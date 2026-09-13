@@ -20,6 +20,7 @@ from app.models import MasteryEvent, Problem, Skill, Student, StudentSkill, Tuto
 from app.schemas import ProblemOut
 from app.services.attempt_evidence import record_evidence
 from app.services.curriculum_scope import (
+    CurriculumScope,
     CurriculumScopeError,
     require_skill_in_scope,
     resolve_student_curriculum_scope,
@@ -62,15 +63,27 @@ def _problem_out(problem: Problem | None) -> ProblemOut | None:
     return ProblemOut(id=problem.id, prompt=problem.prompt, difficulty=problem.difficulty)
 
 
-def _require_diagnostic_skill_scope(
-    db: Session, *, student_id: uuid.UUID, skill_id: uuid.UUID
-) -> Skill:
-    student = db.get(Student, student_id)
+def _diagnostic_scope(db: Session, session: DiagnosticSession) -> CurriculumScope:
+    if session.curriculum_id is not None:
+        return CurriculumScope(
+            curriculum_id=session.curriculum_id,
+            enrollment_id=session.curriculum_enrollment_id,
+            local_authority_id=None,
+        )
+    student = db.get(Student, session.student_id)
     if student is None:
         raise HTTPException(404, "Student not found")
     try:
-        scope = resolve_student_curriculum_scope(db, student)
-        return require_skill_in_scope(db, skill_id=skill_id, scope=scope)
+        return resolve_student_curriculum_scope(db, student)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+
+def _require_session_skill_scope(
+    db: Session, *, session: DiagnosticSession, skill_id: uuid.UUID
+) -> Skill:
+    try:
+        return require_skill_in_scope(db, skill_id=skill_id, scope=_diagnostic_scope(db, session))
     except CurriculumScopeError as exc:
         raise HTTPException(409, str(exc)) from exc
 
@@ -94,6 +107,8 @@ def start_diagnostic(payload: DiagnosticStartIn, db: DbSession) -> DiagnosticOut
         student_id=student.id,
         target_skill_id=target.id,
         current_skill_id=target.id,
+        curriculum_id=scope.curriculum_id,
+        curriculum_enrollment_id=scope.enrollment_id,
         status="ACTIVE",
     )
     db.add(session)
@@ -122,11 +137,8 @@ def respond_to_diagnostic(
     if session is None or session.status != "ACTIVE":
         raise HTTPException(404, "Active diagnostic session not found")
 
-    _require_diagnostic_skill_scope(
-        db,
-        student_id=session.student_id,
-        skill_id=session.current_skill_id,
-    )
+    scope = _diagnostic_scope(db, session)
+    _require_session_skill_scope(db, session=session, skill_id=session.current_skill_id)
     problem = db.get(Problem, payload.problem_id)
     if problem is None or problem.primary_skill_id != session.current_skill_id:
         raise HTTPException(400, "Problem does not belong to the current diagnostic skill")
@@ -170,6 +182,10 @@ def respond_to_diagnostic(
                 "diagnostic_session_id": str(session.id),
                 "diagnostic_attempt_id": str(diagnostic_attempt.id),
                 "correct": evidence.evaluation.correct,
+                "curriculum_id": str(scope.curriculum_id),
+                "curriculum_enrollment_id": (
+                    str(scope.enrollment_id) if scope.enrollment_id else None
+                ),
             },
         )
     )
@@ -190,11 +206,7 @@ def respond_to_diagnostic(
     else:
         previous_skill_id = session.current_skill_id
         next_skill_id = decision.next_skill_id or previous_skill_id
-        _require_diagnostic_skill_scope(
-            db,
-            student_id=session.student_id,
-            skill_id=next_skill_id,
-        )
+        _require_session_skill_scope(db, session=session, skill_id=next_skill_id)
         if next_skill_id != previous_skill_id:
             session.blocked_skill_id = previous_skill_id
             session.current_skill_id = next_skill_id
@@ -231,11 +243,7 @@ def diagnostic_result(session_id: uuid.UUID, db: DbSession) -> DiagnosticResultO
     if session is None:
         raise HTTPException(404, "Diagnostic session not found")
 
-    _require_diagnostic_skill_scope(
-        db,
-        student_id=session.student_id,
-        skill_id=session.target_skill_id,
-    )
+    _require_session_skill_scope(db, session=session, skill_id=session.target_skill_id)
     attempts = list(
         db.scalars(
             select(DiagnosticAttempt)
@@ -245,11 +253,7 @@ def diagnostic_result(session_id: uuid.UUID, db: DbSession) -> DiagnosticResultO
     )
     by_skill: dict[uuid.UUID, tuple[int, int]] = {}
     for attempt in attempts:
-        _require_diagnostic_skill_scope(
-            db,
-            student_id=session.student_id,
-            skill_id=attempt.skill_id,
-        )
+        _require_session_skill_scope(db, session=session, skill_id=attempt.skill_id)
         correct, incorrect = by_skill.get(attempt.skill_id, (0, 0))
         if attempt.is_correct:
             correct += 1
