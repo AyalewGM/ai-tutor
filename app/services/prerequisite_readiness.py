@@ -29,12 +29,17 @@ def find_unready_prerequisite(
         .order_by(SkillPrerequisite.importance_weight.desc())
     ).all()
 
+    # Validate the complete direct graph boundary before returning a readiness
+    # decision. Otherwise an earlier unready prerequisite could mask a corrupt
+    # cross-curriculum edge later in the ordered list.
     for prerequisite in prerequisites:
         require_prerequisite_same_curriculum(
             db,
             target_skill_id=target_skill_id,
             prerequisite_skill_id=prerequisite.prerequisite_skill_id,
         )
+
+    for prerequisite in prerequisites:
         progress = db.get(
             StudentSkill,
             {
