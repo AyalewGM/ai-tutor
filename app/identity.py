@@ -2,6 +2,7 @@ import uuid
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, Request
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
@@ -37,15 +38,16 @@ def current_user(request: Request, db: DbSession) -> User:
 CurrentUser = Annotated[User, Depends(current_user)]
 
 
-def current_parent(user: CurrentUser, db: DbSession) -> ParentProfile:
+def require_parent_role(user: User) -> None:
     if user.role.upper() not in {"PARENT", "GUARDIAN"}:
         raise HTTPException(status_code=403, detail="Parent or guardian access required")
 
-    parent = db.query(ParentProfile).filter(ParentProfile.user_id == user.id).one_or_none()
+
+def current_parent(user: CurrentUser, db: DbSession) -> ParentProfile:
+    require_parent_role(user)
+    parent = db.scalar(select(ParentProfile).where(ParentProfile.user_id == user.id))
     if parent is None:
-        parent = ParentProfile(user_id=user.id)
-        db.add(parent)
-        db.flush()
+        raise HTTPException(status_code=404, detail="Parent profile not initialized")
     return parent
 
 
