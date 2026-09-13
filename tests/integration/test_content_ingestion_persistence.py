@@ -1,11 +1,13 @@
+import pytest
 from sqlalchemy import func, select
 
 from app.content_ingestion import (
     ContentPackInput,
     ExpectationInput,
+    ExpectationSkillMappingInput,
     persist_expectation_pack,
 )
-from app.content_models import CurriculumExpectation
+from app.content_models import CurriculumExpectation, ExpectationSkillMapping
 from app.content_validation import ContentValidationError
 from app.core.database import SessionLocal
 from app.models import Curriculum
@@ -22,7 +24,20 @@ def _active_curriculum(db, code: str) -> Curriculum:
     return curriculum
 
 
-def _pack(curriculum: Curriculum, *, title: str = "Test expectation") -> ContentPackInput:
+def _pack(
+    curriculum: Curriculum,
+    *,
+    title: str = "Test expectation",
+    skill_code: str | None = None,
+) -> ContentPackInput:
+    mappings = ()
+    if skill_code is not None:
+        mappings = (
+            ExpectationSkillMappingInput(
+                source_identifier="F007.TEST.EXPECTATION",
+                skill_code=skill_code,
+            ),
+        )
     return ContentPackInput(
         curriculum_code=curriculum.code,
         curriculum_version=curriculum.version,
@@ -34,6 +49,7 @@ def _pack(curriculum: Curriculum, *, title: str = "Test expectation") -> Content
                 source_uri="https://example.edu/f007/test-expectation",
             ),
         ),
+        mappings=mappings,
     )
 
 
@@ -71,14 +87,12 @@ def test_persist_expectation_pack_requires_exact_active_registry_version() -> No
             expectations=_pack(curriculum).expectations,
         )
 
-        try:
+        with pytest.raises(
+            ContentValidationError,
+            match="Active curriculum registry entry not found",
+        ):
             persist_expectation_pack(db, wrong_version_pack)
-        except ContentValidationError as exc:
-            assert "Active curriculum registry entry not found" in str(exc)
-        else:
-            raise AssertionError("Version mismatch must be rejected")
-        finally:
-            db.rollback()
+        db.rollback()
 
 
 def test_same_source_identifier_persists_separately_across_curricula() -> None:
@@ -93,4 +107,38 @@ def test_same_source_identifier_persists_separately_across_curricula() -> None:
         assert mcps_rows[0].curriculum_id == mcps.id
         assert ontario_rows[0].curriculum_id == ontario.id
         assert mcps_rows[0].source_identifier == ontario_rows[0].source_identifier
+        db.rollback()
+
+
+def test_expectation_skill_mapping_is_idempotent_and_curriculum_scoped() -> None:
+    with SessionLocal() as db:
+        curriculum = _active_curriculum(db, "MCPS_MATH_8")
+        pack = _pack(curriculum, skill_code="M8.ALG.DIST")
+
+        expectations = persist_expectation_pack(db, pack)
+        persist_expectation_pack(db, pack)
+
+        mappings = db.scalars(
+            select(ExpectationSkillMapping).where(
+                ExpectationSkillMapping.expectation_id == expectations[0].id,
+            )
+        ).all()
+        assert len(mappings) == 1
+        assert mappings[0].curriculum_id == curriculum.id
+        assert mappings[0].provenance_json == {
+            "source_type": "AI_TUTOR_CURATED_MAPPING"
+        }
+        db.rollback()
+
+
+def test_mapping_cannot_resolve_skill_from_another_curriculum() -> None:
+    with SessionLocal() as db:
+        ontario = _active_curriculum(db, "MTH1W")
+        pack = _pack(ontario, skill_code="M8.ALG.DIST")
+
+        with pytest.raises(
+            ContentValidationError,
+            match="skill not found in content-pack curriculum",
+        ):
+            persist_expectation_pack(db, pack)
         db.rollback()
