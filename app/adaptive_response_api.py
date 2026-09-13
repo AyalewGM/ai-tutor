@@ -15,14 +15,18 @@ from app.models import (
     MasteryEvent,
     Problem,
     Skill,
+    SkillStatus,
     Student,
     TutorSession,
+    TutorState,
     TutorTurn,
 )
 from app.schemas import EvaluationOut, MasteryOut, RespondIn, RespondOut, TutorOut
 from app.services.attempt_evidence import record_evidence
 from app.services.focus_controller import apply_focus_policy
 from app.services.hint_policy import assistance_level_for_hint, hint_constraint, select_hint
+from app.services.mastery_gate import evaluate_mastery_gate
+from app.services.mastery_gate_evidence import load_mastery_gate_evidence
 from app.services.problem_selection import select_next_problem
 from app.services.state_machine import TutorContext as StateContext
 from app.services.state_machine import determine_next_action
@@ -70,26 +74,6 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         assistance_level=effective_assistance_level,
     )
 
-    independent_successes = db.scalar(
-        select(func.count(Attempt.id))
-        .join(Problem, Problem.id == Attempt.problem_id)
-        .where(
-            Attempt.session_id == session.id,
-            Problem.primary_skill_id == active_skill_id,
-            Attempt.is_correct.is_(True),
-            Attempt.assistance_level == 0,
-        )
-    ) or 0
-    transition = determine_next_action(
-        StateContext(
-            state=state_at_attempt,
-            correct=evidence.evaluation.correct,
-            assistance_level=effective_assistance_level,
-            misconception_count=evidence.misconception_count,
-            consecutive_independent_successes=int(independent_successes),
-        )
-    )
-
     prior_attempt_count = db.scalar(
         select(func.count(Attempt.id)).where(
             Attempt.session_id == session.id,
@@ -117,6 +101,43 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
     )
     db.add(attempt)
     db.flush()
+
+    gate_evidence = load_mastery_gate_evidence(
+        db,
+        student_id=session.student_id,
+        skill_id=active_skill_id,
+    )
+    gate_decision = evaluate_mastery_gate(
+        mastery_score=progress.mastery_score,
+        mastery_threshold=skill.mastery_threshold,
+        independent_correct_count=gate_evidence.independent_correct_count,
+        strong_help_seen=gate_evidence.strong_help_seen,
+        independent_successes_after_strong_help=(
+            gate_evidence.independent_successes_after_strong_help
+        ),
+    )
+
+    independent_successes = db.scalar(
+        select(func.count(Attempt.id))
+        .join(Problem, Problem.id == Attempt.problem_id)
+        .where(
+            Attempt.session_id == session.id,
+            Problem.primary_skill_id == active_skill_id,
+            Attempt.is_correct.is_(True),
+            Attempt.assistance_level == 0,
+        )
+    ) or 0
+    transition = determine_next_action(
+        StateContext(
+            state=state_at_attempt,
+            correct=evidence.evaluation.correct,
+            assistance_level=effective_assistance_level,
+            misconception_count=evidence.misconception_count,
+            consecutive_independent_successes=int(independent_successes),
+            mastery_gate_eligible=gate_decision.eligible,
+        )
+    )
+
     db.add(
         MasteryEvent(
             student_id=session.student_id,
@@ -136,6 +157,31 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         )
     )
 
+    if state_at_attempt in {TutorState.INDEPENDENT_PRACTICE, TutorState.MASTERY_CHECK}:
+        db.add(
+            MasteryEvent(
+                student_id=session.student_id,
+                skill_id=active_skill_id,
+                attempt_id=attempt.id,
+                previous_score=progress.mastery_score,
+                new_score=progress.mastery_score,
+                previous_confidence=progress.confidence_score,
+                new_confidence=progress.confidence_score,
+                reason="MASTERY_GATE_DECISION",
+                metadata_json={
+                    "eligible": gate_decision.eligible,
+                    "reason": gate_decision.reason,
+                    "mastery_score": str(progress.mastery_score),
+                    "mastery_threshold": str(skill.mastery_threshold),
+                    "independent_correct_count": gate_evidence.independent_correct_count,
+                    "strong_help_seen": gate_evidence.strong_help_seen,
+                    "independent_successes_after_strong_help": (
+                        gate_evidence.independent_successes_after_strong_help
+                    ),
+                },
+            )
+        )
+
     transition = apply_focus_policy(
         db,
         session=session,
@@ -144,6 +190,34 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         correct=evidence.evaluation.correct,
         assistance_level=effective_assistance_level,
     )
+
+    if state_at_attempt == TutorState.MASTERY_CHECK:
+        passed_mastery_check = (
+            transition.action == "MARK_MASTERED"
+            and evidence.evaluation.correct
+            and effective_assistance_level == 0
+        )
+        db.add(
+            MasteryEvent(
+                student_id=session.student_id,
+                skill_id=active_skill_id,
+                attempt_id=attempt.id,
+                previous_score=progress.mastery_score,
+                new_score=progress.mastery_score,
+                previous_confidence=progress.confidence_score,
+                new_confidence=progress.confidence_score,
+                reason="MASTERY_CHECK_RESULT",
+                metadata_json={
+                    "passed": passed_mastery_check,
+                    "correct": evidence.evaluation.correct,
+                    "assistance_level": effective_assistance_level,
+                },
+            )
+        )
+        if passed_mastery_check:
+            progress.status = SkillStatus.MASTERED
+            session.ending_mastery = progress.mastery_score
+
     session.current_state = transition.state
 
     jit_decision = select_hint(
@@ -223,6 +297,8 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
                 else None
             ),
             "effective_assistance_level": effective_assistance_level,
+            "mastery_gate_eligible": gate_decision.eligible,
+            "mastery_gate_reason": gate_decision.reason,
         },
     )
     db.add(turn)

@@ -10,6 +10,7 @@ class TutorContext:
     assistance_level: int = 0
     misconception_count: int = 0
     consecutive_independent_successes: int = 0
+    mastery_gate_eligible: bool = False
 
 
 @dataclass(frozen=True)
@@ -40,7 +41,9 @@ def determine_next_action(context: TutorContext) -> Transition:
 
     if context.state == TutorState.INDEPENDENT_PRACTICE:
         if context.correct and context.assistance_level == 0:
-            return Transition(TutorState.MASTERY_CHECK, "START_MASTERY_CHECK")
+            if context.mastery_gate_eligible:
+                return Transition(TutorState.MASTERY_CHECK, "START_MASTERY_CHECK")
+            return Transition(TutorState.INDEPENDENT_PRACTICE, "CONTINUE_INDEPENDENT_PRACTICE")
         return Transition(TutorState.GUIDED_PRACTICE, "GIVE_HINT", hint_level=1)
 
     if context.state == TutorState.MASTERY_CHECK:
