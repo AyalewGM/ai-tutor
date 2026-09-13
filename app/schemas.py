@@ -1,5 +1,4 @@
 import uuid
-from decimal import Decimal
 
 from pydantic import BaseModel, Field
 
@@ -18,8 +17,8 @@ class ProblemOut(BaseModel):
 
 
 class MasteryOut(BaseModel):
-    score: Decimal
-    confidence: Decimal
+    score: float
+    confidence: float
 
 
 class SessionOut(BaseModel):
