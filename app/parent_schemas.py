@@ -11,6 +11,10 @@ class ParentProfileOut(BaseModel):
     email: str
 
 
+class ParentProfileUpdateIn(BaseModel):
+    display_name: str = Field(min_length=1, max_length=120)
+
+
 class ChildSummaryOut(BaseModel):
     id: uuid.UUID
     first_name: str
