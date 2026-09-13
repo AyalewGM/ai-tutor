@@ -9,7 +9,15 @@ from sqlalchemy.orm import Session
 from app.adaptive_api import _focus
 from app.api import _problem_out, _student_skill, _tutor_context
 from app.core.database import get_db
-from app.models import Attempt, MasteryEvent, Problem, Skill, Student, TutorSession, TutorState, TutorTurn
+from app.models import (
+    Attempt,
+    MasteryEvent,
+    Problem,
+    Skill,
+    Student,
+    TutorSession,
+    TutorTurn,
+)
 from app.schemas import EvaluationOut, MasteryOut, RespondIn, RespondOut, TutorOut
 from app.services.attempt_evidence import record_evidence
 from app.services.focus_controller import apply_focus_policy
