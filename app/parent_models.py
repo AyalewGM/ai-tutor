@@ -45,6 +45,19 @@ class ParentStudentRelationship(Base):
     unlinked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
+class ParentStudentRelationshipEvent(Base):
+    __tablename__ = "parent_student_relationship_events"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    relationship_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("parent_student_relationships.id"), nullable=False, index=True
+    )
+    action: Mapped[str] = mapped_column(String(20), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=datetime.utcnow, nullable=False
+    )
+
+
 class ChildLinkClaim(Base):
     __tablename__ = "child_link_claims"
 
