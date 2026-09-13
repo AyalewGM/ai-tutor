@@ -55,3 +55,4 @@ class RespondOut(BaseModel):
     evaluation: EvaluationOut
     tutor: TutorOut
     mastery: MasteryOut
+    next_problem: ProblemOut | None = None
