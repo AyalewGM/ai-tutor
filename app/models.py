@@ -17,6 +17,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
+import app.content_models  # noqa: F401
 import app.curriculum_models  # noqa: F401
 from app.core.database import Base
 
@@ -62,9 +63,7 @@ class Curriculum(Base):
     name: Mapped[str] = mapped_column(String(255))
     jurisdiction: Mapped[str | None] = mapped_column(String(255))
     grade_level: Mapped[str | None] = mapped_column(String(30))
-    authority_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("education_authorities.id"), index=True
-    )
+    authority_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("education_authorities.id"), index=True)
     version: Mapped[str] = mapped_column(String(80), default="1")
     effective_from: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     effective_to: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
@@ -86,10 +85,7 @@ class Student(Base):
 
 class Skill(Base):
     __tablename__ = "skills"
-    __table_args__ = (
-        UniqueConstraint("curriculum_id", "code", name="uq_skills_curriculum_code"),
-    )
-
+    __table_args__ = (UniqueConstraint("curriculum_id", "code", name="uq_skills_curriculum_code"),)
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     curriculum_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("curricula.id"))
     code: Mapped[str] = mapped_column(String(100), index=True)
@@ -160,9 +156,7 @@ class TutorSession(Base):
     primary_skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("skills.id"))
     active_skill_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("skills.id"))
     curriculum_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("curricula.id"), index=True)
-    curriculum_enrollment_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("student_curriculum_enrollments.id"), index=True
-    )
+    curriculum_enrollment_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("student_curriculum_enrollments.id"), index=True)
     remediation_reason: Mapped[str | None] = mapped_column(String(120))
     session_goal: Mapped[str | None] = mapped_column(String(500))
     current_state: Mapped[TutorState] = mapped_column(Enum(TutorState), default=TutorState.DIAGNOSE)
