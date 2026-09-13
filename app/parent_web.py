@@ -113,7 +113,7 @@ async function loadDashboard(studentId) {
 }
 
 function friendlyStatus(value) {
-  return String(value || '').replaceAll('_', ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+  return String(value || '').replaceAll('_', ' ').split(' ').filter(Boolean).map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
 }
 function escapeHtml(value) {
   const div = document.createElement('div'); div.textContent = value ?? ''; return div.innerHTML;
