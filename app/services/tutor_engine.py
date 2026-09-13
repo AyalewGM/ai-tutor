@@ -5,6 +5,10 @@ from typing import Protocol
 from pydantic import BaseModel, ConfigDict, Field
 
 
+class TutorProviderError(RuntimeError):
+    pass
+
+
 class TutorGeneration(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -61,7 +65,7 @@ class TutorEngine:
                     latency_ms=int((perf_counter() - started) * 1000),
                     expects_student_response=generation.expects_student_response,
                 )
-            except Exception:
+            except (TutorProviderError, ValueError, TimeoutError):
                 pass
 
         return TutorEngineResult(
