@@ -42,7 +42,7 @@ def _setup_mastery_session(*, state: TutorState) -> tuple[str, str, str, str]:
             skill_id=skill.id,
             mastery_score=skill.mastery_threshold,
             confidence_score=Decimal("0.900"),
-            status=SkillStatus.IN_PROGRESS,
+            status=SkillStatus.PRACTICING,
         )
         db.add(progress)
 
