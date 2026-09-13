@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from fastapi.testclient import TestClient
 from sqlalchemy import select
@@ -48,7 +48,7 @@ def test_parent_link_dashboard_isolation_and_non_destructive_unlink() -> None:
         claim = ChildLinkClaim(
             student_id=child.id,
             token_hash=hash_claim_token(token),
-            expires_at=datetime.now(timezone.utc) + timedelta(minutes=30),
+            expires_at=datetime.now(UTC) + timedelta(minutes=30),
         )
         db.add(claim)
         db.commit()
@@ -58,6 +58,7 @@ def test_parent_link_dashboard_isolation_and_non_destructive_unlink() -> None:
         parent_user_id = parent_user.id
         other_parent_user_id = other_parent_user.id
         child_id = child.id
+        curriculum_name = curriculum.name
 
     try:
         with SessionLocal() as db:
@@ -75,7 +76,7 @@ def test_parent_link_dashboard_isolation_and_non_destructive_unlink() -> None:
             )
             assert linked.status_code == 200
             assert linked.json()["child"]["id"] == str(child_id)
-            assert linked.json()["child"]["curriculum_name"] == curriculum.name
+            assert linked.json()["child"]["curriculum_name"] == curriculum_name
 
             replay = client.post(
                 "/api/v1/parents/children/link",
