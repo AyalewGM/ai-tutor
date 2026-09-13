@@ -8,6 +8,22 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: ai_tutor
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d ai_tutor"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql+psycopg://postgres@localhost:5432/ai_tutor
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,6 +39,12 @@ jobs:
 
       - name: Lint
         run: ruff check .
+
+      - name: Migrate database
+        run: alembic upgrade head
+
+      - name: Seed Sprint 1 content
+        run: python scripts/seed_sprint1.py
 
       - name: Test
         run: pytest -q
