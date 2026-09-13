@@ -110,15 +110,21 @@ def child_summary(db: Session, student: Student) -> ChildSummaryOut:
         )
 
     curriculum = db.get(Curriculum, scope.curriculum_id)
+    enrollment = (
+        db.get(StudentCurriculumEnrollment, scope.enrollment_id)
+        if scope.enrollment_id is not None
+        else None
+    )
     curriculum_authority = (
         db.get(EducationAuthority, curriculum.authority_id)
         if curriculum is not None and curriculum.authority_id is not None
         else None
     )
+    local_authority_id = (
+        enrollment.local_authority_id if enrollment is not None else scope.local_authority_id
+    )
     local_authority = (
-        db.get(EducationAuthority, scope.local_authority_id)
-        if scope.local_authority_id is not None
-        else None
+        db.get(EducationAuthority, local_authority_id) if local_authority_id is not None else None
     )
     jurisdiction_id = (
         curriculum_authority.jurisdiction_id
