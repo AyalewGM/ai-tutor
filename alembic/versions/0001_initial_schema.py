@@ -9,7 +9,6 @@ from collections.abc import Sequence
 
 import app.models  # noqa: F401
 from alembic import op
-
 from app.core.database import Base
 
 revision: str = "0001"
