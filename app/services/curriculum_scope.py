@@ -69,9 +69,12 @@ def require_session_scope(db: Session, session: TutorSession) -> CurriculumScope
     session_curriculum_id = session.curriculum_id or current.curriculum_id
     if session_curriculum_id != current.curriculum_id:
         raise CurriculumScopeError("Session curriculum no longer matches active learner scope")
-    if session.curriculum_enrollment_id is not None and current.enrollment_id is not None:
-        if session.curriculum_enrollment_id != current.enrollment_id:
-            raise CurriculumScopeError("Session enrollment does not match active learner scope")
+    if (
+        session.curriculum_enrollment_id is not None
+        and current.enrollment_id is not None
+        and session.curriculum_enrollment_id != current.enrollment_id
+    ):
+        raise CurriculumScopeError("Session enrollment does not match active learner scope")
     return CurriculumScope(
         curriculum_id=session_curriculum_id,
         enrollment_id=session.curriculum_enrollment_id or current.enrollment_id,
