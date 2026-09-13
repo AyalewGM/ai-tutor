@@ -13,3 +13,11 @@ def test_parent_dashboard_web_surface_exposes_required_controls() -> None:
     assert "claimToken" in response.text
     assert "Remove selected child" in response.text
     assert "Curriculum and learning decisions are read-only here" in response.text
+
+
+def test_parent_settings_web_surface_exposes_profile_controls() -> None:
+    response = client.get("/parent/settings")
+    assert response.status_code == 200
+    assert "Parent Settings" in response.text
+    assert "displayName" in response.text
+    assert "Save" in response.text
