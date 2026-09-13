@@ -14,6 +14,7 @@ from app.parent_schemas import (
     LinkChildIn,
     LinkChildOut,
     ParentProfileOut,
+    ParentProfileUpdateIn,
 )
 from app.services.parent_dashboard import (
     dashboard,
@@ -26,6 +27,15 @@ router = APIRouter(prefix="/parents", tags=["parents"])
 DbSession = Annotated[Session, Depends(get_db)]
 
 
+def _profile_out(user: CurrentUser, parent: ParentProfile) -> ParentProfileOut:
+    return ParentProfileOut(
+        id=parent.id,
+        user_id=user.id,
+        display_name=user.display_name,
+        email=user.email,
+    )
+
+
 @router.post("/profile", response_model=ParentProfileOut)
 def create_or_load_profile(user: CurrentUser, db: DbSession) -> ParentProfileOut:
     require_parent_role(user)
@@ -35,22 +45,25 @@ def create_or_load_profile(user: CurrentUser, db: DbSession) -> ParentProfileOut
         db.add(parent)
         db.commit()
         db.refresh(parent)
-    return ParentProfileOut(
-        id=parent.id,
-        user_id=user.id,
-        display_name=user.display_name,
-        email=user.email,
-    )
+    return _profile_out(user, parent)
 
 
 @router.get("/profile", response_model=ParentProfileOut)
 def get_profile(user: CurrentUser, parent: CurrentParent) -> ParentProfileOut:
-    return ParentProfileOut(
-        id=parent.id,
-        user_id=user.id,
-        display_name=user.display_name,
-        email=user.email,
-    )
+    return _profile_out(user, parent)
+
+
+@router.patch("/profile", response_model=ParentProfileOut)
+def update_profile(
+    payload: ParentProfileUpdateIn,
+    user: CurrentUser,
+    parent: CurrentParent,
+    db: DbSession,
+) -> ParentProfileOut:
+    user.display_name = payload.display_name.strip()
+    db.commit()
+    db.refresh(user)
+    return _profile_out(user, parent)
 
 
 @router.get("/children", response_model=list[ChildSummaryOut])
