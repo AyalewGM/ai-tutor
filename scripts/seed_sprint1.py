@@ -13,7 +13,12 @@ from app.models import (
 
 
 def _skill(db, curriculum: Curriculum, code: str, name: str, description: str, level: int) -> Skill:
-    skill = db.scalar(select(Skill).where(Skill.code == code))
+    skill = db.scalar(
+        select(Skill).where(
+            Skill.curriculum_id == curriculum.id,
+            Skill.code == code,
+        )
+    )
     if skill is None:
         skill = Skill(
             curriculum_id=curriculum.id,
@@ -29,6 +34,8 @@ def _skill(db, curriculum: Curriculum, code: str, name: str, description: str, l
 
 
 def _prerequisite(db, skill: Skill, prerequisite: Skill, weight: str = "1.000") -> None:
+    if skill.curriculum_id != prerequisite.curriculum_id:
+        raise ValueError("Prerequisite edges cannot cross curriculum boundaries")
     key = {
         "skill_id": skill.id,
         "prerequisite_skill_id": prerequisite.id,
