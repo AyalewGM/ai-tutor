@@ -23,6 +23,11 @@ from app.models import (
 )
 from app.schemas import EvaluationOut, MasteryOut, RespondIn, RespondOut, TutorOut
 from app.services.attempt_evidence import record_evidence
+from app.services.curriculum_scope import (
+    CurriculumScopeError,
+    require_session_scope,
+    require_skill_in_scope,
+)
 from app.services.focus_controller import apply_focus_policy
 from app.services.hint_policy import assistance_level_for_hint, hint_constraint, select_hint
 from app.services.mastery_gate import evaluate_mastery_gate
@@ -43,6 +48,12 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         raise HTTPException(404, "Active tutor session not found")
 
     active_skill_id = session.active_skill_id or session.primary_skill_id
+    try:
+        scope = require_session_scope(db, session)
+        require_skill_in_scope(db, skill_id=active_skill_id, scope=scope)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
     problem = db.get(Problem, payload.problem_id)
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not belong to active learning focus")
@@ -153,6 +164,10 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
                 "assistance_level": effective_assistance_level,
                 "reported_assistance_level": payload.assistance_level,
                 "highest_hint_level": int(highest_hint_level),
+                "curriculum_id": str(scope.curriculum_id),
+                "curriculum_enrollment_id": (
+                    str(scope.enrollment_id) if scope.enrollment_id else None
+                ),
             },
         )
     )
@@ -178,6 +193,7 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
                     "independent_successes_after_strong_help": (
                         gate_evidence.independent_successes_after_strong_help
                     ),
+                    "curriculum_id": str(scope.curriculum_id),
                 },
             )
         )
@@ -211,6 +227,7 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
                     "passed": passed_mastery_check,
                     "correct": evidence.evaluation.correct,
                     "assistance_level": effective_assistance_level,
+                    "curriculum_id": str(scope.curriculum_id),
                 },
             )
         )
@@ -236,10 +253,11 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
     )
 
     next_skill_id = session.active_skill_id or session.primary_skill_id
-    next_skill = db.get(Skill, next_skill_id)
+    try:
+        next_skill = require_skill_in_scope(db, skill_id=next_skill_id, scope=scope)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
     next_progress = _student_skill(db, session.student_id, next_skill_id)
-    if next_skill is None:
-        raise HTTPException(404, "Active skill not found")
 
     if issue_jit_hint:
         next_problem = problem
@@ -299,6 +317,10 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
             "effective_assistance_level": effective_assistance_level,
             "mastery_gate_eligible": gate_decision.eligible,
             "mastery_gate_reason": gate_decision.reason,
+            "curriculum_id": str(scope.curriculum_id),
+            "curriculum_enrollment_id": (
+                str(scope.enrollment_id) if scope.enrollment_id else None
+            ),
         },
     )
     db.add(turn)
