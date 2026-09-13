@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import case, select
+from sqlalchemy import case, func, select
 from sqlalchemy.orm import Session
 
 from app.models import Problem, TutorState
@@ -27,7 +27,7 @@ def select_next_problem(
 
     stmt = stmt.order_by(
         case((Problem.difficulty == target_difficulty, 0), else_=1),
-        abs(Problem.difficulty - target_difficulty),
+        func.abs(Problem.difficulty - target_difficulty),
         Problem.id,
     )
     return db.scalar(stmt.limit(1))
