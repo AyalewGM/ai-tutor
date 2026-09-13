@@ -16,14 +16,41 @@ The backend currently provides:
 - deterministic tutor state transitions
 - adaptive next-problem selection
 - a structured, provider-agnostic `TutorEngine`
-- validated tutor generation output with deterministic fallback when an LLM provider is absent or fails
+- OpenAI and Gemini runtime adapters
+- structured tutor-generation output with deterministic fallback when a provider is absent or fails
 - PostgreSQL-backed integration testing in GitHub Actions
-
-No external LLM provider is wired into the runtime yet. Sprint 1 therefore runs with the deterministic tutor-language fallback while preserving the provider interface for the next integration step.
 
 ## Architecture principle
 
 The application owns pedagogical decisions. The state machine determines the learning state and pedagogical action before the `TutorEngine` generates student-facing language. An LLM provider is therefore a constrained language-generation component, not the authority over mastery, assessment, or progression.
+
+## AI provider configuration
+
+Copy `.env.example` to `.env` and choose one provider. The official SDKs read their credentials from the environment, so keys are never stored in application source.
+
+OpenAI example:
+
+```env
+AI_PROVIDER=openai
+OPENAI_API_KEY=your-local-key
+OPENAI_MODEL=gpt-5
+```
+
+Gemini example:
+
+```env
+AI_PROVIDER=gemini
+GEMINI_API_KEY=your-local-key
+GEMINI_MODEL=gemini-3.8-flash
+```
+
+To force deterministic language generation without an external model:
+
+```env
+AI_PROVIDER=fallback
+```
+
+The `.env` file is ignored by Git and must never be committed.
 
 ## Local development
 
