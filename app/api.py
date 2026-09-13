@@ -31,6 +31,12 @@ from app.schemas import (
     SessionOut,
     TutorOut,
 )
+from app.services.curriculum_scope import (
+    CurriculumScopeError,
+    require_session_scope,
+    require_skill_in_scope,
+    resolve_student_curriculum_scope,
+)
 from app.services.evaluation import evaluate_distributive_property
 from app.services.mastery import update_mastery
 from app.services.problem_selection import select_next_problem
@@ -70,7 +76,7 @@ def _tutor_context(
     student_answer: str | None = None,
     misconception: Misconception | None = None,
 ) -> TutorContext:
-    curriculum = db.get(Curriculum, student.curriculum_id) if student.curriculum_id else None
+    curriculum = db.get(Curriculum, skill.curriculum_id)
     return TutorContext(
         grade_level=student.grade_level,
         curriculum_name=curriculum.name if curriculum else "Unknown curriculum",
@@ -88,9 +94,13 @@ def _tutor_context(
 @router.post("/sessions", response_model=SessionOut)
 def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
     student = db.get(Student, payload.student_id)
-    skill = db.get(Skill, payload.skill_id)
-    if student is None or skill is None:
-        raise HTTPException(404, "Student or skill not found")
+    if student is None:
+        raise HTTPException(404, "Student not found")
+    try:
+        scope = resolve_student_curriculum_scope(db, student)
+        skill = require_skill_in_scope(db, skill_id=payload.skill_id, scope=scope)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
 
     progress = _student_skill(db, student.id, skill.id)
     problem = select_next_problem(
@@ -106,6 +116,9 @@ def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
     session = TutorSession(
         student_id=student.id,
         primary_skill_id=skill.id,
+        active_skill_id=skill.id,
+        curriculum_id=scope.curriculum_id,
+        curriculum_enrollment_id=scope.enrollment_id,
         current_state=TutorState.DIAGNOSE,
         starting_mastery=progress.mastery_score,
         session_goal=f"Diagnose and practice {skill.name}",
@@ -133,7 +146,10 @@ def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
             pedagogical_action="ASK_DIAGNOSTIC",
             problem_id=problem.id,
             llm_model=generation.model,
-            metadata_json={"generation_source": generation.source},
+            metadata_json={
+                "generation_source": generation.source,
+                "curriculum_id": str(scope.curriculum_id),
+            },
         )
     )
     db.commit()
@@ -151,16 +167,21 @@ def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
 @router.post("/sessions/{session_id}/respond", response_model=RespondOut)
 def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> RespondOut:
     session = db.get(TutorSession, session_id)
-    problem = db.get(Problem, payload.problem_id)
     if session is None or session.status != "ACTIVE":
         raise HTTPException(404, "Active tutor session not found")
+    try:
+        scope = require_session_scope(db, session)
+        skill = require_skill_in_scope(db, skill_id=session.primary_skill_id, scope=scope)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+    problem = db.get(Problem, payload.problem_id)
     if problem is None or problem.primary_skill_id != session.primary_skill_id:
         raise HTTPException(400, "Problem does not belong to the active skill")
 
     student = db.get(Student, session.student_id)
-    skill = db.get(Skill, session.primary_skill_id)
-    if student is None or skill is None:
-        raise HTTPException(404, "Student or skill not found")
+    if student is None:
+        raise HTTPException(404, "Student not found")
 
     progress = _student_skill(db, session.student_id, session.primary_skill_id)
     previous_score = progress.mastery_score
@@ -175,7 +196,10 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
     misconception_count = 0
     if evaluation.misconception_code:
         misconception = db.scalar(
-            select(Misconception).where(Misconception.code == evaluation.misconception_code)
+            select(Misconception).where(
+                Misconception.skill_id == skill.id,
+                Misconception.code == evaluation.misconception_code,
+            )
         )
         if misconception:
             key = {
@@ -290,6 +314,7 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
                 "correct": evaluation.correct,
                 "assistance_level": payload.assistance_level,
                 "evidence": mastery.evidence,
+                "curriculum_id": str(scope.curriculum_id),
             },
         )
     )
@@ -335,6 +360,7 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
             metadata_json={
                 "hint_level": transition.hint_level,
                 "generation_source": generation.source,
+                "curriculum_id": str(scope.curriculum_id),
             },
         )
     )
