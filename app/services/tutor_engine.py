@@ -65,7 +65,7 @@ class TutorEngine:
                     latency_ms=int((perf_counter() - started) * 1000),
                     expects_student_response=generation.expects_student_response,
                 )
-            except (TutorProviderError, ValueError, TimeoutError):
+            except (TutorProviderError, RuntimeError, ValueError, TimeoutError):
                 pass
 
         return TutorEngineResult(
