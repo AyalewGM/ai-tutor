@@ -35,7 +35,10 @@ def record_evidence(
     misconception_count = 0
     if evaluation.misconception_code:
         misconception = db.scalar(
-            select(Misconception).where(Misconception.code == evaluation.misconception_code)
+            select(Misconception).where(
+                Misconception.skill_id == progress.skill_id,
+                Misconception.code == evaluation.misconception_code,
+            )
         )
         if misconception:
             key = {
