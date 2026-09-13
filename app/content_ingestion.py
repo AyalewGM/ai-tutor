@@ -5,8 +5,8 @@ expectations, mappings, prerequisites, and problem metadata are application-
 owned data and must be validated before persistence.
 """
 
+from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import Iterable
 
 from app.content_validation import ContentValidationError, validate_source_identity
 
