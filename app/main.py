@@ -6,6 +6,9 @@ from app.api import router as tutor_router
 from app.core.settings import settings
 from app.diagnostic_api import router as diagnostic_router
 from app.hint_api import router as hint_router
+from app.parent_api import router as parent_router
+from app.parent_settings_web import router as parent_settings_web_router
+from app.parent_web import router as parent_web_router
 from app.services.llm_bootstrap import configure_tutor_engine
 
 configure_tutor_engine()
@@ -16,6 +19,9 @@ app.include_router(adaptive_tutor_router, prefix=settings.api_prefix)
 app.include_router(adaptive_response_router, prefix=settings.api_prefix)
 app.include_router(diagnostic_router, prefix=settings.api_prefix)
 app.include_router(hint_router, prefix=settings.api_prefix)
+app.include_router(parent_router, prefix=settings.api_prefix)
+app.include_router(parent_web_router)
+app.include_router(parent_settings_web_router)
 
 
 @app.get("/health")
