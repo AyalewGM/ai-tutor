@@ -1,18 +1,42 @@
 import uuid
 from decimal import Decimal
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.models import Attempt, Misconception, Problem, Skill, Student, StudentMisconception, StudentSkill, TutorSession, TutorState
-from app.schemas import EvaluationOut, MasteryOut, ProblemOut, RespondIn, RespondOut, SessionCreate, SessionOut, TutorOut
+from app.models import (
+    Attempt,
+    MasteryEvent,
+    Misconception,
+    Problem,
+    Skill,
+    Student,
+    StudentMisconception,
+    StudentSkill,
+    TutorSession,
+    TutorState,
+    TutorTurn,
+)
+from app.schemas import (
+    EvaluationOut,
+    MasteryOut,
+    ProblemOut,
+    RespondIn,
+    RespondOut,
+    SessionCreate,
+    SessionOut,
+    TutorOut,
+)
 from app.services.evaluation import evaluate_distributive_property
 from app.services.mastery import update_mastery
+from app.services.problem_selection import select_next_problem
 from app.services.state_machine import TutorContext, determine_next_action
 
 router = APIRouter(prefix="/tutor", tags=["tutor"])
+DbSession = Annotated[Session, Depends(get_db)]
 
 
 def _student_skill(db: Session, student_id: uuid.UUID, skill_id: uuid.UUID) -> StudentSkill:
@@ -22,17 +46,6 @@ def _student_skill(db: Session, student_id: uuid.UUID, skill_id: uuid.UUID) -> S
         db.add(row)
         db.flush()
     return row
-
-
-def _first_problem(db: Session, skill_id: uuid.UUID, difficulty: int = 1) -> Problem:
-    problem = db.scalar(
-        select(Problem)
-        .where(Problem.primary_skill_id == skill_id, Problem.difficulty >= difficulty)
-        .order_by(Problem.difficulty, Problem.id)
-    )
-    if problem is None:
-        raise HTTPException(404, "No problem configured for this skill")
-    return problem
 
 
 def _message_for(action: str, hint_level: int | None, problem: Problem) -> str:
@@ -57,15 +70,30 @@ def _message_for(action: str, hint_level: int | None, problem: Problem) -> str:
     return f"Try the next step on your own: {problem.prompt}"
 
 
+def _problem_out(problem: Problem | None) -> ProblemOut | None:
+    if problem is None:
+        return None
+    return ProblemOut(id=problem.id, prompt=problem.prompt, difficulty=problem.difficulty)
+
+
 @router.post("/sessions", response_model=SessionOut)
-def create_session(payload: SessionCreate, db: Session = Depends(get_db)) -> SessionOut:
+def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
     student = db.get(Student, payload.student_id)
     skill = db.get(Skill, payload.skill_id)
     if student is None or skill is None:
         raise HTTPException(404, "Student or skill not found")
 
     progress = _student_skill(db, student.id, skill.id)
-    problem = _first_problem(db, skill.id)
+    problem = select_next_problem(
+        db,
+        skill_id=skill.id,
+        current_problem_id=None,
+        current_difficulty=progress.current_difficulty,
+        state=TutorState.DIAGNOSE,
+    )
+    if problem is None:
+        raise HTTPException(404, "No problem configured for this skill")
+
     session = TutorSession(
         student_id=student.id,
         primary_skill_id=skill.id,
@@ -74,6 +102,18 @@ def create_session(payload: SessionCreate, db: Session = Depends(get_db)) -> Ses
         session_goal=f"Diagnose and practice {skill.name}",
     )
     db.add(session)
+    db.flush()
+    message = "Let us start with a quick problem so I can see what you already know."
+    db.add(
+        TutorTurn(
+            session_id=session.id,
+            role="TUTOR",
+            message=message,
+            state=TutorState.DIAGNOSE,
+            pedagogical_action="ASK_DIAGNOSTIC",
+            problem_id=problem.id,
+        )
+    )
     db.commit()
     db.refresh(session)
 
@@ -82,12 +122,12 @@ def create_session(payload: SessionCreate, db: Session = Depends(get_db)) -> Ses
         state=session.current_state,
         mastery=MasteryOut(score=progress.mastery_score, confidence=progress.confidence_score),
         problem=ProblemOut(id=problem.id, prompt=problem.prompt, difficulty=problem.difficulty),
-        message="Let us start with a quick problem so I can see what you already know.",
+        message=message,
     )
 
 
 @router.post("/sessions/{session_id}/respond", response_model=RespondOut)
-def respond(session_id: uuid.UUID, payload: RespondIn, db: Session = Depends(get_db)) -> RespondOut:
+def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> RespondOut:
     session = db.get(TutorSession, session_id)
     problem = db.get(Problem, payload.problem_id)
     if session is None or session.status != "ACTIVE":
@@ -96,35 +136,47 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: Session = Depends(get
         raise HTTPException(400, "Problem does not belong to the active skill")
 
     progress = _student_skill(db, session.student_id, session.primary_skill_id)
-    evaluation = evaluate_distributive_property(problem.prompt, payload.answer, problem.canonical_answer or "")
+    previous_score = progress.mastery_score
+    previous_confidence = progress.confidence_score
+    evaluation = evaluate_distributive_property(
+        problem.prompt,
+        payload.answer,
+        problem.canonical_answer or "",
+    )
 
     misconception = None
     misconception_count = 0
     if evaluation.misconception_code:
-        misconception = db.scalar(select(Misconception).where(Misconception.code == evaluation.misconception_code))
+        misconception = db.scalar(
+            select(Misconception).where(Misconception.code == evaluation.misconception_code)
+        )
         if misconception:
-            sm = db.get(StudentMisconception, {"student_id": session.student_id, "misconception_id": misconception.id})
-            if sm is None:
-                sm = StudentMisconception(
+            key = {
+                "student_id": session.student_id,
+                "misconception_id": misconception.id,
+            }
+            student_misconception = db.get(StudentMisconception, key)
+            if student_misconception is None:
+                student_misconception = StudentMisconception(
                     student_id=session.student_id,
                     misconception_id=misconception.id,
                     occurrence_count=1,
                     confidence=Decimal(str(evaluation.misconception_confidence or 0)),
                 )
-                db.add(sm)
+                db.add(student_misconception)
             else:
-                sm.occurrence_count += 1
-                sm.confidence = Decimal(str(evaluation.misconception_confidence or 0))
-            misconception_count = sm.occurrence_count
+                student_misconception.occurrence_count += 1
+                student_misconception.confidence = Decimal(
+                    str(evaluation.misconception_confidence or 0)
+                )
+            misconception_count = student_misconception.occurrence_count
 
-    previous_attempts = progress.attempt_count
     mastery = update_mastery(
         float(progress.mastery_score),
-        previous_attempts,
+        progress.attempt_count,
         evaluation.correct,
         payload.assistance_level,
     )
-
     progress.attempt_count += 1
     if evaluation.correct:
         progress.correct_count += 1
@@ -156,24 +208,92 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: Session = Depends(get
         )
     )
 
-    attempt_number = (db.scalar(select(func.count(Attempt.id)).where(Attempt.session_id == session.id, Attempt.problem_id == problem.id)) or 0) + 1
+    attempt_number = (
+        db.scalar(
+            select(func.count(Attempt.id)).where(
+                Attempt.session_id == session.id,
+                Attempt.problem_id == problem.id,
+            )
+        )
+        or 0
+    ) + 1
+    attempt = Attempt(
+        session_id=session.id,
+        student_id=session.student_id,
+        problem_id=problem.id,
+        student_answer=payload.answer,
+        normalized_answer=evaluation.normalized_answer,
+        is_correct=evaluation.correct,
+        attempt_number=attempt_number,
+        assistance_level=payload.assistance_level,
+        misconception_id=misconception.id if misconception else None,
+        misconception_confidence=(
+            Decimal(str(evaluation.misconception_confidence))
+            if evaluation.misconception_confidence is not None
+            else None
+        ),
+        evaluation_confidence=Decimal(str(evaluation.confidence)),
+        state_at_attempt=session.current_state,
+    )
+    db.add(attempt)
+    db.flush()
+
     db.add(
-        Attempt(
+        TutorTurn(
             session_id=session.id,
-            student_id=session.student_id,
+            role="STUDENT",
+            message=payload.answer,
+            state=session.current_state,
+            pedagogical_action="ANSWER",
             problem_id=problem.id,
-            student_answer=payload.answer,
-            normalized_answer=evaluation.normalized_answer,
-            is_correct=evaluation.correct,
-            attempt_number=attempt_number,
-            assistance_level=payload.assistance_level,
-            misconception_id=misconception.id if misconception else None,
-            misconception_confidence=Decimal(str(evaluation.misconception_confidence)) if evaluation.misconception_confidence else None,
-            evaluation_confidence=Decimal(str(evaluation.confidence)),
-            state_at_attempt=session.current_state,
+            attempt_id=attempt.id,
         )
     )
+    db.add(
+        MasteryEvent(
+            student_id=session.student_id,
+            skill_id=session.primary_skill_id,
+            attempt_id=attempt.id,
+            previous_score=previous_score,
+            new_score=progress.mastery_score,
+            previous_confidence=previous_confidence,
+            new_confidence=progress.confidence_score,
+            reason="ATTEMPT_EVIDENCE",
+            metadata_json={
+                "correct": evaluation.correct,
+                "assistance_level": payload.assistance_level,
+                "evidence": mastery.evidence,
+            },
+        )
+    )
+
     session.current_state = transition.state
+    if transition.action == "INCREASE_DIFFICULTY":
+        progress.current_difficulty = min(10, progress.current_difficulty + 1)
+    elif transition.action == "REMEDIATE":
+        progress.current_difficulty = max(1, progress.current_difficulty - 1)
+
+    next_problem = select_next_problem(
+        db,
+        skill_id=session.primary_skill_id,
+        current_problem_id=problem.id,
+        current_difficulty=progress.current_difficulty,
+        state=transition.state,
+        correct=evaluation.correct,
+    )
+    tutor_message = _message_for(transition.action, transition.hint_level, problem)
+    db.add(
+        TutorTurn(
+            session_id=session.id,
+            role="TUTOR",
+            message=tutor_message,
+            state=transition.state,
+            pedagogical_action=transition.action,
+            problem_id=next_problem.id if next_problem else problem.id,
+            attempt_id=attempt.id,
+            metadata_json={"hint_level": transition.hint_level},
+        )
+    )
     db.commit()
 
     return RespondOut(
@@ -188,7 +308,8 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: Session = Depends(get
         tutor=TutorOut(
             action=transition.action,
             hint_level=transition.hint_level,
-            message=_message_for(transition.action, transition.hint_level, problem),
+            message=tutor_message,
         ),
         mastery=MasteryOut(score=progress.mastery_score, confidence=progress.confidence_score),
+        next_problem=_problem_out(next_problem),
     )
