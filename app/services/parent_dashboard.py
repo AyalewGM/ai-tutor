@@ -10,10 +10,12 @@ from app.models import (
     Curriculum,
     Misconception,
     Skill,
+    SkillStatus,
     Student,
     StudentMisconception,
     StudentSkill,
     TutorSession,
+    TutorState,
 )
 from app.parent_models import ChildLinkClaim, ParentProfile, ParentStudentRelationship
 from app.parent_schemas import (
@@ -28,6 +30,26 @@ from app.parent_schemas import (
 
 def hash_claim_token(token: str) -> str:
     return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+def _parent_skill_status(progress: StudentSkill, *, mastery_check: bool) -> str:
+    if mastery_check:
+        return "Mastery Check"
+    if progress.status == SkillStatus.MASTERED:
+        return "Mastered"
+    if progress.status == SkillStatus.REVIEW_DUE:
+        return "Needs Practice"
+    return "In Progress"
+
+
+def _parent_session_state(state: TutorState) -> str:
+    if state == TutorState.MASTERY_CHECK:
+        return "Mastery Check"
+    if state in {TutorState.REMEDIATION, TutorState.REVIEW}:
+        return "Needs Practice"
+    if state == TutorState.COMPLETE:
+        return "Completed"
+    return "In Progress"
 
 
 def _active_relationship(
@@ -134,6 +156,20 @@ def unlink_child(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -
 def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> ChildDashboardOut:
     student = require_linked_child(db, parent=parent, student_id=student_id)
 
+    active_session = db.scalar(
+        select(TutorSession)
+        .where(TutorSession.student_id == student.id, TutorSession.status == "ACTIVE")
+        .order_by(desc(TutorSession.started_at))
+        .limit(1)
+    )
+    mastery_check_skill_id = None
+    active_skill_name = None
+    if active_session and active_session.active_skill_id:
+        active_skill = db.get(Skill, active_session.active_skill_id)
+        active_skill_name = active_skill.name if active_skill else None
+        if active_session.current_state == TutorState.MASTERY_CHECK:
+            mastery_check_skill_id = active_session.active_skill_id
+
     progress_rows = db.execute(
         select(StudentSkill, Skill)
         .join(Skill, Skill.id == StudentSkill.skill_id)
@@ -145,7 +181,7 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
             skill_id=skill.id,
             skill_code=skill.code,
             skill_name=skill.name,
-            status=progress.status.value,
+            status=_parent_skill_status(progress, mastery_check=skill.id == mastery_check_skill_id),
             attempt_count=progress.attempt_count,
             independent_attempt_count=progress.independent_attempt_count,
             independent_correct_count=progress.independent_correct_count,
@@ -165,7 +201,7 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         RecentActivityOut(
             session_id=session.id,
             skill_name=skill.name,
-            state=session.current_state.value,
+            state=_parent_session_state(session.current_state),
             started_at=session.started_at,
             ended_at=session.ended_at,
         )
@@ -190,17 +226,6 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         )
         for student_misconception, misconception in support_rows
     ]
-
-    active_session = db.scalar(
-        select(TutorSession)
-        .where(TutorSession.student_id == student.id, TutorSession.status == "ACTIVE")
-        .order_by(desc(TutorSession.started_at))
-        .limit(1)
-    )
-    active_skill_name = None
-    if active_session and active_session.active_skill_id:
-        active_skill = db.get(Skill, active_session.active_skill_id)
-        active_skill_name = active_skill.name if active_skill else None
 
     return ChildDashboardOut(
         child=child_summary(db, student),
