@@ -3,7 +3,15 @@ from sqlalchemy import func, select
 
 from app.core.database import SessionLocal
 from app.main import app
-from app.models import Attempt, Curriculum, MasteryEvent, Problem, Skill, Student, TutorTurn
+from app.models import (
+    Attempt,
+    Curriculum,
+    MasteryEvent,
+    Problem,
+    Skill,
+    Student,
+    TutorTurn,
+)
 
 
 client = TestClient(app)
