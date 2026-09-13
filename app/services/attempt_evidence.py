@@ -4,7 +4,7 @@ from decimal import Decimal
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.models import MasteryEvent, Misconception, StudentMisconception, StudentSkill
+from app.models import Misconception, StudentMisconception, StudentSkill
 from app.services.evaluation import EvaluationResult, evaluate_problem
 from app.services.mastery import update_mastery
 
