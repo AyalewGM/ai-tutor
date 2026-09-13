@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from app.adaptive_api import _focus
 from app.api import _problem_out, _student_skill, _tutor_context
 from app.core.database import get_db
+from app.hint_models import HintEvent
 from app.models import (
     Attempt,
     MasteryEvent,
@@ -21,6 +22,7 @@ from app.models import (
 from app.schemas import EvaluationOut, MasteryOut, RespondIn, RespondOut, TutorOut
 from app.services.attempt_evidence import record_evidence
 from app.services.focus_controller import apply_focus_policy
+from app.services.hint_policy import assistance_level_for_hint, hint_constraint, select_hint
 from app.services.problem_selection import select_next_problem
 from app.services.state_machine import TutorContext as StateContext
 from app.services.state_machine import determine_next_action
@@ -46,6 +48,18 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
     if student is None or skill is None:
         raise HTTPException(404, "Student or skill not found")
 
+    state_at_attempt = session.current_state
+    highest_hint_level = db.scalar(
+        select(func.max(HintEvent.level)).where(
+            HintEvent.session_id == session.id,
+            HintEvent.problem_id == problem.id,
+        )
+    ) or 0
+    effective_assistance_level = max(
+        payload.assistance_level,
+        assistance_level_for_hint(int(highest_hint_level)),
+    )
+
     progress = _student_skill(db, session.student_id, active_skill_id)
     evidence = record_evidence(
         db,
@@ -53,7 +67,7 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         prompt=problem.prompt,
         answer=payload.answer,
         canonical_answer=problem.canonical_answer or "",
-        assistance_level=payload.assistance_level,
+        assistance_level=effective_assistance_level,
     )
 
     independent_successes = db.scalar(
@@ -68,23 +82,21 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
     ) or 0
     transition = determine_next_action(
         StateContext(
-            state=session.current_state,
+            state=state_at_attempt,
             correct=evidence.evaluation.correct,
-            assistance_level=payload.assistance_level,
+            assistance_level=effective_assistance_level,
             misconception_count=evidence.misconception_count,
             consecutive_independent_successes=int(independent_successes),
         )
     )
 
-    attempt_number = (
-        db.scalar(
-            select(func.count(Attempt.id)).where(
-                Attempt.session_id == session.id,
-                Attempt.problem_id == problem.id,
-            )
+    prior_attempt_count = db.scalar(
+        select(func.count(Attempt.id)).where(
+            Attempt.session_id == session.id,
+            Attempt.problem_id == problem.id,
         )
-        or 0
-    ) + 1
+    ) or 0
+    attempt_number = int(prior_attempt_count) + 1
     attempt = Attempt(
         session_id=session.id,
         student_id=session.student_id,
@@ -93,7 +105,7 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         normalized_answer=evidence.evaluation.normalized_answer,
         is_correct=evidence.evaluation.correct,
         attempt_number=attempt_number,
-        assistance_level=payload.assistance_level,
+        assistance_level=effective_assistance_level,
         misconception_id=evidence.misconception.id if evidence.misconception else None,
         misconception_confidence=(
             Decimal(str(evidence.evaluation.misconception_confidence))
@@ -101,7 +113,7 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
             else None
         ),
         evaluation_confidence=Decimal(str(evidence.evaluation.confidence)),
-        state_at_attempt=session.current_state,
+        state_at_attempt=state_at_attempt,
     )
     db.add(attempt)
     db.flush()
@@ -117,7 +129,9 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
             reason="ATTEMPT_EVIDENCE",
             metadata_json={
                 "correct": evidence.evaluation.correct,
-                "assistance_level": payload.assistance_level,
+                "assistance_level": effective_assistance_level,
+                "reported_assistance_level": payload.assistance_level,
+                "highest_hint_level": int(highest_hint_level),
             },
         )
     )
@@ -128,56 +142,109 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         progress=progress,
         transition=transition,
         correct=evidence.evaluation.correct,
-        assistance_level=payload.assistance_level,
+        assistance_level=effective_assistance_level,
     )
     session.current_state = transition.state
+
+    jit_decision = select_hint(
+        state=state_at_attempt,
+        highest_level_used=int(highest_hint_level),
+        misconception_confidence=evidence.evaluation.misconception_confidence,
+        repeated_unsuccessful_attempts=(
+            attempt_number if not evidence.evaluation.correct else 0
+        ),
+    )
+    issue_jit_hint = (
+        not evidence.evaluation.correct
+        and evidence.misconception is not None
+        and jit_decision.allowed
+        and (session.active_skill_id or session.primary_skill_id) == active_skill_id
+    )
 
     next_skill_id = session.active_skill_id or session.primary_skill_id
     next_skill = db.get(Skill, next_skill_id)
     next_progress = _student_skill(db, session.student_id, next_skill_id)
     if next_skill is None:
         raise HTTPException(404, "Active skill not found")
-    next_problem = select_next_problem(
-        db,
-        skill_id=next_skill_id,
-        current_problem_id=problem.id if problem.primary_skill_id == next_skill_id else None,
-        current_difficulty=next_progress.current_difficulty,
-        state=transition.state,
-        correct=evidence.evaluation.correct,
-    )
+
+    if issue_jit_hint:
+        next_problem = problem
+        tutor_action = "GIVE_HINT"
+        tutor_hint_level = jit_decision.level
+        tutor_skill = skill
+        generation_state = transition.state
+    else:
+        next_problem = select_next_problem(
+            db,
+            skill_id=next_skill_id,
+            current_problem_id=problem.id if problem.primary_skill_id == next_skill_id else None,
+            current_difficulty=next_progress.current_difficulty,
+            state=transition.state,
+            correct=evidence.evaluation.correct,
+        )
+        tutor_action = transition.action
+        tutor_hint_level = transition.hint_level
+        tutor_skill = next_skill
+        generation_state = transition.state
 
     generation = tutor_engine.generate(
         _tutor_context(
             db,
             student=student,
-            skill=next_skill,
-            state=transition.state,
-            action=transition.action,
-            hint_level=transition.hint_level,
+            skill=tutor_skill,
+            state=generation_state,
+            action=tutor_action,
+            hint_level=tutor_hint_level,
             problem=problem,
             next_problem=next_problem,
             student_answer=payload.answer,
             misconception=evidence.misconception,
         )
     )
-    db.add(
-        TutorTurn(
-            session_id=session.id,
-            role="TUTOR",
-            message=generation.message,
-            state=transition.state,
-            pedagogical_action=transition.action,
-            problem_id=next_problem.id if next_problem else problem.id,
-            attempt_id=attempt.id,
-            llm_model=generation.model,
-            metadata_json={
-                "generation_source": generation.source,
-                "target_skill_id": str(session.primary_skill_id),
-                "active_skill_id": str(next_skill_id),
-                "remediation_reason": session.remediation_reason,
-            },
-        )
+    turn = TutorTurn(
+        session_id=session.id,
+        role="TUTOR",
+        message=generation.message,
+        state=generation_state,
+        pedagogical_action=tutor_action,
+        problem_id=next_problem.id if next_problem else problem.id,
+        attempt_id=attempt.id,
+        llm_model=generation.model,
+        metadata_json={
+            "generation_source": generation.source,
+            "target_skill_id": str(session.primary_skill_id),
+            "active_skill_id": str(next_skill_id),
+            "remediation_reason": session.remediation_reason,
+            "hint_level": tutor_hint_level,
+            "hint_trigger": jit_decision.trigger if issue_jit_hint else None,
+            "hint_constraint": (
+                hint_constraint(tutor_hint_level)
+                if issue_jit_hint and tutor_hint_level is not None
+                else None
+            ),
+            "effective_assistance_level": effective_assistance_level,
+        },
     )
+    db.add(turn)
+    db.flush()
+
+    if issue_jit_hint:
+        db.add(
+            HintEvent(
+                session_id=session.id,
+                student_id=session.student_id,
+                skill_id=active_skill_id,
+                problem_id=problem.id,
+                attempt_id=attempt.id,
+                tutor_turn_id=turn.id,
+                level=jit_decision.level,
+                trigger=jit_decision.trigger,
+                generation_source=generation.source,
+                provider=generation.provider,
+                llm_model=generation.model,
+            )
+        )
+
     db.commit()
 
     return RespondOut(
@@ -190,8 +257,8 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
             misconception_confidence=evidence.evaluation.misconception_confidence,
         ),
         tutor=TutorOut(
-            action=transition.action,
-            hint_level=transition.hint_level,
+            action=tutor_action,
+            hint_level=tutor_hint_level,
             message=generation.message,
         ),
         mastery=MasteryOut(
