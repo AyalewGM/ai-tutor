@@ -2,8 +2,16 @@ import json
 from dataclasses import asdict
 from typing import Any
 
+from google.genai import errors as genai_errors
+from openai import OpenAIError
+
 from app.core.settings import settings
-from app.services.tutor_engine import TutorContext, TutorGeneration, TutorProvider
+from app.services.tutor_engine import (
+    TutorContext,
+    TutorGeneration,
+    TutorProvider,
+    TutorProviderError,
+)
 
 
 def build_prompt(context: TutorContext) -> str:
@@ -25,20 +33,24 @@ class OpenAIAdapter:
         self.client = client
 
     def generate(self, context: TutorContext) -> dict[str, object]:
-        response = self.client.responses.create(
-            model=self.model_name,
-            input=build_prompt(context),
-            text={
-                "format": {
-                    "type": "json_schema",
-                    "name": "tutor_generation",
-                    "strict": True,
-                    "schema": TutorGeneration.model_json_schema(),
-                }
-            },
-        )
+        try:
+            response = self.client.responses.create(
+                model=self.model_name,
+                input=build_prompt(context),
+                text={
+                    "format": {
+                        "type": "json_schema",
+                        "name": "tutor_generation",
+                        "strict": True,
+                        "schema": TutorGeneration.model_json_schema(),
+                    }
+                },
+            )
+        except OpenAIError as exc:
+            raise TutorProviderError("OpenAI tutor generation failed") from exc
+
         if not response.output_text:
-            raise ValueError("OpenAI response contained no tutor output")
+            raise TutorProviderError("OpenAI response contained no tutor output")
         return json.loads(response.output_text)
 
 
@@ -51,16 +63,20 @@ class GeminiAdapter:
         self.config_factory = config_factory
 
     def generate(self, context: TutorContext) -> dict[str, object]:
-        response = self.client.models.generate_content(
-            model=self.model_name,
-            contents=build_prompt(context),
-            config=self.config_factory(
-                response_mime_type="application/json",
-                response_schema=TutorGeneration,
-            ),
-        )
+        try:
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=build_prompt(context),
+                config=self.config_factory(
+                    response_mime_type="application/json",
+                    response_schema=TutorGeneration,
+                ),
+            )
+        except genai_errors.APIError as exc:
+            raise TutorProviderError("Gemini tutor generation failed") from exc
+
         if not response.text:
-            raise ValueError("Gemini response contained no tutor output")
+            raise TutorProviderError("Gemini response contained no tutor output")
         return json.loads(response.text)
 
 
