@@ -32,7 +32,7 @@ class SessionOut(BaseModel):
     session_id: uuid.UUID
     state: TutorState
     mastery: MasteryOut
-    focus: LearningFocusOut
+    focus: LearningFocusOut | None = None
     problem: ProblemOut
     message: str
 
@@ -62,5 +62,5 @@ class RespondOut(BaseModel):
     evaluation: EvaluationOut
     tutor: TutorOut
     mastery: MasteryOut
-    focus: LearningFocusOut
+    focus: LearningFocusOut | None = None
     next_problem: ProblemOut | None = None
