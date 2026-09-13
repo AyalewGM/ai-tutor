@@ -1,4 +1,4 @@
-"""Add parent profiles, parent-child relationships, and child link claims.
+"""Add parent profiles, relationships, audit events, and child link claims.
 
 Revision ID: 0005
 Revises: 0004
@@ -67,6 +67,26 @@ def upgrade() -> None:
 
     inspector = sa.inspect(op.get_bind())
     tables = set(inspector.get_table_names())
+    if "parent_student_relationship_events" not in tables:
+        op.create_table(
+            "parent_student_relationship_events",
+            sa.Column("id", sa.UUID(), nullable=False),
+            sa.Column("relationship_id", sa.UUID(), nullable=False),
+            sa.Column("action", sa.String(length=20), nullable=False),
+            sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+            sa.ForeignKeyConstraint(
+                ["relationship_id"], ["parent_student_relationships.id"]
+            ),
+            sa.PrimaryKeyConstraint("id"),
+        )
+        op.create_index(
+            "ix_parent_student_relationship_events_relationship_id",
+            "parent_student_relationship_events",
+            ["relationship_id"],
+        )
+
+    inspector = sa.inspect(op.get_bind())
+    tables = set(inspector.get_table_names())
     if "child_link_claims" not in tables:
         op.create_table(
             "child_link_claims",
@@ -83,9 +103,6 @@ def upgrade() -> None:
         op.create_index("ix_child_link_claims_student_id", "child_link_claims", ["student_id"])
         op.create_index("ix_child_link_claims_token_hash", "child_link_claims", ["token_hash"])
 
-    # Non-destructive compatibility migration from the legacy students.parent_id field.
-    # One ParentProfile is created for each distinct legacy parent user, then active
-    # relationship rows are inserted for students that do not already have one.
     bind = op.get_bind()
     bind.execute(
         sa.text(
@@ -120,6 +137,22 @@ def upgrade() -> None:
             """
         )
     )
+    bind.execute(
+        sa.text(
+            """
+            INSERT INTO parent_student_relationship_events (id, relationship_id, action, created_at)
+            SELECT gen_random_uuid(), psr.id, 'LEGACY_BACKFILL', CURRENT_TIMESTAMP
+            FROM parent_student_relationships psr
+            JOIN parent_profiles pp ON pp.id = psr.parent_profile_id
+            JOIN students s ON s.id = psr.student_id AND s.parent_id = pp.user_id
+            WHERE NOT EXISTS (
+                SELECT 1
+                FROM parent_student_relationship_events e
+                WHERE e.relationship_id = psr.id
+            )
+            """
+        )
+    )
 
 
 def downgrade() -> None:
@@ -127,6 +160,10 @@ def downgrade() -> None:
     tables = set(inspector.get_table_names())
     if "child_link_claims" in tables:
         op.drop_table("child_link_claims")
+    inspector = sa.inspect(op.get_bind())
+    tables = set(inspector.get_table_names())
+    if "parent_student_relationship_events" in tables:
+        op.drop_table("parent_student_relationship_events")
     inspector = sa.inspect(op.get_bind())
     tables = set(inspector.get_table_names())
     if "parent_student_relationships" in tables:
