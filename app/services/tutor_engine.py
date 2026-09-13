@@ -4,6 +4,8 @@ from typing import Protocol
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.services.hint_policy import hint_constraint
+
 
 class TutorProviderError(RuntimeError):
     pass
@@ -28,6 +30,7 @@ class TutorContext:
     student_answer: str | None = None
     misconception_description: str | None = None
     next_problem_prompt: str | None = None
+    hint_constraint: str | None = None
 
 
 @dataclass(frozen=True)
@@ -53,6 +56,13 @@ class TutorEngine:
         self.provider = provider
 
     def generate(self, context: TutorContext) -> TutorEngineResult:
+        if context.action == "GIVE_HINT" and context.hint_level is not None:
+            context = TutorContext(
+                **{
+                    **context.__dict__,
+                    "hint_constraint": hint_constraint(context.hint_level),
+                }
+            )
         if self.provider is not None:
             started = perf_counter()
             try:
