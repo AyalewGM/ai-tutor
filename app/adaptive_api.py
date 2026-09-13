@@ -1,4 +1,3 @@
-import uuid
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -6,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api import _student_skill, _tutor_context
 from app.core.database import get_db
-from app.models import Problem, Skill, Student, TutorSession, TutorState, TutorTurn
+from app.models import Skill, Student, TutorSession, TutorState, TutorTurn
 from app.schemas import LearningFocusOut, MasteryOut, ProblemOut, SessionCreate, SessionOut
 from app.services.problem_selection import select_next_problem
 from app.services.tutor_engine import tutor_engine
