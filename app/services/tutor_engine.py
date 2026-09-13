@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from time import perf_counter
 from typing import Protocol
 
 from pydantic import BaseModel, Field, ValidationError
@@ -28,11 +29,14 @@ class TutorEngineResult:
     message: str
     source: str
     model: str | None = None
+    provider: str | None = None
+    latency_ms: int | None = None
     expects_student_response: bool = True
 
 
 class TutorProvider(Protocol):
     model_name: str
+    provider_name: str
 
     def generate(self, context: TutorContext) -> dict[str, object]:
         raise NotImplementedError
@@ -44,15 +48,18 @@ class TutorEngine:
 
     def generate(self, context: TutorContext) -> TutorEngineResult:
         if self.provider is not None:
+            started = perf_counter()
             try:
                 generation = TutorGeneration.model_validate(self.provider.generate(context))
                 return TutorEngineResult(
                     message=generation.message,
                     source="llm",
                     model=self.provider.model_name,
+                    provider=self.provider.provider_name,
+                    latency_ms=int((perf_counter() - started) * 1000),
                     expects_student_response=generation.expects_student_response,
                 )
-            except (ValidationError, RuntimeError, TimeoutError, ValueError):
+            except Exception:
                 pass
 
         return TutorEngineResult(
