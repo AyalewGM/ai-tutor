@@ -7,10 +7,10 @@ Create Date: 2026-09-13
 
 from collections.abc import Sequence
 
+import app.models  # noqa: F401
 from alembic import op
 
 from app.core.database import Base
-import app.models  # noqa: F401
 
 revision: str = "0001"
 down_revision: str | None = None
