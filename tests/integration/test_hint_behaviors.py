@@ -6,7 +6,16 @@ from sqlalchemy import select
 from app.core.database import SessionLocal
 from app.hint_models import HintEvent
 from app.main import app
-from app.models import Attempt, Curriculum, Problem, Skill, Student, StudentSkill, TutorSession, TutorState
+from app.models import (
+    Attempt,
+    Curriculum,
+    Problem,
+    Skill,
+    Student,
+    StudentSkill,
+    TutorSession,
+    TutorState,
+)
 
 client = TestClient(app)
 
