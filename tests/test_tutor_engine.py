@@ -3,6 +3,7 @@ from app.services.tutor_engine import TutorContext, TutorEngine
 
 class GoodProvider:
     model_name = "test-model"
+    provider_name = "test-provider"
 
     def generate(self, context: TutorContext) -> dict[str, object]:
         return {
@@ -13,6 +14,7 @@ class GoodProvider:
 
 class FailingProvider:
     model_name = "broken-model"
+    provider_name = "broken-provider"
 
     def generate(self, context: TutorContext) -> dict[str, object]:
         raise RuntimeError("provider unavailable")
@@ -36,6 +38,8 @@ def test_tutor_engine_accepts_structured_provider_output() -> None:
     result = TutorEngine(GoodProvider()).generate(context())
     assert result.source == "llm"
     assert result.model == "test-model"
+    assert result.provider == "test-provider"
+    assert result.latency_ms is not None
     assert "Distributive Property" in result.message
 
 
@@ -43,4 +47,5 @@ def test_tutor_engine_falls_back_when_provider_fails() -> None:
     result = TutorEngine(FailingProvider()).generate(context())
     assert result.source == "fallback"
     assert result.model is None
+    assert result.provider is None
     assert "every term" in result.message
