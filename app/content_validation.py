@@ -79,3 +79,40 @@ def validate_problem_inventory(
             f"Skill {skill.id} has {problem_count} problems; "
             f"at least {minimum_required} are required"
         )
+
+
+def validate_source_identity(
+    *,
+    curriculum_version: str,
+    source_identifier: str,
+    source_uri: str,
+) -> None:
+    """Require stable provenance fields before an expectation can be ingested."""
+    if not curriculum_version.strip():
+        raise ContentValidationError("Curriculum version is required")
+    if not source_identifier.strip():
+        raise ContentValidationError("Source identifier is required")
+    if not source_uri.strip().startswith(("https://", "http://")):
+        raise ContentValidationError("Source URI must be an absolute HTTP(S) URI")
+
+
+def validate_learning_mode_inventory(
+    *,
+    skill: CurriculumScopedRef,
+    diagnostic_count: int,
+    guided_count: int,
+    independent_count: int,
+    mastery_count: int,
+) -> None:
+    """Require distinct inventory capacity for every deterministic learning mode."""
+    counts = {
+        "diagnostic": diagnostic_count,
+        "guided": guided_count,
+        "independent": independent_count,
+        "mastery": mastery_count,
+    }
+    missing = [mode for mode, count in counts.items() if count < 1]
+    if missing:
+        raise ContentValidationError(
+            f"Skill {skill.id} lacks problem inventory for: {', '.join(missing)}"
+        )
