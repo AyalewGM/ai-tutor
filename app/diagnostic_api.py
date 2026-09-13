@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 from decimal import Decimal
 from typing import Annotated
 
@@ -158,7 +158,7 @@ def respond_to_diagnostic(
         session.status = "COMPLETED"
         session.recommended_skill_id = decision.recommended_skill_id
         session.placement_reason = decision.reason
-        session.completed_at = datetime.utcnow()
+        session.completed_at = datetime.now(UTC)
         message = "Diagnostic complete. A recommended starting skill is now available."
     else:
         previous_skill_id = session.current_skill_id
