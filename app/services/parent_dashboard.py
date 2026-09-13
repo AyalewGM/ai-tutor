@@ -17,7 +17,12 @@ from app.models import (
     TutorSession,
     TutorState,
 )
-from app.parent_models import ChildLinkClaim, ParentProfile, ParentStudentRelationship
+from app.parent_models import (
+    ChildLinkClaim,
+    ParentProfile,
+    ParentStudentRelationship,
+    ParentStudentRelationshipEvent,
+)
 from app.parent_schemas import (
     ChildDashboardOut,
     ChildSummaryOut,
@@ -124,6 +129,7 @@ def link_child_with_claim(
             ParentStudentRelationship.student_id == student.id,
         )
     )
+    action = "LINKED"
     if relationship is None:
         relationship = ParentStudentRelationship(
             parent_profile_id=parent.id,
@@ -132,10 +138,13 @@ def link_child_with_claim(
             active=True,
         )
         db.add(relationship)
+        db.flush()
     else:
         relationship.active = True
         relationship.unlinked_at = None
+        action = "RELINKED"
 
+    db.add(ParentStudentRelationshipEvent(relationship_id=relationship.id, action=action))
     claim.consumed_at = now
     db.flush()
     return LinkChildOut(
@@ -150,6 +159,7 @@ def unlink_child(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -
         raise HTTPException(status_code=404, detail="Active child relationship not found")
     relationship.active = False
     relationship.unlinked_at = datetime.now(UTC)
+    db.add(ParentStudentRelationshipEvent(relationship_id=relationship.id, action="UNLINKED"))
     db.flush()
 
 
