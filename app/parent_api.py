@@ -15,7 +15,12 @@ from app.parent_schemas import (
     LinkChildOut,
     ParentProfileOut,
 )
-from app.services.parent_dashboard import dashboard, link_child_with_claim, list_children, unlink_child
+from app.services.parent_dashboard import (
+    dashboard,
+    link_child_with_claim,
+    list_children,
+    unlink_child,
+)
 
 router = APIRouter(prefix="/parents", tags=["parents"])
 DbSession = Annotated[Session, Depends(get_db)]
