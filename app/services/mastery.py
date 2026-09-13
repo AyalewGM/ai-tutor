@@ -1,6 +1,5 @@
-import math
 from dataclasses import dataclass
-
+import math
 
 ASSISTANCE_WEIGHTS = {
     0: 1.00,
@@ -24,7 +23,13 @@ def attempt_evidence(correct: bool, assistance_level: int) -> float:
     return ASSISTANCE_WEIGHTS[assistance_level]
 
 
-def update_mastery(current_mastery: float, meaningful_attempts: int, correct: bool, assistance_level: int, alpha: float = 0.25) -> MasteryUpdate:
+def update_mastery(
+    current_mastery: float,
+    meaningful_attempts: int,
+    correct: bool,
+    assistance_level: int,
+    alpha: float = 0.25,
+) -> MasteryUpdate:
     evidence = attempt_evidence(correct, assistance_level)
     mastery = ((1 - alpha) * current_mastery) + (alpha * evidence)
     confidence = 1 - math.exp(-(meaningful_attempts + 1) / 5)
