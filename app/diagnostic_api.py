@@ -35,12 +35,17 @@ def _student_skill(db: Session, student_id: uuid.UUID, skill_id: uuid.UUID) -> S
     return row
 
 
-def _next_problem(db: Session, student_id: uuid.UUID, skill_id: uuid.UUID) -> Problem | None:
+def _next_problem(
+    db: Session,
+    student_id: uuid.UUID,
+    skill_id: uuid.UUID,
+    current_problem_id: uuid.UUID | None = None,
+) -> Problem | None:
     progress = _student_skill(db, student_id, skill_id)
     return select_next_problem(
         db,
         skill_id=skill_id,
-        current_problem_id=None,
+        current_problem_id=current_problem_id,
         current_difficulty=progress.current_difficulty,
         state=TutorState.DIAGNOSE,
     )
@@ -156,11 +161,18 @@ def respond_to_diagnostic(
         session.completed_at = datetime.utcnow()
         message = "Diagnostic complete. A recommended starting skill is now available."
     else:
-        next_skill_id = decision.next_skill_id or session.current_skill_id
-        if next_skill_id != session.current_skill_id:
-            session.blocked_skill_id = session.current_skill_id
+        previous_skill_id = session.current_skill_id
+        next_skill_id = decision.next_skill_id or previous_skill_id
+        if next_skill_id != previous_skill_id:
+            session.blocked_skill_id = previous_skill_id
             session.current_skill_id = next_skill_id
-        next_problem = _next_problem(db, session.student_id, session.current_skill_id)
+        exclude_problem_id = problem.id if session.current_skill_id == previous_skill_id else None
+        next_problem = _next_problem(
+            db,
+            session.student_id,
+            session.current_skill_id,
+            current_problem_id=exclude_problem_id,
+        )
         if next_problem is None:
             raise HTTPException(404, "No diagnostic problem configured for next probe skill")
         message = "Response recorded. Continue with the next diagnostic question."
