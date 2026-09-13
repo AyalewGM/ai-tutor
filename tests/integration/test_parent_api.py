@@ -7,7 +7,11 @@ from app.core.database import SessionLocal
 from app.identity import current_user
 from app.main import app
 from app.models import Curriculum, Student, User
-from app.parent_models import ChildLinkClaim, ParentStudentRelationship
+from app.parent_models import (
+    ChildLinkClaim,
+    ParentStudentRelationship,
+    ParentStudentRelationshipEvent,
+)
 from app.services.parent_dashboard import hash_claim_token
 
 client = TestClient(app)
@@ -116,6 +120,12 @@ def test_parent_link_dashboard_isolation_and_non_destructive_unlink() -> None:
                 )
             )
             assert relationship is not None
+            actions = db.scalars(
+                select(ParentStudentRelationshipEvent.action)
+                .where(ParentStudentRelationshipEvent.relationship_id == relationship.id)
+                .order_by(ParentStudentRelationshipEvent.created_at)
+            ).all()
+            assert actions == ["LINKED", "UNLINKED"]
     finally:
         _clear_override()
 
