@@ -7,9 +7,11 @@ from app.content_validation import (
     CurriculumScopedRef,
     validate_active_skill_traceability,
     validate_expectation_skill_mapping,
+    validate_learning_mode_inventory,
     validate_prerequisite_edge,
     validate_problem_inventory,
     validate_problem_scope,
+    validate_source_identity,
 )
 
 
@@ -70,15 +72,43 @@ def test_active_skill_requires_source_traceability():
 
 def test_problem_inventory_uses_explicit_accepted_threshold():
     skill = _ref(uuid.uuid4())
-    validate_problem_inventory(
-        skill=skill,
-        problem_count=5,
-        minimum_required=5,
-    )
+    validate_problem_inventory(skill=skill, problem_count=5, minimum_required=5)
 
     with pytest.raises(ContentValidationError):
-        validate_problem_inventory(
+        validate_problem_inventory(skill=skill, problem_count=4, minimum_required=5)
+
+
+def test_source_identity_requires_version_identifier_and_absolute_uri():
+    validate_source_identity(
+        curriculum_version="2021",
+        source_identifier="B1.1",
+        source_uri="https://www.dcp.edu.gov.on.ca/example",
+    )
+
+    for kwargs in (
+        {"curriculum_version": "", "source_identifier": "B1.1", "source_uri": "https://example.org"},
+        {"curriculum_version": "2021", "source_identifier": "", "source_uri": "https://example.org"},
+        {"curriculum_version": "2021", "source_identifier": "B1.1", "source_uri": "relative/path"},
+    ):
+        with pytest.raises(ContentValidationError):
+            validate_source_identity(**kwargs)
+
+
+def test_learning_mode_inventory_requires_each_deterministic_mode():
+    skill = _ref(uuid.uuid4())
+    validate_learning_mode_inventory(
+        skill=skill,
+        diagnostic_count=1,
+        guided_count=1,
+        independent_count=1,
+        mastery_count=1,
+    )
+
+    with pytest.raises(ContentValidationError, match="mastery"):
+        validate_learning_mode_inventory(
             skill=skill,
-            problem_count=4,
-            minimum_required=5,
+            diagnostic_count=1,
+            guided_count=1,
+            independent_count=1,
+            mastery_count=0,
         )
