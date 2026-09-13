@@ -3,7 +3,17 @@ import uuid
 from datetime import datetime
 from decimal import Decimal
 
-from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, Integer, Numeric, String, Text, UniqueConstraint
+from sqlalchemy import (
+    Boolean,
+    DateTime,
+    Enum,
+    ForeignKey,
+    Integer,
+    Numeric,
+    String,
+    Text,
+    UniqueConstraint,
+)
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -83,8 +93,8 @@ class StudentSkill(Base):
     __tablename__ = "student_skills"
     student_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("students.id"), primary_key=True)
     skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("skills.id"), primary_key=True)
-    mastery_score: Mapped[Decimal] = mapped_column(Numeric(4, 3), default=Decimal("0"))
-    confidence_score: Mapped[Decimal] = mapped_column(Numeric(4, 3), default=Decimal("0"))
+    mastery_score: Mapped[Decimal] = mapped_column(Numeric(4, 3), default=Decimal(0))
+    confidence_score: Mapped[Decimal] = mapped_column(Numeric(4, 3), default=Decimal(0))
     attempt_count: Mapped[int] = mapped_column(Integer, default=0)
     correct_count: Mapped[int] = mapped_column(Integer, default=0)
     independent_attempt_count: Mapped[int] = mapped_column(Integer, default=0)
@@ -156,4 +166,33 @@ class Attempt(Base):
     misconception_confidence: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
     evaluation_confidence: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
     state_at_attempt: Mapped[TutorState | None] = mapped_column(Enum(TutorState))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+
+
+class TutorTurn(Base):
+    __tablename__ = "tutor_turns"
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    session_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("tutor_sessions.id"), index=True)
+    role: Mapped[str] = mapped_column(String(20))
+    message: Mapped[str] = mapped_column(Text)
+    state: Mapped[TutorState | None] = mapped_column(Enum(TutorState))
+    pedagogical_action: Mapped[str | None] = mapped_column(String(50))
+    problem_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("problems.id"))
+    attempt_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("attempts.id"))
+    metadata_json: Mapped[dict | None] = mapped_column(JSONB)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+
+
+class MasteryEvent(Base):
+    __tablename__ = "mastery_events"
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    student_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("students.id"), index=True)
+    skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("skills.id"), index=True)
+    attempt_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("attempts.id"))
+    previous_score: Mapped[Decimal] = mapped_column(Numeric(4, 3))
+    new_score: Mapped[Decimal] = mapped_column(Numeric(4, 3))
+    previous_confidence: Mapped[Decimal] = mapped_column(Numeric(4, 3))
+    new_confidence: Mapped[Decimal] = mapped_column(Numeric(4, 3))
+    reason: Mapped[str] = mapped_column(String(100))
+    metadata_json: Mapped[dict | None] = mapped_column(JSONB)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
