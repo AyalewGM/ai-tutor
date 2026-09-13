@@ -6,6 +6,7 @@ from fastapi import HTTPException
 from sqlalchemy import desc, or_, select
 from sqlalchemy.orm import Session
 
+from app.curriculum_models import EducationAuthority, Jurisdiction, StudentCurriculumEnrollment
 from app.models import (
     Curriculum,
     Misconception,
@@ -82,23 +83,60 @@ def require_linked_child(
     return student
 
 
-def _child_curriculum(db: Session, student: Student) -> tuple[Curriculum | None, uuid.UUID | None]:
-    try:
-        scope = resolve_student_curriculum_scope(db, student)
-    except CurriculumScopeError:
-        return None, None
-    return db.get(Curriculum, scope.curriculum_id), scope.curriculum_id
+def _jurisdiction_path(db: Session, jurisdiction_id: uuid.UUID | None) -> list[str]:
+    path: list[str] = []
+    seen: set[uuid.UUID] = set()
+    current_id = jurisdiction_id
+    while current_id is not None and current_id not in seen:
+        seen.add(current_id)
+        jurisdiction = db.get(Jurisdiction, current_id)
+        if jurisdiction is None:
+            break
+        path.append(jurisdiction.name)
+        current_id = jurisdiction.parent_id
+    path.reverse()
+    return path
 
 
 def child_summary(db: Session, student: Student) -> ChildSummaryOut:
-    curriculum, _ = _child_curriculum(db, student)
+    try:
+        scope = resolve_student_curriculum_scope(db, student)
+    except CurriculumScopeError:
+        return ChildSummaryOut(
+            id=student.id,
+            first_name=student.first_name,
+            grade_level=student.grade_level,
+            school_system=student.school_system,
+        )
+
+    curriculum = db.get(Curriculum, scope.curriculum_id)
+    curriculum_authority = (
+        db.get(EducationAuthority, curriculum.authority_id)
+        if curriculum is not None and curriculum.authority_id is not None
+        else None
+    )
+    local_authority = (
+        db.get(EducationAuthority, scope.local_authority_id)
+        if scope.local_authority_id is not None
+        else None
+    )
+    jurisdiction_id = (
+        curriculum_authority.jurisdiction_id
+        if curriculum_authority is not None
+        else (local_authority.jurisdiction_id if local_authority is not None else None)
+    )
     return ChildSummaryOut(
         id=student.id,
         first_name=student.first_name,
         grade_level=student.grade_level,
         school_system=student.school_system,
         curriculum_name=curriculum.name if curriculum else None,
+        curriculum_code=curriculum.code if curriculum else None,
+        curriculum_version=curriculum.version if curriculum else None,
+        curriculum_authority_name=(curriculum_authority.name if curriculum_authority else None),
         jurisdiction=curriculum.jurisdiction if curriculum else None,
+        jurisdiction_path=_jurisdiction_path(db, jurisdiction_id),
+        local_authority_name=local_authority.name if local_authority else None,
     )
 
 
