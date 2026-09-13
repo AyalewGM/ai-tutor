@@ -19,6 +19,8 @@ The backend currently provides:
 - validated tutor generation output with deterministic fallback when an LLM provider is absent or fails
 - PostgreSQL-backed integration testing in GitHub Actions
 
+No external LLM provider is wired into the runtime yet. Sprint 1 therefore runs with the deterministic tutor-language fallback while preserving the provider interface for the next integration step.
+
 ## Architecture principle
 
 The application owns pedagogical decisions. The state machine determines the learning state and pedagogical action before the `TutorEngine` generates student-facing language. An LLM provider is therefore a constrained language-generation component, not the authority over mastery, assessment, or progression.
