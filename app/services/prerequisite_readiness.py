@@ -6,6 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models import SkillPrerequisite, StudentSkill
+from app.services.curriculum_scope import require_prerequisite_same_curriculum
 
 
 @dataclass(frozen=True)
@@ -29,6 +30,11 @@ def find_unready_prerequisite(
     ).all()
 
     for prerequisite in prerequisites:
+        require_prerequisite_same_curriculum(
+            db,
+            target_skill_id=target_skill_id,
+            prerequisite_skill_id=prerequisite.prerequisite_skill_id,
+        )
         progress = db.get(
             StudentSkill,
             {
