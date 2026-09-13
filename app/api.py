@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models import (
     Attempt,
+    Curriculum,
     MasteryEvent,
     Misconception,
     Problem,
@@ -33,7 +34,9 @@ from app.schemas import (
 from app.services.evaluation import evaluate_distributive_property
 from app.services.mastery import update_mastery
 from app.services.problem_selection import select_next_problem
-from app.services.state_machine import TutorContext, determine_next_action
+from app.services.state_machine import TutorContext as StateContext
+from app.services.state_machine import determine_next_action
+from app.services.tutor_engine import TutorContext, tutor_engine
 
 router = APIRouter(prefix="/tutor", tags=["tutor"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -48,32 +51,38 @@ def _student_skill(db: Session, student_id: uuid.UUID, skill_id: uuid.UUID) -> S
     return row
 
 
-def _message_for(action: str, hint_level: int | None, problem: Problem) -> str:
-    if action == "EXPLAIN_CONCEPT":
-        return "A number outside parentheses multiplies every term inside. Let us work through that idea before trying again."
-    if action == "GIVE_HINT":
-        if hint_level == 1:
-            return "Look at the number immediately outside the parentheses. What must it multiply?"
-        if hint_level == 2:
-            return "The multiplier must multiply every term inside the parentheses. Which term have you not multiplied yet?"
-        if hint_level == 3:
-            return "Write the multiplication separately for each term inside the parentheses, then simplify."
-        return "Let us model the distribution step explicitly, then you can finish the problem."
-    if action == "REMEDIATE":
-        return "This same pattern has appeared more than once. Let us return to the distributive property before continuing."
-    if action == "START_MASTERY_CHECK":
-        return "Now solve the next problem independently without hints so we can check mastery."
-    if action == "MARK_MASTERED":
-        return "Good work. This independent attempt supports mastery of the skill."
-    if action == "INCREASE_DIFFICULTY":
-        return "You are solving these independently, so let us increase the difficulty."
-    return f"Try the next step on your own: {problem.prompt}"
-
-
 def _problem_out(problem: Problem | None) -> ProblemOut | None:
     if problem is None:
         return None
     return ProblemOut(id=problem.id, prompt=problem.prompt, difficulty=problem.difficulty)
+
+
+def _tutor_context(
+    db: Session,
+    *,
+    student: Student,
+    skill: Skill,
+    state: TutorState,
+    action: str,
+    hint_level: int | None,
+    problem: Problem,
+    next_problem: Problem | None = None,
+    student_answer: str | None = None,
+    misconception: Misconception | None = None,
+) -> TutorContext:
+    curriculum = db.get(Curriculum, student.curriculum_id) if student.curriculum_id else None
+    return TutorContext(
+        grade_level=student.grade_level,
+        curriculum_name=curriculum.name if curriculum else "Unknown curriculum",
+        state=state.value,
+        skill_name=skill.name,
+        action=action,
+        hint_level=hint_level,
+        problem_prompt=problem.prompt,
+        student_answer=student_answer,
+        misconception_description=misconception.description if misconception else None,
+        next_problem_prompt=next_problem.prompt if next_problem else None,
+    )
 
 
 @router.post("/sessions", response_model=SessionOut)
@@ -103,15 +112,28 @@ def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
     )
     db.add(session)
     db.flush()
-    message = "Let us start with a quick problem so I can see what you already know."
+
+    generation = tutor_engine.generate(
+        _tutor_context(
+            db,
+            student=student,
+            skill=skill,
+            state=TutorState.DIAGNOSE,
+            action="ASK_DIAGNOSTIC",
+            hint_level=None,
+            problem=problem,
+        )
+    )
     db.add(
         TutorTurn(
             session_id=session.id,
             role="TUTOR",
-            message=message,
+            message=generation.message,
             state=TutorState.DIAGNOSE,
             pedagogical_action="ASK_DIAGNOSTIC",
             problem_id=problem.id,
+            llm_model=generation.model,
+            metadata_json={"generation_source": generation.source},
         )
     )
     db.commit()
@@ -122,7 +144,7 @@ def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
         state=session.current_state,
         mastery=MasteryOut(score=progress.mastery_score, confidence=progress.confidence_score),
         problem=ProblemOut(id=problem.id, prompt=problem.prompt, difficulty=problem.difficulty),
-        message=message,
+        message=generation.message,
     )
 
 
@@ -134,6 +156,11 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         raise HTTPException(404, "Active tutor session not found")
     if problem is None or problem.primary_skill_id != session.primary_skill_id:
         raise HTTPException(400, "Problem does not belong to the active skill")
+
+    student = db.get(Student, session.student_id)
+    skill = db.get(Skill, session.primary_skill_id)
+    if student is None or skill is None:
+        raise HTTPException(404, "Student or skill not found")
 
     progress = _student_skill(db, session.student_id, session.primary_skill_id)
     previous_score = progress.mastery_score
@@ -199,7 +226,7 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
     ) or 0
 
     transition = determine_next_action(
-        TutorContext(
+        StateContext(
             state=session.current_state,
             correct=evaluation.correct,
             assistance_level=payload.assistance_level,
@@ -281,17 +308,34 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         state=transition.state,
         correct=evaluation.correct,
     )
-    tutor_message = _message_for(transition.action, transition.hint_level, problem)
+    generation = tutor_engine.generate(
+        _tutor_context(
+            db,
+            student=student,
+            skill=skill,
+            state=transition.state,
+            action=transition.action,
+            hint_level=transition.hint_level,
+            problem=problem,
+            next_problem=next_problem,
+            student_answer=payload.answer,
+            misconception=misconception,
+        )
+    )
     db.add(
         TutorTurn(
             session_id=session.id,
             role="TUTOR",
-            message=tutor_message,
+            message=generation.message,
             state=transition.state,
             pedagogical_action=transition.action,
             problem_id=next_problem.id if next_problem else problem.id,
             attempt_id=attempt.id,
-            metadata_json={"hint_level": transition.hint_level},
+            llm_model=generation.model,
+            metadata_json={
+                "hint_level": transition.hint_level,
+                "generation_source": generation.source,
+            },
         )
     )
     db.commit()
@@ -308,7 +352,7 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         tutor=TutorOut(
             action=transition.action,
             hint_level=transition.hint_level,
-            message=tutor_message,
+            message=generation.message,
         ),
         mastery=MasteryOut(score=progress.mastery_score, confidence=progress.confidence_score),
         next_problem=_problem_out(next_problem),
