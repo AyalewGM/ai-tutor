@@ -11,9 +11,14 @@ from dataclasses import dataclass
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.content_models import CurriculumExpectation
-from app.content_validation import ContentValidationError, validate_source_identity
-from app.models import Curriculum
+from app.content_models import CurriculumExpectation, ExpectationSkillMapping
+from app.content_validation import (
+    ContentValidationError,
+    CurriculumScopedRef,
+    validate_expectation_skill_mapping,
+    validate_source_identity,
+)
+from app.models import Curriculum, Skill
 
 
 @dataclass(frozen=True)
@@ -25,10 +30,18 @@ class ExpectationInput:
 
 
 @dataclass(frozen=True)
+class ExpectationSkillMappingInput:
+    source_identifier: str
+    skill_code: str
+    mapping_type: str = "ALIGNS_TO"
+
+
+@dataclass(frozen=True)
 class ContentPackInput:
     curriculum_code: str
     curriculum_version: str
     expectations: tuple[ExpectationInput, ...]
+    mappings: tuple[ExpectationSkillMappingInput, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -73,18 +86,94 @@ def build_expectation_upserts(pack: ContentPackInput) -> tuple[ExpectationUpsert
     return tuple(commands)
 
 
-def expectation_keys(commands: Iterable[ExpectationUpsert]) -> tuple[tuple[str, str, str], ...]:
+def expectation_keys(
+    commands: Iterable[ExpectationUpsert],
+) -> tuple[tuple[str, str, str], ...]:
     """Expose stable keys for persistence/integration tests without DB coupling."""
     return tuple(command.key for command in commands)
 
 
-def persist_expectation_pack(session: Session, pack: ContentPackInput) -> tuple[CurriculumExpectation, ...]:
-    """Persist expectation metadata idempotently for exactly one curriculum.
+def _persist_mappings(
+    session: Session,
+    *,
+    curriculum: Curriculum,
+    expectations_by_source: dict[str, CurriculumExpectation],
+    mappings: tuple[ExpectationSkillMappingInput, ...],
+) -> tuple[ExpectationSkillMapping, ...]:
+    persisted: list[ExpectationSkillMapping] = []
+    seen: set[tuple[str, str]] = set()
+
+    for mapping_input in mappings:
+        source_identifier = mapping_input.source_identifier.strip()
+        skill_code = mapping_input.skill_code.strip()
+        key = (source_identifier, skill_code)
+        if key in seen:
+            raise ContentValidationError(
+                "Duplicate expectation-to-skill mapping in content pack: "
+                f"{source_identifier} -> {skill_code}"
+            )
+        seen.add(key)
+
+        expectation = expectations_by_source.get(source_identifier)
+        if expectation is None:
+            raise ContentValidationError(
+                f"Mapping references expectation not present in content pack: {source_identifier}"
+            )
+        skill = session.scalar(
+            select(Skill).where(
+                Skill.curriculum_id == curriculum.id,
+                Skill.code == skill_code,
+            )
+        )
+        if skill is None:
+            raise ContentValidationError(
+                f"Mapping references skill not found in content-pack curriculum: {skill_code}"
+            )
+
+        validate_expectation_skill_mapping(
+            mapping_curriculum_id=curriculum.id,
+            expectation=CurriculumScopedRef(
+                id=expectation.id,
+                curriculum_id=expectation.curriculum_id,
+            ),
+            skill=CurriculumScopedRef(id=skill.id, curriculum_id=skill.curriculum_id),
+        )
+
+        mapping = session.scalar(
+            select(ExpectationSkillMapping).where(
+                ExpectationSkillMapping.expectation_id == expectation.id,
+                ExpectationSkillMapping.skill_id == skill.id,
+            )
+        )
+        if mapping is None:
+            mapping = ExpectationSkillMapping(
+                curriculum_id=curriculum.id,
+                expectation_id=expectation.id,
+                skill_id=skill.id,
+                mapping_type=mapping_input.mapping_type.strip() or "ALIGNS_TO",
+                provenance_json={"source_type": "AI_TUTOR_CURATED_MAPPING"},
+            )
+            session.add(mapping)
+        else:
+            mapping.curriculum_id = curriculum.id
+            mapping.mapping_type = mapping_input.mapping_type.strip() or "ALIGNS_TO"
+            mapping.provenance_json = {"source_type": "AI_TUTOR_CURATED_MAPPING"}
+        persisted.append(mapping)
+
+    session.flush()
+    return tuple(persisted)
+
+
+def persist_expectation_pack(
+    session: Session,
+    pack: ContentPackInput,
+) -> tuple[CurriculumExpectation, ...]:
+    """Persist expectation metadata and explicit skill mappings idempotently.
 
     The curriculum registry remains the authority for curriculum identity. A
     pack must match both registry code and version; ingestion never creates a
-    curriculum implicitly. Existing expectations are updated in place using
-    the repository's curriculum/version/source-identifier identity key.
+    curriculum implicitly. Existing expectations and mappings are updated in
+    place using curriculum-scoped identity keys.
     """
     commands = build_expectation_upserts(pack)
     curriculum = session.scalar(
@@ -100,6 +189,7 @@ def persist_expectation_pack(session: Session, pack: ContentPackInput) -> tuple[
         )
 
     persisted: list[CurriculumExpectation] = []
+    expectations_by_source: dict[str, CurriculumExpectation] = {}
     for command in commands:
         value = command.value
         expectation = session.scalar(
@@ -126,7 +216,14 @@ def persist_expectation_pack(session: Session, pack: ContentPackInput) -> tuple[
             expectation.source_uri = value.source_uri.strip()
             expectation.provenance_json = {"source_type": "OFFICIAL_CURRICULUM"}
             expectation.active = True
+        session.flush()
         persisted.append(expectation)
+        expectations_by_source[command.key[2]] = expectation
 
-    session.flush()
+    _persist_mappings(
+        session,
+        curriculum=curriculum,
+        expectations_by_source=expectations_by_source,
+        mappings=pack.mappings,
+    )
     return tuple(persisted)
