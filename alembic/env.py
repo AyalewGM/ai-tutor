@@ -2,7 +2,7 @@ from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config, pool
 
-import app.curriculum_models  # noqa: F401
+import app.curriculum_models
 import app.diagnostic_models
 import app.models
 import app.parent_models  # noqa: F401
