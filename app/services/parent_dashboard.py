@@ -1,6 +1,6 @@
 import hashlib
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from fastapi import HTTPException
 from sqlalchemy import desc, select
@@ -85,7 +85,7 @@ def list_children(db: Session, *, parent: ParentProfile) -> list[ChildSummaryOut
 def link_child_with_claim(
     db: Session, *, parent: ParentProfile, claim_token: str
 ) -> LinkChildOut:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     claim = db.scalar(
         select(ChildLinkClaim).where(ChildLinkClaim.token_hash == hash_claim_token(claim_token))
     )
@@ -127,7 +127,7 @@ def unlink_child(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -
     if relationship is None:
         raise HTTPException(status_code=404, detail="Active child relationship not found")
     relationship.active = False
-    relationship.unlinked_at = datetime.now(timezone.utc)
+    relationship.unlinked_at = datetime.now(UTC)
     db.flush()
 
 
