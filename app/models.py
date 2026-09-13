@@ -179,6 +179,7 @@ class TutorTurn(Base):
     pedagogical_action: Mapped[str | None] = mapped_column(String(50))
     problem_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("problems.id"))
     attempt_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("attempts.id"))
+    llm_model: Mapped[str | None] = mapped_column(String(100))
     metadata_json: Mapped[dict | None] = mapped_column(JSONB)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
 
