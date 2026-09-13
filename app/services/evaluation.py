@@ -15,26 +15,44 @@ def _normalize(expression: str) -> str:
     return re.sub(r"\s+", "", expression.lower())
 
 
-def evaluate_distributive_property(prompt: str, answer: str, canonical_answer: str) -> EvaluationResult:
+def _partial_distribution_error(prompt: str, normalized_answer: str) -> bool:
+    normalized_prompt = _normalize(prompt)
+    match = re.search(r"(-?\d+)\(x([+-]\d+)\)", normalized_prompt)
+    if not match:
+        return False
+
+    multiplier = int(match.group(1))
+    constant = int(match.group(2))
+    correct_fragment = f"{multiplier}x{multiplier * constant:+d}"
+    incorrect_fragment = f"{multiplier}x{constant:+d}"
+
+    if incorrect_fragment not in normalized_answer:
+        return False
+    return correct_fragment not in normalized_answer
+
+
+def evaluate_problem(prompt: str, answer: str, canonical_answer: str) -> EvaluationResult:
     normalized = _normalize(answer)
     canonical = _normalize(canonical_answer)
 
     if normalized == canonical:
         return EvaluationResult(True, 0.99, normalized)
 
-    # Sprint 1 rule: detect the characteristic error 3(x+4) -> 3x+4.
-    match = re.fullmatch(r"(-?\d+)\(x([+-]\d+)\)", _normalize(prompt))
-    if match:
-        multiplier = int(match.group(1))
-        constant = int(match.group(2))
-        undisbtributed_constant = f"{multiplier}x{constant:+d}"
-        if normalized in {undisbtributed_constant, undisbtributed_constant.replace("+", "+")}:
-            return EvaluationResult(
-                False,
-                0.99,
-                normalized,
-                misconception_code="DIST_001",
-                misconception_confidence=0.97,
-            )
+    if _partial_distribution_error(prompt, normalized):
+        return EvaluationResult(
+            False,
+            0.99,
+            normalized,
+            misconception_code="DIST_001",
+            misconception_confidence=0.97,
+        )
 
     return EvaluationResult(False, 0.90, normalized)
+
+
+def evaluate_distributive_property(
+    prompt: str,
+    answer: str,
+    canonical_answer: str,
+) -> EvaluationResult:
+    return evaluate_problem(prompt, answer, canonical_answer)
