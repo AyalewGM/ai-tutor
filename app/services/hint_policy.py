@@ -2,7 +2,6 @@ from dataclasses import dataclass
 
 from app.models import TutorState
 
-
 ASSESSMENT_STATES = {TutorState.DIAGNOSE, TutorState.MASTERY_CHECK}
 
 
