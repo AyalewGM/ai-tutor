@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 import math
+from dataclasses import dataclass
 
 ASSISTANCE_WEIGHTS = {
     0: 1.00,
