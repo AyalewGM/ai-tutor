@@ -3,7 +3,73 @@ from decimal import Decimal
 from sqlalchemy import select
 
 from app.core.database import SessionLocal
-from app.models import Curriculum, Misconception, Problem, Skill
+from app.models import (
+    Curriculum,
+    Misconception,
+    Problem,
+    Skill,
+    SkillPrerequisite,
+)
+
+
+def _skill(db, curriculum: Curriculum, code: str, name: str, description: str, level: int) -> Skill:
+    skill = db.scalar(select(Skill).where(Skill.code == code))
+    if skill is None:
+        skill = Skill(
+            curriculum_id=curriculum.id,
+            code=code,
+            name=name,
+            description=description,
+            difficulty_level=level,
+            mastery_threshold=Decimal("0.850"),
+        )
+        db.add(skill)
+        db.flush()
+    return skill
+
+
+def _prerequisite(db, skill: Skill, prerequisite: Skill, weight: str = "1.000") -> None:
+    key = {
+        "skill_id": skill.id,
+        "prerequisite_skill_id": prerequisite.id,
+    }
+    if db.get(SkillPrerequisite, key) is None:
+        db.add(
+            SkillPrerequisite(
+                skill_id=skill.id,
+                prerequisite_skill_id=prerequisite.id,
+                importance_weight=Decimal(weight),
+            )
+        )
+
+
+def _problem(
+    db,
+    *,
+    skill: Skill,
+    difficulty: int,
+    prompt: str,
+    answer: str,
+    problem_type: str,
+) -> None:
+    existing = db.scalar(
+        select(Problem).where(
+            Problem.primary_skill_id == skill.id,
+            Problem.prompt == prompt,
+        )
+    )
+    if existing is None:
+        db.add(
+            Problem(
+                primary_skill_id=skill.id,
+                problem_type=problem_type,
+                difficulty=difficulty,
+                prompt=prompt,
+                canonical_answer=answer,
+                solution={"answer": answer},
+                source_type="CURATED",
+            )
+        )
 
 
 def seed() -> None:
@@ -20,18 +86,42 @@ def seed() -> None:
             db.add(curriculum)
             db.flush()
 
-        skill = db.scalar(select(Skill).where(Skill.code == "M8.ALG.DIST"))
-        if skill is None:
-            skill = Skill(
-                curriculum_id=curriculum.id,
-                code="M8.ALG.DIST",
-                name="Distributive Property",
-                description="Apply multiplication to every term inside parentheses.",
-                difficulty_level=2,
-                mastery_threshold=Decimal("0.850"),
-            )
-            db.add(skill)
-            db.flush()
+        inverse = _skill(
+            db,
+            curriculum,
+            "M8.ALG.INVERSE",
+            "Inverse Operations",
+            "Use inverse operations to isolate a variable.",
+            1,
+        )
+        distributive = _skill(
+            db,
+            curriculum,
+            "M8.ALG.DIST",
+            "Distributive Property",
+            "Apply multiplication to every term inside parentheses.",
+            2,
+        )
+        two_step = _skill(
+            db,
+            curriculum,
+            "M8.ALG.TWO_STEP",
+            "Two-Step Equations",
+            "Solve equations that require two inverse-operation steps.",
+            3,
+        )
+        multi_step = _skill(
+            db,
+            curriculum,
+            "M8.ALG.MULTI_STEP",
+            "Multi-Step Equations",
+            "Solve equations that combine distribution and inverse operations.",
+            4,
+        )
+
+        _prerequisite(db, two_step, inverse)
+        _prerequisite(db, multi_step, distributive, "1.000")
+        _prerequisite(db, multi_step, two_step, "0.900")
 
         misconception = db.scalar(
             select(Misconception).where(Misconception.code == "DIST_001")
@@ -39,7 +129,7 @@ def seed() -> None:
         if misconception is None:
             db.add(
                 Misconception(
-                    skill_id=skill.id,
+                    skill_id=distributive.id,
                     code="DIST_001",
                     name="Partial distribution",
                     description=(
@@ -53,32 +143,55 @@ def seed() -> None:
                 )
             )
 
-        existing_problem = db.scalar(
-            select(Problem).where(Problem.primary_skill_id == skill.id)
-        )
-        if existing_problem is None:
-            problems = [
-                (1, "3(x+4)", "3x+12"),
-                (1, "2(x+5)", "2x+10"),
-                (2, "4(x-3)", "4x-12"),
-                (2, "5(x+2)", "5x+10"),
-                (3, "-2(x+6)", "-2x-12"),
-            ]
-            for difficulty, prompt, answer in problems:
-                db.add(
-                    Problem(
-                        primary_skill_id=skill.id,
-                        problem_type="SIMPLIFY_EXPRESSION",
-                        difficulty=difficulty,
-                        prompt=prompt,
-                        canonical_answer=answer,
-                        solution={"answer": answer},
-                        source_type="CURATED",
-                    )
-                )
+        for difficulty, prompt, answer in [
+            (1, "3(x+4)", "3x+12"),
+            (1, "2(x+5)", "2x+10"),
+            (2, "4(x-3)", "4x-12"),
+            (2, "5(x+2)", "5x+10"),
+            (3, "-2(x+6)", "-2x-12"),
+        ]:
+            _problem(
+                db,
+                skill=distributive,
+                difficulty=difficulty,
+                prompt=prompt,
+                answer=answer,
+                problem_type="SIMPLIFY_EXPRESSION",
+            )
+
+        for difficulty, prompt, answer in [
+            (1, "x + 5 = 12", "x=7"),
+            (2, "2x + 3 = 11", "x=4"),
+        ]:
+            _problem(
+                db,
+                skill=two_step,
+                difficulty=difficulty,
+                prompt=prompt,
+                answer=answer,
+                problem_type="SOLVE_EQUATION",
+            )
+
+        for difficulty, prompt, answer in [
+            (2, "3(x+4)=24", "x=4"),
+            (3, "4(x-2)+3=19", "x=6"),
+            (4, "2(x+5)-4=18", "x=6"),
+        ]:
+            _problem(
+                db,
+                skill=multi_step,
+                difficulty=difficulty,
+                prompt=prompt,
+                answer=answer,
+                problem_type="SOLVE_EQUATION",
+            )
 
         db.commit()
-        print(f"Seed complete. Curriculum={curriculum.id} Skill={skill.id}")
+        print(
+            "Seed complete. "
+            f"Curriculum={curriculum.id} "
+            f"Distributive={distributive.id} MultiStep={multi_step.id}"
+        )
     finally:
         db.close()
 
