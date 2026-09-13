@@ -21,10 +21,18 @@ class MasteryOut(BaseModel):
     confidence: float
 
 
+class LearningFocusOut(BaseModel):
+    target_skill_id: uuid.UUID
+    active_skill_id: uuid.UUID
+    in_remediation: bool
+    remediation_reason: str | None = None
+
+
 class SessionOut(BaseModel):
     session_id: uuid.UUID
     state: TutorState
     mastery: MasteryOut
+    focus: LearningFocusOut
     problem: ProblemOut
     message: str
 
@@ -54,4 +62,5 @@ class RespondOut(BaseModel):
     evaluation: EvaluationOut
     tutor: TutorOut
     mastery: MasteryOut
+    focus: LearningFocusOut
     next_problem: ProblemOut | None = None
