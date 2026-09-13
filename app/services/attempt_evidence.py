@@ -4,7 +4,7 @@ from decimal import Decimal
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.models import Misconception, StudentMisconception, StudentSkill
+from app.models import Misconception, Skill, StudentMisconception, StudentSkill
 from app.services.evaluation import EvaluationResult, evaluate_problem
 from app.services.mastery import update_mastery
 
@@ -34,9 +34,16 @@ def record_evidence(
     misconception = None
     misconception_count = 0
     if evaluation.misconception_code:
-        misconception = db.scalar(
-            select(Misconception).where(Misconception.code == evaluation.misconception_code)
-        )
+        current_skill = db.get(Skill, progress.skill_id)
+        if current_skill is not None:
+            misconception = db.scalar(
+                select(Misconception)
+                .join(Skill, Skill.id == Misconception.skill_id)
+                .where(
+                    Skill.curriculum_id == current_skill.curriculum_id,
+                    Misconception.code == evaluation.misconception_code,
+                )
+            )
         if misconception:
             key = {
                 "student_id": progress.student_id,

@@ -3,6 +3,7 @@ from decimal import Decimal
 from sqlalchemy import select
 
 from app.core.database import SessionLocal
+from app.curriculum_models import EducationAuthority
 from app.models import (
     Curriculum,
     Misconception,
@@ -13,7 +14,12 @@ from app.models import (
 
 
 def _skill(db, curriculum: Curriculum, code: str, name: str, description: str, level: int) -> Skill:
-    skill = db.scalar(select(Skill).where(Skill.code == code))
+    skill = db.scalar(
+        select(Skill).where(
+            Skill.curriculum_id == curriculum.id,
+            Skill.code == code,
+        )
+    )
     if skill is None:
         skill = Skill(
             curriculum_id=curriculum.id,
@@ -29,6 +35,8 @@ def _skill(db, curriculum: Curriculum, code: str, name: str, description: str, l
 
 
 def _prerequisite(db, skill: Skill, prerequisite: Skill, weight: str = "1.000") -> None:
+    if skill.curriculum_id != prerequisite.curriculum_id:
+        raise ValueError("Prerequisite edges cannot cross curriculum boundaries")
     key = {
         "skill_id": skill.id,
         "prerequisite_skill_id": prerequisite.id,
@@ -75,6 +83,9 @@ def _problem(
 def seed() -> None:
     db = SessionLocal()
     try:
+        mcps_authority = db.scalar(
+            select(EducationAuthority).where(EducationAuthority.code == "MCPS")
+        )
         curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MCPS_MATH_8"))
         if curriculum is None:
             curriculum = Curriculum(
@@ -82,8 +93,20 @@ def seed() -> None:
                 name="MCPS Grade 8 Mathematics",
                 jurisdiction="Montgomery County, Maryland",
                 grade_level="8",
+                authority_id=mcps_authority.id if mcps_authority else None,
+                version="1",
+                source_uri=(
+                    "https://www.montgomeryschoolsmd.org/curriculum/middleschool/grade8/"
+                ),
             )
             db.add(curriculum)
+            db.flush()
+        elif mcps_authority is not None and curriculum.authority_id is None:
+            curriculum.authority_id = mcps_authority.id
+            curriculum.version = curriculum.version or "1"
+            curriculum.source_uri = curriculum.source_uri or (
+                "https://www.montgomeryschoolsmd.org/curriculum/middleschool/grade8/"
+            )
             db.flush()
 
         inverse = _skill(
@@ -124,7 +147,10 @@ def seed() -> None:
         _prerequisite(db, multi_step, two_step, "0.900")
 
         misconception = db.scalar(
-            select(Misconception).where(Misconception.code == "DIST_001")
+            select(Misconception).where(
+                Misconception.skill_id == distributive.id,
+                Misconception.code == "DIST_001",
+            )
         )
         if misconception is None:
             db.add(

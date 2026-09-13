@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 
 from app.diagnostic_models import DiagnosticAttempt, DiagnosticSession
 from app.models import Misconception, SkillPrerequisite
+from app.services.curriculum_scope import require_prerequisite_same_curriculum
 
 
 @dataclass(frozen=True)
@@ -17,13 +18,20 @@ class DiagnosticDecision:
 
 
 def _direct_prerequisites(db: Session, skill_id: uuid.UUID) -> list[SkillPrerequisite]:
-    return list(
+    prerequisites = list(
         db.scalars(
             select(SkillPrerequisite)
             .where(SkillPrerequisite.skill_id == skill_id)
             .order_by(SkillPrerequisite.importance_weight.desc())
         ).all()
     )
+    for prerequisite in prerequisites:
+        require_prerequisite_same_curriculum(
+            db,
+            target_skill_id=skill_id,
+            prerequisite_skill_id=prerequisite.prerequisite_skill_id,
+        )
+    return prerequisites
 
 
 def _misconception_prerequisite(

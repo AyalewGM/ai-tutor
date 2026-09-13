@@ -18,6 +18,10 @@ class DiagnosticSession(Base):
     current_skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("skills.id"))
     blocked_skill_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("skills.id"))
     recommended_skill_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("skills.id"))
+    curriculum_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("curricula.id"), index=True)
+    curriculum_enrollment_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("student_curriculum_enrollments.id"), index=True
+    )
     status: Mapped[str] = mapped_column(String(30), default="ACTIVE")
     placement_reason: Mapped[str | None] = mapped_column(String(120))
     question_count: Mapped[int] = mapped_column(Integer, default=0)

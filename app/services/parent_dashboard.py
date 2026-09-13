@@ -3,9 +3,10 @@ import uuid
 from datetime import UTC, datetime
 
 from fastapi import HTTPException
-from sqlalchemy import desc, select
+from sqlalchemy import desc, or_, select
 from sqlalchemy.orm import Session
 
+from app.curriculum_models import EducationAuthority, Jurisdiction, StudentCurriculumEnrollment
 from app.models import (
     Curriculum,
     Misconception,
@@ -31,6 +32,7 @@ from app.parent_schemas import (
     SkillProgressOut,
     SupportAreaOut,
 )
+from app.services.curriculum_scope import CurriculumScopeError, resolve_student_curriculum_scope
 
 
 def hash_claim_token(token: str) -> str:
@@ -81,15 +83,66 @@ def require_linked_child(
     return student
 
 
+def _jurisdiction_path(db: Session, jurisdiction_id: uuid.UUID | None) -> list[str]:
+    path: list[str] = []
+    seen: set[uuid.UUID] = set()
+    current_id = jurisdiction_id
+    while current_id is not None and current_id not in seen:
+        seen.add(current_id)
+        jurisdiction = db.get(Jurisdiction, current_id)
+        if jurisdiction is None:
+            break
+        path.append(jurisdiction.name)
+        current_id = jurisdiction.parent_id
+    path.reverse()
+    return path
+
+
 def child_summary(db: Session, student: Student) -> ChildSummaryOut:
-    curriculum = db.get(Curriculum, student.curriculum_id) if student.curriculum_id else None
+    try:
+        scope = resolve_student_curriculum_scope(db, student)
+    except CurriculumScopeError:
+        return ChildSummaryOut(
+            id=student.id,
+            first_name=student.first_name,
+            grade_level=student.grade_level,
+            school_system=student.school_system,
+        )
+
+    curriculum = db.get(Curriculum, scope.curriculum_id)
+    enrollment = (
+        db.get(StudentCurriculumEnrollment, scope.enrollment_id)
+        if scope.enrollment_id is not None
+        else None
+    )
+    curriculum_authority = (
+        db.get(EducationAuthority, curriculum.authority_id)
+        if curriculum is not None and curriculum.authority_id is not None
+        else None
+    )
+    local_authority_id = (
+        enrollment.local_authority_id if enrollment is not None else scope.local_authority_id
+    )
+    local_authority = (
+        db.get(EducationAuthority, local_authority_id) if local_authority_id is not None else None
+    )
+    jurisdiction_id = (
+        curriculum_authority.jurisdiction_id
+        if curriculum_authority is not None
+        else (local_authority.jurisdiction_id if local_authority is not None else None)
+    )
     return ChildSummaryOut(
         id=student.id,
         first_name=student.first_name,
         grade_level=student.grade_level,
         school_system=student.school_system,
         curriculum_name=curriculum.name if curriculum else None,
+        curriculum_code=curriculum.code if curriculum else None,
+        curriculum_version=curriculum.version if curriculum else None,
+        curriculum_authority_name=(curriculum_authority.name if curriculum_authority else None),
         jurisdiction=curriculum.jurisdiction if curriculum else None,
+        jurisdiction_path=_jurisdiction_path(db, jurisdiction_id),
+        local_authority_name=local_authority.name if local_authority else None,
     )
 
 
@@ -165,10 +218,21 @@ def unlink_child(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -
 
 def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> ChildDashboardOut:
     student = require_linked_child(db, parent=parent, student_id=student_id)
+    try:
+        scope = resolve_student_curriculum_scope(db, student)
+    except CurriculumScopeError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
 
     active_session = db.scalar(
         select(TutorSession)
-        .where(TutorSession.student_id == student.id, TutorSession.status == "ACTIVE")
+        .where(
+            TutorSession.student_id == student.id,
+            TutorSession.status == "ACTIVE",
+            or_(
+                TutorSession.curriculum_id == scope.curriculum_id,
+                TutorSession.curriculum_id.is_(None),
+            ),
+        )
         .order_by(desc(TutorSession.started_at))
         .limit(1)
     )
@@ -176,14 +240,18 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
     active_skill_name = None
     if active_session and active_session.active_skill_id:
         active_skill = db.get(Skill, active_session.active_skill_id)
-        active_skill_name = active_skill.name if active_skill else None
-        if active_session.current_state == TutorState.MASTERY_CHECK:
-            mastery_check_skill_id = active_session.active_skill_id
+        if active_skill and active_skill.curriculum_id == scope.curriculum_id:
+            active_skill_name = active_skill.name
+            if active_session.current_state == TutorState.MASTERY_CHECK:
+                mastery_check_skill_id = active_session.active_skill_id
 
     progress_rows = db.execute(
         select(StudentSkill, Skill)
         .join(Skill, Skill.id == StudentSkill.skill_id)
-        .where(StudentSkill.student_id == student.id)
+        .where(
+            StudentSkill.student_id == student.id,
+            Skill.curriculum_id == scope.curriculum_id,
+        )
         .order_by(Skill.name)
     ).all()
     skills = [
@@ -203,7 +271,14 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
     sessions = db.execute(
         select(TutorSession, Skill)
         .join(Skill, Skill.id == TutorSession.primary_skill_id)
-        .where(TutorSession.student_id == student.id)
+        .where(
+            TutorSession.student_id == student.id,
+            Skill.curriculum_id == scope.curriculum_id,
+            or_(
+                TutorSession.curriculum_id == scope.curriculum_id,
+                TutorSession.curriculum_id.is_(None),
+            ),
+        )
         .order_by(desc(TutorSession.started_at))
         .limit(10)
     ).all()
@@ -221,9 +296,11 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
     support_rows = db.execute(
         select(StudentMisconception, Misconception)
         .join(Misconception, Misconception.id == StudentMisconception.misconception_id)
+        .join(Skill, Skill.id == Misconception.skill_id)
         .where(
             StudentMisconception.student_id == student.id,
             StudentMisconception.status == "ACTIVE",
+            Skill.curriculum_id == scope.curriculum_id,
         )
         .order_by(desc(StudentMisconception.occurrence_count))
         .limit(10)

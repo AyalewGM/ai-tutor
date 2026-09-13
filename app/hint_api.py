@@ -10,6 +10,11 @@ from app.api import _tutor_context
 from app.core.database import get_db
 from app.hint_models import HintEvent
 from app.models import Problem, Skill, Student, TutorSession, TutorTurn
+from app.services.curriculum_scope import (
+    CurriculumScopeError,
+    require_session_scope,
+    require_skill_in_scope,
+)
 from app.services.hint_policy import hint_constraint, select_hint
 from app.services.tutor_engine import tutor_engine
 
@@ -34,6 +39,12 @@ def request_hint(session_id: uuid.UUID, payload: HintRequest, db: DbSession) -> 
     if session is None or session.status != "ACTIVE":
         raise HTTPException(404, "Active tutor session not found")
     active_skill_id = session.active_skill_id or session.primary_skill_id
+    try:
+        scope = require_session_scope(db, session)
+        require_skill_in_scope(db, skill_id=active_skill_id, scope=scope)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
     problem = db.get(Problem, payload.problem_id)
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not belong to active learning focus")

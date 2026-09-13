@@ -21,7 +21,12 @@ class ChildSummaryOut(BaseModel):
     grade_level: str
     school_system: str | None = None
     curriculum_name: str | None = None
+    curriculum_code: str | None = None
+    curriculum_version: str | None = None
+    curriculum_authority_name: str | None = None
     jurisdiction: str | None = None
+    jurisdiction_path: list[str] = Field(default_factory=list)
+    local_authority_name: str | None = None
 
 
 class LinkChildIn(BaseModel):

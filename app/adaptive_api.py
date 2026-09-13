@@ -5,8 +5,13 @@ from sqlalchemy.orm import Session
 
 from app.api import _student_skill, _tutor_context
 from app.core.database import get_db
-from app.models import Skill, Student, TutorSession, TutorState, TutorTurn
+from app.models import Student, TutorSession, TutorState, TutorTurn
 from app.schemas import LearningFocusOut, MasteryOut, ProblemOut, SessionCreate, SessionOut
+from app.services.curriculum_scope import (
+    CurriculumScopeError,
+    require_skill_in_scope,
+    resolve_student_curriculum_scope,
+)
 from app.services.problem_selection import select_next_problem
 from app.services.tutor_engine import tutor_engine
 
@@ -27,9 +32,14 @@ def _focus(session: TutorSession) -> LearningFocusOut:
 @router.post("/sessions", response_model=SessionOut)
 def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
     student = db.get(Student, payload.student_id)
-    skill = db.get(Skill, payload.skill_id)
-    if student is None or skill is None:
-        raise HTTPException(404, "Student or skill not found")
+    if student is None:
+        raise HTTPException(404, "Student not found")
+
+    try:
+        scope = resolve_student_curriculum_scope(db, student)
+        skill = require_skill_in_scope(db, skill_id=payload.skill_id, scope=scope)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
 
     progress = _student_skill(db, student.id, skill.id)
     problem = select_next_problem(
@@ -46,6 +56,8 @@ def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
         student_id=student.id,
         primary_skill_id=skill.id,
         active_skill_id=skill.id,
+        curriculum_id=scope.curriculum_id,
+        curriculum_enrollment_id=scope.enrollment_id,
         current_state=TutorState.DIAGNOSE,
         starting_mastery=progress.mastery_score,
         session_goal=f"Diagnose and practice {skill.name}",
