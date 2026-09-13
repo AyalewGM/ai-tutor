@@ -2,10 +2,12 @@ from dataclasses import dataclass
 from time import perf_counter
 from typing import Protocol
 
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class TutorGeneration(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     message: str = Field(min_length=1, max_length=1200)
     expects_student_response: bool = True
 
