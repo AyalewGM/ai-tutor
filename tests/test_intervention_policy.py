@@ -4,13 +4,12 @@ from datetime import UTC, datetime, timedelta
 import pytest
 
 from app.services.intervention_policy import (
-    decide_intervention,
     DeclaredPrerequisiteEdge,
     IndependentAttemptEvidence,
     InterventionPolicy,
     InterventionState,
+    decide_intervention,
 )
-
 
 NOW = datetime(2026, 9, 14, 16, 0, tzinfo=UTC)
 WINDOW_START = NOW - timedelta(days=7)
