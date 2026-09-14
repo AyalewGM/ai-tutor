@@ -4,11 +4,11 @@ from datetime import UTC, datetime, timedelta
 import pytest
 
 from app.services.intervention_policy import (
+    decide_intervention,
     DeclaredPrerequisiteEdge,
     IndependentAttemptEvidence,
     InterventionPolicy,
     InterventionState,
-    decide_intervention,
 )
 
 
