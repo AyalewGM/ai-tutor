@@ -1,3 +1,5 @@
+from datetime import UTC, datetime
+
 import pytest
 from sqlalchemy import func, select
 
@@ -75,6 +77,44 @@ def test_persist_expectation_pack_is_idempotent_and_updates_in_place() -> None:
             )
         )
         assert count == 1
+        db.rollback()
+
+
+def test_persist_expectation_pack_preserves_source_metadata() -> None:
+    with SessionLocal() as db:
+        curriculum = _active_curriculum(db, "MTH1W")
+        effective_from = datetime(2021, 9, 1, tzinfo=UTC)
+        pack = ContentPackInput(
+            curriculum_code=curriculum.code,
+            curriculum_version=curriculum.version,
+            expectations=(
+                ExpectationInput(
+                    source_identifier="F007.TEST.METADATA",
+                    title="Metadata expectation",
+                    description="Official expectation description",
+                    strand="C. Algebra",
+                    parent_source_identifier="C2",
+                    source_uri="https://example.edu/f007/metadata-expectation",
+                    provenance_metadata={
+                        "authority": "Ontario Ministry of Education",
+                        "document_version": "2021",
+                        "source_type": "UNTRUSTED_OVERRIDE",
+                    },
+                    effective_from=effective_from,
+                ),
+            ),
+        )
+
+        expectation = persist_expectation_pack(db, pack)[0]
+
+        assert expectation.description == "Official expectation description"
+        assert expectation.parent_source_identifier == "C2"
+        assert expectation.effective_from == effective_from
+        assert expectation.provenance_json == {
+            "authority": "Ontario Ministry of Education",
+            "document_version": "2021",
+            "source_type": "OFFICIAL_CURRICULUM",
+        }
         db.rollback()
 
 
