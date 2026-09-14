@@ -2,6 +2,7 @@ from app.models import SkillStatus
 from app.services.parent_intelligence import (
     AssistanceSignal,
     EvidenceStatus,
+    ParentActionCode,
     ParentLearningState,
     ParentSkillEvidence,
     classify_parent_skill_progress,
@@ -26,6 +27,7 @@ def test_no_observations_are_insufficient_evidence() -> None:
     assert insight.evidence_status == EvidenceStatus.INSUFFICIENT_EVIDENCE
     assert insight.learning_state == ParentLearningState.NOT_STARTED
     assert insight.reason_code == "COLLECT_MORE_EVIDENCE"
+    assert insight.action_code == ParentActionCode.COLLECT_MORE_EVIDENCE
 
 
 def test_single_failure_does_not_become_a_weakness_label() -> None:
@@ -36,6 +38,7 @@ def test_single_failure_does_not_become_a_weakness_label() -> None:
     assert insight.evidence_status == EvidenceStatus.EVIDENCE_AVAILABLE
     assert insight.learning_state == ParentLearningState.IN_PROGRESS
     assert insight.reason_code == "ACTIVITY_OBSERVED_NO_NEGATIVE_INFERENCE"
+    assert insight.action_code == ParentActionCode.CONTINUE_CURRENT_LEARNING
 
 
 def test_assisted_success_stays_distinct_from_independent_progress() -> None:
@@ -53,7 +56,9 @@ def test_assisted_success_stays_distinct_from_independent_progress() -> None:
 
     assert assisted.learning_state == ParentLearningState.ASSISTED_SUCCESS
     assert assisted.assistance_signal == AssistanceSignal.ASSISTANCE_OBSERVED
+    assert assisted.action_code == ParentActionCode.ENCOURAGE_INDEPENDENT_ATTEMPT
     assert independent.learning_state == ParentLearningState.INDEPENDENT_PROGRESS
+    assert independent.action_code == ParentActionCode.RECOGNIZE_INDEPENDENT_PROGRESS
 
 
 def test_mastery_requires_existing_mastered_state_and_independent_success() -> None:
@@ -70,6 +75,22 @@ def test_mastery_requires_existing_mastered_state_and_independent_success() -> N
     assert insight.learning_state == ParentLearningState.INDEPENDENT_MASTERY
     assert insight.assistance_signal == AssistanceSignal.MIXED_INDEPENDENT_AND_ASSISTED
     assert insight.reason_code == "INDEPENDENT_MASTERY_EVIDENCE"
+    assert insight.action_code == ParentActionCode.RECOGNIZE_MASTERY
+
+
+def test_existing_review_state_maps_to_bounded_review_action() -> None:
+    insight = classify_parent_skill_progress(
+        _evidence(
+            attempt_count=3,
+            independent_attempt_count=2,
+            independent_correct_count=1,
+            status=SkillStatus.REVIEW_DUE,
+        )
+    )
+
+    assert insight.learning_state == ParentLearningState.NEEDS_PRACTICE
+    assert insight.reason_code == "EXISTING_REVIEW_DUE_STATE"
+    assert insight.action_code == ParentActionCode.FOLLOW_EXISTING_REVIEW_PLAN
 
 
 def test_custom_policy_can_require_more_evidence_without_changing_mastery_semantics() -> None:
@@ -89,3 +110,4 @@ def test_custom_policy_can_require_more_evidence_without_changing_mastery_semant
 
     assert insight.evidence_status == EvidenceStatus.INSUFFICIENT_EVIDENCE
     assert insight.reason_code == "COLLECT_MORE_EVIDENCE"
+    assert insight.action_code == ParentActionCode.COLLECT_MORE_EVIDENCE
