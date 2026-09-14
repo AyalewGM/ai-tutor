@@ -7,7 +7,15 @@ from sqlalchemy import select
 
 from app.core.database import SessionLocal
 from app.main import app
-from app.models import Attempt, Curriculum, InterventionRecord, Problem, Skill, Student, TutorSession
+from app.models import (
+    Attempt,
+    Curriculum,
+    InterventionRecord,
+    Problem,
+    Skill,
+    Student,
+    TutorSession,
+)
 
 client = TestClient(app)
 
