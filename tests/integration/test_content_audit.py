@@ -3,6 +3,7 @@ import uuid
 import pytest
 
 from app.content_audit import (
+    audit_curriculum_isolation,
     audit_curriculum_problem_inventory,
     audit_curriculum_skill_traceability,
 )
@@ -12,10 +13,10 @@ from app.content_ingestion import (
     ExpectationSkillMappingInput,
     persist_expectation_pack,
 )
-from app.content_models import ProblemContentMetadata
+from app.content_models import CurriculumExpectation, ExpectationSkillMapping, ProblemContentMetadata
 from app.content_validation import ContentValidationError
 from app.core.database import SessionLocal
-from app.models import Curriculum, Problem, Skill
+from app.models import Curriculum, Problem, Skill, SkillPrerequisite
 
 
 def _isolated_curriculum(db) -> tuple[Curriculum, Skill]:
@@ -103,6 +104,87 @@ def test_traceability_audit_accepts_explicit_curriculum_scoped_mapping() -> None
         persist_expectation_pack(db, pack)
 
         audit_curriculum_skill_traceability(db, curriculum_id=curriculum.id)
+        audit_curriculum_isolation(db, curriculum_id=curriculum.id)
+        db.rollback()
+
+
+def test_isolation_audit_rejects_persisted_cross_curriculum_expectation_mapping() -> None:
+    with SessionLocal() as db:
+        curriculum, skill = _isolated_curriculum(db)
+        other_curriculum, _ = _isolated_curriculum(db)
+        expectation = CurriculumExpectation(
+            curriculum_id=other_curriculum.id,
+            curriculum_version=other_curriculum.version,
+            source_identifier="OTHER.EXPECTATION.1",
+            title="Other curriculum expectation",
+            source_uri="https://example.edu/f007/other/expectation-1",
+            active=True,
+        )
+        db.add(expectation)
+        db.flush()
+        db.add(
+            ExpectationSkillMapping(
+                curriculum_id=curriculum.id,
+                expectation_id=expectation.id,
+                skill_id=skill.id,
+                mapping_type="ALIGNS_TO",
+            )
+        )
+        db.flush()
+
+        with pytest.raises(ContentValidationError, match="Expectation curriculum"):
+            audit_curriculum_isolation(db, curriculum_id=curriculum.id)
+        db.rollback()
+
+
+def test_isolation_audit_rejects_persisted_cross_curriculum_prerequisite() -> None:
+    with SessionLocal() as db:
+        curriculum, skill = _isolated_curriculum(db)
+        _, other_skill = _isolated_curriculum(db)
+        db.add(
+            SkillPrerequisite(
+                skill_id=skill.id,
+                prerequisite_skill_id=other_skill.id,
+            )
+        )
+        db.flush()
+
+        with pytest.raises(ContentValidationError, match="cannot cross curriculum boundaries"):
+            audit_curriculum_isolation(db, curriculum_id=curriculum.id)
+        db.rollback()
+
+
+def test_isolation_audit_rejects_persisted_cross_curriculum_problem_metadata() -> None:
+    with SessionLocal() as db:
+        curriculum, skill = _isolated_curriculum(db)
+        other_curriculum, _ = _isolated_curriculum(db)
+        problem = Problem(
+            primary_skill_id=skill.id,
+            problem_type="NUMERIC",
+            difficulty=1,
+            prompt="Original isolation audit problem",
+            canonical_answer="1",
+            source_type="CURATED",
+        )
+        db.add(problem)
+        db.flush()
+        db.add(
+            ProblemContentMetadata(
+                problem_id=problem.id,
+                curriculum_id=other_curriculum.id,
+                objective="Corrupt persisted curriculum metadata fixture",
+                evaluation_type="EXACT",
+                diagnostic_eligible=True,
+                guided_eligible=False,
+                independent_eligible=False,
+                mastery_eligible=False,
+                llm_solution_required=False,
+            )
+        )
+        db.flush()
+
+        with pytest.raises(ContentValidationError, match="another curriculum_id"):
+            audit_curriculum_isolation(db, curriculum_id=curriculum.id)
         db.rollback()
 
 
