@@ -20,10 +20,13 @@ def _partial_distribution_answer(prompt: str) -> str:
     return compact[: match.start()] + replacement + compact[match.end() :]
 
 
-def _problem(problem_id: str) -> Problem:
+def _problem(problem_id: str, curriculum_id) -> Problem:
     with SessionLocal() as db:
         problem = db.get(Problem, problem_id)
         assert problem is not None
+        skill = db.get(Skill, problem.primary_skill_id)
+        assert skill is not None
+        assert skill.curriculum_id == curriculum_id
         db.expunge(problem)
         return problem
 
@@ -47,6 +50,7 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
         db.commit()
         db.refresh(student)
         student_id = student.id
+        curriculum_id = curriculum.id
         target_id = target.id
         distributive_id = distributive.id
 
@@ -63,7 +67,7 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     problem_id = payload["problem"]["id"]
 
     for _ in range(3):
-        problem = _problem(problem_id)
+        problem = _problem(problem_id, curriculum_id)
         response = client.post(
             f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
             json={
@@ -82,7 +86,7 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     assert payload["focus"]["active_skill_id"] == str(distributive_id)
     assert payload["tutor"]["action"] == "REMEDIATE"
 
-    remediation_problem = _problem(problem_id)
+    remediation_problem = _problem(problem_id, curriculum_id)
     assisted = client.post(
         f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
         json={
@@ -97,7 +101,7 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     problem_id = payload["next_problem"]["id"]
 
     for _ in range(5):
-        remediation_problem = _problem(problem_id)
+        remediation_problem = _problem(problem_id, curriculum_id)
         independent = client.post(
             f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
             json={
@@ -116,9 +120,11 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     assert payload["focus"]["active_skill_id"] == str(target_id)
     assert payload["tutor"]["action"] == "RESUME_TARGET"
     assert payload["next_problem"] is not None
+    _problem(payload["next_problem"]["id"], curriculum_id)
 
     with SessionLocal() as db:
         session = db.get(TutorSession, session_id)
         assert session is not None
         assert session.active_skill_id == target_id
+        assert session.curriculum_id == curriculum_id
         assert session.remediation_reason is None
