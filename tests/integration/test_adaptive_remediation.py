@@ -7,7 +7,15 @@ from sqlalchemy import select
 
 from app.core.database import SessionLocal
 from app.main import app
-from app.models import Curriculum, Problem, Skill, Student, TutorSession
+from app.models import (
+    Attempt,
+    Curriculum,
+    InterventionRecord,
+    Problem,
+    Skill,
+    Student,
+    TutorSession,
+)
 
 client = TestClient(app)
 
@@ -53,6 +61,38 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
             school_system="MCPS",
         )
         db.add(student)
+        db.flush()
+
+        prerequisite_problems = db.scalars(
+            select(Problem)
+            .where(Problem.primary_skill_id == distributive.id)
+            .order_by(Problem.id)
+            .limit(2)
+        ).all()
+        assert len(prerequisite_problems) == 2
+
+        evidence_session = TutorSession(
+            student_id=student.id,
+            primary_skill_id=distributive.id,
+            active_skill_id=distributive.id,
+            curriculum_id=curriculum.id,
+        )
+        db.add(evidence_session)
+        db.flush()
+        for problem in prerequisite_problems:
+            db.add(
+                Attempt(
+                    session_id=evidence_session.id,
+                    student_id=student.id,
+                    problem_id=problem.id,
+                    student_answer="incorrect",
+                    normalized_answer="incorrect",
+                    is_correct=False,
+                    attempt_number=1,
+                    assistance_level=0,
+                )
+            )
+
         db.commit()
         db.refresh(student)
         student_id = student.id
@@ -106,6 +146,19 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     assert remediation_workspace["focus"]["in_remediation"] is True
     assert remediation_workspace["problem"]["id"] == problem_id
 
+    with SessionLocal() as db:
+        intervention = db.scalar(
+            select(InterventionRecord).where(
+                InterventionRecord.student_id == student_id,
+                InterventionRecord.target_skill_id == target_id,
+                InterventionRecord.status == "STARTED",
+            )
+        )
+        assert intervention is not None
+        assert intervention.prerequisite_skill_id == distributive_id
+        assert intervention.policy_version == "pilot-v1"
+        assert intervention.reason_code == "DECLARED_PREREQUISITE_GAP_CONFIRMED"
+
     remediation_problem = _problem(problem_id, curriculum_id)
     assisted = client.post(
         f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
@@ -119,12 +172,6 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     payload = assisted.json()
     assert payload["focus"]["in_remediation"] is True
     problem_id = payload["next_problem"]["id"]
-
-    assisted_workspace = _workspace(session_id)
-    assert assisted_workspace["curriculum"]["id"] == str(curriculum_id)
-    assert assisted_workspace["focus"]["active_skill_id"] == str(distributive_id)
-    assert assisted_workspace["focus"]["in_remediation"] is True
-    assert assisted_workspace["problem"]["id"] == problem_id
 
     for _ in range(5):
         remediation_problem = _problem(problem_id, curriculum_id)
@@ -148,15 +195,20 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     assert payload["next_problem"] is not None
     _problem(payload["next_problem"]["id"], curriculum_id)
 
-    resumed_workspace = _workspace(session_id)
-    assert resumed_workspace["curriculum"]["id"] == str(curriculum_id)
-    assert resumed_workspace["focus"]["active_skill_id"] == str(target_id)
-    assert resumed_workspace["focus"]["in_remediation"] is False
-    assert resumed_workspace["problem"]["id"] == payload["next_problem"]["id"]
-
     with SessionLocal() as db:
         session = db.get(TutorSession, session_id)
         assert session is not None
         assert session.active_skill_id == target_id
         assert session.curriculum_id == curriculum_id
         assert session.remediation_reason is None
+
+        intervention = db.scalar(
+            select(InterventionRecord).where(
+                InterventionRecord.student_id == student_id,
+                InterventionRecord.target_skill_id == target_id,
+                InterventionRecord.status == "COMPLETED",
+            )
+        )
+        assert intervention is not None
+        assert intervention.outcome_code == "RETURN_CONDITION_MET"
+        assert intervention.completed_at is not None

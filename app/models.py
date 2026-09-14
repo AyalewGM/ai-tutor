@@ -221,3 +221,23 @@ class MasteryEvent(Base):
     reason: Mapped[str] = mapped_column(String(100))
     metadata_json: Mapped[dict | None] = mapped_column(JSONB)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+
+
+class InterventionRecord(Base):
+    __tablename__ = "intervention_records"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    student_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("students.id"), index=True)
+    curriculum_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("curricula.id"), index=True)
+    target_skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("skills.id"), index=True)
+    prerequisite_skill_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("skills.id"), index=True)
+    policy_version: Mapped[str] = mapped_column(String(80), index=True)
+    state: Mapped[str] = mapped_column(String(50), index=True)
+    reason_code: Mapped[str] = mapped_column(String(120))
+    evidence_ids_json: Mapped[list] = mapped_column(JSONB, default=list)
+    return_condition: Mapped[str | None] = mapped_column(String(160))
+    status: Mapped[str] = mapped_column(String(30), default="RECOMMENDED", index=True)
+    outcome_code: Mapped[str | None] = mapped_column(String(80))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
