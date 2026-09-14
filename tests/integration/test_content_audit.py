@@ -234,6 +234,26 @@ def test_problem_inventory_audit_rejects_problem_reused_across_modes() -> None:
         db.rollback()
 
 
+def test_problem_inventory_audit_rejects_llm_dependent_assessment_metadata() -> None:
+    with SessionLocal() as db:
+        curriculum, skill = _isolated_curriculum(db)
+        diagnostic = _add_problem(db, curriculum=curriculum, skill=skill, mode="diagnostic")
+        _add_problem(db, curriculum=curriculum, skill=skill, mode="guided")
+        _add_problem(db, curriculum=curriculum, skill=skill, mode="independent")
+        _add_problem(db, curriculum=curriculum, skill=skill, mode="mastery")
+
+        metadata = db.query(ProblemContentMetadata).filter_by(problem_id=diagnostic.id).one()
+        metadata.llm_solution_required = True
+        db.flush()
+
+        with pytest.raises(
+            ContentValidationError,
+            match="Diagnostic/mastery problems cannot require an LLM solution",
+        ):
+            audit_curriculum_problem_inventory(db, curriculum_id=curriculum.id)
+        db.rollback()
+
+
 def test_pack_readiness_audit_rejects_incomplete_pack() -> None:
     with SessionLocal() as db:
         curriculum, skill = _isolated_curriculum(db)
