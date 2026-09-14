@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -84,7 +84,7 @@ def apply_focus_policy(
         ):
             intervention.status = "COMPLETED"
             intervention.outcome_code = "RETURN_CONDITION_MET"
-            intervention.completed_at = datetime.now(timezone.utc)
+            intervention.completed_at = datetime.now(UTC)
             session.active_skill_id = session.primary_skill_id
             session.remediation_reason = None
             return Transition(TutorState.GUIDED_PRACTICE, "RESUME_TARGET")
@@ -105,7 +105,7 @@ def apply_focus_policy(
         student_id=session.student_id,
         curriculum_id=session.curriculum_id,
         target_skill_id=session.primary_skill_id,
-        evidence_window_start=datetime.now(timezone.utc)
+        evidence_window_start=datetime.now(UTC)
         - timedelta(days=INTERVENTION_EVIDENCE_WINDOW_DAYS),
     )
     record = record_intervention_decision(
@@ -125,7 +125,7 @@ def apply_focus_policy(
         return Transition(TutorState.GUIDED_PRACTICE, "ASK_RETRY")
 
     record.status = "STARTED"
-    record.started_at = datetime.now(timezone.utc)
+    record.started_at = datetime.now(UTC)
     session.active_skill_id = decision.selected_prerequisite_skill_id
     session.remediation_reason = decision.reason_code
     return Transition(TutorState.REMEDIATION, "REMEDIATE", hint_level=2)
