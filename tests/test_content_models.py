@@ -1,10 +1,15 @@
-from app.content_models import CurriculumExpectation, ExpectationSkillMapping
+from app.content_models import (
+    CurriculumExpectation,
+    ExpectationSkillMapping,
+    ProblemContentMetadata,
+)
 from app.core.database import Base
 
 
 def test_content_tables_registered_with_metadata():
     assert CurriculumExpectation.__tablename__ in Base.metadata.tables
     assert ExpectationSkillMapping.__tablename__ in Base.metadata.tables
+    assert ProblemContentMetadata.__tablename__ in Base.metadata.tables
 
 
 def test_expectation_identity_is_curriculum_version_scoped():
@@ -22,3 +27,19 @@ def test_mapping_carries_explicit_curriculum_boundary():
     assert "curriculum_id" in table.columns
     assert "expectation_id" in table.columns
     assert "skill_id" in table.columns
+
+
+def test_problem_metadata_carries_curriculum_and_learning_modes():
+    table = Base.metadata.tables["problem_content_metadata"]
+    for column in (
+        "problem_id",
+        "curriculum_id",
+        "objective",
+        "evaluation_type",
+        "diagnostic_eligible",
+        "guided_eligible",
+        "independent_eligible",
+        "mastery_eligible",
+        "llm_solution_required",
+    ):
+        assert column in table.columns
