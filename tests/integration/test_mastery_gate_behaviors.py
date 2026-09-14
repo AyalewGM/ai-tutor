@@ -113,7 +113,7 @@ def test_mastery_check_rejects_hint_and_pass_marks_mastered() -> None:
         assert result.metadata_json["passed"] is True
 
 
-def test_failed_mastery_check_returns_to_remediation_without_mastery() -> None:
+def test_failed_mastery_check_without_confirmed_gap_returns_to_guided_practice() -> None:
     session_id, problem_id, student_id, skill_id = _setup_mastery_session(
         state=TutorState.MASTERY_CHECK
     )
@@ -125,8 +125,8 @@ def test_failed_mastery_check_returns_to_remediation_without_mastery() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["evaluation"]["correct"] is False
-    assert payload["state"] == "REMEDIATION"
-    assert payload["tutor"]["action"] == "REMEDIATE"
+    assert payload["state"] == "GUIDED_PRACTICE"
+    assert payload["tutor"]["action"] == "ASK_RETRY"
 
     with SessionLocal() as db:
         progress = db.get(
@@ -135,6 +135,10 @@ def test_failed_mastery_check_returns_to_remediation_without_mastery() -> None:
         )
         assert progress is not None
         assert progress.status != SkillStatus.MASTERED
+
+        session = db.get(TutorSession, session_id)
+        assert session is not None
+        assert session.active_skill_id == session.primary_skill_id
 
         result = db.scalar(
             select(MasteryEvent)
