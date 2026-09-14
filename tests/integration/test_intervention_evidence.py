@@ -50,6 +50,9 @@ def test_persisted_evidence_projects_and_records_auditable_gap() -> None:
             grade_level="8",
             school_system="MCPS",
         )
+        db.add(student)
+        db.flush()
+
         target_session = TutorSession(
             student_id=student.id,
             primary_skill_id=target.id,
@@ -68,7 +71,6 @@ def test_persisted_evidence_projects_and_records_auditable_gap() -> None:
         ]
         db.add_all(
             [
-                student,
                 target_session,
                 prerequisite_session,
                 *target_problems,
