@@ -1,0 +1,155 @@
+import uuid
+from typing import Annotated, Literal
+
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from app.core.database import get_db
+from app.models import Curriculum, Problem, Skill, Student, StudentSkill, TutorSession, TutorState, TutorTurn
+from app.services.curriculum_scope import (
+    CurriculumScopeError,
+    require_session_scope,
+    require_skill_in_scope,
+)
+from app.services.hint_policy import select_hint
+
+router = APIRouter(prefix="/learner-workspace", tags=["learner-workspace"])
+DbSession = Annotated[Session, Depends(get_db)]
+WorkspaceAction = Literal["SUBMIT_ANSWER", "REQUEST_HINT", "I_DONT_UNDERSTAND"]
+
+
+class LearnerIdentityOut(BaseModel):
+    first_name: str
+    grade_level: str
+
+
+class CurriculumContextOut(BaseModel):
+    id: uuid.UUID
+    name: str
+    jurisdiction: str | None = None
+
+
+class LearningFocusOut(BaseModel):
+    primary_skill_id: uuid.UUID
+    active_skill_id: uuid.UUID
+    skill_name: str
+    in_remediation: bool
+    remediation_reason: str | None = None
+
+
+class WorkspaceProblemOut(BaseModel):
+    id: uuid.UUID
+    prompt: str
+    difficulty: int
+
+
+class WorkspaceEvidenceOut(BaseModel):
+    mastery_score: float
+    confidence_score: float
+    independent_attempt_count: int
+    independent_correct_count: int
+    hinted_correct_count: int
+
+
+class LearnerWorkspaceOut(BaseModel):
+    session_id: uuid.UUID
+    state: TutorState
+    learner: LearnerIdentityOut
+    curriculum: CurriculumContextOut
+    focus: LearningFocusOut
+    problem: WorkspaceProblemOut | None
+    coaching_message: str | None
+    allowed_actions: list[WorkspaceAction]
+    evidence: WorkspaceEvidenceOut
+
+
+def _allowed_actions(state: TutorState) -> list[WorkspaceAction]:
+    if state == TutorState.COMPLETE:
+        return []
+
+    actions: list[WorkspaceAction] = ["SUBMIT_ANSWER"]
+    hint = select_hint(state=state, explicit_request=True)
+    if hint.allowed:
+        actions.extend(["REQUEST_HINT", "I_DONT_UNDERSTAND"])
+    return actions
+
+
+def _current_tutor_turn(db: Session, session_id: uuid.UUID) -> TutorTurn | None:
+    return db.scalar(
+        select(TutorTurn)
+        .where(TutorTurn.session_id == session_id, TutorTurn.role == "TUTOR")
+        .order_by(TutorTurn.created_at.desc(), TutorTurn.id.desc())
+        .limit(1)
+    )
+
+
+@router.get("/sessions/{session_id}", response_model=LearnerWorkspaceOut)
+def get_learner_workspace(session_id: uuid.UUID, db: DbSession) -> LearnerWorkspaceOut:
+    """Reconstruct learner-visible state without creating pedagogical evidence."""
+    session = db.get(TutorSession, session_id)
+    if session is None or session.status != "ACTIVE":
+        raise HTTPException(404, "Active tutor session not found")
+
+    try:
+        scope = require_session_scope(db, session)
+        primary_skill = require_skill_in_scope(db, skill_id=session.primary_skill_id, scope=scope)
+        active_skill_id = session.active_skill_id or session.primary_skill_id
+        active_skill = require_skill_in_scope(db, skill_id=active_skill_id, scope=scope)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+    learner = db.get(Student, session.student_id)
+    curriculum = db.get(Curriculum, scope.curriculum_id)
+    if learner is None or curriculum is None:
+        raise HTTPException(409, "Session curriculum or learner context is unavailable")
+
+    turn = _current_tutor_turn(db, session.id)
+    problem = db.get(Problem, turn.problem_id) if turn and turn.problem_id else None
+    if problem is not None and problem.primary_skill_id != active_skill.id:
+        raise HTTPException(409, "Persisted problem falls outside the active learning focus")
+
+    progress = db.get(
+        StudentSkill,
+        {"student_id": session.student_id, "skill_id": active_skill.id},
+    )
+
+    return LearnerWorkspaceOut(
+        session_id=session.id,
+        state=session.current_state,
+        learner=LearnerIdentityOut(
+            first_name=learner.first_name,
+            grade_level=learner.grade_level,
+        ),
+        curriculum=CurriculumContextOut(
+            id=curriculum.id,
+            name=curriculum.name,
+            jurisdiction=curriculum.jurisdiction,
+        ),
+        focus=LearningFocusOut(
+            primary_skill_id=primary_skill.id,
+            active_skill_id=active_skill.id,
+            skill_name=active_skill.name,
+            in_remediation=active_skill.id != primary_skill.id,
+            remediation_reason=session.remediation_reason,
+        ),
+        problem=(
+            WorkspaceProblemOut(
+                id=problem.id,
+                prompt=problem.prompt,
+                difficulty=problem.difficulty,
+            )
+            if problem
+            else None
+        ),
+        coaching_message=turn.message if turn else None,
+        allowed_actions=_allowed_actions(session.current_state),
+        evidence=WorkspaceEvidenceOut(
+            mastery_score=float(progress.mastery_score) if progress else 0.0,
+            confidence_score=float(progress.confidence_score) if progress else 0.0,
+            independent_attempt_count=progress.independent_attempt_count if progress else 0,
+            independent_correct_count=progress.independent_correct_count if progress else 0,
+            hinted_correct_count=progress.hinted_correct_count if progress else 0,
+        ),
+    )
