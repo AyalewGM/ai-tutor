@@ -33,6 +33,7 @@ from app.parent_schemas import (
     SupportAreaOut,
 )
 from app.services.curriculum_scope import CurriculumScopeError, resolve_student_curriculum_scope
+from app.services.parent_intelligence import ParentSkillEvidence, classify_parent_skill_progress
 
 
 def hash_claim_token(token: str) -> str:
@@ -57,6 +58,34 @@ def _parent_session_state(state: TutorState) -> str:
     if state == TutorState.COMPLETE:
         return "Completed"
     return "In Progress"
+
+
+def _skill_progress_out(
+    progress: StudentSkill, skill: Skill, *, mastery_check: bool
+) -> SkillProgressOut:
+    insight = classify_parent_skill_progress(
+        ParentSkillEvidence(
+            attempt_count=progress.attempt_count,
+            independent_attempt_count=progress.independent_attempt_count,
+            independent_correct_count=progress.independent_correct_count,
+            hinted_correct_count=progress.hinted_correct_count,
+            status=progress.status,
+        )
+    )
+    return SkillProgressOut(
+        skill_id=skill.id,
+        skill_code=skill.code,
+        skill_name=skill.name,
+        status=_parent_skill_status(progress, mastery_check=mastery_check),
+        attempt_count=progress.attempt_count,
+        independent_attempt_count=progress.independent_attempt_count,
+        independent_correct_count=progress.independent_correct_count,
+        hinted_correct_count=progress.hinted_correct_count,
+        evidence_status=insight.evidence_status,
+        learning_state=insight.learning_state,
+        assistance_signal=insight.assistance_signal,
+        reason_code=insight.reason_code,
+    )
 
 
 def _active_relationship(
@@ -255,15 +284,10 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         .order_by(Skill.name)
     ).all()
     skills = [
-        SkillProgressOut(
-            skill_id=skill.id,
-            skill_code=skill.code,
-            skill_name=skill.name,
-            status=_parent_skill_status(progress, mastery_check=skill.id == mastery_check_skill_id),
-            attempt_count=progress.attempt_count,
-            independent_attempt_count=progress.independent_attempt_count,
-            independent_correct_count=progress.independent_correct_count,
-            hinted_correct_count=progress.hinted_correct_count,
+        _skill_progress_out(
+            progress,
+            skill,
+            mastery_check=skill.id == mastery_check_skill_id,
         )
         for progress, skill in progress_rows
     ]
