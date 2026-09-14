@@ -233,3 +233,20 @@ def audit_curriculum_problem_inventory(
             independent_problem_ids=pools["independent"],
             mastery_problem_ids=pools["mastery"],
         )
+
+
+def audit_curriculum_pack_readiness(
+    session: Session,
+    *,
+    curriculum_id,
+) -> None:
+    """Run the deterministic acceptance gates for one persisted curriculum pack.
+
+    This deliberately composes independent database-backed checks instead of
+    inferring readiness from CI or from an LLM. A pack is only structurally ready
+    when jurisdiction isolation, official-source traceability, and fresh
+    mode-specific problem inventory all pass against persisted records.
+    """
+    audit_curriculum_isolation(session, curriculum_id=curriculum_id)
+    audit_curriculum_skill_traceability(session, curriculum_id=curriculum_id)
+    audit_curriculum_problem_inventory(session, curriculum_id=curriculum_id)
