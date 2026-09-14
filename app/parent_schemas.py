@@ -47,6 +47,10 @@ class SkillProgressOut(BaseModel):
     independent_attempt_count: int
     independent_correct_count: int
     hinted_correct_count: int
+    evidence_status: str
+    learning_state: str
+    assistance_signal: str
+    reason_code: str
 
 
 class RecentActivityOut(BaseModel):
