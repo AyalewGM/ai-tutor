@@ -4,6 +4,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 
 from app.core.database import SessionLocal
+from app.hint_models import HintEvent
 from app.main import app
 from app.models import (
     Attempt,
@@ -100,3 +101,37 @@ def test_workspace_derives_help_actions_from_backend_state() -> None:
         "REQUEST_HINT",
         "I_DONT_UNDERSTAND",
     ]
+
+
+def test_i_dont_understand_is_recorded_as_assistance() -> None:
+    session_id, _ = _create_session()
+    with SessionLocal() as db:
+        session = db.get(TutorSession, session_id)
+        assert session is not None
+        session.current_state = TutorState.GUIDED_PRACTICE
+        problem_id = db.scalar(
+            select(TutorTurn.problem_id)
+            .where(TutorTurn.session_id == session_id, TutorTurn.role == "TUTOR")
+            .order_by(TutorTurn.created_at.desc())
+            .limit(1)
+        )
+        assert problem_id is not None
+        db.commit()
+
+    response = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/hint",
+        json={"problem_id": str(problem_id), "reason": "I_DONT_UNDERSTAND"},
+    )
+    assert response.status_code == 200
+    assert response.json()["allowed"] is True
+    assert response.json()["trigger"] == "I_DONT_UNDERSTAND"
+
+    with SessionLocal() as db:
+        event = db.scalar(
+            select(HintEvent)
+            .where(HintEvent.session_id == session_id, HintEvent.problem_id == problem_id)
+            .order_by(HintEvent.created_at.desc())
+            .limit(1)
+        )
+        assert event is not None
+        assert event.trigger == "I_DONT_UNDERSTAND"
