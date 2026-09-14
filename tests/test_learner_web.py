@@ -17,4 +17,4 @@ def test_learner_workspace_web_surface_is_problem_first() -> None:
     assert "I don't understand" in response.text
     assert "Assisted successes" in response.text
     assert "assisted success is not counted as independent mastery evidence" in response.text
-    assert f"const sessionId = '{session_id}'" in response.text
+    assert f'const sessionId = "{session_id}"' in response.text
