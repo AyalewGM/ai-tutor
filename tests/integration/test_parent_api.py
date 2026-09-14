@@ -115,6 +115,7 @@ def test_parent_link_dashboard_isolation_and_non_destructive_unlink() -> None:
             assert projected["learning_state"] == "INDEPENDENT_PROGRESS"
             assert projected["assistance_signal"] == "MIXED_INDEPENDENT_AND_ASSISTED"
             assert projected["reason_code"] == "INDEPENDENT_SUCCESS_OBSERVED"
+            assert projected["action_code"] == "RECOGNIZE_INDEPENDENT_PROGRESS"
 
         with SessionLocal() as db:
             other_parent_user = db.get(User, other_parent_user_id)
