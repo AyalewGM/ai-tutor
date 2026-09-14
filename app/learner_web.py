@@ -6,6 +6,74 @@ from fastapi.responses import HTMLResponse
 router = APIRouter(tags=["learner-web"])
 
 
+@router.get("/learn", response_class=HTMLResponse, include_in_schema=False)
+def learner_entry_page() -> str:
+    return """<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Tutor</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; color-scheme: light dark; }
+    body { margin: 0; background: Canvas; color: CanvasText; }
+    main { max-width: 680px; margin: auto; padding: 1rem; }
+    .panel { border: 1px solid color-mix(in srgb, CanvasText 18%, transparent); border-radius: 14px; padding: 1rem; }
+    label { display: block; margin-top: .8rem; font-weight: 650; }
+    input, button { font: inherit; padding: .75rem; border-radius: 9px; border: 1px solid color-mix(in srgb, CanvasText 28%, transparent); }
+    input { width: 100%; box-sizing: border-box; }
+    button { margin-top: 1rem; min-height: 44px; cursor: pointer; }
+    .error { color: #b42318; white-space: pre-wrap; }
+    :focus-visible { outline: 3px solid Highlight; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+<main>
+  <section class="panel" aria-labelledby="startHeading">
+    <h1 id="startHeading">Start a learning session</h1>
+    <p>Choose the learner and skill identifiers provided by the application. Curriculum scope and the first diagnostic problem are validated by the server.</p>
+    <p id="error" class="error" role="alert" aria-live="assertive"></p>
+    <form id="startForm">
+      <label for="studentId">Learner ID</label>
+      <input id="studentId" name="studentId" autocomplete="off" required>
+      <label for="skillId">Skill ID</label>
+      <input id="skillId" name="skillId" autocomplete="off" required>
+      <button id="startBtn" type="submit">Start learning</button>
+    </form>
+  </section>
+</main>
+<script>
+const form = document.getElementById('startForm');
+const error = document.getElementById('error');
+form.addEventListener('submit', async event => {
+  event.preventDefault();
+  error.textContent = '';
+  const button = document.getElementById('startBtn');
+  button.disabled = true;
+  try {
+    const response = await fetch('/api/v1/adaptive-tutor/sessions', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        student_id: document.getElementById('studentId').value.trim(),
+        skill_id: document.getElementById('skillId').value.trim(),
+      }),
+    });
+    let body = null;
+    try { body = await response.json(); } catch (_) {}
+    if (!response.ok) throw new Error(body?.detail || `${response.status} ${response.statusText}`);
+    window.location.assign(`/learn/${body.session_id}`);
+  } catch (failure) {
+    error.textContent = `Unable to start this learning session: ${failure.message}`;
+    button.disabled = false;
+  }
+});
+</script>
+</body>
+</html>"""
+
+
 @router.get("/learn/{session_id}", response_class=HTMLResponse, include_in_schema=False)
 def learner_workspace_page(session_id: uuid.UUID) -> str:
     return rf"""<!doctype html>
