@@ -31,6 +31,12 @@ def _problem(problem_id: str, curriculum_id) -> Problem:
         return problem
 
 
+def _workspace(session_id: str) -> dict:
+    response = client.get(f"/api/v1/learner-workspace/sessions/{session_id}")
+    assert response.status_code == 200
+    return response.json()
+
+
 def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     with SessionLocal() as db:
         curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MCPS_MATH_8"))
@@ -66,6 +72,13 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     session_id = payload["session_id"]
     problem_id = payload["problem"]["id"]
 
+    initial_workspace = _workspace(session_id)
+    assert initial_workspace["curriculum"]["id"] == str(curriculum_id)
+    assert initial_workspace["focus"]["active_skill_id"] == str(target_id)
+    assert initial_workspace["focus"]["in_remediation"] is False
+    assert initial_workspace["problem"]["id"] == problem_id
+    assert initial_workspace["allowed_actions"] == ["SUBMIT_ANSWER"]
+
     for _ in range(3):
         problem = _problem(problem_id, curriculum_id)
         response = client.post(
@@ -86,6 +99,13 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     assert payload["focus"]["active_skill_id"] == str(distributive_id)
     assert payload["tutor"]["action"] == "REMEDIATE"
 
+    remediation_workspace = _workspace(session_id)
+    assert remediation_workspace["curriculum"]["id"] == str(curriculum_id)
+    assert remediation_workspace["focus"]["primary_skill_id"] == str(target_id)
+    assert remediation_workspace["focus"]["active_skill_id"] == str(distributive_id)
+    assert remediation_workspace["focus"]["in_remediation"] is True
+    assert remediation_workspace["problem"]["id"] == problem_id
+
     remediation_problem = _problem(problem_id, curriculum_id)
     assisted = client.post(
         f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
@@ -99,6 +119,11 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     payload = assisted.json()
     assert payload["focus"]["in_remediation"] is True
     problem_id = payload["next_problem"]["id"]
+
+    assisted_workspace = _workspace(session_id)
+    assert assisted_workspace["focus"]["active_skill_id"] == str(distributive_id)
+    assert assisted_workspace["problem"]["id"] == problem_id
+    assert assisted_workspace["evidence"]["hinted_correct_count"] >= 1
 
     for _ in range(5):
         remediation_problem = _problem(problem_id, curriculum_id)
@@ -121,6 +146,13 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     assert payload["tutor"]["action"] == "RESUME_TARGET"
     assert payload["next_problem"] is not None
     _problem(payload["next_problem"]["id"], curriculum_id)
+
+    resumed_workspace = _workspace(session_id)
+    assert resumed_workspace["curriculum"]["id"] == str(curriculum_id)
+    assert resumed_workspace["focus"]["active_skill_id"] == str(target_id)
+    assert resumed_workspace["focus"]["in_remediation"] is False
+    assert resumed_workspace["problem"]["id"] == payload["next_problem"]["id"]
+    assert resumed_workspace["evidence"]["independent_correct_count"] >= 1
 
     with SessionLocal() as db:
         session = db.get(TutorSession, session_id)
