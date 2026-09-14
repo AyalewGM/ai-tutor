@@ -8,7 +8,7 @@ router = APIRouter(tags=["learner-web"])
 
 @router.get("/learn/{session_id}", response_class=HTMLResponse, include_in_schema=False)
 def learner_workspace_page(session_id: uuid.UUID) -> str:
-    return f"""<!doctype html>
+    return rf"""<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
