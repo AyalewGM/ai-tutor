@@ -32,6 +32,20 @@ def test_learner_workspace_web_surface_is_problem_first() -> None:
     assert f'const sessionId = "{session_id}"' in response.text
 
 
+def test_learner_workspace_has_explicit_application_owned_mastery_result() -> None:
+    response = client.get(f"/learn/{uuid.uuid4()}")
+
+    assert response.status_code == 200
+    assert 'id="completionPanel"' in response.text
+    assert "Skill complete" in response.text
+    assert "independently in the mastery check" in response.text
+    assert "Help and hints do not count as mastery evidence" in response.text
+    assert "const complete = data.state === 'COMPLETE';" in response.text
+    assert "q('completionPanel').hidden = !complete;" in response.text
+    assert "q('problemPanel').hidden = complete;" in response.text
+    assert "data.state === 'COMPLETE'" in response.text
+
+
 def test_learner_surfaces_include_accessibility_and_responsive_baseline() -> None:
     entry = client.get("/learn")
     workspace = client.get(f"/learn/{uuid.uuid4()}")
