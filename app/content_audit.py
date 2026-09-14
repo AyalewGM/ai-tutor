@@ -20,6 +20,7 @@ from app.content_validation import (
     validate_fresh_problem_sets,
     validate_learning_mode_inventory,
     validate_prerequisite_edge,
+    validate_problem_metadata,
     validate_problem_scope,
 )
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
@@ -182,7 +183,9 @@ def audit_curriculum_problem_inventory(
 
     Both metadata.curriculum_id and the problem's primary skill are constrained
     to the selected curriculum. Cross-jurisdiction records therefore cannot make
-    an incomplete pack pass this audit.
+    an incomplete pack pass this audit. Persisted metadata is revalidated here
+    as a second-line acceptance gate so database corruption or bypassed ingestion
+    cannot make assessment evidence depend on an LLM.
     """
     curriculum = _active_curriculum(session, curriculum_id)
     skills = session.scalars(
@@ -208,7 +211,19 @@ def audit_curriculum_problem_inventory(
             "independent": [],
             "mastery": [],
         }
+        skill_ref = CurriculumScopedRef(id=skill.id, curriculum_id=skill.curriculum_id)
         for problem_id, metadata in rows:
+            validate_problem_metadata(
+                metadata_curriculum_id=metadata.curriculum_id,
+                primary_skill=skill_ref,
+                objective=metadata.objective,
+                evaluation_type=metadata.evaluation_type,
+                diagnostic_eligible=metadata.diagnostic_eligible,
+                guided_eligible=metadata.guided_eligible,
+                independent_eligible=metadata.independent_eligible,
+                mastery_eligible=metadata.mastery_eligible,
+                llm_solution_required=metadata.llm_solution_required,
+            )
             if metadata.diagnostic_eligible:
                 pools["diagnostic"].append(problem_id)
             if metadata.guided_eligible:
@@ -218,7 +233,6 @@ def audit_curriculum_problem_inventory(
             if metadata.mastery_eligible:
                 pools["mastery"].append(problem_id)
 
-        skill_ref = CurriculumScopedRef(id=skill.id, curriculum_id=skill.curriculum_id)
         validate_learning_mode_inventory(
             skill=skill_ref,
             diagnostic_count=len(pools["diagnostic"]),
