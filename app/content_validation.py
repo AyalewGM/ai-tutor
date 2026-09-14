@@ -54,6 +54,47 @@ def validate_problem_scope(
         )
 
 
+def validate_problem_metadata(
+    *,
+    metadata_curriculum_id: UUID,
+    primary_skill: CurriculumScopedRef,
+    objective: str,
+    evaluation_type: str,
+    diagnostic_eligible: bool,
+    guided_eligible: bool,
+    independent_eligible: bool,
+    mastery_eligible: bool,
+    llm_solution_required: bool,
+) -> None:
+    """Validate application-owned problem usage metadata.
+
+    Assessment evidence must be deterministically evaluable and must never
+    require an LLM solution. At least one usage mode is required so orphaned
+    content cannot silently enter a pilot pack.
+    """
+    validate_problem_scope(
+        pack_curriculum_id=metadata_curriculum_id,
+        primary_skill=primary_skill,
+    )
+    if not objective.strip():
+        raise ContentValidationError("Problem objective is required")
+    if not evaluation_type.strip():
+        raise ContentValidationError("Problem evaluation type is required")
+    if not any(
+        (
+            diagnostic_eligible,
+            guided_eligible,
+            independent_eligible,
+            mastery_eligible,
+        )
+    ):
+        raise ContentValidationError("Problem must be eligible for at least one learning mode")
+    if llm_solution_required and (diagnostic_eligible or mastery_eligible):
+        raise ContentValidationError(
+            "Diagnostic/mastery problems cannot require an LLM solution"
+        )
+
+
 def validate_active_skill_traceability(
     *,
     skill: CurriculumScopedRef,
