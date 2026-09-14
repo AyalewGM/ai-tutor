@@ -1,4 +1,6 @@
+from collections.abc import Collection
 from dataclasses import dataclass
+from typing import Hashable
 from uuid import UUID
 
 
@@ -104,7 +106,7 @@ def validate_learning_mode_inventory(
     independent_count: int,
     mastery_count: int,
 ) -> None:
-    """Require distinct inventory capacity for every deterministic learning mode."""
+    """Require inventory capacity for every deterministic learning mode."""
     counts = {
         "diagnostic": diagnostic_count,
         "guided": guided_count,
@@ -116,3 +118,42 @@ def validate_learning_mode_inventory(
         raise ContentValidationError(
             f"Skill {skill.id} lacks problem inventory for: {', '.join(missing)}"
         )
+
+
+def validate_fresh_problem_sets(
+    *,
+    skill: CurriculumScopedRef,
+    diagnostic_problem_ids: Collection[Hashable],
+    guided_problem_ids: Collection[Hashable],
+    independent_problem_ids: Collection[Hashable],
+    mastery_problem_ids: Collection[Hashable],
+) -> None:
+    """Require non-empty, non-overlapping problem pools for deterministic modes.
+
+    A problem used for diagnosis, guided practice, independent evidence, or a
+    mastery check must not be reused in another pool. This makes the repository
+    acceptance rule for a genuinely fresh post-help independent/mastery problem
+    testable without asking an LLM to decide whether a problem is fresh.
+    """
+    pools = {
+        "diagnostic": set(diagnostic_problem_ids),
+        "guided": set(guided_problem_ids),
+        "independent": set(independent_problem_ids),
+        "mastery": set(mastery_problem_ids),
+    }
+
+    missing = [mode for mode, problem_ids in pools.items() if not problem_ids]
+    if missing:
+        raise ContentValidationError(
+            f"Skill {skill.id} lacks problem inventory for: {', '.join(missing)}"
+        )
+
+    modes = tuple(pools)
+    for index, left_mode in enumerate(modes):
+        for right_mode in modes[index + 1 :]:
+            overlap = pools[left_mode] & pools[right_mode]
+            if overlap:
+                raise ContentValidationError(
+                    f"Skill {skill.id} reuses problem IDs across "
+                    f"{left_mode} and {right_mode}: {len(overlap)} overlap"
+                )
