@@ -7,7 +7,15 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.models import Curriculum, Problem, Skill, Student, StudentSkill, TutorSession, TutorState, TutorTurn
+from app.models import (
+    Curriculum,
+    Problem,
+    Student,
+    StudentSkill,
+    TutorSession,
+    TutorState,
+    TutorTurn,
+)
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
