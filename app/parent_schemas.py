@@ -51,6 +51,7 @@ class SkillProgressOut(BaseModel):
     learning_state: str
     assistance_signal: str
     reason_code: str
+    action_code: str
 
 
 class RecentActivityOut(BaseModel):
