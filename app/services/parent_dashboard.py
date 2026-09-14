@@ -85,6 +85,7 @@ def _skill_progress_out(
         learning_state=insight.learning_state,
         assistance_signal=insight.assistance_signal,
         reason_code=insight.reason_code,
+        action_code=insight.action_code,
     )
 
 
