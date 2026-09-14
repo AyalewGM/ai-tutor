@@ -7,6 +7,7 @@ from app.content_validation import (
     CurriculumScopedRef,
     validate_active_skill_traceability,
     validate_expectation_skill_mapping,
+    validate_fresh_problem_sets,
     validate_learning_mode_inventory,
     validate_prerequisite_edge,
     validate_problem_inventory,
@@ -111,4 +112,36 @@ def test_learning_mode_inventory_requires_each_deterministic_mode():
             guided_count=1,
             independent_count=1,
             mastery_count=0,
+        )
+
+
+def test_fresh_problem_sets_accept_distinct_mode_pools():
+    validate_fresh_problem_sets(
+        skill=_ref(uuid.uuid4()),
+        diagnostic_problem_ids={"d1", "d2"},
+        guided_problem_ids={"g1", "g2"},
+        independent_problem_ids={"i1", "i2"},
+        mastery_problem_ids={"m1", "m2"},
+    )
+
+
+def test_fresh_problem_sets_reject_reuse_between_independent_and_mastery():
+    with pytest.raises(ContentValidationError, match="independent and mastery"):
+        validate_fresh_problem_sets(
+            skill=_ref(uuid.uuid4()),
+            diagnostic_problem_ids={"d1"},
+            guided_problem_ids={"g1"},
+            independent_problem_ids={"fresh-1", "shared"},
+            mastery_problem_ids={"shared", "fresh-2"},
+        )
+
+
+def test_fresh_problem_sets_reject_empty_mode_pool():
+    with pytest.raises(ContentValidationError, match="diagnostic"):
+        validate_fresh_problem_sets(
+            skill=_ref(uuid.uuid4()),
+            diagnostic_problem_ids=set(),
+            guided_problem_ids={"g1"},
+            independent_problem_ids={"i1"},
+            mastery_problem_ids={"m1"},
         )
