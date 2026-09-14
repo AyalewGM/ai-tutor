@@ -1,5 +1,5 @@
 import uuid
-from typing import Annotated
+from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
@@ -24,6 +24,7 @@ DbSession = Annotated[Session, Depends(get_db)]
 
 class HintRequest(BaseModel):
     problem_id: uuid.UUID
+    reason: Literal["HINT", "I_DONT_UNDERSTAND"] = "HINT"
 
 
 class HintResponse(BaseModel):
@@ -60,11 +61,16 @@ def request_hint(session_id: uuid.UUID, payload: HintRequest, db: DbSession) -> 
         highest_level_used=int(highest),
         explicit_request=True,
     )
+    request_trigger = (
+        "I_DONT_UNDERSTAND"
+        if payload.reason == "I_DONT_UNDERSTAND"
+        else decision.trigger
+    )
     if not decision.allowed:
         return HintResponse(
             allowed=False,
             level=0,
-            trigger=decision.trigger,
+            trigger=request_trigger,
             message=decision.reason or "Hints are not available right now.",
         )
 
@@ -95,7 +101,7 @@ def request_hint(session_id: uuid.UUID, payload: HintRequest, db: DbSession) -> 
             "generation_source": generation.source,
             "provider": generation.provider,
             "hint_level": decision.level,
-            "hint_trigger": decision.trigger,
+            "hint_trigger": request_trigger,
             "hint_constraint": hint_constraint(decision.level),
         },
     )
@@ -109,7 +115,7 @@ def request_hint(session_id: uuid.UUID, payload: HintRequest, db: DbSession) -> 
             problem_id=problem.id,
             tutor_turn_id=turn.id,
             level=decision.level,
-            trigger=decision.trigger,
+            trigger=request_trigger,
             generation_source=generation.source,
             provider=generation.provider,
             llm_model=generation.model,
@@ -119,6 +125,6 @@ def request_hint(session_id: uuid.UUID, payload: HintRequest, db: DbSession) -> 
     return HintResponse(
         allowed=True,
         level=decision.level,
-        trigger=decision.trigger,
+        trigger=request_trigger,
         message=generation.message,
     )
