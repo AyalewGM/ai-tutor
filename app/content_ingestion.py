@@ -7,6 +7,7 @@ owned data and must be validated before persistence.
 
 from collections.abc import Iterable
 from dataclasses import dataclass
+from datetime import datetime
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -27,6 +28,11 @@ class ExpectationInput:
     title: str
     source_uri: str
     strand: str | None = None
+    description: str | None = None
+    parent_source_identifier: str | None = None
+    provenance_metadata: dict[str, object] | None = None
+    effective_from: datetime | None = None
+    effective_to: datetime | None = None
 
 
 @dataclass(frozen=True)
@@ -91,6 +97,13 @@ def expectation_keys(
 ) -> tuple[tuple[str, str, str], ...]:
     """Expose stable keys for persistence/integration tests without DB coupling."""
     return tuple(command.key for command in commands)
+
+
+def _official_provenance(value: ExpectationInput) -> dict[str, object]:
+    """Preserve source metadata while keeping official-source identity authoritative."""
+    metadata = dict(value.provenance_metadata or {})
+    metadata["source_type"] = "OFFICIAL_CURRICULUM"
+    return metadata
 
 
 def _persist_mappings(
@@ -205,16 +218,32 @@ def persist_expectation_pack(
                 curriculum_version=command.key[1],
                 source_identifier=command.key[2],
                 title=value.title.strip(),
+                description=value.description.strip() if value.description else None,
                 strand=value.strand.strip() if value.strand else None,
+                parent_source_identifier=(
+                    value.parent_source_identifier.strip()
+                    if value.parent_source_identifier
+                    else None
+                ),
                 source_uri=value.source_uri.strip(),
-                provenance_json={"source_type": "OFFICIAL_CURRICULUM"},
+                provenance_json=_official_provenance(value),
+                effective_from=value.effective_from,
+                effective_to=value.effective_to,
             )
             session.add(expectation)
         else:
             expectation.title = value.title.strip()
+            expectation.description = value.description.strip() if value.description else None
             expectation.strand = value.strand.strip() if value.strand else None
+            expectation.parent_source_identifier = (
+                value.parent_source_identifier.strip()
+                if value.parent_source_identifier
+                else None
+            )
             expectation.source_uri = value.source_uri.strip()
-            expectation.provenance_json = {"source_type": "OFFICIAL_CURRICULUM"}
+            expectation.provenance_json = _official_provenance(value)
+            expectation.effective_from = value.effective_from
+            expectation.effective_to = value.effective_to
             expectation.active = True
         session.flush()
         persisted.append(expectation)
