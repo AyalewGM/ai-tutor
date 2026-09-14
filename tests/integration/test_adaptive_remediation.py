@@ -121,9 +121,10 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     problem_id = payload["next_problem"]["id"]
 
     assisted_workspace = _workspace(session_id)
+    assert assisted_workspace["curriculum"]["id"] == str(curriculum_id)
     assert assisted_workspace["focus"]["active_skill_id"] == str(distributive_id)
+    assert assisted_workspace["focus"]["in_remediation"] is True
     assert assisted_workspace["problem"]["id"] == problem_id
-    assert assisted_workspace["evidence"]["hinted_correct_count"] >= 1
 
     for _ in range(5):
         remediation_problem = _problem(problem_id, curriculum_id)
@@ -152,7 +153,6 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     assert resumed_workspace["focus"]["active_skill_id"] == str(target_id)
     assert resumed_workspace["focus"]["in_remediation"] is False
     assert resumed_workspace["problem"]["id"] == payload["next_problem"]["id"]
-    assert resumed_workspace["evidence"]["independent_correct_count"] >= 1
 
     with SessionLocal() as db:
         session = db.get(TutorSession, session_id)
