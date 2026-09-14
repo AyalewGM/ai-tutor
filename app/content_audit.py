@@ -7,14 +7,22 @@ LLM and never infer curriculum equivalence across jurisdictions.
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.content_models import ExpectationSkillMapping, ProblemContentMetadata
+from app.content_models import (
+    CurriculumExpectation,
+    ExpectationSkillMapping,
+    ProblemContentMetadata,
+)
 from app.content_validation import (
+    ContentValidationError,
     CurriculumScopedRef,
     validate_active_skill_traceability,
+    validate_expectation_skill_mapping,
     validate_fresh_problem_sets,
     validate_learning_mode_inventory,
+    validate_prerequisite_edge,
+    validate_problem_scope,
 )
-from app.models import Curriculum, Problem, Skill
+from app.models import Curriculum, Problem, Skill, SkillPrerequisite
 
 
 def _active_curriculum(session: Session, curriculum_id) -> Curriculum:
@@ -22,6 +30,108 @@ def _active_curriculum(session: Session, curriculum_id) -> Curriculum:
     if curriculum is None or not curriculum.active:
         raise ValueError("Active curriculum is required for content audit")
     return curriculum
+
+
+def audit_curriculum_isolation(
+    session: Session,
+    *,
+    curriculum_id,
+) -> None:
+    """Re-audit persisted records that could leak across curriculum boundaries.
+
+    Normal ingestion validates these relationships before persistence. This
+    audit intentionally reads the database back and fails closed if records were
+    inserted or modified through another path. It provides an independent QA
+    gate for the repository's strict jurisdiction-isolation requirement.
+    """
+    curriculum = _active_curriculum(session, curriculum_id)
+    skills = session.scalars(select(Skill).where(Skill.curriculum_id == curriculum.id)).all()
+    skill_by_id = {skill.id: skill for skill in skills}
+    selected_skill_ids = set(skill_by_id)
+
+    expectations = session.scalars(
+        select(CurriculumExpectation).where(
+            CurriculumExpectation.curriculum_id == curriculum.id
+        )
+    ).all()
+    expectation_by_id = {expectation.id: expectation for expectation in expectations}
+    selected_expectation_ids = set(expectation_by_id)
+
+    # Mapping rows are deliberately inspected globally so a row with a forged
+    # mapping.curriculum_id cannot hide a reference into this curriculum.
+    for mapping in session.scalars(select(ExpectationSkillMapping)).all():
+        if not (
+            mapping.curriculum_id == curriculum.id
+            or mapping.expectation_id in selected_expectation_ids
+            or mapping.skill_id in selected_skill_ids
+        ):
+            continue
+        expectation = session.get(CurriculumExpectation, mapping.expectation_id)
+        skill = session.get(Skill, mapping.skill_id)
+        if expectation is None or skill is None:
+            raise ContentValidationError("Expectation mapping references missing persisted records")
+        if mapping.curriculum_id != curriculum.id:
+            raise ContentValidationError(
+                "Expectation mapping touching audited curriculum uses another curriculum_id"
+            )
+        validate_expectation_skill_mapping(
+            mapping_curriculum_id=mapping.curriculum_id,
+            expectation=CurriculumScopedRef(
+                id=expectation.id,
+                curriculum_id=expectation.curriculum_id,
+            ),
+            skill=CurriculumScopedRef(id=skill.id, curriculum_id=skill.curriculum_id),
+        )
+
+    # A prerequisite edge has no curriculum_id column, so validate every edge
+    # touching an audited skill from the curricula attached to both endpoints.
+    for edge in session.scalars(select(SkillPrerequisite)).all():
+        if (
+            edge.skill_id not in selected_skill_ids
+            and edge.prerequisite_skill_id not in selected_skill_ids
+        ):
+            continue
+        skill = session.get(Skill, edge.skill_id)
+        prerequisite = session.get(Skill, edge.prerequisite_skill_id)
+        if skill is None or prerequisite is None:
+            raise ContentValidationError("Prerequisite edge references missing persisted skills")
+        validate_prerequisite_edge(
+            skill=CurriculumScopedRef(id=skill.id, curriculum_id=skill.curriculum_id),
+            prerequisite=CurriculumScopedRef(
+                id=prerequisite.id,
+                curriculum_id=prerequisite.curriculum_id,
+            ),
+        )
+        if skill.curriculum_id != curriculum.id or prerequisite.curriculum_id != curriculum.id:
+            raise ContentValidationError(
+                "Prerequisite edge touching audited curriculum crosses curriculum boundaries"
+            )
+
+    # Metadata is also inspected globally so a forged metadata.curriculum_id
+    # cannot disguise a problem whose primary skill belongs to this curriculum.
+    for metadata in session.scalars(select(ProblemContentMetadata)).all():
+        problem = session.get(Problem, metadata.problem_id)
+        if problem is None:
+            raise ContentValidationError("Problem metadata references a missing problem")
+        if (
+            metadata.curriculum_id != curriculum.id
+            and problem.primary_skill_id not in selected_skill_ids
+        ):
+            continue
+        primary_skill = session.get(Skill, problem.primary_skill_id)
+        if primary_skill is None:
+            raise ContentValidationError("Problem references a missing primary skill")
+        if metadata.curriculum_id != curriculum.id:
+            raise ContentValidationError(
+                "Problem attached to audited curriculum skill uses another curriculum_id"
+            )
+        validate_problem_scope(
+            pack_curriculum_id=metadata.curriculum_id,
+            primary_skill=CurriculumScopedRef(
+                id=primary_skill.id,
+                curriculum_id=primary_skill.curriculum_id,
+            ),
+        )
 
 
 def audit_curriculum_skill_traceability(
