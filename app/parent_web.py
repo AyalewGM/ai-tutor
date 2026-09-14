@@ -44,7 +44,7 @@ def parent_dashboard_page() -> str:
     .toolbar { display: flex; gap: .75rem; flex-wrap: wrap; align-items: end; }
     label { display: grid; gap: .35rem; font-weight: 650; }
     input, select, button { font: inherit; min-height: 44px; padding: .65rem .8rem; border-radius: 10px; border: 1px solid #c9cfdd; }
-    input:focus-visible, select:focus-visible, button:focus-visible { outline: 3px solid color-mix(in srgb, var(--focus) 36%, transparent); outline-offset: 2px; }
+    input:focus-visible, select:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid color-mix(in srgb, var(--focus) 36%, transparent); outline-offset: 2px; }
     button { cursor: pointer; background: var(--surface); color: #172033; font-weight: 650; }
     button.primary { color: #fff; border-color: transparent; background: linear-gradient(120deg, var(--goozam-blue), var(--goozam-indigo)); }
     button.danger { color: var(--danger); }
@@ -56,6 +56,9 @@ def parent_dashboard_page() -> str:
     .card { border: 1px solid var(--border); border-radius: 12px; padding: .9rem; background: #fff; }
     .card .state { font-weight: 700; color: var(--goozam-indigo); }
     .card small { color: var(--muted); }
+    .next-step { margin: .7rem 0 0; padding: .65rem .75rem; background: var(--surface-soft); border-radius: 8px; }
+    details { margin-top: .65rem; }
+    details summary { cursor: pointer; color: var(--goozam-indigo); font-weight: 650; min-height: 44px; display: flex; align-items: center; }
     .muted { color: var(--muted); }
     .error { color: var(--danger); white-space: pre-wrap; }
     .evidence-note { border-left: 4px solid var(--goozam-indigo); background: var(--surface-soft); padding: .7rem .8rem; border-radius: 8px; }
@@ -107,7 +110,7 @@ def parent_dashboard_page() -> str:
     </section>
 
     <section class="panel" aria-labelledby="skillsHeading">
-      <h2 id="skillsHeading">Skill progress</h2>
+      <h2 id="skillsHeading">Skill progress and next steps</h2>
       <div id="skills" class="grid"></div>
     </section>
 
@@ -180,6 +183,29 @@ function renderSummary(skills) {
   q('summary').innerHTML = items.map(([label, value]) => `<article class="summary-card"><span>${escapeHtml(label)}</span><strong>${value}</strong></article>`).join('');
 }
 
+function actionText(code) {
+  const actions = {
+    COLLECT_MORE_EVIDENCE: 'Continue normal practice so the tutor can collect enough evidence.',
+    CONTINUE_CURRENT_LEARNING: 'Continue the current learning plan without drawing a negative conclusion.',
+    ENCOURAGE_INDEPENDENT_ATTEMPT: 'Encourage a fresh independent attempt when the tutor presents one.',
+    RECOGNIZE_INDEPENDENT_PROGRESS: 'Recognize the independent progress and continue the tutor plan.',
+    RECOGNIZE_MASTERY: 'Celebrate the independently demonstrated mastery.',
+    FOLLOW_EXISTING_REVIEW_PLAN: 'Follow the review already scheduled by the tutoring engine.',
+  };
+  return actions[code] || 'Continue the tutor plan.';
+}
+
+function skillCard(skill) {
+  return `<article class="card">
+    <strong>${escapeHtml(skill.skill_name)}</strong>
+    <p class="state">${escapeHtml(friendlyStatus(skill.learning_state))}</p>
+    <p class="next-step"><strong>Suggested next step:</strong> ${escapeHtml(actionText(skill.action_code))}</p>
+    <details><summary>View supporting evidence</summary>
+      <small>Independent: ${skill.independent_correct_count}/${skill.independent_attempt_count} · Assisted successes: ${skill.hinted_correct_count} · Evidence: ${escapeHtml(friendlyStatus(skill.evidence_status))} · Reason: ${escapeHtml(friendlyStatus(skill.reason_code))}</small>
+    </details>
+  </article>`;
+}
+
 async function loadDashboard(studentId) {
   if (!studentId) { q('dashboard').hidden = true; return; }
   const d = await request(`/children/${studentId}/dashboard`);
@@ -188,7 +214,7 @@ async function loadDashboard(studentId) {
   q('context').textContent = [d.child.jurisdiction, d.child.curriculum_name, d.child.school_system].filter(Boolean).join(' · ');
   q('activeSkill').textContent = d.active_skill_name || 'None';
   renderSummary(d.skills);
-  q('skills').innerHTML = d.skills.length ? d.skills.map(s => `<article class="card"><strong>${escapeHtml(s.skill_name)}</strong><p class="state">${escapeHtml(friendlyStatus(s.learning_state))}</p><small>Independent: ${s.independent_correct_count}/${s.independent_attempt_count} · Assisted successes: ${s.hinted_correct_count} · Evidence: ${escapeHtml(friendlyStatus(s.evidence_status))}</small></article>`).join('') : '<p class="muted">No skill progress recorded yet.</p>';
+  q('skills').innerHTML = d.skills.length ? d.skills.map(skillCard).join('') : '<p class="muted">No skill progress recorded yet.</p>';
   q('activity').innerHTML = d.recent_activity.length ? d.recent_activity.map(a => `<li>${escapeHtml(a.skill_name)} — ${escapeHtml(friendlyStatus(a.state))}</li>`).join('') : '<li class="muted">No recent activity.</li>';
   q('support').innerHTML = d.support_areas.length ? d.support_areas.map(a => `<li>${escapeHtml(a.name)}</li>`).join('') : '<li class="muted">No current support areas recorded.</li>';
 }
