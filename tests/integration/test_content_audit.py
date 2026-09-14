@@ -13,7 +13,11 @@ from app.content_ingestion import (
     ExpectationSkillMappingInput,
     persist_expectation_pack,
 )
-from app.content_models import CurriculumExpectation, ExpectationSkillMapping, ProblemContentMetadata
+from app.content_models import (
+    CurriculumExpectation,
+    ExpectationSkillMapping,
+    ProblemContentMetadata,
+)
 from app.content_validation import ContentValidationError
 from app.core.database import SessionLocal
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
