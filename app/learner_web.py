@@ -95,7 +95,7 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
     input, button {{ font: inherit; padding: .75rem; border-radius: 9px; border: 1px solid color-mix(in srgb, CanvasText 28%, transparent); }}
     input {{ width: min(100%, 34rem); box-sizing: border-box; }}
     button {{ cursor: pointer; min-height: 44px; }}
-    button[hidden] {{ display: none; }}
+    button[hidden], section[hidden] {{ display: none; }}
     .muted {{ opacity: .72; }}
     .error {{ color: #b42318; white-space: pre-wrap; }}
     .success {{ color: #067647; }}
@@ -119,7 +119,13 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
   <p id="error" class="error" role="alert" aria-live="assertive"></p>
   <p id="status" role="status" aria-live="polite"></p>
 
-  <section class="panel" aria-labelledby="problemHeading">
+  <section id="completionPanel" class="panel" aria-labelledby="completionHeading" hidden>
+    <h2 id="completionHeading">Skill complete</h2>
+    <p id="completionMessage">You demonstrated this skill independently in the mastery check.</p>
+    <p class="muted">Mastery is based on the tutor application's recorded independent evidence. Help and hints do not count as mastery evidence.</p>
+  </section>
+
+  <section id="problemPanel" class="panel" aria-labelledby="problemHeading">
     <h2 id="problemHeading">Current problem</h2>
     <div id="problem" class="problem">Loading…</div>
     <form id="answerForm">
@@ -174,12 +180,17 @@ function hasAction(action) {{ return workspace?.allowed_actions?.includes(action
 
 function render(data) {{
   workspace = data;
+  const complete = data.state === 'COMPLETE';
   q('title').textContent = `${{data.learner.first_name}} · Grade ${{data.learner.grade_level}}`;
   q('curriculum').textContent = [data.curriculum.jurisdiction, data.curriculum.name].filter(Boolean).join(' · ');
   q('state').textContent = friendly(data.state);
   q('skill').textContent = data.focus.skill_name;
+  q('completionPanel').hidden = !complete;
+  q('problemPanel').hidden = complete;
   q('problem').textContent = data.problem?.prompt || 'No problem is currently assigned.';
-  q('coach').textContent = data.coaching_message || 'Work through the problem carefully.';
+  q('coach').textContent = complete
+    ? 'Nice work. Your independent mastery check is complete.'
+    : (data.coaching_message || 'Work through the problem carefully.');
   q('independent').textContent = `${{data.evidence.independent_correct_count}} / ${{data.evidence.independent_attempt_count}}`;
   q('assisted').textContent = String(data.evidence.hinted_correct_count);
   q('mastery').textContent = `${{Math.round(data.evidence.mastery_score * 100)}}%`;
