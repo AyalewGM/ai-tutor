@@ -54,3 +54,29 @@ class ExpectationSkillMapping(Base):
     mapping_type: Mapped[str] = mapped_column(String(40), default="ALIGNS_TO")
     provenance_json: Mapped[dict | None] = mapped_column(JSONB)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+
+
+class ProblemContentMetadata(Base):
+    """Deterministic curriculum and learning-mode metadata for a problem.
+
+    The application owns these fields. They define where and how a problem may
+    be used; an LLM must not infer or alter them at runtime.
+    """
+
+    __tablename__ = "problem_content_metadata"
+    __table_args__ = (
+        UniqueConstraint("problem_id", name="uq_problem_content_metadata_problem"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    problem_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("problems.id"), index=True)
+    curriculum_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("curricula.id"), index=True)
+    objective: Mapped[str] = mapped_column(String(500))
+    evaluation_type: Mapped[str] = mapped_column(String(50))
+    diagnostic_eligible: Mapped[bool] = mapped_column(Boolean, default=False)
+    guided_eligible: Mapped[bool] = mapped_column(Boolean, default=False)
+    independent_eligible: Mapped[bool] = mapped_column(Boolean, default=False)
+    mastery_eligible: Mapped[bool] = mapped_column(Boolean, default=False)
+    llm_solution_required: Mapped[bool] = mapped_column(Boolean, default=False)
+    provenance_json: Mapped[dict | None] = mapped_column(JSONB)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
