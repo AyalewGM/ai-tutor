@@ -4,11 +4,11 @@ from datetime import UTC, datetime, timedelta
 import pytest
 
 from app.services.intervention_policy import (
+    decide_intervention,
     DeclaredPrerequisiteEdge,
     IndependentAttemptEvidence,
     InterventionPolicy,
     InterventionState,
-    decide_intervention,
 )
 
 
@@ -221,13 +221,13 @@ def test_same_evidence_and_policy_replays_identically() -> None:
         _attempt(skill_id=PREREQUISITE_SKILL_ID, problem_number=1),
         _attempt(skill_id=PREREQUISITE_SKILL_ID, problem_number=2),
     ]
-    args = dict(
-        policy=InterventionPolicy(version="pilot-v1"),
-        curriculum_id=CURRICULUM_ID,
-        target_skill_id=TARGET_SKILL_ID,
-        prerequisite_edge=_edge(),
-        evidence=evidence,
-        evidence_window_start=WINDOW_START,
-    )
+    args = {
+        "policy": InterventionPolicy(version="pilot-v1"),
+        "curriculum_id": CURRICULUM_ID,
+        "target_skill_id": TARGET_SKILL_ID,
+        "prerequisite_edge": _edge(),
+        "evidence": evidence,
+        "evidence_window_start": WINDOW_START,
+    }
 
     assert decide_intervention(**args) == decide_intervention(**args)
