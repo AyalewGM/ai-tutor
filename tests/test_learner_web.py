@@ -7,6 +7,18 @@ from app.main import app
 client = TestClient(app)
 
 
+def test_learner_entry_uses_server_validated_session_creation() -> None:
+    response = client.get("/learn")
+
+    assert response.status_code == 200
+    assert "Start a learning session" in response.text
+    assert "Learner ID" in response.text
+    assert "Skill ID" in response.text
+    assert "Curriculum scope and the first diagnostic problem are validated by the server" in response.text
+    assert "'/api/v1/adaptive-tutor/sessions'" in response.text
+    assert "window.location.assign(`/learn/${body.session_id}`)" in response.text
+
+
 def test_learner_workspace_web_surface_is_problem_first() -> None:
     session_id = uuid.uuid4()
     response = client.get(f"/learn/{session_id}")
