@@ -81,7 +81,7 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
   </section>
 </main>
 <script>
-const sessionId = {session_id!r};
+const sessionId = "{session_id}";
 const workspaceUrl = `/api/v1/learner-workspace/sessions/${{sessionId}}`;
 const adaptiveUrl = `/api/v1/adaptive-tutor/sessions/${{sessionId}}`;
 const q = id => document.getElementById(id);
