@@ -27,6 +27,15 @@ class AssistanceSignal(StrEnum):
     MIXED_INDEPENDENT_AND_ASSISTED = "MIXED_INDEPENDENT_AND_ASSISTED"
 
 
+class ParentActionCode(StrEnum):
+    COLLECT_MORE_EVIDENCE = "COLLECT_MORE_EVIDENCE"
+    CONTINUE_CURRENT_LEARNING = "CONTINUE_CURRENT_LEARNING"
+    ENCOURAGE_INDEPENDENT_ATTEMPT = "ENCOURAGE_INDEPENDENT_ATTEMPT"
+    RECOGNIZE_INDEPENDENT_PROGRESS = "RECOGNIZE_INDEPENDENT_PROGRESS"
+    RECOGNIZE_MASTERY = "RECOGNIZE_MASTERY"
+    FOLLOW_EXISTING_REVIEW_PLAN = "FOLLOW_EXISTING_REVIEW_PLAN"
+
+
 @dataclass(frozen=True)
 class ParentSkillEvidence:
     attempt_count: int
@@ -42,6 +51,7 @@ class ParentSkillInsight:
     learning_state: ParentLearningState
     assistance_signal: AssistanceSignal
     reason_code: str
+    action_code: ParentActionCode
 
 
 class EvidenceSufficiencyPolicy(Protocol):
@@ -76,10 +86,10 @@ def classify_parent_skill_progress(
 ) -> ParentSkillInsight:
     """Create a deterministic parent-facing projection from persisted evidence.
 
-    This projection never changes tutoring state or mastery. It deliberately
-    avoids converting sparse failures into a weakness label. F-010 may replace
-    the evidence-sufficiency policy, but it cannot override existing mastery
-    semantics through this read model.
+    This projection never changes tutoring state or mastery. Action codes are
+    bounded communication guidance for the parent dashboard, not intervention
+    decisions. F-010 may replace the evidence-sufficiency policy, but it cannot
+    override existing mastery semantics through this read model.
     """
 
     active_policy = policy or ObservationOnlyEvidencePolicy()
@@ -91,6 +101,7 @@ def classify_parent_skill_progress(
             learning_state=ParentLearningState.NOT_STARTED,
             assistance_signal=assistance,
             reason_code="COLLECT_MORE_EVIDENCE",
+            action_code=ParentActionCode.COLLECT_MORE_EVIDENCE,
         )
 
     if evidence.status == SkillStatus.MASTERED and evidence.independent_correct_count > 0:
@@ -99,6 +110,7 @@ def classify_parent_skill_progress(
             learning_state=ParentLearningState.INDEPENDENT_MASTERY,
             assistance_signal=assistance,
             reason_code="INDEPENDENT_MASTERY_EVIDENCE",
+            action_code=ParentActionCode.RECOGNIZE_MASTERY,
         )
 
     if evidence.status == SkillStatus.REVIEW_DUE:
@@ -107,6 +119,7 @@ def classify_parent_skill_progress(
             learning_state=ParentLearningState.NEEDS_PRACTICE,
             assistance_signal=assistance,
             reason_code="EXISTING_REVIEW_DUE_STATE",
+            action_code=ParentActionCode.FOLLOW_EXISTING_REVIEW_PLAN,
         )
 
     if evidence.independent_correct_count > 0:
@@ -115,6 +128,7 @@ def classify_parent_skill_progress(
             learning_state=ParentLearningState.INDEPENDENT_PROGRESS,
             assistance_signal=assistance,
             reason_code="INDEPENDENT_SUCCESS_OBSERVED",
+            action_code=ParentActionCode.RECOGNIZE_INDEPENDENT_PROGRESS,
         )
 
     if evidence.hinted_correct_count > 0:
@@ -123,6 +137,7 @@ def classify_parent_skill_progress(
             learning_state=ParentLearningState.ASSISTED_SUCCESS,
             assistance_signal=assistance,
             reason_code="ASSISTED_SUCCESS_OBSERVED",
+            action_code=ParentActionCode.ENCOURAGE_INDEPENDENT_ATTEMPT,
         )
 
     return ParentSkillInsight(
@@ -130,4 +145,5 @@ def classify_parent_skill_progress(
         learning_state=ParentLearningState.IN_PROGRESS,
         assistance_signal=assistance,
         reason_code="ACTIVITY_OBSERVED_NO_NEGATIVE_INFERENCE",
+        action_code=ParentActionCode.CONTINUE_CURRENT_LEARNING,
     )
