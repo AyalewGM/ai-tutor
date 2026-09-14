@@ -28,6 +28,20 @@ def test_parent_dashboard_is_summary_first_and_keeps_evidence_distinctions_visib
     assert "evidence_status === 'INSUFFICIENT_EVIDENCE'" in response.text
 
 
+def test_parent_dashboard_renders_only_bounded_backend_action_codes() -> None:
+    response = client.get("/parent")
+    assert response.status_code == 200
+    assert "Skill progress and next steps" in response.text
+    assert "Suggested next step:" in response.text
+    assert "COLLECT_MORE_EVIDENCE" in response.text
+    assert "ENCOURAGE_INDEPENDENT_ATTEMPT" in response.text
+    assert "RECOGNIZE_INDEPENDENT_PROGRESS" in response.text
+    assert "RECOGNIZE_MASTERY" in response.text
+    assert "FOLLOW_EXISTING_REVIEW_PLAN" in response.text
+    assert "View supporting evidence" in response.text
+    assert "Reason:" in response.text
+
+
 def test_parent_dashboard_uses_goozam_derived_visual_tokens_and_accessible_interactions() -> None:
     response = client.get("/parent")
     assert response.status_code == 200
