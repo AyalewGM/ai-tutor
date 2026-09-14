@@ -4,6 +4,7 @@ import pytest
 
 from app.content_audit import (
     audit_curriculum_isolation,
+    audit_curriculum_pack_readiness,
     audit_curriculum_problem_inventory,
     audit_curriculum_skill_traceability,
 )
@@ -75,6 +76,28 @@ def _add_problem(db, *, curriculum: Curriculum, skill: Skill, mode: str) -> Prob
     return problem
 
 
+def _map_skill_to_expectation(db, *, curriculum: Curriculum, skill: Skill) -> None:
+    pack = ContentPackInput(
+        curriculum_code=curriculum.code,
+        curriculum_version=curriculum.version,
+        expectations=(
+            ExpectationInput(
+                source_identifier="TEST.EXPECTATION.1",
+                title="Test expectation",
+                strand="Test",
+                source_uri="https://example.edu/f007/audit/expectation-1",
+            ),
+        ),
+        mappings=(
+            ExpectationSkillMappingInput(
+                source_identifier="TEST.EXPECTATION.1",
+                skill_code=skill.code,
+            ),
+        ),
+    )
+    persist_expectation_pack(db, pack)
+
+
 def test_traceability_audit_rejects_unmapped_skill() -> None:
     with SessionLocal() as db:
         curriculum, _ = _isolated_curriculum(db)
@@ -87,25 +110,7 @@ def test_traceability_audit_rejects_unmapped_skill() -> None:
 def test_traceability_audit_accepts_explicit_curriculum_scoped_mapping() -> None:
     with SessionLocal() as db:
         curriculum, skill = _isolated_curriculum(db)
-        pack = ContentPackInput(
-            curriculum_code=curriculum.code,
-            curriculum_version=curriculum.version,
-            expectations=(
-                ExpectationInput(
-                    source_identifier="TEST.EXPECTATION.1",
-                    title="Test expectation",
-                    strand="Test",
-                    source_uri="https://example.edu/f007/audit/expectation-1",
-                ),
-            ),
-            mappings=(
-                ExpectationSkillMappingInput(
-                    source_identifier="TEST.EXPECTATION.1",
-                    skill_code=skill.code,
-                ),
-            ),
-        )
-        persist_expectation_pack(db, pack)
+        _map_skill_to_expectation(db, curriculum=curriculum, skill=skill)
 
         audit_curriculum_skill_traceability(db, curriculum_id=curriculum.id)
         audit_curriculum_isolation(db, curriculum_id=curriculum.id)
@@ -226,4 +231,26 @@ def test_problem_inventory_audit_rejects_problem_reused_across_modes() -> None:
 
         with pytest.raises(ContentValidationError, match="reuses problem IDs"):
             audit_curriculum_problem_inventory(db, curriculum_id=curriculum.id)
+        db.rollback()
+
+
+def test_pack_readiness_audit_rejects_incomplete_pack() -> None:
+    with SessionLocal() as db:
+        curriculum, skill = _isolated_curriculum(db)
+        for mode in ("diagnostic", "guided", "independent", "mastery"):
+            _add_problem(db, curriculum=curriculum, skill=skill, mode=mode)
+
+        with pytest.raises(ContentValidationError, match="must map to at least one"):
+            audit_curriculum_pack_readiness(db, curriculum_id=curriculum.id)
+        db.rollback()
+
+
+def test_pack_readiness_audit_accepts_complete_structural_pack() -> None:
+    with SessionLocal() as db:
+        curriculum, skill = _isolated_curriculum(db)
+        _map_skill_to_expectation(db, curriculum=curriculum, skill=skill)
+        for mode in ("diagnostic", "guided", "independent", "mastery"):
+            _add_problem(db, curriculum=curriculum, skill=skill, mode=mode)
+
+        audit_curriculum_pack_readiness(db, curriculum_id=curriculum.id)
         db.rollback()
