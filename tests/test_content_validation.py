@@ -11,6 +11,7 @@ from app.content_validation import (
     validate_learning_mode_inventory,
     validate_prerequisite_edge,
     validate_problem_inventory,
+    validate_problem_metadata,
     validate_problem_scope,
     validate_source_identity,
 )
@@ -60,6 +61,66 @@ def test_problem_scope_rejects_skill_from_other_curriculum():
         validate_problem_scope(
             pack_curriculum_id=uuid.uuid4(),
             primary_skill=_ref(uuid.uuid4()),
+        )
+
+
+def test_problem_metadata_accepts_deterministic_mastery_problem():
+    curriculum_id = uuid.uuid4()
+    validate_problem_metadata(
+        metadata_curriculum_id=curriculum_id,
+        primary_skill=_ref(curriculum_id),
+        objective="Solve a one-step linear equation",
+        evaluation_type="EXACT_NUMERIC",
+        diagnostic_eligible=False,
+        guided_eligible=False,
+        independent_eligible=True,
+        mastery_eligible=True,
+        llm_solution_required=False,
+    )
+
+
+def test_problem_metadata_rejects_cross_curriculum_or_orphan_mode():
+    curriculum_id = uuid.uuid4()
+    with pytest.raises(ContentValidationError, match="content-pack curriculum"):
+        validate_problem_metadata(
+            metadata_curriculum_id=curriculum_id,
+            primary_skill=_ref(uuid.uuid4()),
+            objective="Solve",
+            evaluation_type="EXACT_NUMERIC",
+            diagnostic_eligible=True,
+            guided_eligible=False,
+            independent_eligible=False,
+            mastery_eligible=False,
+            llm_solution_required=False,
+        )
+
+    with pytest.raises(ContentValidationError, match="at least one learning mode"):
+        validate_problem_metadata(
+            metadata_curriculum_id=curriculum_id,
+            primary_skill=_ref(curriculum_id),
+            objective="Solve",
+            evaluation_type="EXACT_NUMERIC",
+            diagnostic_eligible=False,
+            guided_eligible=False,
+            independent_eligible=False,
+            mastery_eligible=False,
+            llm_solution_required=False,
+        )
+
+
+def test_problem_metadata_rejects_llm_required_assessment_problem():
+    curriculum_id = uuid.uuid4()
+    with pytest.raises(ContentValidationError, match="cannot require an LLM"):
+        validate_problem_metadata(
+            metadata_curriculum_id=curriculum_id,
+            primary_skill=_ref(curriculum_id),
+            objective="Solve",
+            evaluation_type="EXACT_NUMERIC",
+            diagnostic_eligible=False,
+            guided_eligible=False,
+            independent_eligible=False,
+            mastery_eligible=True,
+            llm_solution_required=True,
         )
 
 
