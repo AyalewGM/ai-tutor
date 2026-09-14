@@ -13,35 +13,76 @@ def parent_dashboard_page() -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Tutor Parent Dashboard</title>
   <style>
-    :root { font-family: system-ui, sans-serif; color-scheme: light dark; }
-    body { margin: 0; background: Canvas; color: CanvasText; }
-    main { max-width: 1040px; margin: auto; padding: 1rem; }
-    header, .panel { border: 1px solid color-mix(in srgb, CanvasText 18%, transparent); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; }
+    :root {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #172033;
+      background: #f7f8fc;
+      --goozam-blue: #2563eb;
+      --goozam-indigo: #4f46e5;
+      --goozam-purple: #7c3aed;
+      --surface: #ffffff;
+      --surface-soft: #f5f6ff;
+      --border: #dfe3ef;
+      --muted: #667085;
+      --danger: #b42318;
+      --focus: #1d4ed8;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f7f8fc; color: #172033; }
+    main { max-width: 1120px; margin: auto; padding: 1.25rem; }
+    header.hero {
+      color: white;
+      background: linear-gradient(120deg, var(--goozam-blue), var(--goozam-purple));
+      border-radius: 18px;
+      padding: 1.4rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 12px 30px rgba(79, 70, 229, .18);
+    }
+    header.hero h1 { margin: 0 0 .35rem; font-size: clamp(1.7rem, 4vw, 2.3rem); }
+    header.hero p { margin: .25rem 0; color: rgba(255,255,255,.9); }
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1rem; margin-bottom: 1rem; }
     .toolbar { display: flex; gap: .75rem; flex-wrap: wrap; align-items: end; }
-    label { display: grid; gap: .35rem; font-weight: 600; }
-    input, select, button { font: inherit; padding: .65rem; border-radius: 8px; border: 1px solid color-mix(in srgb, CanvasText 28%, transparent); }
-    button { cursor: pointer; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .75rem; }
-    .card { border: 1px solid color-mix(in srgb, CanvasText 18%, transparent); border-radius: 10px; padding: .8rem; }
-    .muted { opacity: .72; }
-    .error { color: #b42318; white-space: pre-wrap; }
+    label { display: grid; gap: .35rem; font-weight: 650; }
+    input, select, button { font: inherit; min-height: 44px; padding: .65rem .8rem; border-radius: 10px; border: 1px solid #c9cfdd; }
+    input:focus-visible, select:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid color-mix(in srgb, var(--focus) 36%, transparent); outline-offset: 2px; }
+    button { cursor: pointer; background: var(--surface); color: #172033; font-weight: 650; }
+    button.primary { color: #fff; border-color: transparent; background: linear-gradient(120deg, var(--goozam-blue), var(--goozam-indigo)); }
+    button.danger { color: var(--danger); }
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: .75rem; }
+    .summary-card { background: var(--surface-soft); border: 1px solid #e2e4f6; border-radius: 12px; padding: .9rem; }
+    .summary-card strong { display: block; font-size: 1.55rem; color: var(--goozam-indigo); margin-top: .2rem; }
+    .summary-card span { color: var(--muted); font-size: .9rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); gap: .75rem; }
+    .card { border: 1px solid var(--border); border-radius: 12px; padding: .9rem; background: #fff; }
+    .card .state { font-weight: 700; color: var(--goozam-indigo); }
+    .card small { color: var(--muted); }
+    .next-step { margin: .7rem 0 0; padding: .65rem .75rem; background: var(--surface-soft); border-radius: 8px; }
+    details { margin-top: .65rem; }
+    details summary { cursor: pointer; color: var(--goozam-indigo); font-weight: 650; min-height: 44px; display: flex; align-items: center; }
+    .muted { color: var(--muted); }
+    .error { color: var(--danger); white-space: pre-wrap; }
+    .evidence-note { border-left: 4px solid var(--goozam-indigo); background: var(--surface-soft); padding: .7rem .8rem; border-radius: 8px; }
     ul { padding-left: 1.25rem; }
-    @media (max-width: 600px) { main { padding: .65rem; } .toolbar > * { width: 100%; } }
+    @media (max-width: 600px) {
+      main { padding: .7rem; }
+      .toolbar > * { width: 100%; }
+      header.hero { border-radius: 14px; }
+    }
   </style>
 </head>
 <body>
 <main>
-  <header>
+  <header class="hero">
     <h1>Parent Dashboard</h1>
-    <p class="muted">View each linked child's progress. Curriculum and learning decisions are read-only here.</p>
-    <div id="profile" class="muted">Loading parent profile…</div>
+    <p>Clear, evidence-backed learning progress for each linked child.</p>
+    <div id="profile">Loading parent profile…</div>
   </header>
 
-  <section class="panel">
+  <section class="panel" aria-label="Child selection">
     <div class="toolbar">
       <label>Child<select id="childSelect"><option value="">Select a child</option></select></label>
-      <button id="refreshBtn" type="button">Refresh progress</button>
-      <button id="unlinkBtn" type="button">Remove selected child</button>
+      <button id="refreshBtn" class="primary" type="button">Refresh progress</button>
+      <button id="unlinkBtn" class="danger" type="button">Remove selected child</button>
     </div>
   </section>
 
@@ -50,16 +91,38 @@ def parent_dashboard_page() -> str:
     <p class="muted">Enter the one-time link code provided by the application. A child cannot be linked by UUID.</p>
     <form id="linkForm" class="toolbar">
       <label>One-time link code<input id="claimToken" minlength="16" required autocomplete="off"></label>
-      <button type="submit">Link child</button>
+      <button class="primary" type="submit">Link child</button>
     </form>
   </section>
 
-  <p id="error" class="error" role="alert"></p>
+  <p id="error" class="error" role="alert" aria-live="assertive"></p>
   <section id="dashboard" hidden>
-    <div class="panel"><h2 id="childTitle"></h2><div id="context" class="muted"></div><p><strong>Active skill:</strong> <span id="activeSkill">None</span></p></div>
-    <div class="panel"><h2>Skill progress</h2><div id="skills" class="grid"></div></div>
-    <div class="panel"><h2>Recent activity</h2><ul id="activity"></ul></div>
-    <div class="panel"><h2>Areas needing support</h2><ul id="support"></ul></div>
+    <div class="panel">
+      <h2 id="childTitle"></h2>
+      <div id="context" class="muted"></div>
+      <p><strong>Current focus:</strong> <span id="activeSkill">None</span></p>
+      <p class="evidence-note">Progress below distinguishes assisted work from independent evidence. Limited observations are shown as insufficient evidence rather than as a weakness.</p>
+    </div>
+
+    <section class="panel" aria-labelledby="summaryHeading">
+      <h2 id="summaryHeading">Learning summary</h2>
+      <div id="summary" class="summary"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="skillsHeading">
+      <h2 id="skillsHeading">Skill progress and next steps</h2>
+      <div id="skills" class="grid"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="activityHeading">
+      <h2 id="activityHeading">Recent activity</h2>
+      <ul id="activity"></ul>
+    </section>
+
+    <section class="panel" aria-labelledby="supportHeading">
+      <h2 id="supportHeading">Current support areas</h2>
+      <ul id="support"></ul>
+    </section>
   </section>
 </main>
 <script>
@@ -100,6 +163,49 @@ async function loadChildren(preferredId) {
   if (select.value) await loadDashboard(select.value); else q('dashboard').hidden = true;
 }
 
+function summaryCounts(skills) {
+  return {
+    mastered: skills.filter(s => s.learning_state === 'INDEPENDENT_MASTERY').length,
+    independent: skills.filter(s => s.learning_state === 'INDEPENDENT_PROGRESS').length,
+    assisted: skills.filter(s => s.learning_state === 'ASSISTED_SUCCESS').length,
+    insufficient: skills.filter(s => s.evidence_status === 'INSUFFICIENT_EVIDENCE').length,
+  };
+}
+
+function renderSummary(skills) {
+  const counts = summaryCounts(skills);
+  const items = [
+    ['Independent mastery', counts.mastered],
+    ['Independent progress', counts.independent],
+    ['Assisted success', counts.assisted],
+    ['Insufficient evidence', counts.insufficient],
+  ];
+  q('summary').innerHTML = items.map(([label, value]) => `<article class="summary-card"><span>${escapeHtml(label)}</span><strong>${value}</strong></article>`).join('');
+}
+
+function actionText(code) {
+  const actions = {
+    COLLECT_MORE_EVIDENCE: 'Continue normal practice so the tutor can collect enough evidence.',
+    CONTINUE_CURRENT_LEARNING: 'Continue the current learning plan without drawing a negative conclusion.',
+    ENCOURAGE_INDEPENDENT_ATTEMPT: 'Encourage a fresh independent attempt when the tutor presents one.',
+    RECOGNIZE_INDEPENDENT_PROGRESS: 'Recognize the independent progress and continue the tutor plan.',
+    RECOGNIZE_MASTERY: 'Celebrate the independently demonstrated mastery.',
+    FOLLOW_EXISTING_REVIEW_PLAN: 'Follow the review already scheduled by the tutoring engine.',
+  };
+  return actions[code] || 'Continue the tutor plan.';
+}
+
+function skillCard(skill) {
+  return `<article class="card">
+    <strong>${escapeHtml(skill.skill_name)}</strong>
+    <p class="state">${escapeHtml(friendlyStatus(skill.learning_state))}</p>
+    <p class="next-step"><strong>Suggested next step:</strong> ${escapeHtml(actionText(skill.action_code))}</p>
+    <details><summary>View supporting evidence</summary>
+      <small>Independent: ${skill.independent_correct_count}/${skill.independent_attempt_count} · Assisted successes: ${skill.hinted_correct_count} · Evidence: ${escapeHtml(friendlyStatus(skill.evidence_status))} · Reason: ${escapeHtml(friendlyStatus(skill.reason_code))}</small>
+    </details>
+  </article>`;
+}
+
 async function loadDashboard(studentId) {
   if (!studentId) { q('dashboard').hidden = true; return; }
   const d = await request(`/children/${studentId}/dashboard`);
@@ -107,7 +213,8 @@ async function loadDashboard(studentId) {
   q('childTitle').textContent = `${d.child.first_name} · Grade ${d.child.grade_level}`;
   q('context').textContent = [d.child.jurisdiction, d.child.curriculum_name, d.child.school_system].filter(Boolean).join(' · ');
   q('activeSkill').textContent = d.active_skill_name || 'None';
-  q('skills').innerHTML = d.skills.length ? d.skills.map(s => `<article class="card"><strong>${escapeHtml(s.skill_name)}</strong><p>${escapeHtml(friendlyStatus(s.status))}</p><small>Independent: ${s.independent_correct_count}/${s.independent_attempt_count} · Assisted successes: ${s.hinted_correct_count}</small></article>`).join('') : '<p class="muted">No skill progress recorded yet.</p>';
+  renderSummary(d.skills);
+  q('skills').innerHTML = d.skills.length ? d.skills.map(skillCard).join('') : '<p class="muted">No skill progress recorded yet.</p>';
   q('activity').innerHTML = d.recent_activity.length ? d.recent_activity.map(a => `<li>${escapeHtml(a.skill_name)} — ${escapeHtml(friendlyStatus(a.state))}</li>`).join('') : '<li class="muted">No recent activity.</li>';
   q('support').innerHTML = d.support_areas.length ? d.support_areas.map(a => `<li>${escapeHtml(a.name)}</li>`).join('') : '<li class="muted">No current support areas recorded.</li>';
 }
