@@ -1,6 +1,5 @@
-from collections.abc import Collection
+from collections.abc import Collection, Hashable
 from dataclasses import dataclass
-from typing import Hashable
 from uuid import UUID
 
 
