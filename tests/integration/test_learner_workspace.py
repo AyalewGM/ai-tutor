@@ -1,14 +1,25 @@
+import uuid
+
 from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 
 from app.core.database import SessionLocal
 from app.main import app
-from app.models import Attempt, Curriculum, MasteryEvent, Skill, Student, TutorSession, TutorTurn
+from app.models import (
+    Attempt,
+    Curriculum,
+    MasteryEvent,
+    Skill,
+    Student,
+    TutorSession,
+    TutorState,
+    TutorTurn,
+)
 
 client = TestClient(app)
 
 
-def _create_session() -> tuple[str, str]:
+def _create_session() -> tuple[uuid.UUID, uuid.UUID]:
     with SessionLocal() as db:
         curriculum = db.scalar(
             select(Curriculum).where(Curriculum.code == "MCPS_MATH_8")
@@ -35,10 +46,13 @@ def _create_session() -> tuple[str, str]:
     )
     assert response.status_code == 200
     payload = response.json()
-    return payload["session_id"], str(student_id)
+    return uuid.UUID(payload["session_id"]), student_id
 
 
-def _evidence_counts(session_id: str, student_id: str) -> tuple[int, int, int]:
+def _evidence_counts(
+    session_id: uuid.UUID,
+    student_id: uuid.UUID,
+) -> tuple[int, int, int]:
     with SessionLocal() as db:
         attempts = db.scalar(
             select(func.count(Attempt.id)).where(Attempt.session_id == session_id)
@@ -76,7 +90,7 @@ def test_workspace_derives_help_actions_from_backend_state() -> None:
     with SessionLocal() as db:
         session = db.get(TutorSession, session_id)
         assert session is not None
-        session.current_state = "GUIDED_PRACTICE"
+        session.current_state = TutorState.GUIDED_PRACTICE
         db.commit()
 
     response = client.get(f"/api/v1/learner-workspace/sessions/{session_id}")
