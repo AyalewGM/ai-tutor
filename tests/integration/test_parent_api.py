@@ -6,7 +6,7 @@ from sqlalchemy import select
 from app.core.database import SessionLocal
 from app.identity import current_user
 from app.main import app
-from app.models import Curriculum, Student, User
+from app.models import Curriculum, Skill, SkillStatus, Student, StudentSkill, User
 from app.parent_models import (
     ChildLinkClaim,
     ParentStudentRelationship,
@@ -30,6 +30,8 @@ def test_parent_link_dashboard_isolation_and_non_destructive_unlink() -> None:
     with SessionLocal() as db:
         curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MCPS_MATH_8"))
         assert curriculum is not None
+        skill = db.scalar(select(Skill).where(Skill.curriculum_id == curriculum.id).limit(1))
+        assert skill is not None
 
         parent_user = User(
             email="parent-f005@example.test",
@@ -49,6 +51,17 @@ def test_parent_link_dashboard_isolation_and_non_destructive_unlink() -> None:
         )
         db.add_all([parent_user, other_parent_user, child])
         db.flush()
+        db.add(
+            StudentSkill(
+                student_id=child.id,
+                skill_id=skill.id,
+                attempt_count=2,
+                independent_attempt_count=1,
+                independent_correct_count=1,
+                hinted_correct_count=1,
+                status=SkillStatus.PRACTICING,
+            )
+        )
         claim = ChildLinkClaim(
             student_id=child.id,
             token_hash=hash_claim_token(token),
@@ -63,6 +76,7 @@ def test_parent_link_dashboard_isolation_and_non_destructive_unlink() -> None:
         other_parent_user_id = other_parent_user.id
         child_id = child.id
         curriculum_name = curriculum.name
+        skill_code = skill.code
 
     try:
         with SessionLocal() as db:
@@ -94,7 +108,13 @@ def test_parent_link_dashboard_isolation_and_non_destructive_unlink() -> None:
 
             dashboard = client.get(f"/api/v1/parents/children/{child_id}/dashboard")
             assert dashboard.status_code == 200
-            assert dashboard.json()["child"]["id"] == str(child_id)
+            payload = dashboard.json()
+            assert payload["child"]["id"] == str(child_id)
+            projected = next(row for row in payload["skills"] if row["skill_code"] == skill_code)
+            assert projected["evidence_status"] == "EVIDENCE_AVAILABLE"
+            assert projected["learning_state"] == "INDEPENDENT_PROGRESS"
+            assert projected["assistance_signal"] == "MIXED_INDEPENDENT_AND_ASSISTED"
+            assert projected["reason_code"] == "INDEPENDENT_SUCCESS_OBSERVED"
 
         with SessionLocal() as db:
             other_parent_user = db.get(User, other_parent_user_id)
