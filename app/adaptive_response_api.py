@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from app.adaptive_api import _focus
 from app.api import _problem_out, _student_skill, _tutor_context
-from app.core.database import get_db
+from app.core.database import SessionLocal, get_db
 from app.hint_models import HintEvent
 from app.models import (
     Attempt,
@@ -36,9 +36,32 @@ from app.services.problem_selection import select_next_problem
 from app.services.state_machine import TutorContext as StateContext
 from app.services.state_machine import determine_next_action
 from app.services.tutor_engine import tutor_engine
+from app.telemetry import TelemetryEnvelope, publish_telemetry_fail_open
 
 router = APIRouter(prefix="/adaptive-tutor", tags=["adaptive-tutor"])
 DbSession = Annotated[Session, Depends(get_db)]
+
+
+def _publish_adaptive_event(
+    *,
+    event_type: str,
+    session: TutorSession,
+    curriculum_id: uuid.UUID,
+    skill_id: uuid.UUID,
+    payload: dict[str, object],
+) -> None:
+    """Publish metadata only after authoritative tutoring state commits."""
+    publish_telemetry_fail_open(
+        SessionLocal,
+        TelemetryEnvelope(
+            event_type=event_type,
+            learner_pseudonymous_id=str(session.student_id),
+            curriculum_id=curriculum_id,
+            session_id=session.id,
+            skill_id=skill_id,
+            payload=payload,
+        ),
+    )
 
 
 @router.post("/sessions/{session_id}/respond", response_model=RespondOut)
@@ -344,6 +367,32 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         )
 
     db.commit()
+
+    _publish_adaptive_event(
+        event_type="mastery.evidence_recorded",
+        session=session,
+        curriculum_id=scope.curriculum_id,
+        skill_id=active_skill_id,
+        payload={
+            "correct": evidence.evaluation.correct,
+            "assistance_level": effective_assistance_level,
+            "state": state_at_attempt.value,
+            "mastery_gate_eligible": gate_decision.eligible,
+        },
+    )
+    _publish_adaptive_event(
+        event_type="model.generation_completed",
+        session=session,
+        curriculum_id=scope.curriculum_id,
+        skill_id=next_skill_id,
+        payload={
+            "source": generation.source,
+            "provider": generation.provider,
+            "model": generation.model,
+            "latency_ms": generation.latency_ms,
+            "success": generation.source == "llm",
+        },
+    )
 
     return RespondOut(
         session_id=session.id,
