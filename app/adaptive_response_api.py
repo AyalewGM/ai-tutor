@@ -389,6 +389,8 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
             "source": generation.source,
             "provider": generation.provider,
             "model": generation.model,
+            "latency_ms": generation.latency_ms,
+            "success": generation.source == "llm",
         },
     )
 
