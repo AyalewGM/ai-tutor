@@ -4,10 +4,17 @@ from app.core.database import SessionLocal
 from app.curriculum_models import EducationAuthority
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
 from scripts.seed_mth1w import AUTHORITY_CODE, CURRICULUM_CODE, seed
+from scripts.seed_sprint1 import seed as seed_sprint1
+
+
+def _seed_curricula():
+    """Seed both jurisdictions so isolation tests do not depend on CI/test order."""
+    seed_sprint1()
+    seed()
 
 
 def test_mth1w_seed_is_idempotent_and_jurisdiction_local():
-    seed()
+    _seed_curricula()
     seed()
 
     db = SessionLocal()
@@ -57,7 +64,7 @@ def test_mth1w_seed_is_idempotent_and_jurisdiction_local():
 
 
 def test_mth1w_prerequisite_guard_rejects_cross_curriculum_edge():
-    seed()
+    _seed_curricula()
     db = SessionLocal()
     try:
         ontario = db.scalar(select(Curriculum).where(Curriculum.code == CURRICULUM_CODE))
