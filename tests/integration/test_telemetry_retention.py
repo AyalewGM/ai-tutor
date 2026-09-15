@@ -5,7 +5,12 @@ from sqlalchemy import func, select
 
 from app.core.database import SessionLocal
 from app.models import Attempt, Curriculum, Problem, Skill, Student, TutorSession, TutorState
-from app.telemetry import RetentionPolicy, TelemetryEnvelope, append_telemetry_event, expire_disposable_telemetry
+from app.telemetry import (
+    RetentionPolicy,
+    TelemetryEnvelope,
+    append_telemetry_event,
+    expire_disposable_telemetry,
+)
 from app.telemetry_models import TelemetryEventRecord
 
 
