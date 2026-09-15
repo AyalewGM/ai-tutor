@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.core.database import get_db
+from app.core.database import SessionLocal, get_db
 from app.diagnostic_models import DiagnosticAttempt, DiagnosticSession
 from app.diagnostic_schemas import (
     DiagnosticOut,
@@ -27,6 +27,7 @@ from app.services.curriculum_scope import (
 )
 from app.services.diagnostic_controller import decide_next_probe
 from app.services.problem_selection import select_next_problem
+from app.telemetry import TelemetryEnvelope, publish_telemetry_fail_open
 
 router = APIRouter(prefix="/diagnostics", tags=["diagnostics"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -88,6 +89,29 @@ def _require_session_skill_scope(
         raise HTTPException(409, str(exc)) from exc
 
 
+def _publish_diagnostic_event(
+    *,
+    event_type: str,
+    session: DiagnosticSession,
+    skill_id: uuid.UUID | None = None,
+    payload: dict[str, object] | None = None,
+) -> None:
+    """Publish observability only after authoritative diagnostic state commits."""
+    if session.curriculum_id is None:
+        return
+    publish_telemetry_fail_open(
+        SessionLocal,
+        TelemetryEnvelope(
+            event_type=event_type,
+            learner_pseudonymous_id=str(session.student_id),
+            curriculum_id=session.curriculum_id,
+            session_id=session.id,
+            skill_id=skill_id,
+            payload=payload or {},
+        ),
+    )
+
+
 @router.post("/sessions", response_model=DiagnosticOut)
 def start_diagnostic(payload: DiagnosticStartIn, db: DbSession) -> DiagnosticOut:
     student = db.get(Student, payload.student_id)
@@ -114,6 +138,7 @@ def start_diagnostic(payload: DiagnosticStartIn, db: DbSession) -> DiagnosticOut
     db.add(session)
     db.commit()
     db.refresh(session)
+    _publish_diagnostic_event(event_type="diagnostic.started", session=session, skill_id=target.id)
 
     return DiagnosticOut(
         session_id=session.id,
@@ -222,6 +247,13 @@ def respond_to_diagnostic(
         message = "Response recorded. Continue with the next diagnostic question."
 
     db.commit()
+    if decision.complete:
+        _publish_diagnostic_event(
+            event_type="diagnostic.completed",
+            session=session,
+            skill_id=session.recommended_skill_id or session.current_skill_id,
+            payload={"question_count": session.question_count},
+        )
     return DiagnosticOut(
         session_id=session.id,
         status=session.status,
