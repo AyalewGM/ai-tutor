@@ -43,6 +43,7 @@ def test_expiry_deletes_only_disposable_telemetry_and_preserves_authoritative_at
         db.flush()
         problem = Problem(
             primary_skill_id=skill.id,
+            problem_type="ARITHMETIC",
             prompt="2 + 2",
             canonical_answer="4",
             difficulty=1,
