@@ -21,17 +21,26 @@ class FakeKpiSession:
         return FakeScalars(self.events)
 
 
-def event(event_type: str) -> Any:
-    return SimpleNamespace(event_type=event_type)
+def event(event_type: str, **payload: object) -> Any:
+    return SimpleNamespace(event_type=event_type, payload_json=payload)
 
 
 def test_kpis_expose_counts_denominators_policy_and_derived_rates() -> None:
     curriculum_id = uuid.uuid4()
     db = FakeKpiSession(
         [
-            event("mastery.opportunity"),
-            event("mastery.opportunity"),
-            event("mastery.independent"),
+            event(
+                "mastery.evidence_recorded",
+                correct=True,
+                assistance_level="INDEPENDENT",
+                mastery_gate_eligible=True,
+            ),
+            event(
+                "mastery.evidence_recorded",
+                correct=False,
+                assistance_level="INDEPENDENT",
+                mastery_gate_eligible=True,
+            ),
             event("diagnostic.started"),
             event("diagnostic.completed"),
         ]
@@ -50,6 +59,54 @@ def test_kpis_expose_counts_denominators_policy_and_derived_rates() -> None:
     assert diagnostic.numerator == 1
     assert diagnostic.denominator == 1
     assert diagnostic.rate == 1.0
+
+
+def test_assisted_success_never_counts_as_independent_mastery() -> None:
+    curriculum_id = uuid.uuid4()
+    db = FakeKpiSession(
+        [
+            event(
+                "mastery.evidence_recorded",
+                correct=True,
+                assistance_level="ASSISTED",
+                mastery_gate_eligible=True,
+            ),
+            event(
+                "mastery.evidence_recorded",
+                correct=True,
+                assistance_level="INDEPENDENT",
+                mastery_gate_eligible=True,
+            ),
+        ]
+    )
+
+    results = {result.name: result for result in pilot_kpis(db, curriculum_id)}  # type: ignore[arg-type]
+    mastery = results["independent_mastery_rate"]
+
+    assert mastery.numerator == 1
+    assert mastery.denominator == 2
+    assert mastery.rate == 0.5
+
+
+def test_ineligible_evidence_is_not_a_mastery_opportunity() -> None:
+    curriculum_id = uuid.uuid4()
+    db = FakeKpiSession(
+        [
+            event(
+                "mastery.evidence_recorded",
+                correct=True,
+                assistance_level="INDEPENDENT",
+                mastery_gate_eligible=False,
+            )
+        ]
+    )
+
+    results = {result.name: result for result in pilot_kpis(db, curriculum_id)}  # type: ignore[arg-type]
+    mastery = results["independent_mastery_rate"]
+
+    assert mastery.numerator == 0
+    assert mastery.denominator == 0
+    assert mastery.rate is None
 
 
 def test_zero_denominator_rate_is_null_not_zero() -> None:
