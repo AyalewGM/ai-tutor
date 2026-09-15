@@ -53,6 +53,10 @@ def test_safe_metadata_payload_is_allowed() -> None:
         {"nested": {"raw_answer": "7"}},
         {"events": [{"transcript": "private conversation"}]},
         {"auth_token": "secret"},
+        {"learner_prompt": "raw learner text"},
+        {"answer-text": "7"},
+        {"nested": {"student message": "private text"}},
+        {"provider_access_token": "secret"},
     ],
 )
 def test_raw_child_content_and_secrets_are_rejected(payload: dict[str, Any]) -> None:
@@ -120,3 +124,10 @@ def test_retention_policy_is_versioned_and_uses_configurable_days() -> None:
 
     assert policy.policy_version == "pilot-retention-test"
     assert policy.cutoff(now) == datetime(2026, 8, 16, tzinfo=UTC)
+
+
+def test_retention_policy_cannot_target_authoritative_or_unbounded_data() -> None:
+    with pytest.raises(ValueError, match="positive"):
+        RetentionPolicy(days=0)
+    with pytest.raises(ValueError, match="disposable telemetry only"):
+        RetentionPolicy(retention_class="AUTHORITATIVE_LEARNING_EVIDENCE")
