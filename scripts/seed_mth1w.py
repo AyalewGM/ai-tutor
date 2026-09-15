@@ -3,11 +3,14 @@ from decimal import Decimal
 from sqlalchemy import select
 
 from app.core.database import SessionLocal
-from app.curriculum_models import EducationAuthority
+from app.curriculum_models import EducationAuthority, Jurisdiction
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
 
 CURRICULUM_CODE = "ON_MTH1W_2021"
 AUTHORITY_CODE = "ON-MOE"
+CANADA_CODE = "CA"
+ONTARIO_CODE = "ON"
+SOURCE_URI = "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses-list"
 
 
 def _skill(db, curriculum, code, name, description, level):
@@ -57,24 +60,70 @@ def _problem(db, skill, difficulty, prompt, answer, problem_type):
         )
 
 
+def _jurisdiction(db, *, parent_id, code, name, jurisdiction_type, source_uri=None):
+    query = select(Jurisdiction).where(Jurisdiction.code == code)
+    if parent_id is None:
+        query = query.where(Jurisdiction.parent_id.is_(None))
+    else:
+        query = query.where(Jurisdiction.parent_id == parent_id)
+    jurisdiction = db.scalar(query)
+    if jurisdiction is None:
+        jurisdiction = Jurisdiction(
+            parent_id=parent_id,
+            code=code,
+            name=name,
+            jurisdiction_type=jurisdiction_type,
+            source_uri=source_uri,
+            provenance_json={"source": "authoritative_public"} if source_uri else None,
+        )
+        db.add(jurisdiction)
+        db.flush()
+    return jurisdiction
+
+
 def seed():
     db = SessionLocal()
     try:
+        canada = _jurisdiction(
+            db,
+            parent_id=None,
+            code=CANADA_CODE,
+            name="Canada",
+            jurisdiction_type="COUNTRY",
+        )
+        ontario_jurisdiction = _jurisdiction(
+            db,
+            parent_id=canada.id,
+            code=ONTARIO_CODE,
+            name="Ontario",
+            jurisdiction_type="STATE_PROVINCE_TERRITORY",
+            source_uri=SOURCE_URI,
+        )
+
         authority = db.scalar(
-            select(EducationAuthority).where(EducationAuthority.code == AUTHORITY_CODE)
+            select(EducationAuthority).where(
+                EducationAuthority.jurisdiction_id == ontario_jurisdiction.id,
+                EducationAuthority.code == AUTHORITY_CODE,
+            )
         )
         if authority is None:
             authority = EducationAuthority(
+                jurisdiction_id=ontario_jurisdiction.id,
                 code=AUTHORITY_CODE,
                 name="Ontario Ministry of Education",
-                jurisdiction="Ontario, Canada",
                 authority_type="MINISTRY",
+                source_uri=SOURCE_URI,
+                provenance_json={"source": "authoritative_public", "curriculum": "MTH1W 2021"},
             )
             db.add(authority)
             db.flush()
 
         curriculum = db.scalar(
-            select(Curriculum).where(Curriculum.code == CURRICULUM_CODE)
+            select(Curriculum).where(
+                Curriculum.authority_id == authority.id,
+                Curriculum.code == CURRICULUM_CODE,
+                Curriculum.version == "2021",
+            )
         )
         if curriculum is None:
             curriculum = Curriculum(
@@ -84,7 +133,7 @@ def seed():
                 grade_level="9",
                 authority_id=authority.id,
                 version="2021",
-                source_uri="https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses-list",
+                source_uri=SOURCE_URI,
             )
             db.add(curriculum)
             db.flush()
