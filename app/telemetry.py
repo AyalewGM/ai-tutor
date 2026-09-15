@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from sqlalchemy.orm import Session
@@ -40,7 +40,7 @@ class TelemetryEnvelope:
     retention_class: str = "DISPOSABLE_90D"
     payload: dict[str, Any] = field(default_factory=dict)
     event_id: uuid.UUID = field(default_factory=uuid.uuid4)
-    occurred_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    occurred_at: datetime = field(default_factory=lambda: datetime.now(UTC))
     schema_version: str = TELEMETRY_SCHEMA_VERSION
 
 
