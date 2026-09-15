@@ -33,7 +33,7 @@ def test_safe_metadata_payload_is_allowed() -> None:
         {"auth_token": "secret"},
     ],
 )
-def test_raw_child_content_and_secrets_are_rejected(payload: dict) -> None:
+def test_raw_child_content_and_secrets_are_rejected(payload: dict[str, Any]) -> None:
     with pytest.raises(ValueError, match="prohibited telemetry field"):
         validate_telemetry_payload(payload)
 
@@ -51,7 +51,7 @@ def test_append_event_is_observational_and_preserves_envelope_identity() -> None
         payload={"outcome_code": "RETURNED_TO_TARGET"},
     )
 
-    record = append_telemetry_event(fake_db, envelope)
+    record = append_telemetry_event(fake_db, envelope)  # type: ignore[arg-type]
 
     assert fake_db.added == [record]
     assert record.id == event_id
