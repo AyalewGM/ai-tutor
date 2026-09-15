@@ -53,12 +53,20 @@ def _is_independent(event: TelemetryEventRecord) -> bool:
     return _payload(event).get("assistance_level") == "INDEPENDENT"
 
 
+def _is_assisted(event: TelemetryEventRecord) -> bool:
+    return not _is_independent(event)
+
+
 def _is_correct(event: TelemetryEventRecord) -> bool:
     return _payload(event).get("correct") is True
 
 
 def _is_mastery_gate_eligible(event: TelemetryEventRecord) -> bool:
     return _payload(event).get("mastery_gate_eligible") is True
+
+
+def _is_mastery_check(event: TelemetryEventRecord) -> bool:
+    return _payload(event).get("state") == "MASTERY_CHECK"
 
 
 def pilot_kpis(
@@ -80,6 +88,18 @@ def pilot_kpis(
         for event in mastery_opportunities
         if _is_independent(event) and _is_correct(event)
     ]
+    correct_evidence = [event for event in mastery_evidence if _is_correct(event)]
+    assisted_correct = [event for event in correct_evidence if _is_assisted(event)]
+    fresh_mastery_attempts = [
+        event
+        for event in mastery_evidence
+        if _is_mastery_check(event) and _is_independent(event)
+    ]
+    fresh_mastery_passes = [
+        event
+        for event in fresh_mastery_attempts
+        if _is_correct(event) and _is_mastery_gate_eligible(event)
+    ]
 
     definitions = (
         KpiResult(
@@ -93,8 +113,8 @@ def pilot_kpis(
             name="assistance_dependency_rate",
             policy_version=policy_version,
             curriculum_id=curriculum_id,
-            numerator=_count(events, "problem.solved_assisted"),
-            denominator=_count(events, "problem.solved"),
+            numerator=len(assisted_correct),
+            denominator=len(correct_evidence),
         ),
         KpiResult(
             name="remediation_success_rate",
@@ -114,8 +134,8 @@ def pilot_kpis(
             name="fresh_mastery_pass_rate",
             policy_version=policy_version,
             curriculum_id=curriculum_id,
-            numerator=_count(events, "mastery.fresh_passed"),
-            denominator=_count(events, "mastery.fresh_attempted"),
+            numerator=len(fresh_mastery_passes),
+            denominator=len(fresh_mastery_attempts),
         ),
     )
     return list(definitions)
