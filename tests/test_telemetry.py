@@ -1,4 +1,5 @@
 import uuid
+from typing import Any
 
 import pytest
 
@@ -7,9 +8,9 @@ from app.telemetry import TelemetryEnvelope, append_telemetry_event, validate_te
 
 class FakeSession:
     def __init__(self) -> None:
-        self.added = []
+        self.added: list[Any] = []
 
-    def add(self, value) -> None:
+    def add(self, value: Any) -> None:
         self.added.append(value)
 
 
