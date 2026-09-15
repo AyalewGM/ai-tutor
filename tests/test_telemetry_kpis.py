@@ -82,10 +82,14 @@ def test_assisted_success_never_counts_as_independent_mastery() -> None:
 
     results = {result.name: result for result in pilot_kpis(db, curriculum_id)}  # type: ignore[arg-type]
     mastery = results["independent_mastery_rate"]
+    assistance = results["assistance_dependency_rate"]
 
     assert mastery.numerator == 1
     assert mastery.denominator == 2
     assert mastery.rate == 0.5
+    assert assistance.numerator == 1
+    assert assistance.denominator == 2
+    assert assistance.rate == 0.5
 
 
 def test_ineligible_evidence_is_not_a_mastery_opportunity() -> None:
@@ -107,6 +111,42 @@ def test_ineligible_evidence_is_not_a_mastery_opportunity() -> None:
     assert mastery.numerator == 0
     assert mastery.denominator == 0
     assert mastery.rate is None
+
+
+def test_fresh_mastery_requires_independent_mastery_check_and_gate_eligibility() -> None:
+    curriculum_id = uuid.uuid4()
+    db = FakeKpiSession(
+        [
+            event(
+                "mastery.evidence_recorded",
+                correct=True,
+                assistance_level="INDEPENDENT",
+                mastery_gate_eligible=True,
+                state="MASTERY_CHECK",
+            ),
+            event(
+                "mastery.evidence_recorded",
+                correct=True,
+                assistance_level="ASSISTED",
+                mastery_gate_eligible=True,
+                state="MASTERY_CHECK",
+            ),
+            event(
+                "mastery.evidence_recorded",
+                correct=True,
+                assistance_level="INDEPENDENT",
+                mastery_gate_eligible=True,
+                state="INDEPENDENT_PRACTICE",
+            ),
+        ]
+    )
+
+    results = {result.name: result for result in pilot_kpis(db, curriculum_id)}  # type: ignore[arg-type]
+    fresh = results["fresh_mastery_pass_rate"]
+
+    assert fresh.numerator == 1
+    assert fresh.denominator == 1
+    assert fresh.rate == 1.0
 
 
 def test_zero_denominator_rate_is_null_not_zero() -> None:
