@@ -1,15 +1,21 @@
 from __future__ import annotations
 
+import logging
 import uuid
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
-from typing import Any
+from datetime import UTC, datetime, timedelta
+from typing import Any, Callable
 
+from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
 from app.telemetry_models import TelemetryEventRecord
 
+logger = logging.getLogger(__name__)
+
 TELEMETRY_SCHEMA_VERSION = "pilot-v1"
+RETENTION_POLICY_VERSION = "pilot-retention-v1"
+DEFAULT_RETENTION_DAYS = 90
 PROHIBITED_PAYLOAD_KEYS = {
     "answer",
     "auth_token",
@@ -44,6 +50,17 @@ class TelemetryEnvelope:
     schema_version: str = TELEMETRY_SCHEMA_VERSION
 
 
+@dataclass(frozen=True)
+class RetentionPolicy:
+    days: int = DEFAULT_RETENTION_DAYS
+    policy_version: str = RETENTION_POLICY_VERSION
+    retention_class: str = "DISPOSABLE_90D"
+
+    def cutoff(self, now: datetime | None = None) -> datetime:
+        anchor = now or datetime.now(UTC)
+        return anchor - timedelta(days=self.days)
+
+
 def validate_telemetry_payload(payload: dict[str, Any]) -> None:
     stack: list[tuple[str, Any]] = list(payload.items())
     while stack:
@@ -60,11 +77,7 @@ def validate_telemetry_payload(payload: dict[str, Any]) -> None:
 
 
 def append_telemetry_event(db: Session, envelope: TelemetryEnvelope) -> TelemetryEventRecord:
-    """Append one observability event without acquiring pedagogical authority.
-
-    The caller owns transaction boundaries. A duplicate event_id is naturally rejected by the
-    primary key, making retry semantics auditable rather than silently double-counted.
-    """
+    """Append one observability event without acquiring pedagogical authority."""
     validate_telemetry_payload(envelope.payload)
     record = TelemetryEventRecord(
         id=envelope.event_id,
@@ -82,3 +95,41 @@ def append_telemetry_event(db: Session, envelope: TelemetryEnvelope) -> Telemetr
     )
     db.add(record)
     return record
+
+
+def publish_telemetry_fail_open(
+    session_factory: Callable[[], Session], envelope: TelemetryEnvelope
+) -> bool:
+    """Publish in an isolated transaction; observability failure never affects tutoring state."""
+    db: Session | None = None
+    try:
+        db = session_factory()
+        append_telemetry_event(db, envelope)
+        db.commit()
+        return True
+    except Exception:
+        if db is not None:
+            db.rollback()
+        logger.warning("telemetry publication failed open", exc_info=True)
+        return False
+    finally:
+        if db is not None:
+            db.close()
+
+
+def expire_disposable_telemetry(
+    db: Session, policy: RetentionPolicy, now: datetime | None = None
+) -> int:
+    """Delete only disposable telemetry selected by retention class and age."""
+    expired_ids = list(
+        db.scalars(
+            select(TelemetryEventRecord.id).where(
+                TelemetryEventRecord.retention_class == policy.retention_class,
+                TelemetryEventRecord.occurred_at < policy.cutoff(now),
+            )
+        )
+    )
+    if not expired_ids:
+        return 0
+    result = db.execute(delete(TelemetryEventRecord).where(TelemetryEventRecord.id.in_(expired_ids)))
+    return int(result.rowcount or 0)
