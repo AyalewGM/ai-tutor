@@ -55,7 +55,7 @@ def test_expiry_deletes_only_disposable_telemetry_and_preserves_authoritative_at
             primary_skill_id=skill.id,
             active_skill_id=skill.id,
             curriculum_id=curriculum.id,
-            current_state=TutorState.PRACTICE,
+            current_state=TutorState.INDEPENDENT_PRACTICE,
         )
         db.add(session)
         db.flush()
@@ -69,7 +69,7 @@ def test_expiry_deletes_only_disposable_telemetry_and_preserves_authoritative_at
             attempt_number=1,
             assistance_level=0,
             evaluation_confidence=1,
-            state_at_attempt=TutorState.PRACTICE,
+            state_at_attempt=TutorState.INDEPENDENT_PRACTICE,
         )
         db.add(attempt)
         db.flush()
