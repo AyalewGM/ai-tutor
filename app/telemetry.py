@@ -70,6 +70,14 @@ class RetentionPolicy:
         return anchor - timedelta(days=self.days)
 
 
+@dataclass(frozen=True)
+class RetentionExpiryResult:
+    deleted_count: int
+    policy_version: str
+    retention_class: str
+    cutoff: datetime
+
+
 def _normalized_payload_key(key: str) -> str:
     return key.strip().lower().replace("-", "_").replace(" ", "_")
 
@@ -140,17 +148,24 @@ def publish_telemetry_fail_open(
 
 def expire_disposable_telemetry(
     db: Session, policy: RetentionPolicy, now: datetime | None = None
-) -> int:
-    """Delete only disposable telemetry selected by retention class and age."""
+) -> RetentionExpiryResult:
+    """Delete only disposable telemetry and return the policy basis for audit logging."""
+    cutoff = policy.cutoff(now)
     expired_ids = list(
         db.scalars(
             select(TelemetryEventRecord.id).where(
                 TelemetryEventRecord.retention_class == policy.retention_class,
-                TelemetryEventRecord.occurred_at < policy.cutoff(now),
+                TelemetryEventRecord.occurred_at < cutoff,
             )
         )
     )
-    if not expired_ids:
-        return 0
-    result = db.execute(delete(TelemetryEventRecord).where(TelemetryEventRecord.id.in_(expired_ids)))
-    return int(result.rowcount or 0)
+    deleted_count = 0
+    if expired_ids:
+        result = db.execute(delete(TelemetryEventRecord).where(TelemetryEventRecord.id.in_(expired_ids)))
+        deleted_count = int(result.rowcount or 0)
+    return RetentionExpiryResult(
+        deleted_count=deleted_count,
+        policy_version=policy.policy_version,
+        retention_class=policy.retention_class,
+        cutoff=cutoff,
+    )
