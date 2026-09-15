@@ -57,17 +57,37 @@ class RetentionPolicy:
     policy_version: str = RETENTION_POLICY_VERSION
     retention_class: str = "DISPOSABLE_90D"
 
+    def __post_init__(self) -> None:
+        if self.days <= 0:
+            raise ValueError("retention days must be positive")
+        if not self.policy_version.strip():
+            raise ValueError("retention policy_version is required")
+        if not self.retention_class.startswith("DISPOSABLE_"):
+            raise ValueError("retention policy may target disposable telemetry only")
+
     def cutoff(self, now: datetime | None = None) -> datetime:
         anchor = now or datetime.now(UTC)
         return anchor - timedelta(days=self.days)
+
+
+def _normalized_payload_key(key: str) -> str:
+    return key.strip().lower().replace("-", "_").replace(" ", "_")
+
+
+def _payload_key_is_prohibited(key: str) -> bool:
+    normalized = _normalized_payload_key(key)
+    if normalized in PROHIBITED_PAYLOAD_KEYS:
+        return True
+    parts = {part for part in normalized.split("_") if part}
+    sensitive_parts = {"answer", "chat", "email", "message", "name", "prompt", "token", "transcript"}
+    return bool(parts & sensitive_parts)
 
 
 def validate_telemetry_payload(payload: dict[str, Any]) -> None:
     stack: list[tuple[str, Any]] = list(payload.items())
     while stack:
         key, value = stack.pop()
-        normalized = key.strip().lower()
-        if normalized in PROHIBITED_PAYLOAD_KEYS:
+        if _payload_key_is_prohibited(key):
             raise ValueError(f"prohibited telemetry field: {key}")
         if isinstance(value, dict):
             stack.extend(value.items())
