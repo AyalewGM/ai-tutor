@@ -7,7 +7,9 @@ client = TestClient(app)
 
 def test_gateway_health_and_readiness() -> None:
     assert client.get("/health").json() == {"status": "ok"}
-    assert client.get("/ready").json() == {"status": "ready"}
+    readiness = client.get("/ready").json()
+    assert readiness["status"] == "ready"
+    assert readiness["provider"] in {"fallback", "openai", "gemini"}
 
 
 def test_gateway_accepts_application_computed_render_request() -> None:
