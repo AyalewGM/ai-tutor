@@ -1,11 +1,13 @@
 import json
 import os
+import time
+import uuid
 from typing import Any
 
 from fastapi import FastAPI
 from pydantic import BaseModel, ConfigDict, Field
 
-app = FastAPI(title="AI Tutor LLM Gateway", version="0.2.0")
+app = FastAPI(title="AI Tutor LLM Gateway", version="0.3.0")
 
 
 class RenderRequest(BaseModel):
@@ -34,10 +36,22 @@ class RenderResponse(BaseModel):
 
     message: str = Field(min_length=1, max_length=1200)
     expects_student_response: bool = True
+    request_id: str
+    provider: str
+    model: str | None = None
+    latency_ms: int = Field(ge=0)
 
 
 def _provider() -> str:
     return os.getenv("LLM_GATEWAY_PROVIDER", "fallback").strip().lower()
+
+
+def _model_name(provider: str) -> str | None:
+    if provider == "openai":
+        return os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
+    if provider == "gemini":
+        return os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    return None
 
 
 def _prompt(request: RenderRequest) -> str:
@@ -53,20 +67,20 @@ def _prompt(request: RenderRequest) -> str:
     )
 
 
-def _fallback(request: RenderRequest) -> RenderResponse:
+def _fallback(request: RenderRequest) -> dict[str, object]:
     if request.action == "GIVE_HINT" and request.hint_constraint:
         message = f"Use this hint constraint: {request.hint_constraint}"
     elif request.next_problem_prompt:
         message = f"Try this next problem on your own: {request.next_problem_prompt}"
     else:
         message = f"Continue with this problem: {request.problem_prompt}"
-    return RenderResponse(message=message)
+    return {"message": message, "expects_student_response": True}
 
 
-def _openai_render(request: RenderRequest) -> RenderResponse:
+def _openai_render(request: RenderRequest) -> dict[str, object]:
     from openai import OpenAI
 
-    model = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
+    model = _model_name("openai")
     response = OpenAI().responses.create(
         model=model,
         input=_prompt(request),
@@ -75,41 +89,51 @@ def _openai_render(request: RenderRequest) -> RenderResponse:
                 "type": "json_schema",
                 "name": "tutor_generation",
                 "strict": True,
-                "schema": RenderResponse.model_json_schema(),
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "message": {"type": "string", "maxLength": 1200},
+                        "expects_student_response": {"type": "boolean"},
+                    },
+                    "required": ["message", "expects_student_response"],
+                    "additionalProperties": False,
+                },
             }
         },
     )
     if not response.output_text:
         raise RuntimeError("OpenAI returned no language output")
-    return RenderResponse.model_validate_json(response.output_text)
+    data = json.loads(response.output_text)
+    if not isinstance(data, dict):
+        raise TypeError("OpenAI returned invalid language output")
+    return data
 
 
-def _gemini_render(request: RenderRequest) -> RenderResponse:
+def _gemini_render(request: RenderRequest) -> dict[str, object]:
     from google import genai
     from google.genai import types
 
-    model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    model = _model_name("gemini")
     response = genai.Client().models.generate_content(
         model=model,
         contents=_prompt(request),
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=RenderResponse,
-        ),
+        config=types.GenerateContentConfig(response_mime_type="application/json"),
     )
     if not response.text:
         raise RuntimeError("Gemini returned no language output")
-    return RenderResponse.model_validate_json(response.text)
+    data = json.loads(response.text)
+    if not isinstance(data, dict):
+        raise TypeError("Gemini returned invalid language output")
+    return data
 
 
-def _render_with_provider(request: RenderRequest) -> RenderResponse:
+def _render_with_provider(request: RenderRequest, provider: str) -> dict[str, object]:
     renderers: dict[str, Any] = {
         "fallback": _fallback,
         "none": _fallback,
         "openai": _openai_render,
         "gemini": _gemini_render,
     }
-    provider = _provider()
     renderer = renderers.get(provider)
     if renderer is None:
         raise RuntimeError(f"Unsupported LLM gateway provider: {provider}")
@@ -128,6 +152,17 @@ def ready() -> dict[str, str]:
 
 @app.post("/v1/render", response_model=RenderResponse)
 def render_language(request: RenderRequest) -> RenderResponse:
-    """Render constrained language without acquiring pedagogical authority."""
-
-    return _render_with_provider(request)
+    """Render constrained language and return metadata safe for observational telemetry."""
+    request_id = str(uuid.uuid4())
+    provider = _provider()
+    started = time.perf_counter()
+    generation = _render_with_provider(request, provider)
+    latency_ms = max(0, int((time.perf_counter() - started) * 1000))
+    return RenderResponse(
+        message=str(generation["message"]),
+        expects_student_response=bool(generation.get("expects_student_response", True)),
+        request_id=request_id,
+        provider=provider,
+        model=_model_name(provider),
+        latency_ms=latency_ms,
+    )

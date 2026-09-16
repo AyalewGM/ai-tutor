@@ -37,4 +37,7 @@ class LLMGatewayAdapter:
             raise TutorProviderError("LLM Gateway unavailable or invalid") from exc
         if not isinstance(data, dict):
             raise TutorProviderError("LLM Gateway returned invalid payload")
+        required_metadata = {"request_id", "provider", "latency_ms"}
+        if not required_metadata.issubset(data):
+            raise TutorProviderError("LLM Gateway omitted required observability metadata")
         return data

@@ -386,6 +386,7 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         curriculum_id=scope.curriculum_id,
         skill_id=next_skill_id,
         payload={
+            "request_id": generation.request_id,
             "source": generation.source,
             "provider": generation.provider,
             "model": generation.model,

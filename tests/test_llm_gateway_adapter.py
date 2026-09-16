@@ -26,7 +26,14 @@ def test_gateway_adapter_sends_only_rendering_contract(monkeypatch: pytest.Monke
         return httpx.Response(
             200,
             request=request,
-            json={"message": "Look at the two coordinate pairs.", "expects_student_response": True},
+            json={
+                "message": "Look at the two coordinate pairs.",
+                "expects_student_response": True,
+                "request_id": "req-123",
+                "provider": "openai",
+                "model": "gpt-test",
+                "latency_ms": 12,
+            },
         )
 
     monkeypatch.setattr(httpx, "post", fake_post)
@@ -34,6 +41,10 @@ def test_gateway_adapter_sends_only_rendering_contract(monkeypatch: pytest.Monke
     result = adapter.generate(_context())
 
     assert result["message"] == "Look at the two coordinate pairs."
+    assert result["request_id"] == "req-123"
+    assert result["provider"] == "openai"
+    assert result["model"] == "gpt-test"
+    assert result["latency_ms"] == 12
     assert captured["action"] == "GIVE_HINT"
     assert "state" not in captured
     assert "student_answer" not in captured
@@ -63,6 +74,24 @@ def test_gateway_adapter_converts_invalid_payload_to_provider_error(
         return httpx.Response(200, request=request, content=b"not-json")
 
     monkeypatch.setattr(httpx, "post", invalid_post)
+    adapter = LLMGatewayAdapter("http://llm-gateway:8001", 2.0)
+
+    with pytest.raises(TutorProviderError):
+        adapter.generate(_context())
+
+
+def test_gateway_adapter_rejects_missing_observability_metadata(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def incomplete_post(url: str, *, json: dict[str, object], timeout: float) -> httpx.Response:
+        request = httpx.Request("POST", url)
+        return httpx.Response(
+            200,
+            request=request,
+            json={"message": "Rendered language", "expects_student_response": True},
+        )
+
+    monkeypatch.setattr(httpx, "post", incomplete_post)
     adapter = LLMGatewayAdapter("http://llm-gateway:8001", 2.0)
 
     with pytest.raises(TutorProviderError):

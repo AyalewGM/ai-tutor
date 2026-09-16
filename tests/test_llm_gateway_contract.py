@@ -9,7 +9,7 @@ def test_gateway_health_and_readiness() -> None:
     assert client.get("/health").json() == {"status": "ok"}
     readiness = client.get("/ready").json()
     assert readiness["status"] == "ready"
-    assert readiness["provider"] in {"fallback", "openai", "gemini"}
+    assert readiness["provider"] in {"fallback", "none", "openai", "gemini"}
 
 
 def test_gateway_accepts_application_computed_render_request() -> None:
@@ -26,7 +26,19 @@ def test_gateway_accepts_application_computed_render_request() -> None:
         },
     )
     assert response.status_code == 200
-    assert response.json()["expects_student_response"] is True
+    body = response.json()
+    assert body["expects_student_response"] is True
+    assert body["request_id"]
+    assert body["provider"] in {"fallback", "none", "openai", "gemini"}
+    assert isinstance(body["latency_ms"], int)
+    assert set(body) == {
+        "message",
+        "expects_student_response",
+        "request_id",
+        "provider",
+        "model",
+        "latency_ms",
+    }
 
 
 def test_gateway_rejects_pedagogical_authority_fields() -> None:
