@@ -23,7 +23,11 @@ from app.models import (
 )
 from app.schemas import EvaluationOut, MasteryOut, RespondIn, RespondOut, TutorOut
 from app.services.attempt_evidence import record_evidence
-from app.services.curriculum_scope import CurriculumScopeError, require_session_scope, require_skill_in_scope
+from app.services.curriculum_scope import (
+    CurriculumScopeError,
+    require_session_scope,
+    require_skill_in_scope,
+)
 from app.services.focus_controller import apply_focus_policy
 from app.services.hint_policy import assistance_level_for_hint, hint_constraint, select_hint
 from app.services.mastery_gate import evaluate_mastery_gate
