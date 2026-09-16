@@ -67,21 +67,31 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
         db.add(student)
         db.flush()
 
-        # Establish a prerequisite gap using synthetic, independent evidence.
+        # Establish prerequisite-gap breadth using synthetic independent evidence.
+        # The intervention policy intentionally deduplicates retries by problem, so
+        # both target and prerequisite evidence must span at least two problems.
         prerequisite_problems = db.scalars(
             select(Problem)
             .where(Problem.primary_skill_id == prerequisite.id)
             .order_by(Problem.id)
         ).all()
+        target_problems = db.scalars(
+            select(Problem)
+            .where(Problem.primary_skill_id == target.id)
+            .order_by(Problem.id)
+        ).all()
+        assert len(prerequisite_problems) >= 2
+        assert len(target_problems) >= 2
+
         evidence_session = TutorSession(
             student_id=student.id,
-            primary_skill_id=prerequisite.id,
-            active_skill_id=prerequisite.id,
+            primary_skill_id=target.id,
+            active_skill_id=target.id,
             curriculum_id=curriculum.id,
         )
         db.add(evidence_session)
         db.flush()
-        for problem in prerequisite_problems:
+        for problem in [*prerequisite_problems[:2], *target_problems[:2]]:
             db.add(
                 Attempt(
                     session_id=evidence_session.id,
@@ -110,9 +120,8 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
     session_id = payload["session_id"]
 
     # Repeated evidence of the same deterministic misconception activates the
-    # declared-prerequisite intervention. The API permits any problem in the
-    # active skill, so pinning this known target problem makes the evidence
-    # deterministic rather than relying on problem-selection order.
+    # state-machine remediation transition; the persisted intervention gate then
+    # requires the distinct-problem evidence breadth established above.
     for _ in range(3):
         response = client.post(
             f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
