@@ -33,6 +33,7 @@ services:
       dockerfile: Dockerfile
     environment:
       DATABASE_URL: postgresql+psycopg://ai_tutor:${POSTGRES_PASSWORD:-local-dev-only}@db:5432/ai_tutor
+      AI_PROVIDER: gateway
       LLM_GATEWAY_URL: http://llm-gateway:8001
     ports:
       - "8000:8000"
