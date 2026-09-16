@@ -122,6 +122,7 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
         prerequisite_id = prerequisite.id
         prerequisite_problem_ids = [problem.id for problem in prerequisite_problems[:2]]
         misconception_problem_id = misconception_problem.id
+        misconception_problem_answer = misconception_problem.canonical_answer
 
     created = client.post(
         "/api/v1/adaptive-tutor/sessions",
@@ -131,7 +132,26 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
     payload = created.json()
     session_id = payload["session_id"]
 
-    for _ in range(3):
+    # A new tutor session starts in DIAGNOSE. Establish GUIDED_PRACTICE through the
+    # public API before testing repeated misconception routing; remediation is a
+    # GUIDED_PRACTICE policy and should not be manufactured by bypassing that state.
+    diagnostic = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
+        json={
+            "problem_id": str(misconception_problem_id),
+            "answer": misconception_problem_answer,
+            "assistance_level": 0,
+        },
+    )
+    assert diagnostic.status_code == 200
+    payload = diagnostic.json()
+    assert payload["state"] == "GUIDED_PRACTICE"
+    assert payload["focus"]["in_remediation"] is False
+
+    # Two independently evaluated occurrences of the same deterministic misconception
+    # are enough for the state machine to request remediation. The separate persisted
+    # evidence above is what authorizes the prerequisite switch.
+    for _ in range(2):
         response = client.post(
             f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
             json={
