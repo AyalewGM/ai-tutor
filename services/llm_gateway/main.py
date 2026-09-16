@@ -105,7 +105,7 @@ def _openai_render(request: RenderRequest) -> dict[str, object]:
         raise RuntimeError("OpenAI returned no language output")
     data = json.loads(response.output_text)
     if not isinstance(data, dict):
-        raise RuntimeError("OpenAI returned invalid language output")
+        raise TypeError("OpenAI returned invalid language output")
     return data
 
 
@@ -123,7 +123,7 @@ def _gemini_render(request: RenderRequest) -> dict[str, object]:
         raise RuntimeError("Gemini returned no language output")
     data = json.loads(response.text)
     if not isinstance(data, dict):
-        raise RuntimeError("Gemini returned invalid language output")
+        raise TypeError("Gemini returned invalid language output")
     return data
 
 
