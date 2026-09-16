@@ -16,6 +16,10 @@ class TutorGeneration(BaseModel):
 
     message: str = Field(min_length=1, max_length=1200)
     expects_student_response: bool = True
+    request_id: str | None = None
+    provider: str | None = None
+    model: str | None = None
+    latency_ms: int | None = Field(default=None, ge=0)
 
 
 @dataclass(frozen=True)
@@ -40,6 +44,7 @@ class TutorEngineResult:
     model: str | None = None
     provider: str | None = None
     latency_ms: int | None = None
+    request_id: str | None = None
     expects_student_response: bool = True
 
 
@@ -67,12 +72,18 @@ class TutorEngine:
             started = perf_counter()
             try:
                 generation = TutorGeneration.model_validate(self.provider.generate(context))
+                elapsed_ms = int((perf_counter() - started) * 1000)
                 return TutorEngineResult(
                     message=generation.message,
                     source="llm",
-                    model=self.provider.model_name,
-                    provider=self.provider.provider_name,
-                    latency_ms=int((perf_counter() - started) * 1000),
+                    model=generation.model or self.provider.model_name,
+                    provider=generation.provider or self.provider.provider_name,
+                    latency_ms=(
+                        generation.latency_ms
+                        if generation.latency_ms is not None
+                        else elapsed_ms
+                    ),
+                    request_id=generation.request_id,
                     expects_student_response=generation.expects_student_response,
                 )
             except (TutorProviderError, RuntimeError, ValueError, TimeoutError):
