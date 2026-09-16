@@ -104,9 +104,6 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
             )
         db.commit()
 
-        # Make the release-gate precondition explicit: the persisted, curriculum-local
-        # evidence itself must satisfy the deterministic intervention policy before
-        # the tutor state machine is asked to route the learner into remediation.
         decision = evaluate_persisted_intervention(
             db,
             student_id=student.id,
@@ -123,6 +120,7 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
         curriculum_id = curriculum.id
         target_id = target.id
         prerequisite_id = prerequisite.id
+        prerequisite_problem_ids = [problem.id for problem in prerequisite_problems[:2]]
         misconception_problem_id = misconception_problem.id
 
     created = client.post(
@@ -133,9 +131,6 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
     payload = created.json()
     session_id = payload["session_id"]
 
-    # Repeated evidence of the same deterministic misconception activates the
-    # state-machine remediation transition; the persisted intervention gate then
-    # consumes the independently asserted prerequisite-gap evidence above.
     for _ in range(3):
         response = client.post(
             f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
@@ -152,38 +147,38 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
 
     assert payload["focus"]["in_remediation"] is True
     assert payload["focus"]["active_skill_id"] == str(prerequisite_id)
-    problem_id = payload["next_problem"]["id"]
-    _problem(problem_id, curriculum_id)
 
-    problem = _problem(problem_id, curriculum_id)
+    # Strongly assisted success must not release remediation.
+    assisted_problem = _problem(str(prerequisite_problem_ids[0]), curriculum_id)
     assisted = client.post(
         f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
         json={
-            "problem_id": problem_id,
-            "answer": problem.canonical_answer,
+            "problem_id": str(assisted_problem.id),
+            "answer": assisted_problem.canonical_answer,
             "assistance_level": 3,
         },
     )
     assert assisted.status_code == 200
     payload = assisted.json()
     assert payload["focus"]["in_remediation"] is True
-    problem_id = payload["next_problem"]["id"]
 
-    for _ in range(6):
-        problem = _problem(problem_id, curriculum_id)
+    # Return requires fresh independent breadth. Exercise two distinct prerequisite
+    # problems explicitly so the E2E proves the policy rather than depending on the
+    # problem selector to happen to rotate across distinct items.
+    for index, prerequisite_problem_id in enumerate(prerequisite_problem_ids):
+        problem = _problem(str(prerequisite_problem_id), curriculum_id)
         independent = client.post(
             f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
             json={
-                "problem_id": problem_id,
+                "problem_id": str(problem.id),
                 "answer": problem.canonical_answer,
                 "assistance_level": 0,
             },
         )
         assert independent.status_code == 200
         payload = independent.json()
-        if not payload["focus"]["in_remediation"]:
-            break
-        problem_id = payload["next_problem"]["id"]
+        if index == 0:
+            assert payload["focus"]["in_remediation"] is True
 
     assert payload["focus"]["in_remediation"] is False
     assert payload["focus"]["active_skill_id"] == str(target_id)
