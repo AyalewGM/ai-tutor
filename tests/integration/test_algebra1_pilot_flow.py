@@ -47,6 +47,17 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
         )
         assert curriculum is not None and target is not None and prerequisite is not None
 
+        # Use a target problem whose deterministic evaluator can identify the
+        # declared partial-distribution misconception. Generic wrong answers are
+        # intentionally not enough to trigger remediation.
+        misconception_problem = db.scalar(
+            select(Problem).where(
+                Problem.primary_skill_id == target.id,
+                Problem.prompt == "Solve 2(x + 4) = 18.",
+            )
+        )
+        assert misconception_problem is not None
+
         student = Student(
             curriculum_id=curriculum.id,
             first_name="Synthetic Algebra Learner",
@@ -88,6 +99,7 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
         curriculum_id = curriculum.id
         target_id = target.id
         prerequisite_id = prerequisite.id
+        misconception_problem_id = misconception_problem.id
 
     created = client.post(
         "/api/v1/adaptive-tutor/sessions",
@@ -96,25 +108,28 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
     assert created.status_code == 200
     payload = created.json()
     session_id = payload["session_id"]
-    problem_id = payload["problem"]["id"]
 
-    # Repeated deterministic errors activate declared-prerequisite remediation.
+    # Repeated evidence of the same deterministic misconception activates the
+    # declared-prerequisite intervention. The API permits any problem in the
+    # active skill, so pinning this known target problem makes the evidence
+    # deterministic rather than relying on problem-selection order.
     for _ in range(3):
         response = client.post(
             f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
             json={
-                "problem_id": problem_id,
-                "answer": "synthetic-incorrect",
+                "problem_id": str(misconception_problem_id),
+                "answer": "2x+4=18",
                 "assistance_level": 0,
             },
         )
         assert response.status_code == 200
         payload = response.json()
+        assert payload["evaluation"]["misconception_code"] == "DIST_001"
         assert payload["next_problem"] is not None
-        problem_id = payload["next_problem"]["id"]
 
     assert payload["focus"]["in_remediation"] is True
     assert payload["focus"]["active_skill_id"] == str(prerequisite_id)
+    problem_id = payload["next_problem"]["id"]
     _problem(problem_id, curriculum_id)
 
     # Assisted success cannot by itself release remediation.
