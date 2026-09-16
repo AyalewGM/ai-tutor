@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     openai_model: str = "gpt-5"
     gemini_model: str = "gemini-3.8-flash"
     ai_timeout_seconds: float = 20.0
+    llm_gateway_url: str = "http://localhost:8001"
 
     model_config = SettingsConfigDict(
         env_file=".env",
