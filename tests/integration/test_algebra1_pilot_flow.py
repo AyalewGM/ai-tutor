@@ -5,12 +5,16 @@ remediation selection, and mastery evidence remain in the tutor service. No real
 learner data or external LLM call is used.
 """
 
+from datetime import UTC, datetime, timedelta
+
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 
 from app.core.database import SessionLocal
 from app.main import app
 from app.models import Attempt, Curriculum, Problem, Skill, Student, TutorSession
+from app.services.intervention_evidence import evaluate_persisted_intervention
+from app.services.intervention_policy import InterventionState
 from scripts.seed_algebra1 import seed
 
 client = TestClient(app)
@@ -47,9 +51,6 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
         )
         assert curriculum is not None and target is not None and prerequisite is not None
 
-        # Use a target problem whose deterministic evaluator can identify the
-        # declared partial-distribution misconception. Generic wrong answers are
-        # intentionally not enough to trigger remediation.
         misconception_problem = db.scalar(
             select(Problem).where(
                 Problem.primary_skill_id == target.id,
@@ -67,9 +68,6 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
         db.add(student)
         db.flush()
 
-        # Establish prerequisite-gap breadth using synthetic independent evidence.
-        # The intervention policy intentionally deduplicates retries by problem, so
-        # both target and prerequisite evidence must span at least two problems.
         prerequisite_problems = db.scalars(
             select(Problem)
             .where(Problem.primary_skill_id == prerequisite.id)
@@ -105,6 +103,22 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
                 )
             )
         db.commit()
+
+        # Make the release-gate precondition explicit: the persisted, curriculum-local
+        # evidence itself must satisfy the deterministic intervention policy before
+        # the tutor state machine is asked to route the learner into remediation.
+        decision = evaluate_persisted_intervention(
+            db,
+            student_id=student.id,
+            curriculum_id=curriculum.id,
+            target_skill_id=target.id,
+            evidence_window_start=datetime.now(UTC) - timedelta(days=30),
+        )
+        assert decision.state == InterventionState.PREREQUISITE_GAP_CONFIRMED
+        assert decision.selected_prerequisite_skill_id == prerequisite.id
+        assert decision.reason_code == "DECLARED_PREREQUISITE_GAP_CONFIRMED"
+        assert len(decision.evidence_ids) >= 4
+
         student_id = student.id
         curriculum_id = curriculum.id
         target_id = target.id
@@ -121,7 +135,7 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
 
     # Repeated evidence of the same deterministic misconception activates the
     # state-machine remediation transition; the persisted intervention gate then
-    # requires the distinct-problem evidence breadth established above.
+    # consumes the independently asserted prerequisite-gap evidence above.
     for _ in range(3):
         response = client.post(
             f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
@@ -141,7 +155,6 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
     problem_id = payload["next_problem"]["id"]
     _problem(problem_id, curriculum_id)
 
-    # Assisted success cannot by itself release remediation.
     problem = _problem(problem_id, curriculum_id)
     assisted = client.post(
         f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
@@ -156,7 +169,6 @@ def test_algebra1_pilot_remediation_requires_fresh_independent_evidence() -> Non
     assert payload["focus"]["in_remediation"] is True
     problem_id = payload["next_problem"]["id"]
 
-    # Only fresh, unassisted correct work can satisfy the return/mastery gate.
     for _ in range(6):
         problem = _problem(problem_id, curriculum_id)
         independent = client.post(
