@@ -1,4 +1,4 @@
-"""Synthetic F-007A learner-flow evidence for the Ontario MTH1W pilot.
+"""Synthetic F-007A/F-016 learner-to-parent evidence for the Ontario MTH1W pilot.
 
 Pedagogy remains application-owned: deterministic evaluation, remediation selection,
 and mastery evidence stay in the tutor service. No real learner data or external LLM
@@ -11,10 +11,13 @@ from fastapi.testclient import TestClient
 from sqlalchemy import select
 
 from app.core.database import SessionLocal
+from app.identity import current_user
 from app.main import app
-from app.models import Attempt, Curriculum, Problem, Skill, Student, TutorSession
+from app.models import Attempt, Curriculum, Problem, Skill, Student, TutorSession, User
+from app.parent_models import ChildLinkClaim
 from app.services.intervention_evidence import evaluate_persisted_intervention
 from app.services.intervention_policy import InterventionState
+from app.services.parent_dashboard import hash_claim_token
 from scripts.seed_mth1w import seed
 
 client = TestClient(app)
@@ -29,6 +32,14 @@ def _problem(problem_id: str, curriculum_id) -> Problem:
         assert skill.curriculum_id == curriculum_id
         db.expunge(problem)
         return problem
+
+
+def _override_user(user: User) -> None:
+    app.dependency_overrides[current_user] = lambda: user
+
+
+def _clear_override() -> None:
+    app.dependency_overrides.pop(current_user, None)
 
 
 def test_mth1w_pilot_remediation_requires_fresh_independent_evidence() -> None:
@@ -191,3 +202,63 @@ def test_mth1w_pilot_remediation_requires_fresh_independent_evidence() -> None:
     assert payload["tutor"]["action"] == "RESUME_TARGET"
     assert payload["next_problem"] is not None
     _problem(payload["next_problem"]["id"], curriculum_id)
+
+    # F-016 release evidence: the same synthetic learner journey must project its
+    # fresh independent evidence to an authorized parent, while unrelated families
+    # remain fail-closed. Linking does not copy or broaden learner data.
+    claim_token = "synthetic-f016-parent-claim-token"
+    with SessionLocal() as db:
+        parent = User(email="f016-parent@example.test", display_name="F016 Parent", role="PARENT")
+        unrelated = User(
+            email="f016-unrelated@example.test",
+            display_name="F016 Unrelated Parent",
+            role="PARENT",
+        )
+        db.add_all([parent, unrelated])
+        db.flush()
+        db.add(
+            ChildLinkClaim(
+                student_id=student_id,
+                token_hash=hash_claim_token(claim_token),
+                expires_at=datetime.now(UTC) + timedelta(minutes=30),
+            )
+        )
+        db.commit()
+        parent_id = parent.id
+        unrelated_id = unrelated.id
+
+    try:
+        with SessionLocal() as db:
+            parent = db.get(User, parent_id)
+            assert parent is not None
+            _override_user(parent)
+            assert client.post("/api/v1/parents/profile").status_code == 200
+            linked = client.post(
+                "/api/v1/parents/children/link",
+                json={"claim_token": claim_token},
+            )
+            assert linked.status_code == 200
+            assert linked.json()["child"]["curriculum_code"] == "ON_MTH1W_2021"
+
+            dashboard = client.get(f"/api/v1/parents/children/{student_id}/dashboard")
+            assert dashboard.status_code == 200
+            dashboard_payload = dashboard.json()
+            assert dashboard_payload["child"]["curriculum_code"] == "ON_MTH1W_2021"
+            prerequisite_progress = next(
+                row
+                for row in dashboard_payload["skills"]
+                if row["skill_code"] == "MTH1W.B.NUM"
+            )
+            assert prerequisite_progress["independent_correct_count"] >= 2
+            assert prerequisite_progress["learning_state"] == "INDEPENDENT_PROGRESS"
+            assert prerequisite_progress["assistance_signal"] == "MIXED_INDEPENDENT_AND_ASSISTED"
+
+        with SessionLocal() as db:
+            unrelated = db.get(User, unrelated_id)
+            assert unrelated is not None
+            _override_user(unrelated)
+            assert client.post("/api/v1/parents/profile").status_code == 200
+            denied = client.get(f"/api/v1/parents/children/{student_id}/dashboard")
+            assert denied.status_code == 403
+    finally:
+        _clear_override()
