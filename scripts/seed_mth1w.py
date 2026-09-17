@@ -4,7 +4,7 @@ from sqlalchemy import select
 
 from app.core.database import SessionLocal
 from app.curriculum_models import EducationAuthority, Jurisdiction
-from app.models import Curriculum, Problem, Skill, SkillPrerequisite
+from app.models import Curriculum, Misconception, Problem, Skill, SkillPrerequisite
 
 CURRICULUM_CODE = "ON_MTH1W_2021"
 AUTHORITY_CODE = "ON-MOE"
@@ -175,11 +175,35 @@ def seed():
         _prerequisite(db, relations, algebra)
         _prerequisite(db, financial, number)
 
+        misconception = db.scalar(
+            select(Misconception).where(
+                Misconception.skill_id == number.id,
+                Misconception.code == "DIST_001",
+            )
+        )
+        if misconception is None:
+            db.add(
+                Misconception(
+                    skill_id=number.id,
+                    code="DIST_001",
+                    name="Partial distribution",
+                    description=(
+                        "The learner multiplies the outside factor by only one term "
+                        "inside parentheses."
+                    ),
+                    remediation_strategy=(
+                        "Represent the outside factor as multiplying each term separately "
+                        "before simplifying."
+                    ),
+                )
+            )
+
         problems = [
             (number, 1, "Evaluate -6 + 14.", "8", "ARITHMETIC"),
             (number, 2, "Evaluate 3/4 + 1/2.", "5/4", "ARITHMETIC"),
             (algebra, 1, "Simplify 4x + 3 + 2x - 5.", "6x-2", "SIMPLIFY_EXPRESSION"),
             (algebra, 2, "Solve 3x + 4 = 19.", "x=5", "SOLVE_EQUATION"),
+            (algebra, 2, "Simplify 4(x + 3).", "4x+12", "SIMPLIFY_EXPRESSION"),
             (relations, 2, "For y = 3x + 2, what is y when x = 4?", "14", "LINEAR_RELATION"),
             (relations, 3, "A line has slope 2 and y-intercept -1. Write its equation.", "y=2x-1", "LINEAR_RELATION"),
             (financial, 1, "A $80 purchase has 13% tax. What is the tax amount?", "10.40", "WORD_PROBLEM"),
