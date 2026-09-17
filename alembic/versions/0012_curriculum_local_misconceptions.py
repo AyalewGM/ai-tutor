@@ -5,6 +5,7 @@ Revises: 0011
 """
 
 import sqlalchemy as sa
+
 from alembic import op
 
 revision = "0012"
@@ -47,8 +48,7 @@ def downgrade() -> None:
 
     constraints = _unique_constraints()
     has_global_constraint = any(
-        constraint.get("column_names") == ["code"]
-        for constraint in constraints
+        constraint.get("column_names") == ["code"] for constraint in constraints
     )
     if not has_global_constraint:
         op.create_unique_constraint("misconceptions_code_key", "misconceptions", ["code"])
