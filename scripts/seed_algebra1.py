@@ -4,7 +4,7 @@ from sqlalchemy import select
 
 from app.core.database import SessionLocal
 from app.curriculum_models import EducationAuthority
-from app.models import Curriculum, Problem, Skill, SkillPrerequisite
+from app.models import Curriculum, Misconception, Problem, Skill, SkillPrerequisite
 
 CURRICULUM_CODE = "MCPS_ALGEBRA_1_2026_27"
 
@@ -75,6 +75,29 @@ def seed() -> None:
 
         _prerequisite(db, linear_equations, expressions)
         _prerequisite(db, linear_functions, linear_equations)
+
+        misconception = db.scalar(
+            select(Misconception).where(
+                Misconception.skill_id == expressions.id,
+                Misconception.code == "DIST_001",
+            )
+        )
+        if misconception is None:
+            db.add(
+                Misconception(
+                    skill_id=expressions.id,
+                    code="DIST_001",
+                    name="Partial distribution",
+                    description=(
+                        "The learner multiplies the outside factor by only one term "
+                        "inside parentheses."
+                    ),
+                    remediation_strategy=(
+                        "Represent the outside factor as multiplying each term separately "
+                        "before simplifying."
+                    ),
+                )
+            )
 
         problems = [
             (expressions, 1, "Simplify 4(x + 3).", "4x+12", "SIMPLIFY_EXPRESSION"),
