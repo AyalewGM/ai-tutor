@@ -55,7 +55,7 @@ const apiStatus = document.getElementById('apiStatus');
 const entryStatus = document.getElementById('entryStatus');
 async function checkApi() {
   try {
-    const response = await fetch('/api/v1/health', {credentials: 'same-origin'});
+    const response = await fetch('/backend-health', {credentials: 'same-origin'});
     apiStatus.textContent = response.ok ? 'Tutor service ready' : 'Tutor service unavailable';
   } catch (_) { apiStatus.textContent = 'Tutor service unavailable'; }
 }
