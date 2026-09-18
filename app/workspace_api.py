@@ -7,6 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
+from app.identity import CurrentParent, require_parent_owns_session
 from app.models import (
     Curriculum,
     Problem,
@@ -94,11 +95,11 @@ def _current_tutor_turn(db: Session, session_id: uuid.UUID) -> TutorTurn | None:
 
 
 @router.get("/sessions/{session_id}", response_model=LearnerWorkspaceOut)
-def get_learner_workspace(session_id: uuid.UUID, db: DbSession) -> LearnerWorkspaceOut:
-    """Reconstruct learner-visible state without creating pedagogical evidence."""
-    session = db.get(TutorSession, session_id)
-    if session is None or session.status != "ACTIVE":
-        raise HTTPException(404, "Active tutor session not found")
+def get_learner_workspace(
+    session_id: uuid.UUID, parent: CurrentParent, db: DbSession
+) -> LearnerWorkspaceOut:
+    """Reconstruct only an authorized family's learner-visible state."""
+    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
 
     try:
         scope = require_session_scope(db, session)
