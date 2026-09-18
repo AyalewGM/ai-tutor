@@ -7,15 +7,8 @@ from sqlalchemy import select
 
 from app.core.database import SessionLocal
 from app.main import app
-from app.models import (
-    Attempt,
-    Curriculum,
-    InterventionRecord,
-    Problem,
-    Skill,
-    Student,
-    TutorSession,
-)
+from app.models import Attempt, Curriculum, InterventionRecord, Problem, Skill, Student, TutorSession
+from tests.auth_helpers import authenticate_parent_for_student
 
 client = TestClient(app)
 
@@ -54,61 +47,27 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
         assert target is not None
         assert distributive is not None
 
-        student = Student(
-            curriculum_id=curriculum.id,
-            first_name="Adaptive Learner",
-            grade_level="8",
-            school_system="MCPS",
-        )
+        student = Student(curriculum_id=curriculum.id, first_name="Adaptive Learner", grade_level="8", school_system="MCPS")
         db.add(student)
         db.flush()
+        authenticate_parent_for_student(client, db, student)
 
-        prerequisite_problems = db.scalars(
-            select(Problem)
-            .where(Problem.primary_skill_id == distributive.id)
-            .order_by(Problem.id)
-            .limit(2)
-        ).all()
+        prerequisite_problems = db.scalars(select(Problem).where(Problem.primary_skill_id == distributive.id).order_by(Problem.id).limit(2)).all()
         assert len(prerequisite_problems) == 2
-
-        evidence_session = TutorSession(
-            student_id=student.id,
-            primary_skill_id=distributive.id,
-            active_skill_id=distributive.id,
-            curriculum_id=curriculum.id,
-        )
+        evidence_session = TutorSession(student_id=student.id, primary_skill_id=distributive.id, active_skill_id=distributive.id, curriculum_id=curriculum.id)
         db.add(evidence_session)
         db.flush()
         for problem in prerequisite_problems:
-            db.add(
-                Attempt(
-                    session_id=evidence_session.id,
-                    student_id=student.id,
-                    problem_id=problem.id,
-                    student_answer="incorrect",
-                    normalized_answer="incorrect",
-                    is_correct=False,
-                    attempt_number=1,
-                    assistance_level=0,
-                )
-            )
-
+            db.add(Attempt(session_id=evidence_session.id, student_id=student.id, problem_id=problem.id, student_answer="incorrect", normalized_answer="incorrect", is_correct=False, attempt_number=1, assistance_level=0))
         db.commit()
         db.refresh(student)
-        student_id = student.id
-        curriculum_id = curriculum.id
-        target_id = target.id
-        distributive_id = distributive.id
+        student_id, curriculum_id, target_id, distributive_id = student.id, curriculum.id, target.id, distributive.id
 
-    created = client.post(
-        "/api/v1/adaptive-tutor/sessions",
-        json={"student_id": str(student_id), "skill_id": str(target_id)},
-    )
+    created = client.post("/api/v1/adaptive-tutor/sessions", json={"student_id": str(student_id), "skill_id": str(target_id)})
     assert created.status_code == 200
     payload = created.json()
     assert payload["focus"]["in_remediation"] is False
     assert payload["focus"]["active_skill_id"] == str(target_id)
-
     session_id = payload["session_id"]
     problem_id = payload["problem"]["id"]
 
@@ -121,14 +80,7 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
 
     for _ in range(3):
         problem = _problem(problem_id, curriculum_id)
-        response = client.post(
-            f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
-            json={
-                "problem_id": problem_id,
-                "answer": _partial_distribution_answer(problem.prompt),
-                "assistance_level": 0,
-            },
-        )
+        response = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={"problem_id": problem_id, "answer": _partial_distribution_answer(problem.prompt), "assistance_level": 0})
         assert response.status_code == 200
         payload = response.json()
         assert payload["evaluation"]["misconception_code"] == "DIST_001"
@@ -138,7 +90,6 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     assert payload["focus"]["in_remediation"] is True
     assert payload["focus"]["active_skill_id"] == str(distributive_id)
     assert payload["tutor"]["action"] == "REMEDIATE"
-
     remediation_workspace = _workspace(session_id)
     assert remediation_workspace["curriculum"]["id"] == str(curriculum_id)
     assert remediation_workspace["focus"]["primary_skill_id"] == str(target_id)
@@ -147,27 +98,14 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     assert remediation_workspace["problem"]["id"] == problem_id
 
     with SessionLocal() as db:
-        intervention = db.scalar(
-            select(InterventionRecord).where(
-                InterventionRecord.student_id == student_id,
-                InterventionRecord.target_skill_id == target_id,
-                InterventionRecord.status == "STARTED",
-            )
-        )
+        intervention = db.scalar(select(InterventionRecord).where(InterventionRecord.student_id == student_id, InterventionRecord.target_skill_id == target_id, InterventionRecord.status == "STARTED"))
         assert intervention is not None
         assert intervention.prerequisite_skill_id == distributive_id
         assert intervention.policy_version == "pilot-v1"
         assert intervention.reason_code == "DECLARED_PREREQUISITE_GAP_CONFIRMED"
 
     remediation_problem = _problem(problem_id, curriculum_id)
-    assisted = client.post(
-        f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
-        json={
-            "problem_id": problem_id,
-            "answer": remediation_problem.canonical_answer,
-            "assistance_level": 3,
-        },
-    )
+    assisted = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={"problem_id": problem_id, "answer": remediation_problem.canonical_answer, "assistance_level": 3})
     assert assisted.status_code == 200
     payload = assisted.json()
     assert payload["focus"]["in_remediation"] is True
@@ -175,14 +113,7 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
 
     for _ in range(5):
         remediation_problem = _problem(problem_id, curriculum_id)
-        independent = client.post(
-            f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
-            json={
-                "problem_id": problem_id,
-                "answer": remediation_problem.canonical_answer,
-                "assistance_level": 0,
-            },
-        )
+        independent = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={"problem_id": problem_id, "answer": remediation_problem.canonical_answer, "assistance_level": 0})
         assert independent.status_code == 200
         payload = independent.json()
         if not payload["focus"]["in_remediation"]:
@@ -201,14 +132,7 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
         assert session.active_skill_id == target_id
         assert session.curriculum_id == curriculum_id
         assert session.remediation_reason is None
-
-        intervention = db.scalar(
-            select(InterventionRecord).where(
-                InterventionRecord.student_id == student_id,
-                InterventionRecord.target_skill_id == target_id,
-                InterventionRecord.status == "COMPLETED",
-            )
-        )
+        intervention = db.scalar(select(InterventionRecord).where(InterventionRecord.student_id == student_id, InterventionRecord.target_skill_id == target_id, InterventionRecord.status == "COMPLETED"))
         assert intervention is not None
         assert intervention.outcome_code == "RETURN_CONDITION_MET"
         assert intervention.completed_at is not None
