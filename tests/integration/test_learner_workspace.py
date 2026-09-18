@@ -16,6 +16,9 @@ from app.models import (
     TutorState,
     TutorTurn,
 )
+from app.auth import SESSION_COOKIE, create_session as create_auth_session
+from app.models import User
+from app.parent_models import ParentProfile
 from tests.auth_helpers import authenticate_parent_for_student
 
 client = TestClient(app)
@@ -137,3 +140,46 @@ def test_i_dont_understand_is_recorded_as_assistance() -> None:
         )
         assert event is not None
         assert event.trigger == "I_DONT_UNDERSTAND"
+
+
+def test_other_family_cannot_read_hint_or_respond_to_session() -> None:
+    session_id, _ = _create_session()
+    with SessionLocal() as db:
+        outsider = User(
+            email=f"synthetic-outsider-{uuid.uuid4()}@example.com",
+            display_name="Synthetic Unrelated Parent",
+            role="PARENT",
+        )
+        db.add(outsider)
+        db.flush()
+        db.add(ParentProfile(user_id=outsider.id))
+        token, _ = create_auth_session(db, outsider.id)
+        db.commit()
+        client.cookies.set(SESSION_COOKIE, token)
+
+        session = db.get(TutorSession, session_id)
+        assert session is not None
+        problem_id = db.scalar(
+            select(TutorTurn.problem_id)
+            .where(TutorTurn.session_id == session_id, TutorTurn.role == "TUTOR")
+            .order_by(TutorTurn.created_at.desc())
+            .limit(1)
+        )
+        assert problem_id is not None
+
+    workspace = client.get(f"/api/v1/learner-workspace/sessions/{session_id}")
+    hint = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/hint",
+        json={"problem_id": str(problem_id)},
+    )
+    respond = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
+        json={"problem_id": str(problem_id), "answer": "synthetic", "assistance_level": 0},
+    )
+
+    assert workspace.status_code == 404
+    assert hint.status_code == 404
+    assert respond.status_code == 404
+    assert workspace.json()["detail"] == "Learner not found"
+    assert hint.json()["detail"] == "Learner not found"
+    assert respond.json()["detail"] == "Learner not found"
