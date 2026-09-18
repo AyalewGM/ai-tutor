@@ -1,6 +1,6 @@
 from fastapi import HTTPException, Response
 
-import app.auth_api as auth_api
+from app import auth_api
 from app.auth_api import LoginRequest, _set_session_cookie, login
 
 
