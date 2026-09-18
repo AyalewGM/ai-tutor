@@ -3,6 +3,8 @@ import uuid
 from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 
+from app.auth import SESSION_COOKIE
+from app.auth import create_session as create_auth_session
 from app.core.database import SessionLocal
 from app.hint_models import HintEvent
 from app.main import app
@@ -15,9 +17,8 @@ from app.models import (
     TutorSession,
     TutorState,
     TutorTurn,
+    User,
 )
-from app.auth import SESSION_COOKIE, create_session as create_auth_session
-from app.models import User
 from app.parent_models import ParentProfile
 from tests.auth_helpers import authenticate_parent_for_student
 
