@@ -3,6 +3,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
@@ -12,6 +13,14 @@ from app.models import Curriculum, Student
 
 router = APIRouter(prefix="/onboarding", tags=["onboarding"])
 DbSession = Annotated[Session, Depends(get_db)]
+
+
+class CurriculumChoice(BaseModel):
+    id: uuid.UUID
+    code: str
+    version: str
+    jurisdiction: str | None
+    grade_level: str | None
 
 
 class LearnerCreate(BaseModel):
@@ -26,6 +35,25 @@ class LearnerCreated(BaseModel):
     curriculum_code: str
     curriculum_version: str
     jurisdiction: str | None
+
+
+@router.get("/curricula", response_model=list[CurriculumChoice])
+def list_active_curricula(parent: CurrentParent, db: DbSession) -> list[CurriculumChoice]:
+    curricula = db.scalars(
+        select(Curriculum)
+        .where(Curriculum.active.is_(True))
+        .order_by(Curriculum.jurisdiction, Curriculum.grade_level, Curriculum.code, Curriculum.version)
+    ).all()
+    return [
+        CurriculumChoice(
+            id=curriculum.id,
+            code=curriculum.code,
+            version=curriculum.version,
+            jurisdiction=curriculum.jurisdiction,
+            grade_level=curriculum.grade_level,
+        )
+        for curriculum in curricula
+    ]
 
 
 @router.post("/learners", response_model=LearnerCreated, status_code=status.HTTP_201_CREATED)
