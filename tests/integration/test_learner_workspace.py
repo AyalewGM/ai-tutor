@@ -16,6 +16,7 @@ from app.models import (
     TutorState,
     TutorTurn,
 )
+from tests.auth_helpers import authenticate_parent_for_student
 
 client = TestClient(app)
 
@@ -36,7 +37,8 @@ def _create_session() -> tuple[uuid.UUID, uuid.UUID]:
             school_system="MCPS",
         )
         db.add(student)
-        db.commit()
+        db.flush()
+        authenticate_parent_for_student(client, db, student)
         db.refresh(student)
         student_id = student.id
         skill_id = skill.id
