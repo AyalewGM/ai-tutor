@@ -8,8 +8,8 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.curriculum_models import StudentCurriculumEnrollment
-from app.identity import CurrentParent
-from app.models import Curriculum, Student
+from app.identity import CurrentParent, require_parent_owns_student
+from app.models import Curriculum, Skill, Student
 
 router = APIRouter(prefix="/onboarding", tags=["onboarding"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -37,6 +37,21 @@ class LearnerCreated(BaseModel):
     jurisdiction: str | None
 
 
+class LearnerChoice(BaseModel):
+    id: uuid.UUID
+    first_name: str
+    curriculum_id: uuid.UUID
+    curriculum_code: str
+    curriculum_version: str
+    jurisdiction: str | None
+
+
+class SkillChoice(BaseModel):
+    id: uuid.UUID
+    code: str
+    name: str
+
+
 @router.get("/curricula", response_model=list[CurriculumChoice])
 def list_active_curricula(parent: CurrentParent, db: DbSession) -> list[CurriculumChoice]:
     curricula = db.scalars(
@@ -54,6 +69,42 @@ def list_active_curricula(parent: CurrentParent, db: DbSession) -> list[Curricul
         )
         for curriculum in curricula
     ]
+
+
+@router.get("/learners", response_model=list[LearnerChoice])
+def list_learners(parent: CurrentParent, db: DbSession) -> list[LearnerChoice]:
+    rows = db.execute(
+        select(Student, Curriculum)
+        .join(Curriculum, Curriculum.id == Student.curriculum_id)
+        .where(Student.parent_id == parent.user_id, Student.active.is_(True))
+        .order_by(Student.first_name, Student.id)
+    ).all()
+    return [
+        LearnerChoice(
+            id=student.id,
+            first_name=student.first_name,
+            curriculum_id=curriculum.id,
+            curriculum_code=curriculum.code,
+            curriculum_version=curriculum.version,
+            jurisdiction=curriculum.jurisdiction,
+        )
+        for student, curriculum in rows
+    ]
+
+
+@router.get("/learners/{student_id}/skills", response_model=list[SkillChoice])
+def list_learner_skills(
+    student_id: uuid.UUID, parent: CurrentParent, db: DbSession
+) -> list[SkillChoice]:
+    student = require_parent_owns_student(parent, db.get(Student, student_id))
+    if student.curriculum_id is None:
+        raise HTTPException(status_code=409, detail="Learner curriculum is unavailable")
+    skills = db.scalars(
+        select(Skill)
+        .where(Skill.curriculum_id == student.curriculum_id)
+        .order_by(Skill.difficulty_level, Skill.code)
+    ).all()
+    return [SkillChoice(id=skill.id, code=skill.code, name=skill.name) for skill in skills]
 
 
 @router.post("/learners", response_model=LearnerCreated, status_code=status.HTTP_201_CREATED)
