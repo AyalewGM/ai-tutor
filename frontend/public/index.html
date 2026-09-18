@@ -1,131 +1,25 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Curriculum-aware AI tutoring for learners and families.">
-  <title>AI Tutor</title>
-  <style>
-    :root { font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #17202a; background: #f7f9fc; }
-    * { box-sizing: border-box; }
-    body { margin: 0; }
-    main { max-width: 1040px; margin: 0 auto; padding: 2rem 1rem 4rem; }
-    header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem 0 3rem; }
-    .brand { font-weight: 800; font-size: 1.2rem; }
-    .hero { display: grid; grid-template-columns: 1.3fr .7fr; gap: 2rem; align-items: start; }
-    h1 { font-size: clamp(2.25rem, 6vw, 4.5rem); line-height: .98; margin: 0 0 1.2rem; letter-spacing: -.04em; }
-    p { line-height: 1.65; }
-    .lead { font-size: 1.15rem; max-width: 62ch; color: #4b5563; }
-    .card { background: white; border: 1px solid #e4e9f0; border-radius: 20px; padding: 1.4rem; box-shadow: 0 12px 40px rgba(23,32,42,.07); }
-    form { display: grid; gap: .8rem; }
-    label { font-weight: 650; }
-    input, select, button { font: inherit; }
-    input, select { width: 100%; padding: .8rem; border: 1px solid #cbd5e1; border-radius: 10px; background: white; }
-    button { padding: .8rem 1rem; border: 1px solid #17202a; border-radius: 10px; background: #17202a; color: white; cursor: pointer; }
-    button.secondary { background: white; color: #17202a; }
-    .actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .8rem; }
-    .status { min-height: 1.5rem; color: #667085; }
-    .error { color: #b42318; }
-    .principles { margin-top: 3rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-    .principles h2 { font-size: 1rem; margin-top: 0; }
-    .principles p { color: #667085; font-size: .94rem; margin-bottom: 0; }
-    [hidden] { display: none !important; }
-    :focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }
-    @media (max-width: 760px) { .hero { grid-template-columns: 1fr; } .principles { grid-template-columns: 1fr; } header { padding-bottom: 2rem; } }
-  </style>
-</head>
-<body>
-<main>
-  <header><div class="brand">AI Tutor</div><div id="apiStatus" aria-live="polite">Checking tutor service…</div></header>
-  <section class="hero">
-    <div>
-      <h1>Learn what matters. Know what sticks.</h1>
-      <p class="lead">Curriculum-aware tutoring that separates guided practice from what a learner can demonstrate independently. The tutor adapts support without letting AI decide mastery.</p>
-    </div>
-    <section class="card" aria-labelledby="panelHeading">
-      <div id="authPanel">
-        <h2 id="panelHeading">Parent or guardian</h2>
-        <form id="authForm">
-          <label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required>
-          <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required>
-          <label for="displayName">Display name <span aria-hidden="true">(registration only)</span></label><input id="displayName" name="display_name" maxlength="120" autocomplete="name">
-          <div class="actions"><button type="submit" data-action="login">Sign in</button><button class="secondary" type="button" id="registerButton">Create parent account</button></div>
-        </form>
-        <p class="status">New passwords must be at least 12 characters. Learners do not need email accounts.</p>
-      </div>
-      <div id="onboardingPanel" hidden>
-        <h2>Add a learner</h2>
-        <p id="welcome"></p>
-        <form id="learnerForm">
-          <label for="firstName">Learner first name</label><input id="firstName" maxlength="100" autocomplete="off" required>
-          <label for="curriculum">Curriculum</label><select id="curriculum" required><option value="">Loading available curricula…</option></select>
-          <button type="submit">Add learner</button>
-        </form>
-        <div class="actions"><button class="secondary" type="button" id="logoutButton">Sign out</button></div>
-      </div>
-      <p id="entryStatus" class="status" role="status" aria-live="polite"></p>
-    </section>
-  </section>
-  <section class="principles" aria-label="Product principles">
-    <article class="card"><h2>Curriculum specific</h2><p>Learning stays inside the learner's selected jurisdiction, grade, course, and curriculum version.</p></article>
-    <article class="card"><h2>Help is not mastery</h2><p>Hints and guided success support learning but remain distinct from independent evidence.</p></article>
-    <article class="card"><h2>Family privacy first</h2><p>Parent access is server-authorized. The browser does not decide who may see learner data.</p></article>
-  </section>
-</main>
-<script>
-const apiStatus = document.getElementById('apiStatus');
-const entryStatus = document.getElementById('entryStatus');
-const authPanel = document.getElementById('authPanel');
-const onboardingPanel = document.getElementById('onboardingPanel');
-const authForm = document.getElementById('authForm');
-const learnerForm = document.getElementById('learnerForm');
-const curriculumSelect = document.getElementById('curriculum');
-
-async function api(path, options = {}) {
-  const response = await fetch(`/api/v1${path}`, {credentials: 'same-origin', headers: {'Content-Type': 'application/json', ...(options.headers || {})}, ...options});
-  if (!response.ok) {
-    let message = 'Request failed';
-    try { const body = await response.json(); message = body.detail || message; } catch (_) {}
-    throw new Error(message);
-  }
-  return response.status === 204 ? null : response.json();
-}
-function setStatus(message, isError = false) { entryStatus.textContent = message; entryStatus.classList.toggle('error', isError); }
-async function loadCurricula() {
-  const curricula = await api('/onboarding/curricula');
-  curriculumSelect.innerHTML = '<option value="">Select the learner’s exact curriculum</option>';
-  for (const item of curricula) {
-    const option = document.createElement('option'); option.value = item.id;
-    option.textContent = [item.jurisdiction, item.grade_level, item.code, item.version].filter(Boolean).join(' · ');
-    curriculumSelect.appendChild(option);
-  }
-}
-async function signedIn(user) {
-  authPanel.hidden = true; onboardingPanel.hidden = false;
-  document.getElementById('welcome').textContent = user.display_name ? `Signed in as ${user.display_name}.` : 'Signed in securely.';
-  await loadCurricula(); setStatus('Choose the learner’s exact curriculum.');
-}
-authForm.addEventListener('submit', async event => {
-  event.preventDefault(); setStatus('Signing in…');
-  try { const user = await api('/auth/login', {method: 'POST', body: JSON.stringify({email: email.value, password: password.value})}); await signedIn(user); }
-  catch (error) { setStatus(error.message, true); }
-});
-document.getElementById('registerButton').addEventListener('click', async () => {
-  setStatus('Creating account…');
-  try { const user = await api('/auth/register-parent', {method: 'POST', body: JSON.stringify({email: email.value, password: password.value, display_name: displayName.value || null})}); await signedIn(user); }
-  catch (error) { setStatus(error.message, true); }
-});
-learnerForm.addEventListener('submit', async event => {
-  event.preventDefault(); setStatus('Adding learner…');
-  try {
-    const learner = await api('/onboarding/learners', {method: 'POST', body: JSON.stringify({first_name: firstName.value, curriculum_id: curriculumSelect.value})});
-    setStatus(`${learner.first_name} is ready with ${learner.curriculum_code} (${learner.curriculum_version}).`); learnerForm.reset();
-  } catch (error) { setStatus(error.message, true); }
-});
-document.getElementById('logoutButton').addEventListener('click', async () => {
-  try { await api('/auth/logout', {method: 'POST'}); } finally { onboardingPanel.hidden = true; authPanel.hidden = false; authForm.reset(); setStatus('Signed out.'); }
-});
-(async () => { try { const response = await fetch('/backend-health', {credentials: 'same-origin'}); apiStatus.textContent = response.ok ? 'Tutor service ready' : 'Tutor service unavailable'; } catch (_) { apiStatus.textContent = 'Tutor service unavailable'; } })();
-</script>
-</body>
-</html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Tutor</title>
+<style>:root{font-family:Inter,system-ui,sans-serif;color:#17202a;background:#f7f9fc}*{box-sizing:border-box}body{margin:0}main{max-width:1040px;margin:auto;padding:2rem 1rem 4rem}.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:2rem}.card{background:#fff;border:1px solid #e4e9f0;border-radius:20px;padding:1.4rem;margin-bottom:1rem}h1{font-size:clamp(2.3rem,6vw,4.5rem);line-height:1;margin:.5rem 0}p{line-height:1.55}form{display:grid;gap:.7rem}label{font-weight:650}input,select,button{font:inherit;padding:.8rem;border:1px solid #cbd5e1;border-radius:10px}button{background:#17202a;color:#fff;cursor:pointer}.secondary{background:#fff;color:#17202a}.actions{display:flex;gap:.6rem;flex-wrap:wrap}.status{min-height:1.5rem;color:#667085}.error{color:#b42318}[hidden]{display:none!important}:focus-visible{outline:3px solid #2563eb;outline-offset:3px}@media(max-width:760px){.hero{grid-template-columns:1fr}.actions button{flex:1 1 100%}}</style></head>
+<body><main><header><strong>AI Tutor</strong> · <span id="apiStatus" aria-live="polite">Checking tutor service…</span></header>
+<section class="hero"><div><h1>Learn what matters. Know what sticks.</h1><p>Curriculum-aware tutoring that keeps guided work separate from what a learner can demonstrate independently. Application logic—not an LLM—owns mastery and progression.</p></div>
+<section class="card"><div id="authPanel"><h2>Parent or guardian</h2><form id="authForm"><label>Email<input id="email" type="email" autocomplete="email" required></label><label>Password<input id="password" type="password" autocomplete="current-password" required></label><label>Display name (registration only)<input id="displayName" maxlength="120" autocomplete="name"></label><div class="actions"><button type="submit">Sign in</button><button class="secondary" type="button" id="registerButton">Create account</button></div></form><p>New passwords require at least 12 characters. Learners do not need accounts.</p></div>
+<div id="familyPanel" hidden><h2>Family learning</h2><p id="welcome"></p><form id="learnerForm"><label>Learner first name<input id="firstName" maxlength="100" autocomplete="off" required></label><label>Exact curriculum<select id="curriculum" required></select></label><button type="submit">Add learner</button></form><hr><form id="startForm"><label>Learner<select id="learner" required></select></label><label>Skill<select id="skill" required></select></label><button type="submit">Start learning</button></form><div class="actions"><button class="secondary" id="logoutButton" type="button">Sign out</button></div></div><p id="entryStatus" class="status" role="status" aria-live="polite"></p></section></section>
+<section class="card"><strong>Curriculum specific.</strong> Exact jurisdiction/course/version stays server-authoritative. <strong>Help is not mastery.</strong> Assisted success remains visibly separate from independent evidence. <strong>Family privacy first.</strong> Server authorization controls learner access.</section>
+</main><script>
+const q=id=>document.getElementById(id), status=q('entryStatus');
+async function api(path,options={}){const r=await fetch(`/api/v1${path}`,{credentials:'same-origin',headers:{'Content-Type':'application/json',...(options.headers||{})},...options});if(!r.ok){let m='Request failed';try{m=(await r.json()).detail||m}catch(_){}throw new Error(m)}return r.status===204?null:r.json()}
+function setStatus(m,e=false){status.textContent=m;status.classList.toggle('error',e)}
+function options(select,items,label,value='id'){select.innerHTML=`<option value="">${label}</option>`;for(const item of items){const o=document.createElement('option');o.value=item[value];o.textContent=item.label;select.appendChild(o)}}
+async function loadCurricula(){const rows=await api('/onboarding/curricula');options(q('curriculum'),rows.map(x=>({...x,label:[x.jurisdiction,x.grade_level,x.code,x.version].filter(Boolean).join(' · ')})),'Select exact curriculum')}
+async function loadLearners(){const rows=await api('/onboarding/learners');options(q('learner'),rows.map(x=>({...x,label:`${x.first_name} · ${[x.jurisdiction,x.curriculum_code,x.curriculum_version].filter(Boolean).join(' · ')}`})),'Select learner');q('skill').innerHTML='<option value="">Select learner first</option>'}
+async function signedIn(user){q('authPanel').hidden=true;q('familyPanel').hidden=false;q('welcome').textContent=user.display_name?`Signed in as ${user.display_name}.`:'Signed in securely.';await Promise.all([loadCurricula(),loadLearners()]);setStatus('Choose a learner and curriculum, or start learning.')}
+q('authForm').addEventListener('submit',async e=>{e.preventDefault();try{setStatus('Signing in…');await signedIn(await api('/auth/login',{method:'POST',body:JSON.stringify({email:q('email').value,password:q('password').value})}))}catch(x){setStatus(x.message,true)}});
+q('registerButton').onclick=async()=>{try{setStatus('Creating account…');await signedIn(await api('/auth/register-parent',{method:'POST',body:JSON.stringify({email:q('email').value,password:q('password').value,display_name:q('displayName').value||null})}))}catch(x){setStatus(x.message,true)}};
+q('learnerForm').addEventListener('submit',async e=>{e.preventDefault();try{const x=await api('/onboarding/learners',{method:'POST',body:JSON.stringify({first_name:q('firstName').value,curriculum_id:q('curriculum').value})});q('firstName').value='';await loadLearners();q('learner').value=x.id;q('learner').dispatchEvent(new Event('change'));setStatus(`${x.first_name} is ready with ${x.curriculum_code} (${x.curriculum_version}).`)}catch(x){setStatus(x.message,true)}});
+q('learner').addEventListener('change',async()=>{if(!q('learner').value)return;try{const rows=await api(`/onboarding/learners/${q('learner').value}/skills`);options(q('skill'),rows.map(x=>({...x,label:`${x.code} · ${x.name}`})),'Select curriculum skill')}catch(x){setStatus(x.message,true)}});
+q('startForm').addEventListener('submit',async e=>{e.preventDefault();try{setStatus('Starting learning…');const x=await api('/adaptive-tutor/sessions',{method:'POST',body:JSON.stringify({student_id:q('learner').value,skill_id:q('skill').value})});location.assign(`/learn/${x.session_id}`)}catch(x){setStatus(x.message,true)}});
+q('logoutButton').onclick=async()=>{try{await api('/auth/logout',{method:'POST'})}finally{q('familyPanel').hidden=true;q('authPanel').hidden=false;q('authForm').reset();setStatus('Signed out.')}};
+(async()=>{try{q('apiStatus').textContent=(await fetch('/backend-health')).ok?'Tutor service ready':'Tutor service unavailable'}catch(_){q('apiStatus').textContent='Tutor service unavailable'}})();
+</script></body></html>
