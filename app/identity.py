@@ -6,21 +6,14 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.models import User
+from app.models import Student, TutorSession, User
 from app.parent_models import ParentProfile
 
 DbSession = Annotated[Session, Depends(get_db)]
 
 
 def current_user(request: Request, db: DbSession) -> User:
-    """Resolve identity established by trusted authentication middleware.
-
-    Parent routes intentionally do not accept a caller-supplied user/parent UUID as
-    authentication. Deployment-specific auth middleware must validate the external
-    credential and set request.state.authenticated_user_id to the internal User UUID.
-    Until such middleware is configured, protected routes fail closed with 401.
-    """
-
+    """Resolve identity established by trusted authentication middleware."""
     raw_user_id = getattr(request.state, "authenticated_user_id", None)
     if raw_user_id is None:
         raise HTTPException(status_code=401, detail="Authentication required")
@@ -52,3 +45,20 @@ def current_parent(user: CurrentUser, db: DbSession) -> ParentProfile:
 
 
 CurrentParent = Annotated[ParentProfile, Depends(current_parent)]
+
+
+def require_parent_owns_student(parent: ParentProfile, student: Student | None) -> Student:
+    """Fail closed without disclosing whether another family's learner exists."""
+    if student is None or student.parent_id != parent.user_id:
+        raise HTTPException(status_code=404, detail="Learner not found")
+    return student
+
+
+def require_parent_owns_session(
+    db: Session, parent: ParentProfile, session: TutorSession | None
+) -> TutorSession:
+    """Authorize a tutor session through its server-side learner relationship."""
+    if session is None or session.status != "ACTIVE":
+        raise HTTPException(status_code=404, detail="Active tutor session not found")
+    require_parent_owns_student(parent, db.get(Student, session.student_id))
+    return session
