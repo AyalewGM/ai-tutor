@@ -4,6 +4,7 @@ from sqlalchemy import engine_from_config, pool
 
 import app.auth_models
 import app.content_models
+import app.credential_models
 import app.curriculum_models
 import app.diagnostic_models
 import app.models
