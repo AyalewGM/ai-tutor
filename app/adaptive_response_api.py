@@ -10,6 +10,7 @@ from app.adaptive_api import _focus
 from app.api import _problem_out, _student_skill, _tutor_context
 from app.core.database import SessionLocal, get_db
 from app.hint_models import HintEvent
+from app.identity import CurrentParent, require_parent_owns_session
 from app.models import (
     Attempt,
     MasteryEvent,
@@ -65,10 +66,10 @@ def _publish_adaptive_event(
 
 
 @router.post("/sessions/{session_id}/respond", response_model=RespondOut)
-def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> RespondOut:
-    session = db.get(TutorSession, session_id)
-    if session is None or session.status != "ACTIVE":
-        raise HTTPException(404, "Active tutor session not found")
+def respond(
+    session_id: uuid.UUID, payload: RespondIn, parent: CurrentParent, db: DbSession
+) -> RespondOut:
+    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
 
     active_skill_id = session.active_skill_id or session.primary_skill_id
     try:
