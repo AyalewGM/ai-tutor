@@ -12,6 +12,7 @@ from app.main import app
 from app.models import Curriculum, Skill, SkillPrerequisite, Student
 from app.services.curriculum_scope import CurriculumScopeError
 from app.services.prerequisite_readiness import find_unready_prerequisite
+from tests.auth_helpers import authenticate_parent_for_student
 
 client = TestClient(app)
 
@@ -48,9 +49,7 @@ def test_ontario_mth1w_is_owned_by_ministry_not_ocdsb() -> None:
         assert authority.code == "ON_MIN_ED"
         assert authority.name == "Ontario Ministry of Education"
 
-        ocdsb = db.scalar(
-            select(EducationAuthority).where(EducationAuthority.code == "OCDSB")
-        )
+        ocdsb = db.scalar(select(EducationAuthority).where(EducationAuthority.code == "OCDSB"))
         assert ocdsb is not None
         assert curriculum.authority_id != ocdsb.id
 
@@ -104,6 +103,7 @@ def test_adaptive_session_rejects_skill_from_another_curriculum() -> None:
         )
         db.add(student)
         db.flush()
+        authenticate_parent_for_student(client, db, student)
         enrollment = StudentCurriculumEnrollment(
             student_id=student.id,
             curriculum_id=mcps.id,
