@@ -27,7 +27,7 @@ def test_session_cookie_is_http_only_and_same_site(monkeypatch):
 
 
 def test_unknown_parent_login_returns_generic_failure():
-    payload = LoginRequest(email="synthetic.parent@example.test", password="not-a-real-password")
+    payload = LoginRequest(email="synthetic.parent@example.com", password="not-a-real-password")
 
     try:
         login(payload, Response(), MissingUserDb())
