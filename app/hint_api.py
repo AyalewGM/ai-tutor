@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from app.api import _tutor_context
 from app.core.database import get_db
 from app.hint_models import HintEvent
+from app.identity import CurrentParent, require_parent_owns_session
 from app.models import Problem, Skill, Student, TutorSession, TutorTurn
 from app.services.curriculum_scope import (
     CurriculumScopeError,
@@ -35,10 +36,10 @@ class HintResponse(BaseModel):
 
 
 @router.post("/sessions/{session_id}/hint", response_model=HintResponse)
-def request_hint(session_id: uuid.UUID, payload: HintRequest, db: DbSession) -> HintResponse:
-    session = db.get(TutorSession, session_id)
-    if session is None or session.status != "ACTIVE":
-        raise HTTPException(404, "Active tutor session not found")
+def request_hint(
+    session_id: uuid.UUID, payload: HintRequest, parent: CurrentParent, db: DbSession
+) -> HintResponse:
+    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
     active_skill_id = session.active_skill_id or session.primary_skill_id
     try:
         scope = require_session_scope(db, session)
