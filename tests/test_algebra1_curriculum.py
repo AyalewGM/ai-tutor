@@ -13,7 +13,7 @@ def test_algebra1_seed_is_idempotent_versioned_and_curriculum_local():
     try:
         algebra1 = db.scalar(select(Curriculum).where(Curriculum.code == CURRICULUM_CODE))
         grade8 = db.scalar(select(Curriculum).where(Curriculum.code == "MCPS_MATH_8"))
-        ontario = db.scalar(select(Curriculum).where(Curriculum.code == "ON_MTH1W_2021"))
+        ontario = db.scalar(select(Curriculum).where(Curriculum.code == "MTH1W"))
 
         assert algebra1 is not None
         assert algebra1.grade_level == "Algebra 1"
