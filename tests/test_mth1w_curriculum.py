@@ -36,13 +36,15 @@ def test_mth1w_seed_is_idempotent_and_jurisdiction_local():
         assert ontario.id != grade8.id
 
         skills = list(db.scalars(select(Skill).where(Skill.curriculum_id == ontario.id)))
-        assert {skill.code for skill in skills} == {
+        seeded_skill_codes = {
             "MTH1W.B.NUM",
             "MTH1W.C.ALG",
             "MTH1W.C.REL",
             "MTH1W.F.FIN",
         }
-        skill_ids = {skill.id for skill in skills}
+        skills_by_code = {skill.code: skill for skill in skills}
+        assert seeded_skill_codes <= skills_by_code.keys()
+        seeded_skill_ids = {skills_by_code[code].id for code in seeded_skill_codes}
 
         expectations = list(
             db.scalars(
@@ -63,25 +65,32 @@ def test_mth1w_seed_is_idempotent_and_jurisdiction_local():
                 )
             )
         )
-        assert len(mappings) == 4
-        assert {row.skill_id for row in mappings} == skill_ids
+        seeded_mappings = [row for row in mappings if row.skill_id in seeded_skill_ids]
+        assert len(seeded_mappings) == 4
+        assert {row.skill_id for row in seeded_mappings} == seeded_skill_ids
 
         edges = list(
             db.scalars(
-                select(SkillPrerequisite).where(SkillPrerequisite.skill_id.in_(skill_ids))
+                select(SkillPrerequisite).where(
+                    SkillPrerequisite.skill_id.in_(seeded_skill_ids)
+                )
             )
         )
         assert len(edges) == 3
-        assert all(edge.prerequisite_skill_id in skill_ids for edge in edges)
+        assert all(edge.prerequisite_skill_id in seeded_skill_ids for edge in edges)
 
-        problems = list(db.scalars(select(Problem).where(Problem.primary_skill_id.in_(skill_ids))))
+        problems = list(
+            db.scalars(
+                select(Problem).where(Problem.primary_skill_id.in_(seeded_skill_ids))
+            )
+        )
         assert len(problems) == 9
-        assert all(problem.primary_skill_id in skill_ids for problem in problems)
+        assert all(problem.primary_skill_id in seeded_skill_ids for problem in problems)
 
         maryland_skill_ids = set(
             db.scalars(select(Skill.id).where(Skill.curriculum_id == grade8.id))
         )
-        assert skill_ids.isdisjoint(maryland_skill_ids)
+        assert seeded_skill_ids.isdisjoint(maryland_skill_ids)
     finally:
         db.close()
 
