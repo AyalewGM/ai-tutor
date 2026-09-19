@@ -104,7 +104,9 @@ def test_postgres_learner_erase_isolated_and_preserves_shared_curriculum():
                 )
                 if sibling_rel is not None:
                     erase_learner_transactional(db, parent=parent, learner_id=sibling_row.id)
+            db.flush()
             db.delete(parent)
+            db.flush()
             db.delete(user)
             db.commit()
         finally:
