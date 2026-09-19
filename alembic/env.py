@@ -9,6 +9,7 @@ import app.curriculum_models
 import app.diagnostic_models
 import app.models
 import app.parent_models
+import app.privacy_models
 import app.telemetry_models  # noqa: F401
 from alembic import context
 from app.core.database import Base
