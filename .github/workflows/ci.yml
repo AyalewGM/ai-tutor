@@ -70,6 +70,9 @@ jobs:
       - name: Verify frontend health
         run: curl --fail --retry 5 --retry-delay 2 http://localhost:3000/healthz
 
+      - name: Migrate browser E2E database
+        run: docker compose exec -T tutor-api alembic upgrade head
+
       - name: Seed browser E2E content
         run: docker compose exec -T tutor-api python scripts/seed_sprint1.py
 
