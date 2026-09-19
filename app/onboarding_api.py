@@ -10,6 +10,11 @@ from app.core.database import get_db
 from app.curriculum_models import StudentCurriculumEnrollment
 from app.identity import CurrentParent, require_parent_owns_student
 from app.models import Curriculum, Skill, Student
+from app.parent_models import (
+    ParentProfile,
+    ParentStudentRelationship,
+    ParentStudentRelationshipEvent,
+)
 
 router = APIRouter(prefix="/onboarding", tags=["onboarding"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -133,6 +138,15 @@ def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession)
             provenance_json={"source": "parent_onboarding"},
         )
     )
+    relationship = ParentStudentRelationship(
+        parent_profile_id=parent.id,
+        student_id=student.id,
+        relationship_type="GUARDIAN",
+        active=True,
+    )
+    db.add(relationship)
+    db.flush()
+    db.add(ParentStudentRelationshipEvent(relationship_id=relationship.id, action="LINKED"))
     db.commit()
 
     return LearnerCreated(
