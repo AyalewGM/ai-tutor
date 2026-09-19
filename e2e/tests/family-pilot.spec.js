@@ -22,9 +22,9 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await page.getByRole('button', { name: 'Add learner' }).click();
   await expect(page.getByText(/Synthetic Learner is ready with/)).toBeVisible();
 
-  const learner = page.getByLabel('Learner');
+  const learner = page.locator('#learner');
   await expect(learner).not.toHaveValue('');
-  const skill = page.getByLabel('Skill');
+  const skill = page.locator('#skill');
   await expect(skill.locator('option')).toHaveCount(5, { timeout: 10000 });
   await skill.selectOption({ index: 1 });
 
