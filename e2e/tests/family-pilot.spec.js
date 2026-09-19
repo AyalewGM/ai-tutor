@@ -18,15 +18,15 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await page.getByLabel('Learner first name').fill('Synthetic Learner');
   const curriculum = page.getByLabel('Exact curriculum');
   await expect(curriculum.locator('option')).toHaveCount(3, { timeout: 10000 });
-  await curriculum.selectOption({ index: 1 });
+  await curriculum.selectOption({ label: /MCPS Grade 8 Mathematics/ });
   await page.getByRole('button', { name: 'Add learner' }).click();
-  await expect(page.getByText(/Synthetic Learner is ready with/)).toBeVisible();
+  await expect(page.getByText(/Synthetic Learner is ready with MCPS_MATH_8/)).toBeVisible();
 
   const learner = page.locator('#learner');
   await expect(learner).not.toHaveValue('');
   const skill = page.locator('#skill');
   await expect(skill.locator('option')).toHaveCount(5, { timeout: 10000 });
-  await skill.selectOption({ index: 1 });
+  await skill.selectOption({ label: /M8\.ALG\.DIST · Distributive Property/ });
 
   await page.getByRole('button', { name: 'Start learning' }).click();
   await expect(page).toHaveURL(/\/learn\/[0-9a-f-]+$/);
