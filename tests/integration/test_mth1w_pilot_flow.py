@@ -46,7 +46,7 @@ def _clear_override() -> None:
 def test_mth1w_pilot_remediation_requires_fresh_independent_evidence() -> None:
     seed()
     with SessionLocal() as db:
-        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "ON_MTH1W_2021"))
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MTH1W"))
         target = db.scalar(
             select(Skill).where(
                 Skill.curriculum_id == curriculum.id,
@@ -240,12 +240,12 @@ def test_mth1w_pilot_remediation_requires_fresh_independent_evidence() -> None:
                 json={"claim_token": claim_token},
             )
             assert linked.status_code == 200
-            assert linked.json()["child"]["curriculum_code"] == "ON_MTH1W_2021"
+            assert linked.json()["child"]["curriculum_code"] == "MTH1W"
 
             dashboard = client.get(f"/api/v1/parents/children/{student_id}/dashboard")
             assert dashboard.status_code == 200
             dashboard_payload = dashboard.json()
-            assert dashboard_payload["child"]["curriculum_code"] == "ON_MTH1W_2021"
+            assert dashboard_payload["child"]["curriculum_code"] == "MTH1W"
             prerequisite_progress = next(
                 row
                 for row in dashboard_payload["skills"]
