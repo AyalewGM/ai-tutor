@@ -4,11 +4,12 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.identity import CurrentUser, require_parent_role
+from app.identity import CurrentParent, CurrentUser, require_parent_role
+from app.parent_models import ParentStudentRelationship
 from app.privacy_models import PrivacyNoticeAcknowledgement
 
 router = APIRouter(prefix="/privacy", tags=["privacy"])
@@ -36,6 +37,14 @@ class PrivacyNoticeOut(BaseModel):
 
 class PrivacyNoticeAcknowledgementIn(BaseModel):
     notice_version: str
+
+
+class ParentDataSummaryOut(BaseModel):
+    active_learner_count: int
+    stored_categories: list[str]
+    excluded_sensitive_categories: list[str]
+    notice_version: str
+    notice_acknowledged: bool
 
 
 def _existing_acknowledgement(
@@ -85,3 +94,37 @@ def acknowledge_current_notice(
         db.commit()
         db.refresh(acknowledgement)
     return _notice_out(acknowledgement)
+
+
+@router.get("/data-summary", response_model=ParentDataSummaryOut)
+def get_parent_data_summary(
+    user: CurrentUser,
+    parent: CurrentParent,
+    db: DbSession,
+) -> ParentDataSummaryOut:
+    active_learner_count = db.scalar(
+        select(func.count(ParentStudentRelationship.id)).where(
+            ParentStudentRelationship.parent_profile_id == parent.id,
+            ParentStudentRelationship.active.is_(True),
+        )
+    )
+    acknowledgement = _existing_acknowledgement(db, user_id=user.id)
+    return ParentDataSummaryOut(
+        active_learner_count=int(active_learner_count or 0),
+        stored_categories=[
+            "parent account and profile",
+            "family and learner relationships",
+            "learner identity and curriculum enrollment",
+            "authoritative learning evidence and progress",
+            "minimized first-party pilot telemetry",
+            "privacy notice acknowledgement metadata",
+        ],
+        excluded_sensitive_categories=[
+            "password hashes and credentials",
+            "session tokens or token digests",
+            "application secrets",
+            "hidden prompts or internal reasoning",
+        ],
+        notice_version=CURRENT_NOTICE_VERSION,
+        notice_acknowledged=acknowledgement is not None,
+    )
