@@ -17,6 +17,7 @@ from app.models import (
     TutorSession,
     TutorState,
 )
+from tests.auth_helpers import authenticate_parent_for_student
 
 client = TestClient(app)
 
@@ -36,6 +37,7 @@ def _setup_mastery_session(*, state: TutorState) -> tuple[str, str, str, str]:
         )
         db.add(student)
         db.flush()
+        authenticate_parent_for_student(client, db, student)
 
         progress = StudentSkill(
             student_id=student.id,

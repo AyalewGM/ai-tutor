@@ -5,6 +5,7 @@ class Settings(BaseSettings):
     app_name: str = "AI Tutor"
     api_prefix: str = "/api/v1"
     database_url: str = "postgresql+psycopg://postgres:postgres@localhost:5432/ai_tutor"
+    session_cookie_secure: bool = False
 
     ai_provider: str = "fallback"
     openai_model: str = "gpt-5"

@@ -19,6 +19,7 @@ from app.services.intervention_evidence import evaluate_persisted_intervention
 from app.services.intervention_policy import InterventionState
 from app.services.parent_dashboard import hash_claim_token
 from scripts.seed_mth1w import seed
+from tests.auth_helpers import authenticate_parent_for_student
 
 client = TestClient(app)
 
@@ -76,6 +77,7 @@ def test_mth1w_pilot_remediation_requires_fresh_independent_evidence() -> None:
         )
         db.add(student)
         db.flush()
+        authenticate_parent_for_student(client, db, student)
 
         prerequisite_problems = db.scalars(
             select(Problem)

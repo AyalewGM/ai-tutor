@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api import _student_skill, _tutor_context
 from app.core.database import get_db
+from app.identity import CurrentParent, require_parent_owns_student
 from app.models import Student, TutorSession, TutorState, TutorTurn
 from app.schemas import LearningFocusOut, MasteryOut, ProblemOut, SessionCreate, SessionOut
 from app.services.curriculum_scope import (
@@ -30,10 +31,8 @@ def _focus(session: TutorSession) -> LearningFocusOut:
 
 
 @router.post("/sessions", response_model=SessionOut)
-def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
-    student = db.get(Student, payload.student_id)
-    if student is None:
-        raise HTTPException(404, "Student not found")
+def create_session(payload: SessionCreate, parent: CurrentParent, db: DbSession) -> SessionOut:
+    student = require_parent_owns_student(parent, db.get(Student, payload.student_id))
 
     try:
         scope = resolve_student_curriculum_scope(db, student)

@@ -3,6 +3,8 @@ import uuid
 from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 
+from app.auth import SESSION_COOKIE
+from app.auth import create_session as create_auth_session
 from app.core.database import SessionLocal
 from app.hint_models import HintEvent
 from app.main import app
@@ -15,7 +17,10 @@ from app.models import (
     TutorSession,
     TutorState,
     TutorTurn,
+    User,
 )
+from app.parent_models import ParentProfile
+from tests.auth_helpers import authenticate_parent_for_student
 
 client = TestClient(app)
 
@@ -36,7 +41,8 @@ def _create_session() -> tuple[uuid.UUID, uuid.UUID]:
             school_system="MCPS",
         )
         db.add(student)
-        db.commit()
+        db.flush()
+        authenticate_parent_for_student(client, db, student)
         db.refresh(student)
         student_id = student.id
         skill_id = skill.id
@@ -135,3 +141,46 @@ def test_i_dont_understand_is_recorded_as_assistance() -> None:
         )
         assert event is not None
         assert event.trigger == "I_DONT_UNDERSTAND"
+
+
+def test_other_family_cannot_read_hint_or_respond_to_session() -> None:
+    session_id, _ = _create_session()
+    with SessionLocal() as db:
+        outsider = User(
+            email=f"synthetic-outsider-{uuid.uuid4()}@example.com",
+            display_name="Synthetic Unrelated Parent",
+            role="PARENT",
+        )
+        db.add(outsider)
+        db.flush()
+        db.add(ParentProfile(user_id=outsider.id))
+        token, _ = create_auth_session(db, outsider.id)
+        db.commit()
+        client.cookies.set(SESSION_COOKIE, token)
+
+        session = db.get(TutorSession, session_id)
+        assert session is not None
+        problem_id = db.scalar(
+            select(TutorTurn.problem_id)
+            .where(TutorTurn.session_id == session_id, TutorTurn.role == "TUTOR")
+            .order_by(TutorTurn.created_at.desc())
+            .limit(1)
+        )
+        assert problem_id is not None
+
+    workspace = client.get(f"/api/v1/learner-workspace/sessions/{session_id}")
+    hint = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/hint",
+        json={"problem_id": str(problem_id)},
+    )
+    respond = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
+        json={"problem_id": str(problem_id), "answer": "synthetic", "assistance_level": 0},
+    )
+
+    assert workspace.status_code == 404
+    assert hint.status_code == 404
+    assert respond.status_code == 404
+    assert workspace.json()["detail"] == "Learner not found"
+    assert hint.json()["detail"] == "Learner not found"
+    assert respond.json()["detail"] == "Learner not found"
