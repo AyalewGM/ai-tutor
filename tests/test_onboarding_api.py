@@ -6,7 +6,11 @@ from fastapi import HTTPException
 from app.curriculum_models import StudentCurriculumEnrollment
 from app.models import Curriculum, Student
 from app.onboarding_api import LearnerCreate, create_learner
-from app.parent_models import ParentProfile
+from app.parent_models import (
+    ParentProfile,
+    ParentStudentRelationship,
+    ParentStudentRelationshipEvent,
+)
 
 
 class OnboardingDb:
@@ -25,7 +29,7 @@ class OnboardingDb:
 
     def flush(self):
         for value in self.added:
-            if isinstance(value, Student) and value.id is None:
+            if isinstance(value, (Student, ParentStudentRelationship)) and value.id is None:
                 value.id = uuid.uuid4()
 
     def commit(self):
@@ -58,11 +62,23 @@ def test_parent_owned_learner_preserves_exact_curriculum_identity():
     enrollment = next(
         value for value in db.added if isinstance(value, StudentCurriculumEnrollment)
     )
+    relationship = next(
+        value for value in db.added if isinstance(value, ParentStudentRelationship)
+    )
+    relationship_event = next(
+        value for value in db.added if isinstance(value, ParentStudentRelationshipEvent)
+    )
     assert student.parent_id == parent_user_id
     assert student.curriculum_id == curriculum.id
     assert student.grade_level == curriculum.grade_level
     assert enrollment.student_id == student.id
     assert enrollment.curriculum_id == curriculum.id
+    assert relationship.parent_profile_id == parent.id
+    assert relationship.student_id == student.id
+    assert relationship.relationship_type == "GUARDIAN"
+    assert relationship.active is True
+    assert relationship_event.relationship_id == relationship.id
+    assert relationship_event.action == "LINKED"
     assert result.curriculum_id == curriculum.id
     assert result.curriculum_code == curriculum.code
     assert result.curriculum_version == curriculum.version
