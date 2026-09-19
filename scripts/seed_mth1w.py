@@ -2,15 +2,18 @@ from decimal import Decimal
 
 from sqlalchemy import select
 
+from app.content_ingestion import (
+    ContentPackInput,
+    ExpectationInput,
+    ExpectationSkillMappingInput,
+    persist_expectation_pack,
+)
 from app.core.database import SessionLocal
-from app.curriculum_models import EducationAuthority, Jurisdiction
 from app.models import Curriculum, Misconception, Problem, Skill, SkillPrerequisite
 
-CURRICULUM_CODE = "ON_MTH1W_2021"
-AUTHORITY_CODE = "ON-MOE"
-CANADA_CODE = "CA"
-ONTARIO_CODE = "ON"
-SOURCE_URI = "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses-list"
+CURRICULUM_CODE = "MTH1W"
+AUTHORITY_CODE = "ON_MIN_ED"
+SOURCE_URI = "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w"
 
 
 def _skill(db, curriculum, code, name, description, level):
@@ -60,83 +63,55 @@ def _problem(db, skill, difficulty, prompt, answer, problem_type):
         )
 
 
-def _jurisdiction(db, *, parent_id, code, name, jurisdiction_type, source_uri=None):
-    query = select(Jurisdiction).where(Jurisdiction.code == code)
-    if parent_id is None:
-        query = query.where(Jurisdiction.parent_id.is_(None))
-    else:
-        query = query.where(Jurisdiction.parent_id == parent_id)
-    jurisdiction = db.scalar(query)
-    if jurisdiction is None:
-        jurisdiction = Jurisdiction(
-            parent_id=parent_id,
-            code=code,
-            name=name,
-            jurisdiction_type=jurisdiction_type,
-            source_uri=source_uri,
-            provenance_json={"source": "authoritative_public"} if source_uri else None,
-        )
-        db.add(jurisdiction)
-        db.flush()
-    return jurisdiction
+def _expectation_pack() -> ContentPackInput:
+    expectations = (
+        ExpectationInput(
+            source_identifier="MTH1W.B",
+            title="Number",
+            strand="B. Number",
+            source_uri=SOURCE_URI,
+        ),
+        ExpectationInput(
+            source_identifier="MTH1W.C",
+            title="Algebra",
+            strand="C. Algebra",
+            source_uri=SOURCE_URI,
+        ),
+        ExpectationInput(
+            source_identifier="MTH1W.F",
+            title="Financial Literacy",
+            strand="F. Financial Literacy",
+            source_uri=SOURCE_URI,
+        ),
+    )
+    mappings = (
+        ExpectationSkillMappingInput("MTH1W.B", "MTH1W.B.NUM"),
+        ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.ALG"),
+        ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.REL"),
+        ExpectationSkillMappingInput("MTH1W.F", "MTH1W.F.FIN"),
+    )
+    return ContentPackInput(
+        curriculum_code=CURRICULUM_CODE,
+        curriculum_version="2021",
+        expectations=expectations,
+        mappings=mappings,
+    )
 
 
 def seed():
     db = SessionLocal()
     try:
-        canada = _jurisdiction(
-            db,
-            parent_id=None,
-            code=CANADA_CODE,
-            name="Canada",
-            jurisdiction_type="COUNTRY",
-        )
-        ontario_jurisdiction = _jurisdiction(
-            db,
-            parent_id=canada.id,
-            code=ONTARIO_CODE,
-            name="Ontario",
-            jurisdiction_type="STATE_PROVINCE_TERRITORY",
-            source_uri=SOURCE_URI,
-        )
-
-        authority = db.scalar(
-            select(EducationAuthority).where(
-                EducationAuthority.jurisdiction_id == ontario_jurisdiction.id,
-                EducationAuthority.code == AUTHORITY_CODE,
-            )
-        )
-        if authority is None:
-            authority = EducationAuthority(
-                jurisdiction_id=ontario_jurisdiction.id,
-                code=AUTHORITY_CODE,
-                name="Ontario Ministry of Education",
-                authority_type="MINISTRY",
-                source_uri=SOURCE_URI,
-                provenance_json={"source": "authoritative_public", "curriculum": "MTH1W 2021"},
-            )
-            db.add(authority)
-            db.flush()
-
         curriculum = db.scalar(
             select(Curriculum).where(
-                Curriculum.authority_id == authority.id,
                 Curriculum.code == CURRICULUM_CODE,
                 Curriculum.version == "2021",
+                Curriculum.active.is_(True),
             )
         )
         if curriculum is None:
-            curriculum = Curriculum(
-                code=CURRICULUM_CODE,
-                name="Ontario Grade 9 Mathematics (MTH1W)",
-                jurisdiction="Ontario, Canada",
-                grade_level="9",
-                authority_id=authority.id,
-                version="2021",
-                source_uri=SOURCE_URI,
+            raise RuntimeError(
+                "Active MTH1W 2021 curriculum registry entry is required; run migrations first"
             )
-            db.add(curriculum)
-            db.flush()
 
         number = _skill(
             db,
@@ -211,6 +186,8 @@ def seed():
         ]
         for args in problems:
             _problem(db, *args)
+
+        persist_expectation_pack(db, _expectation_pack())
 
         db.commit()
         print(f"MTH1W seed complete. Curriculum={curriculum.id}")
