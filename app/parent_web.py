@@ -74,7 +74,7 @@ def parent_dashboard_page() -> str:
 <main>
   <header class="hero">
     <h1>Parent Dashboard</h1>
-    <p>Clear, evidence-backed learning progress for each linked child.</p>
+    <p>Clear, evidence-backed learning progress for each linked child.</p>\n    <p><a href="/parent/settings" style="color:white">Settings & privacy</a></p>
     <div id="profile">Loading parent profile…</div>
   </header>
 
