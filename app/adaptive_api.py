@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.api import _student_skill, _tutor_context
 from app.core.database import get_db
 from app.identity import CurrentParent, require_parent_owns_student
-from app.models import Student, TutorSession, TutorState, TutorTurn
+from app.models import Skill, Student, TutorSession, TutorState, TutorTurn
 from app.schemas import LearningFocusOut, MasteryOut, ProblemOut, SessionCreate, SessionOut
 from app.services.curriculum_scope import (
     CurriculumScopeError,
@@ -14,6 +14,7 @@ from app.services.curriculum_scope import (
     resolve_student_curriculum_scope,
 )
 from app.services.problem_selection import select_next_problem
+from app.services.review_schedule import REVIEW_REASON, due_review
 from app.services.tutor_engine import tutor_engine
 
 router = APIRouter(prefix="/adaptive-tutor", tags=["adaptive-tutor"])
@@ -41,12 +42,29 @@ def create_session(payload: SessionCreate, parent: CurrentParent, db: DbSession)
         raise HTTPException(409, str(exc)) from exc
 
     progress = _student_skill(db, student.id, skill.id)
+
+    review = None
+    if scope.curriculum_id is not None:
+        review = due_review(
+            db,
+            student_id=student.id,
+            curriculum_id=scope.curriculum_id,
+        )
+    focus_skill = skill
+    focus_progress = progress
+    if review is not None:
+        focus_progress = review.progress
+        focus_skill = db.get(Skill, review.progress.skill_id) or skill
+
+    opening_state = TutorState.REVIEW if review is not None else TutorState.DIAGNOSE
+    opening_action = "START_REVIEW" if review is not None else "ASK_DIAGNOSTIC"
+
     problem = select_next_problem(
         db,
-        skill_id=skill.id,
+        skill_id=focus_skill.id,
         current_problem_id=None,
-        current_difficulty=progress.current_difficulty,
-        state=TutorState.DIAGNOSE,
+        current_difficulty=focus_progress.current_difficulty,
+        state=opening_state,
     )
     if problem is None:
         raise HTTPException(404, "No problem configured for this skill")
@@ -54,12 +72,17 @@ def create_session(payload: SessionCreate, parent: CurrentParent, db: DbSession)
     session = TutorSession(
         student_id=student.id,
         primary_skill_id=skill.id,
-        active_skill_id=skill.id,
+        active_skill_id=focus_skill.id,
         curriculum_id=scope.curriculum_id,
         curriculum_enrollment_id=scope.enrollment_id,
-        current_state=TutorState.DIAGNOSE,
+        current_state=opening_state,
+        remediation_reason=REVIEW_REASON if review is not None else None,
         starting_mastery=progress.mastery_score,
-        session_goal=f"Diagnose and practice {skill.name}",
+        session_goal=(
+            f"Review {focus_skill.name} before continuing"
+            if review is not None
+            else f"Diagnose and practice {skill.name}"
+        ),
     )
     db.add(session)
     db.flush()
@@ -68,9 +91,9 @@ def create_session(payload: SessionCreate, parent: CurrentParent, db: DbSession)
         _tutor_context(
             db,
             student=student,
-            skill=skill,
-            state=TutorState.DIAGNOSE,
-            action="ASK_DIAGNOSTIC",
+            skill=focus_skill,
+            state=opening_state,
+            action=opening_action,
             hint_level=None,
             problem=problem,
         )
@@ -80,8 +103,8 @@ def create_session(payload: SessionCreate, parent: CurrentParent, db: DbSession)
             session_id=session.id,
             role="TUTOR",
             message=generation.message,
-            state=TutorState.DIAGNOSE,
-            pedagogical_action="ASK_DIAGNOSTIC",
+            state=opening_state,
+            pedagogical_action=opening_action,
             problem_id=problem.id,
             llm_model=generation.model,
             metadata_json={"generation_source": generation.source},
@@ -92,7 +115,10 @@ def create_session(payload: SessionCreate, parent: CurrentParent, db: DbSession)
     return SessionOut(
         session_id=session.id,
         state=session.current_state,
-        mastery=MasteryOut(score=progress.mastery_score, confidence=progress.confidence_score),
+        mastery=MasteryOut(
+            score=focus_progress.mastery_score,
+            confidence=focus_progress.confidence_score,
+        ),
         focus=_focus(session),
         problem=ProblemOut(id=problem.id, prompt=problem.prompt, difficulty=problem.difficulty),
         message=generation.message,

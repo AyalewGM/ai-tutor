@@ -42,7 +42,7 @@ services:
       AI_PROVIDER: gateway
       LLM_GATEWAY_URL: http://llm-gateway:8001
     ports:
-      - "8000:8000"
+      - "8002:8000"
     depends_on:
       db:
         condition: service_healthy

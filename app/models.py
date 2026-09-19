@@ -116,6 +116,22 @@ class StudentSkill(Base):
     current_difficulty: Mapped[int] = mapped_column(Integer, default=1)
     status: Mapped[SkillStatus] = mapped_column(Enum(SkillStatus), default=SkillStatus.NOT_STARTED)
     last_attempt_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    last_independent_evidence_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class SkillReviewSchedule(Base):
+    __tablename__ = "skill_review_schedules"
+    student_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("students.id"), primary_key=True)
+    skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("skills.id"), primary_key=True)
+    interval_index: Mapped[int] = mapped_column(Integer, default=0)
+    due_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+    status: Mapped[str] = mapped_column(String(30), default="SCHEDULED")
+    last_reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    last_outcome: Mapped[str | None] = mapped_column(String(40))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow
+    )
 
 
 class Misconception(Base):

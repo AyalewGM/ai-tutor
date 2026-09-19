@@ -1,6 +1,8 @@
 import math
 from dataclasses import dataclass
 
+DEFAULT_MASTERY_HALF_LIFE_DAYS = 21.0
+
 ASSISTANCE_WEIGHTS = {
     0: 1.00,
     1: 0.85,
@@ -38,3 +40,20 @@ def update_mastery(
         confidence=round(max(0.0, min(1.0, confidence)), 3),
         evidence=evidence,
     )
+
+
+def decayed_mastery(
+    mastery: float,
+    *,
+    days_since_evidence: float,
+    confidence: float = 0.0,
+    half_life_days: float = DEFAULT_MASTERY_HALF_LIFE_DAYS,
+) -> float:
+    """Exponential forgetting decay; higher confidence slows the half-life."""
+    bounded = max(0.0, min(1.0, mastery))
+    if days_since_evidence <= 0:
+        return round(bounded, 3)
+    confidence_factor = 0.5 + 0.5 * max(0.0, min(1.0, confidence))
+    effective_half_life = half_life_days * confidence_factor
+    decayed = bounded * math.pow(0.5, days_since_evidence / effective_half_life)
+    return round(max(0.0, min(1.0, decayed)), 3)
