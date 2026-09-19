@@ -63,7 +63,6 @@ def _problem(db, skill, difficulty, prompt, answer, problem_type):
         )
 
 
-
 def _expectation_pack() -> ContentPackInput:
     expectations = (
         ExpectationInput(
@@ -97,6 +96,7 @@ def _expectation_pack() -> ContentPackInput:
         expectations=expectations,
         mappings=mappings,
     )
+
 
 def seed():
     db = SessionLocal()
