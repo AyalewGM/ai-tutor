@@ -9,17 +9,21 @@ from app.privacy_api import (
     PrivacyNoticeAcknowledgementIn,
     acknowledge_current_notice,
     get_current_notice,
+    get_parent_data_summary,
 )
 from app.privacy_models import PrivacyNoticeAcknowledgement
 
 
 class FakePrivacyDb:
-    def __init__(self, existing=None):
+    def __init__(self, existing=None, scalar_values=None):
         self.existing = existing
+        self.scalar_values = list(scalar_values or [])
         self.added = []
         self.commits = 0
 
     def scalar(self, _query):
+        if self.scalar_values:
+            return self.scalar_values.pop(0)
         return self.existing
 
     def add(self, value):
@@ -97,3 +101,24 @@ def test_existing_acknowledgement_is_returned_without_duplicate_write():
     assert result.acknowledged is True
     assert db.added == []
     assert db.commits == 0
+
+
+def test_data_summary_reports_categories_without_sensitive_values():
+    user = _parent()
+    parent_profile = SimpleNamespace(id=uuid.uuid4())
+    acknowledgement = PrivacyNoticeAcknowledgement(
+        user_id=user.id,
+        notice_version=CURRENT_NOTICE_VERSION,
+        acknowledged_at=datetime.now(UTC),
+    )
+    db = FakePrivacyDb(scalar_values=[2, acknowledgement])
+
+    result = get_parent_data_summary(user, parent_profile, db)
+
+    assert result.active_learner_count == 2
+    assert result.notice_acknowledged is True
+    assert "password hashes and credentials" in result.excluded_sensitive_categories
+    assert "session tokens or token digests" in result.excluded_sensitive_categories
+    serialized = result.model_dump_json()
+    assert "synthetic" not in serialized
+    assert "token_hash" not in serialized
