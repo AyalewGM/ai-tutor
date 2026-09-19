@@ -17,7 +17,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
 
   await page.getByLabel('Learner first name').fill('Synthetic Learner');
   const curriculum = page.getByLabel('Exact curriculum');
-  await expect(curriculum.locator('option')).toHaveCount(2, { timeout: 10000 });
+  await expect(curriculum.locator('option')).toHaveCount(3, { timeout: 10000 });
   await curriculum.selectOption({ index: 1 });
   await page.getByRole('button', { name: 'Add learner' }).click();
   await expect(page.getByText(/Synthetic Learner is ready with/)).toBeVisible();
