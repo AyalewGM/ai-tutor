@@ -5,7 +5,7 @@ const baseURL = process.env.E2E_BASE_URL || 'http://127.0.0.1:3000';
 test('synthetic family browser journey reaches tutoring and parent progress', async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
-  const email = `synthetic-f017-${Date.now()}@example.test`;
+  const email = `synthetic-f017-${Date.now()}@example.com`;
   const password = 'SyntheticOnly!12345';
 
   await page.goto(baseURL);
@@ -61,7 +61,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
 
   const outsider = await browser.newContext();
   const outsiderPage = await outsider.newPage();
-  const outsiderEmail = `synthetic-outsider-${Date.now()}@example.test`;
+  const outsiderEmail = `synthetic-outsider-${Date.now()}@example.com`;
   await outsiderPage.goto(baseURL);
   await outsiderPage.getByLabel('Email').fill(outsiderEmail);
   await outsiderPage.getByLabel('Password').fill(password);
