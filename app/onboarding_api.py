@@ -10,11 +10,7 @@ from app.core.database import get_db
 from app.curriculum_models import StudentCurriculumEnrollment
 from app.identity import CurrentParent, require_parent_owns_student
 from app.models import Curriculum, Skill, Student
-from app.parent_models import (
-    ParentProfile,
-    ParentStudentRelationship,
-    ParentStudentRelationshipEvent,
-)
+from app.parent_models import ParentStudentRelationship, ParentStudentRelationshipEvent
 
 router = APIRouter(prefix="/onboarding", tags=["onboarding"])
 DbSession = Annotated[Session, Depends(get_db)]
