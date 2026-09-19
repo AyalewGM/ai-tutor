@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.identity import CurrentParent, CurrentUser, require_parent_role
+from app.learner_deletion import DELETION_POLICY_VERSION, erase_learner_transactional
 from app.parent_models import ParentStudentRelationship
 from app.privacy_models import PrivacyNoticeAcknowledgement
 
@@ -37,6 +38,16 @@ class PrivacyNoticeOut(BaseModel):
 
 class PrivacyNoticeAcknowledgementIn(BaseModel):
     notice_version: str
+
+
+class LearnerDeletionConfirmationIn(BaseModel):
+    confirmation: str
+
+
+class LearnerDeletionOut(BaseModel):
+    learner_id: uuid.UUID
+    policy_version: str
+    status: str
 
 
 class ParentDataSummaryOut(BaseModel):
@@ -127,4 +138,29 @@ def get_parent_data_summary(
         ],
         notice_version=CURRENT_NOTICE_VERSION,
         notice_acknowledged=acknowledgement is not None,
+    )
+
+
+@router.delete("/learners/{learner_id}", response_model=LearnerDeletionOut)
+def delete_learner_data(
+    learner_id: uuid.UUID,
+    payload: LearnerDeletionConfirmationIn,
+    parent: CurrentParent,
+    db: DbSession,
+) -> LearnerDeletionOut:
+    if payload.confirmation != "DELETE":
+        raise HTTPException(status_code=400, detail="Explicit deletion confirmation required")
+    try:
+        result = erase_learner_transactional(db, parent=parent, learner_id=learner_id)
+        db.commit()
+    except HTTPException:
+        db.rollback()
+        raise
+    except Exception:
+        db.rollback()
+        raise
+    return LearnerDeletionOut(
+        learner_id=result.learner_id,
+        policy_version=DELETION_POLICY_VERSION,
+        status="DELETED",
     )
