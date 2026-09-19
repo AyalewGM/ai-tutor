@@ -1,5 +1,6 @@
 from sqlalchemy import select
 
+from app.content_models import CurriculumExpectation, ExpectationSkillMapping
 from app.core.database import SessionLocal
 from app.curriculum_models import EducationAuthority
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
@@ -42,6 +43,28 @@ def test_mth1w_seed_is_idempotent_and_jurisdiction_local():
             "MTH1W.F.FIN",
         }
         skill_ids = {skill.id for skill in skills}
+
+        expectations = list(
+            db.scalars(
+                select(CurriculumExpectation).where(
+                    CurriculumExpectation.curriculum_id == ontario.id
+                )
+            )
+        )
+        assert {row.source_identifier for row in expectations} == {
+            "MTH1W.B",
+            "MTH1W.C",
+            "MTH1W.F",
+        }
+        mappings = list(
+            db.scalars(
+                select(ExpectationSkillMapping).where(
+                    ExpectationSkillMapping.curriculum_id == ontario.id
+                )
+            )
+        )
+        assert len(mappings) == 4
+        assert {row.skill_id for row in mappings} == skill_ids
 
         edges = list(
             db.scalars(
