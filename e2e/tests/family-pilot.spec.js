@@ -18,7 +18,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await page.getByLabel('Learner first name').fill('Synthetic Learner');
   const curriculum = page.getByLabel('Exact curriculum');
   await expect(curriculum.locator('option')).toHaveCount(3, { timeout: 10000 });
-  const mcpsOption = curriculum.locator('option').filter({ hasText: 'MCPS Grade 8 Mathematics' });
+  const mcpsOption = curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' });
   await expect(mcpsOption).toHaveCount(1);
   await curriculum.selectOption(await mcpsOption.getAttribute('value'));
   await page.getByRole('button', { name: 'Add learner' }).click();
