@@ -13,6 +13,7 @@ from app.onboarding_api import router as onboarding_router
 from app.parent_api import router as parent_router
 from app.parent_settings_web import router as parent_settings_web_router
 from app.parent_web import router as parent_web_router
+from app.privacy_api import router as privacy_router
 from app.services.llm_bootstrap import configure_tutor_engine
 from app.telemetry_api import router as telemetry_router
 from app.workspace_api import router as learner_workspace_router
@@ -29,6 +30,7 @@ app.include_router(adaptive_response_router, prefix=settings.api_prefix)
 app.include_router(diagnostic_router, prefix=settings.api_prefix)
 app.include_router(hint_router, prefix=settings.api_prefix)
 app.include_router(parent_router, prefix=settings.api_prefix)
+app.include_router(privacy_router, prefix=settings.api_prefix)
 app.include_router(learner_workspace_router, prefix=settings.api_prefix)
 app.include_router(telemetry_router, prefix=settings.api_prefix)
 app.include_router(parent_web_router)
