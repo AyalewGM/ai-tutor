@@ -14,11 +14,11 @@ GitHub Issues hold detailed requirements/research and Pull Requests hold impleme
 
 | Priority | Work item | GitHub | Status | Current evidence / next gate |
 |---|---|---|---|---|
-| P0 | F-021 MTH1W fine-grained skill graph and adaptive problem variation | Issue #45 / PR #50 | **IN PROGRESS** | PR #50 merged (`107f50f9`) with green CI #439 and meaningful deterministic problem-generation work. F-021 remains open: prove fine-grained MTH1W skills/provenance, multiple materially different problem families, recent-equivalence/exhaustion behavior, evidence-driven selection/prerequisite return, content-readiness gating, cross-jurisdiction negative tests, E2E/pedagogical regression, QA/PO/PM acceptance. |
+| P0 | F-021 MTH1W fine-grained skill graph and adaptive problem variation | Issue #45 / merged PR #50 | **IN PROGRESS** | PR #50 merged (`107f50f9`) and deterministic generators are on `main`. 2026-09-20 architecture review verified the next gap: add stable problem-family/representation/parameter identity, family-aware recent-equivalence, fine-grained MTH1W skill/provenance + >=2 materially different families for the first Number Sense skill, content-readiness gating, prerequisite-return and cross-jurisdiction negative tests. Active branch `feature/f-021-mth1w-adaptive-content` was fast-forwarded to current `main` so new work does not duplicate stale code. DoD/QA/PO/PM acceptance still required. |
 | P1 parallel | F-022 Goozam-family learner/parent UI/UX | Issue #46 | **IN PROGRESS — PARTIAL** | PR #50 also merged substantial learner/login visual work. Do not mark done until F-022 accessibility, responsive behavior, parent/learner flows, reusable design system and browser regressions satisfy its acceptance criteria. |
 | P2 | F-019 MD/DC/VA Grades 6–7 & high-school-entry expansion | Issue #41 | **RESEARCHING / CONTENT BACKLOG** | Authoritative-source and pathway research exists. Curriculum packs still require mapping, original content, ingestion/readiness and isolation acceptance. |
 | P2 | F-020 Dynamic Math Visualization & Instructional Animation Engine | Issue #42 | **PLANNED / RESEARCH GATED** | SVG-first deterministic visualization direction defined; implementation and acceptance remain. |
-| Parallel | Business Model, Pilot Economics & Deployment Strategy | Issue #12 | **RESEARCHING** | Marketing/PO workstream; pricing, packaging, pilot-to-paid, unit economics and GTM experiments continue without interrupting P0. |
+| Parallel | Business Model, Pilot Economics & Deployment Strategy | Issue #12 | **RESEARCHING** | 2026-09-20 market slice added current Khan Academy/IXL pricing and product signals plus two parent-facing positioning tests. Pricing/category/primary-buyer decisions remain owner-gated pending pilot evidence. |
 
 ## Canonical GitHub issue ledger
 
@@ -37,7 +37,7 @@ GitHub Issues hold detailed requirements/research and Pull Requests hold impleme
 | #15 | F-007 Pilot Curriculum Content Packs and Standards-Aligned Ingestion | DONE |
 | #17 | F-008 Student Learning Experience & Tutor UI | DONE |
 | #18 | F-009 Parent Progress Intelligence & Actionable Insights | DONE |
-| #19 | F-010 Learning Analytics & Deterministic Intervention Engine | DONE |
+| #19 | F-010 Learning Analytics & Deterministic Intervention Engine | DONE; 2026-09-20 PO regression guidance carried into F-021 |
 | #20 | F-011 Pilot Observability, Learning KPIs & Unit Economics | DONE |
 | #21 | F-012 Proposed Maryland Mathematics Grade Expansion Framework | DONE / research framework |
 | #22 | F-007A Authoritative Pilot Content Packs & Maryland Course Decision | DONE |
@@ -117,4 +117,4 @@ Every feature that collects, stores, transmits, derives, profiles, exports or di
 4. After any material merge, scope change, block, acceptance or completion, update this file in the same work cycle.
 5. A merged PR does not automatically close a feature. Mark `DONE` only after the applicable Definition of Done and issue acceptance criteria are evidenced.
 
-_Last synchronized: 2026-09-20 after PR #50 merge._
+_Last synchronized: 2026-09-20; F-021 architecture/security checkpoint, active branch refresh, Marketing research and F-010 PO regression follow-up recorded._
