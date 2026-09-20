@@ -73,3 +73,47 @@ Introduce graphs/visual representations where they materially improve conceptual
 - school/district roster and LMS integration;
 - multi-subject expansion;
 - agentic pedagogy that can override deterministic learning controls.
+
+## GitHub Issues Backlog Status
+
+> Synced from GitHub Issues on 2026-09-20. GitHub Issues are the execution source of truth.
+>
+> **Important:** feature numbers in this document and feature numbers used by older/newer GitHub issues evolved independently. For example, this file's F-019 is "React Learner Frontend", while GitHub Issue #41 is also labelled F-019 but means "MD/DC/VA Grades 6–7 & High-School-Entry Math Expansion". Use the GitHub issue number and title to disambiguate work.
+
+| Issue | GitHub backlog item | Status |
+|---|---|---|
+| #2 | F-001: Prerequisite-Aware Adaptive Linear Equations | CLOSED |
+| #3 | F-002: Adaptive Diagnostic Placement | CLOSED |
+| #5 | F-003: Graduated Hint Ladder and Productive Struggle | CLOSED |
+| #6 | F-002: Adaptive Diagnostic Placement (duplicate/continuation issue) | CLOSED |
+| #8 | F-004: Independent Mastery Gate | CLOSED |
+| #10 | F-005: Parent Profiles, Child Management, and Progress Dashboard | CLOSED |
+| #11 | F-006: Hierarchical Curriculum Registry and Jurisdiction Isolation | CLOSED |
+| #12 | EPIC: Business Model, Pilot Economics & Deployment Strategy | OPEN — parallel research |
+| #15 | F-007: Pilot Curriculum Content Packs and Standards-Aligned Ingestion | CLOSED |
+| #17 | F-008: Student Learning Experience & Tutor UI | CLOSED |
+| #18 | F-009: Parent Progress Intelligence & Actionable Insights | CLOSED |
+| #19 | F-010: Learning Analytics & Deterministic Intervention Engine | CLOSED |
+| #20 | F-011: Pilot Observability, Learning KPIs & Unit Economics | CLOSED |
+| #21 | F-012 PROPOSED: Maryland Mathematics Grade Expansion Framework | CLOSED |
+| #22 | F-007A: Authoritative Pilot Content Packs & Maryland Course Decision | CLOSED |
+| #24 | F-013 PROPOSED: Containerized Microservice Architecture & Deployment | CLOSED |
+| #28 | F-014 PROPOSED: F-011 Observability Completion & Pilot Hardening | CLOSED |
+| #30 | F-015 PROPOSED: Ontario Grade 9 MTH1W Curriculum Pack | CLOSED |
+| #35 | F-016: Private Pilot Launch Readiness | CLOSED |
+| #37 | F-017: Pilot Web Application & Family/Learner Onboarding | CLOSED |
+| #39 | F-018: Private Pilot Privacy Controls & Data Lifecycle | CLOSED |
+| #41 | F-019: MD/DC/VA Grades 6–7 & High-School-Entry Math Expansion | OPEN — curriculum expansion |
+| #42 | F-020: Dynamic Math Visualization & Instructional Animation Engine | OPEN — planned backlog |
+| #43 | Fix MTH1W canonical curriculum seeding and learner skill discovery | CLOSED |
+| #45 | F-021: MTH1W fine-grained skill graph and adaptive problem variation | OPEN — active engineering |
+| #46 | F-022: Goozam-family UI/UX redesign for learner and parent experience | OPEN — parallel UI/UX |
+
+### Current execution order
+
+F-021 is the active engineering path. F-022 may proceed in parallel where it does not redefine pedagogy or mastery semantics. F-019 and F-020 remain open backlog work subject to their research/dependency gates. The Business Model epic (#12) remains a parallel Product Owner / Marketing & Growth research track.
+
+### Synchronization rule
+
+When an issue is opened, closed, renamed, superseded, or materially re-scoped, update this status section so the repository backlog remains navigable from one place. Issue status alone does not prove implementation quality; feature acceptance and release still follow `docs/qa/DEFINITION_OF_DONE.md`.
+
