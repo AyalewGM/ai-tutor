@@ -11,6 +11,7 @@ from app.curriculum_models import StudentCurriculumEnrollment
 from app.identity import CurrentParent, require_parent_owns_student
 from app.models import Curriculum, Skill, Student
 from app.parent_models import ParentStudentRelationship, ParentStudentRelationshipEvent
+from app.services.problem_generation import content_readiness
 
 router = APIRouter(prefix="/onboarding", tags=["onboarding"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -51,6 +52,7 @@ class SkillChoice(BaseModel):
     id: uuid.UUID
     code: str
     name: str
+    content_ready: bool = True
 
 
 @router.get("/curricula", response_model=list[CurriculumChoice])
@@ -105,7 +107,15 @@ def list_learner_skills(
         .where(Skill.curriculum_id == student.curriculum_id)
         .order_by(Skill.difficulty_level, Skill.code)
     ).all()
-    return [SkillChoice(id=skill.id, code=skill.code, name=skill.name) for skill in skills]
+    return [
+        SkillChoice(
+            id=skill.id,
+            code=skill.code,
+            name=skill.name,
+            content_ready=content_readiness(db, skill_id=skill.id).ready,
+        )
+        for skill in skills
+    ]
 
 
 @router.post("/learners", response_model=LearnerCreated, status_code=status.HTTP_201_CREATED)

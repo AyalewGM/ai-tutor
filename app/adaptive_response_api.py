@@ -361,7 +361,11 @@ def respond(
             next_problem=next_problem,
             student_answer=payload.answer,
             misconception=evidence.misconception,
-        )
+        ),
+        # Correct-answer feedback needs no model call; the deterministic
+        # fallback covers it. The LLM only engages where language adds
+        # pedagogical value: misses, hints, misconceptions.
+        use_llm=not evidence.evaluation.correct,
     )
     turn = TutorTurn(
         session_id=session.id,
