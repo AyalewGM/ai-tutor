@@ -172,6 +172,21 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
 }
 
 
+def _family_metadata(generated: GeneratedProblem) -> tuple[str, dict]:
+    """Return stable family identity and minimized deterministic parameters.
+
+    Family identity is application-owned and independent of curriculum mapping.
+    Word-problem templates are distinct families; other generators currently
+    have one family per generator until their representations are split.
+    """
+    if generated.context is not None:
+        template = generated.context.get("template")
+        parameters = generated.context.get("parameters") or {}
+        if template:
+            return f"{generated.problem_type}:{template}", dict(parameters)
+    return generated.problem_type, {}
+
+
 def generate_problem(
     db: Session,
     *,
@@ -216,6 +231,7 @@ def generate_problem(
         )
         if narrative:
             prompt = narrative
+    family_id, parameters = _family_metadata(generated)
     problem = Problem(
         primary_skill_id=skill_id,
         problem_type=generated.problem_type,
@@ -225,6 +241,8 @@ def generate_problem(
         solution={
             "generated": True,
             "generator": generated.problem_type,
+            "problem_family": family_id,
+            "parameters": parameters,
             "difficulty": difficulty,
         },
         source_type="GENERATED",
