@@ -18,6 +18,7 @@ from app.models import (
 from app.services.evaluation import evaluate_problem
 from app.services.problem_generation import (
     GENERATORS,
+    content_readiness,
     generate_problem,
     regenerate_variant,
 )
@@ -52,12 +53,16 @@ def test_solve_equation_answers_satisfy_the_equation() -> None:
         assert value == int(rhs)
 
 
-def test_fraction_addition_answers_are_reduced() -> None:
+def test_fraction_answers_are_reduced() -> None:
     rng = random.Random(3)
     for _ in range(20):
         generated = GENERATORS["FRACTION_OPERATIONS"](rng, 2)
         n1, d1, n2, d2 = map(int, re.findall(r"\d+", generated.prompt))
-        expected = Fraction(n1, d1) + Fraction(n2, d2)
+        if " - " in generated.prompt:
+            expected = Fraction(n1, d1) - Fraction(n2, d2)
+            assert generated.family == "fraction/subtract"
+        else:
+            expected = Fraction(n1, d1) + Fraction(n2, d2)
         if expected.denominator == 1:
             assert generated.canonical_answer == str(expected.numerator)
         else:
@@ -321,3 +326,147 @@ def test_gateway_contextualizer_returns_none_on_failure(monkeypatch) -> None:
         parameters={"distance": 120, "hours": 3},
         canonical_answer="40",
     ) is None
+
+
+def test_generated_problems_carry_family_and_parameter_identity() -> None:
+    with SessionLocal() as db:
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MTH1W"))
+        skill = db.scalar(
+            select(Skill).where(
+                Skill.curriculum_id == curriculum.id,
+                Skill.code == "MTH1W.B.NUM.INT",
+            )
+        )
+        problem = generate_problem(
+            db, skill_id=skill.id, difficulty=2, rng=random.Random(4)
+        )
+        assert problem is not None
+        metadata = problem.solution
+        assert metadata["generated"] is True
+        assert metadata["family"] in {"integer/add", "integer/compare"}
+        assert isinstance(metadata["parameters"], dict)
+        assert metadata["parameters"]
+        db.rollback()
+
+
+def test_generated_fingerprints_do_not_collide() -> None:
+    with SessionLocal() as db:
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MTH1W"))
+        skill = db.scalar(
+            select(Skill).where(
+                Skill.curriculum_id == curriculum.id,
+                Skill.code == "MTH1W.B.NUM.INT",
+            )
+        )
+        rng = random.Random(9)
+        fingerprints = set()
+        for _ in range(6):
+            problem = generate_problem(
+                db, skill_id=skill.id, difficulty=3, rng=rng
+            )
+            assert problem is not None
+            key = (
+                problem.solution["family"],
+                tuple(sorted(problem.solution["parameters"].items())),
+            )
+            assert key not in fingerprints
+            fingerprints.add(key)
+        db.rollback()
+
+
+def test_avoid_family_rotates_to_a_different_family() -> None:
+    with SessionLocal() as db:
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MTH1W"))
+        skill = db.scalar(
+            select(Skill).where(
+                Skill.curriculum_id == curriculum.id,
+                Skill.code == "MTH1W.B.NUM.INT",
+            )
+        )
+        problem = generate_problem(
+            db,
+            skill_id=skill.id,
+            difficulty=2,
+            problem_type="INTEGER_OPERATIONS",
+            family="integer/add",
+            rng=random.Random(1),
+        )
+        assert problem.solution["family"] == "integer/add"
+        rotated = generate_problem(
+            db,
+            skill_id=skill.id,
+            difficulty=2,
+            problem_type="INTEGER_OPERATIONS",
+            avoid_family="integer/add",
+            rng=random.Random(1),
+        )
+        assert rotated is not None
+        assert rotated.solution["family"] == "integer/compare"
+        db.rollback()
+
+
+def test_regenerate_variant_preserves_family() -> None:
+    with SessionLocal() as db:
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MTH1W"))
+        skill = db.scalar(
+            select(Skill).where(
+                Skill.curriculum_id == curriculum.id,
+                Skill.code == "MTH1W.B.NUM.INT",
+            )
+        )
+        source = generate_problem(
+            db,
+            skill_id=skill.id,
+            difficulty=2,
+            problem_type="INTEGER_OPERATIONS",
+            family="integer/compare",
+            rng=random.Random(6),
+        )
+        variant = regenerate_variant(
+            db, source_problem=source, rng=random.Random(6)
+        )
+        assert variant is not None
+        assert variant.solution["family"] == "integer/compare"
+        assert variant.solution["parameters"] != source.solution["parameters"]
+        db.rollback()
+
+
+def test_content_readiness_reports_families_and_gate() -> None:
+    with SessionLocal() as db:
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MTH1W"))
+        int_skill = db.scalar(
+            select(Skill).where(
+                Skill.curriculum_id == curriculum.id,
+                Skill.code == "MTH1W.B.NUM.INT",
+            )
+        )
+        report = content_readiness(db, skill_id=int_skill.id)
+        assert report.ready is True
+        assert {"integer/add", "integer/compare"} <= set(report.families)
+
+        thin = Skill(
+            curriculum_id=curriculum.id,
+            code=f"GEN.THIN.{uuid.uuid4().hex[:8]}",
+            name="Thin content skill",
+            difficulty_level=1,
+        )
+        db.add(thin)
+        db.flush()
+        empty = content_readiness(db, skill_id=thin.id)
+        assert empty.ready is False
+        assert empty.problem_count == 0
+
+        db.add(
+            Problem(
+                primary_skill_id=thin.id,
+                problem_type="UNSUPPORTED_ONLY",
+                difficulty=1,
+                prompt="Only one family.",
+                canonical_answer="x",
+            )
+        )
+        db.flush()
+        single_family = content_readiness(db, skill_id=thin.id)
+        assert single_family.ready is False
+        assert single_family.families == ("UNSUPPORTED_ONLY",)
+        db.rollback()

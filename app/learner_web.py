@@ -153,7 +153,10 @@ async function loadSkills(learnerId) {
   for (const skill of skills) {
     const option = document.createElement('option');
     option.value = skill.id;
-    option.textContent = skill.name;
+    option.textContent = skill.content_ready === false
+      ? `${skill.name} (content in progress)`
+      : skill.name;
+    if (skill.content_ready === false) option.disabled = true;
     select.appendChild(option);
   }
 }

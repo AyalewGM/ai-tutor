@@ -1,0 +1,77 @@
+export interface LearnerChoice {
+  id: string;
+  first_name: string;
+  curriculum_id: string;
+  curriculum_code: string;
+  curriculum_version: string;
+  jurisdiction: string | null;
+}
+
+export interface CurriculumChoice {
+  id: string;
+  code: string;
+  version: string;
+  jurisdiction: string | null;
+  grade_level: string | null;
+}
+
+export interface SkillChoice {
+  id: string;
+  code: string;
+  name: string;
+  content_ready: boolean;
+}
+
+export interface SessionOut {
+  session_id: string;
+}
+
+export type TutorState =
+  | "DIAGNOSE"
+  | "GUIDED_PRACTICE"
+  | "REMEDIATION"
+  | "INDEPENDENT_PRACTICE"
+  | "MASTERY_CHECK"
+  | "COMPLETE"
+  | "REVIEW";
+
+export interface WorkspaceProblem {
+  id: string;
+  prompt: string;
+  difficulty: number;
+}
+
+export interface LearnerWorkspace {
+  session_id: string;
+  state: TutorState;
+  learner: { id: string; first_name: string; grade_level: string };
+  curriculum: { id: string; code: string; name: string; jurisdiction: string | null };
+  focus: { skill_id: string; skill_code: string; skill_name: string };
+  problem: WorkspaceProblem | null;
+  coaching_message: string | null;
+  allowed_actions: string[];
+  evidence: {
+    mastery_score: number;
+    confidence_score: number;
+    independent_correct_count: number;
+    independent_attempt_count: number;
+    hinted_correct_count: number;
+  };
+  reviews_due: { skill_id: string; skill_name: string }[];
+  recommended_next: { skill_id: string; skill_code: string; skill_name: string } | null;
+}
+
+export interface EvaluationOut {
+  correct: boolean;
+  misconception_code: string | null;
+}
+
+export interface RespondOut {
+  evaluation: EvaluationOut;
+}
+
+export interface HintResponse {
+  allowed: boolean;
+  level: number;
+  message: string;
+}
