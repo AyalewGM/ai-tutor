@@ -54,11 +54,11 @@ def register_parent(payload: ParentRegistration, response: Response, db: DbSessi
     email = payload.email.strip().lower()
     user = User(email=email, display_name=payload.display_name, role="PARENT")
     db.add(user)
-    db.flush()
-    db.add(UserCredential(user_id=user.id, password_hash=_passwords.hash(payload.password)))
-    db.add(ParentProfile(user_id=user.id))
-    token, _ = create_session(db, user.id)
     try:
+        db.flush()
+        db.add(UserCredential(user_id=user.id, password_hash=_passwords.hash(payload.password)))
+        db.add(ParentProfile(user_id=user.id))
+        token, _ = create_session(db, user.id)
         db.commit()
     except IntegrityError as exc:
         db.rollback()

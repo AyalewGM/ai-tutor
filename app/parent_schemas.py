@@ -79,6 +79,13 @@ class ReviewDueOut(BaseModel):
     projected_mastery_score: float
 
 
+class RecommendedSkillOut(BaseModel):
+    skill_id: uuid.UUID
+    skill_code: str
+    skill_name: str
+    reason: str
+
+
 class ChildDashboardOut(BaseModel):
     child: ChildSummaryOut
     active_skill_name: str | None = None
@@ -86,3 +93,4 @@ class ChildDashboardOut(BaseModel):
     recent_activity: list[RecentActivityOut]
     support_areas: list[SupportAreaOut]
     reviews_due: list[ReviewDueOut] = Field(default_factory=list)
+    recommended_next: RecommendedSkillOut | None = None

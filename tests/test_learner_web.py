@@ -12,11 +12,13 @@ def test_learner_entry_uses_server_validated_session_creation() -> None:
 
     assert response.status_code == 200
     assert "Start a learning session" in response.text
-    assert "Learner ID" in response.text
-    assert "Skill ID" in response.text
-    assert "Curriculum scope and the first diagnostic problem are validated by the server" in response.text
-    assert "'/api/v1/adaptive-tutor/sessions'" in response.text
+    assert "learnerSelect" in response.text
+    assert "skillSelect" in response.text
+    assert "Pick a learner and a skill" in response.text
+    assert "'/adaptive-tutor/sessions'" in response.text
     assert "window.location.assign(`/learn/${body.session_id}`)" in response.text
+    assert "/onboarding/learners" in response.text
+    assert "/login?next=/learn" in response.text
 
 
 def test_learner_workspace_web_surface_is_problem_first() -> None:
@@ -46,6 +48,21 @@ def test_learner_workspace_has_explicit_application_owned_mastery_result() -> No
     assert "data.state === 'COMPLETE'" in response.text
 
 
+def test_learner_surfaces_use_goozam_tokens_and_surface_reviews() -> None:
+    entry = client.get("/learn")
+    workspace = client.get(f"/learn/{uuid.uuid4()}")
+    login = client.get("/login")
+    assert login.status_code == 200
+    for html in (entry.text, workspace.text, login.text):
+        assert "--goozam-blue" in html
+        assert "--goozam-indigo" in html
+        assert "--goozam-purple" in html
+        assert "linear-gradient" in html
+    assert "data.reviews_due" in workspace.text
+    assert "data.recommended_next" in workspace.text
+    assert "reviewBanner" in workspace.text
+
+
 def test_learner_surfaces_include_accessibility_and_responsive_baseline() -> None:
     entry = client.get("/learn")
     workspace = client.get(f"/learn/{uuid.uuid4()}")
@@ -59,8 +76,8 @@ def test_learner_surfaces_include_accessibility_and_responsive_baseline() -> Non
         assert "min-height: 44px" in html
         assert 'role="alert" aria-live="assertive"' in html
 
-    assert '<label for="studentId">Learner ID</label>' in entry.text
-    assert '<label for="skillId">Skill ID</label>' in entry.text
+    assert '<label for="learnerSelect">Learner</label>' in entry.text
+    assert '<label for="skillSelect">Skill</label>' in entry.text
     assert '<label for="answer"><strong>Your answer</strong></label>' in workspace.text
     assert 'role="status" aria-live="polite"' in workspace.text
     assert '@media (max-width: 600px)' in workspace.text

@@ -26,8 +26,23 @@ def test_assistance_reduces_learning_evidence() -> None:
 
 def test_mastery_uses_recent_evidence() -> None:
     update = update_mastery(0.60, meaningful_attempts=4, correct=True, assistance_level=0)
-    assert update.mastery == 0.70
+    # 0.60 + 0.25 * (1.0 * (1 - 0.10 guess) - 0.60)
+    assert update.mastery == 0.675
     assert 0 < update.confidence < 1
+
+
+def test_guess_discounts_correct_evidence() -> None:
+    lucky = update_mastery(0.60, 4, True, 0, guess=0.30)
+    certain = update_mastery(0.60, 4, True, 0, guess=0.0)
+    baseline = update_mastery(0.60, 4, True, 0)
+    assert lucky.mastery < baseline.mastery < certain.mastery
+
+
+def test_slip_softens_incorrect_evidence() -> None:
+    careless = update_mastery(0.60, 4, False, 0, slip=0.30)
+    strict = update_mastery(0.60, 4, False, 0, slip=0.0)
+    baseline = update_mastery(0.60, 4, False, 0)
+    assert strict.mastery < baseline.mastery < careless.mastery
 
 
 def test_mastery_moves_more_on_above_level_evidence() -> None:

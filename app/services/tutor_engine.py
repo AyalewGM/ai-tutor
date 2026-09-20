@@ -97,21 +97,88 @@ class TutorEngine:
         )
 
 
+_DISTRIBUTION_LADDER = (
+    "Look at the number immediately outside the parentheses. What must it multiply?",
+    "The multiplier must multiply every term inside the parentheses. Which term have you not multiplied yet?",
+    "Write the multiplication separately for each term inside the parentheses, then simplify.",
+    "Let us model the distribution step explicitly, then you can finish the problem.",
+)
+_EQUATION_LADDER = (
+    "What is being done to the variable? Think about which operation would undo it.",
+    "Whatever you do to one side of the equation, you must do to the other side. Which operation undoes what is next to the variable?",
+    "Undo the operations around the variable one at a time: first undo any addition or subtraction, then undo multiplication or division.",
+    "Let us isolate the variable step by step together, then you can finish the problem.",
+)
+_LIKE_TERMS_LADDER = (
+    "This expression has more than one term. Which terms have the same variable part?",
+    "Combine the x terms together and the plain numbers together. They are separate groups.",
+    "Add the coefficients of x to get one x term, and add the constants to get one number.",
+    "Let us group the like terms together, then you can finish simplifying.",
+)
+_FRACTION_LADDER = (
+    "Fractions can only be added when their denominators match. Are these denominators the same?",
+    "You cannot add the numerators across different denominators. What denominator do both fractions share?",
+    "Rewrite each fraction with a common denominator first, then add the new numerators.",
+    "Let us find a common denominator together, then you can finish the addition.",
+)
+_LINEAR_FUNCTION_LADDER = (
+    "In slope-intercept form y = mx + b, which number is the slope and which is the intercept?",
+    "The slope multiplies x; the intercept is the number added on its own. Match each given value to m or b.",
+    "Substitute the slope for m and the intercept for b in y = mx + b — or substitute x in if you are evaluating.",
+    "Let us identify m and b together, then you can finish the problem.",
+)
+_GENERIC_LADDER = (
+    "Break the problem into one small step. What is the very first thing you can do?",
+    "Look carefully at each number in the problem. What operation connects them?",
+    "Try writing the first step on scratch paper, even if you are not sure it is right.",
+    "Let us work through the first step together, then you can finish the problem.",
+)
+
+
+def _hint_ladder(problem_prompt: str) -> tuple[str, ...]:
+    normalized = problem_prompt.lower()
+    if "slope" in normalized or "y-intercept" in normalized or "y =" in normalized:
+        return _LINEAR_FUNCTION_LADDER
+    if "=" in normalized and "x" in normalized:
+        return _EQUATION_LADDER
+    if "/" in normalized:
+        return _FRACTION_LADDER
+    if "(" in normalized and ")" in normalized:
+        return _DISTRIBUTION_LADDER
+    if normalized.count("x") > 1:
+        return _LIKE_TERMS_LADDER
+    return _GENERIC_LADDER
+
+
+def _concept_explanation(problem_prompt: str) -> str:
+    ladder = _hint_ladder(problem_prompt)
+    if ladder is _DISTRIBUTION_LADDER:
+        return "A number outside parentheses multiplies every term inside. Let us work through that idea before trying again."
+    if ladder is _EQUATION_LADDER:
+        return "An equation stays balanced only if you do the same thing to both sides. Let us work through that idea before trying again."
+    if ladder is _FRACTION_LADDER:
+        return "Fractions need a common denominator before you can add them. Let us work through that idea before trying again."
+    if ladder is _LINEAR_FUNCTION_LADDER:
+        return "In y = mx + b, m is the slope and b is the y-intercept. Let us work through that idea before trying again."
+    if ladder is _LIKE_TERMS_LADDER:
+        return "Terms can only be combined when they have the same variable part. Let us work through that idea before trying again."
+    return "Let us slow down and look at what the problem is asking, one step at a time."
+
+
 def fallback_message(context: TutorContext) -> str:
     if context.action == "ASK_DIAGNOSTIC":
         return "Let us start with a quick problem so I can see what you already know."
     if context.action == "EXPLAIN_CONCEPT":
-        return "A number outside parentheses multiplies every term inside. Let us work through that idea before trying again."
+        return _concept_explanation(context.problem_prompt)
     if context.action == "GIVE_HINT":
-        if context.hint_level == 1:
-            return "Look at the number immediately outside the parentheses. What must it multiply?"
-        if context.hint_level == 2:
-            return "The multiplier must multiply every term inside the parentheses. Which term have you not multiplied yet?"
-        if context.hint_level == 3:
-            return "Write the multiplication separately for each term inside the parentheses, then simplify."
-        return "Let us model the distribution step explicitly, then you can finish the problem."
+        ladder = _hint_ladder(context.problem_prompt)
+        level = context.hint_level or 1
+        return ladder[min(level, len(ladder)) - 1]
     if context.action == "REMEDIATE":
-        return "This same pattern has appeared more than once. Let us return to the distributive property before continuing."
+        return (
+            "This same pattern has appeared more than once. "
+            f"Let us return to {context.skill_name} before continuing."
+        )
     if context.action == "START_REVIEW":
         return "Before we learn something new, let us check whether an earlier skill is still strong. Try this problem on your own."
     if context.action == "RESUME_TARGET":
