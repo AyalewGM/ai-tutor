@@ -146,28 +146,62 @@ def seed() -> None:
         _prerequisite(db, multi_step, distributive, "1.000")
         _prerequisite(db, multi_step, two_step, "0.900")
 
-        misconception = db.scalar(
-            select(Misconception).where(
-                Misconception.skill_id == distributive.id,
-                Misconception.code == "DIST_001",
-            )
-        )
-        if misconception is None:
-            db.add(
-                Misconception(
-                    skill_id=distributive.id,
-                    code="DIST_001",
-                    name="Partial distribution",
-                    description=(
-                        "The learner multiplies the outside factor by only one term "
-                        "inside parentheses."
-                    ),
-                    remediation_strategy=(
-                        "Represent the outside factor as multiplying each term separately "
-                        "before simplifying."
-                    ),
+        def _misconception(
+            skill: Skill, code: str, name: str, description: str, strategy: str
+        ) -> None:
+            existing = db.scalar(
+                select(Misconception).where(
+                    Misconception.skill_id == skill.id,
+                    Misconception.code == code,
                 )
             )
+            if existing is None:
+                db.add(
+                    Misconception(
+                        skill_id=skill.id,
+                        code=code,
+                        name=name,
+                        description=description,
+                        remediation_strategy=strategy,
+                    )
+                )
+
+        _misconception(
+            distributive,
+            "DIST_001",
+            "Partial distribution",
+            "The learner multiplies the outside factor by only one term "
+            "inside parentheses.",
+            "Represent the outside factor as multiplying each term separately "
+            "before simplifying.",
+        )
+        _misconception(
+            distributive,
+            "DIST_002",
+            "Distribution sign error",
+            "The learner distributes the factor but flips the sign of the "
+            "constant term.",
+            "Rewrite the product as a signed multiplication for each term, "
+            "tracking the sign of both factors before simplifying.",
+        )
+        _misconception(
+            two_step,
+            "EQ_001",
+            "Inverse operation in wrong direction",
+            "The learner applies the inverse operation in the wrong direction, "
+            "for example adding the constant instead of subtracting it.",
+            "Identify the operation applied to the variable and undo it with "
+            "the opposite operation on both sides.",
+        )
+        _misconception(
+            two_step,
+            "EQ_002",
+            "Skipped or missequenced inverse step",
+            "The learner undoes one operation but skips or reorders the other "
+            "inverse step, such as forgetting to divide by the coefficient.",
+            "Undo operations in reverse order: remove the added constant first, "
+            "then divide by the coefficient.",
+        )
 
         for difficulty, prompt, answer in [
             (1, "3(x+4)", "3x+12"),

@@ -87,6 +87,7 @@ def _tutor_context(
         problem_prompt=problem.prompt,
         student_answer=student_answer,
         misconception_description=misconception.description if misconception else None,
+        remediation_strategy=misconception.remediation_strategy if misconception else None,
         next_problem_prompt=next_problem.prompt if next_problem else None,
     )
 
