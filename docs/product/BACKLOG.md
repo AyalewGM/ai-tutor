@@ -80,6 +80,8 @@ The entries below describe capabilities already present in the repository. Their
 | F-023 | LLM word-problem contextualization (`/v1/contextualize` gateway endpoint; LLM writes narrative over code-owned parameters/answer with number-faithfulness validation; Gemini provider live) | DONE in repo on `adaptive_response` |
 | F-024 | Fine-grained subskills extended to MCPS_MATH_8 (5), MCPS_MATH_7 (6), MCPS_ALGEBRA_1_2026_27 (6); placement now descends into anchor subskill chains | DONE in repo on `adaptive_response` |
 | F-025 | Problem-family identity + family-aware equivalence + content-readiness gating (GENERATOR_FAMILIES registry; solution.family/parameters on generated rows; (family, params) dedup; last-family rotation in selection; `SkillChoice.content_ready` gates the picker) | DONE in repo on `adaptive_response` |
+| F-026 | Gamified learner presentation layer — React workspace (`/app/`): streak + best-streak chips, score chip, confetti burst on correct answers, badge medallion on skill completion | DONE on `UI_1` |
+| F-027 | Persisted evidence-backed badges — `learner_awards` table (migration 0017), `services/awards.py` catalog (FIRST_CORRECT, STREAK_3/5, LEVEL_UP, SKILL_MASTERED, GAP_FIXED, FRESH_EYES) evaluated in `respond()` from committed evidence only; `RespondOut.new_awards` + workspace `awards` shelf; React badge toast + shelf UI | DONE in repo on `UI_1` — rewards economy (points, leaderboards) remains deferred |
 
 ## Remaining historical backlog capabilities
 
@@ -94,7 +96,7 @@ These older backlog entries remain useful product capabilities but do not own th
 
 ## Deferred until after private MVP validation
 
-- gamification system;
+- gamification system (backend badge ledger, rewards economy, leaderboards) — PO override 2026-09-20: the *presentation layer* of gamification is pulled forward via F-026; durable badge/award persistence and reward rules remain deferred;
 - native mobile applications;
 - voice-first tutoring;
 - school/district roster and LMS integration;

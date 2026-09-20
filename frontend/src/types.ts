@@ -58,7 +58,16 @@ export interface LearnerWorkspace {
     hinted_correct_count: number;
   };
   reviews_due: { skill_id: string; skill_name: string }[];
+  awards: Award[];
   recommended_next: { skill_id: string; skill_code: string; skill_name: string } | null;
+}
+
+export interface Award {
+  code: string;
+  name: string;
+  description: string;
+  skill_name: string | null;
+  awarded_at: string;
 }
 
 export interface EvaluationOut {
@@ -68,6 +77,7 @@ export interface EvaluationOut {
 
 export interface RespondOut {
   evaluation: EvaluationOut;
+  new_awards?: Award[];
 }
 
 export interface HintResponse {

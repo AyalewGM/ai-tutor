@@ -11,6 +11,7 @@ from app.core.database import get_db
 from app.identity import CurrentParent, require_parent_owns_session
 from app.models import (
     Curriculum,
+    LearnerAward,
     Problem,
     Student,
     StudentSkill,
@@ -18,6 +19,7 @@ from app.models import (
     TutorState,
     TutorTurn,
 )
+from app.services.awards import award_out
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
@@ -78,6 +80,14 @@ class WorkspaceRecommendedSkillOut(BaseModel):
     reason: str
 
 
+class WorkspaceAwardOut(BaseModel):
+    code: str
+    name: str
+    description: str
+    skill_name: str | None = None
+    awarded_at: datetime
+
+
 class LearnerWorkspaceOut(BaseModel):
     session_id: uuid.UUID
     state: TutorState
@@ -89,6 +99,7 @@ class LearnerWorkspaceOut(BaseModel):
     allowed_actions: list[WorkspaceAction]
     evidence: WorkspaceEvidenceOut
     reviews_due: list[WorkspaceReviewDueOut] = Field(default_factory=list)
+    awards: list[WorkspaceAwardOut] = Field(default_factory=list)
     recommended_next: WorkspaceRecommendedSkillOut | None = None
 
 
@@ -191,6 +202,15 @@ def get_learner_workspace(
                 student_id=session.student_id,
                 curriculum_id=scope.curriculum_id,
             )
+        ],
+        awards=[
+            WorkspaceAwardOut(**award_out(db, award))
+            for award in db.scalars(
+                select(LearnerAward)
+                .where(LearnerAward.student_id == session.student_id)
+                .order_by(LearnerAward.created_at.desc())
+                .limit(50)
+            ).all()
         ],
         recommended_next=(
             WorkspaceRecommendedSkillOut(

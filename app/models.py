@@ -203,6 +203,20 @@ class Attempt(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
 
 
+class LearnerAward(Base):
+    __tablename__ = "learner_awards"
+    __table_args__ = (
+        UniqueConstraint("student_id", "badge_code", "skill_id", name="uq_learner_award"),
+    )
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    student_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("students.id"), index=True)
+    badge_code: Mapped[str] = mapped_column(String(50))
+    skill_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("skills.id"))
+    session_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("tutor_sessions.id"))
+    metadata_json: Mapped[dict | None] = mapped_column(JSONB)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+
+
 class TutorTurn(Base):
     __tablename__ = "tutor_turns"
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

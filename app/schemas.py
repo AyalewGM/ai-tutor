@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from pydantic import BaseModel, Field
 
@@ -56,6 +57,14 @@ class TutorOut(BaseModel):
     message: str
 
 
+class AwardOut(BaseModel):
+    code: str
+    name: str
+    description: str
+    skill_name: str | None = None
+    awarded_at: datetime
+
+
 class RespondOut(BaseModel):
     session_id: uuid.UUID
     state: TutorState
@@ -64,3 +73,4 @@ class RespondOut(BaseModel):
     mastery: MasteryOut
     focus: LearningFocusOut | None = None
     next_problem: ProblemOut | None = None
+    new_awards: list[AwardOut] = Field(default_factory=list)
