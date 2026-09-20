@@ -80,6 +80,16 @@ export interface RespondOut {
   new_awards?: Award[];
 }
 
+export interface Badge {
+  code: string;
+  name: string;
+  description: string;
+  earned: boolean;
+  times_earned: number;
+  skill_names: string[];
+  progress: { current: number; target: number } | null;
+}
+
 export interface HintResponse {
   allowed: boolean;
   level: number;

@@ -152,6 +152,69 @@ def evaluate_awards(
     return awards
 
 
+def _current_streak(db: Session, student_id: uuid.UUID) -> int:
+    return _consecutive_correct(db, student_id)
+
+
+STREAK_TARGETS = {"STREAK_3": 3, "STREAK_5": 5}
+
+
+def badge_collection(
+    db: Session, student_id: uuid.UUID
+) -> list[dict]:
+    """Full badge catalog with earned state and progress hints."""
+    earned_rows = db.scalars(
+        select(LearnerAward).where(LearnerAward.student_id == student_id)
+    ).all()
+    earned_global = {
+        row.badge_code for row in earned_rows if row.skill_id is None
+    }
+    earned_skill: dict[str, list[LearnerAward]] = {}
+    for row in earned_rows:
+        if row.skill_id is not None:
+            earned_skill.setdefault(row.badge_code, []).append(row)
+
+    streak = _current_streak(db, student_id)
+    collection: list[dict] = []
+    for code, spec in BADGE_CATALOG.items():
+        if spec.per_skill:
+            rows = earned_skill.get(code, [])
+            collection.append(
+                {
+                    "code": code,
+                    "name": spec.name,
+                    "description": spec.description,
+                    "earned": bool(rows),
+                    "times_earned": len(rows),
+                    "skill_names": [
+                        db.get(Skill, row.skill_id).name
+                        for row in rows
+                        if db.get(Skill, row.skill_id) is not None
+                    ],
+                    "progress": None,
+                }
+            )
+        else:
+            progress = None
+            if code in STREAK_TARGETS:
+                progress = {
+                    "current": min(streak, STREAK_TARGETS[code]),
+                    "target": STREAK_TARGETS[code],
+                }
+            collection.append(
+                {
+                    "code": code,
+                    "name": spec.name,
+                    "description": spec.description,
+                    "earned": code in earned_global,
+                    "times_earned": 1 if code in earned_global else 0,
+                    "skill_names": [],
+                    "progress": progress,
+                }
+            )
+    return collection
+
+
 def award_out(db: Session, award: LearnerAward) -> dict:
     spec = BADGE_CATALOG.get(award.badge_code)
     skill_name = None

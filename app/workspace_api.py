@@ -19,7 +19,7 @@ from app.models import (
     TutorState,
     TutorTurn,
 )
-from app.services.awards import award_out
+from app.services.awards import award_out, badge_collection
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
@@ -228,3 +228,30 @@ def get_learner_workspace(
             else None
         ),
     )
+
+
+class BadgeProgressOut(BaseModel):
+    current: int
+    target: int
+
+
+class BadgeOut(BaseModel):
+    code: str
+    name: str
+    description: str
+    earned: bool
+    times_earned: int
+    skill_names: list[str] = Field(default_factory=list)
+    progress: BadgeProgressOut | None = None
+
+
+@router.get("/sessions/{session_id}/badges", response_model=list[BadgeOut])
+def get_badge_collection(
+    session_id: uuid.UUID, parent: CurrentParent, db: DbSession
+) -> list[BadgeOut]:
+    """Full badge catalog for the learner owning this session."""
+    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    return [
+        BadgeOut(**entry)
+        for entry in badge_collection(db, session.student_id)
+    ]

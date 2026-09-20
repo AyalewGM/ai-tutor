@@ -103,6 +103,28 @@ def test_streak_badges_and_workspace_shelf() -> None:
     assert "STREAK_5" in shelf_codes
 
 
+def test_badge_collection_shows_earned_and_progress() -> None:
+    session_id, _ = _create_session()
+    problem_id = client.get(
+        f"/api/v1/learner-workspace/sessions/{session_id}"
+    ).json()["problem"]["id"]
+
+    payload = _respond_correct(session_id, problem_id)
+    assert payload["next_problem"] is not None
+    _respond_correct(session_id, payload["next_problem"]["id"])
+
+    collection = client.get(
+        f"/api/v1/learner-workspace/sessions/{session_id}/badges"
+    )
+    assert collection.status_code == 200
+    badges = {badge["code"]: badge for badge in collection.json()}
+
+    assert badges["FIRST_CORRECT"]["earned"] is True
+    assert badges["STREAK_5"]["earned"] is False
+    assert badges["STREAK_5"]["progress"] == {"current": 2, "target": 5}
+    assert badges["SKILL_MASTERED"]["earned"] is False
+
+
 def test_wrong_answer_breaks_streak_and_awards_nothing() -> None:
     session_id, _ = _create_session()
     problem_id = client.get(

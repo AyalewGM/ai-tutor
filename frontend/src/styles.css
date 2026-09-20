@@ -300,6 +300,34 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow
 .badge-item strong { display: block; font-size: 0.88rem; }
 .badge-icon { flex-shrink: 0; }
 
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 1rem;
+}
+.badge-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+.badge-card h3 { margin: 0.25rem 0 0; font-size: 1rem; }
+.badge-card.locked { opacity: 0.75; }
+.badge-locked { filter: grayscale(1); }
+.badge-skill { color: var(--primary); font-weight: 600; margin: 0.15rem 0 0; }
+.badge-progress { width: 100%; margin-top: 0.3rem; }
+.card-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.link-btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
 .problem-wrap { position: relative; }
 .burst {
   position: absolute;

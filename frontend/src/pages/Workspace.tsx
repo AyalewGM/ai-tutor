@@ -1,5 +1,5 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import type {
@@ -448,7 +448,15 @@ export default function Workspace() {
 
             {workspace.awards.length > 0 && (
               <section className="card">
-                <h2>Badges</h2>
+                <div className="card-title-row">
+                  <h2>Badges</h2>
+                  <Link
+                    className="muted small"
+                    to={`/learn/${sessionId}/badges`}
+                  >
+                    View all
+                  </Link>
+                </div>
                 <ul className="badge-shelf">
                   {workspace.awards.map((award) => (
                     <li

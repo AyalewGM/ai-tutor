@@ -82,6 +82,7 @@ The entries below describe capabilities already present in the repository. Their
 | F-025 | Problem-family identity + family-aware equivalence + content-readiness gating (GENERATOR_FAMILIES registry; solution.family/parameters on generated rows; (family, params) dedup; last-family rotation in selection; `SkillChoice.content_ready` gates the picker) | DONE in repo on `adaptive_response` |
 | F-026 | Gamified learner presentation layer — React workspace (`/app/`): streak + best-streak chips, score chip, confetti burst on correct answers, badge medallion on skill completion | DONE on `UI_1` |
 | F-027 | Persisted evidence-backed badges — `learner_awards` table (migration 0017), `services/awards.py` catalog (FIRST_CORRECT, STREAK_3/5, LEVEL_UP, SKILL_MASTERED, GAP_FIXED, FRESH_EYES) evaluated in `respond()` from committed evidence only; `RespondOut.new_awards` + workspace `awards` shelf; React badge toast + shelf UI | DONE in repo on `UI_1` — rewards economy (points, leaderboards) remains deferred |
+| F-028 | Badge collection page — `GET /learner-workspace/sessions/{id}/badges` returns full catalog with earned state, per-skill instances, and streak progress; React `/learn/:sessionId/badges` grid (earned vs locked, progress bars) linked from workspace shelf | DONE on `UI_1` |
 
 ## Remaining historical backlog capabilities
 
