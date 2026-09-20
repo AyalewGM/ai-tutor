@@ -66,7 +66,7 @@ def _last_attempt_family(db: Session, session_id: uuid.UUID) -> str | None:
     ).first()
     if row is None or not isinstance(row[0], dict):
         return None
-    return row[0].get("family")
+    return row[0].get("problem_family")
 
 
 def _ordered(stmt, target_difficulty: int, avoid_family: str | None = None):
@@ -81,7 +81,7 @@ def _ordered(stmt, target_difficulty: int, avoid_family: str | None = None):
         ordering.insert(
             0,
             case(
-                (Problem.solution["family"].astext == avoid_family, 1),
+                (Problem.solution["problem_family"].astext == avoid_family, 1),
                 else_=0,
             ),
         )

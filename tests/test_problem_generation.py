@@ -343,7 +343,7 @@ def test_generated_problems_carry_family_and_parameter_identity() -> None:
         assert problem is not None
         metadata = problem.solution
         assert metadata["generated"] is True
-        assert metadata["family"] in {"integer/add", "integer/compare"}
+        assert metadata["problem_family"] in {"INTEGER_OPERATIONS", "INTEGER_COMPARE"}
         assert isinstance(metadata["parameters"], dict)
         assert metadata["parameters"]
         db.rollback()
@@ -366,7 +366,7 @@ def test_generated_fingerprints_do_not_collide() -> None:
             )
             assert problem is not None
             key = (
-                problem.solution["family"],
+                problem.solution["problem_family"],
                 tuple(sorted(problem.solution["parameters"].items())),
             )
             assert key not in fingerprints
@@ -388,20 +388,19 @@ def test_avoid_family_rotates_to_a_different_family() -> None:
             skill_id=skill.id,
             difficulty=2,
             problem_type="INTEGER_OPERATIONS",
-            family="integer/add",
+            family="INTEGER_OPERATIONS",
             rng=random.Random(1),
         )
-        assert problem.solution["family"] == "integer/add"
+        assert problem.solution["problem_family"] == "INTEGER_OPERATIONS"
         rotated = generate_problem(
             db,
             skill_id=skill.id,
             difficulty=2,
-            problem_type="INTEGER_OPERATIONS",
-            avoid_family="integer/add",
+            avoid_family="INTEGER_OPERATIONS",
             rng=random.Random(1),
         )
         assert rotated is not None
-        assert rotated.solution["family"] == "integer/compare"
+        assert rotated.solution["problem_family"] == "INTEGER_COMPARE"
         db.rollback()
 
 
@@ -418,15 +417,15 @@ def test_regenerate_variant_preserves_family() -> None:
             db,
             skill_id=skill.id,
             difficulty=2,
-            problem_type="INTEGER_OPERATIONS",
-            family="integer/compare",
+            problem_type="INTEGER_COMPARE",
+            family="INTEGER_COMPARE",
             rng=random.Random(6),
         )
         variant = regenerate_variant(
             db, source_problem=source, rng=random.Random(6)
         )
         assert variant is not None
-        assert variant.solution["family"] == "integer/compare"
+        assert variant.solution["problem_family"] == "INTEGER_COMPARE"
         assert variant.solution["parameters"] != source.solution["parameters"]
         db.rollback()
 
@@ -442,7 +441,7 @@ def test_content_readiness_reports_families_and_gate() -> None:
         )
         report = content_readiness(db, skill_id=int_skill.id)
         assert report.ready is True
-        assert {"integer/add", "integer/compare"} <= set(report.families)
+        assert {"INTEGER_OPERATIONS", "INTEGER_COMPARE"} <= set(report.families)
 
         thin = Skill(
             curriculum_id=curriculum.id,

@@ -22,17 +22,8 @@ class GeneratedProblem:
     canonical_answer: str
     difficulty: int
     problem_type: str
-    family: str
-    parameters: dict
     context: dict | None = None
-
-
-@dataclass(frozen=True)
-class FamilyGenerator:
-    """A stable problem family: same template, different parameter draws."""
-
-    family: str
-    generate: Callable[[random.Random, int], GeneratedProblem]
+    parameters: dict | None = None
 
 
 def _fmt_term(coefficient: int, variable: str) -> str:
@@ -50,116 +41,73 @@ def _fmt_expr(coefficient: int, constant: int, variable: str = "x") -> str:
     return f"{lead}{constant:+d}"
 
 
-def _gen_simplify_distribute(rng: random.Random, difficulty: int) -> GeneratedProblem:
-    a = rng.randint(2, 9) if difficulty <= 4 else rng.choice([-9, -7, -5, -4, -3, -2, 2, 3, 4, 5, 6, 7, 8, 9])
-    b = rng.randint(1, 12)
-    sign = "+" if difficulty <= 2 or rng.random() < 0.5 else "-"
-    prompt = f"{a}(x{sign}{b})"
-    answer = _fmt_expr(a, a * b if sign == "+" else -a * b)
+def _generate_simplify_expression(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    if difficulty <= 3:
+        a = rng.randint(2, 9)
+        b = rng.randint(1, 12)
+        sign = "+" if difficulty <= 2 or rng.random() < 0.5 else "-"
+        prompt = f"{a}(x{sign}{b})"
+        answer = _fmt_expr(a, a * b if sign == "+" else -a * b)
+        parameters = {"a": a, "b": b, "sign": sign}
+    else:
+        a, c = rng.randint(2, 9), rng.randint(2, 9)
+        b = rng.randint(-9, 9)
+        d = rng.randint(-9, 9)
+        prompt = f"{_fmt_expr(a, b)} + {_fmt_expr(c, d)}"
+        prompt = prompt.replace("+ -", "- ")
+        answer = _fmt_expr(a + c, b + d)
+        parameters = {"a": a, "b": b, "c": c, "d": d}
     return GeneratedProblem(
-        prompt, answer, difficulty, "SIMPLIFY_EXPRESSION",
-        family="simplify/distribute", parameters={"a": a, "b": b, "sign": sign},
+        prompt, answer, difficulty, "SIMPLIFY_EXPRESSION", parameters=parameters
     )
 
 
-def _gen_simplify_combine(rng: random.Random, difficulty: int) -> GeneratedProblem:
-    a, c = rng.randint(2, 9), rng.randint(2, 9)
-    b = rng.randint(-9, 9)
-    d = rng.randint(-9, 9)
-    prompt = f"{_fmt_expr(a, b)} + {_fmt_expr(c, d)}".replace("+ -", "- ")
-    answer = _fmt_expr(a + c, b + d)
-    return GeneratedProblem(
-        prompt, answer, difficulty, "SIMPLIFY_EXPRESSION",
-        family="simplify/combine_like_terms",
-        parameters={"a": a, "b": b, "c": c, "d": d},
-    )
-
-
-def _gen_solve_add_inverse(rng: random.Random, difficulty: int) -> GeneratedProblem:
-    x = rng.randint(-9, 12) if difficulty >= 4 else rng.randint(1, 12)
-    b = rng.randint(1, 20)
-    prompt = f"x + {b} = {x + b}"
-    return GeneratedProblem(
-        prompt, f"x={x}", difficulty, "SOLVE_EQUATION",
-        family="solve/add_inverse", parameters={"x": x, "b": b},
-    )
-
-
-def _gen_solve_coefficient(rng: random.Random, difficulty: int) -> GeneratedProblem:
-    x = rng.randint(-9, 12) if difficulty >= 4 else rng.randint(1, 12)
-    a = rng.randint(2, 9)
-    prompt = f"{a}x = {a * x}"
-    return GeneratedProblem(
-        prompt, f"x={x}", difficulty, "SOLVE_EQUATION",
-        family="solve/coefficient", parameters={"a": a, "x": x},
-    )
-
-
-def _gen_solve_two_step(rng: random.Random, difficulty: int) -> GeneratedProblem:
+def _generate_solve_equation(rng: random.Random, difficulty: int) -> GeneratedProblem:
     x = rng.randint(-12, 12) if difficulty >= 4 else rng.randint(1, 12)
-    a, b = rng.randint(2, 9), rng.randint(1, 15)
-    prompt = f"{_fmt_expr(a, b)} = {a * x + b}"
-    return GeneratedProblem(
-        prompt, f"x={x}", difficulty, "SOLVE_EQUATION",
-        family="solve/two_step", parameters={"a": a, "b": b, "x": x},
-    )
-
-
-def _gen_solve_distribute(rng: random.Random, difficulty: int) -> GeneratedProblem:
-    x = rng.randint(-12, 12) if difficulty >= 4 else rng.randint(1, 12)
-    a, b = rng.randint(2, 6), rng.randint(-9, 9)
-    prompt = f"{a}({_fmt_expr(1, b)}) = {a * (x + b)}"
-    return GeneratedProblem(
-        prompt, f"x={x}", difficulty, "SOLVE_EQUATION",
-        family="solve/distribute_equation",
-        parameters={"a": a, "b": b, "x": x},
-    )
-
-
-def _solve_equation(rng: random.Random, difficulty: int) -> GeneratedProblem:
-    """Difficulty-tiered dispatch across the equation families."""
     if difficulty <= 1:
-        return _gen_solve_add_inverse(rng, difficulty)
-    if difficulty == 2:
-        return _gen_solve_coefficient(rng, difficulty)
-    if difficulty <= 4:
-        return _gen_solve_two_step(rng, difficulty)
-    return _gen_solve_distribute(rng, difficulty)
-
-
-def _gen_linear_write(rng: random.Random, difficulty: int) -> GeneratedProblem:
-    m = rng.randint(1, 8)
-    b = rng.randint(-8, 8) if difficulty >= 2 else rng.randint(0, 8)
-    prompt = (
-        f"A line has slope {m} and y-intercept {b}. "
-        "Write its equation in slope-intercept form."
-    )
-    answer = f"y={_fmt_expr(m, b)}"
+        b = rng.randint(1, 20)
+        prompt = f"x + {b} = {x + b}"
+        parameters = {"tier": "add_inverse", "b": b, "x": x}
+    elif difficulty == 2:
+        a = rng.randint(2, 9)
+        prompt = f"{a}x = {a * x}"
+        parameters = {"tier": "coefficient", "a": a, "x": x}
+    elif difficulty <= 4:
+        a, b = rng.randint(2, 9), rng.randint(1, 15)
+        prompt = f"{_fmt_expr(a, b)} = {a * x + b}"
+        parameters = {"tier": "two_step", "a": a, "b": b, "x": x}
+    else:
+        a, b = rng.randint(2, 6), rng.randint(-9, 9)
+        prompt = f"{a}({_fmt_expr(1, b)}) = {a * (x + b)}"
+        parameters = {"tier": "distribute_equation", "a": a, "b": b, "x": x}
     return GeneratedProblem(
-        prompt, answer, difficulty, "LINEAR_FUNCTION",
-        family="linear/write_slope_intercept", parameters={"m": m, "b": b},
+        prompt, f"x={x}", difficulty, "SOLVE_EQUATION", parameters=parameters
     )
 
 
-def _gen_linear_evaluate(rng: random.Random, difficulty: int) -> GeneratedProblem:
-    m = rng.randint(-8, 8)
-    b = rng.randint(-9, 9)
-    x = rng.randint(-6, 6)
-    prompt = f"For y = {_fmt_expr(m, b)}, what is y when x = {x}?"
-    answer = str(m * x + b)
-    return GeneratedProblem(
-        prompt, answer, difficulty, "LINEAR_FUNCTION",
-        family="linear/evaluate", parameters={"m": m, "b": b, "x": x},
-    )
-
-
-def _linear_function(rng: random.Random, difficulty: int) -> GeneratedProblem:
+def _generate_linear_function(rng: random.Random, difficulty: int) -> GeneratedProblem:
     if difficulty <= 2:
-        return _gen_linear_write(rng, difficulty)
-    return _gen_linear_evaluate(rng, difficulty)
+        m = rng.randint(1, 8)
+        b = rng.randint(-8, 8) if difficulty == 2 else rng.randint(0, 8)
+        prompt = (
+            f"A line has slope {m} and y-intercept {b}. "
+            "Write its equation in slope-intercept form."
+        )
+        answer = f"y={_fmt_expr(m, b)}"
+        parameters = {"tier": "write_slope_intercept", "m": m, "b": b}
+    else:
+        m = rng.randint(-8, 8)
+        b = rng.randint(-9, 9)
+        x = rng.randint(-6, 6)
+        prompt = f"For y = {_fmt_expr(m, b)}, what is y when x = {x}?"
+        answer = str(m * x + b)
+        parameters = {"tier": "evaluate", "m": m, "b": b, "x": x}
+    return GeneratedProblem(
+        prompt, answer, difficulty, "LINEAR_FUNCTION", parameters=parameters
+    )
 
 
-def _gen_integer_add(rng: random.Random, difficulty: int) -> GeneratedProblem:
+def _generate_integer_sum(rng: random.Random, difficulty: int) -> GeneratedProblem:
     if difficulty <= 2:
         a, b = rng.randint(1, 20), rng.randint(1, 20)
     elif difficulty <= 4:
@@ -169,11 +117,11 @@ def _gen_integer_add(rng: random.Random, difficulty: int) -> GeneratedProblem:
     prompt = f"Evaluate {a} + {b}." if b >= 0 else f"Evaluate {a} - {abs(b)}."
     return GeneratedProblem(
         prompt, str(a + b), difficulty, "INTEGER_OPERATIONS",
-        family="integer/add", parameters={"a": a, "b": b},
+        parameters={"a": a, "b": b},
     )
 
 
-def _gen_integer_compare(rng: random.Random, difficulty: int) -> GeneratedProblem:
+def _generate_integer_compare(rng: random.Random, difficulty: int) -> GeneratedProblem:
     bound = 10 if difficulty <= 2 else 20
     a = rng.randint(-bound, bound)
     b = rng.randint(-bound, bound)
@@ -181,40 +129,45 @@ def _gen_integer_compare(rng: random.Random, difficulty: int) -> GeneratedProble
         b = rng.randint(-bound, bound)
     prompt = f"Which is greater, {a} or {b}?"
     return GeneratedProblem(
-        prompt, str(max(a, b)), difficulty, "INTEGER_OPERATIONS",
-        family="integer/compare", parameters={"a": a, "b": b},
+        prompt, str(max(a, b)), difficulty, "INTEGER_COMPARE",
+        parameters={"a": a, "b": b},
     )
 
 
-def _fmt_fraction(value: Fraction) -> str:
-    if value.denominator == 1:
-        return str(value.numerator)
-    return f"{value.numerator}/{value.denominator}"
-
-
-def _gen_fraction_add(rng: random.Random, difficulty: int) -> GeneratedProblem:
+def _generate_fraction_add(rng: random.Random, difficulty: int) -> GeneratedProblem:
     d1 = rng.choice([2, 3, 4, 5])
     d2 = rng.choice([2, 3, 4, 5, 6, 8])
     n1, n2 = rng.randint(1, d1 - 1), rng.randint(1, d2 - 1)
     result = Fraction(n1, d1) + Fraction(n2, d2)
     prompt = f"Evaluate {n1}/{d1} + {n2}/{d2}."
+    answer = (
+        str(result.numerator)
+        if result.denominator == 1
+        else f"{result.numerator}/{result.denominator}"
+    )
     return GeneratedProblem(
-        prompt, _fmt_fraction(result), difficulty, "FRACTION_OPERATIONS",
-        family="fraction/add",
+        prompt, answer, difficulty, "FRACTION_OPERATIONS",
         parameters={"n1": n1, "d1": d1, "n2": n2, "d2": d2},
     )
 
 
-def _gen_fraction_subtract(rng: random.Random, difficulty: int) -> GeneratedProblem:
+def _generate_fraction_subtract(rng: random.Random, difficulty: int) -> GeneratedProblem:
     f1 = Fraction(rng.randint(1, 4), rng.choice([2, 3, 4, 5]))
     f2 = Fraction(rng.randint(1, 7), rng.choice([2, 3, 4, 5, 6, 8]))
     while f2 >= f1:
         f2 = Fraction(rng.randint(1, 7), rng.choice([2, 3, 4, 5, 6, 8]))
     result = f1 - f2
-    prompt = f"Evaluate {f1.numerator}/{f1.denominator} - {f2.numerator}/{f2.denominator}."
+    answer = (
+        str(result.numerator)
+        if result.denominator == 1
+        else f"{result.numerator}/{result.denominator}"
+    )
+    prompt = (
+        f"Evaluate {f1.numerator}/{f1.denominator} - "
+        f"{f2.numerator}/{f2.denominator}."
+    )
     return GeneratedProblem(
-        prompt, _fmt_fraction(result), difficulty, "FRACTION_OPERATIONS",
-        family="fraction/subtract",
+        prompt, answer, difficulty, "FRACTION_SUBTRACT",
         parameters={
             "n1": f1.numerator, "d1": f1.denominator,
             "n2": f2.numerator, "d2": f2.denominator,
@@ -222,119 +175,83 @@ def _gen_fraction_subtract(rng: random.Random, difficulty: int) -> GeneratedProb
     )
 
 
-def _gen_word_percent(rng: random.Random, difficulty: int) -> GeneratedProblem:
-    percent = rng.choice([10, 20, 25, 50])
-    amount = rng.choice([40, 60, 80, 100, 120, 200])
-    prompt = f"What is {percent}% of {amount}?"
-    answer = str(percent * amount // 100)
-    return GeneratedProblem(
-        prompt, answer, difficulty, "WORD_PROBLEM",
-        family="word/percent_of",
-        parameters={"percent": percent, "amount": amount},
-        context={"template": "percent_of",
-                 "parameters": {"percent": percent, "amount": amount}},
-    )
-
-
-def _gen_word_unit_rate(rng: random.Random, difficulty: int) -> GeneratedProblem:
-    total = rng.choice([60, 90, 120, 150, 240, 300])
-    hours = rng.choice([2, 3, 4, 5, 6])
-    prompt = (
-        f"A car travels {total} miles in {hours} hours at a constant rate. "
-        "What is the unit rate in miles per hour?"
-    )
-    answer = str(total // hours) if total % hours == 0 else f"{total}/{hours}"
-    return GeneratedProblem(
-        prompt, answer, difficulty, "WORD_PROBLEM",
-        family="word/unit_rate",
-        parameters={"distance": total, "hours": hours},
-        context={"template": "unit_rate",
-                 "parameters": {"distance": total, "hours": hours}},
-    )
-
-
-def _word_problem(rng: random.Random, difficulty: int) -> GeneratedProblem:
+def _generate_word_problem(rng: random.Random, difficulty: int) -> GeneratedProblem:
     if difficulty <= 2:
-        return _gen_word_percent(rng, difficulty)
-    return _gen_word_unit_rate(rng, difficulty)
-
-
-def _retype(generated: GeneratedProblem, problem_type: str) -> GeneratedProblem:
+        percent = rng.choice([10, 20, 25, 50])
+        amount = rng.choice([40, 60, 80, 100, 120, 200])
+        prompt = f"What is {percent}% of {amount}?"
+        answer = str(percent * amount // 100)
+        context = {
+            "template": "percent_of",
+            "parameters": {"percent": percent, "amount": amount},
+        }
+        parameters = dict(context["parameters"])
+    else:
+        total = rng.choice([60, 90, 120, 150, 240, 300])
+        hours = rng.choice([2, 3, 4, 5, 6])
+        prompt = (
+            f"A car travels {total} miles in {hours} hours at a constant rate. "
+            "What is the unit rate in miles per hour?"
+        )
+        answer = str(total // hours) if total % hours == 0 else f"{total}/{hours}"
+        context = {
+            "template": "unit_rate",
+            "parameters": {"distance": total, "hours": hours},
+        }
+        parameters = dict(context["parameters"])
     return GeneratedProblem(
-        generated.prompt, generated.canonical_answer, generated.difficulty,
-        problem_type, family=generated.family, parameters=generated.parameters,
-        context=generated.context,
+        prompt, answer, difficulty, "WORD_PROBLEM",
+        context=context, parameters=parameters,
     )
 
 
-def _family_mixer(family_generators: list, problem_type: str) -> Callable:
-    def generate(rng: random.Random, difficulty: int) -> GeneratedProblem:
-        return _retype(
-            rng.choice(family_generators)(rng, difficulty), problem_type
-        )
-    return generate
+def _generate_arithmetic(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    generated = (
+        _generate_fraction_add(rng, difficulty)
+        if rng.random() < 0.5
+        else _generate_integer_sum(rng, difficulty)
+    )
+    return GeneratedProblem(
+        generated.prompt, generated.canonical_answer, difficulty, "ARITHMETIC",
+        parameters=generated.parameters,
+    )
 
 
-GENERATOR_FAMILIES: dict[str, list[FamilyGenerator]] = {
-    "SIMPLIFY_EXPRESSION": [
-        FamilyGenerator("simplify/distribute", _gen_simplify_distribute),
-        FamilyGenerator("simplify/combine_like_terms", _gen_simplify_combine),
-    ],
-    "SOLVE_EQUATION": [
-        FamilyGenerator("solve/add_inverse", _gen_solve_add_inverse),
-        FamilyGenerator("solve/coefficient", _gen_solve_coefficient),
-        FamilyGenerator("solve/two_step", _gen_solve_two_step),
-        FamilyGenerator("solve/distribute_equation", _gen_solve_distribute),
-    ],
-    "LINEAR_FUNCTION": [
-        FamilyGenerator("linear/write_slope_intercept", _gen_linear_write),
-        FamilyGenerator("linear/evaluate", _gen_linear_evaluate),
-    ],
-    "LINEAR_RELATION": [
-        FamilyGenerator("linear/write_slope_intercept", _gen_linear_write),
-        FamilyGenerator("linear/evaluate", _gen_linear_evaluate),
-    ],
-    "INTEGER_OPERATIONS": [
-        FamilyGenerator("integer/add", _gen_integer_add),
-        FamilyGenerator("integer/compare", _gen_integer_compare),
-    ],
-    "FRACTION_OPERATIONS": [
-        FamilyGenerator("fraction/add", _gen_fraction_add),
-        FamilyGenerator("fraction/subtract", _gen_fraction_subtract),
-    ],
-    "WORD_PROBLEM": [
-        FamilyGenerator("word/percent_of", _gen_word_percent),
-        FamilyGenerator("word/unit_rate", _gen_word_unit_rate),
-    ],
-    "ARITHMETIC": [
-        FamilyGenerator("integer/add", _gen_integer_add),
-        FamilyGenerator("integer/compare", _gen_integer_compare),
-        FamilyGenerator("fraction/add", _gen_fraction_add),
-        FamilyGenerator("fraction/subtract", _gen_fraction_subtract),
-    ],
-}
+def _generate_linear_relation(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    generated = _generate_linear_function(rng, difficulty)
+    return GeneratedProblem(
+        generated.prompt, generated.canonical_answer, difficulty, "LINEAR_RELATION",
+        parameters=generated.parameters,
+    )
 
-# Type-level dispatch preserved for callers that don't care about families.
+
 GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
-    "ARITHMETIC": _family_mixer(
-        [g.generate for g in GENERATOR_FAMILIES["ARITHMETIC"]], "ARITHMETIC"
-    ),
-    "SIMPLIFY_EXPRESSION": lambda rng, d: (
-        _gen_simplify_distribute(rng, d) if d <= 3 else _gen_simplify_combine(rng, d)
-    ),
-    "SOLVE_EQUATION": _solve_equation,
-    "LINEAR_FUNCTION": _linear_function,
-    "LINEAR_RELATION": lambda rng, d: _retype(_linear_function(rng, d), "LINEAR_RELATION"),
-    "INTEGER_OPERATIONS": _family_mixer(
-        [g.generate for g in GENERATOR_FAMILIES["INTEGER_OPERATIONS"]],
-        "INTEGER_OPERATIONS",
-    ),
-    "FRACTION_OPERATIONS": _family_mixer(
-        [g.generate for g in GENERATOR_FAMILIES["FRACTION_OPERATIONS"]],
-        "FRACTION_OPERATIONS",
-    ),
-    "WORD_PROBLEM": _word_problem,
+    "ARITHMETIC": _generate_arithmetic,
+    "SIMPLIFY_EXPRESSION": _generate_simplify_expression,
+    "SOLVE_EQUATION": _generate_solve_equation,
+    "LINEAR_FUNCTION": _generate_linear_function,
+    "LINEAR_RELATION": _generate_linear_relation,
+    "INTEGER_OPERATIONS": _generate_integer_sum,
+    "INTEGER_COMPARE": _generate_integer_compare,
+    "FRACTION_OPERATIONS": _generate_fraction_add,
+    "FRACTION_SUBTRACT": _generate_fraction_subtract,
+    "WORD_PROBLEM": _generate_word_problem,
 }
+
+
+def _family_metadata(generated: GeneratedProblem) -> tuple[str, dict]:
+    """Return stable family identity and minimized deterministic parameters.
+
+    Family identity is application-owned and independent of curriculum mapping.
+    Word-problem templates are distinct families; other generators currently
+    have one family per generator until their representations are split.
+    """
+    if generated.context is not None:
+        template = generated.context.get("template")
+        parameters = generated.context.get("parameters") or {}
+        if template:
+            return f"{generated.problem_type}:{template}", dict(parameters)
+    return generated.problem_type, dict(generated.parameters or {})
 
 
 def _fingerprint(family: str, parameters: dict) -> tuple:
@@ -342,20 +259,25 @@ def _fingerprint(family: str, parameters: dict) -> tuple:
 
 
 def _existing_generated_keys(db: Session, skill_id: uuid.UUID) -> tuple[set, set]:
-    """(prompts, (family, parameters) fingerprints) already in the skill pool."""
+    """(prompts, (problem_family, parameters) fingerprints) already in the pool."""
     rows = db.execute(
         select(Problem.prompt, Problem.solution).where(
             Problem.primary_skill_id == skill_id
         )
     ).all()
     prompts = {row[0] for row in rows}
-    fingerprints = set()
-    for _, solution in rows:
-        if isinstance(solution, dict) and solution.get("family"):
-            fingerprints.add(
-                _fingerprint(solution["family"], solution.get("parameters") or {})
-            )
+    fingerprints = {
+        _fingerprint(solution["problem_family"], solution.get("parameters") or {})
+        for _, solution in rows
+        if isinstance(solution, dict) and solution.get("problem_family")
+    }
     return prompts, fingerprints
+
+
+def _possible_families(problem_type: str) -> set[str]:
+    if problem_type == "WORD_PROBLEM":
+        return {"WORD_PROBLEM:percent_of", "WORD_PROBLEM:unit_rate"}
+    return {problem_type}
 
 
 def generate_problem(
@@ -370,35 +292,36 @@ def generate_problem(
 ) -> Problem | None:
     rng = rng or random.Random()
     if problem_type is not None:
-        types = [problem_type]
+        supported = [problem_type] if problem_type in GENERATORS else []
     else:
-        types = db.scalars(
+        available = db.scalars(
             select(Problem.problem_type)
             .where(Problem.primary_skill_id == skill_id)
             .distinct()
         ).all()
-    pool = [
-        (t, gen)
-        for t in types
-        for gen in GENERATOR_FAMILIES.get(t, [])
-        if family is None or gen.family == family
-    ]
-    alternatives = [entry for entry in pool if entry[1].family != avoid_family]
-    if alternatives:
-        pool = alternatives
-    if not pool:
+        supported = [t for t in available if t in GENERATORS]
+    if not supported:
         return None
+    possible = {f for t in supported for f in _possible_families(t)}
+    if family is not None:
+        if family not in possible:
+            return None
+        supported = [t for t in supported if family in _possible_families(t)]
+    can_avoid = avoid_family is not None and len(possible - {avoid_family}) >= 1
     existing_prompts, existing_keys = _existing_generated_keys(db, skill_id)
     generated = None
     for _ in range(8):
-        ptype, gen = rng.choice(pool)
-        candidate = gen.generate(rng, difficulty)
+        candidate = GENERATORS[rng.choice(supported)](rng, difficulty)
+        family_id, parameters = _family_metadata(candidate)
+        if family is not None and family_id != family:
+            continue
+        if can_avoid and family_id == avoid_family:
+            continue
         if (
             candidate.prompt not in existing_prompts
-            and _fingerprint(candidate.family, candidate.parameters)
-            not in existing_keys
+            and _fingerprint(family_id, parameters) not in existing_keys
         ):
-            generated = _retype(candidate, ptype)
+            generated = candidate
             break
     if generated is None:
         return None
@@ -412,6 +335,7 @@ def generate_problem(
         )
         if narrative:
             prompt = narrative
+    family_id, parameters = _family_metadata(generated)
     problem = Problem(
         primary_skill_id=skill_id,
         problem_type=generated.problem_type,
@@ -421,8 +345,8 @@ def generate_problem(
         solution={
             "generated": True,
             "generator": generated.problem_type,
-            "family": generated.family,
-            "parameters": generated.parameters,
+            "problem_family": family_id,
+            "parameters": parameters,
             "difficulty": difficulty,
         },
         source_type="GENERATED",
@@ -438,7 +362,7 @@ def regenerate_variant(
     source_problem: Problem,
     rng: random.Random | None = None,
 ) -> Problem | None:
-    """Re-serve a missed generated problem with fresh parameters (same family,
+    """Re-serve a missed generated problem with fresh parameters (same template,
     same difficulty, different numbers). Returns None for curated problems or
     unsupported templates."""
     metadata = source_problem.solution or {}
@@ -450,7 +374,7 @@ def regenerate_variant(
         skill_id=source_problem.primary_skill_id,
         difficulty=int(metadata.get("difficulty") or source_problem.difficulty),
         problem_type=generator,
-        family=metadata.get("family"),
+        family=metadata.get("problem_family"),
         rng=rng,
     )
 
@@ -466,24 +390,21 @@ class SkillContentReport:
 def content_readiness(
     db: Session, *, skill_id: uuid.UUID, min_families: int = 2
 ) -> SkillContentReport:
-    """A skill is content-ready when it has at least one problem and at least
-    `min_families` materially different families available across its problem
-    types (each declared generator family counts; an ungeneratable type counts
-    as a single family)."""
+    """A skill is content-ready when it can sustain a session: at least one
+    problem and either >= min_families distinct families or a generator-
+    capable problem type that can produce fresh items."""
     rows = db.execute(
         select(Problem.problem_type).where(Problem.primary_skill_id == skill_id)
     ).all()
     types = {row[0] for row in rows}
     families: set[str] = set()
     for ptype in types:
-        generators = GENERATOR_FAMILIES.get(ptype)
-        if generators:
-            families.update(gen.family for gen in generators)
-        else:
-            families.add(ptype)
+        families.update(_possible_families(ptype))
+    generatable = bool(types & GENERATORS.keys())
+    ready = len(rows) >= 1 and (len(families) >= min_families or generatable)
     return SkillContentReport(
         skill_id=skill_id,
         problem_count=len(rows),
         families=tuple(sorted(families)),
-        ready=len(rows) >= 1 and len(families) >= min_families,
+        ready=ready,
     )

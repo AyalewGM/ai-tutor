@@ -470,8 +470,12 @@ def seed():
             # Fine-grained subskill problems, each typed to a registered generator.
             (num_int, 1, "Evaluate -8 + 15.", "7", "INTEGER_OPERATIONS"),
             (num_int, 2, "Evaluate -4 - 9.", "-13", "INTEGER_OPERATIONS"),
+            (num_int, 1, "Which is greater, -4 or -9?", "-4", "INTEGER_COMPARE"),
+            (num_int, 2, "Which is greater, -12 or -7?", "-7", "INTEGER_COMPARE"),
             (num_frac, 2, "Evaluate 2/3 + 1/6.", "5/6", "FRACTION_OPERATIONS"),
             (num_frac, 3, "Evaluate 5/8 + 1/4.", "7/8", "FRACTION_OPERATIONS"),
+            (num_frac, 3, "Evaluate 3/4 - 1/2.", "1/4", "FRACTION_SUBTRACT"),
+            (num_frac, 4, "Evaluate 5/6 - 1/3.", "1/2", "FRACTION_SUBTRACT"),
             (alg_expr, 1, "Simplify 3(x + 2).", "3x+6", "SIMPLIFY_EXPRESSION"),
             (alg_expr, 2, "Simplify 5x + 2 - 3x + 7.", "2x+9", "SIMPLIFY_EXPRESSION"),
             (alg_eq1, 1, "Solve x + 6 = 14.", "x=8", "SOLVE_EQUATION"),
