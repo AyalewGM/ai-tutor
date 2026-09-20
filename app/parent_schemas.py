@@ -68,9 +68,21 @@ class SupportAreaOut(BaseModel):
     occurrence_count: int
 
 
+class ReviewDueOut(BaseModel):
+    skill_id: uuid.UUID
+    skill_code: str
+    skill_name: str
+    status: str
+    due_at: datetime
+    interval_index: int
+    mastery_score: float
+    projected_mastery_score: float
+
+
 class ChildDashboardOut(BaseModel):
     child: ChildSummaryOut
     active_skill_name: str | None = None
     skills: list[SkillProgressOut]
     recent_activity: list[RecentActivityOut]
     support_areas: list[SupportAreaOut]
+    reviews_due: list[ReviewDueOut] = Field(default_factory=list)

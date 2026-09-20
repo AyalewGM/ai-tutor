@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from decimal import Decimal
 
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
 from app.models import (
@@ -34,6 +34,15 @@ class DueReview:
     progress: StudentSkill
     schedule: SkillReviewSchedule
     decayed_score: float
+
+
+@dataclass(frozen=True)
+class ReviewVisibilityItem:
+    progress: StudentSkill
+    schedule: SkillReviewSchedule
+    skill: Skill
+    projected_mastery: float
+    visibility_status: str  # DUE or RELEARNING
 
 
 def _utcnow() -> datetime:
@@ -148,6 +157,67 @@ def due_review(
         if most_overdue is None:
             most_overdue = DueReview(progress=progress, schedule=schedule, decayed_score=decayed)
     return most_overdue
+
+
+def reviews_due(
+    db: Session,
+    *,
+    student_id: uuid.UUID,
+    curriculum_id: uuid.UUID,
+    now: datetime | None = None,
+) -> list[ReviewVisibilityItem]:
+    """Read-only projection of skills needing review for parent/learner surfaces.
+
+    Unlike due_review(), this never mutates progress or schedules — decayed
+    mastery is reported as a projection only.
+    """
+    now = now or _utcnow()
+    rows = db.execute(
+        select(StudentSkill, SkillReviewSchedule, Skill)
+        .join(
+            SkillReviewSchedule,
+            (SkillReviewSchedule.student_id == StudentSkill.student_id)
+            & (SkillReviewSchedule.skill_id == StudentSkill.skill_id),
+        )
+        .join(Skill, Skill.id == StudentSkill.skill_id)
+        .where(
+            StudentSkill.student_id == student_id,
+            Skill.curriculum_id == curriculum_id,
+            or_(
+                SkillReviewSchedule.status == RELEARNING,
+                SkillReviewSchedule.due_at <= now,
+            ),
+        )
+        .order_by(SkillReviewSchedule.due_at.asc())
+    ).all()
+
+    items: list[ReviewVisibilityItem] = []
+    for progress, schedule, skill in rows:
+        anchor = (
+            progress.last_independent_evidence_at
+            or progress.last_attempt_at
+            or schedule.created_at
+        )
+        if anchor.tzinfo is None:
+            anchor = anchor.replace(tzinfo=UTC)
+        days_since = max(0.0, (now - anchor).total_seconds() / 86400)
+        projected = decayed_mastery(
+            float(progress.mastery_score),
+            days_since_evidence=days_since,
+            confidence=float(progress.confidence_score),
+        )
+        items.append(
+            ReviewVisibilityItem(
+                progress=progress,
+                schedule=schedule,
+                skill=skill,
+                projected_mastery=projected,
+                visibility_status=(
+                    RELEARNING if schedule.status == RELEARNING else DUE
+                ),
+            )
+        )
+    return items
 
 
 def record_review_outcome(

@@ -29,11 +29,13 @@ from app.parent_schemas import (
     ChildSummaryOut,
     LinkChildOut,
     RecentActivityOut,
+    ReviewDueOut,
     SkillProgressOut,
     SupportAreaOut,
 )
 from app.services.curriculum_scope import CurriculumScopeError, resolve_student_curriculum_scope
 from app.services.parent_intelligence import ParentSkillEvidence, classify_parent_skill_progress
+from app.services.review_schedule import RELEARNING, reviews_due
 
 
 def hash_claim_token(token: str) -> str:
@@ -339,10 +341,28 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         for student_misconception, misconception in support_rows
     ]
 
+    review_items = reviews_due(
+        db, student_id=student.id, curriculum_id=scope.curriculum_id
+    )
+    reviews_due_out = [
+        ReviewDueOut(
+            skill_id=item.skill.id,
+            skill_code=item.skill.code,
+            skill_name=item.skill.name,
+            status="Relearning" if item.visibility_status == RELEARNING else "Due",
+            due_at=item.schedule.due_at,
+            interval_index=item.schedule.interval_index,
+            mastery_score=float(item.progress.mastery_score),
+            projected_mastery_score=item.projected_mastery,
+        )
+        for item in review_items
+    ]
+
     return ChildDashboardOut(
         child=child_summary(db, student),
         active_skill_name=active_skill_name,
         skills=skills,
         recent_activity=recent_activity,
         support_areas=support_areas,
+        reviews_due=reviews_due_out,
     )

@@ -137,5 +137,16 @@ def pilot_kpis(
             numerator=len(fresh_mastery_passes),
             denominator=len(fresh_mastery_attempts),
         ),
+        KpiResult(
+            name="spaced_review_pass_rate",
+            policy_version=policy_version,
+            curriculum_id=curriculum_id,
+            numerator=sum(
+                _payload(event).get("passed") is True
+                for event in events
+                if event.event_type == "review.outcome_recorded"
+            ),
+            denominator=_count(events, "review.outcome_recorded"),
+        ),
     )
     return list(definitions)

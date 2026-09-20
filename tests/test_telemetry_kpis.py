@@ -149,6 +149,25 @@ def test_fresh_mastery_requires_independent_mastery_check_and_gate_eligibility()
     assert fresh.rate == 1.0
 
 
+def test_spaced_review_pass_rate_counts_only_passed_outcomes() -> None:
+    curriculum_id = uuid.uuid4()
+    db = FakeKpiSession(
+        [
+            event("review.outcome_recorded", passed=True, correct=True),
+            event("review.outcome_recorded", passed=False, correct=True),
+            event("review.outcome_recorded", passed=False, correct=False),
+            event("review.scheduled"),
+        ]
+    )
+
+    results = {result.name: result for result in pilot_kpis(db, curriculum_id)}  # type: ignore[arg-type]
+    review = results["spaced_review_pass_rate"]
+
+    assert review.numerator == 1
+    assert review.denominator == 3
+    assert review.rate == 1 / 3
+
+
 def test_zero_denominator_rate_is_null_not_zero() -> None:
     curriculum_id = uuid.uuid4()
     db = FakeKpiSession([])

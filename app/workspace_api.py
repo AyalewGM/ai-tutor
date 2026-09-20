@@ -1,8 +1,9 @@
 import uuid
+from datetime import datetime
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -23,6 +24,7 @@ from app.services.curriculum_scope import (
     require_skill_in_scope,
 )
 from app.services.hint_policy import select_hint
+from app.services.review_schedule import reviews_due
 
 router = APIRouter(prefix="/learner-workspace", tags=["learner-workspace"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -62,6 +64,13 @@ class WorkspaceEvidenceOut(BaseModel):
     hinted_correct_count: int
 
 
+class WorkspaceReviewDueOut(BaseModel):
+    skill_id: uuid.UUID
+    skill_name: str
+    due_at: datetime
+    status: str
+
+
 class LearnerWorkspaceOut(BaseModel):
     session_id: uuid.UUID
     state: TutorState
@@ -72,6 +81,7 @@ class LearnerWorkspaceOut(BaseModel):
     coaching_message: str | None
     allowed_actions: list[WorkspaceAction]
     evidence: WorkspaceEvidenceOut
+    reviews_due: list[WorkspaceReviewDueOut] = Field(default_factory=list)
 
 
 def _allowed_actions(state: TutorState) -> list[WorkspaceAction]:
@@ -161,4 +171,17 @@ def get_learner_workspace(
             independent_correct_count=progress.independent_correct_count if progress else 0,
             hinted_correct_count=progress.hinted_correct_count if progress else 0,
         ),
+        reviews_due=[
+            WorkspaceReviewDueOut(
+                skill_id=item.skill.id,
+                skill_name=item.skill.name,
+                due_at=item.schedule.due_at,
+                status=item.visibility_status,
+            )
+            for item in reviews_due(
+                db,
+                student_id=session.student_id,
+                curriculum_id=scope.curriculum_id,
+            )
+        ],
     )
