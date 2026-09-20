@@ -28,6 +28,7 @@ class RenderRequest(BaseModel):
     hint_level: int | None = Field(default=None, ge=1, le=4)
     hint_constraint: str | None = Field(default=None, max_length=1000)
     misconception_description: str | None = Field(default=None, max_length=2000)
+    remediation_strategy: str | None = Field(default=None, max_length=2000)
     next_problem_prompt: str | None = Field(default=None, max_length=4000)
 
 

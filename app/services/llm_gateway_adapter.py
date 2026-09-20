@@ -23,6 +23,7 @@ class LLMGatewayAdapter:
             "hint_level": context.hint_level,
             "hint_constraint": context.hint_constraint,
             "misconception_description": context.misconception_description,
+            "remediation_strategy": context.remediation_strategy,
             "next_problem_prompt": context.next_problem_prompt,
         }
         try:

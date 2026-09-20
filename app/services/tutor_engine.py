@@ -33,6 +33,7 @@ class TutorContext:
     problem_prompt: str
     student_answer: str | None = None
     misconception_description: str | None = None
+    remediation_strategy: str | None = None
     next_problem_prompt: str | None = None
     hint_constraint: str | None = None
 

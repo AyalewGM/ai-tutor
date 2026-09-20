@@ -150,28 +150,87 @@ def seed():
         _prerequisite(db, relations, algebra)
         _prerequisite(db, financial, number)
 
-        misconception = db.scalar(
-            select(Misconception).where(
-                Misconception.skill_id == number.id,
-                Misconception.code == "DIST_001",
-            )
-        )
-        if misconception is None:
-            db.add(
-                Misconception(
-                    skill_id=number.id,
-                    code="DIST_001",
-                    name="Partial distribution",
-                    description=(
-                        "The learner multiplies the outside factor by only one term "
-                        "inside parentheses."
-                    ),
-                    remediation_strategy=(
-                        "Represent the outside factor as multiplying each term separately "
-                        "before simplifying."
-                    ),
+        def _misconception(skill, code, name, description, strategy):
+            existing = db.scalar(
+                select(Misconception).where(
+                    Misconception.skill_id == skill.id,
+                    Misconception.code == code,
                 )
             )
+            if existing is None:
+                db.add(
+                    Misconception(
+                        skill_id=skill.id,
+                        code=code,
+                        name=name,
+                        description=description,
+                        remediation_strategy=strategy,
+                    )
+                )
+
+        _misconception(
+            number,
+            "DIST_001",
+            "Partial distribution",
+            "The learner multiplies the outside factor by only one term "
+            "inside parentheses.",
+            "Represent the outside factor as multiplying each term separately "
+            "before simplifying.",
+        )
+        _misconception(
+            number,
+            "NUM_001",
+            "Integer sum sign error",
+            "The learner computes the correct magnitude for an integer sum but "
+            "assigns the wrong sign to the result.",
+            "Locate both addends on a number line and determine the sign of the "
+            "result from the addend with the larger absolute value.",
+        )
+        _misconception(
+            number,
+            "NUM_002",
+            "Integer magnitudes added instead of signed sum",
+            "The learner adds the absolute values of the addends and ignores "
+            "their signs.",
+            "Treat the negative addend as movement left on the number line "
+            "rather than as another positive amount.",
+        )
+        _misconception(
+            algebra,
+            "DIST_002",
+            "Distribution sign error",
+            "The learner distributes the factor but flips the sign of the "
+            "constant term.",
+            "Rewrite the product as a signed multiplication for each term, "
+            "tracking the sign of both factors before simplifying.",
+        )
+        _misconception(
+            algebra,
+            "EQ_001",
+            "Inverse operation in wrong direction",
+            "The learner applies the inverse operation in the wrong direction, "
+            "for example adding the constant instead of subtracting it.",
+            "Identify the operation applied to the variable and undo it with "
+            "the opposite operation on both sides.",
+        )
+        _misconception(
+            algebra,
+            "EQ_002",
+            "Skipped or missequenced inverse step",
+            "The learner undoes one operation but skips or reorders the other "
+            "inverse step, such as forgetting to divide by the coefficient.",
+            "Undo operations in reverse order: remove the added constant first, "
+            "then divide by the coefficient.",
+        )
+        _misconception(
+            relations,
+            "REL_001",
+            "Slope and intercept swapped",
+            "The learner writes the linear equation with the slope and "
+            "y-intercept exchanged.",
+            "Anchor the equation as y = mx + b and check which given value "
+            "multiplies x and which stands alone.",
+        )
 
         problems = [
             (number, 1, "Evaluate -6 + 14.", "8", "ARITHMETIC"),
