@@ -6,7 +6,7 @@ from sqlalchemy import func, select
 from app.core.database import SessionLocal
 from app.curriculum_models import StudentCurriculumEnrollment
 from app.learner_deletion import erase_learner_transactional
-from app.models import Curriculum, Skill, Student, StudentSkill, User
+from app.models import Curriculum, LearnerAward, Skill, Student, StudentSkill, User
 from app.parent_models import ChildLinkClaim, ParentProfile, ParentStudentRelationship
 
 
@@ -60,6 +60,11 @@ def test_postgres_learner_erase_isolated_and_preserves_shared_curriculum():
                     token_hash=uuid.uuid4().hex + uuid.uuid4().hex,
                     expires_at=datetime.now(UTC) + timedelta(hours=1),
                 ),
+                LearnerAward(
+                    student_id=target.id,
+                    badge_code="FIRST_CORRECT",
+                    skill_id=skill.id,
+                ),
             ]
         )
         db.commit()
@@ -89,6 +94,9 @@ def test_postgres_learner_erase_isolated_and_preserves_shared_curriculum():
         ) == 1
         assert db.scalar(
             select(func.count(ChildLinkClaim.id)).where(ChildLinkClaim.student_id == target_id)
+        ) == 0
+        assert db.scalar(
+            select(func.count(LearnerAward.id)).where(LearnerAward.student_id == target_id)
         ) == 0
     finally:
         db.rollback()

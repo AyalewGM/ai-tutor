@@ -11,6 +11,7 @@ from app.hint_models import HintEvent
 from app.models import (
     Attempt,
     InterventionRecord,
+    LearnerAward,
     MasteryEvent,
     Student,
     StudentMisconception,
@@ -101,6 +102,8 @@ def erase_learner_transactional(
         # Defensive: turns can also reference an attempt from the learner.
         db.execute(delete(TutorTurn).where(TutorTurn.attempt_id.in_(attempt_ids)))
     db.execute(delete(Attempt).where(Attempt.student_id == learner_id))
+    # Awards reference sessions and the learner; erase before both parents.
+    db.execute(delete(LearnerAward).where(LearnerAward.student_id == learner_id))
 
     if diagnostic_session_ids:
         db.execute(
