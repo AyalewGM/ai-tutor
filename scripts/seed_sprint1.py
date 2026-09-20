@@ -66,6 +66,12 @@ def _problem(
             Problem.prompt == prompt,
         )
     )
+    provenance = {
+        "origin": "AUTHORED",
+        "author": "AI Tutor curriculum team",
+        "license": "proprietary",
+        "source_uri": "https://www.montgomeryschoolsmd.org/curriculum/middleschool/grade8/",
+    }
     if existing is None:
         db.add(
             Problem(
@@ -74,10 +80,12 @@ def _problem(
                 difficulty=difficulty,
                 prompt=prompt,
                 canonical_answer=answer,
-                solution={"answer": answer},
+                solution={"answer": answer, "provenance": provenance},
                 source_type="CURATED",
             )
         )
+    elif "provenance" not in (existing.solution or {}):
+        existing.solution = {**(existing.solution or {}), "provenance": provenance}
 
 
 def seed() -> None:

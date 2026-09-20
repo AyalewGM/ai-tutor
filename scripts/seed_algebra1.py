@@ -34,7 +34,14 @@ def _prerequisite(db, skill: Skill, prerequisite: Skill) -> None:
 
 
 def _problem(db, skill: Skill, difficulty: int, prompt: str, answer: str, problem_type: str) -> None:
-    if db.scalar(select(Problem).where(Problem.primary_skill_id == skill.id, Problem.prompt == prompt)) is None:
+    provenance = {
+        "origin": "AUTHORED",
+        "author": "AI Tutor curriculum team",
+        "license": "proprietary",
+        "source_uri": "https://www.montgomeryschoolsmd.org/curriculum/math/",
+    }
+    existing = db.scalar(select(Problem).where(Problem.primary_skill_id == skill.id, Problem.prompt == prompt))
+    if existing is None:
         db.add(
             Problem(
                 primary_skill_id=skill.id,
@@ -42,10 +49,12 @@ def _problem(db, skill: Skill, difficulty: int, prompt: str, answer: str, proble
                 difficulty=difficulty,
                 prompt=prompt,
                 canonical_answer=answer,
-                solution={"answer": answer},
+                solution={"answer": answer, "provenance": provenance},
                 source_type="CURATED",
             )
         )
+    elif "provenance" not in (existing.solution or {}):
+        existing.solution = {**(existing.solution or {}), "provenance": provenance}
 
 
 def seed() -> None:
