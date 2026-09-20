@@ -110,6 +110,137 @@ def _slope_intercept_swap(prompt: str, answer: str, _canonical: str) -> Misconce
     return None
 
 
+_LIKE_TERMS_PROMPT = re.compile(r"simplify(-?\d+)x([+-]\d+)([+-]\d*)x([+-]\d+)")
+
+
+def _signed_coefficient(text: str) -> int:
+    return int(text + "1") if len(text) == 1 else int(text)
+
+
+def _unlike_terms_combined(prompt: str, answer: str, _canonical: str) -> MisconceptionMatch | None:
+    match = _LIKE_TERMS_PROMPT.search(prompt)
+    if not match:
+        return None
+    coefficient = int(match.group(1)) + _signed_coefficient(match.group(3))
+    merged = coefficient + int(match.group(2)) + int(match.group(4))
+    if answer == f"{merged}x":
+        return MisconceptionMatch("ALG_001", 0.85)
+    return None
+
+
+def _constant_sign_error(prompt: str, answer: str, _canonical: str) -> MisconceptionMatch | None:
+    match = _LIKE_TERMS_PROMPT.search(prompt)
+    if not match:
+        return None
+    coefficient = int(match.group(1)) + _signed_coefficient(match.group(3))
+    first_constant = int(match.group(2))
+    second_constant = int(match.group(4))
+    wrong_constant = first_constant - second_constant
+    if wrong_constant != first_constant + second_constant and answer == (
+        f"{coefficient}x{wrong_constant:+d}"
+    ):
+        return MisconceptionMatch("ALG_002", 0.85)
+    return None
+
+
+_PURE_COEFFICIENT_EQUATION = re.compile(r"(-?\d+)x=(-?\d+)")
+
+
+def _multiply_instead_of_divide(
+    prompt: str, answer: str, _canonical: str
+) -> MisconceptionMatch | None:
+    if _SIMPLE_EQUATION.search(prompt) or _LINEAR_EQUATION.search(prompt):
+        return None
+    match = _PURE_COEFFICIENT_EQUATION.search(prompt)
+    if not match:
+        return None
+    coefficient = int(match.group(1))
+    rhs = int(match.group(2))
+    if abs(coefficient) <= 1 or rhs == 0:
+        return None
+    if answer == f"x={coefficient * rhs}":
+        return MisconceptionMatch("EQ_003", 0.90)
+    return None
+
+
+_FRACTION_ADD_PROMPT = re.compile(r"evaluate(-?\d+)/(-?\d+)\+(-?\d+)/(-?\d+)")
+
+
+def _fraction_adds_across(prompt: str, answer: str, _canonical: str) -> MisconceptionMatch | None:
+    match = _FRACTION_ADD_PROMPT.search(prompt)
+    if not match:
+        return None
+    numerator = int(match.group(1)) + int(match.group(3))
+    denominator = int(match.group(2)) + int(match.group(4))
+    if answer == f"{numerator}/{denominator}":
+        return MisconceptionMatch("NUM_003", 0.90)
+    return None
+
+
+_EVALUATE_LINE_PROMPT = re.compile(r"fory=(-?\d+)x([+-]\d+).*?x=(-?\d+)")
+
+
+def _coefficient_added_not_multiplied(
+    prompt: str, answer: str, _canonical: str
+) -> MisconceptionMatch | None:
+    match = _EVALUATE_LINE_PROMPT.search(prompt)
+    if not match:
+        return None
+    slope = int(match.group(1))
+    intercept = int(match.group(2))
+    value_at = int(match.group(3))
+    if answer == str(slope + value_at + intercept):
+        return MisconceptionMatch("REL_002", 0.85)
+    return None
+
+
+def _numeric_answer(answer: str) -> float | None:
+    try:
+        return float(answer)
+    except ValueError:
+        return None
+
+
+_PERCENT_OF_PROMPT = re.compile(r"(\d+)%of(\d+)")
+_DISCOUNT_PROMPT = re.compile(r"\$(\d+(?:\.\d+)?)\D+?discountedby(\d+)%")
+_TAX_PROMPT = re.compile(r"\$(\d+(?:\.\d+)?)\D+?has(\d+)%tax")
+_FINAL_PRICE_PROMPT = re.compile(r"saleprice|finalprice|pricebeforetax|totalcost")
+
+
+def _percent_scaling_error(prompt: str, answer: str, _canonical: str) -> MisconceptionMatch | None:
+    value = _numeric_answer(answer)
+    if value is None:
+        return None
+    match = _PERCENT_OF_PROMPT.search(prompt)
+    if match:
+        percent, amount = float(match.group(1)), float(match.group(2))
+    else:
+        match = _DISCOUNT_PROMPT.search(prompt) or _TAX_PROMPT.search(prompt)
+        if not match:
+            return None
+        amount, percent = float(match.group(1)), float(match.group(2))
+    if value in {amount * percent, amount - percent, amount + percent}:
+        return MisconceptionMatch("FIN_001", 0.85)
+    return None
+
+
+def _discount_amount_not_price(
+    prompt: str, answer: str, _canonical: str
+) -> MisconceptionMatch | None:
+    if not _FINAL_PRICE_PROMPT.search(prompt):
+        return None
+    match = _DISCOUNT_PROMPT.search(prompt)
+    if not match:
+        return None
+    value = _numeric_answer(answer)
+    if value is None:
+        return None
+    amount, percent = float(match.group(1)), float(match.group(2))
+    if value == amount * percent / 100:
+        return MisconceptionMatch("FIN_002", 0.90)
+    return None
+
+
 _INTEGER_ADD_PROMPT = re.compile(r"evaluate(-?\d+)\+(-?\d+)")
 
 
@@ -145,11 +276,18 @@ def _integer_magnitude(prompt: str, answer: str, canonical: str) -> Misconceptio
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
+    _unlike_terms_combined,
+    _constant_sign_error,
     _inverse_direction,
     _skipped_inverse_step,
+    _multiply_instead_of_divide,
     _slope_intercept_swap,
+    _coefficient_added_not_multiplied,
     _integer_sign_flip,
     _integer_magnitude,
+    _fraction_adds_across,
+    _percent_scaling_error,
+    _discount_amount_not_price,
 )
 
 

@@ -214,6 +214,42 @@ def seed():
             "the opposite operation on both sides.",
         )
         _misconception(
+            number,
+            "NUM_003",
+            "Fractions added across",
+            "The learner adds numerators together and denominators together "
+            "instead of finding a common denominator.",
+            "Rewrite both fractions with a common denominator before adding "
+            "the numerators.",
+        )
+        _misconception(
+            algebra,
+            "ALG_001",
+            "Unlike terms combined",
+            "The learner merges constants into the variable term instead of "
+            "combining like terms separately.",
+            "Group variable terms with variable terms and constants with "
+            "constants before simplifying.",
+        )
+        _misconception(
+            algebra,
+            "ALG_002",
+            "Constant sign dropped",
+            "The learner combines constants but drops the sign of a negative "
+            "term.",
+            "Attach each constant's sign to the term and combine signed "
+            "constants carefully.",
+        )
+        _misconception(
+            algebra,
+            "EQ_003",
+            "Multiplies instead of dividing",
+            "The learner multiplies both sides by the coefficient instead of "
+            "dividing to isolate the variable.",
+            "Undo multiplication with division: divide both sides by the "
+            "coefficient of the variable.",
+        )
+        _misconception(
             algebra,
             "EQ_002",
             "Skipped or missequenced inverse step",
@@ -231,11 +267,39 @@ def seed():
             "Anchor the equation as y = mx + b and check which given value "
             "multiplies x and which stands alone.",
         )
+        _misconception(
+            relations,
+            "REL_002",
+            "Coefficient added to variable",
+            "The learner evaluates mx as m + x instead of multiplying the "
+            "slope by the input value.",
+            "Substitute the input into mx as multiplication: m times x, "
+            "then add b.",
+        )
+        _misconception(
+            financial,
+            "FIN_001",
+            "Percent treated as a whole-number amount",
+            "The learner uses the percent as a dollar amount or forgets to "
+            "divide by 100.",
+            "Convert the percent to a decimal by dividing by 100 before "
+            "multiplying by the amount.",
+        )
+        _misconception(
+            financial,
+            "FIN_002",
+            "Discount amount returned instead of final price",
+            "The learner computes the discount but does not subtract it "
+            "from the original price.",
+            "After finding the discount amount, subtract it from the "
+            "original price to get the price paid.",
+        )
 
         problems = [
             (number, 1, "Evaluate -6 + 14.", "8", "ARITHMETIC"),
             (number, 2, "Evaluate 3/4 + 1/2.", "5/4", "ARITHMETIC"),
             (algebra, 1, "Simplify 4x + 3 + 2x - 5.", "6x-2", "SIMPLIFY_EXPRESSION"),
+            (algebra, 1, "Solve 4x = 20.", "x=5", "SOLVE_EQUATION"),
             (algebra, 2, "Solve 3x + 4 = 19.", "x=5", "SOLVE_EQUATION"),
             (algebra, 2, "Simplify 4(x + 3).", "4x+12", "SIMPLIFY_EXPRESSION"),
             (relations, 2, "For y = 3x + 2, what is y when x = 4?", "14", "LINEAR_RELATION"),
