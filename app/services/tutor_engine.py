@@ -61,7 +61,9 @@ class TutorEngine:
     def __init__(self, provider: TutorProvider | None = None) -> None:
         self.provider = provider
 
-    def generate(self, context: TutorContext) -> TutorEngineResult:
+    def generate(
+        self, context: TutorContext, *, use_llm: bool = True
+    ) -> TutorEngineResult:
         if context.action == "GIVE_HINT" and context.hint_level is not None:
             context = TutorContext(
                 **{
@@ -69,7 +71,7 @@ class TutorEngine:
                     "hint_constraint": hint_constraint(context.hint_level),
                 }
             )
-        if self.provider is not None:
+        if self.provider is not None and use_llm:
             started = perf_counter()
             try:
                 generation = TutorGeneration.model_validate(self.provider.generate(context))
