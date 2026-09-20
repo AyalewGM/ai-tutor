@@ -76,33 +76,74 @@ def seed() -> None:
         _prerequisite(db, linear_equations, expressions)
         _prerequisite(db, linear_functions, linear_equations)
 
-        misconception = db.scalar(
-            select(Misconception).where(
-                Misconception.skill_id == expressions.id,
-                Misconception.code == "DIST_001",
-            )
-        )
-        if misconception is None:
-            db.add(
-                Misconception(
-                    skill_id=expressions.id,
-                    code="DIST_001",
-                    name="Partial distribution",
-                    description=(
-                        "The learner multiplies the outside factor by only one term "
-                        "inside parentheses."
-                    ),
-                    remediation_strategy=(
-                        "Represent the outside factor as multiplying each term separately "
-                        "before simplifying."
-                    ),
+        def _misconception(skill, code, name, description, strategy):
+            if db.scalar(
+                select(Misconception).where(
+                    Misconception.skill_id == skill.id,
+                    Misconception.code == code,
                 )
-            )
+            ) is None:
+                db.add(
+                    Misconception(
+                        skill_id=skill.id,
+                        code=code,
+                        name=name,
+                        description=description,
+                        remediation_strategy=strategy,
+                    )
+                )
+
+        _misconception(
+            expressions,
+            "DIST_001",
+            "Partial distribution",
+            "The learner multiplies the outside factor by only one term "
+            "inside parentheses.",
+            "Represent the outside factor as multiplying each term separately "
+            "before simplifying.",
+        )
+        _misconception(
+            expressions,
+            "ALG_001",
+            "Unlike terms combined",
+            "The learner merges constants into the variable term instead of "
+            "combining like terms separately.",
+            "Group variable terms with variable terms and constants with "
+            "constants before simplifying.",
+        )
+        _misconception(
+            expressions,
+            "ALG_002",
+            "Constant sign dropped",
+            "The learner combines constants but drops the sign of a negative "
+            "term.",
+            "Attach each constant's sign to the term and combine signed "
+            "constants carefully.",
+        )
+        _misconception(
+            linear_equations,
+            "EQ_003",
+            "Multiplies instead of dividing",
+            "The learner multiplies both sides by the coefficient instead of "
+            "dividing to isolate the variable.",
+            "Undo multiplication with division: divide both sides by the "
+            "coefficient of the variable.",
+        )
+        _misconception(
+            linear_functions,
+            "REL_002",
+            "Coefficient added to variable",
+            "The learner evaluates mx as m + x instead of multiplying the "
+            "slope by the input value.",
+            "Substitute the input into mx as multiplication: m times x, "
+            "then add b.",
+        )
 
         problems = [
             (expressions, 1, "Simplify 4(x + 3).", "4x+12", "SIMPLIFY_EXPRESSION"),
             (expressions, 2, "Simplify 3x + 7 + 2x - 4.", "5x+3", "SIMPLIFY_EXPRESSION"),
             (linear_equations, 1, "Solve x + 9 = 21.", "x=12", "SOLVE_EQUATION"),
+            (linear_equations, 1, "Solve 5x = 30.", "x=6", "SOLVE_EQUATION"),
             (linear_equations, 2, "Solve 3x - 5 = 16.", "x=7", "SOLVE_EQUATION"),
             (linear_equations, 3, "Solve 2(x + 4) = 18.", "x=5", "SOLVE_EQUATION"),
             (linear_functions, 1, "A line has slope 3 and y-intercept 2. Write its equation in slope-intercept form.", "y=3x+2", "LINEAR_FUNCTION"),

@@ -176,6 +176,7 @@ def respond_to_diagnostic(
         answer=payload.answer,
         canonical_answer=problem.canonical_answer or "",
         assistance_level=0,
+        problem_difficulty=problem.difficulty,
     )
 
     session.question_count += 1

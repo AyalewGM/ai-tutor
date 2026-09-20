@@ -194,6 +194,15 @@ def seed() -> None:
             "the opposite operation on both sides.",
         )
         _misconception(
+            inverse,
+            "EQ_003",
+            "Multiplies instead of dividing",
+            "The learner multiplies both sides by the coefficient instead of "
+            "dividing to isolate the variable.",
+            "Undo multiplication with division: divide both sides by the "
+            "coefficient of the variable.",
+        )
+        _misconception(
             two_step,
             "EQ_002",
             "Skipped or missequenced inverse step",
@@ -217,6 +226,19 @@ def seed() -> None:
                 prompt=prompt,
                 answer=answer,
                 problem_type="SIMPLIFY_EXPRESSION",
+            )
+
+        for difficulty, prompt, answer in [
+            (1, "Solve 3x = 12", "x=4"),
+            (2, "Solve 5x = 45", "x=9"),
+        ]:
+            _problem(
+                db,
+                skill=inverse,
+                difficulty=difficulty,
+                prompt=prompt,
+                answer=answer,
+                problem_type="SOLVE_EQUATION",
             )
 
         for difficulty, prompt, answer in [

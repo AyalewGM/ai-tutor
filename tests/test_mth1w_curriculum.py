@@ -84,7 +84,7 @@ def test_mth1w_seed_is_idempotent_and_jurisdiction_local():
                 select(Problem).where(Problem.primary_skill_id.in_(seeded_skill_ids))
             )
         )
-        assert len(problems) == 9
+        assert len(problems) == 10
         assert all(problem.primary_skill_id in seeded_skill_ids for problem in problems)
 
         maryland_skill_ids = set(

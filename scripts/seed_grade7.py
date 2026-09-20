@@ -4,7 +4,7 @@ from sqlalchemy import select
 
 from app.core.database import SessionLocal
 from app.curriculum_models import EducationAuthority
-from app.models import Curriculum, Problem, Skill, SkillPrerequisite
+from app.models import Curriculum, Misconception, Problem, Skill, SkillPrerequisite
 
 CURRICULUM_CODE = "MCPS_MATH_7"
 
@@ -130,6 +130,69 @@ def seed() -> None:
         _prerequisite(db, percent, proportional)
         _prerequisite(db, equations, expressions)
 
+        def _misconception(skill, code, name, description, strategy):
+            if db.scalar(
+                select(Misconception).where(
+                    Misconception.skill_id == skill.id,
+                    Misconception.code == code,
+                )
+            ) is None:
+                db.add(
+                    Misconception(
+                        skill_id=skill.id,
+                        code=code,
+                        name=name,
+                        description=description,
+                        remediation_strategy=strategy,
+                    )
+                )
+
+        _misconception(
+            percent,
+            "FIN_001",
+            "Percent treated as a whole-number amount",
+            "The learner uses the percent as a dollar amount or forgets to "
+            "divide by 100.",
+            "Convert the percent to a decimal by dividing by 100 before "
+            "multiplying by the amount.",
+        )
+        _misconception(
+            expressions,
+            "DIST_001",
+            "Partial distribution",
+            "The learner multiplies the outside factor by only one term "
+            "inside parentheses.",
+            "Represent the outside factor as multiplying each term separately "
+            "before simplifying.",
+        )
+        _misconception(
+            expressions,
+            "ALG_001",
+            "Unlike terms combined",
+            "The learner merges constants into the variable term instead of "
+            "combining like terms separately.",
+            "Group variable terms with variable terms and constants with "
+            "constants before simplifying.",
+        )
+        _misconception(
+            expressions,
+            "ALG_002",
+            "Constant sign dropped",
+            "The learner combines constants but drops the sign of a negative "
+            "term.",
+            "Attach each constant's sign to the term and combine signed "
+            "constants carefully.",
+        )
+        _misconception(
+            equations,
+            "EQ_003",
+            "Multiplies instead of dividing",
+            "The learner multiplies both sides by the coefficient instead of "
+            "dividing to isolate the variable.",
+            "Undo multiplication with division: divide both sides by the "
+            "coefficient of the variable.",
+        )
+
         problems = [
             (
                 proportional,
@@ -161,6 +224,7 @@ def seed() -> None:
                 "5x+4",
                 "SIMPLIFY_EXPRESSION",
             ),
+            (equations, 1, "Solve 4x = 20", "x=5", "SOLVE_EQUATION"),
             (equations, 2, "x + 7 = 19", "x=12", "SOLVE_EQUATION"),
             (equations, 3, "3x - 4 = 17", "x=7", "SOLVE_EQUATION"),
         ]

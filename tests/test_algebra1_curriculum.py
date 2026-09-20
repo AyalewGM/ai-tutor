@@ -42,7 +42,7 @@ def test_algebra1_seed_is_idempotent_versioned_and_curriculum_local():
         problems = list(
             db.scalars(select(Problem).where(Problem.primary_skill_id.in_(skill_ids)))
         )
-        assert len(problems) == 8
+        assert len(problems) == 9
         assert all(problem.primary_skill_id in skill_ids for problem in problems)
 
         grade8_skill_ids = set(

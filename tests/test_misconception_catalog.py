@@ -61,6 +61,64 @@ def test_integer_sign_and_magnitude_errors_flagged() -> None:
     assert _misconception("Evaluate -6 + 14.", "-20", "8") == "NUM_001"
 
 
+def test_unlike_terms_combined_flagged() -> None:
+    assert _misconception("Simplify 4x + 3 + 2x - 5.", "4x", "6x-2") == "ALG_001"
+    assert _misconception("Simplify 2x + 5 + 3x - 1.", "9x", "5x+4") == "ALG_001"
+
+
+def test_constant_sign_dropped_flagged() -> None:
+    assert _misconception("Simplify 4x + 3 + 2x - 5.", "6x+8", "6x-2") == "ALG_002"
+    assert _misconception("Simplify 2x + 5 + 3x - 1.", "5x+6", "5x+4") == "ALG_002"
+
+
+def test_multiply_instead_of_divide_flagged() -> None:
+    assert _misconception("Solve 4x = 20.", "x=80", "x=5") == "EQ_003"
+    assert _misconception("Solve 3x = 12", "x=36", "x=4") == "EQ_003"
+
+
+def test_fraction_added_across_flagged() -> None:
+    assert _misconception("Evaluate 3/4 + 1/2.", "4/6", "5/4") == "NUM_003"
+
+
+def test_coefficient_added_not_multiplied_flagged() -> None:
+    assert (
+        _misconception(
+            "For y = 3x + 2, what is y when x = 4?", "9", "14"
+        )
+        == "REL_002"
+    )
+
+
+def test_percent_scaling_errors_flagged() -> None:
+    assert (
+        _misconception(
+            "A $80 purchase has 13% tax. What is the tax amount?",
+            "1040",
+            "10.40",
+        )
+        == "FIN_001"
+    )
+    assert (
+        _misconception(
+            "A $120 item is discounted by 25%. What is the sale price before tax?",
+            "95",
+            "90",
+        )
+        == "FIN_001"
+    )
+
+
+def test_discount_amount_instead_of_price_flagged() -> None:
+    assert (
+        _misconception(
+            "A $120 item is discounted by 25%. What is the sale price before tax?",
+            "30",
+            "90",
+        )
+        == "FIN_002"
+    )
+
+
 def test_unrecognized_errors_carry_no_misconception() -> None:
     assert _misconception("2x + 3 = 11", "x=1", "x=4") is None
     assert _misconception("3(x+4)", "7x", "3x+12") is None
