@@ -58,7 +58,16 @@ export interface LearnerWorkspace {
     hinted_correct_count: number;
   };
   reviews_due: { skill_id: string; skill_name: string }[];
+  awards: Award[];
   recommended_next: { skill_id: string; skill_code: string; skill_name: string } | null;
+}
+
+export interface Award {
+  code: string;
+  name: string;
+  description: string;
+  skill_name: string | null;
+  awarded_at: string;
 }
 
 export interface EvaluationOut {
@@ -68,6 +77,27 @@ export interface EvaluationOut {
 
 export interface RespondOut {
   evaluation: EvaluationOut;
+  new_awards?: Award[];
+}
+
+export interface Badge {
+  code: string;
+  name: string;
+  description: string;
+  earned: boolean;
+  times_earned: number;
+  skill_names: string[];
+  progress: { current: number; target: number } | null;
+}
+
+export interface SkillMapEntry {
+  skill_id: string;
+  code: string;
+  name: string;
+  difficulty_level: number;
+  mastery_score: number;
+  status: string;
+  is_active: boolean;
 }
 
 export interface HintResponse {

@@ -22,8 +22,16 @@ from app.models import (
     TutorState,
     TutorTurn,
 )
-from app.schemas import EvaluationOut, MasteryOut, RespondIn, RespondOut, TutorOut
+from app.schemas import (
+    AwardOut,
+    EvaluationOut,
+    MasteryOut,
+    RespondIn,
+    RespondOut,
+    TutorOut,
+)
 from app.services.attempt_evidence import record_evidence
+from app.services.awards import award_out, evaluate_awards
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
@@ -252,6 +260,8 @@ def respond(
         )
 
     review_scheduled_payload: dict[str, object] | None = None
+    passed_mastery_check = False
+    gap_fixed = False
     if state_at_attempt == TutorState.MASTERY_CHECK:
         passed_mastery_check = (
             transition.action == "MARK_MASTERED"
@@ -291,6 +301,7 @@ def respond(
             ):
                 session.active_skill_id = session.primary_skill_id
                 session.remediation_reason = None
+                gap_fixed = True
                 transition = Transition(TutorState.GUIDED_PRACTICE, "RESUME_TARGET")
 
     session.current_state = transition.state
@@ -417,6 +428,18 @@ def respond(
             )
         )
 
+    new_awards = evaluate_awards(
+        db,
+        student_id=session.student_id,
+        session_id=session.id,
+        active_skill_id=active_skill_id,
+        correct=bool(evidence.evaluation.correct),
+        engine_action=engine_action,
+        mastery_passed=passed_mastery_check,
+        review_passed=review_outcome == REVIEW_PASSED,
+        gap_fixed=gap_fixed,
+    )
+
     db.commit()
 
     _publish_adaptive_event(
@@ -486,4 +509,5 @@ def respond(
         ),
         focus=_focus(session),
         next_problem=_problem_out(next_problem),
+        new_awards=[AwardOut(**award_out(db, award)) for award in new_awards],
     )

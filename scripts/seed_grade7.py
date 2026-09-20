@@ -50,12 +50,19 @@ def _problem(
     answer: str,
     problem_type: str,
 ) -> None:
-    if db.scalar(
+    provenance = {
+        "origin": "AUTHORED",
+        "author": "AI Tutor curriculum team",
+        "license": "proprietary",
+        "source_uri": "https://www.montgomeryschoolsmd.org/curriculum/math/ms/",
+    }
+    existing = db.scalar(
         select(Problem).where(
             Problem.primary_skill_id == skill.id,
             Problem.prompt == prompt,
         )
-    ) is None:
+    )
+    if existing is None:
         db.add(
             Problem(
                 primary_skill_id=skill.id,
@@ -63,10 +70,12 @@ def _problem(
                 difficulty=difficulty,
                 prompt=prompt,
                 canonical_answer=answer,
-                solution={"answer": answer},
+                solution={"answer": answer, "provenance": provenance},
                 source_type="CURATED",
             )
         )
+    elif "provenance" not in (existing.solution or {}):
+        existing.solution = {**(existing.solution or {}), "provenance": provenance}
 
 
 def seed() -> None:

@@ -18,6 +18,7 @@ from app.services.intervention_evidence import (
     record_intervention_decision,
 )
 from app.services.intervention_policy import InterventionState
+from tests.fixtures import TEST_PROVENANCE
 
 
 def _problem(skill_id: uuid.UUID, suffix: str) -> Problem:
@@ -27,7 +28,7 @@ def _problem(skill_id: uuid.UUID, suffix: str) -> Problem:
         difficulty=2,
         prompt=f"F-010 deterministic evidence {suffix}",
         canonical_answer="0",
-        solution={"source": "integration-test"},
+        solution={"source": "integration-test", "provenance": TEST_PROVENANCE},
         source_type="CURATED",
     )
 

@@ -18,6 +18,7 @@ from app.models import (
     TutorState,
 )
 from tests.auth_helpers import authenticate_parent_for_student
+from tests.fixtures import TEST_PROVENANCE
 
 client = TestClient(app)
 
@@ -78,7 +79,7 @@ def _add_problem(prompt: str, answer: str, difficulty: int) -> str:
             difficulty=difficulty,
             prompt=prompt,
             canonical_answer=answer,
-            solution={"answer": answer},
+            solution={"answer": answer, "provenance": TEST_PROVENANCE},
             source_type="CURATED",
         )
         db.add(problem)

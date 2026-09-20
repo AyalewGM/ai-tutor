@@ -19,6 +19,7 @@ from app.models import (
 )
 from app.telemetry_models import TelemetryEventRecord
 from tests.auth_helpers import authenticate_parent_for_student
+from tests.fixtures import TEST_PROVENANCE
 
 client = TestClient(app)
 
@@ -65,7 +66,7 @@ def _setup_review_due() -> tuple[str, str, str, str]:
             difficulty=2,
             prompt="What is 1 + 1?",
             canonical_answer="2",
-            solution={"answer": "2"},
+            solution={"answer": "2", "provenance": TEST_PROVENANCE},
             source_type="CURATED",
         )
         db.add(problem)
@@ -220,7 +221,7 @@ def test_due_review_detours_before_new_skill_and_resumes() -> None:
             difficulty=1,
             prompt="What is 2 + 2?",
             canonical_answer="4",
-            solution={"answer": "4"},
+            solution={"answer": "4", "provenance": TEST_PROVENANCE},
             source_type="CURATED",
         )
         db.add(new_problem)

@@ -23,6 +23,7 @@ from app.services.problem_generation import (
     regenerate_variant,
 )
 from app.services.problem_selection import select_next_problem
+from tests.fixtures import TEST_PROVENANCE
 
 
 def test_all_generators_produce_evaluable_answers() -> None:
@@ -221,7 +222,7 @@ def test_regenerate_variant_rejects_curated_problem() -> None:
             difficulty=1,
             prompt="Solve 5x = 30.",
             canonical_answer="x=6",
-            solution={"answer": "x=6"},
+            solution={"answer": "x=6", "provenance": TEST_PROVENANCE},
             source_type="CURATED",
         )
         db.add(curated)
@@ -462,6 +463,7 @@ def test_content_readiness_reports_families_and_gate() -> None:
                 difficulty=1,
                 prompt="Only one family.",
                 canonical_answer="x",
+                solution={"answer": "x", "provenance": TEST_PROVENANCE},
             )
         )
         db.flush()
