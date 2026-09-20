@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from decimal import Decimal
 
 from sqlalchemy import select
@@ -75,6 +76,7 @@ def record_evidence(
         if assistance_level == 0:
             progress.independent_attempt_count += 1
             progress.independent_correct_count += 1
+            progress.last_independent_evidence_at = datetime.now(UTC)
         else:
             progress.hinted_correct_count += 1
     elif assistance_level == 0:

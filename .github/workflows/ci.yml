@@ -62,7 +62,7 @@ jobs:
         run: docker compose up -d --wait
 
       - name: Verify Tutor API health
-        run: curl --fail --retry 5 --retry-delay 2 http://localhost:8000/health
+        run: curl --fail --retry 5 --retry-delay 2 http://localhost:8002/health
 
       - name: Verify Gateway health from Tutor network
         run: docker compose exec -T tutor-api python -c "import urllib.request; urllib.request.urlopen('http://llm-gateway:8001/health')"

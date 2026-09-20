@@ -34,8 +34,14 @@ from app.services.hint_policy import assistance_level_for_hint, hint_constraint,
 from app.services.mastery_gate import evaluate_mastery_gate
 from app.services.mastery_gate_evidence import load_mastery_gate_evidence
 from app.services.problem_selection import select_next_problem
+from app.services.review_schedule import (
+    REVIEW_PASSED,
+    REVIEW_REASON,
+    apply_review_policy,
+    schedule_review,
+)
+from app.services.state_machine import Transition, determine_next_action
 from app.services.state_machine import TutorContext as StateContext
-from app.services.state_machine import determine_next_action
 from app.services.tutor_engine import tutor_engine
 from app.telemetry import TelemetryEnvelope, publish_telemetry_fail_open
 
@@ -222,15 +228,27 @@ def respond(
             )
         )
 
-    transition = apply_focus_policy(
-        db,
-        session=session,
-        progress=progress,
-        transition=transition,
-        correct=evidence.evaluation.correct,
-        assistance_level=effective_assistance_level,
-    )
+    review_outcome = None
+    if session.remediation_reason == REVIEW_REASON:
+        transition, review_outcome = apply_review_policy(
+            db,
+            session=session,
+            progress=progress,
+            transition=transition,
+            correct=evidence.evaluation.correct,
+            assistance_level=effective_assistance_level,
+        )
+    else:
+        transition = apply_focus_policy(
+            db,
+            session=session,
+            progress=progress,
+            transition=transition,
+            correct=evidence.evaluation.correct,
+            assistance_level=effective_assistance_level,
+        )
 
+    review_scheduled_payload: dict[str, object] | None = None
     if state_at_attempt == TutorState.MASTERY_CHECK:
         passed_mastery_check = (
             transition.action == "MARK_MASTERED"
@@ -258,6 +276,19 @@ def respond(
         if passed_mastery_check:
             progress.status = SkillStatus.MASTERED
             session.ending_mastery = progress.mastery_score
+            review_schedule = schedule_review(db, progress=progress)
+            review_scheduled_payload = {
+                "due_at": review_schedule.due_at.isoformat(),
+                "interval_index": review_schedule.interval_index,
+            }
+            if (
+                session.remediation_reason == REVIEW_REASON
+                and session.active_skill_id
+                and session.active_skill_id != session.primary_skill_id
+            ):
+                session.active_skill_id = session.primary_skill_id
+                session.remediation_reason = None
+                transition = Transition(TutorState.GUIDED_PRACTICE, "RESUME_TARGET")
 
     session.current_state = transition.state
 
@@ -381,6 +412,26 @@ def respond(
             "mastery_gate_eligible": gate_decision.eligible,
         },
     )
+    if review_outcome is not None:
+        _publish_adaptive_event(
+            event_type="review.outcome_recorded",
+            session=session,
+            curriculum_id=scope.curriculum_id,
+            skill_id=active_skill_id,
+            payload={
+                "passed": review_outcome == REVIEW_PASSED,
+                "correct": evidence.evaluation.correct,
+                "assistance_level": effective_assistance_level,
+            },
+        )
+    if review_scheduled_payload is not None:
+        _publish_adaptive_event(
+            event_type="review.scheduled",
+            session=session,
+            curriculum_id=scope.curriculum_id,
+            skill_id=active_skill_id,
+            payload=review_scheduled_payload,
+        )
     _publish_adaptive_event(
         event_type="model.generation_completed",
         session=session,

@@ -111,6 +111,10 @@ def fallback_message(context: TutorContext) -> str:
         return "Let us model the distribution step explicitly, then you can finish the problem."
     if context.action == "REMEDIATE":
         return "This same pattern has appeared more than once. Let us return to the distributive property before continuing."
+    if context.action == "START_REVIEW":
+        return "Before we learn something new, let us check whether an earlier skill is still strong. Try this problem on your own."
+    if context.action == "RESUME_TARGET":
+        return "That review is solid. Let us return to what we were learning."
     if context.action == "START_MASTERY_CHECK":
         return "Now solve the next problem independently without hints so we can check mastery."
     if context.action == "MARK_MASTERED":
