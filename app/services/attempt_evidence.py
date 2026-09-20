@@ -27,6 +27,7 @@ def record_evidence(
     answer: str,
     canonical_answer: str,
     assistance_level: int,
+    problem_difficulty: int | None = None,
 ) -> EvidenceResult:
     previous_score = progress.mastery_score
     previous_confidence = progress.confidence_score
@@ -69,6 +70,8 @@ def record_evidence(
         progress.attempt_count,
         evaluation.correct,
         assistance_level,
+        problem_difficulty=problem_difficulty,
+        learner_level=progress.current_difficulty,
     )
     progress.attempt_count += 1
     if evaluation.correct:

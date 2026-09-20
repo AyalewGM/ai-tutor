@@ -25,14 +25,39 @@ def attempt_evidence(correct: bool, assistance_level: int) -> float:
     return ASSISTANCE_WEIGHTS[assistance_level]
 
 
+def _difficulty_scaled_alpha(
+    alpha: float,
+    problem_difficulty: int,
+    learner_level: int,
+    correct: bool,
+) -> float:
+    """Scale the learning rate by difficulty surprise.
+
+    Correct answers above level are stronger positive evidence; wrong answers
+    below level are stronger negative evidence. The gap flips sign on failure
+    so that missing an easy problem is more diagnostic than missing a hard one.
+    """
+    gap = max(-3, min(3, problem_difficulty - learner_level))
+    if not correct:
+        gap = -gap
+    return max(0.05, min(0.60, alpha * (1 + 0.15 * gap)))
+
+
 def update_mastery(
     current_mastery: float,
     meaningful_attempts: int,
     correct: bool,
     assistance_level: int,
     alpha: float = 0.25,
+    *,
+    problem_difficulty: int | None = None,
+    learner_level: int | None = None,
 ) -> MasteryUpdate:
     evidence = attempt_evidence(correct, assistance_level)
+    if problem_difficulty is not None and learner_level is not None:
+        alpha = _difficulty_scaled_alpha(
+            alpha, problem_difficulty, learner_level, correct
+        )
     mastery = ((1 - alpha) * current_mastery) + (alpha * evidence)
     confidence = 1 - math.exp(-(meaningful_attempts + 1) / 5)
     return MasteryUpdate(

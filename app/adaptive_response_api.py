@@ -113,6 +113,7 @@ def respond(
         answer=payload.answer,
         canonical_answer=problem.canonical_answer or "",
         assistance_level=effective_assistance_level,
+        problem_difficulty=problem.difficulty,
     )
 
     prior_attempt_count = db.scalar(
@@ -178,6 +179,7 @@ def respond(
             mastery_gate_eligible=gate_decision.eligible,
         )
     )
+    engine_action = transition.action
 
     db.add(
         MasteryEvent(
@@ -291,6 +293,10 @@ def respond(
                 transition = Transition(TutorState.GUIDED_PRACTICE, "RESUME_TARGET")
 
     session.current_state = transition.state
+    if engine_action == "INCREASE_DIFFICULTY":
+        progress.current_difficulty = min(10, progress.current_difficulty + 1)
+    elif engine_action == "REMEDIATE":
+        progress.current_difficulty = max(1, progress.current_difficulty - 1)
 
     jit_decision = select_hint(
         state=state_at_attempt,

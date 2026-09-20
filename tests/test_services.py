@@ -30,6 +30,27 @@ def test_mastery_uses_recent_evidence() -> None:
     assert 0 < update.confidence < 1
 
 
+def test_mastery_moves_more_on_above_level_evidence() -> None:
+    easy = update_mastery(
+        0.60, 4, True, 0, problem_difficulty=1, learner_level=5
+    )
+    baseline = update_mastery(0.60, 4, True, 0)
+    hard = update_mastery(
+        0.60, 4, True, 0, problem_difficulty=5, learner_level=1
+    )
+    assert hard.mastery > baseline.mastery > easy.mastery
+
+
+def test_mastery_drops_more_on_easy_failure() -> None:
+    easy_fail = update_mastery(
+        0.60, 4, False, 0, problem_difficulty=1, learner_level=5
+    )
+    hard_fail = update_mastery(
+        0.60, 4, False, 0, problem_difficulty=5, learner_level=1
+    )
+    assert easy_fail.mastery < hard_fail.mastery
+
+
 def test_guided_practice_gives_hint_after_wrong_answer() -> None:
     transition = determine_next_action(
         TutorContext(
