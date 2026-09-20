@@ -3,8 +3,10 @@ from google.genai import types
 from openai import OpenAI
 
 from app.core.settings import settings
+from app.services import problem_contextualizer
 from app.services.llm_adapters import GeminiAdapter, OpenAIAdapter
 from app.services.llm_gateway_adapter import LLMGatewayAdapter
+from app.services.problem_contextualizer import GatewayContextualizer
 from app.services.tutor_engine import tutor_engine
 
 
@@ -13,10 +15,15 @@ def configure_tutor_engine() -> None:
 
     if provider in {"", "fallback", "none"}:
         tutor_engine.provider = None
+        problem_contextualizer.contextualizer = None
         return
 
     if provider == "gateway":
         tutor_engine.provider = LLMGatewayAdapter(
+            settings.llm_gateway_url,
+            settings.ai_timeout_seconds,
+        )
+        problem_contextualizer.contextualizer = GatewayContextualizer(
             settings.llm_gateway_url,
             settings.ai_timeout_seconds,
         )

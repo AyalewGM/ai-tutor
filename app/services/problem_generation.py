@@ -10,12 +10,19 @@ from sqlalchemy.orm import Session
 from app.models import Problem
 
 
+def _module_contextualizer():
+    from app.services import problem_contextualizer
+
+    return problem_contextualizer.contextualizer
+
+
 @dataclass(frozen=True)
 class GeneratedProblem:
     prompt: str
     canonical_answer: str
     difficulty: int
     problem_type: str
+    context: dict | None = None
 
 
 def _fmt_term(coefficient: int, variable: str) -> str:
@@ -116,6 +123,10 @@ def _generate_word_problem(rng: random.Random, difficulty: int) -> GeneratedProb
         amount = rng.choice([40, 60, 80, 100, 120, 200])
         prompt = f"What is {percent}% of {amount}?"
         answer = str(percent * amount // 100)
+        context = {
+            "template": "percent_of",
+            "parameters": {"percent": percent, "amount": amount},
+        }
     else:
         total = rng.choice([60, 90, 120, 150, 240, 300])
         hours = rng.choice([2, 3, 4, 5, 6])
@@ -124,7 +135,11 @@ def _generate_word_problem(rng: random.Random, difficulty: int) -> GeneratedProb
             "What is the unit rate in miles per hour?"
         )
         answer = str(total // hours) if total % hours == 0 else f"{total}/{hours}"
-    return GeneratedProblem(prompt, answer, difficulty, "WORD_PROBLEM")
+        context = {
+            "template": "unit_rate",
+            "parameters": {"distance": total, "hours": hours},
+        }
+    return GeneratedProblem(prompt, answer, difficulty, "WORD_PROBLEM", context=context)
 
 
 def _generate_arithmetic(rng: random.Random, difficulty: int) -> GeneratedProblem:
@@ -138,11 +153,19 @@ def _generate_arithmetic(rng: random.Random, difficulty: int) -> GeneratedProble
     )
 
 
+def _generate_linear_relation(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    generated = _generate_linear_function(rng, difficulty)
+    return GeneratedProblem(
+        generated.prompt, generated.canonical_answer, difficulty, "LINEAR_RELATION"
+    )
+
+
 GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "ARITHMETIC": _generate_arithmetic,
     "SIMPLIFY_EXPRESSION": _generate_simplify_expression,
     "SOLVE_EQUATION": _generate_solve_equation,
     "LINEAR_FUNCTION": _generate_linear_function,
+    "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "FRACTION_OPERATIONS": _generate_fraction_add,
     "WORD_PROBLEM": _generate_word_problem,
@@ -154,15 +177,19 @@ def generate_problem(
     *,
     skill_id: uuid.UUID,
     difficulty: int,
+    problem_type: str | None = None,
     rng: random.Random | None = None,
 ) -> Problem | None:
     rng = rng or random.Random()
-    available = db.scalars(
-        select(Problem.problem_type)
-        .where(Problem.primary_skill_id == skill_id)
-        .distinct()
-    ).all()
-    supported = [t for t in available if t in GENERATORS]
+    if problem_type is not None:
+        supported = [problem_type] if problem_type in GENERATORS else []
+    else:
+        available = db.scalars(
+            select(Problem.problem_type)
+            .where(Problem.primary_skill_id == skill_id)
+            .distinct()
+        ).all()
+        supported = [t for t in available if t in GENERATORS]
     if not supported:
         return None
     existing_prompts = {
@@ -179,15 +206,51 @@ def generate_problem(
             break
     if generated is None:
         return None
+    prompt = generated.prompt
+    contextualizer = _module_contextualizer()
+    if generated.context is not None and contextualizer is not None:
+        narrative = contextualizer.contextualize(
+            template=generated.context["template"],
+            parameters=generated.context["parameters"],
+            canonical_answer=generated.canonical_answer,
+        )
+        if narrative:
+            prompt = narrative
     problem = Problem(
         primary_skill_id=skill_id,
         problem_type=generated.problem_type,
         difficulty=generated.difficulty,
-        prompt=generated.prompt,
+        prompt=prompt,
         canonical_answer=generated.canonical_answer,
-        solution={"generated": True},
+        solution={
+            "generated": True,
+            "generator": generated.problem_type,
+            "difficulty": difficulty,
+        },
         source_type="GENERATED",
     )
     db.add(problem)
     db.flush()
     return problem
+
+
+def regenerate_variant(
+    db: Session,
+    *,
+    source_problem: Problem,
+    rng: random.Random | None = None,
+) -> Problem | None:
+    """Re-serve a missed generated problem with fresh parameters (same template,
+    same difficulty, different numbers). Returns None for curated problems or
+    unsupported templates."""
+    metadata = source_problem.solution or {}
+    generator = metadata.get("generator")
+    if source_problem.source_type != "GENERATED" or generator not in GENERATORS:
+        return None
+    return generate_problem(
+        db,
+        skill_id=source_problem.primary_skill_id,
+        difficulty=int(metadata.get("difficulty") or source_problem.difficulty),
+        problem_type=generator,
+        rng=rng,
+    )

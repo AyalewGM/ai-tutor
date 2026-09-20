@@ -115,3 +115,61 @@ def test_mth1w_prerequisite_guard_rejects_cross_curriculum_edge():
     finally:
         db.rollback()
         db.close()
+
+
+def test_mth1w_fine_grained_subskills_and_chains():
+    _seed_curricula()
+
+    db = SessionLocal()
+    try:
+        ontario = db.scalar(select(Curriculum).where(Curriculum.code == CURRICULUM_CODE))
+        skills = {
+            skill.code: skill
+            for skill in db.scalars(
+                select(Skill).where(Skill.curriculum_id == ontario.id)
+            )
+        }
+        subskills = {
+            "MTH1W.B.NUM.INT", "MTH1W.B.NUM.FRAC",
+            "MTH1W.C.ALG.EXPR", "MTH1W.C.ALG.EQ1", "MTH1W.C.ALG.EQ2",
+            "MTH1W.C.REL.SLOPE", "MTH1W.C.REL.EVAL",
+            "MTH1W.F.FIN.PCT", "MTH1W.F.FIN.APP",
+        }
+        assert subskills <= skills.keys()
+
+        edges = set(
+            db.execute(
+                select(
+                    SkillPrerequisite.skill_id, SkillPrerequisite.prerequisite_skill_id
+                )
+            ).all()
+        )
+
+        def edge(child: str, parent: str) -> bool:
+            return (skills[child].id, skills[parent].id) in edges
+
+        # Each strand anchor gates its chain head; chains descend atomically.
+        assert edge("MTH1W.B.NUM.INT", "MTH1W.B.NUM")
+        assert edge("MTH1W.B.NUM.FRAC", "MTH1W.B.NUM.INT")
+        assert edge("MTH1W.C.ALG.EXPR", "MTH1W.C.ALG")
+        assert edge("MTH1W.C.ALG.EQ1", "MTH1W.C.ALG.EXPR")
+        assert edge("MTH1W.C.ALG.EQ2", "MTH1W.C.ALG.EQ1")
+        assert edge("MTH1W.C.REL.SLOPE", "MTH1W.C.REL")
+        assert edge("MTH1W.C.REL.SLOPE", "MTH1W.C.ALG.EQ2")
+        assert edge("MTH1W.C.REL.EVAL", "MTH1W.C.REL.SLOPE")
+        assert edge("MTH1W.F.FIN.PCT", "MTH1W.F.FIN")
+        assert edge("MTH1W.F.FIN.APP", "MTH1W.F.FIN.PCT")
+
+        # Every subskill has at least one curated problem of a generated-capable type.
+        for code in subskills:
+            types = {
+                row[0]
+                for row in db.execute(
+                    select(Problem.problem_type).where(
+                        Problem.primary_skill_id == skills[code].id
+                    )
+                )
+            }
+            assert types, code
+    finally:
+        db.close()

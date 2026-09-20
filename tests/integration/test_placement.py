@@ -21,7 +21,8 @@ from app.services.placement import (
 
 
 def _student() -> tuple[uuid.UUID, uuid.UUID, dict[str, uuid.UUID]]:
-    """MCPS_MATH_8 graph: INVERSE(1) <- TWO_STEP(3) <- MULTI_STEP(4) <- DIST(2)."""
+    """MCPS_MATH_8 graph: anchors INVERSE(1), DIST(2), TWO_STEP(3), MULTI_STEP(4)
+    with fine-grained subskills chained beneath each anchor."""
     with SessionLocal() as db:
         curriculum = db.scalar(
             select(Curriculum).where(Curriculum.code == "MCPS_MATH_8")
@@ -110,7 +111,9 @@ def test_mastered_skills_advance_placement() -> None:
     )
     recommendation = _recommend(student_id, curriculum_id)
     assert recommendation is not None
-    assert recommendation.skill.id == skills["M8.ALG.DIST"]
+    # Mastering an anchor unlocks its fine-grained subskills, so placement
+    # proceeds into the anchor's chain before moving to the next strand.
+    assert recommendation.skill.id == skills["M8.ALG.INVERSE.ADD"]
     assert recommendation.reason == READY_TO_START
 
 

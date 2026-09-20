@@ -52,6 +52,18 @@ Read-only `reviews_due` projection surfaces due/relearning skills with projected
 ### F-018 Learner Workspace Visual Polish — DONE
 Sticky navbar with sign-out, state stepper (Diagnose→Guided→Independent→Mastery→Complete), two-column layout, chat-style coach bubble, SVG mastery ring, correct/wrong problem feedback animations, completion hero, and review-due/next-skill surfaces.
 
+### F-021 MTH1W Fine-Grained Skill Graph — DONE (doc-side; corresponds to GitHub Issue #45)
+Nine atomic subskills under the four MTH1W strand anchors with prerequisite chains: B.NUM→INT→FRAC, C.ALG→EXPR→EQ1→EQ2, C.REL→SLOPE(+EQ2)→EVAL, F.FIN→PCT(+FRAC)→APP. Each subskill carries curated problems typed to a registered generator, strand-mapped misconceptions, and expectation-pack mappings. Anchor skills, edges, and problem counts preserved.
+
+### F-022 Missed-Template Re-serving — DONE (implemented inside F-021 scope)
+Generated problems persist `{generator, difficulty}` in their `solution` metadata; `regenerate_variant` produces a fresh-parameters variant of the same template and difficulty. `adaptive_response_api` re-serves a variant on incorrect answers to GENERATED problems (same skill), with fallback to normal selection for curated items.
+
+### F-023 LLM Word-Problem Contextualization — DONE
+Code samples parameters and computes the canonical answer; the LLM writes only the narrative skin. New gateway endpoint `POST /v1/contextualize` (strict JSON schema, app-computed context) plus `GatewayContextualizer` adapter that rejects narratives missing any parameter number verbatim — the model can never make a problem wrong, only plain. Wired through `configure_tutor_engine` when `AI_PROVIDER=gateway`; deterministic prompt otherwise. Also fixed google-genai shared-httpx-client lifecycle (module-level cached client) — Gemini provider verified live for both `/v1/render` coaching and `/v1/contextualize`.
+
+### F-024 Fine-Grained Subskills for Remaining Curricula — DONE
+Applied the F-021 atomic-subskill pattern to all three remaining curricula. MCPS_MATH_8: 5 subskills (INVERSE.ADD→MULT, DIST.POS→NEG, MULTI_STEP.COMBINE). MCPS_MATH_7: 6 subskills (PROP.RATE, PERCENT.OF, EXPR.DIST→COMBINE, EQUATION.ONE→TWO). MCPS_ALGEBRA_1_2026_27: 6 subskills (EXPR.DIST→COMBINE, EQ.ONE→TWO, FN.SLOPE→EVAL). All chained beneath their strand anchors via prerequisites, with curated problems typed to registered generators and strand-specific misconception rows. Exact-count tests updated (10 skills/8 edges/21 problems in each of G7 and A1); placement expectations updated to reflect that mastering an anchor now unlocks its subskill chain before the next strand. Dev DB reseeded and verified idempotent.
+
 ## P2 — Content intake and richer math interaction (remaining)
 
 ### F-008 Worksheet / Photo Problem Intake — NOT IMPLEMENTED
@@ -59,9 +71,6 @@ Accept a worksheet or problem image, extract the problem, map it to a curriculum
 
 ### F-019 React Learner Frontend — NOT IMPLEMENTED
 Port the learner workspace (then entry/login, then parent dashboard) to the stub `frontend/` service: Vite + React + TypeScript consuming the existing JSON APIs. Unlocks a real coach message thread, animated problem transitions, math-keypad input, and interactive rendering (prerequisite for F-009). Server-rendered pages remain as fallback.
-
-### F-020 Missed-Template Re-serving — NOT IMPLEMENTED
-Store generator parameters on generated problems so a missed item is re-served later with fresh parameters (IXL pattern) rather than relying on pool exhaustion.
 
 ### F-009 Mathematical Visualization — NOT IMPLEMENTED
 Introduce graphs/visual representations where they materially improve conceptual understanding, especially linear functions and coordinate relationships. Likely requires a backend render spec on problems plus frontend rendering.
@@ -106,7 +115,7 @@ Introduce graphs/visual representations where they materially improve conceptual
 | #41 | F-019: MD/DC/VA Grades 6–7 & High-School-Entry Math Expansion | OPEN — curriculum expansion |
 | #42 | F-020: Dynamic Math Visualization & Instructional Animation Engine | OPEN — planned backlog |
 | #43 | Fix MTH1W canonical curriculum seeding and learner skill discovery | CLOSED |
-| #45 | F-021: MTH1W fine-grained skill graph and adaptive problem variation | OPEN — active engineering |
+| #45 | F-021: MTH1W fine-grained skill graph and adaptive problem variation | OPEN — fine-grained graph + missed-template re-serving landed in repo (doc F-021/F-022); pattern extended to MCPS G7/G8/Algebra 1 (doc F-024); verify remaining issue scope before closing |
 | #46 | F-022: Goozam-family UI/UX redesign for learner and parent experience | OPEN — parallel UI/UX |
 
 ### Current execution order

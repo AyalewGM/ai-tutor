@@ -130,6 +130,51 @@ def seed() -> None:
         _prerequisite(db, percent, proportional)
         _prerequisite(db, equations, expressions)
 
+        # Fine-grained subskills gated by their strand anchors.
+        prop_rate = _skill(
+            db, curriculum, "M7.RP.PROP.RATE",
+            "Unit Rates",
+            "Compute a unit rate from a proportional relationship.",
+            1,
+        )
+        pct_of = _skill(
+            db, curriculum, "M7.RP.PERCENT.OF",
+            "Percent of a Quantity",
+            "Find a percent of a number using decimal conversion.",
+            2,
+        )
+        expr_dist = _skill(
+            db, curriculum, "M7.EE.EXPR.DIST",
+            "Distribution in Expressions",
+            "Apply the distributive property to expand expressions.",
+            2,
+        )
+        expr_combine = _skill(
+            db, curriculum, "M7.EE.EXPR.COMBINE",
+            "Combining Like Terms",
+            "Combine like terms to write equivalent simplified expressions.",
+            2,
+        )
+        eq_one = _skill(
+            db, curriculum, "M7.EE.EQUATION.ONE",
+            "One-Step Equations",
+            "Solve x + a = b and ax = b using a single inverse operation.",
+            3,
+        )
+        eq_two = _skill(
+            db, curriculum, "M7.EE.EQUATION.TWO",
+            "Two-Step Equations",
+            "Solve ax + b = c by undoing operations in reverse order.",
+            3,
+        )
+
+        _prerequisite(db, prop_rate, proportional)
+        _prerequisite(db, pct_of, percent)
+        _prerequisite(db, expr_dist, expressions)
+        _prerequisite(db, expr_combine, expr_dist)
+        _prerequisite(db, eq_one, equations)
+        _prerequisite(db, eq_two, eq_one)
+
         def _misconception(skill, code, name, description, strategy):
             if db.scalar(
                 select(Misconception).where(
@@ -192,6 +237,51 @@ def seed() -> None:
             "Undo multiplication with division: divide both sides by the "
             "coefficient of the variable.",
         )
+        _misconception(
+            pct_of,
+            "FIN_001",
+            "Percent treated as a whole-number amount",
+            "The learner uses the percent as a dollar amount or forgets to "
+            "divide by 100.",
+            "Convert the percent to a decimal by dividing by 100 before "
+            "multiplying by the amount.",
+        )
+        _misconception(
+            expr_dist,
+            "DIST_001",
+            "Partial distribution",
+            "The learner multiplies the outside factor by only one term "
+            "inside parentheses.",
+            "Represent the outside factor as multiplying each term separately "
+            "before simplifying.",
+        )
+        _misconception(
+            expr_combine,
+            "ALG_001",
+            "Unlike terms combined",
+            "The learner merges constants into the variable term instead of "
+            "combining like terms separately.",
+            "Group variable terms with variable terms and constants with "
+            "constants before simplifying.",
+        )
+        _misconception(
+            eq_one,
+            "EQ_003",
+            "Multiplies instead of dividing",
+            "The learner multiplies both sides by the coefficient instead of "
+            "dividing to isolate the variable.",
+            "Undo multiplication with division: divide both sides by the "
+            "coefficient of the variable.",
+        )
+        _misconception(
+            eq_two,
+            "EQ_002",
+            "Skipped or missequenced inverse step",
+            "The learner undoes one operation but skips or reorders the other "
+            "inverse step, such as forgetting to divide by the coefficient.",
+            "Undo operations in reverse order: remove the added constant first, "
+            "then divide by the coefficient.",
+        )
 
         problems = [
             (
@@ -227,6 +317,18 @@ def seed() -> None:
             (equations, 1, "Solve 4x = 20", "x=5", "SOLVE_EQUATION"),
             (equations, 2, "x + 7 = 19", "x=12", "SOLVE_EQUATION"),
             (equations, 3, "3x - 4 = 17", "x=7", "SOLVE_EQUATION"),
+            (prop_rate, 1, "A car travels 120 miles in 2 hours at a constant rate. What is the unit rate?", "60", "WORD_PROBLEM"),
+            (prop_rate, 2, "A recipe uses 4 cups of flour for 2 batches. How many cups for 5 batches?", "10", "WORD_PROBLEM"),
+            (pct_of, 1, "What is 15% of 80?", "12", "WORD_PROBLEM"),
+            (pct_of, 2, "What is 35% of 200?", "70", "WORD_PROBLEM"),
+            (expr_dist, 1, "Simplify 4(x + 5).", "4x+20", "SIMPLIFY_EXPRESSION"),
+            (expr_dist, 2, "Simplify 6(x - 2).", "6x-12", "SIMPLIFY_EXPRESSION"),
+            (expr_combine, 2, "Simplify 3x + 4 + 2x - 1.", "5x+3", "SIMPLIFY_EXPRESSION"),
+            (expr_combine, 3, "Simplify 7x - 3 - 4x + 6.", "3x+3", "SIMPLIFY_EXPRESSION"),
+            (eq_one, 1, "Solve x + 8 = 17.", "x=9", "SOLVE_EQUATION"),
+            (eq_one, 1, "Solve 5x = 35.", "x=7", "SOLVE_EQUATION"),
+            (eq_two, 2, "Solve 2x + 6 = 18.", "x=6", "SOLVE_EQUATION"),
+            (eq_two, 3, "Solve 4x - 3 = 25.", "x=7", "SOLVE_EQUATION"),
         ]
         for skill, difficulty, prompt, answer, problem_type in problems:
             _problem(db, skill, difficulty, prompt, answer, problem_type)

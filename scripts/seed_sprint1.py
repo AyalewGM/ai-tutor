@@ -146,6 +146,45 @@ def seed() -> None:
         _prerequisite(db, multi_step, distributive, "1.000")
         _prerequisite(db, multi_step, two_step, "0.900")
 
+        # Fine-grained subskills: anchor skills gate each chain head so
+        # placement/remediation can descend to the atomic blocker.
+        inv_add = _skill(
+            db, curriculum, "M8.ALG.INVERSE.ADD",
+            "One-Step Add/Subtract Equations",
+            "Solve x + a = b and x - a = b by undoing addition or subtraction.",
+            1,
+        )
+        inv_mult = _skill(
+            db, curriculum, "M8.ALG.INVERSE.MULT",
+            "One-Step Multiply/Divide Equations",
+            "Solve ax = b by undoing multiplication or division.",
+            1,
+        )
+        dist_pos = _skill(
+            db, curriculum, "M8.ALG.DIST.POS",
+            "Distribution with Positive Factors",
+            "Distribute a positive multiplier across a sum inside parentheses.",
+            2,
+        )
+        dist_neg = _skill(
+            db, curriculum, "M8.ALG.DIST.NEG",
+            "Distribution with Signed Factors",
+            "Distribute negative multipliers and subtraction inside parentheses.",
+            3,
+        )
+        combine_eq = _skill(
+            db, curriculum, "M8.ALG.MULTI_STEP.COMBINE",
+            "Combining Like Terms in Equations",
+            "Simplify each side by combining like terms before isolating the variable.",
+            4,
+        )
+
+        _prerequisite(db, inv_add, inverse)
+        _prerequisite(db, inv_mult, inv_add)
+        _prerequisite(db, dist_pos, distributive)
+        _prerequisite(db, dist_neg, dist_pos)
+        _prerequisite(db, combine_eq, multi_step)
+
         def _misconception(
             skill: Skill, code: str, name: str, description: str, strategy: str
         ) -> None:
@@ -211,6 +250,51 @@ def seed() -> None:
             "Undo operations in reverse order: remove the added constant first, "
             "then divide by the coefficient.",
         )
+        _misconception(
+            inv_add,
+            "EQ_001",
+            "Inverse operation in wrong direction",
+            "The learner applies the inverse operation in the wrong direction, "
+            "for example adding the constant instead of subtracting it.",
+            "Identify the operation applied to the variable and undo it with "
+            "the opposite operation on both sides.",
+        )
+        _misconception(
+            inv_mult,
+            "EQ_003",
+            "Multiplies instead of dividing",
+            "The learner multiplies both sides by the coefficient instead of "
+            "dividing to isolate the variable.",
+            "Undo multiplication with division: divide both sides by the "
+            "coefficient of the variable.",
+        )
+        _misconception(
+            dist_pos,
+            "DIST_001",
+            "Partial distribution",
+            "The learner multiplies the outside factor by only one term "
+            "inside parentheses.",
+            "Represent the outside factor as multiplying each term separately "
+            "before simplifying.",
+        )
+        _misconception(
+            dist_neg,
+            "DIST_002",
+            "Distribution sign error",
+            "The learner distributes the factor but flips the sign of the "
+            "constant term.",
+            "Rewrite the product as a signed multiplication for each term, "
+            "tracking the sign of both factors before simplifying.",
+        )
+        _misconception(
+            combine_eq,
+            "ALG_001",
+            "Unlike terms combined",
+            "The learner merges constants into the variable term instead of "
+            "combining like terms separately.",
+            "Group variable terms with variable terms and constants with "
+            "constants before simplifying.",
+        )
 
         for difficulty, prompt, answer in [
             (1, "3(x+4)", "3x+12"),
@@ -266,6 +350,27 @@ def seed() -> None:
                 prompt=prompt,
                 answer=answer,
                 problem_type="SOLVE_EQUATION",
+            )
+
+        for skill, difficulty, prompt, answer, problem_type in [
+            (inv_add, 1, "Solve x + 7 = 15.", "x=8", "SOLVE_EQUATION"),
+            (inv_add, 1, "Solve x - 4 = 9.", "x=13", "SOLVE_EQUATION"),
+            (inv_mult, 1, "Solve 6x = 42.", "x=7", "SOLVE_EQUATION"),
+            (inv_mult, 1, "Solve 8x = 56.", "x=7", "SOLVE_EQUATION"),
+            (dist_pos, 1, "Simplify 2(x + 6).", "2x+12", "SIMPLIFY_EXPRESSION"),
+            (dist_pos, 2, "Simplify 5(x + 3).", "5x+15", "SIMPLIFY_EXPRESSION"),
+            (dist_neg, 2, "Simplify -3(x + 4).", "-3x-12", "SIMPLIFY_EXPRESSION"),
+            (dist_neg, 3, "Simplify -2(x - 5).", "-2x+10", "SIMPLIFY_EXPRESSION"),
+            (combine_eq, 3, "Solve 3x + 2x = 20.", "x=4", "SOLVE_EQUATION"),
+            (combine_eq, 4, "Solve 4x + 3x - 5 = 16.", "x=3", "SOLVE_EQUATION"),
+        ]:
+            _problem(
+                db,
+                skill=skill,
+                difficulty=difficulty,
+                prompt=prompt,
+                answer=answer,
+                problem_type=problem_type,
             )
 
         db.commit()

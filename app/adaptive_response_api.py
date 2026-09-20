@@ -33,6 +33,7 @@ from app.services.focus_controller import apply_focus_policy
 from app.services.hint_policy import assistance_level_for_hint, hint_constraint, select_hint
 from app.services.mastery_gate import evaluate_mastery_gate
 from app.services.mastery_gate_evidence import load_mastery_gate_evidence
+from app.services.problem_generation import regenerate_variant
 from app.services.problem_selection import select_next_problem
 from app.services.review_schedule import (
     REVIEW_PASSED,
@@ -327,15 +328,22 @@ def respond(
         tutor_skill = skill
         generation_state = transition.state
     else:
-        next_problem = select_next_problem(
-            db,
-            skill_id=next_skill_id,
-            current_problem_id=problem.id if problem.primary_skill_id == next_skill_id else None,
-            current_difficulty=next_progress.current_difficulty,
-            state=transition.state,
-            correct=evidence.evaluation.correct,
-            session_id=session.id,
-        )
+        next_problem = None
+        if (
+            evidence.evaluation.correct is False
+            and problem.primary_skill_id == next_skill_id
+        ):
+            next_problem = regenerate_variant(db, source_problem=problem)
+        if next_problem is None:
+            next_problem = select_next_problem(
+                db,
+                skill_id=next_skill_id,
+                current_problem_id=problem.id if problem.primary_skill_id == next_skill_id else None,
+                current_difficulty=next_progress.current_difficulty,
+                state=transition.state,
+                correct=evidence.evaluation.correct,
+                session_id=session.id,
+            )
         tutor_action = transition.action
         tutor_hint_level = transition.hint_level
         tutor_skill = next_skill

@@ -25,6 +25,12 @@ def test_grade7_seed_is_idempotent_and_curriculum_local():
             "M7.RP.PERCENT",
             "M7.EE.EXPR",
             "M7.EE.EQUATION",
+            "M7.RP.PROP.RATE",
+            "M7.RP.PERCENT.OF",
+            "M7.EE.EXPR.DIST",
+            "M7.EE.EXPR.COMBINE",
+            "M7.EE.EQUATION.ONE",
+            "M7.EE.EQUATION.TWO",
         }
         skill_ids = {skill.id for skill in grade7_skills}
 
@@ -33,11 +39,11 @@ def test_grade7_seed_is_idempotent_and_curriculum_local():
                 select(SkillPrerequisite).where(SkillPrerequisite.skill_id.in_(skill_ids))
             )
         )
-        assert len(edges) == 2
+        assert len(edges) == 8
         assert all(edge.prerequisite_skill_id in skill_ids for edge in edges)
 
         problems = list(db.scalars(select(Problem).where(Problem.primary_skill_id.in_(skill_ids))))
-        assert len(problems) == 9
+        assert len(problems) == 21
         assert all(problem.primary_skill_id in skill_ids for problem in problems)
 
         grade8_skill_ids = set(
