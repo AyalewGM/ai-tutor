@@ -1,128 +1,124 @@
-# Product Backlog
+# AI Tutor — Master Product Backlog
 
-Prioritization considers learning impact, evidence from product research, MVP fit, dependency readiness, and implementation cost.
+This file is the **master coordination document** for Ayalew, Devin, ChatGPT/autopilot, and other contributors.
 
-## Implemented
+GitHub Issues hold detailed requirements/research and Pull Requests hold implementation evidence, but this file owns the high-level product status and execution order. Before starting work, read this file first, then inspect the linked issue/PR and current `main`.
 
-### F-001 Prerequisite-Aware Adaptive Linear Equations — DONE
-Expand the current distributive-property vertical slice into a small MCPS Grade 8 linear-equation skill/prerequisite graph. Detect prerequisite gaps, enter targeted remediation, verify independent understanding, and resume the original goal.
+## Status model
 
-### F-002 Diagnostic Placement and Readiness — DONE
-Use a short adaptive diagnostic to estimate starting mastery and choose the appropriate entry skill/difficulty rather than beginning every learner at the same place.
+`PLANNED → RESEARCHING → READY → IN PROGRESS → PR/QA → DONE`
 
-### F-003 Graduated Hint Ladder and Productive Struggle — DONE
-Standardize hint levels across skills and ensure the tutor asks focused questions before revealing worked steps. Track assistance as learning evidence.
+`BLOCKED` may be applied at any stage. `DONE` requires the applicable checks in `docs/qa/DEFINITION_OF_DONE.md`; a merged PR or green CI alone is not sufficient.
 
-### F-004 Independent Mastery Gate — DONE
-Separate assisted success from mastery. Require independent problems and a short mastery check before marking a skill mastered.
+## Current execution
 
-### F-005 Student Tutor Workspace — DONE
-Create the first usable React/Next.js learner interface for session start, problem display, typed responses, tutor messages, hint requests, and progress state.
+| Priority | Work item | GitHub | Status | Current evidence / next gate |
+|---|---|---|---|---|
+| P0 | F-021 MTH1W fine-grained skill graph and adaptive problem variation | Issue #45 / merged PR #50 | **IN PROGRESS** | PR #50 merged (`107f50f9`) and deterministic generators are on `main`. 2026-09-20 architecture review verified the next gap: add stable problem-family/representation/parameter identity, family-aware recent-equivalence, fine-grained MTH1W skill/provenance + >=2 materially different families for the first Number Sense skill, content-readiness gating, prerequisite-return and cross-jurisdiction negative tests. Active branch `feature/f-021-mth1w-adaptive-content` was fast-forwarded to current `main` so new work does not duplicate stale code. Branch `adaptive_response` has since landed MTH1W fine-grained subskills, missed-template re-serving, LLM contextualization, and subskill expansion to MCPS G7/G8/Algebra 1 (ledger F-021–F-024). Issue #45 gaps remain: stable problem-family/parameter identity, family-aware recent-equivalence, content-readiness gating. DoD/QA/PO/PM acceptance still required. |
+| P1 parallel | F-022 Goozam-family learner/parent UI/UX | Issue #46 | **IN PROGRESS — PARTIAL** | PR #50 also merged substantial learner/login visual work. Do not mark done until F-022 accessibility, responsive behavior, parent/learner flows, reusable design system and browser regressions satisfy its acceptance criteria. |
+| P2 | F-019 MD/DC/VA Grades 6–7 & high-school-entry expansion | Issue #41 | **RESEARCHING / CONTENT BACKLOG** | Authoritative-source and pathway research exists. Curriculum packs still require mapping, original content, ingestion/readiness and isolation acceptance. |
+| P2 | F-020 Dynamic Math Visualization & Instructional Animation Engine | Issue #42 | **PLANNED / RESEARCH GATED** | SVG-first deterministic visualization direction defined; implementation and acceptance remain. |
+| Parallel | Business Model, Pilot Economics & Deployment Strategy | Issue #12 | **RESEARCHING** | 2026-09-20 market slice added current Khan Academy/IXL pricing and product signals plus two parent-facing positioning tests. Pricing/category/primary-buyer decisions remain owner-gated pending pilot evidence. |
 
-### F-006 Progress and Learning Explanation — DONE
-Expose mastery, evidence confidence, active misconceptions, improvement, and recommended next work in language useful to a parent and student.
+## Canonical GitHub issue ledger
 
-### F-007 Spaced Review / Retention — DONE
-Schedule review after apparent mastery and lower confidence/mastery when retention evidence shows forgetting. Expanding review intervals (1/3/7/14/30 days), confidence-scaled forgetting decay, review demotion to REVIEW_DUE, and review-due session interception before new instruction.
+**Use the GitHub issue number + full title to disambiguate work.** Historical feature numbers evolved independently in older backlog iterations, so an `F-019` label alone is not a safe identifier.
 
-### F-010 Broader Misconception Catalog — DONE
-Ordered misconception-rule registry replacing single hardcoded detection. Fourteen codes shipped across all four seeded curricula: DIST_001–002 (distribution), ALG_001–002 (like-terms and constant signs), EQ_001–003 (inverse operations), REL_001–002 (linear relations), NUM_001–003 (integers and fractions), FIN_001–002 (percent), each with a remediation_strategy that constrains LLM tutoring language. Further rule coverage remains an ongoing content task.
+| Issue | Work item | Status |
+|---|---|---|
+| #2 | F-001 Prerequisite-Aware Adaptive Linear Equations | DONE |
+| #3 | F-002 Adaptive Diagnostic Placement | DONE |
+| #5 | F-003 Graduated Hint Ladder and Productive Struggle | DONE |
+| #6 | F-002 Adaptive Diagnostic Placement duplicate/continuation | DONE |
+| #8 | F-004 Independent Mastery Gate | DONE |
+| #10 | F-005 Parent Profiles, Child Management, and Progress Dashboard | DONE |
+| #11 | F-006 Hierarchical Curriculum Registry and Jurisdiction Isolation | DONE |
+| #12 | EPIC Business Model, Pilot Economics & Deployment Strategy | RESEARCHING |
+| #15 | F-007 Pilot Curriculum Content Packs and Standards-Aligned Ingestion | DONE |
+| #17 | F-008 Student Learning Experience & Tutor UI | DONE |
+| #18 | F-009 Parent Progress Intelligence & Actionable Insights | DONE |
+| #19 | F-010 Learning Analytics & Deterministic Intervention Engine | DONE; 2026-09-20 PO regression guidance carried into F-021 |
+| #20 | F-011 Pilot Observability, Learning KPIs & Unit Economics | DONE |
+| #21 | F-012 Proposed Maryland Mathematics Grade Expansion Framework | DONE / research framework |
+| #22 | F-007A Authoritative Pilot Content Packs & Maryland Course Decision | DONE |
+| #24 | F-013 Containerized Microservice Architecture & Deployment | DONE |
+| #28 | F-014 F-011 Observability Completion & Pilot Hardening | DONE |
+| #30 | F-015 Ontario Grade 9 MTH1W Curriculum Pack | DONE |
+| #35 | F-016 Private Pilot Launch Readiness | DONE |
+| #37 | F-017 Pilot Web Application & Family/Learner Onboarding | DONE |
+| #39 | F-018 Private Pilot Privacy Controls & Data Lifecycle | DONE |
+| #41 | F-019 MD/DC/VA Grades 6–7 & High-School-Entry Math Expansion | RESEARCHING / CONTENT BACKLOG |
+| #42 | F-020 Dynamic Math Visualization & Instructional Animation Engine | PLANNED / RESEARCH GATED |
+| #43 | Fix MTH1W canonical curriculum seeding and learner skill discovery | DONE |
+| #45 | F-021 MTH1W fine-grained skill graph and adaptive problem variation | **IN PROGRESS — ACTIVE** |
+| #46 | F-022 Goozam-family UI/UX redesign for learner and parent experience | **IN PROGRESS — PARALLEL/PARTIAL** |
 
-### F-011 Difficulty-Aware Mastery and Adaptive Progression — DONE
-Mastery evidence is scaled by problem difficulty relative to learner level (harder success = stronger evidence; easy failure = stronger negative evidence). `current_difficulty` now increases on successful independent progression (cap 10) and decreases when the engine triggers remediation (floor 1), keyed on the pre-focus-policy transition so detours still register struggle.
+## Repository implementation ledger
 
-### F-012 Retention Visibility — DONE
-Read-only `reviews_due` projection surfaces due/relearning skills with projected decayed mastery to the parent dashboard (`ChildDashboardOut.reviews_due`) and learner workspace (`LearnerWorkspaceOut.reviews_due`). New `spaced_review_pass_rate` KPI in telemetry.
+The entries below describe capabilities already present in the repository. Their historical F-numbers are retained for traceability and **must not be used to infer the identity of newer GitHub issues with the same F-number**.
 
-### F-013 Continuous Diagnostic Placement — DONE
-`services/placement.py` recomputes the recommended next skill from live mastery on every read — prerequisite-chain descent resurfaces decayed prerequisites as blockers. Surfaced as `recommended_next` (with READY_TO_START / RESUME_IN_PROGRESS / PREREQUISITE_GAP reason) on the parent dashboard and learner workspace.
+| Historical ID | Capability | Status |
+|---|---|---|
+| F-001 | Prerequisite-aware adaptive linear equations | DONE |
+| F-002 | Diagnostic placement and readiness | DONE |
+| F-003 | Graduated hint ladder / productive struggle | DONE |
+| F-004 | Independent mastery gate | DONE |
+| F-005 | Student tutor workspace | DONE |
+| F-006 | Progress and learning explanation | DONE |
+| F-007 | Spaced review / retention | DONE |
+| F-010 | Broader misconception catalog | DONE |
+| F-011 | Difficulty-aware mastery and adaptive progression | DONE |
+| F-012 | Retention visibility | DONE |
+| F-013 | Continuous diagnostic placement | DONE |
+| F-014 | Psychometric evidence model (BKT-lite) | DONE |
+| F-015 | Parametric problem generation | DONE / expanded further by PR #50 |
+| F-016 | Browser auth and learner onboarding flow | DONE |
+| F-017 | Problem-aware fallback coaching | DONE |
+| F-018 | Learner workspace visual polish | DONE / further UI work tracked in Issue #46 |
+| F-021 | MTH1W fine-grained subskill graph (9 atomic subskills chained under strand anchors, generator-typed problems, strand misconceptions, expectation mappings) | DONE in repo on `adaptive_response` — Issue #45 acceptance/DoD still open |
+| F-022 | Missed-template re-serving (generator metadata on GENERATED problems; `regenerate_variant` re-serves missed items with fresh parameters at same difficulty) | DONE in repo on `adaptive_response` |
+| F-023 | LLM word-problem contextualization (`/v1/contextualize` gateway endpoint; LLM writes narrative over code-owned parameters/answer with number-faithfulness validation; Gemini provider live) | DONE in repo on `adaptive_response` |
+| F-024 | Fine-grained subskills extended to MCPS_MATH_8 (5), MCPS_MATH_7 (6), MCPS_ALGEBRA_1_2026_27 (6); placement now descends into anchor subskill chains | DONE in repo on `adaptive_response` |
 
-### F-014 Psychometric Evidence Model — DONE
-`update_mastery` now applies guess/slip parameters (BKT-lite): correct evidence is discounted by guess probability scaled by difficulty, incorrect evidence retains a slip-probability floor. Composes with assistance weighting, difficulty-scaled learning rate, and forgetting decay.
+## Remaining historical backlog capabilities
 
-### F-015 Parametric Problem Generation — DONE
-`services/problem_generation.py` — IXL-style generator registry keyed by `problem_type` (ARITHMETIC, SIMPLIFY_EXPRESSION, SOLVE_EQUATION, LINEAR_FUNCTION, INTEGER_OPERATIONS, FRACTION_OPERATIONS, WORD_PROBLEM) with difficulty-tiered parameter sampling. Canonical answers computed deterministically; generated problems persist with `source_type=GENERATED`. `select_next_problem` serves unseen curated problems first, excludes all session-attempted problems, generates when the pool is exhausted, and dedups on prompt text.
+These older backlog entries remain useful product capabilities but do not own the same identifiers as newer GitHub issues. Before implementation, create or link a uniquely identified canonical GitHub issue and update this master table.
 
-### F-016 Browser Auth and Learner Onboarding Flow — DONE
-`/login` page (register/sign-in, session cookie, `?next=` redirect), `/learn` rewritten to use onboarding APIs with learner/skill dropdowns instead of raw UUIDs, inline learner creation, and 401→login redirects across browser surfaces. Registration IntegrityError moved inside the flush boundary.
-
-### F-017 Problem-Aware Fallback Coaching — DONE
-`tutor_engine.fallback_message` now dispatches on problem shape: six 4-rung hint ladders (linear function, equation, fraction, distribution, like-terms, generic) so non-distribution problems no longer receive parentheses language. `EXPLAIN_CONCEPT` shares the dispatch; `REMEDIATE` names the actual skill.
-
-### F-018 Learner Workspace Visual Polish — DONE
-Sticky navbar with sign-out, state stepper (Diagnose→Guided→Independent→Mastery→Complete), two-column layout, chat-style coach bubble, SVG mastery ring, correct/wrong problem feedback animations, completion hero, and review-due/next-skill surfaces.
-
-### F-021 MTH1W Fine-Grained Skill Graph — DONE (doc-side; corresponds to GitHub Issue #45)
-Nine atomic subskills under the four MTH1W strand anchors with prerequisite chains: B.NUM→INT→FRAC, C.ALG→EXPR→EQ1→EQ2, C.REL→SLOPE(+EQ2)→EVAL, F.FIN→PCT(+FRAC)→APP. Each subskill carries curated problems typed to a registered generator, strand-mapped misconceptions, and expectation-pack mappings. Anchor skills, edges, and problem counts preserved.
-
-### F-022 Missed-Template Re-serving — DONE (implemented inside F-021 scope)
-Generated problems persist `{generator, difficulty}` in their `solution` metadata; `regenerate_variant` produces a fresh-parameters variant of the same template and difficulty. `adaptive_response_api` re-serves a variant on incorrect answers to GENERATED problems (same skill), with fallback to normal selection for curated items.
-
-### F-023 LLM Word-Problem Contextualization — DONE
-Code samples parameters and computes the canonical answer; the LLM writes only the narrative skin. New gateway endpoint `POST /v1/contextualize` (strict JSON schema, app-computed context) plus `GatewayContextualizer` adapter that rejects narratives missing any parameter number verbatim — the model can never make a problem wrong, only plain. Wired through `configure_tutor_engine` when `AI_PROVIDER=gateway`; deterministic prompt otherwise. Also fixed google-genai shared-httpx-client lifecycle (module-level cached client) — Gemini provider verified live for both `/v1/render` coaching and `/v1/contextualize`.
-
-### F-024 Fine-Grained Subskills for Remaining Curricula — DONE
-Applied the F-021 atomic-subskill pattern to all three remaining curricula. MCPS_MATH_8: 5 subskills (INVERSE.ADD→MULT, DIST.POS→NEG, MULTI_STEP.COMBINE). MCPS_MATH_7: 6 subskills (PROP.RATE, PERCENT.OF, EXPR.DIST→COMBINE, EQUATION.ONE→TWO). MCPS_ALGEBRA_1_2026_27: 6 subskills (EXPR.DIST→COMBINE, EQ.ONE→TWO, FN.SLOPE→EVAL). All chained beneath their strand anchors via prerequisites, with curated problems typed to registered generators and strand-specific misconception rows. Exact-count tests updated (10 skills/8 edges/21 problems in each of G7 and A1); placement expectations updated to reflect that mastering an anchor now unlocks its subskill chain before the next strand. Dev DB reseeded and verified idempotent.
-
-## P2 — Content intake and richer math interaction (remaining)
-
-### F-008 Worksheet / Photo Problem Intake — NOT IMPLEMENTED
-Accept a worksheet or problem image, extract the problem, map it to a curriculum skill, and enter the normal tutoring workflow without allowing OCR confidence problems to silently become authoritative truth.
-
-### F-019 React Learner Frontend — NOT IMPLEMENTED
-Port the learner workspace (then entry/login, then parent dashboard) to the stub `frontend/` service: Vite + React + TypeScript consuming the existing JSON APIs. Unlocks a real coach message thread, animated problem transitions, math-keypad input, and interactive rendering (prerequisite for F-009). Server-rendered pages remain as fallback.
-
-### F-009 Mathematical Visualization — NOT IMPLEMENTED
-Introduce graphs/visual representations where they materially improve conceptual understanding, especially linear functions and coordinate relationships. Likely requires a backend render spec on problems plus frontend rendering.
+| Historical label | Capability | Status |
+|---|---|---|
+| old F-008 | Worksheet / Photo Problem Intake | NOT IMPLEMENTED |
+| old F-019 | React Learner Frontend (Vite + React + TypeScript service) | NOT IMPLEMENTED as described; newer server-rendered UI work does not automatically satisfy this item |
+| old F-020 | Missed-Template Re-serving with fresh parameters | IMPLEMENTED — see ledger row F-022 |
+| old F-009 | Mathematical Visualization | NOT IMPLEMENTED; concept overlaps newer Issue #42 |
 
 ## Deferred until after private MVP validation
+
 - gamification system;
 - native mobile applications;
 - voice-first tutoring;
 - school/district roster and LMS integration;
 - multi-subject expansion;
-- agentic pedagogy that can override deterministic learning controls.
+- agentic pedagogy that can override deterministic learning controls (explicitly disallowed unless product architecture is intentionally changed).
 
-## GitHub Issues Backlog Status
+## Product and architecture guardrails
 
-> Synced from GitHub Issues on 2026-09-20. GitHub Issues are the execution source of truth.
->
-> **Important:** feature numbers in this document and feature numbers used by older/newer GitHub issues evolved independently. For example, this file's F-019 is "React Learner Frontend", while GitHub Issue #41 is also labelled F-019 but means "MD/DC/VA Grades 6–7 & High-School-Entry Math Expansion". Use the GitHub issue number and title to disambiguate work.
+- Application code owns pedagogy, mathematics, answer truth, prerequisite logic, progression, mastery and curriculum mapping.
+- LLMs are constrained to permitted language/explanation/hint roles and may not silently become the authority for assessment or mastery.
+- Follow **define once, map many** for reusable canonical math concepts/problem generators while preserving explicit jurisdiction/version mappings.
+- Learner mastery/evidence remains scoped to the exact curriculum/version; shared concepts never silently transfer mastery across jurisdictions.
+- Do not copy proprietary tutoring question banks or assets.
+- Use synthetic/minimized data in tests, fixtures, logs, prompts and screenshots; never commit real child data or secrets.
 
-| Issue | GitHub backlog item | Status |
-|---|---|---|
-| #2 | F-001: Prerequisite-Aware Adaptive Linear Equations | CLOSED |
-| #3 | F-002: Adaptive Diagnostic Placement | CLOSED |
-| #5 | F-003: Graduated Hint Ladder and Productive Struggle | CLOSED |
-| #6 | F-002: Adaptive Diagnostic Placement (duplicate/continuation issue) | CLOSED |
-| #8 | F-004: Independent Mastery Gate | CLOSED |
-| #10 | F-005: Parent Profiles, Child Management, and Progress Dashboard | CLOSED |
-| #11 | F-006: Hierarchical Curriculum Registry and Jurisdiction Isolation | CLOSED |
-| #12 | EPIC: Business Model, Pilot Economics & Deployment Strategy | OPEN — parallel research |
-| #15 | F-007: Pilot Curriculum Content Packs and Standards-Aligned Ingestion | CLOSED |
-| #17 | F-008: Student Learning Experience & Tutor UI | CLOSED |
-| #18 | F-009: Parent Progress Intelligence & Actionable Insights | CLOSED |
-| #19 | F-010: Learning Analytics & Deterministic Intervention Engine | CLOSED |
-| #20 | F-011: Pilot Observability, Learning KPIs & Unit Economics | CLOSED |
-| #21 | F-012 PROPOSED: Maryland Mathematics Grade Expansion Framework | CLOSED |
-| #22 | F-007A: Authoritative Pilot Content Packs & Maryland Course Decision | CLOSED |
-| #24 | F-013 PROPOSED: Containerized Microservice Architecture & Deployment | CLOSED |
-| #28 | F-014 PROPOSED: F-011 Observability Completion & Pilot Hardening | CLOSED |
-| #30 | F-015 PROPOSED: Ontario Grade 9 MTH1W Curriculum Pack | CLOSED |
-| #35 | F-016: Private Pilot Launch Readiness | CLOSED |
-| #37 | F-017: Pilot Web Application & Family/Learner Onboarding | CLOSED |
-| #39 | F-018: Private Pilot Privacy Controls & Data Lifecycle | CLOSED |
-| #41 | F-019: MD/DC/VA Grades 6–7 & High-School-Entry Math Expansion | OPEN — curriculum expansion |
-| #42 | F-020: Dynamic Math Visualization & Instructional Animation Engine | OPEN — planned backlog |
-| #43 | Fix MTH1W canonical curriculum seeding and learner skill discovery | CLOSED |
-| #45 | F-021: MTH1W fine-grained skill graph and adaptive problem variation | OPEN — fine-grained graph + missed-template re-serving landed in repo (doc F-021/F-022); pattern extended to MCPS G7/G8/Algebra 1 (doc F-024); verify remaining issue scope before closing |
-| #46 | F-022: Goozam-family UI/UX redesign for learner and parent experience | OPEN — parallel UI/UX |
+## Security & data-impact gate
 
-### Current execution order
+Every feature that collects, stores, transmits, derives, profiles, exports or displays learner/parent data must document: data collected, purpose, storage, authorized access, retention/deletion, third-party/LLM flow, and whether a less-data alternative exists. Security/Compliance may block DoD for material unresolved privacy/security risk. COPPA, FERPA/PPRA (school deployments/education records), Canadian/PIPEDA youth privacy and applicable state/provincial obligations are applicability questions requiring appropriate review; unresolved high-risk legal interpretation is escalated to Ayalew.
 
-F-021 is the active engineering path. F-022 may proceed in parallel where it does not redefine pedagogy or mastery semantics. F-019 and F-020 remain open backlog work subject to their research/dependency gates. The Business Model epic (#12) remains a parallel Product Owner / Marketing & Growth research track.
+## Synchronization rule
 
-### Synchronization rule
+1. Read this file before starting or resuming work.
+2. Inspect current `main`, the canonical GitHub issue and any open/recent PR before implementing, so parallel Devin/autopilot work is not duplicated.
+3. Record detailed research, acceptance criteria, data-impact/security findings and implementation evidence on the canonical issue/PR.
+4. After any material merge, scope change, block, acceptance or completion, update this file in the same work cycle.
+5. A merged PR does not automatically close a feature. Mark `DONE` only after the applicable Definition of Done and issue acceptance criteria are evidenced.
 
-When an issue is opened, closed, renamed, superseded, or materially re-scoped, update this status section so the repository backlog remains navigable from one place. Issue status alone does not prove implementation quality; feature acceptance and release still follow `docs/qa/DEFINITION_OF_DONE.md`.
-
+_Last synchronized: 2026-09-20; F-021 architecture/security checkpoint, active branch refresh, Marketing research and F-010 PO regression follow-up recorded. `adaptive_response` branch ledger rows F-021–F-024 added during conflict merge._
