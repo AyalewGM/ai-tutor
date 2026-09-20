@@ -83,6 +83,7 @@ The entries below describe capabilities already present in the repository. Their
 | F-026 | Gamified learner presentation layer — React workspace (`/app/`): streak + best-streak chips, score chip, confetti burst on correct answers, badge medallion on skill completion | DONE on `UI_1` |
 | F-027 | Persisted evidence-backed badges — `learner_awards` table (migration 0017), `services/awards.py` catalog (FIRST_CORRECT, STREAK_3/5, LEVEL_UP, SKILL_MASTERED, GAP_FIXED, FRESH_EYES) evaluated in `respond()` from committed evidence only; `RespondOut.new_awards` + workspace `awards` shelf; React badge toast + shelf UI | DONE in repo on `UI_1` — rewards economy (points, leaderboards) remains deferred |
 | F-028 | Badge collection page — `GET /learner-workspace/sessions/{id}/badges` returns full catalog with earned state, per-skill instances, and streak progress; React `/learn/:sessionId/badges` grid (earned vs locked, progress bars) linked from workspace shelf | DONE on `UI_1` |
+| F-029 | Skill mastery map — `GET /learner-workspace/sessions/{id}/skill-map` returns every curriculum skill ordered by difficulty with mastery score/status/active flag; React `/learn/:sessionId/map` renders an IXL-style color-coded tile grid (mastered/in-progress/not-started) with "You are here" marker | DONE on `UI_1` |
 
 ## Remaining historical backlog capabilities
 
