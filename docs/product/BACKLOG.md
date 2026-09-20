@@ -14,7 +14,7 @@ GitHub Issues hold detailed requirements/research and Pull Requests hold impleme
 
 | Priority | Work item | GitHub | Status | Current evidence / next gate |
 |---|---|---|---|---|
-| P0 | F-021 MTH1W fine-grained skill graph and adaptive problem variation | Issue #45 / merged PR #50 | **IN PROGRESS** | PR #50 merged (`107f50f9`) and deterministic generators are on `main`. 2026-09-20 architecture review verified the next gap: add stable problem-family/representation/parameter identity, family-aware recent-equivalence, fine-grained MTH1W skill/provenance + >=2 materially different families for the first Number Sense skill, content-readiness gating, prerequisite-return and cross-jurisdiction negative tests. Active branch `feature/f-021-mth1w-adaptive-content` was fast-forwarded to current `main` so new work does not duplicate stale code. DoD/QA/PO/PM acceptance still required. |
+| P0 | F-021 MTH1W fine-grained skill graph and adaptive problem variation | Issue #45 / merged PR #50 | **IN PROGRESS** | PR #50 merged (`107f50f9`) and deterministic generators are on `main`. 2026-09-20 architecture review verified the next gap: add stable problem-family/representation/parameter identity, family-aware recent-equivalence, fine-grained MTH1W skill/provenance + >=2 materially different families for the first Number Sense skill, content-readiness gating, prerequisite-return and cross-jurisdiction negative tests. Active branch `feature/f-021-mth1w-adaptive-content` was fast-forwarded to current `main` so new work does not duplicate stale code. Branch `adaptive_response` has since landed MTH1W fine-grained subskills, missed-template re-serving, LLM contextualization, and subskill expansion to MCPS G7/G8/Algebra 1 (ledger F-021–F-024). Issue #45 gaps remain: stable problem-family/parameter identity, family-aware recent-equivalence, content-readiness gating. DoD/QA/PO/PM acceptance still required. |
 | P1 parallel | F-022 Goozam-family learner/parent UI/UX | Issue #46 | **IN PROGRESS — PARTIAL** | PR #50 also merged substantial learner/login visual work. Do not mark done until F-022 accessibility, responsive behavior, parent/learner flows, reusable design system and browser regressions satisfy its acceptance criteria. |
 | P2 | F-019 MD/DC/VA Grades 6–7 & high-school-entry expansion | Issue #41 | **RESEARCHING / CONTENT BACKLOG** | Authoritative-source and pathway research exists. Curriculum packs still require mapping, original content, ingestion/readiness and isolation acceptance. |
 | P2 | F-020 Dynamic Math Visualization & Instructional Animation Engine | Issue #42 | **PLANNED / RESEARCH GATED** | SVG-first deterministic visualization direction defined; implementation and acceptance remain. |
@@ -75,6 +75,10 @@ The entries below describe capabilities already present in the repository. Their
 | F-016 | Browser auth and learner onboarding flow | DONE |
 | F-017 | Problem-aware fallback coaching | DONE |
 | F-018 | Learner workspace visual polish | DONE / further UI work tracked in Issue #46 |
+| F-021 | MTH1W fine-grained subskill graph (9 atomic subskills chained under strand anchors, generator-typed problems, strand misconceptions, expectation mappings) | DONE in repo on `adaptive_response` — Issue #45 acceptance/DoD still open |
+| F-022 | Missed-template re-serving (generator metadata on GENERATED problems; `regenerate_variant` re-serves missed items with fresh parameters at same difficulty) | DONE in repo on `adaptive_response` |
+| F-023 | LLM word-problem contextualization (`/v1/contextualize` gateway endpoint; LLM writes narrative over code-owned parameters/answer with number-faithfulness validation; Gemini provider live) | DONE in repo on `adaptive_response` |
+| F-024 | Fine-grained subskills extended to MCPS_MATH_8 (5), MCPS_MATH_7 (6), MCPS_ALGEBRA_1_2026_27 (6); placement now descends into anchor subskill chains | DONE in repo on `adaptive_response` |
 
 ## Remaining historical backlog capabilities
 
@@ -84,7 +88,7 @@ These older backlog entries remain useful product capabilities but do not own th
 |---|---|---|
 | old F-008 | Worksheet / Photo Problem Intake | NOT IMPLEMENTED |
 | old F-019 | React Learner Frontend (Vite + React + TypeScript service) | NOT IMPLEMENTED as described; newer server-rendered UI work does not automatically satisfy this item |
-| old F-020 | Missed-Template Re-serving with fresh parameters | NOT IMPLEMENTED |
+| old F-020 | Missed-Template Re-serving with fresh parameters | IMPLEMENTED — see ledger row F-022 |
 | old F-009 | Mathematical Visualization | NOT IMPLEMENTED; concept overlaps newer Issue #42 |
 
 ## Deferred until after private MVP validation
@@ -117,4 +121,4 @@ Every feature that collects, stores, transmits, derives, profiles, exports or di
 4. After any material merge, scope change, block, acceptance or completion, update this file in the same work cycle.
 5. A merged PR does not automatically close a feature. Mark `DONE` only after the applicable Definition of Done and issue acceptance criteria are evidenced.
 
-_Last synchronized: 2026-09-20; F-021 architecture/security checkpoint, active branch refresh, Marketing research and F-010 PO regression follow-up recorded._
+_Last synchronized: 2026-09-20; F-021 architecture/security checkpoint, active branch refresh, Marketing research and F-010 PO regression follow-up recorded. `adaptive_response` branch ledger rows F-021–F-024 added during conflict merge._

@@ -27,7 +27,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   const learner = page.locator('#learner');
   await expect(learner).not.toHaveValue('');
   const skill = page.locator('#skill');
-  await expect(skill.locator('option')).toHaveCount(5, { timeout: 10000 });
+  await expect(skill.locator('option')).toHaveCount(10, { timeout: 10000 });
   const distributiveOption = skill.locator('option').filter({ hasText: 'M8.ALG.DIST · Distributive Property' });
   await expect(distributiveOption).toHaveCount(1);
   await skill.selectOption(await distributiveOption.getAttribute('value'));

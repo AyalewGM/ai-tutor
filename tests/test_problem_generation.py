@@ -16,7 +16,11 @@ from app.models import (
     TutorState,
 )
 from app.services.evaluation import evaluate_problem
-from app.services.problem_generation import GENERATORS
+from app.services.problem_generation import (
+    GENERATORS,
+    generate_problem,
+    regenerate_variant,
+)
 from app.services.problem_selection import select_next_problem
 
 
@@ -166,3 +170,154 @@ def test_skill_without_generator_falls_back_to_repeats() -> None:
         )
         assert selected is not None and selected.id == problem.id
         db.rollback()
+
+
+def test_regenerate_variant_produces_fresh_same_template_problem() -> None:
+    with SessionLocal() as db:
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MCPS_MATH_8"))
+        skill = db.scalar(
+            select(Skill).where(
+                Skill.curriculum_id == curriculum.id, Skill.code == "M8.ALG.INVERSE"
+            )
+        )
+        source = Problem(
+            primary_skill_id=skill.id,
+            problem_type="SOLVE_EQUATION",
+            difficulty=2,
+            prompt="Solve 4x = 20.",
+            canonical_answer="x=5",
+            solution={"generated": True, "generator": "SOLVE_EQUATION", "difficulty": 2},
+            source_type="GENERATED",
+        )
+        db.add(source)
+        db.flush()
+
+        variant = regenerate_variant(db, source_problem=source, rng=random.Random(5))
+        assert variant is not None
+        assert variant.id != source.id
+        assert variant.source_type == "GENERATED"
+        assert variant.difficulty == 2
+        assert variant.problem_type == "SOLVE_EQUATION"
+        assert variant.canonical_answer is not None
+        db.rollback()
+
+
+def test_regenerate_variant_rejects_curated_problem() -> None:
+    with SessionLocal() as db:
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MCPS_MATH_8"))
+        skill = db.scalar(
+            select(Skill).where(
+                Skill.curriculum_id == curriculum.id, Skill.code == "M8.ALG.INVERSE"
+            )
+        )
+        curated = Problem(
+            primary_skill_id=skill.id,
+            problem_type="SOLVE_EQUATION",
+            difficulty=1,
+            prompt="Solve 5x = 30.",
+            canonical_answer="x=6",
+            solution={"answer": "x=6"},
+            source_type="CURATED",
+        )
+        db.add(curated)
+        db.flush()
+        assert regenerate_variant(db, source_problem=curated) is None
+        db.rollback()
+
+
+class _StubContextualizer:
+    def __init__(self, narrative):
+        self.narrative = narrative
+
+    def contextualize(self, *, template, parameters, canonical_answer):
+        return self.narrative
+
+
+def test_word_problem_uses_contextualizer_narrative(monkeypatch) -> None:
+    from app.services import problem_contextualizer
+
+    monkeypatch.setattr(
+        problem_contextualizer,
+        "contextualizer",
+        _StubContextualizer("A jacket costs $80. What is 20% of 80?"),
+    )
+    with SessionLocal() as db:
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MTH1W"))
+        skill = db.scalar(
+            select(Skill).where(
+                Skill.curriculum_id == curriculum.id,
+                Skill.code == "MTH1W.F.FIN.PCT",
+            )
+        )
+        problem = generate_problem(
+            db, skill_id=skill.id, difficulty=1, problem_type="WORD_PROBLEM",
+            rng=random.Random(2),
+        )
+        assert problem is not None
+        assert problem.prompt == "A jacket costs $80. What is 20% of 80?"
+        assert problem.canonical_answer  # still code-computed, not model output
+        db.rollback()
+    monkeypatch.setattr(problem_contextualizer, "contextualizer", None)
+
+
+def test_gateway_contextualizer_rejects_unfaithful_numbers(monkeypatch) -> None:
+    import httpx
+
+    from app.services.problem_contextualizer import GatewayContextualizer
+
+    def fake_post(url, *, json, timeout):
+        request = httpx.Request("POST", url)
+        return httpx.Response(
+            200, request=request,
+            json={"prompt": "A taxi charges 5 dollars plus 2 per mile."},
+        )
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+    adapter = GatewayContextualizer("http://gateway", 1.0)
+    # Narrative drops the required 13% and $80 — must be rejected.
+    assert (
+        adapter.contextualize(
+            template="percent_of",
+            parameters={"percent": 13, "amount": 80},
+            canonical_answer="10.40",
+        )
+        is None
+    )
+
+
+def test_gateway_contextualizer_accepts_faithful_narrative(monkeypatch) -> None:
+    import httpx
+
+    from app.services.problem_contextualizer import GatewayContextualizer
+
+    def fake_post(url, *, json, timeout):
+        request = httpx.Request("POST", url)
+        return httpx.Response(
+            200, request=request,
+            json={"prompt": "A $80 purchase has 13% tax. What is the tax?"},
+        )
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+    adapter = GatewayContextualizer("http://gateway", 1.0)
+    assert adapter.contextualize(
+        template="percent_of",
+        parameters={"percent": 13, "amount": 80},
+        canonical_answer="10.40",
+    ) == "A $80 purchase has 13% tax. What is the tax?"
+
+
+def test_gateway_contextualizer_returns_none_on_failure(monkeypatch) -> None:
+    import httpx
+
+    from app.services.problem_contextualizer import GatewayContextualizer
+
+    def fail_post(*args, **kwargs):
+        raise httpx.ConnectError("down")
+
+    monkeypatch.setattr(httpx, "post", fail_post)
+    adapter = GatewayContextualizer("http://gateway", 1.0)
+    assert adapter.contextualize(
+        template="unit_rate",
+        parameters={"distance": 120, "hours": 3},
+        canonical_answer="40",
+    ) is None

@@ -86,9 +86,18 @@ def _expectation_pack() -> ContentPackInput:
     )
     mappings = (
         ExpectationSkillMappingInput("MTH1W.B", "MTH1W.B.NUM"),
+        ExpectationSkillMappingInput("MTH1W.B", "MTH1W.B.NUM.INT"),
+        ExpectationSkillMappingInput("MTH1W.B", "MTH1W.B.NUM.FRAC"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.ALG"),
+        ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.ALG.EXPR"),
+        ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.ALG.EQ1"),
+        ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.ALG.EQ2"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.REL"),
+        ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.REL.SLOPE"),
+        ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.REL.EVAL"),
         ExpectationSkillMappingInput("MTH1W.F", "MTH1W.F.FIN"),
+        ExpectationSkillMappingInput("MTH1W.F", "MTH1W.F.FIN.PCT"),
+        ExpectationSkillMappingInput("MTH1W.F", "MTH1W.F.FIN.APP"),
     )
     return ContentPackInput(
         curriculum_code=CURRICULUM_CODE,
@@ -149,6 +158,77 @@ def seed():
         _prerequisite(db, algebra, number)
         _prerequisite(db, relations, algebra)
         _prerequisite(db, financial, number)
+
+        # Fine-grained subskills. Anchor skills stay in the graph; each strand's
+        # anchor gates the head of its subskill chain so placement can descend
+        # from a broad strand into the exact atomic skill blocking progress.
+        num_int = _skill(
+            db, curriculum, "MTH1W.B.NUM.INT",
+            "Integer Operations",
+            "Add, subtract, multiply, and divide integers with signed results.",
+            1,
+        )
+        num_frac = _skill(
+            db, curriculum, "MTH1W.B.NUM.FRAC",
+            "Fraction Operations",
+            "Add and subtract fractions using common denominators.",
+            2,
+        )
+        alg_expr = _skill(
+            db, curriculum, "MTH1W.C.ALG.EXPR",
+            "Simplifying Algebraic Expressions",
+            "Apply distribution and combine like terms to simplify expressions.",
+            2,
+        )
+        alg_eq1 = _skill(
+            db, curriculum, "MTH1W.C.ALG.EQ1",
+            "One-Step Equations",
+            "Solve equations of the form x + a = b and ax = b using inverse operations.",
+            2,
+        )
+        alg_eq2 = _skill(
+            db, curriculum, "MTH1W.C.ALG.EQ2",
+            "Two-Step and Multi-Step Equations",
+            "Solve ax + b = c and a(x + b) = c by undoing operations in reverse order.",
+            3,
+        )
+        rel_slope = _skill(
+            db, curriculum, "MTH1W.C.REL.SLOPE",
+            "Slope-Intercept Form",
+            "Identify slope and y-intercept and write equations in y = mx + b form.",
+            3,
+        )
+        rel_eval = _skill(
+            db, curriculum, "MTH1W.C.REL.EVAL",
+            "Evaluating Linear Relations",
+            "Evaluate a linear relation for a given input value.",
+            3,
+        )
+        fin_pct = _skill(
+            db, curriculum, "MTH1W.F.FIN.PCT",
+            "Percent Computations",
+            "Compute a percent of an amount using decimal conversion.",
+            2,
+        )
+        fin_app = _skill(
+            db, curriculum, "MTH1W.F.FIN.APP",
+            "Discount and Tax Applications",
+            "Apply percent reasoning to discounts, sale prices, and tax amounts.",
+            3,
+        )
+
+        _prerequisite(db, num_int, number)
+        _prerequisite(db, num_frac, num_int)
+        _prerequisite(db, alg_expr, algebra)
+        _prerequisite(db, alg_expr, num_int)
+        _prerequisite(db, alg_eq1, alg_expr)
+        _prerequisite(db, alg_eq2, alg_eq1)
+        _prerequisite(db, rel_slope, relations)
+        _prerequisite(db, rel_slope, alg_eq2)
+        _prerequisite(db, rel_eval, rel_slope)
+        _prerequisite(db, fin_pct, financial)
+        _prerequisite(db, fin_pct, num_frac)
+        _prerequisite(db, fin_app, fin_pct)
 
         def _misconception(skill, code, name, description, strategy):
             existing = db.scalar(
@@ -294,6 +374,87 @@ def seed():
             "After finding the discount amount, subtract it from the "
             "original price to get the price paid.",
         )
+        _misconception(
+            num_int,
+            "NUM_001",
+            "Integer sum sign error",
+            "The learner computes the correct magnitude for an integer sum but "
+            "assigns the wrong sign to the result.",
+            "Locate both addends on a number line and determine the sign of the "
+            "result from the addend with the larger absolute value.",
+        )
+        _misconception(
+            num_frac,
+            "NUM_003",
+            "Fractions added across",
+            "The learner adds numerators together and denominators together "
+            "instead of finding a common denominator.",
+            "Rewrite both fractions with a common denominator before adding "
+            "the numerators.",
+        )
+        _misconception(
+            alg_expr,
+            "ALG_001",
+            "Unlike terms combined",
+            "The learner merges constants into the variable term instead of "
+            "combining like terms separately.",
+            "Group variable terms with variable terms and constants with "
+            "constants before simplifying.",
+        )
+        _misconception(
+            alg_expr,
+            "DIST_002",
+            "Distribution sign error",
+            "The learner distributes the factor but flips the sign of the "
+            "constant term.",
+            "Rewrite the product as a signed multiplication for each term, "
+            "tracking the sign of both factors before simplifying.",
+        )
+        _misconception(
+            alg_eq1,
+            "EQ_003",
+            "Multiplies instead of dividing",
+            "The learner multiplies both sides by the coefficient instead of "
+            "dividing to isolate the variable.",
+            "Undo multiplication with division: divide both sides by the "
+            "coefficient of the variable.",
+        )
+        _misconception(
+            alg_eq2,
+            "EQ_002",
+            "Skipped or missequenced inverse step",
+            "The learner undoes one operation but skips or reorders the other "
+            "inverse step, such as forgetting to divide by the coefficient.",
+            "Undo operations in reverse order: remove the added constant first, "
+            "then divide by the coefficient.",
+        )
+        _misconception(
+            rel_slope,
+            "REL_001",
+            "Slope and intercept swapped",
+            "The learner writes the linear equation with the slope and "
+            "y-intercept exchanged.",
+            "Anchor the equation as y = mx + b and check which given value "
+            "multiplies x and which stands alone.",
+        )
+        _misconception(
+            rel_eval,
+            "REL_002",
+            "Coefficient added to variable",
+            "The learner evaluates mx as m + x instead of multiplying the "
+            "slope by the input value.",
+            "Substitute the input into mx as multiplication: m times x, "
+            "then add b.",
+        )
+        _misconception(
+            fin_app,
+            "FIN_002",
+            "Discount amount returned instead of final price",
+            "The learner computes the discount but does not subtract it "
+            "from the original price.",
+            "After finding the discount amount, subtract it from the "
+            "original price to get the price paid.",
+        )
 
         problems = [
             (number, 1, "Evaluate -6 + 14.", "8", "ARITHMETIC"),
@@ -306,6 +467,25 @@ def seed():
             (relations, 3, "A line has slope 2 and y-intercept -1. Write its equation.", "y=2x-1", "LINEAR_RELATION"),
             (financial, 1, "A $80 purchase has 13% tax. What is the tax amount?", "10.40", "WORD_PROBLEM"),
             (financial, 2, "A $120 item is discounted by 25%. What is the sale price before tax?", "90", "WORD_PROBLEM"),
+            # Fine-grained subskill problems, each typed to a registered generator.
+            (num_int, 1, "Evaluate -8 + 15.", "7", "INTEGER_OPERATIONS"),
+            (num_int, 2, "Evaluate -4 - 9.", "-13", "INTEGER_OPERATIONS"),
+            (num_frac, 2, "Evaluate 2/3 + 1/6.", "5/6", "FRACTION_OPERATIONS"),
+            (num_frac, 3, "Evaluate 5/8 + 1/4.", "7/8", "FRACTION_OPERATIONS"),
+            (alg_expr, 1, "Simplify 3(x + 2).", "3x+6", "SIMPLIFY_EXPRESSION"),
+            (alg_expr, 2, "Simplify 5x + 2 - 3x + 7.", "2x+9", "SIMPLIFY_EXPRESSION"),
+            (alg_eq1, 1, "Solve x + 6 = 14.", "x=8", "SOLVE_EQUATION"),
+            (alg_eq1, 1, "Solve 3x = 21.", "x=7", "SOLVE_EQUATION"),
+            (alg_eq2, 2, "Solve 2x + 5 = 17.", "x=6", "SOLVE_EQUATION"),
+            (alg_eq2, 3, "Solve 3(x - 2) = 12.", "x=6", "SOLVE_EQUATION"),
+            (rel_slope, 2, "A line has slope 4 and y-intercept 3. Write its equation.", "y=4x+3", "LINEAR_FUNCTION"),
+            (rel_slope, 3, "A line has slope -2 and y-intercept 5. Write its equation.", "y=-2x+5", "LINEAR_FUNCTION"),
+            (rel_eval, 2, "For y = 2x + 1, what is y when x = 5?", "11", "LINEAR_FUNCTION"),
+            (rel_eval, 3, "For y = -3x + 4, what is y when x = 2?", "-2", "LINEAR_FUNCTION"),
+            (fin_pct, 1, "What is 15% of 80?", "12", "WORD_PROBLEM"),
+            (fin_pct, 2, "What is 30% of 150?", "45", "WORD_PROBLEM"),
+            (fin_app, 2, "A $60 item is discounted by 20%. What is the sale price?", "48", "WORD_PROBLEM"),
+            (fin_app, 3, "A $45 meal has 13% tax. What is the tax amount?", "5.85", "WORD_PROBLEM"),
         ]
         for args in problems:
             _problem(db, *args)

@@ -32,6 +32,31 @@ class RenderRequest(BaseModel):
     next_problem_prompt: str | None = Field(default=None, max_length=4000)
 
 
+class ContextualizeRequest(BaseModel):
+    """Narrative-writing request for a generated math problem.
+
+    The gateway only writes the story skin: parameters and the canonical
+    answer are application-computed and must appear verbatim in the output.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    template: str = Field(min_length=1, max_length=80)
+    parameters: dict[str, Any]
+    canonical_answer: str = Field(min_length=1, max_length=200)
+    grade_level: str | None = Field(default=None, max_length=80)
+
+
+class ContextualizeResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    prompt: str = Field(default="", max_length=800)
+    request_id: str
+    provider: str
+    model: str | None = None
+    latency_ms: int = Field(ge=0)
+
+
 class RenderResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -110,12 +135,23 @@ def _openai_render(request: RenderRequest) -> dict[str, object]:
     return data
 
 
+_gemini_client = None
+
+
+def _gemini():
+    global _gemini_client
+    if _gemini_client is None:
+        from google import genai
+
+        _gemini_client = genai.Client()
+    return _gemini_client
+
+
 def _gemini_render(request: RenderRequest) -> dict[str, object]:
-    from google import genai
     from google.genai import types
 
     model = _model_name("gemini")
-    response = genai.Client().models.generate_content(
+    response = _gemini().models.generate_content(
         model=model,
         contents=_prompt(request),
         config=types.GenerateContentConfig(response_mime_type="application/json"),
@@ -139,6 +175,82 @@ def _render_with_provider(request: RenderRequest, provider: str) -> dict[str, ob
     if renderer is None:
         raise RuntimeError(f"Unsupported LLM gateway provider: {provider}")
     return renderer(request)
+
+
+def _contextualize_prompt(request: ContextualizeRequest) -> str:
+    payload = json.dumps(request.model_dump(), ensure_ascii=False)
+    return (
+        "You write short, age-appropriate math word problems. The application "
+        "has already computed every number and the answer. Use EVERY numeric "
+        "value in parameters verbatim — never change, add, compute, or drop a "
+        "number. Do not state or hint at the answer. Do not ask multiple "
+        "questions. Return JSON only: {\"prompt\": \"<one or two sentences "
+        "ending in a single question>\"}.\n\n"
+        f"Application-computed context:\n{payload}"
+    )
+
+
+def _contextualize_fallback(request: ContextualizeRequest) -> dict[str, object]:
+    return {"prompt": ""}
+
+
+def _contextualize_with_provider(
+    request: ContextualizeRequest, provider: str
+) -> dict[str, object]:
+    if provider in {"fallback", "none"}:
+        return _contextualize_fallback(request)
+    if provider == "openai":
+        from openai import OpenAI
+
+        response = OpenAI().responses.create(
+            model=_model_name("openai"),
+            input=_contextualize_prompt(request),
+            text={
+                "format": {
+                    "type": "json_schema",
+                    "name": "contextualized_problem",
+                    "strict": True,
+                    "schema": {
+                        "type": "object",
+                        "properties": {"prompt": {"type": "string", "maxLength": 800}},
+                        "required": ["prompt"],
+                        "additionalProperties": False,
+                    },
+                }
+            },
+        )
+        if not response.output_text:
+            raise RuntimeError("OpenAI returned no contextualization output")
+        return json.loads(response.output_text)
+    if provider == "gemini":
+        from google.genai import types
+
+        response = _gemini().models.generate_content(
+            model=_model_name("gemini"),
+            contents=_contextualize_prompt(request),
+            config=types.GenerateContentConfig(response_mime_type="application/json"),
+        )
+        if not response.text:
+            raise RuntimeError("Gemini returned no contextualization output")
+        return json.loads(response.text)
+    raise RuntimeError(f"Unsupported LLM gateway provider: {provider}")
+
+
+@app.post("/v1/contextualize", response_model=ContextualizeResponse)
+def contextualize_problem(request: ContextualizeRequest) -> ContextualizeResponse:
+    """Render a word-problem narrative; numbers and answers stay app-computed."""
+    request_id = str(uuid.uuid4())
+    provider = _provider()
+    started = time.perf_counter()
+    generation = _contextualize_with_provider(request, provider)
+    latency_ms = max(0, int((time.perf_counter() - started) * 1000))
+    return ContextualizeResponse(
+        prompt=str(generation["prompt"]),
+        request_id=request_id,
+        provider=provider,
+        model=_model_name(provider),
+        latency_ms=latency_ms,
+    )
 
 
 @app.get("/health")
