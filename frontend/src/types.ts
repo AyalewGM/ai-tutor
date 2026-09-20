@@ -90,6 +90,16 @@ export interface Badge {
   progress: { current: number; target: number } | null;
 }
 
+export interface SkillMapEntry {
+  skill_id: string;
+  code: string;
+  name: string;
+  difficulty_level: number;
+  mastery_score: number;
+  status: string;
+  is_active: boolean;
+}
+
 export interface HintResponse {
   allowed: boolean;
   level: number;

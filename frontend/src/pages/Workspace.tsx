@@ -226,6 +226,12 @@ export default function Workspace() {
               </p>
             </div>
             <div className="hero-stats">
+              <Link
+                className="chip map-link"
+                to={`/learn/${sessionId}/map`}
+              >
+                Skill map
+              </Link>
               {streak >= 2 && (
                 <span className="chip streak" role="status">
                   Streak ×{streak}

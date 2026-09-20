@@ -13,6 +13,7 @@ from app.models import (
     Curriculum,
     LearnerAward,
     Problem,
+    Skill,
     Student,
     StudentSkill,
     TutorSession,
@@ -254,4 +255,60 @@ def get_badge_collection(
     return [
         BadgeOut(**entry)
         for entry in badge_collection(db, session.student_id)
+    ]
+
+
+class SkillMapEntryOut(BaseModel):
+    skill_id: uuid.UUID
+    code: str
+    name: str
+    difficulty_level: int
+    mastery_score: float
+    status: str
+    is_active: bool
+
+
+@router.get("/sessions/{session_id}/skill-map", response_model=list[SkillMapEntryOut])
+def get_skill_map(
+    session_id: uuid.UUID, parent: CurrentParent, db: DbSession
+) -> list[SkillMapEntryOut]:
+    """All curriculum skills with the learner's mastery, ordered for display."""
+    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    try:
+        scope = require_session_scope(db, session)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+    skills = db.scalars(
+        select(Skill)
+        .where(Skill.curriculum_id == scope.curriculum_id)
+        .order_by(Skill.difficulty_level, Skill.code)
+    ).all()
+    progress_rows = {
+        row.skill_id: row
+        for row in db.scalars(
+            select(StudentSkill).where(StudentSkill.student_id == session.student_id)
+        ).all()
+    }
+    active_skill_id = session.active_skill_id or session.primary_skill_id
+
+    return [
+        SkillMapEntryOut(
+            skill_id=skill.id,
+            code=skill.code,
+            name=skill.name,
+            difficulty_level=skill.difficulty_level,
+            mastery_score=float(
+                progress_rows[skill.id].mastery_score
+            )
+            if skill.id in progress_rows
+            else 0.0,
+            status=(
+                progress_rows[skill.id].status.value
+                if skill.id in progress_rows
+                else "NOT_STARTED"
+            ),
+            is_active=skill.id == active_skill_id,
+        )
+        for skill in skills
     ]

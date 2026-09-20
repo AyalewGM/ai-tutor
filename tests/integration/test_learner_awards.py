@@ -125,6 +125,27 @@ def test_badge_collection_shows_earned_and_progress() -> None:
     assert badges["SKILL_MASTERED"]["earned"] is False
 
 
+def test_skill_map_lists_curriculum_skills_with_mastery() -> None:
+    session_id, _ = _create_session()
+    problem_id = client.get(
+        f"/api/v1/learner-workspace/sessions/{session_id}"
+    ).json()["problem"]["id"]
+    _respond_correct(session_id, problem_id)
+
+    response = client.get(
+        f"/api/v1/learner-workspace/sessions/{session_id}/skill-map"
+    )
+    assert response.status_code == 200
+    entries = response.json()
+    assert len(entries) >= 9  # MCPS_MATH_8 anchors + subskills
+    active = [entry for entry in entries if entry["is_active"]]
+    assert len(active) == 1
+    assert active[0]["code"].startswith("M8.ALG.DIST")
+    assert active[0]["mastery_score"] > 0
+    untouched = [e for e in entries if e["status"] == "NOT_STARTED"]
+    assert untouched  # skills the session never touched stay unstarted
+
+
 def test_wrong_answer_breaks_streak_and_awards_nothing() -> None:
     session_id, _ = _create_session()
     problem_id = client.get(
