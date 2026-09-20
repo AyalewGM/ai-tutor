@@ -333,6 +333,7 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         current_difficulty=progress.current_difficulty,
         state=transition.state,
         correct=evaluation.correct,
+        session_id=session.id,
     )
     generation = tutor_engine.generate(
         _tutor_context(

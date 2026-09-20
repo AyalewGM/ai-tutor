@@ -42,6 +42,16 @@ def test_parent_dashboard_renders_only_bounded_backend_action_codes() -> None:
     assert "Reason:" in response.text
 
 
+def test_parent_dashboard_surfaces_reviews_due_and_recommendation() -> None:
+    response = client.get("/parent")
+    assert response.status_code == 200
+    assert "Reviews due" in response.text
+    assert "Recommended next" in response.text
+    assert "d.reviews_due" in response.text
+    assert "d.recommended_next" in response.text
+    assert "projected_mastery_score" in response.text
+
+
 def test_parent_dashboard_uses_goozam_derived_visual_tokens_and_accessible_interactions() -> None:
     response = client.get("/parent")
     assert response.status_code == 200

@@ -13,7 +13,7 @@ def _context() -> TutorContext:
         skill_name="Linear relations",
         action="GIVE_HINT",
         hint_level=1,
-        problem_prompt="Find the rate of change.",
+        problem_prompt="3(x+4)",
     )
 
 

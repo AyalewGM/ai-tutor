@@ -2,6 +2,8 @@ import math
 from dataclasses import dataclass
 
 DEFAULT_MASTERY_HALF_LIFE_DAYS = 21.0
+DEFAULT_GUESS_PROBABILITY = 0.10
+DEFAULT_SLIP_PROBABILITY = 0.10
 
 ASSISTANCE_WEIGHTS = {
     0: 1.00,
@@ -43,6 +45,33 @@ def _difficulty_scaled_alpha(
     return max(0.05, min(0.60, alpha * (1 + 0.15 * gap)))
 
 
+def _performance_adjusted_evidence(
+    evidence: float,
+    correct: bool,
+    problem_difficulty: int | None,
+    learner_level: int | None,
+    guess: float,
+    slip: float,
+) -> float:
+    """Adjust the observation target by guess/slip performance parameters.
+
+    P(correct | mastered) = 1 - slip and P(correct | not mastered) = guess.
+    A correct answer is discounted by the guess probability (lucky or
+    scaffolded success is weaker evidence); a wrong answer is credited by
+    the slip probability (careless errors still carry partial evidence of
+    knowledge). Difficulty shifts both: hard problems lower guess and raise
+    slip, easy problems do the reverse.
+    """
+    gap = 0
+    if problem_difficulty is not None and learner_level is not None:
+        gap = max(-3, min(3, problem_difficulty - learner_level))
+    if correct:
+        guess_effective = max(0.0, min(0.5, guess * (1 - 0.15 * gap)))
+        return evidence * (1 - guess_effective)
+    slip_effective = max(0.0, min(0.5, slip * (1 + 0.15 * gap)))
+    return slip_effective
+
+
 def update_mastery(
     current_mastery: float,
     meaningful_attempts: int,
@@ -52,8 +81,17 @@ def update_mastery(
     *,
     problem_difficulty: int | None = None,
     learner_level: int | None = None,
+    guess: float = DEFAULT_GUESS_PROBABILITY,
+    slip: float = DEFAULT_SLIP_PROBABILITY,
 ) -> MasteryUpdate:
-    evidence = attempt_evidence(correct, assistance_level)
+    evidence = _performance_adjusted_evidence(
+        attempt_evidence(correct, assistance_level),
+        correct,
+        problem_difficulty,
+        learner_level,
+        guess,
+        slip,
+    )
     if problem_difficulty is not None and learner_level is not None:
         alpha = _difficulty_scaled_alpha(
             alpha, problem_difficulty, learner_level, correct

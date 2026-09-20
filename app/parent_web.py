@@ -101,8 +101,15 @@ def parent_dashboard_page() -> str:
       <h2 id="childTitle"></h2>
       <div id="context" class="muted"></div>
       <p><strong>Current focus:</strong> <span id="activeSkill">None</span></p>
+      <p><strong>Recommended next:</strong> <span id="recommendedNext">None</span></p>
       <p class="evidence-note">Progress below distinguishes assisted work from independent evidence. Limited observations are shown as insufficient evidence rather than as a weakness.</p>
     </div>
+
+    <section class="panel" id="reviewsPanel" aria-labelledby="reviewsHeading" hidden>
+      <h2 id="reviewsHeading">Reviews due</h2>
+      <p class="muted">Previously mastered skills due for a quick retention check. Projected mastery reflects time since the last independent evidence.</p>
+      <ul id="reviews"></ul>
+    </section>
 
     <section class="panel" aria-labelledby="summaryHeading">
       <h2 id="summaryHeading">Learning summary</h2>
@@ -131,6 +138,10 @@ const q = id => document.getElementById(id);
 
 async function request(path, options = {}) {
   const response = await fetch(api + path, {credentials: 'same-origin', ...options});
+  if (response.status === 401) {
+    window.location.assign('/login?next=/parent');
+    throw new Error('Authentication required');
+  }
   if (!response.ok) {
     let detail = `${response.status} ${response.statusText}`;
     try { const body = await response.json(); detail = body.detail || detail; } catch (_) {}
@@ -213,6 +224,12 @@ async function loadDashboard(studentId) {
   q('childTitle').textContent = `${d.child.first_name} · Grade ${d.child.grade_level}`;
   q('context').textContent = [d.child.jurisdiction, d.child.curriculum_name, d.child.school_system].filter(Boolean).join(' · ');
   q('activeSkill').textContent = d.active_skill_name || 'None';
+  q('recommendedNext').textContent = d.recommended_next
+    ? `${d.recommended_next.skill_name} (${friendlyStatus(d.recommended_next.reason)})`
+    : 'None';
+  const reviews = d.reviews_due || [];
+  q('reviewsPanel').hidden = reviews.length === 0;
+  q('reviews').innerHTML = reviews.map(r => `<li><strong>${escapeHtml(r.skill_name)}</strong> — ${escapeHtml(r.status)} · mastery ${Math.round(r.mastery_score * 100)}% → projected ${Math.round(r.projected_mastery_score * 100)}%</li>`).join('');
   renderSummary(d.skills);
   q('skills').innerHTML = d.skills.length ? d.skills.map(skillCard).join('') : '<p class="muted">No skill progress recorded yet.</p>';
   q('activity').innerHTML = d.recent_activity.length ? d.recent_activity.map(a => `<li>${escapeHtml(a.skill_name)} — ${escapeHtml(friendlyStatus(a.state))}</li>`).join('') : '<li class="muted">No recent activity.</li>';

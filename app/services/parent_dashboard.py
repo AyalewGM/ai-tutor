@@ -29,12 +29,14 @@ from app.parent_schemas import (
     ChildSummaryOut,
     LinkChildOut,
     RecentActivityOut,
+    RecommendedSkillOut,
     ReviewDueOut,
     SkillProgressOut,
     SupportAreaOut,
 )
 from app.services.curriculum_scope import CurriculumScopeError, resolve_student_curriculum_scope
 from app.services.parent_intelligence import ParentSkillEvidence, classify_parent_skill_progress
+from app.services.placement import recommend_next_skill
 from app.services.review_schedule import RELEARNING, reviews_due
 
 
@@ -358,6 +360,10 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         for item in review_items
     ]
 
+    recommendation = recommend_next_skill(
+        db, student_id=student.id, curriculum_id=scope.curriculum_id
+    )
+
     return ChildDashboardOut(
         child=child_summary(db, student),
         active_skill_name=active_skill_name,
@@ -365,4 +371,14 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         recent_activity=recent_activity,
         support_areas=support_areas,
         reviews_due=reviews_due_out,
+        recommended_next=(
+            RecommendedSkillOut(
+                skill_id=recommendation.skill.id,
+                skill_code=recommendation.skill.code,
+                skill_name=recommendation.skill.name,
+                reason=recommendation.reason,
+            )
+            if recommendation
+            else None
+        ),
     )

@@ -334,6 +334,7 @@ def respond(
             current_difficulty=next_progress.current_difficulty,
             state=transition.state,
             correct=evidence.evaluation.correct,
+            session_id=session.id,
         )
         tutor_action = transition.action
         tutor_hint_level = transition.hint_level

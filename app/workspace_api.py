@@ -24,6 +24,7 @@ from app.services.curriculum_scope import (
     require_skill_in_scope,
 )
 from app.services.hint_policy import select_hint
+from app.services.placement import recommend_next_skill
 from app.services.review_schedule import reviews_due
 
 router = APIRouter(prefix="/learner-workspace", tags=["learner-workspace"])
@@ -71,6 +72,12 @@ class WorkspaceReviewDueOut(BaseModel):
     status: str
 
 
+class WorkspaceRecommendedSkillOut(BaseModel):
+    skill_id: uuid.UUID
+    skill_name: str
+    reason: str
+
+
 class LearnerWorkspaceOut(BaseModel):
     session_id: uuid.UUID
     state: TutorState
@@ -82,6 +89,7 @@ class LearnerWorkspaceOut(BaseModel):
     allowed_actions: list[WorkspaceAction]
     evidence: WorkspaceEvidenceOut
     reviews_due: list[WorkspaceReviewDueOut] = Field(default_factory=list)
+    recommended_next: WorkspaceRecommendedSkillOut | None = None
 
 
 def _allowed_actions(state: TutorState) -> list[WorkspaceAction]:
@@ -184,4 +192,19 @@ def get_learner_workspace(
                 curriculum_id=scope.curriculum_id,
             )
         ],
+        recommended_next=(
+            WorkspaceRecommendedSkillOut(
+                skill_id=recommendation.skill.id,
+                skill_name=recommendation.skill.name,
+                reason=recommendation.reason,
+            )
+            if (
+                recommendation := recommend_next_skill(
+                    db,
+                    student_id=session.student_id,
+                    curriculum_id=scope.curriculum_id,
+                )
+            )
+            else None
+        ),
     )
