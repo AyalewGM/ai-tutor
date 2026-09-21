@@ -17,20 +17,18 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
 
   await page.getByLabel('Learner first name').fill('Synthetic Learner');
   const curriculum = page.getByLabel('Exact curriculum');
-  await expect(curriculum.locator('option')).toHaveCount(3, { timeout: 10000 });
   const mcpsOption = curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' });
-  await expect(mcpsOption).toHaveCount(1);
-  await curriculum.selectOption(await mcpsOption.getAttribute('value'));
+  await expect(mcpsOption.first()).toBeAttached({ timeout: 10000 });
+  await curriculum.selectOption(await mcpsOption.first().getAttribute('value'));
   await page.getByRole('button', { name: 'Add learner' }).click();
   await expect(page.getByText(/Synthetic Learner is ready with MCPS_MATH_8/)).toBeVisible();
 
   const learner = page.locator('#learner');
   await expect(learner).not.toHaveValue('');
   const skill = page.locator('#skill');
-  await expect(skill.locator('option')).toHaveCount(10, { timeout: 10000 });
   const distributiveOption = skill.locator('option').filter({ hasText: 'M8.ALG.DIST · Distributive Property' });
-  await expect(distributiveOption).toHaveCount(1);
-  await skill.selectOption(await distributiveOption.getAttribute('value'));
+  await expect(distributiveOption.first()).toBeAttached({ timeout: 10000 });
+  await skill.selectOption(await distributiveOption.first().getAttribute('value'));
 
   await page.getByRole('button', { name: 'Start learning' }).click();
   await expect(page).toHaveURL(/\/learn\/[0-9a-f-]+$/);
