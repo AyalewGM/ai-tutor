@@ -332,8 +332,8 @@ export default function Workspace() {
                   <div className={`problem ${feedback}`} aria-live="polite">
                     {workspace.problem?.prompt ??
                       "No problem is currently assigned."}
-                    <ProblemVisual spec={workspace.problem?.visual ?? null} />
                   </div>
+                  <ProblemVisual spec={workspace.problem?.visual ?? null} />
                   {feedback === "correct" && (
                     <ConfettiBurst trigger={celebrate} />
                   )}
