@@ -444,3 +444,85 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow
   color: var(--muted);
 }
 .tab.active { border-color: var(--primary); color: var(--primary); }
+
+/* Deterministic math visuals (Issue #42) */
+.visual {
+  display: block;
+  margin-top: 0.75rem;
+  max-width: 100%;
+}
+
+.viz-axis {
+  stroke: #475569;
+  stroke-width: 2;
+}
+
+.viz-tick {
+  stroke: #475569;
+  stroke-width: 1.5;
+}
+
+.viz-tick-label {
+  fill: #64748b;
+  font-size: 11px;
+}
+
+.viz-label {
+  fill: #1e293b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.viz-term {
+  fill: #0f172a;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.viz-cell {
+  stroke: #334155;
+  stroke-width: 1.5;
+}
+
+.viz-cell-a {
+  fill: #dbeafe;
+}
+
+.viz-cell-b {
+  fill: #fef3c7;
+}
+
+.viz-hop {
+  fill: none;
+  stroke-width: 2;
+}
+
+.viz-hop-a {
+  stroke: #2563eb;
+}
+
+.viz-hop-b {
+  stroke: #059669;
+}
+
+.viz-hop-label {
+  fill: #334155;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.viz-arrow-a {
+  fill: #2563eb;
+}
+
+.viz-arrow-b {
+  fill: #059669;
+}
+
+.viz-point-a {
+  fill: #2563eb;
+}
+
+.viz-point-b {
+  fill: #059669;
+}

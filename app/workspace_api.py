@@ -29,6 +29,7 @@ from app.services.curriculum_scope import (
 from app.services.hint_policy import select_hint
 from app.services.placement import recommend_next_skill
 from app.services.review_schedule import reviews_due
+from app.services.visualization import visualization_for
 
 router = APIRouter(prefix="/learner-workspace", tags=["learner-workspace"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -58,6 +59,7 @@ class WorkspaceProblemOut(BaseModel):
     id: uuid.UUID
     prompt: str
     difficulty: int
+    visual: dict | None = None
 
 
 class WorkspaceEvidenceOut(BaseModel):
@@ -178,6 +180,7 @@ def get_learner_workspace(
                 id=problem.id,
                 prompt=problem.prompt,
                 difficulty=problem.difficulty,
+                visual=visualization_for(problem),
             )
             if problem
             else None
