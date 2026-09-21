@@ -2,6 +2,7 @@ import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
+import ProblemVisual from "../components/ProblemVisual";
 import type {
   Award,
   HintResponse,
@@ -331,6 +332,7 @@ export default function Workspace() {
                   <div className={`problem ${feedback}`} aria-live="polite">
                     {workspace.problem?.prompt ??
                       "No problem is currently assigned."}
+                    <ProblemVisual spec={workspace.problem?.visual ?? null} />
                   </div>
                   {feedback === "correct" && (
                     <ConfettiBurst trigger={celebrate} />

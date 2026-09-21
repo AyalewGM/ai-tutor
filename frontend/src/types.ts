@@ -35,10 +35,21 @@ export type TutorState =
   | "COMPLETE"
   | "REVIEW";
 
+export interface VisualSpec {
+  type: string;
+  a?: number;
+  b?: number;
+  result?: number;
+  min?: number;
+  max?: number;
+  aria_label?: string;
+}
+
 export interface WorkspaceProblem {
   id: string;
   prompt: string;
   difficulty: number;
+  visual?: VisualSpec | null;
 }
 
 export interface LearnerWorkspace {
