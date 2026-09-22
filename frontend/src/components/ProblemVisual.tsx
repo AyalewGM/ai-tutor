@@ -9,6 +9,7 @@ export interface VisualSpec {
   denominator?: number;
   x?: number;
   y?: number;
+  angle?: number;
   aria_label?: string;
 }
 
@@ -79,6 +80,29 @@ function CoordinatePlane({ spec }: { spec: VisualSpec }) {
   );
 }
 
+function AngleDiagram({ spec }: { spec: VisualSpec }) {
+  const angle = Math.min(180, Math.max(0, spec.angle ?? spec.a ?? 45));
+  const cx = 80;
+  const cy = 145;
+  const radius = 90;
+  const radians = (angle * Math.PI) / 180;
+  const ex = cx + radius * Math.cos(radians);
+  const ey = cy - radius * Math.sin(radians);
+  const arcRadius = 34;
+  const ax = cx + arcRadius * Math.cos(radians);
+  const ay = cy - arcRadius * Math.sin(radians);
+  const largeArc = angle > 180 ? 1 : 0;
+  return (
+    <svg viewBox="0 0 260 190" className="visual" role="img" aria-label={spec.aria_label ?? `Angle measuring ${angle} degrees`}>
+      <line x1={cx} y1={cy} x2={cx + radius} y2={cy} className="viz-axis" />
+      <line x1={cx} y1={cy} x2={ex} y2={ey} className="viz-axis" />
+      {angle > 0 && <path d={`M ${cx + arcRadius} ${cy} A ${arcRadius} ${arcRadius} 0 ${largeArc} 0 ${ax} ${ay}`} className="viz-hop viz-hop-a" />}
+      <circle cx={cx} cy={cy} r="4" className="viz-point viz-point-a" />
+      <text x={cx + 44} y={cy - 18} className="viz-label">{angle}°</text>
+    </svg>
+  );
+}
+
 function NumberLine({ spec, compare = false }: { spec: VisualSpec; compare?: boolean }) {
   const min = spec.min ?? 0;
   const max = spec.max ?? 10;
@@ -131,5 +155,6 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "number_line_compare") return <NumberLine spec={spec} compare />;
   if (spec.type === "fraction_bar" || spec.type === "ratio_bar") return <FractionBar spec={spec} />;
   if (spec.type === "coordinate_plane" || spec.type === "coordinate_point") return <CoordinatePlane spec={spec} />;
+  if (spec.type === "angle" || spec.type === "angle_diagram") return <AngleDiagram spec={spec} />;
   return null;
 }
