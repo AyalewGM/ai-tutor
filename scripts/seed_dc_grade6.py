@@ -3,12 +3,35 @@ from decimal import Decimal
 from sqlalchemy import select
 
 from app.core.database import SessionLocal
-from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, EducationAuthority
+from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, EducationAuthority, Jurisdiction
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
 
 CURRICULUM_CODE = "DC_MATH_6"
 OSSE_SOURCE = "https://osse.dc.gov/node/1210952"
 DCPS_OVERLAY = "https://dcps.dc.gov/page/math"
+
+
+def _authority(db):
+    us = db.scalar(select(Jurisdiction).where(Jurisdiction.parent_id.is_(None), Jurisdiction.code == "US"))
+    if us is None:
+        us = Jurisdiction(code="US", name="United States", jurisdiction_type="COUNTRY")
+        db.add(us)
+        db.flush()
+    dc = db.scalar(select(Jurisdiction).where(Jurisdiction.parent_id == us.id, Jurisdiction.code == "DC"))
+    if dc is None:
+        dc = Jurisdiction(parent_id=us.id, code="DC", name="District of Columbia",
+                          jurisdiction_type="STATE_PROVINCE_TERRITORY", source_uri=OSSE_SOURCE)
+        db.add(dc)
+        db.flush()
+    authority = db.scalar(select(EducationAuthority).where(
+        EducationAuthority.jurisdiction_id == dc.id, EducationAuthority.code == "OSSE"))
+    if authority is None:
+        authority = EducationAuthority(jurisdiction_id=dc.id, code="OSSE",
+            name="Office of the State Superintendent of Education", authority_type="STATE_AGENCY",
+            source_uri=OSSE_SOURCE, provenance_json={"role": "DC mathematics standards authority"})
+        db.add(authority)
+        db.flush()
+    return authority
 
 
 def _skill(db, curriculum, code, name, description, level, canonical_code):
@@ -54,9 +77,7 @@ def _problem(db, skill, prompt, answer, difficulty=1):
 def seed():
     db = SessionLocal()
     try:
-        authority = db.scalar(select(EducationAuthority).where(EducationAuthority.code == "OSSE"))
-        if authority is None:
-            raise RuntimeError("OSSE education authority must be seeded before DC Grade 6 content")
+        authority = _authority(db)
         curriculum = db.scalar(select(Curriculum).where(Curriculum.code == CURRICULUM_CODE))
         if curriculum is None:
             curriculum = Curriculum(code=CURRICULUM_CODE, name="District of Columbia Grade 6 Mathematics",
