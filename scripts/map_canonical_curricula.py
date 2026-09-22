@@ -63,6 +63,10 @@ def map_existing_skills(db) -> int:
                     },
                 )
             )
+            # SessionLocal intentionally does not rely on query-time autoflush.
+            # Persist the mapping before the next idempotency lookup so a second
+            # invocation in the same transaction cannot stage a duplicate row.
+            db.flush()
             created += 1
     return created
 
