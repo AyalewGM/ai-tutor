@@ -282,11 +282,15 @@ def get_skill_map(
     except CurriculumScopeError as exc:
         raise HTTPException(409, str(exc)) from exc
 
-    skills = db.scalars(
-        select(Skill)
-        .where(Skill.curriculum_id == scope.curriculum_id)
-        .order_by(Skill.difficulty_level, Skill.code)
-    ).all()
+    # Group by strand (code prefix up to the last segment), then difficulty —
+    # strands like NUM and ALG should render as contiguous groups, not
+    # interleaved by difficulty_level.
+    skills = sorted(
+        db.scalars(
+            select(Skill).where(Skill.curriculum_id == scope.curriculum_id)
+        ).all(),
+        key=lambda s: (s.code.rsplit(".", 1)[0], s.difficulty_level, s.code),
+    )
     progress_rows = {
         row.skill_id: row
         for row in db.scalars(

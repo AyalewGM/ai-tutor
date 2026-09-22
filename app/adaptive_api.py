@@ -1,12 +1,21 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.api import _student_skill, _tutor_context
 from app.core.database import get_db
 from app.identity import CurrentParent, require_parent_owns_student
-from app.models import Skill, Student, TutorSession, TutorState, TutorTurn
+from app.models import (
+    Problem,
+    Skill,
+    SkillStatus,
+    Student,
+    TutorSession,
+    TutorState,
+    TutorTurn,
+)
 from app.schemas import LearningFocusOut, MasteryOut, ProblemOut, SessionCreate, SessionOut
 from app.services.curriculum_scope import (
     CurriculumScopeError,
@@ -43,6 +52,49 @@ def create_session(payload: SessionCreate, parent: CurrentParent, db: DbSession)
 
     progress = _student_skill(db, student.id, skill.id)
 
+    existing = db.scalar(
+        select(TutorSession)
+        .where(
+            TutorSession.student_id == student.id,
+            TutorSession.primary_skill_id == skill.id,
+            TutorSession.status == "ACTIVE",
+        )
+        .order_by(TutorSession.started_at.desc(), TutorSession.id.desc())
+    )
+    if existing is not None:
+        turn = db.scalar(
+            select(TutorTurn)
+            .where(TutorTurn.session_id == existing.id, TutorTurn.role == "TUTOR")
+            .order_by(TutorTurn.created_at.desc(), TutorTurn.id.desc())
+        )
+        problem = db.get(Problem, turn.problem_id) if turn and turn.problem_id else None
+        if problem is None:
+            focus_id = existing.active_skill_id or skill.id
+            problem = select_next_problem(
+                db,
+                skill_id=focus_id,
+                current_problem_id=None,
+                current_difficulty=progress.current_difficulty,
+                state=existing.current_state,
+            )
+        if problem is None:
+            raise HTTPException(404, "No problem configured for this skill")
+        return SessionOut(
+            session_id=existing.id,
+            state=existing.current_state,
+            mastery=MasteryOut(
+                score=progress.mastery_score,
+                confidence=progress.confidence_score,
+            ),
+            focus=_focus(existing),
+            problem=ProblemOut(
+                id=problem.id, prompt=problem.prompt, difficulty=problem.difficulty
+            ),
+            message=turn.message
+            if turn
+            else "Welcome back — pick up where you left off.",
+        )
+
     review = None
     if scope.curriculum_id is not None:
         review = due_review(
@@ -56,8 +108,22 @@ def create_session(payload: SessionCreate, parent: CurrentParent, db: DbSession)
         focus_progress = review.progress
         focus_skill = db.get(Skill, review.progress.skill_id) or skill
 
-    opening_state = TutorState.REVIEW if review is not None else TutorState.DIAGNOSE
-    opening_action = "START_REVIEW" if review is not None else "ASK_DIAGNOSTIC"
+    if review is not None:
+        opening_state = TutorState.REVIEW
+        opening_action = "START_REVIEW"
+    else:
+        opening_state = {
+            SkillStatus.MASTERED: TutorState.MASTERY_CHECK,
+            SkillStatus.REVIEW_DUE: TutorState.MASTERY_CHECK,
+            SkillStatus.PRACTICING: TutorState.INDEPENDENT_PRACTICE,
+            SkillStatus.LEARNING: TutorState.GUIDED_PRACTICE,
+            SkillStatus.INTRODUCED: TutorState.GUIDED_PRACTICE,
+        }.get(progress.status, TutorState.DIAGNOSE)
+        opening_action = {
+            TutorState.MASTERY_CHECK: "START_MASTERY_CHECK",
+            TutorState.INDEPENDENT_PRACTICE: "RESUME_TARGET",
+            TutorState.GUIDED_PRACTICE: "RESUME_TARGET",
+        }.get(opening_state, "ASK_DIAGNOSTIC")
 
     problem = select_next_problem(
         db,

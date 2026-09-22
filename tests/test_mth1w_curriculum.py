@@ -81,9 +81,14 @@ def test_mth1w_seed_is_idempotent_and_jurisdiction_local():
 
         problems = list(
             db.scalars(
-                select(Problem).where(Problem.primary_skill_id.in_(seeded_skill_ids))
+                select(Problem).where(
+                    Problem.primary_skill_id.in_(seeded_skill_ids),
+                    Problem.source_type == "CURATED",
+                )
             )
         )
+        # Count only curated seed rows — sibling tests may generate problems on
+        # these shared skills in the same test database.
         assert len(problems) == 10
         assert all(problem.primary_skill_id in seeded_skill_ids for problem in problems)
 

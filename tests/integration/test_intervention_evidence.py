@@ -10,6 +10,7 @@ from app.models import (
     InterventionRecord,
     Problem,
     Skill,
+    SkillPrerequisite,
     Student,
     TutorSession,
 )
@@ -37,13 +38,30 @@ def test_persisted_evidence_projects_and_records_auditable_gap() -> None:
     now = datetime.now(UTC)
     with SessionLocal() as db:
         curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MCPS_MATH_8"))
-        target = db.scalar(select(Skill).where(Skill.code == "M8.ALG.MULTI_STEP"))
-        prerequisite = db.scalar(select(Skill).where(Skill.code == "M8.ALG.DIST"))
         assert curriculum is not None
-        assert target is not None
-        assert prerequisite is not None
-        assert target.curriculum_id == curriculum.id
-        assert prerequisite.curriculum_id == curriculum.id
+        # Dedicated F010 skills keep fixture problems off real seeded skills so
+        # they can never be served to other tests via problem selection.
+        target = Skill(
+            curriculum_id=curriculum.id,
+            code=f"F010.TARGET.{uuid.uuid4().hex[:8]}",
+            name="F010 evidence target",
+            difficulty_level=99,
+        )
+        prerequisite = Skill(
+            curriculum_id=curriculum.id,
+            code=f"F010.PREREQ.{uuid.uuid4().hex[:8]}",
+            name="F010 evidence prerequisite",
+            difficulty_level=99,
+        )
+        db.add_all([target, prerequisite])
+        db.flush()
+        db.add(
+            SkillPrerequisite(
+                skill_id=target.id,
+                prerequisite_skill_id=prerequisite.id,
+            )
+        )
+        db.flush()
 
         student = Student(
             curriculum_id=curriculum.id,

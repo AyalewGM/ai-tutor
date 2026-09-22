@@ -14,6 +14,7 @@ from app.models import (
     Misconception,
     Problem,
     Skill,
+    SkillStatus,
     Student,
     StudentMisconception,
     StudentSkill,
@@ -104,12 +105,53 @@ def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
         raise HTTPException(409, str(exc)) from exc
 
     progress = _student_skill(db, student.id, skill.id)
+
+    existing = db.scalar(
+        select(TutorSession)
+        .where(
+            TutorSession.student_id == student.id,
+            TutorSession.primary_skill_id == skill.id,
+            TutorSession.status == "ACTIVE",
+        )
+        .order_by(TutorSession.started_at.desc(), TutorSession.id.desc())
+    )
+    if existing is not None:
+        turn = db.scalar(
+            select(TutorTurn)
+            .where(TutorTurn.session_id == existing.id, TutorTurn.role == "TUTOR")
+            .order_by(TutorTurn.created_at.desc(), TutorTurn.id.desc())
+        )
+        return SessionOut(
+            session_id=existing.id,
+            state=existing.current_state,
+            mastery=MasteryOut(
+                score=progress.mastery_score, confidence=progress.confidence_score
+            ),
+            problem=_problem_out(
+                db.get(Problem, turn.problem_id) if turn and turn.problem_id else None
+            ),
+            message=turn.message if turn else "Welcome back — pick up where you left off.",
+        )
+
+    start_state = {
+        SkillStatus.MASTERED: TutorState.REVIEW,
+        SkillStatus.REVIEW_DUE: TutorState.REVIEW,
+        SkillStatus.PRACTICING: TutorState.INDEPENDENT_PRACTICE,
+        SkillStatus.LEARNING: TutorState.GUIDED_PRACTICE,
+        SkillStatus.INTRODUCED: TutorState.GUIDED_PRACTICE,
+    }.get(progress.status, TutorState.DIAGNOSE)
+    start_action = {
+        TutorState.REVIEW: "START_REVIEW",
+        TutorState.INDEPENDENT_PRACTICE: "RESUME_TARGET",
+        TutorState.GUIDED_PRACTICE: "RESUME_TARGET",
+    }.get(start_state, "ASK_DIAGNOSTIC")
+
     problem = select_next_problem(
         db,
         skill_id=skill.id,
         current_problem_id=None,
         current_difficulty=progress.current_difficulty,
-        state=TutorState.DIAGNOSE,
+        state=start_state,
     )
     if problem is None:
         raise HTTPException(404, "No problem configured for this skill")
@@ -120,7 +162,7 @@ def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
         active_skill_id=skill.id,
         curriculum_id=scope.curriculum_id,
         curriculum_enrollment_id=scope.enrollment_id,
-        current_state=TutorState.DIAGNOSE,
+        current_state=start_state,
         starting_mastery=progress.mastery_score,
         session_goal=f"Diagnose and practice {skill.name}",
     )
@@ -132,8 +174,8 @@ def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
             db,
             student=student,
             skill=skill,
-            state=TutorState.DIAGNOSE,
-            action="ASK_DIAGNOSTIC",
+            state=start_state,
+            action=start_action,
             hint_level=None,
             problem=problem,
         )
@@ -143,8 +185,8 @@ def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
             session_id=session.id,
             role="TUTOR",
             message=generation.message,
-            state=TutorState.DIAGNOSE,
-            pedagogical_action="ASK_DIAGNOSTIC",
+            state=start_state,
+            pedagogical_action=start_action,
             problem_id=problem.id,
             llm_model=generation.model,
             metadata_json={
