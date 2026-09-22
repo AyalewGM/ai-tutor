@@ -51,7 +51,7 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   await page.getByRole('link', { name: 'Parent' }).click();
   await expect(page).toHaveURL(/\/app\/parent$/);
   await expect(page.getByRole('heading', { name: 'Family learning overview' })).toBeVisible();
-  await expect(page.getByLabel('Learner')).toContainText('React Learner');
+  await expect(page.getByLabel('Learner', { exact: true })).toContainText('React Learner');
   await expect(page.getByText('Assisted success is shown separately')).toBeVisible();
   await page.getByRole('link', { name: 'Practice' }).click();
 
