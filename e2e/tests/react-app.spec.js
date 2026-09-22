@@ -46,6 +46,15 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   await page.getByRole('button', { name: 'Add learner' }).click();
   await expect(page.getByText('React Learner is ready.')).toBeVisible();
 
+  // F-022: parent dashboard uses the same authorized family data and keeps
+  // independent evidence visibly separate from assisted success.
+  await page.getByRole('link', { name: 'Parent' }).click();
+  await expect(page).toHaveURL(/\/app\/parent$/);
+  await expect(page.getByRole('heading', { name: 'Family learning overview' })).toBeVisible();
+  await expect(page.getByLabel('Learner', { exact: true })).toContainText('React Learner');
+  await expect(page.getByText('Assisted success is shown separately')).toBeVisible();
+  await page.getByRole('link', { name: 'Practice' }).click();
+
   const learner = page.locator('#learner');
   const learnerOption = learner.locator('option').filter({ hasText: 'React Learner' });
   await learner.selectOption(await learnerOption.getAttribute('value'));

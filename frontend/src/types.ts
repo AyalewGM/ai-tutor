@@ -116,3 +116,41 @@ export interface HintResponse {
   level: number;
   message: string;
 }
+
+
+export interface ChildSummary {
+  id: string;
+  first_name: string;
+  grade_level: string;
+  school_system: string | null;
+  curriculum_name: string | null;
+  curriculum_code: string | null;
+  curriculum_version: string | null;
+  jurisdiction: string | null;
+}
+
+export interface ParentSkillProgress {
+  skill_id: string;
+  skill_code: string;
+  skill_name: string;
+  status: string;
+  attempt_count: number;
+  independent_attempt_count: number;
+  independent_correct_count: number;
+  hinted_correct_count: number;
+  evidence_status: string;
+  learning_state: string;
+  assistance_signal: string;
+  reason_code: string;
+  action_code: string;
+}
+
+export interface ChildDashboard {
+  child: ChildSummary;
+  active_skill_name: string | null;
+  skills: ParentSkillProgress[];
+  recent_activity: { session_id: string; skill_name: string; state: string; started_at: string; ended_at: string | null }[];
+  support_areas: { code: string; name: string; occurrence_count: number }[];
+  reviews_due: { skill_id: string; skill_code: string; skill_name: string; status: string; due_at: string; interval_index: number; mastery_score: number; projected_mastery_score: number }[];
+  recommended_next: { skill_id: string; skill_code: string; skill_name: string; reason: string } | null;
+}
