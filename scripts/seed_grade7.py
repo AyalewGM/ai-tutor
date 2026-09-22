@@ -3,7 +3,7 @@ from decimal import Decimal
 from sqlalchemy import select
 
 from app.core.database import SessionLocal
-from app.curriculum_models import EducationAuthority
+from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, EducationAuthority
 from app.models import Curriculum, Misconception, Problem, Skill, SkillPrerequisite
 
 CURRICULUM_CODE = "MCPS_MATH_7"
@@ -31,6 +31,33 @@ def _skill(
         )
         db.add(skill)
         db.flush()
+    canonical_code = "MATH." + code.split(".", 1)[1]
+    canonical = db.scalar(select(CanonicalSkill).where(CanonicalSkill.code == canonical_code))
+    if canonical is None:
+        canonical = CanonicalSkill(
+            code=canonical_code,
+            name=name,
+            description=description,
+            subject="MATHEMATICS",
+        )
+        db.add(canonical)
+        db.flush()
+    mapping = db.scalar(
+        select(CurriculumSkillMapping).where(CurriculumSkillMapping.skill_id == skill.id)
+    )
+    if mapping is None:
+        db.add(
+            CurriculumSkillMapping(
+                canonical_skill_id=canonical.id,
+                skill_id=skill.id,
+                mapping_type="EQUIVALENT",
+                provenance_json={
+                    "basis": "AI Tutor authored curriculum mapping",
+                    "curriculum_code": curriculum.code,
+                    "curriculum_version": curriculum.version,
+                },
+            )
+        )
     return skill
 
 
