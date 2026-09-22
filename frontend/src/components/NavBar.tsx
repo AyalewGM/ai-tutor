@@ -20,7 +20,7 @@ export default function NavBar() {
       </Link>
       <nav>
         <Link to="/learn">Practice</Link>
-        <a href="/parent">Parent</a>
+        <Link to="/parent">Parent</Link>
         <button className="linklike" onClick={signOut}>
           Sign out
         </button>
