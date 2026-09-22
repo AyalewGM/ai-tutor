@@ -108,3 +108,36 @@ class StudentCurriculumEnrollment(Base):
     effective_to: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     source_uri: Mapped[str | None] = mapped_column(Text)
     provenance_json: Mapped[dict | None] = mapped_column(JSONB)
+
+
+class CanonicalSkill(Base):
+    """Curriculum-neutral mathematical identity; never stores learner evidence."""
+
+    __tablename__ = "canonical_skills"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    code: Mapped[str] = mapped_column(String(120), unique=True, index=True)
+    name: Mapped[str] = mapped_column(String(255))
+    description: Mapped[str | None] = mapped_column(Text)
+    subject: Mapped[str] = mapped_column(String(80), default="MATHEMATICS")
+
+
+class CurriculumSkillMapping(Base):
+    """Maps a curriculum-local skill to reusable mathematical identity.
+
+    Mastery, attempts, prerequisites and interventions remain attached to the
+    curriculum-local Skill row, preserving jurisdiction/version isolation.
+    """
+
+    __tablename__ = "curriculum_skill_mappings"
+    __table_args__ = (
+        UniqueConstraint("skill_id", name="uq_curriculum_skill_mapping_skill"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    canonical_skill_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("canonical_skills.id"), index=True
+    )
+    skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("skills.id"), index=True)
+    mapping_type: Mapped[str] = mapped_column(String(40), default="EQUIVALENT")
+    provenance_json: Mapped[dict | None] = mapped_column(JSONB)
