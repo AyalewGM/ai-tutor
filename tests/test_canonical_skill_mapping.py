@@ -2,7 +2,7 @@ from sqlalchemy import select
 
 from app.core.database import SessionLocal
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
-from app.models import Curriculum, Skill, StudentSkillMastery
+from app.models import Curriculum, Skill, StudentSkill
 from scripts.seed_grade7 import CURRICULUM_CODE, seed
 
 
@@ -32,6 +32,6 @@ def test_grade7_canonical_mappings_are_idempotent_and_local_evidence_stays_local
         # remains attached to curriculum-local Skill rows.
         assert not hasattr(CanonicalSkill, "student_id")
         assert not hasattr(CurriculumSkillMapping, "student_id")
-        assert StudentSkillMastery.skill_id.property.columns[0].foreign_keys
+        assert StudentSkill.skill_id.property.columns[0].foreign_keys
     finally:
         db.close()
