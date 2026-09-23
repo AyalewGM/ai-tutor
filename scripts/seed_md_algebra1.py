@@ -58,16 +58,28 @@ def _canonical_code(skill_code: str) -> str:
 
 
 def seed() -> None:
-    # Preserve the accepted pilot content/problem inventory, then upgrade its
-    # standards authority and canonical identity in place. This avoids cloning
-    # pedagogy or learner-facing content into a second Maryland curriculum.
-    seed_legacy_algebra1()
+    # Upgrade the accepted pilot once, then operate directly on the upgraded
+    # curriculum on subsequent runs. Re-running the legacy seed after its code
+    # has been renamed would create a second pilot row and violate the unique
+    # authority/code/version identity when that row is upgraded.
+    db = SessionLocal()
+    try:
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == CURRICULUM_CODE))
+        legacy = db.scalar(select(Curriculum).where(Curriculum.code == LEGACY_CODE))
+    finally:
+        db.close()
+
+    if curriculum is None and legacy is None:
+        seed_legacy_algebra1()
+
     db = SessionLocal()
     try:
         authority = _authority(db)
-        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == LEGACY_CODE))
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == CURRICULUM_CODE))
         if curriculum is None:
-            raise RuntimeError("Legacy Algebra I seed did not create its curriculum")
+            curriculum = db.scalar(select(Curriculum).where(Curriculum.code == LEGACY_CODE))
+        if curriculum is None:
+            raise RuntimeError("Algebra I seed did not create or locate its curriculum")
 
         curriculum.code = CURRICULUM_CODE
         curriculum.name = "Maryland Algebra I — revised MCCRS — SY 2026-27"
