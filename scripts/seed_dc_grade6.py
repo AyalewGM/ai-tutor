@@ -3,7 +3,12 @@ from decimal import Decimal
 from sqlalchemy import select
 
 from app.core.database import SessionLocal
-from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, EducationAuthority, Jurisdiction
+from app.curriculum_models import (
+    CanonicalSkill,
+    CurriculumSkillMapping,
+    EducationAuthority,
+    Jurisdiction,
+)
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
 
 CURRICULUM_CODE = "DC_MATH_6"
