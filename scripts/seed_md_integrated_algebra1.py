@@ -26,7 +26,7 @@ def _authority(db):
         db.add(us); db.flush()
     md = db.scalar(select(Jurisdiction).where(Jurisdiction.parent_id == us.id, Jurisdiction.code == "MD"))
     if md is None:
-        md = Jurisdiction(parent_id=us.id, code="MD", name="Maryland", jurisdiction_type="STATE_PROVINCE_TERRITORY", source_uri=MSDE_SOURCE)
+        md = Jurisdiction(code="MD", name="Maryland", jurisdiction_type="STATE_PROVINCE_TERRITORY", parent_id=us.id, source_uri=MSDE_SOURCE)
         db.add(md); db.flush()
     authority = db.scalar(select(EducationAuthority).where(EducationAuthority.jurisdiction_id == md.id, EducationAuthority.code == "MSDE"))
     if authority is None:
@@ -75,7 +75,9 @@ def seed() -> None:
             ("IA1.DS.A.1", "Correlation and Causation", "Distinguish correlation from causation when interpreting statistical relationships.", 2, "MATH.IA1.DS.A.1"),
             ("IA1.AT.B.8", "Linear-Inequality Optimization", "Model constraints with systems of linear inequalities, identify the feasible region, and justify an optimal solution in context.", 3, "MATH.IA1.AT.B.8"),
             ("IA1.AT.D.15", "Linear and Exponential Models", "Construct, compare, and interpret linear and exponential models in context, including rates of change and growth factors.", 3, "MATH.IA1.AT.D.15"),
+            ("IA1.AT.D.16", "Function Transformations", "Describe and compare transformations of functions, including translations, reflections, and changes in scale, using representations and function notation.", 3, "MATH.IA1.AT.D.16"),
             ("IA1.AT.D.17", "Inverse Linear Functions", "Find and interpret inverse linear functions and connect an inverse to reversing the input-output relationship.", 3, "MATH.IA1.AT.D.17"),
+            ("IA1.DS.B.6", "Two-Way Data and Association", "Use two-way frequency data and relative frequencies to describe possible associations between categorical variables without treating association as causation.", 2, "MATH.IA1.DS.B.6"),
         ]
         skills = {code: _skill(db, curriculum, code, name, desc, level, canonical) for code, name, desc, level, canonical in specs}
         problems = [
@@ -84,7 +86,9 @@ def seed() -> None:
             ("IA1.DS.A.1", "A study finds that students who carry umbrellas are more likely to wear raincoats. Does this correlation alone prove that umbrellas cause people to wear raincoats?", "No", 1),
             ("IA1.AT.B.8", "A club sells adult tickets x and student tickets y. Capacity gives x + y <= 100 and staffing gives x <= 60. If revenue is 10x + 6y, what quantity should be maximized?", "10x + 6y", 2),
             ("IA1.AT.D.15", "Plan A starts at 20 and increases by 5 each week. Plan B starts at 20 and multiplies by 1.10 each week. Which plan is exponential?", "Plan B", 2),
+            ("IA1.AT.D.16", "The graph of g(x) = f(x) + 4 is compared with the graph of f. What vertical translation produces g?", "4 units up", 2),
             ("IA1.AT.D.17", "A linear function is f(x) = 3x + 6. What is f inverse of x?", "(x - 6) / 3", 2),
+            ("IA1.DS.B.6", "In a survey, 30 of 50 bus riders and 10 of 50 car riders prefer an early start. Which group has the greater relative frequency of preferring an early start?", "Bus riders", 2),
         ]
         for code, prompt, answer, difficulty in problems:
             _problem(db, skills[code], prompt, answer, difficulty)
