@@ -19,7 +19,7 @@ export default function NavBar() {
         <span className="brand-label">AI Tutor</span>
       </Link>
       <nav aria-label="Primary navigation">
-        <Link to="/learn" aria-current={active("/learn") ? "page" : undefined}>Learn</Link>
+        <Link to="/learn" aria-current={active("/learn") ? "page" : undefined}>Practice</Link>
         <Link to="/parent" aria-current={active("/parent") ? "page" : undefined}>Parent</Link>
         <button className="linklike" onClick={signOut}>Sign out</button>
       </nav>
