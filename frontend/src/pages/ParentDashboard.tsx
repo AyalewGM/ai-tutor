@@ -68,13 +68,13 @@ export default function ParentDashboard() {
       <main className="page parent-page">
         <section className="hero hero-row">
           <div>
-            <h1>Family learning overview</h1>
+            <p className="eyebrow">Parent dashboard</p>\n            <h1>Family learning overview</h1>
             <p>See what your child can do independently, where support is helping, and what comes next.</p>
           </div>
           <a className="secondary link-btn" href="/parent/settings">Settings &amp; privacy</a>
         </section>
 
-        <section className="card parent-selector" aria-labelledby="child-heading">
+        <section className="card parent-selector parent-switcher" aria-labelledby="child-heading">
           <div>
             <h2 id="child-heading">Choose a learner</h2>
             <p className="muted small">Progress is always scoped to the learner's exact curriculum and version.</p>
@@ -101,7 +101,7 @@ export default function ParentDashboard() {
 
         {dashboard && !loading && (
           <>
-            <section className="card parent-overview">
+            <section className="card parent-overview parent-overview-feature">
               <div className="hero-row">
                 <div>
                   <p className="eyebrow">Current learning picture</p>
@@ -120,7 +120,7 @@ export default function ParentDashboard() {
               </p>
             </section>
 
-            <section aria-labelledby="summary-heading">
+            <section className="progress-section" aria-labelledby="summary-heading">
               <h2 id="summary-heading">At a glance</h2>
               <div className="parent-summary">
                 <article className="summary-tile"><span>Independent mastery</span><strong>{counts.mastered}</strong></article>
@@ -130,7 +130,7 @@ export default function ParentDashboard() {
               </div>
             </section>
 
-            <section className="card" aria-labelledby="skills-heading">
+            <section className="card parent-skills-card" aria-labelledby="skills-heading">
               <div className="card-title-row">
                 <div>
                   <h2 id="skills-heading">Skills and next steps</h2>
@@ -158,7 +158,27 @@ export default function ParentDashboard() {
               </div>
             </section>
 
-            <div className="grid two">
+            <section className="card recent-activity-card" aria-labelledby="activity-heading">
+              <div className="card-title-row">
+                <div>
+                  <p className="eyebrow">Learning history</p>
+                  <h2 id="activity-heading">Recent activity</h2>
+                </div>
+                <span className="status-pill">{dashboard.recent_activity.length} recent</span>
+              </div>
+              {dashboard.recent_activity.length ? (
+                <ul className="activity-list">
+                  {dashboard.recent_activity.slice(0, 5).map((activity) => (
+                    <li key={activity.session_id}>
+                      <div><strong>{activity.skill_name}</strong><span>{friendly(activity.state)}</span></div>
+                      <time dateTime={activity.started_at}>{new Date(activity.started_at).toLocaleDateString()}</time>
+                    </li>
+                  ))}
+                </ul>
+              ) : <p className="muted">No recent learning sessions yet.</p>}
+            </section>
+
+            <div className="grid two parent-support-grid">
               <section className="card">
                 <h2>Reviews due</h2>
                 {dashboard.reviews_due.length ? (
