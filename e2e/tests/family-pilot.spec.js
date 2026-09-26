@@ -13,7 +13,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await page.getByLabel('Password').fill(password);
   await page.getByLabel('Display name (registration only)').fill('Synthetic Pilot Parent');
   await page.getByRole('button', { name: 'Create account' }).click();
-  await expect(page.getByText('Choose your learning path')).toBeVisible();
+  await expect(page.getByText('Choose a learner and curriculum, or start learning.')).toBeVisible();
 
   await page.getByLabel('Learner first name').fill('Synthetic Learner');
   const curriculum = page.getByLabel('Exact curriculum');
@@ -21,7 +21,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await expect(mcpsOption.first()).toBeAttached({ timeout: 10000 });
   await curriculum.selectOption(await mcpsOption.first().getAttribute('value'));
   await page.getByRole('button', { name: 'Add learner' }).click();
-  await expect(page.getByText('Synthetic Learner is ready.')).toBeVisible();
+  await expect(page.getByText(/Synthetic Learner is ready with MCPS_MATH_8/)).toBeVisible();
 
   const learner = page.locator('#learner');
   await expect(learner).not.toHaveValue('');
@@ -56,10 +56,10 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await expect(page.getByText('Correct. Keep going.')).toBeVisible();
 
   await page.goto(`${baseURL}/parent`);
-  await expect(page.getByRole('heading', { name: 'Family learning overview' })).toBeVisible();
-  await expect(page.getByLabel('Learner', { exact: true })).toContainText('Synthetic Learner');
-  await expect(page.getByText('Assisted success is shown separately and never counted as independent mastery.')).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'At a glance' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Parent Dashboard' })).toBeVisible();
+  await expect(page.getByLabel('Child')).toContainText('Synthetic Learner');
+  await expect(page.getByText('Progress below distinguishes assisted work from independent evidence.')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Learning summary' })).toBeVisible();
 
   const outsider = await browser.newContext();
   const outsiderPage = await outsider.newPage();
@@ -69,7 +69,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await outsiderPage.getByLabel('Password').fill(password);
   await outsiderPage.getByLabel('Display name (registration only)').fill('Synthetic Unrelated Parent');
   await outsiderPage.getByRole('button', { name: 'Create account' }).click();
-  await expect(outsiderPage.getByText('Choose your learning path')).toBeVisible();
+  await expect(outsiderPage.getByText('Choose a learner and curriculum, or start learning.')).toBeVisible();
   await outsiderPage.goto(sessionUrl);
   await expect(outsiderPage.getByRole('alert')).toContainText('Learner not found');
 
