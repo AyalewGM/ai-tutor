@@ -262,3 +262,33 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow:
   .start-panel { align-items:stretch; flex-direction:column; }
   .start-panel .primary { width:100%; }
 }
+
+
+/* F-013 parent pilot journey */
+.parent-page { max-width:1180px; }
+.parent-switcher { margin-bottom:1.25rem; background:rgba(255,255,255,.76); }
+.parent-overview-feature { position:relative; overflow:hidden; border-top:4px solid var(--color-brand); }
+.parent-overview-feature::after {
+  content:""; position:absolute; width:180px; height:180px; border-radius:50%;
+  right:-90px; top:-110px; background:rgba(103,48,195,.07); pointer-events:none;
+}
+.progress-section > h2 { margin-bottom:.7rem; }
+.parent-summary .summary-tile { min-height:108px; display:flex; flex-direction:column; justify-content:space-between; }
+.parent-skills-card { margin-top:.25rem; }
+.parent-skill { transition:border-color .16s ease,box-shadow .16s ease; }
+.parent-skill:hover { border-color:#c8bddc; box-shadow:0 6px 18px rgba(36,25,66,.06); }
+.recent-activity-card { margin-top:1.25rem; }
+.activity-list { list-style:none; margin:.6rem 0 0; padding:0; }
+.activity-list li { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.8rem 0; border-bottom:1px solid var(--color-border); }
+.activity-list li:last-child { border-bottom:0; }
+.activity-list li div { min-width:0; }
+.activity-list strong,.activity-list span { display:block; }
+.activity-list span,.activity-list time { color:var(--color-text-muted); font-size:.8rem; }
+.activity-list time { flex-shrink:0; }
+.parent-support-grid { margin-top:1.25rem; }
+@media (max-width:640px) {
+  .parent-page .hero-row { align-items:flex-start; flex-direction:column; }
+  .parent-page .hero-row .link-btn { width:100%; text-align:center; box-sizing:border-box; }
+  .next-focus { width:100%; min-width:0; box-sizing:border-box; }
+  .activity-list li { align-items:flex-start; }
+}
