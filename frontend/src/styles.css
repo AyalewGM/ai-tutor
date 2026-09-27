@@ -292,3 +292,12 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow:
   .next-focus { width:100%; min-width:0; box-sizing:border-box; }
   .activity-list li { align-items:flex-start; }
 }
+
+
+/* F-023 commercial learner polish */
+.continue-panel { border: 1px solid rgba(103,48,195,.2); background: linear-gradient(135deg,rgba(103,48,195,.08),rgba(8,126,164,.06)); padding: 1.1rem 1.2rem; border-radius: var(--radius-md); }
+.continue-panel > div { display:flex; flex-direction:column; gap:.2rem; }
+.continue-panel .primary { min-width: 150px; }
+.skill-choice strong { font-size:1rem; line-height:1.3; }
+.skill-choice.selected { box-shadow:0 0 0 2px rgba(103,48,195,.16),var(--shadow-card); }
+@media (max-width:640px) { .continue-panel { align-items:stretch; } .continue-panel .primary { width:100%; } }

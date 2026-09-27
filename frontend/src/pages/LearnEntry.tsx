@@ -63,7 +63,7 @@ export default function LearnEntry() {
         <section className="hero learn-hero">
           <p className="eyebrow">Learner home</p>
           <h1>{selectedLearner ? `Ready to learn, ${selectedLearner.first_name}?` : "Choose your learning path"}</h1>
-          <p>Select the learner first, then choose a curriculum-aligned skill to practice.</p>
+          <p>Choose a learner, select a ready skill, and begin focused practice.</p>
         </section>
 
         <section className="learner-switcher" aria-labelledby="learner-heading">
