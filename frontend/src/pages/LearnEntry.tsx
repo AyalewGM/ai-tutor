@@ -15,6 +15,7 @@ export default function LearnEntry() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [skillsLoading, setSkillsLoading] = useState(false);
+  const [topicFilter, setTopicFilter] = useState("All topics");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,6 +56,23 @@ export default function LearnEntry() {
   const selectedLearner = learners.find((learner) => learner.id === learnerId);
   const selectedSkill = skills.find((skill) => skill.id === skillId);
   const readyCount = useMemo(() => skills.filter((skill) => skill.content_ready).length, [skills]);
+  const topicFor = (skill: SkillChoice) => {
+    const text = `${skill.code} ${skill.name}`.toLowerCase();
+    if (/fraction|decimal/.test(text)) return "Fractions & decimals";
+    if (/geometr|shape|angle|coordinate|area|perimeter|volume|line/.test(text)) return "Geometry";
+    if (/measure|length|time|money|clock/.test(text)) return "Measurement & time";
+    if (/graph|data|plot|table/.test(text)) return "Data & graphs";
+    if (/pattern|equation|algebra|expression|distribut|linear|variable/.test(text)) return "Patterns & algebra";
+    return "Numbers & operations";
+  };
+  const topics = useMemo(
+    () => ["All topics", ...Array.from(new Set(skills.map(topicFor)))],
+    [skills],
+  );
+  const visibleSkills = useMemo(
+    () => topicFilter === "All topics" ? skills : skills.filter((skill) => topicFor(skill) === topicFilter),
+    [skills, topicFilter],
+  );
 
   return (
     <>
@@ -63,7 +81,7 @@ export default function LearnEntry() {
         <section className="hero learn-hero">
           <p className="eyebrow">Learner home</p>
           <h1>{selectedLearner ? `Ready to learn, ${selectedLearner.first_name}?` : "Choose your learning path"}</h1>
-          <p>Choose a learner, select a ready skill, and begin focused practice.</p>
+          <p>Continue learning or explore a topic you want to practice today.</p>
         </section>
 
         <section className="learner-switcher" aria-labelledby="learner-heading">
@@ -91,8 +109,9 @@ export default function LearnEntry() {
           <section className="card skill-discovery" aria-labelledby="skill-heading">
             <div className="section-heading">
               <div>
-                <p className="eyebrow">Practice</p>
-                <h2 id="skill-heading">Choose a skill</h2>
+                <p className="eyebrow">Your choice</p>
+                <h2 id="skill-heading">Explore Topics</h2>
+                <p className="muted small">Pick what you want to practice. Your progress is still earned from your work.</p>
               </div>
               {selectedSkill && <span className="status-pill">Selected</span>}
             </div>
@@ -101,14 +120,20 @@ export default function LearnEntry() {
             {learnerId && skillsLoading && <p className="muted" role="status">Loading curriculum skills…</p>}
             {learnerId && !skillsLoading && (
               <>
-                <label htmlFor="skill">Skill</label>
-                <select id="skill" value={skillId} onChange={(e) => setSkillId(e.target.value)} required>
-                  <option value="">Select skill</option>
-                  {skills.map((skill) => <option key={skill.id} value={skill.id} disabled={!skill.content_ready}>{skill.code} · {skill.name}{skill.content_ready ? "" : " (content in progress)"}</option>)}
-                </select>
+                <nav className="topic-grid" aria-label="Explore math topics">
+                  {topics.map((topic) => (
+                    <button key={topic} type="button"
+                      className={topic === topicFilter ? "topic-choice selected" : "topic-choice"}
+                      aria-pressed={topic === topicFilter}
+                      onClick={() => setTopicFilter(topic)}>
+                      <strong>{topic}</strong>
+                      <span>{topic === "All topics" ? `${readyCount} ready skills` : "Explore skills"}</span>
+                    </button>
+                  ))}
+                </nav>
 
-                <div className="skill-grid" aria-label="Available skills">
-                  {skills.map((skill) => (
+                <div className="skill-grid" aria-label={`Skills in ${topicFilter}`}>
+                  {visibleSkills.map((skill) => (
                     <button key={skill.id} type="button"
                       className={skill.id === skillId ? "skill-choice selected" : "skill-choice"}
                       disabled={!skill.content_ready}
@@ -120,7 +145,7 @@ export default function LearnEntry() {
                     </button>
                   ))}
                 </div>
-                {!skills.length && <div className="guided-empty"><strong>No skills are available yet.</strong><p>This curriculum does not currently have learner-ready practice content.</p></div>}
+                {!visibleSkills.length && <div className="guided-empty"><strong>No skills are available in this topic yet.</strong><p>This curriculum does not currently have learner-ready practice content.</p></div>}
               </>
             )}
 

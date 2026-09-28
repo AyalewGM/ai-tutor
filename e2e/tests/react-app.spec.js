@@ -60,10 +60,12 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   await learner.selectOption(await learnerOption.getAttribute('value'));
   await expect(page.getByRole('heading', { name: 'Ready to learn, React Learner?' })).toBeVisible();
   await expect(page.getByLabel('Learning context')).toBeVisible();
-  const skill = page.locator('#skill');
-  await expect(skill.locator('option')).not.toHaveCount(1, { timeout: 10000 });
-  const distOption = skill.locator('option').filter({ hasText: 'M8.ALG.DIST · Distributive Property' });
-  await skill.selectOption(await distOption.getAttribute('value'));
+  await expect(page.getByRole('heading', { name: 'Explore Topics' })).toBeVisible();
+  await page.getByRole('button', { name: /Patterns & algebra/ }).click();
+  const distSkill = page.locator('.skill-choice').filter({ hasText: 'Distributive Property' });
+  await expect(distSkill).toHaveCount(1, { timeout: 10000 });
+  await expect(distSkill).toBeVisible();
+  await distSkill.click();
 
   await page.getByRole('button', { name: 'Start learning' }).click();
   await expect(page).toHaveURL(/\/app\/learn\/[0-9a-f-]+$/);
