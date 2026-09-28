@@ -62,8 +62,9 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   await expect(page.getByLabel('Learning context')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Explore Topics' })).toBeVisible();
   await page.getByRole('button', { name: /Patterns & algebra/ }).click();
-  const distSkill = page.getByRole('button', { name: /M8\.ALG\.DIST.*Distributive Property/ });
-  await expect(distSkill).toBeVisible({ timeout: 10000 });
+  const distSkill = page.locator('.skill-choice').filter({ hasText: 'Distributive Property' });
+  await expect(distSkill).toHaveCount(1, { timeout: 10000 });
+  await expect(distSkill).toBeVisible();
   await distSkill.click();
 
   await page.getByRole('button', { name: 'Start learning' }).click();
