@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "jurisdiction": {
+    "country_code": "US",
+    "code": "DC",
+    "name": "District of Columbia",
+    "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
+    "source_uri": "https://osse-migrate.dc.gov/service/district-columbia-standards-learning-0"
+  },
+  "authority": {
+    "code": "OSSE",
+    "name": "Office of the State Superintendent of Education",
+    "authority_type": "STATE_AGENCY",
+    "source_uri": "https://osse-migrate.dc.gov/service/district-columbia-standards-learning-0"
+  },
+  "curriculum": {
+    "code": "DC_MATH_3_2024_25",
+    "name": "District of Columbia Grade 3 Mathematics — Common Core State Standards",
+    "version": "CCSS-OSSE-2024-25",
+    "grade_level": "3",
+    "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf"
+  },
+  "expectations": [
+    {
+      "source_identifier": "3.OA.A",
+      "title": "Represent and solve problems involving multiplication and division",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Operations and Algebraic Thinking",
+      "description": "Interpret products and quotients of whole numbers, use multiplication and division within 100 to solve word problems, and determine unknown whole numbers in equations."
+    },
+    {
+      "source_identifier": "3.NF.A",
+      "title": "Develop understanding of fractions as numbers",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Number and Operations—Fractions",
+      "description": "Understand fractions 1/b and a/b, represent fractions on a number line, and explain equivalence and comparison of fractions."
+    },
+    {
+      "source_identifier": "3.MD.C",
+      "title": "Geometric measurement: understand concepts of area",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Measurement and Data",
+      "description": "Recognize area as an attribute of plane figures, understand concepts of area measurement, and relate area to multiplication and addition."
+    }
+  ],
+  "skills": [
+    {
+      "code": "DC3.OA.EQUAL_GROUPS",
+      "name": "Multiplication as Equal Groups",
+      "description": "Interpret products as equal groups and arrays.",
+      "difficulty_level": 1,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MULTIPLICATION.EQUAL_GROUPS",
+        "name": "Multiplication as Equal Groups",
+        "description": "Understand multiplication as equal groups, arrays, and repeated addition."
+      },
+      "standard_refs": ["3.OA.A"],
+      "prerequisite_codes": [],
+      "problem_families": ["EQUAL_GROUPS"],
+      "problems": [
+        {
+          "key": "dc3-oa-equal-groups-diagnostic-01",
+          "family": "EQUAL_GROUPS",
+          "prompt": "A Metro train has 4 cars with 6 seats in each car. How many seats are on the train?",
+          "canonical_answer": "24",
+          "difficulty": 1,
+          "objective": "Diagnose whether the learner interprets an equal-groups product.",
+          "modes": ["diagnostic"],
+          "parameters": {"rows": 4, "columns": 6, "representation": "groups"}
+        },
+        {
+          "key": "dc3-oa-equal-groups-guided-01",
+          "family": "EQUAL_GROUPS",
+          "prompt": "A bakery packs 5 boxes with 3 muffins in each box. How many muffins are packed in all?",
+          "canonical_answer": "15",
+          "difficulty": 1,
+          "objective": "Guide the learner from a context to an equal-groups product.",
+          "modes": ["guided"],
+          "parameters": {"rows": 5, "columns": 3, "representation": "groups"}
+        },
+        {
+          "key": "dc3-oa-equal-groups-independent-01",
+          "family": "EQUAL_GROUPS",
+          "prompt": "A library shelf has 7 rows with 4 books in each row. How many books are on the shelf?",
+          "canonical_answer": "28",
+          "difficulty": 2,
+          "objective": "Collect independent evidence of equal-groups multiplication.",
+          "modes": ["independent"],
+          "parameters": {"rows": 7, "columns": 4, "representation": "array"}
+        },
+        {
+          "key": "dc3-oa-equal-groups-mastery-01",
+          "family": "EQUAL_GROUPS",
+          "prompt": "A school garden has 6 rows with 5 tomato plants in each row. How many tomato plants are there?",
+          "canonical_answer": "30",
+          "difficulty": 2,
+          "objective": "Verify mastery of equal-groups multiplication in context.",
+          "modes": ["mastery"],
+          "parameters": {"rows": 6, "columns": 5, "representation": "array"}
+        }
+      ]
+    },
+    {
+      "code": "DC3.OA.EQUAL_SHARING",
+      "name": "Division as Equal Sharing",
+      "description": "Interpret quotients through fair sharing and groups of a known size.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.DIVISION.EQUAL_SHARING",
+        "name": "Division as Equal Sharing",
+        "description": "Understand division as fair sharing and as finding an unknown group size or number of groups."
+      },
+      "standard_refs": ["3.OA.A"],
+      "prerequisite_codes": ["DC3.OA.EQUAL_GROUPS"],
+      "problem_families": ["EQUAL_SHARING"],
+      "problems": [
+        {
+          "key": "dc3-oa-equal-sharing-diagnostic-01",
+          "family": "EQUAL_SHARING",
+          "prompt": "Twenty cherry blossom stickers are shared equally among 4 classmates. How many stickers does each classmate get?",
+          "canonical_answer": "5",
+          "difficulty": 1,
+          "objective": "Diagnose partitive division interpretation.",
+          "modes": ["diagnostic"],
+          "parameters": {"total": 20, "groups": 4, "group_size": 5}
+        },
+        {
+          "key": "dc3-oa-equal-sharing-guided-01",
+          "family": "EQUAL_SHARING",
+          "prompt": "Thirty library bookmarks are placed into groups of 5. How many groups are made?",
+          "canonical_answer": "6",
+          "difficulty": 1,
+          "objective": "Guide the learner to interpret quotative division.",
+          "modes": ["guided"],
+          "parameters": {"total": 30, "groups": 6, "group_size": 5}
+        },
+        {
+          "key": "dc3-oa-equal-sharing-independent-01",
+          "family": "EQUAL_SHARING",
+          "prompt": "Twenty-four tour tickets are packed equally into 6 envelopes. How many tickets are in each envelope?",
+          "canonical_answer": "4",
+          "difficulty": 2,
+          "objective": "Collect independent evidence of equal-sharing division.",
+          "modes": ["independent"],
+          "parameters": {"total": 24, "groups": 6, "group_size": 4}
+        },
+        {
+          "key": "dc3-oa-equal-sharing-mastery-01",
+          "family": "EQUAL_SHARING",
+          "prompt": "A coach places 36 cones in rows of 9. How many rows are made?",
+          "canonical_answer": "4",
+          "difficulty": 2,
+          "objective": "Verify mastery of equal-sharing division in context.",
+          "modes": ["mastery"],
+          "parameters": {"total": 36, "groups": 4, "group_size": 9}
+        }
+      ]
+    },
+    {
+      "code": "DC3.NF.UNIT_FRACTION",
+      "name": "Unit Fractions as Numbers",
+      "description": "Understand 1/b as one equal part of a whole and build fractions from it.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.FRACTION.UNIT",
+        "name": "Unit Fractions as Numbers",
+        "description": "Understand unit fractions 1/b and build non-unit fractions a/b from unit fractions."
+      },
+      "standard_refs": ["3.NF.A"],
+      "prerequisite_codes": ["DC3.OA.EQUAL_SHARING"],
+      "problem_families": ["UNIT_FRACTION"],
+      "problems": [
+        {
+          "key": "dc3-nf-unit-fraction-diagnostic-01",
+          "family": "UNIT_FRACTION",
+          "prompt": "A rectangular garden is divided into 3 equal parts. What fraction is one part?",
+          "canonical_answer": "1/3",
+          "difficulty": 1,
+          "objective": "Diagnose understanding of 1/b as one equal part.",
+          "modes": ["diagnostic"],
+          "parameters": {"numerator": 1, "denominator": 3}
+        },
+        {
+          "key": "dc3-nf-unit-fraction-guided-01",
+          "family": "UNIT_FRACTION",
+          "prompt": "One equal slice of a pizza is 1/8. How many equal slices make the whole pizza?",
+          "canonical_answer": "8",
+          "difficulty": 1,
+          "objective": "Guide the learner to connect unit fractions to the whole.",
+          "modes": ["guided"],
+          "parameters": {"numerator": 1, "denominator": 8}
+        },
+        {
+          "key": "dc3-nf-unit-fraction-independent-01",
+          "family": "UNIT_FRACTION",
+          "prompt": "A number line from 0 to 1 is split into 6 equal spaces. What fraction names the first mark after 0?",
+          "canonical_answer": "1/6",
+          "difficulty": 2,
+          "objective": "Collect independent evidence of unit fractions on a number line.",
+          "modes": ["independent"],
+          "parameters": {"numerator": 1, "denominator": 6}
+        },
+        {
+          "key": "dc3-nf-unit-fraction-mastery-01",
+          "family": "UNIT_FRACTION",
+          "prompt": "Diego uses 4 pieces of size 1/5 to make a banner. What fraction of the banner does he have?",
+          "canonical_answer": "4/5",
+          "difficulty": 2,
+          "objective": "Verify mastery of building non-unit fractions from unit fractions.",
+          "modes": ["mastery"],
+          "parameters": {"numerator": 4, "denominator": 5}
+        }
+      ]
+    },
+    {
+      "code": "DC3.MD.RECTANGLE_AREA",
+      "name": "Rectangle Area with Unit Squares",
+      "description": "Relate rectangular arrays, unit squares, and multiplication to area.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.RECTANGLE_AREA",
+        "name": "Rectangle Area with Unit Squares",
+        "description": "Understand area as covering with unit squares and relate it to multiplication."
+      },
+      "standard_refs": ["3.MD.C"],
+      "prerequisite_codes": ["DC3.OA.EQUAL_GROUPS"],
+      "problem_families": ["RECTANGLE_AREA"],
+      "problems": [
+        {
+          "key": "dc3-md-rectangle-area-diagnostic-01",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A classroom rug has 3 rows of 6 unit squares. What is its area in square units?",
+          "canonical_answer": "18",
+          "difficulty": 1,
+          "objective": "Diagnose understanding of area as rows of unit squares.",
+          "modes": ["diagnostic"],
+          "parameters": {"rows": 3, "columns": 6, "unit": "square units"}
+        },
+        {
+          "key": "dc3-md-rectangle-area-guided-01",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A poster is 5 units long and 2 units wide. What is its area?",
+          "canonical_answer": "10",
+          "difficulty": 1,
+          "objective": "Guide the learner to multiply length and width for area.",
+          "modes": ["guided"],
+          "parameters": {"rows": 2, "columns": 5, "unit": "square units"}
+        },
+        {
+          "key": "dc3-md-rectangle-area-independent-01",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A hallway covers 4 rows with 8 unit squares in each row. What area does it cover?",
+          "canonical_answer": "32",
+          "difficulty": 2,
+          "objective": "Collect independent evidence of rectangle area reasoning.",
+          "modes": ["independent"],
+          "parameters": {"rows": 4, "columns": 8, "unit": "square units"}
+        },
+        {
+          "key": "dc3-md-rectangle-area-mastery-01",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A desktop is 7 units by 3 units. Find its area in square units.",
+          "canonical_answer": "21",
+          "difficulty": 2,
+          "objective": "Verify mastery of rectangle area with unit squares.",
+          "modes": ["mastery"],
+          "parameters": {"rows": 3, "columns": 7, "unit": "square units"}
+        }
+      ]
+    }
+  ],
+  "readiness": {
+    "minimum_curated_per_skill": 4,
+    "required_modes": ["diagnostic", "guided", "independent", "mastery"]
+  }
+}
