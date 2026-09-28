@@ -13,6 +13,8 @@ def test_parent_dashboard_web_surface_exposes_required_controls() -> None:
     assert "claimToken" in response.text
     assert "Remove selected child" in response.text
     assert "evidence-backed learning progress" in response.text
+    assert 'href="/learn">Back to practice</a>' in response.text
+    assert 'target="_blank" rel="noopener noreferrer"' in response.text
 
 
 def test_parent_dashboard_is_summary_first_and_keeps_evidence_distinctions_visible() -> None:

@@ -29,6 +29,11 @@ def parent_dashboard_page() -> str:
     }
     * { box-sizing: border-box; }
     body { margin: 0; background: #f7f8fc; color: #172033; }
+    .topbar { display: flex; align-items: center; gap: .75rem; padding: .75rem max(1rem, calc((100vw - 1120px) / 2)); background: #fff; border-bottom: 1px solid var(--border); }
+    .topbar .brand { margin-right: auto; color: var(--goozam-indigo); font-weight: 800; text-decoration: none; }
+    .topbar a:not(.brand) { color: #172033; font-weight: 650; padding: .6rem .75rem; border-radius: 9px; text-decoration: none; }
+    .topbar a:hover { background: var(--surface-soft); color: var(--goozam-indigo); }
+    .topbar a:focus-visible { outline: 3px solid color-mix(in srgb, var(--focus) 36%, transparent); outline-offset: 2px; }
     main { max-width: 1120px; margin: auto; padding: 1.25rem; }
     header.hero {
       color: white;
@@ -71,6 +76,11 @@ def parent_dashboard_page() -> str:
   </style>
 </head>
 <body>
+<nav class="topbar" aria-label="Primary navigation">
+  <a class="brand" href="/learn">AI Tutor</a>
+  <a href="/learn">Back to practice</a>
+  <a href="/learn" target="_blank" rel="noopener noreferrer">Open practice in a new tab</a>
+</nav>
 <main>
   <header class="hero">
     <h1>Parent Dashboard</h1>
