@@ -255,12 +255,12 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>AI Tutor Learning Session</title>
   <style>
 """ + _DESIGN_TOKENS + rf"""
     * {{ box-sizing: border-box; }}
-    body {{ margin: 0; background: #f7f8fc; color: #172033; }}
+    body {{ margin: 0; background: #f7f8fc; color: #172033; -webkit-tap-highlight-color: transparent; }}
     nav.topbar {{
       display: flex; align-items: center; gap: 1rem;
       background: var(--surface); border-bottom: 1px solid var(--border);
@@ -303,52 +303,61 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
       font-size: .8rem; font-weight: 650; color: rgba(255,255,255,.75);
     }}
     .step .dot {{
-      width: 22px; height: 22px; border-radius: 999px;
+      width: 28px; height: 28px; border-radius: 999px;
       border: 2px solid rgba(255,255,255,.5);
       display: inline-flex; align-items: center; justify-content: center;
-      font-size: .7rem;
+      font-size: .85rem;
     }}
     .step.active {{ color: #fff; }}
     .step.active .dot {{ background: #fff; color: var(--goozam-indigo); border-color: #fff; }}
     .step.done .dot {{ background: rgba(255,255,255,.3); border-color: transparent; color: #fff; }}
-    .layout {{ display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 1rem; align-items: start; }}
+    .layout {{ display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 1.25rem; align-items: start; }}
     .panel {{
       background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-      padding: 1.25rem; margin-bottom: 1rem;
+      padding: 1.5rem; margin-bottom: 1rem;
       box-shadow: 0 2px 10px rgba(23, 32, 51, .05);
     }}
-    .panel h2 {{ margin-top: 0; font-size: 1.05rem; }}
+    .panel h2 {{ margin-top: 0; font-size: 1.15rem; }}
     .problem {{
       font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
-      font-size: 1.45rem; line-height: 1.5; white-space: pre-wrap;
+      font-size: 1.6rem; line-height: 1.6; white-space: pre-wrap;
       background: linear-gradient(180deg, #fafbff, var(--surface-soft));
-      border: 1px solid #e2e4f6; border-radius: 14px; padding: 1.4rem 1.2rem;
+      border: 2px solid #e2e4f6; border-radius: 16px; padding: 1.5rem;
       text-align: center; letter-spacing: .01em;
       transition: border-color .2s ease, box-shadow .2s ease;
+      min-height: 80px; display: flex; align-items: center; justify-content: center;
     }}
-    .problem.correct {{ border-color: var(--success); box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 18%, transparent); }}
-    .problem.wrong {{ border-color: var(--danger); box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 15%, transparent); animation: shake .3s ease; }}
-    @keyframes shake {{ 25% {{ transform: translateX(-4px); }} 75% {{ transform: translateX(4px); }} }}
-    .coach-row {{ display: flex; gap: .7rem; align-items: flex-start; }}
+    .problem.correct {{ border-color: var(--success); box-shadow: 0 0 0 4px color-mix(in srgb, var(--success) 20%, transparent); }}
+    .problem.wrong {{ border-color: var(--danger); box-shadow: 0 0 0 4px color-mix(in srgb, var(--danger) 18%, transparent); animation: gentleShake .3s ease; }}
+    @keyframes gentleShake {{ 25% {{ transform: translateX(-3px); }} 75% {{ transform: translateX(3px); }} }}
+    .visual-box {{
+      margin-top: 1rem; padding: 1rem; border: 1px dashed #c9cfdd;
+      border-radius: 12px; background: #fafbff; text-align: center;
+      min-height: 120px; display: flex; align-items: center; justify-content: center;
+    }}
+    .visual-box svg {{ max-width: 100%; height: auto; }}
+    .coach-row {{ display: flex; gap: .8rem; align-items: flex-start; }}
     .avatar {{
-      width: 36px; height: 36px; border-radius: 999px; flex-shrink: 0;
+      width: 44px; height: 44px; border-radius: 999px; flex-shrink: 0;
       background: linear-gradient(120deg, var(--goozam-blue), var(--goozam-purple));
       color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 4px 10px rgba(79, 70, 229, .3);
+      font-size: 1.1rem;
     }}
     .coach {{
       background: var(--surface-soft); border: 1px solid #e2e4f6;
-      padding: .75rem .95rem; border-radius: 4px 14px 14px 14px; line-height: 1.55;
-      flex: 1;
+      padding: .9rem 1.1rem; border-radius: 4px 14px 14px 14px; line-height: 1.6;
+      flex: 1; font-size: 1.05rem;
     }}
-    .actions {{ display: flex; gap: .65rem; flex-wrap: wrap; }}
-    input, button {{ font: inherit; min-height: 44px; padding: .75rem .9rem; border-radius: 10px; border: 1px solid #c9cfdd; }}
-    input {{ width: 100%; box-sizing: border-box; font-size: 1.1rem; }}
-    input:focus-visible, button:focus-visible {{ outline: 3px solid color-mix(in srgb, var(--focus) 36%, transparent); outline-offset: 2px; }}
-    button {{ cursor: pointer; min-height: 44px; font-weight: 650; background: var(--surface); color: #172033; transition: transform .12s ease, box-shadow .2s ease; }}
+    .actions {{ display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1rem; }}
+    input, button {{ font: inherit; min-height: 52px; padding: .85rem 1rem; border-radius: 12px; border: 1px solid #c9cfdd; }}
+    input {{ width: 100%; box-sizing: border-box; font-size: 1.25rem; }}
+    input:focus-visible, button:focus-visible {{ outline: 4px solid color-mix(in srgb, var(--focus) 40%, transparent); outline-offset: 2px; }}
+    button {{ cursor: pointer; min-height: 52px; font-weight: 650; background: var(--surface); color: #172033; transition: transform .12s ease, box-shadow .2s ease; font-size: 1.05rem; }}
     button:hover:not(:disabled) {{ transform: translateY(-1px); }}
     button.primary {{ color: #fff; border-color: transparent; background: linear-gradient(120deg, var(--goozam-blue), var(--goozam-indigo)); box-shadow: 0 8px 18px rgba(37, 99, 235, .22); }}
     button.primary:hover:not(:disabled) {{ box-shadow: 0 10px 22px rgba(37, 99, 235, .3); }}
+    button.large {{ font-size: 1.2rem; padding: 1rem 1.5rem; }}
     button[hidden], section[hidden] {{ display: none; }}
     .muted {{ color: var(--muted); }}
     .error {{ color: var(--danger); white-space: pre-wrap; }}
@@ -358,30 +367,51 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
       border-left: 4px solid var(--goozam-purple);
       background: linear-gradient(90deg, color-mix(in srgb, var(--goozam-purple) 7%, var(--surface)), var(--surface-soft));
       border-radius: 10px;
-      padding: .8rem 1rem;
+      padding: .9rem 1.1rem;
       margin-bottom: 1rem;
+      font-size: 1.05rem;
     }}
     .ring-wrap {{ display: flex; align-items: center; gap: 1rem; }}
     .ring {{ transform: rotate(-90deg); }}
     .ring .track {{ stroke: #e2e4f6; }}
     .ring .fill {{ stroke: url(#ringGrad); stroke-linecap: round; transition: stroke-dashoffset .4s ease; }}
-    .progress {{ display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-top: 1rem; }}
-    .metric {{ background: var(--surface-soft); border: 1px solid #e2e4f6; border-radius: 12px; padding: .8rem; }}
-    .metric strong {{ display: block; color: var(--muted); font-size: .85rem; font-weight: 650; }}
-    .metric div {{ font-size: 1.35rem; font-weight: 700; color: var(--goozam-indigo); margin-top: .2rem; }}
-    .mastery-bar {{ height: 10px; border-radius: 999px; background: #e2e4f6; overflow: hidden; margin-top: .75rem; }}
+    .progress {{ display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-top: 1rem; }}
+    .metric {{ background: var(--surface-soft); border: 1px solid #e2e4f6; border-radius: 12px; padding: 1rem; }}
+    .metric strong {{ display: block; color: var(--muted); font-size: .9rem; font-weight: 650; }}
+    .metric div {{ font-size: 1.5rem; font-weight: 700; color: var(--goozam-indigo); margin-top: .3rem; }}
+    .mastery-bar {{ height: 14px; border-radius: 999px; background: #e2e4f6; overflow: hidden; margin-top: .8rem; }}
     .mastery-bar > div {{ height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--goozam-blue), var(--goozam-purple)); transition: width .3s ease; }}
-    .completion-hero {{ text-align: center; padding: 1rem 0; }}
+    .completion-hero {{ text-align: center; padding: 1.5rem 0; }}
     .completion-hero .badge {{
-      width: 64px; height: 64px; margin: 0 auto .75rem; border-radius: 999px;
+      width: 80px; height: 80px; margin: 0 auto 1rem; border-radius: 999px;
       background: linear-gradient(120deg, var(--goozam-blue), var(--goozam-purple));
-      color: #fff; font-size: 1.8rem; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 2.2rem; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 10px 24px rgba(79, 70, 229, .35);
     }}
-    @media (max-width: 600px) {{
-      main {{ padding: .65rem; }}
+    .completion-hero h2 {{ font-size: 1.8rem; margin: 0 0 .5rem; }}
+    .keypad {{ display: none; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin-top: 1rem; }}
+    .keypad.visible {{ display: grid; }}
+    .keypad button {{ font-size: 1.3rem; font-weight: 700; min-height: 60px; }}
+    @media (max-width: 700px) {{
+      main {{ padding: .8rem; }}
       .layout {{ grid-template-columns: 1fr; }}
-      .actions button {{ flex: 1 1 100%; }}
+      .panel {{ padding: 1rem; }}
+      .problem {{ font-size: 1.4rem; padding: 1.2rem; }}
+      .actions {{ flex-direction: column; }}
+      .actions button {{ width: 100%; }}
+      input {{ font-size: 1.15rem; }}
+    }}
+    @media (max-width: 400px) {{
+      .stepper {{ flex-direction: column; align-items: flex-start; gap: .3rem; }}
+      .step {{ font-size: .75rem; }}
+    }}
+    @media (prefers-reduced-motion: reduce) {{
+      *, *::before, *::after {{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }}
+    }}
+    @media (prefers-contrast: high) {{
+      .problem {{ border-width: 3px; }}
+      button {{ border-width: 2px; }}
+      .chip {{ border-width: 2px; }}
     }}
   </style>
 </head>
@@ -415,17 +445,17 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
 
   <section id="reviewBanner" class="review-banner" hidden>
     <strong>Review due:</strong> <span id="reviewList"></span>
-    <div class="muted" style="font-size:.9rem">Quick refresh keeps mastered skills strong.</div>
+    <div class="muted" style="font-size:.95rem">Quick refresh keeps mastered skills strong.</div>
   </section>
 
   <section id="completionPanel" class="panel" aria-labelledby="completionHeading" hidden>
     <div class="completion-hero">
       <div class="badge" aria-hidden="true">&#10003;</div>
       <h2 id="completionHeading">Skill complete</h2>
-      <p id="completionMessage">You demonstrated this skill independently in the mastery check.</p>
-      <p id="nextSkill" class="muted"></p>
-      <p class="muted">Mastery is based on the tutor application's recorded independent evidence. Help and hints do not count as mastery evidence.</p>
-      <a href="/learn"><button type="button" class="primary" style="padding:.75rem 2rem">Continue learning</button></a>
+      <p id="completionMessage" style="font-size:1.1rem">You demonstrated this skill independently in the mastery check.</p>
+      <p id="nextSkill" class="muted" style="font-size:1.05rem"></p>
+      <p class="muted" style="font-size:.95rem">Mastery is based on the tutor application's recorded independent evidence. Help and hints do not count as mastery evidence.</p>
+      <a href="/learn"><button type="button" class="primary large" style="padding:.85rem 2.5rem">Continue learning</button></a>
     </div>
   </section>
 
@@ -434,13 +464,34 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
       <section id="problemPanel" class="panel" aria-labelledby="problemHeading">
         <h2 id="problemHeading">Current problem</h2>
         <div id="problem" class="problem">Loading…</div>
+        <div id="visualBox" class="visual-box" aria-live="polite" aria-label="Visual representation" hidden>
+          <div id="visualContent"></div>
+        </div>
         <form id="answerForm">
-          <label for="answer"><strong>Your answer</strong></label><br>
-          <input id="answer" name="answer" autocomplete="off" required placeholder="Type your answer…">
-          <div class="actions" style="margin-top:.75rem">
-            <button id="submitBtn" class="primary" type="submit">Submit answer</button>
-            <button id="hintBtn" type="button" hidden>Hint</button>
-            <button id="struggleBtn" type="button" hidden>I don't understand</button>
+          <label for="answer" style="font-size:1.1rem"><strong>Your answer</strong></label>
+          <input id="answer" name="answer" autocomplete="off" required placeholder="Type your answer…"
+                 inputmode="decimal" aria-describedby="answerHelp">
+          <div class="keypad" id="keypad" role="group" aria-label="Number keypad">
+            <button type="button" data-key="7">7</button>
+            <button type="button" data-key="8">8</button>
+            <button type="button" data-key="9">9</button>
+            <button type="button" data-key="4">4</button>
+            <button type="button" data-key="5">5</button>
+            <button type="button" data-key="6">6</button>
+            <button type="button" data-key="1">1</button>
+            <button type="button" data-key="2">2</button>
+            <button type="button" data-key="3">3</button>
+            <button type="button" data-key="0">0</button>
+            <button type="button" data-key=".">.</button>
+            <button type="button" data-key="backspace">⌫</button>
+          </div>
+          <p id="answerHelp" class="muted" style="font-size:.9rem;margin-top:.5rem">
+            Use the keypad or keyboard. Include units if asked.
+          </p>
+          <div class="actions">
+            <button id="submitBtn" class="primary large" type="submit">Submit answer</button>
+            <button id="hintBtn" class="large" type="button" hidden>Hint</button>
+            <button id="struggleBtn" class="large" type="button" hidden>I don't understand</button>
           </div>
         </form>
       </section>
@@ -457,16 +508,16 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
     <section class="panel" aria-labelledby="progressHeading">
       <h2 id="progressHeading">Your progress</h2>
       <div class="ring-wrap">
-        <svg class="ring" width="86" height="86" viewBox="0 0 86 86" aria-hidden="true">
+        <svg class="ring" width="90" height="90" viewBox="0 0 90 90" aria-hidden="true">
           <defs>
             <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stop-color="#2563eb"/>
               <stop offset="100%" stop-color="#7c3aed"/>
             </linearGradient>
           </defs>
-          <circle class="track" cx="43" cy="43" r="36" fill="none" stroke-width="9"/>
-          <circle class="fill" id="masteryRing" cx="43" cy="43" r="36" fill="none" stroke-width="9"
-                  stroke-dasharray="226.2" stroke-dashoffset="226.2"/>
+          <circle class="track" cx="45" cy="45" r="38" fill="none" stroke-width="10"/>
+          <circle class="fill" id="masteryRing" cx="45" cy="45" r="38" fill="none" stroke-width="10"
+                  stroke-dasharray="238.76" stroke-dashoffset="238.76"/>
         </svg>
         <div>
           <div class="metric" style="border:none;background:none;padding:0">
@@ -479,7 +530,7 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
         <div class="metric"><strong>Independent</strong><div id="independent">0 / 0</div></div>
         <div class="metric"><strong>Assisted successes</strong><div id="assisted">0</div></div>
       </div>
-      <p class="muted" style="font-size:.85rem">Help can support learning, but assisted success is not counted as independent mastery evidence.</p>
+      <p class="muted" style="font-size:.9rem">Help can support learning, but assisted success is not counted as independent mastery evidence.</p>
     </section>
   </div>
 </main>
@@ -489,6 +540,12 @@ const workspaceUrl = `/api/v1/learner-workspace/sessions/${{sessionId}}`;
 const adaptiveUrl = `/api/v1/adaptive-tutor/sessions/${{sessionId}}`;
 const q = id => document.getElementById(id);
 let workspace = null;
+
+// Detect if learner is elementary (Grades 1-5) to enable child-friendly UI
+function isElementary() {{
+  const grade = parseInt(workspace?.learner?.grade_level || '0');
+  return grade >= 1 && grade <= 5;
+}}
 
 function friendly(value) {{
   return String(value || '').replaceAll('_', ' ').toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase());
@@ -524,6 +581,17 @@ function renderStepper(state) {{
   }}
 }}
 
+function renderVisual(spec) {{
+  if (!spec) {{ q('visualBox').hidden = true; return; }}
+  q('visualBox').hidden = false;
+  const box = q('visualContent');
+  box.innerHTML = '';
+  const el = document.createElement('div');
+  el.textContent = spec.aria_label || 'Visual representation';
+  el.style.cssText = 'font-size:1.1rem;color:var(--muted);';
+  box.appendChild(el);
+}}
+
 function render(data) {{
   workspace = data;
   const complete = data.state === 'COMPLETE';
@@ -543,10 +611,23 @@ function render(data) {{
   const masteryPct = Math.round(data.evidence.mastery_score * 100);
   q('mastery').textContent = `${{masteryPct}}%`;
   q('masteryBar').style.width = `${{masteryPct}}%`;
-  q('masteryRing').style.strokeDashoffset = String(226.2 * (1 - masteryPct / 100));
+  q('masteryRing').style.strokeDashoffset = String(238.76 * (1 - masteryPct / 100));
 
   const reviews = data.reviews_due || [];
   q('reviewBanner').hidden = reviews.length === 0;
+
+  // Elementary-specific UI adjustments
+  if (isElementary()) {{
+    document.body.classList.add('elementary');
+    q('keypad').classList.add('visible');
+  }}
+
+  // Render visual if available
+  if (data.problem?.visual_spec) {{
+    renderVisual(data.problem.visual_spec);
+  }} else {{
+    q('visualBox').hidden = true;
+  }}
   q('reviewList').textContent = reviews.map(r => r.skill_name).join(', ');
   q('nextSkill').textContent = data.recommended_next
     ? `Up next: ${{data.recommended_next.skill_name}}`
@@ -600,6 +681,20 @@ q('hintBtn').addEventListener('click', async () => {{
 }});
 q('struggleBtn').addEventListener('click', async () => {{
   try {{ await requestHelp('I_DONT_UNDERSTAND'); }} catch (error) {{ setError(error.message); }}
+}});
+
+// On-screen keypad for elementary learners
+q('keypad').addEventListener('click', event => {{
+  const btn = event.target.closest('button[data-key]');
+  if (!btn) return;
+  const input = q('answer');
+  const key = btn.dataset.key;
+  if (key === 'backspace') {{
+    input.value = input.value.slice(0, -1);
+  }} else {{
+    input.value += key;
+  }}
+  input.focus();
 }});
 q('signOut').addEventListener('click', async event => {{
   event.preventDefault();
