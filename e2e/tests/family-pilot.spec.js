@@ -25,10 +25,15 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
 
   const learner = page.locator('#learner');
   await expect(learner).not.toHaveValue('');
-  const skill = page.locator('#skill');
-  const distributiveOption = skill.locator('option').filter({ hasText: 'M8.ALG.DIST · Distributive Property' });
-  await expect(distributiveOption.first()).toBeAttached({ timeout: 10000 });
-  await skill.selectOption(await distributiveOption.first().getAttribute('value'));
+
+  // F-026 release gate: a learner reaches a chosen skill through the
+  // child-friendly Explore Topics path, not an administrative skill selector.
+  await expect(page.getByRole('heading', { name: 'Explore Topics' })).toBeVisible();
+  await page.getByRole('button', { name: /Patterns & algebra/ }).click();
+  const distributiveSkill = page.locator('.skill-choice').filter({ hasText: 'Distributive Property' });
+  await expect(distributiveSkill).toHaveCount(1, { timeout: 10000 });
+  await expect(distributiveSkill).toBeVisible();
+  await distributiveSkill.click();
 
   await page.getByRole('button', { name: 'Start learning' }).click();
   await expect(page).toHaveURL(/\/learn\/[0-9a-f-]+$/);
