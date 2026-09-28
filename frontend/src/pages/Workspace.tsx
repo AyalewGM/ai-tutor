@@ -96,8 +96,6 @@ export default function Workspace() {
   const [statusOk, setStatusOk] = useState(false);
   const [error, setError] = useState("");
   const [feedback, setFeedback] = useState<"" | "correct" | "wrong">("");
-  const [streak, setStreak] = useState(0);
-  const [bestStreak, setBestStreak] = useState(0);
   const [celebrate, setCelebrate] = useState(0);
   const [badgeToast, setBadgeToast] = useState<Award[]>([]);
 
@@ -149,14 +147,7 @@ export default function Workspace() {
       );
       setStatusOk(correct);
       if (correct) {
-        setStreak((s) => {
-          const next = s + 1;
-          setBestStreak((b) => Math.max(b, next));
-          return next;
-        });
         setCelebrate((c) => c + 1);
-      } else {
-        setStreak(0);
       }
       if (result.new_awards?.length) {
         setBadgeToast(result.new_awards);
@@ -233,14 +224,6 @@ export default function Workspace() {
               >
                 Skill map
               </Link>
-              {streak >= 2 && (
-                <span className="chip streak" role="status">
-                  Streak ×{streak}
-                </span>
-              )}
-              {bestStreak >= 3 && (
-                <span className="chip best">Best ×{bestStreak}</span>
-              )}
               <span className="chip score">Score {masteryPct}</span>
             </div>
           </div>
