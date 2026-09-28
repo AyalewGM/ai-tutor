@@ -16,6 +16,7 @@ from app.services.problem_generation import (
     _generate_word_problem_add_sub_100,
 )
 
+
 @pytest.mark.parametrize("seed", range(100))
 def test_grade2_shared_generators(seed):
     x=_generate_addition_within_100(random.Random(seed),2); p=x.parameters
