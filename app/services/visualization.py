@@ -382,6 +382,34 @@ def _place_value_disks(problem: Problem) -> dict | None:
     }
 
 
+def _decimal_place_value(problem: Problem) -> dict | None:
+    """Decimal place-value chart for tenths/hundredths."""
+    params = _params(problem)
+    decimal_str = params.get("decimal")
+    if decimal_str is None:
+        return None
+    try:
+        value = float(decimal_str)
+    except (TypeError, ValueError):
+        return None
+    # Split into whole and decimal parts
+    whole = int(value)
+    frac = value - whole
+    tenths = int(frac * 10)
+    hundredths = int(frac * 100) % 10
+    return {
+        "type": "decimal_place_value",
+        "whole": whole,
+        "tenths": tenths,
+        "hundredths": hundredths,
+        "value": value,
+        "aria_label": (
+            f"Decimal place value for {value}: "
+            f"{whole} ones, {tenths} tenths, {hundredths} hundredths."
+        ),
+    }
+
+
 def _comparison_bar(problem: Problem) -> dict | None:
     """Side-by-side comparison bars for comparing numbers."""
     params = _params(problem)
@@ -454,17 +482,22 @@ def visualization_for(problem: Problem) -> dict | None:
         "NUMBER_SEQUENCE",
         "NUMBER_PATTERN",
         "EQUATION_BALANCE",
-        "DECIMAL_PLACE_VALUE",
     }:
         return None
+    if problem.problem_type == "DECIMAL_PLACE_VALUE":
+        return _decimal_place_value(problem)
     if problem.problem_type == "COMPARE_NUMBERS":
         return _comparison_bar(problem)
     if problem.problem_type == "FRACTION_EQUIVALENCE":
         return _fraction_bar(problem)
-    if problem.problem_type in {"FRACTION_ADD_SUBTRACT_LIKE", "FRACTION_MULTIPLY", "FRACTION_HALVES_THIRDS_FOURTHS"}:
+    if problem.problem_type in {"FRACTION_ADD_SUBTRACT_LIKE", "FRACTION_MULTIPLY"}:
         return _fraction_bar(problem)
+    if problem.problem_type == "FRACTION_HALVES_THIRDS_FOURTHS":
+        return _fraction_circle(problem)
     if problem.problem_type == "FRACTION_COMPARE":
         return _fraction_bar(problem)
+    if problem.problem_type == "FRACTION_CIRCLE":
+        return _fraction_circle(problem)
     if problem.problem_type == "FRACTION_NUMBER_LINE":
         return _number_line_model(problem)
     if problem.problem_type == "COMPARE_LENGTH":

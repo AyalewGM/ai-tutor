@@ -105,16 +105,43 @@ def test_comparison_bars_for_number_comparison():
     assert "34" in spec["aria_label"]
 
 
-def test_fraction_circle_as_alternative_representation():
+def test_fraction_circle_for_halves_thirds_fourths():
     problem = _problem("FRACTION_HALVES_THIRDS_FOURTHS", {"numerator": 1, "denominator": 4})
     spec = visualization_for(problem)
-    assert spec["type"] == "fraction_bar"
-    # fraction_circle is an alternative representation for the same concept
-    circle = _problem("UNIT_FRACTION", {"numerator": 1, "denominator": 4})
-    # UNIT_FRACTION still uses fraction_bar as primary visual
-    assert visualization_for(circle)["type"] == "fraction_bar"
+    assert spec["type"] == "fraction_circle"
+    assert spec["numerator"] == 1
+    assert spec["denominator"] == 4
+    assert "4 equal parts" in spec["aria_label"]
+
+
+def test_fraction_circle_explicit_type():
+    problem = _problem("FRACTION_CIRCLE", {"numerator": 2, "denominator": 3})
+    spec = visualization_for(problem)
+    assert spec["type"] == "fraction_circle"
+    assert spec["numerator"] == 2
+    assert spec["denominator"] == 3
+
+
+def test_decimal_place_value():
+    problem = _problem("DECIMAL_PLACE_VALUE", {"decimal": "3.45"})
+    spec = visualization_for(problem)
+    assert spec["type"] == "decimal_place_value"
+    assert spec["whole"] == 3
+    assert spec["tenths"] == 4
+    assert spec["hundredths"] == 5
+    assert "3.45" in spec["aria_label"]
+
+
+def test_line_plot_read():
+    problem = _problem("LINE_PLOT_READ", {"data": [1, 2, 2, 3, 2, 4], "value": 2})
+    spec = visualization_for(problem)
+    assert spec["type"] == "line_plot"
+    assert spec["highlight"] == 2
+    assert spec["data"] == [1, 2, 2, 3, 2, 4]
 
 
 def test_invalid_elementary_visual_fails_closed():
     assert visualization_for(_problem("EQUAL_GROUPS", {"rows": 50, "columns": 2})) is None
     assert visualization_for(_problem("UNIT_FRACTION", {"numerator": 3, "denominator": 2})) is None
+    assert visualization_for(_problem("DECIMAL_PLACE_VALUE", {"decimal": "invalid"})) is None
+    assert visualization_for(_problem("FRACTION_CIRCLE", {"numerator": 5, "denominator": 3})) is None
