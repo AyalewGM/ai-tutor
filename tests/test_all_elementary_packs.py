@@ -9,27 +9,30 @@ from app.elementary_pack import parse_pack
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
 from scripts.seed_all_elementary_packs import seed
 
-_MISCONCEPTION_CATALOG = (
+_MISCONCEPTION_CATALOG_1_2 = (
     Path(__file__).parents[1] / "docs/curriculum/misconceptions/grades_1_2.json"
+)
+_MISCONCEPTION_CATALOG_3_5 = (
+    Path(__file__).parents[1] / "docs/curriculum/misconceptions/grades_3_5.json"
 )
 
 _PACK_DIR = __import__("pathlib").Path(__file__).parents[1] / "docs/curriculum/packs"
 _EXPECTED_PACKS = [
     ("md-grade1-mccrs-2026_27.json", "MD", "1", 8),
     ("md-grade2-mccrs-2026_27.json", "MD", "2", 9),
-    ("md-grade3-mccrs-2026_27.json", "MD", "3", 4),
-    ("md-grade4-mccrs-2026_27.json", "MD", "4", 3),
-    ("md-grade5-mccrs-2026_27.json", "MD", "5", 3),
+    ("md-grade3-mccrs-2026_27.json", "MD", "3", 9),
+    ("md-grade4-mccrs-2026_27.json", "MD", "4", 10),
+    ("md-grade5-mccrs-2026_27.json", "MD", "5", 9),
     ("dc-grade1-ccss-2024_25.json", "DC", "1", 8),
     ("dc-grade2-ccss-2024_25.json", "DC", "2", 9),
-    ("dc-grade3-ccss-2024_25.json", "DC", "3", 4),
-    ("dc-grade4-ccss-2024_25.json", "DC", "4", 3),
-    ("dc-grade5-ccss-2024_25.json", "DC", "5", 3),
+    ("dc-grade3-ccss-2024_25.json", "DC", "3", 9),
+    ("dc-grade4-ccss-2024_25.json", "DC", "4", 10),
+    ("dc-grade5-ccss-2024_25.json", "DC", "5", 9),
     ("va-grade1-sol-2024_25.json", "VA", "1", 8),
     ("va-grade2-sol-2024_25.json", "VA", "2", 9),
-    ("va-grade3-sol-2024_25.json", "VA", "3", 4),
-    ("va-grade4-sol-2024_25.json", "VA", "4", 3),
-    ("va-grade5-sol-2024_25.json", "VA", "5", 3),
+    ("va-grade3-sol-2024_25.json", "VA", "3", 9),
+    ("va-grade4-sol-2024_25.json", "VA", "4", 10),
+    ("va-grade5-sol-2024_25.json", "VA", "5", 9),
 ]
 
 
@@ -155,8 +158,8 @@ def test_skill_codes_are_unique_per_curriculum():
             assert len(skill_codes) == len(set(skill_codes))
 
 
-def test_grades_1_2_misconception_catalog_is_valid():
-    catalog = json.loads(_MISCONCEPTION_CATALOG.read_text())
+def _validate_catalog(path: Path) -> set[str]:
+    catalog = json.loads(path.read_text())
     assert catalog["version"]
     assert catalog["catalog"]
     for canonical_code, entry in catalog["catalog"].items():
@@ -166,12 +169,22 @@ def test_grades_1_2_misconception_catalog_is_valid():
             assert m["name"]
             assert m["diagnostic_pattern"]
             assert m["remediation"]
+    return set(catalog["catalog"].keys())
 
 
-def test_grades_1_2_misconceptions_map_to_loaded_canonical_skills():
+def test_grades_1_2_misconception_catalog_is_valid():
+    _validate_catalog(_MISCONCEPTION_CATALOG_1_2)
+
+
+def test_grades_3_5_misconception_catalog_is_valid():
+    _validate_catalog(_MISCONCEPTION_CATALOG_3_5)
+
+
+def test_all_misconceptions_map_to_loaded_canonical_skills():
     seed()
-    catalog = json.loads(_MISCONCEPTION_CATALOG.read_text())
-    canonical_codes = set(catalog["catalog"].keys())
+    codes_1_2 = _validate_catalog(_MISCONCEPTION_CATALOG_1_2)
+    codes_3_5 = _validate_catalog(_MISCONCEPTION_CATALOG_3_5)
+    canonical_codes = codes_1_2 | codes_3_5
     with SessionLocal() as db:
         loaded_codes = set(
             db.scalars(select(CanonicalSkill.code).where(CanonicalSkill.code.in_(canonical_codes)))

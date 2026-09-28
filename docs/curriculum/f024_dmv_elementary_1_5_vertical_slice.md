@@ -98,17 +98,17 @@ Grades 1–2 totals: 6 packs, 51 curriculum-local skills, 408 original authored 
 
 | File | Jurisdiction | Grade | Skills | Problems |
 |---|---|---|---|---|
-| `md-grade3-mccrs-2026_27.json` | Maryland | 3 | 4 | 16 |
-| `md-grade4-mccrs-2026_27.json` | Maryland | 4 | 3 | 12 |
-| `md-grade5-mccrs-2026_27.json` | Maryland | 5 | 3 | 12 |
-| `dc-grade3-ccss-2024_25.json` | DC | 3 | 4 | 16 |
-| `dc-grade4-ccss-2024_25.json` | DC | 4 | 3 | 12 |
-| `dc-grade5-ccss-2024_25.json` | DC | 5 | 3 | 12 |
-| `va-grade3-sol-2024_25.json` | Virginia | 3 | 4 | 16 |
-| `va-grade4-sol-2024_25.json` | Virginia | 4 | 3 | 12 |
-| `va-grade5-sol-2024_25.json` | Virginia | 5 | 3 | 12 |
+| `md-grade3-mccrs-2026_27.json` | Maryland | 3 | 9 | 72 |
+| `md-grade4-mccrs-2026_27.json` | Maryland | 4 | 10 | 80 |
+| `md-grade5-mccrs-2026_27.json` | Maryland | 5 | 9 | 72 |
+| `dc-grade3-ccss-2024_25.json` | DC | 3 | 9 | 72 |
+| `dc-grade4-ccss-2024_25.json` | DC | 4 | 10 | 80 |
+| `dc-grade5-ccss-2024_25.json` | DC | 5 | 9 | 72 |
+| `va-grade3-sol-2024_25.json` | Virginia | 3 | 9 | 72 |
+| `va-grade4-sol-2024_25.json` | Virginia | 4 | 10 | 80 |
+| `va-grade5-sol-2024_25.json` | Virginia | 5 | 9 | 72 |
 
-All 15 packs total: 102 curriculum-local skills, 612 original authored problems.
+All 15 packs total: **141 curriculum-local skills, 1,104 original authored problems**.
 
 ## Content generation helper
 
@@ -119,14 +119,15 @@ All 15 packs total: 102 curriculum-local skills, 612 original authored problems.
 - Ruff clean on all changed Python files.
 - All 15 packs parse and validate against `ElementaryPack`.
 - `scripts/seed_all_elementary_packs.py` loads all 15 packs idempotently.
-- Comprehensive test suite: all 15 packs, cross-jurisdiction canonical reuse, evidence isolation, prerequisite-edge isolation, skill-code uniqueness, and Grades 1–2 misconception catalog validation.
-- Full backend suite on a fresh isolated database: **292 passed, 481 warnings**.
+- Added `scripts/generate_elementary_packs_3_5.py` to expand Grades 3–5 packs with comprehensive standards coverage.
+- Added `docs/curriculum/misconceptions/grades_3_5.json` catalog mapping canonical concepts to deterministic misconception patterns and remediation strategies.
+- Comprehensive test suite: all 15 packs, cross-jurisdiction canonical reuse, evidence isolation, prerequisite-edge isolation, skill-code uniqueness, and Grades 1–5 misconception catalog validation.
+- Full backend suite on a fresh isolated database: **293 passed, 1,762 warnings**.
 
 ## Scope and remaining work
 
-Grades 1–2 now have broader standards coverage and a deterministic misconception/remediation catalog. This is a substantial step toward launch readiness but is not yet exhaustive. Remaining before any grade/jurisdiction can be marketed as supported:
+All DMV Grades 1–5 now have broader standards coverage and Grades 1–5 misconception/remediation catalogs. This is a substantial step toward launch readiness but is not yet exhaustive. Remaining before any grade/jurisdiction can be marketed as supported:
 
-- Grades 3–5 expansion to the same depth as Grades 1–2.
 - Cross-grade prerequisite graph and review-scheduling wiring.
 - Misconception detection integration into the tutoring engine and adaptive remediation flows.
 - Additional visual types (number lines, rulers, bar graphs, picture graphs, shape geometry).

@@ -1,0 +1,168 @@
+{
+  "version": "1.0.0",
+  "description": "Elementary Grades 3-5 deterministic misconception and remediation catalog. Each entry maps to a canonical mathematical concept and provides application-owned classification rules and remediation guidance.",
+  "catalog": {
+    "MATH.ELEMENTARY.MULTIPLICATION.EQUAL_GROUPS": {
+      "misconceptions": [
+        {
+          "code": "MULT_ADDS_NOT_GROUPS",
+          "name": "Adds instead of multiplying equal groups",
+          "diagnostic_pattern": "adds_all_terms",
+          "remediation": "Model equal groups with arrays or counters; write repeated addition and then the matching multiplication sentence."
+        },
+        {
+          "code": "FACTOR_SWAP_CONFUSION",
+          "name": "Confuses factor order in context",
+          "diagnostic_pattern": "swaps_groups_and_size",
+          "remediation": "Label the number of groups and the size of each group before multiplying."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.DIVISION.EQUAL_SHARING": {
+      "misconceptions": [
+        {
+          "code": "DIV_SMALLER_FROM_LARGER",
+          "name": "Always divides smaller digit from larger digit",
+          "diagnostic_pattern": "reverse_quotient",
+          "remediation": "Use equal-sharing models: divide the total into the stated number of equal groups."
+        },
+        {
+          "code": "REMAINDER_IGNOR",
+          "name": "Ignores or misinterprets remainders",
+          "diagnostic_pattern": "drops_remainder",
+          "remediation": "Distribute counters and record the remainder; discuss what it means in the word-problem context."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.MULTIPLICATION.PROPERTIES_FACT_FAMILIES": {
+      "misconceptions": [
+        {
+          "code": "COMMUTATIVE_ONLY_SOMETIMES",
+          "name": "Thinks commutative property does not apply to all multiplication",
+          "diagnostic_pattern": "non_commutative_multiplication",
+          "remediation": "Build an array, rotate it, and show the product is unchanged."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.PLACE_VALUE.ROUNDING_THREE_DIGIT": {
+      "misconceptions": [
+        {
+          "code": "ROUND_LEFTMOST",
+          "name": "Rounds only the leftmost digit",
+          "diagnostic_pattern": "rounds_leading_digit_only",
+          "remediation": "Locate the rounding place on a number line; look at the digit immediately to its right."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.FRACTIONS.FRACTIONS_AS_NUMBERS": {
+      "misconceptions": [
+        {
+          "code": "FRACTION_TWO_NUMBERS",
+          "name": "Treats numerator and denominator as separate whole numbers",
+          "diagnostic_pattern": "adds_numerator_denominator",
+          "remediation": "Use fraction bars and number lines to show a fraction as one number located between 0 and 1."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.FRACTIONS.EQUIVALENCE_OPERATIONS": {
+      "misconceptions": [
+        {
+          "code": "EQUIVALENT_SAME_SHAPE",
+          "name": "Thinks equivalent fractions must use the same shape",
+          "diagnostic_pattern": "shape_dependent_equivalence",
+          "remediation": "Fold and overlay fraction strips to show equal area even with different numbers of parts."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.MEASUREMENT.AREA_PERIMETER": {
+      "misconceptions": [
+        {
+          "code": "AREA_PERIMETER_SWAP",
+          "name": "Confuses area and perimeter formulas",
+          "diagnostic_pattern": "uses_perimeter_for_area",
+          "remediation": "Trace the boundary for perimeter; count unit squares inside for area; label units as linear or square."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.GEOMETRY.QUADRILATERAL_ATTRIBUTES": {
+      "misconceptions": [
+        {
+          "code": "SHAPE_LIST_MEMORIZATION",
+          "name": "Relies on appearance rather than attributes",
+          "diagnostic_pattern": "orientation_dependent_classification",
+          "remediation": "Measure sides and angles; classify by defining attributes, not orientation or size."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.ARITHMETIC.MULTI_DIGIT_MULTIPLICATION": {
+      "misconceptions": [
+        {
+          "code": "PARTIAL_PRODUCTS_OMITTED",
+          "name": "Forgets place-value positions in partial products",
+          "diagnostic_pattern": "misaligned_partial_products",
+          "remediation": "Use an area model to decompose factors by place value and add partial products."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.ARITHMETIC.LONG_DIVISION": {
+      "misconceptions": [
+        {
+          "code": "DIVIDE_DIGIT_BY_DIGIT",
+          "name": "Divides each digit separately without place value",
+          "diagnostic_pattern": "digit_wise_division",
+          "remediation": "Use place-value disks or base-ten blocks to group and subtract divisor chunks."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.FRACTIONS.ADD_SUBTRACT_UNLIKE": {
+      "misconceptions": [
+        {
+          "code": "ADD_DENOMINATORS",
+          "name": "Adds numerators and denominators",
+          "diagnostic_pattern": "sum_numerator_denominator",
+          "remediation": "Use fraction strips to find a common denominator before adding or subtracting."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.FRACTIONS.MULTIPLY_DIVIDE": {
+      "misconceptions": [
+        {
+          "code": "MULTIPLY_INFLATES",
+          "name": "Thinks multiplication always makes numbers bigger",
+          "diagnostic_pattern": "larger_product_expected",
+          "remediation": "Compare a fraction of a quantity to the original quantity; model with fraction bars."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.DECIMALS.PLACE_VALUE_OPERATIONS": {
+      "misconceptions": [
+        {
+          "code": "DECIMAL_ALIGN_LEFT",
+          "name": "Aligns decimal points to the left instead of by place value",
+          "diagnostic_pattern": "misaligned_decimal_columns",
+          "remediation": "Use a place-value chart; line up decimal points before adding or subtracting."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.MEASUREMENT.VOLUME": {
+      "misconceptions": [
+        {
+          "code": "VOLUME_FACE_COUNT",
+          "name": "Counts visible faces or cubes only",
+          "diagnostic_pattern": "surface_or_visible_count",
+          "remediation": "Build the prism with unit cubes layer by layer; count length × width × height."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.GEOMETRY.COORDINATE_PLANE": {
+      "misconceptions": [
+        {
+          "code": "COORDINATE_ORDER_SWAP",
+          "name": "Reverses x and y coordinates",
+          "diagnostic_pattern": "swaps_x_y",
+          "remediation": "Move along the x-axis first, then parallel to the y-axis; label each axis."
+        }
+      ]
+    }
+  }
+}

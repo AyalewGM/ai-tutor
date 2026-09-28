@@ -5,7 +5,7 @@
     "code": "DC",
     "name": "District of Columbia",
     "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
-    "source_uri": "https://osse-migrate.dc.gov/service/district-columbia-standards-learning-0"
+    "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf"
   },
   "authority": {
     "code": "OSSE",
@@ -15,290 +15,1525 @@
   },
   "curriculum": {
     "code": "DC_MATH_4_2024_25",
-    "name": "District of Columbia Grade 4 Mathematics \u2014 Common Core State Standards",
+    "name": "District of Columbia Grade 4 Mathematics \u2014 CCSS-OSSE-2024-25",
     "version": "CCSS-OSSE-2024-25",
     "grade_level": "4",
     "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf"
   },
   "expectations": [
     {
-      "source_identifier": "4.NBT.B",
-      "title": "Use place value understanding and properties of operations to perform multi-digit arithmetic",
+      "source_identifier": "4.OA",
+      "title": "Use the four operations with whole numbers to solve problems",
       "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
-      "strand": "Number and Operations in Base Ten",
-      "description": "Multiply whole numbers and find whole-number quotients and remainders."
+      "strand": "Operations and Algebraic Thinking",
+      "description": "Solve multi-step word problems, gain familiarity with factors and multiples, and generate patterns."
     },
     {
-      "source_identifier": "4.NF.A",
+      "source_identifier": "4.NBT",
+      "title": "Generalize place value understanding for multi-digit whole numbers",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Number and Operations in Base Ten",
+      "description": "Use place value to perform multi-digit arithmetic."
+    },
+    {
+      "source_identifier": "4.NF",
       "title": "Extend understanding of fraction equivalence and ordering",
       "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
       "strand": "Number and Operations\u2014Fractions",
-      "description": "Explain why fractions are equivalent using visual models and generate equivalent fractions."
+      "description": "Understand fraction equivalence, ordering, and decimal notation."
     },
     {
-      "source_identifier": "4.MD.C",
-      "title": "Geometric measurement: understand concepts of angle",
+      "source_identifier": "4.MD",
+      "title": "Solve problems involving measurement and conversion",
       "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
       "strand": "Measurement and Data",
-      "description": "Recognize angles as geometric shapes and understand concepts of angle measurement."
+      "description": "Solve measurement conversion problems, understand angle measurement, and represent data."
+    },
+    {
+      "source_identifier": "4.G",
+      "title": "Draw and identify lines and angles, and classify shapes",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Geometry",
+      "description": "Draw and identify lines and angles and classify shapes by properties."
     }
   ],
   "skills": [
     {
-      "code": "DC4.NBT.MULTIPLY_DIVIDE",
-      "name": "Multi-Digit Multiplication and Division",
-      "description": "Multiply multi-digit whole numbers and find quotients with remainders.",
+      "code": "DC4.OA.COMPARISON",
+      "name": "Multiplicative Comparison",
+      "description": "Interpret a multiplication equation as a comparison and solve multiplicative comparison word problems.",
       "difficulty_level": 4,
       "canonical": {
-        "code": "MATH.ELEMENTARY.ARITHMETIC.MULTI_DIGIT_MULTIPLY_DIVIDE",
-        "name": "Multi-Digit Multiplication and Division",
-        "description": "Multiply multi-digit whole numbers and divide to find quotients and remainders."
+        "code": "MATH.ELEMENTARY.MULTIPLICATION.MULTIPLICATIVE_COMPARISON",
+        "name": "Multiplicative Comparison",
+        "description": "Interpret multiplication as a comparison and solve comparison word problems."
       },
       "standard_refs": [
-        "4.NBT.B",
-        "4.NF.A"
+        "4.OA"
       ],
       "prerequisite_codes": [],
       "problem_families": [
-        "MULTI_DIGIT_MULTIPLICATION",
-        "LONG_DIVISION"
+        "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+        "MULTIPLICATION_WITHIN_100"
       ],
       "problems": [
         {
-          "key": "dc4-multiply_divide-multi_digit_multiplication-01",
+          "key": "dc4-comparison-word_problem_multiply_divide_100-01",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "There are 3 boxes with 4 pencils in each box. How many pencils are there in all?",
+          "canonical_answer": "12",
+          "difficulty": 1,
+          "objective": "Practice word problem multiply divide 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 3,
+            "b": 4,
+            "operation": "\u00d7",
+            "answer": 12
+          }
+        },
+        {
+          "key": "dc4-comparison-multiplication_within_100-02",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 5 \u00d7 6?",
+          "canonical_answer": "30",
+          "difficulty": 1,
+          "objective": "Practice multiplication within 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 5,
+            "b": 6,
+            "operation": "\u00d7",
+            "answer": 30
+          }
+        },
+        {
+          "key": "dc4-comparison-word_problem_multiply_divide_100-03",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "There are 7 boxes with 8 pencils in each box. How many pencils are there in all?",
+          "canonical_answer": "56",
+          "difficulty": 1,
+          "objective": "Practice word problem multiply divide 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 7,
+            "b": 8,
+            "operation": "\u00d7",
+            "answer": 56
+          }
+        },
+        {
+          "key": "dc4-comparison-multiplication_within_100-04",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 9 \u00d7 9?",
+          "canonical_answer": "81",
+          "difficulty": 1,
+          "objective": "Practice multiplication within 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 9,
+            "b": 9,
+            "operation": "\u00d7",
+            "answer": 81
+          }
+        },
+        {
+          "key": "dc4-comparison-word_problem_multiply_divide_100-05",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "There are 3 boxes with 4 pencils in each box. How many pencils are there in all?",
+          "canonical_answer": "12",
+          "difficulty": 2,
+          "objective": "Practice word problem multiply divide 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 3,
+            "b": 4,
+            "operation": "\u00d7",
+            "answer": 12
+          }
+        },
+        {
+          "key": "dc4-comparison-multiplication_within_100-06",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 4 \u00d7 9?",
+          "canonical_answer": "36",
+          "difficulty": 2,
+          "objective": "Practice multiplication within 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 4,
+            "b": 9,
+            "operation": "\u00d7",
+            "answer": 36
+          }
+        },
+        {
+          "key": "dc4-comparison-word_problem_multiply_divide_100-07",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "There are 7 boxes with 8 pencils in each box. How many pencils are there in all?",
+          "canonical_answer": "56",
+          "difficulty": 2,
+          "objective": "Practice word problem multiply divide 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 7,
+            "b": 8,
+            "operation": "\u00d7",
+            "answer": 56
+          }
+        },
+        {
+          "key": "dc4-comparison-multiplication_within_100-08",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 5 \u00d7 8?",
+          "canonical_answer": "40",
+          "difficulty": 2,
+          "objective": "Practice multiplication within 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 5,
+            "b": 8,
+            "operation": "\u00d7",
+            "answer": 40
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC4.OA.MULTI_STEP",
+      "name": "Multi-Step Word Problems",
+      "description": "Solve multi-step word problems using the four operations and interpret remainders.",
+      "difficulty_level": 4,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.ARITHMETIC.MULTI_STEP_WORD_PROBLEMS",
+        "name": "Multi-Step Word Problems",
+        "description": "Solve multi-step word problems using addition, subtraction, multiplication, and division."
+      },
+      "standard_refs": [
+        "4.OA"
+      ],
+      "prerequisite_codes": [
+        "DC4.OA.COMPARISON"
+      ],
+      "problem_families": [
+        "WORD_PROBLEM_ADD_SUB_100",
+        "WORD_PROBLEM_MULTIPLY_DIVIDE_100"
+      ],
+      "problems": [
+        {
+          "key": "dc4-multi_step-word_problem_add_sub_100-01",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "prompt": "A library has 24 fiction books and 35 nonfiction books. How many books are there?",
+          "canonical_answer": "59",
+          "difficulty": 1,
+          "objective": "Practice word problem add sub 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 24,
+            "b": 35,
+            "operation": "+",
+            "answer": 59
+          }
+        },
+        {
+          "key": "dc4-multi_step-word_problem_multiply_divide_100-02",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "36 stickers are shared equally among 6 students. How many stickers does each student get?",
+          "canonical_answer": "216",
+          "difficulty": 1,
+          "objective": "Practice word problem multiply divide 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 36,
+            "b": 6,
+            "operation": "\u00d7",
+            "answer": 216
+          }
+        },
+        {
+          "key": "dc4-multi_step-word_problem_add_sub_100-03",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "prompt": "A library has 56 fiction books and 39 nonfiction books. How many books are there?",
+          "canonical_answer": "95",
+          "difficulty": 1,
+          "objective": "Practice word problem add sub 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 56,
+            "b": 39,
+            "operation": "+",
+            "answer": 95
+          }
+        },
+        {
+          "key": "dc4-multi_step-word_problem_multiply_divide_100-04",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "54 stickers are shared equally among 9 students. How many stickers does each student get?",
+          "canonical_answer": "486",
+          "difficulty": 1,
+          "objective": "Practice word problem multiply divide 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 54,
+            "b": 9,
+            "operation": "\u00d7",
+            "answer": 486
+          }
+        },
+        {
+          "key": "dc4-multi_step-word_problem_add_sub_100-05",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "prompt": "A library has 24 fiction books and 35 nonfiction books. How many books are there?",
+          "canonical_answer": "59",
+          "difficulty": 2,
+          "objective": "Practice word problem add sub 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 24,
+            "b": 35,
+            "operation": "+",
+            "answer": 59
+          }
+        },
+        {
+          "key": "dc4-multi_step-word_problem_multiply_divide_100-06",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "36 stickers are shared equally among 6 students. How many stickers does each student get?",
+          "canonical_answer": "216",
+          "difficulty": 2,
+          "objective": "Practice word problem multiply divide 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 36,
+            "b": 6,
+            "operation": "\u00d7",
+            "answer": 216
+          }
+        },
+        {
+          "key": "dc4-multi_step-word_problem_add_sub_100-07",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "prompt": "A library has 56 fiction books and 39 nonfiction books. How many books are there?",
+          "canonical_answer": "95",
+          "difficulty": 2,
+          "objective": "Practice word problem add sub 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 56,
+            "b": 39,
+            "operation": "+",
+            "answer": 95
+          }
+        },
+        {
+          "key": "dc4-multi_step-word_problem_multiply_divide_100-08",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "54 stickers are shared equally among 9 students. How many stickers does each student get?",
+          "canonical_answer": "486",
+          "difficulty": 2,
+          "objective": "Practice word problem multiply divide 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 54,
+            "b": 9,
+            "operation": "\u00d7",
+            "answer": 486
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC4.OA.FACTORS_PATTERNS",
+      "name": "Factors, Multiples, and Patterns",
+      "description": "Find factor pairs, recognize multiples, and generate number or shape patterns.",
+      "difficulty_level": 4,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.NUMBER_SENSE.FACTORS_MULTIPLES_PATTERNS",
+        "name": "Factors, Multiples, and Patterns",
+        "description": "Find factors and multiples and generate and analyze patterns."
+      },
+      "standard_refs": [
+        "4.OA"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "NUMBER_PATTERN",
+        "MULTIPLICATION_WITHIN_100",
+        "DIVISION_WITHIN_100"
+      ],
+      "problems": [
+        {
+          "key": "dc4-factors_patterns-number_pattern-01",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 25, 30, 35, 40, 45, ?",
+          "canonical_answer": "30",
+          "difficulty": 1,
+          "objective": "Practice number pattern in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "start": 25,
+            "step": 5
+          }
+        },
+        {
+          "key": "dc4-factors_patterns-multiplication_within_100-02",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 5 \u00d7 6?",
+          "canonical_answer": "30",
+          "difficulty": 1,
+          "objective": "Practice multiplication within 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 5,
+            "b": 6,
+            "operation": "\u00d7",
+            "answer": 30
+          }
+        },
+        {
+          "key": "dc4-factors_patterns-division_within_100-03",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "What is 54 \u00f7 9?",
+          "canonical_answer": "6",
+          "difficulty": 1,
+          "objective": "Practice division within 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 54,
+            "b": 9,
+            "operation": "\u00f7"
+          }
+        },
+        {
+          "key": "dc4-factors_patterns-number_pattern-04",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 400, 500, 600, 700, 800, ?",
+          "canonical_answer": "500",
+          "difficulty": 1,
+          "objective": "Practice number pattern in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "start": 400,
+            "step": 100
+          }
+        },
+        {
+          "key": "dc4-factors_patterns-multiplication_within_100-05",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 6 \u00d7 7?",
+          "canonical_answer": "42",
+          "difficulty": 2,
+          "objective": "Practice multiplication within 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 6,
+            "b": 7,
+            "operation": "\u00d7",
+            "answer": 42
+          }
+        },
+        {
+          "key": "dc4-factors_patterns-division_within_100-06",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "What is 72 \u00f7 8?",
+          "canonical_answer": "9",
+          "difficulty": 2,
+          "objective": "Practice division within 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 72,
+            "b": 8,
+            "operation": "\u00f7"
+          }
+        },
+        {
+          "key": "dc4-factors_patterns-number_pattern-07",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 12, 14, 16, 18, 20, ?",
+          "canonical_answer": "14",
+          "difficulty": 2,
+          "objective": "Practice number pattern in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "start": 12,
+            "step": 2
+          }
+        },
+        {
+          "key": "dc4-factors_patterns-multiplication_within_100-08",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 5 \u00d7 8?",
+          "canonical_answer": "40",
+          "difficulty": 2,
+          "objective": "Practice multiplication within 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 5,
+            "b": 8,
+            "operation": "\u00d7",
+            "answer": 40
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC4.NBT.PLACE_VALUE",
+      "name": "Multi-Digit Place Value",
+      "description": "Read, write, and compare multi-digit whole numbers using place value understanding.",
+      "difficulty_level": 4,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.PLACE_VALUE.MULTI_DIGIT",
+        "name": "Multi-Digit Place Value",
+        "description": "Read, write, compare, and round multi-digit whole numbers."
+      },
+      "standard_refs": [
+        "4.NBT"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "PLACE_VALUE_BASE_TEN",
+        "COMPARE_NUMBERS",
+        "ROUNDING"
+      ],
+      "problems": [
+        {
+          "key": "dc4-place_value-place_value_base_ten-01",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many hundreds, tens, and ones make 247?",
+          "canonical_answer": "2 hundreds, 4 tens, and 7 ones",
+          "difficulty": 1,
+          "objective": "Practice place value base ten in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "number": 247,
+            "hundreds": 2,
+            "tens": 4,
+            "ones": 7
+          }
+        },
+        {
+          "key": "dc4-place_value-compare_numbers-02",
+          "family": "COMPARE_NUMBERS",
+          "prompt": "Compare: 1002 ___ 998. Use >, <, or =.",
+          "canonical_answer": ">",
+          "difficulty": 1,
+          "objective": "Practice compare numbers in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 1002,
+            "b": 998
+          }
+        },
+        {
+          "key": "dc4-place_value-rounding-03",
+          "family": "ROUNDING",
+          "prompt": "Round 256 to the nearest ten.",
+          "canonical_answer": "260",
+          "difficulty": 1,
+          "objective": "Practice rounding in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "number": 256,
+            "place": 10
+          }
+        },
+        {
+          "key": "dc4-place_value-place_value_base_ten-04",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many thousands, hundreds, tens, and ones make 3920?",
+          "canonical_answer": "3 thousands, 9 hundreds, 2 tens, and 0 ones",
+          "difficulty": 1,
+          "objective": "Practice place value base ten in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "number": 3920,
+            "thousands": 3,
+            "hundreds": 9,
+            "tens": 2,
+            "ones": 0
+          }
+        },
+        {
+          "key": "dc4-place_value-compare_numbers-05",
+          "family": "COMPARE_NUMBERS",
+          "prompt": "Compare: 1234 ___ 1243. Use >, <, or =.",
+          "canonical_answer": "<",
+          "difficulty": 2,
+          "objective": "Practice compare numbers in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 1234,
+            "b": 1243
+          }
+        },
+        {
+          "key": "dc4-place_value-rounding-06",
+          "family": "ROUNDING",
+          "prompt": "Round 2891 to the nearest thousand.",
+          "canonical_answer": "3000",
+          "difficulty": 2,
+          "objective": "Practice rounding in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "number": 2891,
+            "place": 1000
+          }
+        },
+        {
+          "key": "dc4-place_value-place_value_base_ten-07",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many hundreds, tens, and ones make 506?",
+          "canonical_answer": "5 hundreds, 0 tens, and 6 ones",
+          "difficulty": 2,
+          "objective": "Practice place value base ten in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "number": 506,
+            "hundreds": 5,
+            "tens": 0,
+            "ones": 6
+          }
+        },
+        {
+          "key": "dc4-place_value-compare_numbers-08",
+          "family": "COMPARE_NUMBERS",
+          "prompt": "Compare: 3200 ___ 320. Use >, <, or =.",
+          "canonical_answer": ">",
+          "difficulty": 2,
+          "objective": "Practice compare numbers in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 3200,
+            "b": 320
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC4.NBT.MULTIPLY",
+      "name": "Multi-Digit Multiplication",
+      "description": "Multiply a whole number of up to four digits by a one-digit whole number and multiply two two-digit numbers.",
+      "difficulty_level": 4,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.ARITHMETIC.MULTI_DIGIT_MULTIPLICATION",
+        "name": "Multi-Digit Multiplication",
+        "description": "Multiply multi-digit whole numbers using place-value strategies."
+      },
+      "standard_refs": [
+        "4.NBT"
+      ],
+      "prerequisite_codes": [
+        "DC4.NBT.PLACE_VALUE"
+      ],
+      "problem_families": [
+        "MULTI_DIGIT_MULTIPLICATION"
+      ],
+      "problems": [
+        {
+          "key": "dc4-multiply-multi_digit_multiplication-01",
           "family": "MULTI_DIGIT_MULTIPLICATION",
           "prompt": "What is 23 \u00d7 4?",
           "canonical_answer": "92",
           "difficulty": 1,
-          "objective": "Multiply multi-digit whole numbers.",
+          "objective": "Practice multi digit multiplication in diagnostic mode.",
           "modes": [
             "diagnostic"
           ],
           "parameters": {
             "a": 23,
-            "b": 4,
-            "operation": "\u00d7"
+            "b": 4
           }
         },
         {
-          "key": "dc4-multiply_divide-long_division-02",
-          "family": "LONG_DIVISION",
-          "prompt": "What is 72 \u00f7 6?",
-          "canonical_answer": "12",
+          "key": "dc4-multiply-multi_digit_multiplication-02",
+          "family": "MULTI_DIGIT_MULTIPLICATION",
+          "prompt": "What is 156 \u00d7 3?",
+          "canonical_answer": "468",
           "difficulty": 1,
-          "objective": "Divide to find whole-number quotients.",
+          "objective": "Practice multi digit multiplication in guided mode.",
           "modes": [
             "guided"
           ],
           "parameters": {
-            "dividend": 72,
-            "divisor": 6,
-            "quotient": 12,
-            "operation": "\u00f7"
+            "a": 156,
+            "b": 3
           }
         },
         {
-          "key": "dc4-multiply_divide-multi_digit_multiplication-03",
+          "key": "dc4-multiply-multi_digit_multiplication-03",
           "family": "MULTI_DIGIT_MULTIPLICATION",
-          "prompt": "What is 34 \u00d7 7?",
-          "canonical_answer": "238",
-          "difficulty": 2,
-          "objective": "Multiply multi-digit whole numbers.",
+          "prompt": "What is 45 \u00d7 67?",
+          "canonical_answer": "3015",
+          "difficulty": 1,
+          "objective": "Practice multi digit multiplication in independent mode.",
           "modes": [
             "independent"
           ],
           "parameters": {
-            "a": 34,
-            "b": 7,
-            "operation": "\u00d7"
+            "a": 45,
+            "b": 67
           }
         },
         {
-          "key": "dc4-multiply_divide-long_division-04",
-          "family": "LONG_DIVISION",
-          "prompt": "What is 105 \u00f7 5?",
-          "canonical_answer": "21",
-          "difficulty": 2,
-          "objective": "Divide to find whole-number quotients.",
+          "key": "dc4-multiply-multi_digit_multiplication-04",
+          "family": "MULTI_DIGIT_MULTIPLICATION",
+          "prompt": "What is 29 \u00d7 38?",
+          "canonical_answer": "1102",
+          "difficulty": 1,
+          "objective": "Practice multi digit multiplication in mastery mode.",
           "modes": [
             "mastery"
           ],
           "parameters": {
-            "dividend": 105,
-            "divisor": 5,
-            "quotient": 21,
-            "operation": "\u00f7"
+            "a": 29,
+            "b": 38
+          }
+        },
+        {
+          "key": "dc4-multiply-multi_digit_multiplication-05",
+          "family": "MULTI_DIGIT_MULTIPLICATION",
+          "prompt": "What is 123 \u00d7 5?",
+          "canonical_answer": "615",
+          "difficulty": 2,
+          "objective": "Practice multi digit multiplication in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 123,
+            "b": 5
+          }
+        },
+        {
+          "key": "dc4-multiply-multi_digit_multiplication-06",
+          "family": "MULTI_DIGIT_MULTIPLICATION",
+          "prompt": "What is 34 \u00d7 26?",
+          "canonical_answer": "884",
+          "difficulty": 2,
+          "objective": "Practice multi digit multiplication in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 34,
+            "b": 26
+          }
+        },
+        {
+          "key": "dc4-multiply-multi_digit_multiplication-07",
+          "family": "MULTI_DIGIT_MULTIPLICATION",
+          "prompt": "What is 209 \u00d7 7?",
+          "canonical_answer": "1463",
+          "difficulty": 2,
+          "objective": "Practice multi digit multiplication in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 209,
+            "b": 7
+          }
+        },
+        {
+          "key": "dc4-multiply-multi_digit_multiplication-08",
+          "family": "MULTI_DIGIT_MULTIPLICATION",
+          "prompt": "What is 58 \u00d7 49?",
+          "canonical_answer": "2842",
+          "difficulty": 2,
+          "objective": "Practice multi digit multiplication in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 58,
+            "b": 49
           }
         }
       ]
     },
     {
-      "code": "DC4.NF.FRACTION_EQUIVALENCE",
-      "name": "Fraction Equivalence and Ordering",
-      "description": "Explain and generate equivalent fractions and compare fractions.",
+      "code": "DC4.NBT.DIVIDE",
+      "name": "Long Division",
+      "description": "Find whole-number quotients and remainders with up to four-digit dividends and one-digit divisors.",
       "difficulty_level": 4,
       "canonical": {
-        "code": "MATH.ELEMENTARY.FRACTION.EQUIVALENCE_ORDERING",
-        "name": "Fraction Equivalence and Ordering",
-        "description": "Explain why fractions are equivalent and generate equivalent fractions using visual models."
+        "code": "MATH.ELEMENTARY.ARITHMETIC.LONG_DIVISION",
+        "name": "Long Division",
+        "description": "Divide multi-digit whole numbers using place-value strategies."
       },
       "standard_refs": [
-        "4.NBT.B",
-        "4.NF.A"
+        "4.NBT"
+      ],
+      "prerequisite_codes": [
+        "DC4.NBT.MULTIPLY"
+      ],
+      "problem_families": [
+        "LONG_DIVISION"
+      ],
+      "problems": [
+        {
+          "key": "dc4-divide-long_division-01",
+          "family": "LONG_DIVISION",
+          "prompt": "What is 84 \u00f7 4?",
+          "canonical_answer": "21",
+          "difficulty": 1,
+          "objective": "Practice long division in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 84,
+            "b": 4
+          }
+        },
+        {
+          "key": "dc4-divide-long_division-02",
+          "family": "LONG_DIVISION",
+          "prompt": "What is 735 \u00f7 5?",
+          "canonical_answer": "147",
+          "difficulty": 1,
+          "objective": "Practice long division in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 735,
+            "b": 5
+          }
+        },
+        {
+          "key": "dc4-divide-long_division-03",
+          "family": "LONG_DIVISION",
+          "prompt": "What is 128 \u00f7 8?",
+          "canonical_answer": "16",
+          "difficulty": 1,
+          "objective": "Practice long division in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 128,
+            "b": 8
+          }
+        },
+        {
+          "key": "dc4-divide-long_division-04",
+          "family": "LONG_DIVISION",
+          "prompt": "What is 912 \u00f7 6?",
+          "canonical_answer": "152",
+          "difficulty": 1,
+          "objective": "Practice long division in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 912,
+            "b": 6
+          }
+        },
+        {
+          "key": "dc4-divide-long_division-05",
+          "family": "LONG_DIVISION",
+          "prompt": "What is 408 \u00f7 3?",
+          "canonical_answer": "136",
+          "difficulty": 2,
+          "objective": "Practice long division in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 408,
+            "b": 3
+          }
+        },
+        {
+          "key": "dc4-divide-long_division-06",
+          "family": "LONG_DIVISION",
+          "prompt": "What is 675 \u00f7 9?",
+          "canonical_answer": "75",
+          "difficulty": 2,
+          "objective": "Practice long division in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 675,
+            "b": 9
+          }
+        },
+        {
+          "key": "dc4-divide-long_division-07",
+          "family": "LONG_DIVISION",
+          "prompt": "What is 525 \u00f7 7?",
+          "canonical_answer": "75",
+          "difficulty": 2,
+          "objective": "Practice long division in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 525,
+            "b": 7
+          }
+        },
+        {
+          "key": "dc4-divide-long_division-08",
+          "family": "LONG_DIVISION",
+          "prompt": "What is 884 \u00f7 4?",
+          "canonical_answer": "221",
+          "difficulty": 2,
+          "objective": "Practice long division in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 884,
+            "b": 4
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC4.NF.FRACTIONS",
+      "name": "Fraction Equivalence and Operations",
+      "description": "Explain fraction equivalence, compare fractions, add and subtract like-denominator fractions, and multiply fractions by whole numbers.",
+      "difficulty_level": 4,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.FRACTIONS.EQUIVALENCE_OPERATIONS",
+        "name": "Fraction Equivalence and Operations",
+        "description": "Understand fraction equivalence, compare fractions, and perform basic fraction operations."
+      },
+      "standard_refs": [
+        "4.NF"
       ],
       "prerequisite_codes": [],
       "problem_families": [
         "FRACTION_EQUIVALENCE",
-        "FRACTION_ADD_SUBTRACT_LIKE"
+        "FRACTION_COMPARE",
+        "FRACTION_ADD_SUBTRACT_LIKE",
+        "MULTIPLY_FRACTION_BY_WHOLE"
       ],
       "problems": [
         {
-          "key": "dc4-fraction_equivalence-fraction_equivalence-01",
+          "key": "dc4-fractions-fraction_equivalence-01",
           "family": "FRACTION_EQUIVALENCE",
-          "prompt": "What fraction with denominator 4 is equivalent to 1/2?",
+          "prompt": "Find a fraction equivalent to 1/2.",
           "canonical_answer": "2/4",
           "difficulty": 1,
-          "objective": "Generate equivalent fractions.",
+          "objective": "Practice fraction equivalence in diagnostic mode.",
           "modes": [
             "diagnostic"
           ],
           "parameters": {
-            "original_numerator": 1,
-            "original_denominator": 2,
-            "multiplier": 2,
-            "target_numerator": 2,
-            "target_denominator": 4
+            "numerator": 1,
+            "denominator": 2
           }
         },
         {
-          "key": "dc4-fraction_equivalence-fraction_add_subtract_like-02",
-          "family": "FRACTION_ADD_SUBTRACT_LIKE",
-          "prompt": "What is 3/4 - 1/4?",
-          "canonical_answer": "2/4",
+          "key": "dc4-fractions-fraction_compare-02",
+          "family": "FRACTION_COMPARE",
+          "prompt": "Compare: 2/3 ___ 3/4. Use >, <, or =.",
+          "canonical_answer": "<",
           "difficulty": 1,
-          "objective": "Add and subtract fractions with like denominators.",
+          "objective": "Practice fraction compare in guided mode.",
           "modes": [
             "guided"
           ],
           "parameters": {
-            "n1": 3,
-            "n2": 1,
-            "denominator": 4,
-            "operation": "-"
+            "numerator1": 2,
+            "denominator1": 3,
+            "numerator2": 3,
+            "denominator2": 4
           }
         },
         {
-          "key": "dc4-fraction_equivalence-fraction_equivalence-03",
-          "family": "FRACTION_EQUIVALENCE",
-          "prompt": "What fraction with denominator 12 is equivalent to 1/4?",
-          "canonical_answer": "3/12",
-          "difficulty": 2,
-          "objective": "Generate equivalent fractions.",
+          "key": "dc4-fractions-fraction_add_subtract_like-03",
+          "family": "FRACTION_ADD_SUBTRACT_LIKE",
+          "prompt": "What is 3/8 + 2/8?",
+          "canonical_answer": "5/8",
+          "difficulty": 1,
+          "objective": "Practice fraction add subtract like in independent mode.",
           "modes": [
             "independent"
           ],
           "parameters": {
-            "original_numerator": 1,
-            "original_denominator": 4,
-            "multiplier": 3,
-            "target_numerator": 3,
-            "target_denominator": 12
+            "numerator1": 3,
+            "denominator": 8,
+            "numerator2": 2,
+            "operation": "+"
           }
         },
         {
-          "key": "dc4-fraction_equivalence-fraction_add_subtract_like-04",
-          "family": "FRACTION_ADD_SUBTRACT_LIKE",
-          "prompt": "What is 5/6 - 2/6?",
-          "canonical_answer": "3/6",
-          "difficulty": 2,
-          "objective": "Add and subtract fractions with like denominators.",
+          "key": "dc4-fractions-multiply_fraction_by_whole-04",
+          "family": "MULTIPLY_FRACTION_BY_WHOLE",
+          "prompt": "What is 2 \u00d7 2/7?",
+          "canonical_answer": "4/7",
+          "difficulty": 1,
+          "objective": "Practice multiply fraction by whole in mastery mode.",
           "modes": [
             "mastery"
           ],
           "parameters": {
-            "n1": 5,
-            "n2": 2,
-            "denominator": 6,
-            "operation": "-"
+            "whole": 2,
+            "numerator": 2,
+            "denominator": 7
+          }
+        },
+        {
+          "key": "dc4-fractions-fraction_equivalence-05",
+          "family": "FRACTION_EQUIVALENCE",
+          "prompt": "Find a fraction equivalent to 1/2.",
+          "canonical_answer": "2/4",
+          "difficulty": 2,
+          "objective": "Practice fraction equivalence in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "numerator": 1,
+            "denominator": 2
+          }
+        },
+        {
+          "key": "dc4-fractions-fraction_compare-06",
+          "family": "FRACTION_COMPARE",
+          "prompt": "Compare: 2/3 ___ 3/4. Use >, <, or =.",
+          "canonical_answer": "<",
+          "difficulty": 2,
+          "objective": "Practice fraction compare in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "numerator1": 2,
+            "denominator1": 3,
+            "numerator2": 3,
+            "denominator2": 4
+          }
+        },
+        {
+          "key": "dc4-fractions-fraction_add_subtract_like-07",
+          "family": "FRACTION_ADD_SUBTRACT_LIKE",
+          "prompt": "What is 3/8 + 2/8?",
+          "canonical_answer": "5/8",
+          "difficulty": 2,
+          "objective": "Practice fraction add subtract like in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "numerator1": 3,
+            "denominator": 8,
+            "numerator2": 2,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "dc4-fractions-multiply_fraction_by_whole-08",
+          "family": "MULTIPLY_FRACTION_BY_WHOLE",
+          "prompt": "What is 2 \u00d7 2/7?",
+          "canonical_answer": "4/7",
+          "difficulty": 2,
+          "objective": "Practice multiply fraction by whole in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "whole": 2,
+            "numerator": 2,
+            "denominator": 7
           }
         }
       ]
     },
     {
-      "code": "DC4.MD.ANGLE",
-      "name": "Angle Measurement",
-      "description": "Measure angles in whole-number degrees using a protractor and sketch angles.",
+      "code": "DC4.NF.DECIMALS",
+      "name": "Decimal Notation and Comparison",
+      "description": "Understand decimal notation for fractions and compare decimal fractions.",
       "difficulty_level": 4,
       "canonical": {
-        "code": "MATH.ELEMENTARY.MEASUREMENT.ANGLE_DEGREES",
-        "name": "Angle Measurement",
-        "description": "Understand angle measurement and measure angles in whole-number degrees."
+        "code": "MATH.ELEMENTARY.FRACTIONS.DECIMAL_NOTATION",
+        "name": "Decimal Notation and Comparison",
+        "description": "Express fractions with denominators 10 and 100 as decimals and compare decimal numbers."
       },
       "standard_refs": [
-        "4.NBT.B",
-        "4.NF.A"
+        "4.NF"
       ],
-      "prerequisite_codes": [
-        "DC4.NBT.MULTIPLY_DIVIDE"
-      ],
+      "prerequisite_codes": [],
       "problem_families": [
-        "ANGLE_MEASUREMENT"
+        "DECIMAL_PLACE_VALUE"
       ],
       "problems": [
         {
-          "key": "dc4-angle-angle_measurement-01",
-          "family": "ANGLE_MEASUREMENT",
-          "prompt": "What is the measure of an angle that is 45 degrees?",
-          "canonical_answer": "45",
+          "key": "dc4-decimals-decimal_place_value-01",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the digit 3 in the number 3.45?",
+          "canonical_answer": "tenths",
           "difficulty": 1,
-          "objective": "Measure angles in whole-number degrees.",
+          "objective": "Practice decimal place value in diagnostic mode.",
           "modes": [
             "diagnostic"
           ],
           "parameters": {
-            "angle": 45
+            "digit": 3,
+            "number": 3.45
           }
         },
         {
-          "key": "dc4-angle-angle_measurement-02",
-          "family": "ANGLE_MEASUREMENT",
-          "prompt": "What is the measure of an angle that is 60 degrees?",
-          "canonical_answer": "60",
+          "key": "dc4-decimals-decimal_place_value-02",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the digit 5 in the number 2.05?",
+          "canonical_answer": "hundredths",
           "difficulty": 1,
-          "objective": "Measure angles in whole-number degrees.",
+          "objective": "Practice decimal place value in guided mode.",
           "modes": [
             "guided"
           ],
           "parameters": {
-            "angle": 60
+            "digit": 5,
+            "number": 2.05
           }
         },
         {
-          "key": "dc4-angle-angle_measurement-03",
-          "family": "ANGLE_MEASUREMENT",
-          "prompt": "What is the measure of an angle that is 90 degrees?",
-          "canonical_answer": "90",
-          "difficulty": 2,
-          "objective": "Measure angles in whole-number degrees.",
+          "key": "dc4-decimals-decimal_place_value-03",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the digit 7 in the number 7.89?",
+          "canonical_answer": "ones",
+          "difficulty": 1,
+          "objective": "Practice decimal place value in independent mode.",
           "modes": [
             "independent"
           ],
           "parameters": {
-            "angle": 90
+            "digit": 7,
+            "number": 7.89
           }
         },
         {
-          "key": "dc4-angle-angle_measurement-04",
-          "family": "ANGLE_MEASUREMENT",
-          "prompt": "What is the measure of an angle that is 120 degrees?",
-          "canonical_answer": "120",
-          "difficulty": 2,
-          "objective": "Measure angles in whole-number degrees.",
+          "key": "dc4-decimals-decimal_place_value-04",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the digit 6 in the number 0.67?",
+          "canonical_answer": "tenths",
+          "difficulty": 1,
+          "objective": "Practice decimal place value in mastery mode.",
           "modes": [
             "mastery"
           ],
           "parameters": {
-            "angle": 120
+            "digit": 6,
+            "number": 0.67
+          }
+        },
+        {
+          "key": "dc4-decimals-decimal_place_value-05",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the digit 3 in the number 3.45?",
+          "canonical_answer": "tenths",
+          "difficulty": 2,
+          "objective": "Practice decimal place value in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "digit": 3,
+            "number": 3.45
+          }
+        },
+        {
+          "key": "dc4-decimals-decimal_place_value-06",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the digit 5 in the number 2.05?",
+          "canonical_answer": "hundredths",
+          "difficulty": 2,
+          "objective": "Practice decimal place value in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "digit": 5,
+            "number": 2.05
+          }
+        },
+        {
+          "key": "dc4-decimals-decimal_place_value-07",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the digit 7 in the number 7.89?",
+          "canonical_answer": "ones",
+          "difficulty": 2,
+          "objective": "Practice decimal place value in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "digit": 7,
+            "number": 7.89
+          }
+        },
+        {
+          "key": "dc4-decimals-decimal_place_value-08",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the digit 6 in the number 0.67?",
+          "canonical_answer": "tenths",
+          "difficulty": 2,
+          "objective": "Practice decimal place value in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "digit": 6,
+            "number": 0.67
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC4.MD.MEASUREMENT",
+      "name": "Measurement and Conversion",
+      "description": "Know relative sizes of measurement units within one system and solve measurement conversion problems.",
+      "difficulty_level": 4,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.CONVERSION",
+        "name": "Measurement and Conversion",
+        "description": "Convert between measurement units within the same system and solve word problems."
+      },
+      "standard_refs": [
+        "4.MD"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "MEASUREMENT_CONVERSION"
+      ],
+      "problems": [
+        {
+          "key": "dc4-measurement-measurement_conversion-01",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 3 m to cm.",
+          "canonical_answer": "300",
+          "difficulty": 1,
+          "objective": "Practice measurement conversion in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "value": 3,
+            "from": "m",
+            "to": "cm"
+          }
+        },
+        {
+          "key": "dc4-measurement-measurement_conversion-02",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 5 km to m.",
+          "canonical_answer": "5000",
+          "difficulty": 1,
+          "objective": "Practice measurement conversion in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "value": 5,
+            "from": "km",
+            "to": "m"
+          }
+        },
+        {
+          "key": "dc4-measurement-measurement_conversion-03",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 2 kg to g.",
+          "canonical_answer": "2000",
+          "difficulty": 1,
+          "objective": "Practice measurement conversion in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "value": 2,
+            "from": "kg",
+            "to": "g"
+          }
+        },
+        {
+          "key": "dc4-measurement-measurement_conversion-04",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 4 L to mL.",
+          "canonical_answer": "4000",
+          "difficulty": 1,
+          "objective": "Practice measurement conversion in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "value": 4,
+            "from": "L",
+            "to": "mL"
+          }
+        },
+        {
+          "key": "dc4-measurement-measurement_conversion-05",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 7 ft to in.",
+          "canonical_answer": "84",
+          "difficulty": 2,
+          "objective": "Practice measurement conversion in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "value": 7,
+            "from": "ft",
+            "to": "in"
+          }
+        },
+        {
+          "key": "dc4-measurement-measurement_conversion-06",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 6 ft to yd.",
+          "canonical_answer": "2",
+          "difficulty": 2,
+          "objective": "Practice measurement conversion in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "value": 6,
+            "from": "ft",
+            "to": "yd"
+          }
+        },
+        {
+          "key": "dc4-measurement-measurement_conversion-07",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 9 cm to mm.",
+          "canonical_answer": "90",
+          "difficulty": 2,
+          "objective": "Practice measurement conversion in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "value": 9,
+            "from": "cm",
+            "to": "mm"
+          }
+        },
+        {
+          "key": "dc4-measurement-measurement_conversion-08",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 1.5 m to cm.",
+          "canonical_answer": "150",
+          "difficulty": 2,
+          "objective": "Practice measurement conversion in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "value": 1.5,
+            "from": "m",
+            "to": "cm"
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC4.MD.ANGLE_LINES",
+      "name": "Angles, Lines, and Shapes",
+      "description": "Measure and sketch angles, identify parallel and perpendicular lines, and classify two-dimensional figures.",
+      "difficulty_level": 4,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.GEOMETRY.ANGLES_LINES_SHAPES",
+        "name": "Angles, Lines, and Shapes",
+        "description": "Measure angles, identify line relationships, and classify two-dimensional shapes."
+      },
+      "standard_refs": [
+        "4.MD",
+        "4.G"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "ANGLE_MEASUREMENT",
+        "LINES_PARALLEL_PERPENDICULAR",
+        "CLASSIFY_SHAPE"
+      ],
+      "problems": [
+        {
+          "key": "dc4-angle_lines-angle_measurement-01",
+          "family": "ANGLE_MEASUREMENT",
+          "prompt": "What is the measure of an angle that is acute a right angle?",
+          "canonical_answer": "45",
+          "difficulty": 1,
+          "objective": "Practice angle measurement in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "relation": "acute",
+            "degrees": 45
+          }
+        },
+        {
+          "key": "dc4-angle_lines-lines_parallel_perpendicular-02",
+          "family": "LINES_PARALLEL_PERPENDICULAR",
+          "prompt": "Two lines meet at a right angle. Are they parallel or perpendicular?",
+          "canonical_answer": "perpendicular",
+          "difficulty": 1,
+          "objective": "Practice lines parallel perpendicular in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "relation": "perpendicular"
+          }
+        },
+        {
+          "key": "dc4-angle_lines-classify_shape-03",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a pentagon have?",
+          "canonical_answer": "5",
+          "difficulty": 1,
+          "objective": "Practice classify shape in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "shape": "pentagon",
+            "sides": 5
+          }
+        },
+        {
+          "key": "dc4-angle_lines-angle_measurement-04",
+          "family": "ANGLE_MEASUREMENT",
+          "prompt": "What is the measure of an angle that is one-third of a straight a right angle?",
+          "canonical_answer": "60",
+          "difficulty": 1,
+          "objective": "Practice angle measurement in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "relation": "one-third of a straight",
+            "degrees": 60
+          }
+        },
+        {
+          "key": "dc4-angle_lines-lines_parallel_perpendicular-05",
+          "family": "LINES_PARALLEL_PERPENDICULAR",
+          "prompt": "Two lines in the same plane never meet. Are they parallel or perpendicular?",
+          "canonical_answer": "parallel",
+          "difficulty": 2,
+          "objective": "Practice lines parallel perpendicular in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "relation": "parallel"
+          }
+        },
+        {
+          "key": "dc4-angle_lines-classify_shape-06",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a triangle have?",
+          "canonical_answer": "3",
+          "difficulty": 2,
+          "objective": "Practice classify shape in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "shape": "triangle",
+            "sides": 3
+          }
+        },
+        {
+          "key": "dc4-angle_lines-angle_measurement-07",
+          "family": "ANGLE_MEASUREMENT",
+          "prompt": "What is the measure of an angle that is one half of a a right angle?",
+          "canonical_answer": "45",
+          "difficulty": 2,
+          "objective": "Practice angle measurement in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "relation": "one half of a",
+            "degrees": 45
+          }
+        },
+        {
+          "key": "dc4-angle_lines-lines_parallel_perpendicular-08",
+          "family": "LINES_PARALLEL_PERPENDICULAR",
+          "prompt": "Two lines meet at a right angle. Are they parallel or perpendicular?",
+          "canonical_answer": "perpendicular",
+          "difficulty": 2,
+          "objective": "Practice lines parallel perpendicular in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "relation": "perpendicular"
           }
         }
       ]

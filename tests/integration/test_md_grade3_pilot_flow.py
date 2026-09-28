@@ -19,7 +19,7 @@ def test_md_grade3_equal_groups_session_preserves_curriculum_and_fresh_evidence(
         skill = db.scalar(
             select(Skill).where(
                 Skill.curriculum_id == curriculum.id,
-                Skill.code == "MD3.NOS.EQUAL_GROUPS",
+                Skill.code == "MD3.OA.MULTIPLICATION",
             )
         )
         learner = Student(
@@ -50,7 +50,7 @@ def test_md_grade3_equal_groups_session_preserves_curriculum_and_fresh_evidence(
         problem = db.get(Problem, payload["problem"]["id"])
         assert session.curriculum_id == curriculum_id
         assert problem.primary_skill_id == skill_id
-        assert problem.problem_type == "EQUAL_GROUPS"
+        assert problem.problem_type in {"EQUAL_GROUPS", "MULTIPLICATION_WITHIN_100", "WORD_PROBLEM_MULTIPLY_DIVIDE_100"}
         answer = problem.canonical_answer
 
     response = client.post(
