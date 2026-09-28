@@ -1,0 +1,333 @@
+{
+  "schema_version": 1,
+  "jurisdiction": {
+    "country_code": "US",
+    "code": "VA",
+    "name": "Virginia",
+    "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
+    "source_uri": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics"
+  },
+  "authority": {
+    "code": "VDOE",
+    "name": "Virginia Department of Education",
+    "authority_type": "STATE_AGENCY",
+    "source_uri": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics"
+  },
+  "curriculum": {
+    "code": "VA_MATH_2_2024_25",
+    "name": "Virginia Grade 2 Mathematics \u2014 2023 Standards of Learning",
+    "version": "VDOE-2023-SY2024-25",
+    "grade_level": "2",
+    "source_uri": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+  },
+  "expectations": [
+    {
+      "source_identifier": "2.NS.1",
+      "title": "Read, write, and identify numbers",
+      "source_uri": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources",
+      "strand": "Number and Number Sense",
+      "description": "Read, write, and identify numbers to 999."
+    },
+    {
+      "source_identifier": "2.CE.1",
+      "title": "Solve problems using addition and subtraction",
+      "source_uri": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources",
+      "strand": "Computation and Estimation",
+      "description": "Solve single-step practical problems involving addition and subtraction within 1000."
+    },
+    {
+      "source_identifier": "2.MG.1",
+      "title": "Tell time and read a calendar",
+      "source_uri": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources",
+      "strand": "Measurement and Geometry",
+      "description": "Tell time to the nearest five minutes using analog and digital clocks."
+    }
+  ],
+  "skills": [
+    {
+      "code": "VA2.OA.ADD_SUB_100",
+      "name": "Addition and Subtraction within 100",
+      "description": "Add and subtract within 100 using strategies based on place value.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_100",
+        "name": "Addition and Subtraction within 100",
+        "description": "Add and subtract whole numbers within 100 using place-value strategies."
+      },
+      "standard_refs": [
+        "2.NS.1",
+        "2.CE.1"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "ADDITION_WITHIN_100",
+        "SUBTRACTION_WITHIN_100"
+      ],
+      "problems": [
+        {
+          "key": "va2-add_sub_100-addition_within_100-01",
+          "family": "ADDITION_WITHIN_100",
+          "prompt": "A school has 24 fiction books and 35 nonfiction books. How many books are there?",
+          "canonical_answer": "59",
+          "difficulty": 1,
+          "objective": "Add two-digit numbers within 100 using place-value strategies.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 24,
+            "b": 35,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "va2-add_sub_100-subtraction_within_100-02",
+          "family": "SUBTRACTION_WITHIN_100",
+          "prompt": "There are 72 crayons in a box. 38 are used. How many crayons are left?",
+          "canonical_answer": "34",
+          "difficulty": 1,
+          "objective": "Subtract two-digit numbers within 100 using place-value strategies.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 72,
+            "b": 38,
+            "operation": "-"
+          }
+        },
+        {
+          "key": "va2-add_sub_100-addition_within_100-03",
+          "family": "ADDITION_WITHIN_100",
+          "prompt": "A school has 56 fiction books and 39 nonfiction books. How many books are there?",
+          "canonical_answer": "95",
+          "difficulty": 2,
+          "objective": "Add two-digit numbers within 100 using place-value strategies.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 56,
+            "b": 39,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "va2-add_sub_100-subtraction_within_100-04",
+          "family": "SUBTRACTION_WITHIN_100",
+          "prompt": "There are 81 crayons in a box. 47 are used. How many crayons are left?",
+          "canonical_answer": "34",
+          "difficulty": 2,
+          "objective": "Subtract two-digit numbers within 100 using place-value strategies.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 81,
+            "b": 47,
+            "operation": "-"
+          }
+        }
+      ]
+    },
+    {
+      "code": "VA2.NBT.PLACE_VALUE_3DIGIT",
+      "name": "Place Value: Hundreds, Tens, Ones",
+      "description": "Understand three-digit numbers as hundreds, tens, and ones.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.PLACE_VALUE.HUNDREDS_TENS_ONES",
+        "name": "Place Value: Hundreds, Tens, Ones",
+        "description": "Understand that the digits of a three-digit number represent hundreds, tens, and ones."
+      },
+      "standard_refs": [
+        "2.NS.1",
+        "2.CE.1"
+      ],
+      "prerequisite_codes": [
+        "VA2.OA.ADD_SUB_100"
+      ],
+      "problem_families": [
+        "PLACE_VALUE_BASE_TEN"
+      ],
+      "problems": [
+        {
+          "key": "va2-place_value_3digit-place_value_base_ten-01",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 45?",
+          "canonical_answer": "4 tens and 5 ones",
+          "difficulty": 1,
+          "objective": "Decompose two-digit numbers into tens and ones.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "number": 45,
+            "tens": 4,
+            "ones": 5,
+            "hundreds": 0,
+            "place": "tens_and_ones"
+          }
+        },
+        {
+          "key": "va2-place_value_3digit-place_value_base_ten-02",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 63?",
+          "canonical_answer": "6 tens and 3 ones",
+          "difficulty": 1,
+          "objective": "Decompose two-digit numbers into tens and ones.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "number": 63,
+            "tens": 6,
+            "ones": 3,
+            "hundreds": 0,
+            "place": "tens_and_ones"
+          }
+        },
+        {
+          "key": "va2-place_value_3digit-place_value_base_ten-03",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 247?",
+          "canonical_answer": "2 tens and 4 ones",
+          "difficulty": 2,
+          "objective": "Decompose two-digit numbers into tens and ones.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "number": 247,
+            "tens": 2,
+            "ones": 4,
+            "hundreds": 7,
+            "place": "hundreds_tens_ones"
+          }
+        },
+        {
+          "key": "va2-place_value_3digit-place_value_base_ten-04",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 385?",
+          "canonical_answer": "3 tens and 8 ones",
+          "difficulty": 2,
+          "objective": "Decompose two-digit numbers into tens and ones.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "number": 385,
+            "tens": 3,
+            "ones": 8,
+            "hundreds": 5,
+            "place": "hundreds_tens_ones"
+          }
+        }
+      ]
+    },
+    {
+      "code": "VA2.MD.MONEY",
+      "name": "Count Money",
+      "description": "Count collections of coins and bills and solve money word problems.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.MONEY_COUNT",
+        "name": "Count Money",
+        "description": "Determine the value of a collection of coins and bills and solve money word problems."
+      },
+      "standard_refs": [
+        "2.NS.1",
+        "2.CE.1"
+      ],
+      "prerequisite_codes": [
+        "VA2.OA.ADD_SUB_100"
+      ],
+      "problem_families": [
+        "MONEY_COUNT"
+      ],
+      "problems": [
+        {
+          "key": "va2-money-money_count-01",
+          "family": "MONEY_COUNT",
+          "prompt": "What is the total value of 1 quarter(s), 1 dime(s), 1 nickel(s), and 1 penny(ies)?",
+          "canonical_answer": "$0.41",
+          "difficulty": 1,
+          "objective": "Count mixed coin collections.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "quarters": 1,
+            "dimes": 1,
+            "nickels": 1,
+            "pennies": 1,
+            "total_cents": 41
+          }
+        },
+        {
+          "key": "va2-money-money_count-02",
+          "family": "MONEY_COUNT",
+          "prompt": "What is the total value of 2 quarter(s), 0 dime(s), 1 nickel(s), and 3 penny(ies)?",
+          "canonical_answer": "$0.58",
+          "difficulty": 1,
+          "objective": "Count mixed coin collections.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "quarters": 2,
+            "dimes": 0,
+            "nickels": 1,
+            "pennies": 3,
+            "total_cents": 58
+          }
+        },
+        {
+          "key": "va2-money-money_count-03",
+          "family": "MONEY_COUNT",
+          "prompt": "What is the total value of 0 quarter(s), 3 dime(s), 2 nickel(s), and 4 penny(ies)?",
+          "canonical_answer": "$0.44",
+          "difficulty": 2,
+          "objective": "Count mixed coin collections.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "quarters": 0,
+            "dimes": 3,
+            "nickels": 2,
+            "pennies": 4,
+            "total_cents": 44
+          }
+        },
+        {
+          "key": "va2-money-money_count-04",
+          "family": "MONEY_COUNT",
+          "prompt": "What is the total value of 1 quarter(s), 2 dime(s), 0 nickel(s), and 0 penny(ies)?",
+          "canonical_answer": "$0.45",
+          "difficulty": 2,
+          "objective": "Count mixed coin collections.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "quarters": 1,
+            "dimes": 2,
+            "nickels": 0,
+            "pennies": 0,
+            "total_cents": 45
+          }
+        }
+      ]
+    }
+  ],
+  "readiness": {
+    "minimum_curated_per_skill": 4,
+    "required_modes": [
+      "diagnostic",
+      "guided",
+      "independent",
+      "mastery"
+    ]
+  }
+}

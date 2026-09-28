@@ -11,7 +11,7 @@ GRADE3_COMPANION = "https://marylandpublicschools.org/about/Documents/DCAA/Math/
 
 _PACK_PATH = (
     Path(__file__).parents[1]
-    / "docs/curriculum/packs/md-grade3-mccrs-2026-27.json"
+    / "docs/curriculum/packs/md-grade3-mccrs-2026_27.json"
 )
 
 

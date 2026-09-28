@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "jurisdiction": {
+    "country_code": "US",
+    "code": "DC",
+    "name": "District of Columbia",
+    "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
+    "source_uri": "https://osse-migrate.dc.gov/service/district-columbia-standards-learning-0"
+  },
+  "authority": {
+    "code": "OSSE",
+    "name": "Office of the State Superintendent of Education",
+    "authority_type": "STATE_AGENCY",
+    "source_uri": "https://osse-migrate.dc.gov/service/district-columbia-standards-learning-0"
+  },
+  "curriculum": {
+    "code": "DC_MATH_3_2024_25",
+    "name": "District of Columbia Grade 3 Mathematics \u2014 Common Core State Standards",
+    "version": "CCSS-OSSE-2024-25",
+    "grade_level": "3",
+    "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf"
+  },
+  "expectations": [
+    {
+      "source_identifier": "3.OA.A",
+      "title": "Represent and solve problems involving multiplication and division",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Operations and Algebraic Thinking",
+      "description": "Interpret products and quotients of whole numbers and solve word problems."
+    },
+    {
+      "source_identifier": "3.NF.A",
+      "title": "Develop understanding of fractions as numbers",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Number and Operations\u2014Fractions",
+      "description": "Understand fractions 1/b and a/b and represent them on a number line."
+    },
+    {
+      "source_identifier": "3.MD.C",
+      "title": "Geometric measurement: understand concepts of area",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Measurement and Data",
+      "description": "Recognize area as an attribute of plane figures and relate area to multiplication."
+    }
+  ],
+  "skills": [
+    {
+      "code": "DC3.OA.EQUAL_GROUPS",
+      "name": "Multiplication as Equal Groups",
+      "description": "Interpret products as equal groups and arrays.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MULTIPLICATION.EQUAL_GROUPS",
+        "name": "Multiplication as Equal Groups",
+        "description": "Understand multiplication as equal groups, arrays, and repeated addition."
+      },
+      "standard_refs": [
+        "3.OA.A",
+        "3.NF.A"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "EQUAL_GROUPS"
+      ],
+      "problems": [
+        {
+          "key": "dc3-equal_groups-equal_groups-01",
+          "family": "EQUAL_GROUPS",
+          "prompt": "There are 3 rows with 4 objects in each row. How many objects are there?",
+          "canonical_answer": "12",
+          "difficulty": 1,
+          "objective": "Interpret products as equal groups or arrays.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "rows": 3,
+            "columns": 4,
+            "unit": "objects"
+          }
+        },
+        {
+          "key": "dc3-equal_groups-equal_groups-02",
+          "family": "EQUAL_GROUPS",
+          "prompt": "There are 5 rows with 2 objects in each row. How many objects are there?",
+          "canonical_answer": "10",
+          "difficulty": 1,
+          "objective": "Interpret products as equal groups or arrays.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "rows": 5,
+            "columns": 2,
+            "unit": "objects"
+          }
+        },
+        {
+          "key": "dc3-equal_groups-equal_groups-03",
+          "family": "EQUAL_GROUPS",
+          "prompt": "There are 6 rows with 7 objects in each row. How many objects are there?",
+          "canonical_answer": "42",
+          "difficulty": 2,
+          "objective": "Interpret products as equal groups or arrays.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "rows": 6,
+            "columns": 7,
+            "unit": "objects"
+          }
+        },
+        {
+          "key": "dc3-equal_groups-equal_groups-04",
+          "family": "EQUAL_GROUPS",
+          "prompt": "There are 8 rows with 4 objects in each row. How many objects are there?",
+          "canonical_answer": "32",
+          "difficulty": 2,
+          "objective": "Interpret products as equal groups or arrays.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "rows": 8,
+            "columns": 4,
+            "unit": "objects"
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC3.OA.EQUAL_SHARING",
+      "name": "Division as Equal Sharing",
+      "description": "Interpret quotients through fair sharing and groups of a known size.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.DIVISION.EQUAL_SHARING",
+        "name": "Division as Equal Sharing",
+        "description": "Understand division as fair sharing and as finding an unknown group size or number of groups."
+      },
+      "standard_refs": [
+        "3.OA.A",
+        "3.NF.A"
+      ],
+      "prerequisite_codes": [
+        "DC3.OA.EQUAL_GROUPS"
+      ],
+      "problem_families": [
+        "EQUAL_SHARING"
+      ],
+      "problems": [
+        {
+          "key": "dc3-equal_sharing-equal_sharing-01",
+          "family": "EQUAL_SHARING",
+          "prompt": "12 objects are shared equally among 3 groups. How many objects are in each group?",
+          "canonical_answer": "4",
+          "difficulty": 1,
+          "objective": "Interpret quotients as equal sharing.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "total": 12,
+            "groups": 3,
+            "group_size": 4
+          }
+        },
+        {
+          "key": "dc3-equal_sharing-equal_sharing-02",
+          "family": "EQUAL_SHARING",
+          "prompt": "20 objects are shared equally among 4 groups. How many objects are in each group?",
+          "canonical_answer": "5",
+          "difficulty": 1,
+          "objective": "Interpret quotients as equal sharing.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "total": 20,
+            "groups": 4,
+            "group_size": 5
+          }
+        },
+        {
+          "key": "dc3-equal_sharing-equal_sharing-03",
+          "family": "EQUAL_SHARING",
+          "prompt": "28 objects are shared equally among 7 groups. How many objects are in each group?",
+          "canonical_answer": "4",
+          "difficulty": 2,
+          "objective": "Interpret quotients as equal sharing.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "total": 28,
+            "groups": 7,
+            "group_size": 4
+          }
+        },
+        {
+          "key": "dc3-equal_sharing-equal_sharing-04",
+          "family": "EQUAL_SHARING",
+          "prompt": "36 objects are shared equally among 6 groups. How many objects are in each group?",
+          "canonical_answer": "6",
+          "difficulty": 2,
+          "objective": "Interpret quotients as equal sharing.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "total": 36,
+            "groups": 6,
+            "group_size": 6
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC3.NF.UNIT_FRACTION",
+      "name": "Unit Fractions as Numbers",
+      "description": "Understand 1/b as one equal part of a whole and build fractions from it.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.FRACTION.UNIT",
+        "name": "Unit Fractions as Numbers",
+        "description": "Understand unit fractions 1/b and build non-unit fractions a/b from unit fractions."
+      },
+      "standard_refs": [
+        "3.OA.A",
+        "3.NF.A"
+      ],
+      "prerequisite_codes": [
+        "DC3.OA.EQUAL_SHARING"
+      ],
+      "problem_families": [
+        "UNIT_FRACTION"
+      ],
+      "problems": [
+        {
+          "key": "dc3-unit_fraction-unit_fraction-01",
+          "family": "UNIT_FRACTION",
+          "prompt": "A whole is divided into 4 equal parts. What fraction is 1 of those parts?",
+          "canonical_answer": "1/4",
+          "difficulty": 1,
+          "objective": "Understand unit and non-unit fractions.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "key": "dc3-unit_fraction-unit_fraction-02",
+          "family": "UNIT_FRACTION",
+          "prompt": "A whole is divided into 6 equal parts. What fraction is 1 of those parts?",
+          "canonical_answer": "1/6",
+          "difficulty": 1,
+          "objective": "Understand unit and non-unit fractions.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "numerator": 1,
+            "denominator": 6
+          }
+        },
+        {
+          "key": "dc3-unit_fraction-unit_fraction-03",
+          "family": "UNIT_FRACTION",
+          "prompt": "A whole is divided into 5 equal parts. What fraction is 3 of those parts?",
+          "canonical_answer": "3/5",
+          "difficulty": 2,
+          "objective": "Understand unit and non-unit fractions.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "numerator": 3,
+            "denominator": 5
+          }
+        },
+        {
+          "key": "dc3-unit_fraction-unit_fraction-04",
+          "family": "UNIT_FRACTION",
+          "prompt": "A whole is divided into 8 equal parts. What fraction is 2 of those parts?",
+          "canonical_answer": "2/8",
+          "difficulty": 2,
+          "objective": "Understand unit and non-unit fractions.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "numerator": 2,
+            "denominator": 8
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC3.MD.RECTANGLE_AREA",
+      "name": "Rectangle Area with Unit Squares",
+      "description": "Relate rectangular arrays, unit squares, and multiplication to area.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.RECTANGLE_AREA",
+        "name": "Rectangle Area with Unit Squares",
+        "description": "Understand area as covering with unit squares and relate it to multiplication."
+      },
+      "standard_refs": [
+        "3.OA.A",
+        "3.NF.A"
+      ],
+      "prerequisite_codes": [
+        "DC3.OA.EQUAL_GROUPS"
+      ],
+      "problem_families": [
+        "RECTANGLE_AREA"
+      ],
+      "problems": [
+        {
+          "key": "dc3-rectangle_area-rectangle_area-01",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A rectangle has 3 rows of 5 unit squares. What is its area in square units?",
+          "canonical_answer": "15",
+          "difficulty": 1,
+          "objective": "Relate rectangular arrays to area.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "rows": 3,
+            "columns": 5,
+            "unit": "square units"
+          }
+        },
+        {
+          "key": "dc3-rectangle_area-rectangle_area-02",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A rectangle has 4 rows of 6 unit squares. What is its area in square units?",
+          "canonical_answer": "24",
+          "difficulty": 1,
+          "objective": "Relate rectangular arrays to area.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "rows": 4,
+            "columns": 6,
+            "unit": "square units"
+          }
+        },
+        {
+          "key": "dc3-rectangle_area-rectangle_area-03",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A rectangle has 5 rows of 7 unit squares. What is its area in square units?",
+          "canonical_answer": "35",
+          "difficulty": 2,
+          "objective": "Relate rectangular arrays to area.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "rows": 5,
+            "columns": 7,
+            "unit": "square units"
+          }
+        },
+        {
+          "key": "dc3-rectangle_area-rectangle_area-04",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A rectangle has 6 rows of 8 unit squares. What is its area in square units?",
+          "canonical_answer": "48",
+          "difficulty": 2,
+          "objective": "Relate rectangular arrays to area.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "rows": 6,
+            "columns": 8,
+            "unit": "square units"
+          }
+        }
+      ]
+    }
+  ],
+  "readiness": {
+    "minimum_curated_per_skill": 4,
+    "required_modes": [
+      "diagnostic",
+      "guided",
+      "independent",
+      "mastery"
+    ]
+  }
+}

@@ -137,6 +137,191 @@ def _fraction_bar(problem: Problem) -> dict | None:
     }
 
 
+def _ten_frame(problem: Problem) -> dict | None:
+    params = _params(problem)
+    a, b = _int(params.get("a")), _int(params.get("b"))
+    if a is None or b is None:
+        return None
+    total = a + b if params.get("operation") == "+" else a - b
+    if not (0 <= total <= 20):
+        return None
+    return {
+        "type": "ten_frame",
+        "a": a,
+        "b": b,
+        "operation": params.get("operation", "+"),
+        "total": total,
+        "aria_label": (
+            f"Ten frames showing {a} counters and {b} counters, "
+            f"{params.get('operation', '+')} equals {total}."
+        ),
+    }
+
+
+def _base_ten_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    number = _int(params.get("number"))
+    if number is None:
+        return None
+    hundreds = _int(params.get("hundreds")) or 0
+    tens = _int(params.get("tens")) or 0
+    ones = _int(params.get("ones")) or 0
+    return {
+        "type": "base_ten",
+        "number": number,
+        "hundreds": hundreds,
+        "tens": tens,
+        "ones": ones,
+        "aria_label": (
+            f"Base-ten blocks for {number}: "
+            f"{hundreds} hundreds, {tens} tens, and {ones} ones."
+        ),
+    }
+
+
+def _money_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    q = _int(params.get("quarters")) or 0
+    d = _int(params.get("dimes")) or 0
+    n = _int(params.get("nickels")) or 0
+    p = _int(params.get("pennies")) or 0
+    total = _int(params.get("total_cents"))
+    if total is None:
+        return None
+    return {
+        "type": "money",
+        "quarters": q,
+        "dimes": d,
+        "nickels": n,
+        "pennies": p,
+        "total_cents": total,
+        "aria_label": (
+            f"Coins totaling {total} cents: "
+            f"{q} quarters, {d} dimes, {n} nickels, {p} pennies."
+        ),
+    }
+
+
+def _clock_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    hour = _int(params.get("hour"))
+    minute = _int(params.get("minute"))
+    if hour is None or minute is None:
+        return None
+    return {
+        "type": "clock",
+        "hour": hour,
+        "minute": minute,
+        "aria_label": f"Analog clock showing {hour}:{minute:02d}.",
+    }
+
+
+def _angle_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    angle = _int(params.get("angle"))
+    if angle is None or not (0 <= angle <= 180):
+        return None
+    return {
+        "type": "angle",
+        "angle": angle,
+        "aria_label": f"Angle measuring {angle} degrees.",
+    }
+
+
+def _coordinate_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    x = _int(params.get("x"))
+    y = _int(params.get("y"))
+    if x is None or y is None:
+        return None
+    return {
+        "type": "coordinate_plane",
+        "x": x,
+        "y": y,
+        "max": max(x, y, 10) + 1,
+        "aria_label": f"Coordinate plane with point at ({x}, {y}).",
+    }
+
+
+def _volume_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    l = _int(params.get("length"))
+    w = _int(params.get("width"))
+    h = _int(params.get("height"))
+    if l is None or w is None or h is None:
+        return None
+    return {
+        "type": "volume",
+        "length": l,
+        "width": w,
+        "height": h,
+        "aria_label": (
+            f"Rectangular prism with length {l}, width {w}, height {h}, "
+            f"volume {l * w * h}."
+        ),
+    }
+
+
+def _ruler_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    a = _int(params.get("a"))
+    b = _int(params.get("b"))
+    if a is None or b is None:
+        return None
+    lo = 0
+    hi = max(a, b) + 2
+    return {
+        "type": "ruler",
+        "a": a,
+        "b": b,
+        "min": lo,
+        "max": hi,
+        "aria_label": f"Ruler showing lengths {a} and {b} units.",
+    }
+
+
+def _shape_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    shape = params.get("shape")
+    sides = _int(params.get("sides"))
+    if shape is None:
+        return None
+    return {
+        "type": "shape",
+        "shape": shape,
+        "sides": sides,
+        "aria_label": f"A {shape} with {sides} sides.",
+    }
+
+
+def _bar_graph_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    data = params.get("data")
+    category = params.get("category")
+    if not isinstance(data, dict) or category is None:
+        return None
+    return {
+        "type": "bar_graph",
+        "data": data,
+        "category": category,
+        "aria_label": f"Bar graph with values {data}. Highlight category {category}.",
+    }
+
+
+def _picture_graph_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    data = params.get("data")
+    category = params.get("category")
+    if not isinstance(data, dict) or category is None:
+        return None
+    return {
+        "type": "picture_graph",
+        "data": data,
+        "category": category,
+        "aria_label": f"Picture graph with values {data}. Highlight category {category}.",
+    }
+
+
 def visualization_for(problem: Problem) -> dict | None:
     """Return a declarative visual spec for a problem, or None."""
     if problem.problem_type == "SIMPLIFY_EXPRESSION":
@@ -149,4 +334,45 @@ def visualization_for(problem: Problem) -> dict | None:
         return _array_model(problem)
     if problem.problem_type == "UNIT_FRACTION":
         return _fraction_bar(problem)
+    if problem.problem_type in {"ADDITION_WITHIN_20", "SUBTRACTION_WITHIN_20", "WORD_PROBLEM_ADD_SUB_20"}:
+        return _ten_frame(problem)
+    if problem.problem_type == "PLACE_VALUE_BASE_TEN":
+        return _base_ten_model(problem)
+    if problem.problem_type == "MONEY_COUNT":
+        return _money_model(problem)
+    if problem.problem_type == "TIME_TO_HOUR_HALF_HOUR":
+        return _clock_model(problem)
+    if problem.problem_type == "TIME_TO_5_MINUTES":
+        return _clock_model(problem)
+    if problem.problem_type in {
+        "ADDITION_WITHIN_100",
+        "SUBTRACTION_WITHIN_100",
+        "WORD_PROBLEM_ADD_SUB_100",
+        "MULTI_DIGIT_MULTIPLICATION",
+        "LONG_DIVISION",
+        "NUMBER_SEQUENCE",
+        "NUMBER_PATTERN",
+        "EQUATION_BALANCE",
+        "COMPARE_NUMBERS",
+        "DECIMAL_PLACE_VALUE",
+    }:
+        return None
+    if problem.problem_type == "FRACTION_EQUIVALENCE":
+        return _fraction_bar(problem)
+    if problem.problem_type in {"FRACTION_ADD_SUBTRACT_LIKE", "FRACTION_MULTIPLY", "FRACTION_HALVES_THIRDS_FOURTHS"}:
+        return _fraction_bar(problem)
+    if problem.problem_type == "COMPARE_LENGTH":
+        return _ruler_model(problem)
+    if problem.problem_type == "GEOMETRY_SHAPES":
+        return _shape_model(problem)
+    if problem.problem_type == "BAR_GRAPH_READ":
+        return _bar_graph_model(problem)
+    if problem.problem_type == "PICTURE_GRAPH_READ":
+        return _picture_graph_model(problem)
+    if problem.problem_type == "ANGLE_MEASUREMENT":
+        return _angle_model(problem)
+    if problem.problem_type == "COORDINATE_PLANE":
+        return _coordinate_model(problem)
+    if problem.problem_type == "VOLUME":
+        return _volume_model(problem)
     return None

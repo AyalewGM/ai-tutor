@@ -197,10 +197,9 @@ def test_canonical_mapping_never_transfers_dc_grade3_evidence():
 def test_dc_grade3_pack_loaded_via_declarative_framework():
     result = seed()
     with SessionLocal() as db:
-        curriculum = db.scalar(
-            select(Curriculum).where(Curriculum.code == CURRICULUM_CODE)
-        )
-        assert result.curriculum_id == str(curriculum.id)
+        curriculum = db.get(Curriculum, result.curriculum_id)
+        assert curriculum is not None
+        assert curriculum.code == CURRICULUM_CODE
         assert result.skill_count == 4
         assert result.expectation_count == 3
         assert result.problem_count == 16

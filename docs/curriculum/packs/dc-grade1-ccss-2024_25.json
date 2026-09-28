@@ -1,0 +1,319 @@
+{
+  "schema_version": 1,
+  "jurisdiction": {
+    "country_code": "US",
+    "code": "DC",
+    "name": "District of Columbia",
+    "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
+    "source_uri": "https://osse-migrate.dc.gov/service/district-columbia-standards-learning-0"
+  },
+  "authority": {
+    "code": "OSSE",
+    "name": "Office of the State Superintendent of Education",
+    "authority_type": "STATE_AGENCY",
+    "source_uri": "https://osse-migrate.dc.gov/service/district-columbia-standards-learning-0"
+  },
+  "curriculum": {
+    "code": "DC_MATH_1_2024_25",
+    "name": "District of Columbia Grade 1 Mathematics \u2014 Common Core State Standards",
+    "version": "CCSS-OSSE-2024-25",
+    "grade_level": "1",
+    "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf"
+  },
+  "expectations": [
+    {
+      "source_identifier": "1.OA.C",
+      "title": "Add and subtract within 20",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Operations and Algebraic Thinking",
+      "description": "Demonstrate fluency for addition and subtraction within 10 and apply strategies within 20."
+    },
+    {
+      "source_identifier": "1.NBT.B",
+      "title": "Understand place value",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Number and Operations in Base Ten",
+      "description": "Understand that the two digits of a two-digit number represent amounts of tens and ones."
+    },
+    {
+      "source_identifier": "1.MD.B",
+      "title": "Tell and write time",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Measurement and Data",
+      "description": "Tell and write time in hours and half-hours using analog and digital clocks."
+    }
+  ],
+  "skills": [
+    {
+      "code": "DC1.OA.ADD_SUB_20",
+      "name": "Addition and Subtraction within 20",
+      "description": "Add and subtract within 20 using objects, drawings, and equations.",
+      "difficulty_level": 1,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_20",
+        "name": "Addition and Subtraction within 20",
+        "description": "Add and subtract whole numbers within 20 with objects, drawings, and equations."
+      },
+      "standard_refs": [
+        "1.OA.C",
+        "1.NBT.B"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "ADDITION_WITHIN_20",
+        "SUBTRACTION_WITHIN_20"
+      ],
+      "problems": [
+        {
+          "key": "dc1-add_sub_20-addition_within_20-01",
+          "family": "ADDITION_WITHIN_20",
+          "prompt": "5 apples and 4 apples are on the table. How many apples are there?",
+          "canonical_answer": "9",
+          "difficulty": 1,
+          "objective": "Add within 20 using a ten-frame model.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 5,
+            "b": 4,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "dc1-add_sub_20-subtraction_within_20-02",
+          "family": "SUBTRACTION_WITHIN_20",
+          "prompt": "There are 15 birds on a branch. 7 fly away. How many birds are left?",
+          "canonical_answer": "8",
+          "difficulty": 1,
+          "objective": "Subtract within 20 using a ten-frame model.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 15,
+            "b": 7,
+            "operation": "-"
+          }
+        },
+        {
+          "key": "dc1-add_sub_20-addition_within_20-03",
+          "family": "ADDITION_WITHIN_20",
+          "prompt": "8 apples and 9 apples are on the table. How many apples are there?",
+          "canonical_answer": "17",
+          "difficulty": 2,
+          "objective": "Add within 20 using a ten-frame model.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 8,
+            "b": 9,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "dc1-add_sub_20-subtraction_within_20-04",
+          "family": "SUBTRACTION_WITHIN_20",
+          "prompt": "There are 14 birds on a branch. 6 fly away. How many birds are left?",
+          "canonical_answer": "8",
+          "difficulty": 2,
+          "objective": "Subtract within 20 using a ten-frame model.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 14,
+            "b": 6,
+            "operation": "-"
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC1.NBT.PLACE_VALUE",
+      "name": "Place Value: Tens and Ones",
+      "description": "Understand two-digit numbers as tens and ones.",
+      "difficulty_level": 1,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.PLACE_VALUE.TENS_ONES",
+        "name": "Place Value: Tens and Ones",
+        "description": "Understand that the digits of a two-digit number represent tens and ones."
+      },
+      "standard_refs": [
+        "1.OA.C",
+        "1.NBT.B"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "PLACE_VALUE_BASE_TEN"
+      ],
+      "problems": [
+        {
+          "key": "dc1-place_value-place_value_base_ten-01",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 45?",
+          "canonical_answer": "4 tens and 5 ones",
+          "difficulty": 1,
+          "objective": "Decompose two-digit numbers into tens and ones.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "number": 45,
+            "tens": 4,
+            "ones": 5,
+            "hundreds": 0,
+            "place": "tens_and_ones"
+          }
+        },
+        {
+          "key": "dc1-place_value-place_value_base_ten-02",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 63?",
+          "canonical_answer": "6 tens and 3 ones",
+          "difficulty": 1,
+          "objective": "Decompose two-digit numbers into tens and ones.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "number": 63,
+            "tens": 6,
+            "ones": 3,
+            "hundreds": 0,
+            "place": "tens_and_ones"
+          }
+        },
+        {
+          "key": "dc1-place_value-place_value_base_ten-03",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 247?",
+          "canonical_answer": "2 tens and 4 ones",
+          "difficulty": 2,
+          "objective": "Decompose two-digit numbers into tens and ones.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "number": 247,
+            "tens": 2,
+            "ones": 4,
+            "hundreds": 7,
+            "place": "hundreds_tens_ones"
+          }
+        },
+        {
+          "key": "dc1-place_value-place_value_base_ten-04",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 385?",
+          "canonical_answer": "3 tens and 8 ones",
+          "difficulty": 2,
+          "objective": "Decompose two-digit numbers into tens and ones.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "number": 385,
+            "tens": 3,
+            "ones": 8,
+            "hundreds": 5,
+            "place": "hundreds_tens_ones"
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC1.MD.TELL_TIME",
+      "name": "Tell Time to Hour and Half-Hour",
+      "description": "Read analog and digital clocks to the nearest hour and half-hour.",
+      "difficulty_level": 1,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.TELL_TIME_HOUR_HALF_HOUR",
+        "name": "Tell Time to Hour and Half-Hour",
+        "description": "Tell and write time in hours and half-hours using analog and digital clocks."
+      },
+      "standard_refs": [
+        "1.OA.C",
+        "1.NBT.B"
+      ],
+      "prerequisite_codes": [
+        "DC1.OA.ADD_SUB_20"
+      ],
+      "problem_families": [
+        "TIME_TO_HOUR_HALF_HOUR"
+      ],
+      "problems": [
+        {
+          "key": "dc1-tell_time-time_to_hour_half_hour-01",
+          "family": "TIME_TO_HOUR_HALF_HOUR",
+          "prompt": "What time is shown when the hour hand points to 3 and the minute hand points to 12?",
+          "canonical_answer": "3:00",
+          "difficulty": 1,
+          "objective": "Read time to the nearest hour.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "hour": 3,
+            "minute": 0
+          }
+        },
+        {
+          "key": "dc1-tell_time-time_to_hour_half_hour-02",
+          "family": "TIME_TO_HOUR_HALF_HOUR",
+          "prompt": "What time is shown when the hour hand points to 7 and the minute hand points to 12?",
+          "canonical_answer": "7:00",
+          "difficulty": 1,
+          "objective": "Read time to the nearest hour.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "hour": 7,
+            "minute": 0
+          }
+        },
+        {
+          "key": "dc1-tell_time-time_to_hour_half_hour-03",
+          "family": "TIME_TO_HOUR_HALF_HOUR",
+          "prompt": "What time is shown when the hour hand points to 4 and the minute hand points to 12?",
+          "canonical_answer": "4:00",
+          "difficulty": 2,
+          "objective": "Read time to the nearest hour.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "hour": 4,
+            "minute": 30
+          }
+        },
+        {
+          "key": "dc1-tell_time-time_to_hour_half_hour-04",
+          "family": "TIME_TO_HOUR_HALF_HOUR",
+          "prompt": "What time is shown when the hour hand points to 9 and the minute hand points to 12?",
+          "canonical_answer": "9:00",
+          "difficulty": 2,
+          "objective": "Read time to the nearest hour.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "hour": 9,
+            "minute": 30
+          }
+        }
+      ]
+    }
+  ],
+  "readiness": {
+    "minimum_curated_per_skill": 4,
+    "required_modes": [
+      "diagnostic",
+      "guided",
+      "independent",
+      "mastery"
+    ]
+  }
+}

@@ -1,0 +1,316 @@
+{
+  "schema_version": 1,
+  "jurisdiction": {
+    "country_code": "US",
+    "code": "DC",
+    "name": "District of Columbia",
+    "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
+    "source_uri": "https://osse-migrate.dc.gov/service/district-columbia-standards-learning-0"
+  },
+  "authority": {
+    "code": "OSSE",
+    "name": "Office of the State Superintendent of Education",
+    "authority_type": "STATE_AGENCY",
+    "source_uri": "https://osse-migrate.dc.gov/service/district-columbia-standards-learning-0"
+  },
+  "curriculum": {
+    "code": "DC_MATH_4_2024_25",
+    "name": "District of Columbia Grade 4 Mathematics \u2014 Common Core State Standards",
+    "version": "CCSS-OSSE-2024-25",
+    "grade_level": "4",
+    "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf"
+  },
+  "expectations": [
+    {
+      "source_identifier": "4.NBT.B",
+      "title": "Use place value understanding and properties of operations to perform multi-digit arithmetic",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Number and Operations in Base Ten",
+      "description": "Multiply whole numbers and find whole-number quotients and remainders."
+    },
+    {
+      "source_identifier": "4.NF.A",
+      "title": "Extend understanding of fraction equivalence and ordering",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Number and Operations\u2014Fractions",
+      "description": "Explain why fractions are equivalent using visual models and generate equivalent fractions."
+    },
+    {
+      "source_identifier": "4.MD.C",
+      "title": "Geometric measurement: understand concepts of angle",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Measurement and Data",
+      "description": "Recognize angles as geometric shapes and understand concepts of angle measurement."
+    }
+  ],
+  "skills": [
+    {
+      "code": "DC4.NBT.MULTIPLY_DIVIDE",
+      "name": "Multi-Digit Multiplication and Division",
+      "description": "Multiply multi-digit whole numbers and find quotients with remainders.",
+      "difficulty_level": 4,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.ARITHMETIC.MULTI_DIGIT_MULTIPLY_DIVIDE",
+        "name": "Multi-Digit Multiplication and Division",
+        "description": "Multiply multi-digit whole numbers and divide to find quotients and remainders."
+      },
+      "standard_refs": [
+        "4.NBT.B",
+        "4.NF.A"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "MULTI_DIGIT_MULTIPLICATION",
+        "LONG_DIVISION"
+      ],
+      "problems": [
+        {
+          "key": "dc4-multiply_divide-multi_digit_multiplication-01",
+          "family": "MULTI_DIGIT_MULTIPLICATION",
+          "prompt": "What is 23 \u00d7 4?",
+          "canonical_answer": "92",
+          "difficulty": 1,
+          "objective": "Multiply multi-digit whole numbers.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 23,
+            "b": 4,
+            "operation": "\u00d7"
+          }
+        },
+        {
+          "key": "dc4-multiply_divide-long_division-02",
+          "family": "LONG_DIVISION",
+          "prompt": "What is 72 \u00f7 6?",
+          "canonical_answer": "12",
+          "difficulty": 1,
+          "objective": "Divide to find whole-number quotients.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "dividend": 72,
+            "divisor": 6,
+            "quotient": 12,
+            "operation": "\u00f7"
+          }
+        },
+        {
+          "key": "dc4-multiply_divide-multi_digit_multiplication-03",
+          "family": "MULTI_DIGIT_MULTIPLICATION",
+          "prompt": "What is 34 \u00d7 7?",
+          "canonical_answer": "238",
+          "difficulty": 2,
+          "objective": "Multiply multi-digit whole numbers.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 34,
+            "b": 7,
+            "operation": "\u00d7"
+          }
+        },
+        {
+          "key": "dc4-multiply_divide-long_division-04",
+          "family": "LONG_DIVISION",
+          "prompt": "What is 105 \u00f7 5?",
+          "canonical_answer": "21",
+          "difficulty": 2,
+          "objective": "Divide to find whole-number quotients.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "dividend": 105,
+            "divisor": 5,
+            "quotient": 21,
+            "operation": "\u00f7"
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC4.NF.FRACTION_EQUIVALENCE",
+      "name": "Fraction Equivalence and Ordering",
+      "description": "Explain and generate equivalent fractions and compare fractions.",
+      "difficulty_level": 4,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.FRACTION.EQUIVALENCE_ORDERING",
+        "name": "Fraction Equivalence and Ordering",
+        "description": "Explain why fractions are equivalent and generate equivalent fractions using visual models."
+      },
+      "standard_refs": [
+        "4.NBT.B",
+        "4.NF.A"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "FRACTION_EQUIVALENCE",
+        "FRACTION_ADD_SUBTRACT_LIKE"
+      ],
+      "problems": [
+        {
+          "key": "dc4-fraction_equivalence-fraction_equivalence-01",
+          "family": "FRACTION_EQUIVALENCE",
+          "prompt": "What fraction with denominator 4 is equivalent to 1/2?",
+          "canonical_answer": "2/4",
+          "difficulty": 1,
+          "objective": "Generate equivalent fractions.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "original_numerator": 1,
+            "original_denominator": 2,
+            "multiplier": 2,
+            "target_numerator": 2,
+            "target_denominator": 4
+          }
+        },
+        {
+          "key": "dc4-fraction_equivalence-fraction_add_subtract_like-02",
+          "family": "FRACTION_ADD_SUBTRACT_LIKE",
+          "prompt": "What is 3/4 - 1/4?",
+          "canonical_answer": "2/4",
+          "difficulty": 1,
+          "objective": "Add and subtract fractions with like denominators.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "n1": 3,
+            "n2": 1,
+            "denominator": 4,
+            "operation": "-"
+          }
+        },
+        {
+          "key": "dc4-fraction_equivalence-fraction_equivalence-03",
+          "family": "FRACTION_EQUIVALENCE",
+          "prompt": "What fraction with denominator 12 is equivalent to 1/4?",
+          "canonical_answer": "3/12",
+          "difficulty": 2,
+          "objective": "Generate equivalent fractions.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "original_numerator": 1,
+            "original_denominator": 4,
+            "multiplier": 3,
+            "target_numerator": 3,
+            "target_denominator": 12
+          }
+        },
+        {
+          "key": "dc4-fraction_equivalence-fraction_add_subtract_like-04",
+          "family": "FRACTION_ADD_SUBTRACT_LIKE",
+          "prompt": "What is 5/6 - 2/6?",
+          "canonical_answer": "3/6",
+          "difficulty": 2,
+          "objective": "Add and subtract fractions with like denominators.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "n1": 5,
+            "n2": 2,
+            "denominator": 6,
+            "operation": "-"
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC4.MD.ANGLE",
+      "name": "Angle Measurement",
+      "description": "Measure angles in whole-number degrees using a protractor and sketch angles.",
+      "difficulty_level": 4,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.ANGLE_DEGREES",
+        "name": "Angle Measurement",
+        "description": "Understand angle measurement and measure angles in whole-number degrees."
+      },
+      "standard_refs": [
+        "4.NBT.B",
+        "4.NF.A"
+      ],
+      "prerequisite_codes": [
+        "DC4.NBT.MULTIPLY_DIVIDE"
+      ],
+      "problem_families": [
+        "ANGLE_MEASUREMENT"
+      ],
+      "problems": [
+        {
+          "key": "dc4-angle-angle_measurement-01",
+          "family": "ANGLE_MEASUREMENT",
+          "prompt": "What is the measure of an angle that is 45 degrees?",
+          "canonical_answer": "45",
+          "difficulty": 1,
+          "objective": "Measure angles in whole-number degrees.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "angle": 45
+          }
+        },
+        {
+          "key": "dc4-angle-angle_measurement-02",
+          "family": "ANGLE_MEASUREMENT",
+          "prompt": "What is the measure of an angle that is 60 degrees?",
+          "canonical_answer": "60",
+          "difficulty": 1,
+          "objective": "Measure angles in whole-number degrees.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "angle": 60
+          }
+        },
+        {
+          "key": "dc4-angle-angle_measurement-03",
+          "family": "ANGLE_MEASUREMENT",
+          "prompt": "What is the measure of an angle that is 90 degrees?",
+          "canonical_answer": "90",
+          "difficulty": 2,
+          "objective": "Measure angles in whole-number degrees.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "angle": 90
+          }
+        },
+        {
+          "key": "dc4-angle-angle_measurement-04",
+          "family": "ANGLE_MEASUREMENT",
+          "prompt": "What is the measure of an angle that is 120 degrees?",
+          "canonical_answer": "120",
+          "difficulty": 2,
+          "objective": "Measure angles in whole-number degrees.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "angle": 120
+          }
+        }
+      ]
+    }
+  ],
+  "readiness": {
+    "minimum_curated_per_skill": 4,
+    "required_modes": [
+      "diagnostic",
+      "guided",
+      "independent",
+      "mastery"
+    ]
+  }
+}
