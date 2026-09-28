@@ -5,19 +5,34 @@ from fractions import Fraction
 import pytest
 
 from app.services.problem_generation import (
-    _generate_add_subtract_unlike_fractions, _generate_angle_measurement,
-    _generate_area_perimeter_rectangle, _generate_coordinate_plane,
-    _generate_decimal_operations, _generate_decimal_place_value,
-    _generate_divide_fractions, _generate_division_within_100,
-    _generate_elapsed_time, _generate_equal_groups, _generate_equal_sharing,
-    _generate_fraction_add_subtract_like, _generate_fraction_compare,
-    _generate_fraction_equivalence, _generate_fraction_on_number_line,
-    _generate_long_division, _generate_measurement_conversion,
-    _generate_multi_digit_multiplication, _generate_multiplication_within_100,
-    _generate_multiply_by_whole, _generate_multiply_fractions,
-    _generate_powers_of_ten, _generate_rectangle_area, _generate_unit_fraction,
-    _generate_volume, _generate_word_problem_multiply_divide_100,
+    _generate_add_subtract_unlike_fractions,
+    _generate_angle_measurement,
+    _generate_area_perimeter_rectangle,
+    _generate_coordinate_plane,
+    _generate_decimal_operations,
+    _generate_decimal_place_value,
+    _generate_divide_fractions,
+    _generate_division_within_100,
+    _generate_elapsed_time,
+    _generate_equal_groups,
+    _generate_equal_sharing,
+    _generate_fraction_add_subtract_like,
+    _generate_fraction_compare,
+    _generate_fraction_equivalence,
+    _generate_fraction_on_number_line,
+    _generate_long_division,
+    _generate_measurement_conversion,
+    _generate_multi_digit_multiplication,
+    _generate_multiplication_within_100,
+    _generate_multiply_by_whole,
+    _generate_multiply_fractions,
+    _generate_powers_of_ten,
+    _generate_rectangle_area,
+    _generate_unit_fraction,
+    _generate_volume,
+    _generate_word_problem_multiply_divide_100,
 )
+
 
 @pytest.mark.parametrize("seed", range(100))
 def test_grade3_core_arithmetic(seed):
