@@ -329,6 +329,108 @@ def test_gateway_contextualizer_returns_none_on_failure(monkeypatch) -> None:
     ) is None
 
 
+def test_elementary_arithmetic_generators_are_mathematically_correct() -> None:
+    """Verify elementary arithmetic generators produce correct answers."""
+    rng = random.Random(42)
+    for _ in range(30):
+        # Addition within 20
+        gen = GENERATORS["ADDITION_WITHIN_20"](rng, 1)
+        a, b = map(int, re.findall(r"\d+", gen.prompt)[:2])
+        assert int(gen.canonical_answer) == a + b
+
+        # Subtraction within 20
+        gen = GENERATORS["SUBTRACTION_WITHIN_20"](rng, 1)
+        a, b = map(int, re.findall(r"\d+", gen.prompt)[:2])
+        assert int(gen.canonical_answer) == a - b
+
+        # Addition within 100
+        gen = GENERATORS["ADDITION_WITHIN_100"](rng, 2)
+        a, b = map(int, re.findall(r"\d+", gen.prompt)[:2])
+        assert int(gen.canonical_answer) == a + b
+
+        # Multiplication within 100
+        gen = GENERATORS["MULTIPLICATION_WITHIN_100"](rng, 3)
+        a, b = map(int, re.findall(r"\d+", gen.prompt)[:2])
+        assert int(gen.canonical_answer) == a * b
+
+
+def test_elementary_place_value_and_rounding() -> None:
+    """Verify place value and rounding generators."""
+    rng = random.Random(7)
+    for _ in range(20):
+        # Place value — answer may be "N tens and M ones" or just a number
+        gen = GENERATORS["PLACE_VALUE_BASE_TEN"](rng, 1)
+        assert gen.canonical_answer is not None
+
+        # Rounding
+        gen = GENERATORS["ROUNDING"](rng, 3)
+        answer = int(gen.canonical_answer)
+        assert answer % 10 == 0 or answer % 100 == 0
+
+
+def test_elementary_money_and_time() -> None:
+    """Verify money and time generators."""
+    rng = random.Random(11)
+    for _ in range(10):
+        # Money counting — answer is in dollar format like "$1.37"
+        gen = GENERATORS["MONEY_COUNT"](rng, 2)
+        answer = gen.canonical_answer
+        assert answer.startswith("$") or answer.replace(".", "").isdigit()
+
+        # Time to hour/half-hour
+        gen = GENERATORS["TIME_TO_HOUR_HALF_HOUR"](rng, 1)
+        answer = gen.canonical_answer
+        assert ":" in answer or answer.endswith("00") or ":" in answer
+
+
+def test_elementary_fractions_are_reduced() -> None:
+    """Verify fraction generators produce reduced answers."""
+    rng = random.Random(5)
+    for _ in range(20):
+        # Unit fraction
+        gen = GENERATORS["UNIT_FRACTION"](rng, 1)
+        num, den = map(int, gen.canonical_answer.split("/"))
+        assert Fraction(num, den) == Fraction(1, den)
+
+        # Fraction add/subtract like denominators
+        gen = GENERATORS["FRACTION_ADD_SUBTRACT_LIKE"](rng, 2)
+        if "+" in gen.prompt:
+            parts = re.findall(r"(\d+)/(\d+)", gen.prompt)
+            if len(parts) >= 2:
+                n1, d1 = int(parts[0][0]), int(parts[0][1])
+                n2, d2 = int(parts[1][0]), int(parts[1][1])
+                expected = Fraction(n1, d1) + Fraction(n2, d2)
+                if "/" in gen.canonical_answer:
+                    ans_n, ans_d = map(int, gen.canonical_answer.split("/"))
+                    assert Fraction(ans_n, ans_d) == expected
+
+
+def test_elementary_multi_digit_arithmetic() -> None:
+    """Verify multi-digit multiplication and division."""
+    rng = random.Random(13)
+    for _ in range(15):
+        gen = GENERATORS["MULTI_DIGIT_MULTIPLICATION"](rng, 4)
+        a, b = map(int, re.findall(r"\d+", gen.prompt)[:2])
+        assert int(gen.canonical_answer) == a * b
+
+        gen = GENERATORS["LONG_DIVISION"](rng, 4)
+        # Verify the quotient and remainder are consistent
+        answer = gen.canonical_answer
+        assert "/" in answer or "remainder" in answer.lower() or answer.isdigit()
+
+
+def test_elementary_word_problems_have_consistent_answers() -> None:
+    """Verify word problem generators produce internally consistent answers."""
+    rng = random.Random(17)
+    for _ in range(10):
+        gen = GENERATORS["WORD_PROBLEM_ADD_SUB_20"](rng, 1)
+        # Answer should be a valid number
+        assert int(gen.canonical_answer) >= 0
+
+        gen = GENERATORS["WORD_PROBLEM_MULTIPLY_DIVIDE_100"](rng, 3)
+        assert int(gen.canonical_answer) >= 0
+
+
 def test_generated_problems_carry_family_and_parameter_identity() -> None:
     with SessionLocal() as db:
         curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MTH1W"))

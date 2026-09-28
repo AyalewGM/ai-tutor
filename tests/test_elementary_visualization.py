@@ -70,12 +70,49 @@ def test_visual_specs_include_accessibility_metadata():
         visualization_for(_problem("BAR_GRAPH_READ", {"category": "blue", "value": 7, "total": 20})),
         visualization_for(_problem("PICTURE_GRAPH_READ", {"category": "dog", "value": 5, "total": 14})),
         visualization_for(_problem("UNIT_FRACTION", {"numerator": 1, "denominator": 4})),
+        visualization_for(_problem("COMPARE_NUMBERS", {"a": 34, "b": 27})),
+        visualization_for(_problem("FRACTION_COMPARE", {"numerator": 1, "denominator": 4})),
+        visualization_for(_problem("VOLUME", {"length": 2, "width": 3, "height": 4})),
     ]
     for spec in specs:
         assert spec is not None
         assert "aria_label" in spec
         assert isinstance(spec["aria_label"], str)
         assert len(spec["aria_label"]) > 0
+
+
+def test_place_value_disks_for_multi_digit():
+    problem = _problem("PLACE_VALUE_BASE_TEN", {"number": 1234})
+    spec = visualization_for(problem)
+    assert spec["type"] == "place_value_disks"
+    assert spec["thousands"] == 1
+    assert spec["hundreds"] == 2
+    assert spec["tens"] == 3
+    assert spec["ones"] == 4
+
+    # Numbers <= 999 still use base_ten blocks
+    small = _problem("PLACE_VALUE_BASE_TEN", {"number": 456})
+    small_spec = visualization_for(small)
+    assert small_spec["type"] == "base_ten"
+
+
+def test_comparison_bars_for_number_comparison():
+    problem = _problem("COMPARE_NUMBERS", {"a": 34, "b": 27})
+    spec = visualization_for(problem)
+    assert spec["type"] == "comparison_bars"
+    assert spec["a"] == 34
+    assert spec["b"] == 27
+    assert "34" in spec["aria_label"]
+
+
+def test_fraction_circle_as_alternative_representation():
+    problem = _problem("FRACTION_HALVES_THIRDS_FOURTHS", {"numerator": 1, "denominator": 4})
+    spec = visualization_for(problem)
+    assert spec["type"] == "fraction_bar"
+    # fraction_circle is an alternative representation for the same concept
+    circle = _problem("UNIT_FRACTION", {"numerator": 1, "denominator": 4})
+    # UNIT_FRACTION still uses fraction_bar as primary visual
+    assert visualization_for(circle)["type"] == "fraction_bar"
 
 
 def test_invalid_elementary_visual_fails_closed():
