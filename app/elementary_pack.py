@@ -294,7 +294,7 @@ def _authority(session: Session, jurisdiction: Jurisdiction, spec: AuthoritySpec
     return row
 
 
-def _curriculum(session: Session, authority, spec: CurriculumSpec):
+def _curriculum(session: Session, authority, jurisdiction: Jurisdiction, spec: CurriculumSpec):
     row = session.scalar(
         select(Curriculum).where(
             Curriculum.authority_id == authority.id,
@@ -306,7 +306,7 @@ def _curriculum(session: Session, authority, spec: CurriculumSpec):
         row = Curriculum(authority_id=authority.id, code=spec.code, version=spec.version)
         session.add(row)
     row.name = spec.name
-    row.jurisdiction = authority.name
+    row.jurisdiction = jurisdiction.name
     row.grade_level = spec.grade_level
     row.source_uri = spec.source_uri
     row.provenance_json = {"source_type": "OFFICIAL_CURRICULUM"}
@@ -434,7 +434,7 @@ def load_pack(session: Session, pack: ElementaryPack) -> LoadResult:
     with session.begin_nested():
         jurisdiction = _jurisdiction(session, pack.jurisdiction)
         authority = _authority(session, jurisdiction, pack.authority)
-        curriculum = _curriculum(session, authority, pack.curriculum)
+        curriculum = _curriculum(session, authority, jurisdiction, pack.curriculum)
         skills = _skills(session, curriculum, pack)
 
         expectation_pack = ContentPackInput(
