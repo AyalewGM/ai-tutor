@@ -573,3 +573,112 @@ def test_content_readiness_reports_families_and_gate() -> None:
         assert single_family.ready is False
         assert single_family.families == ("UNSUPPORTED_ONLY",)
         db.rollback()
+
+
+def test_elementary_generators_respect_boundary_values() -> None:
+    """Generators must respect mathematical bounds for elementary content."""
+    rng = random.Random(42)
+
+    # Addition within 20: sum must not exceed 20
+    for _ in range(50):
+        gen = GENERATORS["ADDITION_WITHIN_20"](rng, 1)
+        a, b = gen.parameters["a"], gen.parameters["b"]
+        assert a + b <= 20, f"{a} + {b} = {a + b} exceeds 20"
+
+    # Subtraction within 20: result must be non-negative
+    for _ in range(50):
+        gen = GENERATORS["SUBTRACTION_WITHIN_20"](rng, 1)
+        a, b = gen.parameters["a"], gen.parameters["b"]
+        assert a - b >= 0, f"{a} - {b} = {a - b} is negative"
+
+    # Addition within 100: sum must not exceed 100
+    for _ in range(50):
+        gen = GENERATORS["ADDITION_WITHIN_100"](rng, 1)
+        a, b = gen.parameters["a"], gen.parameters["b"]
+        assert a + b <= 100, f"{a} + {b} = {a + b} exceeds 100"
+
+    # Subtraction within 100: result must be non-negative
+    for _ in range(50):
+        gen = GENERATORS["SUBTRACTION_WITHIN_100"](rng, 1)
+        a, b = gen.parameters["a"], gen.parameters["b"]
+        assert a - b >= 0, f"{a} - {b} = {a - b} is negative"
+
+
+def test_elementary_generators_produce_valid_parameters() -> None:
+    """All generator parameters must be internally consistent."""
+    rng = random.Random(7)
+
+    for _ in range(30):
+        # Money: total_cents must equal sum of coin values
+        gen = GENERATORS["MONEY_COUNT"](rng, 2)
+        q, d, n, p = (
+            gen.parameters["quarters"],
+            gen.parameters["dimes"],
+            gen.parameters["nickels"],
+            gen.parameters["pennies"],
+        )
+        expected = q * 25 + d * 10 + n * 5 + p
+        assert gen.parameters["total_cents"] == expected, f"Money total mismatch: {expected} != {gen.parameters['total_cents']}"
+
+        # Time: minute must be valid (0, 15, 30, or 45)
+        gen = GENERATORS["TIME_TO_HOUR_HALF_HOUR"](rng, 2)
+        assert gen.parameters["minute"] in {0, 15, 30, 45}, f"Invalid minute: {gen.parameters['minute']}"
+        assert 1 <= gen.parameters["hour"] <= 12, f"Invalid hour: {gen.parameters['hour']}"
+
+        # Fraction equivalence: equivalent fractions must be equal
+        gen = GENERATORS["FRACTION_EQUIVALENCE"](rng, 3)
+        n1, d1 = gen.parameters["original_numerator"], gen.parameters["original_denominator"]
+        n2, d2 = gen.parameters["target_numerator"], gen.parameters["target_denominator"]
+        assert Fraction(n1, d1) == Fraction(n2, d2), f"{n1}/{d1} != {n2}/{d2}"
+
+        # Volume: answer must equal l*w*h
+        gen = GENERATORS["VOLUME"](rng, 3)
+        l, w, h = gen.parameters["length"], gen.parameters["width"], gen.parameters["height"]
+        assert int(gen.canonical_answer) == l * w * h
+
+
+def test_elementary_generators_difficulty_scaling() -> None:
+    """Higher difficulty should produce larger or more complex problems."""
+    rng = random.Random(11)
+
+    # Place value: higher difficulty means larger numbers
+    easy_numbers = set()
+    hard_numbers = set()
+    for _ in range(20):
+        easy_numbers.add(GENERATORS["PLACE_VALUE_BASE_TEN"](rng, 1).parameters["number"])
+        hard_numbers.add(GENERATORS["PLACE_VALUE_BASE_TEN"](rng, 5).parameters["number"])
+    assert max(easy_numbers) < max(hard_numbers), "Difficulty should scale with number size"
+
+    # Multi-digit multiplication: higher difficulty means larger factors
+    easy_products = set()
+    hard_products = set()
+    for _ in range(20):
+        g1 = GENERATORS["MULTI_DIGIT_MULTIPLICATION"](rng, 1)
+        g5 = GENERATORS["MULTI_DIGIT_MULTIPLICATION"](rng, 5)
+        easy_products.add(g1.parameters["a"] * g1.parameters["b"])
+        hard_products.add(g5.parameters["a"] * g5.parameters["b"])
+    assert max(easy_products) < max(hard_products), "Difficulty should scale with product size"
+
+
+def test_generator_determinism_with_seed() -> None:
+    """Same seed must produce identical problem."""
+    rng1 = random.Random(99)
+    rng2 = random.Random(99)
+    for _ in range(10):
+        g1 = GENERATORS["ADDITION_WITHIN_20"](rng1, 3)
+        g2 = GENERATORS["ADDITION_WITHIN_20"](rng2, 3)
+        assert g1.prompt == g2.prompt
+        assert g1.canonical_answer == g2.canonical_answer
+        assert g1.parameters == g2.parameters
+
+
+def test_generator_produces_unique_parameters() -> None:
+    """Different generations should produce varied parameters."""
+    rng = random.Random(5)
+    seen_params = set()
+    for _ in range(100):
+        gen = GENERATORS["ADDITION_WITHIN_20"](rng, 2)
+        param_tuple = tuple(sorted(gen.parameters.items()))
+        seen_params.add(param_tuple)
+    # With 100 generations, we should see multiple unique parameter sets
+    assert len(seen_params) > 10, "Generator is not producing varied parameters"
