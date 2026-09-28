@@ -62,7 +62,7 @@ export default function LearnEntry() {
     if (/geometr|shape|angle|coordinate|area|perimeter|volume|line/.test(text)) return "Geometry";
     if (/measure|length|time|money|clock/.test(text)) return "Measurement & time";
     if (/graph|data|plot|table/.test(text)) return "Data & graphs";
-    if (/pattern|equation|algebra|expression/.test(text)) return "Patterns & algebra";
+    if (/pattern|equation|algebra|expression|distribut|linear|variable/.test(text)) return "Patterns & algebra";
     return "Numbers & operations";
   };
   const topics = useMemo(
