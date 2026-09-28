@@ -1,10 +1,19 @@
 import random
+
 import pytest
+
 from app.services.problem_generation import (
-    _generate_addition_within_100, _generate_compare_length, _generate_equation_balance,
-    _generate_fraction_halves_thirds_fourths, _generate_geometry_shapes, _generate_money_count,
-    _generate_number_pattern, _generate_place_value_base_ten, _generate_subtraction_within_100,
-    _generate_time_to_5_minutes, _generate_word_problem_add_sub_100,
+    _generate_addition_within_100,
+    _generate_compare_length,
+    _generate_equation_balance,
+    _generate_fraction_halves_thirds_fourths,
+    _generate_geometry_shapes,
+    _generate_money_count,
+    _generate_number_pattern,
+    _generate_place_value_base_ten,
+    _generate_subtraction_within_100,
+    _generate_time_to_5_minutes,
+    _generate_word_problem_add_sub_100,
 )
 
 @pytest.mark.parametrize("seed", range(100))
