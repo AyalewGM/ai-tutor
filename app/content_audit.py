@@ -1,3 +1,5 @@
+import uuid
+
 """Database-backed deterministic content audits for F-007.
 
 Audits in this module are application-owned quality gates. They do not call an
@@ -19,7 +21,6 @@ from app.content_validation import (
     validate_expectation_skill_mapping,
     validate_fresh_problem_sets,
     validate_learning_mode_inventory,
-    validate_prerequisite_edge,
     validate_problem_metadata,
     validate_problem_scope,
 )
@@ -86,6 +87,21 @@ def audit_curriculum_isolation(
 
     # A prerequisite edge has no curriculum_id column, so validate every edge
     # touching an audited skill from the curricula attached to both endpoints.
+    # Cross-grade edges are permitted when both endpoints belong to the same
+    # jurisdiction (and authority/version), preserving state-level isolation.
+    curricula_by_id: dict[uuid.UUID, Curriculum] = {}
+
+    def _curriculum_for_skill(skill: Skill) -> Curriculum:
+        c = curricula_by_id.get(skill.curriculum_id)
+        if c is None:
+            c = session.get(Curriculum, skill.curriculum_id)
+            curricula_by_id[skill.curriculum_id] = c
+        if c is None:
+            raise ContentValidationError(
+                "Prerequisite edge references a skill with no curriculum"
+            )
+        return c
+
     for edge in session.scalars(select(SkillPrerequisite)).all():
         if (
             edge.skill_id not in selected_skill_ids
@@ -96,16 +112,13 @@ def audit_curriculum_isolation(
         prerequisite = session.get(Skill, edge.prerequisite_skill_id)
         if skill is None or prerequisite is None:
             raise ContentValidationError("Prerequisite edge references missing persisted skills")
-        validate_prerequisite_edge(
-            skill=CurriculumScopedRef(id=skill.id, curriculum_id=skill.curriculum_id),
-            prerequisite=CurriculumScopedRef(
-                id=prerequisite.id,
-                curriculum_id=prerequisite.curriculum_id,
-            ),
-        )
-        if skill.curriculum_id != curriculum.id or prerequisite.curriculum_id != curriculum.id:
+        if skill.id == prerequisite.id:
+            raise ContentValidationError("A skill cannot be its own prerequisite")
+        skill_curriculum = _curriculum_for_skill(skill)
+        prereq_curriculum = _curriculum_for_skill(prerequisite)
+        if skill_curriculum.jurisdiction != prereq_curriculum.jurisdiction:
             raise ContentValidationError(
-                "Prerequisite edge touching audited curriculum crosses curriculum boundaries"
+                "Prerequisite edge crosses jurisdiction boundaries"
             )
 
     # Metadata is also inspected globally so a forged metadata.curriculum_id

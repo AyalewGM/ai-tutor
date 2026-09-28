@@ -100,8 +100,12 @@ def test_dc_grade3_seed_is_idempotent_provenanced_and_content_ready():
                 )
             )
         )
-        assert len(edges) == 3
-        assert all(edge.prerequisite_skill_id in skill_ids for edge in edges)
+        assert len(edges) == 9
+        assert all(
+            db.get(Curriculum, db.get(Skill, edge.prerequisite_skill_id).curriculum_id).jurisdiction
+            == "District of Columbia"
+            for edge in edges
+        )
 
 
 def test_dc_grade3_generators_produce_fresh_answer_consistent_variants():

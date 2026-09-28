@@ -44,6 +44,40 @@ def test_unit_fraction_bar_uses_stored_math_state():
     assert "4 equal parts" in spec["aria_label"]
 
 
+def test_bar_graph_read_visualizes_category_value():
+    problem = _problem("BAR_GRAPH_READ", {"category": "blue", "value": 7, "total": 20})
+    spec = visualization_for(problem)
+    assert spec["type"] == "bar_graph"
+    assert spec["category"] == "blue"
+    assert spec["value"] == 7
+    assert "blue" in spec["aria_label"]
+    assert "7" in spec["aria_label"]
+
+
+def test_picture_graph_read_visualizes_category_value():
+    problem = _problem("PICTURE_GRAPH_READ", {"category": "dog", "value": 5, "total": 14})
+    spec = visualization_for(problem)
+    assert spec["type"] == "picture_graph"
+    assert spec["category"] == "dog"
+    assert spec["value"] == 5
+    assert "dog" in spec["aria_label"]
+
+
+def test_visual_specs_include_accessibility_metadata():
+    """Every returned visual spec must carry non-color descriptive metadata."""
+    specs = [
+        visualization_for(_problem("EQUAL_GROUPS", {"rows": 3, "columns": 4})),
+        visualization_for(_problem("BAR_GRAPH_READ", {"category": "blue", "value": 7, "total": 20})),
+        visualization_for(_problem("PICTURE_GRAPH_READ", {"category": "dog", "value": 5, "total": 14})),
+        visualization_for(_problem("UNIT_FRACTION", {"numerator": 1, "denominator": 4})),
+    ]
+    for spec in specs:
+        assert spec is not None
+        assert "aria_label" in spec
+        assert isinstance(spec["aria_label"], str)
+        assert len(spec["aria_label"]) > 0
+
+
 def test_invalid_elementary_visual_fails_closed():
     assert visualization_for(_problem("EQUAL_GROUPS", {"rows": 50, "columns": 2})) is None
     assert visualization_for(_problem("UNIT_FRACTION", {"numerator": 3, "denominator": 2})) is None

@@ -273,6 +273,71 @@ def _integer_magnitude(prompt: str, answer: str, canonical: str) -> Misconceptio
     return None
 
 
+_ELEMENTARY_EQUAL_GROUPS = re.compile(r"(\d+)groupsof(\d+)", re.IGNORECASE)
+_ELEMENTARY_COUNTERS = re.compile(r"(\d+)counterssharedequallyamong(\d+)groups", re.IGNORECASE)
+_ELEMENTARY_RECTANGLE = re.compile(r"length(\d+)unitsandwidth(\d+)units", re.IGNORECASE)
+_ELEMENTARY_COORDINATE = re.compile(r"(\d+)unitsrightand(\d+)unitsup", re.IGNORECASE)
+
+
+def _elementary_equal_groups_adds(
+    prompt: str, answer: str, _canonical: str
+) -> MisconceptionMatch | None:
+    match = _ELEMENTARY_EQUAL_GROUPS.search(prompt)
+    if not match:
+        return None
+    a = int(match.group(1))
+    b = int(match.group(2))
+    if answer == str(a + b):
+        return MisconceptionMatch("MULT_ADDS_NOT_GROUPS", 0.95)
+    return None
+
+
+def _elementary_equal_sharing_reverse(
+    prompt: str, answer: str, _canonical: str
+) -> MisconceptionMatch | None:
+    match = _ELEMENTARY_COUNTERS.search(prompt)
+    if not match:
+        return None
+    total = int(match.group(1))
+    groups = int(match.group(2))
+    if groups == 0:
+        return None
+    if answer == str(groups) and str(total // groups) != str(groups):
+        return MisconceptionMatch("DIV_SMALLER_FROM_LARGER", 0.85)
+    return None
+
+
+def _elementary_area_perimeter_swap(
+    prompt: str, answer: str, _canonical: str
+) -> MisconceptionMatch | None:
+    match = _ELEMENTARY_RECTANGLE.search(prompt)
+    if not match:
+        return None
+    length = int(match.group(1))
+    width = int(match.group(2))
+    area = length * width
+    perimeter = 2 * (length + width)
+    prompt_lower = prompt.lower()
+    if "area" in prompt_lower and answer == str(perimeter) and str(area) != str(perimeter):
+        return MisconceptionMatch("AREA_PERIMETER_SWAP", 0.95)
+    if "perimeter" in prompt_lower and answer == str(area) and str(area) != str(perimeter):
+        return MisconceptionMatch("AREA_PERIMETER_SWAP", 0.95)
+    return None
+
+
+def _elementary_coordinate_order_swap(
+    prompt: str, answer: str, _canonical: str
+) -> MisconceptionMatch | None:
+    match = _ELEMENTARY_COORDINATE.search(prompt)
+    if not match:
+        return None
+    x = int(match.group(1))
+    y = int(match.group(2))
+    if answer == f"({y},{x})" or answer == f"{y},{x}":
+        return MisconceptionMatch("COORDINATE_ORDER_SWAP", 0.95)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -288,6 +353,10 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _fraction_adds_across,
     _percent_scaling_error,
     _discount_amount_not_price,
+    _elementary_equal_groups_adds,
+    _elementary_equal_sharing_reverse,
+    _elementary_area_perimeter_swap,
+    _elementary_coordinate_order_swap,
 )
 
 

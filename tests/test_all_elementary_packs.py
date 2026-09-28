@@ -6,7 +6,7 @@ from sqlalchemy import select
 from app.core.database import SessionLocal
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
 from app.elementary_pack import parse_pack
-from app.models import Curriculum, Problem, Skill, SkillPrerequisite
+from app.models import Curriculum, Misconception, Problem, Skill, SkillPrerequisite
 from scripts.seed_all_elementary_packs import seed
 
 _MISCONCEPTION_CATALOG_1_2 = (
@@ -117,7 +117,13 @@ def test_seed_all_packs_is_idempotent_and_complete():
             prereq = db.get(Skill, edge.prerequisite_skill_id)
             assert skill is not None
             assert prereq is not None
-            assert skill.curriculum_id == prereq.curriculum_id
+            skill_curriculum = db.get(Curriculum, skill.curriculum_id)
+            prereq_curriculum = db.get(Curriculum, prereq.curriculum_id)
+            assert skill_curriculum is not None
+            assert prereq_curriculum is not None
+            assert (
+                skill_curriculum.jurisdiction == prereq_curriculum.jurisdiction
+            )
 
 
 def test_canonical_skills_are_reused_across_jurisdictions():
@@ -190,3 +196,107 @@ def test_all_misconceptions_map_to_loaded_canonical_skills():
             db.scalars(select(CanonicalSkill.code).where(CanonicalSkill.code.in_(canonical_codes)))
         )
         assert loaded_codes == canonical_codes
+
+
+def test_elementary_misconceptions_are_loaded_per_skill():
+    seed()
+    with SessionLocal() as db:
+        elementary_curricula = list(
+            db.scalars(
+                select(Curriculum).where(
+                    Curriculum.grade_level.in_(["1", "2", "3", "4", "5"])
+                )
+            )
+        )
+        assert len(elementary_curricula) == 15
+        skill_ids = {
+            s.id
+            for s in db.scalars(
+                select(Skill).where(
+                    Skill.curriculum_id.in_({c.id for c in elementary_curricula})
+                )
+            )
+        }
+        misconception_codes = {
+            row.code
+            for row in db.scalars(
+                select(Misconception).where(Misconception.skill_id.in_(skill_ids))
+            )
+        }
+        assert "MULT_ADDS_NOT_GROUPS" in misconception_codes
+        assert "AREA_PERIMETER_SWAP" in misconception_codes
+        assert "COORDINATE_ORDER_SWAP" in misconception_codes
+
+
+def test_elementary_misconception_rules_detect_known_errors():
+    from app.services.evaluation import evaluate_problem
+
+    result = evaluate_problem(
+        "There are 3 groups of 4 counters. How many counters are there in all?",
+        "7",
+        "12",
+    )
+    assert not result.correct
+    assert result.misconception_code == "MULT_ADDS_NOT_GROUPS"
+
+    result = evaluate_problem(
+        "A rectangle has length 4 units and width 5 units. What is its area?",
+        "18",
+        "20",
+    )
+    assert not result.correct
+    assert result.misconception_code == "AREA_PERIMETER_SWAP"
+
+    result = evaluate_problem(
+        "What is the ordered pair for the point located 2 units right and 3 units up from the origin?",
+        "(3, 2)",
+        "(2, 3)",
+    )
+    assert not result.correct
+    assert result.misconception_code == "COORDINATE_ORDER_SWAP"
+
+
+def test_cross_grade_prerequisites_wired_within_each_jurisdiction():
+    seed()
+    with SessionLocal() as db:
+        for jurisdiction in ("Maryland", "District of Columbia", "Virginia"):
+            curricula = list(
+                db.scalars(
+                    select(Curriculum).where(
+                        Curriculum.jurisdiction == jurisdiction,
+                        Curriculum.grade_level.in_(["1", "2", "3", "4", "5"]),
+                    )
+                )
+            )
+            assert len(curricula) == 5  # grades 1–5
+            curriculum_by_grade = {int(c.grade_level): c for c in curricula}
+            assert set(curriculum_by_grade.keys()) == {1, 2, 3, 4, 5}
+
+            cross_grade_edges = []
+            for grade in (2, 3, 4, 5):
+                skill_ids = {
+                    s.id
+                    for s in db.scalars(
+                        select(Skill).where(
+                            Skill.curriculum_id == curriculum_by_grade[grade].id
+                        )
+                    )
+                }
+                prereq_ids = {
+                    e.prerequisite_skill_id
+                    for e in db.scalars(
+                        select(SkillPrerequisite).where(
+                            SkillPrerequisite.skill_id.in_(skill_ids)
+                        )
+                    )
+                }
+                for prereq_id in prereq_ids:
+                    prereq = db.get(Skill, prereq_id)
+                    assert prereq is not None
+                    prereq_grade = int(
+                        db.get(Curriculum, prereq.curriculum_id).grade_level
+                    )
+                    if prereq_grade < grade:
+                        cross_grade_edges.append((prereq_grade, grade))
+
+            assert len(cross_grade_edges) >= 8, jurisdiction

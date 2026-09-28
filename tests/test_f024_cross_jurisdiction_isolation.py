@@ -147,12 +147,22 @@ def test_md_and_dc_prerequisite_edges_are_curriculum_isolated():
                 )
             )
         )
-        assert len(md_edges) == 3
-        assert len(dc_edges) == 3
+        assert len(md_edges) == 9
+        assert len(dc_edges) == 9
+        md_prereq_curriculum_ids = {
+            db.get(Skill, edge.prerequisite_skill_id).curriculum_id
+            for edge in md_edges
+        }
+        dc_prereq_curriculum_ids = {
+            db.get(Skill, edge.prerequisite_skill_id).curriculum_id
+            for edge in dc_edges
+        }
         assert all(
-            edge.prerequisite_skill_id in md_skill_ids for edge in md_edges
+            db.get(Curriculum, cid).jurisdiction == "Maryland"
+            for cid in md_prereq_curriculum_ids
         )
         assert all(
-            edge.prerequisite_skill_id in dc_skill_ids for edge in dc_edges
+            db.get(Curriculum, cid).jurisdiction == "District of Columbia"
+            for cid in dc_prereq_curriculum_ids
         )
         db.rollback()
