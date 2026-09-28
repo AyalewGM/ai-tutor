@@ -10,6 +10,9 @@ export interface VisualSpec {
   x?: number;
   y?: number;
   angle?: number;
+  rows?: number;
+  columns?: number;
+  mode?: "counters" | "squares";
   aria_label?: string;
 }
 
@@ -31,6 +34,30 @@ function AreaModel({ spec }: { spec: VisualSpec }) {
       <rect x={bx + xW} y={by} width={bW} height={h} className="viz-cell viz-cell-b" />
       <text x={bx + xW / 2} y={by + h / 2 + 6} textAnchor="middle" className="viz-term">{a}x</text>
       <text x={bx + xW + bW / 2} y={by + h / 2 + 6} textAnchor="middle" className="viz-term">{a}·{b}</text>
+    </svg>
+  );
+}
+
+function ArrayModel({ spec }: { spec: VisualSpec }) {
+  const rows = Math.min(10, Math.max(1, Math.floor(spec.rows ?? 1)));
+  const columns = Math.min(10, Math.max(1, Math.floor(spec.columns ?? 1)));
+  const cell = 28;
+  const pad = 28;
+  const width = columns * cell + pad * 2;
+  const height = rows * cell + pad * 2 + 24;
+  const squares = spec.mode === "squares";
+  return (
+    <svg viewBox={`0 0 ${width} ${height}`} className="visual elementary-visual" role="img" aria-label={spec.aria_label}>
+      {Array.from({ length: rows * columns }, (_, index) => {
+        const row = Math.floor(index / columns);
+        const column = index % columns;
+        return squares ? (
+          <rect key={index} x={pad + column * cell} y={pad + row * cell} width={cell} height={cell} className="viz-array-square" />
+        ) : (
+          <circle key={index} cx={pad + column * cell + cell / 2} cy={pad + row * cell + cell / 2} r="9" className="viz-array-counter" />
+        );
+      })}
+      <text x={width / 2} y={height - 5} textAnchor="middle" className="viz-label">{rows} rows × {columns} in each row</text>
     </svg>
   );
 }
@@ -153,6 +180,7 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "area_model") return <AreaModel spec={spec} />;
   if (spec.type === "number_line") return <NumberLine spec={spec} />;
   if (spec.type === "number_line_compare") return <NumberLine spec={spec} compare />;
+  if (spec.type === "array_model") return <ArrayModel spec={spec} />;
   if (spec.type === "fraction_bar" || spec.type === "ratio_bar") return <FractionBar spec={spec} />;
   if (spec.type === "coordinate_plane" || spec.type === "coordinate_point") return <CoordinatePlane spec={spec} />;
   if (spec.type === "angle" || spec.type === "angle_diagram") return <AngleDiagram spec={spec} />;
