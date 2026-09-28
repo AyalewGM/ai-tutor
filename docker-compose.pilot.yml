@@ -1,0 +1,75 @@
+# F-026: Production-oriented overlay for the private family pilot.
+#
+# Usage: docker compose -f docker-compose.yml -f docker-compose.pilot.yml up -d
+#
+# Adds:
+# - .env.pilot for environment-specific configuration (secrets excluded from Git)
+# - One-shot `migrate` service that runs Alembic before the API starts
+# - Structured JSON log rotation (10 MiB × 3 files per service)
+# - Readiness-gated startup ordering
+# - Explicit restart policies for all services
+
+x-default-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  db:
+    env_file: .env.pilot
+    logging: *default-logging
+    restart: unless-stopped
+    # Persist the database volume; it survives container restarts and VPS reboots.
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env.pilot
+    command: ["alembic", "upgrade", "head"]
+    depends_on:
+      db:
+        condition: service_healthy
+    logging: *default-logging
+    restart: "no"
+
+  llm-gateway:
+    env_file: .env.pilot
+    logging: *default-logging
+    restart: unless-stopped
+
+  tutor-api:
+    env_file: .env.pilot
+    environment:
+      # The API must never see a real database password in plain text here.
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-ai_tutor}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-ai_tutor}
+      SESSION_COOKIE_SECURE: "true"
+      AI_PROVIDER: ${AI_PROVIDER:-gateway}
+      LLM_GATEWAY_URL: http://llm-gateway:8001
+    depends_on:
+      db:
+        condition: service_healthy
+      llm-gateway:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    logging: *default-logging
+    restart: unless-stopped
+    healthcheck:
+      # Readiness = DB reachable + migrations at head
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/ready')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+
+  frontend:
+    env_file: .env.pilot
+    depends_on:
+      tutor-api:
+        condition: service_healthy
+    logging: *default-logging
+    restart: unless-stopped
