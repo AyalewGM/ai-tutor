@@ -205,6 +205,69 @@ def _generate_word_problem(rng: random.Random, difficulty: int) -> GeneratedProb
     )
 
 
+def _generate_equal_groups(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    limit = 5 if difficulty <= 1 else 10
+    rows, columns = rng.randint(2, limit), rng.randint(2, limit)
+    return GeneratedProblem(
+        prompt=(
+            f"An array has {rows} rows with {columns} counters in each row. "
+            "How many counters are there?"
+        ),
+        canonical_answer=str(rows * columns),
+        difficulty=difficulty,
+        problem_type="EQUAL_GROUPS",
+        parameters={"rows": rows, "columns": columns, "representation": "array"},
+    )
+
+
+def _generate_equal_sharing(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    limit = 5 if difficulty <= 1 else 10
+    groups, group_size = rng.randint(2, limit), rng.randint(2, limit)
+    total = groups * group_size
+    return GeneratedProblem(
+        prompt=(
+            f"{total} counters are shared equally among {groups} groups. "
+            "How many counters are in each group?"
+        ),
+        canonical_answer=str(group_size),
+        difficulty=difficulty,
+        problem_type="EQUAL_SHARING",
+        parameters={"total": total, "groups": groups, "group_size": group_size},
+    )
+
+
+def _generate_unit_fraction(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    denominator = rng.randint(2, 6 if difficulty <= 1 else 10)
+    numerator = 1 if difficulty <= 1 else rng.randint(1, denominator - 1)
+    answer = f"{numerator}/{denominator}"
+    prompt = (
+        f"A whole is divided into {denominator} equal parts. "
+        f"What fraction is {numerator} of those parts?"
+    )
+    return GeneratedProblem(
+        prompt,
+        answer,
+        difficulty,
+        "UNIT_FRACTION",
+        parameters={"numerator": numerator, "denominator": denominator},
+    )
+
+
+def _generate_rectangle_area(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    limit = 6 if difficulty <= 1 else 10
+    rows, columns = rng.randint(2, limit), rng.randint(2, limit)
+    return GeneratedProblem(
+        prompt=(
+            f"A rectangle has {rows} rows of {columns} unit squares. "
+            "What is its area in square units?"
+        ),
+        canonical_answer=str(rows * columns),
+        difficulty=difficulty,
+        problem_type="RECTANGLE_AREA",
+        parameters={"rows": rows, "columns": columns, "unit": "square units"},
+    )
+
+
 def _generate_arithmetic(rng: random.Random, difficulty: int) -> GeneratedProblem:
     generated = (
         _generate_fraction_add(rng, difficulty)
@@ -236,6 +299,10 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "FRACTION_OPERATIONS": _generate_fraction_add,
     "FRACTION_SUBTRACT": _generate_fraction_subtract,
     "WORD_PROBLEM": _generate_word_problem,
+    "EQUAL_GROUPS": _generate_equal_groups,
+    "EQUAL_SHARING": _generate_equal_sharing,
+    "UNIT_FRACTION": _generate_unit_fraction,
+    "RECTANGLE_AREA": _generate_rectangle_area,
 }
 
 

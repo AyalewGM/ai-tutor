@@ -96,6 +96,47 @@ def _compare_points(problem: Problem) -> dict | None:
     }
 
 
+def _array_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    rows, columns = _int(params.get("rows")), _int(params.get("columns"))
+    if rows is None or columns is None or not (1 <= rows <= 10 and 1 <= columns <= 10):
+        return None
+    return {
+        "type": "array_model",
+        "rows": rows,
+        "columns": columns,
+        "mode": "squares" if problem.problem_type == "RECTANGLE_AREA" else "counters",
+        "aria_label": (
+            f"Array with {rows} rows and {columns} columns, "
+            f"showing {rows * columns} items in all."
+        ),
+    }
+
+
+def _fraction_bar(problem: Problem) -> dict | None:
+    params = _params(problem)
+    numerator = _int(params.get("numerator"))
+    denominator = _int(params.get("denominator"))
+    if (
+        numerator is None
+        or denominator is None
+        or denominator < 2
+        or denominator > 12
+        or numerator < 0
+        or numerator > denominator
+    ):
+        return None
+    return {
+        "type": "fraction_bar",
+        "numerator": numerator,
+        "denominator": denominator,
+        "aria_label": (
+            f"Fraction bar divided into {denominator} equal parts with "
+            f"{numerator} part{'s' if numerator != 1 else ''} selected."
+        ),
+    }
+
+
 def visualization_for(problem: Problem) -> dict | None:
     """Return a declarative visual spec for a problem, or None."""
     if problem.problem_type == "SIMPLIFY_EXPRESSION":
@@ -104,4 +145,8 @@ def visualization_for(problem: Problem) -> dict | None:
         return _number_line(problem)
     if problem.problem_type == "INTEGER_COMPARE":
         return _compare_points(problem)
+    if problem.problem_type in {"EQUAL_GROUPS", "RECTANGLE_AREA"}:
+        return _array_model(problem)
+    if problem.problem_type == "UNIT_FRACTION":
+        return _fraction_bar(problem)
     return None
