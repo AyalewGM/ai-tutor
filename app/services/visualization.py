@@ -354,6 +354,99 @@ def _line_plot_model(problem: Problem) -> dict | None:
     }
 
 
+def _place_value_disks(problem: Problem) -> dict | None:
+    """Hundreds/tens/ones disks for multi-digit place value."""
+    params = _params(problem)
+    number = _int(params.get("number"))
+    if number is None or number < 0 or number > 9999:
+        return None
+    digits = str(number).zfill(4)[-4:]
+    thousands, hundreds, tens, ones = (
+        int(digits[0]),
+        int(digits[1]),
+        int(digits[2]),
+        int(digits[3]),
+    )
+    return {
+        "type": "place_value_disks",
+        "thousands": thousands,
+        "hundreds": hundreds,
+        "tens": tens,
+        "ones": ones,
+        "value": number,
+        "aria_label": (
+            f"Place value disks for {number}: "
+            f"{thousands} thousand disks, {hundreds} hundred disks, "
+            f"{tens} ten disks, {ones} one disks."
+        ),
+    }
+
+
+def _decimal_place_value(problem: Problem) -> dict | None:
+    """Decimal place-value chart for tenths/hundredths."""
+    params = _params(problem)
+    decimal_str = params.get("decimal")
+    if decimal_str is None:
+        return None
+    try:
+        value = float(decimal_str)
+    except (TypeError, ValueError):
+        return None
+    # Split into whole and decimal parts
+    whole = int(value)
+    frac = value - whole
+    tenths = int(frac * 10)
+    hundredths = int(frac * 100) % 10
+    return {
+        "type": "decimal_place_value",
+        "whole": whole,
+        "tenths": tenths,
+        "hundredths": hundredths,
+        "value": value,
+        "aria_label": (
+            f"Decimal place value for {value}: "
+            f"{whole} ones, {tenths} tenths, {hundredths} hundredths."
+        ),
+    }
+
+
+def _comparison_bar(problem: Problem) -> dict | None:
+    """Side-by-side comparison bars for comparing numbers."""
+    params = _params(problem)
+    a = _int(params.get("a"))
+    b = _int(params.get("b"))
+    if a is None or b is None:
+        return None
+    return {
+        "type": "comparison_bars",
+        "a": a,
+        "b": b,
+        "aria_label": f"Two bars: one for {a} and one for {b}. Compare their lengths.",
+    }
+
+
+def _fraction_circle(problem: Problem) -> dict | None:
+    """Circular fraction model as an alternative to fraction bar."""
+    params = _params(problem)
+    numerator = _int(params.get("numerator"))
+    denominator = _int(params.get("denominator"))
+    if (
+        numerator is None
+        or denominator is None
+        or denominator < 2
+        or denominator > 12
+        or numerator < 0
+        or numerator > denominator
+    ):
+        return None
+    return {
+        "type": "fraction_circle",
+        "numerator": numerator,
+        "denominator": denominator,
+        "aria_label": f"Circle divided into {denominator} equal parts, {numerator} shaded.",
+    }
+
+
 def visualization_for(problem: Problem) -> dict | None:
     """Return a declarative visual spec for a problem, or None."""
     if problem.problem_type == "SIMPLIFY_EXPRESSION":
@@ -369,6 +462,10 @@ def visualization_for(problem: Problem) -> dict | None:
     if problem.problem_type in {"ADDITION_WITHIN_20", "SUBTRACTION_WITHIN_20", "WORD_PROBLEM_ADD_SUB_20"}:
         return _ten_frame(problem)
     if problem.problem_type == "PLACE_VALUE_BASE_TEN":
+        params = _params(problem)
+        number = _int(params.get("number"))
+        if number is not None and number > 999:
+            return _place_value_disks(problem)
         return _base_ten_model(problem)
     if problem.problem_type == "MONEY_COUNT":
         return _money_model(problem)
@@ -385,22 +482,30 @@ def visualization_for(problem: Problem) -> dict | None:
         "NUMBER_SEQUENCE",
         "NUMBER_PATTERN",
         "EQUATION_BALANCE",
-        "COMPARE_NUMBERS",
-        "DECIMAL_PLACE_VALUE",
     }:
         return None
+    if problem.problem_type == "DECIMAL_PLACE_VALUE":
+        return _decimal_place_value(problem)
+    if problem.problem_type == "COMPARE_NUMBERS":
+        return _comparison_bar(problem)
     if problem.problem_type == "FRACTION_EQUIVALENCE":
         return _fraction_bar(problem)
-    if problem.problem_type in {"FRACTION_ADD_SUBTRACT_LIKE", "FRACTION_MULTIPLY", "FRACTION_HALVES_THIRDS_FOURTHS"}:
+    if problem.problem_type in {"FRACTION_ADD_SUBTRACT_LIKE", "FRACTION_MULTIPLY"}:
         return _fraction_bar(problem)
+    if problem.problem_type == "FRACTION_HALVES_THIRDS_FOURTHS":
+        return _fraction_circle(problem)
     if problem.problem_type == "FRACTION_COMPARE":
         return _fraction_bar(problem)
+    if problem.problem_type == "FRACTION_CIRCLE":
+        return _fraction_circle(problem)
     if problem.problem_type == "FRACTION_NUMBER_LINE":
         return _number_line_model(problem)
     if problem.problem_type == "COMPARE_LENGTH":
         return _ruler_model(problem)
-    if problem.problem_type in {"AREA_PERIMETER_RECTANGLE", "VOLUME"}:
+    if problem.problem_type in {"AREA_PERIMETER_RECTANGLE"}:
         return None
+    if problem.problem_type == "VOLUME":
+        return _volume_model(problem)
     if problem.problem_type == "GEOMETRY_SHAPES":
         return _shape_model(problem)
     if problem.problem_type == "BAR_GRAPH_READ":
@@ -428,6 +533,4 @@ def visualization_for(problem: Problem) -> dict | None:
         return _angle_model(problem)
     if problem.problem_type == "COORDINATE_PLANE":
         return _coordinate_model(problem)
-    if problem.problem_type == "VOLUME":
-        return _volume_model(problem)
     return None

@@ -70,6 +70,9 @@ def test_visual_specs_include_accessibility_metadata():
         visualization_for(_problem("BAR_GRAPH_READ", {"category": "blue", "value": 7, "total": 20})),
         visualization_for(_problem("PICTURE_GRAPH_READ", {"category": "dog", "value": 5, "total": 14})),
         visualization_for(_problem("UNIT_FRACTION", {"numerator": 1, "denominator": 4})),
+        visualization_for(_problem("COMPARE_NUMBERS", {"a": 34, "b": 27})),
+        visualization_for(_problem("FRACTION_COMPARE", {"numerator": 1, "denominator": 4})),
+        visualization_for(_problem("VOLUME", {"length": 2, "width": 3, "height": 4})),
     ]
     for spec in specs:
         assert spec is not None
@@ -78,6 +81,67 @@ def test_visual_specs_include_accessibility_metadata():
         assert len(spec["aria_label"]) > 0
 
 
+def test_place_value_disks_for_multi_digit():
+    problem = _problem("PLACE_VALUE_BASE_TEN", {"number": 1234})
+    spec = visualization_for(problem)
+    assert spec["type"] == "place_value_disks"
+    assert spec["thousands"] == 1
+    assert spec["hundreds"] == 2
+    assert spec["tens"] == 3
+    assert spec["ones"] == 4
+
+    # Numbers <= 999 still use base_ten blocks
+    small = _problem("PLACE_VALUE_BASE_TEN", {"number": 456})
+    small_spec = visualization_for(small)
+    assert small_spec["type"] == "base_ten"
+
+
+def test_comparison_bars_for_number_comparison():
+    problem = _problem("COMPARE_NUMBERS", {"a": 34, "b": 27})
+    spec = visualization_for(problem)
+    assert spec["type"] == "comparison_bars"
+    assert spec["a"] == 34
+    assert spec["b"] == 27
+    assert "34" in spec["aria_label"]
+
+
+def test_fraction_circle_for_halves_thirds_fourths():
+    problem = _problem("FRACTION_HALVES_THIRDS_FOURTHS", {"numerator": 1, "denominator": 4})
+    spec = visualization_for(problem)
+    assert spec["type"] == "fraction_circle"
+    assert spec["numerator"] == 1
+    assert spec["denominator"] == 4
+    assert "4 equal parts" in spec["aria_label"]
+
+
+def test_fraction_circle_explicit_type():
+    problem = _problem("FRACTION_CIRCLE", {"numerator": 2, "denominator": 3})
+    spec = visualization_for(problem)
+    assert spec["type"] == "fraction_circle"
+    assert spec["numerator"] == 2
+    assert spec["denominator"] == 3
+
+
+def test_decimal_place_value():
+    problem = _problem("DECIMAL_PLACE_VALUE", {"decimal": "3.45"})
+    spec = visualization_for(problem)
+    assert spec["type"] == "decimal_place_value"
+    assert spec["whole"] == 3
+    assert spec["tenths"] == 4
+    assert spec["hundredths"] == 5
+    assert "3.45" in spec["aria_label"]
+
+
+def test_line_plot_read():
+    problem = _problem("LINE_PLOT_READ", {"data": [1, 2, 2, 3, 2, 4], "value": 2})
+    spec = visualization_for(problem)
+    assert spec["type"] == "line_plot"
+    assert spec["highlight"] == 2
+    assert spec["data"] == [1, 2, 2, 3, 2, 4]
+
+
 def test_invalid_elementary_visual_fails_closed():
     assert visualization_for(_problem("EQUAL_GROUPS", {"rows": 50, "columns": 2})) is None
     assert visualization_for(_problem("UNIT_FRACTION", {"numerator": 3, "denominator": 2})) is None
+    assert visualization_for(_problem("DECIMAL_PLACE_VALUE", {"decimal": "invalid"})) is None
+    assert visualization_for(_problem("FRACTION_CIRCLE", {"numerator": 5, "denominator": 3})) is None

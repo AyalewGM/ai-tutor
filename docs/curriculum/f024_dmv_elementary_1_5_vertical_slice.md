@@ -107,13 +107,18 @@ Deterministic generators added or extended for the expanded grades:
 Visual specs are computed from stored parameters, never from an LLM:
 
 - `ten_frame` for addition/subtraction within 20
-- `base_ten` for place value
+- `base_ten` for place value (numbers ≤ 999)
+- `place_value_disks` for place value (numbers > 999)
 - `money` for coin collections
 - `clock` for hour/half-hour/five-minute time
 - `angle` for angle measurement
 - `coordinate_plane` for ordered pairs
-- `array_model` and `fraction_bar` reused for Grade 3 concepts
-- `ruler`, `shape`, `bar_graph`, and `picture_graph` for measurement and data
+- `array_model` and `fraction_bar` for Grade 3 concepts
+- `fraction_circle` as an alternative fraction representation
+- `ruler`, `shape`, `bar_graph`, `picture_graph` for measurement and data
+- `comparison_bars` for number comparison
+- `line_plot` for data plots
+- `number_line` for fractions and integer operations
 
 ## Pack inventory
 
@@ -165,11 +170,10 @@ These scripts are not runtime code. The committed JSON packs are the source of t
 
 ## Scope and remaining work
 
-All DMV Grades 1–5 now have broader standards coverage, Grades 1–5 misconception/remediation catalogs, cross-grade prerequisite wiring, and a state curriculum addition runbook. This is a substantial step toward launch readiness but is not yet exhaustive. Remaining before any grade/jurisdiction can be marketed as supported:
+All DMV Grades 1–5 now have broader standards coverage, Grades 1–5 misconception/remediation catalogs, cross-grade prerequisite wiring, synthetic E2E learner journey tests, expanded visual types with accessibility metadata, and a state curriculum addition runbook. This is a substantial step toward launch readiness but is not yet exhaustive. Remaining before any grade/jurisdiction can be marketed as supported:
 
-- Additional visual types (e.g., fraction number lines, place-value disks, 3D volume nets) and full tablet/mobile accessibility.
-- Synthetic E2E coverage for younger learners covering diagnostic placement, guided practice, independent practice, mastery verification, review scheduling, and remediation flows.
-- Full problem-generation tests for every new problem family.
+- Additional visual types (e.g., 3D volume nets, place-value chart for decimals) and full tablet/mobile accessibility (touch input, screen-reader flow, age-appropriate controls).
+- More problem-generation edge-case tests (e.g., boundary values, parameter range validation).
 - QA, Security/Data Impact, PO, and PM acceptance per `docs/qa/DEFINITION_OF_DONE.md`.
 
 No Ontario/MTH1W (F-025) files were modified.

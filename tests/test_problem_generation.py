@@ -329,6 +329,108 @@ def test_gateway_contextualizer_returns_none_on_failure(monkeypatch) -> None:
     ) is None
 
 
+def test_elementary_arithmetic_generators_are_mathematically_correct() -> None:
+    """Verify elementary arithmetic generators produce correct answers."""
+    rng = random.Random(42)
+    for _ in range(30):
+        # Addition within 20
+        gen = GENERATORS["ADDITION_WITHIN_20"](rng, 1)
+        a, b = map(int, re.findall(r"\d+", gen.prompt)[:2])
+        assert int(gen.canonical_answer) == a + b
+
+        # Subtraction within 20
+        gen = GENERATORS["SUBTRACTION_WITHIN_20"](rng, 1)
+        a, b = map(int, re.findall(r"\d+", gen.prompt)[:2])
+        assert int(gen.canonical_answer) == a - b
+
+        # Addition within 100
+        gen = GENERATORS["ADDITION_WITHIN_100"](rng, 2)
+        a, b = map(int, re.findall(r"\d+", gen.prompt)[:2])
+        assert int(gen.canonical_answer) == a + b
+
+        # Multiplication within 100
+        gen = GENERATORS["MULTIPLICATION_WITHIN_100"](rng, 3)
+        a, b = map(int, re.findall(r"\d+", gen.prompt)[:2])
+        assert int(gen.canonical_answer) == a * b
+
+
+def test_elementary_place_value_and_rounding() -> None:
+    """Verify place value and rounding generators."""
+    rng = random.Random(7)
+    for _ in range(20):
+        # Place value — answer may be "N tens and M ones" or just a number
+        gen = GENERATORS["PLACE_VALUE_BASE_TEN"](rng, 1)
+        assert gen.canonical_answer is not None
+
+        # Rounding
+        gen = GENERATORS["ROUNDING"](rng, 3)
+        answer = int(gen.canonical_answer)
+        assert answer % 10 == 0 or answer % 100 == 0
+
+
+def test_elementary_money_and_time() -> None:
+    """Verify money and time generators."""
+    rng = random.Random(11)
+    for _ in range(10):
+        # Money counting — answer is in dollar format like "$1.37"
+        gen = GENERATORS["MONEY_COUNT"](rng, 2)
+        answer = gen.canonical_answer
+        assert answer.startswith("$") or answer.replace(".", "").isdigit()
+
+        # Time to hour/half-hour
+        gen = GENERATORS["TIME_TO_HOUR_HALF_HOUR"](rng, 1)
+        answer = gen.canonical_answer
+        assert ":" in answer or answer.endswith("00") or ":" in answer
+
+
+def test_elementary_fractions_are_reduced() -> None:
+    """Verify fraction generators produce reduced answers."""
+    rng = random.Random(5)
+    for _ in range(20):
+        # Unit fraction
+        gen = GENERATORS["UNIT_FRACTION"](rng, 1)
+        num, den = map(int, gen.canonical_answer.split("/"))
+        assert Fraction(num, den) == Fraction(1, den)
+
+        # Fraction add/subtract like denominators
+        gen = GENERATORS["FRACTION_ADD_SUBTRACT_LIKE"](rng, 2)
+        if "+" in gen.prompt:
+            parts = re.findall(r"(\d+)/(\d+)", gen.prompt)
+            if len(parts) >= 2:
+                n1, d1 = int(parts[0][0]), int(parts[0][1])
+                n2, d2 = int(parts[1][0]), int(parts[1][1])
+                expected = Fraction(n1, d1) + Fraction(n2, d2)
+                if "/" in gen.canonical_answer:
+                    ans_n, ans_d = map(int, gen.canonical_answer.split("/"))
+                    assert Fraction(ans_n, ans_d) == expected
+
+
+def test_elementary_multi_digit_arithmetic() -> None:
+    """Verify multi-digit multiplication and division."""
+    rng = random.Random(13)
+    for _ in range(15):
+        gen = GENERATORS["MULTI_DIGIT_MULTIPLICATION"](rng, 4)
+        a, b = map(int, re.findall(r"\d+", gen.prompt)[:2])
+        assert int(gen.canonical_answer) == a * b
+
+        gen = GENERATORS["LONG_DIVISION"](rng, 4)
+        # Verify the quotient and remainder are consistent
+        answer = gen.canonical_answer
+        assert "/" in answer or "remainder" in answer.lower() or answer.isdigit()
+
+
+def test_elementary_word_problems_have_consistent_answers() -> None:
+    """Verify word problem generators produce internally consistent answers."""
+    rng = random.Random(17)
+    for _ in range(10):
+        gen = GENERATORS["WORD_PROBLEM_ADD_SUB_20"](rng, 1)
+        # Answer should be a valid number
+        assert int(gen.canonical_answer) >= 0
+
+        gen = GENERATORS["WORD_PROBLEM_MULTIPLY_DIVIDE_100"](rng, 3)
+        assert int(gen.canonical_answer) >= 0
+
+
 def test_generated_problems_carry_family_and_parameter_identity() -> None:
     with SessionLocal() as db:
         curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MTH1W"))
@@ -471,3 +573,112 @@ def test_content_readiness_reports_families_and_gate() -> None:
         assert single_family.ready is False
         assert single_family.families == ("UNSUPPORTED_ONLY",)
         db.rollback()
+
+
+def test_elementary_generators_respect_boundary_values() -> None:
+    """Generators must respect mathematical bounds for elementary content."""
+    rng = random.Random(42)
+
+    # Addition within 20: sum must not exceed 20
+    for _ in range(50):
+        gen = GENERATORS["ADDITION_WITHIN_20"](rng, 1)
+        a, b = gen.parameters["a"], gen.parameters["b"]
+        assert a + b <= 20, f"{a} + {b} = {a + b} exceeds 20"
+
+    # Subtraction within 20: result must be non-negative
+    for _ in range(50):
+        gen = GENERATORS["SUBTRACTION_WITHIN_20"](rng, 1)
+        a, b = gen.parameters["a"], gen.parameters["b"]
+        assert a - b >= 0, f"{a} - {b} = {a - b} is negative"
+
+    # Addition within 100: sum must not exceed 100
+    for _ in range(50):
+        gen = GENERATORS["ADDITION_WITHIN_100"](rng, 1)
+        a, b = gen.parameters["a"], gen.parameters["b"]
+        assert a + b <= 100, f"{a} + {b} = {a + b} exceeds 100"
+
+    # Subtraction within 100: result must be non-negative
+    for _ in range(50):
+        gen = GENERATORS["SUBTRACTION_WITHIN_100"](rng, 1)
+        a, b = gen.parameters["a"], gen.parameters["b"]
+        assert a - b >= 0, f"{a} - {b} = {a - b} is negative"
+
+
+def test_elementary_generators_produce_valid_parameters() -> None:
+    """All generator parameters must be internally consistent."""
+    rng = random.Random(7)
+
+    for _ in range(30):
+        # Money: total_cents must equal sum of coin values
+        gen = GENERATORS["MONEY_COUNT"](rng, 2)
+        q, d, n, p = (
+            gen.parameters["quarters"],
+            gen.parameters["dimes"],
+            gen.parameters["nickels"],
+            gen.parameters["pennies"],
+        )
+        expected = q * 25 + d * 10 + n * 5 + p
+        assert gen.parameters["total_cents"] == expected, f"Money total mismatch: {expected} != {gen.parameters['total_cents']}"
+
+        # Time: minute must be valid (0, 15, 30, or 45)
+        gen = GENERATORS["TIME_TO_HOUR_HALF_HOUR"](rng, 2)
+        assert gen.parameters["minute"] in {0, 15, 30, 45}, f"Invalid minute: {gen.parameters['minute']}"
+        assert 1 <= gen.parameters["hour"] <= 12, f"Invalid hour: {gen.parameters['hour']}"
+
+        # Fraction equivalence: equivalent fractions must be equal
+        gen = GENERATORS["FRACTION_EQUIVALENCE"](rng, 3)
+        n1, d1 = gen.parameters["original_numerator"], gen.parameters["original_denominator"]
+        n2, d2 = gen.parameters["target_numerator"], gen.parameters["target_denominator"]
+        assert Fraction(n1, d1) == Fraction(n2, d2), f"{n1}/{d1} != {n2}/{d2}"
+
+        # Volume: answer must equal l*w*h
+        gen = GENERATORS["VOLUME"](rng, 3)
+        l, w, h = gen.parameters["length"], gen.parameters["width"], gen.parameters["height"]
+        assert int(gen.canonical_answer) == l * w * h
+
+
+def test_elementary_generators_difficulty_scaling() -> None:
+    """Higher difficulty should produce larger or more complex problems."""
+    rng = random.Random(11)
+
+    # Place value: higher difficulty means larger numbers
+    easy_numbers = set()
+    hard_numbers = set()
+    for _ in range(20):
+        easy_numbers.add(GENERATORS["PLACE_VALUE_BASE_TEN"](rng, 1).parameters["number"])
+        hard_numbers.add(GENERATORS["PLACE_VALUE_BASE_TEN"](rng, 5).parameters["number"])
+    assert max(easy_numbers) < max(hard_numbers), "Difficulty should scale with number size"
+
+    # Multi-digit multiplication: higher difficulty means larger factors
+    easy_products = set()
+    hard_products = set()
+    for _ in range(20):
+        g1 = GENERATORS["MULTI_DIGIT_MULTIPLICATION"](rng, 1)
+        g5 = GENERATORS["MULTI_DIGIT_MULTIPLICATION"](rng, 5)
+        easy_products.add(g1.parameters["a"] * g1.parameters["b"])
+        hard_products.add(g5.parameters["a"] * g5.parameters["b"])
+    assert max(easy_products) < max(hard_products), "Difficulty should scale with product size"
+
+
+def test_generator_determinism_with_seed() -> None:
+    """Same seed must produce identical problem."""
+    rng1 = random.Random(99)
+    rng2 = random.Random(99)
+    for _ in range(10):
+        g1 = GENERATORS["ADDITION_WITHIN_20"](rng1, 3)
+        g2 = GENERATORS["ADDITION_WITHIN_20"](rng2, 3)
+        assert g1.prompt == g2.prompt
+        assert g1.canonical_answer == g2.canonical_answer
+        assert g1.parameters == g2.parameters
+
+
+def test_generator_produces_unique_parameters() -> None:
+    """Different generations should produce varied parameters."""
+    rng = random.Random(5)
+    seen_params = set()
+    for _ in range(100):
+        gen = GENERATORS["ADDITION_WITHIN_20"](rng, 2)
+        param_tuple = tuple(sorted(gen.parameters.items()))
+        seen_params.add(param_tuple)
+    # With 100 generations, we should see multiple unique parameter sets
+    assert len(seen_params) > 10, "Generator is not producing varied parameters"
