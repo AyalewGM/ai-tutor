@@ -8,6 +8,7 @@ from datetime import UTC, datetime, timedelta
 from typing import Any
 
 from sqlalchemy import delete, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.telemetry_models import TelemetryEventRecord
@@ -136,6 +137,13 @@ def publish_telemetry_fail_open(
         append_telemetry_event(db, envelope)
         db.commit()
         return True
+    except IntegrityError:
+        if db is not None:
+            db.rollback()
+        logger.info(
+            "telemetry publication skipped because referenced authoritative data is unavailable"
+        )
+        return False
     except Exception:
         if db is not None:
             db.rollback()

@@ -3,6 +3,7 @@ from datetime import UTC, datetime
 from typing import Any
 
 import pytest
+from sqlalchemy.exc import IntegrityError
 
 from app.telemetry import (
     RetentionPolicy,
@@ -14,9 +15,12 @@ from app.telemetry import (
 
 
 class FakeSession:
-    def __init__(self, *, fail_commit: bool = False) -> None:
+    def __init__(
+        self, *, fail_commit: bool = False, integrity_error_on_commit: bool = False
+    ) -> None:
         self.added: list[Any] = []
         self.fail_commit = fail_commit
+        self.integrity_error_on_commit = integrity_error_on_commit
         self.committed = False
         self.rolled_back = False
         self.closed = False
@@ -25,6 +29,8 @@ class FakeSession:
         self.added.append(value)
 
     def commit(self) -> None:
+        if self.integrity_error_on_commit:
+            raise IntegrityError("insert telemetry", {}, Exception("foreign key"))
         if self.fail_commit:
             raise RuntimeError("telemetry unavailable")
         self.committed = True
@@ -109,6 +115,22 @@ def test_fail_open_publisher_swallows_observability_failure() -> None:
         event_type="session.started",
         learner_pseudonymous_id="learner-hash-1",
         curriculum_id=uuid.uuid4(),
+    )
+
+    published = publish_telemetry_fail_open(lambda: fake_db, envelope)  # type: ignore[arg-type]
+
+    assert published is False
+    assert fake_db.rolled_back is True
+    assert fake_db.closed is True
+
+
+def test_fail_open_publisher_handles_stale_authoritative_reference() -> None:
+    fake_db = FakeSession(integrity_error_on_commit=True)
+    envelope = TelemetryEnvelope(
+        event_type="session.completed",
+        learner_pseudonymous_id="learner-hash-1",
+        curriculum_id=uuid.uuid4(),
+        session_id=uuid.uuid4(),
     )
 
     published = publish_telemetry_fail_open(lambda: fake_db, envelope)  # type: ignore[arg-type]
