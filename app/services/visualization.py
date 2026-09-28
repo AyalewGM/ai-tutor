@@ -262,6 +262,66 @@ def _volume_model(problem: Problem) -> dict | None:
     }
 
 
+def _ruler_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    a = _int(params.get("a"))
+    b = _int(params.get("b"))
+    if a is None or b is None:
+        return None
+    lo = 0
+    hi = max(a, b) + 2
+    return {
+        "type": "ruler",
+        "a": a,
+        "b": b,
+        "min": lo,
+        "max": hi,
+        "aria_label": f"Ruler showing lengths {a} and {b} units.",
+    }
+
+
+def _shape_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    shape = params.get("shape")
+    sides = _int(params.get("sides"))
+    if shape is None:
+        return None
+    return {
+        "type": "shape",
+        "shape": shape,
+        "sides": sides,
+        "aria_label": f"A {shape} with {sides} sides.",
+    }
+
+
+def _bar_graph_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    data = params.get("data")
+    category = params.get("category")
+    if not isinstance(data, dict) or category is None:
+        return None
+    return {
+        "type": "bar_graph",
+        "data": data,
+        "category": category,
+        "aria_label": f"Bar graph with values {data}. Highlight category {category}.",
+    }
+
+
+def _picture_graph_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    data = params.get("data")
+    category = params.get("category")
+    if not isinstance(data, dict) or category is None:
+        return None
+    return {
+        "type": "picture_graph",
+        "data": data,
+        "category": category,
+        "aria_label": f"Picture graph with values {data}. Highlight category {category}.",
+    }
+
+
 def visualization_for(problem: Problem) -> dict | None:
     """Return a declarative visual spec for a problem, or None."""
     if problem.problem_type == "SIMPLIFY_EXPRESSION":
@@ -274,7 +334,7 @@ def visualization_for(problem: Problem) -> dict | None:
         return _array_model(problem)
     if problem.problem_type == "UNIT_FRACTION":
         return _fraction_bar(problem)
-    if problem.problem_type in {"ADDITION_WITHIN_20", "SUBTRACTION_WITHIN_20"}:
+    if problem.problem_type in {"ADDITION_WITHIN_20", "SUBTRACTION_WITHIN_20", "WORD_PROBLEM_ADD_SUB_20"}:
         return _ten_frame(problem)
     if problem.problem_type == "PLACE_VALUE_BASE_TEN":
         return _base_ten_model(problem)
@@ -282,19 +342,33 @@ def visualization_for(problem: Problem) -> dict | None:
         return _money_model(problem)
     if problem.problem_type == "TIME_TO_HOUR_HALF_HOUR":
         return _clock_model(problem)
+    if problem.problem_type == "TIME_TO_5_MINUTES":
+        return _clock_model(problem)
     if problem.problem_type in {
         "ADDITION_WITHIN_100",
         "SUBTRACTION_WITHIN_100",
+        "WORD_PROBLEM_ADD_SUB_100",
         "MULTI_DIGIT_MULTIPLICATION",
         "LONG_DIVISION",
+        "NUMBER_SEQUENCE",
+        "NUMBER_PATTERN",
+        "EQUATION_BALANCE",
+        "COMPARE_NUMBERS",
+        "DECIMAL_PLACE_VALUE",
     }:
         return None
     if problem.problem_type == "FRACTION_EQUIVALENCE":
         return _fraction_bar(problem)
-    if problem.problem_type in {"FRACTION_ADD_SUBTRACT_LIKE", "FRACTION_MULTIPLY"}:
+    if problem.problem_type in {"FRACTION_ADD_SUBTRACT_LIKE", "FRACTION_MULTIPLY", "FRACTION_HALVES_THIRDS_FOURTHS"}:
         return _fraction_bar(problem)
-    if problem.problem_type == "DECIMAL_PLACE_VALUE":
-        return None
+    if problem.problem_type == "COMPARE_LENGTH":
+        return _ruler_model(problem)
+    if problem.problem_type == "GEOMETRY_SHAPES":
+        return _shape_model(problem)
+    if problem.problem_type == "BAR_GRAPH_READ":
+        return _bar_graph_model(problem)
+    if problem.problem_type == "PICTURE_GRAPH_READ":
+        return _picture_graph_model(problem)
     if problem.problem_type == "ANGLE_MEASUREMENT":
         return _angle_model(problem)
     if problem.problem_type == "COORDINATE_PLANE":
