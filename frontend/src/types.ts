@@ -22,6 +22,22 @@ export interface SkillChoice {
   content_ready: boolean;
 }
 
+export interface LearnerLaunchpad {
+  recommended: {
+    id: string;
+    code: string;
+    name: string;
+    reason: "CONTINUE_SESSION" | "RESUME_IN_PROGRESS" | "READY_TO_START" | "PREREQUISITE_GAP";
+    mastery_score: number;
+    session_id: string | null;
+  } | null;
+  reviews_due: { skill_id: string; skill_name: string }[];
+  mastered_count: number;
+  learning_count: number;
+  ready_skill_count: number;
+  award_count: number;
+}
+
 export interface SessionOut {
   session_id: string;
 }

@@ -58,6 +58,8 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   const learner = page.locator('#learner');
   const learnerOption = learner.locator('option').filter({ hasText: 'React Learner' });
   await learner.selectOption(await learnerOption.getAttribute('value'));
+  await expect(page.getByRole('heading', { name: 'Ready to learn, React Learner?' })).toBeVisible();
+  await expect(page.getByLabel('Learning context')).toBeVisible();
   const skill = page.locator('#skill');
   await expect(skill.locator('option')).not.toHaveCount(1, { timeout: 10000 });
   const distOption = skill.locator('option').filter({ hasText: 'M8.ALG.DIST · Distributive Property' });
