@@ -5,7 +5,7 @@
     "code": "VA",
     "name": "Virginia",
     "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
-    "source_uri": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics"
+    "source_uri": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
   },
   "authority": {
     "code": "VDOE",
@@ -15,149 +15,61 @@
   },
   "curriculum": {
     "code": "VA_MATH_2_2024_25",
-    "name": "Virginia Grade 2 Mathematics \u2014 2023 Standards of Learning",
+    "name": "Virginia Grade 2 Mathematics \u2014 VDOE-2023-SY2024-25",
     "version": "VDOE-2023-SY2024-25",
     "grade_level": "2",
     "source_uri": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
   },
   "expectations": [
     {
-      "source_identifier": "2.NS.1",
-      "title": "Read, write, and identify numbers",
+      "source_identifier": "2.NS",
+      "title": "Number and Number Sense",
       "source_uri": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources",
       "strand": "Number and Number Sense",
-      "description": "Read, write, and identify numbers to 999."
+      "description": "Read, write, and identify numbers to 999; compare and order whole numbers."
     },
     {
-      "source_identifier": "2.CE.1",
-      "title": "Solve problems using addition and subtraction",
+      "source_identifier": "2.CE",
+      "title": "Computation and Estimation",
       "source_uri": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources",
       "strand": "Computation and Estimation",
-      "description": "Solve single-step practical problems involving addition and subtraction within 1000."
+      "description": "Solve single-step practical problems using addition and subtraction within 1000."
     },
     {
-      "source_identifier": "2.MG.1",
-      "title": "Tell time and read a calendar",
+      "source_identifier": "2.MG",
+      "title": "Measurement and Geometry",
       "source_uri": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources",
       "strand": "Measurement and Geometry",
-      "description": "Tell time to the nearest five minutes using analog and digital clocks."
+      "description": "Tell time to the nearest five minutes; measure length; identify and partition shapes."
     }
   ],
   "skills": [
     {
-      "code": "VA2.OA.ADD_SUB_100",
-      "name": "Addition and Subtraction within 100",
-      "description": "Add and subtract within 100 using strategies based on place value.",
-      "difficulty_level": 2,
-      "canonical": {
-        "code": "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_100",
-        "name": "Addition and Subtraction within 100",
-        "description": "Add and subtract whole numbers within 100 using place-value strategies."
-      },
-      "standard_refs": [
-        "2.NS.1",
-        "2.CE.1"
-      ],
-      "prerequisite_codes": [],
-      "problem_families": [
-        "ADDITION_WITHIN_100",
-        "SUBTRACTION_WITHIN_100"
-      ],
-      "problems": [
-        {
-          "key": "va2-add_sub_100-addition_within_100-01",
-          "family": "ADDITION_WITHIN_100",
-          "prompt": "A school has 24 fiction books and 35 nonfiction books. How many books are there?",
-          "canonical_answer": "59",
-          "difficulty": 1,
-          "objective": "Add two-digit numbers within 100 using place-value strategies.",
-          "modes": [
-            "diagnostic"
-          ],
-          "parameters": {
-            "a": 24,
-            "b": 35,
-            "operation": "+"
-          }
-        },
-        {
-          "key": "va2-add_sub_100-subtraction_within_100-02",
-          "family": "SUBTRACTION_WITHIN_100",
-          "prompt": "There are 72 crayons in a box. 38 are used. How many crayons are left?",
-          "canonical_answer": "34",
-          "difficulty": 1,
-          "objective": "Subtract two-digit numbers within 100 using place-value strategies.",
-          "modes": [
-            "guided"
-          ],
-          "parameters": {
-            "a": 72,
-            "b": 38,
-            "operation": "-"
-          }
-        },
-        {
-          "key": "va2-add_sub_100-addition_within_100-03",
-          "family": "ADDITION_WITHIN_100",
-          "prompt": "A school has 56 fiction books and 39 nonfiction books. How many books are there?",
-          "canonical_answer": "95",
-          "difficulty": 2,
-          "objective": "Add two-digit numbers within 100 using place-value strategies.",
-          "modes": [
-            "independent"
-          ],
-          "parameters": {
-            "a": 56,
-            "b": 39,
-            "operation": "+"
-          }
-        },
-        {
-          "key": "va2-add_sub_100-subtraction_within_100-04",
-          "family": "SUBTRACTION_WITHIN_100",
-          "prompt": "There are 81 crayons in a box. 47 are used. How many crayons are left?",
-          "canonical_answer": "34",
-          "difficulty": 2,
-          "objective": "Subtract two-digit numbers within 100 using place-value strategies.",
-          "modes": [
-            "mastery"
-          ],
-          "parameters": {
-            "a": 81,
-            "b": 47,
-            "operation": "-"
-          }
-        }
-      ]
-    },
-    {
-      "code": "VA2.NBT.PLACE_VALUE_3DIGIT",
+      "code": "VA2.NBT.PLACE_VALUE",
       "name": "Place Value: Hundreds, Tens, Ones",
-      "description": "Understand three-digit numbers as hundreds, tens, and ones.",
+      "description": "Understand that three-digit numbers represent hundreds, tens, and ones; count within 1000; read and write numbers to 1000.",
       "difficulty_level": 2,
       "canonical": {
         "code": "MATH.ELEMENTARY.PLACE_VALUE.HUNDREDS_TENS_ONES",
         "name": "Place Value: Hundreds, Tens, Ones",
-        "description": "Understand that the digits of a three-digit number represent hundreds, tens, and ones."
+        "description": "Decompose three-digit numbers into hundreds, tens, and ones."
       },
       "standard_refs": [
-        "2.NS.1",
-        "2.CE.1"
+        "2.NS"
       ],
-      "prerequisite_codes": [
-        "VA2.OA.ADD_SUB_100"
-      ],
+      "prerequisite_codes": [],
       "problem_families": [
-        "PLACE_VALUE_BASE_TEN"
+        "PLACE_VALUE_BASE_TEN",
+        "NUMBER_SEQUENCE"
       ],
       "problems": [
         {
-          "key": "va2-place_value_3digit-place_value_base_ten-01",
+          "key": "va2-place_value-place_value_base_ten-01",
           "family": "PLACE_VALUE_BASE_TEN",
           "prompt": "How many tens and ones make 45?",
           "canonical_answer": "4 tens and 5 ones",
           "difficulty": 1,
-          "objective": "Decompose two-digit numbers into tens and ones.",
+          "objective": "Practice place value base ten in diagnostic mode.",
           "modes": [
             "diagnostic"
           ],
@@ -165,62 +77,756 @@
             "number": 45,
             "tens": 4,
             "ones": 5,
-            "hundreds": 0,
             "place": "tens_and_ones"
           }
         },
         {
-          "key": "va2-place_value_3digit-place_value_base_ten-02",
-          "family": "PLACE_VALUE_BASE_TEN",
-          "prompt": "How many tens and ones make 63?",
-          "canonical_answer": "6 tens and 3 ones",
+          "key": "va2-place_value-number_sequence-02",
+          "family": "NUMBER_SEQUENCE",
+          "prompt": "What number is missing? 25, 30, ?, 40, 45",
+          "canonical_answer": "35",
           "difficulty": 1,
-          "objective": "Decompose two-digit numbers into tens and ones.",
+          "objective": "Practice number sequence in guided mode.",
           "modes": [
             "guided"
           ],
           "parameters": {
-            "number": 63,
-            "tens": 6,
-            "ones": 3,
-            "hundreds": 0,
-            "place": "tens_and_ones"
+            "start": 25,
+            "step": 5,
+            "answer": 35,
+            "sequence": "25, 30, ?, 40, 45"
           }
         },
         {
-          "key": "va2-place_value_3digit-place_value_base_ten-03",
+          "key": "va2-place_value-place_value_base_ten-03",
           "family": "PLACE_VALUE_BASE_TEN",
-          "prompt": "How many tens and ones make 247?",
-          "canonical_answer": "2 tens and 4 ones",
-          "difficulty": 2,
-          "objective": "Decompose two-digit numbers into tens and ones.",
+          "prompt": "How many tens and ones make 70?",
+          "canonical_answer": "7 tens and 0 ones",
+          "difficulty": 1,
+          "objective": "Practice place value base ten in independent mode.",
           "modes": [
             "independent"
           ],
           "parameters": {
-            "number": 247,
-            "tens": 2,
-            "ones": 4,
-            "hundreds": 7,
-            "place": "hundreds_tens_ones"
+            "number": 70,
+            "tens": 7,
+            "ones": 0,
+            "place": "tens_and_ones"
           }
         },
         {
-          "key": "va2-place_value_3digit-place_value_base_ten-04",
-          "family": "PLACE_VALUE_BASE_TEN",
-          "prompt": "How many tens and ones make 385?",
-          "canonical_answer": "3 tens and 8 ones",
-          "difficulty": 2,
-          "objective": "Decompose two-digit numbers into tens and ones.",
+          "key": "va2-place_value-number_sequence-04",
+          "family": "NUMBER_SEQUENCE",
+          "prompt": "What number is missing? 25, 30, ?, 40, 45",
+          "canonical_answer": "35",
+          "difficulty": 1,
+          "objective": "Practice number sequence in mastery mode.",
           "modes": [
             "mastery"
           ],
           "parameters": {
-            "number": 385,
-            "tens": 3,
-            "ones": 8,
-            "hundreds": 5,
-            "place": "hundreds_tens_ones"
+            "start": 25,
+            "step": 5,
+            "answer": 35,
+            "sequence": "25, 30, ?, 40, 45"
+          }
+        },
+        {
+          "key": "va2-place_value-place_value_base_ten-05",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 45?",
+          "canonical_answer": "4 tens and 5 ones",
+          "difficulty": 2,
+          "objective": "Practice place value base ten in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "number": 45,
+            "tens": 4,
+            "ones": 5,
+            "place": "tens_and_ones"
+          }
+        },
+        {
+          "key": "va2-place_value-number_sequence-06",
+          "family": "NUMBER_SEQUENCE",
+          "prompt": "What number is missing? 25, 30, ?, 40, 45",
+          "canonical_answer": "35",
+          "difficulty": 2,
+          "objective": "Practice number sequence in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "start": 25,
+            "step": 5,
+            "answer": 35,
+            "sequence": "25, 30, ?, 40, 45"
+          }
+        },
+        {
+          "key": "va2-place_value-place_value_base_ten-07",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 70?",
+          "canonical_answer": "7 tens and 0 ones",
+          "difficulty": 2,
+          "objective": "Practice place value base ten in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "number": 70,
+            "tens": 7,
+            "ones": 0,
+            "place": "tens_and_ones"
+          }
+        },
+        {
+          "key": "va2-place_value-number_sequence-08",
+          "family": "NUMBER_SEQUENCE",
+          "prompt": "What number is missing? 25, 30, ?, 40, 45",
+          "canonical_answer": "35",
+          "difficulty": 2,
+          "objective": "Practice number sequence in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "start": 25,
+            "step": 5,
+            "answer": 35,
+            "sequence": "25, 30, ?, 40, 45"
+          }
+        }
+      ]
+    },
+    {
+      "code": "VA2.NBT.PATTERNS",
+      "name": "Skip Counting and Number Patterns",
+      "description": "Skip-count by 5s, 10s, and 100s; identify and extend number patterns within 1000.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.NUMBER_SENSE.SKIP_COUNTING_PATTERNS",
+        "name": "Skip Counting and Number Patterns",
+        "description": "Skip-count and identify patterns in number sequences."
+      },
+      "standard_refs": [
+        "2.NS"
+      ],
+      "prerequisite_codes": [
+        "VA2.NBT.PLACE_VALUE"
+      ],
+      "problem_families": [
+        "NUMBER_PATTERN",
+        "NUMBER_SEQUENCE"
+      ],
+      "problems": [
+        {
+          "key": "va2-patterns-number_pattern-01",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 25, 30, 35, 40, 45, ?",
+          "canonical_answer": "30",
+          "difficulty": 1,
+          "objective": "Practice number pattern in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "start": 25,
+            "step": 5,
+            "sequence": "25, 30, 35, 40, 45, ?"
+          }
+        },
+        {
+          "key": "va2-patterns-number_sequence-02",
+          "family": "NUMBER_SEQUENCE",
+          "prompt": "What number is missing? 25, 30, ?, 40, 45",
+          "canonical_answer": "35",
+          "difficulty": 1,
+          "objective": "Practice number sequence in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "start": 25,
+            "step": 5,
+            "answer": 35,
+            "sequence": "25, 30, ?, 40, 45"
+          }
+        },
+        {
+          "key": "va2-patterns-number_pattern-03",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 12, 14, 16, 18, 20, ?",
+          "canonical_answer": "14",
+          "difficulty": 1,
+          "objective": "Practice number pattern in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "start": 12,
+            "step": 2,
+            "sequence": "12, 14, 16, 18, 20, ?"
+          }
+        },
+        {
+          "key": "va2-patterns-number_sequence-04",
+          "family": "NUMBER_SEQUENCE",
+          "prompt": "What number is missing? 25, 30, ?, 40, 45",
+          "canonical_answer": "35",
+          "difficulty": 1,
+          "objective": "Practice number sequence in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "start": 25,
+            "step": 5,
+            "answer": 35,
+            "sequence": "25, 30, ?, 40, 45"
+          }
+        },
+        {
+          "key": "va2-patterns-number_pattern-05",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 25, 30, 35, 40, 45, ?",
+          "canonical_answer": "30",
+          "difficulty": 2,
+          "objective": "Practice number pattern in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "start": 25,
+            "step": 5,
+            "sequence": "25, 30, 35, 40, 45, ?"
+          }
+        },
+        {
+          "key": "va2-patterns-number_sequence-06",
+          "family": "NUMBER_SEQUENCE",
+          "prompt": "What number is missing? 25, 30, ?, 40, 45",
+          "canonical_answer": "35",
+          "difficulty": 2,
+          "objective": "Practice number sequence in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "start": 25,
+            "step": 5,
+            "answer": 35,
+            "sequence": "25, 30, ?, 40, 45"
+          }
+        },
+        {
+          "key": "va2-patterns-number_pattern-07",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 12, 14, 16, 18, 20, ?",
+          "canonical_answer": "14",
+          "difficulty": 2,
+          "objective": "Practice number pattern in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "start": 12,
+            "step": 2,
+            "sequence": "12, 14, 16, 18, 20, ?"
+          }
+        },
+        {
+          "key": "va2-patterns-number_sequence-08",
+          "family": "NUMBER_SEQUENCE",
+          "prompt": "What number is missing? 25, 30, ?, 40, 45",
+          "canonical_answer": "35",
+          "difficulty": 2,
+          "objective": "Practice number sequence in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "start": 25,
+            "step": 5,
+            "answer": 35,
+            "sequence": "25, 30, ?, 40, 45"
+          }
+        }
+      ]
+    },
+    {
+      "code": "VA2.NBT.ADDITION_100",
+      "name": "Addition within 100",
+      "description": "Fluently add within 100 using place-value strategies, properties of operations, and the relationship between addition and subtraction.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_100",
+        "name": "Addition and Subtraction within 100",
+        "description": "Add and subtract whole numbers within 100 using place-value strategies."
+      },
+      "standard_refs": [
+        "2.CE"
+      ],
+      "prerequisite_codes": [
+        "VA2.NBT.PLACE_VALUE"
+      ],
+      "problem_families": [
+        "ADDITION_WITHIN_100"
+      ],
+      "problems": [
+        {
+          "key": "va2-addition_100-addition_within_100-01",
+          "family": "ADDITION_WITHIN_100",
+          "prompt": "What is 24 + 35?",
+          "canonical_answer": "59",
+          "difficulty": 1,
+          "objective": "Practice addition within 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 24,
+            "b": 35,
+            "operation": "+",
+            "answer": 59
+          }
+        },
+        {
+          "key": "va2-addition_100-addition_within_100-02",
+          "family": "ADDITION_WITHIN_100",
+          "prompt": "What is 47 + 28?",
+          "canonical_answer": "75",
+          "difficulty": 1,
+          "objective": "Practice addition within 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 47,
+            "b": 28,
+            "operation": "+",
+            "answer": 75
+          }
+        },
+        {
+          "key": "va2-addition_100-addition_within_100-03",
+          "family": "ADDITION_WITHIN_100",
+          "prompt": "What is 56 + 39?",
+          "canonical_answer": "95",
+          "difficulty": 1,
+          "objective": "Practice addition within 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 56,
+            "b": 39,
+            "operation": "+",
+            "answer": 95
+          }
+        },
+        {
+          "key": "va2-addition_100-addition_within_100-04",
+          "family": "ADDITION_WITHIN_100",
+          "prompt": "What is 63 + 19?",
+          "canonical_answer": "82",
+          "difficulty": 1,
+          "objective": "Practice addition within 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 63,
+            "b": 19,
+            "operation": "+",
+            "answer": 82
+          }
+        },
+        {
+          "key": "va2-addition_100-addition_within_100-05",
+          "family": "ADDITION_WITHIN_100",
+          "prompt": "What is 15 + 67?",
+          "canonical_answer": "82",
+          "difficulty": 2,
+          "objective": "Practice addition within 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 15,
+            "b": 67,
+            "operation": "+",
+            "answer": 82
+          }
+        },
+        {
+          "key": "va2-addition_100-addition_within_100-06",
+          "family": "ADDITION_WITHIN_100",
+          "prompt": "What is 34 + 45?",
+          "canonical_answer": "79",
+          "difficulty": 2,
+          "objective": "Practice addition within 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 34,
+            "b": 45,
+            "operation": "+",
+            "answer": 79
+          }
+        },
+        {
+          "key": "va2-addition_100-addition_within_100-07",
+          "family": "ADDITION_WITHIN_100",
+          "prompt": "What is 72 + 18?",
+          "canonical_answer": "90",
+          "difficulty": 2,
+          "objective": "Practice addition within 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 72,
+            "b": 18,
+            "operation": "+",
+            "answer": 90
+          }
+        },
+        {
+          "key": "va2-addition_100-addition_within_100-08",
+          "family": "ADDITION_WITHIN_100",
+          "prompt": "What is 55 + 27?",
+          "canonical_answer": "82",
+          "difficulty": 2,
+          "objective": "Practice addition within 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 55,
+            "b": 27,
+            "operation": "+",
+            "answer": 82
+          }
+        }
+      ]
+    },
+    {
+      "code": "VA2.NBT.SUBTRACTION_100",
+      "name": "Subtraction within 100",
+      "description": "Fluently subtract within 100 using place-value strategies, decomposing tens, and the relationship between addition and subtraction.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_100",
+        "name": "Addition and Subtraction within 100",
+        "description": "Add and subtract whole numbers within 100 using place-value strategies."
+      },
+      "standard_refs": [
+        "2.CE"
+      ],
+      "prerequisite_codes": [
+        "VA2.NBT.ADDITION_100"
+      ],
+      "problem_families": [
+        "SUBTRACTION_WITHIN_100"
+      ],
+      "problems": [
+        {
+          "key": "va2-subtraction_100-subtraction_within_100-01",
+          "family": "SUBTRACTION_WITHIN_100",
+          "prompt": "What is 50 - 23?",
+          "canonical_answer": "27",
+          "difficulty": 1,
+          "objective": "Practice subtraction within 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 50,
+            "b": 23,
+            "operation": "-",
+            "answer": 27
+          }
+        },
+        {
+          "key": "va2-subtraction_100-subtraction_within_100-02",
+          "family": "SUBTRACTION_WITHIN_100",
+          "prompt": "What is 72 - 38?",
+          "canonical_answer": "34",
+          "difficulty": 1,
+          "objective": "Practice subtraction within 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 72,
+            "b": 38,
+            "operation": "-",
+            "answer": 34
+          }
+        },
+        {
+          "key": "va2-subtraction_100-subtraction_within_100-03",
+          "family": "SUBTRACTION_WITHIN_100",
+          "prompt": "What is 65 - 29?",
+          "canonical_answer": "36",
+          "difficulty": 1,
+          "objective": "Practice subtraction within 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 65,
+            "b": 29,
+            "operation": "-",
+            "answer": 36
+          }
+        },
+        {
+          "key": "va2-subtraction_100-subtraction_within_100-04",
+          "family": "SUBTRACTION_WITHIN_100",
+          "prompt": "What is 81 - 47?",
+          "canonical_answer": "34",
+          "difficulty": 1,
+          "objective": "Practice subtraction within 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 81,
+            "b": 47,
+            "operation": "-",
+            "answer": 34
+          }
+        },
+        {
+          "key": "va2-subtraction_100-subtraction_within_100-05",
+          "family": "SUBTRACTION_WITHIN_100",
+          "prompt": "What is 90 - 56?",
+          "canonical_answer": "34",
+          "difficulty": 2,
+          "objective": "Practice subtraction within 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 90,
+            "b": 56,
+            "operation": "-",
+            "answer": 34
+          }
+        },
+        {
+          "key": "va2-subtraction_100-subtraction_within_100-06",
+          "family": "SUBTRACTION_WITHIN_100",
+          "prompt": "What is 44 - 18?",
+          "canonical_answer": "26",
+          "difficulty": 2,
+          "objective": "Practice subtraction within 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 44,
+            "b": 18,
+            "operation": "-",
+            "answer": 26
+          }
+        },
+        {
+          "key": "va2-subtraction_100-subtraction_within_100-07",
+          "family": "SUBTRACTION_WITHIN_100",
+          "prompt": "What is 76 - 49?",
+          "canonical_answer": "27",
+          "difficulty": 2,
+          "objective": "Practice subtraction within 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 76,
+            "b": 49,
+            "operation": "-",
+            "answer": 27
+          }
+        },
+        {
+          "key": "va2-subtraction_100-subtraction_within_100-08",
+          "family": "SUBTRACTION_WITHIN_100",
+          "prompt": "What is 68 - 35?",
+          "canonical_answer": "33",
+          "difficulty": 2,
+          "objective": "Practice subtraction within 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 68,
+            "b": 35,
+            "operation": "-",
+            "answer": 33
+          }
+        }
+      ]
+    },
+    {
+      "code": "VA2.OA.WORD_PROBLEM_100",
+      "name": "Word Problems within 100",
+      "description": "Solve one- and two-step word problems involving addition and subtraction within 100 with unknowns in all positions.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.ARITHMETIC.WORD_PROBLEM_WITHIN_100",
+        "name": "Word Problems within 100",
+        "description": "Solve contextual addition and subtraction word problems within 100."
+      },
+      "standard_refs": [
+        "2.CE"
+      ],
+      "prerequisite_codes": [
+        "VA2.NBT.ADDITION_100",
+        "VA2.NBT.SUBTRACTION_100"
+      ],
+      "problem_families": [
+        "WORD_PROBLEM_ADD_SUB_100"
+      ],
+      "problems": [
+        {
+          "key": "va2-word_problem_100-word_problem_add_sub_100-01",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "prompt": "A library has 24 fiction books and 35 nonfiction books. How many books are there?",
+          "canonical_answer": "59",
+          "difficulty": 1,
+          "objective": "Practice word problem add sub 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 24,
+            "b": 35,
+            "operation": "+",
+            "answer": 59
+          }
+        },
+        {
+          "key": "va2-word_problem_100-word_problem_add_sub_100-02",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "prompt": "There are 72 sheets of paper. 38 are used. How many are left?",
+          "canonical_answer": "110",
+          "difficulty": 1,
+          "objective": "Practice word problem add sub 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 72,
+            "b": 38,
+            "operation": "-",
+            "answer": 34
+          }
+        },
+        {
+          "key": "va2-word_problem_100-word_problem_add_sub_100-03",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "prompt": "A library has 56 fiction books and 39 nonfiction books. How many books are there?",
+          "canonical_answer": "95",
+          "difficulty": 1,
+          "objective": "Practice word problem add sub 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 56,
+            "b": 39,
+            "operation": "+",
+            "answer": 95
+          }
+        },
+        {
+          "key": "va2-word_problem_100-word_problem_add_sub_100-04",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "prompt": "There are 81 sheets of paper. 47 are used. How many are left?",
+          "canonical_answer": "128",
+          "difficulty": 1,
+          "objective": "Practice word problem add sub 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 81,
+            "b": 47,
+            "operation": "-",
+            "answer": 34
+          }
+        },
+        {
+          "key": "va2-word_problem_100-word_problem_add_sub_100-05",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "prompt": "A library has 24 fiction books and 35 nonfiction books. How many books are there?",
+          "canonical_answer": "59",
+          "difficulty": 2,
+          "objective": "Practice word problem add sub 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 24,
+            "b": 35,
+            "operation": "+",
+            "answer": 59
+          }
+        },
+        {
+          "key": "va2-word_problem_100-word_problem_add_sub_100-06",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "prompt": "There are 72 sheets of paper. 38 are used. How many are left?",
+          "canonical_answer": "110",
+          "difficulty": 2,
+          "objective": "Practice word problem add sub 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 72,
+            "b": 38,
+            "operation": "-",
+            "answer": 34
+          }
+        },
+        {
+          "key": "va2-word_problem_100-word_problem_add_sub_100-07",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "prompt": "A library has 56 fiction books and 39 nonfiction books. How many books are there?",
+          "canonical_answer": "95",
+          "difficulty": 2,
+          "objective": "Practice word problem add sub 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 56,
+            "b": 39,
+            "operation": "+",
+            "answer": 95
+          }
+        },
+        {
+          "key": "va2-word_problem_100-word_problem_add_sub_100-08",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "prompt": "There are 81 sheets of paper. 47 are used. How many are left?",
+          "canonical_answer": "128",
+          "difficulty": 2,
+          "objective": "Practice word problem add sub 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 81,
+            "b": 47,
+            "operation": "-",
+            "answer": 34
           }
         }
       ]
@@ -228,7 +834,7 @@
     {
       "code": "VA2.MD.MONEY",
       "name": "Count Money",
-      "description": "Count collections of coins and bills and solve money word problems.",
+      "description": "Determine the value of a collection of coins and bills; solve word problems involving money using dollar and cent symbols.",
       "difficulty_level": 2,
       "canonical": {
         "code": "MATH.ELEMENTARY.MEASUREMENT.MONEY_COUNT",
@@ -236,11 +842,10 @@
         "description": "Determine the value of a collection of coins and bills and solve money word problems."
       },
       "standard_refs": [
-        "2.NS.1",
-        "2.CE.1"
+        "2.MG"
       ],
       "prerequisite_codes": [
-        "VA2.OA.ADD_SUB_100"
+        "VA2.NBT.ADDITION_100"
       ],
       "problem_families": [
         "MONEY_COUNT"
@@ -252,7 +857,7 @@
           "prompt": "What is the total value of 1 quarter(s), 1 dime(s), 1 nickel(s), and 1 penny(ies)?",
           "canonical_answer": "$0.41",
           "difficulty": 1,
-          "objective": "Count mixed coin collections.",
+          "objective": "Practice money count in diagnostic mode.",
           "modes": [
             "diagnostic"
           ],
@@ -270,7 +875,7 @@
           "prompt": "What is the total value of 2 quarter(s), 0 dime(s), 1 nickel(s), and 3 penny(ies)?",
           "canonical_answer": "$0.58",
           "difficulty": 1,
-          "objective": "Count mixed coin collections.",
+          "objective": "Practice money count in guided mode.",
           "modes": [
             "guided"
           ],
@@ -287,8 +892,8 @@
           "family": "MONEY_COUNT",
           "prompt": "What is the total value of 0 quarter(s), 3 dime(s), 2 nickel(s), and 4 penny(ies)?",
           "canonical_answer": "$0.44",
-          "difficulty": 2,
-          "objective": "Count mixed coin collections.",
+          "difficulty": 1,
+          "objective": "Practice money count in independent mode.",
           "modes": [
             "independent"
           ],
@@ -305,8 +910,8 @@
           "family": "MONEY_COUNT",
           "prompt": "What is the total value of 1 quarter(s), 2 dime(s), 0 nickel(s), and 0 penny(ies)?",
           "canonical_answer": "$0.45",
-          "difficulty": 2,
-          "objective": "Count mixed coin collections.",
+          "difficulty": 1,
+          "objective": "Practice money count in mastery mode.",
           "modes": [
             "mastery"
           ],
@@ -316,6 +921,513 @@
             "nickels": 0,
             "pennies": 0,
             "total_cents": 45
+          }
+        },
+        {
+          "key": "va2-money-money_count-05",
+          "family": "MONEY_COUNT",
+          "prompt": "What is the total value of 2 quarter(s), 1 dime(s), 1 nickel(s), and 2 penny(ies)?",
+          "canonical_answer": "$0.67",
+          "difficulty": 2,
+          "objective": "Practice money count in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "quarters": 2,
+            "dimes": 1,
+            "nickels": 1,
+            "pennies": 2,
+            "total_cents": 67
+          }
+        },
+        {
+          "key": "va2-money-money_count-06",
+          "family": "MONEY_COUNT",
+          "prompt": "What is the total value of 0 quarter(s), 2 dime(s), 0 nickel(s), and 5 penny(ies)?",
+          "canonical_answer": "$0.25",
+          "difficulty": 2,
+          "objective": "Practice money count in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "quarters": 0,
+            "dimes": 2,
+            "nickels": 0,
+            "pennies": 5,
+            "total_cents": 25
+          }
+        },
+        {
+          "key": "va2-money-money_count-07",
+          "family": "MONEY_COUNT",
+          "prompt": "What is the total value of 1 quarter(s), 0 dime(s), 3 nickel(s), and 4 penny(ies)?",
+          "canonical_answer": "$0.44",
+          "difficulty": 2,
+          "objective": "Practice money count in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "quarters": 1,
+            "dimes": 0,
+            "nickels": 3,
+            "pennies": 4,
+            "total_cents": 44
+          }
+        },
+        {
+          "key": "va2-money-money_count-08",
+          "family": "MONEY_COUNT",
+          "prompt": "What is the total value of 3 quarter(s), 1 dime(s), 0 nickel(s), and 0 penny(ies)?",
+          "canonical_answer": "$0.85",
+          "difficulty": 2,
+          "objective": "Practice money count in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "quarters": 3,
+            "dimes": 1,
+            "nickels": 0,
+            "pennies": 0,
+            "total_cents": 85
+          }
+        }
+      ]
+    },
+    {
+      "code": "VA2.MD.LENGTH",
+      "name": "Measure and Compare Length",
+      "description": "Measure lengths using appropriate tools; estimate lengths in inches, feet, centimeters, and meters; compare lengths within 100.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.LENGTH_COMPARE",
+        "name": "Measure and Compare Length",
+        "description": "Measure, estimate, and compare lengths using standard and nonstandard units."
+      },
+      "standard_refs": [
+        "2.MG"
+      ],
+      "prerequisite_codes": [
+        "VA2.NBT.SUBTRACTION_100"
+      ],
+      "problem_families": [
+        "COMPARE_LENGTH"
+      ],
+      "problems": [
+        {
+          "key": "va2-length-compare_length-01",
+          "family": "COMPARE_LENGTH",
+          "prompt": "One ribbon is 10 inches long. Another is 6 inches long. How much longer is the longer ribbon?",
+          "canonical_answer": "4",
+          "difficulty": 1,
+          "objective": "Practice compare length in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 10,
+            "b": 6,
+            "difference": 4
+          }
+        },
+        {
+          "key": "va2-length-compare_length-02",
+          "family": "COMPARE_LENGTH",
+          "prompt": "One ribbon is 15 inches long. Another is 9 inches long. How much longer is the longer ribbon?",
+          "canonical_answer": "6",
+          "difficulty": 1,
+          "objective": "Practice compare length in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 15,
+            "b": 9,
+            "difference": 6
+          }
+        },
+        {
+          "key": "va2-length-compare_length-03",
+          "family": "COMPARE_LENGTH",
+          "prompt": "One ribbon is 20 inches long. Another is 14 inches long. How much longer is the longer ribbon?",
+          "canonical_answer": "6",
+          "difficulty": 1,
+          "objective": "Practice compare length in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 20,
+            "b": 14,
+            "difference": 6
+          }
+        },
+        {
+          "key": "va2-length-compare_length-04",
+          "family": "COMPARE_LENGTH",
+          "prompt": "One ribbon is 8 inches long. Another is 5 inches long. How much longer is the longer ribbon?",
+          "canonical_answer": "3",
+          "difficulty": 1,
+          "objective": "Practice compare length in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 8,
+            "b": 5,
+            "difference": 3
+          }
+        },
+        {
+          "key": "va2-length-compare_length-05",
+          "family": "COMPARE_LENGTH",
+          "prompt": "One ribbon is 12 inches long. Another is 7 inches long. How much longer is the longer ribbon?",
+          "canonical_answer": "5",
+          "difficulty": 2,
+          "objective": "Practice compare length in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 12,
+            "b": 7,
+            "difference": 5
+          }
+        },
+        {
+          "key": "va2-length-compare_length-06",
+          "family": "COMPARE_LENGTH",
+          "prompt": "One ribbon is 18 inches long. Another is 11 inches long. How much longer is the longer ribbon?",
+          "canonical_answer": "7",
+          "difficulty": 2,
+          "objective": "Practice compare length in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 18,
+            "b": 11,
+            "difference": 7
+          }
+        },
+        {
+          "key": "va2-length-compare_length-07",
+          "family": "COMPARE_LENGTH",
+          "prompt": "One ribbon is 9 inches long. Another is 4 inches long. How much longer is the longer ribbon?",
+          "canonical_answer": "5",
+          "difficulty": 2,
+          "objective": "Practice compare length in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 9,
+            "b": 4,
+            "difference": 5
+          }
+        },
+        {
+          "key": "va2-length-compare_length-08",
+          "family": "COMPARE_LENGTH",
+          "prompt": "One ribbon is 14 inches long. Another is 8 inches long. How much longer is the longer ribbon?",
+          "canonical_answer": "6",
+          "difficulty": 2,
+          "objective": "Practice compare length in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 14,
+            "b": 8,
+            "difference": 6
+          }
+        }
+      ]
+    },
+    {
+      "code": "VA2.MD.TIME",
+      "name": "Tell Time to Five Minutes",
+      "description": "Tell and write time from analog and digital clocks to the nearest five minutes.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.TELL_TIME_FIVE_MINUTES",
+        "name": "Tell Time to Five Minutes",
+        "description": "Tell and write time to the nearest five minutes using analog and digital clocks."
+      },
+      "standard_refs": [
+        "2.MG"
+      ],
+      "prerequisite_codes": [
+        "VA2.NBT.PATTERNS"
+      ],
+      "problem_families": [
+        "TIME_TO_5_MINUTES"
+      ],
+      "problems": [
+        {
+          "key": "va2-time-time_to_5_minutes-01",
+          "family": "TIME_TO_5_MINUTES",
+          "prompt": "What time is 3:15 on an analog clock when the hour hand is near 3 and the minute hand points to 3?",
+          "canonical_answer": "3:15",
+          "difficulty": 1,
+          "objective": "Practice time to 5 minutes in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "hour": 3,
+            "minute": 15
+          }
+        },
+        {
+          "key": "va2-time-time_to_5_minutes-02",
+          "family": "TIME_TO_5_MINUTES",
+          "prompt": "What time is 7:30 on an analog clock when the hour hand is near 7 and the minute hand points to 6?",
+          "canonical_answer": "7:30",
+          "difficulty": 1,
+          "objective": "Practice time to 5 minutes in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "hour": 7,
+            "minute": 30
+          }
+        },
+        {
+          "key": "va2-time-time_to_5_minutes-03",
+          "family": "TIME_TO_5_MINUTES",
+          "prompt": "What time is 11:45 on an analog clock when the hour hand is near 11 and the minute hand points to 9?",
+          "canonical_answer": "11:45",
+          "difficulty": 1,
+          "objective": "Practice time to 5 minutes in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "hour": 11,
+            "minute": 45
+          }
+        },
+        {
+          "key": "va2-time-time_to_5_minutes-04",
+          "family": "TIME_TO_5_MINUTES",
+          "prompt": "What time is 1:20 on an analog clock when the hour hand is near 1 and the minute hand points to 4?",
+          "canonical_answer": "1:20",
+          "difficulty": 1,
+          "objective": "Practice time to 5 minutes in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "hour": 1,
+            "minute": 20
+          }
+        },
+        {
+          "key": "va2-time-time_to_5_minutes-05",
+          "family": "TIME_TO_5_MINUTES",
+          "prompt": "What time is 5:05 on an analog clock when the hour hand is near 5 and the minute hand points to 1?",
+          "canonical_answer": "5:05",
+          "difficulty": 2,
+          "objective": "Practice time to 5 minutes in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "hour": 5,
+            "minute": 5
+          }
+        },
+        {
+          "key": "va2-time-time_to_5_minutes-06",
+          "family": "TIME_TO_5_MINUTES",
+          "prompt": "What time is 9:50 on an analog clock when the hour hand is near 9 and the minute hand points to 10?",
+          "canonical_answer": "9:50",
+          "difficulty": 2,
+          "objective": "Practice time to 5 minutes in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "hour": 9,
+            "minute": 50
+          }
+        },
+        {
+          "key": "va2-time-time_to_5_minutes-07",
+          "family": "TIME_TO_5_MINUTES",
+          "prompt": "What time is 2:25 on an analog clock when the hour hand is near 2 and the minute hand points to 5?",
+          "canonical_answer": "2:25",
+          "difficulty": 2,
+          "objective": "Practice time to 5 minutes in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "hour": 2,
+            "minute": 25
+          }
+        },
+        {
+          "key": "va2-time-time_to_5_minutes-08",
+          "family": "TIME_TO_5_MINUTES",
+          "prompt": "What time is 6:40 on an analog clock when the hour hand is near 6 and the minute hand points to 8?",
+          "canonical_answer": "6:40",
+          "difficulty": 2,
+          "objective": "Practice time to 5 minutes in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "hour": 6,
+            "minute": 40
+          }
+        }
+      ]
+    },
+    {
+      "code": "VA2.G.SHAPES_FRACTIONS",
+      "name": "Shapes and Equal Shares",
+      "description": "Identify and draw shapes with specified attributes; partition circles and rectangles into halves, thirds, and fourths.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.GEOMETRY.SHAPES_EQUAL_SHARES",
+        "name": "Shapes and Equal Shares",
+        "description": "Identify shapes by attributes and partition shapes into equal shares."
+      },
+      "standard_refs": [
+        "2.MG"
+      ],
+      "prerequisite_codes": [
+        "VA2.NBT.PLACE_VALUE"
+      ],
+      "problem_families": [
+        "GEOMETRY_SHAPES",
+        "FRACTION_HALVES_THIRDS_FOURTHS"
+      ],
+      "problems": [
+        {
+          "key": "va2-shapes_fractions-geometry_shapes-01",
+          "family": "GEOMETRY_SHAPES",
+          "prompt": "How many sides does a triangle have?",
+          "canonical_answer": "3",
+          "difficulty": 1,
+          "objective": "Practice geometry shapes in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "shape": "triangle",
+            "sides": 3
+          }
+        },
+        {
+          "key": "va2-shapes_fractions-fraction_halves_thirds_fourths-02",
+          "family": "FRACTION_HALVES_THIRDS_FOURTHS",
+          "prompt": "A circle is divided into 3 equal parts. 1 part(s) are shaded. What fraction is shaded?",
+          "canonical_answer": "1/3",
+          "difficulty": 1,
+          "objective": "Practice fraction halves thirds fourths in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "numerator": 1,
+            "denominator": 3
+          }
+        },
+        {
+          "key": "va2-shapes_fractions-geometry_shapes-03",
+          "family": "GEOMETRY_SHAPES",
+          "prompt": "How many sides does a rectangle have?",
+          "canonical_answer": "4",
+          "difficulty": 1,
+          "objective": "Practice geometry shapes in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "shape": "rectangle",
+            "sides": 4
+          }
+        },
+        {
+          "key": "va2-shapes_fractions-fraction_halves_thirds_fourths-04",
+          "family": "FRACTION_HALVES_THIRDS_FOURTHS",
+          "prompt": "A circle is divided into 4 equal parts. 3 part(s) are shaded. What fraction is shaded?",
+          "canonical_answer": "3/4",
+          "difficulty": 1,
+          "objective": "Practice fraction halves thirds fourths in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "numerator": 3,
+            "denominator": 4
+          }
+        },
+        {
+          "key": "va2-shapes_fractions-geometry_shapes-05",
+          "family": "GEOMETRY_SHAPES",
+          "prompt": "How many sides does a circle have?",
+          "canonical_answer": "0",
+          "difficulty": 2,
+          "objective": "Practice geometry shapes in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "shape": "circle",
+            "sides": 0
+          }
+        },
+        {
+          "key": "va2-shapes_fractions-fraction_halves_thirds_fourths-06",
+          "family": "FRACTION_HALVES_THIRDS_FOURTHS",
+          "prompt": "A circle is divided into 3 equal parts. 2 part(s) are shaded. What fraction is shaded?",
+          "canonical_answer": "2/3",
+          "difficulty": 2,
+          "objective": "Practice fraction halves thirds fourths in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "numerator": 2,
+            "denominator": 3
+          }
+        },
+        {
+          "key": "va2-shapes_fractions-geometry_shapes-07",
+          "family": "GEOMETRY_SHAPES",
+          "prompt": "How many sides does a square have?",
+          "canonical_answer": "4",
+          "difficulty": 2,
+          "objective": "Practice geometry shapes in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "shape": "square",
+            "sides": 4
+          }
+        },
+        {
+          "key": "va2-shapes_fractions-fraction_halves_thirds_fourths-08",
+          "family": "FRACTION_HALVES_THIRDS_FOURTHS",
+          "prompt": "A circle is divided into 4 equal parts. 3 part(s) are shaded. What fraction is shaded?",
+          "canonical_answer": "3/4",
+          "difficulty": 2,
+          "objective": "Practice fraction halves thirds fourths in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "numerator": 3,
+            "denominator": 4
           }
         }
       ]

@@ -2,6 +2,12 @@ from pathlib import Path
 
 from app.core.database import SessionLocal
 from app.elementary_pack import load_pack, parse_pack
+from app.services.elementary_cross_grade_prerequisites import (
+    wire_cross_grade_prerequisites,
+)
+from app.services.elementary_misconception_loader import (
+    load_elementary_misconceptions,
+)
 
 _PACK_DIR = Path(__file__).parents[1] / "docs/curriculum/packs"
 
@@ -42,7 +48,11 @@ def seed() -> list[dict]:
                     "problem_count": result.problem_count,
                 }
             )
+        added_edges = wire_cross_grade_prerequisites(db)
+        added_misconceptions = load_elementary_misconceptions(db)
         db.commit()
+    print(f"Cross-grade prerequisite edges added: {added_edges}")
+    print(f"Elementary misconceptions loaded: {added_misconceptions}")
     return results
 
 

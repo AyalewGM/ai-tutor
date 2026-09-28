@@ -756,7 +756,7 @@ def _generate_bar_graph_read(rng: random.Random, difficulty: int) -> GeneratedPr
         str(answer),
         difficulty,
         "BAR_GRAPH_READ",
-        parameters={"data": data, "category": category, "answer": answer},
+        parameters={"category": category, "value": answer, "total": sum(values)},
     )
 
 
@@ -772,7 +772,327 @@ def _generate_picture_graph_read(rng: random.Random, difficulty: int) -> Generat
         str(answer),
         difficulty,
         "PICTURE_GRAPH_READ",
-        parameters={"data": data, "category": category, "answer": answer},
+        parameters={"category": category, "value": answer, "total": sum(values)},
+    )
+
+
+def _generate_multiplication_within_100(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    a = rng.randint(2, 9) if difficulty <= 2 else rng.randint(2, 12)
+    b = rng.randint(2, 9) if difficulty <= 2 else rng.randint(2, 12)
+    return GeneratedProblem(
+        prompt=f"What is {a} × {b}?",
+        canonical_answer=str(a * b),
+        difficulty=difficulty,
+        problem_type="MULTIPLICATION_WITHIN_100",
+        parameters={"a": a, "b": b, "operation": "×"},
+    )
+
+
+def _generate_division_within_100(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    b = rng.randint(2, 9)
+    answer = rng.randint(2, 12 if difficulty <= 2 else 9)
+    a = b * answer
+    return GeneratedProblem(
+        prompt=f"What is {a} ÷ {b}?",
+        canonical_answer=str(answer),
+        difficulty=difficulty,
+        problem_type="DIVISION_WITHIN_100",
+        parameters={"a": a, "b": b, "operation": "÷"},
+    )
+
+
+def _generate_word_problem_multiply_divide_100(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    templates = [
+        ("multiply", "There are {a} boxes with {b} pencils in each box. How many pencils are there in all?"),
+        ("divide", "{a} stickers are shared equally among {b} students. How many stickers does each student get?"),
+    ]
+    op, template = rng.choice(templates)
+    if op == "multiply":
+        a = rng.randint(2, 9)
+        b = rng.randint(2, 12 if difficulty <= 2 else 9)
+        answer = a * b
+    else:
+        b = rng.randint(2, 9)
+        answer = rng.randint(2, 12 if difficulty <= 2 else 9)
+        a = b * answer
+    prompt = template.format(a=a, b=b)
+    return GeneratedProblem(
+        prompt,
+        str(answer),
+        difficulty,
+        "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+        parameters={"a": a, "b": b, "operation": op, "answer": answer},
+    )
+
+
+def _generate_rounding(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    if difficulty <= 2:
+        number = rng.randint(10, 99)
+        place = 10
+        place_name = "ten"
+    else:
+        number = rng.randint(100, 999)
+        place = 100
+        place_name = "hundred"
+    rounded = round(number / place) * place
+    return GeneratedProblem(
+        prompt=f"Round {number} to the nearest {place_name}.",
+        canonical_answer=str(rounded),
+        difficulty=difficulty,
+        problem_type="ROUNDING",
+        parameters={"number": number, "place": place_name, "rounded": rounded},
+    )
+
+
+def _generate_fraction_compare(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    denominators = [2, 3, 4, 6, 8]
+    d1, d2 = rng.sample(denominators, 2)
+    n1 = rng.randint(1, d1 - 1)
+    n2 = rng.randint(1, d2 - 1)
+    from fractions import Fraction
+    f1 = Fraction(n1, d1)
+    f2 = Fraction(n2, d2)
+    if f1 > f2:
+        answer = ">"
+    elif f1 < f2:
+        answer = "<"
+    else:
+        answer = "="
+    return GeneratedProblem(
+        prompt=f"Compare: {n1}/{d1} ___ {n2}/{d2}. Use >, <, or =.",
+        canonical_answer=answer,
+        difficulty=difficulty,
+        problem_type="FRACTION_COMPARE",
+        parameters={"numerator1": n1, "denominator1": d1, "numerator2": n2, "denominator2": d2},
+    )
+
+
+def _generate_fraction_on_number_line(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    denominator = rng.choice([2, 3, 4, 6, 8])
+    numerator = rng.randint(1, denominator - 1)
+    return GeneratedProblem(
+        prompt=f"Where is the fraction {numerator}/{denominator} located on a number line from 0 to 1?",
+        canonical_answer=f"{numerator}/{denominator}",
+        difficulty=difficulty,
+        problem_type="FRACTION_NUMBER_LINE",
+        parameters={"numerator": numerator, "denominator": denominator},
+    )
+
+
+def _generate_area_perimeter_rectangle(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    length = rng.randint(2, 10)
+    width = rng.randint(2, 10)
+    op = rng.choice(["area", "perimeter"])
+    if op == "area":
+        answer = length * width
+        prompt = f"A rectangle has length {length} units and width {width} units. What is its area?"
+    else:
+        answer = 2 * (length + width)
+        prompt = f"A rectangle has length {length} units and width {width} units. What is its perimeter?"
+    return GeneratedProblem(
+        prompt,
+        str(answer),
+        difficulty,
+        "AREA_PERIMETER_RECTANGLE",
+        parameters={"length": length, "width": width, "measure": op},
+    )
+
+
+def _generate_elapsed_time(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    start_hour = rng.randint(1, 11)
+    start_minute = rng.choice([0, 15, 30, 45])
+    elapsed = rng.choice([15, 30, 45, 60, 90])
+    start_total = start_hour * 60 + start_minute
+    end_total = start_total + elapsed
+    end_hour = (end_total // 60) % 12
+    if end_hour == 0:
+        end_hour = 12
+    end_minute = end_total % 60
+    start_str = f"{start_hour}:{start_minute:02d}"
+    end_str = f"{end_hour}:{end_minute:02d}"
+    return GeneratedProblem(
+        prompt=f"A movie starts at {start_str} and ends at {end_str}. How many minutes long is the movie?",
+        canonical_answer=str(elapsed),
+        difficulty=difficulty,
+        problem_type="ELAPSED_TIME",
+        parameters={"start": start_str, "end": end_str, "elapsed": elapsed},
+    )
+
+
+def _generate_line_plot_read(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    data_points = [rng.randint(1, 10) for _ in range(rng.randint(8, 15))]
+    value = rng.choice(list(set(data_points)))
+    answer = data_points.count(value)
+    return GeneratedProblem(
+        prompt=f"A line plot shows these measurements in inches: {data_points}. How many measurements are {value} inches?",
+        canonical_answer=str(answer),
+        difficulty=difficulty,
+        problem_type="LINE_PLOT_READ",
+        parameters={"data": data_points, "value": value, "count": answer},
+    )
+
+
+def _generate_classify_shape(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    shapes = ["quadrilateral", "parallelogram", "rectangle", "rhombus", "square", "trapezoid"]
+    shape = rng.choice(shapes)
+    attr_map = {
+        "quadrilateral": "4 sides",
+        "parallelogram": "2 pairs of parallel sides",
+        "rectangle": "4 right angles",
+        "rhombus": "4 equal sides",
+        "square": "4 equal sides and 4 right angles",
+        "trapezoid": "at least 1 pair of parallel sides",
+    }
+    answer = attr_map[shape]
+    return GeneratedProblem(
+        prompt=f"What is the defining attribute of a {shape}?",
+        canonical_answer=answer,
+        difficulty=difficulty,
+        problem_type="CLASSIFY_SHAPE",
+        parameters={"shape": shape, "attribute": answer},
+    )
+
+
+def _generate_lines_parallel_perpendicular(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    relation = rng.choice(["parallel", "perpendicular"])
+    if relation == "parallel":
+        answer = "parallel"
+        prompt = "Two lines in the same plane never meet. What are they called?"
+    else:
+        answer = "perpendicular"
+        prompt = "Two lines meet at a right angle. What are they called?"
+    return GeneratedProblem(
+        prompt,
+        answer,
+        difficulty,
+        "LINES_PARALLEL_PERPENDICULAR",
+        parameters={"relation": relation},
+    )
+
+
+def _generate_multiply_by_whole(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    whole = rng.randint(2, 9)
+    denominator = rng.randint(2, 8)
+    numerator = rng.randint(1, denominator - 1)
+    answer_num = whole * numerator
+    return GeneratedProblem(
+        prompt=f"What is {whole} × {numerator}/{denominator}?",
+        canonical_answer=f"{answer_num}/{denominator}",
+        difficulty=difficulty,
+        problem_type="MULTIPLY_FRACTION_BY_WHOLE",
+        parameters={"whole": whole, "numerator": numerator, "denominator": denominator},
+    )
+
+
+def _generate_add_subtract_unlike_fractions(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    from fractions import Fraction
+    d1, d2 = rng.sample([2, 3, 4, 5, 6, 8, 10], 2)
+    n1 = rng.randint(1, d1 - 1)
+    n2 = rng.randint(1, d2 - 1)
+    op = rng.choice(["+", "-"])
+    f1 = Fraction(n1, d1)
+    f2 = Fraction(n2, d2)
+    result = f1 + f2 if op == "+" else f1 - f2
+    if result <= 0:
+        result = f1 + f2
+        op = "+"
+    prompt = f"What is {n1}/{d1} {op} {n2}/{d2}?"
+    return GeneratedProblem(
+        prompt,
+        f"{result.numerator}/{result.denominator}",
+        difficulty,
+        "ADD_SUBTRACT_UNLIKE_FRACTIONS",
+        parameters={"numerator1": n1, "denominator1": d1, "numerator2": n2, "denominator2": d2, "operation": op},
+    )
+
+
+def _generate_multiply_fractions(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    from fractions import Fraction
+    denominators = [2, 3, 4, 5, 6, 8]
+    d1, d2 = rng.sample(denominators, 2)
+    n1 = rng.randint(1, d1 - 1)
+    n2 = rng.randint(1, d2 - 1)
+    result = Fraction(n1, d1) * Fraction(n2, d2)
+    prompt = f"What is {n1}/{d1} × {n2}/{d2}?"
+    return GeneratedProblem(
+        prompt,
+        f"{result.numerator}/{result.denominator}",
+        difficulty,
+        "MULTIPLY_FRACTIONS",
+        parameters={"numerator1": n1, "denominator1": d1, "numerator2": n2, "denominator2": d2},
+    )
+
+
+def _generate_divide_fractions(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    from fractions import Fraction
+    d = rng.choice([2, 3, 4, 5, 6, 8])
+    n = rng.randint(1, d - 1)
+    whole = rng.randint(2, 9)
+    fraction = Fraction(n, d)
+    result = Fraction(whole) / fraction
+    prompt = f"How many servings of {n}/{d} are in {whole}?"
+    return GeneratedProblem(
+        prompt,
+        f"{result.numerator}/{result.denominator}",
+        difficulty,
+        "DIVIDE_FRACTIONS",
+        parameters={"whole": whole, "numerator": n, "denominator": d},
+    )
+
+
+def _generate_powers_of_ten(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    exponent = rng.randint(1, 4)
+    answer = 10 ** exponent
+    prompt = f"What is 10^{exponent}?"
+    return GeneratedProblem(
+        prompt,
+        str(answer),
+        difficulty,
+        "POWERS_OF_TEN",
+        parameters={"exponent": exponent, "base": 10},
+    )
+
+
+def _generate_decimal_operations(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    from decimal import Decimal
+    op = rng.choice(["+", "-"])
+    a = Decimal(rng.randint(1, 99)) / 10 if rng.random() < 0.5 else Decimal(rng.randint(1, 999)) / 100
+    b = Decimal(rng.randint(1, 99)) / 10 if rng.random() < 0.5 else Decimal(rng.randint(1, 999)) / 100
+    if op == "+":
+        answer = a + b
+        prompt = f"What is {a} + {b}?"
+    else:
+        if a < b:
+            a, b = b, a
+        answer = a - b
+        prompt = f"What is {a} - {b}?"
+    return GeneratedProblem(
+        prompt,
+        str(answer),
+        difficulty,
+        "DECIMAL_OPERATIONS",
+        parameters={"a": str(a), "b": str(b), "operation": op},
+    )
+
+
+def _generate_measurement_conversion(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    conversions = [
+        ("m", "cm", 100),
+        ("km", "m", 1000),
+        ("kg", "g", 1000),
+        ("L", "mL", 1000),
+        ("ft", "in", 12),
+    ]
+    from_unit, to_unit, factor = rng.choice(conversions)
+    value = rng.randint(1, 9)
+    answer = value * factor
+    prompt = f"Convert {value} {from_unit} to {to_unit}."
+    return GeneratedProblem(
+        prompt,
+        str(answer),
+        difficulty,
+        "MEASUREMENT_CONVERSION",
+        parameters={"value": value, "from": from_unit, "to": to_unit, "factor": factor},
     )
 
 
@@ -839,6 +1159,24 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "FRACTION_HALVES_THIRDS_FOURTHS": _generate_fraction_halves_thirds_fourths,
     "BAR_GRAPH_READ": _generate_bar_graph_read,
     "PICTURE_GRAPH_READ": _generate_picture_graph_read,
+    "MULTIPLICATION_WITHIN_100": _generate_multiplication_within_100,
+    "DIVISION_WITHIN_100": _generate_division_within_100,
+    "WORD_PROBLEM_MULTIPLY_DIVIDE_100": _generate_word_problem_multiply_divide_100,
+    "ROUNDING": _generate_rounding,
+    "FRACTION_COMPARE": _generate_fraction_compare,
+    "FRACTION_NUMBER_LINE": _generate_fraction_on_number_line,
+    "AREA_PERIMETER_RECTANGLE": _generate_area_perimeter_rectangle,
+    "ELAPSED_TIME": _generate_elapsed_time,
+    "LINE_PLOT_READ": _generate_line_plot_read,
+    "CLASSIFY_SHAPE": _generate_classify_shape,
+    "LINES_PARALLEL_PERPENDICULAR": _generate_lines_parallel_perpendicular,
+    "MULTIPLY_FRACTION_BY_WHOLE": _generate_multiply_by_whole,
+    "ADD_SUBTRACT_UNLIKE_FRACTIONS": _generate_add_subtract_unlike_fractions,
+    "MULTIPLY_FRACTIONS": _generate_multiply_fractions,
+    "DIVIDE_FRACTIONS": _generate_divide_fractions,
+    "POWERS_OF_TEN": _generate_powers_of_ten,
+    "DECIMAL_OPERATIONS": _generate_decimal_operations,
+    "MEASUREMENT_CONVERSION": _generate_measurement_conversion,
 }
 
 

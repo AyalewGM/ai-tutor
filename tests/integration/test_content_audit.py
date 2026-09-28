@@ -24,12 +24,12 @@ from app.core.database import SessionLocal
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
 
 
-def _isolated_curriculum(db) -> tuple[Curriculum, Skill]:
+def _isolated_curriculum(db, jurisdiction: str = "TEST") -> tuple[Curriculum, Skill]:
     suffix = uuid.uuid4().hex[:10]
     curriculum = Curriculum(
         code=f"F007_AUDIT_{suffix}",
         name="F-007 traceability audit fixture",
-        jurisdiction="TEST",
+        jurisdiction=jurisdiction,
         grade_level="TEST",
         version="2026-test",
         source_uri="https://example.edu/f007/audit",
@@ -146,10 +146,10 @@ def test_isolation_audit_rejects_persisted_cross_curriculum_expectation_mapping(
         db.rollback()
 
 
-def test_isolation_audit_rejects_persisted_cross_curriculum_prerequisite() -> None:
+def test_isolation_audit_rejects_persisted_cross_jurisdiction_prerequisite() -> None:
     with SessionLocal() as db:
-        curriculum, skill = _isolated_curriculum(db)
-        _, other_skill = _isolated_curriculum(db)
+        curriculum, skill = _isolated_curriculum(db, jurisdiction="TEST-A")
+        _, other_skill = _isolated_curriculum(db, jurisdiction="TEST-B")
         db.add(
             SkillPrerequisite(
                 skill_id=skill.id,
@@ -158,7 +158,7 @@ def test_isolation_audit_rejects_persisted_cross_curriculum_prerequisite() -> No
         )
         db.flush()
 
-        with pytest.raises(ContentValidationError, match="cannot cross curriculum boundaries"):
+        with pytest.raises(ContentValidationError, match="crosses jurisdiction boundaries"):
             audit_curriculum_isolation(db, curriculum_id=curriculum.id)
         db.rollback()
 

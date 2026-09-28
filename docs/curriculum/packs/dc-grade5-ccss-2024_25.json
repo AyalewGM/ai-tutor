@@ -5,7 +5,7 @@
     "code": "DC",
     "name": "District of Columbia",
     "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
-    "source_uri": "https://osse-migrate.dc.gov/service/district-columbia-standards-learning-0"
+    "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf"
   },
   "authority": {
     "code": "OSSE",
@@ -15,240 +15,1109 @@
   },
   "curriculum": {
     "code": "DC_MATH_5_2024_25",
-    "name": "District of Columbia Grade 5 Mathematics \u2014 Common Core State Standards",
+    "name": "District of Columbia Grade 5 Mathematics \u2014 CCSS-OSSE-2024-25",
     "version": "CCSS-OSSE-2024-25",
     "grade_level": "5",
     "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf"
   },
   "expectations": [
     {
-      "source_identifier": "5.NBT.B",
-      "title": "Perform operations with multi-digit whole numbers and decimals",
+      "source_identifier": "5.OA",
+      "title": "Write and interpret numerical expressions",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Operations and Algebraic Thinking",
+      "description": "Use parentheses in expressions, write expressions, and analyze patterns."
+    },
+    {
+      "source_identifier": "5.NBT",
+      "title": "Understand the place value system and perform operations with multi-digit whole numbers and decimals",
       "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
       "strand": "Number and Operations in Base Ten",
-      "description": "Add, subtract, multiply, and divide decimals to hundredths."
+      "description": "Understand decimal place value and fluently perform operations with decimals."
     },
     {
-      "source_identifier": "5.NF.B",
-      "title": "Apply and extend previous understandings of multiplication and division to multiply and divide fractions",
+      "source_identifier": "5.NF",
+      "title": "Use equivalent fractions as a strategy to add and subtract fractions",
       "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
       "strand": "Number and Operations\u2014Fractions",
-      "description": "Interpret multiplication as scaling and solve real-world problems involving fraction operations."
+      "description": "Add and subtract fractions with unlike denominators; multiply and divide fractions."
     },
     {
-      "source_identifier": "5.G.A",
-      "title": "Graph points on the coordinate plane",
+      "source_identifier": "5.MD",
+      "title": "Convert like measurement units within a given measurement system and understand volume",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Measurement and Data",
+      "description": "Convert measurement units and understand concepts of volume."
+    },
+    {
+      "source_identifier": "5.G",
+      "title": "Graph points on the coordinate plane and classify two-dimensional figures",
       "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
       "strand": "Geometry",
-      "description": "Use a pair of perpendicular number lines to define a coordinate system and graph points."
+      "description": "Graph points in the first quadrant and classify two-dimensional figures."
     }
   ],
   "skills": [
     {
-      "code": "DC5.NBT.DECIMAL_OPERATIONS",
-      "name": "Decimal Place Value and Operations",
-      "description": "Understand decimal place value and perform operations with decimals to hundredths.",
+      "code": "DC5.OA.EXPRESSIONS",
+      "name": "Expressions and Order of Operations",
+      "description": "Use parentheses, brackets, or braces in numerical expressions and write simple expressions.",
       "difficulty_level": 5,
       "canonical": {
-        "code": "MATH.ELEMENTARY.DECIMAL.PLACE_VALUE_OPERATIONS",
-        "name": "Decimal Place Value and Operations",
-        "description": "Understand decimal place value through thousandths and perform decimal operations."
+        "code": "MATH.ELEMENTARY.ARITHMETIC.ORDER_OF_OPERATIONS",
+        "name": "Expressions and Order of Operations",
+        "description": "Evaluate numerical expressions with grouping symbols and write expressions from verbal descriptions."
       },
       "standard_refs": [
-        "5.NBT.B",
-        "5.NF.B"
+        "5.OA"
       ],
       "prerequisite_codes": [],
       "problem_families": [
-        "DECIMAL_PLACE_VALUE"
+        "DECIMAL_OPERATIONS",
+        "POWERS_OF_TEN"
       ],
       "problems": [
         {
-          "key": "dc5-decimal_operations-decimal_place_value-01",
-          "family": "DECIMAL_PLACE_VALUE",
-          "prompt": "What is the value of the tenths digit in 0.4?",
-          "canonical_answer": "4",
+          "key": "dc5-expressions-decimal_operations-01",
+          "family": "DECIMAL_OPERATIONS",
+          "prompt": "What is 2.5 + 1.4?",
+          "canonical_answer": "3.9",
           "difficulty": 1,
-          "objective": "Understand decimal place value.",
+          "objective": "Practice decimal operations in diagnostic mode.",
           "modes": [
             "diagnostic"
           ],
           "parameters": {
-            "number": 0.4,
-            "place": "tenths",
-            "digit": 4
+            "a": 2.5,
+            "b": 1.4,
+            "operation": "+"
           }
         },
         {
-          "key": "dc5-decimal_operations-decimal_place_value-02",
-          "family": "DECIMAL_PLACE_VALUE",
-          "prompt": "What is the value of the tenths digit in 0.7?",
-          "canonical_answer": "7",
+          "key": "dc5-expressions-powers_of_ten-02",
+          "family": "POWERS_OF_TEN",
+          "prompt": "What is 10^3?",
+          "canonical_answer": "1000",
           "difficulty": 1,
-          "objective": "Understand decimal place value.",
+          "objective": "Practice powers of ten in guided mode.",
           "modes": [
             "guided"
           ],
           "parameters": {
-            "number": 0.7,
-            "place": "tenths",
-            "digit": 7
+            "exponent": 3
           }
         },
         {
-          "key": "dc5-decimal_operations-decimal_place_value-03",
-          "family": "DECIMAL_PLACE_VALUE",
-          "prompt": "What is the value of the hundredths digit in 0.25?",
-          "canonical_answer": "5",
-          "difficulty": 2,
-          "objective": "Understand decimal place value.",
+          "key": "dc5-expressions-decimal_operations-03",
+          "family": "DECIMAL_OPERATIONS",
+          "prompt": "What is 0.7 + 0.25?",
+          "canonical_answer": "0.95",
+          "difficulty": 1,
+          "objective": "Practice decimal operations in independent mode.",
           "modes": [
             "independent"
           ],
           "parameters": {
-            "number": 0.25,
-            "place": "hundredths",
-            "digit": 5
+            "a": 0.7,
+            "b": 0.25,
+            "operation": "+"
           }
         },
         {
-          "key": "dc5-decimal_operations-decimal_place_value-04",
-          "family": "DECIMAL_PLACE_VALUE",
-          "prompt": "What is the value of the hundredths digit in 0.63?",
-          "canonical_answer": "3",
-          "difficulty": 2,
-          "objective": "Understand decimal place value.",
+          "key": "dc5-expressions-powers_of_ten-04",
+          "family": "POWERS_OF_TEN",
+          "prompt": "What is 10^5?",
+          "canonical_answer": "100000",
+          "difficulty": 1,
+          "objective": "Practice powers of ten in mastery mode.",
           "modes": [
             "mastery"
           ],
           "parameters": {
-            "number": 0.63,
-            "place": "hundredths",
-            "digit": 3
+            "exponent": 5
+          }
+        },
+        {
+          "key": "dc5-expressions-decimal_operations-05",
+          "family": "DECIMAL_OPERATIONS",
+          "prompt": "What is 1.2 + 3.45?",
+          "canonical_answer": "4.65",
+          "difficulty": 2,
+          "objective": "Practice decimal operations in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 1.2,
+            "b": 3.45,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "dc5-expressions-powers_of_ten-06",
+          "family": "POWERS_OF_TEN",
+          "prompt": "What is 10^3?",
+          "canonical_answer": "1000",
+          "difficulty": 2,
+          "objective": "Practice powers of ten in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "exponent": 3
+          }
+        },
+        {
+          "key": "dc5-expressions-decimal_operations-07",
+          "family": "DECIMAL_OPERATIONS",
+          "prompt": "What is 0.55 + 0.45?",
+          "canonical_answer": "1.0",
+          "difficulty": 2,
+          "objective": "Practice decimal operations in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 0.55,
+            "b": 0.45,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "dc5-expressions-powers_of_ten-08",
+          "family": "POWERS_OF_TEN",
+          "prompt": "What is 10^2?",
+          "canonical_answer": "100",
+          "difficulty": 2,
+          "objective": "Practice powers of ten in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "exponent": 2
           }
         }
       ]
     },
     {
-      "code": "DC5.NF.FRACTION_OPERATIONS",
-      "name": "Fraction Multiplication and Division",
-      "description": "Multiply and divide fractions in real-world contexts.",
+      "code": "DC5.OA.PATTERNS",
+      "name": "Numerical Patterns",
+      "description": "Generate two numerical patterns using given rules and identify relationships between corresponding terms.",
       "difficulty_level": 5,
       "canonical": {
-        "code": "MATH.ELEMENTARY.FRACTION.MULTIPLY_DIVIDE",
-        "name": "Fraction Multiplication and Division",
-        "description": "Apply previous understandings of multiplication and division to fractions."
+        "code": "MATH.ELEMENTARY.NUMBER_SENSE.PATTERNS_TWO_RULES",
+        "name": "Numerical Patterns",
+        "description": "Generate and analyze numerical patterns from two rules."
       },
       "standard_refs": [
-        "5.NBT.B",
-        "5.NF.B"
+        "5.OA"
       ],
       "prerequisite_codes": [
-        "DC5.NBT.DECIMAL_OPERATIONS"
+        "DC5.OA.EXPRESSIONS"
+      ],
+      "problem_families": [
+        "NUMBER_PATTERN"
+      ],
+      "problems": [
+        {
+          "key": "dc5-patterns-number_pattern-01",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 25, 30, 35, 40, 45, ?",
+          "canonical_answer": "30",
+          "difficulty": 1,
+          "objective": "Practice number pattern in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "start": 25,
+            "step": 5
+          }
+        },
+        {
+          "key": "dc5-patterns-number_pattern-02",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 50, 60, 70, 80, 90, ?",
+          "canonical_answer": "60",
+          "difficulty": 1,
+          "objective": "Practice number pattern in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "start": 50,
+            "step": 10
+          }
+        },
+        {
+          "key": "dc5-patterns-number_pattern-03",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 12, 14, 16, 18, 20, ?",
+          "canonical_answer": "14",
+          "difficulty": 1,
+          "objective": "Practice number pattern in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "start": 12,
+            "step": 2
+          }
+        },
+        {
+          "key": "dc5-patterns-number_pattern-04",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 400, 500, 600, 700, 800, ?",
+          "canonical_answer": "500",
+          "difficulty": 1,
+          "objective": "Practice number pattern in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "start": 400,
+            "step": 100
+          }
+        },
+        {
+          "key": "dc5-patterns-number_pattern-05",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 25, 30, 35, 40, 45, ?",
+          "canonical_answer": "30",
+          "difficulty": 2,
+          "objective": "Practice number pattern in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "start": 25,
+            "step": 5
+          }
+        },
+        {
+          "key": "dc5-patterns-number_pattern-06",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 50, 60, 70, 80, 90, ?",
+          "canonical_answer": "60",
+          "difficulty": 2,
+          "objective": "Practice number pattern in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "start": 50,
+            "step": 10
+          }
+        },
+        {
+          "key": "dc5-patterns-number_pattern-07",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 12, 14, 16, 18, 20, ?",
+          "canonical_answer": "14",
+          "difficulty": 2,
+          "objective": "Practice number pattern in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "start": 12,
+            "step": 2
+          }
+        },
+        {
+          "key": "dc5-patterns-number_pattern-08",
+          "family": "NUMBER_PATTERN",
+          "prompt": "What number completes the pattern? 400, 500, 600, 700, 800, ?",
+          "canonical_answer": "500",
+          "difficulty": 2,
+          "objective": "Practice number pattern in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "start": 400,
+            "step": 100
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC5.NBT.DECIMALS",
+      "name": "Decimal Place Value and Operations",
+      "description": "Understand place value in decimals, perform operations with decimals, and use powers of 10.",
+      "difficulty_level": 5,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.DECIMALS.PLACE_VALUE_OPERATIONS",
+        "name": "Decimal Place Value and Operations",
+        "description": "Understand decimal place value and fluently add, subtract, multiply, and divide decimals."
+      },
+      "standard_refs": [
+        "5.NBT"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "DECIMAL_PLACE_VALUE",
+        "DECIMAL_OPERATIONS",
+        "POWERS_OF_TEN"
+      ],
+      "problems": [
+        {
+          "key": "dc5-decimals-decimal_place_value-01",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the digit 3 in the number 3.45?",
+          "canonical_answer": "tenths",
+          "difficulty": 1,
+          "objective": "Practice decimal place value in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "digit": 3,
+            "number": 3.45
+          }
+        },
+        {
+          "key": "dc5-decimals-decimal_operations-02",
+          "family": "DECIMAL_OPERATIONS",
+          "prompt": "What is 5.6 - 2.3?",
+          "canonical_answer": "3.3",
+          "difficulty": 1,
+          "objective": "Practice decimal operations in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 5.6,
+            "b": 2.3,
+            "operation": "-"
+          }
+        },
+        {
+          "key": "dc5-decimals-powers_of_ten-03",
+          "family": "POWERS_OF_TEN",
+          "prompt": "What is 10^4?",
+          "canonical_answer": "10000",
+          "difficulty": 1,
+          "objective": "Practice powers of ten in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "exponent": 4
+          }
+        },
+        {
+          "key": "dc5-decimals-decimal_place_value-04",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the digit 6 in the number 0.67?",
+          "canonical_answer": "tenths",
+          "difficulty": 1,
+          "objective": "Practice decimal place value in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "digit": 6,
+            "number": 0.67
+          }
+        },
+        {
+          "key": "dc5-decimals-decimal_operations-05",
+          "family": "DECIMAL_OPERATIONS",
+          "prompt": "What is 1.2 + 3.45?",
+          "canonical_answer": "4.65",
+          "difficulty": 2,
+          "objective": "Practice decimal operations in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 1.2,
+            "b": 3.45,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "dc5-decimals-powers_of_ten-06",
+          "family": "POWERS_OF_TEN",
+          "prompt": "What is 10^3?",
+          "canonical_answer": "1000",
+          "difficulty": 2,
+          "objective": "Practice powers of ten in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "exponent": 3
+          }
+        },
+        {
+          "key": "dc5-decimals-decimal_place_value-07",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the digit 7 in the number 7.89?",
+          "canonical_answer": "ones",
+          "difficulty": 2,
+          "objective": "Practice decimal place value in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "digit": 7,
+            "number": 7.89
+          }
+        },
+        {
+          "key": "dc5-decimals-decimal_operations-08",
+          "family": "DECIMAL_OPERATIONS",
+          "prompt": "What is 3.14 - 2.0?",
+          "canonical_answer": "1.14",
+          "difficulty": 2,
+          "objective": "Practice decimal operations in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 3.14,
+            "b": 2.0,
+            "operation": "-"
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC5.NF.ADD_SUBTRACT",
+      "name": "Add and Subtract Fractions with Unlike Denominators",
+      "description": "Add and subtract fractions with unlike denominators by replacing with equivalent fractions.",
+      "difficulty_level": 5,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.FRACTIONS.ADD_SUBTRACT_UNLIKE",
+        "name": "Add and Subtract Fractions with Unlike Denominators",
+        "description": "Add and subtract fractions with unlike denominators using equivalent fractions."
+      },
+      "standard_refs": [
+        "5.NF"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "ADD_SUBTRACT_UNLIKE_FRACTIONS",
+        "FRACTION_EQUIVALENCE"
+      ],
+      "problems": [
+        {
+          "key": "dc5-add_subtract-add_subtract_unlike_fractions-01",
+          "family": "ADD_SUBTRACT_UNLIKE_FRACTIONS",
+          "prompt": "What is 1/2 + 1/4?",
+          "canonical_answer": "3/4",
+          "difficulty": 1,
+          "objective": "Practice add subtract unlike fractions in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "numerator1": 1,
+            "denominator1": 2,
+            "numerator2": 1,
+            "denominator2": 4,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "dc5-add_subtract-fraction_equivalence-02",
+          "family": "FRACTION_EQUIVALENCE",
+          "prompt": "Find a fraction equivalent to 2/3.",
+          "canonical_answer": "4/6",
+          "difficulty": 1,
+          "objective": "Practice fraction equivalence in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "numerator": 2,
+            "denominator": 3
+          }
+        },
+        {
+          "key": "dc5-add_subtract-add_subtract_unlike_fractions-03",
+          "family": "ADD_SUBTRACT_UNLIKE_FRACTIONS",
+          "prompt": "What is 2/3 + 1/5?",
+          "canonical_answer": "13/15",
+          "difficulty": 1,
+          "objective": "Practice add subtract unlike fractions in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "numerator1": 2,
+            "denominator1": 3,
+            "numerator2": 1,
+            "denominator2": 5,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "dc5-add_subtract-fraction_equivalence-04",
+          "family": "FRACTION_EQUIVALENCE",
+          "prompt": "Find a fraction equivalent to 2/5.",
+          "canonical_answer": "4/10",
+          "difficulty": 1,
+          "objective": "Practice fraction equivalence in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "numerator": 2,
+            "denominator": 5
+          }
+        },
+        {
+          "key": "dc5-add_subtract-add_subtract_unlike_fractions-05",
+          "family": "ADD_SUBTRACT_UNLIKE_FRACTIONS",
+          "prompt": "What is 1/2 + 1/4?",
+          "canonical_answer": "3/4",
+          "difficulty": 2,
+          "objective": "Practice add subtract unlike fractions in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "numerator1": 1,
+            "denominator1": 2,
+            "numerator2": 1,
+            "denominator2": 4,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "dc5-add_subtract-fraction_equivalence-06",
+          "family": "FRACTION_EQUIVALENCE",
+          "prompt": "Find a fraction equivalent to 2/3.",
+          "canonical_answer": "4/6",
+          "difficulty": 2,
+          "objective": "Practice fraction equivalence in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "numerator": 2,
+            "denominator": 3
+          }
+        },
+        {
+          "key": "dc5-add_subtract-add_subtract_unlike_fractions-07",
+          "family": "ADD_SUBTRACT_UNLIKE_FRACTIONS",
+          "prompt": "What is 2/3 + 1/5?",
+          "canonical_answer": "13/15",
+          "difficulty": 2,
+          "objective": "Practice add subtract unlike fractions in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "numerator1": 2,
+            "denominator1": 3,
+            "numerator2": 1,
+            "denominator2": 5,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "dc5-add_subtract-fraction_equivalence-08",
+          "family": "FRACTION_EQUIVALENCE",
+          "prompt": "Find a fraction equivalent to 2/5.",
+          "canonical_answer": "4/10",
+          "difficulty": 2,
+          "objective": "Practice fraction equivalence in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "numerator": 2,
+            "denominator": 5
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC5.NF.MULTIPLY_DIVIDE",
+      "name": "Multiply and Divide Fractions",
+      "description": "Interpret multiplication as scaling, multiply fractions and mixed numbers, and divide fractions by whole numbers and unit fractions.",
+      "difficulty_level": 5,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.FRACTIONS.MULTIPLY_DIVIDE",
+        "name": "Multiply and Divide Fractions",
+        "description": "Multiply and divide fractions in contextual and symbolic problems."
+      },
+      "standard_refs": [
+        "5.NF"
+      ],
+      "prerequisite_codes": [
+        "DC5.NF.ADD_SUBTRACT"
       ],
       "problem_families": [
         "FRACTION_MULTIPLY",
-        "FRACTION_ADD_SUBTRACT_LIKE"
+        "MULTIPLY_FRACTIONS",
+        "DIVIDE_FRACTIONS"
       ],
       "problems": [
         {
-          "key": "dc5-fraction_operations-fraction_multiply-01",
+          "key": "dc5-multiply_divide-fraction_multiply-01",
           "family": "FRACTION_MULTIPLY",
-          "prompt": "What is 1/2 \u00d7 1/3?",
-          "canonical_answer": "1/6",
+          "prompt": "What is 1/2 of 3/4?",
+          "canonical_answer": "3/8",
           "difficulty": 1,
-          "objective": "Multiply fractions in context.",
+          "objective": "Practice fraction multiply in diagnostic mode.",
           "modes": [
             "diagnostic"
           ],
           "parameters": {
-            "n1": 1,
-            "d1": 2,
-            "n2": 1,
-            "d2": 3
+            "numerator1": 1,
+            "denominator1": 2,
+            "numerator2": 3,
+            "denominator2": 4
           }
         },
         {
-          "key": "dc5-fraction_operations-fraction_add_subtract_like-02",
-          "family": "FRACTION_ADD_SUBTRACT_LIKE",
-          "prompt": "What is 3/4 - 1/4?",
-          "canonical_answer": "2/4",
+          "key": "dc5-multiply_divide-multiply_fractions-02",
+          "family": "MULTIPLY_FRACTIONS",
+          "prompt": "What is 2/3 \u00d7 3/5?",
+          "canonical_answer": "2/5",
           "difficulty": 1,
-          "objective": "Add and subtract fractions with like denominators.",
+          "objective": "Practice multiply fractions in guided mode.",
           "modes": [
             "guided"
           ],
           "parameters": {
-            "n1": 3,
-            "n2": 1,
-            "denominator": 4,
-            "operation": "-"
+            "numerator1": 2,
+            "denominator1": 3,
+            "numerator2": 3,
+            "denominator2": 5
           }
         },
         {
-          "key": "dc5-fraction_operations-fraction_multiply-03",
-          "family": "FRACTION_MULTIPLY",
-          "prompt": "What is 1/5 \u00d7 2/3?",
-          "canonical_answer": "2/15",
-          "difficulty": 2,
-          "objective": "Multiply fractions in context.",
+          "key": "dc5-multiply_divide-divide_fractions-03",
+          "family": "DIVIDE_FRACTIONS",
+          "prompt": "How many servings of 2/3 are in 4?",
+          "canonical_answer": "6",
+          "difficulty": 1,
+          "objective": "Practice divide fractions in independent mode.",
           "modes": [
             "independent"
           ],
           "parameters": {
-            "n1": 1,
-            "d1": 5,
-            "n2": 2,
-            "d2": 3
+            "numerator": 2,
+            "denominator": 3,
+            "whole": 4
           }
         },
         {
-          "key": "dc5-fraction_operations-fraction_add_subtract_like-04",
-          "family": "FRACTION_ADD_SUBTRACT_LIKE",
-          "prompt": "What is 5/6 - 2/6?",
-          "canonical_answer": "3/6",
-          "difficulty": 2,
-          "objective": "Add and subtract fractions with like denominators.",
+          "key": "dc5-multiply_divide-fraction_multiply-04",
+          "family": "FRACTION_MULTIPLY",
+          "prompt": "What is 1/3 of 6/7?",
+          "canonical_answer": "2/7",
+          "difficulty": 1,
+          "objective": "Practice fraction multiply in mastery mode.",
           "modes": [
             "mastery"
           ],
           "parameters": {
-            "n1": 5,
-            "n2": 2,
-            "denominator": 6,
-            "operation": "-"
+            "numerator1": 1,
+            "denominator1": 3,
+            "numerator2": 6,
+            "denominator2": 7
+          }
+        },
+        {
+          "key": "dc5-multiply_divide-multiply_fractions-05",
+          "family": "MULTIPLY_FRACTIONS",
+          "prompt": "What is 1/2 \u00d7 3/4?",
+          "canonical_answer": "3/8",
+          "difficulty": 2,
+          "objective": "Practice multiply fractions in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "numerator1": 1,
+            "denominator1": 2,
+            "numerator2": 3,
+            "denominator2": 4
+          }
+        },
+        {
+          "key": "dc5-multiply_divide-divide_fractions-06",
+          "family": "DIVIDE_FRACTIONS",
+          "prompt": "How many servings of 1/4 are in 2?",
+          "canonical_answer": "8",
+          "difficulty": 2,
+          "objective": "Practice divide fractions in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "numerator": 1,
+            "denominator": 4,
+            "whole": 2
+          }
+        },
+        {
+          "key": "dc5-multiply_divide-fraction_multiply-07",
+          "family": "FRACTION_MULTIPLY",
+          "prompt": "What is 3/4 of 2/3?",
+          "canonical_answer": "1/2",
+          "difficulty": 2,
+          "objective": "Practice fraction multiply in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "numerator1": 3,
+            "denominator1": 4,
+            "numerator2": 2,
+            "denominator2": 3
+          }
+        },
+        {
+          "key": "dc5-multiply_divide-multiply_fractions-08",
+          "family": "MULTIPLY_FRACTIONS",
+          "prompt": "What is 1/3 \u00d7 6/7?",
+          "canonical_answer": "2/7",
+          "difficulty": 2,
+          "objective": "Practice multiply fractions in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "numerator1": 1,
+            "denominator1": 3,
+            "numerator2": 6,
+            "denominator2": 7
           }
         }
       ]
     },
     {
-      "code": "DC5.G.COORDINATE_PLANE",
+      "code": "DC5.MD.CONVERSION",
+      "name": "Convert Measurement Units",
+      "description": "Convert among different-sized standard measurement units within a given measurement system.",
+      "difficulty_level": 5,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.CONVERSION",
+        "name": "Convert Measurement Units",
+        "description": "Convert between standard measurement units and solve word problems involving conversions."
+      },
+      "standard_refs": [
+        "5.MD"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "MEASUREMENT_CONVERSION"
+      ],
+      "problems": [
+        {
+          "key": "dc5-conversion-measurement_conversion-01",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 3 m to cm.",
+          "canonical_answer": "300",
+          "difficulty": 1,
+          "objective": "Practice measurement conversion in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "value": 3,
+            "from": "m",
+            "to": "cm"
+          }
+        },
+        {
+          "key": "dc5-conversion-measurement_conversion-02",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 5 km to m.",
+          "canonical_answer": "5000",
+          "difficulty": 1,
+          "objective": "Practice measurement conversion in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "value": 5,
+            "from": "km",
+            "to": "m"
+          }
+        },
+        {
+          "key": "dc5-conversion-measurement_conversion-03",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 2 kg to g.",
+          "canonical_answer": "2000",
+          "difficulty": 1,
+          "objective": "Practice measurement conversion in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "value": 2,
+            "from": "kg",
+            "to": "g"
+          }
+        },
+        {
+          "key": "dc5-conversion-measurement_conversion-04",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 4 L to mL.",
+          "canonical_answer": "4000",
+          "difficulty": 1,
+          "objective": "Practice measurement conversion in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "value": 4,
+            "from": "L",
+            "to": "mL"
+          }
+        },
+        {
+          "key": "dc5-conversion-measurement_conversion-05",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 7 ft to in.",
+          "canonical_answer": "84",
+          "difficulty": 2,
+          "objective": "Practice measurement conversion in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "value": 7,
+            "from": "ft",
+            "to": "in"
+          }
+        },
+        {
+          "key": "dc5-conversion-measurement_conversion-06",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 6 ft to yd.",
+          "canonical_answer": "2",
+          "difficulty": 2,
+          "objective": "Practice measurement conversion in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "value": 6,
+            "from": "ft",
+            "to": "yd"
+          }
+        },
+        {
+          "key": "dc5-conversion-measurement_conversion-07",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 9 cm to mm.",
+          "canonical_answer": "90",
+          "difficulty": 2,
+          "objective": "Practice measurement conversion in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "value": 9,
+            "from": "cm",
+            "to": "mm"
+          }
+        },
+        {
+          "key": "dc5-conversion-measurement_conversion-08",
+          "family": "MEASUREMENT_CONVERSION",
+          "prompt": "Convert 1.5 m to cm.",
+          "canonical_answer": "150",
+          "difficulty": 2,
+          "objective": "Practice measurement conversion in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "value": 1.5,
+            "from": "m",
+            "to": "cm"
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC5.MD.VOLUME",
+      "name": "Volume",
+      "description": "Recognize volume as an attribute of solid figures and measure volumes by counting unit cubes.",
+      "difficulty_level": 5,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.VOLUME",
+        "name": "Volume",
+        "description": "Measure volume by counting unit cubes and apply volume formulas for rectangular prisms."
+      },
+      "standard_refs": [
+        "5.MD"
+      ],
+      "prerequisite_codes": [
+        "DC5.MD.CONVERSION"
+      ],
+      "problem_families": [
+        "VOLUME"
+      ],
+      "problems": [
+        {
+          "key": "dc5-volume-volume-01",
+          "family": "VOLUME",
+          "prompt": "A rectangular prism has length 2, width 3, and height 4. What is its volume?",
+          "canonical_answer": "24",
+          "difficulty": 1,
+          "objective": "Practice volume in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "length": 2,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "key": "dc5-volume-volume-02",
+          "family": "VOLUME",
+          "prompt": "A rectangular prism has length 5, width 2, and height 3. What is its volume?",
+          "canonical_answer": "30",
+          "difficulty": 1,
+          "objective": "Practice volume in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "length": 5,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "key": "dc5-volume-volume-03",
+          "family": "VOLUME",
+          "prompt": "A rectangular prism has length 4, width 4, and height 2. What is its volume?",
+          "canonical_answer": "32",
+          "difficulty": 1,
+          "objective": "Practice volume in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "length": 4,
+            "width": 4,
+            "height": 2
+          }
+        },
+        {
+          "key": "dc5-volume-volume-04",
+          "family": "VOLUME",
+          "prompt": "A rectangular prism has length 6, width 3, and height 2. What is its volume?",
+          "canonical_answer": "36",
+          "difficulty": 1,
+          "objective": "Practice volume in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "length": 6,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "key": "dc5-volume-volume-05",
+          "family": "VOLUME",
+          "prompt": "A rectangular prism has length 3, width 3, and height 3. What is its volume?",
+          "canonical_answer": "27",
+          "difficulty": 2,
+          "objective": "Practice volume in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "length": 3,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "key": "dc5-volume-volume-06",
+          "family": "VOLUME",
+          "prompt": "A rectangular prism has length 5, width 4, and height 2. What is its volume?",
+          "canonical_answer": "40",
+          "difficulty": 2,
+          "objective": "Practice volume in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "length": 5,
+            "width": 4,
+            "height": 2
+          }
+        },
+        {
+          "key": "dc5-volume-volume-07",
+          "family": "VOLUME",
+          "prompt": "A rectangular prism has length 2, width 5, and height 6. What is its volume?",
+          "canonical_answer": "60",
+          "difficulty": 2,
+          "objective": "Practice volume in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "length": 2,
+            "width": 5,
+            "height": 6
+          }
+        },
+        {
+          "key": "dc5-volume-volume-08",
+          "family": "VOLUME",
+          "prompt": "A rectangular prism has length 7, width 2, and height 2. What is its volume?",
+          "canonical_answer": "28",
+          "difficulty": 2,
+          "objective": "Practice volume in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "length": 7,
+            "width": 2,
+            "height": 2
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC5.G.COORDINATES",
       "name": "Coordinate Plane",
-      "description": "Graph ordered pairs on a coordinate plane and interpret coordinate values.",
+      "description": "Use a pair of perpendicular number lines to define a coordinate system and graph points.",
       "difficulty_level": 5,
       "canonical": {
         "code": "MATH.ELEMENTARY.GEOMETRY.COORDINATE_PLANE",
         "name": "Coordinate Plane",
-        "description": "Use a pair of perpendicular number lines to define a coordinate system and graph points."
+        "description": "Graph points in the first quadrant of the coordinate plane."
       },
       "standard_refs": [
-        "5.NBT.B",
-        "5.NF.B"
+        "5.G"
       ],
-      "prerequisite_codes": [
-        "DC5.NF.FRACTION_OPERATIONS"
-      ],
+      "prerequisite_codes": [],
       "problem_families": [
         "COORDINATE_PLANE"
       ],
       "problems": [
         {
-          "key": "dc5-coordinate_plane-coordinate_plane-01",
+          "key": "dc5-coordinates-coordinate_plane-01",
           "family": "COORDINATE_PLANE",
-          "prompt": "What ordered pair is located at (2, 3) on a coordinate grid?",
+          "prompt": "What is the ordered pair for the point located 2 units right and 3 units up from the origin?",
           "canonical_answer": "(2, 3)",
           "difficulty": 1,
-          "objective": "Identify and write ordered pairs.",
+          "objective": "Practice coordinate plane in diagnostic mode.",
           "modes": [
             "diagnostic"
           ],
@@ -258,48 +1127,248 @@
           }
         },
         {
-          "key": "dc5-coordinate_plane-coordinate_plane-02",
+          "key": "dc5-coordinates-coordinate_plane-02",
           "family": "COORDINATE_PLANE",
-          "prompt": "What ordered pair is located at (5, 1) on a coordinate grid?",
-          "canonical_answer": "(5, 1)",
+          "prompt": "What is the ordered pair for the point located 4 units right and 1 units up from the origin?",
+          "canonical_answer": "(4, 1)",
           "difficulty": 1,
-          "objective": "Identify and write ordered pairs.",
+          "objective": "Practice coordinate plane in guided mode.",
           "modes": [
             "guided"
           ],
           "parameters": {
-            "x": 5,
+            "x": 4,
             "y": 1
           }
         },
         {
-          "key": "dc5-coordinate_plane-coordinate_plane-03",
+          "key": "dc5-coordinates-coordinate_plane-03",
           "family": "COORDINATE_PLANE",
-          "prompt": "What ordered pair is located at (0, 4) on a coordinate grid?",
-          "canonical_answer": "(0, 4)",
-          "difficulty": 2,
-          "objective": "Identify and write ordered pairs.",
+          "prompt": "What is the ordered pair for the point located 0 units right and 5 units up from the origin?",
+          "canonical_answer": "(0, 5)",
+          "difficulty": 1,
+          "objective": "Practice coordinate plane in independent mode.",
           "modes": [
             "independent"
           ],
           "parameters": {
             "x": 0,
-            "y": 4
+            "y": 5
           }
         },
         {
-          "key": "dc5-coordinate_plane-coordinate_plane-04",
+          "key": "dc5-coordinates-coordinate_plane-04",
           "family": "COORDINATE_PLANE",
-          "prompt": "What ordered pair is located at (7, 6) on a coordinate grid?",
-          "canonical_answer": "(7, 6)",
-          "difficulty": 2,
-          "objective": "Identify and write ordered pairs.",
+          "prompt": "What is the ordered pair for the point located 3 units right and 3 units up from the origin?",
+          "canonical_answer": "(3, 3)",
+          "difficulty": 1,
+          "objective": "Practice coordinate plane in mastery mode.",
           "modes": [
             "mastery"
           ],
           "parameters": {
-            "x": 7,
-            "y": 6
+            "x": 3,
+            "y": 3
+          }
+        },
+        {
+          "key": "dc5-coordinates-coordinate_plane-05",
+          "family": "COORDINATE_PLANE",
+          "prompt": "What is the ordered pair for the point located 5 units right and 0 units up from the origin?",
+          "canonical_answer": "(5, 0)",
+          "difficulty": 2,
+          "objective": "Practice coordinate plane in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "x": 5,
+            "y": 0
+          }
+        },
+        {
+          "key": "dc5-coordinates-coordinate_plane-06",
+          "family": "COORDINATE_PLANE",
+          "prompt": "What is the ordered pair for the point located 1 units right and 4 units up from the origin?",
+          "canonical_answer": "(1, 4)",
+          "difficulty": 2,
+          "objective": "Practice coordinate plane in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "x": 1,
+            "y": 4
+          }
+        },
+        {
+          "key": "dc5-coordinates-coordinate_plane-07",
+          "family": "COORDINATE_PLANE",
+          "prompt": "What is the ordered pair for the point located 6 units right and 2 units up from the origin?",
+          "canonical_answer": "(6, 2)",
+          "difficulty": 2,
+          "objective": "Practice coordinate plane in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "x": 6,
+            "y": 2
+          }
+        },
+        {
+          "key": "dc5-coordinates-coordinate_plane-08",
+          "family": "COORDINATE_PLANE",
+          "prompt": "What is the ordered pair for the point located 2 units right and 5 units up from the origin?",
+          "canonical_answer": "(2, 5)",
+          "difficulty": 2,
+          "objective": "Practice coordinate plane in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "x": 2,
+            "y": 5
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC5.G.SHAPES",
+      "name": "Classify Two-Dimensional Figures",
+      "description": "Understand attributes of two-dimensional figures and classify them in a hierarchy.",
+      "difficulty_level": 5,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.GEOMETRY.CLASSIFY_2D_FIGURES",
+        "name": "Classify Two-Dimensional Figures",
+        "description": "Classify two-dimensional figures in a hierarchy based on properties."
+      },
+      "standard_refs": [
+        "5.G"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "CLASSIFY_SHAPE"
+      ],
+      "problems": [
+        {
+          "key": "dc5-shapes-classify_shape-01",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a triangle have?",
+          "canonical_answer": "3",
+          "difficulty": 1,
+          "objective": "Practice classify shape in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "shape": "triangle",
+            "sides": 3
+          }
+        },
+        {
+          "key": "dc5-shapes-classify_shape-02",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a quadrilateral have?",
+          "canonical_answer": "4",
+          "difficulty": 1,
+          "objective": "Practice classify shape in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "shape": "quadrilateral",
+            "sides": 4
+          }
+        },
+        {
+          "key": "dc5-shapes-classify_shape-03",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a pentagon have?",
+          "canonical_answer": "5",
+          "difficulty": 1,
+          "objective": "Practice classify shape in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "shape": "pentagon",
+            "sides": 5
+          }
+        },
+        {
+          "key": "dc5-shapes-classify_shape-04",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a hexagon have?",
+          "canonical_answer": "6",
+          "difficulty": 1,
+          "objective": "Practice classify shape in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "shape": "hexagon",
+            "sides": 6
+          }
+        },
+        {
+          "key": "dc5-shapes-classify_shape-05",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a octagon have?",
+          "canonical_answer": "8",
+          "difficulty": 2,
+          "objective": "Practice classify shape in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "shape": "octagon",
+            "sides": 8
+          }
+        },
+        {
+          "key": "dc5-shapes-classify_shape-06",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a triangle have?",
+          "canonical_answer": "3",
+          "difficulty": 2,
+          "objective": "Practice classify shape in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "shape": "triangle",
+            "sides": 3
+          }
+        },
+        {
+          "key": "dc5-shapes-classify_shape-07",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a quadrilateral have?",
+          "canonical_answer": "4",
+          "difficulty": 2,
+          "objective": "Practice classify shape in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "shape": "quadrilateral",
+            "sides": 4
+          }
+        },
+        {
+          "key": "dc5-shapes-classify_shape-08",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a pentagon have?",
+          "canonical_answer": "5",
+          "difficulty": 2,
+          "objective": "Practice classify shape in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "shape": "pentagon",
+            "sides": 5
           }
         }
       ]

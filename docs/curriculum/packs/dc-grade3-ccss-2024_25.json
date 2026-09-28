@@ -5,7 +5,7 @@
     "code": "DC",
     "name": "District of Columbia",
     "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
-    "source_uri": "https://osse-migrate.dc.gov/service/district-columbia-standards-learning-0"
+    "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf"
   },
   "authority": {
     "code": "OSSE",
@@ -15,373 +15,1376 @@
   },
   "curriculum": {
     "code": "DC_MATH_3_2024_25",
-    "name": "District of Columbia Grade 3 Mathematics \u2014 Common Core State Standards",
+    "name": "District of Columbia Grade 3 Mathematics \u2014 CCSS-OSSE-2024-25",
     "version": "CCSS-OSSE-2024-25",
     "grade_level": "3",
     "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf"
   },
   "expectations": [
     {
-      "source_identifier": "3.OA.A",
+      "source_identifier": "3.OA",
       "title": "Represent and solve problems involving multiplication and division",
       "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
       "strand": "Operations and Algebraic Thinking",
-      "description": "Interpret products and quotients of whole numbers and solve word problems."
+      "description": "Understand products and quotients, solve word problems, and apply properties of multiplication and division."
     },
     {
-      "source_identifier": "3.NF.A",
+      "source_identifier": "3.NBT",
+      "title": "Use place value understanding and properties of operations to perform multi-digit arithmetic",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Number and Operations in Base Ten",
+      "description": "Round whole numbers and fluently add and subtract within 1000."
+    },
+    {
+      "source_identifier": "3.NF",
       "title": "Develop understanding of fractions as numbers",
       "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
       "strand": "Number and Operations\u2014Fractions",
-      "description": "Understand fractions 1/b and a/b and represent them on a number line."
+      "description": "Understand fractions as numbers, represent them on a number line, and identify equivalent fractions."
     },
     {
-      "source_identifier": "3.MD.C",
-      "title": "Geometric measurement: understand concepts of area",
+      "source_identifier": "3.MD",
+      "title": "Solve problems involving measurement and estimation of intervals of time, liquid volumes, and masses of objects",
       "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
       "strand": "Measurement and Data",
-      "description": "Recognize area as an attribute of plane figures and relate area to multiplication."
+      "description": "Tell time, measure mass and volume, represent and interpret data, and understand area and perimeter."
+    },
+    {
+      "source_identifier": "3.G",
+      "title": "Reason with shapes and their attributes",
+      "source_uri": "https://osse-migrate.dc.gov/sites/default/files/dc/sites/osse/page_content/attachments/mathematics-adjusted-blueprintGrades3_0.pdf",
+      "strand": "Geometry",
+      "description": "Understand that shapes in different categories share attributes."
     }
   ],
   "skills": [
     {
-      "code": "DC3.OA.EQUAL_GROUPS",
+      "code": "DC3.OA.MULTIPLICATION",
       "name": "Multiplication as Equal Groups",
-      "description": "Interpret products as equal groups and arrays.",
+      "description": "Interpret products of whole numbers and solve multiplication word problems within 100 using equal groups and arrays.",
       "difficulty_level": 3,
       "canonical": {
         "code": "MATH.ELEMENTARY.MULTIPLICATION.EQUAL_GROUPS",
         "name": "Multiplication as Equal Groups",
-        "description": "Understand multiplication as equal groups, arrays, and repeated addition."
+        "description": "Interpret products and solve word problems involving equal groups and arrays."
       },
       "standard_refs": [
-        "3.OA.A",
-        "3.NF.A"
+        "3.OA"
       ],
       "prerequisite_codes": [],
       "problem_families": [
-        "EQUAL_GROUPS"
+        "EQUAL_GROUPS",
+        "MULTIPLICATION_WITHIN_100",
+        "WORD_PROBLEM_MULTIPLY_DIVIDE_100"
       ],
       "problems": [
         {
-          "key": "dc3-equal_groups-equal_groups-01",
+          "key": "dc3-multiplication-equal_groups-01",
           "family": "EQUAL_GROUPS",
-          "prompt": "There are 3 rows with 4 objects in each row. How many objects are there?",
+          "prompt": "There are 3 groups of 4 counters. How many counters are there in all?",
           "canonical_answer": "12",
           "difficulty": 1,
-          "objective": "Interpret products as equal groups or arrays.",
+          "objective": "Practice equal groups in diagnostic mode.",
           "modes": [
             "diagnostic"
           ],
           "parameters": {
-            "rows": 3,
-            "columns": 4,
-            "unit": "objects"
+            "a": 3,
+            "b": 4,
+            "operation": "\u00d7"
           }
         },
         {
-          "key": "dc3-equal_groups-equal_groups-02",
-          "family": "EQUAL_GROUPS",
-          "prompt": "There are 5 rows with 2 objects in each row. How many objects are there?",
-          "canonical_answer": "10",
+          "key": "dc3-multiplication-multiplication_within_100-02",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 5 \u00d7 6?",
+          "canonical_answer": "30",
           "difficulty": 1,
-          "objective": "Interpret products as equal groups or arrays.",
+          "objective": "Practice multiplication within 100 in guided mode.",
           "modes": [
             "guided"
           ],
           "parameters": {
-            "rows": 5,
-            "columns": 2,
-            "unit": "objects"
+            "a": 5,
+            "b": 6,
+            "operation": "\u00d7",
+            "answer": 30
           }
         },
         {
-          "key": "dc3-equal_groups-equal_groups-03",
-          "family": "EQUAL_GROUPS",
-          "prompt": "There are 6 rows with 7 objects in each row. How many objects are there?",
-          "canonical_answer": "42",
-          "difficulty": 2,
-          "objective": "Interpret products as equal groups or arrays.",
+          "key": "dc3-multiplication-word_problem_multiply_divide_100-03",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "There are 7 boxes with 8 pencils in each box. How many pencils are there in all?",
+          "canonical_answer": "56",
+          "difficulty": 1,
+          "objective": "Practice word problem multiply divide 100 in independent mode.",
           "modes": [
             "independent"
           ],
           "parameters": {
-            "rows": 6,
-            "columns": 7,
-            "unit": "objects"
+            "a": 7,
+            "b": 8,
+            "operation": "\u00d7",
+            "answer": 56
           }
         },
         {
-          "key": "dc3-equal_groups-equal_groups-04",
+          "key": "dc3-multiplication-equal_groups-04",
           "family": "EQUAL_GROUPS",
-          "prompt": "There are 8 rows with 4 objects in each row. How many objects are there?",
-          "canonical_answer": "32",
-          "difficulty": 2,
-          "objective": "Interpret products as equal groups or arrays.",
+          "prompt": "There are 6 groups of 8 counters. How many counters are there in all?",
+          "canonical_answer": "48",
+          "difficulty": 1,
+          "objective": "Practice equal groups in mastery mode.",
           "modes": [
             "mastery"
           ],
           "parameters": {
-            "rows": 8,
-            "columns": 4,
-            "unit": "objects"
+            "a": 6,
+            "b": 8,
+            "operation": "\u00d7"
+          }
+        },
+        {
+          "key": "dc3-multiplication-multiplication_within_100-05",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 6 \u00d7 7?",
+          "canonical_answer": "42",
+          "difficulty": 2,
+          "objective": "Practice multiplication within 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 6,
+            "b": 7,
+            "operation": "\u00d7",
+            "answer": 42
+          }
+        },
+        {
+          "key": "dc3-multiplication-word_problem_multiply_divide_100-06",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "36 stickers are shared equally among 6 students. How many stickers does each student get?",
+          "canonical_answer": "216",
+          "difficulty": 2,
+          "objective": "Practice word problem multiply divide 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 36,
+            "b": 6,
+            "operation": "\u00d7",
+            "answer": 216
+          }
+        },
+        {
+          "key": "dc3-multiplication-equal_groups-07",
+          "family": "EQUAL_GROUPS",
+          "prompt": "There are 4 groups of 7 counters. How many counters are there in all?",
+          "canonical_answer": "28",
+          "difficulty": 2,
+          "objective": "Practice equal groups in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 4,
+            "b": 7,
+            "operation": "\u00d7"
+          }
+        },
+        {
+          "key": "dc3-multiplication-multiplication_within_100-08",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 5 \u00d7 8?",
+          "canonical_answer": "40",
+          "difficulty": 2,
+          "objective": "Practice multiplication within 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 5,
+            "b": 8,
+            "operation": "\u00d7",
+            "answer": 40
           }
         }
       ]
     },
     {
-      "code": "DC3.OA.EQUAL_SHARING",
+      "code": "DC3.OA.DIVISION",
       "name": "Division as Equal Sharing",
-      "description": "Interpret quotients through fair sharing and groups of a known size.",
+      "description": "Interpret quotients and solve division word problems within 100 using equal sharing and arrays.",
       "difficulty_level": 3,
       "canonical": {
         "code": "MATH.ELEMENTARY.DIVISION.EQUAL_SHARING",
         "name": "Division as Equal Sharing",
-        "description": "Understand division as fair sharing and as finding an unknown group size or number of groups."
+        "description": "Interpret quotients and solve word problems involving equal sharing and arrays."
       },
       "standard_refs": [
-        "3.OA.A",
-        "3.NF.A"
+        "3.OA"
       ],
       "prerequisite_codes": [
-        "DC3.OA.EQUAL_GROUPS"
+        "DC3.OA.MULTIPLICATION"
       ],
       "problem_families": [
-        "EQUAL_SHARING"
+        "EQUAL_SHARING",
+        "DIVISION_WITHIN_100",
+        "WORD_PROBLEM_MULTIPLY_DIVIDE_100"
       ],
       "problems": [
         {
-          "key": "dc3-equal_sharing-equal_sharing-01",
+          "key": "dc3-division-equal_sharing-01",
           "family": "EQUAL_SHARING",
-          "prompt": "12 objects are shared equally among 3 groups. How many objects are in each group?",
+          "prompt": "12 counters are shared equally among 3 groups. How many counters are in each group?",
           "canonical_answer": "4",
           "difficulty": 1,
-          "objective": "Interpret quotients as equal sharing.",
+          "objective": "Practice equal sharing in diagnostic mode.",
           "modes": [
             "diagnostic"
           ],
           "parameters": {
-            "total": 12,
-            "groups": 3,
-            "group_size": 4
+            "a": 12,
+            "b": 3,
+            "operation": "\u00f7"
           }
         },
         {
-          "key": "dc3-equal_sharing-equal_sharing-02",
-          "family": "EQUAL_SHARING",
-          "prompt": "20 objects are shared equally among 4 groups. How many objects are in each group?",
-          "canonical_answer": "5",
+          "key": "dc3-division-division_within_100-02",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "What is 42 \u00f7 6?",
+          "canonical_answer": "7",
           "difficulty": 1,
-          "objective": "Interpret quotients as equal sharing.",
+          "objective": "Practice division within 100 in guided mode.",
           "modes": [
             "guided"
           ],
           "parameters": {
-            "total": 20,
-            "groups": 4,
-            "group_size": 5
+            "a": 42,
+            "b": 6,
+            "operation": "\u00f7"
           }
         },
         {
-          "key": "dc3-equal_sharing-equal_sharing-03",
-          "family": "EQUAL_SHARING",
-          "prompt": "28 objects are shared equally among 7 groups. How many objects are in each group?",
-          "canonical_answer": "4",
-          "difficulty": 2,
-          "objective": "Interpret quotients as equal sharing.",
+          "key": "dc3-division-word_problem_multiply_divide_100-03",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "There are 7 boxes with 8 pencils in each box. How many pencils are there in all?",
+          "canonical_answer": "56",
+          "difficulty": 1,
+          "objective": "Practice word problem multiply divide 100 in independent mode.",
           "modes": [
             "independent"
           ],
           "parameters": {
-            "total": 28,
-            "groups": 7,
-            "group_size": 4
+            "a": 7,
+            "b": 8,
+            "operation": "\u00d7",
+            "answer": 56
           }
         },
         {
-          "key": "dc3-equal_sharing-equal_sharing-04",
+          "key": "dc3-division-equal_sharing-04",
           "family": "EQUAL_SHARING",
-          "prompt": "36 objects are shared equally among 6 groups. How many objects are in each group?",
-          "canonical_answer": "6",
-          "difficulty": 2,
-          "objective": "Interpret quotients as equal sharing.",
+          "prompt": "45 counters are shared equally among 5 groups. How many counters are in each group?",
+          "canonical_answer": "9",
+          "difficulty": 1,
+          "objective": "Practice equal sharing in mastery mode.",
           "modes": [
             "mastery"
           ],
           "parameters": {
-            "total": 36,
-            "groups": 6,
-            "group_size": 6
+            "a": 45,
+            "b": 5,
+            "operation": "\u00f7"
+          }
+        },
+        {
+          "key": "dc3-division-division_within_100-05",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "What is 35 \u00f7 5?",
+          "canonical_answer": "7",
+          "difficulty": 2,
+          "objective": "Practice division within 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 35,
+            "b": 5,
+            "operation": "\u00f7"
+          }
+        },
+        {
+          "key": "dc3-division-word_problem_multiply_divide_100-06",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "36 stickers are shared equally among 6 students. How many stickers does each student get?",
+          "canonical_answer": "216",
+          "difficulty": 2,
+          "objective": "Practice word problem multiply divide 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 36,
+            "b": 6,
+            "operation": "\u00d7",
+            "answer": 216
+          }
+        },
+        {
+          "key": "dc3-division-equal_sharing-07",
+          "family": "EQUAL_SHARING",
+          "prompt": "36 counters are shared equally among 6 groups. How many counters are in each group?",
+          "canonical_answer": "6",
+          "difficulty": 2,
+          "objective": "Practice equal sharing in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 36,
+            "b": 6,
+            "operation": "\u00f7"
+          }
+        },
+        {
+          "key": "dc3-division-division_within_100-08",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "What is 56 \u00f7 7?",
+          "canonical_answer": "8",
+          "difficulty": 2,
+          "objective": "Practice division within 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 56,
+            "b": 7,
+            "operation": "\u00f7"
           }
         }
       ]
     },
     {
-      "code": "DC3.NF.UNIT_FRACTION",
-      "name": "Unit Fractions as Numbers",
-      "description": "Understand 1/b as one equal part of a whole and build fractions from it.",
+      "code": "DC3.OA.FACT_FAMILIES",
+      "name": "Properties of Multiplication and Division",
+      "description": "Apply commutative, associative, and distributive properties and use multiplication/division fact families.",
       "difficulty_level": 3,
       "canonical": {
-        "code": "MATH.ELEMENTARY.FRACTION.UNIT",
-        "name": "Unit Fractions as Numbers",
-        "description": "Understand unit fractions 1/b and build non-unit fractions a/b from unit fractions."
+        "code": "MATH.ELEMENTARY.MULTIPLICATION.PROPERTIES_FACT_FAMILIES",
+        "name": "Properties of Multiplication and Division",
+        "description": "Apply properties of operations and use fact families to solve problems."
       },
       "standard_refs": [
-        "3.OA.A",
-        "3.NF.A"
+        "3.OA"
       ],
       "prerequisite_codes": [
-        "DC3.OA.EQUAL_SHARING"
+        "DC3.OA.DIVISION"
       ],
       "problem_families": [
-        "UNIT_FRACTION"
+        "MULTIPLICATION_WITHIN_100",
+        "DIVISION_WITHIN_100"
       ],
       "problems": [
         {
-          "key": "dc3-unit_fraction-unit_fraction-01",
-          "family": "UNIT_FRACTION",
-          "prompt": "A whole is divided into 4 equal parts. What fraction is 1 of those parts?",
-          "canonical_answer": "1/4",
+          "key": "dc3-fact_families-multiplication_within_100-01",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 3 \u00d7 4?",
+          "canonical_answer": "12",
           "difficulty": 1,
-          "objective": "Understand unit and non-unit fractions.",
+          "objective": "Practice multiplication within 100 in diagnostic mode.",
           "modes": [
             "diagnostic"
           ],
           "parameters": {
-            "numerator": 1,
-            "denominator": 4
+            "a": 3,
+            "b": 4,
+            "operation": "\u00d7",
+            "answer": 12
           }
         },
         {
-          "key": "dc3-unit_fraction-unit_fraction-02",
-          "family": "UNIT_FRACTION",
-          "prompt": "A whole is divided into 6 equal parts. What fraction is 1 of those parts?",
-          "canonical_answer": "1/6",
+          "key": "dc3-fact_families-division_within_100-02",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "What is 42 \u00f7 6?",
+          "canonical_answer": "7",
           "difficulty": 1,
-          "objective": "Understand unit and non-unit fractions.",
+          "objective": "Practice division within 100 in guided mode.",
           "modes": [
             "guided"
           ],
           "parameters": {
-            "numerator": 1,
-            "denominator": 6
+            "a": 42,
+            "b": 6,
+            "operation": "\u00f7"
           }
         },
         {
-          "key": "dc3-unit_fraction-unit_fraction-03",
-          "family": "UNIT_FRACTION",
-          "prompt": "A whole is divided into 5 equal parts. What fraction is 3 of those parts?",
-          "canonical_answer": "3/5",
+          "key": "dc3-fact_families-multiplication_within_100-03",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 7 \u00d7 8?",
+          "canonical_answer": "56",
+          "difficulty": 1,
+          "objective": "Practice multiplication within 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 7,
+            "b": 8,
+            "operation": "\u00d7",
+            "answer": 56
+          }
+        },
+        {
+          "key": "dc3-fact_families-division_within_100-04",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "What is 48 \u00f7 8?",
+          "canonical_answer": "6",
+          "difficulty": 1,
+          "objective": "Practice division within 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 48,
+            "b": 8,
+            "operation": "\u00f7"
+          }
+        },
+        {
+          "key": "dc3-fact_families-multiplication_within_100-05",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 6 \u00d7 7?",
+          "canonical_answer": "42",
           "difficulty": 2,
-          "objective": "Understand unit and non-unit fractions.",
+          "objective": "Practice multiplication within 100 in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 6,
+            "b": 7,
+            "operation": "\u00d7",
+            "answer": 42
+          }
+        },
+        {
+          "key": "dc3-fact_families-division_within_100-06",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "What is 72 \u00f7 8?",
+          "canonical_answer": "9",
+          "difficulty": 2,
+          "objective": "Practice division within 100 in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 72,
+            "b": 8,
+            "operation": "\u00f7"
+          }
+        },
+        {
+          "key": "dc3-fact_families-multiplication_within_100-07",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What is 8 \u00d7 7?",
+          "canonical_answer": "56",
+          "difficulty": 2,
+          "objective": "Practice multiplication within 100 in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 8,
+            "b": 7,
+            "operation": "\u00d7",
+            "answer": 56
+          }
+        },
+        {
+          "key": "dc3-fact_families-division_within_100-08",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "What is 56 \u00f7 7?",
+          "canonical_answer": "8",
+          "difficulty": 2,
+          "objective": "Practice division within 100 in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 56,
+            "b": 7,
+            "operation": "\u00f7"
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC3.NBT.PLACE_VALUE",
+      "name": "Place Value and Rounding",
+      "description": "Round whole numbers to the nearest 10 or 100 and use place value to add and subtract within 1000.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.PLACE_VALUE.ROUNDING_THREE_DIGIT",
+        "name": "Place Value and Rounding",
+        "description": "Round whole numbers to nearest 10 or 100 and use place-value strategies for addition/subtraction."
+      },
+      "standard_refs": [
+        "3.NBT"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "PLACE_VALUE_BASE_TEN",
+        "ROUNDING"
+      ],
+      "problems": [
+        {
+          "key": "dc3-place_value-place_value_base_ten-01",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many hundreds, tens, and ones make 247?",
+          "canonical_answer": "2 hundreds, 4 tens, and 7 ones",
+          "difficulty": 1,
+          "objective": "Practice place value base ten in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "number": 247,
+            "hundreds": 2,
+            "tens": 4,
+            "ones": 7
+          }
+        },
+        {
+          "key": "dc3-place_value-rounding-02",
+          "family": "ROUNDING",
+          "prompt": "Round 123 to the nearest hundred.",
+          "canonical_answer": "100",
+          "difficulty": 1,
+          "objective": "Practice rounding in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "number": 123,
+            "place": 100
+          }
+        },
+        {
+          "key": "dc3-place_value-place_value_base_ten-03",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many hundreds, tens, and ones make 506?",
+          "canonical_answer": "5 hundreds, 0 tens, and 6 ones",
+          "difficulty": 1,
+          "objective": "Practice place value base ten in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "number": 506,
+            "hundreds": 5,
+            "tens": 0,
+            "ones": 6
+          }
+        },
+        {
+          "key": "dc3-place_value-rounding-04",
+          "family": "ROUNDING",
+          "prompt": "Round 349 to the nearest hundred.",
+          "canonical_answer": "300",
+          "difficulty": 1,
+          "objective": "Practice rounding in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "number": 349,
+            "place": 100
+          }
+        },
+        {
+          "key": "dc3-place_value-place_value_base_ten-05",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many hundreds, tens, and ones make 247?",
+          "canonical_answer": "2 hundreds, 4 tens, and 7 ones",
+          "difficulty": 2,
+          "objective": "Practice place value base ten in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "number": 247,
+            "hundreds": 2,
+            "tens": 4,
+            "ones": 7
+          }
+        },
+        {
+          "key": "dc3-place_value-rounding-06",
+          "family": "ROUNDING",
+          "prompt": "Round 2891 to the nearest thousand.",
+          "canonical_answer": "3000",
+          "difficulty": 2,
+          "objective": "Practice rounding in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "number": 2891,
+            "place": 1000
+          }
+        },
+        {
+          "key": "dc3-place_value-place_value_base_ten-07",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many hundreds, tens, and ones make 506?",
+          "canonical_answer": "5 hundreds, 0 tens, and 6 ones",
+          "difficulty": 2,
+          "objective": "Practice place value base ten in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "number": 506,
+            "hundreds": 5,
+            "tens": 0,
+            "ones": 6
+          }
+        },
+        {
+          "key": "dc3-place_value-rounding-08",
+          "family": "ROUNDING",
+          "prompt": "Round 738 to the nearest hundred.",
+          "canonical_answer": "700",
+          "difficulty": 2,
+          "objective": "Practice rounding in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "number": 738,
+            "place": 100
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC3.NF.FRACTIONS",
+      "name": "Fractions as Numbers",
+      "description": "Understand fractions as parts of a whole, represent fractions on a number line, and identify equivalent fractions.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.FRACTIONS.FRACTIONS_AS_NUMBERS",
+        "name": "Fractions as Numbers",
+        "description": "Represent fractions as numbers on a number line and identify equivalent fractions."
+      },
+      "standard_refs": [
+        "3.NF"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "UNIT_FRACTION",
+        "FRACTION_NUMBER_LINE",
+        "FRACTION_EQUIVALENCE",
+        "FRACTION_COMPARE"
+      ],
+      "problems": [
+        {
+          "key": "dc3-fractions-unit_fraction-01",
+          "family": "UNIT_FRACTION",
+          "prompt": "A whole is divided into 3 equal parts. What fraction is 1 of those parts?",
+          "canonical_answer": "1/3",
+          "difficulty": 1,
+          "objective": "Practice unit fraction in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "denominator": 3
+          }
+        },
+        {
+          "key": "dc3-fractions-fraction_number_line-02",
+          "family": "FRACTION_NUMBER_LINE",
+          "prompt": "Where is the fraction 2/4 located on a number line from 0 to 1?",
+          "canonical_answer": "2/4",
+          "difficulty": 1,
+          "objective": "Practice fraction number line in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "numerator": 2,
+            "denominator": 4
+          }
+        },
+        {
+          "key": "dc3-fractions-fraction_equivalence-03",
+          "family": "FRACTION_EQUIVALENCE",
+          "prompt": "Find a fraction equivalent to 3/4.",
+          "canonical_answer": "6/8",
+          "difficulty": 1,
+          "objective": "Practice fraction equivalence in independent mode.",
           "modes": [
             "independent"
           ],
           "parameters": {
             "numerator": 3,
-            "denominator": 5
+            "denominator": 4
           }
         },
         {
-          "key": "dc3-unit_fraction-unit_fraction-04",
-          "family": "UNIT_FRACTION",
-          "prompt": "A whole is divided into 8 equal parts. What fraction is 2 of those parts?",
-          "canonical_answer": "2/8",
-          "difficulty": 2,
-          "objective": "Understand unit and non-unit fractions.",
+          "key": "dc3-fractions-fraction_compare-04",
+          "family": "FRACTION_COMPARE",
+          "prompt": "Compare: 4/6 ___ 2/3. Use >, <, or =.",
+          "canonical_answer": "=",
+          "difficulty": 1,
+          "objective": "Practice fraction compare in mastery mode.",
           "modes": [
             "mastery"
           ],
           "parameters": {
+            "numerator1": 4,
+            "denominator1": 6,
+            "numerator2": 2,
+            "denominator2": 3
+          }
+        },
+        {
+          "key": "dc3-fractions-unit_fraction-05",
+          "family": "UNIT_FRACTION",
+          "prompt": "A whole is divided into 3 equal parts. What fraction is 1 of those parts?",
+          "canonical_answer": "1/3",
+          "difficulty": 2,
+          "objective": "Practice unit fraction in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "denominator": 3
+          }
+        },
+        {
+          "key": "dc3-fractions-fraction_number_line-06",
+          "family": "FRACTION_NUMBER_LINE",
+          "prompt": "Where is the fraction 2/4 located on a number line from 0 to 1?",
+          "canonical_answer": "2/4",
+          "difficulty": 2,
+          "objective": "Practice fraction number line in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
             "numerator": 2,
-            "denominator": 8
+            "denominator": 4
+          }
+        },
+        {
+          "key": "dc3-fractions-fraction_equivalence-07",
+          "family": "FRACTION_EQUIVALENCE",
+          "prompt": "Find a fraction equivalent to 3/4.",
+          "canonical_answer": "6/8",
+          "difficulty": 2,
+          "objective": "Practice fraction equivalence in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "numerator": 3,
+            "denominator": 4
+          }
+        },
+        {
+          "key": "dc3-fractions-fraction_compare-08",
+          "family": "FRACTION_COMPARE",
+          "prompt": "Compare: 4/6 ___ 2/3. Use >, <, or =.",
+          "canonical_answer": "=",
+          "difficulty": 2,
+          "objective": "Practice fraction compare in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "numerator1": 4,
+            "denominator1": 6,
+            "numerator2": 2,
+            "denominator2": 3
           }
         }
       ]
     },
     {
-      "code": "DC3.MD.RECTANGLE_AREA",
-      "name": "Rectangle Area with Unit Squares",
-      "description": "Relate rectangular arrays, unit squares, and multiplication to area.",
+      "code": "DC3.MD.TIME",
+      "name": "Time and Elapsed Time",
+      "description": "Tell and write time to the nearest minute and measure intervals of time.",
       "difficulty_level": 3,
       "canonical": {
-        "code": "MATH.ELEMENTARY.MEASUREMENT.RECTANGLE_AREA",
-        "name": "Rectangle Area with Unit Squares",
-        "description": "Understand area as covering with unit squares and relate it to multiplication."
+        "code": "MATH.ELEMENTARY.MEASUREMENT.TELL_TIME_MINUTE_ELAPSED",
+        "name": "Time and Elapsed Time",
+        "description": "Tell time to the nearest minute and solve elapsed-time problems."
       },
       "standard_refs": [
-        "3.OA.A",
-        "3.NF.A"
+        "3.MD"
       ],
-      "prerequisite_codes": [
-        "DC3.OA.EQUAL_GROUPS"
-      ],
+      "prerequisite_codes": [],
       "problem_families": [
-        "RECTANGLE_AREA"
+        "TIME_TO_5_MINUTES",
+        "ELAPSED_TIME"
       ],
       "problems": [
         {
-          "key": "dc3-rectangle_area-rectangle_area-01",
-          "family": "RECTANGLE_AREA",
-          "prompt": "A rectangle has 3 rows of 5 unit squares. What is its area in square units?",
-          "canonical_answer": "15",
+          "key": "dc3-time-time_to_5_minutes-01",
+          "family": "TIME_TO_5_MINUTES",
+          "prompt": "What time is 3:15 on an analog clock?",
+          "canonical_answer": "3:15",
           "difficulty": 1,
-          "objective": "Relate rectangular arrays to area.",
+          "objective": "Practice time to 5 minutes in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "hour": 3,
+            "minute": 15
+          }
+        },
+        {
+          "key": "dc3-time-elapsed_time-02",
+          "family": "ELAPSED_TIME",
+          "prompt": "A movie starts at 7:20 and ends at 8:05. How many minutes long is the movie?",
+          "canonical_answer": "45",
+          "difficulty": 1,
+          "objective": "Practice elapsed time in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "start": "7:20",
+            "end": "8:05",
+            "elapsed_minutes": 45
+          }
+        },
+        {
+          "key": "dc3-time-time_to_5_minutes-03",
+          "family": "TIME_TO_5_MINUTES",
+          "prompt": "What time is 11:45 on an analog clock?",
+          "canonical_answer": "11:45",
+          "difficulty": 1,
+          "objective": "Practice time to 5 minutes in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "hour": 11,
+            "minute": 45
+          }
+        },
+        {
+          "key": "dc3-time-elapsed_time-04",
+          "family": "ELAPSED_TIME",
+          "prompt": "A movie starts at 5:30 and ends at 6:15. How many minutes long is the movie?",
+          "canonical_answer": "45",
+          "difficulty": 1,
+          "objective": "Practice elapsed time in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "start": "5:30",
+            "end": "6:15",
+            "elapsed_minutes": 45
+          }
+        },
+        {
+          "key": "dc3-time-time_to_5_minutes-05",
+          "family": "TIME_TO_5_MINUTES",
+          "prompt": "What time is 5:05 on an analog clock?",
+          "canonical_answer": "5:05",
+          "difficulty": 2,
+          "objective": "Practice time to 5 minutes in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "hour": 5,
+            "minute": 5
+          }
+        },
+        {
+          "key": "dc3-time-elapsed_time-06",
+          "family": "ELAPSED_TIME",
+          "prompt": "A movie starts at 7:20 and ends at 8:05. How many minutes long is the movie?",
+          "canonical_answer": "45",
+          "difficulty": 2,
+          "objective": "Practice elapsed time in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "start": "7:20",
+            "end": "8:05",
+            "elapsed_minutes": 45
+          }
+        },
+        {
+          "key": "dc3-time-time_to_5_minutes-07",
+          "family": "TIME_TO_5_MINUTES",
+          "prompt": "What time is 2:25 on an analog clock?",
+          "canonical_answer": "2:25",
+          "difficulty": 2,
+          "objective": "Practice time to 5 minutes in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "hour": 2,
+            "minute": 25
+          }
+        },
+        {
+          "key": "dc3-time-elapsed_time-08",
+          "family": "ELAPSED_TIME",
+          "prompt": "A movie starts at 5:30 and ends at 6:15. How many minutes long is the movie?",
+          "canonical_answer": "45",
+          "difficulty": 2,
+          "objective": "Practice elapsed time in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "start": "5:30",
+            "end": "6:15",
+            "elapsed_minutes": 45
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC3.MD.DATA",
+      "name": "Data: Picture and Bar Graphs",
+      "description": "Draw and interpret scaled picture graphs and bar graphs to solve problems.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.DATA.PICTURE_BAR_GRAPHS",
+        "name": "Picture and Bar Graphs",
+        "description": "Draw and interpret scaled picture graphs and bar graphs."
+      },
+      "standard_refs": [
+        "3.MD"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "BAR_GRAPH_READ",
+        "PICTURE_GRAPH_READ"
+      ],
+      "problems": [
+        {
+          "key": "dc3-data-bar_graph_read-01",
+          "family": "BAR_GRAPH_READ",
+          "prompt": "A bar graph shows votes for favorite colors: red=4, blue=7, green=3, yellow=6. How many votes did blue receive?",
+          "canonical_answer": "7",
+          "difficulty": 1,
+          "objective": "Practice bar graph read in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "category": "blue",
+            "value": 7
+          }
+        },
+        {
+          "key": "dc3-data-picture_graph_read-02",
+          "family": "PICTURE_GRAPH_READ",
+          "prompt": "A picture graph shows pets: dog=2, cat=6, bird=3, fish=5. How many cats are there?",
+          "canonical_answer": "6",
+          "difficulty": 1,
+          "objective": "Practice picture graph read in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "category": "cat",
+            "value": 6
+          }
+        },
+        {
+          "key": "dc3-data-bar_graph_read-03",
+          "family": "BAR_GRAPH_READ",
+          "prompt": "A bar graph shows votes for favorite colors: red=4, blue=7, green=3, yellow=6. How many votes did blue receive?",
+          "canonical_answer": "7",
+          "difficulty": 1,
+          "objective": "Practice bar graph read in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "category": "blue",
+            "value": 7
+          }
+        },
+        {
+          "key": "dc3-data-picture_graph_read-04",
+          "family": "PICTURE_GRAPH_READ",
+          "prompt": "A picture graph shows pets: dog=2, cat=6, bird=3, fish=5. How many cats are there?",
+          "canonical_answer": "6",
+          "difficulty": 1,
+          "objective": "Practice picture graph read in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "category": "cat",
+            "value": 6
+          }
+        },
+        {
+          "key": "dc3-data-bar_graph_read-05",
+          "family": "BAR_GRAPH_READ",
+          "prompt": "A bar graph shows votes for favorite colors: red=4, blue=7, green=3, yellow=6. How many votes did blue receive?",
+          "canonical_answer": "7",
+          "difficulty": 2,
+          "objective": "Practice bar graph read in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "category": "blue",
+            "value": 7
+          }
+        },
+        {
+          "key": "dc3-data-picture_graph_read-06",
+          "family": "PICTURE_GRAPH_READ",
+          "prompt": "A picture graph shows pets: dog=2, cat=6, bird=3, fish=5. How many cats are there?",
+          "canonical_answer": "6",
+          "difficulty": 2,
+          "objective": "Practice picture graph read in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "category": "cat",
+            "value": 6
+          }
+        },
+        {
+          "key": "dc3-data-bar_graph_read-07",
+          "family": "BAR_GRAPH_READ",
+          "prompt": "A bar graph shows votes for favorite colors: red=4, blue=7, green=3, yellow=6. How many votes did blue receive?",
+          "canonical_answer": "7",
+          "difficulty": 2,
+          "objective": "Practice bar graph read in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "category": "blue",
+            "value": 7
+          }
+        },
+        {
+          "key": "dc3-data-picture_graph_read-08",
+          "family": "PICTURE_GRAPH_READ",
+          "prompt": "A picture graph shows pets: dog=2, cat=6, bird=3, fish=5. How many cats are there?",
+          "canonical_answer": "6",
+          "difficulty": 2,
+          "objective": "Practice picture graph read in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "category": "cat",
+            "value": 6
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC3.MD.AREA_PERIMETER",
+      "name": "Area and Perimeter",
+      "description": "Understand area as counting unit squares; relate area to multiplication; and solve perimeter problems.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.AREA_PERIMETER",
+        "name": "Area and Perimeter",
+        "description": "Measure area by counting unit squares and solve area/perimeter problems for rectangles."
+      },
+      "standard_refs": [
+        "3.MD"
+      ],
+      "prerequisite_codes": [
+        "DC3.OA.MULTIPLICATION"
+      ],
+      "problem_families": [
+        "RECTANGLE_AREA",
+        "AREA_PERIMETER_RECTANGLE"
+      ],
+      "problems": [
+        {
+          "key": "dc3-area_perimeter-rectangle_area-01",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A rectangle has 3 rows of 4 unit squares. What is its area?",
+          "canonical_answer": "12",
+          "difficulty": 1,
+          "objective": "Practice rectangle area in diagnostic mode.",
           "modes": [
             "diagnostic"
           ],
           "parameters": {
             "rows": 3,
-            "columns": 5,
-            "unit": "square units"
+            "columns": 4
           }
         },
         {
-          "key": "dc3-rectangle_area-rectangle_area-02",
-          "family": "RECTANGLE_AREA",
-          "prompt": "A rectangle has 4 rows of 6 unit squares. What is its area in square units?",
-          "canonical_answer": "24",
+          "key": "dc3-area_perimeter-area_perimeter_rectangle-02",
+          "family": "AREA_PERIMETER_RECTANGLE",
+          "prompt": "A rectangle has length 6 units and width 3 units. What is its area?",
+          "canonical_answer": "18",
           "difficulty": 1,
-          "objective": "Relate rectangular arrays to area.",
+          "objective": "Practice area perimeter rectangle in guided mode.",
           "modes": [
             "guided"
           ],
           "parameters": {
-            "rows": 4,
-            "columns": 6,
-            "unit": "square units"
+            "length": 6,
+            "width": 3,
+            "measure": "area"
           }
         },
         {
-          "key": "dc3-rectangle_area-rectangle_area-03",
+          "key": "dc3-area_perimeter-rectangle_area-03",
           "family": "RECTANGLE_AREA",
-          "prompt": "A rectangle has 5 rows of 7 unit squares. What is its area in square units?",
-          "canonical_answer": "35",
-          "difficulty": 2,
-          "objective": "Relate rectangular arrays to area.",
+          "prompt": "A rectangle has 7 rows of 4 unit squares. What is its area?",
+          "canonical_answer": "28",
+          "difficulty": 1,
+          "objective": "Practice rectangle area in independent mode.",
           "modes": [
             "independent"
           ],
           "parameters": {
-            "rows": 5,
-            "columns": 7,
-            "unit": "square units"
+            "rows": 7,
+            "columns": 4
           }
         },
         {
-          "key": "dc3-rectangle_area-rectangle_area-04",
-          "family": "RECTANGLE_AREA",
-          "prompt": "A rectangle has 6 rows of 8 unit squares. What is its area in square units?",
-          "canonical_answer": "48",
-          "difficulty": 2,
-          "objective": "Relate rectangular arrays to area.",
+          "key": "dc3-area_perimeter-area_perimeter_rectangle-04",
+          "family": "AREA_PERIMETER_RECTANGLE",
+          "prompt": "A rectangle has length 5 units and width 5 units. What is its area?",
+          "canonical_answer": "25",
+          "difficulty": 1,
+          "objective": "Practice area perimeter rectangle in mastery mode.",
           "modes": [
             "mastery"
           ],
           "parameters": {
-            "rows": 6,
-            "columns": 8,
-            "unit": "square units"
+            "length": 5,
+            "width": 5,
+            "measure": "area"
+          }
+        },
+        {
+          "key": "dc3-area_perimeter-rectangle_area-05",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A rectangle has 3 rows of 4 unit squares. What is its area?",
+          "canonical_answer": "12",
+          "difficulty": 2,
+          "objective": "Practice rectangle area in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "rows": 3,
+            "columns": 4
+          }
+        },
+        {
+          "key": "dc3-area_perimeter-area_perimeter_rectangle-06",
+          "family": "AREA_PERIMETER_RECTANGLE",
+          "prompt": "A rectangle has length 6 units and width 3 units. What is its area?",
+          "canonical_answer": "18",
+          "difficulty": 2,
+          "objective": "Practice area perimeter rectangle in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "length": 6,
+            "width": 3,
+            "measure": "area"
+          }
+        },
+        {
+          "key": "dc3-area_perimeter-rectangle_area-07",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A rectangle has 7 rows of 4 unit squares. What is its area?",
+          "canonical_answer": "28",
+          "difficulty": 2,
+          "objective": "Practice rectangle area in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "rows": 7,
+            "columns": 4
+          }
+        },
+        {
+          "key": "dc3-area_perimeter-area_perimeter_rectangle-08",
+          "family": "AREA_PERIMETER_RECTANGLE",
+          "prompt": "A rectangle has length 5 units and width 5 units. What is its area?",
+          "canonical_answer": "25",
+          "difficulty": 2,
+          "objective": "Practice area perimeter rectangle in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "length": 5,
+            "width": 5,
+            "measure": "area"
+          }
+        }
+      ]
+    },
+    {
+      "code": "DC3.G.SHAPES",
+      "name": "Shapes and Their Attributes",
+      "description": "Understand that shapes in different categories share attributes and identify quadrilaterals.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.GEOMETRY.QUADRILATERAL_ATTRIBUTES",
+        "name": "Shapes and Their Attributes",
+        "description": "Recognize shared attributes of shapes and classify quadrilaterals."
+      },
+      "standard_refs": [
+        "3.G"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "CLASSIFY_SHAPE"
+      ],
+      "problems": [
+        {
+          "key": "dc3-shapes-classify_shape-01",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a triangle have?",
+          "canonical_answer": "3",
+          "difficulty": 1,
+          "objective": "Practice classify shape in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "shape": "triangle",
+            "sides": 3
+          }
+        },
+        {
+          "key": "dc3-shapes-classify_shape-02",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a quadrilateral have?",
+          "canonical_answer": "4",
+          "difficulty": 1,
+          "objective": "Practice classify shape in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "shape": "quadrilateral",
+            "sides": 4
+          }
+        },
+        {
+          "key": "dc3-shapes-classify_shape-03",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a pentagon have?",
+          "canonical_answer": "5",
+          "difficulty": 1,
+          "objective": "Practice classify shape in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "shape": "pentagon",
+            "sides": 5
+          }
+        },
+        {
+          "key": "dc3-shapes-classify_shape-04",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a hexagon have?",
+          "canonical_answer": "6",
+          "difficulty": 1,
+          "objective": "Practice classify shape in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "shape": "hexagon",
+            "sides": 6
+          }
+        },
+        {
+          "key": "dc3-shapes-classify_shape-05",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a octagon have?",
+          "canonical_answer": "8",
+          "difficulty": 2,
+          "objective": "Practice classify shape in diagnostic mode.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "shape": "octagon",
+            "sides": 8
+          }
+        },
+        {
+          "key": "dc3-shapes-classify_shape-06",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a triangle have?",
+          "canonical_answer": "3",
+          "difficulty": 2,
+          "objective": "Practice classify shape in guided mode.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "shape": "triangle",
+            "sides": 3
+          }
+        },
+        {
+          "key": "dc3-shapes-classify_shape-07",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a quadrilateral have?",
+          "canonical_answer": "4",
+          "difficulty": 2,
+          "objective": "Practice classify shape in independent mode.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "shape": "quadrilateral",
+            "sides": 4
+          }
+        },
+        {
+          "key": "dc3-shapes-classify_shape-08",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides does a pentagon have?",
+          "canonical_answer": "5",
+          "difficulty": 2,
+          "objective": "Practice classify shape in mastery mode.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "shape": "pentagon",
+            "sides": 5
           }
         }
       ]

@@ -35,8 +35,8 @@ def test_md_and_dc_grade3_share_canonical_concepts_but_not_evidence():
                 select(Skill).where(Skill.curriculum_id == dc_curriculum.id)
             )
         )
-        assert len(md_skills) == 4
-        assert len(dc_skills) == 4
+        assert len(md_skills) == 9
+        assert len(dc_skills) == 9
         md_skill_ids = {skill.id for skill in md_skills}
         dc_skill_ids = {skill.id for skill in dc_skills}
         assert md_skill_ids.isdisjoint(dc_skill_ids)
@@ -55,8 +55,8 @@ def test_md_and_dc_grade3_share_canonical_concepts_but_not_evidence():
                 )
             )
         )
-        assert len(md_mappings) == 4
-        assert len(dc_mappings) == 4
+        assert len(md_mappings) == 9
+        assert len(dc_mappings) == 9
 
         md_canonical_codes = {
             db.get(CanonicalSkill, mapping.canonical_skill_id).code
@@ -71,13 +71,13 @@ def test_md_and_dc_grade3_share_canonical_concepts_but_not_evidence():
         md_equal_groups = db.scalar(
             select(Skill).where(
                 Skill.curriculum_id == md_curriculum.id,
-                Skill.code == "MD3.NOS.EQUAL_GROUPS",
+                Skill.code == "MD3.OA.MULTIPLICATION",
             )
         )
         dc_equal_groups = db.scalar(
             select(Skill).where(
                 Skill.curriculum_id == dc_curriculum.id,
-                Skill.code == "DC3.OA.EQUAL_GROUPS",
+                Skill.code == "DC3.OA.MULTIPLICATION",
             )
         )
         learner = Student(
@@ -147,12 +147,22 @@ def test_md_and_dc_prerequisite_edges_are_curriculum_isolated():
                 )
             )
         )
-        assert len(md_edges) == 3
-        assert len(dc_edges) == 3
+        assert len(md_edges) == 9
+        assert len(dc_edges) == 9
+        md_prereq_curriculum_ids = {
+            db.get(Skill, edge.prerequisite_skill_id).curriculum_id
+            for edge in md_edges
+        }
+        dc_prereq_curriculum_ids = {
+            db.get(Skill, edge.prerequisite_skill_id).curriculum_id
+            for edge in dc_edges
+        }
         assert all(
-            edge.prerequisite_skill_id in md_skill_ids for edge in md_edges
+            db.get(Curriculum, cid).jurisdiction == "Maryland"
+            for cid in md_prereq_curriculum_ids
         )
         assert all(
-            edge.prerequisite_skill_id in dc_skill_ids for edge in dc_edges
+            db.get(Curriculum, cid).jurisdiction == "District of Columbia"
+            for cid in dc_prereq_curriculum_ids
         )
         db.rollback()

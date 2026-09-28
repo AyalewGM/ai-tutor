@@ -296,29 +296,61 @@ def _shape_model(problem: Problem) -> dict | None:
 
 def _bar_graph_model(problem: Problem) -> dict | None:
     params = _params(problem)
-    data = params.get("data")
     category = params.get("category")
-    if not isinstance(data, dict) or category is None:
+    value = _int(params.get("value"))
+    if category is None or value is None:
         return None
     return {
         "type": "bar_graph",
-        "data": data,
         "category": category,
-        "aria_label": f"Bar graph with values {data}. Highlight category {category}.",
+        "value": value,
+        "aria_label": f"Bar graph highlighting category {category} with value {value}.",
     }
 
 
 def _picture_graph_model(problem: Problem) -> dict | None:
     params = _params(problem)
-    data = params.get("data")
     category = params.get("category")
-    if not isinstance(data, dict) or category is None:
+    value = _int(params.get("value"))
+    if category is None or value is None:
         return None
     return {
         "type": "picture_graph",
-        "data": data,
         "category": category,
-        "aria_label": f"Picture graph with values {data}. Highlight category {category}.",
+        "value": value,
+        "aria_label": f"Picture graph highlighting category {category} with value {value}.",
+    }
+
+
+def _number_line_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    if "numerator" in params and "denominator" in params:
+        numerator = _int(params.get("numerator"))
+        denominator = _int(params.get("denominator"))
+        if numerator is None or denominator is None or denominator == 0:
+            return None
+        return {
+            "type": "number_line",
+            "min": 0,
+            "max": 1,
+            "tick_count": denominator,
+            "mark_value": numerator / denominator,
+            "aria_label": f"Number line from 0 to 1 showing {numerator}/{denominator}.",
+        }
+    return None
+
+
+def _line_plot_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    data = params.get("data")
+    value = _int(params.get("value"))
+    if not isinstance(data, list) or value is None:
+        return None
+    return {
+        "type": "line_plot",
+        "data": data,
+        "highlight": value,
+        "aria_label": f"Line plot of measurements. Count how many are {value}.",
     }
 
 
@@ -361,14 +393,37 @@ def visualization_for(problem: Problem) -> dict | None:
         return _fraction_bar(problem)
     if problem.problem_type in {"FRACTION_ADD_SUBTRACT_LIKE", "FRACTION_MULTIPLY", "FRACTION_HALVES_THIRDS_FOURTHS"}:
         return _fraction_bar(problem)
+    if problem.problem_type == "FRACTION_COMPARE":
+        return _fraction_bar(problem)
+    if problem.problem_type == "FRACTION_NUMBER_LINE":
+        return _number_line_model(problem)
     if problem.problem_type == "COMPARE_LENGTH":
         return _ruler_model(problem)
+    if problem.problem_type in {"AREA_PERIMETER_RECTANGLE", "VOLUME"}:
+        return None
     if problem.problem_type == "GEOMETRY_SHAPES":
         return _shape_model(problem)
     if problem.problem_type == "BAR_GRAPH_READ":
         return _bar_graph_model(problem)
     if problem.problem_type == "PICTURE_GRAPH_READ":
         return _picture_graph_model(problem)
+    if problem.problem_type == "LINE_PLOT_READ":
+        return _line_plot_model(problem)
+    if problem.problem_type in {"CLASSIFY_SHAPE", "LINES_PARALLEL_PERPENDICULAR"}:
+        return _shape_model(problem)
+    if problem.problem_type == "ELAPSED_TIME":
+        return _clock_model(problem)
+    if problem.problem_type in {
+        "ROUNDING",
+        "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+        "ADD_SUBTRACT_UNLIKE_FRACTIONS",
+        "MULTIPLY_FRACTIONS",
+        "DIVIDE_FRACTIONS",
+        "DECIMAL_OPERATIONS",
+        "POWERS_OF_TEN",
+        "MEASUREMENT_CONVERSION",
+    }:
+        return None
     if problem.problem_type == "ANGLE_MEASUREMENT":
         return _angle_model(problem)
     if problem.problem_type == "COORDINATE_PLANE":
