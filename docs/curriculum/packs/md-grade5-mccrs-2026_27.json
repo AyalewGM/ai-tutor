@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "jurisdiction": {
+    "country_code": "US",
+    "code": "MD",
+    "name": "Maryland",
+    "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
+    "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx"
+  },
+  "authority": {
+    "code": "MSDE",
+    "name": "Maryland State Department of Education",
+    "authority_type": "STATE_AGENCY",
+    "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx"
+  },
+  "curriculum": {
+    "code": "MD_MATH_5_2026_27",
+    "name": "Maryland Grade 5 Mathematics \u2014 revised MCCRS",
+    "version": "MCCRS-revised-SY2026-27",
+    "grade_level": "5",
+    "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx"
+  },
+  "expectations": [
+    {
+      "source_identifier": "5.NBT.B",
+      "title": "Perform operations with multi-digit whole numbers and decimals",
+      "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx",
+      "strand": "Number and Operations in Base Ten",
+      "description": "Add, subtract, multiply, and divide decimals to hundredths."
+    },
+    {
+      "source_identifier": "5.NF.B",
+      "title": "Apply and extend previous understandings of multiplication and division to multiply and divide fractions",
+      "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx",
+      "strand": "Number and Operations\u2014Fractions",
+      "description": "Interpret multiplication as scaling and solve real-world problems involving fraction operations."
+    },
+    {
+      "source_identifier": "5.G.A",
+      "title": "Graph points on the coordinate plane",
+      "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx",
+      "strand": "Geometry",
+      "description": "Use a pair of perpendicular number lines to define a coordinate system and graph points."
+    }
+  ],
+  "skills": [
+    {
+      "code": "MD5.NBT.DECIMAL_OPERATIONS",
+      "name": "Decimal Place Value and Operations",
+      "description": "Understand decimal place value and perform operations with decimals to hundredths.",
+      "difficulty_level": 5,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.DECIMAL.PLACE_VALUE_OPERATIONS",
+        "name": "Decimal Place Value and Operations",
+        "description": "Understand decimal place value through thousandths and perform decimal operations."
+      },
+      "standard_refs": [
+        "5.NBT.B",
+        "5.NF.B"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "DECIMAL_PLACE_VALUE"
+      ],
+      "problems": [
+        {
+          "key": "md5-decimal_operations-decimal_place_value-01",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the tenths digit in 0.4?",
+          "canonical_answer": "4",
+          "difficulty": 1,
+          "objective": "Understand decimal place value.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "number": 0.4,
+            "place": "tenths",
+            "digit": 4
+          }
+        },
+        {
+          "key": "md5-decimal_operations-decimal_place_value-02",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the tenths digit in 0.7?",
+          "canonical_answer": "7",
+          "difficulty": 1,
+          "objective": "Understand decimal place value.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "number": 0.7,
+            "place": "tenths",
+            "digit": 7
+          }
+        },
+        {
+          "key": "md5-decimal_operations-decimal_place_value-03",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the hundredths digit in 0.25?",
+          "canonical_answer": "5",
+          "difficulty": 2,
+          "objective": "Understand decimal place value.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "number": 0.25,
+            "place": "hundredths",
+            "digit": 5
+          }
+        },
+        {
+          "key": "md5-decimal_operations-decimal_place_value-04",
+          "family": "DECIMAL_PLACE_VALUE",
+          "prompt": "What is the value of the hundredths digit in 0.63?",
+          "canonical_answer": "3",
+          "difficulty": 2,
+          "objective": "Understand decimal place value.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "number": 0.63,
+            "place": "hundredths",
+            "digit": 3
+          }
+        }
+      ]
+    },
+    {
+      "code": "MD5.NF.FRACTION_OPERATIONS",
+      "name": "Fraction Multiplication and Division",
+      "description": "Multiply and divide fractions in real-world contexts.",
+      "difficulty_level": 5,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.FRACTION.MULTIPLY_DIVIDE",
+        "name": "Fraction Multiplication and Division",
+        "description": "Apply previous understandings of multiplication and division to fractions."
+      },
+      "standard_refs": [
+        "5.NBT.B",
+        "5.NF.B"
+      ],
+      "prerequisite_codes": [
+        "MD5.NBT.DECIMAL_OPERATIONS"
+      ],
+      "problem_families": [
+        "FRACTION_MULTIPLY",
+        "FRACTION_ADD_SUBTRACT_LIKE"
+      ],
+      "problems": [
+        {
+          "key": "md5-fraction_operations-fraction_multiply-01",
+          "family": "FRACTION_MULTIPLY",
+          "prompt": "What is 1/2 \u00d7 1/3?",
+          "canonical_answer": "1/6",
+          "difficulty": 1,
+          "objective": "Multiply fractions in context.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "n1": 1,
+            "d1": 2,
+            "n2": 1,
+            "d2": 3
+          }
+        },
+        {
+          "key": "md5-fraction_operations-fraction_add_subtract_like-02",
+          "family": "FRACTION_ADD_SUBTRACT_LIKE",
+          "prompt": "What is 3/4 - 1/4?",
+          "canonical_answer": "2/4",
+          "difficulty": 1,
+          "objective": "Add and subtract fractions with like denominators.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "n1": 3,
+            "n2": 1,
+            "denominator": 4,
+            "operation": "-"
+          }
+        },
+        {
+          "key": "md5-fraction_operations-fraction_multiply-03",
+          "family": "FRACTION_MULTIPLY",
+          "prompt": "What is 1/5 \u00d7 2/3?",
+          "canonical_answer": "2/15",
+          "difficulty": 2,
+          "objective": "Multiply fractions in context.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "n1": 1,
+            "d1": 5,
+            "n2": 2,
+            "d2": 3
+          }
+        },
+        {
+          "key": "md5-fraction_operations-fraction_add_subtract_like-04",
+          "family": "FRACTION_ADD_SUBTRACT_LIKE",
+          "prompt": "What is 5/6 - 2/6?",
+          "canonical_answer": "3/6",
+          "difficulty": 2,
+          "objective": "Add and subtract fractions with like denominators.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "n1": 5,
+            "n2": 2,
+            "denominator": 6,
+            "operation": "-"
+          }
+        }
+      ]
+    },
+    {
+      "code": "MD5.G.COORDINATE_PLANE",
+      "name": "Coordinate Plane",
+      "description": "Graph ordered pairs on a coordinate plane and interpret coordinate values.",
+      "difficulty_level": 5,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.GEOMETRY.COORDINATE_PLANE",
+        "name": "Coordinate Plane",
+        "description": "Use a pair of perpendicular number lines to define a coordinate system and graph points."
+      },
+      "standard_refs": [
+        "5.NBT.B",
+        "5.NF.B"
+      ],
+      "prerequisite_codes": [
+        "MD5.NF.FRACTION_OPERATIONS"
+      ],
+      "problem_families": [
+        "COORDINATE_PLANE"
+      ],
+      "problems": [
+        {
+          "key": "md5-coordinate_plane-coordinate_plane-01",
+          "family": "COORDINATE_PLANE",
+          "prompt": "What ordered pair is located at (2, 3) on a coordinate grid?",
+          "canonical_answer": "(2, 3)",
+          "difficulty": 1,
+          "objective": "Identify and write ordered pairs.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "x": 2,
+            "y": 3
+          }
+        },
+        {
+          "key": "md5-coordinate_plane-coordinate_plane-02",
+          "family": "COORDINATE_PLANE",
+          "prompt": "What ordered pair is located at (5, 1) on a coordinate grid?",
+          "canonical_answer": "(5, 1)",
+          "difficulty": 1,
+          "objective": "Identify and write ordered pairs.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "x": 5,
+            "y": 1
+          }
+        },
+        {
+          "key": "md5-coordinate_plane-coordinate_plane-03",
+          "family": "COORDINATE_PLANE",
+          "prompt": "What ordered pair is located at (0, 4) on a coordinate grid?",
+          "canonical_answer": "(0, 4)",
+          "difficulty": 2,
+          "objective": "Identify and write ordered pairs.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "x": 0,
+            "y": 4
+          }
+        },
+        {
+          "key": "md5-coordinate_plane-coordinate_plane-04",
+          "family": "COORDINATE_PLANE",
+          "prompt": "What ordered pair is located at (7, 6) on a coordinate grid?",
+          "canonical_answer": "(7, 6)",
+          "difficulty": 2,
+          "objective": "Identify and write ordered pairs.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "x": 7,
+            "y": 6
+          }
+        }
+      ]
+    }
+  ],
+  "readiness": {
+    "minimum_curated_per_skill": 4,
+    "required_modes": [
+      "diagnostic",
+      "guided",
+      "independent",
+      "mastery"
+    ]
+  }
+}

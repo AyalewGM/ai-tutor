@@ -1,0 +1,333 @@
+{
+  "schema_version": 1,
+  "jurisdiction": {
+    "country_code": "US",
+    "code": "MD",
+    "name": "Maryland",
+    "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
+    "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx"
+  },
+  "authority": {
+    "code": "MSDE",
+    "name": "Maryland State Department of Education",
+    "authority_type": "STATE_AGENCY",
+    "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx"
+  },
+  "curriculum": {
+    "code": "MD_MATH_2_2026_27",
+    "name": "Maryland Grade 2 Mathematics \u2014 revised MCCRS",
+    "version": "MCCRS-revised-SY2026-27",
+    "grade_level": "2",
+    "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx"
+  },
+  "expectations": [
+    {
+      "source_identifier": "2.OA.A",
+      "title": "Represent and solve problems involving addition and subtraction",
+      "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx",
+      "strand": "Operations and Algebraic Thinking",
+      "description": "Use addition and subtraction within 100 to solve one- and two-step word problems."
+    },
+    {
+      "source_identifier": "2.NBT.B",
+      "title": "Use place value understanding and properties of operations to add and subtract",
+      "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx",
+      "strand": "Number and Operations in Base Ten",
+      "description": "Fluently add and subtract within 1000 using strategies based on place value."
+    },
+    {
+      "source_identifier": "2.MD.C",
+      "title": "Work with time and money",
+      "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx",
+      "strand": "Measurement and Data",
+      "description": "Tell and write time from analog and digital clocks to the nearest five minutes and work with money."
+    }
+  ],
+  "skills": [
+    {
+      "code": "MD2.OA.ADD_SUB_100",
+      "name": "Addition and Subtraction within 100",
+      "description": "Add and subtract within 100 using strategies based on place value.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_100",
+        "name": "Addition and Subtraction within 100",
+        "description": "Add and subtract whole numbers within 100 using place-value strategies."
+      },
+      "standard_refs": [
+        "2.OA.A",
+        "2.NBT.B"
+      ],
+      "prerequisite_codes": [],
+      "problem_families": [
+        "ADDITION_WITHIN_100",
+        "SUBTRACTION_WITHIN_100"
+      ],
+      "problems": [
+        {
+          "key": "md2-add_sub_100-addition_within_100-01",
+          "family": "ADDITION_WITHIN_100",
+          "prompt": "A school has 24 fiction books and 35 nonfiction books. How many books are there?",
+          "canonical_answer": "59",
+          "difficulty": 1,
+          "objective": "Add two-digit numbers within 100 using place-value strategies.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "a": 24,
+            "b": 35,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "md2-add_sub_100-subtraction_within_100-02",
+          "family": "SUBTRACTION_WITHIN_100",
+          "prompt": "There are 72 crayons in a box. 38 are used. How many crayons are left?",
+          "canonical_answer": "34",
+          "difficulty": 1,
+          "objective": "Subtract two-digit numbers within 100 using place-value strategies.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "a": 72,
+            "b": 38,
+            "operation": "-"
+          }
+        },
+        {
+          "key": "md2-add_sub_100-addition_within_100-03",
+          "family": "ADDITION_WITHIN_100",
+          "prompt": "A school has 56 fiction books and 39 nonfiction books. How many books are there?",
+          "canonical_answer": "95",
+          "difficulty": 2,
+          "objective": "Add two-digit numbers within 100 using place-value strategies.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "a": 56,
+            "b": 39,
+            "operation": "+"
+          }
+        },
+        {
+          "key": "md2-add_sub_100-subtraction_within_100-04",
+          "family": "SUBTRACTION_WITHIN_100",
+          "prompt": "There are 81 crayons in a box. 47 are used. How many crayons are left?",
+          "canonical_answer": "34",
+          "difficulty": 2,
+          "objective": "Subtract two-digit numbers within 100 using place-value strategies.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "a": 81,
+            "b": 47,
+            "operation": "-"
+          }
+        }
+      ]
+    },
+    {
+      "code": "MD2.NBT.PLACE_VALUE_3DIGIT",
+      "name": "Place Value: Hundreds, Tens, Ones",
+      "description": "Understand three-digit numbers as hundreds, tens, and ones.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.PLACE_VALUE.HUNDREDS_TENS_ONES",
+        "name": "Place Value: Hundreds, Tens, Ones",
+        "description": "Understand that the digits of a three-digit number represent hundreds, tens, and ones."
+      },
+      "standard_refs": [
+        "2.OA.A",
+        "2.NBT.B"
+      ],
+      "prerequisite_codes": [
+        "MD2.OA.ADD_SUB_100"
+      ],
+      "problem_families": [
+        "PLACE_VALUE_BASE_TEN"
+      ],
+      "problems": [
+        {
+          "key": "md2-place_value_3digit-place_value_base_ten-01",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 45?",
+          "canonical_answer": "4 tens and 5 ones",
+          "difficulty": 1,
+          "objective": "Decompose two-digit numbers into tens and ones.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "number": 45,
+            "tens": 4,
+            "ones": 5,
+            "hundreds": 0,
+            "place": "tens_and_ones"
+          }
+        },
+        {
+          "key": "md2-place_value_3digit-place_value_base_ten-02",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 63?",
+          "canonical_answer": "6 tens and 3 ones",
+          "difficulty": 1,
+          "objective": "Decompose two-digit numbers into tens and ones.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "number": 63,
+            "tens": 6,
+            "ones": 3,
+            "hundreds": 0,
+            "place": "tens_and_ones"
+          }
+        },
+        {
+          "key": "md2-place_value_3digit-place_value_base_ten-03",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 247?",
+          "canonical_answer": "2 tens and 4 ones",
+          "difficulty": 2,
+          "objective": "Decompose two-digit numbers into tens and ones.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "number": 247,
+            "tens": 2,
+            "ones": 4,
+            "hundreds": 7,
+            "place": "hundreds_tens_ones"
+          }
+        },
+        {
+          "key": "md2-place_value_3digit-place_value_base_ten-04",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "How many tens and ones make 385?",
+          "canonical_answer": "3 tens and 8 ones",
+          "difficulty": 2,
+          "objective": "Decompose two-digit numbers into tens and ones.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "number": 385,
+            "tens": 3,
+            "ones": 8,
+            "hundreds": 5,
+            "place": "hundreds_tens_ones"
+          }
+        }
+      ]
+    },
+    {
+      "code": "MD2.MD.MONEY",
+      "name": "Count Money",
+      "description": "Count collections of coins and bills and solve money word problems.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.MONEY_COUNT",
+        "name": "Count Money",
+        "description": "Determine the value of a collection of coins and bills and solve money word problems."
+      },
+      "standard_refs": [
+        "2.OA.A",
+        "2.NBT.B"
+      ],
+      "prerequisite_codes": [
+        "MD2.OA.ADD_SUB_100"
+      ],
+      "problem_families": [
+        "MONEY_COUNT"
+      ],
+      "problems": [
+        {
+          "key": "md2-money-money_count-01",
+          "family": "MONEY_COUNT",
+          "prompt": "What is the total value of 1 quarter(s), 1 dime(s), 1 nickel(s), and 1 penny(ies)?",
+          "canonical_answer": "$0.41",
+          "difficulty": 1,
+          "objective": "Count mixed coin collections.",
+          "modes": [
+            "diagnostic"
+          ],
+          "parameters": {
+            "quarters": 1,
+            "dimes": 1,
+            "nickels": 1,
+            "pennies": 1,
+            "total_cents": 41
+          }
+        },
+        {
+          "key": "md2-money-money_count-02",
+          "family": "MONEY_COUNT",
+          "prompt": "What is the total value of 2 quarter(s), 0 dime(s), 1 nickel(s), and 3 penny(ies)?",
+          "canonical_answer": "$0.58",
+          "difficulty": 1,
+          "objective": "Count mixed coin collections.",
+          "modes": [
+            "guided"
+          ],
+          "parameters": {
+            "quarters": 2,
+            "dimes": 0,
+            "nickels": 1,
+            "pennies": 3,
+            "total_cents": 58
+          }
+        },
+        {
+          "key": "md2-money-money_count-03",
+          "family": "MONEY_COUNT",
+          "prompt": "What is the total value of 0 quarter(s), 3 dime(s), 2 nickel(s), and 4 penny(ies)?",
+          "canonical_answer": "$0.44",
+          "difficulty": 2,
+          "objective": "Count mixed coin collections.",
+          "modes": [
+            "independent"
+          ],
+          "parameters": {
+            "quarters": 0,
+            "dimes": 3,
+            "nickels": 2,
+            "pennies": 4,
+            "total_cents": 44
+          }
+        },
+        {
+          "key": "md2-money-money_count-04",
+          "family": "MONEY_COUNT",
+          "prompt": "What is the total value of 1 quarter(s), 2 dime(s), 0 nickel(s), and 0 penny(ies)?",
+          "canonical_answer": "$0.45",
+          "difficulty": 2,
+          "objective": "Count mixed coin collections.",
+          "modes": [
+            "mastery"
+          ],
+          "parameters": {
+            "quarters": 1,
+            "dimes": 2,
+            "nickels": 0,
+            "pennies": 0,
+            "total_cents": 45
+          }
+        }
+      ]
+    }
+  ],
+  "readiness": {
+    "minimum_curated_per_skill": 4,
+    "required_modes": [
+      "diagnostic",
+      "guided",
+      "independent",
+      "mastery"
+    ]
+  }
+}

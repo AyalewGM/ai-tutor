@@ -10,7 +10,7 @@ DC_GRADE3_BLUEPRINT = "https://osse-migrate.dc.gov/sites/default/files/dc/sites/
 
 _PACK_PATH = (
     Path(__file__).parents[1]
-    / "docs/curriculum/packs/dc-grade3-ccss-2024-25.json"
+    / "docs/curriculum/packs/dc-grade3-ccss-2024_25.json"
 )
 
 
