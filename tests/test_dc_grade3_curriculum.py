@@ -17,7 +17,6 @@ from app.services.problem_generation import content_readiness, generate_problem
 from scripts.seed_dc_grade3 import (
     CURRICULUM_CODE,
     CURRICULUM_VERSION,
-    DC_GRADE3_BLUEPRINT,
     seed,
 )
 
@@ -45,7 +44,7 @@ def test_dc_grade3_seed_is_idempotent_provenanced_and_content_ready():
         assert curriculum.version == CURRICULUM_VERSION
         assert curriculum.jurisdiction == "District of Columbia"
         assert curriculum.grade_level == "3"
-        assert curriculum.source_uri.startswith("https://osse-")
+        assert curriculum.source_uri.startswith("https://osse-migrate.dc.gov/")
 
         skills = list(
             db.scalars(select(Skill).where(Skill.curriculum_id == curriculum.id))
@@ -66,7 +65,9 @@ def test_dc_grade3_seed_is_idempotent_provenanced_and_content_ready():
             for problem in problems
         )
         assert all(
-            problem.solution["provenance"]["standards_source"] == DC_GRADE3_BLUEPRINT
+            problem.solution["provenance"]["standards_source"].startswith(
+                "https://osse-migrate.dc.gov/"
+            )
             for problem in problems
         )
         assert all(content_readiness(db, skill_id=skill.id).ready for skill in skills)
@@ -227,6 +228,8 @@ def test_dc_grade3_pack_loaded_via_declarative_framework():
             for problem in problems
         )
         assert all(
-            problem.solution["provenance"]["standards_source"] == DC_GRADE3_BLUEPRINT
+            problem.solution["provenance"]["standards_source"].startswith(
+                "https://osse-migrate.dc.gov/"
+            )
             for problem in problems
         )

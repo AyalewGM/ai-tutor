@@ -17,7 +17,6 @@ from app.services.problem_generation import content_readiness, generate_problem
 from scripts.seed_md_grade3 import (
     CURRICULUM_CODE,
     CURRICULUM_VERSION,
-    GRADE3_CROSSWALK,
     seed,
 )
 
