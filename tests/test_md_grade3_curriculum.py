@@ -73,7 +73,10 @@ def test_md_grade3_seed_is_idempotent_provenanced_and_content_ready():
             for mapping in mappings
         }
         assert mapped_codes == set(EXPECTED_SKILLS.values())
-        assert all(mapping.provenance_json["standard"].startswith("3.") for mapping in mappings)
+        assert all(
+            any(ref.startswith("3.") for ref in mapping.provenance_json["expectation_refs"])
+            for mapping in mappings
+        )
 
         edges = list(
             db.scalars(
@@ -177,3 +180,35 @@ def test_canonical_mapping_never_transfers_md_grade3_evidence():
         assert db.get(StudentSkill, (learner.id, other_skill.id)) is None
         assert not hasattr(StudentSkill, "canonical_skill_id")
         db.rollback()
+
+
+def test_md_grade3_pack_loaded_via_declarative_framework():
+    result = seed()
+    with SessionLocal() as db:
+        curriculum = db.scalar(
+            select(Curriculum).where(Curriculum.code == CURRICULUM_CODE)
+        )
+        assert result.curriculum_id == str(curriculum.id)
+        assert result.skill_count == 4
+        assert result.expectation_count == 3
+        assert result.problem_count == 16
+
+        skills = list(
+            db.scalars(select(Skill).where(Skill.curriculum_id == curriculum.id))
+        )
+        skill_ids = {skill.id for skill in skills}
+        problems = list(
+            db.scalars(
+                select(Problem).where(
+                    Problem.primary_skill_id.in_(skill_ids),
+                    Problem.source_type == "CURATED",
+                )
+            )
+        )
+        assert len(problems) == 16
+        assert all("pack_problem_key" in problem.solution for problem in problems)
+        assert all(problem.solution["provenance"]["origin"] == "AUTHORED" for problem in problems)
+        assert all(
+            problem.solution["provenance"]["standards_source"] == GRADE3_CROSSWALK
+            for problem in problems
+        )

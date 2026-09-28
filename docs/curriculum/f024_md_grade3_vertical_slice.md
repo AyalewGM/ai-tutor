@@ -19,6 +19,33 @@ Primary authority: **Maryland State Department of Education (MSDE)**.
 
 The revised standards were adopted July 29, 2025 and identify implementation for school year 2026–27. The curriculum identity therefore uses version `MCCRS-revised-SY2026-27`; it does not silently overwrite the older Maryland/Common Core framework.
 
+## Declarative pack format
+
+This slice is now authored as a versioned declarative curriculum pack:
+
+`docs/curriculum/packs/md-grade3-mccrs-2026-27.json`
+
+It is loaded idempotently by the generic elementary loader introduced in PR #93:
+
+```bash
+python scripts/load_elementary_pack.py docs/curriculum/packs/md-grade3-mccrs-2026-27.json
+```
+
+The pack declares:
+
+- jurisdiction (`US` → `MD` → Maryland)
+- authority (`MSDE`)
+- curriculum identity, version, grade, and official source URI
+- curriculum expectations drawn from the crosswalk
+- curriculum-local skills with canonical mathematical mappings
+- curriculum-local prerequisite edges
+- eligible problem families
+- authored problems assigned to deterministic learning modes (diagnostic, guided, independent, mastery)
+
+`scripts/seed_md_grade3.py` is now a thin wrapper that parses and loads this pack, preserving compatibility with existing tests and local seed workflows.
+
+A small framework fix was required while loading real content: the loader now writes the declared jurisdiction name (`Maryland`) into `Curriculum.jurisdiction` rather than the authority name (`Maryland State Department of Education`). This preserves the existing jurisdiction semantics and test expectations.
+
 Secondary local context reviewed, but not treated as the standards authority for this state-level pack:
 
 - MCPS Grade 3 mathematics: https://www.montgomeryschoolsmd.org/curriculum/math/elementary/grade3
@@ -65,9 +92,9 @@ This curriculum/content slice adds no learner or parent PII and no external data
 
 ## Remaining F-024 work
 
-1. Complete standards decomposition and content-depth readiness for Maryland Grades 1–5.
-2. Independently verify and implement OSSE/DC Grades 1–5 and VDOE 2023 Grades 1–5 packs.
-3. Add shared ten-frame, base-ten, clock, money, measurement, geometry, and elementary graph specs/renderers.
-4. Add misconception catalogs and representation families per skill.
+1. Implement DC Grade 3 and Virginia Grade 3 as separate declarative packs using the same loader.
+2. After those three Grade 3 packs are stable, stop and run the architecture validation checkpoint before expanding to Grades 1, 2, 4, and 5.
+3. Add shared ten-frame, base-ten, clock, money, measurement, geometry, and elementary graph specs/renderers where needed by the Grade 3 concepts.
+4. Add misconception catalogs and remediation paths per skill.
 5. Add tablet/mobile accessibility and synthetic E2E coverage for younger learners.
 6. Complete QA, Security/Data Impact, PO, and PM acceptance before any pack is marketed as supported.

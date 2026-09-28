@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "jurisdiction": {
+    "country_code": "US",
+    "code": "MD",
+    "name": "Maryland",
+    "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
+    "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx"
+  },
+  "authority": {
+    "code": "MSDE",
+    "name": "Maryland State Department of Education",
+    "authority_type": "STATE_AGENCY",
+    "source_uri": "https://marylandpublicschools.org/about/pages/dcaa/math/revised-standards.aspx"
+  },
+  "curriculum": {
+    "code": "MD_MATH_3_2026_27",
+    "name": "Maryland Grade 3 Mathematics — revised MCCRS",
+    "version": "MCCRS-revised-SY2026-27",
+    "grade_level": "3",
+    "source_uri": "https://marylandpublicschools.org/about/Documents/DCAA/Math/revised/Grade-3-MCCRS-Math-Crosswalk-A.pdf"
+  },
+  "expectations": [
+    {
+      "source_identifier": "3.NOS.B",
+      "title": "Use multiplication and division within 100 to solve word problems",
+      "source_uri": "https://marylandpublicschools.org/about/Documents/DCAA/Math/revised/Grade-3-MCCRS-Math-Crosswalk-A.pdf",
+      "strand": "Number and Operation Sense",
+      "description": "Interpret products and quotients of whole numbers through equal groups, arrays, and measurement quantities."
+    },
+    {
+      "source_identifier": "3.NOS.F",
+      "title": "Understand fractions as numbers built from unit fractions",
+      "source_uri": "https://marylandpublicschools.org/about/Documents/DCAA/Math/revised/Grade-3-MCCRS-Math-Crosswalk-A.pdf",
+      "strand": "Number and Operation Sense",
+      "description": "Understand 1/b as one equal part of a whole and build fractions a/b from a copies of 1/b."
+    },
+    {
+      "source_identifier": "3.GR.C",
+      "title": "Relate area to multiplication and addition",
+      "source_uri": "https://marylandpublicschools.org/about/Documents/DCAA/Math/revised/Grade-3-MCCRS-Math-Crosswalk-A.pdf",
+      "strand": "Measurement and Geometry",
+      "description": "Recognize area as an attribute of plane figures and understand concepts of area measurement using unit squares."
+    }
+  ],
+  "skills": [
+    {
+      "code": "MD3.NOS.EQUAL_GROUPS",
+      "name": "Multiplication as Equal Groups",
+      "description": "Interpret products as equal groups and arrays.",
+      "difficulty_level": 1,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MULTIPLICATION.EQUAL_GROUPS",
+        "name": "Multiplication as Equal Groups",
+        "description": "Understand multiplication as equal groups, arrays, and repeated addition."
+      },
+      "standard_refs": ["3.NOS.B"],
+      "prerequisite_codes": [],
+      "problem_families": ["EQUAL_GROUPS"],
+      "problems": [
+        {
+          "key": "md3-nos-equal-groups-diagnostic-01",
+          "family": "EQUAL_GROUPS",
+          "prompt": "There are 3 rows with 4 counters in each row. How many counters are there?",
+          "canonical_answer": "12",
+          "difficulty": 1,
+          "objective": "Diagnose whether the learner interprets an array as equal groups.",
+          "modes": ["diagnostic"],
+          "parameters": {"rows": 3, "columns": 4, "representation": "counters"}
+        },
+        {
+          "key": "md3-nos-equal-groups-guided-01",
+          "family": "EQUAL_GROUPS",
+          "prompt": "Five bags each hold 2 marbles. How many marbles are in all?",
+          "canonical_answer": "10",
+          "difficulty": 1,
+          "objective": "Guide the learner from a context to an equal-groups product.",
+          "modes": ["guided"],
+          "parameters": {"rows": 5, "columns": 2, "representation": "groups"}
+        },
+        {
+          "key": "md3-nos-equal-groups-independent-01",
+          "family": "EQUAL_GROUPS",
+          "prompt": "What product is represented by 4 equal groups of 6?",
+          "canonical_answer": "24",
+          "difficulty": 2,
+          "objective": "Collect independent evidence of equal-groups interpretation.",
+          "modes": ["independent"],
+          "parameters": {"rows": 4, "columns": 6, "representation": "groups"}
+        },
+        {
+          "key": "md3-nos-equal-groups-mastery-01",
+          "family": "EQUAL_GROUPS",
+          "prompt": "A garden has 7 short rows with 3 plants in each row. How many plants are there?",
+          "canonical_answer": "21",
+          "difficulty": 2,
+          "objective": "Verify mastery of equal-groups multiplication in context.",
+          "modes": ["mastery"],
+          "parameters": {"rows": 7, "columns": 3, "representation": "array"}
+        }
+      ]
+    },
+    {
+      "code": "MD3.NOS.EQUAL_SHARING",
+      "name": "Division as Equal Sharing",
+      "description": "Interpret quotients through fair sharing and groups of a known size.",
+      "difficulty_level": 2,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.DIVISION.EQUAL_SHARING",
+        "name": "Division as Equal Sharing",
+        "description": "Understand division as fair sharing and as finding an unknown group size or number of groups."
+      },
+      "standard_refs": ["3.NOS.B"],
+      "prerequisite_codes": ["MD3.NOS.EQUAL_GROUPS"],
+      "problem_families": ["EQUAL_SHARING"],
+      "problems": [
+        {
+          "key": "md3-nos-equal-sharing-diagnostic-01",
+          "family": "EQUAL_SHARING",
+          "prompt": "Twelve counters are shared equally among 3 children. How many counters does each child get?",
+          "canonical_answer": "4",
+          "difficulty": 1,
+          "objective": "Diagnose partitive division interpretation.",
+          "modes": ["diagnostic"],
+          "parameters": {"total": 12, "groups": 3, "group_size": 4}
+        },
+        {
+          "key": "md3-nos-equal-sharing-guided-01",
+          "family": "EQUAL_SHARING",
+          "prompt": "Eighteen shells are placed into groups of 6. How many groups are made?",
+          "canonical_answer": "3",
+          "difficulty": 1,
+          "objective": "Guide the learner to interpret quotative division.",
+          "modes": ["guided"],
+          "parameters": {"total": 18, "groups": 3, "group_size": 6}
+        },
+        {
+          "key": "md3-nos-equal-sharing-independent-01",
+          "family": "EQUAL_SHARING",
+          "prompt": "Twenty-four pencils are packed equally into 4 boxes. How many pencils go in each box?",
+          "canonical_answer": "6",
+          "difficulty": 2,
+          "objective": "Collect independent evidence of equal-sharing division.",
+          "modes": ["independent"],
+          "parameters": {"total": 24, "groups": 4, "group_size": 6}
+        },
+        {
+          "key": "md3-nos-equal-sharing-mastery-01",
+          "family": "EQUAL_SHARING",
+          "prompt": "A coach places 28 cones in rows of 7. How many rows are made?",
+          "canonical_answer": "4",
+          "difficulty": 2,
+          "objective": "Verify mastery of equal-sharing division in context.",
+          "modes": ["mastery"],
+          "parameters": {"total": 28, "groups": 4, "group_size": 7}
+        }
+      ]
+    },
+    {
+      "code": "MD3.NOS.UNIT_FRACTION",
+      "name": "Unit Fractions as Numbers",
+      "description": "Understand 1/b as one equal part of a whole and build fractions from it.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.FRACTION.UNIT",
+        "name": "Unit Fractions as Numbers",
+        "description": "Understand unit fractions 1/b and build non-unit fractions a/b from unit fractions."
+      },
+      "standard_refs": ["3.NOS.F"],
+      "prerequisite_codes": ["MD3.NOS.EQUAL_SHARING"],
+      "problem_families": ["UNIT_FRACTION"],
+      "problems": [
+        {
+          "key": "md3-nos-unit-fraction-diagnostic-01",
+          "family": "UNIT_FRACTION",
+          "prompt": "A strip is divided into 4 equal parts. What fraction is one part?",
+          "canonical_answer": "1/4",
+          "difficulty": 1,
+          "objective": "Diagnose understanding of 1/b as one equal part.",
+          "modes": ["diagnostic"],
+          "parameters": {"numerator": 1, "denominator": 4}
+        },
+        {
+          "key": "md3-nos-unit-fraction-guided-01",
+          "family": "UNIT_FRACTION",
+          "prompt": "One equal part of a whole is 1/6. How many equal parts make the whole?",
+          "canonical_answer": "6",
+          "difficulty": 1,
+          "objective": "Guide the learner to connect unit fractions to the whole.",
+          "modes": ["guided"],
+          "parameters": {"numerator": 1, "denominator": 6}
+        },
+        {
+          "key": "md3-nos-unit-fraction-independent-01",
+          "family": "UNIT_FRACTION",
+          "prompt": "A number line from 0 to 1 is split into 8 equal spaces. What fraction names the first mark after 0?",
+          "canonical_answer": "1/8",
+          "difficulty": 2,
+          "objective": "Collect independent evidence of unit fractions on a number line.",
+          "modes": ["independent"],
+          "parameters": {"numerator": 1, "denominator": 8}
+        },
+        {
+          "key": "md3-nos-unit-fraction-mastery-01",
+          "family": "UNIT_FRACTION",
+          "prompt": "Mina uses 3 pieces of size 1/5. What fraction of the whole does she have?",
+          "canonical_answer": "3/5",
+          "difficulty": 2,
+          "objective": "Verify mastery of building non-unit fractions from unit fractions.",
+          "modes": ["mastery"],
+          "parameters": {"numerator": 3, "denominator": 5}
+        }
+      ]
+    },
+    {
+      "code": "MD3.GR.RECTANGLE_AREA",
+      "name": "Rectangle Area with Unit Squares",
+      "description": "Relate rectangular arrays, unit squares, and multiplication to area.",
+      "difficulty_level": 3,
+      "canonical": {
+        "code": "MATH.ELEMENTARY.MEASUREMENT.RECTANGLE_AREA",
+        "name": "Rectangle Area with Unit Squares",
+        "description": "Understand area as covering with unit squares and relate it to multiplication."
+      },
+      "standard_refs": ["3.GR.C"],
+      "prerequisite_codes": ["MD3.NOS.EQUAL_GROUPS"],
+      "problem_families": ["RECTANGLE_AREA"],
+      "problems": [
+        {
+          "key": "md3-gr-rectangle-area-diagnostic-01",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A rectangle has 3 rows of 5 unit squares. What is its area in square units?",
+          "canonical_answer": "15",
+          "difficulty": 1,
+          "objective": "Diagnose understanding of area as rows of unit squares.",
+          "modes": ["diagnostic"],
+          "parameters": {"rows": 3, "columns": 5, "unit": "square units"}
+        },
+        {
+          "key": "md3-gr-rectangle-area-guided-01",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A rectangular mat is 4 units long and 2 units wide. What is its area?",
+          "canonical_answer": "8",
+          "difficulty": 1,
+          "objective": "Guide the learner to multiply length and width for area.",
+          "modes": ["guided"],
+          "parameters": {"rows": 2, "columns": 4, "unit": "square units"}
+        },
+        {
+          "key": "md3-gr-rectangle-area-independent-01",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A rectangle covers 6 rows with 3 unit squares in each row. What area does it cover?",
+          "canonical_answer": "18",
+          "difficulty": 2,
+          "objective": "Collect independent evidence of rectangle area reasoning.",
+          "modes": ["independent"],
+          "parameters": {"rows": 6, "columns": 3, "unit": "square units"}
+        },
+        {
+          "key": "md3-gr-rectangle-area-mastery-01",
+          "family": "RECTANGLE_AREA",
+          "prompt": "A board is 7 units by 4 units. Find its area in square units.",
+          "canonical_answer": "28",
+          "difficulty": 2,
+          "objective": "Verify mastery of rectangle area with unit squares.",
+          "modes": ["mastery"],
+          "parameters": {"rows": 4, "columns": 7, "unit": "square units"}
+        }
+      ]
+    }
+  ],
+  "readiness": {
+    "minimum_curated_per_skill": 4,
+    "required_modes": ["diagnostic", "guided", "independent", "mastery"]
+  }
+}
