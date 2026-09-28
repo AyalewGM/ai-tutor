@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "jurisdiction": {
+    "country_code": "US",
+    "code": "SYNTH",
+    "name": "Synthetic Jurisdiction",
+    "jurisdiction_type": "STATE_PROVINCE_TERRITORY",
+    "source_uri": "https://example.test/authority"
+  },
+  "authority": {
+    "code": "SYNTH-DOE",
+    "name": "Synthetic Education Authority",
+    "authority_type": "STATE_AGENCY",
+    "source_uri": "https://example.test/authority"
+  },
+  "curriculum": {
+    "code": "SYNTH_MATH_3",
+    "name": "Synthetic Grade 3 Mathematics",
+    "version": "test-v1",
+    "grade_level": "3",
+    "source_uri": "https://example.test/standards/grade3"
+  },
+  "expectations": [
+    {
+      "source_identifier": "3.SYNTH.A.1",
+      "title": "Solve original synthetic contextual problems",
+      "source_uri": "https://example.test/standards/grade3#a1",
+      "strand": "Synthetic Number Sense",
+      "description": "A non-production fixture demonstrating the schema."
+    }
+  ],
+  "skills": [
+    {
+      "code": "SYNTH3.NUM.CONTEXT",
+      "name": "Synthetic Context Problems",
+      "description": "Solve deterministic original context problems.",
+      "difficulty_level": 1,
+      "canonical": {
+        "code": "MATH.SYNTHETIC.CONTEXT",
+        "name": "Synthetic Context Problems",
+        "description": "Test-only canonical identity."
+      },
+      "standard_refs": ["3.SYNTH.A.1"],
+      "prerequisite_codes": [],
+      "problem_families": ["WORD_PROBLEM"],
+      "problems": [
+        {
+          "key": "synth3-context-diagnostic-01",
+          "family": "WORD_PROBLEM",
+          "prompt": "What is 10% of 40?",
+          "canonical_answer": "4",
+          "difficulty": 1,
+          "objective": "Establish initial deterministic evidence.",
+          "modes": ["diagnostic"],
+          "parameters": {"percent": 10, "amount": 40}
+        },
+        {
+          "key": "synth3-context-guided-01",
+          "family": "WORD_PROBLEM",
+          "prompt": "What is 20% of 60?",
+          "canonical_answer": "12",
+          "difficulty": 1,
+          "objective": "Support guided deterministic practice.",
+          "modes": ["guided"],
+          "parameters": {"percent": 20, "amount": 60}
+        },
+        {
+          "key": "synth3-context-independent-01",
+          "family": "WORD_PROBLEM",
+          "prompt": "What is 25% of 80?",
+          "canonical_answer": "20",
+          "difficulty": 2,
+          "objective": "Collect fresh independent evidence.",
+          "modes": ["independent"],
+          "parameters": {"percent": 25, "amount": 80}
+        },
+        {
+          "key": "synth3-context-mastery-01",
+          "family": "WORD_PROBLEM",
+          "prompt": "What is 50% of 120?",
+          "canonical_answer": "60",
+          "difficulty": 2,
+          "objective": "Verify mastery with a fresh problem.",
+          "modes": ["mastery"],
+          "parameters": {"percent": 50, "amount": 120}
+        }
+      ]
+    }
+  ],
+  "readiness": {
+    "minimum_curated_per_skill": 4,
+    "required_modes": ["diagnostic", "guided", "independent", "mastery"]
+  }
+}
