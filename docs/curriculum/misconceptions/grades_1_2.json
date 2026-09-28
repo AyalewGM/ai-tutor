@@ -1,0 +1,186 @@
+{
+  "version": "1.0.0",
+  "description": "Elementary Grades 1-2 deterministic misconception and remediation catalog. Each entry maps to a canonical mathematical concept and provides application-owned classification rules and remediation guidance.",
+  "catalog": {
+    "MATH.ELEMENTARY.NUMBER_SENSE.COUNT_COMPARE_TO_120": {
+      "misconceptions": [
+        {
+          "code": "COUNT_SKIPS",
+          "name": "Skips numbers when counting",
+          "diagnostic_pattern": "sequence_missing_or_duplicate",
+          "remediation": "Use a number line or hundred chart to rehearse counting by ones from a given start number."
+        },
+        {
+          "code": "COMPARE_DIGITS_ONLY",
+          "name": "Compares multi-digit numbers by digit count or first digit only",
+          "diagnostic_pattern": "wrong_comparison_symbol",
+          "remediation": "Compare place values from left to right; use base-ten models to justify the result."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.PLACE_VALUE.TENS_ONES": {
+      "misconceptions": [
+        {
+          "code": "TEEN_TEN",
+          "name": "Confuses teen numbers with tens",
+          "diagnostic_pattern": "reverses_tens_and_ones",
+          "remediation": "Build the number with base-ten blocks and name the tens and ones separately."
+        },
+        {
+          "code": "FACE_VALUE_ONLY",
+          "name": "Reads digits by face value only",
+          "diagnostic_pattern": "says_digits_not_value",
+          "remediation": "Use a place-value mat: label tens and ones columns and place counters."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.PLACE_VALUE.HUNDREDS_TENS_ONES": {
+      "misconceptions": [
+        {
+          "code": "ZERO_PLACE_IGNORED",
+          "name": "Ignores zeros in three-digit numbers",
+          "diagnostic_pattern": "omits_zero_place",
+          "remediation": "Decompose the number with base-ten blocks and record each place, including zeros."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_20": {
+      "misconceptions": [
+        {
+          "code": "COUNT_ALL",
+          "name": "Counts all objects instead of counting on",
+          "diagnostic_pattern": "slow_count_from_one",
+          "remediation": "Use a number line or ten-frame: start at the larger addend and count on."
+        },
+        {
+          "code": "SUBTRACTION_AS_FIRST_MINUS_SECOND",
+          "name": "Always subtracts smaller digit from larger digit regardless of position",
+          "diagnostic_pattern": "reverse_subtraction",
+          "remediation": "Model the minuend with counters and remove the subtrahend; compare to a number line."
+        },
+        {
+          "code": "MAKE_TEN_MISSING",
+          "name": "Does not decompose to make a ten",
+          "diagnostic_pattern": "no_decomposition",
+          "remediation": "Practice making ten with a ten-frame; decompose the smaller addend to reach ten first."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_100": {
+      "misconceptions": [
+        {
+          "code": "ADD_COLUMNS_WRONG",
+          "name": "Adds tens and ones independently without regrouping",
+          "diagnostic_pattern": "incorrect_regrouping",
+          "remediation": "Use base-ten blocks to combine ones, regroup ten ones as a ten, then combine tens."
+        },
+        {
+          "code": "BORROW_FROM_WRONG_PLACE",
+          "name": "Decomposes the wrong place value in subtraction",
+          "diagnostic_pattern": "wrong_place_borrow",
+          "remediation": "Model the minuend with base-ten blocks; trade one ten for ten ones when needed."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.ARITHMETIC.WORD_PROBLEM_WITHIN_20": {
+      "misconceptions": [
+        {
+          "code": "KEY_WORD_TRAP",
+          "name": "Relies only on keywords rather than the situation",
+          "diagnostic_pattern": "keyword_driven_operation",
+          "remediation": "Act out the problem with objects; identify whether the total increases, decreases, or is compared."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.ARITHMETIC.WORD_PROBLEM_WITHIN_100": {
+      "misconceptions": [
+        {
+          "code": "TWO_STEP_FIRST_ONLY",
+          "name": "Solves only the first step of a two-step problem",
+          "diagnostic_pattern": "partial_solution",
+          "remediation": "Restate the question; solve one step, then use that answer to complete the second step."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.ARITHMETIC.EQUATION_BALANCE": {
+      "misconceptions": [
+        {
+          "code": "EQUAL_IS_ANSWER",
+          "name": "Treats the equal sign as a prompt for an answer rather than a balance",
+          "diagnostic_pattern": "rejects_equation_without_operation_on_left",
+          "remediation": "Use a balance model: both sides must have the same value. Check by computing each side."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.MEASUREMENT.TELL_TIME_HOUR_HALF_HOUR": {
+      "misconceptions": [
+        {
+          "code": "HAND_SWAP",
+          "name": "Confuses hour and minute hands",
+          "diagnostic_pattern": "swaps_hands",
+          "remediation": "Label hands: the shorter hand shows the hour; the longer hand shows minutes."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.MEASUREMENT.TELL_TIME_FIVE_MINUTES": {
+      "misconceptions": [
+        {
+          "code": "MINUTE_COUNT_BY_ONES",
+          "name": "Counts minute marks as single minutes",
+          "diagnostic_pattern": "off_by_factor_of_five",
+          "remediation": "Count by fives around the clock face; each number represents five minutes."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.MEASUREMENT.MONEY_COUNT": {
+      "misconceptions": [
+        {
+          "code": "COIN_FACE_VALUE",
+          "name": "Confuses coin size with value",
+          "diagnostic_pattern": "uses_size_for_value",
+          "remediation": "Sort coins by value; use a coin-value chart and count from highest to lowest."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.MEASUREMENT.LENGTH_COMPARE": {
+      "misconceptions": [
+        {
+          "code": "UNIT_MISMATCH",
+          "name": "Subtracts lengths without attending to units",
+          "diagnostic_pattern": "ignores_units",
+          "remediation": "Measure both objects with the same unit; subtract only after units match."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.GEOMETRY.IDENTIFY_COMPOSE_SHAPES": {
+      "misconceptions": [
+        {
+          "code": "SHAPE_ORIENTATION",
+          "name": "Does not recognize shapes in nonstandard orientations",
+          "diagnostic_pattern": "orientation_dependent",
+          "remediation": "Rotate shapes and trace sides; focus on defining attributes, not orientation or size."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.GEOMETRY.SHAPES_EQUAL_SHARES": {
+      "misconceptions": [
+        {
+          "code": "EQUAL_PARTS_COUNT",
+          "name": "Counts parts without checking equal size",
+          "diagnostic_pattern": "counts_unequal_parts",
+          "remediation": "Fold paper shapes to confirm equal shares before naming the fraction."
+        }
+      ]
+    },
+    "MATH.ELEMENTARY.NUMBER_SENSE.SKIP_COUNTING_PATTERNS": {
+      "misconceptions": [
+        {
+          "code": "PATTERN_STEP_WRONG",
+          "name": "Identifies a different step size in a pattern",
+          "diagnostic_pattern": "wrong_increment",
+          "remediation": "Find the difference between consecutive terms; verify by continuing the pattern."
+        }
+      ]
+    }
+  }
+}
