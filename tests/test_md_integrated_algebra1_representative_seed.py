@@ -17,6 +17,7 @@ def test_integrated_algebra1_representative_seed_is_idempotent_and_isolated():
         assert curriculum.source_uri == MSDE_SOURCE
         skills = list(db.scalars(select(Skill).where(Skill.curriculum_id == curriculum.id)))
         expected_codes = {
+            "IA1.AT.A.1",
             "IA1.AT.C.10",
             "IA1.AT.C.11",
             "IA1.AT.C.12",
@@ -33,7 +34,7 @@ def test_integrated_algebra1_representative_seed_is_idempotent_and_isolated():
         assert {skill.code for skill in skills} == expected_codes
         skill_ids = {skill.id for skill in skills}
         mappings = list(db.scalars(select(CurriculumSkillMapping).where(CurriculumSkillMapping.skill_id.in_(skill_ids))))
-        assert len(mappings) == 12
+        assert len(mappings) == 13
         assert all(mapping.provenance_json["standards_source"] == MSDE_SOURCE for mapping in mappings)
         canonical_ids = {mapping.canonical_skill_id for mapping in mappings}
         canonical_codes = set(db.scalars(select(CanonicalSkill.code).where(CanonicalSkill.id.in_(canonical_ids))))
@@ -43,7 +44,7 @@ def test_integrated_algebra1_representative_seed_is_idempotent_and_isolated():
         edges = list(db.scalars(select(SkillPrerequisite).where(SkillPrerequisite.skill_id.in_(skill_ids))))
         assert edges == []
         problems = list(db.scalars(select(Problem).where(Problem.primary_skill_id.in_(skill_ids))))
-        assert len(problems) == 12
+        assert len(problems) == 13
         assert all(problem.solution["provenance"]["origin"] == "AUTHORED" for problem in problems)
         assert all(problem.solution["provenance"]["author"] == "AI Tutor curriculum team" for problem in problems)
         traditional = db.scalar(select(Curriculum).where(Curriculum.code == "MD_ALGEBRA_1_2026_27"))
