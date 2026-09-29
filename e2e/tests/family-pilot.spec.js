@@ -8,20 +8,21 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   const email = `synthetic-f017-${Date.now()}@example.com`;
   const password = 'SyntheticOnly!12345';
 
-  await page.goto(baseURL);
+  await page.goto(`${baseURL}/app/login`);
+  await page.getByRole('tab', { name: 'Create account' }).click();
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Password').fill(password);
-  await page.getByLabel('Display name (registration only)').fill('Synthetic Pilot Parent');
+  await page.getByLabel('Display name').fill('Synthetic Pilot Parent');
   await page.getByRole('button', { name: 'Create account' }).click();
-  await expect(page.getByText('Choose a learner and curriculum, or start learning.')).toBeVisible();
+  await expect(page).toHaveURL(/\/app\/learn/);
 
   await page.getByLabel('Learner first name').fill('Synthetic Learner');
-  const curriculum = page.getByLabel('Exact curriculum');
+  const curriculum = page.locator('#curriculum');
   const mcpsOption = curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' });
   await expect(mcpsOption.first()).toBeAttached({ timeout: 10000 });
   await curriculum.selectOption(await mcpsOption.first().getAttribute('value'));
   await page.getByRole('button', { name: 'Add learner' }).click();
-  await expect(page.getByText(/Synthetic Learner is ready with MCPS_MATH_8/)).toBeVisible();
+  await expect(page.getByText('Synthetic Learner is ready.')).toBeVisible();
 
   const learner = page.locator('#learner');
   await expect(learner).not.toHaveValue('');
@@ -36,12 +37,12 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await distributiveSkill.click();
 
   await page.getByRole('button', { name: 'Start learning' }).click();
-  await expect(page).toHaveURL(/\/learn\/[0-9a-f-]+$/);
+  await expect(page).toHaveURL(/\/app\/learn\/[0-9a-f-]+$/);
   await expect(page.getByRole('heading', { name: 'Current problem' })).toBeVisible();
   await expect(page.getByText('Help can support learning, but assisted success is not counted as independent mastery evidence.')).toBeVisible();
 
   const sessionUrl = page.url();
-  const problemText = (await page.locator('#problem').textContent()) || '';
+  const problemText = (await page.locator('.problem').textContent()) || '';
   const knownAnswers = {
     '3(x+4)': '3x+12',
     '2(x+5)': '2x+10',
@@ -60,21 +61,21 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await page.getByRole('button', { name: 'Submit answer' }).click();
   await expect(page.getByText('Correct. Keep going.')).toBeVisible();
 
-  await page.goto(`${baseURL}/parent`);
-  await expect(page.getByRole('heading', { name: 'Parent Dashboard' })).toBeVisible();
-  await expect(page.getByLabel('Child')).toContainText('Synthetic Learner');
-  await expect(page.getByText('Progress below distinguishes assisted work from independent evidence.')).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Learning summary' })).toBeVisible();
+  await page.goto(`${baseURL}/app/parent`);
+  await expect(page.getByRole('heading', { name: 'Family learning overview' })).toBeVisible();
+  await expect(page.getByLabel('Learner', { exact: true })).toContainText('Synthetic Learner');
+  await expect(page.getByText('Assisted success is shown separately')).toBeVisible();
 
   const outsider = await browser.newContext();
   const outsiderPage = await outsider.newPage();
   const outsiderEmail = `synthetic-outsider-${Date.now()}@example.com`;
-  await outsiderPage.goto(baseURL);
+  await outsiderPage.goto(`${baseURL}/app/login`);
+  await outsiderPage.getByRole('tab', { name: 'Create account' }).click();
   await outsiderPage.getByLabel('Email').fill(outsiderEmail);
   await outsiderPage.getByLabel('Password').fill(password);
-  await outsiderPage.getByLabel('Display name (registration only)').fill('Synthetic Unrelated Parent');
+  await outsiderPage.getByLabel('Display name').fill('Synthetic Unrelated Parent');
   await outsiderPage.getByRole('button', { name: 'Create account' }).click();
-  await expect(outsiderPage.getByText('Choose a learner and curriculum, or start learning.')).toBeVisible();
+  await expect(outsiderPage).toHaveURL(/\/app\/learn/);
   await outsiderPage.goto(sessionUrl);
   await expect(outsiderPage.getByRole('alert')).toContainText('Learner not found');
 
