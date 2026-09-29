@@ -70,6 +70,7 @@ def seed() -> None:
             curriculum.name = "Maryland Integrated Algebra I — 2025 revised MCCRS"; curriculum.jurisdiction = "Maryland"; curriculum.grade_level = "Integrated Algebra I"; curriculum.authority_id = authority.id; curriculum.version = CURRICULUM_VERSION; curriculum.source_uri = MSDE_SOURCE
 
         specs = [
+            ("IA1.AT.A.1", "Equivalent Linear and Exponential Expressions", "Interpret components of linear and exponential expressions and rewrite equivalent forms to reveal contextual properties such as initial value, rate of change, growth, or decay.", 2, "MATH.IA1.AT.A.1"),
             ("IA1.AT.C.10", "Functions, Domain, and Range", "Identify, represent, and analyze functions using domain, range, tables, graphs, equations, and function notation.", 2, "MATH.IA1.AT.C.10"),
             ("IA1.GR.A.1", "Rigid Transformations and Congruence", "Apply rotations, reflections, and translations and use preserved distance and angle measure to justify congruence.", 2, "MATH.IA1.GR.A.1"),
             ("IA1.DS.A.1", "Correlation and Causation", "Distinguish correlation from causation when interpreting statistical relationships.", 2, "MATH.IA1.DS.A.1"),
@@ -85,6 +86,7 @@ def seed() -> None:
         ]
         skills = {code: _skill(db, curriculum, code, name, desc, level, canonical) for code, name, desc, level, canonical in specs}
         problems = [
+            ("IA1.AT.A.1", "A population model is P = 120(1.05)^t. What does 120 represent in this model?", "The initial population", 1),
             ("IA1.AT.C.10", "A function assigns 3, 7, and 11 to inputs 1, 2, and 3. What is its domain?", "{1, 2, 3}", 1),
             ("IA1.GR.A.1", "A triangle is translated 4 units right and 2 units up. Does the translation preserve its side lengths?", "Yes", 1),
             ("IA1.DS.A.1", "A study finds that students who carry umbrellas are more likely to wear raincoats. Does this correlation alone prove that umbrellas cause people to wear raincoats?", "No", 1),
