@@ -34,8 +34,9 @@ def test_integrated_algebra1_registers_idempotently_without_mutating_traditional
         integrated_skills = list(
             db.scalars(select(Skill).where(Skill.curriculum_id == curriculum.id))
         )
-        assert len(integrated_skills) == 12
+        assert len(integrated_skills) == 13
         skill_by_code = {skill.code: skill for skill in integrated_skills}
+        assert "IA1.AT.A.1" in skill_by_code
         assert "IA1.AT.C.11" in skill_by_code
         assert "IA1.AT.C.12" in skill_by_code
         assert "IA1.AT.D.13" in skill_by_code
