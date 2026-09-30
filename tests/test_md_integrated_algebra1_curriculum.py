@@ -5,7 +5,8 @@ from sqlalchemy import func, select
 from app.core.database import SessionLocal
 from app.curriculum_models import EducationAuthority
 from app.models import Curriculum, Problem, Skill, Student, StudentSkill
-from scripts.seed_md_algebra1 import CURRICULUM_CODE as TRADITIONAL_CURRICULUM_CODE, seed as seed_traditional
+from scripts.seed_md_algebra1 import CURRICULUM_CODE as TRADITIONAL_CURRICULUM_CODE
+from scripts.seed_md_algebra1 import seed as seed_traditional
 from scripts.seed_md_integrated_algebra1 import (
     CURRICULUM_CODE,
     CURRICULUM_VERSION,
