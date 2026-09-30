@@ -105,6 +105,7 @@ def test_integrated_seed_preserves_existing_traditional_pathway_evidence():
         db.commit()
         student_id = student.id
         skill_id = traditional_skill.id
+        traditional_id = traditional.id
     finally:
         db.close()
 
@@ -128,6 +129,6 @@ def test_integrated_seed_preserves_existing_traditional_pathway_evidence():
             select(Curriculum).where(Curriculum.code == CURRICULUM_CODE)
         )
         assert integrated is not None
-        assert integrated.id != traditional.id
+        assert integrated.id != traditional_id
     finally:
         db.close()
