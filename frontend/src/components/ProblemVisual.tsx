@@ -12,6 +12,12 @@ export interface VisualSpec {
   angle?: number;
   rows?: number;
   columns?: number;
+  whole?: number;
+  tenths?: number;
+  hundredths?: number;
+  length?: number;
+  width?: number;
+  height?: number;
   mode?: "counters" | "squares";
   aria_label?: string;
 }
@@ -175,6 +181,49 @@ function NumberLine({ spec, compare = false }: { spec: VisualSpec; compare?: boo
   );
 }
 
+
+function DecimalPlaceValue({ spec }: { spec: VisualSpec }) {
+  const whole = Math.max(0, Math.floor(spec.whole ?? 0));
+  const tenths = Math.min(9, Math.max(0, Math.floor(spec.tenths ?? 0)));
+  const hundredths = Math.min(9, Math.max(0, Math.floor(spec.hundredths ?? 0)));
+  const cells = [
+    { label: "Ones", value: whole },
+    { label: "Tenths", value: tenths },
+    { label: "Hundredths", value: hundredths },
+  ];
+  return (
+    <svg viewBox="0 0 390 145" className="visual elementary-visual" role="img" aria-label={spec.aria_label}>
+      {cells.map((cell, index) => (
+        <g key={cell.label}>
+          <rect x={15 + index * 125} y="18" width="110" height="92" className="viz-cell" />
+          <text x={70 + index * 125} y="48" textAnchor="middle" className="viz-label">{cell.label}</text>
+          <text x={70 + index * 125} y="88" textAnchor="middle" className="viz-term">{cell.value}</text>
+        </g>
+      ))}
+      <text x="195" y="132" textAnchor="middle" className="viz-label">
+        {whole}.{tenths}{hundredths}
+      </text>
+    </svg>
+  );
+}
+
+function VolumeModel({ spec }: { spec: VisualSpec }) {
+  const length = Math.max(1, Math.floor(spec.length ?? 1));
+  const width = Math.max(1, Math.floor(spec.width ?? 1));
+  const height = Math.max(1, Math.floor(spec.height ?? 1));
+  const volume = length * width * height;
+  return (
+    <svg viewBox="0 0 360 210" className="visual elementary-visual" role="img" aria-label={spec.aria_label}>
+      <path d="M70 70 L230 70 L290 35 L130 35 Z" className="viz-cell" />
+      <path d="M230 70 L290 35 L290 135 L230 170 Z" className="viz-cell viz-cell-b" />
+      <rect x="70" y="70" width="160" height="100" className="viz-cell viz-cell-a" />
+      <text x="150" y="125" textAnchor="middle" className="viz-term">{length} × {height}</text>
+      <text x="260" y="105" textAnchor="middle" className="viz-label">depth {width}</text>
+      <text x="180" y="195" textAnchor="middle" className="viz-label">Volume = {volume} cubic units</text>
+    </svg>
+  );
+}
+
 export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (!spec) return null;
   if (spec.type === "area_model") return <AreaModel spec={spec} />;
@@ -184,5 +233,7 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "fraction_bar" || spec.type === "ratio_bar") return <FractionBar spec={spec} />;
   if (spec.type === "coordinate_plane" || spec.type === "coordinate_point") return <CoordinatePlane spec={spec} />;
   if (spec.type === "angle" || spec.type === "angle_diagram") return <AngleDiagram spec={spec} />;
+  if (spec.type === "decimal_place_value") return <DecimalPlaceValue spec={spec} />;
+  if (spec.type === "volume_model" || spec.type === "volume") return <VolumeModel spec={spec} />;
   return null;
 }
