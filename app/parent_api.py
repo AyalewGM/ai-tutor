@@ -10,6 +10,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
+from app.credential_models import UserCredential
 from app.identity import CurrentParent, CurrentUser, require_parent_role
 from app.models import Attempt, MasteryEvent, Student, TutorSession
 from app.parent_models import ParentProfile, ParentStudentRelationship, ParentStudentRelationshipEvent
@@ -30,6 +31,7 @@ from app.services.parent_dashboard import (
 from app.schemas import (
     PINVerifyOut,
     PINVerifySchema,
+    PasswordReauthSchema,
     ProgressStudentSummary,
     ProgressSummaryOut,
     StudentCreateSchema,
@@ -220,6 +222,37 @@ def verify_parent_pin(
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Invalid parent PIN",
+        )
+    clear_pin_attempts(parent.user_id)
+    unlock_token = issue_parent_unlock(parent.user_id)
+    return PINVerifyOut(
+        verified=True,
+        unlock_token=unlock_token,
+        expires_in_seconds=600,
+    )
+
+
+@router.post("/verify-password", response_model=PINVerifyOut)
+def verify_parent_password(
+    payload: PasswordReauthSchema,
+    parent: CurrentParent,
+    db: DbSession,
+) -> PINVerifyOut:
+    register_pin_attempt(parent.user_id)
+    credential = db.get(UserCredential, parent.user_id)
+    if credential is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Password re-authentication is unavailable",
+        )
+    try:
+        valid = _pin_hasher.verify(credential.password_hash, payload.password)
+    except VerificationError:
+        valid = False
+    if not valid:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid account password",
         )
     clear_pin_attempts(parent.user_id)
     unlock_token = issue_parent_unlock(parent.user_id)
