@@ -107,14 +107,15 @@ def link_child(payload: LinkChildIn, parent: CurrentParent, db: DbSession) -> Li
         )
         or 0
     )
-    if active_relationships >= locked_parent.max_students:
+    seat_limit = locked_parent.max_students or 1
+    if active_relationships >= seat_limit:
         raise HTTPException(
             status_code=status.HTTP_402_PAYMENT_REQUIRED,
             detail={
                 "code": "STUDENT_SEAT_LIMIT_REACHED",
                 "subscription_tier": locked_parent.subscription_tier,
                 "current_students": active_relationships,
-                "max_students": locked_parent.max_students,
+                "max_students": seat_limit,
                 "upgrade": {"recommended_tier": "pro", "max_students": 5},
             },
         )
@@ -167,7 +168,8 @@ def add_student(
         )
         or 0
     )
-    if current_count >= locked_parent.max_students:
+    seat_limit = locked_parent.max_students or 1
+    if current_count >= seat_limit:
         raise HTTPException(
             status_code=status.HTTP_402_PAYMENT_REQUIRED,
             detail={
@@ -175,7 +177,7 @@ def add_student(
                 "message": "Your current plan has no available student seats.",
                 "subscription_tier": locked_parent.subscription_tier,
                 "current_students": current_count,
-                "max_students": locked_parent.max_students,
+                "max_students": seat_limit,
                 "upgrade": {
                     "recommended_tier": "pro",
                     "max_students": 5,
