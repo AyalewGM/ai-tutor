@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { api } from "../api";
+import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import type { ChildDashboard, ChildSummary } from "../types";
 
@@ -28,6 +28,10 @@ export default function ParentDashboard() {
   const [dashboard, setDashboard] = useState<ChildDashboard | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [pin, setPin] = useState("");
+  const [unlockToken, setUnlockToken] = useState(
+    () => sessionStorage.getItem("parentUnlock") || "",
+  );
 
   useEffect(() => {
     api<ChildSummary[]>("/parents/children")
@@ -40,17 +44,43 @@ export default function ParentDashboard() {
   }, []);
 
   useEffect(() => {
-    if (!childId) {
+    if (!childId || !unlockToken) {
       setDashboard(null);
       return;
     }
     setLoading(true);
     setError("");
-    api<ChildDashboard>(`/parents/children/${childId}/dashboard`)
+    api<ChildDashboard>(`/parents/children/${childId}/dashboard`, {
+      headers: { "X-Parent-Unlock": unlockToken },
+    })
       .then(setDashboard)
-      .catch(() => setError("Could not load this learner's progress."))
+      .catch((err) => {
+        if (err instanceof ApiError && err.status === 403) {
+          sessionStorage.removeItem("parentUnlock");
+          setUnlockToken("");
+          setError("Parent PIN is required to view progress.");
+          return;
+        }
+        setError("Could not load this learner's progress.");
+      })
       .finally(() => setLoading(false));
-  }, [childId]);
+  }, [childId, unlockToken]);
+
+  async function unlockParentView(event: React.FormEvent) {
+    event.preventDefault();
+    setError("");
+    try {
+      const result = await post<{ verified: boolean; unlock_token: string }>(
+        "/parents/verify-pin",
+        { parent_pin: pin },
+      );
+      sessionStorage.setItem("parentUnlock", result.unlock_token);
+      setUnlockToken(result.unlock_token);
+      setPin("");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Could not verify parent PIN.");
+    }
+  }
 
   const counts = useMemo(() => {
     const skills = dashboard?.skills ?? [];
@@ -73,6 +103,29 @@ export default function ParentDashboard() {
           </div>
           <a className="secondary link-btn" href="/parent/settings">Settings &amp; privacy</a>
         </section>
+
+        {!unlockToken && (
+          <section className="card" aria-labelledby="parent-unlock-heading">
+            <h2 id="parent-unlock-heading">Parent access</h2>
+            <p className="muted small">Enter your 4-digit parent PIN to view progress and adult settings.</p>
+            <form onSubmit={unlockParentView}>
+              <label htmlFor="parent-pin">Parent PIN</label>
+              <input
+                id="parent-pin"
+                type="password"
+                inputMode="numeric"
+                pattern="[0-9]{4}"
+                minLength={4}
+                maxLength={4}
+                required
+                autoComplete="off"
+                value={pin}
+                onChange={(event) => setPin(event.target.value)}
+              />
+              <button type="submit" className="primary">Unlock parent view</button>
+            </form>
+          </section>
+        )}
 
         <section className="card parent-selector parent-switcher" aria-labelledby="child-heading">
           <div>
