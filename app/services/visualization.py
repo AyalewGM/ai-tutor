@@ -447,10 +447,99 @@ def _fraction_circle(problem: Problem) -> dict | None:
     }
 
 
+
+_LINEAR_TERM = re.compile(r"([+-]?\\s*\\d*)\\s*([a-zA-Z])(?:\\^(\\d+))?")
+_POLY_GROUPS = re.compile(r"\\(([^()]*)\\)\\s*([+-])\\s*\\(([^()]*)\\)")
+
+
+def _algebra_terms(expression: str) -> list[dict[str, Any]]:
+    """Parse the simple authored polynomial forms used by deterministic visuals."""
+    normalized = expression.replace("−", "-").replace(" ", "")
+    terms: list[dict[str, Any]] = []
+    for match in _LINEAR_TERM.finditer(normalized):
+        raw, variable, degree_raw = match.groups()
+        if raw in {"", "+"}:
+            coefficient = 1
+        elif raw == "-":
+            coefficient = -1
+        else:
+            coefficient = int(raw)
+        terms.append(
+            {
+                "coefficient": coefficient,
+                "variable": variable,
+                "degree": int(degree_raw or "1"),
+                "label": f"{coefficient if abs(coefficient) != 1 else '-' if coefficient < 0 else ''}{variable}{'^' + degree_raw if degree_raw else ''}",
+            }
+        )
+    occupied = [(m.start(), m.end()) for m in _LINEAR_TERM.finditer(normalized)]
+    for match in re.finditer(r"(?<![a-zA-Z^\\d])([+-]?\\d+)(?![a-zA-Z^\\d])", normalized):
+        if any(start <= match.start() < end for start, end in occupied):
+            continue
+        value = int(match.group(1))
+        terms.append({"coefficient": value, "variable": None, "degree": 0, "label": str(value)})
+    return terms
+
+
+def _like_term_visual(problem: Problem) -> dict | None:
+    expression = problem.prompt.removeprefix("Simplify ").rstrip(".")
+    terms = _algebra_terms(expression)
+    if len(terms) < 2:
+        return None
+    groups: dict[str, list[dict[str, Any]]] = {}
+    for term in terms:
+        key = f"{term['variable'] or 'constant'}^{term['degree']}"
+        groups.setdefault(key, []).append(term)
+    return {
+        "type": "algebra_tiles",
+        "terms": terms,
+        "groups": [{"key": key, "terms": grouped} for key, grouped in groups.items()],
+        "aria_label": (
+            "Algebra tiles grouped by matching variable and exponent structure. "
+            "Only terms in the same group are like terms."
+        ),
+    }
+
+
+def _polynomial_sign_visual(problem: Problem) -> dict | None:
+    expression = problem.prompt.removeprefix("Simplify ").rstrip(".")
+    match = _POLY_GROUPS.search(expression)
+    if not match:
+        return None
+    left, operation, right = match.groups()
+    left_terms = _algebra_terms(left)
+    right_terms = _algebra_terms(right)
+    if not left_terms or not right_terms:
+        return None
+    transformed = [
+        {**term, "coefficient": -term["coefficient"], "sign_changed": True}
+        if operation == "-"
+        else {**term, "sign_changed": False}
+        for term in right_terms
+    ]
+    return {
+        "type": "polynomial_sign_change",
+        "operation": operation,
+        "left_terms": left_terms,
+        "right_terms": right_terms,
+        "transformed_right_terms": transformed,
+        "aria_label": (
+            "Polynomial subtraction sign-change model. "
+            + ("Every term in the subtracted group changes sign before like terms are combined."
+               if operation == "-"
+               else "The second polynomial keeps its signs before like terms are combined.")
+        ),
+    }
+
+
 def visualization_for(problem: Problem) -> dict | None:
     """Return a declarative visual spec for a problem, or None."""
     if problem.problem_type == "SIMPLIFY_EXPRESSION":
         return _area_model(problem)
+    if problem.problem_type == "COMBINE_LIKE_TERMS":
+        return _like_term_visual(problem)
+    if problem.problem_type == "POLYNOMIAL_ADD_SUBTRACT":
+        return _polynomial_sign_visual(problem)
     if problem.problem_type == "INTEGER_OPERATIONS":
         return _number_line(problem)
     if problem.problem_type == "INTEGER_COMPARE":
