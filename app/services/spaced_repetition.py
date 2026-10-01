@@ -3,9 +3,9 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 
+from app.models import TutorState
 from app.services.problem_selection import select_next_problem
 from app.services.review_schedule import reviews_due
-from app.models import TutorState
 
 
 def fetch_spaced_repetition_prompt(
