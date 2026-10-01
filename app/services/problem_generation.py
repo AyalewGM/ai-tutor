@@ -1233,6 +1233,115 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
 }
 
 
+def _mc_transform(candidate: GeneratedProblem, rng: random.Random) -> GeneratedProblem | None:
+    """Build a multiple-choice variant with misconception-coded distractors.
+
+    Distractors are computed from the problem's parameters so each wrong option
+    encodes a real error pattern from the misconception catalog. Returns None
+    when the candidate's type/tier has no distractor construction.
+    """
+    p = candidate.parameters or {}
+    correct_text: str | None = None
+    distractors: list[tuple[str, str | None]] = []
+
+    if candidate.problem_type == "SOLVE_EQUATION":
+        x = p.get("x")
+        if not isinstance(x, int):
+            return None
+        correct_text = f"x = {x}"
+        tier = p.get("tier")
+        if tier == "add_inverse":
+            b, c = p["b"], x + p["b"]
+            distractors = [
+                (f"x = {c + b}", "EQ_001"),   # added instead of subtracted
+                (f"x = {b - c}", "EQ_001"),   # reversed subtraction (b - c)
+                (f"x = {x + 1}", None),
+            ]
+        elif tier == "coefficient":
+            a, c = p["a"], p["a"] * x
+            distractors = [
+                (f"x = {c * a}", "EQ_003"),   # multiplied instead of divided
+                (f"x = {c + a}", "EQ_001"),   # added coefficient instead of dividing
+                (f"x = {-x}", None),
+            ]
+        elif tier == "two_step":
+            a, b, c = p["a"], p["b"], p["a"] * x + p["b"]
+            distractors = [(f"x = {c - b}", "EQ_002")]  # stopped after undoing b
+            if (c + b) % a == 0:
+                distractors.append((f"x = {(c + b) // a}", "EQ_001"))
+            distractors += [(f"x = {-x}", "ALG_002"), (f"x = {x + 1}", None)]
+        elif tier == "distribute_equation":
+            a, b, c = p["a"], p["b"], p["a"] * (x + p["b"])
+            distractors = [(f"x = {x + b}", "EQ_002")]  # divided by a, forgot -b
+            if (c - b) % a == 0:
+                distractors.append((f"x = {(c - b) // a}", "DIST_001"))
+            distractors += [(f"x = {-x}", "ALG_002"), (f"x = {x - 1}", None)]
+    elif candidate.problem_type == "SIMPLIFY_EXPRESSION" and "sign" in p:
+        a, b, sign = p["a"], p["b"], p["sign"]
+        correct_text = candidate.canonical_answer
+        inner = b if sign == "+" else -b
+        distractors = [
+            (_fmt_expr(a, inner), "DIST_001"),            # only first term multiplied
+            (f"{a * b}x", "ALG_001"),                     # multiplied everything together
+            (_fmt_expr(a, a + inner), "EQ_003"),          # added instead of multiplying
+        ]
+    elif candidate.problem_type == "COMBINE_LIKE_TERMS":
+        a, b, constant, variable = (
+            p["a"], p["b"], p["constant"], p["variable"]
+        )
+        correct_text = candidate.canonical_answer
+        distractors = [
+            (_fmt_expr(a - b, constant, variable), "NUM_001"),  # sign slip on second term
+            (_fmt_expr(a + b + 1, constant, variable), None),
+            (_fmt_expr(a + b - 1, constant, variable), None),
+        ]
+        if constant:
+            distractors.insert(
+                0, (_fmt_term(a + b + constant, variable), "ALG_001")  # folded constant in
+            )
+    else:
+        return None
+
+    if correct_text is None:
+        return None
+    # Dedupe against the correct answer and each other; pad with near misses.
+    seen = {correct_text}
+    unique: list[tuple[str, str | None]] = []
+    for text, code in distractors:
+        if text not in seen:
+            seen.add(text)
+            unique.append((text, code))
+    while len(unique) < 3:
+        pad = f"x = {rng.randint(-15, 15)}"
+        if pad not in seen:
+            seen.add(pad)
+            unique.append((pad, None))
+    unique = unique[:3]
+    rng.shuffle(unique)
+
+    options = unique + [(correct_text, None)]
+    rng.shuffle(options)
+    choices = [
+        {
+            "id": chr(ord("a") + i),
+            "text": text,
+            **({"misconception_code": code} if code else {}),
+        }
+        for i, (text, code) in enumerate(options)
+    ]
+    correct_id = next(c["id"] for c in choices if c["text"] == correct_text)
+    return GeneratedProblem(
+        prompt=candidate.prompt + " Choose the correct answer.",
+        canonical_answer=correct_id,
+        difficulty=candidate.difficulty,
+        problem_type=candidate.problem_type,
+        context=candidate.context,
+        parameters={**p, "answer_kind": "MULTIPLE_CHOICE"},
+        answer_kind="MULTIPLE_CHOICE",
+        choices=choices,
+    )
+
+
 def _family_metadata(generated: GeneratedProblem) -> tuple[str, dict]:
     """Return stable family identity and minimized deterministic parameters.
 
@@ -1282,6 +1391,7 @@ def generate_problem(
     problem_type: str | None = None,
     family: str | None = None,
     avoid_family: str | None = None,
+    answer_kind: str | None = None,
     rng: random.Random | None = None,
 ) -> Problem | None:
     rng = rng or random.Random()
@@ -1306,6 +1416,11 @@ def generate_problem(
     generated = None
     for _ in range(8):
         candidate = GENERATORS[rng.choice(supported)](rng, difficulty)
+        if answer_kind == "MULTIPLE_CHOICE":
+            transformed = _mc_transform(candidate, rng)
+            if transformed is None:
+                continue
+            candidate = transformed
         family_id, parameters = _family_metadata(candidate)
         if family is not None and family_id != family:
             continue

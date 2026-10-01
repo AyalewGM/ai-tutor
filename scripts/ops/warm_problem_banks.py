@@ -35,7 +35,7 @@ def main() -> None:
             query = query.where(Curriculum.code.in_(codes))
         skills = db.scalars(query).all()
 
-        created = 0
+        created = mc_created = 0
         for skill in skills:
             for difficulty in TARGET_DIFFICULTIES:
                 for _ in range(VARIANTS_PER_LEVEL):
@@ -43,8 +43,20 @@ def main() -> None:
                         db, skill_id=skill.id, difficulty=difficulty, rng=rng
                     ) is not None:
                         created += 1
+                # One MC variant per level where a distractor construction exists.
+                if generate_problem(
+                    db,
+                    skill_id=skill.id,
+                    difficulty=difficulty,
+                    answer_kind="MULTIPLE_CHOICE",
+                    rng=rng,
+                ) is not None:
+                    mc_created += 1
         db.commit()
-        print(f"warmed {len(skills)} skills — {created} problems generated")
+        print(
+            f"warmed {len(skills)} skills — {created} problems generated, "
+            f"{mc_created} multiple-choice"
+        )
 
 
 if __name__ == "__main__":
