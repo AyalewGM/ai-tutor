@@ -16,7 +16,7 @@ from starlette.types import ASGIApp, Message, Receive, Scope, Send
 _TEXT_KEYS = {"prompt", "message", "answer", "student_answer", "text"}
 _MAX_JSON_BODY_BYTES = 1_000_000
 
-_EMAIL = re.compile(r"(?<![\w.+-])[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}(?![\w.-])", re.I)
+_EMAIL = re.compile(r"(?<![\w.+-])[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}(?![\w.-])", re.IGNORECASE)
 _SSN = re.compile(r"(?<!\d)(?:\d{3}[- ]?\d{2}[- ]?\d{4})(?!\d)")
 _PHONE = re.compile(
     r"(?<!\d)(?:\+?1[-.\s]?)?(?:\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}(?!\d)"
@@ -25,12 +25,12 @@ _STREET_ADDRESS = re.compile(
     r"(?<!\w)\d{1,6}\s+[A-Z0-9][A-Z0-9.'-]*(?:\s+[A-Z0-9][A-Z0-9.'-]*){0,4}\s+"
     r"(?:STREET|ST|ROAD|RD|AVENUE|AVE|BOULEVARD|BLVD|DRIVE|DR|LANE|LN|COURT|CT|"
     r"CIRCLE|CIR|WAY|PLACE|PL)\b(?:\s*,?\s*[A-Z][A-Z .'-]+)?",
-    re.I,
+    re.IGNORECASE,
 )
 _EXPLICIT_FULL_NAME = re.compile(
     r"\b(?P<prefix>my\s+(?:full\s+)?name\s+is\s+)"
     r"(?P<name>[A-Z][A-Za-z'-]{1,30}\s+[A-Z][A-Za-z'-]{1,30}(?:\s+[A-Z][A-Za-z'-]{1,30})?)",
-    re.I,
+    re.IGNORECASE,
 )
 
 
