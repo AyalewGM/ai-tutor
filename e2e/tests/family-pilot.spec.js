@@ -9,7 +9,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   const password = 'SyntheticOnly!12345';
   const parentPin = '4821';
 
-  await page.goto(`${baseURL}/app/login`);
+  await page.goto(`${baseURL}/login`);
   await page.getByRole('tab', { name: 'Create account' }).click();
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Password').fill(password);
@@ -18,31 +18,31 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await page.getByLabel('I accept the Terms of Service.').check();
   await page.getByLabel(/I am the parent or guardian/).check();
   await page.getByRole('button', { name: 'Create account' }).click();
-  await expect(page).toHaveURL(/\/app\/learn/);
+  await expect(page).toHaveURL(/\/learn/);
 
   await page.getByLabel('Learner nickname').fill('SyntheticLearner');
-  const curriculum = page.locator('#curriculum');
-  const mcpsOption = curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' });
-  await expect(mcpsOption.first()).toBeAttached({ timeout: 10000 });
-  await curriculum.selectOption(await mcpsOption.first().getAttribute('value'));
+  await page.locator('#curriculum').click();
+  const mcpsOption = page.getByRole('option', { name: /MCPS_MATH_8/ });
+  await expect(mcpsOption.first()).toBeVisible({ timeout: 10000 });
+  await mcpsOption.first().click();
   await page.getByRole('button', { name: 'Add learner' }).click();
   await expect(page.getByText('SyntheticLearner is ready.')).toBeVisible();
 
   const learner = page.locator('#learner');
-  await expect(learner).not.toHaveValue('');
+  await expect(learner).toContainText('SyntheticLearner');
 
   // F-026 release gate: a learner reaches a chosen skill through the
   // child-friendly Explore Topics path, not an administrative skill selector.
-  await expect(page.getByRole('heading', { name: 'Explore Topics' })).toBeVisible();
+  await expect(page.getByText('Explore Topics')).toBeVisible();
   await page.getByRole('button', { name: /Patterns & algebra/ }).click();
-  const distributiveSkill = page.locator('.skill-choice').filter({ hasText: 'Distributive Property' });
+  const distributiveSkill = page.getByTestId('skill-choice').filter({ hasText: 'Distributive Property' });
   await expect(distributiveSkill).toHaveCount(1, { timeout: 10000 });
   await expect(distributiveSkill).toBeVisible();
   await distributiveSkill.click();
 
   await page.getByRole('button', { name: 'Start learning' }).click();
-  await expect(page).toHaveURL(/\/app\/learn\/[0-9a-f-]+$/);
-  await expect(page.getByRole('heading', { name: 'Current problem' })).toBeVisible();
+  await expect(page).toHaveURL(/\/learn\/[0-9a-f-]+$/);
+  await expect(page.getByText('Current problem')).toBeVisible();
   await expect(page.getByText('Help can support learning, but assisted success is not counted as independent mastery evidence.')).toBeVisible();
 
   const sessionUrl = page.url();
@@ -65,7 +65,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await page.getByRole('button', { name: 'Submit answer' }).click();
   await expect(page.getByText('Correct. Keep going.')).toBeVisible();
 
-  await page.goto(`${baseURL}/app/parent`);
+  await page.goto(`${baseURL}/parent`);
   await expect(page.getByRole('heading', { name: 'Family learning overview' })).toBeVisible();
   await page.getByLabel('Parent PIN').fill(parentPin);
   await page.getByRole('button', { name: 'Unlock parent view' }).click();
@@ -75,7 +75,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   const outsider = await browser.newContext();
   const outsiderPage = await outsider.newPage();
   const outsiderEmail = `synthetic-outsider-${Date.now()}@example.com`;
-  await outsiderPage.goto(`${baseURL}/app/login`);
+  await outsiderPage.goto(`${baseURL}/login`);
   await outsiderPage.getByRole('tab', { name: 'Create account' }).click();
   await outsiderPage.getByLabel('Email').fill(outsiderEmail);
   await outsiderPage.getByLabel('Password').fill(password);
@@ -84,7 +84,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await outsiderPage.getByLabel('I accept the Terms of Service.').check();
   await outsiderPage.getByLabel(/I am the parent or guardian/).check();
   await outsiderPage.getByRole('button', { name: 'Create account' }).click();
-  await expect(outsiderPage).toHaveURL(/\/app\/learn/);
+  await expect(outsiderPage).toHaveURL(/\/learn/);
   await outsiderPage.goto(sessionUrl);
   await expect(outsiderPage.getByRole('alert')).toContainText('Learner not found');
 

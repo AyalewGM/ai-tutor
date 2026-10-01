@@ -11,3 +11,5 @@ venv/
 node_modules/
 .env.pilot
 backups/
+frontend/dist/
+frontend/node_modules/

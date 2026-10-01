@@ -31,7 +31,7 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   const password = 'SyntheticOnly!12345';
   const parentPin = '4821';
 
-  await page.goto(`${baseURL}/app/login`);
+  await page.goto(`${baseURL}/login`);
   await page.getByRole('tab', { name: 'Create account' }).click();
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Password').fill(password);
@@ -40,20 +40,20 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   await page.getByLabel('I accept the Terms of Service.').check();
   await page.getByLabel(/I am the parent or guardian/).check();
   await page.getByRole('button', { name: 'Create account' }).click();
-  await expect(page).toHaveURL(/\/app\/learn/);
+  await expect(page).toHaveURL(/\/learn/);
 
   await page.getByLabel('Learner nickname').fill('ReactLearner');
-  const curriculum = page.locator('#curriculum');
-  await expect(curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' })).toHaveCount(1, { timeout: 10000 });
-  const mcpsOption = curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' });
-  await curriculum.selectOption(await mcpsOption.getAttribute('value'));
+  await page.locator('#curriculum').click();
+  const mcpsOption = page.getByRole('option', { name: /MCPS_MATH_8/ });
+  await expect(mcpsOption.first()).toBeVisible({ timeout: 10000 });
+  await mcpsOption.first().click();
   await page.getByRole('button', { name: 'Add learner' }).click();
   await expect(page.getByText('ReactLearner is ready.')).toBeVisible();
 
   // F-022: parent dashboard uses the same authorized family data and keeps
   // independent evidence visibly separate from assisted success.
   await page.getByRole('link', { name: 'Parent' }).click();
-  await expect(page).toHaveURL(/\/app\/parent$/);
+  await expect(page).toHaveURL(/\/parent$/);
   await expect(page.getByRole('heading', { name: 'Family learning overview' })).toBeVisible();
   await page.getByLabel('Parent PIN').fill(parentPin);
   await page.getByRole('button', { name: 'Unlock parent view' }).click();
@@ -62,20 +62,20 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   await page.getByRole('link', { name: 'Practice' }).click();
 
   const learner = page.locator('#learner');
-  const learnerOption = learner.locator('option').filter({ hasText: 'ReactLearner' });
-  await learner.selectOption(await learnerOption.getAttribute('value'));
+  await learner.click();
+  await page.getByRole('option', { name: /ReactLearner/ }).click();
+  await expect(learner).toContainText('ReactLearner');
   await expect(page.getByRole('heading', { name: 'Ready to learn, ReactLearner?' })).toBeVisible();
-  await expect(page.getByLabel('Learning context')).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Explore Topics' })).toBeVisible();
+  await expect(page.getByText('Explore Topics')).toBeVisible();
   await page.getByRole('button', { name: /Patterns & algebra/ }).click();
-  const distSkill = page.locator('.skill-choice').filter({ hasText: 'Distributive Property' });
+  const distSkill = page.getByTestId('skill-choice').filter({ hasText: 'Distributive Property' });
   await expect(distSkill).toHaveCount(1, { timeout: 10000 });
   await expect(distSkill).toBeVisible();
   await distSkill.click();
 
   await page.getByRole('button', { name: 'Start learning' }).click();
-  await expect(page).toHaveURL(/\/app\/learn\/[0-9a-f-]+$/);
-  await expect(page.getByRole('heading', { name: 'Current problem' })).toBeVisible();
+  await expect(page).toHaveURL(/\/learn\/[0-9a-f-]+$/);
+  await expect(page.getByText('Current problem')).toBeVisible();
 
   const prompt = (await page.locator('.problem').textContent()) || '';
   const answer = solve(prompt);
@@ -86,15 +86,15 @@ test('react learner journey: register, practice, earn badge, view badges and ski
 
   // First correct answer mints the First Steps badge and shows the toast.
   await expect(page.locator('.badge-toast')).toContainText('First Steps');
-  await expect(page.locator('.badge-shelf')).toContainText('First Steps');
+  await expect(page.getByTestId('badge-shelf')).toContainText('First Steps');
 
   // Badge collection page shows earned vs locked badges.
   await page.getByRole('link', { name: 'View all' }).click();
   await expect(page).toHaveURL(/\/badges$/);
   await expect(page.getByRole('heading', { name: 'Badge collection' })).toBeVisible();
-  const firstSteps = page.locator('.badge-card', { hasText: 'First Steps' });
-  await expect(firstSteps).not.toHaveClass(/locked/);
-  const locked = page.locator('.badge-card.locked');
+  const firstSteps = page.getByTestId('badge-card').filter({ hasText: 'First Steps' });
+  await expect(firstSteps).toHaveAttribute('data-earned', 'true');
+  const locked = page.getByTestId('badge-card').filter({ hasText: 'Not yet earned' });
   await expect(locked.first()).toBeVisible();
 
   // Skill map renders the full curriculum grid with an active tile.
@@ -102,8 +102,9 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   await page.getByRole('link', { name: 'Skill map' }).click();
   await expect(page).toHaveURL(/\/map$/);
   await expect(page.getByRole('heading', { name: 'Skill map' })).toBeVisible();
-  await expect(page.locator('.map-tile').first()).toBeVisible();
-  expect(await page.locator('.map-tile').count()).toBeGreaterThanOrEqual(9);
-  await expect(page.locator('.map-tile.active')).toHaveCount(1);
-  await expect(page.locator('.map-tile.active')).toContainText('Distributive Property');
+  await expect(page.getByTestId('map-tile').first()).toBeVisible();
+  expect(await page.getByTestId('map-tile').count()).toBeGreaterThanOrEqual(9);
+  const activeTile = page.getByTestId('map-tile').filter({ hasText: 'You are here' });
+  await expect(activeTile).toHaveCount(1);
+  await expect(activeTile).toContainText('Distributive Property');
 });

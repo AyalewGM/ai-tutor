@@ -9,13 +9,16 @@
 # - LLM Gateway is healthy
 # - Tutor API /health and /ready return 200
 # - Frontend /healthz and /backend-health return 200
-# - A synthetic login page loads
+# - The React SPA serves /, /login, /learn, /parent
 #
 # Returns 0 on success, 1 on failure.
 
 set -euo pipefail
 
-COMPOSE="docker compose -f docker-compose.yml -f docker-compose.pilot.yml"
+# For exec commands, use the default compose file — the running containers are
+# identified by project name, not by which compose file launched them.
+COMPOSE="docker compose"
+COMPOSE_PILOT="docker compose -f docker-compose.yml -f docker-compose.pilot.yml"
 FAILURES=0
 API_URL="${API_URL:-http://localhost:8002}"
 FRONTEND_URL="${FRONTEND_URL:-http://localhost:3000}"
@@ -31,10 +34,12 @@ check() {
 }
 
 echo "=== Container status ==="
-$COMPOSE ps --format "table {{.Name}}\t{{.Status}}" | tee /dev/stderr | grep -c "healthy\|running" || true
+$COMPOSE_PILOT ps --format "table {{.Name}}\t{{.Status}}" 2>/dev/null \
+    || $COMPOSE ps --format "table {{.Name}}\t{{.Status}}" | tee /dev/stderr | grep -c "healthy\|running" || true
 
 echo ""
 echo "=== Health checks ==="
+# Exec commands use the default compose file — running containers are found by project name.
 check "db pg_isready" "$COMPOSE exec -T db pg_isready -U ${POSTGRES_USER:-ai_tutor} -d ${POSTGRES_DB:-ai_tutor}"
 check "llm-gateway /health" "$COMPOSE exec -T llm-gateway python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8001/health')\""
 check "llm-gateway /ready" "$COMPOSE exec -T llm-gateway python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8001/ready')\""
@@ -45,9 +50,11 @@ check "frontend /backend-health" "curl -sf --max-time 5 $FRONTEND_URL/backend-he
 
 echo ""
 echo "=== Synthetic surface checks ==="
-check "login page loads" "curl -sf --max-time 5 $API_URL/login | grep -q 'Sign in\|login\|email'"
-check "learn page loads" "curl -sf --max-time 5 $API_URL/learn | grep -q 'Start learning\|AI Tutor'"
-check "parent page loads" "curl -sf --max-time 5 $FRONTEND_URL/parent | grep -q 'Parent\|parent'"
+# UI paths are served by the React SPA; the API only exposes /api/*, /health, /ready.
+check "SPA index serves at root" "curl -sf --max-time 5 $FRONTEND_URL/ | grep -q 'id=\"root\"'"
+check "SPA fallback serves /login" "curl -sf --max-time 5 $FRONTEND_URL/login | grep -q 'id=\"root\"'"
+check "SPA fallback serves /learn" "curl -sf --max-time 5 $FRONTEND_URL/learn | grep -q 'id=\"root\"'"
+check "SPA fallback serves /parent" "curl -sf --max-time 5 $FRONTEND_URL/parent | grep -q 'id=\"root\"'"
 
 echo ""
 if [ "$FAILURES" -eq 0 ]; then

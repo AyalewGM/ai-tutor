@@ -1,0 +1,17 @@
+{
+  "name": "AI Tutor",
+  "short_name": "AI Tutor",
+  "description": "Adaptive math tutoring that diagnoses misconceptions and verifies real mastery.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f7fc",
+  "theme_color": "#6730c3",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

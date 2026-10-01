@@ -12,10 +12,27 @@ class SessionCreate(BaseModel):
     skill_id: uuid.UUID
 
 
+class ProblemChoiceOut(BaseModel):
+    id: str
+    text: str
+
+
+def problem_choices_out(choices: list | None) -> list[ProblemChoiceOut] | None:
+    """Serialize choices for the wire; distractor misconception codes stay server-side."""
+    if not choices:
+        return None
+    return [
+        ProblemChoiceOut(id=str(choice.get("id", "")), text=str(choice.get("text", "")))
+        for choice in choices
+    ]
+
+
 class ProblemOut(BaseModel):
     id: uuid.UUID
     prompt: str
     difficulty: int
+    answer_kind: str = "FREE_TEXT"
+    choices: list[ProblemChoiceOut] | None = None
 
 
 class MasteryOut(BaseModel):

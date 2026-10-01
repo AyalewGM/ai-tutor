@@ -15,7 +15,7 @@ test('elementary shell is responsive and keyboard reachable at launch breakpoint
       reducedMotion: 'reduce',
     });
     const page = await context.newPage();
-    await page.goto(`${baseURL}/app/login`);
+    await page.goto(`${baseURL}/login`);
 
     await expect(page.getByRole('tab', { name: 'Sign in' })).toBeVisible();
     await expect(page.getByRole('tab', { name: 'Create account' })).toBeVisible();

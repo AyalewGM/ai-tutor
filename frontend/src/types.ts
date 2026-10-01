@@ -61,11 +61,29 @@ export interface VisualSpec {
   aria_label?: string;
 }
 
+export interface ProblemChoice {
+  id: string;
+  text: string;
+}
+
+export interface LearnExample {
+  title: string;
+  steps: string[];
+  answer?: string | null;
+}
+
+export interface LearnContent {
+  summary: string;
+  examples: LearnExample[];
+}
+
 export interface WorkspaceProblem {
   id: string;
   prompt: string;
   difficulty: number;
   visual?: VisualSpec | null;
+  answer_kind?: string;
+  choices?: ProblemChoice[] | null;
 }
 
 export interface LearnerWorkspace {
@@ -73,7 +91,14 @@ export interface LearnerWorkspace {
   state: TutorState;
   learner: { id: string; first_name: string; grade_level: string };
   curriculum: { id: string; code: string; name: string; jurisdiction: string | null };
-  focus: { skill_id: string; skill_code: string; skill_name: string };
+  focus: {
+    primary_skill_id: string;
+    active_skill_id: string;
+    skill_name: string;
+    in_remediation: boolean;
+    remediation_reason?: string | null;
+    learn?: LearnContent | null;
+  };
   problem: WorkspaceProblem | null;
   coaching_message: string | null;
   allowed_actions: string[];
@@ -87,6 +112,7 @@ export interface LearnerWorkspace {
   reviews_due: { skill_id: string; skill_name: string }[];
   awards: Award[];
   recommended_next: { skill_id: string; skill_code: string; skill_name: string } | null;
+  streak_days?: number;
 }
 
 export interface Award {
@@ -161,6 +187,27 @@ export interface ParentSkillProgress {
   action_code: string;
 }
 
+export interface StrandSummary {
+  strand: string;
+  total: number;
+  mastered: number;
+  in_progress: number;
+}
+
+export interface GradeLevelSummary {
+  curriculum_code: string | null;
+  curriculum_name: string | null;
+  skills_total: number;
+  skills_mastered: number;
+  skills_in_progress: number;
+  skills_not_started: number;
+  mastery_percent: number;
+  strands: StrandSummary[];
+  sessions_last_7_days: number;
+  minutes_last_7_days: number;
+  trouble_spots: string[];
+}
+
 export interface ChildDashboard {
   child: ChildSummary;
   active_skill_name: string | null;
@@ -169,4 +216,5 @@ export interface ChildDashboard {
   support_areas: { code: string; name: string; occurrence_count: number }[];
   reviews_due: { skill_id: string; skill_code: string; skill_name: string; status: string; due_at: string; interval_index: number; mastery_score: number; projected_mastery_score: number }[];
   recommended_next: { skill_id: string; skill_code: string; skill_name: string; reason: string } | null;
+  grade_level_summary?: GradeLevelSummary | null;
 }

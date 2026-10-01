@@ -1,6 +1,6 @@
 import hashlib
 import uuid
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 from fastapi import HTTPException, status
 from sqlalchemy import desc, func, or_, select
@@ -27,11 +27,13 @@ from app.parent_models import (
 from app.parent_schemas import (
     ChildDashboardOut,
     ChildSummaryOut,
+    GradeLevelSummaryOut,
     LinkChildOut,
     RecentActivityOut,
     RecommendedSkillOut,
     ReviewDueOut,
     SkillProgressOut,
+    StrandSummaryOut,
     SupportAreaOut,
 )
 from app.services.curriculum_scope import CurriculumScopeError, resolve_student_curriculum_scope
@@ -351,7 +353,7 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
     ]
 
     support_rows = db.execute(
-        select(StudentMisconception, Misconception)
+        select(StudentMisconception, Misconception, Skill.name)
         .join(Misconception, Misconception.id == StudentMisconception.misconception_id)
         .join(Skill, Skill.id == Misconception.skill_id)
         .where(
@@ -368,8 +370,9 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
             name=misconception.name,
             occurrence_count=student_misconception.occurrence_count,
         )
-        for student_misconception, misconception in support_rows
+        for student_misconception, misconception, _skill_name in support_rows
     ]
+    support_skill_names = [skill_name for *_rest, skill_name in support_rows]
 
     review_items = reviews_due(
         db, student_id=student.id, curriculum_id=scope.curriculum_id
@@ -392,6 +395,14 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         db, student_id=student.id, curriculum_id=scope.curriculum_id
     )
 
+    summary = _grade_level_summary(
+        db,
+        student_id=student.id,
+        scope=scope,
+        progress_rows=progress_rows,
+        support_skill_names=support_skill_names,
+    )
+
     return ChildDashboardOut(
         child=child_summary(db, student),
         active_skill_name=active_skill_name,
@@ -409,4 +420,113 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
             if recommendation
             else None
         ),
+        grade_level_summary=summary,
+    )
+
+
+def _strand_for(code: str, name: str) -> str:
+    """Mirror the learner Explore Topics grouping so parent and learner views
+    use the same strand vocabulary."""
+    text = f"{code} {name}".lower()
+    if "fraction" in text or "decimal" in text:
+        return "Fractions & decimals"
+    if any(
+        term in text
+        for term in ("geometr", "shape", "angle", "coordinate", "area", "perimeter", "volume", "line")
+    ):
+        return "Geometry"
+    if any(term in text for term in ("measure", "length", "time", "money", "clock")):
+        return "Measurement & time"
+    if any(term in text for term in ("graph", "data", "plot", "table")):
+        return "Data & graphs"
+    if any(
+        term in text
+        for term in ("pattern", "equation", "algebra", "expression", "distribut", "linear", "variable")
+    ):
+        return "Patterns & algebra"
+    if "percent" in text or "financial" in text or "discount" in text or "tax" in text:
+        return "Percent & financial"
+    if "proportion" in text or "rate" in text or "ratio" in text:
+        return "Ratios & proportions"
+    return "Numbers & operations"
+
+
+def _grade_level_summary(
+    db: Session,
+    *,
+    student_id: uuid.UUID,
+    scope,
+    progress_rows,
+    support_skill_names: list[str],
+) -> GradeLevelSummaryOut | None:
+    curriculum = db.get(Curriculum, scope.curriculum_id)
+    curriculum_skills = db.scalars(
+        select(Skill).where(Skill.curriculum_id == scope.curriculum_id)
+    ).all()
+    if not curriculum_skills:
+        return None
+
+    progress_by_skill = {progress.skill_id: progress for progress, _skill in progress_rows}
+
+    mastered = in_progress = 0
+    strands: dict[str, StrandSummaryOut] = {}
+    trouble: list[str] = list(support_skill_names)
+    for skill in curriculum_skills:
+        progress = progress_by_skill.get(skill.id)
+        if progress is None:
+            bucket = "not_started"
+        elif progress.status == SkillStatus.MASTERED:
+            mastered += 1
+            bucket = "mastered"
+        else:
+            in_progress += 1
+            bucket = "in_progress"
+            if (
+                progress.independent_attempt_count >= 3
+                and progress.independent_correct_count == 0
+                and skill.name not in trouble
+            ):
+                trouble.append(skill.name)
+
+        strand = _strand_for(skill.code, skill.name)
+        entry = strands.setdefault(
+            strand, StrandSummaryOut(strand=strand, total=0, mastered=0, in_progress=0)
+        )
+        entry.total += 1
+        if bucket == "mastered":
+            entry.mastered += 1
+        elif bucket == "in_progress":
+            entry.in_progress += 1
+
+    week_ago = datetime.now(UTC) - timedelta(days=7)
+    week_sessions = db.scalars(
+        select(TutorSession).where(
+            TutorSession.student_id == student_id,
+            TutorSession.started_at >= week_ago,
+            or_(
+                TutorSession.curriculum_id == scope.curriculum_id,
+                TutorSession.curriculum_id.is_(None),
+            ),
+        )
+    ).all()
+    minutes = sum(
+        int(
+            ((session.ended_at or session.started_at) - session.started_at).total_seconds() // 60
+        )
+        for session in week_sessions
+    )
+
+    total = len(curriculum_skills)
+    return GradeLevelSummaryOut(
+        curriculum_code=curriculum.code if curriculum else None,
+        curriculum_name=curriculum.name if curriculum else None,
+        skills_total=total,
+        skills_mastered=mastered,
+        skills_in_progress=in_progress,
+        skills_not_started=total - mastered - in_progress,
+        mastery_percent=round(100.0 * mastered / total, 1),
+        strands=sorted(strands.values(), key=lambda s: s.strand),
+        sessions_last_7_days=len(week_sessions),
+        minutes_last_7_days=int(minutes),
+        trouble_spots=trouble[:5],
     )

@@ -64,7 +64,7 @@ docker compose -f docker-compose.yml -f docker-compose.pilot.yml ps
 | API ready | `curl http://localhost:8002/ready` | `{"status":"ready"}` |
 | Frontend | `curl http://localhost:3000/healthz` | `ok` |
 | Backend proxy | `curl http://localhost:3000/backend-health` | `{"status":"ok"}` |
-| Login page | `curl http://localhost:8002/login` | HTML with sign-in form |
+| React SPA (login) | `curl http://localhost:3000/login` | HTML shell with `<div id="root">` |
 
 Run all at once: `./scripts/ops/smoke_test.sh`
 
@@ -150,6 +150,19 @@ docker compose -f docker-compose.yml -f docker-compose.pilot.yml up -d --build
 
 ## 8. Pilot Account Provisioning
 
+### Answer-kind backfill (after curriculum seeding)
+
+Seeded problems default to `answer_kind = FREE_TEXT`. After running any
+curriculum seed script on the pilot database, classify bare numeric/fraction
+answers so grading accepts equivalent forms (`2/4` = `1/2`):
+
+```bash
+docker compose -f docker-compose.pilot.yml exec tutor-api \
+    python /app/scripts/ops/backfill_answer_kinds.py
+```
+
+### Create a family account
+
 ```bash
 # Run interactively on the VPS
 python scripts/ops/provision_pilot_family.py
@@ -203,7 +216,7 @@ docker compose logs --tail 100 tutor-api | grep '"status":5'
 | `llm-gateway` unhealthy | `docker compose logs llm-gateway` | Check provider keys, network |
 | `migrate` exits non-zero | `docker compose logs migrate` | Check Alembic error, DB connectivity |
 | Login fails | Check `users`/`user_credentials` tables | Verify account exists, password reset |
-| Blank learner page | `docker compose logs frontend` | Check nginx config, `/learn/` proxy |
+| Blank learner page | `docker compose logs frontend` | Check nginx SPA fallback (`try_files … /index.html`) |
 | Backup fails | `df -h`, `docker compose exec db pg_isready` | Disk space, DB connectivity |
 | Container won't start | `docker compose ps`, `docker inspect` | Check for port conflicts, OOM |
 

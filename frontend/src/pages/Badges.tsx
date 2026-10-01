@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { ArrowLeft, Lock } from "lucide-react";
 import { ApiError, api } from "../api";
 import NavBar from "../components/NavBar";
+import { Badge as UiBadge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import type { Badge } from "../types";
 
 function BadgeMedal({ earned }: { earned: boolean }) {
@@ -10,8 +17,8 @@ function BadgeMedal({ earned }: { earned: boolean }) {
       viewBox="0 0 64 64"
       width="56"
       height="56"
-      className={`badge-icon ${earned ? "" : "badge-locked"}`}
       aria-hidden="true"
+      className={cn(!earned && "opacity-40 grayscale")}
     >
       <circle cx="32" cy="26" r="20" fill={earned ? "#f59e0b" : "#d1d5db"} />
       <circle cx="32" cy="26" r="15" fill={earned ? "#fff8e6" : "#f3f4f6"} />
@@ -43,74 +50,112 @@ export default function Badges() {
   const earnedCount = badges?.filter((b) => b.earned).length ?? 0;
 
   return (
-    <>
+    <div className="min-h-screen bg-background">
       <NavBar />
-      <main className="page">
-        <section className="hero">
-          <div className="hero-row">
+      <main className="mx-auto max-w-5xl px-4 py-8">
+        <div className="mb-8 rounded-2xl bg-gradient-to-br from-primary to-violet-700 p-6 text-primary-foreground shadow-raised">
+          <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h1>Badge collection</h1>
-              <p>
-                {badges
-                  ? `${earnedCount} of ${badges.length} earned`
-                  : "Loading…"}
+              <h1 className="text-2xl font-bold tracking-tight">Badge collection</h1>
+              <p className="mt-1 text-sm opacity-85">
+                Badges are earned by real learning — correct answers, mastered
+                skills, and fixed gaps.
               </p>
             </div>
-            <Link className="secondary link-btn" to={`/learn/${sessionId}`}>
-              Back to practice
-            </Link>
+            <div className="flex items-center gap-3">
+              {badges && (
+                <span className="rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold backdrop-blur">
+                  {earnedCount} / {badges.length} earned
+                </span>
+              )}
+              <Button variant="secondary" asChild>
+                <Link to={`/learn/${sessionId}`}>
+                  <ArrowLeft className="h-4 w-4" /> Back to practice
+                </Link>
+              </Button>
+            </div>
           </div>
-        </section>
+          {badges && (
+            <Progress
+              className="mt-4 h-2 bg-white/20"
+              value={badges.length ? (100 * earnedCount) / badges.length : 0}
+            />
+          )}
+        </div>
 
         {error && (
-          <p className="error" role="alert">
+          <p
+            className="rounded-md bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
+            role="alert"
+          >
             {error}
           </p>
         )}
 
-        <section className="badge-grid">
+        {!badges && !error && (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="status">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} className="h-44" />
+            ))}
+          </div>
+        )}
+
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {badges?.map((badge) => (
-            <div
+            <Card
               key={badge.code}
-              className={`card badge-card ${badge.earned ? "" : "locked"}`}
+              data-testid="badge-card"
+              data-earned={badge.earned}
+              className={cn(
+                "transition-shadow",
+                badge.earned ? "border-amber-300/60" : "opacity-90",
+              )}
             >
-              <BadgeMedal earned={badge.earned} />
-              <h3>{badge.name}</h3>
-              <p className="muted small">{badge.description}</p>
-              {badge.earned && badge.skill_names.length > 0 && (
-                <p className="small badge-skill">
-                  {badge.skill_names.join(", ")}
-                  {badge.times_earned > 1 && ` (×${badge.times_earned})`}
-                </p>
-              )}
-              {badge.earned && badge.skill_names.length === 0 && (
-                <p className="small badge-skill">Earned</p>
-              )}
-              {!badge.earned && badge.progress && (
-                <div className="badge-progress">
-                  <div className="bar">
-                    <div
-                      className="bar-fill"
-                      style={{
-                        width: `${Math.round(
-                          (badge.progress.current / badge.progress.target) *
-                            100,
-                        )}%`,
-                      }}
-                    />
+              <CardContent className="flex items-start gap-4 p-5">
+                <BadgeMedal earned={badge.earned} />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-semibold">{badge.name}</h3>
+                    {badge.earned ? (
+                      badge.times_earned > 1 && (
+                        <UiBadge variant="secondary">×{badge.times_earned}</UiBadge>
+                      )
+                    ) : (
+                      <Lock className="h-3.5 w-3.5 text-muted-foreground" />
+                    )}
                   </div>
-                  <span className="muted small">
-                    {badge.progress.current} / {badge.progress.target}
-                  </span>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {badge.description}
+                  </p>
+                  {badge.earned && badge.skill_names.length > 0 && (
+                    <p className="mt-2 text-xs font-medium text-primary">
+                      {badge.skill_names.join(", ")}
+                    </p>
+                  )}
+                  {!badge.earned && badge.progress && (
+                    <div className="mt-3 space-y-1">
+                      <Progress
+                        className="h-1.5"
+                        value={
+                          (100 * badge.progress.current) / badge.progress.target
+                        }
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        {badge.progress.current} / {badge.progress.target} in a row
+                      </p>
+                    </div>
+                  )}
+                  {!badge.earned && !badge.progress && (
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      Not yet earned
+                    </p>
+                  )}
                 </div>
-              )}
-              {!badge.earned && !badge.progress && (
-                <p className="muted small">Not yet earned</p>
-              )}
-            </div>
+              </CardContent>
+            </Card>
           ))}
-        </section>
+        </div>
       </main>
-    </>
+    </div>
   );
 }

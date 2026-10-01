@@ -24,6 +24,8 @@ class GeneratedProblem:
     problem_type: str
     context: dict | None = None
     parameters: dict | None = None
+    answer_kind: str = "FREE_TEXT"
+    choices: list | None = None
 
 
 def _fmt_term(coefficient: int, variable: str) -> str:
@@ -1334,6 +1336,8 @@ def generate_problem(
         difficulty=generated.difficulty,
         prompt=prompt,
         canonical_answer=generated.canonical_answer,
+        answer_kind=generated.answer_kind,
+        choices=generated.choices,
         solution={
             "generated": True,
             "generator": generated.problem_type,

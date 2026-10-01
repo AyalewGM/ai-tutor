@@ -1,10 +1,11 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime, timedelta
+from itertools import pairwise
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
@@ -20,13 +21,14 @@ from app.models import (
     TutorState,
     TutorTurn,
 )
+from app.schemas import ProblemChoiceOut, problem_choices_out
 from app.services.awards import award_out, badge_collection
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
     require_skill_in_scope,
 )
-from app.services.hint_policy import select_hint
+from app.services.hint_policy import ASSESSMENT_STATES, select_hint
 from app.services.placement import recommend_next_skill
 from app.services.review_schedule import reviews_due
 from app.services.visualization import visualization_for
@@ -47,12 +49,24 @@ class CurriculumContextOut(BaseModel):
     jurisdiction: str | None = None
 
 
+class LearnExampleOut(BaseModel):
+    title: str
+    steps: list[str]
+    answer: str | None = None
+
+
+class LearnContentOut(BaseModel):
+    summary: str
+    examples: list[LearnExampleOut] = Field(default_factory=list)
+
+
 class LearningFocusOut(BaseModel):
     primary_skill_id: uuid.UUID
     active_skill_id: uuid.UUID
     skill_name: str
     in_remediation: bool
     remediation_reason: str | None = None
+    learn: LearnContentOut | None = None
 
 
 class WorkspaceProblemOut(BaseModel):
@@ -60,6 +74,8 @@ class WorkspaceProblemOut(BaseModel):
     prompt: str
     difficulty: int
     visual: dict | None = None
+    answer_kind: str = "FREE_TEXT"
+    choices: list[ProblemChoiceOut] | None = None
 
 
 class WorkspaceEvidenceOut(BaseModel):
@@ -104,6 +120,7 @@ class LearnerWorkspaceOut(BaseModel):
     reviews_due: list[WorkspaceReviewDueOut] = Field(default_factory=list)
     awards: list[WorkspaceAwardOut] = Field(default_factory=list)
     recommended_next: WorkspaceRecommendedSkillOut | None = None
+    streak_days: int = 0
 
 
 def _allowed_actions(state: TutorState) -> list[WorkspaceAction]:
@@ -115,6 +132,49 @@ def _allowed_actions(state: TutorState) -> list[WorkspaceAction]:
     if hint.allowed:
         actions.extend(["REQUEST_HINT", "I_DONT_UNDERSTAND"])
     return actions
+
+
+def _learn_content(skill: Skill, *, state: TutorState) -> LearnContentOut | None:
+    """Pre-practice instruction is hidden during assessment states, same as hints —
+    a worked example during DIAGNOSE or MASTERY_CHECK would contaminate evidence."""
+    if state in ASSESSMENT_STATES or state == TutorState.COMPLETE:
+        return None
+    content = skill.learn_content
+    if not content or not isinstance(content, dict) or not content.get("summary"):
+        return None
+    examples = [
+        LearnExampleOut(
+            title=str(example.get("title", "")),
+            steps=[str(step) for step in example.get("steps", [])],
+            answer=str(example["answer"]) if example.get("answer") is not None else None,
+        )
+        for example in content.get("examples", [])
+        if example.get("title") and example.get("steps")
+    ]
+    return LearnContentOut(summary=str(content["summary"]), examples=examples)
+
+
+def _practice_streak_days(db: Session, student_id: uuid.UUID) -> int:
+    """Consecutive calendar days with at least one session, counting back from
+    today or yesterday (a streak isn't broken until a full day is missed)."""
+    days = db.scalars(
+        select(func.date(TutorSession.started_at))
+        .where(TutorSession.student_id == student_id)
+        .distinct()
+        .order_by(func.date(TutorSession.started_at).desc())
+    ).all()
+    if not days:
+        return 0
+    today = datetime.now(UTC).date()
+    if days[0] not in {today, today - timedelta(days=1)}:
+        return 0
+    streak = 1
+    for previous, current in pairwise(days):
+        if previous - current == timedelta(days=1):
+            streak += 1
+        else:
+            break
+    return streak
 
 
 def _current_tutor_turn(db: Session, session_id: uuid.UUID) -> TutorTurn | None:
@@ -174,6 +234,7 @@ def get_learner_workspace(
             skill_name=active_skill.name,
             in_remediation=active_skill.id != primary_skill.id,
             remediation_reason=session.remediation_reason,
+            learn=_learn_content(active_skill, state=session.current_state),
         ),
         problem=(
             WorkspaceProblemOut(
@@ -181,6 +242,8 @@ def get_learner_workspace(
                 prompt=problem.prompt,
                 difficulty=problem.difficulty,
                 visual=visualization_for(problem),
+                answer_kind=problem.answer_kind,
+                choices=problem_choices_out(problem.choices),
             )
             if problem
             else None
@@ -216,6 +279,7 @@ def get_learner_workspace(
                 .limit(50)
             ).all()
         ],
+        streak_days=_practice_streak_days(db, session.student_id),
         recommended_next=(
             WorkspaceRecommendedSkillOut(
                 skill_id=recommendation.skill.id,

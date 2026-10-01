@@ -7,7 +7,14 @@ from app.api import _student_skill, _tutor_context
 from app.core.database import get_db
 from app.identity import CurrentParent, require_parent_owns_student
 from app.models import Skill, Student, TutorSession, TutorState, TutorTurn
-from app.schemas import LearningFocusOut, MasteryOut, ProblemOut, SessionCreate, SessionOut
+from app.schemas import (
+    LearningFocusOut,
+    MasteryOut,
+    ProblemOut,
+    SessionCreate,
+    SessionOut,
+    problem_choices_out,
+)
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_skill_in_scope,
@@ -120,6 +127,12 @@ def create_session(payload: SessionCreate, parent: CurrentParent, db: DbSession)
             confidence=focus_progress.confidence_score,
         ),
         focus=_focus(session),
-        problem=ProblemOut(id=problem.id, prompt=problem.prompt, difficulty=problem.difficulty),
+        problem=ProblemOut(
+            id=problem.id,
+            prompt=problem.prompt,
+            difficulty=problem.difficulty,
+            answer_kind=problem.answer_kind,
+            choices=problem_choices_out(problem.choices),
+        ),
         message=generation.message,
     )

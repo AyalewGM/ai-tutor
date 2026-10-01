@@ -1,9 +1,19 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { BookOpen, CheckCircle2, ChevronDown, Flame, Lightbulb, Map as MapIcon, HelpCircle } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import ProblemVisual from "../components/ProblemVisual";
 import VoiceChatControls from "../components/chat/VoiceChatControls";
+import MathText from "../components/MathText";
+import ScratchPad from "../components/ScratchPad";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 import type {
   Award,
   HintResponse,
@@ -93,12 +103,15 @@ export default function Workspace() {
   const { sessionId } = useParams<{ sessionId: string }>();
   const [workspace, setWorkspace] = useState<LearnerWorkspace | null>(null);
   const [answer, setAnswer] = useState("");
+  const [fracNum, setFracNum] = useState("");
+  const [fracDen, setFracDen] = useState("");
   const [status, setStatus] = useState("");
   const [statusOk, setStatusOk] = useState(false);
   const [error, setError] = useState("");
   const [feedback, setFeedback] = useState<"" | "correct" | "wrong">("");
   const [celebrate, setCelebrate] = useState(0);
   const [badgeToast, setBadgeToast] = useState<Award[]>([]);
+  const [learnOpen, setLearnOpen] = useState(false);
 
   const load = useCallback(async () => {
     try {
@@ -123,6 +136,27 @@ export default function Workspace() {
   const hasAction = (action: string) =>
     workspace?.allowed_actions.includes(action) ?? false;
 
+  const problemKind = workspace?.problem?.answer_kind ?? "FREE_TEXT";
+  const effectiveAnswer =
+    problemKind === "FRACTION"
+      ? fracNum.trim() && fracDen.trim()
+        ? `${fracNum.trim()}/${fracDen.trim()}`
+        : ""
+      : answer;
+
+  const problemId = workspace?.problem?.id;
+  useEffect(() => {
+    setAnswer("");
+    setFracNum("");
+    setFracDen("");
+  }, [problemId]);
+
+  const activeSkillId = workspace?.focus.active_skill_id;
+  const learn = workspace?.focus.learn ?? null;
+  useEffect(() => {
+    setLearnOpen(Boolean(workspace?.focus.in_remediation && learn));
+  }, [activeSkillId]);
+
   async function submitAnswer(event: FormEvent) {
     event.preventDefault();
     if (!workspace?.problem) return;
@@ -133,11 +167,13 @@ export default function Workspace() {
         `/adaptive-tutor/sessions/${sessionId}/respond`,
         {
           problem_id: workspace.problem.id,
-          answer,
+          answer: effectiveAnswer,
           assistance_level: 0,
         },
       );
       setAnswer("");
+      setFracNum("");
+      setFracDen("");
       const correct = result.evaluation.correct;
       setFeedback("");
       requestAnimationFrame(() => setFeedback(correct ? "correct" : "wrong"));
@@ -181,18 +217,18 @@ export default function Workspace() {
 
   if (!workspace) {
     return (
-      <>
+      <div className="min-h-screen bg-background">
         <NavBar />
-        <main className="page">
+        <main className="mx-auto max-w-6xl px-4 py-12">
           {error ? (
-            <p className="error" role="alert">
+            <p className="rounded-md bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive" role="alert">
               {error}
             </p>
           ) : (
-            <p className="muted">Loading your session…</p>
+            <p className="text-muted-foreground">Loading your session…</p>
           )}
         </main>
-      </>
+      </div>
     );
   }
 
@@ -202,50 +238,68 @@ export default function Workspace() {
   const masteryPct = Math.round(workspace.evidence.mastery_score * 100);
 
   return (
-    <>
+    <div className="min-h-screen bg-background">
       <NavBar />
-      <main className="page">
-        <section className="hero">
-          <div className="hero-row">
+      <main className="mx-auto max-w-6xl px-4 py-6">
+        {/* Session header */}
+        <div className="mb-6 rounded-2xl bg-gradient-to-br from-primary to-violet-700 p-6 text-primary-foreground shadow-raised">
+          <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h1>
-                {workspace.learner.first_name} · Grade{" "}
-                {workspace.learner.grade_level}
+              <h1 className="text-2xl font-bold tracking-tight">
+                {workspace.learner.first_name} · Grade {workspace.learner.grade_level}
               </h1>
-              <p>
+              <p className="mt-1 text-sm opacity-85">
                 {[workspace.curriculum.jurisdiction, workspace.curriculum.name]
                   .filter(Boolean)
                   .join(" · ")}
               </p>
             </div>
-            <div className="hero-stats">
+            <div className="flex items-center gap-2">
+              {(workspace.streak_days ?? 0) > 0 && (
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-full bg-amber-400/90 px-3.5 py-1.5 text-sm font-semibold text-amber-950"
+                  title="Consecutive days of practice"
+                >
+                  <Flame className="h-4 w-4" /> {workspace.streak_days}-day streak
+                </span>
+              )}
               <Link
-                className="chip map-link"
                 to={`/learn/${sessionId}/map`}
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-medium backdrop-blur transition-colors hover:bg-white/25"
               >
-                Skill map
+                <MapIcon className="h-4 w-4" /> Skill map
               </Link>
-              <span className="chip score">Score {masteryPct}</span>
+              <span className="rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold backdrop-blur">
+                Score {masteryPct}
+              </span>
             </div>
           </div>
-          <ol className="stepper" aria-label="Learning state">
+          {/* Stepper */}
+          <ol className="mt-5 flex flex-wrap items-center gap-x-1 gap-y-2" aria-label="Learning state">
             {STEP_ORDER.map((step, index) => (
-              <li
-                key={step}
-                className={
-                  index === activeIndex
-                    ? "step active"
-                    : index < activeIndex
-                      ? "step done"
-                      : "step"
-                }
-              >
-                {STEP_LABELS[index]}
+              <li key={step} className="flex items-center">
+                <span
+                  className={cn(
+                    "flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold",
+                    index === activeIndex
+                      ? "bg-white text-primary"
+                      : index < activeIndex
+                        ? "bg-white/20 text-white"
+                        : "text-white/60",
+                  )}
+                >
+                  {index < activeIndex && <CheckCircle2 className="h-3.5 w-3.5" />}
+                  {STEP_LABELS[index]}
+                </span>
+                {index < STEP_ORDER.length - 1 && (
+                  <span className="mx-1 h-px w-4 bg-white/30" aria-hidden="true" />
+                )}
               </li>
             ))}
           </ol>
-        </section>
+        </div>
 
+        {/* Badge toast */}
         {badgeToast.length > 0 && (
           <div className="badge-toast" role="status">
             {badgeToast.map((award) => (
@@ -260,26 +314,27 @@ export default function Workspace() {
           </div>
         )}
 
+        {/* Review banner */}
         {workspace.reviews_due.length > 0 && (
-          <div className="banner" role="status">
+          <div className="mb-4 rounded-xl border-l-4 border-primary bg-secondary/60 px-4 py-3 text-sm" role="status">
             <strong>Quick refresh:</strong>{" "}
             {workspace.reviews_due.map((r) => r.skill_name).join(", ")}
           </div>
         )}
 
         {error && (
-          <p className="error" role="alert">
+          <p className="mb-4 rounded-md bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive" role="alert">
             {error}
           </p>
         )}
 
-        <div className="grid two">
-          <div className="col">
+        <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
+          <div className="space-y-6">
             {complete ? (
-              <section className="card completion" id="completionPanel">
+              <Card className="completion" id="completionPanel">
                 <ConfettiBurst trigger={celebrate} always />
-                <div className="medallion" aria-hidden="true">
-                  <svg viewBox="0 0 64 64" width="72" height="72">
+                <CardContent className="flex flex-col items-center py-10 text-center">
+                  <svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true">
                     <defs>
                       <linearGradient id="badgeGrad" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stopColor="#f59e0b" />
@@ -294,189 +349,333 @@ export default function Workspace() {
                     />
                     <path d="M24 44l-4 14 12-6 12 6-4-14" fill="#6d28d9" />
                   </svg>
-                </div>
-                <h2>Skill complete</h2>
-                <p className="badge-name">Badge earned: {workspace.focus.skill_name}</p>
-                <p>
-                  You answered correctly and independently in the mastery check.
-                </p>
-                {workspace.recommended_next && (
-                  <p className="muted">
-                    Up next: {workspace.recommended_next.skill_name}
+                  <h2 className="mt-4 text-2xl font-bold">Skill complete</h2>
+                  <Badge className="mt-2">Badge earned: {workspace.focus.skill_name}</Badge>
+                  <p className="mt-3 text-muted-foreground">
+                    You answered correctly and independently in the mastery check.
                   </p>
-                )}
-              </section>
-            ) : (
-              <section className="card">
-                <h2>Current problem</h2>
-                <p className="muted small">
-                  {workspace.focus.skill_name} · {friendly(workspace.state)}
-                </p>
-                <div className="problem-wrap">
-                  <div className={`problem ${feedback}`} aria-live="polite">
-                    {workspace.problem?.prompt ??
-                      "No problem is currently assigned."}
-                  </div>
-                  <ProblemVisual spec={workspace.problem?.visual ?? null} />
-                  {feedback === "correct" && (
-                    <ConfettiBurst trigger={celebrate} />
+                  {workspace.recommended_next && (
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Up next: {workspace.recommended_next.skill_name}
+                    </p>
                   )}
-                </div>
-                <form onSubmit={submitAnswer}>
-                  <label htmlFor="answer">Your answer</label>
-                  <input
-                    id="answer"
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    disabled={
-                      !hasAction("SUBMIT_ANSWER") || !workspace.problem
-                    }
-                    autoComplete="off"
-                  />
-                  <VoiceChatControls
-                    onTranscript={setAnswer}
-                    promptToRead={workspace.coaching_message}
-                    disabled={!hasAction("SUBMIT_ANSWER") || !workspace.problem}
-                  />
-                  <div className="actions">
-                    <button
-                      type="submit"
-                      className="primary"
-                      disabled={
-                        !hasAction("SUBMIT_ANSWER") ||
-                        !workspace.problem ||
-                        !answer.trim()
-                      }
-                    >
-                      Submit answer
-                    </button>
-                    <button
-                      type="button"
-                      className="secondary"
-                      onClick={() => requestHelp("HINT")}
-                      disabled={
-                        !hasAction("REQUEST_HINT") || !workspace.problem
-                      }
-                    >
-                      Hint
-                    </button>
-                    <button
-                      type="button"
-                      className="secondary"
-                      onClick={() => requestHelp("I_DONT_UNDERSTAND")}
-                      disabled={
-                        !hasAction("I_DONT_UNDERSTAND") || !workspace.problem
-                      }
-                    >
-                      I don&apos;t understand
-                    </button>
+                </CardContent>
+              </Card>
+            ) : (
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle>Current problem</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    {workspace.focus.skill_name} · {friendly(workspace.state)}
+                  </p>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {learn && (
+                    <div className="rounded-lg border border-accent/50 bg-accent/5">
+                      <button
+                        type="button"
+                        onClick={() => setLearnOpen((o) => !o)}
+                        aria-expanded={learnOpen}
+                        className="flex w-full items-center gap-2 px-4 py-2.5 text-sm font-medium text-accent-foreground"
+                      >
+                        <BookOpen className="h-4 w-4 text-accent" />
+                        Learn the idea first
+                        <ChevronDown
+                          className={cn(
+                            "ml-auto h-4 w-4 transition-transform",
+                            learnOpen && "rotate-180",
+                          )}
+                        />
+                      </button>
+                      {learnOpen && (
+                        <div className="space-y-3 border-t border-accent/30 px-4 py-3">
+                          <MathText text={learn.summary} />
+                          {learn.examples.map((example, index) => (
+                            <div
+                              key={index}
+                              className="rounded-md bg-card p-3 text-sm"
+                            >
+                              <p className="font-medium">
+                                Example {index + 1}: {example.title}
+                              </p>
+                              <ol className="mt-2 list-decimal space-y-1 pl-5">
+                                {example.steps.map((step, stepIndex) => (
+                                  <li key={stepIndex}>
+                                    <MathText text={step} />
+                                  </li>
+                                ))}
+                              </ol>
+                              {example.answer && (
+                                <p className="mt-2 font-medium text-primary">
+                                  Answer: <MathText text={example.answer} />
+                                </p>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  <div className="problem-wrap">
+                    <div className={`problem ${feedback}`} aria-live="polite">
+                      <MathText
+                        text={
+                          workspace.problem?.prompt ??
+                          "No problem is currently assigned."
+                        }
+                      />
+                    </div>
+                    <ProblemVisual spec={workspace.problem?.visual ?? null} />
+                    <ScratchPad />
+                    {feedback === "correct" && <ConfettiBurst trigger={celebrate} />}
                   </div>
-                </form>
-                <p className={statusOk ? "success" : "muted"} aria-live="polite">
-                  {status}
-                </p>
-              </section>
+                  <form onSubmit={submitAnswer} className="space-y-3">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="answer">Your answer</Label>
+                      {problemKind === "MULTIPLE_CHOICE" &&
+                      workspace.problem?.choices?.length ? (
+                        <div
+                          role="radiogroup"
+                          aria-label="Answer choices"
+                          className="grid gap-2 sm:grid-cols-2"
+                        >
+                          {workspace.problem.choices.map((choice) => (
+                            <button
+                              key={choice.id}
+                              type="button"
+                              role="radio"
+                              aria-checked={answer === choice.id}
+                              onClick={() => setAnswer(choice.id)}
+                              disabled={
+                                !hasAction("SUBMIT_ANSWER") ||
+                                !workspace.problem
+                              }
+                              className={cn(
+                                "rounded-lg border px-4 py-3 text-left text-base transition-colors",
+                                "hover:border-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                                "disabled:cursor-not-allowed disabled:opacity-50",
+                                answer === choice.id
+                                  ? "border-primary bg-primary/10 font-medium"
+                                  : "border-border bg-card",
+                              )}
+                            >
+                              <MathText text={choice.text} />
+                            </button>
+                          ))}
+                        </div>
+                      ) : problemKind === "FRACTION" ? (
+                        <div className="inline-flex flex-col items-center gap-1">
+                          <Input
+                            id="answer-num"
+                            aria-label="Numerator"
+                            className="h-12 w-24 text-center text-lg"
+                            inputMode="numeric"
+                            value={fracNum}
+                            onChange={(e) => setFracNum(e.target.value)}
+                            disabled={
+                              !hasAction("SUBMIT_ANSWER") || !workspace.problem
+                            }
+                            autoComplete="off"
+                          />
+                          <div className="h-0.5 w-24 bg-foreground" aria-hidden="true" />
+                          <Input
+                            id="answer-den"
+                            aria-label="Denominator"
+                            className="h-12 w-24 text-center text-lg"
+                            inputMode="numeric"
+                            value={fracDen}
+                            onChange={(e) => setFracDen(e.target.value)}
+                            disabled={
+                              !hasAction("SUBMIT_ANSWER") || !workspace.problem
+                            }
+                            autoComplete="off"
+                          />
+                        </div>
+                      ) : (
+                        <Input
+                          id="answer"
+                          className="h-12 text-lg"
+                          inputMode={
+                            problemKind === "INTEGER" ? "numeric" : undefined
+                          }
+                          value={answer}
+                          onChange={(e) => setAnswer(e.target.value)}
+                          disabled={
+                            !hasAction("SUBMIT_ANSWER") || !workspace.problem
+                          }
+                          autoComplete="off"
+                        />
+                      )}
+                    </div>
+                    <VoiceChatControls
+                      onTranscript={setAnswer}
+                      promptToRead={workspace.coaching_message}
+                      disabled={!hasAction("SUBMIT_ANSWER") || !workspace.problem}
+                    />
+                    <div className="flex flex-wrap gap-2">
+                      <Button
+                        type="submit"
+                        size="lg"
+                        disabled={
+                          !hasAction("SUBMIT_ANSWER") ||
+                          !workspace.problem ||
+                          !effectiveAnswer
+                        }
+                      >
+                        Submit answer
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="lg"
+                        onClick={() => requestHelp("HINT")}
+                        disabled={!hasAction("REQUEST_HINT") || !workspace.problem}
+                      >
+                        <Lightbulb className="h-4 w-4" /> Hint
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="lg"
+                        onClick={() => requestHelp("I_DONT_UNDERSTAND")}
+                        disabled={
+                          !hasAction("I_DONT_UNDERSTAND") || !workspace.problem
+                        }
+                      >
+                        <HelpCircle className="h-4 w-4" /> I don&apos;t understand
+                      </Button>
+                    </div>
+                  </form>
+                  {status && (
+                    <p
+                      className={cn(
+                        "text-sm font-medium",
+                        statusOk ? "text-emerald-700" : "text-muted-foreground",
+                      )}
+                      aria-live="polite"
+                    >
+                      {status}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
             )}
 
-            <section className="card coach">
-              <h2>Coach</h2>
-              <div className="bubble" aria-live="polite">
-                {complete
-                  ? "Nice work. Your independent mastery check is complete."
-                  : workspace.coaching_message ??
-                    "Work through the problem carefully."}
-              </div>
-            </section>
+            {/* Coach */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle>Coach</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary font-bold text-primary-foreground">
+                    T
+                  </span>
+                  <div className="rounded-xl rounded-tl-sm bg-secondary px-4 py-3 text-sm leading-relaxed" aria-live="polite">
+                    {complete
+                      ? "Nice work. Your independent mastery check is complete."
+                      : workspace.coaching_message ??
+                        "Work through the problem carefully."}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          <aside className="col">
-            <section className="card">
-              <h2>Progress</h2>
-              <div className="mastery-row">
-                <svg viewBox="0 0 80 80" className="ring" aria-hidden="true">
-                  <defs>
-                    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stopColor="#6d28d9" />
-                      <stop offset="100%" stopColor="#0ea5e9" />
-                    </linearGradient>
-                  </defs>
-                  <circle cx="40" cy="40" r="36" className="ring-track" />
-                  <circle
-                    cx="40"
-                    cy="40"
-                    r="36"
-                    className="ring-fill"
-                    strokeDasharray={RING_LENGTH}
-                    strokeDashoffset={RING_LENGTH * (1 - masteryPct / 100)}
-                  />
-                </svg>
-                <div>
-                  <div className="mastery-pct">{masteryPct}%</div>
-                  <div className="muted small">mastery</div>
+          {/* Sidebar */}
+          <aside className="space-y-6">
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle>Progress</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <svg viewBox="0 0 80 80" className="ring" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="#6d28d9" />
+                        <stop offset="100%" stopColor="#0ea5e9" />
+                      </linearGradient>
+                    </defs>
+                    <circle cx="40" cy="40" r="36" className="ring-track" />
+                    <circle
+                      cx="40"
+                      cy="40"
+                      r="36"
+                      className="ring-fill"
+                      strokeDasharray={RING_LENGTH}
+                      strokeDashoffset={RING_LENGTH * (1 - masteryPct / 100)}
+                    />
+                  </svg>
+                  <div>
+                    <div className="mastery-pct">{masteryPct}%</div>
+                    <div className="text-sm text-muted-foreground">mastery</div>
+                  </div>
                 </div>
-              </div>
-              <div className="bar">
-                <div
-                  className="bar-fill"
-                  style={{ width: `${masteryPct}%` }}
-                />
-              </div>
-              <div className="metric">
-                <strong>Independent correct</strong>
-                <div>
-                  {workspace.evidence.independent_correct_count} /{" "}
-                  {workspace.evidence.independent_attempt_count}
+                <Progress value={masteryPct} />
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-lg bg-secondary/60 p-3">
+                    <p className="text-xs font-medium text-muted-foreground">Independent correct</p>
+                    <p className="mt-1 text-xl font-bold text-primary">
+                      {workspace.evidence.independent_correct_count} /{" "}
+                      {workspace.evidence.independent_attempt_count}
+                    </p>
+                  </div>
+                  <div className="rounded-lg bg-secondary/60 p-3">
+                    <p className="text-xs font-medium text-muted-foreground">Assisted successes</p>
+                    <p className="mt-1 text-xl font-bold text-primary">
+                      {workspace.evidence.hinted_correct_count}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="metric">
-                <strong>Assisted successes</strong>
-                <div>{workspace.evidence.hinted_correct_count}</div>
-              </div>
-              <p className="muted small">
-                Help can support learning, but assisted success is not counted
-                as independent mastery evidence.
-              </p>
-              {workspace.recommended_next && !complete && (
-                <p className="muted small">
-                  Up next: {workspace.recommended_next.skill_name}
+                <p className="text-xs text-muted-foreground">
+                  Help can support learning, but assisted success is not counted
+                  as independent mastery evidence.
                 </p>
-              )}
-            </section>
+                {workspace.recommended_next && !complete && (
+                  <p className="text-sm text-muted-foreground">
+                    Up next: <strong>{workspace.recommended_next.skill_name}</strong>
+                  </p>
+                )}
+              </CardContent>
+            </Card>
 
             {workspace.awards.length > 0 && (
-              <section className="card">
-                <div className="card-title-row">
-                  <h2>Badges</h2>
+              <Card data-testid="badge-shelf">
+                <CardHeader className="flex-row items-center justify-between pb-3">
+                  <CardTitle>Badges</CardTitle>
                   <Link
-                    className="muted small"
+                    className="text-sm text-muted-foreground hover:text-foreground"
                     to={`/learn/${sessionId}/badges`}
                   >
                     View all
                   </Link>
-                </div>
-                <ul className="badge-shelf">
-                  {workspace.awards.map((award) => (
-                    <li
-                      key={award.code + (award.skill_name ?? "")}
-                      className="badge-item"
-                    >
-                      <BadgeIcon small />
-                      <div>
-                        <strong>{award.name}</strong>
-                        <span className="muted small">
-                          {award.skill_name
-                            ? `${award.description} · ${award.skill_name}`
-                            : award.description}
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {workspace.awards.map((award) => (
+                      <li
+                        key={award.code + (award.skill_name ?? "")}
+                        className="flex items-center gap-3"
+                      >
+                        <BadgeIcon small />
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold">{award.name}</p>
+                          <p className="truncate text-xs text-muted-foreground">
+                            {award.skill_name
+                              ? `${award.description} · ${award.skill_name}`
+                              : award.description}
+                          </p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
             )}
           </aside>
         </div>
       </main>
-    </>
+    </div>
   );
 }

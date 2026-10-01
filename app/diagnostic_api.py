@@ -17,7 +17,7 @@ from app.diagnostic_schemas import (
     DiagnosticStartIn,
 )
 from app.models import MasteryEvent, Problem, Skill, Student, StudentSkill, TutorState
-from app.schemas import ProblemOut
+from app.schemas import ProblemOut, problem_choices_out
 from app.services.attempt_evidence import record_evidence
 from app.services.curriculum_scope import (
     CurriculumScope,
@@ -61,7 +61,13 @@ def _next_problem(
 def _problem_out(problem: Problem | None) -> ProblemOut | None:
     if problem is None:
         return None
-    return ProblemOut(id=problem.id, prompt=problem.prompt, difficulty=problem.difficulty)
+    return ProblemOut(
+        id=problem.id,
+        prompt=problem.prompt,
+        difficulty=problem.difficulty,
+        answer_kind=problem.answer_kind,
+        choices=problem_choices_out(problem.choices),
+    )
 
 
 def _diagnostic_scope(db: Session, session: DiagnosticSession) -> CurriculumScope:
@@ -177,6 +183,8 @@ def respond_to_diagnostic(
         canonical_answer=problem.canonical_answer or "",
         assistance_level=0,
         problem_difficulty=problem.difficulty,
+        answer_kind=problem.answer_kind,
+        choices=problem.choices,
     )
 
     session.question_count += 1

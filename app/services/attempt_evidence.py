@@ -28,10 +28,14 @@ def record_evidence(
     canonical_answer: str,
     assistance_level: int,
     problem_difficulty: int | None = None,
+    answer_kind: str = "FREE_TEXT",
+    choices: list | None = None,
 ) -> EvidenceResult:
     previous_score = progress.mastery_score
     previous_confidence = progress.confidence_score
-    evaluation = evaluate_problem(prompt, answer, canonical_answer)
+    evaluation = evaluate_problem(
+        prompt, answer, canonical_answer, answer_kind=answer_kind, choices=choices
+    )
 
     misconception = None
     misconception_count = 0

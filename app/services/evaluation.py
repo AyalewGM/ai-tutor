@@ -360,13 +360,97 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
 )
 
 
-def evaluate_problem(prompt: str, answer: str, canonical_answer: str) -> EvaluationResult:
+_FRACTION_ANSWER = re.compile(r"^\s*(-?\d+)\s*/\s*(-?\d+)\s*$")
+_INTEGER_ANSWER = re.compile(r"^\s*(-?\d+)\s*$")
+
+
+def _fraction_value(answer: str) -> tuple[int, int] | None:
+    """Parse 'a/b' (or a bare integer) into a rational; None if unparseable."""
+    match = _FRACTION_ANSWER.match(answer)
+    if match:
+        numerator, denominator = int(match.group(1)), int(match.group(2))
+        return None if denominator == 0 else (numerator, denominator)
+    match = _INTEGER_ANSWER.match(answer)
+    if match:
+        return int(match.group(1)), 1
+    return None
+
+
+def _fractions_equal(a: tuple[int, int], b: tuple[int, int]) -> bool:
+    """Deterministic equivalence: equivalent fractions count as correct."""
+    return a[0] * b[1] == b[0] * a[1]
+
+
+def _choice_misconception(choices: list | None, answer: str) -> MisconceptionMatch | None:
+    """Map a wrong multiple-choice selection to its authored distractor code."""
+    if not choices:
+        return None
+    normalized = _normalize(answer)
+    for choice in choices:
+        if _normalize(str(choice.get("id", ""))) == normalized:
+            code = choice.get("misconception_code")
+            if code:
+                return MisconceptionMatch(code=code, confidence=0.9)
+            return None
+    return None
+
+
+def _evaluate_typed(
+    answer_kind: str,
+    answer: str,
+    canonical_answer: str,
+    normalized: str,
+) -> EvaluationResult | None:
+    """Kind-aware grading; returns None to fall through to text/misconception rules."""
+    if answer_kind == "MULTIPLE_CHOICE":
+        return EvaluationResult(normalized == _normalize(canonical_answer), 0.99, normalized)
+    if answer_kind == "FRACTION":
+        student_value = _fraction_value(answer)
+        canonical_value = _fraction_value(canonical_answer)
+        if student_value is None or canonical_value is None:
+            return None
+        return EvaluationResult(
+            _fractions_equal(student_value, canonical_value), 0.99, normalized
+        )
+    if answer_kind == "INTEGER":
+        student_int = _INTEGER_ANSWER.match(answer)
+        canonical_int = _INTEGER_ANSWER.match(canonical_answer)
+        if student_int is None or canonical_int is None:
+            return None
+        return EvaluationResult(
+            int(student_int.group(1)) == int(canonical_int.group(1)), 0.99, normalized
+        )
+    return None
+
+
+def evaluate_problem(
+    prompt: str,
+    answer: str,
+    canonical_answer: str,
+    *,
+    answer_kind: str = "FREE_TEXT",
+    choices: list | None = None,
+) -> EvaluationResult:
     normalized = _normalize(answer)
     canonical = _normalize(canonical_answer)
     normalized_prompt = _normalize(prompt)
 
     if normalized == canonical:
         return EvaluationResult(True, 0.99, normalized)
+
+    typed = _evaluate_typed(answer_kind, answer, canonical_answer, normalized)
+    if typed is not None and typed.correct:
+        return typed
+
+    if answer_kind == "MULTIPLE_CHOICE":
+        distractor = _choice_misconception(choices, answer)
+        return EvaluationResult(
+            False,
+            0.99 if distractor else 0.90,
+            normalized,
+            misconception_code=distractor.code if distractor else None,
+            misconception_confidence=distractor.confidence if distractor else None,
+        )
 
     for rule in MISCONCEPTION_RULES:
         match = rule(normalized_prompt, normalized, canonical)
@@ -379,6 +463,9 @@ def evaluate_problem(prompt: str, answer: str, canonical_answer: str) -> Evaluat
                 misconception_confidence=match.confidence,
             )
 
+    if typed is not None:
+        return EvaluationResult(False, 0.90, normalized)
+
     return EvaluationResult(False, 0.90, normalized)
 
 
@@ -386,5 +473,10 @@ def evaluate_distributive_property(
     prompt: str,
     answer: str,
     canonical_answer: str,
+    *,
+    answer_kind: str = "FREE_TEXT",
+    choices: list | None = None,
 ) -> EvaluationResult:
-    return evaluate_problem(prompt, answer, canonical_answer)
+    return evaluate_problem(
+        prompt, answer, canonical_answer, answer_kind=answer_kind, choices=choices
+    )

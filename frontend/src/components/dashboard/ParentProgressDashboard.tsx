@@ -73,36 +73,19 @@ interface ParentProgressDashboardProps {
   onStudentChange: (studentId: string) => void;
 }
 
-const demoDailyMetrics: DailyMetric[] = [
-  { date: "2026-09-24", label: "Wed", minutes: 22, masteryScore: 68 },
-  { date: "2026-09-25", label: "Thu", minutes: 34, masteryScore: 71 },
-  { date: "2026-09-26", label: "Fri", minutes: 18, masteryScore: 73 },
-  { date: "2026-09-27", label: "Sat", minutes: 46, masteryScore: 76 },
-  { date: "2026-09-28", label: "Sun", minutes: 31, masteryScore: 79 },
-  { date: "2026-09-29", label: "Mon", minutes: 29, masteryScore: 81 },
-  { date: "2026-09-30", label: "Tue", minutes: 38, masteryScore: 84 },
-];
-
-const demoMisconceptions: MisconceptionItem[] = [
-  {
-    id: "demo-order-operations",
-    topicName: "Multi-step expressions",
-    misconception: "Applies addition before multiplication when grouping symbols are absent.",
-    flaggedAt: "2026-09-29T18:30:00Z",
-    status: "Needs Review",
-    suggestion:
-      "Ask the learner to explain which operation should happen first and why, then compare two worked examples without giving the answer.",
-  },
-  {
-    id: "demo-negative-sign",
-    topicName: "Integer operations",
-    misconception: "Sometimes treats subtraction of a negative number as subtraction of its absolute value.",
-    flaggedAt: "2026-09-27T17:10:00Z",
-    status: "Needs Review",
-    suggestion:
-      "Use a number line and ask what direction changes when subtracting a negative quantity.",
-  },
-];
+function emptyWeekMetrics(): DailyMetric[] {
+  const labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return Array.from({ length: 7 }, (_, index) => {
+    const day = new Date();
+    day.setDate(day.getDate() - (6 - index));
+    return {
+      date: day.toISOString().slice(0, 10),
+      label: labels[day.getDay()],
+      minutes: 0,
+      masteryScore: 0,
+    };
+  });
+}
 
 function deriveSyllabus(dashboard: ChildDashboard | null): SyllabusStatus[] {
   const skills = dashboard?.skills ?? [];
@@ -135,11 +118,14 @@ function makeStudentSummary(
   child: ChildSummary,
   progress: ProgressStudentApi | undefined,
   dashboard: ChildDashboard | null,
-  useDemoFallback: boolean,
 ): StudentSummary {
   const syllabus = deriveSyllabus(dashboard);
-  const topicsMastered = syllabus.find((item) => item.status === "Mastered")?.count ?? 0;
-  const totalTopics = syllabus.reduce((sum, item) => sum + item.count, 0);
+  const gradeSummary = dashboard?.grade_level_summary ?? null;
+  const topicsMastered = gradeSummary?.skills_mastered
+    ?? syllabus.find((item) => item.status === "Mastered")?.count
+    ?? 0;
+  const totalTopics = gradeSummary?.skills_total
+    ?? syllabus.reduce((sum, item) => sum + item.count, 0);
   const evidenceMastery =
     progress && progress.attempts > 0
       ? Math.round((progress.correct_attempts / progress.attempts) * 100)
@@ -150,36 +136,25 @@ function makeStudentSummary(
     studentId: child.id,
     displayName: child.first_name,
     gradeLevel: child.grade_level,
-    totalLearningMinutes: useDemoFallback ? 218 : 0,
-    learningTimeTrend: useDemoFallback ? 15 : null,
-    topicsMastered: topicsMastered || (useDemoFallback ? 12 : 0),
-    totalTopics: totalTopics || (useDemoFallback ? 18 : 0),
-    masteryScore: Math.round((progress?.average_mastery ?? evidenceMastery / 100) * 100),
-    masteryTrend: useDemoFallback ? 6 : null,
-    activeMisconceptions:
-      backendMisconceptions.length || (useDemoFallback ? demoMisconceptions.length : 0),
-    dailyMetrics: useDemoFallback ? demoDailyMetrics : [],
-    syllabus:
-      totalTopics > 0
-        ? syllabus
-        : useDemoFallback
-          ? [
-              { status: "Mastered", count: 12 },
-              { status: "In Progress", count: 4 },
-              { status: "Not Started", count: 2 },
-            ]
-          : syllabus,
-    misconceptions:
-      backendMisconceptions.length > 0
-        ? backendMisconceptions
-        : useDemoFallback
-          ? demoMisconceptions
-          : [],
+    totalLearningMinutes: gradeSummary?.minutes_last_7_days ?? 0,
+    learningTimeTrend: null,
+    topicsMastered,
+    totalTopics,
+    masteryScore: Math.round(
+      gradeSummary?.mastery_percent
+        ?? (progress?.average_mastery ?? evidenceMastery / 100) * 100,
+    ),
+    masteryTrend: null,
+    activeMisconceptions: backendMisconceptions.length,
+    dailyMetrics: [],
+    syllabus,
+    misconceptions: backendMisconceptions,
   };
 }
 
 function formatLearningTime(minutes: number): string {
-  if (!minutes) return "Not available";
+  if (!minutes) return "0 min this week";
+  if (minutes < 60) return `${minutes} min this week`;
   const hours = minutes / 60;
   return `${hours.toFixed(hours >= 10 ? 0 : 1)} hrs this week`;
 }
@@ -219,8 +194,7 @@ export default function ParentProgressDashboard({
         setProgress(summary);
         setChildDashboard(dashboard);
         const selected = summary.students.find((item) => item.student_id === selectedStudentId);
-        const lacksTimeSeries = !selected || selected.sessions_started === 0;
-        setUsingDemoFallback(lacksTimeSeries);
+        setUsingDemoFallback(!selected || selected.sessions_started === 0);
       })
       .catch((reason: unknown) => {
         if (cancelled) return;
@@ -228,8 +202,8 @@ export default function ParentProgressDashboard({
           setError("Parent access expired. Enter your PIN again.");
           setUsingDemoFallback(false);
         } else {
-          setError("Live analytics are temporarily unavailable. Preview data is shown below.");
-          setUsingDemoFallback(true);
+          setError("Live analytics are temporarily unavailable.");
+          setUsingDemoFallback(false);
         }
       })
       .finally(() => {
@@ -249,17 +223,16 @@ export default function ParentProgressDashboard({
   const summary = useMemo(
     () =>
       child
-        ? makeStudentSummary(child, selectedProgress, childDashboard, usingDemoFallback)
+        ? makeStudentSummary(child, selectedProgress, childDashboard)
         : null,
-    [child, selectedProgress, childDashboard, usingDemoFallback],
+    [child, selectedProgress, childDashboard],
   );
 
   if (!summary) return null;
 
+  const gradeSummary = childDashboard?.grade_level_summary ?? null;
   const activityData =
-    summary.dailyMetrics.length > 0
-      ? summary.dailyMetrics
-      : demoDailyMetrics.map((item) => ({ ...item, minutes: 0, masteryScore: summary.masteryScore }));
+    summary.dailyMetrics.length > 0 ? summary.dailyMetrics : emptyWeekMetrics();
 
   return (
     <div className="space-y-6">
@@ -318,7 +291,7 @@ export default function ParentProgressDashboard({
           }`}
           role="status"
         >
-          {error || "Some chart fields are not yet supplied by the live API. Clearly labeled preview data fills those visualization-only gaps."}
+          {error || "No practice sessions recorded for this learner yet — the charts and stats fill in as they work."}
         </div>
       )}
 
@@ -365,6 +338,70 @@ export default function ParentProgressDashboard({
             <ActivityChart data={activityData} />
             <SyllabusProgressDonut data={summary.syllabus} />
           </section>
+
+          {gradeSummary && (
+            <section className="grid gap-6 xl:grid-cols-2">
+              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-dashboard">
+                <h2 className="text-base font-semibold text-slate-950">
+                  {gradeSummary.curriculum_name ?? "Curriculum"} coverage
+                </h2>
+                <p className="mt-1 text-sm text-slate-500">
+                  {gradeSummary.skills_mastered} of {gradeSummary.skills_total} skills
+                  independently mastered
+                </p>
+                <div className="mt-4 space-y-3">
+                  {gradeSummary.strands.map((strand) => (
+                    <div key={strand.strand}>
+                      <div className="flex items-baseline justify-between text-sm">
+                        <span className="font-medium text-slate-700">{strand.strand}</span>
+                        <span className="text-xs text-slate-500">
+                          {strand.mastered}/{strand.total} mastered
+                          {strand.in_progress > 0 && ` · ${strand.in_progress} in progress`}
+                        </span>
+                      </div>
+                      <div className="mt-1 h-2 rounded-full bg-slate-100">
+                        <div
+                          className="h-2 rounded-full bg-emerald-500"
+                          style={{
+                            width: `${strand.total ? (100 * strand.mastered) / strand.total : 0}%`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-dashboard">
+                <h2 className="text-base font-semibold text-slate-950">This week</h2>
+                <p className="mt-1 text-sm text-slate-500">
+                  {gradeSummary.sessions_last_7_days} practice{" "}
+                  {gradeSummary.sessions_last_7_days === 1 ? "session" : "sessions"} ·{" "}
+                  {gradeSummary.minutes_last_7_days} min
+                </p>
+                {gradeSummary.trouble_spots.length > 0 ? (
+                  <>
+                    <h3 className="mt-4 text-xs font-semibold uppercase tracking-wide text-amber-600">
+                      Trouble spots
+                    </h3>
+                    <ul className="mt-2 flex flex-wrap gap-2">
+                      {gradeSummary.trouble_spots.map((spot) => (
+                        <li
+                          key={spot}
+                          className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800"
+                        >
+                          {spot}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <p className="mt-4 text-sm text-slate-500">
+                    No trouble spots flagged — independent work is going well.
+                  </p>
+                )}
+              </div>
+            </section>
+          )}
 
           <MisconceptionList items={summary.misconceptions} />
 
