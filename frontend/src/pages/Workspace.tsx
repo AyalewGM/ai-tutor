@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import ProblemVisual from "../components/ProblemVisual";
+import VoiceChatControls from "../components/chat/VoiceChatControls";
 import type {
   Award,
   HintResponse,
@@ -331,6 +332,11 @@ export default function Workspace() {
                       !hasAction("SUBMIT_ANSWER") || !workspace.problem
                     }
                     autoComplete="off"
+                  />
+                  <VoiceChatControls
+                    onTranscript={setAnswer}
+                    promptToRead={workspace.coaching_message}
+                    disabled={!hasAction("SUBMIT_ANSWER") || !workspace.problem}
                   />
                   <div className="actions">
                     <button
