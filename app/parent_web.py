@@ -88,6 +88,12 @@ def parent_dashboard_page() -> str:
     <div id="profile">Loading parent profile…</div>
   </header>
 
+  <section class="panel" id="unlockPanel">
+    <h2>Parent access</h2>
+    <p class="muted">Enter your 4-digit parent PIN to view learning progress.</p>
+    <div class="toolbar"><label>Parent PIN<input id="parentPin" type="password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" autocomplete="off"></label><button id="unlockBtn" class="primary" type="button">Unlock parent view</button></div>
+  </section>
+  <div id="adultContent" hidden>
   <section class="panel" aria-label="Child selection">
     <div class="toolbar">
       <label>Child<select id="childSelect"><option value="">Select a child</option></select></label>
@@ -141,13 +147,17 @@ def parent_dashboard_page() -> str:
       <ul id="support"></ul>
     </section>
   </section>
+  </div>
 </main>
 <script>
 const api = '/api/v1/parents';
 const q = id => document.getElementById(id);
 
 async function request(path, options = {}) {
-  const response = await fetch(api + path, {credentials: 'same-origin', ...options});
+  const headers = {...(options.headers || {})};
+  const unlock = sessionStorage.getItem('parentUnlock');
+  if (unlock) headers['X-Parent-Unlock'] = unlock;
+  const response = await fetch(api + path, {credentials: 'same-origin', ...options, headers});
   if (response.status === 401) {
     window.location.assign('/login?next=/parent');
     throw new Error('Authentication required');
@@ -269,9 +279,35 @@ q('linkForm').addEventListener('submit', async e => {
   } catch (err) { showError(err); }
 });
 
+async function loadAdultView() {
+  await loadProfile();
+  await loadChildren();
+  q('unlockPanel').hidden = true;
+  q('adultContent').hidden = false;
+}
+
+q('unlockBtn').addEventListener('click', async () => {
+  try {
+    showError();
+    const result = await request('/verify-pin', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({parent_pin: q('parentPin').value}),
+    });
+    sessionStorage.setItem('parentUnlock', result.unlock_token);
+    q('parentPin').value = '';
+    await loadAdultView();
+  } catch (err) { showError(err); }
+});
+
 (async () => {
-  try { await loadProfile(); await loadChildren(); }
-  catch (err) { showError(new Error(`Parent access is not available: ${err.message}`)); }
+  if (!sessionStorage.getItem('parentUnlock')) return;
+  try { await loadAdultView(); }
+  catch (err) {
+    sessionStorage.removeItem('parentUnlock');
+    q('unlockPanel').hidden = false;
+    q('adultContent').hidden = true;
+  }
 })();
 </script>
 </body>
