@@ -42,7 +42,7 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   await page.getByRole('button', { name: 'Create account' }).click();
   await expect(page).toHaveURL(/\/app\/learn/);
 
-  await page.getByLabel('Learner first name').fill('ReactLearner');
+  await page.getByLabel('Learner nickname').fill('ReactLearner');
   const curriculum = page.locator('#curriculum');
   await expect(curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' })).toHaveCount(1, { timeout: 10000 });
   const mcpsOption = curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' });
