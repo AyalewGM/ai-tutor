@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Eraser, PenLine, Trash2, X, PenTool } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 /**
  * Scratch pad for learners to sketch work.
  *
- * - Touch and mouse drawing
- * - Clear button
- * - Toggle visibility to save screen space
+ * - Unified pointer events (mouse, touch, stylus)
+ * - Pen and eraser tools, clear, hide
  * - No data persistence — purely a scratch space
- * - No handwriting recognition or submission
+ * - No handwriting recognition or submission; nothing leaves the browser
  */
 
 const PEN_COLOR = "#211c35";
@@ -20,157 +22,149 @@ interface ScratchPadProps {
 
 export default function ScratchPad({ defaultVisible = false }: ScratchPadProps) {
   const [visible, setVisible] = useState(defaultVisible);
-  const [drawing, setDrawing] = useState(false);
   const [tool, setTool] = useState<"pen" | "eraser">("pen");
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const drawing = useRef(false);
   const lastPoint = useRef<{ x: number; y: number } | null>(null);
 
-  const getCtx = useCallback(() => {
+  // Resize canvas to match its display size, preserving existing strokes.
+  const resize = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return null;
-    return canvas.getContext("2d");
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width === 0) return;
+    const dpr = window.devicePixelRatio || 1;
+
+    const snapshot = document.createElement("canvas");
+    snapshot.width = canvas.width;
+    snapshot.height = canvas.height;
+    snapshot.getContext("2d")?.drawImage(canvas, 0, 0);
+
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    if (snapshot.width > 0) ctx.drawImage(snapshot, 0, 0, rect.width, rect.height);
   }, []);
 
-  // Resize canvas to match its display size
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || !visible) return;
-
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      const ctx = canvas.getContext("2d");
-      if (ctx) ctx.scale(dpr, dpr);
-    };
-
+    if (!visible) return;
     resize();
     window.addEventListener("resize", resize);
     return () => window.removeEventListener("resize", resize);
-  }, [visible]);
+  }, [visible, resize]);
 
-  const getPoint = useCallback(
-    (e: React.MouseEvent | React.TouchEvent) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return null;
-      const rect = canvas.getBoundingClientRect();
+  const pointFrom = (e: React.PointerEvent) => {
+    const rect = canvasRef.current?.getBoundingClientRect();
+    return rect ? { x: e.clientX - rect.left, y: e.clientY - rect.top } : null;
+  };
 
-      if ("touches" in e) {
-        const touch = e.touches[0];
-        return { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
-      }
-      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-    },
-    [],
-  );
+  const onPointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    canvasRef.current?.setPointerCapture(e.pointerId);
+    drawing.current = true;
+    lastPoint.current = pointFrom(e);
+  };
 
-  const startStroke = useCallback(
-    (e: React.MouseEvent | React.TouchEvent) => {
-      e.preventDefault();
-      setDrawing(true);
-      lastPoint.current = getPoint(e);
-    },
-    [getPoint],
-  );
-
-  const moveStroke = useCallback(
-    (e: React.MouseEvent | React.TouchEvent) => {
-      if (!drawing) return;
-      e.preventDefault();
-      const point = getPoint(e);
-      const ctx = getCtx();
-      if (!point || !ctx || !lastPoint.current) return;
-
-      ctx.beginPath();
-      ctx.moveTo(lastPoint.current.x, lastPoint.current.y);
-      ctx.lineTo(point.x, point.y);
-      ctx.strokeStyle = tool === "pen" ? PEN_COLOR : "#f7f8fc";
-      ctx.lineWidth = tool === "pen" ? PEN_WIDTH : ERASER_WIDTH;
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      ctx.stroke();
-
-      lastPoint.current = point;
-    },
-    [drawing, getPoint, getCtx, tool],
-  );
-
-  const endStroke = useCallback(() => {
-    setDrawing(false);
-    lastPoint.current = null;
-  }, []);
-
-  const clear = useCallback(() => {
-    const ctx = getCtx();
+  const onPointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!drawing.current) return;
+    e.preventDefault();
     const canvas = canvasRef.current;
-    if (!ctx || !canvas) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }, [getCtx]);
+    const ctx = canvas?.getContext("2d");
+    const point = pointFrom(e);
+    if (!ctx || !point || !lastPoint.current) return;
+
+    ctx.strokeStyle = tool === "pen" ? PEN_COLOR : "#ffffff";
+    ctx.lineWidth = tool === "pen" ? PEN_WIDTH : ERASER_WIDTH;
+    ctx.beginPath();
+    ctx.moveTo(lastPoint.current.x, lastPoint.current.y);
+    ctx.lineTo(point.x, point.y);
+    ctx.stroke();
+    lastPoint.current = point;
+  };
+
+  const onPointerEnd = () => {
+    drawing.current = false;
+    lastPoint.current = null;
+  };
+
+  const clear = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (canvas && ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+  };
 
   if (!visible) {
     return (
-      <button
+      <Button
         type="button"
-        className="scratch-toggle secondary"
+        variant="outline"
         onClick={() => setVisible(true)}
         aria-expanded="false"
         aria-controls="scratchpad"
       >
-        Scratch pad
-      </button>
+        <PenTool className="h-4 w-4" /> Scratch pad
+      </Button>
     );
   }
 
+  const toolButton = (
+    name: "pen" | "eraser",
+    label: string,
+    Icon: typeof PenLine,
+  ) => (
+    <button
+      type="button"
+      aria-label={label}
+      aria-pressed={tool === name}
+      title={label}
+      onClick={() => setTool(name)}
+      className={cn(
+        "flex h-9 w-9 items-center justify-center rounded-md border transition-colors",
+        tool === name
+          ? "border-primary bg-primary/10 text-primary"
+          : "border-border bg-card text-muted-foreground hover:bg-secondary",
+      )}
+    >
+      <Icon className="h-4 w-4" />
+    </button>
+  );
+
   return (
-    <div className="scratch-panel" id="scratchpad">
-      <div className="scratch-toolbar">
+    <div className="rounded-xl border border-border bg-card p-3" id="scratchpad">
+      <div className="mb-2 flex items-center gap-1.5">
+        {toolButton("pen", "Pen", PenLine)}
+        {toolButton("eraser", "Eraser", Eraser)}
+        <span className="mx-1 h-5 w-px bg-border" aria-hidden="true" />
         <button
           type="button"
-          className={`tool-btn ${tool === "pen" ? "active" : ""}`}
-          onClick={() => setTool("pen")}
-          aria-label="Pen"
-          title="Pen"
-        >
-          ✏️
-        </button>
-        <button
-          type="button"
-          className={`tool-btn ${tool === "eraser" ? "active" : ""}`}
-          onClick={() => setTool("eraser")}
-          aria-label="Eraser"
-          title="Eraser"
-        >
-          🧹
-        </button>
-        <button
-          type="button"
-          className="tool-btn clear-btn"
-          onClick={clear}
           aria-label="Clear scratch pad"
+          title="Clear"
+          onClick={clear}
+          className="flex h-9 items-center gap-1.5 rounded-md border border-border bg-card px-3 text-sm text-muted-foreground transition-colors hover:bg-secondary"
         >
-          Clear
+          <Trash2 className="h-4 w-4" /> Clear
         </button>
         <button
           type="button"
-          className="tool-btn close-btn"
-          onClick={() => setVisible(false)}
           aria-label="Hide scratch pad"
+          title="Hide"
+          onClick={() => setVisible(false)}
+          className="ml-auto flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary"
         >
-          ×
+          <X className="h-4 w-4" />
         </button>
       </div>
       <canvas
         ref={canvasRef}
         className="scratch-canvas"
-        onMouseDown={startStroke}
-        onMouseMove={moveStroke}
-        onMouseUp={endStroke}
-        onMouseLeave={endStroke}
-        onTouchStart={startStroke}
-        onTouchMove={moveStroke}
-        onTouchEnd={endStroke}
-        onTouchCancel={endStroke}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerEnd}
+        onPointerCancel={onPointerEnd}
         role="img"
         aria-label="Drawing area — sketch your work here"
       />

@@ -1,7 +1,16 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BookOpen, Play, UserPlus, Compass } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import type { CurriculumChoice, LearnerChoice, SessionOut, SkillChoice } from "../types";
 
 export default function LearnEntry() {
@@ -75,119 +84,209 @@ export default function LearnEntry() {
   );
 
   return (
-    <>
+    <div className="min-h-screen bg-background">
       <NavBar />
-      <main className="page learn-home">
-        <section className="hero learn-hero">
-          <p className="eyebrow">Learner home</p>
-          <h1>{selectedLearner ? `Ready to learn, ${selectedLearner.first_name}?` : "Choose your learning path"}</h1>
-          <p>Continue learning or explore a topic you want to practice today.</p>
-        </section>
-
-        <section className="learner-switcher" aria-labelledby="learner-heading">
-          <div>
-            <h2 id="learner-heading">Who is learning?</h2>
-            <p className="muted small">Each learner stays connected to their exact curriculum and version.</p>
-          </div>
-          <label htmlFor="learner">Learner</label>
-          <select id="learner" value={learnerId} onChange={(e) => setLearnerId(e.target.value)} required>
-            <option value="">Select learner</option>
-            {learners.map((learner) => <option key={learner.id} value={learner.id}>{learner.first_name} — {learner.curriculum_code}</option>)}
-          </select>
-        </section>
-
-        {selectedLearner && (
-          <section className="learning-context" aria-label="Learning context">
-            <div><span>Curriculum</span><strong>{selectedLearner.curriculum_code}</strong></div>
-            <div><span>Version</span><strong>{selectedLearner.curriculum_version}</strong></div>
-            <div><span>Jurisdiction</span><strong>{selectedLearner.jurisdiction ?? "Curriculum-defined"}</strong></div>
-            <div><span>Ready skills</span><strong>{readyCount}</strong></div>
-          </section>
-        )}
-
-        <div className="learn-layout">
-          <section className="card skill-discovery" aria-labelledby="skill-heading">
-            <div className="section-heading">
-              <div>
-                <p className="eyebrow">Your choice</p>
-                <h2 id="skill-heading">Explore Topics</h2>
-                <p className="muted small">Pick what you want to practice. Your progress is still earned from your work.</p>
-              </div>
-              {selectedSkill && <span className="status-pill">Selected</span>}
-            </div>
-
-            {!learnerId && <div className="guided-empty"><strong>Start by choosing a learner.</strong><p>We will show only skills assigned to that learner's curriculum.</p></div>}
-            {learnerId && skillsLoading && <p className="muted" role="status">Loading curriculum skills…</p>}
-            {learnerId && !skillsLoading && (
-              <>
-                <nav className="topic-grid" aria-label="Explore math topics">
-                  {topics.map((topic) => (
-                    <button key={topic} type="button"
-                      className={topic === topicFilter ? "topic-choice selected" : "topic-choice"}
-                      aria-pressed={topic === topicFilter}
-                      onClick={() => setTopicFilter(topic)}>
-                      <strong>{topic}</strong>
-                      <span>{topic === "All topics" ? `${readyCount} ready skills` : "Explore skills"}</span>
-                    </button>
-                  ))}
-                </nav>
-
-                <div className="skill-grid" aria-label={`Skills in ${topicFilter}`}>
-                  {visibleSkills.map((skill) => (
-                    <button key={skill.id} type="button"
-                      className={skill.id === skillId ? "skill-choice selected" : "skill-choice"}
-                      disabled={!skill.content_ready}
-                      aria-pressed={skill.id === skillId}
-                      onClick={() => setSkillId(skill.id)}>
-                      <span className="skill-code">{skill.code}</span>
-                      <strong>{skill.name}</strong>
-                      <span>{skill.content_ready ? "Ready to practice" : "Content in progress"}</span>
-                    </button>
-                  ))}
-                </div>
-                {!visibleSkills.length && <div className="guided-empty"><strong>No skills are available in this topic yet.</strong><p>This curriculum does not currently have learner-ready practice content.</p></div>}
-              </>
-            )}
-
-            <form onSubmit={startSession} className="start-panel">
-              <div>
-                <span className="muted small">Your next session</span>
-                <strong>{selectedSkill?.name ?? "Choose a skill to continue"}</strong>
-              </div>
-              <button type="submit" className="primary" disabled={!learnerId || !skillId}>Start learning</button>
-            </form>
-          </section>
-
-          <aside>
-            <section className="card add-learner-card">
-              <p className="eyebrow">Family setup</p>
-              <h2>Add a learner</h2>
-              <p className="muted small">Use a short nickname or alias, not a full legal name. Then choose the exact curriculum.</p>
-              <form onSubmit={addLearner}>
-                <label htmlFor="firstName">Learner nickname</label>
-                <input
-                  id="firstName"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  required
-                  maxLength={32}
-                  pattern="[A-Za-z0-9_-]+"
-                  autoComplete="off"
-                />
-                <label htmlFor="curriculum">Exact curriculum</label>
-                <select id="curriculum" value={curriculumId} onChange={(e) => setCurriculumId(e.target.value)} required>
-                  <option value="">Select curriculum</option>
-                  {curricula.map((curriculum) => <option key={curriculum.id} value={curriculum.id}>{curriculum.code} ({curriculum.version})</option>)}
-                </select>
-                <button type="submit" className="secondary">Add learner</button>
-              </form>
-              {notice && <p className="success" role="status">{notice}</p>}
-            </section>
-          </aside>
+      <main className="mx-auto max-w-6xl px-4 py-8">
+        {/* Hero */}
+        <div className="mb-8">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary">Learner home</p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight">
+            {selectedLearner ? `Ready to learn, ${selectedLearner.first_name}?` : "Choose your learning path"}
+          </h1>
+          <p className="mt-1 text-muted-foreground">
+            Continue learning or explore a topic you want to practice today.
+          </p>
         </div>
 
-        {error && <p className="error" role="alert">{error}</p>}
+        {/* Learner picker */}
+        <Card className="mb-6">
+          <CardContent className="flex flex-col gap-4 pt-6 sm:flex-row sm:items-end">
+            <div className="flex-1 space-y-1.5">
+              <Label htmlFor="learner">Who is learning?</Label>
+              <Select value={learnerId} onValueChange={setLearnerId}>
+                <SelectTrigger id="learner">
+                  <SelectValue placeholder="Select learner" />
+                </SelectTrigger>
+                <SelectContent>
+                  {learners.map((learner) => (
+                    <SelectItem key={learner.id} value={learner.id}>
+                      {learner.first_name} — {learner.curriculum_code}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">
+                Each learner stays connected to their exact curriculum and version.
+              </p>
+            </div>
+            {selectedLearner && (
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="secondary">{selectedLearner.curriculum_code}</Badge>
+                <Badge variant="secondary">{selectedLearner.curriculum_version}</Badge>
+                {selectedLearner.jurisdiction && <Badge variant="secondary">{selectedLearner.jurisdiction}</Badge>}
+                <Badge variant="outline">{readyCount} ready skills</Badge>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
+          {/* Explore Topics */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Compass className="h-5 w-5 text-primary" />
+                  <CardTitle>Explore Topics</CardTitle>
+                </div>
+                {selectedSkill && <Badge>Selected</Badge>}
+              </div>
+              <CardDescription>
+                Pick what you want to practice. Your progress is still earned from your work.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              {!learnerId && (
+                <div className="rounded-lg border border-dashed border-border p-8 text-center">
+                  <BookOpen className="mx-auto h-8 w-8 text-muted-foreground" />
+                  <p className="mt-2 font-medium">Start by choosing a learner.</p>
+                  <p className="text-sm text-muted-foreground">
+                    We will show only skills assigned to that learner's curriculum.
+                  </p>
+                </div>
+              )}
+              {learnerId && skillsLoading && (
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {[...Array(6)].map((_, i) => <Skeleton key={i} className="h-24" />)}
+                </div>
+              )}
+              {learnerId && !skillsLoading && (
+                <>
+                  <div className="flex flex-wrap gap-2">
+                    {topics.map((topic) => (
+                      <button
+                        key={topic}
+                        type="button"
+                        aria-pressed={topic === topicFilter}
+                        onClick={() => setTopicFilter(topic)}
+                        className={cn(
+                          "rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
+                          topic === topicFilter
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border bg-card text-muted-foreground hover:bg-secondary",
+                        )}
+                      >
+                        {topic}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {visibleSkills.map((skill) => (
+                      <button
+                        key={skill.id}
+                        type="button"
+                        disabled={!skill.content_ready}
+                        aria-pressed={skill.id === skillId}
+                        onClick={() => setSkillId(skill.id)}
+                        className={cn(
+                          "rounded-xl border p-4 text-left transition-all",
+                          skill.id === skillId
+                            ? "border-primary bg-primary/5 ring-2 ring-primary/30"
+                            : "border-border bg-card hover:border-primary/40 hover:shadow-dashboard",
+                          !skill.content_ready && "opacity-50",
+                        )}
+                      >
+                        <span className="text-xs font-mono text-muted-foreground">{skill.code}</span>
+                        <p className="mt-0.5 font-medium leading-snug">{skill.name}</p>
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          {skill.content_ready ? "Ready to practice" : "Content in progress"}
+                        </p>
+                      </button>
+                    ))}
+                  </div>
+                  {!visibleSkills.length && (
+                    <div className="rounded-lg border border-dashed border-border p-8 text-center">
+                      <p className="font-medium">No skills are available in this topic yet.</p>
+                      <p className="text-sm text-muted-foreground">
+                        This curriculum does not currently have learner-ready practice content.
+                      </p>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {/* Start panel */}
+              <form onSubmit={startSession} className="flex items-center justify-between gap-4 rounded-xl border border-border bg-secondary/50 p-4">
+                <div className="min-w-0">
+                  <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Your next session</p>
+                  <p className="truncate font-semibold">{selectedSkill?.name ?? "Choose a skill to continue"}</p>
+                </div>
+                <Button type="submit" disabled={!learnerId || !skillId}>
+                  <Play className="h-4 w-4" />
+                  Start learning
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+
+          {/* Add learner */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <UserPlus className="h-5 w-5 text-primary" />
+                <CardTitle>Add a learner</CardTitle>
+              </div>
+              <CardDescription>
+                Use a short nickname or alias, not a full legal name. Then choose the exact curriculum.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={addLearner} className="space-y-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="firstName">Learner nickname</Label>
+                  <Input
+                    id="firstName"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
+                    maxLength={32}
+                    pattern="[A-Za-z0-9_-]+"
+                    autoComplete="off"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="curriculum">Exact curriculum</Label>
+                  <Select value={curriculumId} onValueChange={setCurriculumId}>
+                    <SelectTrigger id="curriculum">
+                      <SelectValue placeholder="Select curriculum" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {curricula.map((curriculum) => (
+                        <SelectItem key={curriculum.id} value={curriculum.id}>
+                          {curriculum.code} ({curriculum.version})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button type="submit" variant="secondary" className="w-full">Add learner</Button>
+              </form>
+              {notice && (
+                <p className="mt-3 rounded-md bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700" role="status">
+                  {notice}
+                </p>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
+        {error && (
+          <p className="mt-6 rounded-md bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive" role="alert">
+            {error}
+          </p>
+        )}
       </main>
-    </>
+    </div>
   );
 }

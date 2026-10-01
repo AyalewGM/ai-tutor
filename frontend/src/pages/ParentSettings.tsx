@@ -1,7 +1,13 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ArrowLeft, Lock, ShieldCheck, Trash2 } from "lucide-react";
 import { ApiError } from "../api";
 import NavBar from "../components/NavBar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type Profile = { display_name: string | null; email: string };
 type PrivacyNotice = { version: string; title: string; summary: string; acknowledged: boolean };
@@ -152,116 +158,158 @@ export default function ParentSettings() {
   }
 
   return (
-    <>
+    <div className="min-h-screen bg-background">
       <NavBar />
-      <main className="page parent-page">
-        <section className="hero">
-          <p className="eyebrow">Parent settings</p>
-          <h1>Settings &amp; privacy</h1>
-          <p>
-            <Link to="/parent">Back to dashboard</Link>
-          </p>
-        </section>
+      <main className="mx-auto max-w-2xl px-4 py-8">
+        <div className="mb-8">
+          <Link to="/parent" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+            <ArrowLeft className="h-4 w-4" /> Back to dashboard
+          </Link>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight">Settings &amp; privacy</h1>
+        </div>
 
         {!unlocked && (
-          <section className="card" aria-labelledby="settings-unlock-heading">
-            <h2 id="settings-unlock-heading">Parent access</h2>
-            <p className="muted small">
-              Enter your 4-digit parent PIN to open settings and privacy controls.
-            </p>
-            <form onSubmit={unlock}>
-              <label htmlFor="settings-pin">Parent PIN</label>
-              <input
-                id="settings-pin"
-                type="password"
-                inputMode="numeric"
-                pattern="[0-9]{4}"
-                minLength={4}
-                maxLength={4}
-                required
-                autoComplete="off"
-                value={pin}
-                onChange={(event) => setPin(event.target.value)}
-              />
-              <button type="submit" className="primary">Unlock</button>
-            </form>
-          </section>
+          <Card className="mx-auto max-w-md">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Lock className="h-5 w-5 text-primary" />
+                <CardTitle>Parent access</CardTitle>
+              </div>
+              <CardDescription>
+                Enter your 4-digit parent PIN to open settings and privacy controls.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={unlock} className="space-y-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="settings-pin">Parent PIN</Label>
+                  <Input
+                    id="settings-pin"
+                    type="password"
+                    inputMode="numeric"
+                    pattern="[0-9]{4}"
+                    minLength={4}
+                    maxLength={4}
+                    required
+                    autoComplete="off"
+                    value={pin}
+                    onChange={(event) => setPin(event.target.value)}
+                  />
+                </div>
+                <Button type="submit" className="w-full">Unlock</Button>
+              </form>
+            </CardContent>
+          </Card>
         )}
 
         {unlocked && (
-          <>
-            <section className="card" aria-labelledby="profile-heading">
-              <h2 id="profile-heading">Profile</h2>
-              <form onSubmit={saveProfile}>
-                <label htmlFor="display-name">Display name</label>
-                <input
-                  id="display-name"
-                  required
-                  minLength={1}
-                  maxLength={120}
-                  value={displayName}
-                  onChange={(event) => setDisplayName(event.target.value)}
-                />
-                <button type="submit" className="secondary">Save</button>
-              </form>
-              {profile && <p className="muted small">Email: {profile.email}</p>}
-            </section>
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Profile</CardTitle>
+                {profile && <CardDescription>Signed in as {profile.email}</CardDescription>}
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={saveProfile} className="flex items-end gap-3">
+                  <div className="flex-1 space-y-1.5">
+                    <Label htmlFor="display-name">Display name</Label>
+                    <Input
+                      id="display-name"
+                      required
+                      minLength={1}
+                      maxLength={120}
+                      value={displayName}
+                      onChange={(event) => setDisplayName(event.target.value)}
+                    />
+                  </div>
+                  <Button type="submit" variant="secondary">Save</Button>
+                </form>
+              </CardContent>
+            </Card>
 
-            <section className="card" aria-labelledby="privacy-heading">
-              <h2 id="privacy-heading">Privacy &amp; family data</h2>
-              {notice ? (
-                <p className="muted small">{notice.title}: {notice.summary}</p>
-              ) : (
-                <p className="muted small">Loading privacy notice…</p>
-              )}
-              {notice && !notice.acknowledged && (
-                <button type="button" className="secondary" onClick={acknowledgeNotice}>
-                  Acknowledge current notice
-                </button>
-              )}
-              {summary && (
-                <p className="muted small">
-                  Active learners: {summary.active_learner_count}. Stored categories:{" "}
-                  {summary.stored_categories.join(", ")}.
-                </p>
-              )}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-5 w-5 text-primary" />
+                  <CardTitle>Privacy &amp; family data</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {notice ? (
+                  <p className="text-sm text-muted-foreground">{notice.title}: {notice.summary}</p>
+                ) : (
+                  <p className="text-sm text-muted-foreground">Loading privacy notice…</p>
+                )}
+                {notice && !notice.acknowledged && (
+                  <Button variant="secondary" onClick={acknowledgeNotice}>
+                    Acknowledge current notice
+                  </Button>
+                )}
+                {summary && (
+                  <p className="text-sm text-muted-foreground">
+                    Active learners: {summary.active_learner_count}. Stored categories:{" "}
+                    {summary.stored_categories.join(", ")}.
+                  </p>
+                )}
+              </CardContent>
+            </Card>
 
-              <h3>Delete a learner's data</h3>
-              <p className="muted small">
-                This permanently deletes the selected learner and their tutoring/progress
-                evidence. This is different from removing a child from your dashboard. Shared
-                curriculum content is not deleted.
-              </p>
-              <label htmlFor="delete-learner">Learner</label>
-              <select
-                id="delete-learner"
-                value={deleteLearnerId}
-                onChange={(event) => setDeleteLearnerId(event.target.value)}
-              >
-                <option value="">Select a learner</option>
-                {children.map((child) => (
-                  <option key={child.id} value={child.id}>
-                    {child.first_name} · Grade {child.grade_level}
-                  </option>
-                ))}
-              </select>
-              <label htmlFor="delete-confirm">Type DELETE to confirm</label>
-              <input
-                id="delete-confirm"
-                autoComplete="off"
-                value={deleteConfirm}
-                onChange={(event) => setDeleteConfirm(event.target.value)}
-              />
-              <button type="button" className="danger" onClick={deleteLearner}>
-                Permanently delete learner data
-              </button>
-            </section>
-          </>
+            <Card className="border-destructive/30">
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <Trash2 className="h-5 w-5 text-destructive" />
+                  <CardTitle>Delete a learner's data</CardTitle>
+                </div>
+                <CardDescription>
+                  This permanently deletes the selected learner and their tutoring/progress
+                  evidence. This is different from removing a child from your dashboard.
+                  Shared curriculum content is not deleted.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="delete-learner">Learner</Label>
+                  <Select value={deleteLearnerId} onValueChange={setDeleteLearnerId}>
+                    <SelectTrigger id="delete-learner">
+                      <SelectValue placeholder="Select a learner" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {children.map((child) => (
+                        <SelectItem key={child.id} value={child.id}>
+                          {child.first_name} · Grade {child.grade_level}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="delete-confirm">Type DELETE to confirm</Label>
+                  <Input
+                    id="delete-confirm"
+                    autoComplete="off"
+                    value={deleteConfirm}
+                    onChange={(event) => setDeleteConfirm(event.target.value)}
+                  />
+                </div>
+                <Button variant="destructive" onClick={deleteLearner}>
+                  Permanently delete learner data
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         )}
 
-        {status && <p className="success" role="status">{status}</p>}
-        {error && <p className="error" role="alert">{error}</p>}
+        {status && (
+          <p className="mt-6 rounded-md bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700" role="status">
+            {status}
+          </p>
+        )}
+        {error && (
+          <p className="mt-6 rounded-md bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive" role="alert">
+            {error}
+          </p>
+        )}
       </main>
-    </>
+    </div>
   );
 }
