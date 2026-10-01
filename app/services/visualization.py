@@ -448,8 +448,8 @@ def _fraction_circle(problem: Problem) -> dict | None:
 
 
 
-_LINEAR_TERM = re.compile(r"([+-]?\\s*\\d*)\\s*([a-zA-Z])(?:\\^(\\d+))?")
-_POLY_GROUPS = re.compile(r"\\(([^()]*)\\)\\s*([+-])\\s*\\(([^()]*)\\)")
+_LINEAR_TERM = re.compile(r"([+-]?\s*\d*)\s*([a-zA-Z])(?:\^(\d+))?")
+_POLY_GROUPS = re.compile(r"\(([^()]*)\)\s*([+-])\s*\(([^()]*)\)")
 
 
 def _algebra_terms(expression: str) -> list[dict[str, Any]]:
@@ -457,7 +457,7 @@ def _algebra_terms(expression: str) -> list[dict[str, Any]]:
     normalized = expression.replace("−", "-").replace(" ", "")
     terms: list[dict[str, Any]] = []
     for token in re.findall(r"[+-]?[^+-]+", normalized):
-        variable_match = re.fullmatch(r"([+-]?\\d*)([a-zA-Z])(?:\\^(\\d+))?", token)
+        variable_match = re.fullmatch(r"([+-]?\d*)([a-zA-Z])(?:\^(\d+))?", token)
         if variable_match:
             raw, variable, degree_raw = variable_match.groups()
             if raw in {"", "+"}:
@@ -475,7 +475,7 @@ def _algebra_terms(expression: str) -> list[dict[str, Any]]:
                 }
             )
             continue
-        if re.fullmatch(r"[+-]?\\d+", token):
+        if re.fullmatch(r"[+-]?\d+", token):
             value = int(token)
             terms.append(
                 {"coefficient": value, "variable": None, "degree": 0, "label": str(value)}
