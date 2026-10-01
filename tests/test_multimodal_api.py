@@ -1,7 +1,5 @@
 import uuid
 
-from fastapi.testclient import TestClient
-
 from app.multimodal_api import MultimodalStepIn
 
 
