@@ -11,8 +11,8 @@ from app.core.database import get_db
 from app.identity import CurrentParent, CurrentUser, require_parent_role
 from app.learner_deletion import DELETION_POLICY_VERSION, erase_learner_transactional
 from app.parent_models import ParentStudentRelationship
-from app.services.parent_gate import require_parent_unlock
 from app.privacy_models import PrivacyNoticeAcknowledgement
+from app.services.parent_gate import require_parent_unlock
 
 router = APIRouter(prefix="/privacy", tags=["privacy"])
 DbSession = Annotated[Session, Depends(get_db)]
