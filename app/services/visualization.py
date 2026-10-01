@@ -456,30 +456,31 @@ def _algebra_terms(expression: str) -> list[dict[str, Any]]:
     """Parse the simple authored polynomial forms used by deterministic visuals."""
     normalized = expression.replace("−", "-").replace(" ", "")
     terms: list[dict[str, Any]] = []
-    for match in _LINEAR_TERM.finditer(normalized):
-        raw, variable, degree_raw = match.groups()
-        if raw in {"", "+"}:
-            coefficient = 1
-        elif raw == "-":
-            coefficient = -1
-        else:
-            coefficient = int(raw)
-        terms.append(
-            {
-                "coefficient": coefficient,
-                "variable": variable,
-                "degree": int(degree_raw or "1"),
-                "label": f"{coefficient if abs(coefficient) != 1 else '-' if coefficient < 0 else ''}{variable}{'^' + degree_raw if degree_raw else ''}",
-            }
-        )
-    occupied = [(m.start(), m.end()) for m in _LINEAR_TERM.finditer(normalized)]
-    for match in re.finditer(r"(?<![a-zA-Z^\\d])([+-]?\\d+)(?![a-zA-Z^\\d])", normalized):
-        if any(start <= match.start() < end for start, end in occupied):
+    for token in re.findall(r"[+-]?[^+-]+", normalized):
+        variable_match = re.fullmatch(r"([+-]?\\d*)([a-zA-Z])(?:\\^(\\d+))?", token)
+        if variable_match:
+            raw, variable, degree_raw = variable_match.groups()
+            if raw in {"", "+"}:
+                coefficient = 1
+            elif raw == "-":
+                coefficient = -1
+            else:
+                coefficient = int(raw)
+            terms.append(
+                {
+                    "coefficient": coefficient,
+                    "variable": variable,
+                    "degree": int(degree_raw or "1"),
+                    "label": token.lstrip("+"),
+                }
+            )
             continue
-        value = int(match.group(1))
-        terms.append({"coefficient": value, "variable": None, "degree": 0, "label": str(value)})
+        if re.fullmatch(r"[+-]?\\d+", token):
+            value = int(token)
+            terms.append(
+                {"coefficient": value, "variable": None, "degree": 0, "label": str(value)}
+            )
     return terms
-
 
 def _like_term_visual(problem: Problem) -> dict | None:
     expression = problem.prompt.removeprefix("Simplify ").rstrip(".")
