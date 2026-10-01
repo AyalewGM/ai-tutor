@@ -2,8 +2,8 @@ import hashlib
 import uuid
 from datetime import UTC, datetime
 
-from fastapi import HTTPException
-from sqlalchemy import desc, or_, select
+from fastapi import HTTPException, status
+from sqlalchemy import desc, func, or_, select
 from sqlalchemy.orm import Session
 
 from app.curriculum_models import EducationAuthority, Jurisdiction, StudentCurriculumEnrollment
@@ -216,6 +216,34 @@ def link_child_with_claim(
             ParentStudentRelationship.student_id == student.id,
         )
     )
+    if relationship is None or not relationship.active:
+        locked_parent = db.scalar(
+            select(ParentProfile).where(ParentProfile.id == parent.id).with_for_update()
+        )
+        if locked_parent is None:
+            raise HTTPException(status_code=404, detail="Parent profile not found")
+        active_relationships = int(
+            db.scalar(
+                select(func.count(ParentStudentRelationship.id)).where(
+                    ParentStudentRelationship.parent_profile_id == parent.id,
+                    ParentStudentRelationship.active.is_(True),
+                )
+            )
+            or 0
+        )
+        seat_limit = locked_parent.max_students or 1
+        if active_relationships >= seat_limit:
+            raise HTTPException(
+                status_code=status.HTTP_402_PAYMENT_REQUIRED,
+                detail={
+                    "code": "STUDENT_SEAT_LIMIT_REACHED",
+                    "subscription_tier": locked_parent.subscription_tier,
+                    "current_students": active_relationships,
+                    "max_students": seat_limit,
+                    "upgrade": {"recommended_tier": "pro", "max_students": 5},
+                },
+            )
+
     action = "LINKED"
     if relationship is None:
         relationship = ParentStudentRelationship(
