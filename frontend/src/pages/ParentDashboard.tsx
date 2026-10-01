@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import type { ChildDashboard, ChildSummary } from "../types";
@@ -66,7 +66,7 @@ export default function ParentDashboard() {
       .finally(() => setLoading(false));
   }, [childId, unlockToken]);
 
-  async function unlockParentView(event: React.FormEvent) {
+  async function unlockParentView(event: FormEvent) {
     event.preventDefault();
     setError("");
     try {
