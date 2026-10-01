@@ -8,9 +8,9 @@ from __future__ import annotations
 
 import json
 import re
-from collections.abc import Awaitable, Callable
 from typing import Any
 
+from starlette.responses import JSONResponse
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 _TEXT_KEYS = {"prompt", "message", "answer", "student_answer", "text"}
@@ -88,7 +88,11 @@ class PIISanitizerMiddleware:
                 continue
             body.extend(message.get("body", b""))
             if len(body) > _MAX_JSON_BODY_BYTES:
-                await self.app(scope, _single_body_receive(bytes(body)), send)
+                response = JSONResponse(
+                    status_code=413,
+                    content={"detail": "JSON request body is too large"},
+                )
+                await response(scope, receive, send)
                 return
             more_body = bool(message.get("more_body", False))
 
