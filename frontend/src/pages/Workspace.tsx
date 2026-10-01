@@ -641,7 +641,7 @@ export default function Workspace() {
             </Card>
 
             {workspace.awards.length > 0 && (
-              <Card>
+              <Card data-testid="badge-shelf">
                 <CardHeader className="flex-row items-center justify-between pb-3">
                   <CardTitle>Badges</CardTitle>
                   <Link

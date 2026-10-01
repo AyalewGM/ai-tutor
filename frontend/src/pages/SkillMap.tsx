@@ -110,6 +110,8 @@ export default function SkillMap() {
             return (
               <Card
                 key={entry.skill_id}
+                data-testid="map-tile"
+                data-active={entry.is_active}
                 className={cn(
                   TIER_STYLE[level],
                   entry.is_active && "ring-2 ring-primary",

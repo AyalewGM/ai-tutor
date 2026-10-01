@@ -186,6 +186,7 @@ export default function LearnEntry() {
                       <button
                         key={skill.id}
                         type="button"
+                        data-testid="skill-choice"
                         disabled={!skill.content_ready}
                         aria-pressed={skill.id === skillId}
                         onClick={() => setSkillId(skill.id)}

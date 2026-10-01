@@ -17,8 +17,8 @@ from app.models import Problem, Skill
 WORD_PROBLEMS: list[tuple[str, int, str, str]] = [
     # One-step add/subtract
     ("M8.ALG.INVERSE.ADD", 1,
-     "Maya had some stickers. She bought 7 more and now has 15. How many did she start with? "
-     "Write and solve x + 7 = 15.",
+     ("Maya had some stickers. She bought 7 more and now has 15. How many did she start with? "
+      "Write and solve x + 7 = 15."),
      "x = 8"),
     ("M8.ALG.INVERSE.ADD", 2,
      "After spending $9 on lunch, Leo has $23 left. Write and solve x - 9 = 23.",
@@ -34,32 +34,32 @@ WORD_PROBLEMS: list[tuple[str, int, str, str]] = [
      "Six friends split a $42 pizza bill equally. Solve 6x = 42 for each share.",
      "x = 7"),
     ("M8.ALG.INVERSE.MULT", 2,
-     "Each row holds the same number of chairs. With x chairs per row and 3 rows filling 15 seats, "
-     "solve 3x = 15.",
+     ("Each row holds the same number of chairs. With x chairs per row and 3 rows filling 15 "
+      "seats, solve 3x = 15."),
      "x = 5"),
     ("MTH1W.C.ALG.EQ1", 2,
      "Five identical boxes weigh 35 kg together. Solve 5x = 35 for the weight of one box.",
      "x = 7"),
     # Two-step
     ("M8.ALG.TWO_STEP", 2,
-     "A gym charges a $3 sign-up fee plus $2 per week. If Sam paid $11 total, solve 2x + 3 = 11 "
-     "for the number of weeks.",
+     ("A gym charges a $3 sign-up fee plus $2 per week. If Sam paid $11 total, solve 2x + 3 = 11 "
+      "for the number of weeks."),
      "x = 4"),
     ("M7.EE.EQUATION.TWO", 2,
-     "A taxi charges a $7 pickup fee plus $5 per km. A ride cost $22 total. Solve 5x + 7 = 22 "
-     "for the number of km.",
+     ("A taxi charges a $7 pickup fee plus $5 per km. A ride cost $22 total. Solve 5x + 7 = 22 "
+      "for the number of km."),
      "x = 3"),
     ("MTH1W.C.ALG.EQ2", 2,
-     "A tutoring club has a $4 materials fee and charges $3 per session. Priya paid $19. "
-     "Solve 3x + 4 = 19.",
+     ("A tutoring club has a $4 materials fee and charges $3 per session. Priya paid $19. "
+      "Solve 3x + 4 = 19."),
      "x = 5"),
     ("A1.LINEAR.EQ.TWO", 2,
      "A phone repair costs $15 plus $4 per hour of labor. The bill was $35. Solve 4x + 15 = 35.",
      "x = 5"),
     # Distribution in context
     ("M8.ALG.DIST", 1,
-     "Three gift bags each hold x candies plus 4 bonus candies. Write the total as an expression: "
-     "expand 3(x + 4).",
+     ("Three gift bags each hold x candies plus 4 bonus candies. Write the total as an "
+      "expression: expand 3(x + 4)."),
      "3x + 12"),
     ("M8.ALG.DIST.POS", 1,
      "Four planters each grow x seedlings plus 2 spares. Expand 4(x + 2).",
@@ -72,29 +72,29 @@ WORD_PROBLEMS: list[tuple[str, int, str, str]] = [
      "6x + 6"),
     # Combining like terms in context
     ("M7.EE.EXPR.COMBINE", 1,
-     "Jordan earned 3x points on Monday and 5x on Tuesday, then lost 2. Write 3x + 5x - 2 in "
-     "simplest form.",
+     ("Jordan earned 3x points on Monday and 5x on Tuesday, then lost 2. Write 3x + 5x - 2 in "
+      "simplest form."),
      "8x - 2"),
     ("A1.EXPR.COMBINE", 2,
-     "A rectangle's sides are 4a and 2b; moving a hedge trims a from one side and adds 6 metres of "
-     "fencing. Simplify 4a + 2b - a + 6.",
+     ("A rectangle's sides are 4a and 2b; moving a hedge trims a from one side and adds 6 metres "
+      "of fencing. Simplify 4a + 2b - a + 6."),
      "3a + 2b + 6"),
     ("M8.ALG.MULTI_STEP.COMBINE", 3,
      "Two pockets hold 3x and 2x marbles, totaling 20. Solve 3x + 2x = 20.",
      "x = 4"),
     # Multi-step
     ("M8.ALG.MULTI_STEP", 3,
-     "Two identical bundles each contain x pencils plus 3 extras, for 14 pencils total. "
-     "Solve 2(x + 3) = 14.",
+     ("Two identical bundles each contain x pencils plus 3 extras, for 14 pencils total. "
+      "Solve 2(x + 3) = 14."),
      "x = 4"),
     # Slope-intercept in context
     ("MTH1W.C.REL.SLOPE", 2,
-     "A plant starts 5 cm tall and shrinks 3 cm each week in winter — y = -3x + 5. "
-     "Which number is the slope?",
+     ("A plant starts 5 cm tall and shrinks 3 cm each week in winter — y = -3x + 5. "
+      "Which number is the slope?"),
      "-3"),
     ("A1.LINEAR.FN.SLOPE", 2,
-     "A rewards card gives a $1 starting credit and earns $2 per visit. Write its balance rule "
-     "in y = mx + b form (slope 2, intercept -1).",
+     ("A rewards card gives a $1 starting credit and earns $2 per visit. Write its balance rule "
+      "in y = mx + b form (slope 2, intercept -1)."),
      "y = 2x - 1"),
     # Evaluating relations
     ("MTH1W.C.REL.EVAL", 1,

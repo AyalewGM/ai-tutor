@@ -104,6 +104,8 @@ export default function Badges() {
           {badges?.map((badge) => (
             <Card
               key={badge.code}
+              data-testid="badge-card"
+              data-earned={badge.earned}
               className={cn(
                 "transition-shadow",
                 badge.earned ? "border-amber-300/60" : "opacity-90",
