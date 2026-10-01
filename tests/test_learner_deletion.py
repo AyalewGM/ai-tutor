@@ -3,6 +3,7 @@ from types import SimpleNamespace
 
 import pytest
 from fastapi import HTTPException
+from starlette.requests import Request
 
 from app.learner_deletion import erase_learner_transactional
 from app.privacy_api import LearnerDeletionConfirmationIn, delete_learner_data
@@ -48,6 +49,10 @@ class FakeDeletionDb:
         self.rollbacks += 1
 
 
+def _request() -> Request:
+    return Request({"type": "http", "headers": []})
+
+
 def _family():
     user_id = uuid.uuid4()
     parent = SimpleNamespace(id=uuid.uuid4(), user_id=user_id)
@@ -90,7 +95,8 @@ def test_transactional_service_does_not_commit_itself():
     assert db.rollbacks == 0
 
 
-def test_api_requires_explicit_confirmation_before_mutation():
+def test_api_requires_explicit_confirmation_before_mutation(monkeypatch):
+    monkeypatch.setattr("app.privacy_api.require_parent_unlock", lambda *_args: None)
     parent, learner, relationship = _family()
     db = FakeDeletionDb(learner=learner, relationship=relationship)
 
@@ -98,6 +104,7 @@ def test_api_requires_explicit_confirmation_before_mutation():
         delete_learner_data(
             learner.id,
             LearnerDeletionConfirmationIn(confirmation="delete"),
+            _request(),
             parent,
             db,
         )
@@ -107,7 +114,8 @@ def test_api_requires_explicit_confirmation_before_mutation():
     assert db.commits == 0
 
 
-def test_api_commits_only_after_complete_service():
+def test_api_commits_only_after_complete_service(monkeypatch):
+    monkeypatch.setattr("app.privacy_api.require_parent_unlock", lambda *_args: None)
     parent, learner, relationship = _family()
     db = FakeDeletionDb(
         learner=learner,
@@ -118,6 +126,7 @@ def test_api_commits_only_after_complete_service():
     result = delete_learner_data(
         learner.id,
         LearnerDeletionConfirmationIn(confirmation="DELETE"),
+        _request(),
         parent,
         db,
     )
@@ -128,7 +137,8 @@ def test_api_commits_only_after_complete_service():
     assert db.rollbacks == 0
 
 
-def test_failure_rolls_back_and_never_commits():
+def test_failure_rolls_back_and_never_commits(monkeypatch):
+    monkeypatch.setattr("app.privacy_api.require_parent_unlock", lambda *_args: None)
     parent, learner, relationship = _family()
     db = FakeDeletionDb(
         learner=learner,
@@ -141,6 +151,7 @@ def test_failure_rolls_back_and_never_commits():
         delete_learner_data(
             learner.id,
             LearnerDeletionConfirmationIn(confirmation="DELETE"),
+            _request(),
             parent,
             db,
         )
