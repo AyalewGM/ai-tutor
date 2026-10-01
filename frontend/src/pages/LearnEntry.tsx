@@ -162,10 +162,18 @@ export default function LearnEntry() {
             <section className="card add-learner-card">
               <p className="eyebrow">Family setup</p>
               <h2>Add a learner</h2>
-              <p className="muted small">Connect a learner to an exact curriculum before practice begins.</p>
+              <p className="muted small">Use a short nickname or alias, not a full legal name. Then choose the exact curriculum.</p>
               <form onSubmit={addLearner}>
-                <label htmlFor="firstName">Learner first name</label>
-                <input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+                <label htmlFor="firstName">Learner nickname</label>
+                <input
+                  id="firstName"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                  maxLength={32}
+                  pattern="[A-Za-z0-9_-]+"
+                  autoComplete="off"
+                />
                 <label htmlFor="curriculum">Exact curriculum</label>
                 <select id="curriculum" value={curriculumId} onChange={(e) => setCurriculumId(e.target.value)} required>
                   <option value="">Select curriculum</option>
