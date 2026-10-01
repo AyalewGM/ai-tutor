@@ -20,6 +20,20 @@ export interface VisualSpec {
   height?: number;
   mode?: "counters" | "squares";
   aria_label?: string;
+  operation?: "+" | "-";
+  terms?: AlgebraTerm[];
+  groups?: Array<{ key: string; terms: AlgebraTerm[] }>;
+  left_terms?: AlgebraTerm[];
+  right_terms?: AlgebraTerm[];
+  transformed_right_terms?: AlgebraTerm[];
+}
+
+interface AlgebraTerm {
+  coefficient: number;
+  variable?: string | null;
+  degree: number;
+  label: string;
+  sign_changed?: boolean;
 }
 
 function AreaModel({ spec }: { spec: VisualSpec }) {
@@ -224,9 +238,50 @@ function VolumeModel({ spec }: { spec: VisualSpec }) {
   );
 }
 
+
+function AlgebraTiles({ spec }: { spec: VisualSpec }) {
+  const groups = spec.groups ?? [];
+  return (
+    <div className="visual algebra-tiles" role="img" aria-label={spec.aria_label}>
+      {groups.map((group) => (
+        <div className="algebra-tile-group" key={group.key}>
+          <span className="viz-label">{group.key === "constant^0" ? "constants" : group.key.replace("^1", "")}</span>
+          <div>
+            {group.terms.map((term, index) => (
+              <span className="algebra-tile" key={`${group.key}-${index}`}>
+                {term.label}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+      <p className="viz-label">Combine coefficients only inside the same group.</p>
+    </div>
+  );
+}
+
+function PolynomialSignChange({ spec }: { spec: VisualSpec }) {
+  const renderTerms = (terms: AlgebraTerm[]) =>
+    terms.map((term, index) => (
+      <span className={`algebra-tile ${term.sign_changed ? "sign-changed" : ""}`} key={index}>
+        {term.coefficient > 0 && index > 0 ? "+" : ""}{term.coefficient}
+        {term.variable ?? ""}{term.degree > 1 ? `^${term.degree}` : ""}
+      </span>
+    ));
+  return (
+    <div className="visual polynomial-sign-model" role="img" aria-label={spec.aria_label}>
+      <div>{renderTerms(spec.left_terms ?? [])}</div>
+      <span className="viz-label">{spec.operation === "-" ? "subtract the group → add its opposite" : "add the group"}</span>
+      <div>{renderTerms(spec.transformed_right_terms ?? [])}</div>
+    </div>
+  );
+}
+
 export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (!spec) return null;
   if (spec.type === "area_model") return <AreaModel spec={spec} />;
+  if (spec.type === "algebra_tiles") return <AlgebraTiles spec={spec} />;
+  if (spec.type === "polynomial_sign_change") return <PolynomialSignChange spec={spec} />;
   if (spec.type === "number_line") return <NumberLine spec={spec} />;
   if (spec.type === "number_line_compare") return <NumberLine spec={spec} compare />;
   if (spec.type === "array_model") return <ArrayModel spec={spec} />;
