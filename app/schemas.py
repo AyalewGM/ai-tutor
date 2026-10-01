@@ -92,6 +92,7 @@ class RespondOut(BaseModel):
     focus: LearningFocusOut | None = None
     next_problem: ProblemOut | None = None
     new_awards: list[AwardOut] = Field(default_factory=list)
+    xp_earned: int = 0
 
 
 

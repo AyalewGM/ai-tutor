@@ -187,6 +187,9 @@ export default function Workspace() {
       if (correct) {
         setCelebrate((c) => c + 1);
       }
+      if (result.xp_earned) {
+        setStatus((s) => `${s} +${result.xp_earned} XP`);
+      }
       if (result.new_awards?.length) {
         setBadgeToast(result.new_awards);
       }
@@ -256,6 +259,14 @@ export default function Workspace() {
               </p>
             </div>
             <div className="flex items-center gap-2">
+              {workspace.growth && (
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold backdrop-blur"
+                  title={`${workspace.growth.xp_in_level}/${workspace.growth.xp_for_next} XP to next level`}
+                >
+                  Lv {workspace.growth.level} · {workspace.growth.level_title}
+                </span>
+              )}
               {(workspace.streak_days ?? 0) > 0 && (
                 <span
                   className="inline-flex items-center gap-1.5 rounded-full bg-amber-400/90 px-3.5 py-1.5 text-sm font-semibold text-amber-950"
@@ -275,6 +286,21 @@ export default function Workspace() {
               </span>
             </div>
           </div>
+          {workspace.growth && (
+            <div className="mt-3 flex items-center gap-2" aria-label={`Level progress: ${workspace.growth.xp_in_level} of ${workspace.growth.xp_for_next} XP`}>
+              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/20">
+                <div
+                  className="h-full rounded-full bg-amber-300 transition-all"
+                  style={{
+                    width: `${Math.min(100, Math.round((workspace.growth.xp_in_level / Math.max(1, workspace.growth.xp_for_next)) * 100))}%`,
+                  }}
+                />
+              </div>
+              <span className="text-xs font-medium text-white/80">
+                {workspace.growth.xp_in_level}/{workspace.growth.xp_for_next} XP
+              </span>
+            </div>
+          )}
           {/* Stepper */}
           <ol className="mt-5 flex flex-wrap items-center gap-x-1 gap-y-2" aria-label="Learning state">
             {STEP_ORDER.map((step, index) => (

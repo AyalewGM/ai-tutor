@@ -94,6 +94,14 @@ export interface WorkspaceProblem {
   choices?: ProblemChoice[] | null;
 }
 
+export interface LearnerGrowth {
+  xp: number;
+  level: number;
+  level_title: string;
+  xp_in_level: number;
+  xp_for_next: number;
+}
+
 export interface LearnerWorkspace {
   session_id: string;
   state: TutorState;
@@ -121,6 +129,7 @@ export interface LearnerWorkspace {
   awards: Award[];
   recommended_next: { skill_id: string; skill_code: string; skill_name: string } | null;
   streak_days?: number;
+  growth?: LearnerGrowth | null;
 }
 
 export interface Award {
@@ -139,6 +148,7 @@ export interface EvaluationOut {
 export interface RespondOut {
   evaluation: EvaluationOut;
   new_awards?: Award[];
+  xp_earned?: number;
 }
 
 export interface Badge {

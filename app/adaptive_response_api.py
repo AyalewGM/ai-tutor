@@ -31,7 +31,12 @@ from app.schemas import (
     TutorOut,
 )
 from app.services.attempt_evidence import record_evidence
-from app.services.awards import award_out, evaluate_awards
+from app.services.awards import (
+    BADGE_XP,
+    attempt_xp,
+    award_out,
+    evaluate_awards,
+)
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
@@ -512,4 +517,10 @@ def respond(
         focus=_focus(session),
         next_problem=_problem_out(next_problem),
         new_awards=[AwardOut(**award_out(db, award)) for award in new_awards],
+        xp_earned=attempt_xp(
+            bool(evidence.evaluation.correct),
+            effective_assistance_level,
+            problem.difficulty,
+        )
+        + sum(BADGE_XP.get(award.badge_code, 0) for award in new_awards),
     )

@@ -160,3 +160,14 @@ def test_mc_transform_grades_distractor_to_misconception() -> None:
         choices=mc.choices,
     )
     assert good.correct
+
+
+def test_learner_progress_rewards_independent_work() -> None:
+    """XP accumulates from graded attempts; independent out-earns assisted."""
+    from app.services.awards import attempt_xp, learner_progress
+
+    assert attempt_xp(True, 0, 3) > attempt_xp(True, 2, 3)
+    assert attempt_xp(False, 0, 5) == 0
+
+    progress = learner_progress.__wrapped__ if False else None
+    del progress

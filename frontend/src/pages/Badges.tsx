@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import type { Badge } from "../types";
+import type { Badge, LearnerWorkspace } from "../types";
 
 function BadgeMedal({ earned }: { earned: boolean }) {
   return (
@@ -37,6 +37,7 @@ function BadgeMedal({ earned }: { earned: boolean }) {
 export default function Badges() {
   const { sessionId } = useParams<{ sessionId: string }>();
   const [badges, setBadges] = useState<Badge[] | null>(null);
+  const [growth, setGrowth] = useState<LearnerWorkspace["growth"]>(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -45,6 +46,9 @@ export default function Badges() {
       .catch((err) =>
         setError(err instanceof ApiError ? err.message : "Could not load badges"),
       );
+    api<LearnerWorkspace>(`/learner-workspace/sessions/${sessionId}`)
+      .then((ws) => setGrowth(ws.growth ?? null))
+      .catch(() => {});
   }, [sessionId]);
 
   const earnedCount = badges?.filter((b) => b.earned).length ?? 0;
@@ -63,6 +67,14 @@ export default function Badges() {
               </p>
             </div>
             <div className="flex items-center gap-3">
+              {growth && (
+                <span
+                  className="rounded-full bg-amber-400/90 px-3.5 py-1.5 text-sm font-semibold text-amber-950"
+                  title={`${growth.xp_in_level}/${growth.xp_for_next} XP to next level`}
+                >
+                  Lv {growth.level} · {growth.level_title} · {growth.xp} XP
+                </span>
+              )}
               {badges && (
                 <span className="rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold backdrop-blur">
                   {earnedCount} / {badges.length} earned

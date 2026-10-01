@@ -22,7 +22,7 @@ from app.models import (
     TutorTurn,
 )
 from app.schemas import ProblemChoiceOut, problem_choices_out
-from app.services.awards import award_out, badge_collection
+from app.services.awards import award_out, badge_collection, learner_progress
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
@@ -142,6 +142,14 @@ class WorkspaceAwardOut(BaseModel):
     awarded_at: datetime
 
 
+class LearnerGrowthOut(BaseModel):
+    xp: int
+    level: int
+    level_title: str
+    xp_in_level: int
+    xp_for_next: int
+
+
 class LearnerWorkspaceOut(BaseModel):
     session_id: uuid.UUID
     state: TutorState
@@ -156,6 +164,7 @@ class LearnerWorkspaceOut(BaseModel):
     awards: list[WorkspaceAwardOut] = Field(default_factory=list)
     recommended_next: WorkspaceRecommendedSkillOut | None = None
     streak_days: int = 0
+    growth: LearnerGrowthOut | None = None
 
 
 def _allowed_actions(state: TutorState) -> list[WorkspaceAction]:
@@ -303,6 +312,7 @@ def get_learner_workspace(
             ).all()
         ],
         streak_days=_practice_streak_days(db, session.student_id),
+        growth=LearnerGrowthOut(**learner_progress(db, session.student_id)),
         recommended_next=(
             WorkspaceRecommendedSkillOut(
                 skill_id=recommendation.skill.id,
