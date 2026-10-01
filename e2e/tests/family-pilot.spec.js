@@ -26,7 +26,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await expect(mcpsOption.first()).toBeAttached({ timeout: 10000 });
   await curriculum.selectOption(await mcpsOption.first().getAttribute('value'));
   await page.getByRole('button', { name: 'Add learner' }).click();
-  await expect(page.getByText('Synthetic Learner is ready.')).toBeVisible();
+  await expect(page.getByText('SyntheticLearner is ready.')).toBeVisible();
 
   const learner = page.locator('#learner');
   await expect(learner).not.toHaveValue('');
