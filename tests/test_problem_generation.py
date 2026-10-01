@@ -711,7 +711,17 @@ def test_mth1w_algebra_generators_are_deterministic_and_structurally_correct() -
     params = poly.parameters
     assert params is not None
     sign = 1 if params["operation"] == "+" else -1
-    assert params["a"] + sign * params["c"] != 999  # exercise parsed coefficients
+    coefficient = params["a"] + sign * params["c"]
+    constant = params["b"] + sign * params["d"]
+    variable = params["variable"]
+    expected = (
+        f"{variable}" if coefficient == 1
+        else f"-{variable}" if coefficient == -1
+        else f"{coefficient}{variable}"
+    )
+    if constant:
+        expected += f"{constant:+d}"
+    assert poly.canonical_answer == expected
     assert evaluate_problem(
         poly.prompt, poly.canonical_answer, poly.canonical_answer
     ).correct
