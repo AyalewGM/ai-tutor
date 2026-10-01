@@ -105,6 +105,10 @@ class PINVerifySchema(BaseModel):
     parent_pin: str = Field(pattern=r"^\d{4}$")
 
 
+class PasswordReauthSchema(BaseModel):
+    password: str = Field(min_length=1, max_length=128)
+
+
 class StudentProfileOut(BaseModel):
     id: uuid.UUID
     display_name: str
