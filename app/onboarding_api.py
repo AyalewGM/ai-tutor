@@ -26,6 +26,7 @@ from app.parent_models import (
 from app.services.placement import recommend_next_skill
 from app.services.problem_generation import content_readiness
 from app.services.review_schedule import reviews_due
+from app.workspace_api import LearnContentOut, build_learn_content
 
 router = APIRouter(prefix="/onboarding", tags=["onboarding"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -67,6 +68,7 @@ class SkillChoice(BaseModel):
     code: str
     name: str
     content_ready: bool = True
+    learn: LearnContentOut | None = None
 
 
 class LaunchpadSkill(BaseModel):
@@ -150,6 +152,7 @@ def list_learner_skills(
             code=skill.code,
             name=skill.name,
             content_ready=content_readiness(db, skill_id=skill.id).ready,
+            learn=build_learn_content(skill.learn_content),
         )
         for skill in skills
     ]

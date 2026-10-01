@@ -22,7 +22,7 @@ from app.models import (
     TutorTurn,
 )
 from app.schemas import ProblemChoiceOut, problem_choices_out
-from app.services.awards import award_out, badge_collection
+from app.services.awards import award_out, badge_collection, learner_progress
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
@@ -55,9 +55,44 @@ class LearnExampleOut(BaseModel):
     answer: str | None = None
 
 
+class LearnTermOut(BaseModel):
+    term: str
+    definition: str
+
+
 class LearnContentOut(BaseModel):
     summary: str
     examples: list[LearnExampleOut] = Field(default_factory=list)
+    key_terms: list[LearnTermOut] = Field(default_factory=list)
+    watch_out: list[str] = Field(default_factory=list)
+
+
+def build_learn_content(content: dict | None) -> LearnContentOut | None:
+    """Wire-safe rendering of a skill's authored lesson. Shared by the workspace
+    (state-gated) and the pre-session "learn this first" surface."""
+    if not content or not isinstance(content, dict) or not content.get("summary"):
+        return None
+    examples = [
+        LearnExampleOut(
+            title=str(example.get("title", "")),
+            steps=[str(step) for step in example.get("steps", [])],
+            answer=str(example["answer"]) if example.get("answer") is not None else None,
+        )
+        for example in content.get("examples", [])
+        if example.get("title") and example.get("steps")
+    ]
+    key_terms = [
+        LearnTermOut(term=str(item.get("term", "")), definition=str(item.get("definition", "")))
+        for item in content.get("key_terms", [])
+        if item.get("term") and item.get("definition")
+    ]
+    watch_out = [str(item) for item in content.get("watch_out", []) if item]
+    return LearnContentOut(
+        summary=str(content["summary"]),
+        examples=examples,
+        key_terms=key_terms,
+        watch_out=watch_out,
+    )
 
 
 class LearningFocusOut(BaseModel):
@@ -107,6 +142,14 @@ class WorkspaceAwardOut(BaseModel):
     awarded_at: datetime
 
 
+class LearnerGrowthOut(BaseModel):
+    xp: int
+    level: int
+    level_title: str
+    xp_in_level: int
+    xp_for_next: int
+
+
 class LearnerWorkspaceOut(BaseModel):
     session_id: uuid.UUID
     state: TutorState
@@ -121,6 +164,7 @@ class LearnerWorkspaceOut(BaseModel):
     awards: list[WorkspaceAwardOut] = Field(default_factory=list)
     recommended_next: WorkspaceRecommendedSkillOut | None = None
     streak_days: int = 0
+    growth: LearnerGrowthOut | None = None
 
 
 def _allowed_actions(state: TutorState) -> list[WorkspaceAction]:
@@ -139,19 +183,7 @@ def _learn_content(skill: Skill, *, state: TutorState) -> LearnContentOut | None
     a worked example during DIAGNOSE or MASTERY_CHECK would contaminate evidence."""
     if state in ASSESSMENT_STATES or state == TutorState.COMPLETE:
         return None
-    content = skill.learn_content
-    if not content or not isinstance(content, dict) or not content.get("summary"):
-        return None
-    examples = [
-        LearnExampleOut(
-            title=str(example.get("title", "")),
-            steps=[str(step) for step in example.get("steps", [])],
-            answer=str(example["answer"]) if example.get("answer") is not None else None,
-        )
-        for example in content.get("examples", [])
-        if example.get("title") and example.get("steps")
-    ]
-    return LearnContentOut(summary=str(content["summary"]), examples=examples)
+    return build_learn_content(skill.learn_content)
 
 
 def _practice_streak_days(db: Session, student_id: uuid.UUID) -> int:
@@ -280,6 +312,7 @@ def get_learner_workspace(
             ).all()
         ],
         streak_days=_practice_streak_days(db, session.student_id),
+        growth=LearnerGrowthOut(**learner_progress(db, session.student_id)),
         recommended_next=(
             WorkspaceRecommendedSkillOut(
                 skill_id=recommendation.skill.id,

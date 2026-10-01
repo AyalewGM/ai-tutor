@@ -33,6 +33,9 @@ def audit_curriculum(db, curriculum: Curriculum) -> dict:
         difficulties = {p.difficulty for p in rows}
         generated_capable = bool(types & GENERATORS.keys())
         word_problems = sum(1 for p in rows if p.problem_type == "WORD_PROBLEM")
+        mc_problems = sum(
+            1 for p in rows if getattr(p, "answer_kind", None) == "MULTIPLE_CHOICE"
+        )
         ready = content_readiness(db, skill_id=skill.id).ready
 
         gaps = []
@@ -52,6 +55,7 @@ def audit_curriculum(db, curriculum: Curriculum) -> dict:
                 "difficulties": sorted(difficulties),
                 "generator": generated_capable,
                 "word_problems": word_problems,
+                "multiple_choice": mc_problems,
                 "ready": ready,
                 "gaps": gaps,
             }
@@ -79,7 +83,8 @@ def main() -> None:
             print(
                 f"  {flag} {s['code']:<32} problems={s['problems']:<3} "
                 f"diff={s['difficulties']} gen={'y' if s['generator'] else 'n'} "
-                f"wp={s['word_problems']} {','.join(s['gaps'])}"
+                f"wp={s['word_problems']} mc={s['multiple_choice']} "
+                f"{','.join(s['gaps'])}"
             )
         if report["gaps"]:
             print(f"  -> {len(report['gaps'])} skills with depth gaps")

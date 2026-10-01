@@ -20,6 +20,7 @@ export interface SkillChoice {
   code: string;
   name: string;
   content_ready: boolean;
+  learn?: LearnContent | null;
 }
 
 export interface LearnerLaunchpad {
@@ -72,9 +73,16 @@ export interface LearnExample {
   answer?: string | null;
 }
 
+export interface LearnTerm {
+  term: string;
+  definition: string;
+}
+
 export interface LearnContent {
   summary: string;
   examples: LearnExample[];
+  key_terms?: LearnTerm[];
+  watch_out?: string[];
 }
 
 export interface WorkspaceProblem {
@@ -84,6 +92,14 @@ export interface WorkspaceProblem {
   visual?: VisualSpec | null;
   answer_kind?: string;
   choices?: ProblemChoice[] | null;
+}
+
+export interface LearnerGrowth {
+  xp: number;
+  level: number;
+  level_title: string;
+  xp_in_level: number;
+  xp_for_next: number;
 }
 
 export interface LearnerWorkspace {
@@ -113,6 +129,7 @@ export interface LearnerWorkspace {
   awards: Award[];
   recommended_next: { skill_id: string; skill_code: string; skill_name: string } | null;
   streak_days?: number;
+  growth?: LearnerGrowth | null;
 }
 
 export interface Award {
@@ -131,6 +148,8 @@ export interface EvaluationOut {
 export interface RespondOut {
   evaluation: EvaluationOut;
   new_awards?: Award[];
+  xp_earned?: number;
+  growth?: (LearnerGrowth & { leveled_up?: boolean }) | null;
 }
 
 export interface Badge {

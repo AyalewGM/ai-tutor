@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.models import Attempt, LearnerAward, Skill
+from app.models import Attempt, LearnerAward, Problem, Skill
 
 
 @dataclass(frozen=True)
@@ -227,4 +227,81 @@ def award_out(db: Session, award: LearnerAward) -> dict:
         "description": spec.description if spec else "",
         "skill_name": skill_name,
         "awarded_at": award.created_at,
+    }
+
+
+# --- Learner points (XP) -----------------------------------------------------
+#
+# XP is derived from authoritative attempt + award rows only — never from
+# client counters. Independent work pays the most; assisted correctness pays
+# partial credit; wrong answers pay nothing. Badges carry a one-time bonus so
+# real milestones (mastery, gap closure, retained review) out-earn grinding.
+
+BADGE_XP: dict[str, int] = {
+    "FIRST_CORRECT": 10,
+    "STREAK_3": 10,
+    "STREAK_5": 15,
+    "LEVEL_UP": 20,
+    "SKILL_MASTERED": 50,
+    "GAP_FIXED": 40,
+    "FRESH_EYES": 30,
+}
+
+LEVEL_TITLES = (
+    "Newcomer",
+    "Explorer",
+    "Solver",
+    "Strategist",
+    "Scholar",
+    "Master",
+    "Mentor",
+    "Sage",
+)
+
+
+def _xp_for_next_level(level: int) -> int:
+    """XP needed to go from `level` to `level + 1` — grows linearly."""
+    return 100 + 60 * (level - 1)
+
+
+def attempt_xp(is_correct: bool, assistance_level: int, difficulty: int) -> int:
+    if not is_correct:
+        return 0
+    if assistance_level <= 0:
+        return 8 + 2 * difficulty
+    return 4 + difficulty
+
+
+def level_for_xp(xp: int) -> tuple[int, int]:
+    """Return (level, xp_in_level) for a cumulative XP total."""
+    level = 1
+    remaining = xp
+    while remaining >= _xp_for_next_level(level) and level < len(LEVEL_TITLES):
+        remaining -= _xp_for_next_level(level)
+        level += 1
+    return level, remaining
+
+
+def learner_progress(db: Session, student_id: uuid.UUID) -> dict:
+    """Authoritative XP/level snapshot for a learner."""
+    rows = db.execute(
+        select(Attempt.is_correct, Attempt.assistance_level, Problem.difficulty)
+        .join(Problem, Attempt.problem_id == Problem.id)
+        .where(Attempt.student_id == student_id, Attempt.is_correct.isnot(None))
+    ).all()
+    xp = sum(attempt_xp(bool(ok), int(assistance or 0), int(diff or 1))
+             for ok, assistance, diff in rows)
+
+    award_codes = db.scalars(
+        select(LearnerAward.badge_code).where(LearnerAward.student_id == student_id)
+    ).all()
+    xp += sum(BADGE_XP.get(code, 0) for code in award_codes)
+
+    level, xp_in_level = level_for_xp(xp)
+    return {
+        "xp": xp,
+        "level": level,
+        "level_title": LEVEL_TITLES[level - 1],
+        "xp_in_level": xp_in_level,
+        "xp_for_next": _xp_for_next_level(level),
     }

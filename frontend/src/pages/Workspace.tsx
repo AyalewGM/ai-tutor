@@ -6,6 +6,7 @@ import NavBar from "../components/NavBar";
 import ProblemVisual from "../components/ProblemVisual";
 import VoiceChatControls from "../components/chat/VoiceChatControls";
 import MathText from "../components/MathText";
+import LearnPanel from "../components/LearnPanel";
 import ScratchPad from "../components/ScratchPad";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -111,6 +112,7 @@ export default function Workspace() {
   const [feedback, setFeedback] = useState<"" | "correct" | "wrong">("");
   const [celebrate, setCelebrate] = useState(0);
   const [badgeToast, setBadgeToast] = useState<Award[]>([]);
+  const [levelUp, setLevelUp] = useState<{ level: number; title: string } | null>(null);
   const [learnOpen, setLearnOpen] = useState(false);
 
   const load = useCallback(async () => {
@@ -132,6 +134,12 @@ export default function Workspace() {
     const timer = setTimeout(() => setBadgeToast([]), 5000);
     return () => clearTimeout(timer);
   }, [badgeToast]);
+
+  useEffect(() => {
+    if (!levelUp) return;
+    const timer = setTimeout(() => setLevelUp(null), 5000);
+    return () => clearTimeout(timer);
+  }, [levelUp]);
 
   const hasAction = (action: string) =>
     workspace?.allowed_actions.includes(action) ?? false;
@@ -186,8 +194,17 @@ export default function Workspace() {
       if (correct) {
         setCelebrate((c) => c + 1);
       }
+      if (result.xp_earned) {
+        setStatus((s) => `${s} +${result.xp_earned} XP`);
+      }
       if (result.new_awards?.length) {
         setBadgeToast(result.new_awards);
+      }
+      if (result.growth?.leveled_up) {
+        setLevelUp({
+          level: result.growth.level,
+          title: result.growth.level_title,
+        });
       }
       await load();
     } catch (err) {
@@ -255,6 +272,14 @@ export default function Workspace() {
               </p>
             </div>
             <div className="flex items-center gap-2">
+              {workspace.growth && (
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold backdrop-blur"
+                  title={`${workspace.growth.xp_in_level}/${workspace.growth.xp_for_next} XP to next level`}
+                >
+                  Lv {workspace.growth.level} · {workspace.growth.level_title}
+                </span>
+              )}
               {(workspace.streak_days ?? 0) > 0 && (
                 <span
                   className="inline-flex items-center gap-1.5 rounded-full bg-amber-400/90 px-3.5 py-1.5 text-sm font-semibold text-amber-950"
@@ -274,6 +299,21 @@ export default function Workspace() {
               </span>
             </div>
           </div>
+          {workspace.growth && (
+            <div className="mt-3 flex items-center gap-2" aria-label={`Level progress: ${workspace.growth.xp_in_level} of ${workspace.growth.xp_for_next} XP`}>
+              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/20">
+                <div
+                  className="h-full rounded-full bg-amber-300 transition-all"
+                  style={{
+                    width: `${Math.min(100, Math.round((workspace.growth.xp_in_level / Math.max(1, workspace.growth.xp_for_next)) * 100))}%`,
+                  }}
+                />
+              </div>
+              <span className="text-xs font-medium text-white/80">
+                {workspace.growth.xp_in_level}/{workspace.growth.xp_for_next} XP
+              </span>
+            </div>
+          )}
           {/* Stepper */}
           <ol className="mt-5 flex flex-wrap items-center gap-x-1 gap-y-2" aria-label="Learning state">
             {STEP_ORDER.map((step, index) => (
@@ -311,6 +351,32 @@ export default function Workspace() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Level-up celebration */}
+        {levelUp && (
+          <div
+            className="fixed inset-0 z-50 grid place-items-center bg-black/40"
+            role="alertdialog"
+            aria-label={`Level up! You reached level ${levelUp.level}`}
+            onClick={() => setLevelUp(null)}
+          >
+            <div className="relative rounded-3xl bg-gradient-to-br from-amber-300 to-orange-400 p-10 text-center text-amber-950 shadow-2xl">
+              <ConfettiBurst trigger={1} always />
+              <p className="text-sm font-bold uppercase tracking-widest">
+                Level up
+              </p>
+              <p className="mt-1 text-4xl font-extrabold">
+                Level {levelUp.level}
+              </p>
+              <p className="mt-2 text-lg font-semibold">
+                You're now a {levelUp.title}
+              </p>
+              <p className="mt-3 text-sm opacity-80">
+                Keep practicing to reach the next level
+              </p>
+            </div>
           </div>
         )}
 
@@ -388,30 +454,8 @@ export default function Workspace() {
                         />
                       </button>
                       {learnOpen && (
-                        <div className="space-y-3 border-t border-accent/30 px-4 py-3">
-                          <MathText text={learn.summary} />
-                          {learn.examples.map((example, index) => (
-                            <div
-                              key={index}
-                              className="rounded-md bg-card p-3 text-sm"
-                            >
-                              <p className="font-medium">
-                                Example {index + 1}: {example.title}
-                              </p>
-                              <ol className="mt-2 list-decimal space-y-1 pl-5">
-                                {example.steps.map((step, stepIndex) => (
-                                  <li key={stepIndex}>
-                                    <MathText text={step} />
-                                  </li>
-                                ))}
-                              </ol>
-                              {example.answer && (
-                                <p className="mt-2 font-medium text-primary">
-                                  Answer: <MathText text={example.answer} />
-                                </p>
-                              )}
-                            </div>
-                          ))}
+                        <div className="border-t border-accent/30 px-4 py-3">
+                          <LearnPanel learn={learn} />
                         </div>
                       )}
                     </div>

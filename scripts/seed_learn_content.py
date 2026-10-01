@@ -17,8 +17,21 @@ from app.core.database import SessionLocal
 from app.models import Skill
 
 
-def _content(summary: str, *examples: dict) -> dict:
-    return {"summary": summary, "examples": list(examples)}
+def _content(
+    summary: str,
+    *examples: dict,
+    key_terms: list[tuple[str, str]] | None = None,
+    watch_out: list[str] | None = None,
+) -> dict:
+    return {
+        "summary": summary,
+        "examples": list(examples),
+        "key_terms": [
+            {"term": term, "definition": definition}
+            for term, definition in (key_terms or [])
+        ],
+        "watch_out": list(watch_out or []),
+    }
 
 
 def _ex(title: str, steps: list[str], answer: str | None = None) -> dict:
@@ -47,6 +60,17 @@ INVERSE_OPS = _content(
         ],
         "x = 5",
     ),
+    key_terms=[
+        ("equation", "A statement that two expressions are equal, like x + 5 = 12."),
+        ("variable", "A letter that stands for an unknown number, like x."),
+        ("inverse operation", "The operation that undoes another — subtraction undoes addition."),
+        ("isolate", "Get the variable alone on one side of the equation."),
+    ],
+    watch_out=[
+        "Undoing only one side: whatever you do to the left, you must do to the right.",
+        "Using the same operation instead of the inverse — adding when you should subtract keeps x attached.",
+        "Forgetting a sign: in x - 3 = 9, the 3 is subtracted, so you add 3 back — not subtract it again.",
+    ],
 )
 
 ONE_STEP_ADD = _content(
@@ -70,6 +94,14 @@ ONE_STEP_ADD = _content(
         ],
         "x = 12",
     ),
+    key_terms=[
+        ("constant", "A plain number with no variable attached, like 7 in x + 7."),
+        ("both sides", "The two expressions joined by the equals sign — they must stay equal."),
+    ],
+    watch_out=[
+        "Adding when the equation needs subtracting — check which operation is attached to x.",
+        "Subtracting the constant from only one side, which unbalances the equation.",
+    ],
 )
 
 ONE_STEP_MULT = _content(
@@ -93,6 +125,14 @@ ONE_STEP_MULT = _content(
         ],
         "x = 15",
     ),
+    key_terms=[
+        ("coefficient", "The number multiplied by the variable — the 6 in 6x."),
+        ("reciprocal thinking", "Dividing by a number is the same as multiplying by its fraction."),
+    ],
+    watch_out=[
+        "Dividing only the left side — both sides must be divided by the coefficient.",
+        "Mixing up which number is the coefficient: in 6x = 42, divide by 6, not by 42.",
+    ],
 )
 
 TWO_STEP = _content(
@@ -116,6 +156,14 @@ TWO_STEP = _content(
         ],
         "x = 5",
     ),
+    key_terms=[
+        ("two-step equation", "An equation needing two inverse operations, like 2x + 3 = 11."),
+        ("reverse order", "Undo the addition/subtraction first, then the multiplication/division."),
+    ],
+    watch_out=[
+        "Undoing in the wrong order — dividing by the coefficient first leaves the constant tangled.",
+        "Only undoing one step and stopping early: 2x + 3 = 11 is not finished at 2x = 8.",
+    ],
 )
 
 DISTRIBUTE = _content(
@@ -139,6 +187,16 @@ DISTRIBUTE = _content(
         ],
         "10x - 15",
     ),
+    key_terms=[
+        ("distributive property", "a(b + c) = ab + ac — the outside factor multiplies every term inside."),
+        ("term", "A part of an expression separated by + or − signs."),
+        ("expand", "Rewrite a product like 3(x + 4) as a sum, 3x + 12."),
+    ],
+    watch_out=[
+        "Stopping after the first term: 3(x + 4) is 3x + 12, not 3x + 4.",
+        "Adding instead of multiplying: 3(x + 4) ≠ 3 + x + 4.",
+        "Losing the sign inside parentheses — (2x − 3) keeps the subtraction.",
+    ],
 )
 
 DISTRIBUTE_NEG = _content(
@@ -162,6 +220,14 @@ DISTRIBUTE_NEG = _content(
         ],
         "-x + 7",
     ),
+    key_terms=[
+        ("negative factor", "A factor below zero — it flips the sign of every term it multiplies."),
+        ("opposite", "The number with its sign flipped: the opposite of +7 is −7."),
+    ],
+    watch_out=[
+        "Forgetting the second sign flip: −2(x + 5) is −2x − 10, not −2x + 10.",
+        "A bare minus sign in front means −1: −(x − 7) = −x + 7.",
+    ],
 )
 
 COMBINE_TERMS = _content(
@@ -184,6 +250,16 @@ COMBINE_TERMS = _content(
         ],
         "3a + 2b + 6",
     ),
+    key_terms=[
+        ("like terms", "Terms with the same variable part — 3x and 5x are like; 3x and 5 are not."),
+        ("coefficient", "The number in front of the variable — combine like terms by adding coefficients."),
+        ("simplify", "Rewrite an expression in its shortest form."),
+    ],
+    watch_out=[
+        "Combining unlike terms: 3x + 5 does not become 8x — constants and variables stay separate.",
+        "Dropping the variable: 3x + 5x is 8x, not 8.",
+        "Forgetting the invisible 1: a lone a means 1a, so 4a − a = 3a.",
+    ],
 )
 
 COMBINE_IN_EQUATIONS = _content(
@@ -207,6 +283,13 @@ COMBINE_IN_EQUATIONS = _content(
         ],
         "x = 3",
     ),
+    key_terms=[
+        ("combine first", "Simplify each side before moving terms across the equals sign."),
+    ],
+    watch_out=[
+        "Jumping to inverse operations before combining — 3x + 2x = 20 has an easy 5x hiding in it.",
+        "Combining terms across the equals sign — like terms must be on the same side first.",
+    ],
 )
 
 MULTI_STEP = _content(
@@ -231,6 +314,13 @@ MULTI_STEP = _content(
         ],
         "x = 5",
     ),
+    key_terms=[
+        ("order of moves", "Distribute → combine like terms → undo operations, in that order."),
+    ],
+    watch_out=[
+        "Solving before clearing parentheses — distribute first or the equation gets tangled.",
+        "Distributing to only one term inside the parentheses.",
+    ],
 )
 
 FRACTION_OPS = _content(
@@ -255,6 +345,15 @@ FRACTION_OPS = _content(
         ],
         "7/12",
     ),
+    key_terms=[
+        ("numerator", "The top number of a fraction — how many parts you have."),
+        ("denominator", "The bottom number — how many equal parts make a whole."),
+        ("common denominator", "A shared bottom number so fractions can be added or subtracted."),
+    ],
+    watch_out=[
+        "Adding denominators too: 1/2 + 1/4 ≠ 2/6. Only numerators combine.",
+        "Forgetting to simplify: 14/24 should reduce to 7/12.",
+    ],
 )
 
 INTEGER_OPS = _content(
@@ -277,6 +376,14 @@ INTEGER_OPS = _content(
         ],
         "12",
     ),
+    key_terms=[
+        ("integer", "A whole number, positive, negative, or zero: …−2, −1, 0, 1, 2…"),
+        ("negative number", "A number less than zero, written with a minus sign."),
+    ],
+    watch_out=[
+        "Sign slips on subtraction: −4 − (−9) becomes −4 + 9.",
+        "Forgetting that negative × negative is positive — different signs are negative.",
+    ],
 )
 
 SLOPE_INTERCEPT = _content(
@@ -299,6 +406,15 @@ SLOPE_INTERCEPT = _content(
         ],
         "slope = -3, intercept = 5",
     ),
+    key_terms=[
+        ("slope", "How steep the line is — rise over run, the m in y = mx + b."),
+        ("y-intercept", "Where the line crosses the y-axis — the b in y = mx + b."),
+        ("linear relation", "A relationship whose graph is a straight line."),
+    ],
+    watch_out=[
+        "Swapping m and b — the slope is attached to x, the intercept stands alone.",
+        "Dropping a negative sign: in y = −3x + 5 the slope is −3, not 3.",
+    ],
 )
 
 EVAL_LINEAR = _content(
@@ -321,6 +437,14 @@ EVAL_LINEAR = _content(
         ],
         "f(-3) = 13",
     ),
+    key_terms=[
+        ("evaluate", "Substitute a value for the variable and simplify."),
+        ("substitute", "Replace a variable with a given number."),
+    ],
+    watch_out=[
+        "Sign errors when substituting negatives — write f(−3) = −2(−3) + 7 in parentheses.",
+        "Adding before multiplying: in 3x − 2, multiply 3 × x first.",
+    ],
 )
 
 PERCENT = _content(
@@ -342,6 +466,14 @@ PERCENT = _content(
         ],
         "100",
     ),
+    key_terms=[
+        ("percent", "A rate out of 100 — 15% means 15 per 100."),
+        ("decimal form", "The percent divided by 100: 15% = 0.15."),
+    ],
+    watch_out=[
+        "Using the percent as a whole number: 15% of 80 is 0.15 × 80, not 15 × 80.",
+        "Forgetting to move the decimal two places when converting.",
+    ],
 )
 
 DISCOUNT_TAX = _content(
@@ -363,6 +495,15 @@ DISCOUNT_TAX = _content(
         ],
         "$90.40",
     ),
+    key_terms=[
+        ("discount", "A percent taken off the original price — subtract it."),
+        ("tax", "A percent added on top of the price — add it."),
+        ("sale price", "The price after the discount is subtracted."),
+    ],
+    watch_out=[
+        "Adding a discount instead of subtracting it.",
+        "Applying the percent to the new price instead of the original.",
+    ],
 )
 
 UNIT_RATE = _content(
@@ -383,6 +524,14 @@ UNIT_RATE = _content(
         ],
         "90 km per hour",
     ),
+    key_terms=[
+        ("rate", "A comparison of two quantities, like dollars per hour."),
+        ("unit rate", "The amount per one unit — $5 per ticket, km per hour."),
+    ],
+    watch_out=[
+        "Dividing the wrong way — 'per' means divide the first quantity by the second.",
+        "Forgetting the units on the answer.",
+    ],
 )
 
 PROPORTIONAL = _content(
@@ -397,6 +546,12 @@ PROPORTIONAL = _content(
         ],
         "Yes, proportional",
     ),
+    key_terms=[
+        ("proportional", "Two quantities with a constant ratio — doubling one doubles the other."),
+    ],
+    watch_out=[
+        "Checking only one pair — every pair must share the same unit rate.",
+    ],
 )
 
 ALGEBRAIC_EXPR = _content(
@@ -410,6 +565,14 @@ ALGEBRAIC_EXPR = _content(
         ],
         "6x + 6",
     ),
+    key_terms=[
+        ("expression", "Numbers, variables, and operations — with no equals sign."),
+        ("simplify", "Rewrite in shortest form: distribute, then combine like terms."),
+    ],
+    watch_out=[
+        "Trying to 'solve' an expression — there's no equals sign, just simplify it.",
+        "Combining unlike terms after distributing.",
+    ],
 )
 
 EQ_AND_INEQUALITY = _content(
@@ -429,6 +592,13 @@ EQ_AND_INEQUALITY = _content(
         ],
         "x > -5",
     ),
+    key_terms=[
+        ("inequality", "A comparison using <, >, ≤, or ≥ instead of equals."),
+        ("flip the sign", "Multiplying or dividing an inequality by a negative reverses it."),
+    ],
+    watch_out=[
+        "Forgetting to flip the inequality sign when dividing by a negative — −2x < 10 gives x > −5.",
+    ],
 )
 
 NUMBER_SENSE = _content(
@@ -450,6 +620,14 @@ NUMBER_SENSE = _content(
         ],
         "3/4",
     ),
+    key_terms=[
+        ("integer", "A whole number, including negatives and zero."),
+        ("common denominator", "A shared bottom number for adding or subtracting fractions."),
+    ],
+    watch_out=[
+        "Treating −(−9) as subtraction — two negatives make an addition.",
+        "Adding fraction denominators instead of finding a common one.",
+    ],
 )
 
 ALG_OVERVIEW = _content(
@@ -464,6 +642,13 @@ ALG_OVERVIEW = _content(
         ],
         "x = 4",
     ),
+    key_terms=[
+        ("isolate", "Get the variable alone on one side."),
+        ("inverse operation", "The operation that undoes another."),
+    ],
+    watch_out=[
+        "Undoing only one side — both sides must get the same operation.",
+    ],
 )
 
 LINEAR_REL_OVERVIEW = _content(
@@ -478,6 +663,14 @@ LINEAR_REL_OVERVIEW = _content(
         ],
         "y = 7",
     ),
+    key_terms=[
+        ("linear relation", "A relationship whose graph is a straight line."),
+        ("slope", "How steep the line is — the m in y = mx + b."),
+        ("y-intercept", "Where the line crosses the y-axis — the b."),
+    ],
+    watch_out=[
+        "Mixing up which letter is slope vs. intercept in y = mx + b.",
+    ],
 )
 
 FIN_LIT_OVERVIEW = _content(
@@ -491,6 +684,15 @@ FIN_LIT_OVERVIEW = _content(
         ],
         "$32",
     ),
+    key_terms=[
+        ("discount", "A percent off the price — subtract it."),
+        ("tax", "A percent added on — add it."),
+        ("interest", "A percent earned or owed over time."),
+    ],
+    watch_out=[
+        "Applying percents as whole numbers — convert 20% to 0.20 first.",
+        "Subtracting tax instead of adding it.",
+    ],
 )
 
 

@@ -1,8 +1,9 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Play, UserPlus, Compass } from "lucide-react";
+import { BookOpen, ChevronDown, Play, UserPlus, Compass } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
+import LearnPanel from "../components/LearnPanel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,6 +26,7 @@ export default function LearnEntry() {
   const [notice, setNotice] = useState("");
   const [skillsLoading, setSkillsLoading] = useState(false);
   const [topicFilter, setTopicFilter] = useState("All topics");
+  const [lessonOpen, setLessonOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -215,6 +217,32 @@ export default function LearnEntry() {
                     </div>
                   )}
                 </>
+              )}
+
+              {/* Learn this first — the selected skill's authored lesson */}
+              {selectedSkill?.learn && (
+                <div className="rounded-lg border border-accent/50 bg-accent/5">
+                  <button
+                    type="button"
+                    onClick={() => setLessonOpen((o) => !o)}
+                    aria-expanded={lessonOpen}
+                    className="flex w-full items-center gap-2 px-4 py-2.5 text-sm font-medium text-accent-foreground"
+                  >
+                    <BookOpen className="h-4 w-4 text-accent" />
+                    Learn this first — how {selectedSkill.name} works
+                    <ChevronDown
+                      className={cn(
+                        "ml-auto h-4 w-4 transition-transform",
+                        lessonOpen && "rotate-180",
+                      )}
+                    />
+                  </button>
+                  {lessonOpen && (
+                    <div className="border-t border-accent/30 px-4 py-3">
+                      <LearnPanel learn={selectedSkill.learn} />
+                    </div>
+                  )}
+                </div>
               )}
 
               {/* Start panel */}
