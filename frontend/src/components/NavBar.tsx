@@ -35,7 +35,7 @@ export default function NavBar() {
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4">
         <Link to="/learn" className="flex items-center gap-2" aria-label="AI Tutor home">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <GraduationCap className="h-4.5 w-4.5" />
+            <GraduationCap className="h-4 w-4" />
           </span>
           <span className="font-bold tracking-tight">AI Tutor</span>
         </Link>
