@@ -330,6 +330,12 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
     .problem.correct {{ border-color: var(--success); box-shadow: 0 0 0 4px color-mix(in srgb, var(--success) 20%, transparent); }}
     .problem.wrong {{ border-color: var(--danger); box-shadow: 0 0 0 4px color-mix(in srgb, var(--danger) 18%, transparent); animation: gentleShake .3s ease; }}
     @keyframes gentleShake {{ 25% {{ transform: translateX(-3px); }} 75% {{ transform: translateX(3px); }} }}
+    /* Inline math rendering — no external dependency */
+    .frac {{ display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 .15em; }}
+    .frac-num {{ border-bottom: 2px solid currentColor; padding: 0 .25em; line-height: 1.2; }}
+    .frac-den {{ padding: 0 .25em; line-height: 1.2; }}
+    .math-sup {{ font-size: .7em; vertical-align: super; line-height: 0; }}
+    .math-sym {{ font-family: "SF Mono", ui-monospace, monospace; }}
     .visual-box {{
       margin-top: 1rem; padding: 1rem; border: 1px dashed #c9cfdd;
       border-radius: 12px; background: #fafbff; text-align: center;
@@ -392,6 +398,15 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
     .keypad {{ display: none; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin-top: 1rem; }}
     .keypad.visible {{ display: grid; }}
     .keypad button {{ font-size: 1.3rem; font-weight: 700; min-height: 60px; }}
+    .scratch-panel {{ margin-top: 1rem; }}
+    .scratch-toolbar {{ display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: .6rem; }}
+    .scratch-toolbar button {{ min-height: 44px; padding: .55rem .9rem; font-size: .95rem; }}
+    .scratch-toolbar button.active {{ border-color: var(--goozam-indigo); box-shadow: 0 0 0 3px color-mix(in srgb, var(--goozam-indigo) 20%, transparent); }}
+    .scratch-canvas {{
+      width: 100%; height: 220px; display: block;
+      border: 2px solid #e2e4f6; border-radius: 12px; background: #fff;
+      touch-action: none; cursor: crosshair;
+    }}
     @media (max-width: 700px) {{
       main {{ padding: .8rem; }}
       .layout {{ grid-template-columns: 1fr; }}
@@ -492,8 +507,18 @@ def learner_workspace_page(session_id: uuid.UUID) -> str:
             <button id="submitBtn" class="primary large" type="submit">Submit answer</button>
             <button id="hintBtn" class="large" type="button" hidden>Hint</button>
             <button id="struggleBtn" class="large" type="button" hidden>I don't understand</button>
+            <button id="scratchToggle" class="large" type="button" aria-expanded="false" aria-controls="scratchPanel">Scratch pad</button>
           </div>
         </form>
+        <div id="scratchPanel" class="scratch-panel" hidden>
+          <div class="scratch-toolbar" role="group" aria-label="Scratch pad tools">
+            <button type="button" id="penBtn" class="active" aria-pressed="true">Pen</button>
+            <button type="button" id="eraserBtn" aria-pressed="false">Eraser</button>
+            <button type="button" id="clearPadBtn">Clear</button>
+          </div>
+          <canvas id="scratchCanvas" class="scratch-canvas" role="img"
+                  aria-label="Scratch pad. Draw with your finger, stylus, or mouse."></canvas>
+        </div>
       </section>
 
       <section class="panel" aria-labelledby="coachHeading">
@@ -592,6 +617,38 @@ function renderVisual(spec) {{
   box.appendChild(el);
 }}
 
+// Lightweight math renderer — no external dependencies.
+// Converts a/b fractions to styled spans and a^b to superscripts.
+function renderMath(text) {{
+  if (!text) return '';
+  // Escape HTML first
+  let html = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  // Convert fractions: a/b → stacked fraction
+  html = html.replace(
+    /(\d+)\s*\/\s*(\d+)/g,
+    '<span class="frac"><span class="frac-num">$1</span><span class="frac-den">$2</span></span>'
+  );
+
+  // Convert exponents: a^b → superscript
+  html = html.replace(
+    /(\w)\s*\^\s*(\d+)/g,
+    '$1<span class="math-sup">$2</span>'
+  );
+
+  // Convert operators to nicer symbols
+  html = html
+    .replace(/\*/g, '<span class="math-sym">×</span>')
+    .replace(/×/g, '<span class="math-sym">×</span>')
+    .replace(/÷/g, '<span class="math-sym">÷</span>')
+    .replace(/-/g, '<span class="math-sym">−</span>');
+
+  return html;
+}}
+
 function render(data) {{
   workspace = data;
   const complete = data.state === 'COMPLETE';
@@ -602,7 +659,7 @@ function render(data) {{
   renderStepper(data.state);
   q('completionPanel').hidden = !complete;
   q('problemPanel').hidden = complete;
-  q('problem').textContent = data.problem?.prompt || 'No problem is currently assigned.';
+  q('problem').innerHTML = renderMath(data.problem?.prompt || 'No problem is currently assigned.');
   q('coach').textContent = complete
     ? 'Nice work. Your independent mastery check is complete.'
     : (data.coaching_message || 'Work through the problem carefully.');
@@ -701,6 +758,76 @@ q('signOut').addEventListener('click', async event => {{
   try {{ await jsonRequest('/api/v1/auth/logout', {{method: 'POST'}}); }} catch (_) {{}}
   window.location.assign('/login');
 }});
+
+// Scratch pad — local canvas only, nothing is sent to the server.
+const scratchCanvas = q('scratchCanvas');
+const scratchCtx = scratchCanvas.getContext('2d');
+let drawing = false;
+let erasing = false;
+let lastPoint = null;
+
+function resizeScratchCanvas() {{
+  const ratio = window.devicePixelRatio || 1;
+  const rect = scratchCanvas.getBoundingClientRect();
+  if (rect.width === 0) return;
+  const snapshot = document.createElement('canvas');
+  snapshot.width = scratchCanvas.width; snapshot.height = scratchCanvas.height;
+  snapshot.getContext('2d').drawImage(scratchCanvas, 0, 0);
+  scratchCanvas.width = Math.round(rect.width * ratio);
+  scratchCanvas.height = Math.round(rect.height * ratio);
+  scratchCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  scratchCtx.lineCap = 'round'; scratchCtx.lineJoin = 'round';
+  if (snapshot.width > 0) scratchCtx.drawImage(snapshot, 0, 0, rect.width, rect.height);
+}}
+
+function scratchPos(event) {{
+  const rect = scratchCanvas.getBoundingClientRect();
+  return {{ x: event.clientX - rect.left, y: event.clientY - rect.top }};
+}}
+
+scratchCanvas.addEventListener('pointerdown', event => {{
+  event.preventDefault();
+  scratchCanvas.setPointerCapture(event.pointerId);
+  drawing = true;
+  lastPoint = scratchPos(event);
+}});
+scratchCanvas.addEventListener('pointermove', event => {{
+  if (!drawing) return;
+  event.preventDefault();
+  const point = scratchPos(event);
+  scratchCtx.strokeStyle = erasing ? '#ffffff' : '#1f2937';
+  scratchCtx.lineWidth = erasing ? 24 : 3;
+  scratchCtx.beginPath();
+  scratchCtx.moveTo(lastPoint.x, lastPoint.y);
+  scratchCtx.lineTo(point.x, point.y);
+  scratchCtx.stroke();
+  lastPoint = point;
+}});
+['pointerup', 'pointercancel'].forEach(name =>
+  scratchCanvas.addEventListener(name, () => {{ drawing = false; lastPoint = null; }})
+);
+
+q('scratchToggle').addEventListener('click', () => {{
+  const panel = q('scratchPanel');
+  const open = panel.hidden;
+  panel.hidden = !open;
+  q('scratchToggle').setAttribute('aria-expanded', String(open));
+  if (open) resizeScratchCanvas();
+}});
+q('penBtn').addEventListener('click', () => {{
+  erasing = false;
+  q('penBtn').classList.add('active'); q('penBtn').setAttribute('aria-pressed', 'true');
+  q('eraserBtn').classList.remove('active'); q('eraserBtn').setAttribute('aria-pressed', 'false');
+}});
+q('eraserBtn').addEventListener('click', () => {{
+  erasing = true;
+  q('eraserBtn').classList.add('active'); q('eraserBtn').setAttribute('aria-pressed', 'true');
+  q('penBtn').classList.remove('active'); q('penBtn').setAttribute('aria-pressed', 'false');
+}});
+q('clearPadBtn').addEventListener('click', () => {{
+  scratchCtx.clearRect(0, 0, scratchCanvas.width, scratchCanvas.height);
+}});
+window.addEventListener('resize', () => {{ if (!q('scratchPanel').hidden) resizeScratchCanvas(); }});
 
 (async () => {{
   try {{ await loadWorkspace(); }}

@@ -321,3 +321,31 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow:
 .topic-choice.selected { border-color:var(--color-brand); background:var(--color-surface-subtle); box-shadow:0 0 0 2px rgba(103,48,195,.13); }
 @media (max-width:860px) { .topic-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width:640px) { .topic-grid { grid-template-columns:1fr; } .topic-choice { min-height:72px; } }
+
+
+/* F-026: math rendering and scratch pad */
+.math-text .katex { font-size: 1.1em; }
+.math-text .katex-display { margin: 0; }
+
+.scratch-toggle { margin: .5rem 0; }
+.scratch-panel {
+  margin: .75rem 0; border: 1px solid var(--color-border); border-radius: var(--radius-md);
+  background: #fff; overflow: hidden;
+}
+.scratch-toolbar {
+  display: flex; gap: .4rem; padding: .5rem .75rem; border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-subtle); align-items: center;
+}
+.tool-btn {
+  min-height: 40px; min-width: 40px; border: 1px solid var(--color-border); border-radius: 8px;
+  background: #fff; cursor: pointer; font-size: 1rem; display: inline-flex;
+  align-items: center; justify-content: center;
+}
+.tool-btn.active { border-color: var(--color-brand); box-shadow: 0 0 0 2px rgba(103,48,195,.18); }
+.tool-btn.clear-btn { margin-left: auto; padding: 0 .8rem; font-size: .85rem; font-weight: 650; }
+.tool-btn.close-btn { font-size: 1.2rem; font-weight: 700; color: var(--color-text-muted); }
+.scratch-canvas {
+  display: block; width: 100%; height: 220px; cursor: crosshair;
+  touch-action: none; /* Prevent scroll interference on tablets */
+  background: linear-gradient(180deg, #fdfdfe, #fff);
+}

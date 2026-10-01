@@ -4,6 +4,8 @@ import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import ProblemVisual from "../components/ProblemVisual";
 import VoiceChatControls from "../components/chat/VoiceChatControls";
+import MathText from "../components/MathText";
+import ScratchPad from "../components/ScratchPad";
 import type {
   Award,
   HintResponse,
@@ -314,10 +316,15 @@ export default function Workspace() {
                 </p>
                 <div className="problem-wrap">
                   <div className={`problem ${feedback}`} aria-live="polite">
-                    {workspace.problem?.prompt ??
-                      "No problem is currently assigned."}
+                    <MathText
+                      text={
+                        workspace.problem?.prompt ??
+                        "No problem is currently assigned."
+                      }
+                    />
                   </div>
                   <ProblemVisual spec={workspace.problem?.visual ?? null} />
+                  <ScratchPad />
                   {feedback === "correct" && (
                     <ConfettiBurst trigger={celebrate} />
                   )}
