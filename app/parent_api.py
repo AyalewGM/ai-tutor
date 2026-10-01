@@ -260,7 +260,15 @@ def progress_summary(
     since = datetime.now(UTC) - timedelta(days=7)
     students = db.scalars(
         select(Student)
-        .where(Student.parent_id == parent.user_id, Student.active.is_(True))
+        .join(
+            ParentStudentRelationship,
+            ParentStudentRelationship.student_id == Student.id,
+        )
+        .where(
+            ParentStudentRelationship.parent_profile_id == parent.id,
+            ParentStudentRelationship.active.is_(True),
+            Student.active.is_(True),
+        )
         .order_by(Student.first_name, Student.id)
     ).all()
 
