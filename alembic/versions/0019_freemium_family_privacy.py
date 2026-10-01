@@ -72,6 +72,13 @@ def upgrade() -> None:
                     "parent_profiles",
                     "max_students >= 1",
                 )
+            if "ck_parent_subscription_seat_policy" not in constraints:
+                op.create_check_constraint(
+                    "ck_parent_subscription_seat_policy",
+                    "parent_profiles",
+                    "(subscription_tier = 'free' AND max_students = 1) OR "
+                    "(subscription_tier = 'pro' AND max_students BETWEEN 1 AND 5)",
+                )
 
     if "students" in tables:
         columns = _column_names("students")
@@ -95,6 +102,10 @@ def downgrade() -> None:
                 constraint["name"]
                 for constraint in sa.inspect(op.get_bind()).get_check_constraints("parent_profiles")
             }
+            if "ck_parent_subscription_seat_policy" in constraints:
+                op.drop_constraint(
+                    "ck_parent_subscription_seat_policy", "parent_profiles", type_="check"
+                )
             if "ck_parent_max_students_positive" in constraints:
                 op.drop_constraint(
                     "ck_parent_max_students_positive", "parent_profiles", type_="check"
