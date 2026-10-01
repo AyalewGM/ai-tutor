@@ -55,9 +55,44 @@ class LearnExampleOut(BaseModel):
     answer: str | None = None
 
 
+class LearnTermOut(BaseModel):
+    term: str
+    definition: str
+
+
 class LearnContentOut(BaseModel):
     summary: str
     examples: list[LearnExampleOut] = Field(default_factory=list)
+    key_terms: list[LearnTermOut] = Field(default_factory=list)
+    watch_out: list[str] = Field(default_factory=list)
+
+
+def build_learn_content(content: dict | None) -> LearnContentOut | None:
+    """Wire-safe rendering of a skill's authored lesson. Shared by the workspace
+    (state-gated) and the pre-session "learn this first" surface."""
+    if not content or not isinstance(content, dict) or not content.get("summary"):
+        return None
+    examples = [
+        LearnExampleOut(
+            title=str(example.get("title", "")),
+            steps=[str(step) for step in example.get("steps", [])],
+            answer=str(example["answer"]) if example.get("answer") is not None else None,
+        )
+        for example in content.get("examples", [])
+        if example.get("title") and example.get("steps")
+    ]
+    key_terms = [
+        LearnTermOut(term=str(item.get("term", "")), definition=str(item.get("definition", "")))
+        for item in content.get("key_terms", [])
+        if item.get("term") and item.get("definition")
+    ]
+    watch_out = [str(item) for item in content.get("watch_out", []) if item]
+    return LearnContentOut(
+        summary=str(content["summary"]),
+        examples=examples,
+        key_terms=key_terms,
+        watch_out=watch_out,
+    )
 
 
 class LearningFocusOut(BaseModel):
@@ -139,19 +174,7 @@ def _learn_content(skill: Skill, *, state: TutorState) -> LearnContentOut | None
     a worked example during DIAGNOSE or MASTERY_CHECK would contaminate evidence."""
     if state in ASSESSMENT_STATES or state == TutorState.COMPLETE:
         return None
-    content = skill.learn_content
-    if not content or not isinstance(content, dict) or not content.get("summary"):
-        return None
-    examples = [
-        LearnExampleOut(
-            title=str(example.get("title", "")),
-            steps=[str(step) for step in example.get("steps", [])],
-            answer=str(example["answer"]) if example.get("answer") is not None else None,
-        )
-        for example in content.get("examples", [])
-        if example.get("title") and example.get("steps")
-    ]
-    return LearnContentOut(summary=str(content["summary"]), examples=examples)
+    return build_learn_content(skill.learn_content)
 
 
 def _practice_streak_days(db: Session, student_id: uuid.UUID) -> int:

@@ -20,6 +20,7 @@ export interface SkillChoice {
   code: string;
   name: string;
   content_ready: boolean;
+  learn?: LearnContent | null;
 }
 
 export interface LearnerLaunchpad {
@@ -72,9 +73,16 @@ export interface LearnExample {
   answer?: string | null;
 }
 
+export interface LearnTerm {
+  term: string;
+  definition: string;
+}
+
 export interface LearnContent {
   summary: string;
   examples: LearnExample[];
+  key_terms?: LearnTerm[];
+  watch_out?: string[];
 }
 
 export interface WorkspaceProblem {

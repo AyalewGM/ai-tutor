@@ -6,6 +6,7 @@ import NavBar from "../components/NavBar";
 import ProblemVisual from "../components/ProblemVisual";
 import VoiceChatControls from "../components/chat/VoiceChatControls";
 import MathText from "../components/MathText";
+import LearnPanel from "../components/LearnPanel";
 import ScratchPad from "../components/ScratchPad";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -388,30 +389,8 @@ export default function Workspace() {
                         />
                       </button>
                       {learnOpen && (
-                        <div className="space-y-3 border-t border-accent/30 px-4 py-3">
-                          <MathText text={learn.summary} />
-                          {learn.examples.map((example, index) => (
-                            <div
-                              key={index}
-                              className="rounded-md bg-card p-3 text-sm"
-                            >
-                              <p className="font-medium">
-                                Example {index + 1}: {example.title}
-                              </p>
-                              <ol className="mt-2 list-decimal space-y-1 pl-5">
-                                {example.steps.map((step, stepIndex) => (
-                                  <li key={stepIndex}>
-                                    <MathText text={step} />
-                                  </li>
-                                ))}
-                              </ol>
-                              {example.answer && (
-                                <p className="mt-2 font-medium text-primary">
-                                  Answer: <MathText text={example.answer} />
-                                </p>
-                              )}
-                            </div>
-                          ))}
+                        <div className="border-t border-accent/30 px-4 py-3">
+                          <LearnPanel learn={learn} />
                         </div>
                       )}
                     </div>
