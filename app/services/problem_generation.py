@@ -62,6 +62,55 @@ def _generate_simplify_expression(rng: random.Random, difficulty: int) -> Genera
     )
 
 
+def _generate_combine_like_terms(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    variable = rng.choice(["x", "y", "n"])
+    a = rng.randint(-9, 9)
+    b = rng.randint(-9, 9)
+    while a == 0 or b == 0:
+        a = rng.randint(-9, 9)
+        b = rng.randint(-9, 9)
+    constant = rng.randint(-9, 9) if difficulty >= 3 else 0
+    terms = [f"{_fmt_term(a, variable)}", f"{_fmt_term(b, variable)}"]
+    if constant:
+        terms.append(str(constant))
+    prompt = "Simplify " + " + ".join(terms).replace("+ -", "- ") + "."
+    answer = _fmt_expr(a + b, constant, variable)
+    return GeneratedProblem(
+        prompt,
+        answer,
+        difficulty,
+        "COMBINE_LIKE_TERMS",
+        parameters={"a": a, "b": b, "constant": constant, "variable": variable},
+    )
+
+
+def _generate_polynomial_add_subtract(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    variable = rng.choice(["x", "y"])
+    a, b = rng.randint(-6, 6), rng.randint(-9, 9)
+    c, d = rng.randint(-6, 6), rng.randint(-9, 9)
+    while a == 0 or c == 0:
+        a, c = rng.randint(-6, 6), rng.randint(-6, 6)
+    operation = "-" if difficulty >= 3 and rng.random() < 0.6 else "+"
+    left = _fmt_expr(a, b, variable)
+    right = _fmt_expr(c, d, variable)
+    prompt = f"Simplify ({left}) {operation} ({right})."
+    if operation == "+":
+        coefficient, constant = a + c, b + d
+    else:
+        coefficient, constant = a - c, b - d
+    answer = _fmt_expr(coefficient, constant, variable)
+    return GeneratedProblem(
+        prompt,
+        answer,
+        difficulty,
+        "POLYNOMIAL_ADD_SUBTRACT",
+        parameters={
+            "a": a, "b": b, "c": c, "d": d,
+            "operation": operation, "variable": variable,
+        },
+    )
+
+
 def _generate_solve_equation(rng: random.Random, difficulty: int) -> GeneratedProblem:
     x = rng.randint(-12, 12) if difficulty >= 4 else rng.randint(1, 12)
     if difficulty <= 1:
@@ -1119,6 +1168,8 @@ def _generate_linear_relation(rng: random.Random, difficulty: int) -> GeneratedP
 GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "ARITHMETIC": _generate_arithmetic,
     "SIMPLIFY_EXPRESSION": _generate_simplify_expression,
+    "COMBINE_LIKE_TERMS": _generate_combine_like_terms,
+    "POLYNOMIAL_ADD_SUBTRACT": _generate_polynomial_add_subtract,
     "SOLVE_EQUATION": _generate_solve_equation,
     "LINEAR_FUNCTION": _generate_linear_function,
     "LINEAR_RELATION": _generate_linear_relation,
