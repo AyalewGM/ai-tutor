@@ -48,7 +48,7 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   const mcpsOption = curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' });
   await curriculum.selectOption(await mcpsOption.getAttribute('value'));
   await page.getByRole('button', { name: 'Add learner' }).click();
-  await expect(page.getByText('React Learner is ready.')).toBeVisible();
+  await expect(page.getByText('ReactLearner is ready.')).toBeVisible();
 
   // F-022: parent dashboard uses the same authorized family data and keeps
   // independent evidence visibly separate from assisted success.
@@ -64,7 +64,7 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   const learner = page.locator('#learner');
   const learnerOption = learner.locator('option').filter({ hasText: 'ReactLearner' });
   await learner.selectOption(await learnerOption.getAttribute('value'));
-  await expect(page.getByRole('heading', { name: 'Ready to learn, React Learner?' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Ready to learn, ReactLearner?' })).toBeVisible();
   await expect(page.getByLabel('Learning context')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Explore Topics' })).toBeVisible();
   await page.getByRole('button', { name: /Patterns & algebra/ }).click();
