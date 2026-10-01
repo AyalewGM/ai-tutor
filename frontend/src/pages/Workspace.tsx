@@ -7,6 +7,7 @@ import ProblemVisual from "../components/ProblemVisual";
 import VoiceChatControls from "../components/chat/VoiceChatControls";
 import MathText from "../components/MathText";
 import LearnPanel from "../components/LearnPanel";
+import LevelCrest from "../components/LevelCrest";
 import ScratchPad from "../components/ScratchPad";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -113,6 +114,7 @@ export default function Workspace() {
   const [celebrate, setCelebrate] = useState(0);
   const [badgeToast, setBadgeToast] = useState<Award[]>([]);
   const [levelUp, setLevelUp] = useState<{ level: number; title: string } | null>(null);
+  const [masteryWin, setMasteryWin] = useState<Award | null>(null);
   const [learnOpen, setLearnOpen] = useState(false);
 
   const load = useCallback(async () => {
@@ -140,6 +142,12 @@ export default function Workspace() {
     const timer = setTimeout(() => setLevelUp(null), 5000);
     return () => clearTimeout(timer);
   }, [levelUp]);
+
+  useEffect(() => {
+    if (!masteryWin) return;
+    const timer = setTimeout(() => setMasteryWin(null), 6000);
+    return () => clearTimeout(timer);
+  }, [masteryWin]);
 
   const hasAction = (action: string) =>
     workspace?.allowed_actions.includes(action) ?? false;
@@ -199,6 +207,8 @@ export default function Workspace() {
       }
       if (result.new_awards?.length) {
         setBadgeToast(result.new_awards);
+        const mastered = result.new_awards.find((a) => a.code === "SKILL_MASTERED");
+        if (mastered) setMasteryWin(mastered);
       }
       if (result.growth?.leveled_up) {
         setLevelUp({
@@ -274,10 +284,19 @@ export default function Workspace() {
             <div className="flex items-center gap-2">
               {workspace.growth && (
                 <span
-                  className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold backdrop-blur"
+                  className="inline-flex items-center gap-2 rounded-full bg-white/15 py-1 pl-1 pr-3.5 text-sm font-semibold backdrop-blur"
                   title={`${workspace.growth.xp_in_level}/${workspace.growth.xp_for_next} XP to next level`}
                 >
+                  <LevelCrest level={workspace.growth.level} title={workspace.growth.level_title} size="sm" />
                   Lv {workspace.growth.level} · {workspace.growth.level_title}
+                </span>
+              )}
+              {(workspace.growth?.xp_today ?? 0) > 0 && (
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold backdrop-blur"
+                  title="XP earned today"
+                >
+                  Today +{workspace.growth?.xp_today} XP
                 </span>
               )}
               {(workspace.streak_days ?? 0) > 0 && (
@@ -375,6 +394,29 @@ export default function Workspace() {
               </p>
               <p className="mt-3 text-sm opacity-80">
                 Keep practicing to reach the next level
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Skill-mastery celebration */}
+        {masteryWin && (
+          <div
+            className="fixed inset-0 z-50 grid place-items-center bg-black/40"
+            role="alertdialog"
+            aria-label={`Skill mastered: ${masteryWin.skill_name ?? masteryWin.name}`}
+            onClick={() => setMasteryWin(null)}
+          >
+            <div className="relative rounded-3xl bg-gradient-to-br from-emerald-300 to-teal-500 p-10 text-center text-emerald-950 shadow-2xl">
+              <ConfettiBurst trigger={1} always />
+              <p className="text-sm font-bold uppercase tracking-widest">
+                Skill mastered
+              </p>
+              <p className="mt-1 text-3xl font-extrabold">
+                {masteryWin.skill_name ?? masteryWin.name}
+              </p>
+              <p className="mt-3 text-sm opacity-80">
+                Mastery verified — review will keep it sharp
               </p>
             </div>
           </div>

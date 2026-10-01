@@ -35,6 +35,12 @@ const TIER_ICON = {
   locked: <CircleDashed className="h-4 w-4 text-muted-foreground" />,
 } as const;
 
+const NODE_STYLE = {
+  mastered: "border-emerald-400 bg-emerald-500 text-white",
+  learning: "border-primary bg-primary text-primary-foreground",
+  locked: "border-border bg-card text-muted-foreground",
+} as const;
+
 export default function SkillMap() {
   const { sessionId } = useParams<{ sessionId: string }>();
   const [entries, setEntries] = useState<SkillMapEntry[] | null>(null);
@@ -96,54 +102,89 @@ export default function SkillMap() {
         )}
 
         {!entries && !error && (
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" role="status">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <Skeleton key={i} className="h-32" />
+          <div className="space-y-6" role="status">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Skeleton key={i} className="h-24" />
             ))}
           </div>
         )}
 
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {entries?.map((entry) => {
-            const pct = Math.round(entry.mastery_score * 100);
-            const level = tier(entry);
-            return (
-              <Card
-                key={entry.skill_id}
-                data-testid="map-tile"
-                data-active={entry.is_active}
-                className={cn(
-                  TIER_STYLE[level],
-                  entry.is_active && "ring-2 ring-primary",
-                )}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between gap-2">
-                    <span className="font-mono text-[11px] text-muted-foreground">
-                      {entry.code}
-                    </span>
-                    {entry.is_active ? (
-                      <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
-                        <MapPin className="h-3.5 w-3.5" /> You are here
-                      </span>
-                    ) : (
-                      TIER_ICON[level]
+        {/* Journey path — a spine with alternating stops */}
+        <div className="relative">
+          <div
+            className="absolute bottom-4 left-5 top-4 w-0.5 rounded-full bg-border sm:left-1/2 sm:-translate-x-1/2"
+            aria-hidden="true"
+          />
+          <ol className="relative space-y-6">
+            {entries?.map((entry, index) => {
+              const pct = Math.round(entry.mastery_score * 100);
+              const level = tier(entry);
+              const left = index % 2 === 0;
+              return (
+                <li
+                  key={entry.skill_id}
+                  className={cn(
+                    "relative flex",
+                    left ? "sm:justify-start" : "sm:justify-end",
+                  )}
+                >
+                  {/* stop on the spine */}
+                  <span
+                    className={cn(
+                      "absolute left-5 top-5 z-10 flex h-7 w-7 -translate-x-1/2 items-center justify-center rounded-full border-2 sm:left-1/2",
+                      NODE_STYLE[level],
                     )}
-                  </div>
-                  <p className="mt-1.5 font-medium leading-snug">{entry.name}</p>
-                  <div className="mt-3 flex items-center gap-2">
-                    <Progress className="h-1.5 flex-1" value={pct} />
-                    <span className="text-xs font-medium tabular-nums text-muted-foreground">
-                      {pct}%
-                    </span>
-                  </div>
-                  <p className="mt-1.5 text-xs text-muted-foreground">
-                    {TIER_LABEL[level]}
-                  </p>
-                </CardContent>
-              </Card>
-            );
-          })}
+                    aria-hidden="true"
+                  >
+                    {level === "mastered" && (
+                      <CheckCircle2 className="h-4 w-4" />
+                    )}
+                    {entry.is_active && level !== "mastered" && (
+                      <MapPin className="h-4 w-4" />
+                    )}
+                    {entry.is_active && (
+                      <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-primary/40" />
+                    )}
+                  </span>
+
+                  <Card
+                    data-testid="map-tile"
+                    data-active={entry.is_active}
+                    className={cn(
+                      "ml-12 w-full sm:ml-0 sm:w-[calc(50%-2.5rem)]",
+                      TIER_STYLE[level],
+                      entry.is_active && "ring-2 ring-primary",
+                    )}
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="font-mono text-[11px] text-muted-foreground">
+                          {entry.code}
+                        </span>
+                        {entry.is_active ? (
+                          <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                            <MapPin className="h-3.5 w-3.5" /> You are here
+                          </span>
+                        ) : (
+                          TIER_ICON[level]
+                        )}
+                      </div>
+                      <p className="mt-1.5 font-medium leading-snug">{entry.name}</p>
+                      <div className="mt-3 flex items-center gap-2">
+                        <Progress className="h-1.5 flex-1" value={pct} />
+                        <span className="text-xs font-medium tabular-nums text-muted-foreground">
+                          {pct}%
+                        </span>
+                      </div>
+                      <p className="mt-1.5 text-xs text-muted-foreground">
+                        {TIER_LABEL[level]}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </main>
     </div>

@@ -99,6 +99,60 @@ def test_learner_progress_aggregates_attempts_and_badges() -> None:
         assert progress["xp"] == expected
         assert progress["xp_in_level"] < progress["xp_for_next"]
         assert progress["level"] >= 1
+        # Everything above was created "now", so daily XP matches the total.
+        assert progress["xp_today"] == expected
+
+
+def test_xp_today_excludes_earlier_days() -> None:
+    from datetime import UTC, datetime, timedelta
+
+    with SessionLocal() as db:
+        curriculum = db.scalar(select(Curriculum).limit(1))
+        assert curriculum
+        skill = Skill(
+            curriculum_id=curriculum.id,
+            code=f"TEST.XPDAY.{uuid.uuid4().hex[:8]}",
+            name="XP day test skill",
+            description="dedicated skill for xp_today test",
+            difficulty_level=1,
+        )
+        student = Student(curriculum_id=curriculum.id, first_name="XP Day", grade_level="7")
+        db.add_all([skill, student])
+        db.flush()
+        session = TutorSession(
+            student_id=student.id,
+            primary_skill_id=skill.id,
+            active_skill_id=skill.id,
+            curriculum_id=curriculum.id,
+        )
+        db.add(session)
+        db.flush()
+        problem = Problem(
+            primary_skill_id=skill.id,
+            problem_type="SOLVE_EQUATION",
+            difficulty=3,
+            prompt=f"xpday-test {uuid.uuid4()}",
+            canonical_answer="x=1",
+            source_type="TEST",
+        )
+        db.add(problem)
+        db.flush()
+        db.add(
+            Attempt(
+                session_id=session.id,
+                student_id=student.id,
+                problem_id=problem.id,
+                student_answer="x=1",
+                is_correct=True,
+                assistance_level=0,
+                created_at=datetime.now(UTC) - timedelta(days=2),
+            )
+        )
+        db.commit()
+
+        progress = learner_progress(db, student.id)
+        assert progress["xp"] == attempt_xp(True, 0, 3)
+        assert progress["xp_today"] == 0
 
 
 def _xp_student(db, *, prior_correct: int) -> tuple[str, str, str]:
