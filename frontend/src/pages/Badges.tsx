@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Lock } from "lucide-react";
 import { ApiError, api } from "../api";
 import NavBar from "../components/NavBar";
+import LevelCrest from "../components/LevelCrest";
 import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -69,10 +70,12 @@ export default function Badges() {
             <div className="flex items-center gap-3">
               {growth && (
                 <span
-                  className="rounded-full bg-amber-400/90 px-3.5 py-1.5 text-sm font-semibold text-amber-950"
+                  className="inline-flex items-center gap-2 rounded-full bg-amber-400/90 py-1 pl-1 pr-3.5 text-sm font-semibold text-amber-950"
                   title={`${growth.xp_in_level}/${growth.xp_for_next} XP to next level`}
                 >
+                  <LevelCrest level={growth.level} title={growth.level_title} size="sm" />
                   Lv {growth.level} · {growth.level_title} · {growth.xp} XP
+                  {(growth.xp_today ?? 0) > 0 && ` (+${growth.xp_today} today)`}
                 </span>
               )}
               {badges && (

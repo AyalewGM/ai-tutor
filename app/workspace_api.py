@@ -148,6 +148,7 @@ class LearnerGrowthOut(BaseModel):
     level_title: str
     xp_in_level: int
     xp_for_next: int
+    xp_today: int = 0
 
 
 class LearnerWorkspaceOut(BaseModel):

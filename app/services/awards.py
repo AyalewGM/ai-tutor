@@ -8,6 +8,7 @@ prerequisite-gap closure, difficulty promotion, and spaced-review passes.
 
 import uuid
 from dataclasses import dataclass
+from datetime import UTC, datetime
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -297,6 +298,28 @@ def learner_progress(db: Session, student_id: uuid.UUID) -> dict:
     ).all()
     xp += sum(BADGE_XP.get(code, 0) for code in award_codes)
 
+    today_start = datetime.now(UTC).replace(hour=0, minute=0, second=0, microsecond=0)
+    today_rows = db.execute(
+        select(Attempt.is_correct, Attempt.assistance_level, Problem.difficulty)
+        .join(Problem, Attempt.problem_id == Problem.id)
+        .where(
+            Attempt.student_id == student_id,
+            Attempt.is_correct.isnot(None),
+            Attempt.created_at >= today_start,
+        )
+    ).all()
+    xp_today = sum(
+        attempt_xp(bool(ok), int(assistance or 0), int(diff or 1))
+        for ok, assistance, diff in today_rows
+    )
+    today_award_codes = db.scalars(
+        select(LearnerAward.badge_code).where(
+            LearnerAward.student_id == student_id,
+            LearnerAward.created_at >= today_start,
+        )
+    ).all()
+    xp_today += sum(BADGE_XP.get(code, 0) for code in today_award_codes)
+
     level, xp_in_level = level_for_xp(xp)
     return {
         "xp": xp,
@@ -304,4 +327,5 @@ def learner_progress(db: Session, student_id: uuid.UUID) -> dict:
         "level_title": LEVEL_TITLES[level - 1],
         "xp_in_level": xp_in_level,
         "xp_for_next": _xp_for_next_level(level),
+        "xp_today": xp_today,
     }

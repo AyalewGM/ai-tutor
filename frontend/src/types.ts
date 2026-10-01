@@ -114,6 +114,7 @@ export interface LearnerGrowth {
   level_title: string;
   xp_in_level: number;
   xp_for_next: number;
+  xp_today?: number;
 }
 
 export interface LearnerWorkspace {
