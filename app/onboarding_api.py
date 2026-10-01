@@ -36,7 +36,7 @@ class CurriculumChoice(BaseModel):
 
 
 class LearnerCreate(BaseModel):
-    first_name: str = Field(min_length=1, max_length=100)
+    first_name: str = Field(min_length=1, max_length=32, pattern=r"^[A-Za-z0-9_-]+$")
     curriculum_id: uuid.UUID
 
 
@@ -240,6 +240,32 @@ def get_learner_launchpad(
 
 @router.post("/learners", response_model=LearnerCreated, status_code=status.HTTP_201_CREATED)
 def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession) -> LearnerCreated:
+    locked_parent = db.scalar(
+        select(type(parent)).where(type(parent).id == parent.id).with_for_update()
+    )
+    if locked_parent is None:
+        raise HTTPException(status_code=404, detail="Parent profile not found")
+    current_count = int(
+        db.scalar(
+            select(func.count(Student.id)).where(
+                Student.parent_id == parent.user_id,
+                Student.active.is_(True),
+            )
+        )
+        or 0
+    )
+    if current_count >= locked_parent.max_students:
+        raise HTTPException(
+            status_code=status.HTTP_402_PAYMENT_REQUIRED,
+            detail={
+                "code": "STUDENT_SEAT_LIMIT_REACHED",
+                "subscription_tier": locked_parent.subscription_tier,
+                "current_students": current_count,
+                "max_students": locked_parent.max_students,
+                "upgrade": {"recommended_tier": "pro", "max_students": 5},
+            },
+        )
+
     curriculum = db.get(Curriculum, payload.curriculum_id)
     if curriculum is None or not curriculum.active:
         raise HTTPException(status_code=404, detail="Active curriculum not found")
@@ -254,6 +280,7 @@ def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession)
         first_name=first_name,
         grade_level=curriculum.grade_level or "UNSPECIFIED",
         school_system=None,
+        avatar_id="avatar-1",
     )
     db.add(student)
     db.flush()
