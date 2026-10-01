@@ -1,10 +1,11 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime, timedelta
+from itertools import pairwise
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
@@ -119,6 +120,7 @@ class LearnerWorkspaceOut(BaseModel):
     reviews_due: list[WorkspaceReviewDueOut] = Field(default_factory=list)
     awards: list[WorkspaceAwardOut] = Field(default_factory=list)
     recommended_next: WorkspaceRecommendedSkillOut | None = None
+    streak_days: int = 0
 
 
 def _allowed_actions(state: TutorState) -> list[WorkspaceAction]:
@@ -150,6 +152,29 @@ def _learn_content(skill: Skill, *, state: TutorState) -> LearnContentOut | None
         if example.get("title") and example.get("steps")
     ]
     return LearnContentOut(summary=str(content["summary"]), examples=examples)
+
+
+def _practice_streak_days(db: Session, student_id: uuid.UUID) -> int:
+    """Consecutive calendar days with at least one session, counting back from
+    today or yesterday (a streak isn't broken until a full day is missed)."""
+    days = db.scalars(
+        select(func.date(TutorSession.started_at))
+        .where(TutorSession.student_id == student_id)
+        .distinct()
+        .order_by(func.date(TutorSession.started_at).desc())
+    ).all()
+    if not days:
+        return 0
+    today = datetime.now(UTC).date()
+    if days[0] not in {today, today - timedelta(days=1)}:
+        return 0
+    streak = 1
+    for previous, current in pairwise(days):
+        if previous - current == timedelta(days=1):
+            streak += 1
+        else:
+            break
+    return streak
 
 
 def _current_tutor_turn(db: Session, session_id: uuid.UUID) -> TutorTurn | None:
@@ -254,6 +279,7 @@ def get_learner_workspace(
                 .limit(50)
             ).all()
         ],
+        streak_days=_practice_streak_days(db, session.student_id),
         recommended_next=(
             WorkspaceRecommendedSkillOut(
                 skill_id=recommendation.skill.id,

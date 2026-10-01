@@ -4,6 +4,7 @@ import LearnEntry from "./pages/LearnEntry";
 import Login from "./pages/Login";
 import ParentDashboard from "./pages/ParentDashboard";
 import ParentSettings from "./pages/ParentSettings";
+import Privacy from "./pages/Privacy";
 import SkillMap from "./pages/SkillMap";
 import Workspace from "./pages/Workspace";
 
@@ -14,6 +15,7 @@ export default function App() {
       <Route path="/learn" element={<LearnEntry />} />
       <Route path="/parent" element={<ParentDashboard />} />
       <Route path="/parent/settings" element={<ParentSettings />} />
+      <Route path="/privacy" element={<Privacy />} />
       <Route path="/learn/:sessionId" element={<Workspace />} />
       <Route path="/learn/:sessionId/badges" element={<Badges />} />
       <Route path="/learn/:sessionId/map" element={<SkillMap />} />

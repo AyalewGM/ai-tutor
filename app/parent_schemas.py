@@ -86,6 +86,27 @@ class RecommendedSkillOut(BaseModel):
     reason: str
 
 
+class StrandSummaryOut(BaseModel):
+    strand: str
+    total: int
+    mastered: int
+    in_progress: int
+
+
+class GradeLevelSummaryOut(BaseModel):
+    curriculum_code: str | None
+    curriculum_name: str | None
+    skills_total: int
+    skills_mastered: int
+    skills_in_progress: int
+    skills_not_started: int
+    mastery_percent: float
+    strands: list[StrandSummaryOut]
+    sessions_last_7_days: int
+    minutes_last_7_days: int
+    trouble_spots: list[str]
+
+
 class ChildDashboardOut(BaseModel):
     child: ChildSummaryOut
     active_skill_name: str | None = None
@@ -94,3 +115,4 @@ class ChildDashboardOut(BaseModel):
     support_areas: list[SupportAreaOut]
     reviews_due: list[ReviewDueOut] = Field(default_factory=list)
     recommended_next: RecommendedSkillOut | None = None
+    grade_level_summary: GradeLevelSummaryOut | None = None
