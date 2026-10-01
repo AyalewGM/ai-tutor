@@ -13,6 +13,11 @@ class ParentProfile(Base):
     __table_args__ = (
         CheckConstraint("subscription_tier IN ('free', 'pro')", name="ck_parent_subscription_tier"),
         CheckConstraint("max_students >= 1", name="ck_parent_max_students_positive"),
+        CheckConstraint(
+            "(subscription_tier = 'free' AND max_students = 1) OR "
+            "(subscription_tier = 'pro' AND max_students BETWEEN 1 AND 5)",
+            name="ck_parent_subscription_seat_policy",
+        ),
     )
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
