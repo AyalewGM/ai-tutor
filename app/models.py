@@ -80,6 +80,9 @@ class Student(Base):
     first_name: Mapped[str] = mapped_column(String(100))
     grade_level: Mapped[str] = mapped_column(String(30))
     school_system: Mapped[str | None] = mapped_column(String(100))
+    avatar_id: Mapped[str] = mapped_column(
+        String(80), default="avatar-1", server_default="avatar-1", nullable=False
+    )
     active: Mapped[bool] = mapped_column(Boolean, default=True)
 
 
