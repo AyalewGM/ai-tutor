@@ -20,7 +20,7 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await page.getByRole('button', { name: 'Create account' }).click();
   await expect(page).toHaveURL(/\/app\/learn/);
 
-  await page.getByLabel('Learner first name').fill('SyntheticLearner');
+  await page.getByLabel('Learner nickname').fill('SyntheticLearner');
   const curriculum = page.locator('#curriculum');
   const mcpsOption = curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' });
   await expect(mcpsOption.first()).toBeAttached({ timeout: 10000 });
