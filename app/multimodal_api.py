@@ -8,9 +8,13 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.identity import CurrentParent, require_parent_owns_session
-from app.models import Problem, Skill, TutorSession
-from app.services.curriculum_scope import CurriculumScopeError, require_session_scope, require_skill_in_scope
-from app.services.tutor_engine import fallback_message, TutorContext
+from app.models import Problem, TutorSession
+from app.services.curriculum_scope import (
+    CurriculumScopeError,
+    require_session_scope,
+    require_skill_in_scope,
+)
+from app.services.tutor_engine import TutorContext, fallback_message
 
 router = APIRouter(prefix="/tutor", tags=["tutor-multimodal"])
 DbSession = Annotated[Session, Depends(get_db)]
