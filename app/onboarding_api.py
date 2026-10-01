@@ -18,7 +18,7 @@ from app.models import (
     StudentSkill,
     TutorSession,
 )
-from app.parent_models import ParentStudentRelationship, ParentStudentRelationshipEvent
+from app.parent_models import ParentProfile, ParentStudentRelationship, ParentStudentRelationshipEvent
 from app.services.placement import recommend_next_skill
 from app.services.problem_generation import content_readiness
 from app.services.review_schedule import reviews_due
@@ -241,7 +241,7 @@ def get_learner_launchpad(
 @router.post("/learners", response_model=LearnerCreated, status_code=status.HTTP_201_CREATED)
 def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession) -> LearnerCreated:
     locked_parent = db.scalar(
-        select(type(parent)).where(type(parent).id == parent.id).with_for_update()
+        select(ParentProfile).where(ParentProfile.id == parent.id).with_for_update()
     )
     if locked_parent is None:
         raise HTTPException(status_code=404, detail="Parent profile not found")
