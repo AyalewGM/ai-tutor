@@ -1,6 +1,7 @@
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useWebSpeech } from "../../hooks/useWebSpeech";
+import ChatMessageView from "./ChatMessage";
 
 export type ChatMessage = { id: string; role: "student" | "tutor"; text: string };
 type Props = {
@@ -45,10 +46,7 @@ export default function SocraticChatPanel({ topic, masteryPercent, messages, dis
     </header>
 
     <div className="min-h-0 flex-1 space-y-3 overflow-y-auto bg-slate-50 p-4" aria-live="polite">
-      {messages.map((message) => <article key={message.id} className={message.role === "tutor" ? "mr-8 rounded-3xl rounded-tl-md border border-indigo-100 bg-white p-4 text-slate-800 shadow-sm" : "ml-8 rounded-3xl rounded-tr-md bg-indigo-600 p-4 text-white"}>
-        <div className="mb-1 text-xs font-semibold opacity-70">{message.role === "tutor" ? "Tutor" : "You"}</div>
-        <div className="whitespace-pre-wrap leading-7">{message.text}</div>
-      </article>)}
+      {messages.map((message) => <ChatMessageView key={message.id} text={message.text} role={message.role} />)}
     </div>
 
     <div className="border-t border-slate-200 p-3">
