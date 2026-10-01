@@ -56,6 +56,10 @@ def test_mth1w_seed_is_idempotent_and_jurisdiction_local():
         assert {row.source_identifier for row in expectations} == {
             "MTH1W.B",
             "MTH1W.C",
+            "MTH1W.C1.2",
+            "MTH1W.C1.3",
+            "MTH1W.C1.4",
+            "MTH1W.C1.5",
             "MTH1W.F",
         }
         mappings = list(
@@ -131,7 +135,8 @@ def test_mth1w_fine_grained_subskills_and_chains():
         }
         subskills = {
             "MTH1W.B.NUM.INT", "MTH1W.B.NUM.FRAC",
-            "MTH1W.C.ALG.EXPR", "MTH1W.C.ALG.EQ1", "MTH1W.C.ALG.EQ2",
+            "MTH1W.C.ALG.EXPR", "MTH1W.C.ALG.LIKE", "MTH1W.C.ALG.POLY",
+            "MTH1W.C.ALG.EQ1", "MTH1W.C.ALG.EQ2",
             "MTH1W.C.REL.SLOPE", "MTH1W.C.REL.EVAL",
             "MTH1W.F.FIN.PCT", "MTH1W.F.FIN.APP",
         }
@@ -152,6 +157,8 @@ def test_mth1w_fine_grained_subskills_and_chains():
         assert edge("MTH1W.B.NUM.INT", "MTH1W.B.NUM")
         assert edge("MTH1W.B.NUM.FRAC", "MTH1W.B.NUM.INT")
         assert edge("MTH1W.C.ALG.EXPR", "MTH1W.C.ALG")
+        assert edge("MTH1W.C.ALG.LIKE", "MTH1W.C.ALG.EXPR")
+        assert edge("MTH1W.C.ALG.POLY", "MTH1W.C.ALG.LIKE")
         assert edge("MTH1W.C.ALG.EQ1", "MTH1W.C.ALG.EXPR")
         assert edge("MTH1W.C.ALG.EQ2", "MTH1W.C.ALG.EQ1")
         assert edge("MTH1W.C.REL.SLOPE", "MTH1W.C.REL")
