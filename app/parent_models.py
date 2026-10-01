@@ -15,7 +15,7 @@ class ParentProfile(Base):
         CheckConstraint("max_students >= 1", name="ck_parent_max_students_positive"),
         CheckConstraint(
             "(subscription_tier = 'free' AND max_students = 1) OR "
-            "(subscription_tier = 'pro' AND max_students BETWEEN 1 AND 5)",
+            "(subscription_tier = 'pro' AND max_students = 5)",
             name="ck_parent_subscription_seat_policy",
         ),
     )
