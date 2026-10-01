@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -11,6 +11,7 @@ from app.core.database import get_db
 from app.identity import CurrentParent, CurrentUser, require_parent_role
 from app.learner_deletion import DELETION_POLICY_VERSION, erase_learner_transactional
 from app.parent_models import ParentStudentRelationship
+from app.services.parent_gate import require_parent_unlock
 from app.privacy_models import PrivacyNoticeAcknowledgement
 
 router = APIRouter(prefix="/privacy", tags=["privacy"])
@@ -80,18 +81,24 @@ def _notice_out(ack: PrivacyNoticeAcknowledgement | None) -> PrivacyNoticeOut:
 
 
 @router.get("/notice", response_model=PrivacyNoticeOut)
-def get_current_notice(user: CurrentUser, db: DbSession) -> PrivacyNoticeOut:
+def get_current_notice(
+    request: Request, user: CurrentUser, parent: CurrentParent, db: DbSession
+) -> PrivacyNoticeOut:
     require_parent_role(user)
+    require_parent_unlock(request, parent.user_id)
     return _notice_out(_existing_acknowledgement(db, user_id=user.id))
 
 
 @router.post("/notice/acknowledge", response_model=PrivacyNoticeOut)
 def acknowledge_current_notice(
     payload: PrivacyNoticeAcknowledgementIn,
+    request: Request,
     user: CurrentUser,
+    parent: CurrentParent,
     db: DbSession,
 ) -> PrivacyNoticeOut:
     require_parent_role(user)
+    require_parent_unlock(request, parent.user_id)
     if payload.notice_version != CURRENT_NOTICE_VERSION:
         raise HTTPException(status_code=409, detail="Privacy notice version is no longer current")
 
@@ -109,10 +116,12 @@ def acknowledge_current_notice(
 
 @router.get("/data-summary", response_model=ParentDataSummaryOut)
 def get_parent_data_summary(
+    request: Request,
     user: CurrentUser,
     parent: CurrentParent,
     db: DbSession,
 ) -> ParentDataSummaryOut:
+    require_parent_unlock(request, parent.user_id)
     active_learner_count = db.scalar(
         select(func.count(ParentStudentRelationship.id)).where(
             ParentStudentRelationship.parent_profile_id == parent.id,
@@ -145,9 +154,11 @@ def get_parent_data_summary(
 def delete_learner_data(
     learner_id: uuid.UUID,
     payload: LearnerDeletionConfirmationIn,
+    request: Request,
     parent: CurrentParent,
     db: DbSession,
 ) -> LearnerDeletionOut:
+    require_parent_unlock(request, parent.user_id)
     if payload.confirmation != "DELETE":
         raise HTTPException(status_code=400, detail="Explicit deletion confirmation required")
     try:
