@@ -57,8 +57,8 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   await expect(page.getByRole('heading', { name: 'Family learning overview' })).toBeVisible();
   await page.getByLabel('Parent PIN').fill(parentPin);
   await page.getByRole('button', { name: 'Unlock parent view' }).click();
-  await expect(page.getByLabel('Learner', { exact: true })).toContainText('ReactLearner');
-  await expect(page.getByText('Assisted success is shown separately')).toBeVisible();
+  await expect(page.getByLabel('Student', { exact: true })).toContainText('ReactLearner');
+  await expect(page.getByText('Topics mastered')).toBeVisible();
   await page.getByRole('link', { name: 'Practice' }).click();
 
   const learner = page.locator('#learner');
