@@ -245,7 +245,7 @@ def verify_parent_pin(
         valid = False
     if not valid:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
+            status_code=status.HTTP_403_FORBIDDEN,
             detail="Invalid parent PIN",
         )
     clear_pin_attempts(parent.user_id)
