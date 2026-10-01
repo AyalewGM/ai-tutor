@@ -1,7 +1,6 @@
 import re
 from dataclasses import dataclass
 from enum import StrEnum
-from typing import Optional
 
 SOCRATIC_REDIRECT = (
     "I see what you're asking, but I'm here to help you solve it yourself! "
@@ -19,7 +18,7 @@ class SafetyIntent(StrEnum):
 class GuardrailDecision:
     allowed: bool
     intent: SafetyIntent
-    response: Optional[str] = None
+    response: str | None = None
 
 _PATTERNS: tuple[tuple[SafetyIntent, re.Pattern[str]], ...] = (
     (SafetyIntent.PROMPT_INJECTION, re.compile(
@@ -59,7 +58,7 @@ def inspect_student_input(prompt: str) -> GuardrailDecision:
         return GuardrailDecision(False, SafetyIntent.OFF_TOPIC, SOCRATIC_REDIRECT)
     return GuardrailDecision(True, SafetyIntent.SAFE)
 
-async def validate_pedagogical_safety(prompt: str) -> tuple[bool, Optional[str]]:
+async def validate_pedagogical_safety(prompt: str) -> tuple[bool, str | None]:
     """Fast, local pre-flight guardrail. No learner text leaves the process."""
     decision = inspect_student_input(prompt)
     return decision.allowed, decision.response
