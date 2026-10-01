@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Badges from "./pages/Badges";
+import Diagnostic from "./pages/Diagnostic";
 import LearnEntry from "./pages/LearnEntry";
 import Login from "./pages/Login";
 import ParentDashboard from "./pages/ParentDashboard";
@@ -16,6 +17,7 @@ export default function App() {
       <Route path="/parent" element={<ParentDashboard />} />
       <Route path="/parent/settings" element={<ParentSettings />} />
       <Route path="/privacy" element={<Privacy />} />
+      <Route path="/diagnostic/:sessionId" element={<Diagnostic />} />
       <Route path="/learn/:sessionId" element={<Workspace />} />
       <Route path="/learn/:sessionId/badges" element={<Badges />} />
       <Route path="/learn/:sessionId/map" element={<SkillMap />} />

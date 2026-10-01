@@ -1,3 +1,5 @@
+import uuid
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import select
@@ -113,7 +115,7 @@ def test_adaptive_session_rejects_skill_from_another_curriculum() -> None:
         )
         foreign_skill = Skill(
             curriculum_id=mth1w.id,
-            code="TEST.MTH1W.FOREIGN",
+            code=f"TEST.MTH1W.FOREIGN.{uuid.uuid4().hex[:8]}",
             name="Foreign Skill",
             description="Must not be accessible from MCPS enrollment.",
             difficulty_level=1,
@@ -145,13 +147,14 @@ def test_diagnostic_start_rejects_skill_from_another_curriculum() -> None:
         )
         foreign_skill = Skill(
             curriculum_id=mth1w.id,
-            code="TEST.MTH1W.DIAGNOSTIC.FOREIGN",
+            code=f"TEST.MTH1W.DIAGNOSTIC.FOREIGN.{uuid.uuid4().hex[:8]}",
             name="Foreign diagnostic skill",
             description="Must not be reachable by an MCPS diagnostic.",
             difficulty_level=1,
         )
         db.add_all([student, foreign_skill])
         db.flush()
+        authenticate_parent_for_student(client, db, student)
         db.add(
             StudentCurriculumEnrollment(
                 student_id=student.id,
@@ -191,6 +194,7 @@ def test_completed_diagnostic_keeps_original_curriculum_snapshot_after_reassignm
         )
         db.add(student)
         db.flush()
+        authenticate_parent_for_student(client, db, student)
         original_enrollment = StudentCurriculumEnrollment(
             student_id=student.id,
             curriculum_id=mcps.id,
@@ -238,7 +242,7 @@ def test_prerequisite_graph_fails_closed_on_cross_curriculum_edge() -> None:
 
         foreign_prerequisite = Skill(
             curriculum_id=mth1w.id,
-            code="TEST.MTH1W.PREREQ",
+            code=f"TEST.MTH1W.PREREQ.{uuid.uuid4().hex[:8]}",
             name="Foreign prerequisite",
             description="Test-only cross-curriculum prerequisite.",
             difficulty_level=1,
