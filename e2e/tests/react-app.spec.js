@@ -29,16 +29,20 @@ function solve(prompt) {
 test('react learner journey: register, practice, earn badge, view badges and skill map', async ({ page }) => {
   const email = `synthetic-react-${Date.now()}@example.com`;
   const password = 'SyntheticOnly!12345';
+  const parentPin = '4821';
 
   await page.goto(`${baseURL}/app/login`);
   await page.getByRole('tab', { name: 'Create account' }).click();
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Password').fill(password);
   await page.getByLabel('Display name').fill('Synthetic React Parent');
+  await page.getByLabel('4-digit parent PIN').fill(parentPin);
+  await page.getByLabel('I accept the Terms of Service.').check();
+  await page.getByLabel(/I am the parent or guardian/).check();
   await page.getByRole('button', { name: 'Create account' }).click();
   await expect(page).toHaveURL(/\/app\/learn/);
 
-  await page.getByLabel('Learner first name').fill('React Learner');
+  await page.getByLabel('Learner first name').fill('ReactLearner');
   const curriculum = page.locator('#curriculum');
   await expect(curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' })).toHaveCount(1, { timeout: 10000 });
   const mcpsOption = curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' });
@@ -51,12 +55,14 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   await page.getByRole('link', { name: 'Parent' }).click();
   await expect(page).toHaveURL(/\/app\/parent$/);
   await expect(page.getByRole('heading', { name: 'Family learning overview' })).toBeVisible();
-  await expect(page.getByLabel('Learner', { exact: true })).toContainText('React Learner');
+  await page.getByLabel('Parent PIN').fill(parentPin);
+  await page.getByRole('button', { name: 'Unlock parent view' }).click();
+  await expect(page.getByLabel('Learner', { exact: true })).toContainText('ReactLearner');
   await expect(page.getByText('Assisted success is shown separately')).toBeVisible();
   await page.getByRole('link', { name: 'Practice' }).click();
 
   const learner = page.locator('#learner');
-  const learnerOption = learner.locator('option').filter({ hasText: 'React Learner' });
+  const learnerOption = learner.locator('option').filter({ hasText: 'ReactLearner' });
   await learner.selectOption(await learnerOption.getAttribute('value'));
   await expect(page.getByRole('heading', { name: 'Ready to learn, React Learner?' })).toBeVisible();
   await expect(page.getByLabel('Learning context')).toBeVisible();
