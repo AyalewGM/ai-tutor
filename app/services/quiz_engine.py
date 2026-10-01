@@ -8,7 +8,7 @@ work while preserving the authoritative evidence pipeline.
 import uuid
 from pydantic import BaseModel, ConfigDict, Field
 
-from app.services.answer_evaluation import evaluate_answer
+from app.services.evaluation import evaluate_problem
 
 
 class QuizQuestion(BaseModel):
@@ -40,7 +40,7 @@ def verify_selected_index(*, selected_index: int, correct_index: int, option_cou
 
 def verify_free_response(*, answer: str, canonical_answer: str):
     """Delegate to the same deterministic evaluator used by tutor attempts."""
-    return evaluate_answer(answer, canonical_answer)
+    return evaluate_problem("", answer, canonical_answer)
 
 
 def quiz_id_for_problem(problem_id: uuid.UUID) -> str:
