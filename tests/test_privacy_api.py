@@ -2,7 +2,10 @@ import uuid
 from datetime import UTC, datetime
 from types import SimpleNamespace
 
+import pytest
 from fastapi import HTTPException
+
+from app import privacy_api
 
 from app.privacy_api import (
     CURRENT_NOTICE_VERSION,
@@ -44,8 +47,18 @@ def _parent():
     return SimpleNamespace(id=uuid.uuid4(), role="PARENT")
 
 
+def _profile(user):
+    return SimpleNamespace(id=uuid.uuid4(), user_id=user.id)
+
+
+@pytest.fixture(autouse=True)
+def _adult_unlock(monkeypatch):
+    monkeypatch.setattr(privacy_api, "require_parent_unlock", lambda *_args: None)
+
+
 def test_notice_is_parent_authenticated_and_unacknowledged_initially():
-    result = get_current_notice(_parent(), FakePrivacyDb())
+    user = _parent()
+    result = get_current_notice(SimpleNamespace(), user, _profile(user), FakePrivacyDb())
     assert result.version == CURRENT_NOTICE_VERSION
     assert result.acknowledged is False
     assert result.acknowledged_at is None
@@ -57,8 +70,9 @@ def test_acknowledgement_is_idempotent_for_current_version():
     db = FakePrivacyDb()
     payload = PrivacyNoticeAcknowledgementIn(notice_version=CURRENT_NOTICE_VERSION)
 
-    first = acknowledge_current_notice(payload, parent, db)
-    second = acknowledge_current_notice(payload, parent, db)
+    profile = _profile(parent)
+    first = acknowledge_current_notice(payload, SimpleNamespace(), parent, profile, db)
+    second = acknowledge_current_notice(payload, SimpleNamespace(), parent, profile, db)
 
     assert first.acknowledged is True
     assert second.acknowledged is True
@@ -72,7 +86,9 @@ def test_stale_notice_version_fails_before_writing():
     try:
         acknowledge_current_notice(
             PrivacyNoticeAcknowledgementIn(notice_version="obsolete-version"),
-            _parent(),
+            SimpleNamespace(),
+            (user := _parent()),
+            _profile(user),
             db,
         )
     except HTTPException as exc:
@@ -94,7 +110,9 @@ def test_existing_acknowledgement_is_returned_without_duplicate_write():
 
     result = acknowledge_current_notice(
         PrivacyNoticeAcknowledgementIn(notice_version=CURRENT_NOTICE_VERSION),
+        SimpleNamespace(),
         parent,
+        _profile(parent),
         db,
     )
 
@@ -105,7 +123,7 @@ def test_existing_acknowledgement_is_returned_without_duplicate_write():
 
 def test_data_summary_reports_categories_without_sensitive_values():
     user = _parent()
-    parent_profile = SimpleNamespace(id=uuid.uuid4())
+    parent_profile = SimpleNamespace(id=uuid.uuid4(), user_id=user.id)
     acknowledgement = PrivacyNoticeAcknowledgement(
         user_id=user.id,
         notice_version=CURRENT_NOTICE_VERSION,
@@ -113,7 +131,7 @@ def test_data_summary_reports_categories_without_sensitive_values():
     )
     db = FakePrivacyDb(scalar_values=[2, acknowledgement])
 
-    result = get_parent_data_summary(user, parent_profile, db)
+    result = get_parent_data_summary(SimpleNamespace(), user, parent_profile, db)
 
     assert result.active_learner_count == 2
     assert result.notice_acknowledged is True
