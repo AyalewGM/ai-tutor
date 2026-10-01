@@ -77,7 +77,7 @@ def upgrade() -> None:
                     "ck_parent_subscription_seat_policy",
                     "parent_profiles",
                     "(subscription_tier = 'free' AND max_students = 1) OR "
-                    "(subscription_tier = 'pro' AND max_students BETWEEN 1 AND 5)",
+                    "(subscription_tier = 'pro' AND max_students = 5)",
                 )
 
     if "students" in tables:
