@@ -6,7 +6,6 @@ import pytest
 from fastapi import HTTPException
 
 from app import privacy_api
-
 from app.privacy_api import (
     CURRENT_NOTICE_VERSION,
     PrivacyNoticeAcknowledgementIn,
