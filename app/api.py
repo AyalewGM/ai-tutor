@@ -30,6 +30,7 @@ from app.schemas import (
     SessionCreate,
     SessionOut,
     TutorOut,
+    problem_choices_out,
 )
 from app.services.curriculum_scope import (
     CurriculumScopeError,
@@ -60,7 +61,13 @@ def _student_skill(db: Session, student_id: uuid.UUID, skill_id: uuid.UUID) -> S
 def _problem_out(problem: Problem | None) -> ProblemOut | None:
     if problem is None:
         return None
-    return ProblemOut(id=problem.id, prompt=problem.prompt, difficulty=problem.difficulty)
+    return ProblemOut(
+        id=problem.id,
+        prompt=problem.prompt,
+        difficulty=problem.difficulty,
+        answer_kind=problem.answer_kind,
+        choices=problem_choices_out(problem.choices),
+    )
 
 
 def _tutor_context(
@@ -160,7 +167,7 @@ def create_session(payload: SessionCreate, db: DbSession) -> SessionOut:
         session_id=session.id,
         state=session.current_state,
         mastery=MasteryOut(score=progress.mastery_score, confidence=progress.confidence_score),
-        problem=ProblemOut(id=problem.id, prompt=problem.prompt, difficulty=problem.difficulty),
+        problem=_problem_out(problem),
         message=generation.message,
     )
 
@@ -191,6 +198,8 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
         problem.prompt,
         payload.answer,
         problem.canonical_answer or "",
+        answer_kind=problem.answer_kind,
+        choices=problem.choices,
     )
 
     misconception = None

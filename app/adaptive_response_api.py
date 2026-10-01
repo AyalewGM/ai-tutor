@@ -123,6 +123,8 @@ def respond(
         canonical_answer=problem.canonical_answer or "",
         assistance_level=effective_assistance_level,
         problem_difficulty=problem.difficulty,
+        answer_kind=problem.answer_kind,
+        choices=problem.choices,
     )
 
     prior_attempt_count = db.scalar(

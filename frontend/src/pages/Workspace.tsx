@@ -103,6 +103,8 @@ export default function Workspace() {
   const { sessionId } = useParams<{ sessionId: string }>();
   const [workspace, setWorkspace] = useState<LearnerWorkspace | null>(null);
   const [answer, setAnswer] = useState("");
+  const [fracNum, setFracNum] = useState("");
+  const [fracDen, setFracDen] = useState("");
   const [status, setStatus] = useState("");
   const [statusOk, setStatusOk] = useState(false);
   const [error, setError] = useState("");
@@ -133,6 +135,21 @@ export default function Workspace() {
   const hasAction = (action: string) =>
     workspace?.allowed_actions.includes(action) ?? false;
 
+  const problemKind = workspace?.problem?.answer_kind ?? "FREE_TEXT";
+  const effectiveAnswer =
+    problemKind === "FRACTION"
+      ? fracNum.trim() && fracDen.trim()
+        ? `${fracNum.trim()}/${fracDen.trim()}`
+        : ""
+      : answer;
+
+  const problemId = workspace?.problem?.id;
+  useEffect(() => {
+    setAnswer("");
+    setFracNum("");
+    setFracDen("");
+  }, [problemId]);
+
   async function submitAnswer(event: FormEvent) {
     event.preventDefault();
     if (!workspace?.problem) return;
@@ -143,11 +160,13 @@ export default function Workspace() {
         `/adaptive-tutor/sessions/${sessionId}/respond`,
         {
           problem_id: workspace.problem.id,
-          answer,
+          answer: effectiveAnswer,
           assistance_level: 0,
         },
       );
       setAnswer("");
+      setFracNum("");
+      setFracDen("");
       const correct = result.evaluation.correct;
       setFeedback("");
       requestAnimationFrame(() => setFeedback(correct ? "correct" : "wrong"));
@@ -352,14 +371,80 @@ export default function Workspace() {
                   <form onSubmit={submitAnswer} className="space-y-3">
                     <div className="space-y-1.5">
                       <Label htmlFor="answer">Your answer</Label>
-                      <Input
-                        id="answer"
-                        className="h-12 text-lg"
-                        value={answer}
-                        onChange={(e) => setAnswer(e.target.value)}
-                        disabled={!hasAction("SUBMIT_ANSWER") || !workspace.problem}
-                        autoComplete="off"
-                      />
+                      {problemKind === "MULTIPLE_CHOICE" &&
+                      workspace.problem?.choices?.length ? (
+                        <div
+                          role="radiogroup"
+                          aria-label="Answer choices"
+                          className="grid gap-2 sm:grid-cols-2"
+                        >
+                          {workspace.problem.choices.map((choice) => (
+                            <button
+                              key={choice.id}
+                              type="button"
+                              role="radio"
+                              aria-checked={answer === choice.id}
+                              onClick={() => setAnswer(choice.id)}
+                              disabled={
+                                !hasAction("SUBMIT_ANSWER") ||
+                                !workspace.problem
+                              }
+                              className={cn(
+                                "rounded-lg border px-4 py-3 text-left text-base transition-colors",
+                                "hover:border-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                                "disabled:cursor-not-allowed disabled:opacity-50",
+                                answer === choice.id
+                                  ? "border-primary bg-primary/10 font-medium"
+                                  : "border-border bg-card",
+                              )}
+                            >
+                              <MathText text={choice.text} />
+                            </button>
+                          ))}
+                        </div>
+                      ) : problemKind === "FRACTION" ? (
+                        <div className="inline-flex flex-col items-center gap-1">
+                          <Input
+                            id="answer-num"
+                            aria-label="Numerator"
+                            className="h-12 w-24 text-center text-lg"
+                            inputMode="numeric"
+                            value={fracNum}
+                            onChange={(e) => setFracNum(e.target.value)}
+                            disabled={
+                              !hasAction("SUBMIT_ANSWER") || !workspace.problem
+                            }
+                            autoComplete="off"
+                          />
+                          <div className="h-0.5 w-24 bg-foreground" aria-hidden="true" />
+                          <Input
+                            id="answer-den"
+                            aria-label="Denominator"
+                            className="h-12 w-24 text-center text-lg"
+                            inputMode="numeric"
+                            value={fracDen}
+                            onChange={(e) => setFracDen(e.target.value)}
+                            disabled={
+                              !hasAction("SUBMIT_ANSWER") || !workspace.problem
+                            }
+                            autoComplete="off"
+                          />
+                        </div>
+                      ) : (
+                        <Input
+                          id="answer"
+                          className="h-12 text-lg"
+                          inputMode={
+                            problemKind === "INTEGER" ? "numeric" : undefined
+                          }
+                          value={answer}
+                          onChange={(e) => setAnswer(e.target.value)}
+                          disabled={
+                            !hasAction("SUBMIT_ANSWER") || !workspace.problem
+                          }
+                          autoComplete="off"
+                        />
+                      )}
                     </div>
                     <VoiceChatControls
                       onTranscript={setAnswer}
@@ -373,7 +458,7 @@ export default function Workspace() {
                         disabled={
                           !hasAction("SUBMIT_ANSWER") ||
                           !workspace.problem ||
-                          !answer.trim()
+                          !effectiveAnswer
                         }
                       >
                         Submit answer

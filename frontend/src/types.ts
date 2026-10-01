@@ -61,11 +61,18 @@ export interface VisualSpec {
   aria_label?: string;
 }
 
+export interface ProblemChoice {
+  id: string;
+  text: string;
+}
+
 export interface WorkspaceProblem {
   id: string;
   prompt: string;
   difficulty: number;
   visual?: VisualSpec | null;
+  answer_kind?: string;
+  choices?: ProblemChoice[] | null;
 }
 
 export interface LearnerWorkspace {

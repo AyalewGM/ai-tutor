@@ -150,6 +150,19 @@ docker compose -f docker-compose.yml -f docker-compose.pilot.yml up -d --build
 
 ## 8. Pilot Account Provisioning
 
+### Answer-kind backfill (after curriculum seeding)
+
+Seeded problems default to `answer_kind = FREE_TEXT`. After running any
+curriculum seed script on the pilot database, classify bare numeric/fraction
+answers so grading accepts equivalent forms (`2/4` = `1/2`):
+
+```bash
+docker compose -f docker-compose.pilot.yml exec tutor-api \
+    python /app/scripts/ops/backfill_answer_kinds.py
+```
+
+### Create a family account
+
 ```bash
 # Run interactively on the VPS
 python scripts/ops/provision_pilot_family.py

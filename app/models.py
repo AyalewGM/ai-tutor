@@ -165,6 +165,8 @@ class Problem(Base):
     difficulty: Mapped[int] = mapped_column(Integer)
     prompt: Mapped[str] = mapped_column(Text)
     canonical_answer: Mapped[str | None] = mapped_column(Text)
+    answer_kind: Mapped[str] = mapped_column(String(20), default="FREE_TEXT", server_default="FREE_TEXT")
+    choices: Mapped[list | None] = mapped_column(JSONB)
     solution: Mapped[dict | None] = mapped_column(JSONB)
     source_type: Mapped[str] = mapped_column(String(30), default="CURATED")
 

@@ -20,6 +20,7 @@ from app.models import (
     TutorState,
     TutorTurn,
 )
+from app.schemas import ProblemChoiceOut, problem_choices_out
 from app.services.awards import award_out, badge_collection
 from app.services.curriculum_scope import (
     CurriculumScopeError,
@@ -60,6 +61,8 @@ class WorkspaceProblemOut(BaseModel):
     prompt: str
     difficulty: int
     visual: dict | None = None
+    answer_kind: str = "FREE_TEXT"
+    choices: list[ProblemChoiceOut] | None = None
 
 
 class WorkspaceEvidenceOut(BaseModel):
@@ -181,6 +184,8 @@ def get_learner_workspace(
                 prompt=problem.prompt,
                 difficulty=problem.difficulty,
                 visual=visualization_for(problem),
+                answer_kind=problem.answer_kind,
+                choices=problem_choices_out(problem.choices),
             )
             if problem
             else None
