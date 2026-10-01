@@ -4,7 +4,6 @@ from typing import Annotated
 
 from argon2 import PasswordHasher
 from argon2.exceptions import VerificationError
-
 from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -13,7 +12,11 @@ from app.core.database import get_db
 from app.credential_models import UserCredential
 from app.identity import CurrentParent, CurrentUser, require_parent_role
 from app.models import Attempt, MasteryEvent, Student, TutorSession
-from app.parent_models import ParentProfile, ParentStudentRelationship, ParentStudentRelationshipEvent
+from app.parent_models import (
+    ParentProfile,
+    ParentStudentRelationship,
+    ParentStudentRelationshipEvent,
+)
 from app.parent_schemas import (
     ChildDashboardOut,
     ChildSummaryOut,
@@ -22,20 +25,20 @@ from app.parent_schemas import (
     ParentProfileOut,
     ParentProfileUpdateIn,
 )
+from app.schemas import (
+    PasswordReauthSchema,
+    PINVerifyOut,
+    PINVerifySchema,
+    ProgressStudentSummary,
+    ProgressSummaryOut,
+    StudentCreateSchema,
+    StudentProfileOut,
+)
 from app.services.parent_dashboard import (
     dashboard,
     link_child_with_claim,
     list_children,
     unlink_child,
-)
-from app.schemas import (
-    PINVerifyOut,
-    PINVerifySchema,
-    PasswordReauthSchema,
-    ProgressStudentSummary,
-    ProgressSummaryOut,
-    StudentCreateSchema,
-    StudentProfileOut,
 )
 from app.services.parent_gate import (
     clear_pin_attempts,
