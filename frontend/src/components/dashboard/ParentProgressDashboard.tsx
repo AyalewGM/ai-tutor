@@ -277,9 +277,15 @@ export default function ParentProgressDashboard({
             </p>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-            <label className="m-0 min-w-52 text-xs font-semibold text-slate-600">
-              Student
+            <div className="min-w-52">
+              <label
+                htmlFor="parent-progress-student"
+                className="m-0 text-xs font-semibold text-slate-600"
+              >
+                Student
+              </label>
               <select
+                id="parent-progress-student"
                 value={selectedStudentId}
                 onChange={(event) => onStudentChange(event.target.value)}
                 className="mt-1 min-h-11 rounded-xl border-slate-200 bg-slate-50 px-3 text-sm font-medium"
@@ -290,7 +296,7 @@ export default function ParentProgressDashboard({
                   </option>
                 ))}
               </select>
-            </label>
+            </div>
             <button
               type="button"
               onClick={() => window.print()}
