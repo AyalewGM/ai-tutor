@@ -1,8 +1,10 @@
 from datetime import UTC, datetime, timedelta
 
+import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 
+from app import parent_api
 from app.core.database import SessionLocal
 from app.identity import current_user
 from app.main import app
@@ -15,6 +17,11 @@ from app.parent_models import (
 from app.services.parent_dashboard import hash_claim_token
 
 client = TestClient(app)
+
+
+@pytest.fixture(autouse=True)
+def _adult_unlock(monkeypatch):
+    monkeypatch.setattr(parent_api, "require_parent_unlock", lambda *_args: None)
 
 
 def _override_user(user: User) -> None:
