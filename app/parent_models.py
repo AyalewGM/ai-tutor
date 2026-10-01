@@ -30,6 +30,7 @@ class ParentProfile(Base):
         Boolean, default=False, server_default="false", nullable=False
     )
     consent_timestamp: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    terms_accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=datetime.utcnow, nullable=False
     )
