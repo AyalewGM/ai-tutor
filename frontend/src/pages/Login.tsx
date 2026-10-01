@@ -7,6 +7,9 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [parentPin, setParentPin] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [coppaConsent, setCoppaConsent] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [params] = useSearchParams();
@@ -21,6 +24,9 @@ export default function Login() {
           email,
           password,
           display_name: displayName || undefined,
+          parent_pin: parentPin,
+          terms_accepted: termsAccepted,
+          coppa_consent_given: coppaConsent,
         });
       } else {
         await post("/auth/login", { email, password });
@@ -81,6 +87,37 @@ export default function Login() {
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
               />
+              <label htmlFor="parentPin">4-digit parent PIN</label>
+              <input
+                id="parentPin"
+                type="password"
+                inputMode="numeric"
+                pattern="[0-9]{4}"
+                minLength={4}
+                maxLength={4}
+                required
+                autoComplete="off"
+                value={parentPin}
+                onChange={(e) => setParentPin(e.target.value)}
+              />
+              <label className="checkbox-row">
+                <input
+                  type="checkbox"
+                  required
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                />
+                I accept the Terms of Service.
+              </label>
+              <label className="checkbox-row">
+                <input
+                  type="checkbox"
+                  required
+                  checked={coppaConsent}
+                  onChange={(e) => setCoppaConsent(e.target.checked)}
+                />
+                I am the parent or guardian and consent to the privacy practices described for this family account.
+              </label>
             </>
           )}
           {error && (
