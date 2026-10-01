@@ -69,8 +69,8 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await expect(page.getByRole('heading', { name: 'Family learning overview' })).toBeVisible();
   await page.getByLabel('Parent PIN').fill(parentPin);
   await page.getByRole('button', { name: 'Unlock parent view' }).click();
-  await expect(page.getByLabel('Learner', { exact: true })).toContainText('SyntheticLearner');
-  await expect(page.getByText('Assisted success is shown separately')).toBeVisible();
+  await expect(page.getByLabel('Student', { exact: true })).toContainText('SyntheticLearner');
+  await expect(page.getByText('Topics mastered')).toBeVisible();
 
   const outsider = await browser.newContext();
   const outsiderPage = await outsider.newPage();
