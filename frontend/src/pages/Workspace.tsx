@@ -1,6 +1,6 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { CheckCircle2, Lightbulb, Map as MapIcon, HelpCircle } from "lucide-react";
+import { BookOpen, CheckCircle2, ChevronDown, Lightbulb, Map as MapIcon, HelpCircle } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import ProblemVisual from "../components/ProblemVisual";
@@ -111,6 +111,7 @@ export default function Workspace() {
   const [feedback, setFeedback] = useState<"" | "correct" | "wrong">("");
   const [celebrate, setCelebrate] = useState(0);
   const [badgeToast, setBadgeToast] = useState<Award[]>([]);
+  const [learnOpen, setLearnOpen] = useState(false);
 
   const load = useCallback(async () => {
     try {
@@ -149,6 +150,12 @@ export default function Workspace() {
     setFracNum("");
     setFracDen("");
   }, [problemId]);
+
+  const activeSkillId = workspace?.focus.active_skill_id;
+  const learn = workspace?.focus.learn ?? null;
+  useEffect(() => {
+    setLearnOpen(Boolean(workspace?.focus.in_remediation && learn));
+  }, [activeSkillId]);
 
   async function submitAnswer(event: FormEvent) {
     event.preventDefault();
@@ -355,6 +362,52 @@ export default function Workspace() {
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-4">
+                  {learn && (
+                    <div className="rounded-lg border border-accent/50 bg-accent/5">
+                      <button
+                        type="button"
+                        onClick={() => setLearnOpen((o) => !o)}
+                        aria-expanded={learnOpen}
+                        className="flex w-full items-center gap-2 px-4 py-2.5 text-sm font-medium text-accent-foreground"
+                      >
+                        <BookOpen className="h-4 w-4 text-accent" />
+                        Learn the idea first
+                        <ChevronDown
+                          className={cn(
+                            "ml-auto h-4 w-4 transition-transform",
+                            learnOpen && "rotate-180",
+                          )}
+                        />
+                      </button>
+                      {learnOpen && (
+                        <div className="space-y-3 border-t border-accent/30 px-4 py-3">
+                          <MathText text={learn.summary} />
+                          {learn.examples.map((example, index) => (
+                            <div
+                              key={index}
+                              className="rounded-md bg-card p-3 text-sm"
+                            >
+                              <p className="font-medium">
+                                Example {index + 1}: {example.title}
+                              </p>
+                              <ol className="mt-2 list-decimal space-y-1 pl-5">
+                                {example.steps.map((step, stepIndex) => (
+                                  <li key={stepIndex}>
+                                    <MathText text={step} />
+                                  </li>
+                                ))}
+                              </ol>
+                              {example.answer && (
+                                <p className="mt-2 font-medium text-primary">
+                                  Answer: <MathText text={example.answer} />
+                                </p>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
                   <div className="problem-wrap">
                     <div className={`problem ${feedback}`} aria-live="polite">
                       <MathText

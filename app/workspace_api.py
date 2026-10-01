@@ -27,7 +27,7 @@ from app.services.curriculum_scope import (
     require_session_scope,
     require_skill_in_scope,
 )
-from app.services.hint_policy import select_hint
+from app.services.hint_policy import ASSESSMENT_STATES, select_hint
 from app.services.placement import recommend_next_skill
 from app.services.review_schedule import reviews_due
 from app.services.visualization import visualization_for
@@ -48,12 +48,24 @@ class CurriculumContextOut(BaseModel):
     jurisdiction: str | None = None
 
 
+class LearnExampleOut(BaseModel):
+    title: str
+    steps: list[str]
+    answer: str | None = None
+
+
+class LearnContentOut(BaseModel):
+    summary: str
+    examples: list[LearnExampleOut] = Field(default_factory=list)
+
+
 class LearningFocusOut(BaseModel):
     primary_skill_id: uuid.UUID
     active_skill_id: uuid.UUID
     skill_name: str
     in_remediation: bool
     remediation_reason: str | None = None
+    learn: LearnContentOut | None = None
 
 
 class WorkspaceProblemOut(BaseModel):
@@ -120,6 +132,26 @@ def _allowed_actions(state: TutorState) -> list[WorkspaceAction]:
     return actions
 
 
+def _learn_content(skill: Skill, *, state: TutorState) -> LearnContentOut | None:
+    """Pre-practice instruction is hidden during assessment states, same as hints —
+    a worked example during DIAGNOSE or MASTERY_CHECK would contaminate evidence."""
+    if state in ASSESSMENT_STATES or state == TutorState.COMPLETE:
+        return None
+    content = skill.learn_content
+    if not content or not isinstance(content, dict) or not content.get("summary"):
+        return None
+    examples = [
+        LearnExampleOut(
+            title=str(example.get("title", "")),
+            steps=[str(step) for step in example.get("steps", [])],
+            answer=str(example["answer"]) if example.get("answer") is not None else None,
+        )
+        for example in content.get("examples", [])
+        if example.get("title") and example.get("steps")
+    ]
+    return LearnContentOut(summary=str(content["summary"]), examples=examples)
+
+
 def _current_tutor_turn(db: Session, session_id: uuid.UUID) -> TutorTurn | None:
     return db.scalar(
         select(TutorTurn)
@@ -177,6 +209,7 @@ def get_learner_workspace(
             skill_name=active_skill.name,
             in_remediation=active_skill.id != primary_skill.id,
             remediation_reason=session.remediation_reason,
+            learn=_learn_content(active_skill, state=session.current_state),
         ),
         problem=(
             WorkspaceProblemOut(

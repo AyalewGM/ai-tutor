@@ -96,6 +96,7 @@ class Skill(Base):
     description: Mapped[str | None] = mapped_column(Text)
     difficulty_level: Mapped[int] = mapped_column(Integer, default=1)
     mastery_threshold: Mapped[Decimal] = mapped_column(Numeric(4, 3), default=Decimal("0.850"))
+    learn_content: Mapped[dict | None] = mapped_column(JSONB)
 
 
 class SkillPrerequisite(Base):

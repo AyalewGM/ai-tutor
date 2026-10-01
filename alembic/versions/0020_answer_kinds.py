@@ -7,6 +7,7 @@ Revises: 0019_freemium_family_privacy
 import re
 
 import sqlalchemy as sa
+from sqlalchemy.dialects.postgresql import JSONB
 
 from alembic import op
 
@@ -27,7 +28,7 @@ def upgrade() -> None:
             sa.Column("answer_kind", sa.String(length=20), nullable=False, server_default="FREE_TEXT"),
         )
     if "choices" not in columns:
-        op.add_column("problems", sa.Column("choices", sa.JSON(), nullable=True))
+        op.add_column("problems", sa.Column("choices", JSONB(), nullable=True))
 
     # Backfill: a canonical answer that is a bare fraction grades more fairly as
     # FRACTION (equivalents accepted); a bare integer as INTEGER.

@@ -66,6 +66,17 @@ export interface ProblemChoice {
   text: string;
 }
 
+export interface LearnExample {
+  title: string;
+  steps: string[];
+  answer?: string | null;
+}
+
+export interface LearnContent {
+  summary: string;
+  examples: LearnExample[];
+}
+
 export interface WorkspaceProblem {
   id: string;
   prompt: string;
@@ -80,7 +91,14 @@ export interface LearnerWorkspace {
   state: TutorState;
   learner: { id: string; first_name: string; grade_level: string };
   curriculum: { id: string; code: string; name: string; jurisdiction: string | null };
-  focus: { skill_id: string; skill_code: string; skill_name: string };
+  focus: {
+    primary_skill_id: string;
+    active_skill_id: string;
+    skill_name: string;
+    in_remediation: boolean;
+    remediation_reason?: string | null;
+    learn?: LearnContent | null;
+  };
   problem: WorkspaceProblem | null;
   coaching_message: string | null;
   allowed_actions: string[];
