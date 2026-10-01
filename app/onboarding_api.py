@@ -18,7 +18,11 @@ from app.models import (
     StudentSkill,
     TutorSession,
 )
-from app.parent_models import ParentProfile, ParentStudentRelationship, ParentStudentRelationshipEvent
+from app.parent_models import (
+    ParentProfile,
+    ParentStudentRelationship,
+    ParentStudentRelationshipEvent,
+)
 from app.services.placement import recommend_next_skill
 from app.services.problem_generation import content_readiness
 from app.services.review_schedule import reviews_due
