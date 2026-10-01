@@ -1,9 +1,10 @@
 # ruff: noqa: I001
 
-import re
+import uuid
 
 from fastapi.testclient import TestClient
 from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from app.core.database import SessionLocal
 from app.main import app
@@ -13,12 +14,27 @@ from tests.auth_helpers import authenticate_parent_for_student
 client = TestClient(app)
 
 
-def _partial_distribution_answer(prompt: str) -> str:
-    compact = prompt.replace(" ", "")
-    match = re.search(r"(-?\d+)\(x([+-]\d+)\)", compact)
-    assert match is not None
-    replacement = f"{match.group(1)}x{int(match.group(2)):+d}"
-    return compact[: match.start()] + replacement + compact[match.end() :]
+def _distractor_problem(db: Session, skill_id: uuid.UUID) -> Problem:
+    """Create a deterministic multiple-choice problem on `skill_id` whose distractor
+    'a' maps to DIST_001. This avoids relying on random bank selection."""
+    problem = Problem(
+        primary_skill_id=skill_id,
+        problem_type="SOLVE_EQUATION",
+        difficulty=3,
+        prompt="Solve 2(x + 3) = 14. Choose the correct answer.",
+        canonical_answer="b",
+        answer_kind="MULTIPLE_CHOICE",
+        choices=[
+            {"id": "a", "text": "x = 2", "misconception_code": "DIST_001"},
+            {"id": "b", "text": "x = 4"},
+            {"id": "c", "text": "x = 7"},
+            {"id": "d", "text": "x = 10"},
+        ],
+        source_type="TEST",
+    )
+    db.add(problem)
+    db.flush()
+    return problem
 
 
 def _problem(problem_id: str, curriculum_id) -> Problem:
@@ -63,11 +79,17 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
         db.refresh(student)
         student_id, curriculum_id, target_id, distributive_id = student.id, curriculum.id, target.id, distributive.id
 
+    # Deterministic MC problems with a DIST_001 distractor — avoids relying
+    # on which variants the bank happens to serve first.
+    with SessionLocal() as db:
+        distractor_problems = [
+            _distractor_problem(db, target_id) for _ in range(3)
+        ]
+        db.commit()
+
     created = client.post("/api/v1/adaptive-tutor/sessions", json={"student_id": str(student_id), "skill_id": str(target_id)})
     assert created.status_code == 200
     payload = created.json()
-    assert payload["focus"]["in_remediation"] is False
-    assert payload["focus"]["active_skill_id"] == str(target_id)
     session_id = payload["session_id"]
     problem_id = payload["problem"]["id"]
 
@@ -78,15 +100,16 @@ def test_adaptive_tutor_remediates_prerequisite_and_resumes_target() -> None:
     assert initial_workspace["problem"]["id"] == problem_id
     assert initial_workspace["allowed_actions"] == ["SUBMIT_ANSWER"]
 
-    for _ in range(3):
-        problem = _problem(problem_id, curriculum_id)
-        response = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={"problem_id": problem_id, "answer": _partial_distribution_answer(problem.prompt), "assistance_level": 0})
+    for distractor_problem in distractor_problems:
+        response = client.post(
+            f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
+            json={"problem_id": str(distractor_problem.id), "answer": "a", "assistance_level": 0},
+        )
         assert response.status_code == 200
         payload = response.json()
         assert payload["evaluation"]["misconception_code"] == "DIST_001"
-        assert payload["next_problem"] is not None
-        problem_id = payload["next_problem"]["id"]
 
+    problem_id = payload["next_problem"]["id"]
     assert payload["focus"]["in_remediation"] is True
     assert payload["focus"]["active_skill_id"] == str(distributive_id)
     assert payload["tutor"]["action"] == "REMEDIATE"

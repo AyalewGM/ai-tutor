@@ -83,6 +83,15 @@ class AwardOut(BaseModel):
     awarded_at: datetime
 
 
+class GrowthOut(BaseModel):
+    xp: int
+    level: int
+    level_title: str
+    xp_in_level: int
+    xp_for_next: int
+    leveled_up: bool = False
+
+
 class RespondOut(BaseModel):
     session_id: uuid.UUID
     state: TutorState
@@ -93,6 +102,7 @@ class RespondOut(BaseModel):
     next_problem: ProblemOut | None = None
     new_awards: list[AwardOut] = Field(default_factory=list)
     xp_earned: int = 0
+    growth: GrowthOut | None = None
 
 
 

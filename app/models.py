@@ -1,6 +1,6 @@
 import enum
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 from decimal import Decimal
 
 from sqlalchemy import (
@@ -49,7 +49,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     display_name: Mapped[str | None] = mapped_column(String(120))
     role: Mapped[str] = mapped_column(String(30), default="PARENT")
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
 
 
 class Curriculum(Base):
@@ -132,9 +132,9 @@ class SkillReviewSchedule(Base):
     status: Mapped[str] = mapped_column(String(30), default="SCHEDULED")
     last_reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     last_outcome: Mapped[str | None] = mapped_column(String(40))
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow
+        DateTime(timezone=True), default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC)
     )
 
 
@@ -186,7 +186,7 @@ class TutorSession(Base):
     starting_mastery: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
     ending_mastery: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
     status: Mapped[str] = mapped_column(String(30), default="ACTIVE")
-    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
     ended_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
@@ -206,7 +206,7 @@ class Attempt(Base):
     misconception_confidence: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
     evaluation_confidence: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
     state_at_attempt: Mapped[TutorState | None] = mapped_column(Enum(TutorState))
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
 
 
 class LearnerAward(Base):
@@ -220,7 +220,7 @@ class LearnerAward(Base):
     skill_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("skills.id"))
     session_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("tutor_sessions.id"))
     metadata_json: Mapped[dict | None] = mapped_column(JSONB)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
 
 
 class TutorTurn(Base):
@@ -235,7 +235,7 @@ class TutorTurn(Base):
     attempt_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("attempts.id"))
     llm_model: Mapped[str | None] = mapped_column(String(100))
     metadata_json: Mapped[dict | None] = mapped_column(JSONB)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
 
 
 class MasteryEvent(Base):
@@ -250,7 +250,7 @@ class MasteryEvent(Base):
     new_confidence: Mapped[Decimal] = mapped_column(Numeric(4, 3))
     reason: Mapped[str] = mapped_column(String(100))
     metadata_json: Mapped[dict | None] = mapped_column(JSONB)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
 
 
 class InterventionRecord(Base):
@@ -267,6 +267,6 @@ class InterventionRecord(Base):
     return_condition: Mapped[str | None] = mapped_column(String(160))
     status: Mapped[str] = mapped_column(String(30), default="RECOMMENDED", index=True)
     outcome_code: Mapped[str | None] = mapped_column(String(80))
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

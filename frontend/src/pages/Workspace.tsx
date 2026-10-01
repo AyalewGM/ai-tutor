@@ -112,6 +112,7 @@ export default function Workspace() {
   const [feedback, setFeedback] = useState<"" | "correct" | "wrong">("");
   const [celebrate, setCelebrate] = useState(0);
   const [badgeToast, setBadgeToast] = useState<Award[]>([]);
+  const [levelUp, setLevelUp] = useState<{ level: number; title: string } | null>(null);
   const [learnOpen, setLearnOpen] = useState(false);
 
   const load = useCallback(async () => {
@@ -133,6 +134,12 @@ export default function Workspace() {
     const timer = setTimeout(() => setBadgeToast([]), 5000);
     return () => clearTimeout(timer);
   }, [badgeToast]);
+
+  useEffect(() => {
+    if (!levelUp) return;
+    const timer = setTimeout(() => setLevelUp(null), 5000);
+    return () => clearTimeout(timer);
+  }, [levelUp]);
 
   const hasAction = (action: string) =>
     workspace?.allowed_actions.includes(action) ?? false;
@@ -192,6 +199,12 @@ export default function Workspace() {
       }
       if (result.new_awards?.length) {
         setBadgeToast(result.new_awards);
+      }
+      if (result.growth?.leveled_up) {
+        setLevelUp({
+          level: result.growth.level,
+          title: result.growth.level_title,
+        });
       }
       await load();
     } catch (err) {
@@ -338,6 +351,32 @@ export default function Workspace() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Level-up celebration */}
+        {levelUp && (
+          <div
+            className="fixed inset-0 z-50 grid place-items-center bg-black/40"
+            role="alertdialog"
+            aria-label={`Level up! You reached level ${levelUp.level}`}
+            onClick={() => setLevelUp(null)}
+          >
+            <div className="relative rounded-3xl bg-gradient-to-br from-amber-300 to-orange-400 p-10 text-center text-amber-950 shadow-2xl">
+              <ConfettiBurst trigger={1} always />
+              <p className="text-sm font-bold uppercase tracking-widest">
+                Level up
+              </p>
+              <p className="mt-1 text-4xl font-extrabold">
+                Level {levelUp.level}
+              </p>
+              <p className="mt-2 text-lg font-semibold">
+                You're now a {levelUp.title}
+              </p>
+              <p className="mt-3 text-sm opacity-80">
+                Keep practicing to reach the next level
+              </p>
+            </div>
           </div>
         )}
 

@@ -272,6 +272,16 @@ def attempt_xp(is_correct: bool, assistance_level: int, difficulty: int) -> int:
     return 4 + difficulty
 
 
+def level_for_xp(xp: int) -> tuple[int, int]:
+    """Return (level, xp_in_level) for a cumulative XP total."""
+    level = 1
+    remaining = xp
+    while remaining >= _xp_for_next_level(level) and level < len(LEVEL_TITLES):
+        remaining -= _xp_for_next_level(level)
+        level += 1
+    return level, remaining
+
+
 def learner_progress(db: Session, student_id: uuid.UUID) -> dict:
     """Authoritative XP/level snapshot for a learner."""
     rows = db.execute(
@@ -287,15 +297,11 @@ def learner_progress(db: Session, student_id: uuid.UUID) -> dict:
     ).all()
     xp += sum(BADGE_XP.get(code, 0) for code in award_codes)
 
-    level = 1
-    remaining = xp
-    while remaining >= _xp_for_next_level(level) and level < len(LEVEL_TITLES):
-        remaining -= _xp_for_next_level(level)
-        level += 1
+    level, xp_in_level = level_for_xp(xp)
     return {
         "xp": xp,
         "level": level,
         "level_title": LEVEL_TITLES[level - 1],
-        "xp_in_level": remaining,
+        "xp_in_level": xp_in_level,
         "xp_for_next": _xp_for_next_level(level),
     }

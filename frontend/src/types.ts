@@ -149,6 +149,7 @@ export interface RespondOut {
   evaluation: EvaluationOut;
   new_awards?: Award[];
   xp_earned?: number;
+  growth?: (LearnerGrowth & { leveled_up?: boolean }) | null;
 }
 
 export interface Badge {

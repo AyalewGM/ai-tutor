@@ -25,6 +25,7 @@ from app.models import (
 from app.schemas import (
     AwardOut,
     EvaluationOut,
+    GrowthOut,
     MasteryOut,
     RespondIn,
     RespondOut,
@@ -36,6 +37,8 @@ from app.services.awards import (
     attempt_xp,
     award_out,
     evaluate_awards,
+    learner_progress,
+    level_for_xp,
 )
 from app.services.curriculum_scope import (
     CurriculumScopeError,
@@ -446,6 +449,20 @@ def respond(
         review_passed=review_outcome == REVIEW_PASSED,
         gap_fixed=gap_fixed,
     )
+    db.flush()
+
+    xp_earned = attempt_xp(
+        bool(evidence.evaluation.correct),
+        effective_assistance_level,
+        problem.difficulty,
+    ) + sum(BADGE_XP.get(award.badge_code, 0) for award in new_awards)
+    progress = learner_progress(db, session.student_id)
+    level_now, _ = level_for_xp(progress["xp"])
+    level_before, _ = level_for_xp(progress["xp"] - xp_earned)
+    growth_out = {
+        **progress,
+        "leveled_up": level_now > level_before,
+    }
 
     db.commit()
 
@@ -517,10 +534,6 @@ def respond(
         focus=_focus(session),
         next_problem=_problem_out(next_problem),
         new_awards=[AwardOut(**award_out(db, award)) for award in new_awards],
-        xp_earned=attempt_xp(
-            bool(evidence.evaluation.correct),
-            effective_assistance_level,
-            problem.difficulty,
-        )
-        + sum(BADGE_XP.get(award.badge_code, 0) for award in new_awards),
+        xp_earned=xp_earned,
+        growth=GrowthOut(**growth_out),
     )
