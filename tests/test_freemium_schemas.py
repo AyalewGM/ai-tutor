@@ -6,7 +6,7 @@ from app.schemas import ParentRegisterSchema, PINVerifySchema, StudentCreateSche
 
 def test_parent_registration_requires_terms_and_coppa_attestation() -> None:
     valid = {
-        "email": "parent@example.test",
+        "email": "parent@example.com",
         "password": "synthetic-password-123",
         "display_name": "Synthetic Parent",
         "parent_pin": "4821",
