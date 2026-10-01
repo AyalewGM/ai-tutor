@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, String, UniqueConstraint
+from sqlalchemy import Boolean, CheckConstraint, DateTime, ForeignKey, Integer, String, UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -10,11 +10,26 @@ from app.core.database import Base
 
 class ParentProfile(Base):
     __tablename__ = "parent_profiles"
+    __table_args__ = (
+        CheckConstraint("subscription_tier IN ('free', 'pro')", name="ck_parent_subscription_tier"),
+        CheckConstraint("max_students >= 1", name="ck_parent_max_students_positive"),
+    )
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("users.id"), unique=True, nullable=False, index=True
     )
+    subscription_tier: Mapped[str] = mapped_column(
+        String(20), default="free", server_default="free", nullable=False
+    )
+    max_students: Mapped[int] = mapped_column(
+        Integer, default=1, server_default="1", nullable=False
+    )
+    parent_pin_hash: Mapped[str | None] = mapped_column(String(255))
+    coppa_consent_given: Mapped[bool] = mapped_column(
+        Boolean, default=False, server_default="false", nullable=False
+    )
+    consent_timestamp: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=datetime.utcnow, nullable=False
     )
