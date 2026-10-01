@@ -4,6 +4,7 @@ from sqlalchemy import select
 from app.core.database import SessionLocal
 from app.main import app
 from app.models import Curriculum, Problem, Skill, Student
+from tests.auth_helpers import authenticate_parent_for_student
 
 client = TestClient(app)
 
@@ -31,6 +32,8 @@ def _student(curriculum_id) -> str:
             school_system="MCPS",
         )
         db.add(student)
+        db.flush()
+        authenticate_parent_for_student(client, db, student)
         db.commit()
         db.refresh(student)
         return str(student.id)
@@ -60,6 +63,19 @@ def _wrong_answer(problem: Problem) -> str:
             if choice["id"] != problem.canonical_answer:
                 return choice["id"]
     return "I do not know"
+
+
+def test_diagnostic_requires_authenticated_parent() -> None:
+    curriculum, target, _ = _seeded_context()
+    student_id = _student(curriculum.id)
+    client.cookies.clear()
+    unauthenticated = TestClient(app)
+
+    start = unauthenticated.post(
+        "/api/v1/diagnostics/sessions",
+        json={"student_id": student_id, "target_skill_id": str(target.id)},
+    )
+    assert start.status_code == 401
 
 
 def test_diagnostic_stops_early_when_target_is_ready() -> None:

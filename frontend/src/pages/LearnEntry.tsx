@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, ChevronDown, Play, UserPlus, Compass } from "lucide-react";
+import { BookOpen, ChevronDown, ClipboardCheck, Play, UserPlus, Compass } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import LearnPanel from "../components/LearnPanel";
@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import type { CurriculumChoice, LearnerChoice, SessionOut, SkillChoice } from "../types";
+import type { CurriculumChoice, DiagnosticOut, LearnerChoice, SessionOut, SkillChoice } from "../types";
 
 export default function LearnEntry() {
   const [learners, setLearners] = useState<LearnerChoice[]>([]);
@@ -62,6 +62,23 @@ export default function LearnEntry() {
       const session = await post<SessionOut>("/adaptive-tutor/sessions", { student_id: learnerId, skill_id: skillId });
       navigate(`/learn/${session.session_id}`);
     } catch (err) { setError(err instanceof ApiError ? err.message : "Could not start session"); }
+  }
+
+  async function startPlacement() {
+    setError("");
+    // Anchor on the selected topic, or the most advanced ready skill — the
+    // diagnostic descends the prerequisite graph until the learner is solid.
+    const anchor = selectedSkill ?? [...skills].reverse().find((skill) => skill.content_ready);
+    if (!anchor) return;
+    try {
+      const diagnostic = await post<DiagnosticOut>("/diagnostics/sessions", {
+        student_id: learnerId,
+        target_skill_id: anchor.id,
+      });
+      navigate(`/diagnostic/${diagnostic.session_id}?learner=${learnerId}`, {
+        state: { diagnostic },
+      });
+    } catch (err) { setError(err instanceof ApiError ? err.message : "Could not start placement check"); }
   }
 
   const selectedLearner = learners.find((learner) => learner.id === learnerId);
@@ -256,6 +273,19 @@ export default function LearnEntry() {
                   Start learning
                 </Button>
               </form>
+
+              <button
+                type="button"
+                onClick={startPlacement}
+                disabled={!learnerId || !skills.some((skill) => skill.content_ready)}
+                data-testid="placement-check"
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-primary/40 bg-primary/5 px-4 py-3 text-sm font-medium text-primary transition-colors hover:bg-primary/10 disabled:opacity-50"
+              >
+                <ClipboardCheck className="h-4 w-4" />
+                {selectedSkill
+                  ? `Not sure you're ready for ${selectedSkill.name}? Take a quick check`
+                  : "Not sure where to start? Take a quick placement check"}
+              </button>
             </CardContent>
           </Card>
 

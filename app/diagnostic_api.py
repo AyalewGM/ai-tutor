@@ -16,6 +16,7 @@ from app.diagnostic_schemas import (
     DiagnosticSkillEvidenceOut,
     DiagnosticStartIn,
 )
+from app.identity import CurrentParent, require_parent_owns_student
 from app.models import MasteryEvent, Problem, Skill, Student, StudentSkill, TutorState
 from app.schemas import ProblemOut, problem_choices_out
 from app.services.attempt_evidence import record_evidence
@@ -119,10 +120,8 @@ def _publish_diagnostic_event(
 
 
 @router.post("/sessions", response_model=DiagnosticOut)
-def start_diagnostic(payload: DiagnosticStartIn, db: DbSession) -> DiagnosticOut:
-    student = db.get(Student, payload.student_id)
-    if student is None:
-        raise HTTPException(404, "Student not found")
+def start_diagnostic(payload: DiagnosticStartIn, parent: CurrentParent, db: DbSession) -> DiagnosticOut:
+    student = require_parent_owns_student(parent, db.get(Student, payload.student_id))
     try:
         scope = resolve_student_curriculum_scope(db, student)
         target = require_skill_in_scope(db, skill_id=payload.target_skill_id, scope=scope)
@@ -158,15 +157,48 @@ def start_diagnostic(payload: DiagnosticStartIn, db: DbSession) -> DiagnosticOut
     )
 
 
+@router.get("/sessions/{session_id}", response_model=DiagnosticOut)
+def get_diagnostic(session_id: uuid.UUID, parent: CurrentParent, db: DbSession) -> DiagnosticOut:
+    """Resume an in-flight diagnostic (e.g. after a page reload)."""
+    session = db.get(DiagnosticSession, session_id)
+    if session is None:
+        raise HTTPException(404, "Diagnostic session not found")
+    require_parent_owns_student(parent, db.get(Student, session.student_id))
+
+    problem = None
+    if session.status == "ACTIVE":
+        problem = _next_problem(db, session.student_id, session.current_skill_id)
+        if problem is None:
+            raise HTTPException(404, "No diagnostic problem configured for current skill")
+        message = "Answer this diagnostic question independently. No hints are used during placement."
+    else:
+        message = "Diagnostic complete. A recommended starting skill is now available."
+
+    return DiagnosticOut(
+        session_id=session.id,
+        status=session.status,
+        target_skill_id=session.target_skill_id,
+        current_skill_id=session.current_skill_id,
+        question_count=session.question_count,
+        max_questions=session.max_questions,
+        problem=_problem_out(problem),
+        recommended_skill_id=session.recommended_skill_id,
+        placement_reason=session.placement_reason,
+        message=message,
+    )
+
+
 @router.post("/sessions/{session_id}/respond", response_model=DiagnosticOut)
 def respond_to_diagnostic(
     session_id: uuid.UUID,
     payload: DiagnosticRespondIn,
+    parent: CurrentParent,
     db: DbSession,
 ) -> DiagnosticOut:
     session = db.get(DiagnosticSession, session_id)
     if session is None or session.status != "ACTIVE":
         raise HTTPException(404, "Active diagnostic session not found")
+    require_parent_owns_student(parent, db.get(Student, session.student_id))
 
     scope = _diagnostic_scope(db, session)
     _require_session_skill_scope(db, session=session, skill_id=session.current_skill_id)
@@ -279,10 +311,11 @@ def respond_to_diagnostic(
 
 
 @router.get("/sessions/{session_id}/result", response_model=DiagnosticResultOut)
-def diagnostic_result(session_id: uuid.UUID, db: DbSession) -> DiagnosticResultOut:
+def diagnostic_result(session_id: uuid.UUID, parent: CurrentParent, db: DbSession) -> DiagnosticResultOut:
     session = db.get(DiagnosticSession, session_id)
     if session is None:
         raise HTTPException(404, "Diagnostic session not found")
+    require_parent_owns_student(parent, db.get(Student, session.student_id))
 
     _require_session_skill_scope(db, session=session, skill_id=session.target_skill_id)
     attempts = list(

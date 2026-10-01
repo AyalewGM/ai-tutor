@@ -94,6 +94,20 @@ export interface WorkspaceProblem {
   choices?: ProblemChoice[] | null;
 }
 
+export interface DiagnosticOut {
+  session_id: string;
+  status: string;
+  target_skill_id: string;
+  current_skill_id: string;
+  question_count: number;
+  max_questions: number;
+  problem?: WorkspaceProblem | null;
+  last_answer_correct?: boolean | null;
+  recommended_skill_id?: string | null;
+  placement_reason?: string | null;
+  message: string;
+}
+
 export interface LearnerGrowth {
   xp: number;
   level: number;
