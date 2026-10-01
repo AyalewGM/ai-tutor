@@ -6,6 +6,7 @@ or directly mark mastery. It provides typed quiz-shaped projections for UI/API
 work while preserving the authoritative evidence pipeline.
 """
 import uuid
+
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.services.evaluation import evaluate_problem
