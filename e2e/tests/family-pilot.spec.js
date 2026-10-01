@@ -7,16 +7,20 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   const page = await context.newPage();
   const email = `synthetic-f017-${Date.now()}@example.com`;
   const password = 'SyntheticOnly!12345';
+  const parentPin = '4821';
 
   await page.goto(`${baseURL}/app/login`);
   await page.getByRole('tab', { name: 'Create account' }).click();
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Password').fill(password);
   await page.getByLabel('Display name').fill('Synthetic Pilot Parent');
+  await page.getByLabel('4-digit parent PIN').fill(parentPin);
+  await page.getByLabel('I accept the Terms of Service.').check();
+  await page.getByLabel(/I am the parent or guardian/).check();
   await page.getByRole('button', { name: 'Create account' }).click();
   await expect(page).toHaveURL(/\/app\/learn/);
 
-  await page.getByLabel('Learner first name').fill('Synthetic Learner');
+  await page.getByLabel('Learner first name').fill('SyntheticLearner');
   const curriculum = page.locator('#curriculum');
   const mcpsOption = curriculum.locator('option').filter({ hasText: 'MCPS_MATH_8' });
   await expect(mcpsOption.first()).toBeAttached({ timeout: 10000 });
@@ -63,7 +67,9 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
 
   await page.goto(`${baseURL}/app/parent`);
   await expect(page.getByRole('heading', { name: 'Family learning overview' })).toBeVisible();
-  await expect(page.getByLabel('Learner', { exact: true })).toContainText('Synthetic Learner');
+  await page.getByLabel('Parent PIN').fill(parentPin);
+  await page.getByRole('button', { name: 'Unlock parent view' }).click();
+  await expect(page.getByLabel('Learner', { exact: true })).toContainText('SyntheticLearner');
   await expect(page.getByText('Assisted success is shown separately')).toBeVisible();
 
   const outsider = await browser.newContext();
@@ -74,6 +80,9 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await outsiderPage.getByLabel('Email').fill(outsiderEmail);
   await outsiderPage.getByLabel('Password').fill(password);
   await outsiderPage.getByLabel('Display name').fill('Synthetic Unrelated Parent');
+  await outsiderPage.getByLabel('4-digit parent PIN').fill(parentPin);
+  await outsiderPage.getByLabel('I accept the Terms of Service.').check();
+  await outsiderPage.getByLabel(/I am the parent or guardian/).check();
   await outsiderPage.getByRole('button', { name: 'Create account' }).click();
   await expect(outsiderPage).toHaveURL(/\/app\/learn/);
   await outsiderPage.goto(sessionUrl);
