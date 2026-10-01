@@ -13,7 +13,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const next = params.get("next") || "/app/learn";
+  const next = (params.get("next") || "/learn").replace(/^\/app/, "");
 
   async function submit(event: FormEvent) {
     event.preventDefault();
@@ -31,7 +31,7 @@ export default function Login() {
       } else {
         await post("/auth/login", { email, password });
       }
-      navigate(next.replace(/^\/app/, ""), { replace: true });
+      navigate(next, { replace: true });
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Something went wrong");
     }

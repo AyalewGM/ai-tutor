@@ -9,7 +9,7 @@
 # - LLM Gateway is healthy
 # - Tutor API /health and /ready return 200
 # - Frontend /healthz and /backend-health return 200
-# - A synthetic login page loads
+# - The React SPA serves /, /login, /learn, /parent
 #
 # Returns 0 on success, 1 on failure.
 
@@ -50,9 +50,11 @@ check "frontend /backend-health" "curl -sf --max-time 5 $FRONTEND_URL/backend-he
 
 echo ""
 echo "=== Synthetic surface checks ==="
-check "login page loads" "curl -sf --max-time 5 $API_URL/login | grep -q 'Sign in\|login\|email'"
-check "learn page loads" "curl -sf --max-time 5 $API_URL/learn | grep -q 'Start learning\|AI Tutor'"
-check "parent page loads" "curl -sf --max-time 5 $FRONTEND_URL/parent | grep -q 'Parent\|parent'"
+# UI paths are served by the React SPA; the API only exposes /api/*, /health, /ready.
+check "SPA index serves at root" "curl -sf --max-time 5 $FRONTEND_URL/ | grep -q 'id=\"root\"'"
+check "SPA fallback serves /login" "curl -sf --max-time 5 $FRONTEND_URL/login | grep -q 'id=\"root\"'"
+check "SPA fallback serves /learn" "curl -sf --max-time 5 $FRONTEND_URL/learn | grep -q 'id=\"root\"'"
+check "SPA fallback serves /parent" "curl -sf --max-time 5 $FRONTEND_URL/parent | grep -q 'id=\"root\"'"
 
 echo ""
 if [ "$FAILURES" -eq 0 ]; then

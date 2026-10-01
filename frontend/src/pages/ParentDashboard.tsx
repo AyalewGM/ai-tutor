@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import ParentProgressDashboard from "../components/dashboard/ParentProgressDashboard";
@@ -53,9 +54,9 @@ export default function ParentDashboard() {
               your child may need support.
             </p>
           </div>
-          <a className="secondary link-btn" href="/parent/settings">
+          <Link className="secondary link-btn" to="/parent/settings">
             Settings &amp; privacy
-          </a>
+          </Link>
         </section>
 
         {!unlockToken && (

@@ -6,18 +6,14 @@ from app.adaptive_response_api import router as adaptive_response_router
 from app.api import router as tutor_router
 from app.auth import session_identity_middleware
 from app.auth_api import router as auth_router
-from app.auth_web import router as auth_web_router
 from app.core.database import SessionLocal
 from app.core.observability import configure_logging, request_logging_middleware
 from app.core.settings import settings
 from app.diagnostic_api import router as diagnostic_router
 from app.hint_api import router as hint_router
-from app.learner_web import router as learner_web_router
 from app.middleware.pii_sanitizer import PIISanitizerMiddleware
 from app.onboarding_api import router as onboarding_router
 from app.parent_api import router as parent_router
-from app.parent_settings_web import router as parent_settings_web_router
-from app.parent_web import router as parent_web_router
 from app.privacy_api import router as privacy_router
 from app.services.llm_bootstrap import configure_tutor_engine
 from app.telemetry_api import router as telemetry_router
@@ -41,10 +37,6 @@ app.include_router(parent_router, prefix=settings.api_prefix)
 app.include_router(privacy_router, prefix=settings.api_prefix)
 app.include_router(learner_workspace_router, prefix=settings.api_prefix)
 app.include_router(telemetry_router, prefix=settings.api_prefix)
-app.include_router(auth_web_router)
-app.include_router(parent_web_router)
-app.include_router(parent_settings_web_router)
-app.include_router(learner_web_router)
 
 
 @app.get("/health")

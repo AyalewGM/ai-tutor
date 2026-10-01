@@ -15,7 +15,7 @@ export async function api<T>(path: string, options: RequestInit = {}): Promise<T
   });
   if (response.status === 401) {
     const next = encodeURIComponent(window.location.pathname);
-    window.location.assign(`/app/login?next=${next}`);
+    window.location.assign(`/login?next=${next}`);
     throw new ApiError(401, "Authentication required");
   }
   let body: unknown = null;
