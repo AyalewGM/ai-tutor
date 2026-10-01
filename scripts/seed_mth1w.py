@@ -86,6 +86,30 @@ def _expectation_pack() -> ContentPackInput:
             source_uri=SOURCE_URI,
         ),
         ExpectationInput(
+            source_identifier="MTH1W.C1.2",
+            title="Create Algebraic Expressions",
+            strand="C. Algebra",
+            source_uri=SOURCE_URI,
+        ),
+        ExpectationInput(
+            source_identifier="MTH1W.C1.3",
+            title="Compare Equivalent Algebraic Expressions",
+            strand="C. Algebra",
+            source_uri=SOURCE_URI,
+        ),
+        ExpectationInput(
+            source_identifier="MTH1W.C1.4",
+            title="Simplify Algebraic Expressions",
+            strand="C. Algebra",
+            source_uri=SOURCE_URI,
+        ),
+        ExpectationInput(
+            source_identifier="MTH1W.C1.5",
+            title="Create and Solve Equations",
+            strand="C. Algebra",
+            source_uri=SOURCE_URI,
+        ),
+        ExpectationInput(
             source_identifier="MTH1W.F",
             title="Financial Literacy",
             strand="F. Financial Literacy",
@@ -98,6 +122,12 @@ def _expectation_pack() -> ContentPackInput:
         ExpectationSkillMappingInput("MTH1W.B", "MTH1W.B.NUM.FRAC"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.ALG"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.ALG.EXPR"),
+        ExpectationSkillMappingInput("MTH1W.C1.2", "MTH1W.C.ALG.EXPR"),
+        ExpectationSkillMappingInput("MTH1W.C1.3", "MTH1W.C.ALG.LIKE"),
+        ExpectationSkillMappingInput("MTH1W.C1.4", "MTH1W.C.ALG.LIKE"),
+        ExpectationSkillMappingInput("MTH1W.C1.4", "MTH1W.C.ALG.POLY"),
+        ExpectationSkillMappingInput("MTH1W.C1.5", "MTH1W.C.ALG.EQ1"),
+        ExpectationSkillMappingInput("MTH1W.C1.5", "MTH1W.C.ALG.EQ2"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.ALG.EQ1"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.ALG.EQ2"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.REL"),
@@ -188,6 +218,18 @@ def seed():
             "Apply distribution and combine like terms to simplify expressions.",
             2,
         )
+        alg_like = _skill(
+            db, curriculum, "MTH1W.C.ALG.LIKE",
+            "Like Terms and Algebraic Structure",
+            "Identify like terms by variable and exponent structure and combine like terms without merging unlike terms.",
+            2,
+        )
+        alg_poly = _skill(
+            db, curriculum, "MTH1W.C.ALG.POLY",
+            "Polynomial Addition and Subtraction",
+            "Add and subtract polynomial expressions, preserving term structure and distributing subtraction across grouped terms.",
+            3,
+        )
         alg_eq1 = _skill(
             db, curriculum, "MTH1W.C.ALG.EQ1",
             "One-Step Equations",
@@ -229,6 +271,8 @@ def seed():
         _prerequisite(db, num_frac, num_int)
         _prerequisite(db, alg_expr, algebra)
         _prerequisite(db, alg_expr, num_int)
+        _prerequisite(db, alg_like, alg_expr)
+        _prerequisite(db, alg_poly, alg_like)
         _prerequisite(db, alg_eq1, alg_expr)
         _prerequisite(db, alg_eq2, alg_eq1)
         _prerequisite(db, rel_slope, relations)
@@ -419,6 +463,20 @@ def seed():
             "tracking the sign of both factors before simplifying.",
         )
         _misconception(
+            alg_like,
+            "ALG_LIKE_001",
+            "Unlike terms combined",
+            "The learner combines terms whose variable or exponent structure differs.",
+            "Group terms only when their variable and exponent parts match exactly, then combine their coefficients.",
+        )
+        _misconception(
+            alg_poly,
+            "ALG_POLY_001",
+            "Subtraction sign not distributed",
+            "The learner subtracts a polynomial without changing the sign of every term in the subtracted group.",
+            "Rewrite subtraction of the grouped polynomial as adding its opposite before collecting like terms.",
+        )
+        _misconception(
             alg_eq1,
             "EQ_003",
             "Multiplies instead of dividing",
@@ -486,6 +544,10 @@ def seed():
             (num_frac, 4, "Evaluate 5/6 - 1/3.", "1/2", "FRACTION_SUBTRACT"),
             (alg_expr, 1, "Simplify 3(x + 2).", "3x+6", "SIMPLIFY_EXPRESSION"),
             (alg_expr, 2, "Simplify 5x + 2 - 3x + 7.", "2x+9", "SIMPLIFY_EXPRESSION"),
+            (alg_like, 2, "Simplify 7x - 3x.", "4x", "COMBINE_LIKE_TERMS"),
+            (alg_like, 3, "Simplify 5y + 2 - 8y.", "-3y+2", "COMBINE_LIKE_TERMS"),
+            (alg_poly, 2, "Simplify (3x + 4) + (2x - 7).", "5x-3", "POLYNOMIAL_ADD_SUBTRACT"),
+            (alg_poly, 3, "Simplify (6x - 2) - (4x + 5).", "2x-7", "POLYNOMIAL_ADD_SUBTRACT"),
             (alg_eq1, 1, "Solve x + 6 = 14.", "x=8", "SOLVE_EQUATION"),
             (alg_eq1, 1, "Solve 3x = 21.", "x=7", "SOLVE_EQUATION"),
             (alg_eq2, 2, "Solve 2x + 5 = 17.", "x=6", "SOLVE_EQUATION"),
