@@ -1,7 +1,6 @@
 import re
 from dataclasses import dataclass
 from enum import StrEnum
-from typing import Optional
 
 SOCRATIC_REDIRECT = (
     "I see what you're asking, but I'm here to help you solve it yourself! "
@@ -19,7 +18,7 @@ class SafetyIntent(StrEnum):
 class GuardrailDecision:
     allowed: bool
     intent: SafetyIntent
-    response: Optional[str] = None
+    response: str | None = None
 
 _PATTERNS: tuple[tuple[SafetyIntent, re.Pattern[str]], ...] = (
     (SafetyIntent.PROMPT_INJECTION, re.compile(
