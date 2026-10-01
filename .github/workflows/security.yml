@@ -1,0 +1,80 @@
+name: AppSec Baseline
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+concurrency:
+  group: appsec-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # GitHub CodeQL Default Setup is already enabled for this repository.
+  # Do not add an advanced CodeQL job here: GitHub rejects duplicate setup.
+  # Semgrep and Trivy complement the repository-managed CodeQL analysis.
+
+  semgrep:
+    name: Semgrep SAST
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Semgrep
+        run: python -m pip install --disable-pip-version-check "semgrep>=1.100,<2"
+
+      - name: Scan application source
+        run: >-
+          semgrep scan
+          --config p/owasp-top-ten
+          --config p/python
+          --config p/typescript
+          --severity ERROR
+          --error
+          --exclude .git
+          --exclude node_modules
+          --exclude frontend/dist
+          --exclude e2e/test-results
+          .
+
+  trivy:
+    name: Trivy dependencies and secrets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Scan repository for vulnerable dependencies
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+          format: table
+
+      - name: Scan repository for secrets
+        if: always()
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: secret
+          exit-code: "1"
+          format: table
