@@ -254,14 +254,15 @@ def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession)
         )
         or 0
     )
-    if current_count >= locked_parent.max_students:
+    seat_limit = locked_parent.max_students or 1
+    if current_count >= seat_limit:
         raise HTTPException(
             status_code=status.HTTP_402_PAYMENT_REQUIRED,
             detail={
                 "code": "STUDENT_SEAT_LIMIT_REACHED",
                 "subscription_tier": locked_parent.subscription_tier,
                 "current_students": current_count,
-                "max_students": locked_parent.max_students,
+                "max_students": seat_limit,
                 "upgrade": {"recommended_tier": "pro", "max_students": 5},
             },
         )
