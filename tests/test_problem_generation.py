@@ -682,3 +682,36 @@ def test_generator_produces_unique_parameters() -> None:
         seen_params.add(param_tuple)
     # With 100 generations, we should see multiple unique parameter sets
     assert len(seen_params) > 10, "Generator is not producing varied parameters"
+
+
+def test_mth1w_algebra_generators_are_deterministic_and_structurally_correct() -> None:
+    for problem_type in ("COMBINE_LIKE_TERMS", "POLYNOMIAL_ADD_SUBTRACT"):
+        first = GENERATORS[problem_type](random.Random(29), 3)
+        second = GENERATORS[problem_type](random.Random(29), 3)
+        assert first == second
+        assert first.parameters == second.parameters
+        assert first.problem_type == problem_type
+
+    like = GENERATORS["COMBINE_LIKE_TERMS"](random.Random(31), 3)
+    params = like.parameters
+    assert params is not None
+    expected_coefficient = params["a"] + params["b"]
+    variable = params["variable"]
+    constant = params["constant"]
+    expected = (
+        f"{variable}" if expected_coefficient == 1
+        else f"-{variable}" if expected_coefficient == -1
+        else f"{expected_coefficient}{variable}"
+    )
+    if constant:
+        expected += f"{constant:+d}"
+    assert like.canonical_answer == expected
+
+    poly = GENERATORS["POLYNOMIAL_ADD_SUBTRACT"](random.Random(37), 3)
+    params = poly.parameters
+    assert params is not None
+    sign = 1 if params["operation"] == "+" else -1
+    assert params["a"] + sign * params["c"] != 999  # exercise parsed coefficients
+    assert evaluate_problem(
+        poly.prompt, poly.canonical_answer, poly.canonical_answer
+    ).correct
