@@ -69,17 +69,20 @@ def create_or_load_profile(user: CurrentUser, db: DbSession) -> ParentProfileOut
 
 
 @router.get("/profile", response_model=ParentProfileOut)
-def get_profile(user: CurrentUser, parent: CurrentParent) -> ParentProfileOut:
+def get_profile(request: Request, user: CurrentUser, parent: CurrentParent) -> ParentProfileOut:
+    require_parent_unlock(request, parent.user_id)
     return _profile_out(user, parent)
 
 
 @router.patch("/profile", response_model=ParentProfileOut)
 def update_profile(
     payload: ParentProfileUpdateIn,
+    request: Request,
     user: CurrentUser,
     parent: CurrentParent,
     db: DbSession,
 ) -> ParentProfileOut:
+    require_parent_unlock(request, parent.user_id)
     user.display_name = payload.display_name.strip()
     db.commit()
     db.refresh(user)
@@ -133,8 +136,12 @@ def remove_child(student_id: uuid.UUID, parent: CurrentParent, db: DbSession) ->
 
 @router.get("/children/{student_id}/dashboard", response_model=ChildDashboardOut)
 def child_dashboard(
-    student_id: uuid.UUID, parent: CurrentParent, db: DbSession
+    student_id: uuid.UUID,
+    request: Request,
+    parent: CurrentParent,
+    db: DbSession,
 ) -> ChildDashboardOut:
+    require_parent_unlock(request, parent.user_id)
     return dashboard(db, parent=parent, student_id=student_id)
 
 
