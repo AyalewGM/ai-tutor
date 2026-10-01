@@ -1,13 +1,12 @@
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Lock, Settings } from "lucide-react";
-import { ApiError, api, post } from "../api";
+import { Settings } from "lucide-react";
+import { api } from "../api";
 import NavBar from "../components/NavBar";
+import ParentUnlock from "../components/ParentUnlock";
 import ParentProgressDashboard from "../components/dashboard/ParentProgressDashboard";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { ChildSummary } from "../types";
 
@@ -16,7 +15,6 @@ export default function ParentDashboard() {
   const [childId, setChildId] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const [pin, setPin] = useState("");
   const [unlockToken, setUnlockToken] = useState(
     () => sessionStorage.getItem("parentUnlock") || "",
   );
@@ -31,21 +29,7 @@ export default function ParentDashboard() {
       .finally(() => setLoading(false));
   }, []);
 
-  async function unlockParentView(event: FormEvent) {
-    event.preventDefault();
-    setError("");
-    try {
-      const result = await post<{ verified: boolean; unlock_token: string }>(
-        "/parents/verify-pin",
-        { parent_pin: pin },
-      );
-      sessionStorage.setItem("parentUnlock", result.unlock_token);
-      setUnlockToken(result.unlock_token);
-      setPin("");
-    } catch (reason) {
-      setError(reason instanceof ApiError ? reason.message : "Could not verify parent PIN.");
-    }
-  }
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -68,37 +52,7 @@ export default function ParentDashboard() {
         </div>
 
         {!unlockToken && (
-          <Card className="mx-auto max-w-md">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Lock className="h-5 w-5 text-primary" />
-                <CardTitle>Parent access</CardTitle>
-              </div>
-              <CardDescription>
-                Enter your 4-digit parent PIN to view progress and adult settings.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={unlockParentView} className="space-y-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="parent-pin">Parent PIN</Label>
-                  <Input
-                    id="parent-pin"
-                    type="password"
-                    inputMode="numeric"
-                    pattern="[0-9]{4}"
-                    minLength={4}
-                    maxLength={4}
-                    required
-                    autoComplete="off"
-                    value={pin}
-                    onChange={(event) => setPin(event.target.value)}
-                  />
-                </div>
-                <Button type="submit" className="w-full">Unlock parent view</Button>
-              </form>
-            </CardContent>
-          </Card>
+          <ParentUnlock onUnlocked={setUnlockToken} />
         )}
 
         {error && (

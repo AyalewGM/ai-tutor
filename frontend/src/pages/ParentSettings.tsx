@@ -1,8 +1,9 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Lock, ShieldCheck, Trash2 } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Trash2 } from "lucide-react";
 import { ApiError } from "../api";
 import NavBar from "../components/NavBar";
+import ParentUnlock from "../components/ParentUnlock";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -43,7 +44,6 @@ async function adultRequest<T>(path: string, options: RequestInit = {}): Promise
 }
 
 export default function ParentSettings() {
-  const [pin, setPin] = useState("");
   const [unlocked, setUnlocked] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [displayName, setDisplayName] = useState("");
@@ -78,20 +78,11 @@ export default function ParentSettings() {
     });
   }, [loadAdultSettings]);
 
-  async function unlock(event: FormEvent) {
-    event.preventDefault();
-    setError("");
+  async function onUnlocked() {
     try {
-      const result = await adultRequest<{ unlock_token: string }>("/parents/verify-pin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ parent_pin: pin }),
-      });
-      sessionStorage.setItem("parentUnlock", result.unlock_token);
-      setPin("");
       await loadAdultSettings();
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not verify parent PIN.");
+      setError(err instanceof ApiError ? err.message : "Could not load settings.");
     }
   }
 
@@ -169,37 +160,10 @@ export default function ParentSettings() {
         </div>
 
         {!unlocked && (
-          <Card className="mx-auto max-w-md">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Lock className="h-5 w-5 text-primary" />
-                <CardTitle>Parent access</CardTitle>
-              </div>
-              <CardDescription>
-                Enter your 4-digit parent PIN to open settings and privacy controls.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={unlock} className="space-y-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="settings-pin">Parent PIN</Label>
-                  <Input
-                    id="settings-pin"
-                    type="password"
-                    inputMode="numeric"
-                    pattern="[0-9]{4}"
-                    minLength={4}
-                    maxLength={4}
-                    required
-                    autoComplete="off"
-                    value={pin}
-                    onChange={(event) => setPin(event.target.value)}
-                  />
-                </div>
-                <Button type="submit" className="w-full">Unlock</Button>
-              </form>
-            </CardContent>
-          </Card>
+          <ParentUnlock
+            onUnlocked={onUnlocked}
+            description="Verify your identity to open settings and privacy controls."
+          />
         )}
 
         {unlocked && (
