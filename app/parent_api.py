@@ -96,36 +96,9 @@ def get_children(parent: CurrentParent, db: DbSession) -> list[ChildSummaryOut]:
 
 @router.post("/children/link", response_model=LinkChildOut)
 def link_child(payload: LinkChildIn, parent: CurrentParent, db: DbSession) -> LinkChildOut:
-    locked_parent = db.scalar(
-        select(ParentProfile).where(ParentProfile.id == parent.id).with_for_update()
-    )
-    if locked_parent is None:
-        raise HTTPException(status_code=404, detail="Parent profile not found")
-    active_relationships = int(
-        db.scalar(
-            select(func.count(ParentStudentRelationship.id)).where(
-                ParentStudentRelationship.parent_profile_id == parent.id,
-                ParentStudentRelationship.active.is_(True),
-            )
-        )
-        or 0
-    )
-    seat_limit = locked_parent.max_students or 1
-    if active_relationships >= seat_limit:
-        raise HTTPException(
-            status_code=status.HTTP_402_PAYMENT_REQUIRED,
-            detail={
-                "code": "STUDENT_SEAT_LIMIT_REACHED",
-                "subscription_tier": locked_parent.subscription_tier,
-                "current_students": active_relationships,
-                "max_students": seat_limit,
-                "upgrade": {"recommended_tier": "pro", "max_students": 5},
-            },
-        )
     result = link_child_with_claim(db, parent=parent, claim_token=payload.claim_token)
     db.commit()
     return result
-
 
 @router.delete("/children/{student_id}", status_code=status.HTTP_204_NO_CONTENT)
 def remove_child(student_id: uuid.UUID, parent: CurrentParent, db: DbSession) -> Response:
