@@ -12,7 +12,7 @@ type Props = {
   multimodalEndpoint?: string | null;
 };
 
-export default function StudentWorkspace({ sessionId, topic, masteryPercent, initialMessages, onSendText, multimodalEndpoint = null }: Props) {
+export default function StudentWorkspace({ sessionId, topic, masteryPercent, initialMessages, onSendText, multimodalEndpoint = "/tutor/multimodal-step" }: Props) {
   const boardRef = useRef<WhiteboardHandle>(null);
   const canvas = useCanvasSync();
   const [messages, setMessages] = useState(initialMessages);
@@ -36,8 +36,11 @@ export default function StudentWorkspace({ sessionId, topic, masteryPercent, ini
     }
     setBusy(true);
     try {
-      await canvas.sendSnapshot(multimodalEndpoint, { session_id: sessionId, prompt: text || "Please help me with the work shown on my scratchpad.", snapshot_data_url: snapshot });
-      setMessages((items) => [...items, { id: crypto.randomUUID(), role: "student", text: text || "I shared my scratchpad." }]);
+      const result = await canvas.sendSnapshot<{ message: string; overlays: { kind: "highlight" | "label"; text: string; x: number; y: number }[] }>(multimodalEndpoint, { session_id: sessionId, prompt: text || "Please help me with the work shown on my scratchpad.", snapshot_data_url: snapshot });
+      setMessages((items) => [...items,
+        { id: crypto.randomUUID(), role: "student", text: text || "I shared my scratchpad." },
+        ...(result ? [{ id: crypto.randomUUID(), role: "tutor" as const, text: result.message }] : []),
+      ]);
     } finally { setBusy(false); }
   }
 
