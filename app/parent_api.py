@@ -135,9 +135,9 @@ def add_student(
 
     current_count = int(
         db.scalar(
-            select(func.count(Student.id)).where(
-                Student.parent_id == parent.user_id,
-                Student.active.is_(True),
+            select(func.count(ParentStudentRelationship.id)).where(
+                ParentStudentRelationship.parent_profile_id == parent.id,
+                ParentStudentRelationship.active.is_(True),
             )
         )
         or 0
