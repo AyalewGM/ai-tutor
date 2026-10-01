@@ -6,6 +6,10 @@ class Settings(BaseSettings):
     api_prefix: str = "/api/v1"
     database_url: str = "postgresql+psycopg://postgres:postgres@localhost:5432/ai_tutor"
     session_cookie_secure: bool = False
+    redis_url: str = "redis://localhost:6379/0"
+    parent_unlock_ttl_seconds: int = 600
+    parent_pin_max_attempts: int = 5
+    parent_pin_window_seconds: int = 300
 
     ai_provider: str = "fallback"
     openai_model: str = "gpt-5"

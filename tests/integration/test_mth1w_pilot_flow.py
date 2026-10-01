@@ -6,6 +6,7 @@ call is used.
 """
 
 from datetime import UTC, datetime, timedelta
+from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 from sqlalchemy import select
@@ -242,7 +243,11 @@ def test_mth1w_pilot_remediation_requires_fresh_independent_evidence() -> None:
             assert linked.status_code == 200
             assert linked.json()["child"]["curriculum_code"] == "MTH1W"
 
-            dashboard = client.get(f"/api/v1/parents/children/{student_id}/dashboard")
+            # This test validates curriculum-local evidence projection and family
+            # isolation. Parent-unlock behavior has dedicated coverage, so bypass
+            # only that gate here while retaining ownership checks.
+            with patch("app.parent_api.require_parent_unlock"):
+                dashboard = client.get(f"/api/v1/parents/children/{student_id}/dashboard")
             assert dashboard.status_code == 200
             dashboard_payload = dashboard.json()
             assert dashboard_payload["child"]["curriculum_code"] == "MTH1W"
@@ -260,7 +265,8 @@ def test_mth1w_pilot_remediation_requires_fresh_independent_evidence() -> None:
             assert unrelated is not None
             _override_user(unrelated)
             assert client.post("/api/v1/parents/profile").status_code == 200
-            denied = client.get(f"/api/v1/parents/children/{student_id}/dashboard")
+            with patch("app.parent_api.require_parent_unlock"):
+                denied = client.get(f"/api/v1/parents/children/{student_id}/dashboard")
             assert denied.status_code == 403
     finally:
         _clear_override()

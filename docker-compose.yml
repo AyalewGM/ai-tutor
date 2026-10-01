@@ -14,6 +14,16 @@ services:
       retries: 10
     restart: unless-stopped
 
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
   llm-gateway:
     build:
       context: .
@@ -41,12 +51,15 @@ services:
       DATABASE_URL: postgresql+psycopg://ai_tutor:${POSTGRES_PASSWORD:-local-dev-only}@db:5432/ai_tutor
       AI_PROVIDER: gateway
       LLM_GATEWAY_URL: http://llm-gateway:8001
+      REDIS_URL: redis://redis:6379/0
     ports:
       - "8002:8000"
     depends_on:
       db:
         condition: service_healthy
       llm-gateway:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]

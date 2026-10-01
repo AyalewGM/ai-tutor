@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /*
  * F-013 design-system foundation.
  * Tokens are intentionally semantic: pages consume roles rather than hard-coded

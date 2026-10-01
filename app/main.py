@@ -13,6 +13,7 @@ from app.core.settings import settings
 from app.diagnostic_api import router as diagnostic_router
 from app.hint_api import router as hint_router
 from app.learner_web import router as learner_web_router
+from app.middleware.pii_sanitizer import PIISanitizerMiddleware
 from app.onboarding_api import router as onboarding_router
 from app.parent_api import router as parent_router
 from app.parent_settings_web import router as parent_settings_web_router
@@ -26,6 +27,7 @@ configure_tutor_engine()
 configure_logging()
 
 app = FastAPI(title=settings.app_name, version="0.1.0")
+app.add_middleware(PIISanitizerMiddleware)
 app.middleware("http")(session_identity_middleware)
 app.middleware("http")(request_logging_middleware)
 app.include_router(auth_router, prefix=settings.api_prefix)

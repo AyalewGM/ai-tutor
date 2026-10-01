@@ -1,66 +1,44 @@
-import { useEffect, useMemo, useState } from "react";
-import { api } from "../api";
+import { FormEvent, useEffect, useState } from "react";
+import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
-import type { ChildDashboard, ChildSummary } from "../types";
-
-function friendly(value: string | null | undefined) {
-  return String(value ?? "")
-    .replaceAll("_", " ")
-    .toLowerCase()
-    .replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
-function nextStep(code: string) {
-  const copy: Record<string, string> = {
-    COLLECT_MORE_EVIDENCE: "Keep practicing so the tutor can collect enough evidence.",
-    CONTINUE_CURRENT_LEARNING: "Continue the current learning plan.",
-    ENCOURAGE_INDEPENDENT_ATTEMPT: "Try a fresh problem independently when the tutor presents one.",
-    RECOGNIZE_INDEPENDENT_PROGRESS: "Recognize the independent progress and continue the plan.",
-    RECOGNIZE_MASTERY: "Celebrate the independently demonstrated mastery.",
-    FOLLOW_EXISTING_REVIEW_PLAN: "Complete the review already scheduled by the tutoring engine.",
-  };
-  return copy[code] ?? "Continue the tutor plan.";
-}
+import ParentProgressDashboard from "../components/dashboard/ParentProgressDashboard";
+import type { ChildSummary } from "../types";
 
 export default function ParentDashboard() {
   const [children, setChildren] = useState<ChildSummary[]>([]);
   const [childId, setChildId] = useState("");
-  const [dashboard, setDashboard] = useState<ChildDashboard | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [pin, setPin] = useState("");
+  const [unlockToken, setUnlockToken] = useState(
+    () => sessionStorage.getItem("parentUnlock") || "",
+  );
 
   useEffect(() => {
     api<ChildSummary[]>("/parents/children")
       .then((rows) => {
         setChildren(rows);
-        if (rows.length) setChildId(rows[0].id);
+        if (rows.length) setChildId((current) => current || rows[0].id);
       })
       .catch(() => setError("Could not load family dashboard."))
       .finally(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
-    if (!childId) {
-      setDashboard(null);
-      return;
-    }
-    setLoading(true);
+  async function unlockParentView(event: FormEvent) {
+    event.preventDefault();
     setError("");
-    api<ChildDashboard>(`/parents/children/${childId}/dashboard`)
-      .then(setDashboard)
-      .catch(() => setError("Could not load this learner's progress."))
-      .finally(() => setLoading(false));
-  }, [childId]);
-
-  const counts = useMemo(() => {
-    const skills = dashboard?.skills ?? [];
-    return {
-      mastered: skills.filter((s) => s.learning_state === "INDEPENDENT_MASTERY").length,
-      progressing: skills.filter((s) => s.learning_state === "INDEPENDENT_PROGRESS").length,
-      assisted: skills.filter((s) => s.learning_state === "ASSISTED_SUCCESS").length,
-      evidence: skills.filter((s) => s.evidence_status === "INSUFFICIENT_EVIDENCE").length,
-    };
-  }, [dashboard]);
+    try {
+      const result = await post<{ verified: boolean; unlock_token: string }>(
+        "/parents/verify-pin",
+        { parent_pin: pin },
+      );
+      sessionStorage.setItem("parentUnlock", result.unlock_token);
+      setUnlockToken(result.unlock_token);
+      setPin("");
+    } catch (reason) {
+      setError(reason instanceof ApiError ? reason.message : "Could not verify parent PIN.");
+    }
+  }
 
   return (
     <>
@@ -68,30 +46,55 @@ export default function ParentDashboard() {
       <main className="page parent-page">
         <section className="hero hero-row">
           <div>
-            <p className="eyebrow">Parent dashboard</p>\n            <h1>Family learning overview</h1>
-            <p>See what your child can do independently, where support is helping, and what comes next.</p>
+            <p className="eyebrow">Parent dashboard</p>
+            <h1>Family learning overview</h1>
+            <p>
+              A clear weekly view of independent progress, learning activity, and areas where
+              your child may need support.
+            </p>
           </div>
-          <a className="secondary link-btn" href="/parent/settings">Settings &amp; privacy</a>
+          <a className="secondary link-btn" href="/parent/settings">
+            Settings &amp; privacy
+          </a>
         </section>
 
-        <section className="card parent-selector parent-switcher" aria-labelledby="child-heading">
-          <div>
-            <h2 id="child-heading">Choose a learner</h2>
-            <p className="muted small">Progress is always scoped to the learner's exact curriculum and version.</p>
-          </div>
-          <label htmlFor="parent-child">Learner</label>
-          <select id="parent-child" value={childId} onChange={(e) => setChildId(e.target.value)}>
-            <option value="">Select learner</option>
-            {children.map((child) => (
-              <option key={child.id} value={child.id}>
-                {child.first_name} — Grade {child.grade_level}
-              </option>
-            ))}
-          </select>
-        </section>
+        {!unlockToken && (
+          <section className="card" aria-labelledby="parent-unlock-heading">
+            <h2 id="parent-unlock-heading">Parent access</h2>
+            <p className="muted small">
+              Enter your 4-digit parent PIN to view progress and adult settings.
+            </p>
+            <form onSubmit={unlockParentView}>
+              <label htmlFor="parent-pin">Parent PIN</label>
+              <input
+                id="parent-pin"
+                type="password"
+                inputMode="numeric"
+                pattern="[0-9]{4}"
+                minLength={4}
+                maxLength={4}
+                required
+                autoComplete="off"
+                value={pin}
+                onChange={(event) => setPin(event.target.value)}
+              />
+              <button type="submit" className="primary">
+                Unlock parent view
+              </button>
+            </form>
+          </section>
+        )}
 
-        {error && <p className="error" role="alert">{error}</p>}
-        {loading && <p className="muted" role="status">Loading learning progress…</p>}
+        {error && (
+          <p className="error" role="alert">
+            {error}
+          </p>
+        )}
+        {loading && (
+          <p className="muted" role="status">
+            Loading family profiles…
+          </p>
+        )}
         {!loading && !children.length && (
           <section className="card empty-state">
             <h2>No learners yet</h2>
@@ -99,108 +102,13 @@ export default function ParentDashboard() {
           </section>
         )}
 
-        {dashboard && !loading && (
-          <>
-            <section className="card parent-overview parent-overview-feature">
-              <div className="hero-row">
-                <div>
-                  <p className="eyebrow">Current learning picture</p>
-                  <h2>{dashboard.child.first_name} · Grade {dashboard.child.grade_level}</h2>
-                  <p className="muted">
-                    {[dashboard.child.curriculum_name, dashboard.child.jurisdiction].filter(Boolean).join(" · ")}
-                  </p>
-                </div>
-                <div className="next-focus">
-                  <span>Recommended next</span>
-                  <strong>{dashboard.recommended_next?.skill_name ?? dashboard.active_skill_name ?? "Keep practicing"}</strong>
-                </div>
-              </div>
-              <p className="evidence-note">
-                Assisted success is shown separately and never counted as independent mastery.
-              </p>
-            </section>
-
-            <section className="progress-section" aria-labelledby="summary-heading">
-              <h2 id="summary-heading">At a glance</h2>
-              <div className="parent-summary">
-                <article className="summary-tile"><span>Independent mastery</span><strong>{counts.mastered}</strong></article>
-                <article className="summary-tile"><span>Independent progress</span><strong>{counts.progressing}</strong></article>
-                <article className="summary-tile"><span>Assisted success</span><strong>{counts.assisted}</strong></article>
-                <article className="summary-tile"><span>More evidence needed</span><strong>{counts.evidence}</strong></article>
-              </div>
-            </section>
-
-            <section className="card parent-skills-card" aria-labelledby="skills-heading">
-              <div className="card-title-row">
-                <div>
-                  <h2 id="skills-heading">Skills and next steps</h2>
-                  <p className="muted small">Independent evidence is the source of truth for mastery.</p>
-                </div>
-              </div>
-              <div className="parent-skill-grid">
-                {dashboard.skills.map((skill) => (
-                  <article className="parent-skill" key={skill.skill_id}>
-                    <div className="hero-row">
-                      <strong>{skill.skill_name}</strong>
-                      <span className="status-pill">{friendly(skill.learning_state)}</span>
-                    </div>
-                    <p>{nextStep(skill.action_code)}</p>
-                    <details>
-                      <summary>Supporting evidence</summary>
-                      <p className="muted small">
-                        Independent: {skill.independent_correct_count}/{skill.independent_attempt_count} ·
-                        Assisted successes: {skill.hinted_correct_count} · {friendly(skill.evidence_status)}
-                      </p>
-                    </details>
-                  </article>
-                ))}
-                {!dashboard.skills.length && <p className="muted">No skill evidence recorded yet.</p>}
-              </div>
-            </section>
-
-            <section className="card recent-activity-card" aria-labelledby="activity-heading">
-              <div className="card-title-row">
-                <div>
-                  <p className="eyebrow">Learning history</p>
-                  <h2 id="activity-heading">Recent activity</h2>
-                </div>
-                <span className="status-pill">{dashboard.recent_activity.length} recent</span>
-              </div>
-              {dashboard.recent_activity.length ? (
-                <ul className="activity-list">
-                  {dashboard.recent_activity.slice(0, 5).map((activity) => (
-                    <li key={activity.session_id}>
-                      <div><strong>{activity.skill_name}</strong><span>{friendly(activity.state)}</span></div>
-                      <time dateTime={activity.started_at}>{new Date(activity.started_at).toLocaleDateString()}</time>
-                    </li>
-                  ))}
-                </ul>
-              ) : <p className="muted">No recent learning sessions yet.</p>}
-            </section>
-
-            <div className="grid two parent-support-grid">
-              <section className="card">
-                <h2>Reviews due</h2>
-                {dashboard.reviews_due.length ? (
-                  <ul className="clean-list">
-                    {dashboard.reviews_due.map((review) => (
-                      <li key={review.skill_id}><strong>{review.skill_name}</strong><span>{friendly(review.status)}</span></li>
-                    ))}
-                  </ul>
-                ) : <p className="muted">No reviews are due right now.</p>}
-              </section>
-              <section className="card">
-                <h2>Current support areas</h2>
-                {dashboard.support_areas.length ? (
-                  <ul className="clean-list">
-                    {dashboard.support_areas.map((area) => (
-                      <li key={area.code}><strong>{area.name}</strong><span>{area.occurrence_count} observed</span></li>
-                    ))}
-                  </ul>
-                ) : <p className="muted">No current support areas recorded.</p>}
-              </section>
-            </div>
-          </>
+        {!loading && unlockToken && children.length > 0 && childId && (
+          <ParentProgressDashboard
+            unlockToken={unlockToken}
+            children={children}
+            selectedStudentId={childId}
+            onStudentChange={setChildId}
+          />
         )}
       </main>
     </>

@@ -36,6 +36,10 @@ services:
     logging: *default-logging
     restart: "no"
 
+  redis:
+    logging: *default-logging
+    restart: unless-stopped
+
   llm-gateway:
     env_file: .env.pilot
     logging: *default-logging

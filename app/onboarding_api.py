@@ -18,7 +18,11 @@ from app.models import (
     StudentSkill,
     TutorSession,
 )
-from app.parent_models import ParentStudentRelationship, ParentStudentRelationshipEvent
+from app.parent_models import (
+    ParentProfile,
+    ParentStudentRelationship,
+    ParentStudentRelationshipEvent,
+)
 from app.services.placement import recommend_next_skill
 from app.services.problem_generation import content_readiness
 from app.services.review_schedule import reviews_due
@@ -36,7 +40,7 @@ class CurriculumChoice(BaseModel):
 
 
 class LearnerCreate(BaseModel):
-    first_name: str = Field(min_length=1, max_length=100)
+    first_name: str = Field(min_length=1, max_length=32, pattern=r"^[A-Za-z0-9_-]+$")
     curriculum_id: uuid.UUID
 
 
@@ -240,6 +244,33 @@ def get_learner_launchpad(
 
 @router.post("/learners", response_model=LearnerCreated, status_code=status.HTTP_201_CREATED)
 def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession) -> LearnerCreated:
+    locked_parent = db.scalar(
+        select(ParentProfile).where(ParentProfile.id == parent.id).with_for_update()
+    )
+    if locked_parent is None:
+        raise HTTPException(status_code=404, detail="Parent profile not found")
+    current_count = int(
+        db.scalar(
+            select(func.count(ParentStudentRelationship.id)).where(
+                ParentStudentRelationship.parent_profile_id == parent.id,
+                ParentStudentRelationship.active.is_(True),
+            )
+        )
+        or 0
+    )
+    seat_limit = locked_parent.max_students or 1
+    if current_count >= seat_limit:
+        raise HTTPException(
+            status_code=status.HTTP_402_PAYMENT_REQUIRED,
+            detail={
+                "code": "STUDENT_SEAT_LIMIT_REACHED",
+                "subscription_tier": locked_parent.subscription_tier,
+                "current_students": current_count,
+                "max_students": seat_limit,
+                "upgrade": {"recommended_tier": "pro", "max_students": 5},
+            },
+        )
+
     curriculum = db.get(Curriculum, payload.curriculum_id)
     if curriculum is None or not curriculum.active:
         raise HTTPException(status_code=404, detail="Active curriculum not found")
@@ -254,6 +285,7 @@ def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession)
         first_name=first_name,
         grade_level=curriculum.grade_level or "UNSPECIFIED",
         school_system=None,
+        avatar_id="avatar-1",
     )
     db.add(student)
     db.flush()

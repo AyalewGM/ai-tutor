@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from typing import Annotated
 
 from argon2 import PasswordHasher
@@ -14,17 +15,14 @@ from app.core.settings import settings
 from app.credential_models import UserCredential
 from app.models import User
 from app.parent_models import ParentProfile
+from app.schemas import ParentRegisterSchema
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 DbSession = Annotated[Session, Depends(get_db)]
 _passwords = PasswordHasher()
 
 
-class ParentRegistration(BaseModel):
-    email: EmailStr
-    password: str = Field(min_length=12, max_length=128)
-    display_name: str | None = Field(default=None, max_length=120)
-
+ParentRegistration = ParentRegisterSchema
 
 class LoginRequest(BaseModel):
     email: EmailStr
@@ -57,7 +55,18 @@ def register_parent(payload: ParentRegistration, response: Response, db: DbSessi
     try:
         db.flush()
         db.add(UserCredential(user_id=user.id, password_hash=_passwords.hash(payload.password)))
-        db.add(ParentProfile(user_id=user.id))
+        accepted_at = datetime.now(UTC)
+        db.add(
+            ParentProfile(
+                user_id=user.id,
+                subscription_tier="free",
+                max_students=1,
+                parent_pin_hash=_passwords.hash(payload.parent_pin),
+                coppa_consent_given=True,
+                consent_timestamp=accepted_at,
+                terms_accepted_at=accepted_at,
+            )
+        )
         token, _ = create_session(db, user.id)
         db.commit()
     except IntegrityError as exc:

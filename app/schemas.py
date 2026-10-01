@@ -1,7 +1,8 @@
 import uuid
 from datetime import datetime
+from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 from app.models import TutorState
 
@@ -74,3 +75,63 @@ class RespondOut(BaseModel):
     focus: LearningFocusOut | None = None
     next_problem: ProblemOut | None = None
     new_awards: list[AwardOut] = Field(default_factory=list)
+
+
+
+class ParentRegisterSchema(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=12, max_length=128)
+    display_name: str | None = Field(default=None, min_length=1, max_length=120)
+    parent_pin: str = Field(pattern=r"^\d{4}$")
+    terms_accepted: Literal[True]
+    coppa_consent_given: Literal[True]
+
+
+class StudentCreateSchema(BaseModel):
+    display_name: str = Field(min_length=1, max_length=32, pattern=r"^[A-Za-z0-9_-]+$")
+    grade_level: str | None = Field(default=None, min_length=1, max_length=30)
+    avatar_id: str = Field(min_length=1, max_length=80, pattern=r"^[A-Za-z0-9_-]+$")
+
+    @field_validator("display_name")
+    @classmethod
+    def reject_contact_like_display_names(cls, value: str) -> str:
+        normalized = value.strip()
+        if "@" in normalized or "." in normalized:
+            raise ValueError("Use a short nickname, not contact information")
+        return normalized
+
+
+class PINVerifySchema(BaseModel):
+    parent_pin: str = Field(pattern=r"^\d{4}$")
+
+
+class PasswordReauthSchema(BaseModel):
+    password: str = Field(min_length=1, max_length=128)
+
+
+class StudentProfileOut(BaseModel):
+    id: uuid.UUID
+    display_name: str
+    grade_level: str | None
+    avatar_id: str
+
+
+class PINVerifyOut(BaseModel):
+    verified: bool
+    unlock_token: str
+    expires_in_seconds: int
+
+
+class ProgressStudentSummary(BaseModel):
+    student_id: uuid.UUID
+    display_name: str
+    sessions_started: int
+    sessions_completed: int
+    attempts: int
+    correct_attempts: int
+    average_mastery: float
+
+
+class ProgressSummaryOut(BaseModel):
+    window_days: int
+    students: list[ProgressStudentSummary]

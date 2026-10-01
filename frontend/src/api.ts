@@ -25,9 +25,13 @@ export async function api<T>(path: string, options: RequestInit = {}): Promise<T
     /* no JSON body */
   }
   if (!response.ok) {
+    const rawDetail = (body as { detail?: unknown } | null)?.detail;
     const detail =
-      (body as { detail?: string } | null)?.detail ??
-      `${response.status} ${response.statusText}`;
+      typeof rawDetail === "string"
+        ? rawDetail
+        : rawDetail && typeof rawDetail === "object" && "message" in rawDetail
+          ? String((rawDetail as { message: unknown }).message)
+          : `${response.status} ${response.statusText}`;
     throw new ApiError(response.status, detail);
   }
   return body as T;
