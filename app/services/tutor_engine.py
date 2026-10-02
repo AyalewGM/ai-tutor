@@ -36,6 +36,25 @@ class TutorContext:
     remediation_strategy: str | None = None
     next_problem_prompt: str | None = None
     hint_constraint: str | None = None
+    # Application-classified step error on the current problem, when any:
+    # what the learner wrote, what it followed, and the catalog code. Lets
+    # the voice name the actual move instead of restating the generic ladder.
+    step_evidence: "StepEvidence | None" = None
+
+
+@dataclass(frozen=True)
+class StepEvidence:
+    previous_line: str
+    attempted_line: str
+    misconception_code: str | None = None
+    invalid_count: int = 1
+
+    def describe(self) -> str:
+        """Compact, learner-safe description for prompt context."""
+        text = f"from '{self.previous_line}' the learner wrote '{self.attempted_line}'"
+        if self.misconception_code:
+            text += f" (classified {self.misconception_code})"
+        return text
 
 
 @dataclass(frozen=True)
@@ -61,9 +80,7 @@ class TutorEngine:
     def __init__(self, provider: TutorProvider | None = None) -> None:
         self.provider = provider
 
-    def generate(
-        self, context: TutorContext, *, use_llm: bool = True
-    ) -> TutorEngineResult:
+    def generate(self, context: TutorContext, *, use_llm: bool = True) -> TutorEngineResult:
         if context.action == "GIVE_HINT" and context.hint_level is not None:
             context = TutorContext(
                 **{
@@ -82,9 +99,7 @@ class TutorEngine:
                     model=generation.model or self.provider.model_name,
                     provider=generation.provider or self.provider.provider_name,
                     latency_ms=(
-                        generation.latency_ms
-                        if generation.latency_ms is not None
-                        else elapsed_ms
+                        generation.latency_ms if generation.latency_ms is not None else elapsed_ms
                     ),
                     request_id=generation.request_id,
                     expects_student_response=generation.expects_student_response,
@@ -167,12 +182,69 @@ def _concept_explanation(problem_prompt: str) -> str:
     return "Let us slow down and look at what the problem is asking, one step at a time."
 
 
+_STEP_VOICE = {
+    # Keyed by the step classifier's codes (see services/stepwork.py). Each
+    # names the actual move; the second sentence is the corrective idea.
+    "EQ_001": (
+        "Look at your line {attempted}. To undo a number that is added, subtract it "
+        "from both sides — you moved it the wrong direction."
+    ),
+    "EQ_002": (
+        "In {attempted} you changed only one side of the equation. Whatever you do "
+        "to one side must happen to the other side too."
+    ),
+    "EQ_003": (
+        "In {attempted} you multiplied where you needed to divide. To undo a "
+        "coefficient, divide both sides by it."
+    ),
+    "DIST_001": (
+        "Your line {attempted} multiplied only the first term inside the parentheses. "
+        "The outside number has to multiply every term."
+    ),
+    "NUM_003": (
+        "In {attempted} the numerators and denominators were added straight across. "
+        "Fractions need a common denominator first."
+    ),
+    "ALG_001": (
+        "In {attempted} a variable term and a plain number were merged. Only like "
+        "terms combine — keep the x terms and the constants separate."
+    ),
+    "WP_001": (
+        "Your equation {attempted} doesn't match the situation. Check which number "
+        "multiplies the unknown and which is added on."
+    ),
+}
+
+
+def _step_voice(context: TutorContext) -> str | None:
+    """Name the learner's actual step error when we have one classified."""
+    evidence = context.step_evidence
+    if evidence is None:
+        return None
+    attempted = evidence.attempted_line
+    template = _STEP_VOICE.get(evidence.misconception_code or "")
+    if template:
+        message = template.format(attempted=attempted)
+    else:
+        message = (
+            f"Your line {attempted} doesn't follow from {evidence.previous_line}. "
+            "Check that the move keeps the two sides equal."
+        )
+    if evidence.invalid_count >= 2:
+        message += " Try the step again, slowly."
+    return message
+
+
 def fallback_message(context: TutorContext) -> str:
     if context.action == "ASK_DIAGNOSTIC":
         return "Let us start with a quick problem so I can see what you already know."
     if context.action == "EXPLAIN_CONCEPT":
-        return _concept_explanation(context.problem_prompt)
+        return _step_voice(context) or _concept_explanation(context.problem_prompt)
     if context.action == "GIVE_HINT":
+        step_voice = _step_voice(context)
+        if step_voice and (context.hint_level or 1) >= 2:
+            # Level 1 stays a nudge; from level 2 the hint names the move.
+            return step_voice
         ladder = _hint_ladder(context.problem_prompt)
         level = context.hint_level or 1
         return ladder[min(level, len(ladder)) - 1]

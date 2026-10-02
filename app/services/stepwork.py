@@ -919,6 +919,53 @@ def _check_equation_step(
     )
 
 
+def latest_step_evidence(db, *, session_id, problem_id):
+    """The learner's most recent wrong work line on this problem, for the voice.
+
+    Walks persisted WORK_STEP turns: the previous line is the last accepted
+    line before the error (or the problem's seed when none). Returns None if
+    the latest work line was accepted — the voice should not dwell on an
+    error the learner already corrected.
+    """
+    from sqlalchemy import select
+
+    from app.models import Problem, TutorTurn
+    from app.services.tutor_engine import StepEvidence
+
+    turns = db.scalars(
+        select(TutorTurn)
+        .where(
+            TutorTurn.session_id == session_id,
+            TutorTurn.problem_id == problem_id,
+            TutorTurn.pedagogical_action == "WORK_STEP",
+        )
+        .order_by(TutorTurn.created_at, TutorTurn.id)
+    ).all()
+    if not turns:
+        return None
+    problem = db.get(Problem, problem_id)
+    previous = starting_point(problem) or (problem.prompt if problem else "")
+    latest: StepEvidence | None = None
+    invalid_count = 0
+    for turn in turns:
+        meta = turn.metadata_json or {}
+        status = meta.get("step_status")
+        line = meta.get("line") or ""
+        if status in {"valid", "solved"}:
+            previous = meta.get("normalized_line") or line
+            invalid_count = 0
+            latest = None
+        elif status == "invalid":
+            invalid_count += 1
+            latest = StepEvidence(
+                previous_line=previous,
+                attempted_line=line,
+                misconception_code=meta.get("misconception_code"),
+                invalid_count=invalid_count,
+            )
+    return latest
+
+
 _ERROR_FEEDBACK = {
     "EQ_001": "Careful — use the inverse operation. To remove +b, subtract it (don't add).",
     "EQ_002": "Apply the same operation to every term on both sides of the equation.",

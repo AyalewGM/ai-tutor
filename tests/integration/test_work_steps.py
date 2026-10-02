@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from app.core.database import SessionLocal
 from app.main import app
-from app.models import Attempt, Curriculum, Problem, Skill, Student
+from app.models import Attempt, Curriculum, Problem, Skill, Student, TutorSession, TutorState
 from tests.auth_helpers import authenticate_parent_for_student
 
 client = TestClient(app)
@@ -275,3 +275,41 @@ def test_work_step_algebra_word_problem_declare_setup_solve() -> None:
     )
     assert result.status_code == 200
     assert result.json()["evaluation"]["correct"] is True
+
+
+def test_hint_after_step_error_names_the_learners_line() -> None:
+    student_id, _, skill_id = _fresh_learner()
+    session_id = _start_session(student_id, skill_id)
+    with SessionLocal() as db:
+        problem = _step_problem(db, skill_id)
+        session = db.get(TutorSession, uuid.UUID(session_id))
+        session.current_state = TutorState.GUIDED_PRACTICE  # hints allowed
+        db.commit()
+        problem_id = problem.id
+
+    # 2(x+3)=14 -> 2x+6=14 accepted, then the classic wrong-direction move.
+    assert _step(session_id, problem_id, "2x + 6 = 14")["status"] == "valid"
+    wrong = _step(session_id, problem_id, "2x = 20")
+    assert wrong["misconception_code"] == "EQ_001"
+
+    # First hint is a nudge; second hint quotes the actual wrong line.
+    first = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/hint",
+        json={"problem_id": str(problem_id)},
+    ).json()
+    second = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/hint",
+        json={"problem_id": str(problem_id)},
+    ).json()
+    assert first["allowed"] and second["allowed"]
+    assert "2x = 20" not in first["message"]
+    assert "2x = 20" in second["message"]
+    assert "wrong direction" in second["message"]
+
+    # Once the learner corrects the line, the voice stops dwelling on the error.
+    assert _step(session_id, problem_id, "2x = 8")["status"] == "valid"
+    third = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/hint",
+        json={"problem_id": str(problem_id)},
+    ).json()
+    assert "2x = 20" not in third["message"]

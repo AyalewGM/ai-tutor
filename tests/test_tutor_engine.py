@@ -1,4 +1,4 @@
-from app.services.tutor_engine import TutorContext, TutorEngine
+from app.services.tutor_engine import StepEvidence, TutorContext, TutorEngine
 
 
 class GoodProvider:
@@ -93,3 +93,44 @@ def test_generic_hint_is_neutral() -> None:
 def test_explain_concept_matches_problem_shape() -> None:
     assert "both sides" in _hint("x + 7 = 19", action="EXPLAIN_CONCEPT")
     assert "parentheses" in _hint("3(x+4)", action="EXPLAIN_CONCEPT")
+
+
+def _step_context(action: str, hint_level: int | None, evidence: StepEvidence | None):
+    return TutorContext(
+        grade_level="8",
+        curriculum_name="MCPS Grade 8 Mathematics",
+        state="GUIDED_PRACTICE",
+        skill_name="Two-Step Equations",
+        action=action,
+        hint_level=hint_level,
+        problem_prompt="Solve 3x + 12 = 30.",
+        step_evidence=evidence,
+    )
+
+
+def test_step_voice_names_the_learners_line_from_hint_level_two() -> None:
+    evidence = StepEvidence("3x + 12 = 30", "3x = 42", "EQ_001")
+    level_one = TutorEngine().generate(_step_context("GIVE_HINT", 1, evidence)).message
+    level_two = TutorEngine().generate(_step_context("GIVE_HINT", 2, evidence)).message
+    # Level 1 stays a nudge; level 2 quotes the line and names the move.
+    assert "3x = 42" not in level_one
+    assert "3x = 42" in level_two
+    assert "subtract" in level_two.lower()
+    assert "wrong direction" in level_two
+
+
+def test_step_voice_without_a_code_still_cites_both_lines() -> None:
+    evidence = StepEvidence("3x + 12 = 30", "3x = 17", None, invalid_count=2)
+    message = TutorEngine().generate(_step_context("EXPLAIN_CONCEPT", None, evidence)).message
+    assert "3x = 17" in message and "3x + 12 = 30" in message
+    assert "again" in message  # second miss adds the retry nudge
+
+
+def test_no_step_evidence_keeps_the_generic_ladder() -> None:
+    message = TutorEngine().generate(_step_context("GIVE_HINT", 2, None)).message
+    assert "both sides" in message.lower() or "other side" in message.lower()
+
+
+def test_step_evidence_describe_is_compact_and_codes_the_move() -> None:
+    text = StepEvidence("3x + 12 = 30", "3x = 42", "EQ_001").describe()
+    assert text == "from '3x + 12 = 30' the learner wrote '3x = 42' (classified EQ_001)"

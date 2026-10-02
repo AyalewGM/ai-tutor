@@ -90,8 +90,16 @@ def _tutor_context(
     next_problem: Problem | None = None,
     student_answer: str | None = None,
     misconception: Misconception | None = None,
+    session_id: uuid.UUID | None = None,
 ) -> TutorContext:
+    from app.services.stepwork import latest_step_evidence
+
     curriculum = db.get(Curriculum, skill.curriculum_id)
+    step_evidence = (
+        latest_step_evidence(db, session_id=session_id, problem_id=problem.id)
+        if session_id is not None
+        else None
+    )
     return TutorContext(
         grade_level=student.grade_level,
         curriculum_name=curriculum.name if curriculum else "Unknown curriculum",
@@ -104,6 +112,7 @@ def _tutor_context(
         misconception_description=misconception.description if misconception else None,
         remediation_strategy=misconception.remediation_strategy if misconception else None,
         next_problem_prompt=next_problem.prompt if next_problem else None,
+        step_evidence=step_evidence,
     )
 
 
@@ -259,13 +268,16 @@ def respond(session_id: uuid.UUID, payload: RespondIn, db: DbSession) -> Respond
     progress.mastery_score = Decimal(str(mastery.mastery))
     progress.confidence_score = Decimal(str(mastery.confidence))
 
-    consecutive_successes = db.scalar(
-        select(func.count(Attempt.id)).where(
-            Attempt.session_id == session.id,
-            Attempt.is_correct.is_(True),
-            Attempt.assistance_level == 0,
+    consecutive_successes = (
+        db.scalar(
+            select(func.count(Attempt.id)).where(
+                Attempt.session_id == session.id,
+                Attempt.is_correct.is_(True),
+                Attempt.assistance_level == 0,
+            )
         )
-    ) or 0
+        or 0
+    )
 
     transition = determine_next_action(
         StateContext(

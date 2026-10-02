@@ -432,6 +432,7 @@ def respond(
             next_problem=next_problem,
             student_answer=payload.answer,
             misconception=evidence.misconception,
+            session_id=session.id,
         ),
         # Correct-answer feedback needs no model call; the deterministic
         # fallback covers it. The LLM only engages where language adds

@@ -51,21 +51,22 @@ def request_hint(
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not belong to active learning focus")
 
-    highest = db.scalar(
-        select(func.max(HintEvent.level)).where(
-            HintEvent.session_id == session.id,
-            HintEvent.problem_id == problem.id,
+    highest = (
+        db.scalar(
+            select(func.max(HintEvent.level)).where(
+                HintEvent.session_id == session.id,
+                HintEvent.problem_id == problem.id,
+            )
         )
-    ) or 0
+        or 0
+    )
     decision = select_hint(
         state=session.current_state,
         highest_level_used=int(highest),
         explicit_request=True,
     )
     request_trigger = (
-        "I_DONT_UNDERSTAND"
-        if payload.reason == "I_DONT_UNDERSTAND"
-        else decision.trigger
+        "I_DONT_UNDERSTAND" if payload.reason == "I_DONT_UNDERSTAND" else decision.trigger
     )
     if not decision.allowed:
         return HintResponse(
@@ -88,6 +89,7 @@ def request_hint(
             action="GIVE_HINT",
             hint_level=decision.level,
             problem=problem,
+            session_id=session.id,
         )
     )
     turn = TutorTurn(
