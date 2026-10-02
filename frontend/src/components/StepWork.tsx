@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { FormEvent } from "react";
 import { Check, X } from "lucide-react";
 
 import { ApiError, post } from "../api";
@@ -36,8 +35,7 @@ export default function StepWork({
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
 
-  async function submitLine(event: FormEvent) {
-    event.preventDefault();
+  async function submitLine() {
     if (!draft.trim() || busy || done) return;
     setBusy(true);
     setFeedback(null);
@@ -106,10 +104,16 @@ export default function StepWork({
         </p>
       )}
       {!done && (
-        <form onSubmit={submitLine} className="flex gap-2">
+        <div className="flex gap-2">
           <Input
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                void submitLine();
+              }
+            }}
             placeholder="Next line, e.g. 3x + 12 = 30"
             aria-label="Next work line"
             className="h-11 text-base"
@@ -117,13 +121,14 @@ export default function StepWork({
             autoComplete="off"
           />
           <Button
-            type="submit"
+            type="button"
             variant="secondary"
+            onClick={() => void submitLine()}
             disabled={disabled || busy || !draft.trim()}
           >
             Check step
           </Button>
-        </form>
+        </div>
       )}
     </div>
   );
