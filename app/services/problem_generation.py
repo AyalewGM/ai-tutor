@@ -107,8 +107,12 @@ def _generate_polynomial_add_subtract(rng: random.Random, difficulty: int) -> Ge
         difficulty,
         "POLYNOMIAL_ADD_SUBTRACT",
         parameters={
-            "a": a, "b": b, "c": c, "d": d,
-            "operation": operation, "variable": variable,
+            "a": a,
+            "b": b,
+            "c": c,
+            "d": d,
+            "operation": operation,
+            "variable": variable,
         },
     )
 
@@ -131,9 +135,7 @@ def _generate_solve_equation(rng: random.Random, difficulty: int) -> GeneratedPr
         a, b = rng.randint(2, 6), rng.randint(-9, 9)
         prompt = f"{a}({_fmt_expr(1, b)}) = {a * (x + b)}"
         parameters = {"tier": "distribute_equation", "a": a, "b": b, "x": x}
-    return GeneratedProblem(
-        prompt, f"x={x}", difficulty, "SOLVE_EQUATION", parameters=parameters
-    )
+    return GeneratedProblem(prompt, f"x={x}", difficulty, "SOLVE_EQUATION", parameters=parameters)
 
 
 def _generate_linear_function(rng: random.Random, difficulty: int) -> GeneratedProblem:
@@ -141,8 +143,7 @@ def _generate_linear_function(rng: random.Random, difficulty: int) -> GeneratedP
         m = rng.randint(1, 8)
         b = rng.randint(-8, 8) if difficulty == 2 else rng.randint(0, 8)
         prompt = (
-            f"A line has slope {m} and y-intercept {b}. "
-            "Write its equation in slope-intercept form."
+            f"A line has slope {m} and y-intercept {b}. Write its equation in slope-intercept form."
         )
         answer = f"y={_fmt_expr(m, b)}"
         parameters = {"tier": "write_slope_intercept", "m": m, "b": b}
@@ -153,9 +154,7 @@ def _generate_linear_function(rng: random.Random, difficulty: int) -> GeneratedP
         prompt = f"For y = {_fmt_expr(m, b)}, what is y when x = {x}?"
         answer = str(m * x + b)
         parameters = {"tier": "evaluate", "m": m, "b": b, "x": x}
-    return GeneratedProblem(
-        prompt, answer, difficulty, "LINEAR_FUNCTION", parameters=parameters
-    )
+    return GeneratedProblem(prompt, answer, difficulty, "LINEAR_FUNCTION", parameters=parameters)
 
 
 def _generate_integer_sum(rng: random.Random, difficulty: int) -> GeneratedProblem:
@@ -167,7 +166,10 @@ def _generate_integer_sum(rng: random.Random, difficulty: int) -> GeneratedProbl
         a, b = rng.randint(-20, 20), rng.randint(-20, 20)
     prompt = f"Evaluate {a} + {b}." if b >= 0 else f"Evaluate {a} - {abs(b)}."
     return GeneratedProblem(
-        prompt, str(a + b), difficulty, "INTEGER_OPERATIONS",
+        prompt,
+        str(a + b),
+        difficulty,
+        "INTEGER_OPERATIONS",
         parameters={"a": a, "b": b},
     )
 
@@ -180,7 +182,10 @@ def _generate_integer_compare(rng: random.Random, difficulty: int) -> GeneratedP
         b = rng.randint(-bound, bound)
     prompt = f"Which is greater, {a} or {b}?"
     return GeneratedProblem(
-        prompt, str(max(a, b)), difficulty, "INTEGER_COMPARE",
+        prompt,
+        str(max(a, b)),
+        difficulty,
+        "INTEGER_COMPARE",
         parameters={"a": a, "b": b},
     )
 
@@ -197,7 +202,10 @@ def _generate_fraction_add(rng: random.Random, difficulty: int) -> GeneratedProb
         else f"{result.numerator}/{result.denominator}"
     )
     return GeneratedProblem(
-        prompt, answer, difficulty, "FRACTION_OPERATIONS",
+        prompt,
+        answer,
+        difficulty,
+        "FRACTION_OPERATIONS",
         parameters={"n1": n1, "d1": d1, "n2": n2, "d2": d2},
     )
 
@@ -213,15 +221,17 @@ def _generate_fraction_subtract(rng: random.Random, difficulty: int) -> Generate
         if result.denominator == 1
         else f"{result.numerator}/{result.denominator}"
     )
-    prompt = (
-        f"Evaluate {f1.numerator}/{f1.denominator} - "
-        f"{f2.numerator}/{f2.denominator}."
-    )
+    prompt = f"Evaluate {f1.numerator}/{f1.denominator} - {f2.numerator}/{f2.denominator}."
     return GeneratedProblem(
-        prompt, answer, difficulty, "FRACTION_SUBTRACT",
+        prompt,
+        answer,
+        difficulty,
+        "FRACTION_SUBTRACT",
         parameters={
-            "n1": f1.numerator, "d1": f1.denominator,
-            "n2": f2.numerator, "d2": f2.denominator,
+            "n1": f1.numerator,
+            "d1": f1.denominator,
+            "n2": f2.numerator,
+            "d2": f2.denominator,
         },
     )
 
@@ -251,8 +261,64 @@ def _generate_word_problem(rng: random.Random, difficulty: int) -> GeneratedProb
         }
         parameters = dict(context["parameters"])
     return GeneratedProblem(
-        prompt, answer, difficulty, "WORD_PROBLEM",
-        context=context, parameters=parameters,
+        prompt,
+        answer,
+        difficulty,
+        "WORD_PROBLEM",
+        context=context,
+        parameters=parameters,
+    )
+
+
+def _generate_algebra_word_problem(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Word problems that require defining a variable and building an equation.
+
+    Every template yields a linear ax + b = c model with an integer answer,
+    so the step checker can verify the setup by its solution value.
+    """
+    if difficulty <= 2:
+        template = rng.choice(["number_trick", "shared_total"])
+    else:
+        template = rng.choice(["flat_fee", "savings"])
+    if template == "number_trick":
+        a, b, x = rng.randint(2, 9), rng.randint(1, 15), rng.randint(2, 12)
+        prompt = (
+            f"When a number is multiplied by {a} and then increased by {b}, "
+            f"the result is {a * x + b}. Find the number."
+        )
+        answer = str(x)
+        parameters = {"multiplier": a, "added": b, "value": x}
+    elif template == "shared_total":
+        k, x = rng.randint(2, 5), rng.randint(3, 12)
+        prompt = (
+            f"Mia scored {k} times as many points as Leo. Together they scored "
+            f"{(k + 1) * x} points. How many points did Leo score?"
+        )
+        answer = str(x)
+        parameters = {"ratio": k, "leo": x}
+    elif template == "flat_fee":
+        fee, rate, miles = rng.randint(2, 8), rng.randint(2, 9), rng.randint(4, 15)
+        prompt = (
+            f"A taxi charges a ${fee} pickup fee plus ${rate} per mile. "
+            f"A ride costs ${fee + rate * miles} total. How many miles was the ride?"
+        )
+        answer = str(miles)
+        parameters = {"fee": fee, "rate": rate, "miles": miles}
+    else:
+        saved, weekly, weeks = rng.randint(5, 30), rng.randint(3, 10), rng.randint(4, 12)
+        prompt = (
+            f"You already have ${saved} saved and add ${weekly} every week. "
+            f"In how many weeks will you have ${saved + weekly * weeks}?"
+        )
+        answer = str(weeks)
+        parameters = {"saved": saved, "weekly": weekly, "weeks": weeks}
+    return GeneratedProblem(
+        prompt,
+        answer,
+        difficulty,
+        "ALGEBRA_WORD_PROBLEM",
+        context={"template": template, "parameters": parameters},
+        parameters=parameters,
     )
 
 
@@ -382,10 +448,14 @@ def _generate_place_value_base_ten(rng: random.Random, difficulty: int) -> Gener
         number = hundreds * 100 + tens * 10 + ones
         prompt = f"How many hundreds, tens, and ones make {number}?"
         answer = f"{hundreds} hundreds, {tens} tens, and {ones} ones"
-        params = {"number": number, "hundreds": hundreds, "tens": tens, "ones": ones, "place": "hundreds_tens_ones"}
-    return GeneratedProblem(
-        prompt, answer, difficulty, "PLACE_VALUE_BASE_TEN", parameters=params
-    )
+        params = {
+            "number": number,
+            "hundreds": hundreds,
+            "tens": tens,
+            "ones": ones,
+            "place": "hundreds_tens_ones",
+        }
+    return GeneratedProblem(prompt, answer, difficulty, "PLACE_VALUE_BASE_TEN", parameters=params)
 
 
 def _generate_money_count(rng: random.Random, difficulty: int) -> GeneratedProblem:
@@ -471,7 +541,12 @@ def _generate_long_division(rng: random.Random, difficulty: int) -> GeneratedPro
         canonical_answer=str(quotient),
         difficulty=difficulty,
         problem_type="LONG_DIVISION",
-        parameters={"dividend": dividend, "divisor": divisor, "quotient": quotient, "operation": "÷"},
+        parameters={
+            "dividend": dividend,
+            "divisor": divisor,
+            "quotient": quotient,
+            "operation": "÷",
+        },
     )
 
 
@@ -610,7 +685,11 @@ def _generate_number_sequence(rng: random.Random, difficulty: int) -> GeneratedP
     sequence = [start + step * i for i in range(5)]
     answer = sequence[missing_index]
     sequence[missing_index] = None
-    prompt = "What number completes the sequence: " + ", ".join("?" if x is None else str(x) for x in sequence) + "?"
+    prompt = (
+        "What number completes the sequence: "
+        + ", ".join("?" if x is None else str(x) for x in sequence)
+        + "?"
+    )
     return GeneratedProblem(
         prompt,
         str(answer),
@@ -670,9 +749,15 @@ def _generate_word_problem_add_sub_20(rng: random.Random, difficulty: int) -> Ge
 
 def _generate_word_problem_add_sub_100(rng: random.Random, difficulty: int) -> GeneratedProblem:
     contexts = [
-        ("add", "A library has {a} fiction books and {b} nonfiction books. How many books are there?"),
+        (
+            "add",
+            "A library has {a} fiction books and {b} nonfiction books. How many books are there?",
+        ),
         ("subtract", "There are {a} sheets of paper. {b} are used. How many are left?"),
-        ("add", "A box has {a} red marbles and {b} blue marbles. How many marbles are there in all?"),
+        (
+            "add",
+            "A box has {a} red marbles and {b} blue marbles. How many marbles are there in all?",
+        ),
         ("subtract", "A school has {a} students. {b} leave for a field trip. How many remain?"),
     ]
     op, template = rng.choice(contexts)
@@ -702,7 +787,11 @@ def _generate_number_pattern(rng: random.Random, difficulty: int) -> GeneratedPr
     pattern = [start + step * i for i in range(length)]
     answer = pattern[index]
     pattern[index] = None
-    prompt = "What number completes the pattern: " + ", ".join("?" if x is None else str(x) for x in pattern) + "?"
+    prompt = (
+        "What number completes the pattern: "
+        + ", ".join("?" if x is None else str(x) for x in pattern)
+        + "?"
+    )
     return GeneratedProblem(
         prompt,
         str(answer),
@@ -781,7 +870,9 @@ def _generate_geometry_shapes(rng: random.Random, difficulty: int) -> GeneratedP
     )
 
 
-def _generate_fraction_halves_thirds_fourths(rng: random.Random, difficulty: int) -> GeneratedProblem:
+def _generate_fraction_halves_thirds_fourths(
+    rng: random.Random, difficulty: int
+) -> GeneratedProblem:
     denominator = rng.choice([2, 3, 4])
     numerator = rng.randint(1, denominator)
     prompt = f"A shape is divided into {denominator} equal parts. {numerator} part{'s' if numerator != 1 else ''} are shaded. What fraction is shaded?"
@@ -852,10 +943,18 @@ def _generate_division_within_100(rng: random.Random, difficulty: int) -> Genera
     )
 
 
-def _generate_word_problem_multiply_divide_100(rng: random.Random, difficulty: int) -> GeneratedProblem:
+def _generate_word_problem_multiply_divide_100(
+    rng: random.Random, difficulty: int
+) -> GeneratedProblem:
     templates = [
-        ("multiply", "There are {a} boxes with {b} pencils in each box. How many pencils are there in all?"),
-        ("divide", "{a} stickers are shared equally among {b} students. How many stickers does each student get?"),
+        (
+            "multiply",
+            "There are {a} boxes with {b} pencils in each box. How many pencils are there in all?",
+        ),
+        (
+            "divide",
+            "{a} stickers are shared equally among {b} students. How many stickers does each student get?",
+        ),
     ]
     op, template = rng.choice(templates)
     if op == "multiply":
@@ -901,6 +1000,7 @@ def _generate_fraction_compare(rng: random.Random, difficulty: int) -> Generated
     n1 = rng.randint(1, d1 - 1)
     n2 = rng.randint(1, d2 - 1)
     from fractions import Fraction
+
     f1 = Fraction(n1, d1)
     f2 = Fraction(n2, d2)
     if f1 > f2:
@@ -939,7 +1039,9 @@ def _generate_area_perimeter_rectangle(rng: random.Random, difficulty: int) -> G
         prompt = f"A rectangle has length {length} units and width {width} units. What is its area?"
     else:
         answer = 2 * (length + width)
-        prompt = f"A rectangle has length {length} units and width {width} units. What is its perimeter?"
+        prompt = (
+            f"A rectangle has length {length} units and width {width} units. What is its perimeter?"
+        )
     return GeneratedProblem(
         prompt,
         str(answer),
@@ -1035,8 +1137,11 @@ def _generate_multiply_by_whole(rng: random.Random, difficulty: int) -> Generate
     )
 
 
-def _generate_add_subtract_unlike_fractions(rng: random.Random, difficulty: int) -> GeneratedProblem:
+def _generate_add_subtract_unlike_fractions(
+    rng: random.Random, difficulty: int
+) -> GeneratedProblem:
     from fractions import Fraction
+
     d1, d2 = rng.sample([2, 3, 4, 5, 6, 8, 10], 2)
     n1 = rng.randint(1, d1 - 1)
     n2 = rng.randint(1, d2 - 1)
@@ -1053,12 +1158,19 @@ def _generate_add_subtract_unlike_fractions(rng: random.Random, difficulty: int)
         f"{result.numerator}/{result.denominator}",
         difficulty,
         "ADD_SUBTRACT_UNLIKE_FRACTIONS",
-        parameters={"numerator1": n1, "denominator1": d1, "numerator2": n2, "denominator2": d2, "operation": op},
+        parameters={
+            "numerator1": n1,
+            "denominator1": d1,
+            "numerator2": n2,
+            "denominator2": d2,
+            "operation": op,
+        },
     )
 
 
 def _generate_multiply_fractions(rng: random.Random, difficulty: int) -> GeneratedProblem:
     from fractions import Fraction
+
     denominators = [2, 3, 4, 5, 6, 8]
     d1, d2 = rng.sample(denominators, 2)
     n1 = rng.randint(1, d1 - 1)
@@ -1076,6 +1188,7 @@ def _generate_multiply_fractions(rng: random.Random, difficulty: int) -> Generat
 
 def _generate_divide_fractions(rng: random.Random, difficulty: int) -> GeneratedProblem:
     from fractions import Fraction
+
     d = rng.choice([2, 3, 4, 5, 6, 8])
     n = rng.randint(1, d - 1)
     whole = rng.randint(2, 9)
@@ -1093,7 +1206,7 @@ def _generate_divide_fractions(rng: random.Random, difficulty: int) -> Generated
 
 def _generate_powers_of_ten(rng: random.Random, difficulty: int) -> GeneratedProblem:
     exponent = rng.randint(1, 4)
-    answer = 10 ** exponent
+    answer = 10**exponent
     prompt = f"What is 10^{exponent}?"
     return GeneratedProblem(
         prompt,
@@ -1106,9 +1219,18 @@ def _generate_powers_of_ten(rng: random.Random, difficulty: int) -> GeneratedPro
 
 def _generate_decimal_operations(rng: random.Random, difficulty: int) -> GeneratedProblem:
     from decimal import Decimal
+
     op = rng.choice(["+", "-"])
-    a = Decimal(rng.randint(1, 99)) / 10 if rng.random() < 0.5 else Decimal(rng.randint(1, 999)) / 100
-    b = Decimal(rng.randint(1, 99)) / 10 if rng.random() < 0.5 else Decimal(rng.randint(1, 999)) / 100
+    a = (
+        Decimal(rng.randint(1, 99)) / 10
+        if rng.random() < 0.5
+        else Decimal(rng.randint(1, 999)) / 100
+    )
+    b = (
+        Decimal(rng.randint(1, 99)) / 10
+        if rng.random() < 0.5
+        else Decimal(rng.randint(1, 999)) / 100
+    )
     if op == "+":
         answer = a + b
         prompt = f"What is {a} + {b}?"
@@ -1154,7 +1276,10 @@ def _generate_arithmetic(rng: random.Random, difficulty: int) -> GeneratedProble
         else _generate_integer_sum(rng, difficulty)
     )
     return GeneratedProblem(
-        generated.prompt, generated.canonical_answer, difficulty, "ARITHMETIC",
+        generated.prompt,
+        generated.canonical_answer,
+        difficulty,
+        "ARITHMETIC",
         parameters=generated.parameters,
     )
 
@@ -1162,7 +1287,10 @@ def _generate_arithmetic(rng: random.Random, difficulty: int) -> GeneratedProble
 def _generate_linear_relation(rng: random.Random, difficulty: int) -> GeneratedProblem:
     generated = _generate_linear_function(rng, difficulty)
     return GeneratedProblem(
-        generated.prompt, generated.canonical_answer, difficulty, "LINEAR_RELATION",
+        generated.prompt,
+        generated.canonical_answer,
+        difficulty,
+        "LINEAR_RELATION",
         parameters=generated.parameters,
     )
 
@@ -1180,6 +1308,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "FRACTION_OPERATIONS": _generate_fraction_add,
     "FRACTION_SUBTRACT": _generate_fraction_subtract,
     "WORD_PROBLEM": _generate_word_problem,
+    "ALGEBRA_WORD_PROBLEM": _generate_algebra_word_problem,
     "EQUAL_GROUPS": _generate_equal_groups,
     "EQUAL_SHARING": _generate_equal_sharing,
     "UNIT_FRACTION": _generate_unit_fraction,
@@ -1264,15 +1393,15 @@ def _mc_transform(candidate: GeneratedProblem, rng: random.Random) -> GeneratedP
         if tier == "add_inverse":
             b, c = p["b"], x + p["b"]
             distractors = [
-                (f"x = {c + b}", "EQ_001"),   # added instead of subtracted
-                (f"x = {b - c}", "EQ_001"),   # reversed subtraction (b - c)
+                (f"x = {c + b}", "EQ_001"),  # added instead of subtracted
+                (f"x = {b - c}", "EQ_001"),  # reversed subtraction (b - c)
                 (f"x = {x + 1}", None),
             ]
         elif tier == "coefficient":
             a, c = p["a"], p["a"] * x
             distractors = [
-                (f"x = {c * a}", "EQ_003"),   # multiplied instead of divided
-                (f"x = {c + a}", "EQ_001"),   # added coefficient instead of dividing
+                (f"x = {c * a}", "EQ_003"),  # multiplied instead of divided
+                (f"x = {c + a}", "EQ_001"),  # added coefficient instead of dividing
                 (f"x = {-x}", None),
             ]
         elif tier == "two_step":
@@ -1292,14 +1421,12 @@ def _mc_transform(candidate: GeneratedProblem, rng: random.Random) -> GeneratedP
         correct_text = candidate.canonical_answer
         inner = b if sign == "+" else -b
         distractors = [
-            (_fmt_expr(a, inner), "DIST_001"),            # only first term multiplied
-            (f"{a * b}x", "ALG_001"),                     # multiplied everything together
-            (_fmt_expr(a, a + inner), "EQ_003"),          # added instead of multiplying
+            (_fmt_expr(a, inner), "DIST_001"),  # only first term multiplied
+            (f"{a * b}x", "ALG_001"),  # multiplied everything together
+            (_fmt_expr(a, a + inner), "EQ_003"),  # added instead of multiplying
         ]
     elif candidate.problem_type == "COMBINE_LIKE_TERMS":
-        a, b, constant, variable = (
-            p["a"], p["b"], p["constant"], p["variable"]
-        )
+        a, b, constant, variable = (p["a"], p["b"], p["constant"], p["variable"])
         correct_text = candidate.canonical_answer
         distractors = [
             (_fmt_expr(a - b, constant, variable), "NUM_001"),  # sign slip on second term
@@ -1308,7 +1435,8 @@ def _mc_transform(candidate: GeneratedProblem, rng: random.Random) -> GeneratedP
         ]
         if constant:
             distractors.insert(
-                0, (_fmt_term(a + b + constant, variable), "ALG_001")  # folded constant in
+                0,
+                (_fmt_term(a + b + constant, variable), "ALG_001"),  # folded constant in
             )
     elif candidate.problem_type in _ARITHMETIC_MC_TYPES:
         a, b, op = p.get("a"), p.get("b"), p.get("operation")
@@ -1318,27 +1446,27 @@ def _mc_transform(candidate: GeneratedProblem, rng: random.Random) -> GeneratedP
         correct = int(correct_text)
         if op == "+":
             distractors = [
-                (str(a - b), None),      # switched to subtraction
+                (str(a - b), None),  # switched to subtraction
                 (str(correct + 10), None),  # place-value slip
-                (str(correct - 1), None),   # off by one
+                (str(correct - 1), None),  # off by one
             ]
         elif op == "-":
             distractors = [
-                (str(a + b), None),      # switched to addition
+                (str(a + b), None),  # switched to addition
                 (str(correct + 10), None),
-                (str(b - a), None),      # reversed operands
+                (str(b - a), None),  # reversed operands
             ]
         elif op == "×":
             distractors = [
-                (str(a + b), None),          # added instead of multiplied
-                (str(a * (b + 1)), None),    # adjacent fact
-                (str(a * (b - 1)), None),    # adjacent fact
+                (str(a + b), None),  # added instead of multiplied
+                (str(a * (b + 1)), None),  # adjacent fact
+                (str(a * (b - 1)), None),  # adjacent fact
             ]
         elif op == "÷":
             distractors = [
                 (str(correct + 1), None),
                 (str(correct - 1), None),
-                (str(b), None),              # returned the divisor
+                (str(b), None),  # returned the divisor
             ]
         else:
             return None
@@ -1359,13 +1487,16 @@ def _mc_transform(candidate: GeneratedProblem, rng: random.Random) -> GeneratedP
         correct_text = candidate.canonical_answer
         distractors = [
             (f"{n1 + n2}/{d1 + d2}", "NUM_003"),  # added across
-            (f"{n1 + n2}/{d1}", None),            # kept one denominator
+            (f"{n1 + n2}/{d1}", None),  # kept one denominator
         ]
         if d1 != d2:
             distractors.append((f"{n1 + n2}/{d2}", None))
     elif candidate.problem_type == "FRACTION_ADD_SUBTRACT_LIKE":
         n1, n2, denom, op = (
-            p.get("n1"), p.get("n2"), p.get("denominator"), p.get("operation"),
+            p.get("n1"),
+            p.get("n2"),
+            p.get("denominator"),
+            p.get("operation"),
         )
         if not all(isinstance(v, int) for v in (n1, n2, denom)):
             return None
@@ -1377,7 +1508,7 @@ def _mc_transform(candidate: GeneratedProblem, rng: random.Random) -> GeneratedP
             ]
         else:
             distractors = [
-                (f"{n1 + n2}/{denom}", None),           # added instead of subtracted
+                (f"{n1 + n2}/{denom}", None),  # added instead of subtracted
                 (f"{abs(n1 - n2)}/{denom * 2}", "NUM_003"),
             ]
     else:
@@ -1450,9 +1581,7 @@ def _fingerprint(family: str, parameters: dict) -> tuple:
 def _existing_generated_keys(db: Session, skill_id: uuid.UUID) -> tuple[set, set]:
     """(prompts, (problem_family, parameters) fingerprints) already in the pool."""
     rows = db.execute(
-        select(Problem.prompt, Problem.solution).where(
-            Problem.primary_skill_id == skill_id
-        )
+        select(Problem.prompt, Problem.solution).where(Problem.primary_skill_id == skill_id)
     ).all()
     prompts = {row[0] for row in rows}
     fingerprints = {
@@ -1485,9 +1614,7 @@ def generate_problem(
         supported = [problem_type] if problem_type in GENERATORS else []
     else:
         available = db.scalars(
-            select(Problem.problem_type)
-            .where(Problem.primary_skill_id == skill_id)
-            .distinct()
+            select(Problem.problem_type).where(Problem.primary_skill_id == skill_id).distinct()
         ).all()
         supported = [t for t in available if t in GENERATORS]
     if not supported:

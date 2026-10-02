@@ -173,9 +173,10 @@ def test_work_step_rejects_unsupported_and_foreign_problems() -> None:
         foreign_skill = db.scalar(
             select(Skill).where(
                 Skill.code != "M8.ALG.MULTI_STEP",
-                Skill.curriculum_id == select(Skill.curriculum_id).where(
-                    Skill.code == "M8.ALG.MULTI_STEP"
-                ).scalar_subquery(),
+                Skill.curriculum_id
+                == select(Skill.curriculum_id)
+                .where(Skill.code == "M8.ALG.MULTI_STEP")
+                .scalar_subquery(),
             )
         )
         assert foreign_skill is not None
@@ -234,3 +235,43 @@ def test_work_step_word_problem_model_then_answer() -> None:
     solved = _step(session_id, problem_id, "10.40 dollars")
     assert solved["status"] == "solved"
     assert solved["normalized_line"] == "10.40"
+
+
+def test_work_step_algebra_word_problem_declare_setup_solve() -> None:
+    student_id, _, skill_id = _fresh_learner()
+    session_id = _start_session(student_id, skill_id)
+    with SessionLocal() as db:
+        problem = Problem(
+            primary_skill_id=skill_id,
+            problem_type="ALGEBRA_WORD_PROBLEM",
+            difficulty=3,
+            prompt="A taxi charges a $3 pickup fee plus $2 per mile. "
+            "A ride costs $17 total. How many miles was the ride?",
+            canonical_answer="7",
+            answer_kind="FREE_TEXT",
+            source_type="TEST",
+        )
+        db.add(problem)
+        db.commit()
+        problem_id = problem.id
+
+    # Equations are rejected with guidance until the variable is named.
+    early = _step(session_id, problem_id, "2x + 3 = 17")
+    assert early["status"] == "unparseable"
+    # Declare, then model: a wrong model is caught by its solution value.
+    assert _step(session_id, problem_id, "x = miles driven")["status"] == "valid"
+    bad_model = _step(session_id, problem_id, "3x + 2 = 17")
+    assert bad_model["status"] == "invalid"
+    assert bad_model["misconception_code"] == "WP_001"
+    # The right model and solve steps ride the ordinary equivalence checker.
+    assert _step(session_id, problem_id, "3 + 2x = 17")["status"] == "valid"
+    assert _step(session_id, problem_id, "2x = 14")["status"] == "valid"
+    solved = _step(session_id, problem_id, "x = 7")
+    assert solved["status"] == "solved"
+
+    result = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
+        json={"problem_id": str(problem_id), "answer": "7", "assistance_level": 0},
+    )
+    assert result.status_code == 200
+    assert result.json()["evaluation"]["correct"] is True

@@ -17,9 +17,7 @@ SOURCE_URI = "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/
 
 
 def _skill(db, curriculum, code, name, description, level):
-    skill = db.scalar(
-        select(Skill).where(Skill.curriculum_id == curriculum.id, Skill.code == code)
-    )
+    skill = db.scalar(select(Skill).where(Skill.curriculum_id == curriculum.id, Skill.code == code))
     if skill is None:
         skill = Skill(
             curriculum_id=curriculum.id,
@@ -201,67 +199,89 @@ def seed():
         # anchor gates the head of its subskill chain so placement can descend
         # from a broad strand into the exact atomic skill blocking progress.
         num_int = _skill(
-            db, curriculum, "MTH1W.B.NUM.INT",
+            db,
+            curriculum,
+            "MTH1W.B.NUM.INT",
             "Integer Operations",
             "Add, subtract, multiply, and divide integers with signed results.",
             1,
         )
         num_frac = _skill(
-            db, curriculum, "MTH1W.B.NUM.FRAC",
+            db,
+            curriculum,
+            "MTH1W.B.NUM.FRAC",
             "Fraction Operations",
             "Add and subtract fractions using common denominators.",
             2,
         )
         alg_expr = _skill(
-            db, curriculum, "MTH1W.C.ALG.EXPR",
+            db,
+            curriculum,
+            "MTH1W.C.ALG.EXPR",
             "Simplifying Algebraic Expressions",
             "Apply distribution and combine like terms to simplify expressions.",
             2,
         )
         alg_like = _skill(
-            db, curriculum, "MTH1W.C.ALG.LIKE",
+            db,
+            curriculum,
+            "MTH1W.C.ALG.LIKE",
             "Like Terms and Algebraic Structure",
             "Identify like terms by variable and exponent structure and combine like terms without merging unlike terms.",
             2,
         )
         alg_poly = _skill(
-            db, curriculum, "MTH1W.C.ALG.POLY",
+            db,
+            curriculum,
+            "MTH1W.C.ALG.POLY",
             "Polynomial Addition and Subtraction",
             "Add and subtract polynomial expressions, preserving term structure and distributing subtraction across grouped terms.",
             3,
         )
         alg_eq1 = _skill(
-            db, curriculum, "MTH1W.C.ALG.EQ1",
+            db,
+            curriculum,
+            "MTH1W.C.ALG.EQ1",
             "One-Step Equations",
             "Solve equations of the form x + a = b and ax = b using inverse operations.",
             2,
         )
         alg_eq2 = _skill(
-            db, curriculum, "MTH1W.C.ALG.EQ2",
+            db,
+            curriculum,
+            "MTH1W.C.ALG.EQ2",
             "Two-Step and Multi-Step Equations",
             "Solve ax + b = c and a(x + b) = c by undoing operations in reverse order.",
             3,
         )
         rel_slope = _skill(
-            db, curriculum, "MTH1W.C.REL.SLOPE",
+            db,
+            curriculum,
+            "MTH1W.C.REL.SLOPE",
             "Slope-Intercept Form",
             "Identify slope and y-intercept and write equations in y = mx + b form.",
             3,
         )
         rel_eval = _skill(
-            db, curriculum, "MTH1W.C.REL.EVAL",
+            db,
+            curriculum,
+            "MTH1W.C.REL.EVAL",
             "Evaluating Linear Relations",
             "Evaluate a linear relation for a given input value.",
             3,
         )
         fin_pct = _skill(
-            db, curriculum, "MTH1W.F.FIN.PCT",
+            db,
+            curriculum,
+            "MTH1W.F.FIN.PCT",
             "Percent Computations",
             "Compute a percent of an amount using decimal conversion.",
             2,
         )
         fin_app = _skill(
-            db, curriculum, "MTH1W.F.FIN.APP",
+            db,
+            curriculum,
+            "MTH1W.F.FIN.APP",
             "Discount and Tax Applications",
             "Apply percent reasoning to discounts, sale prices, and tax amounts.",
             3,
@@ -304,10 +324,8 @@ def seed():
             number,
             "DIST_001",
             "Partial distribution",
-            "The learner multiplies the outside factor by only one term "
-            "inside parentheses.",
-            "Represent the outside factor as multiplying each term separately "
-            "before simplifying.",
+            "The learner multiplies the outside factor by only one term inside parentheses.",
+            "Represent the outside factor as multiplying each term separately before simplifying.",
         )
         _misconception(
             number,
@@ -322,8 +340,7 @@ def seed():
             number,
             "NUM_002",
             "Integer magnitudes added instead of signed sum",
-            "The learner adds the absolute values of the addends and ignores "
-            "their signs.",
+            "The learner adds the absolute values of the addends and ignores their signs.",
             "Treat the negative addend as movement left on the number line "
             "rather than as another positive amount.",
         )
@@ -331,8 +348,7 @@ def seed():
             algebra,
             "DIST_002",
             "Distribution sign error",
-            "The learner distributes the factor but flips the sign of the "
-            "constant term.",
+            "The learner distributes the factor but flips the sign of the constant term.",
             "Rewrite the product as a signed multiplication for each term, "
             "tracking the sign of both factors before simplifying.",
         )
@@ -351,8 +367,7 @@ def seed():
             "Fractions added across",
             "The learner adds numerators together and denominators together "
             "instead of finding a common denominator.",
-            "Rewrite both fractions with a common denominator before adding "
-            "the numerators.",
+            "Rewrite both fractions with a common denominator before adding the numerators.",
         )
         _misconception(
             algebra,
@@ -367,10 +382,17 @@ def seed():
             algebra,
             "ALG_002",
             "Constant sign dropped",
-            "The learner combines constants but drops the sign of a negative "
-            "term.",
-            "Attach each constant's sign to the term and combine signed "
-            "constants carefully.",
+            "The learner combines constants but drops the sign of a negative term.",
+            "Attach each constant's sign to the term and combine signed constants carefully.",
+        )
+        _misconception(
+            alg_eq2,
+            "WP_001",
+            "Equation doesn't model the situation",
+            "The learner writes an equation whose solution does not match the "
+            "quantities described in the problem.",
+            "Name what each number does — which multiplies the unknown and "
+            "which is added — before writing the equation.",
         )
         _misconception(
             algebra,
@@ -394,8 +416,7 @@ def seed():
             relations,
             "REL_001",
             "Slope and intercept swapped",
-            "The learner writes the linear equation with the slope and "
-            "y-intercept exchanged.",
+            "The learner writes the linear equation with the slope and y-intercept exchanged.",
             "Anchor the equation as y = mx + b and check which given value "
             "multiplies x and which stands alone.",
         )
@@ -405,24 +426,20 @@ def seed():
             "Coefficient added to variable",
             "The learner evaluates mx as m + x instead of multiplying the "
             "slope by the input value.",
-            "Substitute the input into mx as multiplication: m times x, "
-            "then add b.",
+            "Substitute the input into mx as multiplication: m times x, then add b.",
         )
         _misconception(
             financial,
             "FIN_001",
             "Percent treated as a whole-number amount",
-            "The learner uses the percent as a dollar amount or forgets to "
-            "divide by 100.",
-            "Convert the percent to a decimal by dividing by 100 before "
-            "multiplying by the amount.",
+            "The learner uses the percent as a dollar amount or forgets to divide by 100.",
+            "Convert the percent to a decimal by dividing by 100 before multiplying by the amount.",
         )
         _misconception(
             financial,
             "FIN_002",
             "Discount amount returned instead of final price",
-            "The learner computes the discount but does not subtract it "
-            "from the original price.",
+            "The learner computes the discount but does not subtract it from the original price.",
             "After finding the discount amount, subtract it from the "
             "original price to get the price paid.",
         )
@@ -441,8 +458,7 @@ def seed():
             "Fractions added across",
             "The learner adds numerators together and denominators together "
             "instead of finding a common denominator.",
-            "Rewrite both fractions with a common denominator before adding "
-            "the numerators.",
+            "Rewrite both fractions with a common denominator before adding the numerators.",
         )
         _misconception(
             alg_expr,
@@ -457,8 +473,7 @@ def seed():
             alg_expr,
             "DIST_002",
             "Distribution sign error",
-            "The learner distributes the factor but flips the sign of the "
-            "constant term.",
+            "The learner distributes the factor but flips the sign of the constant term.",
             "Rewrite the product as a signed multiplication for each term, "
             "tracking the sign of both factors before simplifying.",
         )
@@ -498,8 +513,7 @@ def seed():
             rel_slope,
             "REL_001",
             "Slope and intercept swapped",
-            "The learner writes the linear equation with the slope and "
-            "y-intercept exchanged.",
+            "The learner writes the linear equation with the slope and y-intercept exchanged.",
             "Anchor the equation as y = mx + b and check which given value "
             "multiplies x and which stands alone.",
         )
@@ -509,15 +523,13 @@ def seed():
             "Coefficient added to variable",
             "The learner evaluates mx as m + x instead of multiplying the "
             "slope by the input value.",
-            "Substitute the input into mx as multiplication: m times x, "
-            "then add b.",
+            "Substitute the input into mx as multiplication: m times x, then add b.",
         )
         _misconception(
             fin_app,
             "FIN_002",
             "Discount amount returned instead of final price",
-            "The learner computes the discount but does not subtract it "
-            "from the original price.",
+            "The learner computes the discount but does not subtract it from the original price.",
             "After finding the discount amount, subtract it from the "
             "original price to get the price paid.",
         )
@@ -530,9 +542,27 @@ def seed():
             (algebra, 2, "Solve 3x + 4 = 19.", "x=5", "SOLVE_EQUATION"),
             (algebra, 2, "Simplify 4(x + 3).", "4x+12", "SIMPLIFY_EXPRESSION"),
             (relations, 2, "For y = 3x + 2, what is y when x = 4?", "14", "LINEAR_RELATION"),
-            (relations, 3, "A line has slope 2 and y-intercept -1. Write its equation.", "y=2x-1", "LINEAR_RELATION"),
-            (financial, 1, "A $80 purchase has 13% tax. What is the tax amount?", "10.40", "WORD_PROBLEM"),
-            (financial, 2, "A $120 item is discounted by 25%. What is the sale price before tax?", "90", "WORD_PROBLEM"),
+            (
+                relations,
+                3,
+                "A line has slope 2 and y-intercept -1. Write its equation.",
+                "y=2x-1",
+                "LINEAR_RELATION",
+            ),
+            (
+                financial,
+                1,
+                "A $80 purchase has 13% tax. What is the tax amount?",
+                "10.40",
+                "WORD_PROBLEM",
+            ),
+            (
+                financial,
+                2,
+                "A $120 item is discounted by 25%. What is the sale price before tax?",
+                "90",
+                "WORD_PROBLEM",
+            ),
             # Fine-grained subskill problems, each typed to a registered generator.
             (num_int, 1, "Evaluate -8 + 15.", "7", "INTEGER_OPERATIONS"),
             (num_int, 2, "Evaluate -4 - 9.", "-13", "INTEGER_OPERATIONS"),
@@ -552,13 +582,51 @@ def seed():
             (alg_eq1, 1, "Solve 3x = 21.", "x=7", "SOLVE_EQUATION"),
             (alg_eq2, 2, "Solve 2x + 5 = 17.", "x=6", "SOLVE_EQUATION"),
             (alg_eq2, 3, "Solve 3(x - 2) = 12.", "x=6", "SOLVE_EQUATION"),
-            (rel_slope, 2, "A line has slope 4 and y-intercept 3. Write its equation.", "y=4x+3", "LINEAR_FUNCTION"),
-            (rel_slope, 3, "A line has slope -2 and y-intercept 5. Write its equation.", "y=-2x+5", "LINEAR_FUNCTION"),
+            (
+                alg_eq2,
+                2,
+                (
+                    "When a number is doubled and then increased by 5, "
+                    "the result is 21. Find the number."
+                ),
+                "8",
+                "ALGEBRA_WORD_PROBLEM",
+            ),
+            (
+                alg_eq2,
+                3,
+                (
+                    "A taxi charges a $3 pickup fee plus $2 per mile. "
+                    "A ride costs $17 total. How many miles was the ride?"
+                ),
+                "7",
+                "ALGEBRA_WORD_PROBLEM",
+            ),
+            (
+                rel_slope,
+                2,
+                "A line has slope 4 and y-intercept 3. Write its equation.",
+                "y=4x+3",
+                "LINEAR_FUNCTION",
+            ),
+            (
+                rel_slope,
+                3,
+                "A line has slope -2 and y-intercept 5. Write its equation.",
+                "y=-2x+5",
+                "LINEAR_FUNCTION",
+            ),
             (rel_eval, 2, "For y = 2x + 1, what is y when x = 5?", "11", "LINEAR_FUNCTION"),
             (rel_eval, 3, "For y = -3x + 4, what is y when x = 2?", "-2", "LINEAR_FUNCTION"),
             (fin_pct, 1, "What is 15% of 80?", "12", "WORD_PROBLEM"),
             (fin_pct, 2, "What is 30% of 150?", "45", "WORD_PROBLEM"),
-            (fin_app, 2, "A $60 item is discounted by 20%. What is the sale price?", "48", "WORD_PROBLEM"),
+            (
+                fin_app,
+                2,
+                "A $60 item is discounted by 20%. What is the sale price?",
+                "48",
+                "WORD_PROBLEM",
+            ),
             (fin_app, 3, "A $45 meal has 13% tax. What is the tax amount?", "5.85", "WORD_PROBLEM"),
         ]
         for args in problems:

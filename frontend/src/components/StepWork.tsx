@@ -32,6 +32,7 @@ export default function StepWork({
   onError,
 }: StepWorkProps) {
   const wordProblem = problemType === "WORD_PROBLEM";
+  const algebraWordProblem = problemType === "ALGEBRA_WORD_PROBLEM";
   const [lines, setLines] = useState<StepLine[]>([]);
   const [draft, setDraft] = useState("");
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -68,9 +69,11 @@ export default function StepWork({
   return (
     <div className="space-y-3" data-testid="step-work">
       <p className="text-sm text-muted-foreground">
-        {wordProblem
-          ? "Work it out step by step — write the calculation, then your answer."
-          : "Solve it line by line — write each step as an equation."}
+        {algebraWordProblem
+          ? "Name the unknown first (like x = miles driven), then write the equation, then solve it line by line."
+          : wordProblem
+            ? "Work it out step by step — write the calculation, then your answer."
+            : "Solve it line by line — write each step as an equation."}
       </p>
       {lines.length > 0 && (
         <ol className="space-y-1.5" aria-label="Your work">
