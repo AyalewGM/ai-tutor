@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import katex from "katex";
 import "katex/dist/katex.min.css";
 
@@ -13,7 +13,9 @@ import "katex/dist/katex.min.css";
  * - Comparisons: `=`, `<`, `>`, `≤`, `≥`, `≠`
  * - Equations: `a = b`, `x = ?`
  *
- * Everything else is rendered as plain text.
+ * Everything else is rendered as plain text via React's escaping.
+ * Math segments are rendered with katex.render() into a DOM node, so no
+ * HTML string is ever reinterpreted — no dangerouslySetInnerHTML.
  */
 
 // Patterns that indicate a segment is math
@@ -53,17 +55,33 @@ function toLatex(text: string): string {
   return result;
 }
 
+function KatexSpan({ latex, fallback }: { latex: string; fallback: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    try {
+      katex.render(latex, el, {
+        throwOnError: false,
+        displayMode: false,
+        strict: false,
+      });
+    } catch {
+      el.textContent = fallback; // fallback to plain text on error
+    }
+  }, [latex, fallback]);
+  return <span ref={ref}>{fallback}</span>;
+}
+
 interface MathTextProps {
   text: string;
   className?: string;
 }
 
 export default function MathText({ text, className }: MathTextProps) {
-  const html = useMemo(() => {
-    if (!text) return "";
-
-    // Split into math and non-math segments
-    const segments: Array<{ type: "text" | "math"; content: string }> = [];
+  const segments = useMemo(() => {
+    const out: Array<{ type: "text" | "math"; content: string }> = [];
+    if (!text) return out;
     let lastEnd = 0;
     let match: RegExpExecArray | null;
 
@@ -71,42 +89,26 @@ export default function MathText({ text, className }: MathTextProps) {
     while ((match = MATH_SEGMENT_RE.exec(text)) !== null) {
       const segStart = match.index + match[0].indexOf(match[1]);
       if (segStart > lastEnd) {
-        segments.push({ type: "text", content: text.slice(lastEnd, segStart) });
+        out.push({ type: "text", content: text.slice(lastEnd, segStart) });
       }
-      segments.push({ type: "math", content: match[1].trim() });
+      out.push({ type: "math", content: match[1].trim() });
       lastEnd = segStart + match[1].length;
     }
     if (lastEnd < text.length) {
-      segments.push({ type: "text", content: text.slice(lastEnd) });
+      out.push({ type: "text", content: text.slice(lastEnd) });
     }
-
-    return segments
-      .map((seg) => {
-        if (seg.type === "text") {
-          // Escape HTML in text segments
-          return seg.content
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
-        }
-        const latex = toLatex(seg.content);
-        try {
-          return katex.renderToString(latex, {
-            throwOnError: false,
-            displayMode: false,
-            strict: false,
-          });
-        } catch {
-          return seg.content; // fallback to plain text on error
-        }
-      })
-      .join("");
+    return out;
   }, [text]);
 
   return (
-    <span
-      className={`math-text ${className ?? ""}`}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
+    <span className={`math-text ${className ?? ""}`}>
+      {segments.map((seg, i) =>
+        seg.type === "text" ? (
+          seg.content
+        ) : (
+          <KatexSpan key={i} latex={toLatex(seg.content)} fallback={seg.content} />
+        ),
+      )}
+    </span>
   );
 }
