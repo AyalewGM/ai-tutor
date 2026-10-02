@@ -9,6 +9,7 @@ or divide-first), not only the canonical path.
 Scope is single-variable polynomials in exact rational arithmetic, which
 covers the SOLVE_EQUATION families served today.
 """
+
 import math
 import re
 from dataclasses import dataclass
@@ -468,7 +469,10 @@ def _check_expression_step(
             misconception_code=code,
             revealed_line=revealed,
         )
-    feedback = _ERROR_FEEDBACK.get(code) or "That expression isn't equal to the line above — check your arithmetic."
+    feedback = (
+        _ERROR_FEEDBACK.get(code)
+        or "That expression isn't equal to the line above — check your arithmetic."
+    )
     return StepCheck(status="invalid", feedback=feedback, misconception_code=code)
 
 
@@ -510,10 +514,11 @@ def is_equation_family(problem_type: str | None) -> bool:
 def problem_supports_steps(problem) -> bool:
     """A problem offers structured steps only when the checker can parse it."""
     start = starting_point(problem)
-    if (
-        getattr(problem, "answer_kind", None) not in {"FREE_TEXT", "FRACTION", "INTEGER"}
-        or not supports_steps(getattr(problem, "problem_type", None))
-    ):
+    if getattr(problem, "answer_kind", None) not in {
+        "FREE_TEXT",
+        "FRACTION",
+        "INTEGER",
+    } or not supports_steps(getattr(problem, "problem_type", None)):
         return False
     if getattr(problem, "problem_type", None) == "WORD_PROBLEM":
         return word_canonical_value(problem) is not None
@@ -541,8 +546,15 @@ def word_canonical_value(problem) -> Fraction | None:
 
 
 def _strip_units(text: str) -> str:
-    """Drop a trailing units word so '12 dollars' grades like '12'."""
-    return re.sub(r"\s+[a-zA-Z]+$", "", text.strip())
+    """Drop a trailing units word so '12 dollars' grades like '12'.
+
+    A lone trailing letter is left alone — it could be the variable.
+    """
+    stripped = text.strip()
+    head, sep, tail = stripped.rpartition(" ")
+    if sep and len(tail) > 1 and tail.isalpha():
+        return head.rstrip()
+    return stripped
 
 
 def _word_line_value(line: str) -> Fraction | None:
@@ -612,9 +624,7 @@ def check_word_step(
         last_side = _strip_units(stripped.split("=")[-1])
         last_poly = parse_expression_lenient(last_side)
         last_is_bare = (
-            last_poly is not None
-            and set(last_poly) == {0}
-            and not _looks_like_model(last_side)
+            last_poly is not None and set(last_poly) == {0} and not _looks_like_model(last_side)
         )
         return StepCheck(
             status="solved" if last_is_bare else "valid",
@@ -631,8 +641,7 @@ def check_word_step(
         )
     else:
         feedback = (
-            "That line doesn't match the value of your calculation above — "
-            "check your arithmetic."
+            "That line doesn't match the value of your calculation above — check your arithmetic."
         )
     return StepCheck(
         status="invalid",
@@ -648,7 +657,9 @@ def _looks_like_model(line: str) -> bool:
 
 def starting_equation(prompt: str) -> str | None:
     """Extract the equation text from a problem prompt."""
-    text = re.sub(r"^(solve( for \w)?|find \w|evaluate)[:\s]*", "", prompt.strip(), flags=re.IGNORECASE)
+    text = re.sub(
+        r"^(solve( for \w)?|find \w|evaluate)[:\s]*", "", prompt.strip(), flags=re.IGNORECASE
+    )
     text = text.strip().rstrip(".;?")
     return text if "=" in text else None
 

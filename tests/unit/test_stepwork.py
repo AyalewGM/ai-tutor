@@ -1,6 +1,7 @@
 from fractions import Fraction
 
 from app.services.stepwork import (
+    _strip_units,
     check_step,
     check_word_step,
     parse_equation,
@@ -174,10 +175,13 @@ def test_starting_expression_preserves_leading_sign() -> None:
 def test_sympy_fallback_covers_syntax_the_native_parser_lacks() -> None:
     # ^ exponent syntax and implicit multiplication through parens
     assert parse_expression_lenient("x^2 - 5x + 6") == {
-        2: Fraction(1), 1: Fraction(-5), 0: Fraction(6),
+        2: Fraction(1),
+        1: Fraction(-5),
+        0: Fraction(6),
     }
     assert parse_expression_lenient("0.5x + 1/4") == {
-        1: Fraction(1, 2), 0: Fraction(1, 4),
+        1: Fraction(1, 2),
+        0: Fraction(1, 4),
     }
     assert parse_equation_lenient("x^2 - 4 = 0") is not None
 
@@ -216,13 +220,21 @@ def test_word_problem_model_and_answer() -> None:
     # scaffolding, not a gate.
     assert check_word_step("10.40", c, [], "10.40 dollars", 0).status == "solved"
     # Chained computation ending at the answer is solved.
-    assert check_word_step(
-        "10.40", c, ["0.13 * 80"], "0.13 * 80 = 10.4", 0
-    ).status == "solved"
+    assert check_word_step("10.40", c, ["0.13 * 80"], "0.13 * 80 = 10.4", 0).status == "solved"
     # Off-value compute step is an arithmetic slip.
     slip = check_word_step("10.40", c, ["0.13 * 80"], "9.4", 0)
     assert slip.status == "invalid"
     assert slip.misconception_code == "NUM_003"
+
+
+def test_strip_units() -> None:
+    assert _strip_units("12 dollars") == "12"
+    assert _strip_units("x = 12 dollars") == "x = 12"
+    assert _strip_units("12  dollars") == "12"
+    # A lone trailing letter could be the variable — never strip it.
+    assert _strip_units("2 x") == "2 x"
+    assert _strip_units("x") == "x"
+    assert _strip_units("5 cm^2") == "5 cm^2"
 
 
 def test_word_problem_supports_steps_gate() -> None:
