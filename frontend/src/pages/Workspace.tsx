@@ -486,7 +486,7 @@ export default function Workspace() {
                         type="button"
                         onClick={() => setLearnOpen((o) => !o)}
                         aria-expanded={learnOpen}
-                        className="flex w-full items-center gap-2 px-4 py-2.5 text-sm font-medium text-accent-foreground"
+                        className="flex w-full items-center gap-2 px-4 py-2.5 text-sm font-semibold text-accent"
                       >
                         <BookOpen className="h-4 w-4 text-accent" />
                         Learn the idea first
