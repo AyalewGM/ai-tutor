@@ -1,4 +1,5 @@
 import uuid
+from datetime import UTC, datetime, timedelta
 
 from fastapi.testclient import TestClient
 from sqlalchemy import func, select
@@ -12,8 +13,11 @@ from app.models import (
     Attempt,
     Curriculum,
     MasteryEvent,
+    Problem,
     Skill,
+    SkillStatus,
     Student,
+    StudentSkill,
     TutorSession,
     TutorState,
     TutorTurn,
@@ -27,9 +31,7 @@ client = TestClient(app)
 
 def _create_session() -> tuple[uuid.UUID, uuid.UUID]:
     with SessionLocal() as db:
-        curriculum = db.scalar(
-            select(Curriculum).where(Curriculum.code == "MCPS_MATH_8")
-        )
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MCPS_MATH_8"))
         skill = db.scalar(select(Skill).where(Skill.code == "M8.ALG.DIST"))
         assert curriculum is not None
         assert skill is not None
@@ -61,15 +63,19 @@ def _evidence_counts(
     student_id: uuid.UUID,
 ) -> tuple[int, int, int]:
     with SessionLocal() as db:
-        attempts = db.scalar(
-            select(func.count(Attempt.id)).where(Attempt.session_id == session_id)
-        ) or 0
-        mastery_events = db.scalar(
-            select(func.count(MasteryEvent.id)).where(MasteryEvent.student_id == student_id)
-        ) or 0
-        turns = db.scalar(
-            select(func.count(TutorTurn.id)).where(TutorTurn.session_id == session_id)
-        ) or 0
+        attempts = (
+            db.scalar(select(func.count(Attempt.id)).where(Attempt.session_id == session_id)) or 0
+        )
+        mastery_events = (
+            db.scalar(
+                select(func.count(MasteryEvent.id)).where(MasteryEvent.student_id == student_id)
+            )
+            or 0
+        )
+        turns = (
+            db.scalar(select(func.count(TutorTurn.id)).where(TutorTurn.session_id == session_id))
+            or 0
+        )
     return int(attempts), int(mastery_events), int(turns)
 
 
@@ -141,6 +147,56 @@ def test_i_dont_understand_is_recorded_as_assistance() -> None:
         )
         assert event is not None
         assert event.trigger == "I_DONT_UNDERSTAND"
+
+
+def test_workspace_exposes_smartscore_streak_and_level() -> None:
+    session_id, student_id = _create_session()
+    now = datetime.now(UTC)
+    with SessionLocal() as db:
+        session = db.get(TutorSession, session_id)
+        skill_id = session.active_skill_id or session.primary_skill_id
+        problem = db.scalar(select(Problem).where(Problem.primary_skill_id == skill_id).limit(1))
+        assert problem is not None
+        progress = db.get(StudentSkill, {"student_id": student_id, "skill_id": skill_id})
+        if progress is None:
+            progress = StudentSkill(student_id=student_id, skill_id=skill_id)
+            db.add(progress)
+        progress.mastery_score = 0.72
+        progress.status = SkillStatus.PRACTICING
+        for offset, correct in [(0, False), (1, True), (2, True), (3, True)]:
+            db.add(
+                Attempt(
+                    session_id=session_id,
+                    student_id=student_id,
+                    problem_id=problem.id,
+                    student_answer="x",
+                    is_correct=correct,
+                    attempt_number=offset + 1,
+                    created_at=now + timedelta(seconds=offset),
+                )
+            )
+        db.commit()
+
+    evidence = client.get(f"/api/v1/learner-workspace/sessions/{session_id}").json()["evidence"]
+    assert evidence["smartscore"] == 72
+    assert evidence["streak_count"] == 3  # trailing correct run; earlier miss ignored
+    assert evidence["mastery_level"] == "proficient"
+
+    with SessionLocal() as db:
+        db.add(
+            Attempt(
+                session_id=session_id,
+                student_id=student_id,
+                problem_id=problem.id,
+                student_answer="y",
+                is_correct=False,
+                attempt_number=5,
+                created_at=now + timedelta(seconds=4),
+            )
+        )
+        db.commit()
+    evidence = client.get(f"/api/v1/learner-workspace/sessions/{session_id}").json()["evidence"]
+    assert evidence["streak_count"] == 0
 
 
 def test_other_family_cannot_read_hint_or_respond_to_session() -> None:

@@ -9,6 +9,7 @@ or divide-first), not only the canonical path.
 Scope is single-variable polynomials in exact rational arithmetic, which
 covers the SOLVE_EQUATION families served today.
 """
+
 import math
 import re
 from dataclasses import dataclass
@@ -22,6 +23,8 @@ STEP_FAMILIES = {
     "COMBINE_LIKE_TERMS",
     "FRACTION_OPERATIONS",
     "FRACTION_SUBTRACT",
+    "WORD_PROBLEM",
+    "ALGEBRA_WORD_PROBLEM",
 }
 
 EXPRESSION_FAMILIES = {
@@ -182,6 +185,94 @@ def parse_equation(text: str) -> tuple[Poly, Poly] | None:
     return lhs, rhs
 
 
+def _sympy_to_fraction(coef) -> Fraction | None:
+    """Convert a SymPy coefficient to an exact Fraction; None if not rational."""
+    import sympy as sp
+
+    if isinstance(coef, sp.Integer):
+        return Fraction(int(coef))
+    if isinstance(coef, sp.Rational):
+        return Fraction(int(coef.p), int(coef.q))
+    if isinstance(coef, sp.Float):
+        # Learner-typed decimals round-trip exactly through their repr.
+        return Fraction(str(float(coef)))
+    return None
+
+
+def _sympy_expression(text: str) -> Poly | None:
+    """Bounded SymPy fallback for syntax the native parser can't read.
+
+    The input must reduce to a univariate polynomial — the result is the
+    native ``Poly``, so equivalence, solved-form, and classification rules
+    downstream stay exact and identical for both parse paths. No heavy SymPy
+    machinery (simplify/equals/solve) runs on the request path; the bounds
+    are input length, expression size, single symbol, integer exponents.
+    """
+    cleaned = text.strip()
+    if not cleaned or len(cleaned) > 120:
+        return None
+    try:
+        import sympy as sp
+        from sympy.parsing.sympy_parser import (
+            convert_xor,
+            implicit_multiplication_application,
+            parse_expr,
+            standard_transformations,
+        )
+    except ImportError:  # pragma: no cover - dependency is pinned
+        return None
+    try:
+        expr = parse_expr(
+            cleaned,
+            transformations=standard_transformations
+            + (implicit_multiplication_application, convert_xor),
+        )
+    except (SyntaxError, ValueError, TypeError, AttributeError, NameError, sp.SympifyError):
+        return None
+    nodes = list(sp.preorder_traversal(expr))
+    if len(nodes) > 80:
+        return None
+    allowed = (sp.Add, sp.Mul, sp.Pow, sp.Symbol, sp.Number)
+    if not all(isinstance(node, allowed) for node in nodes):
+        return None
+    if len(expr.free_symbols) > 1:
+        return None
+    for pow_node in expr.atoms(sp.Pow):
+        if not (isinstance(pow_node.exp, sp.Integer) and pow_node.exp >= 0):
+            return None
+    var = next(iter(expr.free_symbols), sp.Symbol("x"))
+    try:
+        poly = sp.Poly(sp.expand(expr), var)
+    except (sp.PolynomialError, sp.GeneratorsNeeded, TypeError, ValueError):
+        return None
+    out: Poly = {}
+    for (power,), coef in poly.terms():
+        frac = _sympy_to_fraction(coef)
+        if frac is None:
+            return None
+        out[int(power)] = frac
+    return out
+
+
+def parse_expression_lenient(text: str) -> Poly | None:
+    """Native parse first; bounded SymPy only for syntax it can't read."""
+    result = parse_expression(text)
+    return result if result is not None else _sympy_expression(text)
+
+
+def parse_equation_lenient(text: str) -> tuple[Poly, Poly] | None:
+    result = parse_equation(text)
+    if result is not None:
+        return result
+    parts = text.strip().split("=")
+    if len(parts) != 2:
+        return None
+    lhs, rhs = _sympy_expression(parts[0]), _sympy_expression(parts[1])
+    if lhs is None or rhs is None:
+        return None
+    return lhs, rhs
+
+
 def _normalized(eq: tuple[Poly, Poly]) -> Poly:
     """lhs - rhs as a polynomial."""
     return _add(eq[0], _scale(eq[1], Fraction(-1)))
@@ -226,21 +317,24 @@ def _solution_value(eq: tuple[Poly, Poly]) -> Fraction | None:
 
 
 def _fmt_poly(poly: Poly, var: str = "x") -> str:
-    """Render a polynomial (deg<=1) as 'ax + b' text for feedback."""
-    a = poly.get(1, Fraction(0))
-    b = poly.get(0, Fraction(0))
+    """Render a polynomial as '2x^2 + 3x - 1' text for feedback."""
     parts: list[str] = []
-    if a != 0:
-        if a == 1:
-            parts.append(var)
-        elif a == -1:
-            parts.append(f"-{var}")
+    for power in sorted(poly, reverse=True):
+        coef = poly[power]
+        if coef == 0:
+            continue
+        mag = abs(coef)
+        if power == 0:
+            term = str(mag)
+        elif power == 1:
+            term = var if mag == 1 else f"{mag}{var}"
         else:
-            parts.append(f"{a}{var}")
-    if b != 0 or not parts:
-        sign = "+" if b > 0 and parts else ("-" if b < 0 else "")
-        parts.append(f"{sign} {abs(b)}".strip())
-    return " ".join(parts)
+            term = f"{var}^{power}" if mag == 1 else f"{mag}{var}^{power}"
+        if not parts:
+            parts.append(f"-{term}" if coef < 0 else term)
+        else:
+            parts.append(f"- {term}" if coef < 0 else f"+ {term}")
+    return " ".join(parts) if parts else "0"
 
 
 def _canonical_next_line(eq: tuple[Poly, Poly], var: str = "x") -> str | None:
@@ -339,7 +433,7 @@ def _classify_expression_error(prev_text: str, new_poly: Poly) -> str | None:
 def _check_expression_step(
     prev_text: str, new_line: str, invalid_count: int, var: str
 ) -> StepCheck:
-    prev_poly = parse_expression(prev_text)
+    prev_poly = parse_expression_lenient(prev_text)
     if prev_poly is None:
         return StepCheck(status="unparseable", feedback="The previous line can't be checked.")
 
@@ -351,7 +445,7 @@ def _check_expression_step(
             status="unparseable",
             feedback="This is an expression — write the next form without an equals sign.",
         )
-    new_poly = parse_expression(stripped)
+    new_poly = parse_expression_lenient(stripped)
     if new_poly is None:
         return StepCheck(
             status="unparseable",
@@ -376,7 +470,10 @@ def _check_expression_step(
             misconception_code=code,
             revealed_line=revealed,
         )
-    feedback = _ERROR_FEEDBACK.get(code) or "That expression isn't equal to the line above — check your arithmetic."
+    feedback = (
+        _ERROR_FEEDBACK.get(code)
+        or "That expression isn't equal to the line above — check your arithmetic."
+    )
     return StepCheck(status="invalid", feedback=feedback, misconception_code=code)
 
 
@@ -408,21 +505,313 @@ def supports_steps(problem_type: str | None) -> bool:
 
 
 def is_equation_family(problem_type: str | None) -> bool:
-    return problem_type not in EXPRESSION_FAMILIES and supports_steps(problem_type)
+    return (
+        problem_type not in EXPRESSION_FAMILIES
+        and problem_type not in {"WORD_PROBLEM", "ALGEBRA_WORD_PROBLEM"}
+        and supports_steps(problem_type)
+    )
 
 
 def problem_supports_steps(problem) -> bool:
     """A problem offers structured steps only when the checker can parse it."""
-    return (
-        getattr(problem, "answer_kind", None) in {"FREE_TEXT", "FRACTION"}
-        and supports_steps(getattr(problem, "problem_type", None))
-        and starting_point(problem) is not None
+    start = starting_point(problem)
+    if getattr(problem, "answer_kind", None) not in {
+        "FREE_TEXT",
+        "FRACTION",
+        "INTEGER",
+    } or not supports_steps(getattr(problem, "problem_type", None)):
+        return False
+    if getattr(problem, "problem_type", None) in {"WORD_PROBLEM", "ALGEBRA_WORD_PROBLEM"}:
+        return word_canonical_value(problem) is not None
+    if start is None:
+        return False
+    # The seed line must actually parse, or every check fails closed.
+    if "=" in start:
+        return parse_equation_lenient(start) is not None
+    return parse_expression_lenient(start) is not None
+
+
+def word_canonical_value(problem) -> Fraction | None:
+    """The numeric answer of a word problem, when it is a plain number."""
+    if getattr(problem, "problem_type", None) not in {"WORD_PROBLEM", "ALGEBRA_WORD_PROBLEM"}:
+        return None
+    raw = getattr(problem, "canonical_answer", None) or ""
+    try:
+        return Fraction(raw.strip())
+    except (ValueError, ZeroDivisionError):
+        pass
+    poly = parse_expression_lenient(raw)
+    if poly is not None and set(poly) <= {0}:
+        return poly.get(0, Fraction(0))
+    return None
+
+
+def _strip_units(text: str) -> str:
+    """Drop a trailing units word so '12 dollars' grades like '12'.
+
+    A lone trailing letter is left alone — it could be the variable.
+    """
+    stripped = text.strip()
+    head, sep, tail = stripped.rpartition(" ")
+    if sep and len(tail) > 1 and tail.isalpha():
+        return head.rstrip()
+    return stripped
+
+
+def _word_line_value(line: str) -> Fraction | None:
+    """Numeric value of a word-problem work line.
+
+    Accepts a bare expression, ``var = expr``, an equal-sign chain whose
+    rightmost side carries the value, and a trailing unit word.
+    """
+    text = _strip_units(line)
+    if "=" in text:
+        parts = [p for p in text.split("=") if p.strip()]
+        if not parts:
+            return None
+        # An equals-anchored chain: every side must carry the same value.
+        values = []
+        for part in parts:
+            poly = parse_expression_lenient(part.strip())
+            if poly is None or set(poly) - {0, 1}:
+                return None
+            # A lone variable side (x = ...) is a label, not a value.
+            if set(poly) == {1}:
+                continue
+            values.append(poly.get(0, Fraction(0)))
+        if not values or len(set(values)) != 1:
+            return None
+        return values[0]
+    poly = parse_expression_lenient(text)
+    if poly is None or set(poly) != {0}:
+        return None
+    return poly.get(0)
+
+
+def check_word_step(
+    canonical_text: str,
+    canonical: Fraction,
+    accepted_lines: list[str],
+    new_line: str,
+    invalid_count: int,
+) -> StepCheck:
+    """Grade a word-problem work line against the model-compute structure.
+
+    The first accepted line is the learner's *model* (the calculation that
+    produces the answer); its value must equal the canonical answer. Later
+    lines must preserve that value, ending at the bare answer. A bare correct
+    answer at any point counts as solved — the structure is scaffolding, not
+    a gate. There is no honest way to reveal a semantic model, so the
+    escalation ceiling is targeted feedback, never an answer leak.
+    """
+    stripped = new_line.strip()
+    if not stripped:
+        return StepCheck(status="unparseable", feedback="Type a line of work first.")
+    if stripped in {line.strip() for line in accepted_lines}:
+        return StepCheck(status="duplicate", feedback="That's the same line — make a move.")
+
+    value = _word_line_value(stripped)
+    if value is None:
+        return StepCheck(
+            status="unparseable",
+            feedback=(
+                "Write a calculation, like 0.2 * 60, or your final answer "
+                "with its unit, like 12 dollars."
+            ),
+        )
+    if value == canonical:
+        # Solved when the line ends at the bare answer; otherwise it is an
+        # accepted model/computation line and work continues.
+        last_side = _strip_units(stripped.split("=")[-1])
+        last_poly = parse_expression_lenient(last_side)
+        last_is_bare = (
+            last_poly is not None and set(last_poly) == {0} and not _looks_like_model(last_side)
+        )
+        return StepCheck(
+            status="solved" if last_is_bare else "valid",
+            # On solve, hand respond() the authored canonical answer — the
+            # learner's raw line ("0.2 * 60 = 12", "12 dollars") may not
+            # match the final-answer normalizer.
+            normalized_line=canonical_text if last_is_bare else stripped,
+        )
+
+    if not accepted_lines:
+        feedback = (
+            "That calculation doesn't produce the answer the problem asks for — "
+            "check which numbers and operation the problem describes."
+        )
+    else:
+        feedback = (
+            "That line doesn't match the value of your calculation above — check your arithmetic."
+        )
+    return StepCheck(
+        status="invalid",
+        feedback=feedback,
+        misconception_code=None if not accepted_lines else "NUM_003",
     )
+
+
+def _looks_like_model(line: str) -> bool:
+    """A line containing an operator is a computation, not a bare answer."""
+    return bool(re.search(r"[+\-*/^]", line))
+
+
+def _declaration_var(line: str) -> str | None:
+    """A variable declaration like 'x = miles driven' (or 'let x = ...').
+
+    The right side must read as a description — it carries a word of two or
+    more letters — and must not parse as math, so 'x = 12' and 'x = y' stay
+    equations. What the description *means* is intentionally not verified;
+    only the form is checked. String ops only — no regex over learner input.
+    """
+    text = line.strip()
+    if text.lower().startswith("let "):
+        text = text[4:].lstrip()
+    head, sep, rhs = text.partition("=")
+    var = head.strip()
+    if not sep or len(var) != 1 or not var.isalpha():
+        return None
+    rhs = rhs.strip()
+    if "=" in rhs or not any(len(word) >= 2 and word.isalpha() for word in rhs.split()):
+        return None
+    if parse_expression_lenient(rhs) is not None:
+        return None
+    return var.lower()
+
+
+def _algebra_state(
+    accepted_lines: list[str],
+) -> tuple[list[str], str | None, list[str]]:
+    """Reconstruct DECLARE -> SETUP -> SOLVE progress from accepted lines."""
+    declared: list[str] = []
+    setup: str | None = None
+    solve_lines: list[str] = []
+    for line in accepted_lines:
+        if _declaration_var(line) is not None:
+            declared.append(_declaration_var(line))
+        elif parse_equation_lenient(line) is not None:
+            if setup is None:
+                setup = line
+            else:
+                solve_lines.append(line)
+    return declared, setup, solve_lines
+
+
+def check_algebra_word_step(
+    canonical_text: str,
+    canonical: Fraction,
+    accepted_lines: list[str],
+    new_line: str,
+    invalid_count: int,
+) -> StepCheck:
+    """Grade a work line for a word problem that must be modeled with x.
+
+    Structure: declare the variable (format-checked), write the setup
+    equation (must use the declared variable and solve to the canonical
+    answer — a wrong model is caught deterministically as WP_001), then
+    solve it with ordinary equivalence-checked equation steps. A correct
+    bare answer still solves: the structure is scaffolding, not a gate.
+    There is no honest reveal before SOLVE — we cannot show the learner's
+    own model — so earlier phases cap at targeted feedback.
+    """
+    stripped = new_line.strip()
+    if not stripped:
+        return StepCheck(status="unparseable", feedback="Type a line of work first.")
+    if stripped in {line.strip() for line in accepted_lines}:
+        return StepCheck(status="duplicate", feedback="That's the same line — make a move.")
+    declared, setup, solve_lines = _algebra_state(accepted_lines)
+
+    decl_var = _declaration_var(stripped)
+    if decl_var is not None:
+        if setup is not None:
+            return StepCheck(
+                status="unparseable",
+                feedback="Your variable is already defined — write the next equation line.",
+            )
+        return StepCheck(status="valid", normalized_line=stripped)
+
+    if "=" not in stripped:
+        candidate = parse_expression_lenient(_strip_units(stripped))
+        if candidate is not None and set(candidate) == {0}:
+            if candidate[0] == canonical:
+                return StepCheck(status="solved", normalized_line=canonical_text)
+            return StepCheck(
+                status="invalid",
+                feedback="That's not the value the problem describes — check your setup.",
+                misconception_code="WP_001",
+            )
+        guidance = (
+            "Name your variable first, like x = miles driven."
+            if not declared
+            else f"Write an equation using {declared[0]} — like 2{declared[0]} + 5 = 21."
+        )
+        return StepCheck(status="unparseable", feedback=guidance)
+
+    eq = parse_equation_lenient(stripped)
+    if eq is not None and _is_solved_form(eq):
+        # A direct 'x = value' is a final answer wherever it lands — a correct
+        # one solves even before declaring (scaffolding, not a gate).
+        value = _solution_value(eq)
+        if value == canonical:
+            return StepCheck(status="solved", normalized_line=canonical_text)
+        if value is not None:
+            return StepCheck(
+                status="invalid",
+                feedback="That's not the value the problem describes — check your setup.",
+                misconception_code="WP_001",
+            )
+    if not declared:
+        return StepCheck(
+            status="unparseable",
+            feedback="Name your variable first, like x = miles driven.",
+        )
+    if eq is None:
+        return StepCheck(
+            status="unparseable",
+            feedback=f"Write an equation using {declared[0]} — like 2{declared[0]} + 5 = 21.",
+        )
+    letters = set(re.findall(r"[a-zA-Z]", stripped))
+    if letters - set(declared):
+        return StepCheck(
+            status="unparseable",
+            feedback=f"Stick with {declared[0]} — that's the variable you defined.",
+        )
+    var = declared[0]
+
+    if setup is None:
+        # The setup is the model: a not-yet-solved linear equation whose
+        # solution equals the authored answer. A bare 'x = 8' never reaches
+        # here — solved-form lines are final answers handled above.
+        solution = _solution_value(eq)
+        if solution is None:
+            return StepCheck(
+                status="unparseable",
+                feedback="I can check linear equations — set this up as ax + b = c.",
+            )
+        if solution != canonical:
+            return StepCheck(
+                status="invalid",
+                feedback=(
+                    "That equation doesn't match the situation — "
+                    "check which number multiplies your variable and which is added."
+                ),
+                misconception_code="WP_001",
+            )
+        normalized = f"{_fmt_poly(eq[0], var)} = {_fmt_poly(eq[1], var)}"
+        return StepCheck(status="valid", normalized_line=normalized)
+
+    prev_text = solve_lines[-1] if solve_lines else setup
+    prev_eq = parse_equation_lenient(prev_text)
+    if prev_eq is None:
+        return StepCheck(status="unparseable", feedback="The previous line can't be checked.")
+    return _check_equation_step(prev_eq, prev_text, new_line, invalid_count, var)
 
 
 def starting_equation(prompt: str) -> str | None:
     """Extract the equation text from a problem prompt."""
-    text = re.sub(r"^(solve( for \w)?|find \w|evaluate)[:\s]*", "", prompt.strip(), flags=re.IGNORECASE)
+    text = re.sub(
+        r"^(solve( for \w)?|find \w|evaluate)[:\s]*", "", prompt.strip(), flags=re.IGNORECASE
+    )
     text = text.strip().rstrip(".;?")
     return text if "=" in text else None
 
@@ -430,10 +819,10 @@ def starting_equation(prompt: str) -> str | None:
 def starting_expression(prompt: str) -> str | None:
     """Extract the expression text from a problem prompt."""
     text = prompt.strip().rstrip(".;?")
-    if parse_expression(text) is not None:
+    if parse_expression_lenient(text) is not None:
         return text
     stripped = _EXPR_PREFIX.sub("", text).strip().rstrip(".;?")
-    return stripped if parse_expression(stripped) is not None else None
+    return stripped if parse_expression_lenient(stripped) is not None else None
 
 
 def starting_point(problem) -> str | None:
@@ -465,10 +854,20 @@ def check_step(
     if "=" not in start_text:
         return _check_expression_step(prior_text, new_line, invalid_count, var)
 
-    prev_eq = parse_equation(prior_text)
+    prev_eq = parse_equation_lenient(prior_text)
     if prev_eq is None:
         return StepCheck(status="unparseable", feedback="The previous line can't be checked.")
 
+    return _check_equation_step(prev_eq, prior_text, new_line, invalid_count, var)
+
+
+def _check_equation_step(
+    prev_eq: tuple[Poly, Poly],
+    prior_text: str,
+    new_line: str,
+    invalid_count: int,
+    var: str,
+) -> StepCheck:
     stripped = new_line.strip()
     if not stripped:
         return StepCheck(status="unparseable", feedback="Type a line of work first.")
@@ -476,7 +875,7 @@ def check_step(
     # A bare number is a proposed solution state; a bare expression isn't
     # gradeable as a step.
     if "=" not in stripped:
-        candidate = parse_expression(stripped)
+        candidate = parse_expression_lenient(stripped)
         if candidate is None or set(candidate) != {0}:
             return StepCheck(
                 status="unparseable",
@@ -484,7 +883,7 @@ def check_step(
             )
         stripped = f"{var} = {stripped}"
 
-    new_eq = parse_equation(stripped)
+    new_eq = parse_equation_lenient(stripped)
     if new_eq is None:
         return StepCheck(
             status="unparseable",
@@ -526,4 +925,5 @@ _ERROR_FEEDBACK = {
     "EQ_003": "Undo multiplication by dividing — not by multiplying.",
     "DIST_001": "Multiply the factor by every term inside the parentheses.",
     "ALG_001": "Only combine like terms — variable terms and constants stay separate.",
+    "WP_001": "Match each number in the problem to its role in the equation.",
 }

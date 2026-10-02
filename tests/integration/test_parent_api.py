@@ -1,3 +1,4 @@
+import uuid
 from datetime import UTC, datetime, timedelta
 
 import pytest
@@ -33,7 +34,10 @@ def _clear_override() -> None:
 
 
 def test_parent_link_dashboard_isolation_and_non_destructive_unlink() -> None:
-    token = "integration-parent-claim-token-0001"
+    suffix = uuid.uuid4().hex[:8]
+    token = f"integration-parent-claim-token-{suffix}"
+    parent_email = f"parent-f005-{suffix}@example.test"
+    other_parent_email = f"other-parent-f005-{suffix}@example.test"
     with SessionLocal() as db:
         curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MCPS_MATH_8"))
         assert curriculum is not None
@@ -41,12 +45,12 @@ def test_parent_link_dashboard_isolation_and_non_destructive_unlink() -> None:
         assert skill is not None
 
         parent_user = User(
-            email="parent-f005@example.test",
+            email=parent_email,
             display_name="Parent F005",
             role="PARENT",
         )
         other_parent_user = User(
-            email="other-parent-f005@example.test",
+            email=other_parent_email,
             display_name="Other Parent F005",
             role="PARENT",
         )
@@ -93,7 +97,7 @@ def test_parent_link_dashboard_isolation_and_non_destructive_unlink() -> None:
 
             profile = client.post("/api/v1/parents/profile")
             assert profile.status_code == 200
-            assert profile.json()["email"] == "parent-f005@example.test"
+            assert profile.json()["email"] == parent_email
 
             linked = client.post(
                 "/api/v1/parents/children/link",

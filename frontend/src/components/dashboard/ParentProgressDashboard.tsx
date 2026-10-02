@@ -12,6 +12,7 @@ import type { ChildDashboard, ChildSummary } from "../../types";
 import ActivityChart from "./ActivityChart";
 import MisconceptionList from "./MisconceptionList";
 import StatCard from "./StatCard";
+import StepTrails from "./StepTrails";
 import SyllabusProgressDonut from "./SyllabusProgressDonut";
 
 export interface DailyMetric {
@@ -432,11 +433,32 @@ export default function ParentProgressDashboard({
                     No trouble spots flagged — independent work is going well.
                   </p>
                 )}
+                {(childDashboard?.recent_patterns?.length ?? 0) > 0 && (
+                  <>
+                    <h3 className="mt-4 text-xs font-semibold uppercase tracking-wide text-indigo-600">
+                      Patterns seen this week
+                    </h3>
+                    <ul className="mt-2 flex flex-wrap gap-2">
+                      {childDashboard?.recent_patterns?.map((pattern) => (
+                        <li
+                          key={pattern.code}
+                          className="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-800"
+                        >
+                          {pattern.name} · {pattern.count}×
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </div>
             </section>
           )}
 
           <MisconceptionList items={summary.misconceptions} />
+
+          {(childDashboard?.step_trails?.length ?? 0) > 0 && (
+            <StepTrails trails={childDashboard?.step_trails ?? []} />
+          )}
 
           <section className="flex flex-col justify-between gap-4 rounded-2xl bg-slate-950 p-5 text-white sm:flex-row sm:items-center">
             <div className="flex gap-3">

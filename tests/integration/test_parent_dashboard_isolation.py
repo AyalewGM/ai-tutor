@@ -9,12 +9,14 @@ from app.models import (
     Curriculum,
     LearnerAward,
     MasteryEvent,
+    Misconception,
     Problem,
     Skill,
     SkillStatus,
     Student,
     StudentSkill,
     TutorSession,
+    TutorTurn,
     User,
 )
 from app.parent_models import ParentProfile, ParentStudentRelationship
@@ -224,3 +226,110 @@ def test_parent_dashboard_reports_learning_trends() -> None:
         assert digest.mastery_delta == 20.0
         assert digest.days_since_practice == 0
         assert digest.stall is False
+
+
+def test_parent_dashboard_shows_step_trails_in_scope_only() -> None:
+    with SessionLocal() as db:
+        parent, student, skill, other_skill = _persist_scope_fixture(db)
+        now = datetime.now(UTC)
+
+        session = TutorSession(
+            student_id=student.id,
+            primary_skill_id=skill.id,
+            active_skill_id=skill.id,
+            curriculum_id=skill.curriculum_id,
+            started_at=now - timedelta(minutes=30),
+        )
+        problem = Problem(
+            primary_skill_id=skill.id,
+            problem_type="SOLVE_EQUATION",
+            difficulty=2,
+            prompt="Solve 3(x + 4) = 30.",
+            canonical_answer="x=6",
+            source_type="TEST",
+        )
+        other_problem = Problem(
+            primary_skill_id=other_skill.id,
+            problem_type="SOLVE_EQUATION",
+            difficulty=2,
+            prompt="Solve 2x = 4.",
+            canonical_answer="x=2",
+            source_type="TEST",
+        )
+        misconception = Misconception(
+            skill_id=skill.id,
+            code="EQ_001",
+            name="Moves the constant the wrong direction",
+            description="Adds instead of subtracting when isolating the variable.",
+        )
+        db.add_all([session, problem, other_problem, misconception])
+        db.flush()
+
+        def work_turn(problem_id, *, line, status, code=None, revealed=False, at):
+            return TutorTurn(
+                session_id=session.id,
+                role="STUDENT",
+                message=line,
+                pedagogical_action="WORK_STEP",
+                problem_id=problem_id,
+                created_at=at,
+                metadata_json={
+                    "step_status": status,
+                    "line": line,
+                    "normalized_line": line,
+                    "misconception_code": code,
+                    "revealed": revealed,
+                },
+            )
+
+        db.add_all(
+            [
+                work_turn(
+                    problem.id, line="3x + 12 = 30", status="valid",
+                    at=now - timedelta(minutes=10),
+                ),
+                work_turn(
+                    problem.id, line="3x = 42", status="invalid", code="EQ_001",
+                    at=now - timedelta(minutes=9),
+                ),
+                work_turn(
+                    problem.id, line="3x = 18", status="valid",
+                    at=now - timedelta(minutes=8),
+                ),
+                work_turn(
+                    problem.id, line="x = 6", status="solved",
+                    at=now - timedelta(minutes=7),
+                ),
+                # Out-of-scope curriculum: must not leak into the dashboard.
+                work_turn(
+                    other_problem.id, line="x = 9", status="invalid",
+                    at=now - timedelta(minutes=5),
+                ),
+            ]
+        )
+        db.commit()
+
+        result = dashboard(db, parent=parent, student_id=student.id)
+
+        assert len(result.step_trails) == 1
+        trail = result.step_trails[0]
+        assert trail.problem_id == problem.id
+        assert trail.prompt == "Solve 3(x + 4) = 30."
+        assert trail.skill_name == "In-scope skill"
+        assert trail.status == "SOLVED"
+        assert [line.status for line in trail.lines] == [
+            "valid", "invalid", "valid", "solved",
+        ]
+        assert trail.lines[1].misconception_code == "EQ_001"
+        assert trail.misconception_names == [
+            "Moves the constant the wrong direction"
+        ]
+
+        # The 7-day aggregate picks up the classified step error without
+        # reading any learner text.
+        assert len(result.recent_patterns) == 1
+        pattern = result.recent_patterns[0]
+        assert pattern.code == "EQ_001"
+        assert pattern.name == "Moves the constant the wrong direction"
+        assert pattern.count == 1
+        assert pattern.source == "steps"

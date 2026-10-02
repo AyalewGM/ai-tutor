@@ -21,6 +21,7 @@ from app.models import (
     StudentSkill,
     TutorSession,
     TutorState,
+    TutorTurn,
 )
 from app.parent_models import (
     ChildLinkClaim,
@@ -35,12 +36,15 @@ from app.parent_schemas import (
     GradeLevelSummaryOut,
     LinkChildOut,
     RecentActivityOut,
+    RecentPatternOut,
     RecommendedSkillOut,
     ReviewDueOut,
     SkillProgressOut,
+    StepTrailOut,
     StrandSummaryOut,
     SupportAreaOut,
     WeeklyDigestOut,
+    WorkStepLineOut,
 )
 from app.services.awards import BADGE_XP, attempt_xp
 from app.services.curriculum_scope import CurriculumScopeError, resolve_student_curriculum_scope
@@ -414,6 +418,9 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         db, student_id=student.id, scope=scope
     )
 
+    step_trails = _step_trails(db, student_id=student.id, scope=scope)
+    recent_patterns = _recent_patterns(db, student_id=student.id, scope=scope)
+
     return ChildDashboardOut(
         child=child_summary(db, student),
         active_skill_name=active_skill_name,
@@ -434,7 +441,206 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         grade_level_summary=summary,
         daily_metrics=daily_metrics,
         weekly_digest=weekly_digest,
+        step_trails=step_trails,
+        recent_patterns=recent_patterns,
     )
+
+
+def _recent_patterns(
+    db: Session,
+    *,
+    student_id: uuid.UUID,
+    scope,
+    days: int = 7,
+    limit: int = 3,
+) -> list[RecentPatternOut]:
+    """Top misconception patterns over the last week.
+
+    Combines answer-level classifications (Attempt.misconception_id) and
+    step-level transition classifications (WORK_STEP turns) — aggregated
+    counts only, no raw learner text is read.
+    """
+    since = datetime.now(UTC) - timedelta(days=days)
+
+    answer_rows = db.execute(
+        select(Misconception.code, Misconception.name, func.count())
+        .join(Attempt, Attempt.misconception_id == Misconception.id)
+        .join(TutorSession, TutorSession.id == Attempt.session_id)
+        .join(Skill, Skill.id == Misconception.skill_id)
+        .where(
+            TutorSession.student_id == student_id,
+            Attempt.created_at >= since,
+            Skill.curriculum_id == scope.curriculum_id,
+        )
+        .group_by(Misconception.code, Misconception.name)
+    ).all()
+
+    # JSONB extraction can't be grouped by label portably — count in Python
+    # over a bounded window of rows.
+    step_rows = db.execute(
+        select(
+            TutorTurn.metadata_json["misconception_code"].as_string(),
+            Problem.primary_skill_id,
+        )
+        .join(TutorSession, TutorSession.id == TutorTurn.session_id)
+        .join(Problem, Problem.id == TutorTurn.problem_id)
+        .join(Skill, Skill.id == Problem.primary_skill_id)
+        .where(
+            TutorSession.student_id == student_id,
+            TutorTurn.pedagogical_action == "WORK_STEP",
+            TutorTurn.metadata_json["step_status"].as_string() == "invalid",
+            TutorTurn.metadata_json["misconception_code"].as_string().is_not(None),
+            TutorTurn.created_at >= since,
+            Skill.curriculum_id == scope.curriculum_id,
+        )
+        .limit(2000)
+    ).all()
+    step_counts: dict[tuple[uuid.UUID, str], int] = {}
+    for code, skill_id in step_rows:
+        key = (skill_id, code)
+        step_counts[key] = step_counts.get(key, 0) + 1
+
+    # Resolve step-level codes to names within their owning skill.
+    step_keys = set(step_counts)
+    step_names: dict[tuple[uuid.UUID, str], str] = {}
+    if step_keys:
+        for skill_id, code, name in db.execute(
+            select(Misconception.skill_id, Misconception.code, Misconception.name).where(
+                Misconception.skill_id.in_({s for s, _ in step_keys}),
+                Misconception.code.in_({c for _, c in step_keys}),
+            )
+        ):
+            step_names[(skill_id, code)] = name
+
+    counts: dict[str, dict] = {}
+    for code, name, n in answer_rows:
+        entry = counts.setdefault(code, {"name": name, "n": 0, "answer": 0, "steps": 0})
+        entry["n"] += n
+        entry["answer"] += n
+    for (skill_id, code), n in step_counts.items():
+        name = step_names.get((skill_id, code))
+        if name is None:
+            continue
+        entry = counts.setdefault(code, {"name": name, "n": 0, "answer": 0, "steps": 0})
+        entry["n"] += n
+        entry["steps"] += n
+
+    top = sorted(counts.items(), key=lambda kv: -kv[1]["n"])[:limit]
+    return [
+        RecentPatternOut(
+            code=code,
+            name=data["name"],
+            count=data["n"],
+            source=(
+                "both"
+                if data["answer"] and data["steps"]
+                else ("answer" if data["answer"] else "steps")
+            ),
+        )
+        for code, data in top
+    ]
+
+
+def _step_trails(
+    db: Session,
+    *,
+    student_id: uuid.UUID,
+    scope,
+    limit_problems: int = 5,
+) -> list[StepTrailOut]:
+    """Recent step-worked problems so parents can see where the work stumbled."""
+    rows = db.execute(
+        select(TutorTurn, Problem, Skill)
+        .join(TutorSession, TutorSession.id == TutorTurn.session_id)
+        .join(Problem, Problem.id == TutorTurn.problem_id)
+        .join(Skill, Skill.id == Problem.primary_skill_id)
+        .where(
+            TutorSession.student_id == student_id,
+            TutorTurn.pedagogical_action == "WORK_STEP",
+            Skill.curriculum_id == scope.curriculum_id,
+        )
+        .order_by(desc(TutorTurn.created_at), desc(TutorTurn.id))
+        .limit(400)
+    ).all()
+
+    grouped: dict[uuid.UUID, dict] = {}
+    order: list[uuid.UUID] = []
+    for turn, problem, skill in rows:
+        entry = grouped.get(problem.id)
+        if entry is None:
+            if len(order) >= limit_problems:
+                continue
+            entry = {
+                "problem": problem,
+                "skill": skill,
+                "turns": [],
+                "updated_at": turn.created_at,
+            }
+            grouped[problem.id] = entry
+            order.append(problem.id)
+        entry["turns"].append(turn)
+
+    code_pairs = {
+        (entry["problem"].primary_skill_id, (t.metadata_json or {}).get("misconception_code"))
+        for entry in grouped.values()
+        for t in entry["turns"]
+        if (t.metadata_json or {}).get("misconception_code")
+    }
+    name_lookup: dict[tuple[uuid.UUID, str], str] = {}
+    if code_pairs:
+        skill_ids = {skill_id for skill_id, _ in code_pairs}
+        codes = {code for _, code in code_pairs}
+        for skill_id, code, name in db.execute(
+            select(Misconception.skill_id, Misconception.code, Misconception.name).where(
+                Misconception.skill_id.in_(skill_ids),
+                Misconception.code.in_(codes),
+            )
+        ):
+            name_lookup[(skill_id, code)] = name
+
+    trails: list[StepTrailOut] = []
+    for problem_id in order:
+        entry = grouped[problem_id]
+        problem = entry["problem"]
+        turns = list(reversed(entry["turns"]))  # chronological within the trail
+        lines = [
+            WorkStepLineOut(
+                line=(t.metadata_json or {}).get("normalized_line")
+                or (t.metadata_json or {}).get("line")
+                or t.message,
+                status=(t.metadata_json or {}).get("step_status") or "invalid",
+                misconception_code=(t.metadata_json or {}).get("misconception_code"),
+                revealed=bool((t.metadata_json or {}).get("revealed")),
+            )
+            for t in turns
+        ]
+        statuses = {line.status for line in lines}
+        if "solved" in statuses:
+            status = "SOLVED"
+        elif statuses & {"invalid", "unparseable"} or any(line.revealed for line in lines):
+            status = "STRUGGLED"
+        else:
+            status = "IN_PROGRESS"
+        misconception_names = sorted(
+            {
+                name_lookup[(problem.primary_skill_id, line.misconception_code)]
+                for line in lines
+                if line.misconception_code
+                and (problem.primary_skill_id, line.misconception_code) in name_lookup
+            }
+        )
+        trails.append(
+            StepTrailOut(
+                problem_id=problem.id,
+                prompt=problem.prompt,
+                skill_name=entry["skill"].name,
+                updated_at=entry["updated_at"],
+                status=status,
+                lines=lines,
+                misconception_names=misconception_names,
+            )
+        )
+    return trails
 
 
 def _learning_trends(

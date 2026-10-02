@@ -1,9 +1,16 @@
 from fractions import Fraction
 
 from app.services.stepwork import (
+    _declaration_var,
+    _strip_units,
+    check_algebra_word_step,
     check_step,
+    check_word_step,
     parse_equation,
+    parse_equation_lenient,
     parse_expression,
+    parse_expression_lenient,
+    problem_supports_steps,
     starting_equation,
     starting_expression,
     supports_steps,
@@ -165,3 +172,180 @@ def test_starting_expression_preserves_leading_sign() -> None:
     assert starting_expression("Evaluate 1/2 + 1/3.") == "1/2 + 1/3"
     assert starting_expression("3(x + 4)") == "3(x + 4)"
     assert check_step("-2y - 5y", [], "-7y", 0).status == "solved"
+
+
+def test_sympy_fallback_covers_syntax_the_native_parser_lacks() -> None:
+    # ^ exponent syntax and implicit multiplication through parens
+    assert parse_expression_lenient("x^2 - 5x + 6") == {
+        2: Fraction(1),
+        1: Fraction(-5),
+        0: Fraction(6),
+    }
+    assert parse_expression_lenient("0.5x + 1/4") == {
+        1: Fraction(1, 2),
+        0: Fraction(1, 4),
+    }
+    assert parse_equation_lenient("x^2 - 4 = 0") is not None
+
+
+def test_sympy_fallback_rejects_out_of_scope_input() -> None:
+    # Rational expressions, functions, and multi-variable input stay
+    # honestly unparseable rather than being half-checked.
+    assert parse_expression_lenient("(x+1)/(x-1)") is None
+    assert parse_expression_lenient("sin(x)") is None
+    assert parse_expression_lenient("x + y") is None
+    assert parse_expression_lenient("hello") is None
+    assert parse_expression_lenient("2**x") is None
+
+
+def test_quadratic_equation_steps() -> None:
+    # Factoring preserves the solution set — a legal step.
+    result = check_step("x^2 - 5x + 6 = 0", [], "(x-2)(x-3) = 0", 0)
+    assert result.status == "valid"
+    # x = 2 alone drops a root — the solution set is NOT preserved.
+    assert check_step("x^2 = 4", [], "x = 2", 0).status == "invalid"
+
+
+def test_higher_degree_normalized_rendering() -> None:
+    result = check_step("x^2 - 5x + 6 = 0", [], "(x-2)(x-3) = 0", 0)
+    assert result.normalized_line == "x^2 - 5x + 6 = 0"
+
+
+def test_word_problem_model_and_answer() -> None:
+    # "A $80 purchase has 13% tax." — the model is a calculation whose
+    # value must equal the canonical answer.
+    c = Fraction("10.40")
+    assert check_word_step("10.40", c, [], "0.13 * 80", 0).status == "valid"
+    wrong_model = check_word_step("10.40", c, [], "0.13 * 50", 0)
+    assert wrong_model.status == "invalid"
+    # A bare correct answer is solved at any point — the structure is
+    # scaffolding, not a gate.
+    assert check_word_step("10.40", c, [], "10.40 dollars", 0).status == "solved"
+    # Chained computation ending at the answer is solved.
+    assert check_word_step("10.40", c, ["0.13 * 80"], "0.13 * 80 = 10.4", 0).status == "solved"
+    # Off-value compute step is an arithmetic slip.
+    slip = check_word_step("10.40", c, ["0.13 * 80"], "9.4", 0)
+    assert slip.status == "invalid"
+    assert slip.misconception_code == "NUM_003"
+
+
+def test_strip_units() -> None:
+    assert _strip_units("12 dollars") == "12"
+    assert _strip_units("x = 12 dollars") == "x = 12"
+    assert _strip_units("12  dollars") == "12"
+    # A lone trailing letter could be the variable — never strip it.
+    assert _strip_units("2 x") == "2 x"
+    assert _strip_units("x") == "x"
+    assert _strip_units("5 cm^2") == "5 cm^2"
+
+
+def test_algebra_word_problem_full_flow() -> None:
+    # "A number doubled then increased by 5 gives 21" -> 2x + 5 = 21 -> x = 8.
+    c = Fraction(8)
+    lines: list[str] = []
+
+    def step(line: str) -> object:
+        result = check_algebra_word_step("8", c, list(lines), line, 0)
+        if result.status in {"valid", "solved"}:
+            lines.append(result.normalized_line or line)
+        return result
+
+    assert step("x = the number").status == "valid"
+    assert step("2x + 5 = 21").status == "valid"
+    assert step("2x = 16").status == "valid"
+    assert step("x = 8").status == "solved"
+
+
+def test_algebra_word_problem_setup_checked_by_solution() -> None:
+    c = Fraction(8)
+    declared = ["x = the number"]
+    wrong_model = check_algebra_word_step("8", c, declared, "2x + 5 = 25", 0)
+    assert wrong_model.status == "invalid"
+    assert wrong_model.misconception_code == "WP_001"
+    # A nonlinear setup can't be verified — honest unparseable, not a guess.
+    nonlinear = check_algebra_word_step("8", c, declared, "x^2 + 5 = 21", 0)
+    assert nonlinear.status == "unparseable"
+
+
+def test_algebra_word_problem_requires_declaration_first() -> None:
+    c = Fraction(8)
+    result = check_algebra_word_step("8", c, [], "2x + 5 = 21", 0)
+    assert result.status == "unparseable"
+    assert "variable" in (result.feedback or "").lower()
+    # Solve steps must use the declared variable.
+    declared = ["n = the number"]
+    wrong_var = check_algebra_word_step("8", c, declared, "2x + 5 = 21", 0)
+    assert wrong_var.status == "unparseable"
+    ok_var = check_algebra_word_step("8", c, declared, "2n + 5 = 21", 0)
+    assert ok_var.status == "valid"
+
+
+def test_algebra_word_problem_bare_answer_is_solved() -> None:
+    c = Fraction(8)
+    # Scaffolding is not a gate — a correct final answer solves at any point.
+    assert check_algebra_word_step("8", c, [], "8", 0).status == "solved"
+    assert check_algebra_word_step("8", c, [], "x = 8", 0).status == "solved"
+    wrong = check_algebra_word_step("8", c, [], "x = 9", 0)
+    assert wrong.status == "invalid"
+    assert wrong.misconception_code == "WP_001"
+
+
+def test_algebra_word_problem_solve_phase_classifies_slips() -> None:
+    c = Fraction(8)
+    accepted = ["x = the number", "2x + 5 = 21"]
+    slip = check_algebra_word_step("8", c, accepted, "2x = 26", 0)
+    assert slip.status == "invalid"
+    assert slip.misconception_code == "EQ_001"
+    # No reveal of the model is possible before SOLVE, but solve-phase
+    # escalations still surface a legal next line.
+    revealed = check_algebra_word_step("8", c, accepted, "2x = 26", 2)
+    assert revealed.revealed_line is not None
+
+
+def test_declaration_var() -> None:
+    assert _declaration_var("x = miles driven") == "x"
+    assert _declaration_var("let n = number of tickets") == "n"
+    assert _declaration_var("x = 12") is None  # parses as math — an equation
+    assert _declaration_var("x = y") is None  # single letter is math, not a description
+    assert _declaration_var("2x + 5 = 21") is None
+
+
+def test_word_problem_supports_steps_gate() -> None:
+    from app.models import Problem
+
+    problem = Problem(
+        problem_type="WORD_PROBLEM",
+        answer_kind="INTEGER",
+        prompt="What is 20% of 60?",
+        canonical_answer="12",
+    )
+    assert problem_supports_steps(problem)
+    # No parseable numeric answer → step mode stays off.
+    bad = Problem(
+        problem_type="WORD_PROBLEM",
+        answer_kind="FREE_TEXT",
+        prompt="Explain the pattern.",
+        canonical_answer="it doubles",
+    )
+    assert not problem_supports_steps(bad)
+
+
+def test_algebra_word_problem_supports_steps_gate() -> None:
+    from app.models import Problem
+
+    problem = Problem(
+        problem_type="ALGEBRA_WORD_PROBLEM",
+        answer_kind="FREE_TEXT",
+        prompt="A taxi charges a $3 fee plus $2 per mile. A ride costs $17. "
+        "How many miles was the ride?",
+        canonical_answer="7",
+    )
+    assert problem_supports_steps(problem)
+    # Non-numeric answers (like 'y=2x+4') can't anchor the setup check.
+    bad = Problem(
+        problem_type="ALGEBRA_WORD_PROBLEM",
+        answer_kind="FREE_TEXT",
+        prompt="Write an equation for the cost.",
+        canonical_answer="y=2x+4",
+    )
+    assert not problem_supports_steps(bad)

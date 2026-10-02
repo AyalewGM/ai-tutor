@@ -114,30 +114,39 @@ def respond(
         raise HTTPException(404, "Student or skill not found")
 
     state_at_attempt = session.current_state
-    highest_hint_level = db.scalar(
-        select(func.max(HintEvent.level)).where(
-            HintEvent.session_id == session.id,
-            HintEvent.problem_id == problem.id,
+    highest_hint_level = (
+        db.scalar(
+            select(func.max(HintEvent.level)).where(
+                HintEvent.session_id == session.id,
+                HintEvent.problem_id == problem.id,
+            )
         )
-    ) or 0
+        or 0
+    )
     # Step errors and revealed work lines count as assistance — derived from
     # server-side records, not the client payload.
-    step_errors = db.scalar(
-        select(func.count(TutorTurn.id)).where(
-            TutorTurn.session_id == session.id,
-            TutorTurn.problem_id == problem.id,
-            TutorTurn.pedagogical_action == "WORK_STEP",
-            TutorTurn.metadata_json["step_status"].as_string() == "invalid",
+    step_errors = (
+        db.scalar(
+            select(func.count(TutorTurn.id)).where(
+                TutorTurn.session_id == session.id,
+                TutorTurn.problem_id == problem.id,
+                TutorTurn.pedagogical_action == "WORK_STEP",
+                TutorTurn.metadata_json["step_status"].as_string() == "invalid",
+            )
         )
-    ) or 0
-    step_revealed = db.scalar(
-        select(func.count(TutorTurn.id)).where(
-            TutorTurn.session_id == session.id,
-            TutorTurn.problem_id == problem.id,
-            TutorTurn.pedagogical_action == "WORK_STEP",
-            TutorTurn.metadata_json["revealed"].as_boolean(),
+        or 0
+    )
+    step_revealed = (
+        db.scalar(
+            select(func.count(TutorTurn.id)).where(
+                TutorTurn.session_id == session.id,
+                TutorTurn.problem_id == problem.id,
+                TutorTurn.pedagogical_action == "WORK_STEP",
+                TutorTurn.metadata_json["revealed"].as_boolean(),
+            )
         )
-    ) or 0
+        or 0
+    )
     step_assistance = (1 if step_errors else 0) + (1 if step_revealed else 0)
     effective_assistance_level = max(
         payload.assistance_level,
@@ -173,12 +182,15 @@ def respond(
         step_misconception_code=step_misconception_code,
     )
 
-    prior_attempt_count = db.scalar(
-        select(func.count(Attempt.id)).where(
-            Attempt.session_id == session.id,
-            Attempt.problem_id == problem.id,
+    prior_attempt_count = (
+        db.scalar(
+            select(func.count(Attempt.id)).where(
+                Attempt.session_id == session.id,
+                Attempt.problem_id == problem.id,
+            )
         )
-    ) or 0
+        or 0
+    )
     attempt_number = int(prior_attempt_count) + 1
     attempt = Attempt(
         session_id=session.id,
@@ -216,16 +228,19 @@ def respond(
         ),
     )
 
-    independent_successes = db.scalar(
-        select(func.count(Attempt.id))
-        .join(Problem, Problem.id == Attempt.problem_id)
-        .where(
-            Attempt.session_id == session.id,
-            Problem.primary_skill_id == active_skill_id,
-            Attempt.is_correct.is_(True),
-            Attempt.assistance_level == 0,
+    independent_successes = (
+        db.scalar(
+            select(func.count(Attempt.id))
+            .join(Problem, Problem.id == Attempt.problem_id)
+            .where(
+                Attempt.session_id == session.id,
+                Problem.primary_skill_id == active_skill_id,
+                Attempt.is_correct.is_(True),
+                Attempt.assistance_level == 0,
+            )
         )
-    ) or 0
+        or 0
+    )
     transition = determine_next_action(
         StateContext(
             state=state_at_attempt,
@@ -362,9 +377,7 @@ def respond(
         state=state_at_attempt,
         highest_level_used=int(highest_hint_level),
         misconception_confidence=evidence.evaluation.misconception_confidence,
-        repeated_unsuccessful_attempts=(
-            attempt_number if not evidence.evaluation.correct else 0
-        ),
+        repeated_unsuccessful_attempts=(attempt_number if not evidence.evaluation.correct else 0),
     )
     issue_jit_hint = (
         not evidence.evaluation.correct
@@ -388,16 +401,15 @@ def respond(
         generation_state = transition.state
     else:
         next_problem = None
-        if (
-            evidence.evaluation.correct is False
-            and problem.primary_skill_id == next_skill_id
-        ):
+        if evidence.evaluation.correct is False and problem.primary_skill_id == next_skill_id:
             next_problem = regenerate_variant(db, source_problem=problem)
         if next_problem is None:
             next_problem = select_next_problem(
                 db,
                 skill_id=next_skill_id,
-                current_problem_id=problem.id if problem.primary_skill_id == next_skill_id else None,
+                current_problem_id=problem.id
+                if problem.primary_skill_id == next_skill_id
+                else None,
                 current_difficulty=next_progress.current_difficulty,
                 state=transition.state,
                 correct=evidence.evaluation.correct,
@@ -451,9 +463,7 @@ def respond(
             "mastery_gate_eligible": gate_decision.eligible,
             "mastery_gate_reason": gate_decision.reason,
             "curriculum_id": str(scope.curriculum_id),
-            "curriculum_enrollment_id": (
-                str(scope.enrollment_id) if scope.enrollment_id else None
-            ),
+            "curriculum_enrollment_id": (str(scope.enrollment_id) if scope.enrollment_id else None),
         },
     )
     db.add(turn)
@@ -576,6 +586,7 @@ def respond(
         growth=GrowthOut(**growth_out),
     )
 
+
 @router.post("/sessions/{session_id}/work-step", response_model=WorkStepOut)
 def work_step(
     session_id: uuid.UUID, payload: WorkStepIn, parent: CurrentParent, db: DbSession
@@ -591,9 +602,10 @@ def work_step(
     active_skill_id = session.active_skill_id or session.primary_skill_id
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not support step-by-step work")
-    start = stepwork.starting_point(problem)
-    if start is None or not stepwork.problem_supports_steps(problem):
+    if not stepwork.problem_supports_steps(problem):
         raise HTTPException(400, "Problem does not support step-by-step work")
+    start = stepwork.starting_point(problem)
+    word_model = stepwork.word_canonical_value(problem)
 
     turns = db.scalars(
         select(TutorTurn)
@@ -615,7 +627,16 @@ def work_step(
         elif status == "invalid":
             invalid_count += 1
 
-    result = stepwork.check_step(start, accepted, payload.line, invalid_count)
+    if problem.problem_type == "ALGEBRA_WORD_PROBLEM":
+        result = stepwork.check_algebra_word_step(
+            problem.canonical_answer, word_model, accepted, payload.line, invalid_count
+        )
+    elif word_model is not None:
+        result = stepwork.check_word_step(
+            problem.canonical_answer, word_model, accepted, payload.line, invalid_count
+        )
+    else:
+        result = stepwork.check_step(start, accepted, payload.line, invalid_count)
     db.add(
         TutorTurn(
             session_id=session.id,
@@ -640,7 +661,5 @@ def work_step(
         misconception_code=result.misconception_code,
         revealed_line=result.revealed_line,
         normalized_line=result.normalized_line,
-        invalid_count=(
-            invalid_count + 1 if result.status == "invalid" else 0
-        ),
+        invalid_count=(invalid_count + 1 if result.status == "invalid" else 0),
     )
