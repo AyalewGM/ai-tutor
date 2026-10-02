@@ -36,6 +36,7 @@ from app.parent_schemas import (
     GradeLevelSummaryOut,
     LinkChildOut,
     RecentActivityOut,
+    RecentPatternOut,
     RecommendedSkillOut,
     ReviewDueOut,
     SkillProgressOut,
@@ -418,6 +419,7 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
     )
 
     step_trails = _step_trails(db, student_id=student.id, scope=scope)
+    recent_patterns = _recent_patterns(db, student_id=student.id, scope=scope)
 
     return ChildDashboardOut(
         child=child_summary(db, student),
@@ -440,7 +442,103 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         daily_metrics=daily_metrics,
         weekly_digest=weekly_digest,
         step_trails=step_trails,
+        recent_patterns=recent_patterns,
     )
+
+
+def _recent_patterns(
+    db: Session,
+    *,
+    student_id: uuid.UUID,
+    scope,
+    days: int = 7,
+    limit: int = 3,
+) -> list[RecentPatternOut]:
+    """Top misconception patterns over the last week.
+
+    Combines answer-level classifications (Attempt.misconception_id) and
+    step-level transition classifications (WORK_STEP turns) — aggregated
+    counts only, no raw learner text is read.
+    """
+    since = datetime.now(UTC) - timedelta(days=days)
+
+    answer_rows = db.execute(
+        select(Misconception.code, Misconception.name, func.count())
+        .join(Attempt, Attempt.misconception_id == Misconception.id)
+        .join(TutorSession, TutorSession.id == Attempt.session_id)
+        .join(Skill, Skill.id == Misconception.skill_id)
+        .where(
+            TutorSession.student_id == student_id,
+            Attempt.created_at >= since,
+            Skill.curriculum_id == scope.curriculum_id,
+        )
+        .group_by(Misconception.code, Misconception.name)
+    ).all()
+
+    # JSONB extraction can't be grouped by label portably — count in Python
+    # over a bounded window of rows.
+    step_rows = db.execute(
+        select(
+            TutorTurn.metadata_json["misconception_code"].as_string(),
+            Problem.primary_skill_id,
+        )
+        .join(TutorSession, TutorSession.id == TutorTurn.session_id)
+        .join(Problem, Problem.id == TutorTurn.problem_id)
+        .join(Skill, Skill.id == Problem.primary_skill_id)
+        .where(
+            TutorSession.student_id == student_id,
+            TutorTurn.pedagogical_action == "WORK_STEP",
+            TutorTurn.metadata_json["step_status"].as_string() == "invalid",
+            TutorTurn.metadata_json["misconception_code"].as_string().is_not(None),
+            TutorTurn.created_at >= since,
+            Skill.curriculum_id == scope.curriculum_id,
+        )
+        .limit(2000)
+    ).all()
+    step_counts: dict[tuple[uuid.UUID, str], int] = {}
+    for code, skill_id in step_rows:
+        key = (skill_id, code)
+        step_counts[key] = step_counts.get(key, 0) + 1
+
+    # Resolve step-level codes to names within their owning skill.
+    step_keys = set(step_counts)
+    step_names: dict[tuple[uuid.UUID, str], str] = {}
+    if step_keys:
+        for skill_id, code, name in db.execute(
+            select(Misconception.skill_id, Misconception.code, Misconception.name).where(
+                Misconception.skill_id.in_({s for s, _ in step_keys}),
+                Misconception.code.in_({c for _, c in step_keys}),
+            )
+        ):
+            step_names[(skill_id, code)] = name
+
+    counts: dict[str, dict] = {}
+    for code, name, n in answer_rows:
+        entry = counts.setdefault(code, {"name": name, "n": 0, "answer": 0, "steps": 0})
+        entry["n"] += n
+        entry["answer"] += n
+    for (skill_id, code), n in step_counts.items():
+        name = step_names.get((skill_id, code))
+        if name is None:
+            continue
+        entry = counts.setdefault(code, {"name": name, "n": 0, "answer": 0, "steps": 0})
+        entry["n"] += n
+        entry["steps"] += n
+
+    top = sorted(counts.items(), key=lambda kv: -kv[1]["n"])[:limit]
+    return [
+        RecentPatternOut(
+            code=code,
+            name=data["name"],
+            count=data["n"],
+            source=(
+                "both"
+                if data["answer"] and data["steps"]
+                else ("answer" if data["answer"] else "steps")
+            ),
+        )
+        for code, data in top
+    ]
 
 
 def _step_trails(

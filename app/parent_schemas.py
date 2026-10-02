@@ -145,6 +145,13 @@ class StepTrailOut(BaseModel):
     misconception_names: list[str] = Field(default_factory=list)
 
 
+class RecentPatternOut(BaseModel):
+    code: str
+    name: str
+    count: int
+    source: str  # "answer" | "steps" | "both"
+
+
 class ChildDashboardOut(BaseModel):
     child: ChildSummaryOut
     active_skill_name: str | None = None
@@ -157,3 +164,4 @@ class ChildDashboardOut(BaseModel):
     daily_metrics: list[DailyMetricOut] = Field(default_factory=list)
     weekly_digest: WeeklyDigestOut | None = None
     step_trails: list[StepTrailOut] = Field(default_factory=list)
+    recent_patterns: list[RecentPatternOut] = Field(default_factory=list)

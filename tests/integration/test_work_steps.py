@@ -206,3 +206,31 @@ def test_work_step_requires_auth() -> None:
         json={"problem_id": str(uuid.uuid4()), "line": "x = 1"},
     )
     assert response.status_code in (401, 403)
+
+
+def test_work_step_word_problem_model_then_answer() -> None:
+    student_id, _, skill_id = _fresh_learner()
+    session_id = _start_session(student_id, skill_id)
+    with SessionLocal() as db:
+        problem = Problem(
+            primary_skill_id=skill_id,
+            problem_type="WORD_PROBLEM",
+            difficulty=2,
+            prompt="A $80 purchase has 13% tax. What is the tax amount?",
+            canonical_answer="10.40",
+            answer_kind="FREE_TEXT",
+            source_type="TEST",
+        )
+        db.add(problem)
+        db.commit()
+        problem_id = problem.id
+
+    # A wrong-value model is caught deterministically.
+    bad = _step(session_id, problem_id, "0.13 * 50")
+    assert bad["status"] == "invalid"
+    # A model whose value matches the canonical answer is accepted.
+    assert _step(session_id, problem_id, "0.13 * 80")["status"] == "valid"
+    # The answer with a unit word solves; normalized to the authored answer.
+    solved = _step(session_id, problem_id, "10.40 dollars")
+    assert solved["status"] == "solved"
+    assert solved["normalized_line"] == "10.40"

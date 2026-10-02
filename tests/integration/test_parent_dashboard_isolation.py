@@ -324,3 +324,12 @@ def test_parent_dashboard_shows_step_trails_in_scope_only() -> None:
         assert trail.misconception_names == [
             "Moves the constant the wrong direction"
         ]
+
+        # The 7-day aggregate picks up the classified step error without
+        # reading any learner text.
+        assert len(result.recent_patterns) == 1
+        pattern = result.recent_patterns[0]
+        assert pattern.code == "EQ_001"
+        assert pattern.name == "Moves the constant the wrong direction"
+        assert pattern.count == 1
+        assert pattern.source == "steps"

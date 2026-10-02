@@ -534,6 +534,7 @@ export default function Workspace() {
                           key={workspace.problem.id}
                           sessionId={sessionId}
                           problemId={workspace.problem.id}
+                          problemType={workspace.problem.problem_type}
                           disabled={!hasAction("SUBMIT_ANSWER")}
                           onSolved={(line) => void submitAnswerText(line)}
                           onError={setError}

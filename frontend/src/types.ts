@@ -290,6 +290,7 @@ export interface ChildDashboard {
   daily_metrics?: { date: string; label: string; minutes: number; mastery_score: number }[];
   weekly_digest?: WeeklyDigest | null;
   step_trails?: StepTrail[];
+  recent_patterns?: { code: string; name: string; count: number; source: string }[];
 }
 
 export interface WeeklyDigest {

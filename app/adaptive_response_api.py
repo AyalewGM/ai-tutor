@@ -591,9 +591,10 @@ def work_step(
     active_skill_id = session.active_skill_id or session.primary_skill_id
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not support step-by-step work")
-    start = stepwork.starting_point(problem)
-    if start is None or not stepwork.problem_supports_steps(problem):
+    if not stepwork.problem_supports_steps(problem):
         raise HTTPException(400, "Problem does not support step-by-step work")
+    start = stepwork.starting_point(problem)
+    word_model = stepwork.word_canonical_value(problem)
 
     turns = db.scalars(
         select(TutorTurn)
@@ -615,7 +616,12 @@ def work_step(
         elif status == "invalid":
             invalid_count += 1
 
-    result = stepwork.check_step(start, accepted, payload.line, invalid_count)
+    if word_model is not None:
+        result = stepwork.check_word_step(
+            problem.canonical_answer, word_model, accepted, payload.line, invalid_count
+        )
+    else:
+        result = stepwork.check_step(start, accepted, payload.line, invalid_count)
     db.add(
         TutorTurn(
             session_id=session.id,

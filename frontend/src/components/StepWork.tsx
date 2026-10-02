@@ -17,6 +17,7 @@ interface StepLine {
 interface StepWorkProps {
   sessionId: string;
   problemId: string;
+  problemType?: string | null;
   disabled?: boolean;
   onSolved: (answer: string) => void;
   onError?: (message: string) => void;
@@ -25,10 +26,12 @@ interface StepWorkProps {
 export default function StepWork({
   sessionId,
   problemId,
+  problemType,
   disabled,
   onSolved,
   onError,
 }: StepWorkProps) {
+  const wordProblem = problemType === "WORD_PROBLEM";
   const [lines, setLines] = useState<StepLine[]>([]);
   const [draft, setDraft] = useState("");
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -65,7 +68,9 @@ export default function StepWork({
   return (
     <div className="space-y-3" data-testid="step-work">
       <p className="text-sm text-muted-foreground">
-        Solve it line by line — write each step as an equation.
+        {wordProblem
+          ? "Work it out step by step — write the calculation, then your answer."
+          : "Solve it line by line — write each step as an equation."}
       </p>
       {lines.length > 0 && (
         <ol className="space-y-1.5" aria-label="Your work">
@@ -114,7 +119,9 @@ export default function StepWork({
                 void submitLine();
               }
             }}
-            placeholder="Next line, e.g. 3x + 12 = 30"
+            placeholder={
+              wordProblem ? "e.g. 0.2 * 60, then 12 dollars" : "Next line, e.g. 3x + 12 = 30"
+            }
             aria-label="Next work line"
             className="h-11 text-base"
             disabled={disabled || busy}

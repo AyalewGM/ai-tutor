@@ -2,8 +2,12 @@ from fractions import Fraction
 
 from app.services.stepwork import (
     check_step,
+    check_word_step,
     parse_equation,
+    parse_equation_lenient,
     parse_expression,
+    parse_expression_lenient,
+    problem_supports_steps,
     starting_equation,
     starting_expression,
     supports_steps,
@@ -165,3 +169,77 @@ def test_starting_expression_preserves_leading_sign() -> None:
     assert starting_expression("Evaluate 1/2 + 1/3.") == "1/2 + 1/3"
     assert starting_expression("3(x + 4)") == "3(x + 4)"
     assert check_step("-2y - 5y", [], "-7y", 0).status == "solved"
+
+
+def test_sympy_fallback_covers_syntax_the_native_parser_lacks() -> None:
+    # ^ exponent syntax and implicit multiplication through parens
+    assert parse_expression_lenient("x^2 - 5x + 6") == {
+        2: Fraction(1), 1: Fraction(-5), 0: Fraction(6),
+    }
+    assert parse_expression_lenient("0.5x + 1/4") == {
+        1: Fraction(1, 2), 0: Fraction(1, 4),
+    }
+    assert parse_equation_lenient("x^2 - 4 = 0") is not None
+
+
+def test_sympy_fallback_rejects_out_of_scope_input() -> None:
+    # Rational expressions, functions, and multi-variable input stay
+    # honestly unparseable rather than being half-checked.
+    assert parse_expression_lenient("(x+1)/(x-1)") is None
+    assert parse_expression_lenient("sin(x)") is None
+    assert parse_expression_lenient("x + y") is None
+    assert parse_expression_lenient("hello") is None
+    assert parse_expression_lenient("2**x") is None
+
+
+def test_quadratic_equation_steps() -> None:
+    # Factoring preserves the solution set — a legal step.
+    result = check_step("x^2 - 5x + 6 = 0", [], "(x-2)(x-3) = 0", 0)
+    assert result.status == "valid"
+    # x = 2 alone drops a root — the solution set is NOT preserved.
+    assert check_step("x^2 = 4", [], "x = 2", 0).status == "invalid"
+
+
+def test_higher_degree_normalized_rendering() -> None:
+    result = check_step("x^2 - 5x + 6 = 0", [], "(x-2)(x-3) = 0", 0)
+    assert result.normalized_line == "x^2 - 5x + 6 = 0"
+
+
+def test_word_problem_model_and_answer() -> None:
+    # "A $80 purchase has 13% tax." — the model is a calculation whose
+    # value must equal the canonical answer.
+    c = Fraction("10.40")
+    assert check_word_step("10.40", c, [], "0.13 * 80", 0).status == "valid"
+    wrong_model = check_word_step("10.40", c, [], "0.13 * 50", 0)
+    assert wrong_model.status == "invalid"
+    # A bare correct answer is solved at any point — the structure is
+    # scaffolding, not a gate.
+    assert check_word_step("10.40", c, [], "10.40 dollars", 0).status == "solved"
+    # Chained computation ending at the answer is solved.
+    assert check_word_step(
+        "10.40", c, ["0.13 * 80"], "0.13 * 80 = 10.4", 0
+    ).status == "solved"
+    # Off-value compute step is an arithmetic slip.
+    slip = check_word_step("10.40", c, ["0.13 * 80"], "9.4", 0)
+    assert slip.status == "invalid"
+    assert slip.misconception_code == "NUM_003"
+
+
+def test_word_problem_supports_steps_gate() -> None:
+    from app.models import Problem
+
+    problem = Problem(
+        problem_type="WORD_PROBLEM",
+        answer_kind="INTEGER",
+        prompt="What is 20% of 60?",
+        canonical_answer="12",
+    )
+    assert problem_supports_steps(problem)
+    # No parseable numeric answer → step mode stays off.
+    bad = Problem(
+        problem_type="WORD_PROBLEM",
+        answer_kind="FREE_TEXT",
+        prompt="Explain the pattern.",
+        canonical_answer="it doubles",
+    )
+    assert not problem_supports_steps(bad)
