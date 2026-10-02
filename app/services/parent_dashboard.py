@@ -21,6 +21,7 @@ from app.models import (
     StudentSkill,
     TutorSession,
     TutorState,
+    TutorTurn,
 )
 from app.parent_models import (
     ChildLinkClaim,
@@ -38,9 +39,11 @@ from app.parent_schemas import (
     RecommendedSkillOut,
     ReviewDueOut,
     SkillProgressOut,
+    StepTrailOut,
     StrandSummaryOut,
     SupportAreaOut,
     WeeklyDigestOut,
+    WorkStepLineOut,
 )
 from app.services.awards import BADGE_XP, attempt_xp
 from app.services.curriculum_scope import CurriculumScopeError, resolve_student_curriculum_scope
@@ -414,6 +417,8 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         db, student_id=student.id, scope=scope
     )
 
+    step_trails = _step_trails(db, student_id=student.id, scope=scope)
+
     return ChildDashboardOut(
         child=child_summary(db, student),
         active_skill_name=active_skill_name,
@@ -434,7 +439,110 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         grade_level_summary=summary,
         daily_metrics=daily_metrics,
         weekly_digest=weekly_digest,
+        step_trails=step_trails,
     )
+
+
+def _step_trails(
+    db: Session,
+    *,
+    student_id: uuid.UUID,
+    scope,
+    limit_problems: int = 5,
+) -> list[StepTrailOut]:
+    """Recent step-worked problems so parents can see where the work stumbled."""
+    rows = db.execute(
+        select(TutorTurn, Problem, Skill)
+        .join(TutorSession, TutorSession.id == TutorTurn.session_id)
+        .join(Problem, Problem.id == TutorTurn.problem_id)
+        .join(Skill, Skill.id == Problem.primary_skill_id)
+        .where(
+            TutorSession.student_id == student_id,
+            TutorTurn.pedagogical_action == "WORK_STEP",
+            Skill.curriculum_id == scope.curriculum_id,
+        )
+        .order_by(desc(TutorTurn.created_at), desc(TutorTurn.id))
+        .limit(400)
+    ).all()
+
+    grouped: dict[uuid.UUID, dict] = {}
+    order: list[uuid.UUID] = []
+    for turn, problem, skill in rows:
+        entry = grouped.get(problem.id)
+        if entry is None:
+            if len(order) >= limit_problems:
+                continue
+            entry = {
+                "problem": problem,
+                "skill": skill,
+                "turns": [],
+                "updated_at": turn.created_at,
+            }
+            grouped[problem.id] = entry
+            order.append(problem.id)
+        entry["turns"].append(turn)
+
+    code_pairs = {
+        (entry["problem"].primary_skill_id, (t.metadata_json or {}).get("misconception_code"))
+        for entry in grouped.values()
+        for t in entry["turns"]
+        if (t.metadata_json or {}).get("misconception_code")
+    }
+    name_lookup: dict[tuple[uuid.UUID, str], str] = {}
+    if code_pairs:
+        skill_ids = {skill_id for skill_id, _ in code_pairs}
+        codes = {code for _, code in code_pairs}
+        for skill_id, code, name in db.execute(
+            select(Misconception.skill_id, Misconception.code, Misconception.name).where(
+                Misconception.skill_id.in_(skill_ids),
+                Misconception.code.in_(codes),
+            )
+        ):
+            name_lookup[(skill_id, code)] = name
+
+    trails: list[StepTrailOut] = []
+    for problem_id in order:
+        entry = grouped[problem_id]
+        problem = entry["problem"]
+        turns = list(reversed(entry["turns"]))  # chronological within the trail
+        lines = [
+            WorkStepLineOut(
+                line=(t.metadata_json or {}).get("normalized_line")
+                or (t.metadata_json or {}).get("line")
+                or t.message,
+                status=(t.metadata_json or {}).get("step_status") or "invalid",
+                misconception_code=(t.metadata_json or {}).get("misconception_code"),
+                revealed=bool((t.metadata_json or {}).get("revealed")),
+            )
+            for t in turns
+        ]
+        statuses = {line.status for line in lines}
+        if "solved" in statuses:
+            status = "SOLVED"
+        elif statuses & {"invalid", "unparseable"} or any(line.revealed for line in lines):
+            status = "STRUGGLED"
+        else:
+            status = "IN_PROGRESS"
+        misconception_names = sorted(
+            {
+                name_lookup[(problem.primary_skill_id, line.misconception_code)]
+                for line in lines
+                if line.misconception_code
+                and (problem.primary_skill_id, line.misconception_code) in name_lookup
+            }
+        )
+        trails.append(
+            StepTrailOut(
+                problem_id=problem.id,
+                prompt=problem.prompt,
+                skill_name=entry["skill"].name,
+                updated_at=entry["updated_at"],
+                status=status,
+                lines=lines,
+                misconception_names=misconception_names,
+            )
+        )
+    return trails
 
 
 def _learning_trends(

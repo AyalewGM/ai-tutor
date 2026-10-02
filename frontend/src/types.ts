@@ -261,6 +261,23 @@ export interface GradeLevelSummary {
   trouble_spots: string[];
 }
 
+export interface WorkStepLine {
+  line: string;
+  status: string;
+  misconception_code: string | null;
+  revealed: boolean;
+}
+
+export interface StepTrail {
+  problem_id: string;
+  prompt: string;
+  skill_name: string;
+  updated_at: string;
+  status: string;
+  lines: WorkStepLine[];
+  misconception_names: string[];
+}
+
 export interface ChildDashboard {
   child: ChildSummary;
   active_skill_name: string | null;
@@ -272,6 +289,7 @@ export interface ChildDashboard {
   grade_level_summary?: GradeLevelSummary | null;
   daily_metrics?: { date: string; label: string; minutes: number; mastery_score: number }[];
   weekly_digest?: WeeklyDigest | null;
+  step_trails?: StepTrail[];
 }
 
 export interface WeeklyDigest {

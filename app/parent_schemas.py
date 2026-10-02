@@ -128,6 +128,23 @@ class WeeklyDigestOut(BaseModel):
     stall: bool = False
 
 
+class WorkStepLineOut(BaseModel):
+    line: str
+    status: str
+    misconception_code: str | None = None
+    revealed: bool = False
+
+
+class StepTrailOut(BaseModel):
+    problem_id: uuid.UUID
+    prompt: str
+    skill_name: str
+    updated_at: datetime
+    status: str
+    lines: list[WorkStepLineOut]
+    misconception_names: list[str] = Field(default_factory=list)
+
+
 class ChildDashboardOut(BaseModel):
     child: ChildSummaryOut
     active_skill_name: str | None = None
@@ -139,3 +156,4 @@ class ChildDashboardOut(BaseModel):
     grade_level_summary: GradeLevelSummaryOut | None = None
     daily_metrics: list[DailyMetricOut] = Field(default_factory=list)
     weekly_digest: WeeklyDigestOut | None = None
+    step_trails: list[StepTrailOut] = Field(default_factory=list)
