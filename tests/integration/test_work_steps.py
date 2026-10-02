@@ -126,6 +126,37 @@ def test_work_step_invalid_steps_escalate_to_reveal() -> None:
         assert attempt.assistance_level >= 2  # errors + reveal
 
 
+def test_step_misconception_counts_as_evidence_on_correct_final_answer() -> None:
+    student_id, _, skill_id = _fresh_learner()
+    session_id = _start_session(student_id, skill_id)
+    with SessionLocal() as db:
+        problem = _step_problem(db, skill_id)
+        db.commit()
+        problem_id = problem.id
+
+    # Two inverse-direction errors mid-work, then a correct final answer.
+    assert _step(session_id, problem_id, "2x = 20")["misconception_code"] == "EQ_001"
+    assert _step(session_id, problem_id, "2x = 22")["status"] == "invalid"
+
+    result = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
+        json={"problem_id": str(problem_id), "answer": "x = 4", "assistance_level": 0},
+    )
+    assert result.status_code == 200
+    assert result.json()["evaluation"]["correct"] is True
+    # The recovered answer still records the step-level misconception.
+    assert result.json()["evaluation"]["misconception_code"] == "EQ_001"
+
+    with SessionLocal() as db:
+        attempt = db.scalar(
+            select(Attempt)
+            .where(Attempt.session_id == uuid.UUID(session_id))
+            .order_by(Attempt.attempt_number.desc())
+        )
+        assert attempt is not None
+        assert attempt.misconception_id is not None
+
+
 def test_work_step_rejects_unsupported_and_foreign_problems() -> None:
     student_id, _, skill_id = _fresh_learner()
     session_id = _start_session(student_id, skill_id)

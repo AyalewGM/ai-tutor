@@ -5,6 +5,7 @@ from app.services.stepwork import (
     parse_equation,
     parse_expression,
     starting_equation,
+    starting_expression,
     supports_steps,
 )
 
@@ -19,8 +20,9 @@ def test_parse_expression_linear_forms() -> None:
     assert parse_expression("-2(x - 7)") == {1: Fraction(-2), 0: Fraction(14)}
 
 
-def test_parse_expression_rejects_non_x_variables_and_junk() -> None:
-    assert parse_expression("2y + 1") is None
+def test_parse_expression_rejects_mixed_variables_and_junk() -> None:
+    assert parse_expression("2y + 1") is not None  # any single variable is fine
+    assert parse_expression("2x + y") is None  # mixed variables are not
     assert parse_expression("hello") is None
     assert parse_expression("x +") is None
     assert parse_expression("3x = 9") is None  # not an expression
@@ -119,5 +121,47 @@ def test_multi_step_full_path_with_detour() -> None:
 
 def test_supports_steps_scoping() -> None:
     assert supports_steps("SOLVE_EQUATION")
+    assert supports_steps("SIMPLIFY_EXPRESSION")
+    assert supports_steps("FRACTION_OPERATIONS")
     assert not supports_steps("ARITHMETIC_20")
     assert not supports_steps(None)
+
+
+def test_expression_steps_fraction_family() -> None:
+    start = "1/2 + 1/3"
+    result = check_step(start, [], "3/6 + 2/6", 0)
+    assert result.status == "valid"
+    assert check_step(start, ["3/6 + 2/6"], "5/6", 0).status == "solved"
+    assert check_step(start, [], "5/6", 0).status == "solved"
+    # Equal but not in lowest terms — a valid move, not the final answer.
+    assert check_step(start, ["3/6 + 2/6"], "10/12", 0).status == "valid"
+
+
+def test_expression_steps_simplify_family() -> None:
+    start = "3(x + 4)"
+    assert check_step(start, [], "3x + 12", 0).status == "solved"
+    partial = check_step(start, [], "3x + 4", 0)
+    assert partial.status == "invalid"
+    assert partial.misconception_code == "DIST_001"
+
+
+def test_expression_steps_combine_like_terms_family() -> None:
+    start = "4y + 3y - 5"
+    assert check_step(start, [], "7y - 5", 0).status == "solved"
+    assert check_step(start, [], "7y + 5", 0).status == "invalid"
+    eq = check_step(start, [], "4y + 3y = 5", 0)
+    assert eq.status == "unparseable"
+
+
+def test_fraction_adds_across_misconception() -> None:
+    result = check_step("1/2 + 1/3", [], "2/5", 0)
+    assert result.status == "invalid"
+    assert result.misconception_code == "NUM_003"
+
+
+def test_starting_expression_preserves_leading_sign() -> None:
+    # "Simplify -2y - 5y." — the prefix stripper must not eat the minus.
+    assert starting_expression("Simplify -2y - 5y.") == "-2y - 5y"
+    assert starting_expression("Evaluate 1/2 + 1/3.") == "1/2 + 1/3"
+    assert starting_expression("3(x + 4)") == "3(x + 4)"
+    assert check_step("-2y - 5y", [], "-7y", 0).status == "solved"

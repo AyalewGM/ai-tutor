@@ -30,6 +30,7 @@ def record_evidence(
     problem_difficulty: int | None = None,
     answer_kind: str = "FREE_TEXT",
     choices: list | None = None,
+    step_misconception_code: str | None = None,
 ) -> EvidenceResult:
     previous_score = progress.mastery_score
     previous_confidence = progress.confidence_score
@@ -37,9 +38,24 @@ def record_evidence(
         prompt, answer, canonical_answer, answer_kind=answer_kind, choices=choices
     )
 
+    # A misconception detected in graded work steps is real evidence even when
+    # the final answer recovered — the learner still exhibited the pattern.
+    misconception_code = evaluation.misconception_code
+    misconception_confidence = evaluation.misconception_confidence
+    if misconception_code is None and step_misconception_code is not None:
+        misconception_code = step_misconception_code
+        misconception_confidence = 0.7
+        evaluation = EvaluationResult(
+            correct=evaluation.correct,
+            confidence=evaluation.confidence,
+            normalized_answer=evaluation.normalized_answer,
+            misconception_code=misconception_code,
+            misconception_confidence=misconception_confidence,
+        )
+
     misconception = None
     misconception_count = 0
-    if evaluation.misconception_code:
+    if misconception_code:
         current_skill = db.get(Skill, progress.skill_id)
         if current_skill is not None:
             misconception = db.scalar(
@@ -47,7 +63,7 @@ def record_evidence(
                 .join(Skill, Skill.id == Misconception.skill_id)
                 .where(
                     Skill.curriculum_id == current_skill.curriculum_id,
-                    Misconception.code == evaluation.misconception_code,
+                    Misconception.code == misconception_code,
                 )
             )
         if misconception:
@@ -61,12 +77,12 @@ def record_evidence(
                     student_id=progress.student_id,
                     misconception_id=misconception.id,
                     occurrence_count=1,
-                    confidence=Decimal(str(evaluation.misconception_confidence or 0)),
+                    confidence=Decimal(str(misconception_confidence or 0)),
                 )
                 db.add(row)
             else:
                 row.occurrence_count += 1
-                row.confidence = Decimal(str(evaluation.misconception_confidence or 0))
+                row.confidence = Decimal(str(misconception_confidence or 0))
             misconception_count = row.occurrence_count
 
     mastery = update_mastery(

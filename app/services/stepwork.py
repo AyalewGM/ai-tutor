@@ -9,13 +9,26 @@ or divide-first), not only the canonical path.
 Scope is single-variable polynomials in exact rational arithmetic, which
 covers the SOLVE_EQUATION families served today.
 """
+import math
 import re
 from dataclasses import dataclass
 from fractions import Fraction
 
 Poly = dict[int, Fraction]
 
-STEP_FAMILIES = {"SOLVE_EQUATION"}
+STEP_FAMILIES = {
+    "SOLVE_EQUATION",
+    "SIMPLIFY_EXPRESSION",
+    "COMBINE_LIKE_TERMS",
+    "FRACTION_OPERATIONS",
+    "FRACTION_SUBTRACT",
+}
+
+EXPRESSION_FAMILIES = {
+    "SIMPLIFY_EXPRESSION",
+    "COMBINE_LIKE_TERMS",
+    "FRACTION_OPERATIONS",
+}
 
 _TOKEN = re.compile(r"\s*(\d+(?:\.\d+)?|[a-zA-Z]|[+\-*/()])")
 
@@ -56,9 +69,12 @@ def _mul(p: Poly, q: Poly) -> Poly | None:
 
 
 class _Parser:
+    """Single-variable polynomial parser; the first letter binds the variable."""
+
     def __init__(self, tokens: list[str]):
         self.tokens = tokens
         self.pos = 0
+        self.var: str | None = None
 
     def _peek(self) -> str | None:
         return self.tokens[self.pos] if self.pos < len(self.tokens) else None
@@ -133,7 +149,13 @@ class _Parser:
         if token[0].isdigit():
             return {0: Fraction(token)}
         if token.isalpha():
-            return {1: Fraction(1)} if token == "x" else None
+            if len(token) != 1:
+                return None
+            if self.var is None:
+                self.var = token
+            elif token != self.var:
+                return None
+            return {1: Fraction(1)}
         return None
 
 
@@ -203,25 +225,25 @@ def _solution_value(eq: tuple[Poly, Poly]) -> Fraction | None:
     return -norm.get(0, Fraction(0)) / a
 
 
-def _fmt_poly(poly: Poly) -> str:
+def _fmt_poly(poly: Poly, var: str = "x") -> str:
     """Render a polynomial (deg<=1) as 'ax + b' text for feedback."""
     a = poly.get(1, Fraction(0))
     b = poly.get(0, Fraction(0))
     parts: list[str] = []
     if a != 0:
         if a == 1:
-            parts.append("x")
+            parts.append(var)
         elif a == -1:
-            parts.append("-x")
+            parts.append(f"-{var}")
         else:
-            parts.append(f"{a}x")
+            parts.append(f"{a}{var}")
     if b != 0 or not parts:
         sign = "+" if b > 0 and parts else ("-" if b < 0 else "")
         parts.append(f"{sign} {abs(b)}".strip())
     return " ".join(parts)
 
 
-def _canonical_next_line(eq: tuple[Poly, Poly]) -> str | None:
+def _canonical_next_line(eq: tuple[Poly, Poly], var: str = "x") -> str | None:
     """One legal next line toward x = const, for the reveal hint.
 
     Uses the normalized form so it works regardless of the route the learner
@@ -234,11 +256,128 @@ def _canonical_next_line(eq: tuple[Poly, Poly]) -> str | None:
         return None
     if b != 0:
         # ax + b = 0  ->  ax = -b
-        return f"{_fmt_poly({1: a})} = {-b}"
+        return f"{_fmt_poly({1: a}, var)} = {-b}"
     if a != 1:
         value = _solution_value(eq)
-        return f"x = {value}" if value is not None else None
+        return f"{var} = {value}" if value is not None else None
     return None
+
+
+_FRACTION_TERM = re.compile(r"^(-?\d+)/(\d+)$")
+_EXPR_PREFIX = re.compile(
+    r"^(simplify|evaluate|compute|expand|combine( like terms)?( of)?|add|subtract|rewrite|write)"
+    r"[:\s]*(the expression|the following)?[:\s]*",
+    re.IGNORECASE,
+)
+
+
+def _is_simplified(text: str, poly: Poly) -> bool:
+    """Honest 'final form' check for expression families.
+
+    Fully expanded (no parentheses), at most one term per degree, and a
+    lone fraction is in lowest terms.
+    """
+    if "(" in text or ")" in text:
+        return False
+    pieces = [p for p in re.split(r"[+-]", text.strip()) if p.strip()]
+    var_terms = sum(1 for p in pieces if re.search(r"[a-zA-Z]", p))
+    const_terms = len(pieces) - var_terms
+    if var_terms > 1 or const_terms > 1:
+        return False
+    if len(pieces) == 1:
+        match = _FRACTION_TERM.match(pieces[0].strip())
+        if match:
+            num, den = int(match.group(1)), int(match.group(2))
+            return den != 0 and math.gcd(abs(num), abs(den)) == 1
+    return True
+
+
+_FACTOR_FORM = re.compile(r"(-?\d+)\s*\(\s*([a-zA-Z])\s*([+-])\s*(\d+)\s*\)")
+
+
+@dataclass
+class StepCheck:
+    status: str  # "solved" | "valid" | "invalid" | "unparseable" | "duplicate"
+    feedback: str | None = None
+    misconception_code: str | None = None
+    revealed_line: str | None = None
+    normalized_line: str | None = None
+
+
+def _classify_expression_error(prev_text: str, new_poly: Poly) -> str | None:
+    """Map a non-equivalent expression step to a catalog misconception."""
+    # DIST_001: a(bx + c) -> abx + c (factor applied to only the first term).
+    match = _FACTOR_FORM.search(prev_text.replace(" ", ""))
+    if match:
+        a = int(match.group(1))
+        sign = 1 if match.group(3) == "+" else -1
+        c = int(match.group(4))
+        naive = {1: Fraction(a), 0: Fraction(sign * c)}
+        if new_poly == naive:
+            return "DIST_001"
+
+    # NUM_003: numerators and denominators added across.
+    terms = [t.strip() for t in re.split(r"[+-]", prev_text) if t.strip()]
+    fracs = []
+    for term in terms:
+        match = _FRACTION_TERM.match(term.replace(" ", ""))
+        if not match:
+            return None
+        fracs.append((int(match.group(1)), int(match.group(2))))
+    if len(fracs) != 2:
+        return None
+    (a, b), (c, d) = fracs
+    value = new_poly.get(0)
+    naive = set()
+    for sign in (1, -1):
+        for denom in (b + d, b - d):
+            if denom:
+                naive.add(Fraction(a + sign * c, denom))
+    return "NUM_003" if value in naive else None
+
+
+def _check_expression_step(
+    prev_text: str, new_line: str, invalid_count: int, var: str
+) -> StepCheck:
+    prev_poly = parse_expression(prev_text)
+    if prev_poly is None:
+        return StepCheck(status="unparseable", feedback="The previous line can't be checked.")
+
+    stripped = new_line.strip()
+    if not stripped:
+        return StepCheck(status="unparseable", feedback="Type a line of work first.")
+    if "=" in stripped:
+        return StepCheck(
+            status="unparseable",
+            feedback="This is an expression — write the next form without an equals sign.",
+        )
+    new_poly = parse_expression(stripped)
+    if new_poly is None:
+        return StepCheck(
+            status="unparseable",
+            feedback="I can't read that — try something like 3x + 12 or 5/6.",
+        )
+    if stripped == prev_text.strip():
+        return StepCheck(status="duplicate", feedback="That's the same line — make a move.")
+
+    if new_poly == prev_poly:
+        normalized = _fmt_poly(new_poly, var)
+        if _is_simplified(stripped, new_poly):
+            return StepCheck(status="solved", normalized_line=normalized)
+        return StepCheck(status="valid", normalized_line=normalized)
+
+    code = _classify_expression_error(prev_text, new_poly)
+    if invalid_count >= 2:
+        revealed = _fmt_poly(prev_poly, var)
+        feedback = _ERROR_FEEDBACK.get(code) or "That expression isn't equal to the line above."
+        return StepCheck(
+            status="invalid",
+            feedback=f"{feedback} Fully simplified, the line above is: {revealed}",
+            misconception_code=code,
+            revealed_line=revealed,
+        )
+    feedback = _ERROR_FEEDBACK.get(code) or "That expression isn't equal to the line above — check your arithmetic."
+    return StepCheck(status="invalid", feedback=feedback, misconception_code=code)
 
 
 def _classify_error(
@@ -264,33 +403,47 @@ def _classify_error(
     return None
 
 
-@dataclass
-class StepCheck:
-    status: str  # "solved" | "valid" | "invalid" | "unparseable" | "duplicate"
-    feedback: str | None = None
-    misconception_code: str | None = None
-    revealed_line: str | None = None
-    normalized_line: str | None = None
-
-
 def supports_steps(problem_type: str | None) -> bool:
     return problem_type in STEP_FAMILIES
+
+
+def is_equation_family(problem_type: str | None) -> bool:
+    return problem_type not in EXPRESSION_FAMILIES and supports_steps(problem_type)
 
 
 def problem_supports_steps(problem) -> bool:
     """A problem offers structured steps only when the checker can parse it."""
     return (
-        getattr(problem, "answer_kind", None) == "FREE_TEXT"
+        getattr(problem, "answer_kind", None) in {"FREE_TEXT", "FRACTION"}
         and supports_steps(getattr(problem, "problem_type", None))
-        and starting_equation(getattr(problem, "prompt", "") or "") is not None
+        and starting_point(problem) is not None
     )
 
 
 def starting_equation(prompt: str) -> str | None:
     """Extract the equation text from a problem prompt."""
     text = re.sub(r"^(solve( for \w)?|find \w|evaluate)[:\s]*", "", prompt.strip(), flags=re.IGNORECASE)
-    text = text.strip().rstrip(".;")
+    text = text.strip().rstrip(".;?")
     return text if "=" in text else None
+
+
+def starting_expression(prompt: str) -> str | None:
+    """Extract the expression text from a problem prompt."""
+    text = prompt.strip().rstrip(".;?")
+    if parse_expression(text) is not None:
+        return text
+    stripped = _EXPR_PREFIX.sub("", text).strip().rstrip(".;?")
+    return stripped if parse_expression(stripped) is not None else None
+
+
+def starting_point(problem) -> str | None:
+    """The checkable seed line for a problem — equation or expression."""
+    prompt = getattr(problem, "prompt", "") or ""
+    if is_equation_family(getattr(problem, "problem_type", None)):
+        return starting_equation(prompt)
+    if supports_steps(getattr(problem, "problem_type", None)):
+        return starting_expression(prompt)
+    return None
 
 
 def check_step(
@@ -305,7 +458,13 @@ def check_step(
     the number of invalid submissions since the last valid line (server-derived
     so the escalation policy can't be gamed).
     """
+    var_match = re.search(r"[a-zA-Z]", start_text)
+    var = var_match.group(0) if var_match else "x"
     prior_text = accepted_lines[-1] if accepted_lines else start_text
+
+    if "=" not in start_text:
+        return _check_expression_step(prior_text, new_line, invalid_count, var)
+
     prev_eq = parse_equation(prior_text)
     if prev_eq is None:
         return StepCheck(status="unparseable", feedback="The previous line can't be checked.")
@@ -323,7 +482,7 @@ def check_step(
                 status="unparseable",
                 feedback="Write each step as an equation, like 3x + 12 = 30.",
             )
-        stripped = f"x = {stripped}"
+        stripped = f"{var} = {stripped}"
 
     new_eq = parse_equation(stripped)
     if new_eq is None:
@@ -336,14 +495,14 @@ def check_step(
         return StepCheck(status="duplicate", feedback="That's the same line — make a move.")
 
     if _proportional(_normalized(prev_eq), _normalized(new_eq)):
-        normalized = f"{_fmt_poly(new_eq[0])} = {_fmt_poly(new_eq[1])}"
+        normalized = f"{_fmt_poly(new_eq[0], var)} = {_fmt_poly(new_eq[1], var)}"
         if _is_solved_form(new_eq):
             return StepCheck(status="solved", normalized_line=normalized)
         return StepCheck(status="valid", normalized_line=normalized)
 
     code = _classify_error(prev_eq, new_eq)
     if invalid_count >= 2:
-        revealed = _canonical_next_line(prev_eq)
+        revealed = _canonical_next_line(prev_eq, var)
         feedback = _ERROR_FEEDBACK.get(code) or "Check that every operation applies to both sides."
         return StepCheck(
             status="invalid",

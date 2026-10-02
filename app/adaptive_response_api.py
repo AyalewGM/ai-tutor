@@ -146,6 +146,20 @@ def respond(
     )
 
     progress = _student_skill(db, session.student_id, active_skill_id)
+    # A misconception observed during graded work steps is evidence even when
+    # the final answer recovered; the final-answer classification still wins
+    # when both fire.
+    step_misconception_code = db.scalar(
+        select(TutorTurn.metadata_json["misconception_code"].as_string())
+        .where(
+            TutorTurn.session_id == session.id,
+            TutorTurn.problem_id == problem.id,
+            TutorTurn.pedagogical_action == "WORK_STEP",
+            TutorTurn.metadata_json["step_status"].as_string() == "invalid",
+            TutorTurn.metadata_json["misconception_code"].as_string().is_not(None),
+        )
+        .order_by(TutorTurn.created_at.desc(), TutorTurn.id.desc())
+    )
     evidence = record_evidence(
         db,
         progress=progress,
@@ -156,6 +170,7 @@ def respond(
         problem_difficulty=problem.difficulty,
         answer_kind=problem.answer_kind,
         choices=problem.choices,
+        step_misconception_code=step_misconception_code,
     )
 
     prior_attempt_count = db.scalar(
@@ -574,14 +589,10 @@ def work_step(
     session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
     problem = db.get(Problem, payload.problem_id)
     active_skill_id = session.active_skill_id or session.primary_skill_id
-    if (
-        problem is None
-        or problem.primary_skill_id != active_skill_id
-        or not stepwork.supports_steps(problem.problem_type)
-    ):
+    if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not support step-by-step work")
-    start = stepwork.starting_equation(problem.prompt)
-    if start is None:
+    start = stepwork.starting_point(problem)
+    if start is None or not stepwork.problem_supports_steps(problem):
         raise HTTPException(400, "Problem does not support step-by-step work")
 
     turns = db.scalars(
