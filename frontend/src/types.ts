@@ -93,6 +93,24 @@ export interface WorkspaceProblem {
   visual?: VisualSpec | null;
   answer_kind?: string;
   choices?: ProblemChoice[] | null;
+  problem_type?: string | null;
+  supports_steps?: boolean;
+}
+
+export type StepStatus =
+  | "solved"
+  | "valid"
+  | "invalid"
+  | "unparseable"
+  | "duplicate";
+
+export interface WorkStepOut {
+  status: StepStatus;
+  feedback?: string | null;
+  misconception_code?: string | null;
+  revealed_line?: string | null;
+  normalized_line?: string | null;
+  invalid_count: number;
 }
 
 export interface DiagnosticOut {

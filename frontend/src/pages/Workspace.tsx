@@ -10,6 +10,7 @@ import MathText from "../components/MathText";
 import LearnPanel from "../components/LearnPanel";
 import LevelCrest from "../components/LevelCrest";
 import ScratchPad from "../components/ScratchPad";
+import StepWork from "../components/StepWork";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -174,9 +175,8 @@ export default function Workspace() {
     setLearnOpen(Boolean(workspace?.focus.in_remediation && learn));
   }, [activeSkillId]);
 
-  async function submitAnswer(event: FormEvent) {
-    event.preventDefault();
-    if (!workspace?.problem) return;
+  async function submitAnswerText(text: string) {
+    if (!workspace?.problem || !text) return;
     setError("");
     setStatus("Checking your work…");
     try {
@@ -184,7 +184,7 @@ export default function Workspace() {
         `/adaptive-tutor/sessions/${sessionId}/respond`,
         {
           problem_id: workspace.problem.id,
-          answer: effectiveAnswer,
+          answer: text,
           assistance_level: 0,
         },
       );
@@ -222,6 +222,11 @@ export default function Workspace() {
       setError(err instanceof ApiError ? err.message : "Submit failed");
       setStatus("");
     }
+  }
+
+  function submitAnswer(event: FormEvent) {
+    event.preventDefault();
+    void submitAnswerText(effectiveAnswer);
   }
 
   async function requestHelp(reason: "HINT" | "I_DONT_UNDERSTAND") {
@@ -519,8 +524,21 @@ export default function Workspace() {
                   </div>
                   <form onSubmit={submitAnswer} className="space-y-3">
                     <div className="space-y-1.5">
-                      <Label htmlFor="answer">Your answer</Label>
-                      {problemKind === "MULTIPLE_CHOICE" &&
+                      <Label htmlFor="answer">
+                        {workspace.problem?.supports_steps
+                          ? "Your work"
+                          : "Your answer"}
+                      </Label>
+                      {workspace.problem?.supports_steps && sessionId ? (
+                        <StepWork
+                          key={workspace.problem.id}
+                          sessionId={sessionId}
+                          problemId={workspace.problem.id}
+                          disabled={!hasAction("SUBMIT_ANSWER")}
+                          onSolved={(line) => void submitAnswerText(line)}
+                          onError={setError}
+                        />
+                      ) : problemKind === "MULTIPLE_CHOICE" &&
                       workspace.problem?.choices?.length ? (
                         <div
                           role="radiogroup"
@@ -595,23 +613,27 @@ export default function Workspace() {
                         />
                       )}
                     </div>
-                    <VoiceChatControls
-                      onTranscript={setAnswer}
-                      promptToRead={workspace.coaching_message}
-                      disabled={!hasAction("SUBMIT_ANSWER") || !workspace.problem}
-                    />
+                    {!workspace.problem?.supports_steps && (
+                      <VoiceChatControls
+                        onTranscript={setAnswer}
+                        promptToRead={workspace.coaching_message}
+                        disabled={!hasAction("SUBMIT_ANSWER") || !workspace.problem}
+                      />
+                    )}
                     <div className="flex flex-wrap gap-2">
-                      <Button
-                        type="submit"
-                        size="lg"
-                        disabled={
-                          !hasAction("SUBMIT_ANSWER") ||
-                          !workspace.problem ||
-                          !effectiveAnswer
-                        }
-                      >
-                        Submit answer
-                      </Button>
+                      {!workspace.problem?.supports_steps && (
+                        <Button
+                          type="submit"
+                          size="lg"
+                          disabled={
+                            !hasAction("SUBMIT_ANSWER") ||
+                            !workspace.problem ||
+                            !effectiveAnswer
+                          }
+                        >
+                          Submit answer
+                        </Button>
+                      )}
                       <Button
                         type="button"
                         variant="outline"

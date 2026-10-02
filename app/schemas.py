@@ -33,6 +33,22 @@ class ProblemOut(BaseModel):
     difficulty: int
     answer_kind: str = "FREE_TEXT"
     choices: list[ProblemChoiceOut] | None = None
+    problem_type: str | None = None
+    supports_steps: bool = False
+
+
+class WorkStepIn(BaseModel):
+    problem_id: uuid.UUID
+    line: str = Field(min_length=1, max_length=200)
+
+
+class WorkStepOut(BaseModel):
+    status: Literal["solved", "valid", "invalid", "unparseable", "duplicate"]
+    feedback: str | None = None
+    misconception_code: str | None = None
+    revealed_line: str | None = None
+    normalized_line: str | None = None
+    invalid_count: int = 0
 
 
 class MasteryOut(BaseModel):

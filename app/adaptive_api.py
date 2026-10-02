@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.api import _student_skill, _tutor_context
+from app.api import _student_skill, _supports_steps, _tutor_context
 from app.core.database import get_db
 from app.identity import CurrentParent, require_parent_owns_student
 from app.models import Skill, Student, TutorSession, TutorState, TutorTurn
@@ -133,6 +133,8 @@ def create_session(payload: SessionCreate, parent: CurrentParent, db: DbSession)
             difficulty=problem.difficulty,
             answer_kind=problem.answer_kind,
             choices=problem_choices_out(problem.choices),
+            problem_type=problem.problem_type,
+            supports_steps=_supports_steps(problem),
         ),
         message=generation.message,
     )

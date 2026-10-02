@@ -58,6 +58,12 @@ def _student_skill(db: Session, student_id: uuid.UUID, skill_id: uuid.UUID) -> S
     return row
 
 
+def _supports_steps(problem: Problem) -> bool:
+    from app.services import stepwork
+
+    return stepwork.problem_supports_steps(problem)
+
+
 def _problem_out(problem: Problem | None) -> ProblemOut | None:
     if problem is None:
         return None
@@ -67,6 +73,8 @@ def _problem_out(problem: Problem | None) -> ProblemOut | None:
         difficulty=problem.difficulty,
         answer_kind=problem.answer_kind,
         choices=problem_choices_out(problem.choices),
+        problem_type=problem.problem_type,
+        supports_steps=_supports_steps(problem),
     )
 
 
