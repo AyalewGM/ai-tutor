@@ -80,8 +80,14 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   const prompt = (await page.locator('.problem').textContent()) || '';
   const answer = solve(prompt);
   expect(answer, `No synthetic answer for problem: ${prompt}`).toBeTruthy();
-  await page.getByLabel('Your answer').fill(answer);
-  await page.getByRole('button', { name: 'Submit answer' }).click();
+  const stepInput = page.getByLabel('Next work line');
+  if (await stepInput.isVisible()) {
+    await stepInput.fill(answer);
+    await page.getByRole('button', { name: 'Check step' }).click();
+  } else {
+    await page.getByLabel('Your answer').fill(answer);
+    await page.getByRole('button', { name: 'Submit answer' }).click();
+  }
   await expect(page.getByText('Correct. Keep going.')).toBeVisible();
 
   // First correct answer mints the First Steps badge and shows the toast.

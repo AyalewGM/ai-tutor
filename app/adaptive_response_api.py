@@ -30,7 +30,10 @@ from app.schemas import (
     RespondIn,
     RespondOut,
     TutorOut,
+    WorkStepIn,
+    WorkStepOut,
 )
+from app.services import stepwork
 from app.services.attempt_evidence import record_evidence
 from app.services.awards import (
     BADGE_XP,
@@ -117,12 +120,46 @@ def respond(
             HintEvent.problem_id == problem.id,
         )
     ) or 0
+    # Step errors and revealed work lines count as assistance — derived from
+    # server-side records, not the client payload.
+    step_errors = db.scalar(
+        select(func.count(TutorTurn.id)).where(
+            TutorTurn.session_id == session.id,
+            TutorTurn.problem_id == problem.id,
+            TutorTurn.pedagogical_action == "WORK_STEP",
+            TutorTurn.metadata_json["step_status"].as_string() == "invalid",
+        )
+    ) or 0
+    step_revealed = db.scalar(
+        select(func.count(TutorTurn.id)).where(
+            TutorTurn.session_id == session.id,
+            TutorTurn.problem_id == problem.id,
+            TutorTurn.pedagogical_action == "WORK_STEP",
+            TutorTurn.metadata_json["revealed"].as_boolean(),
+        )
+    ) or 0
+    step_assistance = (1 if step_errors else 0) + (1 if step_revealed else 0)
     effective_assistance_level = max(
         payload.assistance_level,
         assistance_level_for_hint(int(highest_hint_level)),
+        min(step_assistance, 4),
     )
 
     progress = _student_skill(db, session.student_id, active_skill_id)
+    # A misconception observed during graded work steps is evidence even when
+    # the final answer recovered; the final-answer classification still wins
+    # when both fire.
+    step_misconception_code = db.scalar(
+        select(TutorTurn.metadata_json["misconception_code"].as_string())
+        .where(
+            TutorTurn.session_id == session.id,
+            TutorTurn.problem_id == problem.id,
+            TutorTurn.pedagogical_action == "WORK_STEP",
+            TutorTurn.metadata_json["step_status"].as_string() == "invalid",
+            TutorTurn.metadata_json["misconception_code"].as_string().is_not(None),
+        )
+        .order_by(TutorTurn.created_at.desc(), TutorTurn.id.desc())
+    )
     evidence = record_evidence(
         db,
         progress=progress,
@@ -133,6 +170,7 @@ def respond(
         problem_difficulty=problem.difficulty,
         answer_kind=problem.answer_kind,
         choices=problem.choices,
+        step_misconception_code=step_misconception_code,
     )
 
     prior_attempt_count = db.scalar(
@@ -536,4 +574,73 @@ def respond(
         new_awards=[AwardOut(**award_out(db, award)) for award in new_awards],
         xp_earned=xp_earned,
         growth=GrowthOut(**growth_out),
+    )
+
+@router.post("/sessions/{session_id}/work-step", response_model=WorkStepOut)
+def work_step(
+    session_id: uuid.UUID, payload: WorkStepIn, parent: CurrentParent, db: DbSession
+) -> WorkStepOut:
+    """Grade one intermediate work line for a step-supporting problem.
+
+    Accepted lines and the invalid streak are reconstructed from recorded
+    WORK_STEP turns, so the escalation policy is server-derived and cannot be
+    reset by the client.
+    """
+    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    problem = db.get(Problem, payload.problem_id)
+    active_skill_id = session.active_skill_id or session.primary_skill_id
+    if problem is None or problem.primary_skill_id != active_skill_id:
+        raise HTTPException(400, "Problem does not support step-by-step work")
+    start = stepwork.starting_point(problem)
+    if start is None or not stepwork.problem_supports_steps(problem):
+        raise HTTPException(400, "Problem does not support step-by-step work")
+
+    turns = db.scalars(
+        select(TutorTurn)
+        .where(
+            TutorTurn.session_id == session.id,
+            TutorTurn.problem_id == problem.id,
+            TutorTurn.pedagogical_action == "WORK_STEP",
+        )
+        .order_by(TutorTurn.created_at, TutorTurn.id)
+    ).all()
+    accepted: list[str] = []
+    invalid_count = 0
+    for turn in turns:
+        meta = turn.metadata_json or {}
+        status = meta.get("step_status")
+        if status in {"valid", "solved"}:
+            accepted.append(meta.get("normalized_line") or meta.get("line") or "")
+            invalid_count = 0
+        elif status == "invalid":
+            invalid_count += 1
+
+    result = stepwork.check_step(start, accepted, payload.line, invalid_count)
+    db.add(
+        TutorTurn(
+            session_id=session.id,
+            role="STUDENT",
+            message=payload.line[:200],
+            state=session.current_state,
+            pedagogical_action="WORK_STEP",
+            problem_id=problem.id,
+            metadata_json={
+                "step_status": result.status,
+                "line": payload.line[:200],
+                "normalized_line": result.normalized_line,
+                "misconception_code": result.misconception_code,
+                "revealed": bool(result.revealed_line),
+            },
+        )
+    )
+    db.commit()
+    return WorkStepOut(
+        status=result.status,
+        feedback=result.feedback,
+        misconception_code=result.misconception_code,
+        revealed_line=result.revealed_line,
+        normalized_line=result.normalized_line,
+        invalid_count=(
+            invalid_count + 1 if result.status == "invalid" else 0
+        ),
     )

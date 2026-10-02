@@ -61,8 +61,14 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   };
   const answer = knownAnswers[problemText.trim()];
   expect(answer, `No synthetic answer fixture for problem: ${problemText}`).toBeTruthy();
-  await page.getByLabel('Your answer').fill(answer);
-  await page.getByRole('button', { name: 'Submit answer' }).click();
+  const stepInput = page.getByLabel('Next work line');
+  if (await stepInput.isVisible()) {
+    await stepInput.fill(answer);
+    await page.getByRole('button', { name: 'Check step' }).click();
+  } else {
+    await page.getByLabel('Your answer').fill(answer);
+    await page.getByRole('button', { name: 'Submit answer' }).click();
+  }
   await expect(page.getByText('Correct. Keep going.')).toBeVisible();
 
   await page.goto(`${baseURL}/parent`);

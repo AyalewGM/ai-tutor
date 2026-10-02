@@ -31,6 +31,7 @@ from app.services.curriculum_scope import (
 from app.services.hint_policy import ASSESSMENT_STATES, select_hint
 from app.services.placement import recommend_next_skill
 from app.services.review_schedule import reviews_due
+from app.services.stepwork import problem_supports_steps
 from app.services.visualization import visualization_for
 
 router = APIRouter(prefix="/learner-workspace", tags=["learner-workspace"])
@@ -112,6 +113,8 @@ class WorkspaceProblemOut(BaseModel):
     visual: dict | None = None
     answer_kind: str = "FREE_TEXT"
     choices: list[ProblemChoiceOut] | None = None
+    problem_type: str | None = None
+    supports_steps: bool = False
 
 
 class WorkspaceEvidenceOut(BaseModel):
@@ -279,6 +282,8 @@ def get_learner_workspace(
                 visual=visualization_for(problem),
                 answer_kind=problem.answer_kind,
                 choices=problem_choices_out(problem.choices),
+                problem_type=problem.problem_type,
+                supports_steps=problem_supports_steps(problem),
             )
             if problem
             else None
