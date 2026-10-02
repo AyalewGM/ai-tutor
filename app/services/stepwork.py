@@ -656,26 +656,27 @@ def _looks_like_model(line: str) -> bool:
     return bool(re.search(r"[+\-*/^]", line))
 
 
-_DECLARATION = re.compile(r"^(?:let\s+)?([a-zA-Z])\s*=\s*(.+)$", re.IGNORECASE)
-
-
 def _declaration_var(line: str) -> str | None:
     """A variable declaration like 'x = miles driven' (or 'let x = ...').
 
     The right side must read as a description — it carries a word of two or
     more letters — and must not parse as math, so 'x = 12' and 'x = y' stay
     equations. What the description *means* is intentionally not verified;
-    only the form is checked.
+    only the form is checked. String ops only — no regex over learner input.
     """
-    match = _DECLARATION.match(line.strip())
-    if match is None:
+    text = line.strip()
+    if text.lower().startswith("let "):
+        text = text[4:].lstrip()
+    head, sep, rhs = text.partition("=")
+    var = head.strip()
+    if not sep or len(var) != 1 or not var.isalpha():
         return None
-    rhs = match.group(2).strip()
-    if "=" in rhs or not re.search(r"[a-zA-Z]{2,}", rhs):
+    rhs = rhs.strip()
+    if "=" in rhs or not any(len(word) >= 2 and word.isalpha() for word in rhs.split()):
         return None
     if parse_expression_lenient(rhs) is not None:
         return None
-    return match.group(1).lower()
+    return var.lower()
 
 
 def _algebra_state(
