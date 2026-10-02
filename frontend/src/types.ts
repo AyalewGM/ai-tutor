@@ -158,6 +158,9 @@ export interface LearnerWorkspace {
     independent_correct_count: number;
     independent_attempt_count: number;
     hinted_correct_count: number;
+    smartscore: number;
+    streak_count: number;
+    mastery_level: "practicing" | "proficient" | "mastered";
   };
   reviews_due: { skill_id: string; skill_name: string }[];
   awards: Award[];

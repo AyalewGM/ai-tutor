@@ -1,6 +1,6 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { BookOpen, CheckCircle2, ChevronDown, Flame, Lightbulb, Map as MapIcon, HelpCircle } from "lucide-react";
+import { BookOpen, CheckCircle2, ChevronDown, Flame, Lightbulb, Map as MapIcon, HelpCircle, Zap } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
@@ -314,14 +314,25 @@ export default function Workspace() {
                   <Flame className="h-4 w-4" /> {workspace.streak_days}-day streak
                 </span>
               )}
+              {workspace.evidence.streak_count > 1 && (
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/90 px-3.5 py-1.5 text-sm font-semibold text-emerald-950"
+                  title="Correct answers in a row on this skill"
+                >
+                  <Zap className="h-4 w-4" /> {workspace.evidence.streak_count} in a row
+                </span>
+              )}
               <Link
                 to={`/learn/${sessionId}/map`}
                 className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-medium backdrop-blur transition-colors hover:bg-white/25"
               >
                 <MapIcon className="h-4 w-4" /> Skill map
               </Link>
-              <span className="rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold backdrop-blur">
-                Score {masteryPct}
+              <span
+                className="rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold backdrop-blur"
+                title={`SmartScore — ${workspace.evidence.mastery_level} on ${workspace.focus.skill_name}`}
+              >
+                SmartScore {workspace.evidence.smartscore}
               </span>
             </div>
           </div>
@@ -720,7 +731,9 @@ export default function Workspace() {
                   </svg>
                   <div>
                     <div className="mastery-pct">{masteryPct}%</div>
-                    <div className="text-sm text-muted-foreground">mastery</div>
+                    <div className="text-sm font-medium capitalize text-muted-foreground">
+                      {workspace.evidence.mastery_level}
+                    </div>
                   </div>
                 </div>
                 <Progress value={masteryPct} />

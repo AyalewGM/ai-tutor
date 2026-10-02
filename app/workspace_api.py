@@ -11,10 +11,12 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.identity import CurrentParent, require_parent_owns_session
 from app.models import (
+    Attempt,
     Curriculum,
     LearnerAward,
     Problem,
     Skill,
+    SkillStatus,
     Student,
     StudentSkill,
     TutorSession,
@@ -123,6 +125,9 @@ class WorkspaceEvidenceOut(BaseModel):
     independent_attempt_count: int
     independent_correct_count: int
     hinted_correct_count: int
+    smartscore: int = 0
+    streak_count: int = 0
+    mastery_level: str = "practicing"
 
 
 class WorkspaceReviewDueOut(BaseModel):
@@ -214,6 +219,41 @@ def _practice_streak_days(db: Session, student_id: uuid.UUID) -> int:
     return streak
 
 
+def _answer_streak(db: Session, student_id: uuid.UUID, skill_id: uuid.UUID) -> int:
+    """Trailing run of correct answers on this skill — the SmartScore streak.
+
+    Assisted successes still count (they are correct answers); only the
+    evidence weight differs. Derived from Attempt rows — no new state.
+    """
+    rows = db.execute(
+        select(Attempt.is_correct)
+        .join(Problem, Problem.id == Attempt.problem_id)
+        .where(
+            Attempt.student_id == student_id,
+            Problem.primary_skill_id == skill_id,
+        )
+        .order_by(Attempt.created_at.desc(), Attempt.id.desc())
+        .limit(40)
+    ).all()
+    streak = 0
+    for (correct,) in rows:
+        if not correct:
+            break
+        streak += 1
+    return streak
+
+
+def _mastery_level(progress: StudentSkill | None) -> str:
+    """The three learner-facing labels; the state machine still owns truth."""
+    if progress is None:
+        return "practicing"
+    if progress.status == SkillStatus.MASTERED:
+        return "mastered"
+    if float(progress.mastery_score) >= 0.7:
+        return "proficient"
+    return "practicing"
+
+
 def _current_tutor_turn(db: Session, session_id: uuid.UUID) -> TutorTurn | None:
     return db.scalar(
         select(TutorTurn)
@@ -296,6 +336,9 @@ def get_learner_workspace(
             independent_attempt_count=progress.independent_attempt_count if progress else 0,
             independent_correct_count=progress.independent_correct_count if progress else 0,
             hinted_correct_count=progress.hinted_correct_count if progress else 0,
+            smartscore=round(float(progress.mastery_score) * 100) if progress else 0,
+            streak_count=_answer_streak(db, session.student_id, active_skill.id),
+            mastery_level=_mastery_level(progress),
         ),
         reviews_due=[
             WorkspaceReviewDueOut(
@@ -360,10 +403,7 @@ def get_badge_collection(
 ) -> list[BadgeOut]:
     """Full badge catalog for the learner owning this session."""
     session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
-    return [
-        BadgeOut(**entry)
-        for entry in badge_collection(db, session.student_id)
-    ]
+    return [BadgeOut(**entry) for entry in badge_collection(db, session.student_id)]
 
 
 class SkillMapEntryOut(BaseModel):
@@ -406,15 +446,11 @@ def get_skill_map(
             code=skill.code,
             name=skill.name,
             difficulty_level=skill.difficulty_level,
-            mastery_score=float(
-                progress_rows[skill.id].mastery_score
-            )
+            mastery_score=float(progress_rows[skill.id].mastery_score)
             if skill.id in progress_rows
             else 0.0,
             status=(
-                progress_rows[skill.id].status.value
-                if skill.id in progress_rows
-                else "NOT_STARTED"
+                progress_rows[skill.id].status.value if skill.id in progress_rows else "NOT_STARTED"
             ),
             is_active=skill.id == active_skill_id,
         )
