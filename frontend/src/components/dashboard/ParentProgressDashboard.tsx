@@ -132,21 +132,27 @@ function makeStudentSummary(
       : 0;
   const backendMisconceptions = deriveMisconceptions(dashboard);
 
+  const digest = dashboard?.weekly_digest ?? null;
   return {
     studentId: child.id,
     displayName: child.first_name,
     gradeLevel: child.grade_level,
-    totalLearningMinutes: gradeSummary?.minutes_last_7_days ?? 0,
-    learningTimeTrend: null,
+    totalLearningMinutes: digest?.minutes ?? gradeSummary?.minutes_last_7_days ?? 0,
+    learningTimeTrend: digest ? digest.minutes_delta : null,
     topicsMastered,
     totalTopics,
     masteryScore: Math.round(
       gradeSummary?.mastery_percent
         ?? (progress?.average_mastery ?? evidenceMastery / 100) * 100,
     ),
-    masteryTrend: null,
+    masteryTrend: digest?.mastery_delta ?? null,
     activeMisconceptions: backendMisconceptions.length,
-    dailyMetrics: [],
+    dailyMetrics: (dashboard?.daily_metrics ?? []).map((d) => ({
+      date: d.date,
+      label: d.label,
+      minutes: d.minutes,
+      masteryScore: d.mastery_score,
+    })),
     syllabus,
     misconceptions: backendMisconceptions,
   };
@@ -282,6 +288,17 @@ export default function ParentProgressDashboard({
         </div>
       </section>
 
+      {childDashboard?.weekly_digest?.stall && (
+        <div
+          className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
+          role="alert"
+        >
+          <strong>Practice paused:</strong> {summary.displayName} hasn&apos;t
+          practiced in {childDashboard.weekly_digest.days_since_practice} days.
+          A short session today keeps the streak of progress going.
+        </div>
+      )}
+
       {(usingDemoFallback || error) && (
         <div
           className={`rounded-xl border px-4 py-3 text-sm ${
@@ -374,10 +391,26 @@ export default function ParentProgressDashboard({
               <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-dashboard">
                 <h2 className="text-base font-semibold text-slate-950">This week</h2>
                 <p className="mt-1 text-sm text-slate-500">
-                  {gradeSummary.sessions_last_7_days} practice{" "}
-                  {gradeSummary.sessions_last_7_days === 1 ? "session" : "sessions"} ·{" "}
-                  {gradeSummary.minutes_last_7_days} min
+                  {childDashboard?.weekly_digest?.sessions ?? gradeSummary.sessions_last_7_days} practice{" "}
+                  {(childDashboard?.weekly_digest?.sessions ?? gradeSummary.sessions_last_7_days) === 1 ? "session" : "sessions"} ·{" "}
+                  {childDashboard?.weekly_digest?.minutes ?? gradeSummary.minutes_last_7_days} min
                 </p>
+                {childDashboard?.weekly_digest && (
+                  <dl className="mt-3 grid grid-cols-3 gap-2 text-center">
+                    <div className="rounded-lg bg-slate-50 px-2 py-2">
+                      <dt className="text-[11px] font-medium uppercase tracking-wide text-slate-500">XP earned</dt>
+                      <dd className="mt-0.5 text-lg font-bold text-slate-900">{childDashboard.weekly_digest.xp_earned}</dd>
+                    </div>
+                    <div className="rounded-lg bg-slate-50 px-2 py-2">
+                      <dt className="text-[11px] font-medium uppercase tracking-wide text-slate-500">Skills mastered</dt>
+                      <dd className="mt-0.5 text-lg font-bold text-emerald-600">{childDashboard.weekly_digest.skills_mastered}</dd>
+                    </div>
+                    <div className="rounded-lg bg-slate-50 px-2 py-2">
+                      <dt className="text-[11px] font-medium uppercase tracking-wide text-slate-500">Badges</dt>
+                      <dd className="mt-0.5 text-lg font-bold text-amber-600">{childDashboard.weekly_digest.badges_earned}</dd>
+                    </div>
+                  </dl>
+                )}
                 {gradeSummary.trouble_spots.length > 0 ? (
                   <>
                     <h3 className="mt-4 text-xs font-semibold uppercase tracking-wide text-amber-600">

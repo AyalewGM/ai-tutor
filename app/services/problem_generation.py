@@ -1233,6 +1233,17 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
 }
 
 
+_ARITHMETIC_MC_TYPES = {
+    "ADDITION_WITHIN_20",
+    "SUBTRACTION_WITHIN_20",
+    "ADDITION_WITHIN_100",
+    "SUBTRACTION_WITHIN_100",
+    "MULTIPLICATION_WITHIN_100",
+    "MULTI_DIGIT_MULTIPLICATION",
+    "DIVISION_WITHIN_100",
+}
+
+
 def _mc_transform(candidate: GeneratedProblem, rng: random.Random) -> GeneratedProblem | None:
     """Build a multiple-choice variant with misconception-coded distractors.
 
@@ -1299,6 +1310,76 @@ def _mc_transform(candidate: GeneratedProblem, rng: random.Random) -> GeneratedP
             distractors.insert(
                 0, (_fmt_term(a + b + constant, variable), "ALG_001")  # folded constant in
             )
+    elif candidate.problem_type in _ARITHMETIC_MC_TYPES:
+        a, b, op = p.get("a"), p.get("b"), p.get("operation")
+        if not isinstance(a, int) or not isinstance(b, int) or not isinstance(op, str):
+            return None
+        correct_text = candidate.canonical_answer
+        correct = int(correct_text)
+        if op == "+":
+            distractors = [
+                (str(a - b), None),      # switched to subtraction
+                (str(correct + 10), None),  # place-value slip
+                (str(correct - 1), None),   # off by one
+            ]
+        elif op == "-":
+            distractors = [
+                (str(a + b), None),      # switched to addition
+                (str(correct + 10), None),
+                (str(b - a), None),      # reversed operands
+            ]
+        elif op == "×":
+            distractors = [
+                (str(a + b), None),          # added instead of multiplied
+                (str(a * (b + 1)), None),    # adjacent fact
+                (str(a * (b - 1)), None),    # adjacent fact
+            ]
+        elif op == "÷":
+            distractors = [
+                (str(correct + 1), None),
+                (str(correct - 1), None),
+                (str(b), None),              # returned the divisor
+            ]
+        else:
+            return None
+    elif candidate.problem_type == "INTEGER_OPERATIONS":
+        a, b = p.get("a"), p.get("b")
+        if not isinstance(a, int) or not isinstance(b, int):
+            return None
+        correct = a + b
+        correct_text = str(correct)
+        distractors = [(str(a - b), "NUM_001")]  # sign flip on second operand
+        if a < 0 or b < 0:
+            distractors.append((str(abs(a) + abs(b)), "NUM_002"))
+        distractors.append((str(correct + 1), None))
+    elif candidate.problem_type == "FRACTION_OPERATIONS":
+        n1, d1, n2, d2 = p.get("n1"), p.get("d1"), p.get("n2"), p.get("d2")
+        if not all(isinstance(v, int) for v in (n1, d1, n2, d2)):
+            return None
+        correct_text = candidate.canonical_answer
+        distractors = [
+            (f"{n1 + n2}/{d1 + d2}", "NUM_003"),  # added across
+            (f"{n1 + n2}/{d1}", None),            # kept one denominator
+        ]
+        if d1 != d2:
+            distractors.append((f"{n1 + n2}/{d2}", None))
+    elif candidate.problem_type == "FRACTION_ADD_SUBTRACT_LIKE":
+        n1, n2, denom, op = (
+            p.get("n1"), p.get("n2"), p.get("denominator"), p.get("operation"),
+        )
+        if not all(isinstance(v, int) for v in (n1, n2, denom)):
+            return None
+        correct_text = candidate.canonical_answer
+        if op == "+":
+            distractors = [
+                (f"{n1 + n2}/{denom * 2}", "NUM_003"),  # added denominators too
+                (f"{n1 + n2 + 1}/{denom}", None),
+            ]
+        else:
+            distractors = [
+                (f"{n1 + n2}/{denom}", None),           # added instead of subtracted
+                (f"{abs(n1 - n2)}/{denom * 2}", "NUM_003"),
+            ]
     else:
         return None
 
@@ -1312,8 +1393,13 @@ def _mc_transform(candidate: GeneratedProblem, rng: random.Random) -> GeneratedP
             seen.add(text)
             unique.append((text, code))
     while len(unique) < 3:
-        pad = f"x = {rng.randint(-15, 15)}"
-        if pad not in seen:
+        if correct_text.lstrip("-").isdigit():
+            pad = str(int(correct_text) + rng.choice([-9, -5, -2, -1, 1, 2, 5, 9]))
+        elif correct_text.startswith("x ="):
+            pad = f"x = {rng.randint(-15, 15)}"
+        else:
+            pad = f"{rng.randint(1, 12)}/{rng.randint(2, 9)}"
+        if pad not in seen and pad != correct_text:
             seen.add(pad)
             unique.append((pad, None))
     unique = unique[:3]

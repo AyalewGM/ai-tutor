@@ -109,6 +109,47 @@ def test_unknown_or_inactive_curriculum_is_rejected(curriculum):
     assert not db.committed
 
 
+def test_learner_avatar_choice_is_persisted():
+    parent = ParentProfile(id=uuid.uuid4(), user_id=uuid.uuid4())
+    curriculum = _curriculum()
+    db = OnboardingDb(curriculum, parent)
+
+    result = create_learner(
+        LearnerCreate(
+            first_name="AvatarKid",
+            curriculum_id=curriculum.id,
+            avatar_id="avatar-5",
+        ),
+        parent,
+        db,
+    )
+
+    student = next(value for value in db.added if isinstance(value, Student))
+    assert student.avatar_id == "avatar-5"
+    assert result.avatar_id == "avatar-5"
+
+
+def test_unknown_avatar_is_rejected():
+    parent = ParentProfile(id=uuid.uuid4(), user_id=uuid.uuid4())
+    curriculum = _curriculum()
+    db = OnboardingDb(curriculum, parent)
+
+    with pytest.raises(HTTPException) as exc_info:
+        create_learner(
+            LearnerCreate(
+                first_name="AvatarKid",
+                curriculum_id=curriculum.id,
+                avatar_id="avatar-999",
+            ),
+            parent,
+            db,
+        )
+
+    assert exc_info.value.status_code == 422
+    assert db.added == []
+    assert not db.committed
+
+
 
 def test_free_parent_cannot_create_second_learner() -> None:
     parent = ParentProfile(

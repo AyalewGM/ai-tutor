@@ -40,9 +40,17 @@ class CurriculumChoice(BaseModel):
     grade_level: str | None
 
 
+AVATAR_IDS = [f"avatar-{i}" for i in range(1, 9)]
+
+
 class LearnerCreate(BaseModel):
     first_name: str = Field(min_length=1, max_length=32, pattern=r"^[A-Za-z0-9_-]+$")
     curriculum_id: uuid.UUID
+    avatar_id: str = Field(default="avatar-1", max_length=80)
+
+
+class LearnerAvatarUpdate(BaseModel):
+    avatar_id: str = Field(min_length=1, max_length=80)
 
 
 class LearnerCreated(BaseModel):
@@ -52,6 +60,7 @@ class LearnerCreated(BaseModel):
     curriculum_code: str
     curriculum_version: str
     jurisdiction: str | None
+    avatar_id: str = "avatar-1"
 
 
 class LearnerChoice(BaseModel):
@@ -61,6 +70,7 @@ class LearnerChoice(BaseModel):
     curriculum_code: str
     curriculum_version: str
     jurisdiction: str | None
+    avatar_id: str = "avatar-1"
 
 
 class SkillChoice(BaseModel):
@@ -129,9 +139,36 @@ def list_learners(parent: CurrentParent, db: DbSession) -> list[LearnerChoice]:
             curriculum_code=curriculum.code,
             curriculum_version=curriculum.version,
             jurisdiction=curriculum.jurisdiction,
+            avatar_id=student.avatar_id,
         )
         for student, curriculum in rows
     ]
+
+
+@router.patch("/learners/{student_id}", response_model=LearnerChoice)
+def update_learner_avatar(
+    student_id: uuid.UUID,
+    payload: LearnerAvatarUpdate,
+    parent: CurrentParent,
+    db: DbSession,
+) -> LearnerChoice:
+    student = require_parent_owns_student(parent, db.get(Student, student_id))
+    if payload.avatar_id not in AVATAR_IDS:
+        raise HTTPException(status_code=422, detail="Unknown avatar")
+    student.avatar_id = payload.avatar_id
+    db.commit()
+    curriculum = db.get(Curriculum, student.curriculum_id) if student.curriculum_id else None
+    if curriculum is None:
+        raise HTTPException(status_code=409, detail="Learner curriculum is unavailable")
+    return LearnerChoice(
+        id=student.id,
+        first_name=student.first_name,
+        curriculum_id=curriculum.id,
+        curriculum_code=curriculum.code,
+        curriculum_version=curriculum.version,
+        jurisdiction=curriculum.jurisdiction,
+        avatar_id=student.avatar_id,
+    )
 
 
 @router.get("/learners/{student_id}/skills", response_model=list[SkillChoice])
@@ -282,13 +319,15 @@ def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession)
     if not first_name:
         raise HTTPException(status_code=422, detail="Learner first name is required")
 
+    if payload.avatar_id not in AVATAR_IDS:
+        raise HTTPException(status_code=422, detail="Unknown avatar")
     student = Student(
         parent_id=parent.user_id,
         curriculum_id=curriculum.id,
         first_name=first_name,
         grade_level=curriculum.grade_level or "UNSPECIFIED",
         school_system=None,
-        avatar_id="avatar-1",
+        avatar_id=payload.avatar_id,
     )
     db.add(student)
     db.flush()
@@ -317,4 +356,5 @@ def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession)
         curriculum_code=curriculum.code,
         curriculum_version=curriculum.version,
         jurisdiction=curriculum.jurisdiction,
+        avatar_id=student.avatar_id,
     )

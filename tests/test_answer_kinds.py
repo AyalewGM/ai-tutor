@@ -162,6 +162,58 @@ def test_mc_transform_grades_distractor_to_misconception() -> None:
     assert good.correct
 
 
+def test_mc_transform_covers_arithmetic_and_fraction_families() -> None:
+    """Elementary + fraction generators emit valid MC variants with a correct choice."""
+    import random as _random
+
+    from app.services.problem_generation import GENERATORS, _mc_transform
+
+    covered = [
+        "ADDITION_WITHIN_20",
+        "SUBTRACTION_WITHIN_100",
+        "MULTIPLICATION_WITHIN_100",
+        "DIVISION_WITHIN_100",
+        "INTEGER_OPERATIONS",
+        "FRACTION_OPERATIONS",
+        "FRACTION_ADD_SUBTRACT_LIKE",
+    ]
+    for family in covered:
+        rng = _random.Random(hash(family) & 0xFFFF)
+        produced = False
+        for _ in range(30):
+            candidate = GENERATORS[family](rng, rng.randint(1, 5))
+            mc = _mc_transform(candidate, rng)
+            if mc is None:
+                continue
+            assert mc.answer_kind == "MULTIPLE_CHOICE"
+            assert len(mc.choices) == 4
+            texts = {c["text"] for c in mc.choices}
+            assert len(texts) == 4, f"{family}: duplicate choice text {texts}"
+            correct = [c for c in mc.choices if c["id"] == mc.canonical_answer]
+            assert len(correct) == 1, f"{family}: canonical id must mark one choice"
+            produced = True
+            break
+        assert produced, f"{family}: transform never produced an MC variant"
+
+
+def test_mc_transform_fraction_add_across_is_coded() -> None:
+    """The classic add-across distractor must carry NUM_003."""
+    import random as _random
+
+    from app.services.problem_generation import GENERATORS, _mc_transform
+
+    rng = _random.Random(3)
+    for _ in range(40):
+        candidate = GENERATORS["FRACTION_OPERATIONS"](rng, 2)
+        mc = _mc_transform(candidate, rng)
+        if mc is None:
+            continue
+        coded = {c.get("misconception_code") for c in mc.choices}
+        assert "NUM_003" in coded
+        return
+    raise AssertionError("no transformable FRACTION_OPERATIONS candidate produced")
+
+
 def test_learner_progress_rewards_independent_work() -> None:
     """XP accumulates from graded attempts; independent out-earns assisted."""
     from app.services.awards import attempt_xp, learner_progress

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { BookOpen, ChevronDown, ClipboardCheck, Play, UserPlus, Compass } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
+import Avatar from "../components/Avatar";
+import AvatarPicker from "../components/AvatarPicker";
 import LearnPanel from "../components/LearnPanel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,6 +24,8 @@ export default function LearnEntry() {
   const [skillId, setSkillId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [curriculumId, setCurriculumId] = useState("");
+  const [newAvatarId, setNewAvatarId] = useState("avatar-1");
+  const [avatarPickerOpen, setAvatarPickerOpen] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [skillsLoading, setSkillsLoading] = useState(false);
@@ -49,7 +53,7 @@ export default function LearnEntry() {
   async function addLearner(event: FormEvent) {
     event.preventDefault(); setError(""); setNotice("");
     try {
-      const created = await post<LearnerChoice & { id: string }>("/onboarding/learners", { first_name: firstName, curriculum_id: curriculumId });
+      const created = await post<LearnerChoice & { id: string }>("/onboarding/learners", { first_name: firstName, curriculum_id: curriculumId, avatar_id: newAvatarId });
       const rows = await api<LearnerChoice[]>("/onboarding/learners");
       setLearners(rows); setLearnerId(created.id); setFirstName("");
       setNotice(`${created.first_name ?? "Learner"} is ready.`);
@@ -79,6 +83,20 @@ export default function LearnEntry() {
         state: { diagnostic },
       });
     } catch (err) { setError(err instanceof ApiError ? err.message : "Could not start placement check"); }
+  }
+
+  async function changeAvatar(avatarId: string) {
+    if (!learnerId) return;
+    try {
+      const updated = await api<LearnerChoice>(`/onboarding/learners/${learnerId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ avatar_id: avatarId }),
+      });
+      setLearners((rows) => rows.map((row) => (row.id === updated.id ? updated : row)));
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Could not update avatar");
+    }
   }
 
   const selectedLearner = learners.find((learner) => learner.id === learnerId);
@@ -129,7 +147,10 @@ export default function LearnEntry() {
                 <SelectContent>
                   {learners.map((learner) => (
                     <SelectItem key={learner.id} value={learner.id}>
-                      {learner.first_name} — {learner.curriculum_code}
+                      <span className="flex items-center gap-2">
+                        <Avatar avatarId={learner.avatar_id ?? "avatar-1"} size={22} />
+                        {learner.first_name} — {learner.curriculum_code}
+                      </span>
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -139,11 +160,39 @@ export default function LearnEntry() {
               </p>
             </div>
             {selectedLearner && (
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">{selectedLearner.curriculum_code}</Badge>
-                <Badge variant="secondary">{selectedLearner.curriculum_version}</Badge>
-                {selectedLearner.jurisdiction && <Badge variant="secondary">{selectedLearner.jurisdiction}</Badge>}
-                <Badge variant="outline">{readyCount} ready skills</Badge>
+              <div className="flex flex-col items-start gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setAvatarPickerOpen((open) => !open)}
+                    aria-expanded={avatarPickerOpen}
+                    aria-label="Change avatar"
+                    title="Change avatar"
+                    className="rounded-full transition-transform hover:scale-105"
+                  >
+                    <Avatar avatarId={selectedLearner.avatar_id ?? "avatar-1"} size={44} />
+                  </button>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="secondary">{selectedLearner.curriculum_code}</Badge>
+                    <Badge variant="secondary">{selectedLearner.curriculum_version}</Badge>
+                    {selectedLearner.jurisdiction && <Badge variant="secondary">{selectedLearner.jurisdiction}</Badge>}
+                    <Badge variant="outline">{readyCount} ready skills</Badge>
+                  </div>
+                </div>
+                {avatarPickerOpen && (
+                  <div className="rounded-xl border border-border bg-card p-3">
+                    <p className="mb-2 text-xs font-medium text-muted-foreground">
+                      Pick {selectedLearner.first_name}&apos;s look
+                    </p>
+                    <AvatarPicker
+                      value={selectedLearner.avatar_id ?? "avatar-1"}
+                      onChange={(id) => {
+                        changeAvatar(id);
+                        setAvatarPickerOpen(false);
+                      }}
+                    />
+                  </div>
+                )}
               </div>
             )}
           </CardContent>
@@ -328,6 +377,10 @@ export default function LearnEntry() {
                       ))}
                     </SelectContent>
                   </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label>Avatar</Label>
+                  <AvatarPicker value={newAvatarId} onChange={setNewAvatarId} />
                 </div>
                 <Button type="submit" variant="secondary" className="w-full">Add learner</Button>
               </form>
