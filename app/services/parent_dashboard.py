@@ -8,8 +8,12 @@ from sqlalchemy.orm import Session
 
 from app.curriculum_models import EducationAuthority, Jurisdiction, StudentCurriculumEnrollment
 from app.models import (
+    Attempt,
     Curriculum,
+    LearnerAward,
+    MasteryEvent,
     Misconception,
+    Problem,
     Skill,
     SkillStatus,
     Student,
@@ -27,6 +31,7 @@ from app.parent_models import (
 from app.parent_schemas import (
     ChildDashboardOut,
     ChildSummaryOut,
+    DailyMetricOut,
     GradeLevelSummaryOut,
     LinkChildOut,
     RecentActivityOut,
@@ -35,7 +40,9 @@ from app.parent_schemas import (
     SkillProgressOut,
     StrandSummaryOut,
     SupportAreaOut,
+    WeeklyDigestOut,
 )
+from app.services.awards import BADGE_XP, attempt_xp
 from app.services.curriculum_scope import CurriculumScopeError, resolve_student_curriculum_scope
 from app.services.parent_intelligence import ParentSkillEvidence, classify_parent_skill_progress
 from app.services.placement import recommend_next_skill
@@ -403,6 +410,10 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
         support_skill_names=support_skill_names,
     )
 
+    daily_metrics, weekly_digest = _learning_trends(
+        db, student_id=student.id, scope=scope
+    )
+
     return ChildDashboardOut(
         child=child_summary(db, student),
         active_skill_name=active_skill_name,
@@ -421,7 +432,167 @@ def dashboard(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -> C
             else None
         ),
         grade_level_summary=summary,
+        daily_metrics=daily_metrics,
+        weekly_digest=weekly_digest,
     )
+
+
+def _learning_trends(
+    db: Session,
+    *,
+    student_id: uuid.UUID,
+    scope,
+) -> tuple[list[DailyMetricOut], WeeklyDigestOut]:
+    """14-day daily activity + week-over-week digest from authoritative rows."""
+    now = datetime.now(UTC)
+    window_start = (now - timedelta(days=13)).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
+    week_start = (now - timedelta(days=6)).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
+
+    sessions = db.scalars(
+        select(TutorSession).where(
+            TutorSession.student_id == student_id,
+            TutorSession.started_at >= window_start,
+            or_(
+                TutorSession.curriculum_id == scope.curriculum_id,
+                TutorSession.curriculum_id.is_(None),
+            ),
+        )
+    ).all()
+
+    # Daily minutes — same duration convention as the grade-level summary.
+    minutes_by_day: dict[str, int] = {}
+    for session in sessions:
+        day = session.started_at.date().isoformat()
+        minutes = int(
+            ((session.ended_at or session.started_at) - session.started_at).total_seconds() // 60
+        )
+        minutes_by_day[day] = minutes_by_day.get(day, 0) + max(minutes, 0)
+
+    # Mastery line — last recorded score per day, carried forward across
+    # quiet days. Baseline is the earliest event's previous_score.
+    events = db.scalars(
+        select(MasteryEvent)
+        .where(
+            MasteryEvent.student_id == student_id,
+            MasteryEvent.created_at >= window_start,
+        )
+        .order_by(MasteryEvent.created_at)
+    ).all()
+    score_by_day: dict[str, float] = {}
+    baseline = 0.0
+    for event in events:
+        if not score_by_day:
+            baseline = float(event.previous_score)
+        score_by_day[event.created_at.date().isoformat()] = float(event.new_score)
+    # Carry the pre-window score forward if earlier events exist.
+    prior_event = db.scalar(
+        select(MasteryEvent)
+        .where(
+            MasteryEvent.student_id == student_id,
+            MasteryEvent.created_at < window_start,
+        )
+        .order_by(desc(MasteryEvent.created_at))
+        .limit(1)
+    )
+    running = float(prior_event.new_score) if prior_event else baseline
+
+    day_labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    daily_metrics: list[DailyMetricOut] = []
+    week_mastery_start = running
+    for offset in range(14):
+        day = (window_start + timedelta(days=offset)).date()
+        key = day.isoformat()
+        running = score_by_day.get(key, running)
+        if day < week_start.date():
+            week_mastery_start = running
+        daily_metrics.append(
+            DailyMetricOut(
+                date=key,
+                label=day_labels[(day.weekday() + 1) % 7],
+                minutes=minutes_by_day.get(key, 0),
+                mastery_score=round(running * 100, 1),
+            )
+        )
+
+    def _week_bounds(days_ago_start: int, days_ago_end: int) -> tuple[datetime, datetime]:
+        start = (now - timedelta(days=days_ago_start)).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
+        end = (now - timedelta(days=days_ago_end)).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
+        return start, end
+
+    this_lo, this_hi = _week_bounds(6, -1)
+    prev_lo, prev_hi = _week_bounds(13, 6)
+
+    def _sessions_between(lo: datetime, hi: datetime) -> list[TutorSession]:
+        return [
+            s for s in sessions if lo <= s.started_at < hi
+        ]
+
+    this_sessions = _sessions_between(this_lo, this_hi)
+    prev_sessions = _sessions_between(prev_lo, prev_hi)
+
+    def _minutes(items: list[TutorSession]) -> int:
+        return sum(
+            max(
+                int(((s.ended_at or s.started_at) - s.started_at).total_seconds() // 60),
+                0,
+            )
+            for s in items
+        )
+
+    week_attempts = db.execute(
+        select(Attempt.is_correct, Attempt.assistance_level, Problem.difficulty)
+        .join(Problem, Attempt.problem_id == Problem.id)
+        .where(
+            Attempt.student_id == student_id,
+            Attempt.is_correct.isnot(None),
+            Attempt.created_at >= this_lo,
+        )
+    ).all()
+    xp_earned = sum(
+        attempt_xp(bool(ok), int(assistance or 0), int(diff or 1))
+        for ok, assistance, diff in week_attempts
+    )
+    week_awards = db.scalars(
+        select(LearnerAward).where(
+            LearnerAward.student_id == student_id,
+            LearnerAward.created_at >= this_lo,
+        )
+    ).all()
+    xp_earned += sum(BADGE_XP.get(a.badge_code, 0) for a in week_awards)
+
+    last_attempt_at = db.scalar(
+        select(func.max(Attempt.created_at)).where(Attempt.student_id == student_id)
+    )
+    days_since = (
+        (now.date() - last_attempt_at.date()).days if last_attempt_at else None
+    )
+
+    digest = WeeklyDigestOut(
+        sessions=len(this_sessions),
+        minutes=_minutes(this_sessions),
+        xp_earned=xp_earned,
+        skills_mastered=sum(1 for a in week_awards if a.badge_code == "SKILL_MASTERED"),
+        badges_earned=len(week_awards),
+        prev_sessions=len(prev_sessions),
+        prev_minutes=_minutes(prev_sessions),
+        minutes_delta=_minutes(this_sessions) - _minutes(prev_sessions),
+        mastery_delta=(
+            round((running - week_mastery_start) * 100, 1)
+            if events or prior_event
+            else None
+        ),
+        days_since_practice=days_since,
+        stall=days_since is not None and days_since >= 3,
+    )
+    return daily_metrics, digest
 
 
 def _strand_for(code: str, name: str) -> str:

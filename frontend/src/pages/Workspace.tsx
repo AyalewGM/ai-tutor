@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { BookOpen, CheckCircle2, ChevronDown, Flame, Lightbulb, Map as MapIcon, HelpCircle } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
+import Avatar from "../components/Avatar";
 import ProblemVisual from "../components/ProblemVisual";
 import VoiceChatControls from "../components/chat/VoiceChatControls";
 import MathText from "../components/MathText";
@@ -272,7 +273,8 @@ export default function Workspace() {
         <div className="mb-6 rounded-2xl bg-gradient-to-br from-primary to-violet-700 p-6 text-primary-foreground shadow-raised">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight">
+              <h1 className="flex items-center gap-2.5 text-2xl font-bold tracking-tight">
+                <Avatar avatarId={workspace.learner.avatar_id ?? "avatar-1"} size={40} />
                 {workspace.learner.first_name} · Grade {workspace.learner.grade_level}
               </h1>
               <p className="mt-1 text-sm opacity-85">

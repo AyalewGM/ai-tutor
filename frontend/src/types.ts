@@ -5,6 +5,7 @@ export interface LearnerChoice {
   curriculum_code: string;
   curriculum_version: string;
   jurisdiction: string | null;
+  avatar_id?: string;
 }
 
 export interface CurriculumChoice {
@@ -120,7 +121,7 @@ export interface LearnerGrowth {
 export interface LearnerWorkspace {
   session_id: string;
   state: TutorState;
-  learner: { id: string; first_name: string; grade_level: string };
+  learner: { id: string; first_name: string; grade_level: string; avatar_id?: string };
   curriculum: { id: string; code: string; name: string; jurisdiction: string | null };
   focus: {
     primary_skill_id: string;
@@ -251,4 +252,20 @@ export interface ChildDashboard {
   reviews_due: { skill_id: string; skill_code: string; skill_name: string; status: string; due_at: string; interval_index: number; mastery_score: number; projected_mastery_score: number }[];
   recommended_next: { skill_id: string; skill_code: string; skill_name: string; reason: string } | null;
   grade_level_summary?: GradeLevelSummary | null;
+  daily_metrics?: { date: string; label: string; minutes: number; mastery_score: number }[];
+  weekly_digest?: WeeklyDigest | null;
+}
+
+export interface WeeklyDigest {
+  sessions: number;
+  minutes: number;
+  xp_earned: number;
+  skills_mastered: number;
+  badges_earned: number;
+  prev_sessions: number;
+  prev_minutes: number;
+  minutes_delta: number;
+  mastery_delta: number | null;
+  days_since_practice: number | null;
+  stall: boolean;
 }

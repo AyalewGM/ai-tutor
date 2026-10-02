@@ -41,6 +41,19 @@ const NODE_STYLE = {
   locked: "border-border bg-card text-muted-foreground",
 } as const;
 
+const ZONES = [
+  "Trailhead",
+  "Forest Path",
+  "River Crossing",
+  "Hill Climb",
+  "Summit Ridge",
+] as const;
+
+function zoneFor(difficultyLevel: number): string {
+  const index = Math.min(Math.max(difficultyLevel - 1, 0), ZONES.length - 1);
+  return ZONES[index];
+}
+
 export default function SkillMap() {
   const { sessionId } = useParams<{ sessionId: string }>();
   const [entries, setEntries] = useState<SkillMapEntry[] | null>(null);
@@ -116,11 +129,22 @@ export default function SkillMap() {
             aria-hidden="true"
           />
           <ol className="relative space-y-6">
-            {entries?.map((entry, index) => {
+            {entries?.flatMap((entry, index) => {
               const pct = Math.round(entry.mastery_score * 100);
               const level = tier(entry);
               const left = index % 2 === 0;
-              return (
+              const zone = zoneFor(entry.difficulty_level);
+              const rows = [];
+              if (index === 0 || zoneFor(entries[index - 1].difficulty_level) !== zone) {
+                rows.push(
+                  <li key={`zone-${zone}`} className="relative flex justify-start pl-12 sm:justify-center sm:pl-0" aria-hidden="true">
+                    <span className="z-10 rounded-full border border-primary/30 bg-card px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-primary shadow-sm">
+                      {zone}
+                    </span>
+                  </li>,
+                );
+              }
+              rows.push(
                 <li
                   key={entry.skill_id}
                   className={cn(
@@ -181,8 +205,9 @@ export default function SkillMap() {
                       </p>
                     </CardContent>
                   </Card>
-                </li>
+                </li>,
               );
+              return rows;
             })}
           </ol>
         </div>

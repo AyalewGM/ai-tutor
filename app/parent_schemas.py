@@ -107,6 +107,27 @@ class GradeLevelSummaryOut(BaseModel):
     trouble_spots: list[str]
 
 
+class DailyMetricOut(BaseModel):
+    date: str
+    label: str
+    minutes: int
+    mastery_score: float
+
+
+class WeeklyDigestOut(BaseModel):
+    sessions: int
+    minutes: int
+    xp_earned: int
+    skills_mastered: int
+    badges_earned: int
+    prev_sessions: int
+    prev_minutes: int
+    minutes_delta: int
+    mastery_delta: float | None = None
+    days_since_practice: int | None = None
+    stall: bool = False
+
+
 class ChildDashboardOut(BaseModel):
     child: ChildSummaryOut
     active_skill_name: str | None = None
@@ -116,3 +137,5 @@ class ChildDashboardOut(BaseModel):
     reviews_due: list[ReviewDueOut] = Field(default_factory=list)
     recommended_next: RecommendedSkillOut | None = None
     grade_level_summary: GradeLevelSummaryOut | None = None
+    daily_metrics: list[DailyMetricOut] = Field(default_factory=list)
+    weekly_digest: WeeklyDigestOut | None = None
