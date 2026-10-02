@@ -1,6 +1,6 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { BookOpen, CheckCircle2, ChevronDown, Flame, Lightbulb, Map as MapIcon, HelpCircle } from "lucide-react";
+import { BookOpen, CheckCircle2, ChevronDown, Lightbulb, Map as MapIcon, HelpCircle } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
@@ -307,14 +307,6 @@ export default function Workspace() {
                   Today +{workspace.growth?.xp_today} XP
                 </span>
               )}
-              {(workspace.streak_days ?? 0) > 0 && (
-                <span
-                  className="inline-flex items-center gap-1.5 rounded-full bg-amber-400/90 px-3.5 py-1.5 text-sm font-semibold text-amber-950"
-                  title="Consecutive days of practice"
-                >
-                  <Flame className="h-4 w-4" /> {workspace.streak_days}-day streak
-                </span>
-              )}
               <Link
                 to={`/learn/${sessionId}/map`}
                 className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-medium backdrop-blur transition-colors hover:bg-white/25"
@@ -324,6 +316,7 @@ export default function Workspace() {
               <SmartScoreBadge
                 score={workspace.evidence.smartscore}
                 streak={workspace.evidence.streak_count}
+                daysStreak={workspace.streak_days}
                 level={workspace.evidence.mastery_level}
                 skillName={workspace.focus.skill_name}
               />

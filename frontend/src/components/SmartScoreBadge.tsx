@@ -1,8 +1,9 @@
-import { Zap } from "lucide-react";
+import { Flame, Zap } from "lucide-react";
 
 interface SmartScoreBadgeProps {
   score: number; // 0–100, derived server-side from mastery_score
   streak: number; // correct answers in a row on the active skill
+  daysStreak?: number; // consecutive days of practice — separate signal
   level?: string; // practicing | proficient | mastered — tooltip only
   skillName?: string;
 }
@@ -17,11 +18,20 @@ function tierClass(score: number): string {
 export default function SmartScoreBadge({
   score,
   streak,
+  daysStreak,
   level,
   skillName,
 }: SmartScoreBadgeProps) {
   return (
     <>
+      {(daysStreak ?? 0) > 0 && (
+        <span
+          className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-100 px-3.5 py-1.5 text-sm font-semibold text-amber-800"
+          title="Consecutive days of practice"
+        >
+          <Flame className="h-4 w-4" /> {daysStreak}-day streak
+        </span>
+      )}
       {streak > 1 && (
         <span
           className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-100 px-3.5 py-1.5 text-sm font-semibold text-emerald-800"
