@@ -26,6 +26,20 @@ export interface CPAVisualizerPayload {
 const MAX_SEGMENTS = 24;
 const BAR_COLORS = ["#6366f1", "#10b981", "#f59e0b", "#ec4899"];
 
+// The LLM contract sends Tailwind classes ("bg-indigo-500"); inline styles
+// need real colors, so map the contract set and pass raw CSS values through.
+const TAILWIND_FILLS: Record<string, string> = {
+  "bg-indigo-500": "#6366f1",
+  "bg-emerald-500": "#10b981",
+  "bg-amber-500": "#f59e0b",
+  "bg-rose-500": "#f43f5e",
+};
+
+function barColor(color: string | undefined, index: number): string {
+  if (!color) return BAR_COLORS[index % BAR_COLORS.length];
+  return TAILWIND_FILLS[color] ?? color;
+}
+
 function safeCount(value: number | undefined, fallback: number): number {
   if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
   return Math.max(0, Math.floor(value));
@@ -40,7 +54,7 @@ function FractionBarsView({ bars }: { bars: FractionBarData[] }) {
           Math.max(1, safeCount(bar.denominator, 1)),
         );
         const numerator = Math.min(denominator, safeCount(bar.numerator, 0));
-        const color = bar.color ?? BAR_COLORS[i % BAR_COLORS.length];
+        const color = barColor(bar.color, i);
         return (
           <div key={i} role="listitem" className="space-y-1">
             <div

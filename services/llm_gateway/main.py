@@ -34,6 +34,9 @@ class RenderRequest(BaseModel):
     # line (what followed what, catalog code). Language only — the gateway
     # must not re-grade it.
     step_evidence: str | None = Field(default=None, max_length=600)
+    # Application-owned CPA presentation level (ABSTRACT/PICTORIAL/CONCRETE).
+    # Language guidance only: how strongly to lean on an emitted visual.
+    cpa_level: str | None = Field(default=None, max_length=20)
 
 
 class ContextualizeRequest(BaseModel):
@@ -64,7 +67,7 @@ class ContextualizeResponse(BaseModel):
 class RenderResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    message: str = Field(min_length=1, max_length=1200)
+    message: str = Field(min_length=1, max_length=2400)
     expects_student_response: bool = True
     request_id: str
     provider: str
@@ -84,8 +87,36 @@ def _model_name(provider: str) -> str | None:
     return None
 
 
+_CPA_CONTRACT = (
+    "Socratic voice (Concrete-Pictorial-Abstract): guide with scaffolding "
+    "questions — never state or compute the final answer, never lecture. "
+    "You MAY append exactly one ```json:cpa fenced block at the very end of "
+    "your message (after all prose; nothing after the closing fence), but "
+    "only when a picture genuinely helps: introducing a concept, expressed "
+    "confusion, or a detected misconception. If the dialogue is flowing "
+    "abstractly, text alone is right. "
+    "Payloads: "
+    '{"type":"FRACTION_BARS","title":str,"fractionBars":[{"numerator":n,'
+    '"denominator":d,"label":str,"color":"bg-indigo-500"|"bg-emerald-500"|'
+    '"bg-amber-500"|"bg-rose-500"}]} or '
+    '{"type":"BALANCE_SCALE","title":str,"balanceScale":{"leftExpr":str,'
+    '"rightExpr":str,"leftValue":num,"rightValue":num}}. '
+    "MIRROR THE STUDENT'S MODEL: to expose a misconception, render the "
+    "student's state, not the solution — for the wrong claim '2x + 3 = 11 "
+    "so 2x = 11', emit leftExpr '2x' with leftValue 8 vs rightValue 11 so "
+    "the scale visibly tilts, then ask why. Never render a solved equation. "
+    "Strict JSON only — double quotes, no trailing commas."
+)
+
+
 def _prompt(request: RenderRequest) -> str:
     payload = json.dumps(request.model_dump(), ensure_ascii=False)
+    cpa_guidance = (
+        "The session's CPA level is "
+        f"{request.cpa_level} — lean toward emitting a visual this turn."
+        if request.cpa_level in {"PICTORIAL", "CONCRETE"}
+        else ""
+    )
     return (
         "You are only the language-rendering layer of an adaptive math tutor. "
         "The application has already selected the pedagogical action. Follow it exactly. "
@@ -94,8 +125,9 @@ def _prompt(request: RenderRequest) -> str:
         "age-appropriate, and bounded by the supplied context. "
         "If step_evidence is present, refer to the learner's specific written line and "
         "the move it got wrong; do not re-check the math yourself, do not give the "
-        "answer, and do not go beyond the hint constraint. Return only the requested "
-        "JSON response.\n\n"
+        "answer, and do not go beyond the hint constraint. "
+        f"{_CPA_CONTRACT} {cpa_guidance} "
+        "Return only the requested JSON response.\n\n"
         f"Application-computed context:\n{payload}"
     )
 
@@ -125,7 +157,7 @@ def _openai_render(request: RenderRequest) -> dict[str, object]:
                 "schema": {
                     "type": "object",
                     "properties": {
-                        "message": {"type": "string", "maxLength": 1200},
+                        "message": {"type": "string", "maxLength": 2400},
                         "expects_student_response": {"type": "boolean"},
                     },
                     "required": ["message", "expects_student_response"],
