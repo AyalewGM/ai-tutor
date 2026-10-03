@@ -12,14 +12,15 @@ GitHub Issues hold detailed requirements/research and Pull Requests hold impleme
 
 ## Current execution
 
+> Reconciled 2026-10-02 against GitHub and `main` at `38a70b09`. F-026 is the active private-family release gate. Closed historical issues are not active merely because an older version of this file said otherwise.
+
 | Priority | Work item | GitHub | Status | Current evidence / next gate |
 |---|---|---|---|---|
-| P0 | F-021 MTH1W fine-grained skill graph and adaptive problem variation | Issue #45 / merged PR #50 | **IN PROGRESS** | PR #50 merged (`107f50f9`) and deterministic generators are on `main`. 2026-09-20 architecture review verified the next gap: add stable problem-family/representation/parameter identity, family-aware recent-equivalence, fine-grained MTH1W skill/provenance + >=2 materially different families for the first Number Sense skill, content-readiness gating, prerequisite-return and cross-jurisdiction negative tests. Active branch `feature/f-021-mth1w-adaptive-content` was fast-forwarded to current `main` so new work does not duplicate stale code. Branch `adaptive_response` has since landed MTH1W fine-grained subskills, missed-template re-serving, LLM contextualization, and subskill expansion to MCPS G7/G8/Algebra 1 (ledger F-021–F-024). Follow-up work then landed stable problem-family/parameter identity (`GENERATOR_FAMILIES` registry; `solution.family`/`solution.parameters` persisted on GENERATED rows), family-aware recent-equivalence (selection avoids repeating the last-attempted family; dedup on (family, parameters) fingerprints rather than prompt text, which also closes the contextualized-prompt dedup hole), >=2 families for MTH1W.B.NUM.INT (`integer/add` + `integer/compare`; `fraction/subtract` added so NUM.FRAC also meets the bar), and content-readiness gating (`content_readiness` report; `SkillChoice.content_ready` gates the learner skill dropdown). Issue #45 remaining: prerequisite-return and cross-jurisdiction negative-test coverage review confirmed adequate (test_curriculum_isolation, test_content_audit, test_prerequisite_ingestion cover rejection paths); provenance detail landed on `UI_1` (`solution.provenance` on all curated problems, backfill on reseed, `test_curated_provenance.py` audits all seeded curricula). Issue #45 remaining: DoD/QA/PO/PM acceptance only. |
-| P1 parallel | F-030 Learner Gamification & Badge System — evidence-backed awards | Issue #55 | **IN PROGRESS** | PO override 2026-09-20: badge presentation + `learner_awards` ledger pulled forward ahead of MVP validation; rewards economy (points, leaderboards, purchases) stays deferred. Scope on `UI_1`: migration 0017 + `services/awards.py` deterministic catalog (FIRST_CORRECT, STREAK_3/5, LEVEL_UP, SKILL_MASTERED, GAP_FIXED, FRESH_EYES) evaluated in `respond()` from committed evidence only; `new_awards` + workspace awards shelf; badge collection page; skill mastery map. **Release gate:** Security/Data-Impact review — `learner_awards` holds derived learner-profile data: confirm purpose/minimization, family authorization (`require_parent_owns_session`), retention/export stance, auditability (deterministic catalog), and that award metadata is never sent to LLM providers (verified by inspection: gateway receives only `/v1/render` + `/v1/contextualize` payloads). Learner-deletion cascade coverage landed on `UI_1` (`learner_deletion.py` erases `learner_awards`; asserted in `test_learner_deletion_postgres.py`). Playwright coverage for the React gamified journey landed in `e2e/tests/react-app.spec.js` (PR #56); `family-pilot.spec.js` de-brittled to option-presence assertions. Do NOT merge into the F-021 acceptance path; merge under this item's own acceptance. |
-| P1 parallel | F-022 Goozam-family learner/parent UI/UX | Issue #46 | **IN PROGRESS — PARTIAL** | PR #50 also merged substantial learner/login visual work. Do not mark done until F-022 accessibility, responsive behavior, parent/learner flows, reusable design system and browser regressions satisfy its acceptance criteria. |
-| P2 | F-019 MD/DC/VA Grades 6–7 & high-school-entry expansion | Issue #41 | **RESEARCHING / CONTENT BACKLOG** | Authoritative-source and pathway research exists. Curriculum packs still require mapping, original content, ingestion/readiness and isolation acceptance. |
-| P2 | F-020 Dynamic Math Visualization & Instructional Animation Engine | Issue #42 | **IN PROGRESS — PARTIAL** | First slice landed: `app/services/visualization.py` emits deterministic declarative specs (area model for SIMPLIFY_EXPRESSION, number line for INTEGER_OPERATIONS/INTEGER_COMPARE) from problem parameters — no LLM in the render path — rendered by `frontend/src/components/ProblemVisual.tsx` as inline SVG in the problem card. Remaining: fraction bars, coordinate-plane/graph visuals, animation/reduced-motion behavior, and the full acceptance gate. |
-| Parallel | Business Model, Pilot Economics & Deployment Strategy | Issue #12 | **RESEARCHING** | 2026-09-20 market slice added current Khan Academy/IXL pricing and product signals plus two parent-facing positioning tests. Pricing/category/primary-buyer decisions remain owner-gated pending pilot evidence. |
+| P0 | F-026 Private Family Pilot Release Candidate | Issue #107; PRs #108–#111 merged | **IN PROGRESS — ACTIVE RC GATE** | Explore Topics, pilot operations, telemetry hardening and synthetic-family E2E are merged. Significant post-gate product work landed through PRs #121 and #123–#128, so prior RC acceptance must be rerun against current `main`. Next: exact-head CI/regression, adaptive-step correctness, family/curriculum isolation, Security/Data Impact, QA/PO/PM acceptance, VPS/backup-restore verification, then explicit owner go-live approval before inviting real families. |
+| P0 | F-027 Pre-pilot gap closure | Issue #122; PRs #121, #123–#128 merged; PR #129 open | **PR/QA — CONVERGE INTO F-026** | Typed item kinds, Learn panels, parent reporting, gamification depth, content warming, PWA, placement diagnostic and stepwise adaptivity are substantially implemented. Issue text is stale where it calls within-problem adaptivity deferred: PR #128 implemented it. Do not add new competitive features before pilot; verify/accept shipped scope. PR #129 (parent step-work trails) needs privacy/data-impact and RC-value review before merge. |
+| P1 after RC | Avatar visual redesign/polish | Avatar infrastructure shipped in PR #126 | **DEFERRED POST-PILOT** | Selection/persistence/allowlist are acceptable for the private pilot. Owner considers the current artwork non-final; do not spend F-026 time redesigning it. |
+| P1 after RC | Product/UX follow-ups discovered by pilot | Pilot feedback | **DEFERRED POST-PILOT** | Prioritize from observed family friction and learning evidence rather than feature-for-feature competitor chasing. |
+| P2 after RC | Business Model, Pilot Economics & Deployment Strategy | Issue #12 | **RESEARCHING / OWNER-GATED** | Revisit pricing, buyer and public-beta decisions after private-pilot evidence. |
 
 ## Canonical GitHub issue ledger
 
@@ -48,11 +49,18 @@ GitHub Issues hold detailed requirements/research and Pull Requests hold impleme
 | #35 | F-016 Private Pilot Launch Readiness | DONE |
 | #37 | F-017 Pilot Web Application & Family/Learner Onboarding | DONE |
 | #39 | F-018 Private Pilot Privacy Controls & Data Lifecycle | DONE |
-| #41 | F-019 MD/DC/VA Grades 6–7 & High-School-Entry Math Expansion | RESEARCHING / CONTENT BACKLOG |
-| #42 | F-020 Dynamic Math Visualization & Instructional Animation Engine | PLANNED / RESEARCH GATED |
+| #41 | F-019 MD/DC/VA Grades 6–7 & High-School-Entry Math Expansion | DONE |
+| #42 | F-020 Dynamic Math Visualization & Instructional Animation Engine | DONE |
 | #43 | Fix MTH1W canonical curriculum seeding and learner skill discovery | DONE |
-| #45 | F-021 MTH1W fine-grained skill graph and adaptive problem variation | **IN PROGRESS — ACTIVE** |
-| #46 | F-022 Goozam-family UI/UX redesign for learner and parent experience | **IN PROGRESS — PARALLEL/PARTIAL** |
+| #45 | F-021 MTH1W fine-grained skill graph and adaptive problem variation | DONE |
+| #46 | F-022 Goozam-family UI/UX redesign for learner and parent experience | DONE |
+| #55 | F-030 Learner Gamification & Badge System (evidence-backed awards) | DONE |
+| #81 | F-013 Production UI Template, Design System & Pilot Experience | DONE |
+| #86 | F-023 Commercial learner dashboard & tutoring workspace polish | DONE |
+| #90 | F-024 DMV Grades 1–5 Curriculum Expansion & Elementary Learning Experience | DONE |
+| #91 | F-025 Ontario MTH1W Classroom-Aligned Algebra Content Expansion | DONE |
+| #107 | F-026 Private Family Pilot Release Candidate | **IN PROGRESS — ACTIVE RC GATE** |
+| #122 | F-027 Pre-pilot gap closure — item types, learn panels, parent reporting, gamification, content depth | **PR/QA — CONVERGE INTO F-026** |
 
 ## Repository implementation ledger
 
@@ -128,4 +136,4 @@ Every feature that collects, stores, transmits, derives, profiles, exports or di
 4. After any material merge, scope change, block, acceptance or completion, update this file in the same work cycle.
 5. A merged PR does not automatically close a feature. Mark `DONE` only after the applicable Definition of Done and issue acceptance criteria are evidenced.
 
-_Last synchronized: 2026-09-20; F-021 architecture/security checkpoint, active branch refresh, Marketing research and F-010 PO regression follow-up recorded. `adaptive_response` branch ledger rows F-021–F-024 added during conflict merge._
+_Last synchronized: 2026-10-02; reconciled against GitHub issue/PR state and `main` at `38a70b09`. F-026 #107 is the active release-candidate gate; F-027 #122 is pre-pilot convergence work, not a new expansion track. Avatar visual redesign is explicitly deferred until after the private pilot._
