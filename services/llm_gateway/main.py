@@ -122,13 +122,27 @@ _CPA_CONTRACT = (
 
 
 def _prompt(request: RenderRequest) -> str:
-    payload = json.dumps(request.model_dump(), ensure_ascii=False)
-    cpa_guidance = (
-        "The session's CPA level is "
-        f"{request.cpa_level} — lean toward emitting a visual this turn."
-        if request.cpa_level in {"PICTORIAL", "CONCRETE"}
-        else ""
+    # Token discipline: the CPA contract (~450 tokens) only rides along when a
+    # visual is plausible this turn — a downgraded CPA level, a detected
+    # misconception or wrong line, or a deep (scaffold/modeled) hint. On plain
+    # turns the model simply cannot emit a block, which is also the desired
+    # behavior. The context payload drops None fields for the same reason.
+    payload = json.dumps(request.model_dump(exclude_none=True), ensure_ascii=False)
+    visual_context = (
+        request.cpa_level in {"PICTORIAL", "CONCRETE"}
+        or bool(request.step_evidence)
+        or bool(request.misconception_description)
+        or (request.hint_level is not None and request.hint_level >= 3)
     )
+    cpa_part = ""
+    if visual_context:
+        cpa_part = _CPA_CONTRACT
+        if request.cpa_level in {"PICTORIAL", "CONCRETE"}:
+            cpa_part += (
+                f" The session's CPA level is {request.cpa_level}"
+                " — lean toward emitting a visual this turn."
+            )
+        cpa_part += " "
     return (
         "You are only the language-rendering layer of an adaptive math tutor. "
         "The application has already selected the pedagogical action. Follow it exactly. "
@@ -138,7 +152,7 @@ def _prompt(request: RenderRequest) -> str:
         "If step_evidence is present, refer to the learner's specific written line and "
         "the move it got wrong; do not re-check the math yourself, do not give the "
         "answer, and do not go beyond the hint constraint. "
-        f"{_CPA_CONTRACT} {cpa_guidance} "
+        f"{cpa_part}"
         "Return only the requested JSON response.\n\n"
         f"Application-computed context:\n{payload}"
     )
