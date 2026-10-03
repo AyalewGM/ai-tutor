@@ -201,6 +201,42 @@ def test_workspace_exposes_smartscore_streak_and_level() -> None:
     assert evidence["streak_count"] == 0
 
 
+def test_workspace_exposes_remediation_voice_fields() -> None:
+    session_id, _ = _create_session()
+    with SessionLocal() as db:
+        session = db.get(TutorSession, session_id)
+        assert session is not None
+        other = db.scalar(
+            select(Skill).where(
+                Skill.curriculum_id == session.curriculum_id,
+                Skill.id != session.primary_skill_id,
+            )
+        )
+        assert other is not None
+        session.active_skill_id = other.id
+        session.remediation_reason = "DECLARED_PREREQUISITE_GAP_CONFIRMED"
+        turn = db.scalar(
+            select(TutorTurn)
+            .where(TutorTurn.session_id == session_id, TutorTurn.role == "TUTOR")
+            .order_by(TutorTurn.created_at.desc())
+            .limit(1)
+        )
+        prereq_problem = db.scalar(
+            select(Problem).where(Problem.primary_skill_id == other.id).limit(1)
+        )
+        if turn is not None and prereq_problem is not None:
+            turn.problem_id = prereq_problem.id
+        db.commit()
+        primary_name = db.get(Skill, session.primary_skill_id).name
+        active_name = other.name
+
+    focus = client.get(f"/api/v1/learner-workspace/sessions/{session_id}").json()["focus"]
+    assert focus["in_remediation"] is True
+    assert focus["skill_name"] == active_name
+    assert focus["primary_skill_name"] == primary_name
+    assert focus["remediation_reason"] == "DECLARED_PREREQUISITE_GAP_CONFIRMED"
+
+
 def test_other_family_cannot_read_hint_or_respond_to_session() -> None:
     session_id, _ = _create_session()
     with SessionLocal() as db:

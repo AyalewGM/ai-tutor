@@ -143,6 +143,7 @@ export interface LearnerWorkspace {
   curriculum: { id: string; code: string; name: string; jurisdiction: string | null };
   focus: {
     primary_skill_id: string;
+    primary_skill_name: string;
     active_skill_id: string;
     skill_name: string;
     in_remediation: boolean;

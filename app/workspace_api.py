@@ -108,6 +108,7 @@ def build_learn_content(content: dict | None) -> LearnContentOut | None:
 
 class LearningFocusOut(BaseModel):
     primary_skill_id: uuid.UUID
+    primary_skill_name: str
     active_skill_id: uuid.UUID
     skill_name: str
     in_remediation: bool
@@ -343,6 +344,7 @@ def get_learner_workspace(
         ),
         focus=LearningFocusOut(
             primary_skill_id=primary_skill.id,
+            primary_skill_name=primary_skill.name,
             active_skill_id=active_skill.id,
             skill_name=active_skill.name,
             in_remediation=active_skill.id != primary_skill.id,

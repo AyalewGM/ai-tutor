@@ -1,6 +1,6 @@
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { BookOpen, CheckCircle2, ChevronDown, Flag, Lightbulb, Map as MapIcon, HelpCircle, Target } from "lucide-react";
+import { BookOpen, CheckCircle2, ChevronDown, Flag, Lightbulb, Map as MapIcon, HelpCircle, RefreshCcw, Target, Undo2 } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
@@ -654,6 +654,34 @@ export default function Workspace() {
 
         <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
           <div className="space-y-6">
+            {workspace.focus.in_remediation && !complete && (
+              <div
+                className="flex items-start gap-3 rounded-xl border border-sky-300/70 bg-sky-50 px-4 py-3"
+                role="status"
+                data-testid="remediation-banner"
+              >
+                {workspace.focus.remediation_reason === "SPACED_REVIEW" ? (
+                  <>
+                    <RefreshCcw className="mt-0.5 h-5 w-5 shrink-0 text-sky-700" aria-hidden="true" />
+                    <p className="text-sm leading-relaxed text-sky-900">
+                      Quick review — a few questions on{" "}
+                      <strong>{workspace.focus.skill_name}</strong> to keep it
+                      fresh, then we move on.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <Undo2 className="mt-0.5 h-5 w-5 shrink-0 text-sky-700" aria-hidden="true" />
+                    <p className="text-sm leading-relaxed text-sky-900">
+                      Stepping back on purpose: practicing{" "}
+                      <strong>{workspace.focus.skill_name}</strong> first makes{" "}
+                      <strong>{workspace.focus.primary_skill_name}</strong> much
+                      easier. Once you&apos;ve got it, we go straight back.
+                    </p>
+                  </>
+                )}
+              </div>
+            )}
             {complete ? (
               <Card className="completion" id="completionPanel">
                 <ConfettiBurst trigger={celebrate} always />
