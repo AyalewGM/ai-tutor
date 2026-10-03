@@ -2,7 +2,7 @@ import uuid
 from decimal import Decimal
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
@@ -27,13 +27,15 @@ from app.schemas import (
     EvaluationOut,
     GrowthOut,
     MasteryOut,
+    PhotoLineOut,
+    PhotoScanOut,
     RespondIn,
     RespondOut,
     TutorOut,
     WorkStepIn,
     WorkStepOut,
 )
-from app.services import stepwork
+from app.services import photo_ocr, stepwork
 from app.services.attempt_evidence import record_evidence
 from app.services.awards import (
     BADGE_XP,
@@ -663,4 +665,52 @@ def work_step(
         revealed_line=result.revealed_line,
         normalized_line=result.normalized_line,
         invalid_count=(invalid_count + 1 if result.status == "invalid" else 0),
+    )
+
+
+OcrProvider = Annotated[photo_ocr.PhotoOcrProvider, Depends(photo_ocr.get_ocr_provider)]
+
+
+@router.post("/sessions/{session_id}/work-photo/scan", response_model=PhotoScanOut)
+async def work_photo_scan(
+    session_id: uuid.UUID,
+    parent: CurrentParent,
+    db: DbSession,
+    ocr: OcrProvider,
+    file: Annotated[UploadFile, File()],
+    problem_id: Annotated[uuid.UUID, Form()],
+) -> PhotoScanOut:
+    """Read photographed written work into editable lines.
+
+    The image is processed in memory and never persisted. OCR output is a
+    *suggestion*: the learner confirms or edits each line client-side, and
+    only confirmed lines are submitted to ``work-step`` — so a misread can
+    never be graded as a learner misconception.
+    """
+    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    problem = db.get(Problem, problem_id)
+    active_skill_id = session.active_skill_id or session.primary_skill_id
+    if problem is None or problem.primary_skill_id != active_skill_id:
+        raise HTTPException(400, "Problem does not support step-by-step work")
+    if not stepwork.problem_supports_steps(problem):
+        raise HTTPException(400, "Problem does not support step-by-step work")
+    if file.content_type not in photo_ocr.ALLOWED_CONTENT_TYPES:
+        raise HTTPException(415, "Upload a JPEG, PNG, or WebP photo")
+    image = await file.read()
+    if len(image) > photo_ocr.MAX_PHOTO_BYTES:
+        raise HTTPException(413, "Photo is too large — keep it under 8 MB")
+    try:
+        result = ocr.scan(image, file.content_type)
+    except photo_ocr.PhotoOcrUnavailable as exc:
+        raise HTTPException(503, "Photo intake is not enabled") from exc
+    except photo_ocr.PhotoOcrError as exc:
+        raise HTTPException(502, "Could not read the photo — try a clearer shot") from exc
+    if not result.lines:
+        raise HTTPException(
+            422, "No work lines found — photograph the written steps up close"
+        )
+    return PhotoScanOut(
+        problem_id=problem.id,
+        lines=[PhotoLineOut(text=l.text, needs_review=l.needs_review) for l in result.lines],
+        engine=result.engine,
     )

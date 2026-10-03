@@ -113,6 +113,17 @@ export interface WorkStepOut {
   invalid_count: number;
 }
 
+export interface PhotoLine {
+  text: string;
+  needs_review: boolean;
+}
+
+export interface PhotoScanOut {
+  problem_id: string;
+  lines: PhotoLine[];
+  engine: string;
+}
+
 export interface DiagnosticOut {
   session_id: string;
   status: string;

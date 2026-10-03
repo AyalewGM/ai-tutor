@@ -221,16 +221,20 @@ def test_work_step_rejects_unsupported_and_foreign_problems() -> None:
             answer_kind="FREE_TEXT",
             source_type="TEST",
         )
-        foreign_skill = db.scalar(
-            select(Skill).where(
-                Skill.code != "M8.ALG.MULTI_STEP",
-                Skill.curriculum_id
-                == select(Skill.curriculum_id)
-                .where(Skill.code == "M8.ALG.MULTI_STEP")
-                .scalar_subquery(),
-            )
+        curriculum_id = db.scalar(
+            select(Skill.curriculum_id).where(Skill.code == "M8.ALG.MULTI_STEP")
         )
-        assert foreign_skill is not None
+        assert curriculum_id is not None
+        # A test-owned skill — never park fixture problems on a real seeded
+        # skill, where they'd leak into that skill's selection pool.
+        foreign_skill = Skill(
+            curriculum_id=curriculum_id,
+            code=f"TEST.FOREIGN.{uuid.uuid4().hex[:8]}",
+            name="Foreign test skill",
+            difficulty_level=1,
+        )
+        db.add(foreign_skill)
+        db.flush()
         foreign = Problem(
             primary_skill_id=foreign_skill.id,
             problem_type="SOLVE_EQUATION",
