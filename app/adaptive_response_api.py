@@ -35,7 +35,7 @@ from app.schemas import (
     WorkStepIn,
     WorkStepOut,
 )
-from app.services import pedagogy_engine, photo_ocr, stepwork, visualization
+from app.services import chat_cpa, pedagogy_engine, photo_ocr, stepwork, visualization
 from app.services.attempt_evidence import record_evidence
 from app.services.awards import (
     BADGE_XP,
@@ -441,10 +441,12 @@ def respond(
         # pedagogical value: misses, hints, misconceptions.
         use_llm=not evidence.evaluation.correct,
     )
-    message = generation.message
+    message = chat_cpa.sanitize_cpa_blocks(
+        generation.message, canonical_answer=problem.canonical_answer
+    )
     if not evidence.evaluation.correct:
         block = visualization.chat_cpa_block(visualization.visualization_for(problem))
-        if block:
+        if block and "```json:cpa" not in message:
             message = f"{message}\n\n{block}"
     turn = TutorTurn(
         session_id=session.id,
