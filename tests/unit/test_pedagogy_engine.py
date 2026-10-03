@@ -119,3 +119,46 @@ def test_visual_cues_reference_real_renderer_types() -> None:
     }
     for code, profile in misconceptions.TAXONOMY.items():
         assert profile.visual_cue is None or profile.visual_cue in known, code
+
+
+def test_chat_cpa_block_translates_balance_and_fraction_specs() -> None:
+    import json
+
+    from app.services import visualization
+
+    block = visualization.chat_cpa_block(
+        {
+            "type": "balance_scale",
+            "left": {"x_count": 3, "units": 0},
+            "right": {"x_count": 0, "units": 18},
+        }
+    )
+    assert block is not None
+    payload = json.loads(block.split("\n", 1)[1].rsplit("```", 1)[0])
+    assert payload["type"] == "BALANCE_SCALE"
+    assert payload["balanceScale"]["leftExpr"] == "3x"
+    assert payload["balanceScale"]["rightExpr"] == "18"
+
+    block = visualization.chat_cpa_block(
+        {
+            "type": "fraction_operation",
+            "first": {"numerator": 1, "denominator": 2},
+            "second": {"numerator": 1, "denominator": 3},
+            "common_denominator": 6,
+        }
+    )
+    assert block is not None
+    payload = json.loads(block.split("\n", 1)[1].rsplit("```", 1)[0])
+    assert payload["type"] == "FRACTION_BARS"
+    assert payload["fractionBars"][0] == {
+        "numerator": 3,
+        "denominator": 6,
+        "label": "1/2 =",
+    }
+
+
+def test_chat_cpa_block_none_for_unmappable_or_missing() -> None:
+    from app.services import visualization
+
+    assert visualization.chat_cpa_block(None) is None
+    assert visualization.chat_cpa_block({"type": "tape_diagram"}) is None

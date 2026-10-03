@@ -441,10 +441,15 @@ def respond(
         # pedagogical value: misses, hints, misconceptions.
         use_llm=not evidence.evaluation.correct,
     )
+    message = generation.message
+    if not evidence.evaluation.correct:
+        block = visualization.chat_cpa_block(visualization.visualization_for(problem))
+        if block:
+            message = f"{message}\n\n{block}"
     turn = TutorTurn(
         session_id=session.id,
         role="TUTOR",
-        message=generation.message,
+        message=message,
         state=generation_state,
         pedagogical_action=tutor_action,
         problem_id=next_problem.id if next_problem else problem.id,
@@ -576,7 +581,7 @@ def respond(
         tutor=TutorOut(
             action=tutor_action,
             hint_level=tutor_hint_level,
-            message=generation.message,
+            message=message,
         ),
         mastery=MasteryOut(
             score=next_progress.mastery_score,
