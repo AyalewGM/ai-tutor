@@ -39,7 +39,7 @@ $COMPOSE up -d db
 $COMPOSE run --rm migrate
 
 echo "[deploy] Seeding curricula and content (idempotent)..."
-$COMPOSE run --rm --no-deps tutor-api python /app/scripts/ops/seed_all_curricula.py
+$COMPOSE run --rm --no-deps tutor-api python /app/scripts/ops/seed_all_curricula.py --warm
 
 echo "[deploy] Starting all services..."
 $COMPOSE up -d

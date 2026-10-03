@@ -19,7 +19,7 @@ from app.models import Curriculum, Skill
 from app.services.problem_generation import generate_problem
 
 TARGET_DIFFICULTIES = (1, 2, 3, 4, 5)
-VARIANTS_PER_LEVEL = 2
+VARIANTS_PER_LEVEL = 4
 
 
 def main() -> None:
