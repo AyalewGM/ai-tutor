@@ -8,6 +8,7 @@ from sqlalchemy import (
     DateTime,
     Enum,
     ForeignKey,
+    Index,
     Integer,
     Numeric,
     String,
@@ -227,6 +228,11 @@ class LearnerAward(Base):
 
 class TutorTurn(Base):
     __tablename__ = "tutor_turns"
+    __table_args__ = (
+        # Parent-dashboard analytics scan per-session turns inside a time
+        # window — the composite keeps those reads off a full table scan.
+        Index("ix_tutor_turns_session_created", "session_id", "created_at"),
+    )
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     session_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("tutor_sessions.id"), index=True)
     role: Mapped[str] = mapped_column(String(20))

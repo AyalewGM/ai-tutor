@@ -18,7 +18,7 @@ from app.services.curriculum_scope import (
     require_skill_in_scope,
 )
 from app.services.hint_policy import hint_constraint, select_hint
-from app.services.tutor_engine import tutor_engine
+from app.services.tutor_engine import fallback_message, tutor_engine
 
 router = APIRouter(prefix="/adaptive-tutor", tags=["adaptive-tutor"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -110,21 +110,26 @@ def request_hint(
     skill = db.get(Skill, active_skill_id)
     if student is None or skill is None:
         raise HTTPException(404, "Student or skill not found")
-    generation = tutor_engine.generate(
-        _tutor_context(
-            db,
-            student=student,
-            skill=skill,
-            state=session.current_state,
-            action="GIVE_HINT",
-            hint_level=decision.level,
-            problem=problem,
-            session_id=session.id,
-        )
+    tutor_context = _tutor_context(
+        db,
+        student=student,
+        skill=skill,
+        state=session.current_state,
+        action="GIVE_HINT",
+        hint_level=decision.level,
+        problem=problem,
+        session_id=session.id,
     )
+    generation = tutor_engine.generate(tutor_context)
     message = chat_cpa.sanitize_cpa_blocks(
         generation.message, canonical_answer=problem.canonical_answer
     )
+    answer_leak_blocked = False
+    if generation.source == "llm" and chat_cpa.text_reveals_answer(
+        message, problem.canonical_answer
+    ):
+        message = fallback_message(tutor_context)
+        answer_leak_blocked = True
     block = visualization.chat_cpa_block(visualization.visualization_for(problem))
     if block and "```json:cpa" not in message:
         message = f"{message}\n\n{block}"
@@ -138,6 +143,7 @@ def request_hint(
         llm_model=generation.model,
         metadata_json={
             "generation_source": generation.source,
+            "answer_leak_blocked": answer_leak_blocked,
             "provider": generation.provider,
             "hint_level": decision.level,
             "hint_trigger": request_trigger,

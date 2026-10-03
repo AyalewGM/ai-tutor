@@ -25,30 +25,63 @@ _CPA_BLOCK = re.compile(
 _SOLVED_EQUATION = re.compile(r"^\s*([a-zA-Z])\s*=\s*(-?\d+(?:\.\d+)?)\s*$")
 _BARE_VAR = re.compile(r"^\s*[a-zA-Z]\s*$")
 
+# Payload fields render into style attributes and SVG text. React escapes
+# markup, but values still get allowlist treatment — a stored message that
+# predates validation must not be able to smuggle CSS or oversized content.
+_SAFE_COLOR = re.compile(r"^[a-zA-Z0-9#-]{1,32}$")
+_MAX_BARS = 8
+_MAX_DENOMINATOR = 48
+_MAX_PAN_VALUE = 1_000_000
+
 
 def _is_number(value: Any) -> bool:
     return isinstance(value, int | float) and not isinstance(value, bool)
 
 
+def _safe_str(value: Any, max_len: int) -> bool:
+    return isinstance(value, str) and len(value) <= max_len
+
+
+def _safe_int(value: Any, lo: int, hi: int) -> bool:
+    return (
+        _is_number(value)
+        and float(value).is_integer()
+        and lo <= float(value) <= hi
+    )
+
+
 def _valid_fraction_bars(obj: dict) -> bool:
     bars = obj.get("fractionBars")
-    if not isinstance(bars, list) or not bars:
+    if not isinstance(bars, list) or not bars or len(bars) > _MAX_BARS:
         return False
     for bar in bars:
         if not isinstance(bar, dict):
             return False
-        if not _is_number(bar.get("numerator")) or not _is_number(bar.get("denominator")):
+        if not _safe_int(bar.get("numerator"), 0, _MAX_DENOMINATOR):
+            return False
+        if not _safe_int(bar.get("denominator"), 1, _MAX_DENOMINATOR):
+            return False
+        if "label" in bar and not _safe_str(bar["label"], 40):
+            return False
+        color = bar.get("color")
+        if color is not None and not _SAFE_COLOR.match(str(color)):
             return False
     return True
 
 
 def _valid_balance_scale(obj: dict) -> bool:
     scale = obj.get("balanceScale")
-    return (
+    if not (
         isinstance(scale, dict)
-        and isinstance(scale.get("leftExpr"), str)
-        and isinstance(scale.get("rightExpr"), str)
-    )
+        and _safe_str(scale.get("leftExpr"), 60)
+        and _safe_str(scale.get("rightExpr"), 60)
+    ):
+        return False
+    for key in ("leftValue", "rightValue"):
+        value = scale.get(key)
+        if value is not None and not (_is_number(value) and abs(value) <= _MAX_PAN_VALUE):
+            return False
+    return True
 
 
 def _payload_reveals_answer(obj: dict, canonical_answer: str | None) -> bool:
@@ -94,7 +127,33 @@ def _valid_payload(raw: str, canonical_answer: str | None) -> bool:
         valid = _valid_balance_scale(obj)
     else:
         return False
+    if not _safe_str(obj.get("title", ""), 80):
+        return False
     return valid and not _payload_reveals_answer(obj, canonical_answer)
+
+
+def text_reveals_answer(message: str, canonical_answer: str | None) -> bool:
+    """True when message prose states the solved form (``x = 4``) of the
+    canonical answer — the same leak the block validator bans, in plain text.
+
+    Only equation-form canonicals are checked. A bare numeric canonical
+    ("8") appears legitimately inside hints ("what is 8 divided by 2?"), so
+    matching it would flag correct Socratic language.
+    """
+    if not canonical_answer:
+        return False
+    match = _SOLVED_EQUATION.match(canonical_answer.strip())
+    if match is None:
+        return False
+    var, value = match.group(1), match.group(2)
+    prose = _CPA_BLOCK.sub(" ", message)
+    return (
+        re.search(
+            rf"(?<![\w]){re.escape(var)}\s*=\s*{re.escape(value)}(?![\d.])",
+            prose,
+        )
+        is not None
+    )
 
 
 def sanitize_cpa_blocks(

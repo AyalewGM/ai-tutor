@@ -42,7 +42,7 @@ def test_gateway_accepts_application_computed_render_request() -> None:
 
 
 def test_gateway_accepts_cpa_level_and_prompt_carries_cpa_contract() -> None:
-    from services.llm_gateway.main import RenderRequest, _prompt
+    from services.llm_gateway.main import RenderRequest, _system_prompt
 
     response = client.post(
         "/v1/render",
@@ -65,10 +65,32 @@ def test_gateway_accepts_cpa_level_and_prompt_carries_cpa_contract() -> None:
         problem_prompt="p",
         cpa_level="PICTORIAL",
     )
-    prompt = _prompt(request)
+    prompt = _system_prompt(request)
     assert "json:cpa" in prompt
     assert "PICTORIAL" in prompt
     assert "lean toward" in prompt
+
+
+def test_prompt_omits_cpa_contract_on_text_only_turns() -> None:
+    from services.llm_gateway.main import RenderRequest, _context_payload, _system_prompt
+
+    lean = RenderRequest(
+        action="PRAISE",
+        curriculum_name="c",
+        grade_level="8",
+        skill_name="s",
+        problem_prompt="Solve 2x + 3 = 11.",
+        cpa_level="ABSTRACT",
+        hint_level=None,
+    )
+    prompt = _system_prompt(lean)
+    assert "json:cpa" not in prompt
+    # None fields are stripped from the context payload for token economy.
+    assert "null" not in _context_payload(lean)
+    # A deep hint or a classified miss re-enables the contract.
+    deep_hint = _system_prompt(lean.model_copy(update={"hint_level": 3}))
+    evidence = _system_prompt(lean.model_copy(update={"step_evidence": "wrote 2x = 11"}))
+    assert "json:cpa" in deep_hint and "json:cpa" in evidence
 
 
 def test_gateway_rejects_pedagogical_authority_fields() -> None:
