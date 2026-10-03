@@ -26,6 +26,29 @@ export interface VisualSpec {
   left_terms?: AlgebraTerm[];
   right_terms?: AlgebraTerm[];
   transformed_right_terms?: AlgebraTerm[];
+  left?: PanSpec;
+  right?: PanSpec;
+  first?: FractionSpec;
+  second?: FractionSpec;
+  common_denominator?: number;
+  total_label?: string;
+  segments?: TapeSegment[];
+}
+
+interface PanSpec {
+  x_count: number;
+  units: number;
+}
+
+interface FractionSpec {
+  numerator: number;
+  denominator: number;
+}
+
+interface TapeSegment {
+  label: string;
+  span: number;
+  highlight: boolean;
 }
 
 interface AlgebraTerm {
@@ -277,9 +300,131 @@ function PolynomialSignChange({ spec }: { spec: VisualSpec }) {
   );
 }
 
+function Pan({ pan, x }: { pan: PanSpec; x: number }) {
+  const blockW = 26;
+  const unitW = 10;
+  const unitRows = Math.ceil(pan.units / 6);
+  const items: React.ReactNode[] = [];
+  for (let i = 0; i < pan.x_count; i += 1) {
+    items.push(
+      <g key={`x${i}`}>
+        <rect x={x + i * (blockW + 4)} y={60 - 30} width={blockW} height={28} rx="3" className="viz-cell viz-cell-a" />
+        <text x={x + i * (blockW + 4) + blockW / 2} y={60 - 11} textAnchor="middle" className="viz-term">x</text>
+      </g>,
+    );
+  }
+  const unitX = x + pan.x_count * (blockW + 4) + (pan.x_count ? 8 : 0);
+  for (let i = 0; i < pan.units; i += 1) {
+    const row = Math.floor(i / 6);
+    const col = i % 6;
+    items.push(
+      <rect
+        key={`u${i}`}
+        x={unitX + col * (unitW + 2)}
+        y={60 - 2 - (row + 1) * (unitW + 2)}
+        width={unitW}
+        height={unitW}
+        rx="2"
+        className="viz-cell viz-cell-b"
+      />,
+    );
+  }
+  const panW = Math.max(60, unitX - x + Math.min(pan.units, 6) * (unitW + 2));
+  return (
+    <g>
+      {items}
+      <line x1={x - 6} y1={62} x2={x + panW + 6} y2={62} className="viz-axis" strokeWidth={3} />
+      {unitRows > 2 && <text x={x + panW / 2} y={78} textAnchor="middle" className="viz-label">{pan.units}</text>}
+    </g>
+  );
+}
+
+function BalanceScale({ spec }: { spec: VisualSpec }) {
+  const left = spec.left ?? { x_count: 0, units: 0 };
+  const right = spec.right ?? { x_count: 0, units: 0 };
+  const width = 420;
+  const leftLabel = [left.x_count ? `${left.x_count === 1 ? "" : left.x_count}x` : "", left.units ? String(left.units) : ""].filter(Boolean).join(" + ") || "0";
+  const rightLabel = [right.x_count ? `${right.x_count === 1 ? "" : right.x_count}x` : "", right.units ? String(right.units) : ""].filter(Boolean).join(" + ") || "0";
+  return (
+    <svg viewBox={`0 0 ${width} 130`} className="visual" role="img" aria-label={spec.aria_label}>
+      <line x1={width / 2} y1={70} x2={width / 2} y2={112} className="viz-axis" strokeWidth={4} />
+      <line x1={40} y1={70} x2={width - 40} y2={70} className="viz-axis" strokeWidth={4} />
+      <polygon points={`${width / 2 - 24},112 ${width / 2 + 24},112 ${width / 2},92`} className="viz-cell" />
+      <Pan pan={left} x={48} />
+      <Pan pan={right} x={width / 2 + 28} />
+      <text x={width / 4 + 10} y={124} textAnchor="middle" className="viz-label">{leftLabel}</text>
+      <text x={(3 * width) / 4 - 10} y={124} textAnchor="middle" className="viz-label">{rightLabel}</text>
+    </svg>
+  );
+}
+
+function FractionOperation({ spec }: { spec: VisualSpec }) {
+  const first = spec.first ?? { numerator: 0, denominator: 1 };
+  const second = spec.second ?? { numerator: 0, denominator: 1 };
+  const common = Math.max(1, spec.common_denominator ?? Math.max(first.denominator, second.denominator));
+  const width = 380;
+  const x = 24;
+  const barW = width - 48;
+  const h = 34;
+  const renderBar = (frac: FractionSpec, y: number) => {
+    const scale = common / frac.denominator;
+    const shaded = frac.numerator * scale;
+    return (
+      <g key={y}>
+        {Array.from({ length: common }, (_, i) => (
+          <rect key={i} x={x + (i * barW) / common} y={y} width={barW / common} height={h} className={`viz-cell ${i < shaded ? "viz-cell-a" : ""}`} />
+        ))}
+        {Array.from({ length: frac.denominator + 1 }, (_, i) => (
+          <line key={`d${i}`} x1={x + (i * barW) / frac.denominator} y1={y - 3} x2={x + (i * barW) / frac.denominator} y2={y + h + 3} className="viz-axis" strokeWidth={2} />
+        ))}
+        <text x={x + barW + 6} y={y + h / 2 + 5} className="viz-label">{frac.numerator}/{frac.denominator}</text>
+      </g>
+    );
+  };
+  return (
+    <svg viewBox={`0 0 ${width + 50} 140`} className="visual" role="img" aria-label={spec.aria_label}>
+      {renderBar(first, 18)}
+      <text x={x + barW / 2} y={72} textAnchor="middle" className="viz-term">{spec.operation === "-" ? "−" : "+"}</text>
+      {renderBar(second, 84)}
+      <text x={x} y={134} className="viz-label">each bar cut into {common} equal pieces</text>
+    </svg>
+  );
+}
+
+function TapeDiagram({ spec }: { spec: VisualSpec }) {
+  const segments = spec.segments ?? [];
+  const totalSpan = segments.reduce((sum, s) => sum + Math.max(0, s.span), 0) || 1;
+  const width = 400;
+  const x = 24;
+  const barW = width - 48;
+  const y = 36;
+  const h = 44;
+  let cursor = x;
+  return (
+    <svg viewBox={`0 0 ${width} 110`} className="visual" role="img" aria-label={spec.aria_label}>
+      <line x1={x} y1={y - 12} x2={x + barW} y2={y - 12} className="viz-axis" strokeWidth={2} />
+      <text x={x + barW / 2} y={y - 18} textAnchor="middle" className="viz-label">{spec.total_label}</text>
+      {segments.map((segment, i) => {
+        const w = (Math.max(0, segment.span) / totalSpan) * barW;
+        const sx = cursor;
+        cursor += w;
+        return (
+          <g key={i}>
+            <rect x={sx} y={y} width={w} height={h} className={`viz-cell ${segment.highlight ? "viz-cell-a" : ""}`} />
+            {w > 22 && <text x={sx + w / 2} y={y + h / 2 + 5} textAnchor="middle" className="viz-term">{segment.label}</text>}
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (!spec) return null;
   if (spec.type === "area_model") return <AreaModel spec={spec} />;
+  if (spec.type === "balance_scale") return <BalanceScale spec={spec} />;
+  if (spec.type === "fraction_operation") return <FractionOperation spec={spec} />;
+  if (spec.type === "tape_diagram") return <TapeDiagram spec={spec} />;
   if (spec.type === "algebra_tiles") return <AlgebraTiles spec={spec} />;
   if (spec.type === "polynomial_sign_change") return <PolynomialSignChange spec={spec} />;
   if (spec.type === "number_line") return <NumberLine spec={spec} />;

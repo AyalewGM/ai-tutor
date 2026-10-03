@@ -6,6 +6,7 @@ never misrepresent the math. Unknown problem shapes return None — the
 renderer simply shows nothing.
 """
 
+import math
 import re
 from typing import Any
 
@@ -69,10 +70,7 @@ def _number_line(problem: Problem) -> dict | None:
         "result": total,
         "min": lo,
         "max": hi,
-        "aria_label": (
-            f"Number line from {lo} to {hi}: start at 0, move {a}, "
-            f"then move {b}."
-        ),
+        "aria_label": (f"Number line from {lo} to {hi}: start at 0, move {a}, then move {b}."),
     }
 
 
@@ -107,8 +105,7 @@ def _array_model(problem: Problem) -> dict | None:
         "columns": columns,
         "mode": "squares" if problem.problem_type == "RECTANGLE_AREA" else "counters",
         "aria_label": (
-            f"Array with {rows} rows and {columns} columns, "
-            f"showing {rows * columns} items in all."
+            f"Array with {rows} rows and {columns} columns, showing {rows * columns} items in all."
         ),
     }
 
@@ -173,8 +170,7 @@ def _base_ten_model(problem: Problem) -> dict | None:
         "tens": tens,
         "ones": ones,
         "aria_label": (
-            f"Base-ten blocks for {number}: "
-            f"{hundreds} hundreds, {tens} tens, and {ones} ones."
+            f"Base-ten blocks for {number}: {hundreds} hundreds, {tens} tens, and {ones} ones."
         ),
     }
 
@@ -196,8 +192,7 @@ def _money_model(problem: Problem) -> dict | None:
         "pennies": p,
         "total_cents": total,
         "aria_label": (
-            f"Coins totaling {total} cents: "
-            f"{q} quarters, {d} dimes, {n} nickels, {p} pennies."
+            f"Coins totaling {total} cents: {q} quarters, {d} dimes, {n} nickels, {p} pennies."
         ),
     }
 
@@ -256,8 +251,7 @@ def _volume_model(problem: Problem) -> dict | None:
         "width": w,
         "height": h,
         "aria_label": (
-            f"Rectangular prism with length {l}, width {w}, height {h}, "
-            f"volume {l * w * h}."
+            f"Rectangular prism with length {l}, width {w}, height {h}, volume {l * w * h}."
         ),
     }
 
@@ -447,7 +441,6 @@ def _fraction_circle(problem: Problem) -> dict | None:
     }
 
 
-
 _LINEAR_TERM = re.compile(r"([+-]?\s*\d*)\s*([a-zA-Z])(?:\^(\d+))?")
 _POLY_GROUPS = re.compile(r"\(([^()]*)\)\s*([+-])\s*\(([^()]*)\)")
 
@@ -477,10 +470,9 @@ def _algebra_terms(expression: str) -> list[dict[str, Any]]:
             continue
         if re.fullmatch(r"[+-]?\d+", token):
             value = int(token)
-            terms.append(
-                {"coefficient": value, "variable": None, "degree": 0, "label": str(value)}
-            )
+            terms.append({"coefficient": value, "variable": None, "degree": 0, "label": str(value)})
     return terms
+
 
 def _like_term_visual(problem: Problem) -> dict | None:
     expression = problem.prompt.removeprefix("Simplify ").rstrip(".")
@@ -526,15 +518,197 @@ def _polynomial_sign_visual(problem: Problem) -> dict | None:
         "transformed_right_terms": transformed,
         "aria_label": (
             "Polynomial subtraction sign-change model. "
-            + ("Every term in the subtracted group changes sign before like terms are combined."
-               if operation == "-"
-               else "The second polynomial keeps its signs before like terms are combined.")
+            + (
+                "Every term in the subtracted group changes sign before like terms are combined."
+                if operation == "-"
+                else "The second polynomial keeps its signs before like terms are combined."
+            )
         ),
     }
 
 
+_LINEAR_SIDE = re.compile(
+    r"^\s*(?:(-?\d*)\s*\(\s*x\s*([+-])\s*(\d+)\s*\)|(-?\d*)\s*x\s*(?:([+-])\s*(\d+))?|(-?\d+))\s*$"
+)
+
+
+def _linear_side(text: str) -> tuple[int, int] | None:
+    """Parse 'ax + b', 'a(x + b)', 'ax', or 'c' into (x-coefficient, constant)."""
+    match = _LINEAR_SIDE.match(text.replace("−", "-"))
+    if not match:
+        return None
+    if match.group(2):  # a(x ± b)
+        a = (
+            int(match.group(1) or "1")
+            if match.group(1) not in ("", "-")
+            else (-1 if match.group(1) == "-" else 1)
+        )
+        b = int(match.group(3)) * (1 if match.group(2) == "+" else -1)
+        return a, a * b
+    if match.group(7) is not None:  # bare constant
+        return 0, int(match.group(7))
+    raw = match.group(4)
+    a = -1 if raw == "-" else (1 if raw in ("", None) else int(raw))
+    b = int(match.group(6)) * (1 if match.group(5) == "+" else -1) if match.group(6) else 0
+    return a, b
+
+
+def _balance_scale(problem: Problem) -> dict | None:
+    """Two-pan balance for a linear equation: x-blocks and unit weights per side.
+
+    Honest for ax + b = c with 0 < a <= 6 and small constants; anything else
+    (negatives on the pans, big numbers) returns None rather than a misleading
+    picture.
+    """
+    from app.services.stepwork import starting_equation
+
+    equation = starting_equation(problem.prompt)
+    if equation is None:
+        return None
+    lhs_text, _, rhs_text = equation.partition("=")
+    lhs, rhs = _linear_side(lhs_text), _linear_side(rhs_text)
+    if lhs is None or rhs is None:
+        return None
+    a_l, b_l = lhs
+    a_r, b_r = rhs
+    if a_l < 0 or a_r < 0 or b_l < 0 or b_r < 0 or max(a_l, a_r) > 6 or max(b_l, b_r) > 30:
+        return None
+    if a_l == 0 and a_r == 0:
+        return None
+    return {
+        "type": "balance_scale",
+        "left": {"x_count": a_l, "units": b_l},
+        "right": {"x_count": a_r, "units": b_r},
+        "aria_label": (
+            f"A balance scale. Left pan: {a_l} x-block{'s' if a_l != 1 else ''} and "
+            f"{b_l} unit weight{'s' if b_l != 1 else ''}. Right pan: {a_r} x-block"
+            f"{'s' if a_r != 1 else ''} and {b_r} unit weight{'s' if b_r != 1 else ''}. "
+            "The pans balance, so both sides are equal."
+        ),
+    }
+
+
+_FRACTION_OP = re.compile(r"(\d+)\s*/\s*(\d+)\s*([+\-−])\s*(\d+)\s*/\s*(\d+)")
+
+
+def _fraction_operation_bars(problem: Problem) -> dict | None:
+    """Two fraction bars drawn on a common-denominator grid for + / −."""
+    params = _params(problem)
+    n1, d1, n2, d2 = (_int(params.get(k)) for k in ("n1", "d1", "n2", "d2"))
+    operation = "+" if problem.problem_type != "FRACTION_SUBTRACT" else "-"
+    if None in (n1, d1, n2, d2):
+        match = _FRACTION_OP.search(problem.prompt.replace("−", "-"))
+        if not match:
+            return None
+        n1, d1, n2, d2 = (int(match.group(i)) for i in (1, 2, 4, 5))
+        operation = "-" if match.group(3) in "-−" else "+"
+    if min(d1, d2) < 2 or n1 > d1 or n2 > d2 or n1 < 0 or n2 < 0:
+        return None
+    common = d1 * d2 // math.gcd(d1, d2)
+    if common > 24:
+        return None
+    return {
+        "type": "fraction_operation",
+        "operation": operation,
+        "first": {"numerator": n1, "denominator": d1},
+        "second": {"numerator": n2, "denominator": d2},
+        "common_denominator": common,
+        "aria_label": (
+            f"Two fraction bars: {n1}/{d1} and {n2}/{d2}, both divided into "
+            f"{common} equal parts so the pieces match before "
+            f"{'adding' if operation == '+' else 'subtracting'}."
+        ),
+    }
+
+
+def _tape_diagram(problem: Problem) -> dict | None:
+    """Bar model for a word problem: segments whose lengths follow the parameters."""
+    params = _params(problem)
+    solution = problem.solution or {}
+    family = str(solution.get("problem_family") or "")
+    template = family.split(":", 1)[1] if ":" in family else params.get("template")
+    if template == "percent_of":
+        percent, amount = _int(params.get("percent")), _int(params.get("amount"))
+        if percent is None or amount is None or not (0 < percent <= 100):
+            return None
+        return {
+            "type": "tape_diagram",
+            "total_label": str(amount),
+            "segments": [
+                {"label": f"{percent}%", "span": percent, "highlight": True},
+                {"label": "", "span": 100 - percent, "highlight": False},
+            ],
+            "aria_label": f"A bar representing {amount}, with {percent} percent of it shaded.",
+        }
+    if template == "unit_rate":
+        distance, hours = _int(params.get("distance")), _int(params.get("hours"))
+        if not distance or not hours or hours > 8:
+            return None
+        return {
+            "type": "tape_diagram",
+            "total_label": f"{distance} miles",
+            "segments": [{"label": "?", "span": 1, "highlight": i == 0} for i in range(hours)],
+            "aria_label": f"A bar for {distance} miles split into {hours} equal hours; one hour is highlighted.",
+        }
+    if template in {"flat_fee", "savings"}:
+        fixed = _int(params.get("fee") if template == "flat_fee" else params.get("saved"))
+        rate = _int(params.get("rate") if template == "flat_fee" else params.get("weekly"))
+        count = _int(params.get("miles") if template == "flat_fee" else params.get("weeks"))
+        if fixed is None or rate is None or count is None or count > 15:
+            return None
+        unit = "mile" if template == "flat_fee" else "week"
+        # The count of rate parts is the answer, so it is drawn as a single
+        # unknown-length part rather than N visible segments.
+        return {
+            "type": "tape_diagram",
+            "total_label": f"${fixed + rate * count}",
+            "segments": [
+                {"label": f"${fixed}", "span": 2, "highlight": True},
+                {"label": f"${rate} × ?", "span": 5, "highlight": False},
+            ],
+            "aria_label": (
+                f"A bar for the total: a fixed ${fixed} part followed by an unknown "
+                f"number of ${rate} parts, one per {unit}."
+            ),
+        }
+    if template == "number_trick":
+        a, b, x = (
+            _int(params.get("multiplier")),
+            _int(params.get("added")),
+            _int(params.get("value")),
+        )
+        if a is None or b is None or x is None or a > 9:
+            return None
+        # Unknown parts get a fixed width — the diagram must not leak x's size.
+        return {
+            "type": "tape_diagram",
+            "total_label": str(a * x + b),
+            "segments": [{"label": "x", "span": 4, "highlight": True} for _ in range(a)]
+            + [{"label": str(b), "span": 3, "highlight": False}],
+            "aria_label": f"A bar made of {a} equal x parts plus {b}, totaling {a * x + b}.",
+        }
+    if template == "shared_total":
+        k, x = _int(params.get("ratio")), _int(params.get("leo"))
+        if k is None or x is None or k > 6:
+            return None
+        return {
+            "type": "tape_diagram",
+            "total_label": str((k + 1) * x),
+            "segments": [{"label": "Leo", "span": 1, "highlight": True}]
+            + [{"label": "Mia", "span": 1, "highlight": False} for _ in range(k)],
+            "aria_label": f"A bar split into {k + 1} equal parts: 1 for Leo and {k} for Mia, totaling {(k + 1) * x}.",
+        }
+    return None
+
+
 def visualization_for(problem: Problem) -> dict | None:
     """Return a declarative visual spec for a problem, or None."""
+    if problem.problem_type == "SOLVE_EQUATION":
+        return _balance_scale(problem)
+    if problem.problem_type in {"FRACTION_OPERATIONS", "FRACTION_SUBTRACT"}:
+        return _fraction_operation_bars(problem)
+    if problem.problem_type in {"WORD_PROBLEM", "ALGEBRA_WORD_PROBLEM"}:
+        return _tape_diagram(problem)
     if problem.problem_type == "SIMPLIFY_EXPRESSION":
         return _area_model(problem)
     if problem.problem_type == "COMBINE_LIKE_TERMS":
@@ -549,7 +723,11 @@ def visualization_for(problem: Problem) -> dict | None:
         return _array_model(problem)
     if problem.problem_type == "UNIT_FRACTION":
         return _fraction_bar(problem)
-    if problem.problem_type in {"ADDITION_WITHIN_20", "SUBTRACTION_WITHIN_20", "WORD_PROBLEM_ADD_SUB_20"}:
+    if problem.problem_type in {
+        "ADDITION_WITHIN_20",
+        "SUBTRACTION_WITHIN_20",
+        "WORD_PROBLEM_ADD_SUB_20",
+    }:
         return _ten_frame(problem)
     if problem.problem_type == "PLACE_VALUE_BASE_TEN":
         params = _params(problem)

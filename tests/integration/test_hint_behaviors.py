@@ -54,7 +54,16 @@ def _create_guided_session() -> tuple[str, str, str]:
         assert session is not None
         session.current_state = TutorState.GUIDED_PRACTICE
         db.commit()
-    return session_id, problem_id, str(student_id)
+    return session_id, problem_id, str(student_id), str(skill_id)
+
+
+def _distribution_problem_id(skill_id: str) -> str:
+    with SessionLocal() as db:
+        problems = db.scalars(select(Problem).where(Problem.primary_skill_id == skill_id)).all()
+    for problem in problems:
+        if re.search(r"-?\d+\(x[+-]\d+\)", problem.prompt.replace(" ", "")):
+            return str(problem.id)
+    raise AssertionError("no distribution problem on skill")
 
 
 def _problem(problem_id: str) -> Problem:
@@ -66,7 +75,8 @@ def _problem(problem_id: str) -> Problem:
 
 
 def test_confident_misconception_emits_and_persists_jit_hint() -> None:
-    session_id, problem_id, _ = _create_guided_session()
+    session_id, _, _, skill_id = _create_guided_session()
+    problem_id = _distribution_problem_id(skill_id)
     problem = _problem(problem_id)
     response = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={"problem_id": problem_id, "answer": _partial_distribution_answer(problem.prompt), "assistance_level": 0})
     assert response.status_code == 200
@@ -84,7 +94,7 @@ def test_confident_misconception_emits_and_persists_jit_hint() -> None:
 
 
 def test_level_three_hint_forces_assisted_success_until_new_problem() -> None:
-    session_id, problem_id, student_id = _create_guided_session()
+    session_id, problem_id, student_id, _ = _create_guided_session()
     for expected_level in (1, 2, 3):
         hint = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/hint", json={"problem_id": problem_id})
         assert hint.status_code == 200

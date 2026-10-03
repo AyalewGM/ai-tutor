@@ -204,6 +204,7 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow:
 /* Deterministic math visuals */
 .visual { display:block; margin-top:.75rem; max-width:100%; }
 .viz-axis,.viz-tick,.viz-cell { stroke:#475569; } .viz-axis { stroke-width:2; } .viz-tick,.viz-cell { stroke-width:1.5; }
+.viz-cell { fill:#ffffff; }
 .viz-tick-label { fill:#64748b; font-size:11px; } .viz-label { fill:#1e293b; font-size:13px; font-weight:600; }
 .viz-term { fill:#0f172a; font-size:15px; font-weight:700; } .viz-cell-a { fill:#dbeafe; } .viz-cell-b { fill:#fef3c7; }
 .viz-hop { fill:none; stroke-width:2; } .viz-hop-a { stroke:#2563eb; } .viz-hop-b { stroke:#059669; }
