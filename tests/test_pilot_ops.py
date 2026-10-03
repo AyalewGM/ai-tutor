@@ -109,3 +109,45 @@ def test_runbook_exists_and_covers_scope() -> None:
     content = runbook.read_text().lower()
     for topic in ("deploy", "verify", "backup", "restore", "rollback", "troubleshoot", "restart"):
         assert topic in content, f"Runbook missing: {topic}"
+
+
+def test_seed_all_curricula_steps_resolve() -> None:
+    """Every orchestrator step must resolve to a module exposing seed()."""
+    import importlib
+
+    from scripts.ops.seed_all_curricula import STEPS
+
+    assert len(STEPS) >= 10
+    for module_name, label in STEPS:
+        module = importlib.import_module(f"scripts.{module_name}")
+        assert callable(getattr(module, "seed", None)), f"{module_name} lacks seed(): {label}"
+
+
+def test_seed_all_curricula_list_flag_is_side_effect_free(capsys) -> None:
+    """--list prints the plan without touching the database."""
+    import sys
+
+    from scripts.ops import seed_all_curricula
+
+    argv = sys.argv
+    try:
+        sys.argv = ["seed_all_curricula.py", "--list"]
+        assert seed_all_curricula.main() == 0
+    finally:
+        sys.argv = argv
+    out = capsys.readouterr().out
+    assert "seed_sprint1" in out and "seed_all_elementary_packs" in out
+
+
+def test_dockerfile_ships_elementary_packs() -> None:
+    """seed_all_elementary_packs reads docs/curriculum/packs at deploy time —
+    the API image must copy it or the loader cannot run in production."""
+    dockerfile = (REPO_ROOT / "Dockerfile").read_text()
+    assert "docs/curriculum/packs" in dockerfile
+
+
+def test_deploy_script_seeds_curricula() -> None:
+    """Deploy must run the orchestrator so authored content reaches the pilot."""
+    deploy = (REPO_ROOT / "scripts/ops/deploy.sh").read_text()
+    assert "seed_all_curricula" in deploy
+    assert deploy.index("run --rm migrate") < deploy.index("seed_all_curricula")

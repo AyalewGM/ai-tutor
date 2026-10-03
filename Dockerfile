@@ -12,6 +12,9 @@ COPY app ./app
 COPY alembic ./alembic
 COPY alembic.ini ./
 COPY scripts ./scripts
+# Elementary curriculum packs are data files the loader seeds from at deploy
+# time (scripts/ops/seed_all_curricula.py -> docs/curriculum/packs).
+COPY docs/curriculum/packs ./docs/curriculum/packs
 
 RUN pip install --no-cache-dir .
 
