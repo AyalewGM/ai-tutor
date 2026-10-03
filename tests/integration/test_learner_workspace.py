@@ -12,7 +12,9 @@ from app.main import app
 from app.models import (
     Attempt,
     Curriculum,
+    LearnerAward,
     MasteryEvent,
+    Misconception,
     Problem,
     Skill,
     SkillStatus,
@@ -199,6 +201,42 @@ def test_workspace_exposes_smartscore_streak_and_level() -> None:
     assert evidence["streak_count"] == 0
 
 
+def test_workspace_exposes_remediation_voice_fields() -> None:
+    session_id, _ = _create_session()
+    with SessionLocal() as db:
+        session = db.get(TutorSession, session_id)
+        assert session is not None
+        other = db.scalar(
+            select(Skill).where(
+                Skill.curriculum_id == session.curriculum_id,
+                Skill.id != session.primary_skill_id,
+            )
+        )
+        assert other is not None
+        session.active_skill_id = other.id
+        session.remediation_reason = "DECLARED_PREREQUISITE_GAP_CONFIRMED"
+        turn = db.scalar(
+            select(TutorTurn)
+            .where(TutorTurn.session_id == session_id, TutorTurn.role == "TUTOR")
+            .order_by(TutorTurn.created_at.desc())
+            .limit(1)
+        )
+        prereq_problem = db.scalar(
+            select(Problem).where(Problem.primary_skill_id == other.id).limit(1)
+        )
+        if turn is not None and prereq_problem is not None:
+            turn.problem_id = prereq_problem.id
+        db.commit()
+        primary_name = db.get(Skill, session.primary_skill_id).name
+        active_name = other.name
+
+    focus = client.get(f"/api/v1/learner-workspace/sessions/{session_id}").json()["focus"]
+    assert focus["in_remediation"] is True
+    assert focus["skill_name"] == active_name
+    assert focus["primary_skill_name"] == primary_name
+    assert focus["remediation_reason"] == "DECLARED_PREREQUISITE_GAP_CONFIRMED"
+
+
 def test_other_family_cannot_read_hint_or_respond_to_session() -> None:
     session_id, _ = _create_session()
     with SessionLocal() as db:
@@ -240,3 +278,128 @@ def test_other_family_cannot_read_hint_or_respond_to_session() -> None:
     assert workspace.json()["detail"] == "Learner not found"
     assert hint.json()["detail"] == "Learner not found"
     assert respond.json()["detail"] == "Learner not found"
+
+
+def test_daily_goal_patch_and_progress() -> None:
+    session_id, student_id = _create_session()
+
+    workspace = client.get(f"/api/v1/learner-workspace/sessions/{session_id}").json()
+    assert workspace["daily_goal"] is None
+
+    patched = client.patch(
+        f"/api/v1/learner-workspace/sessions/{session_id}/daily-goal",
+        json={"questions_per_day": 3},
+    )
+    assert patched.status_code == 200
+    assert patched.json() == {"target": 3, "done": 0, "reached": False}
+
+    with SessionLocal() as db:
+        session = db.get(TutorSession, session_id)
+        problem = db.scalar(
+            select(Problem).where(
+                Problem.primary_skill_id == (session.active_skill_id or session.primary_skill_id)
+            )
+        )
+        for n in range(3):
+            db.add(
+                Attempt(
+                    session_id=session_id,
+                    student_id=student_id,
+                    problem_id=problem.id,
+                    student_answer="x",
+                    is_correct=True,
+                    attempt_number=n + 1,
+                )
+            )
+        db.commit()
+
+    workspace = client.get(f"/api/v1/learner-workspace/sessions/{session_id}").json()
+    assert workspace["daily_goal"] == {"target": 3, "done": 3, "reached": True}
+
+    cleared = client.patch(
+        f"/api/v1/learner-workspace/sessions/{session_id}/daily-goal",
+        json={"questions_per_day": None},
+    )
+    assert cleared.status_code == 200
+    assert cleared.json() is None
+    workspace = client.get(f"/api/v1/learner-workspace/sessions/{session_id}").json()
+    assert workspace["daily_goal"] is None
+
+
+def test_session_summary_aggregates_evidence() -> None:
+    session_id, student_id = _create_session()
+    with SessionLocal() as db:
+        session = db.get(TutorSession, session_id)
+        assert session is not None
+        session.starting_mastery = 0.40
+        skill_id = session.active_skill_id or session.primary_skill_id
+        problem = db.scalar(select(Problem).where(Problem.primary_skill_id == skill_id).limit(1))
+        assert problem is not None
+        code = f"TEST_{uuid.uuid4().hex[:8]}"
+        misconception = Misconception(
+            skill_id=skill_id,
+            code=code,
+            name="Test slip",
+            description="synthetic",
+        )
+        db.add(misconception)
+        db.flush()
+        db.add_all(
+            [
+                Attempt(
+                    session_id=session_id,
+                    student_id=student_id,
+                    problem_id=problem.id,
+                    student_answer="wrong",
+                    is_correct=False,
+                    attempt_number=1,
+                    misconception_id=misconception.id,
+                ),
+                Attempt(
+                    session_id=session_id,
+                    student_id=student_id,
+                    problem_id=problem.id,
+                    student_answer="right",
+                    is_correct=True,
+                    attempt_number=2,
+                ),
+            ]
+        )
+        db.add(
+            LearnerAward(
+                student_id=student_id,
+                badge_code="FIRST_CORRECT",
+                skill_id=skill_id,
+                session_id=session_id,
+            )
+        )
+        progress = db.get(StudentSkill, {"student_id": student_id, "skill_id": skill_id})
+        if progress is None:
+            progress = StudentSkill(student_id=student_id, skill_id=skill_id)
+            db.add(progress)
+        progress.mastery_score = 0.55
+        db.commit()
+
+    response = client.get(f"/api/v1/learner-workspace/sessions/{session_id}/summary")
+    assert response.status_code == 200
+    summary = response.json()
+    assert summary["attempts"] == 2
+    assert summary["correct"] == 1
+    assert summary["independent_correct"] == 1
+    assert summary["smartscore_start"] == 40
+    assert summary["smartscore_now"] == 55
+    assert summary["xp_earned"] > 0
+    assert summary["minutes"] >= 0
+    assert summary["misconceptions"] == [
+        {"code": code, "name": "Test slip", "resolved": True}
+    ]
+    assert [a["code"] for a in summary["awards"]] == ["FIRST_CORRECT"]
+    with SessionLocal() as db:
+        skill_name = db.get(Skill, skill_id_for(session_id)).name
+    assert summary["skills_practiced"] == [skill_name]
+
+
+def skill_id_for(session_id: uuid.UUID) -> uuid.UUID:
+    with SessionLocal() as db:
+        session = db.get(TutorSession, session_id)
+        return session.active_skill_id or session.primary_skill_id

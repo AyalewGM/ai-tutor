@@ -303,6 +303,33 @@ def seed() -> None:
             "Group variable terms with variable terms and constants with "
             "constants before simplifying.",
         )
+        _misconception(
+            combine_eq,
+            "ALG_002",
+            "Constant sign dropped",
+            "The learner rewrites an expression but flips or drops the sign "
+            "of the constant term.",
+            "Attach each term's sign to the term and check signs before "
+            "simplifying.",
+        )
+        _misconception(
+            two_step,
+            "ARITH_001",
+            "Arithmetic slip in isolation",
+            "The learner applies the correct inverse operation but computes "
+            "the result on the other side incorrectly.",
+            "After applying an inverse operation, recompute the unaffected "
+            "side carefully before moving on.",
+        )
+        _misconception(
+            inv_mult,
+            "EQ_004",
+            "Coefficient treated as addend",
+            "The learner subtracts the coefficient from the constant as if "
+            "3x meant x + 3 instead of 3 times x.",
+            "Name the operation binding the variable: a coefficient multiplies "
+            "the variable, so undo it with division.",
+        )
 
         for difficulty, prompt, answer in [
             (1, "3(x+4)", "3x+12"),

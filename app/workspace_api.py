@@ -14,6 +14,7 @@ from app.models import (
     Attempt,
     Curriculum,
     LearnerAward,
+    Misconception,
     Problem,
     Skill,
     SkillStatus,
@@ -24,7 +25,13 @@ from app.models import (
     TutorTurn,
 )
 from app.schemas import ProblemChoiceOut, problem_choices_out
-from app.services.awards import award_out, badge_collection, learner_progress
+from app.services.awards import (
+    BADGE_XP,
+    attempt_xp,
+    award_out,
+    badge_collection,
+    learner_progress,
+)
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
@@ -101,6 +108,7 @@ def build_learn_content(content: dict | None) -> LearnContentOut | None:
 
 class LearningFocusOut(BaseModel):
     primary_skill_id: uuid.UUID
+    primary_skill_name: str
     active_skill_id: uuid.UUID
     skill_name: str
     in_remediation: bool
@@ -160,6 +168,12 @@ class LearnerGrowthOut(BaseModel):
     xp_today: int = 0
 
 
+class DailyGoalOut(BaseModel):
+    target: int
+    done: int
+    reached: bool
+
+
 class LearnerWorkspaceOut(BaseModel):
     session_id: uuid.UUID
     state: TutorState
@@ -175,6 +189,7 @@ class LearnerWorkspaceOut(BaseModel):
     recommended_next: WorkspaceRecommendedSkillOut | None = None
     streak_days: int = 0
     growth: LearnerGrowthOut | None = None
+    daily_goal: DailyGoalOut | None = None
 
 
 def _allowed_actions(state: TutorState) -> list[WorkspaceAction]:
@@ -243,6 +258,27 @@ def _answer_streak(db: Session, student_id: uuid.UUID, skill_id: uuid.UUID) -> i
     return streak
 
 
+def _daily_goal(db: Session, student: Student) -> DailyGoalOut | None:
+    """Questions answered today vs the learner-picked target, UTC day boundary.
+
+    None when no target is set — no goal, no chip. `done` counts answer-level
+    Attempt rows today across all of the learner's sessions.
+    """
+    if not student.daily_goal_questions:
+        return None
+    today_start = datetime.now(UTC).replace(hour=0, minute=0, second=0, microsecond=0)
+    done = db.scalar(
+        select(func.count(Attempt.id)).where(
+            Attempt.student_id == student.id,
+            Attempt.is_correct.isnot(None),
+            Attempt.created_at >= today_start,
+        )
+    ) or 0
+    return DailyGoalOut(
+        target=student.daily_goal_questions, done=done, reached=done >= student.daily_goal_questions
+    )
+
+
 def _mastery_level(progress: StudentSkill | None) -> str:
     """The three learner-facing labels; the state machine still owns truth."""
     if progress is None:
@@ -308,6 +344,7 @@ def get_learner_workspace(
         ),
         focus=LearningFocusOut(
             primary_skill_id=primary_skill.id,
+            primary_skill_name=primary_skill.name,
             active_skill_id=active_skill.id,
             skill_name=active_skill.name,
             in_remediation=active_skill.id != primary_skill.id,
@@ -364,6 +401,7 @@ def get_learner_workspace(
         ],
         streak_days=_practice_streak_days(db, session.student_id),
         growth=LearnerGrowthOut(**learner_progress(db, session.student_id)),
+        daily_goal=_daily_goal(db, learner),
         recommended_next=(
             WorkspaceRecommendedSkillOut(
                 skill_id=recommendation.skill.id,
@@ -379,6 +417,149 @@ def get_learner_workspace(
             )
             else None
         ),
+    )
+
+
+class DailyGoalPatchIn(BaseModel):
+    questions_per_day: int | None = Field(default=None, ge=1, le=60)
+
+
+@router.patch("/sessions/{session_id}/daily-goal", response_model=DailyGoalOut | None)
+def patch_daily_goal(
+    session_id: uuid.UUID, payload: DailyGoalPatchIn, parent: CurrentParent, db: DbSession
+) -> DailyGoalOut | None:
+    """Set (or clear) the learner's daily question target."""
+    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    learner = db.get(Student, session.student_id)
+    if learner is None:
+        raise HTTPException(409, "Session learner context is unavailable")
+    learner.daily_goal_questions = payload.questions_per_day
+    db.commit()
+    return _daily_goal(db, learner)
+
+
+class SessionMisconceptionOut(BaseModel):
+    code: str
+    name: str
+    resolved: bool
+
+
+class SessionSummaryOut(BaseModel):
+    attempts: int
+    correct: int
+    independent_correct: int
+    minutes: int
+    xp_earned: int
+    smartscore_start: int | None
+    smartscore_now: int
+    skills_practiced: list[str]
+    misconceptions: list[SessionMisconceptionOut]
+    awards: list[WorkspaceAwardOut]
+    daily_goal: DailyGoalOut | None
+
+
+@router.get("/sessions/{session_id}/summary", response_model=SessionSummaryOut)
+def get_session_summary(
+    session_id: uuid.UUID, parent: CurrentParent, db: DbSession
+) -> SessionSummaryOut:
+    """End-of-session recap, derived entirely from persisted evidence."""
+    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    learner = db.get(Student, session.student_id)
+    if learner is None:
+        raise HTTPException(409, "Session learner context is unavailable")
+
+    attempts = db.scalars(
+        select(Attempt)
+        .where(Attempt.session_id == session.id, Attempt.is_correct.isnot(None))
+        .order_by(Attempt.created_at, Attempt.id)
+    ).all()
+
+    # A misconception counts as resolved when a correct answer came after it.
+    misconception_rows: dict[uuid.UUID, int] = {}
+    resolved_at: dict[uuid.UUID, int] = {}
+    for index, attempt in enumerate(attempts):
+        if attempt.misconception_id is not None:
+            misconception_rows.setdefault(attempt.misconception_id, index)
+        if attempt.is_correct:
+            for mid, first_index in misconception_rows.items():
+                if index > first_index:
+                    resolved_at[mid] = index
+    misconception_seen: list[SessionMisconceptionOut] = []
+    if misconception_rows:
+        names = {
+            row.id: (row.code, row.name)
+            for row in db.scalars(
+                select(Misconception).where(Misconception.id.in_(misconception_rows))
+            ).all()
+        }
+        misconception_seen = [
+            SessionMisconceptionOut(
+                code=names.get(mid, ("", ""))[0],
+                name=names.get(mid, ("", ""))[1],
+                resolved=mid in resolved_at,
+            )
+            for mid in misconception_rows
+        ]
+
+    skill_names = db.execute(
+        select(Skill.name)
+        .join(Problem, Problem.primary_skill_id == Skill.id)
+        .where(Problem.id.in_({a.problem_id for a in attempts}))
+        .distinct()
+    ).all() if attempts else []
+    skills_practiced = [name for (name,) in skill_names]
+
+    session_awards = db.scalars(
+        select(LearnerAward)
+        .where(LearnerAward.session_id == session.id)
+        .order_by(LearnerAward.created_at)
+    ).all()
+
+    problem_difficulty = {
+        pid: diff
+        for pid, diff in db.execute(
+            select(Problem.id, Problem.difficulty).where(
+                Problem.id.in_({a.problem_id for a in attempts})
+            )
+        ).all()
+    } if attempts else {}
+    xp = sum(
+        attempt_xp(
+            bool(a.is_correct), int(a.assistance_level or 0), int(problem_difficulty.get(a.problem_id, 1))
+        )
+        for a in attempts
+    ) + sum(BADGE_XP.get(a.badge_code, 0) for a in session_awards)
+
+    progress = db.get(
+        StudentSkill, {"student_id": session.student_id, "skill_id": session.primary_skill_id}
+    )
+    smartscore_now = round(float(progress.mastery_score) * 100) if progress else 0
+    smartscore_start = (
+        round(float(session.starting_mastery) * 100)
+        if session.starting_mastery is not None
+        else None
+    )
+
+    minutes = 0
+    if attempts:
+        minutes = max(
+            1, round((attempts[-1].created_at - session.started_at).total_seconds() / 60)
+        )
+
+    return SessionSummaryOut(
+        attempts=len(attempts),
+        correct=sum(1 for a in attempts if a.is_correct),
+        independent_correct=sum(
+            1 for a in attempts if a.is_correct and (a.assistance_level or 0) == 0
+        ),
+        minutes=minutes,
+        xp_earned=xp,
+        smartscore_start=smartscore_start,
+        smartscore_now=smartscore_now,
+        skills_practiced=skills_practiced,
+        misconceptions=misconception_seen,
+        awards=[WorkspaceAwardOut(**award_out(db, award)) for award in session_awards],
+        daily_goal=_daily_goal(db, learner),
     )
 
 

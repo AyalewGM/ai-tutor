@@ -51,6 +51,17 @@ class WorkStepOut(BaseModel):
     invalid_count: int = 0
 
 
+class PhotoLineOut(BaseModel):
+    text: str
+    needs_review: bool = False
+
+
+class PhotoScanOut(BaseModel):
+    problem_id: uuid.UUID
+    lines: list[PhotoLineOut]
+    engine: str
+
+
 class MasteryOut(BaseModel):
     score: float
     confidence: float

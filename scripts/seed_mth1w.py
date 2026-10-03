@@ -510,6 +510,33 @@ def seed():
             "then divide by the coefficient.",
         )
         _misconception(
+            alg_eq2,
+            "ARITH_001",
+            "Arithmetic slip in isolation",
+            "The learner applies the correct inverse operation but computes "
+            "the result on the other side incorrectly.",
+            "After applying an inverse operation, recompute the unaffected "
+            "side carefully before moving on.",
+        )
+        _misconception(
+            alg_eq1,
+            "EQ_004",
+            "Coefficient treated as addend",
+            "The learner subtracts the coefficient from the constant as if "
+            "3x meant x + 3 instead of 3 times x.",
+            "Name the operation binding the variable: a coefficient multiplies "
+            "the variable, so undo it with division.",
+        )
+        _misconception(
+            num_frac,
+            "FRAC_001",
+            "Numerators not scaled to common denominator",
+            "The learner rewrites fractions with a common denominator but "
+            "keeps the original numerators.",
+            "Scale each numerator by the same factor used to reach the "
+            "common denominator before adding or subtracting.",
+        )
+        _misconception(
             rel_slope,
             "REL_001",
             "Slope and intercept swapped",

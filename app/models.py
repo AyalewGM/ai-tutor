@@ -84,6 +84,7 @@ class Student(Base):
         String(80), default="avatar-1", server_default="avatar-1", nullable=False
     )
     active: Mapped[bool] = mapped_column(Boolean, default=True)
+    daily_goal_questions: Mapped[int | None] = mapped_column(Integer)
 
 
 class Skill(Base):

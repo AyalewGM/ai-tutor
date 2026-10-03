@@ -113,6 +113,17 @@ export interface WorkStepOut {
   invalid_count: number;
 }
 
+export interface PhotoLine {
+  text: string;
+  needs_review: boolean;
+}
+
+export interface PhotoScanOut {
+  problem_id: string;
+  lines: PhotoLine[];
+  engine: string;
+}
+
 export interface DiagnosticOut {
   session_id: string;
   status: string;
@@ -143,6 +154,7 @@ export interface LearnerWorkspace {
   curriculum: { id: string; code: string; name: string; jurisdiction: string | null };
   focus: {
     primary_skill_id: string;
+    primary_skill_name: string;
     active_skill_id: string;
     skill_name: string;
     in_remediation: boolean;
@@ -167,6 +179,27 @@ export interface LearnerWorkspace {
   recommended_next: { skill_id: string; skill_code: string; skill_name: string } | null;
   streak_days?: number;
   growth?: LearnerGrowth | null;
+  daily_goal?: DailyGoal | null;
+}
+
+export interface DailyGoal {
+  target: number;
+  done: number;
+  reached: boolean;
+}
+
+export interface SessionSummary {
+  attempts: number;
+  correct: number;
+  independent_correct: number;
+  minutes: number;
+  xp_earned: number;
+  smartscore_start: number | null;
+  smartscore_now: number;
+  skills_practiced: string[];
+  misconceptions: { code: string; name: string; resolved: boolean }[];
+  awards: Award[];
+  daily_goal: DailyGoal | null;
 }
 
 export interface Award {

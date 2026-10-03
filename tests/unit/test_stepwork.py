@@ -349,3 +349,72 @@ def test_algebra_word_problem_supports_steps_gate() -> None:
         canonical_answer="y=2x+4",
     )
     assert not problem_supports_steps(bad)
+
+
+def test_multiplies_instead_of_dividing_misconception() -> None:
+    # 3x = 18 -> x = 54 (multiplied both sides by the coefficient).
+    result = check_step("3x = 18", [], "x = 54", 0)
+    assert result.status == "invalid"
+    assert result.misconception_code == "EQ_003"
+    # Divide-the-wrong-way variant: x = 1/6.
+    assert check_step("3x = 18", [], "x = 1/6", 0).misconception_code == "EQ_003"
+    # Negative coefficient: -3x = 18 -> x = -54.
+    assert check_step("-3x = 18", [], "x = -54", 0).misconception_code == "EQ_003"
+
+
+def test_coefficient_treated_as_addend_misconception() -> None:
+    # 3x = 18 -> x = 15 (subtracted 3 as if 3x meant x + 3).
+    result = check_step("3x = 18", [], "x = 15", 0)
+    assert result.status == "invalid"
+    assert result.misconception_code == "EQ_004"
+    assert check_step("3x = 18", [], "x = 21", 0).misconception_code == "EQ_004"
+
+
+def test_unlike_terms_merged_misconception() -> None:
+    # Equation side: 3x + 12 = 30 -> 15x = 30.
+    result = check_step("3x + 12 = 30", [], "15x = 30", 0)
+    assert result.status == "invalid"
+    assert result.misconception_code == "ALG_001"
+    # Expression: 2x + 3 -> 5x.
+    assert check_step("2x + 3", [], "5x", 0).misconception_code == "ALG_001"
+    # Signed constant: 3x - 5 = 16 -> -2x = 16.
+    assert check_step("3x - 5 = 16", [], "-2x = 16", 0).misconception_code == "ALG_001"
+
+
+def test_constant_sign_dropped_misconception() -> None:
+    # 3x - 5 = 16 -> 3x + 5 = 16.
+    result = check_step("3x - 5 = 16", [], "3x + 5 = 16", 0)
+    assert result.status == "invalid"
+    assert result.misconception_code == "ALG_002"
+    # Expression: 3x - 5 -> 3x + 5.
+    assert check_step("3x - 5", [], "3x + 5", 0).misconception_code == "ALG_002"
+
+
+def test_distribution_sign_error_misconception() -> None:
+    # 3(x - 4) -> 3x + 12: distributed the factor but dropped the minus.
+    result = check_step("3(x - 4)", [], "3x + 12", 0)
+    assert result.status == "invalid"
+    assert result.misconception_code == "DIST_002"
+
+
+def test_fraction_unscaled_numerators_misconception() -> None:
+    # 2/3 + 1/6 -> 3/6: found the common denominator, kept raw numerators.
+    result = check_step("2/3 + 1/6", [], "3/6", 0)
+    assert result.status == "invalid"
+    assert result.misconception_code == "FRAC_001"
+
+
+def test_arithmetic_slip_misconception() -> None:
+    # 3x + 12 = 30 -> 3x = 20: right move, wrong subtraction.
+    result = check_step("3x + 12 = 30", [], "3x = 20", 0)
+    assert result.status == "invalid"
+    assert result.misconception_code == "ARITH_001"
+
+
+def test_new_classifiers_do_not_steal_existing_codes() -> None:
+    # The specific patterns must not shadow EQ_001/EQ_002/DIST_001.
+    assert check_step("3(x + 4) = 30", ["3x + 12 = 30"], "3x = 42", 0).misconception_code == "EQ_001"
+    assert check_step("3(x + 4) = 30", [], "x + 4 = 30", 0).misconception_code == "EQ_002"
+    assert check_step("3(x + 4)", [], "3x + 4", 0).misconception_code == "DIST_001"
+    # A truly ambiguous line still stays unclassified.
+    assert check_step("3x = 18", [], "x = 2", 0).misconception_code is None

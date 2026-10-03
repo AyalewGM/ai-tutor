@@ -5,6 +5,7 @@ and mastery evidence stay in the tutor service. No real learner data or external
 call is used.
 """
 
+import uuid
 from datetime import UTC, datetime, timedelta
 from unittest.mock import patch
 
@@ -209,11 +210,16 @@ def test_mth1w_pilot_remediation_requires_fresh_independent_evidence() -> None:
     # F-016 release evidence: the same synthetic learner journey must project its
     # fresh independent evidence to an authorized parent, while unrelated families
     # remain fail-closed. Linking does not copy or broaden learner data.
-    claim_token = "synthetic-f016-parent-claim-token"
+    suffix = uuid.uuid4().hex[:8]
+    claim_token = f"synthetic-f016-parent-claim-token-{suffix}"
     with SessionLocal() as db:
-        parent = User(email="f016-parent@example.test", display_name="F016 Parent", role="PARENT")
+        parent = User(
+            email=f"f016-parent-{suffix}@example.test",
+            display_name="F016 Parent",
+            role="PARENT",
+        )
         unrelated = User(
-            email="f016-unrelated@example.test",
+            email=f"f016-unrelated-{suffix}@example.test",
             display_name="F016 Unrelated Parent",
             role="PARENT",
         )

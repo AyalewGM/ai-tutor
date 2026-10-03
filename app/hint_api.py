@@ -10,7 +10,7 @@ from app.api import _tutor_context
 from app.core.database import get_db
 from app.hint_models import HintEvent
 from app.identity import CurrentParent, require_parent_owns_session
-from app.models import Problem, Skill, Student, TutorSession, TutorTurn
+from app.models import Attempt, Problem, Skill, Student, TutorSession, TutorTurn
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
@@ -51,21 +51,51 @@ def request_hint(
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not belong to active learning focus")
 
-    highest = db.scalar(
-        select(func.max(HintEvent.level)).where(
-            HintEvent.session_id == session.id,
-            HintEvent.problem_id == problem.id,
+    highest = (
+        db.scalar(
+            select(func.max(HintEvent.level)).where(
+                HintEvent.session_id == session.id,
+                HintEvent.problem_id == problem.id,
+            )
         )
-    ) or 0
+        or 0
+    )
+    # Whether the learner did anything (answer or work step) after the most
+    # recent hint on this problem — the anti-drill signal for escalation.
+    attempt_since_last_hint = True
+    if highest > 0:
+        last_hint_at = db.scalar(
+            select(func.max(HintEvent.created_at)).where(
+                HintEvent.session_id == session.id,
+                HintEvent.problem_id == problem.id,
+            )
+        )
+        latest_attempt_at = db.scalar(
+            select(func.max(Attempt.created_at)).where(
+                Attempt.session_id == session.id,
+                Attempt.problem_id == problem.id,
+            )
+        )
+        latest_step_at = db.scalar(
+            select(func.max(TutorTurn.created_at)).where(
+                TutorTurn.session_id == session.id,
+                TutorTurn.problem_id == problem.id,
+                TutorTurn.role == "STUDENT",
+            )
+        )
+        activity_at = max(
+            (t for t in (latest_attempt_at, latest_step_at) if t is not None),
+            default=None,
+        )
+        attempt_since_last_hint = activity_at is not None and activity_at > last_hint_at
     decision = select_hint(
         state=session.current_state,
         highest_level_used=int(highest),
         explicit_request=True,
+        attempt_since_last_hint=attempt_since_last_hint,
     )
     request_trigger = (
-        "I_DONT_UNDERSTAND"
-        if payload.reason == "I_DONT_UNDERSTAND"
-        else decision.trigger
+        "I_DONT_UNDERSTAND" if payload.reason == "I_DONT_UNDERSTAND" else decision.trigger
     )
     if not decision.allowed:
         return HintResponse(
@@ -88,6 +118,7 @@ def request_hint(
             action="GIVE_HINT",
             hint_level=decision.level,
             problem=problem,
+            session_id=session.id,
         )
     )
     turn = TutorTurn(

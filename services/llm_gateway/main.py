@@ -30,6 +30,10 @@ class RenderRequest(BaseModel):
     misconception_description: str | None = Field(default=None, max_length=2000)
     remediation_strategy: str | None = Field(default=None, max_length=2000)
     next_problem_prompt: str | None = Field(default=None, max_length=4000)
+    # Application-classified description of the learner's latest wrong work
+    # line (what followed what, catalog code). Language only — the gateway
+    # must not re-grade it.
+    step_evidence: str | None = Field(default=None, max_length=600)
 
 
 class ContextualizeRequest(BaseModel):
@@ -87,7 +91,10 @@ def _prompt(request: RenderRequest) -> str:
         "The application has already selected the pedagogical action. Follow it exactly. "
         "Do not change curriculum, prerequisite routing, hint level, assessment state, "
         "intervention state, or mastery. Do not declare mastery. Keep language concise, "
-        "age-appropriate, and bounded by the supplied context. Return only the requested "
+        "age-appropriate, and bounded by the supplied context. "
+        "If step_evidence is present, refer to the learner's specific written line and "
+        "the move it got wrong; do not re-check the math yourself, do not give the "
+        "answer, and do not go beyond the hint constraint. Return only the requested "
         "JSON response.\n\n"
         f"Application-computed context:\n{payload}"
     )
@@ -184,8 +191,8 @@ def _contextualize_prompt(request: ContextualizeRequest) -> str:
         "has already computed every number and the answer. Use EVERY numeric "
         "value in parameters verbatim — never change, add, compute, or drop a "
         "number. Do not state or hint at the answer. Do not ask multiple "
-        "questions. Return JSON only: {\"prompt\": \"<one or two sentences "
-        "ending in a single question>\"}.\n\n"
+        'questions. Return JSON only: {"prompt": "<one or two sentences '
+        'ending in a single question>"}.\n\n'
         f"Application-computed context:\n{payload}"
     )
 
@@ -194,9 +201,7 @@ def _contextualize_fallback(request: ContextualizeRequest) -> dict[str, object]:
     return {"prompt": ""}
 
 
-def _contextualize_with_provider(
-    request: ContextualizeRequest, provider: str
-) -> dict[str, object]:
+def _contextualize_with_provider(request: ContextualizeRequest, provider: str) -> dict[str, object]:
     if provider in {"fallback", "none"}:
         return _contextualize_fallback(request)
     if provider == "openai":

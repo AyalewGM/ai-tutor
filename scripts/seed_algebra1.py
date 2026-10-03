@@ -199,6 +199,42 @@ def seed() -> None:
             "then divide by the coefficient.",
         )
         _misconception(
+            eq_two,
+            "EQ_001",
+            "Inverse operation in wrong direction",
+            "The learner applies the inverse operation in the wrong direction, "
+            "for example adding the constant instead of subtracting it.",
+            "Identify the operation applied to the variable and undo it with "
+            "the opposite operation on both sides.",
+        )
+        _misconception(
+            eq_two,
+            "ARITH_001",
+            "Arithmetic slip in isolation",
+            "The learner applies the correct inverse operation but computes "
+            "the result on the other side incorrectly.",
+            "After applying an inverse operation, recompute the unaffected "
+            "side carefully before moving on.",
+        )
+        _misconception(
+            eq_one,
+            "EQ_004",
+            "Coefficient treated as addend",
+            "The learner subtracts the coefficient from the constant as if "
+            "3x meant x + 3 instead of 3 times x.",
+            "Name the operation binding the variable: a coefficient multiplies "
+            "the variable, so undo it with division.",
+        )
+        _misconception(
+            expr_dist,
+            "DIST_002",
+            "Distribution sign error",
+            "The learner distributes the factor but flips the sign of the "
+            "constant term.",
+            "Rewrite the product as a signed multiplication for each term, "
+            "tracking the sign of both factors before simplifying.",
+        )
+        _misconception(
             fn_slope,
             "REL_001",
             "Slope and intercept swapped",

@@ -52,6 +52,9 @@ services:
       AI_PROVIDER: gateway
       LLM_GATEWAY_URL: http://llm-gateway:8001
       REDIS_URL: redis://redis:6379/0
+      PHOTO_OCR_PROVIDER: ${PHOTO_OCR_PROVIDER:-auto}
+      MATHPIX_APP_ID: ${MATHPIX_APP_ID:-}
+      MATHPIX_APP_KEY: ${MATHPIX_APP_KEY:-}
     ports:
       - "8002:8000"
     depends_on:

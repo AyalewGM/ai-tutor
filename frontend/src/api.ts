@@ -46,3 +46,7 @@ export function post<T>(path: string, payload?: unknown): Promise<T> {
     body: payload === undefined ? undefined : JSON.stringify(payload),
   });
 }
+
+export function postForm<T>(path: string, form: FormData): Promise<T> {
+  return api<T>(path, { method: "POST", body: form });
+}

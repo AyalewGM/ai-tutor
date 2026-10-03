@@ -398,17 +398,30 @@ class StepCheck:
     normalized_line: str | None = None
 
 
-def _classify_expression_error(prev_text: str, new_poly: Poly) -> str | None:
+def _classify_expression_error(prev_text: str, prev_poly: Poly, new_poly: Poly) -> str | None:
     """Map a non-equivalent expression step to a catalog misconception."""
-    # DIST_001: a(bx + c) -> abx + c (factor applied to only the first term).
+    # DIST_001/DIST_002: a(bx + c) -> abx + c (first term only) or abx - ac with
+    # the sign flipped (factor distributed but sign dropped).
     match = _FACTOR_FORM.search(prev_text.replace(" ", ""))
     if match:
         a = int(match.group(1))
         sign = 1 if match.group(3) == "+" else -1
         c = int(match.group(4))
-        naive = {1: Fraction(a), 0: Fraction(sign * c)}
-        if new_poly == naive:
+        if new_poly == {1: Fraction(a), 0: Fraction(sign * c)}:
             return "DIST_001"
+        if new_poly == {1: Fraction(a), 0: Fraction(-sign * a * c)}:
+            return "DIST_002"
+
+    # ALG_001: unlike terms merged — ax + b -> (a+b)x or a+b.
+    a, b = prev_poly.get(1), prev_poly.get(0)
+    if a and b and len(prev_poly) == 2 and len(new_poly) == 1:
+        merged = a + b
+        if new_poly in ({1: merged}, {0: merged}):
+            return "ALG_001"
+
+    # ALG_002: the constant's sign flipped while everything else stayed put.
+    if b and new_poly == {d: (-v if d == 0 else v) for d, v in prev_poly.items()}:
+        return "ALG_002"
 
     # NUM_003: numerators and denominators added across.
     terms = [t.strip() for t in re.split(r"[+-]", prev_text) if t.strip()]
@@ -427,7 +440,13 @@ def _classify_expression_error(prev_text: str, new_poly: Poly) -> str | None:
         for denom in (b + d, b - d):
             if denom:
                 naive.add(Fraction(a + sign * c, denom))
-    return "NUM_003" if value in naive else None
+    if value in naive:
+        return "NUM_003"
+    # FRAC_001: common denominator found but numerators copied unscaled.
+    lcm = b * d // math.gcd(b, d)
+    if lcm and value in {Fraction(a + c, lcm), Fraction(a - c, lcm)}:
+        return "FRAC_001"
+    return None
 
 
 def _check_expression_step(
@@ -460,13 +479,16 @@ def _check_expression_step(
             return StepCheck(status="solved", normalized_line=normalized)
         return StepCheck(status="valid", normalized_line=normalized)
 
-    code = _classify_expression_error(prev_text, new_poly)
+    code = _classify_expression_error(prev_text, prev_poly, new_poly)
     if invalid_count >= 2:
         revealed = _fmt_poly(prev_poly, var)
         feedback = _ERROR_FEEDBACK.get(code) or "That expression isn't equal to the line above."
         return StepCheck(
             status="invalid",
-            feedback=f"{feedback} Fully simplified, the line above is: {revealed}",
+            feedback=(
+                f"{feedback} Fully simplified, the line above is: {revealed} "
+                "— before continuing, say why that line is equal to it."
+            ),
             misconception_code=code,
             revealed_line=revealed,
         )
@@ -484,6 +506,26 @@ def _classify_error(
     """Map a non-equivalent step to a catalog misconception where honest."""
     prev_lhs, prev_rhs = prev_eq
     new_lhs, new_rhs = new_eq
+
+    # More specific single-side patterns run before EQ_002's generic
+    # one-side-changed check.
+    sides = (
+        (prev_lhs, new_lhs, new_rhs == prev_rhs),
+        (prev_rhs, new_rhs, new_lhs == prev_lhs),
+    )
+    for prev_side, new_side, other_unchanged in sides:
+        if not other_unchanged:
+            continue
+        a, b = prev_side.get(1), prev_side.get(0)
+        # ALG_001: unlike terms merged — ax + b = c -> (a+b)x = c.
+        if a and b and len(prev_side) == 2 and len(new_side) == 1:
+            merged = a + b
+            if new_side in ({1: merged}, {0: merged}):
+                return "ALG_001"
+        # ALG_002: the constant's sign flipped, everything else identical.
+        if b and new_side == {d: (-v if d == 0 else v) for d, v in prev_side.items()}:
+            return "ALG_002"
+
     # Applied the operation to only one side (e.g. divided just the RHS).
     if new_lhs == prev_lhs and new_rhs != prev_rhs:
         return "EQ_002"
@@ -497,6 +539,56 @@ def _classify_error(
         return "EQ_001"
     if rc and new_rhs == _add(prev_rhs, {0: -rc}) and new_lhs == _add(prev_lhs, {0: rc}):
         return "EQ_001"
+
+    # kx = c -> x = v with v from the wrong undo of the coefficient.
+    # Restricted to integer |k| > 1 so the naming stays honest ("multiplied
+    # instead of dividing"); fractional-coefficient confusions are left
+    # unclassified rather than mislabeled.
+    for prev_var, prev_con, new_var, new_con in (
+        (prev_lhs, prev_rhs, new_lhs, new_rhs),
+        (prev_rhs, prev_lhs, new_rhs, new_lhs),
+    ):
+        k, c = prev_var.get(1), prev_con.get(0)
+        if not (
+            k
+            and k.denominator == 1
+            and abs(k) > 1
+            and len(prev_var) == 1
+            and c is not None
+            and len(prev_con) == 1
+        ):
+            continue
+        if set(new_var) != {1} or new_var[1] != 1 or set(new_con) != {0}:
+            continue
+        v = new_con[0]
+        # EQ_003: multiplied by the coefficient (or divided the wrong way).
+        if v == c * k or (c and v == k / c):
+            return "EQ_003"
+        # EQ_004: treated the coefficient as an added constant (3x means
+        # x + 3 to the learner) — c - k or c + k.
+        if v in {c - k, c + k}:
+            return "EQ_004"
+
+    # ARITH_001: right move, wrong value — ax + b = c -> ax = v with v neither
+    # the correct c - b (that case is valid, never reaches here) nor c + b
+    # (EQ_001 above). The left side undid the constant exactly; the right
+    # side's arithmetic is off.
+    for prev_var, prev_con, new_var, new_con in (
+        (prev_lhs, prev_rhs, new_lhs, new_rhs),
+        (prev_rhs, prev_lhs, new_rhs, new_lhs),
+    ):
+        a, b, c = prev_var.get(1), prev_var.get(0), prev_con.get(0)
+        if (
+            a
+            and b
+            and len(prev_var) == 2
+            and c is not None
+            and len(prev_con) == 1
+            and new_var == {1: a}
+            and set(new_con) == {0}
+            and new_con[0] != c - b
+        ):
+            return "ARITH_001"
     return None
 
 
@@ -905,7 +997,12 @@ def _check_equation_step(
         feedback = _ERROR_FEEDBACK.get(code) or "Check that every operation applies to both sides."
         return StepCheck(
             status="invalid",
-            feedback=f"{feedback} One legal next line: {revealed}" if revealed else feedback,
+            feedback=(
+                f"{feedback} One legal next line: {revealed} "
+                "— before continuing, say why that move keeps both sides equal."
+                if revealed
+                else feedback
+            ),
             misconception_code=code,
             revealed_line=revealed,
         )
@@ -919,11 +1016,64 @@ def _check_equation_step(
     )
 
 
+def latest_step_evidence(db, *, session_id, problem_id):
+    """The learner's most recent wrong work line on this problem, for the voice.
+
+    Walks persisted WORK_STEP turns: the previous line is the last accepted
+    line before the error (or the problem's seed when none). Returns None if
+    the latest work line was accepted — the voice should not dwell on an
+    error the learner already corrected.
+    """
+    from sqlalchemy import select
+
+    from app.models import Problem, TutorTurn
+    from app.services.tutor_engine import StepEvidence
+
+    turns = db.scalars(
+        select(TutorTurn)
+        .where(
+            TutorTurn.session_id == session_id,
+            TutorTurn.problem_id == problem_id,
+            TutorTurn.pedagogical_action == "WORK_STEP",
+        )
+        .order_by(TutorTurn.created_at, TutorTurn.id)
+    ).all()
+    if not turns:
+        return None
+    problem = db.get(Problem, problem_id)
+    previous = starting_point(problem) or (problem.prompt if problem else "")
+    latest: StepEvidence | None = None
+    invalid_count = 0
+    for turn in turns:
+        meta = turn.metadata_json or {}
+        status = meta.get("step_status")
+        line = meta.get("line") or ""
+        if status in {"valid", "solved"}:
+            previous = meta.get("normalized_line") or line
+            invalid_count = 0
+            latest = None
+        elif status == "invalid":
+            invalid_count += 1
+            latest = StepEvidence(
+                previous_line=previous,
+                attempted_line=line,
+                misconception_code=meta.get("misconception_code"),
+                invalid_count=invalid_count,
+            )
+    return latest
+
+
 _ERROR_FEEDBACK = {
     "EQ_001": "Careful — use the inverse operation. To remove +b, subtract it (don't add).",
     "EQ_002": "Apply the same operation to every term on both sides of the equation.",
     "EQ_003": "Undo multiplication by dividing — not by multiplying.",
+    "EQ_004": "Remember 3x means 3 times x — undo it with division, not subtraction.",
+    "ARITH_001": "You undid the right operation — check the arithmetic on the other side.",
     "DIST_001": "Multiply the factor by every term inside the parentheses.",
+    "DIST_002": "Watch the sign — the factor multiplies the negative term too.",
     "ALG_001": "Only combine like terms — variable terms and constants stay separate.",
+    "ALG_002": "The sign of a term changed — keep the sign attached to it.",
+    "NUM_003": "Fractions need a common denominator — don't add across.",
+    "FRAC_001": "Common denominator found — now scale each numerator to match it.",
     "WP_001": "Match each number in the problem to its role in the equation.",
 }

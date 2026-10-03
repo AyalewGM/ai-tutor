@@ -25,6 +25,7 @@ class LLMGatewayAdapter:
             "misconception_description": context.misconception_description,
             "remediation_strategy": context.remediation_strategy,
             "next_problem_prompt": context.next_problem_prompt,
+            "step_evidence": (context.step_evidence.describe() if context.step_evidence else None),
         }
         try:
             response = httpx.post(
