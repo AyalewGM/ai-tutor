@@ -35,8 +35,15 @@ const TAILWIND_FILLS: Record<string, string> = {
   "bg-rose-500": "#f43f5e",
 };
 
+// Payload colors land in style.backgroundColor. Allowlist the contract's
+// Tailwind classes, hex colors, and plain CSS color names; anything else
+// (url(), expressions) falls back to the palette. Defense in depth for
+// messages persisted before backend validation existed.
+const SAFE_COLOR_RE = /^(bg-[a-z]+-\d{3}|#[0-9a-fA-F]{3,8}|[a-zA-Z]{1,24})$/;
+
 function barColor(color: string | undefined, index: number): string {
   if (!color) return BAR_COLORS[index % BAR_COLORS.length];
+  if (!SAFE_COLOR_RE.test(color)) return BAR_COLORS[index % BAR_COLORS.length];
   return TAILWIND_FILLS[color] ?? color;
 }
 

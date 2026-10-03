@@ -64,7 +64,7 @@ from app.services.review_schedule import (
 )
 from app.services.state_machine import Transition, determine_next_action
 from app.services.state_machine import TutorContext as StateContext
-from app.services.tutor_engine import tutor_engine
+from app.services.tutor_engine import fallback_message, tutor_engine
 from app.telemetry import TelemetryEnvelope, publish_telemetry_fail_open
 
 router = APIRouter(prefix="/adaptive-tutor", tags=["adaptive-tutor"])
@@ -422,20 +422,21 @@ def respond(
         tutor_skill = next_skill
         generation_state = transition.state
 
+    tutor_context = _tutor_context(
+        db,
+        student=student,
+        skill=tutor_skill,
+        state=generation_state,
+        action=tutor_action,
+        hint_level=tutor_hint_level,
+        problem=problem,
+        next_problem=next_problem,
+        student_answer=payload.answer,
+        misconception=evidence.misconception,
+        session_id=session.id,
+    )
     generation = tutor_engine.generate(
-        _tutor_context(
-            db,
-            student=student,
-            skill=tutor_skill,
-            state=generation_state,
-            action=tutor_action,
-            hint_level=tutor_hint_level,
-            problem=problem,
-            next_problem=next_problem,
-            student_answer=payload.answer,
-            misconception=evidence.misconception,
-            session_id=session.id,
-        ),
+        tutor_context,
         # Correct-answer feedback needs no model call; the deterministic
         # fallback covers it. The LLM only engages where language adds
         # pedagogical value: misses, hints, misconceptions.
@@ -444,6 +445,14 @@ def respond(
     message = chat_cpa.sanitize_cpa_blocks(
         generation.message, canonical_answer=problem.canonical_answer
     )
+    answer_leak_blocked = False
+    if generation.source == "llm" and chat_cpa.text_reveals_answer(
+        message, problem.canonical_answer
+    ):
+        # The model stated the solved form in prose. Swap in the
+        # deterministic voice — Socratic integrity is not negotiable.
+        message = fallback_message(tutor_context)
+        answer_leak_blocked = True
     if not evidence.evaluation.correct:
         block = visualization.chat_cpa_block(visualization.visualization_for(problem))
         if block and "```json:cpa" not in message:
@@ -459,6 +468,7 @@ def respond(
         llm_model=generation.model,
         metadata_json={
             "generation_source": generation.source,
+            "answer_leak_blocked": answer_leak_blocked,
             "target_skill_id": str(session.primary_skill_id),
             "active_skill_id": str(next_skill_id),
             "remediation_reason": session.remediation_reason,
