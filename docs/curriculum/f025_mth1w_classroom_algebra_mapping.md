@@ -37,3 +37,27 @@ This slice adds curriculum metadata, expectation mappings, skills, misconception
 ## Remaining F-025 scope
 
 This is an incremental vertical slice, not F-025 completion. Remaining issue-level work includes the rest of the classroom-derived decomposition, visual algebra representations, readiness/variation depth across required modes, Ontario learner E2E for the expanded skills, explicit cross-jurisdiction evidence regression for the completed slice, and final QA/Security/PO/PM acceptance.
+
+
+## Classroom-aligned equation progression extension
+
+Owner-supplied Ottawa Catholic School Board Grade 9 classroom references dated as Unit 2 materials show the local instructional progression continuing from collecting like terms into two-step and multi-step equation solving. These files remain external reference evidence only; no worksheet questions, graphics, annotations, or exact instructional wording are product content.
+
+AI Tutor mirrors the *skill progression* with original content:
+
+1. simplify each side before solving when simplification is required;
+2. solve one-step equations with inverse operations;
+3. solve two-step equations by undoing the constant operation and then the coefficient operation;
+4. distribute through brackets and collect like terms before isolation;
+5. solve equations with variable terms on both sides by collecting variable terms on one side and constants on the other;
+6. apply the same process in original contextual/application problems.
+
+The curriculum-local path is:
+
+`MTH1W.C.ALG.EXPR -> MTH1W.C.ALG.EQ1 -> MTH1W.C.ALG.EQ2 -> MTH1W.C.ALG.EQ3`
+
+`MTH1W.C.ALG.EQ3` is mapped to C1.5 and represents the variables-on-both-sides/bracketed multi-step stage. Generated difficulty tiers 6 and 7 provide fresh variables-on-both-sides and bracketed variants respectively, while deterministic application logic remains authoritative for answers and step evidence.
+
+### Copyright boundary
+
+The classroom references establish sequencing, emphasis, and observed misconception opportunities only. Repository examples use independently authored values, contexts, and wording. The product must not reproduce or closely imitate the supplied handouts/notebook pages.
