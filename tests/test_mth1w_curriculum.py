@@ -136,7 +136,7 @@ def test_mth1w_fine_grained_subskills_and_chains():
         subskills = {
             "MTH1W.B.NUM.INT", "MTH1W.B.NUM.FRAC",
             "MTH1W.C.ALG.EXPR", "MTH1W.C.ALG.LIKE", "MTH1W.C.ALG.POLY",
-            "MTH1W.C.ALG.EQ1", "MTH1W.C.ALG.EQ2",
+            "MTH1W.C.ALG.EQ1", "MTH1W.C.ALG.EQ2", "MTH1W.C.ALG.EQ3",
             "MTH1W.C.REL.SLOPE", "MTH1W.C.REL.EVAL",
             "MTH1W.F.FIN.PCT", "MTH1W.F.FIN.APP",
         }
@@ -161,8 +161,9 @@ def test_mth1w_fine_grained_subskills_and_chains():
         assert edge("MTH1W.C.ALG.POLY", "MTH1W.C.ALG.LIKE")
         assert edge("MTH1W.C.ALG.EQ1", "MTH1W.C.ALG.EXPR")
         assert edge("MTH1W.C.ALG.EQ2", "MTH1W.C.ALG.EQ1")
+        assert edge("MTH1W.C.ALG.EQ3", "MTH1W.C.ALG.EQ2")
         assert edge("MTH1W.C.REL.SLOPE", "MTH1W.C.REL")
-        assert edge("MTH1W.C.REL.SLOPE", "MTH1W.C.ALG.EQ2")
+        assert edge("MTH1W.C.REL.SLOPE", "MTH1W.C.ALG.EQ3")
         assert edge("MTH1W.C.REL.EVAL", "MTH1W.C.REL.SLOPE")
         assert edge("MTH1W.F.FIN.PCT", "MTH1W.F.FIN")
         assert edge("MTH1W.F.FIN.APP", "MTH1W.F.FIN.PCT")
@@ -178,5 +179,32 @@ def test_mth1w_fine_grained_subskills_and_chains():
                 )
             }
             assert types, code
+    finally:
+        db.close()
+
+
+def test_mth1w_classroom_equation_progression_has_original_multistep_depth():
+    _seed_curricula()
+    db = SessionLocal()
+    try:
+        ontario = db.scalar(select(Curriculum).where(Curriculum.code == CURRICULUM_CODE))
+        skill = db.scalar(
+            select(Skill).where(
+                Skill.curriculum_id == ontario.id,
+                Skill.code == "MTH1W.C.ALG.EQ3",
+            )
+        )
+        assert skill is not None
+        problems = list(
+            db.scalars(select(Problem).where(Problem.primary_skill_id == skill.id))
+        )
+        assert len(problems) >= 4
+        assert {"SOLVE_EQUATION", "ALGEBRA_WORD_PROBLEM"} <= {
+            problem.problem_type for problem in problems
+        }
+        prompts = " ".join(problem.prompt.lower() for problem in problems)
+        assert "community garden" in prompts
+        assert "teacher" not in prompts
+        assert "worksheet" not in prompts
     finally:
         db.close()
