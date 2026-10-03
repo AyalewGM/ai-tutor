@@ -100,6 +100,10 @@ def _tutor_context(
         if session_id is not None
         else None
     )
+    cpa_level = None
+    if session_id is not None:
+        session = db.get(TutorSession, session_id)
+        cpa_level = session.cpa_level if session else None
     return TutorContext(
         grade_level=student.grade_level,
         curriculum_name=curriculum.name if curriculum else "Unknown curriculum",
@@ -113,6 +117,7 @@ def _tutor_context(
         remediation_strategy=misconception.remediation_strategy if misconception else None,
         next_problem_prompt=next_problem.prompt if next_problem else None,
         step_evidence=step_evidence,
+        cpa_level=cpa_level or "ABSTRACT",
     )
 
 

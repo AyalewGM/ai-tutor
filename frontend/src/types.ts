@@ -104,6 +104,11 @@ export type StepStatus =
   | "unparseable"
   | "duplicate";
 
+export interface ReverseChallenge {
+  line: string;
+  prompt: string;
+}
+
 export interface WorkStepOut {
   status: StepStatus;
   feedback?: string | null;
@@ -111,6 +116,10 @@ export interface WorkStepOut {
   revealed_line?: string | null;
   normalized_line?: string | null;
   invalid_count: number;
+  cpa_level?: string | null;
+  step_visual?: VisualSpec | null;
+  reverse_challenge?: ReverseChallenge | null;
+  challenge_outcome?: "spotted" | "missed" | "unresolved" | null;
 }
 
 export interface PhotoLine {

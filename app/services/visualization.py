@@ -565,6 +565,11 @@ def _balance_scale(problem: Problem) -> dict | None:
     equation = starting_equation(problem.prompt)
     if equation is None:
         return None
+    return _balance_scale_for_equation(equation)
+
+
+def _balance_scale_for_equation(equation: str) -> dict | None:
+    """Balance-scale spec for any 'lhs = rhs' text, e.g. a learner's line."""
     lhs_text, _, rhs_text = equation.partition("=")
     lhs, rhs = _linear_side(lhs_text), _linear_side(rhs_text)
     if lhs is None or rhs is None:
@@ -699,6 +704,26 @@ def _tape_diagram(problem: Problem) -> dict | None:
             "aria_label": f"A bar split into {k + 1} equal parts: 1 for Leo and {k} for Mia, totaling {(k + 1) * x}.",
         }
     return None
+
+
+def step_visual(problem: Problem, line: str | None) -> dict | None:
+    """Visual anchored at the learner's *current* line, not the problem start.
+
+    CPA PICTORIAL/CONCRETE presentation: render the last accepted line (or the
+    problem's starting point) so the picture tracks where the learner actually
+    is. Equation lines become a balance scale of that line; other strands fall
+    back to the problem-level spec. Returns None when nothing honest exists.
+    """
+    anchor = line or None
+    if anchor is None:
+        from app.services.stepwork import starting_point
+
+        anchor = starting_point(problem)
+    if anchor and "=" in anchor:
+        spec = _balance_scale_for_equation(anchor)
+        if spec is not None:
+            return spec
+    return visualization_for(problem)
 
 
 def visualization_for(problem: Problem) -> dict | None:

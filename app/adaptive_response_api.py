@@ -35,7 +35,7 @@ from app.schemas import (
     WorkStepIn,
     WorkStepOut,
 )
-from app.services import photo_ocr, stepwork
+from app.services import pedagogy_engine, photo_ocr, stepwork, visualization
 from app.services.attempt_evidence import record_evidence
 from app.services.awards import (
     BADGE_XP,
@@ -640,6 +640,104 @@ def work_step(
         )
     else:
         result = stepwork.check_step(start, accepted, payload.line, invalid_count)
+
+    new_meta: dict = {
+        "step_status": result.status,
+        "line": payload.line[:200],
+        "normalized_line": result.normalized_line,
+        "misconception_code": result.misconception_code,
+        "revealed": bool(result.revealed_line),
+    }
+
+    # --- Pedagogy layer: reverse-Socratic challenge resolution, CPA level ---
+    challenge_turn = db.scalars(
+        select(TutorTurn)
+        .where(
+            TutorTurn.session_id == session.id,
+            TutorTurn.problem_id == problem.id,
+            TutorTurn.pedagogical_action == "REVERSE_CHALLENGE",
+        )
+        .order_by(TutorTurn.created_at.desc(), TutorTurn.id.desc())
+        .limit(1)
+    ).first()
+    challenge_pending = challenge_turn is not None and "resolved_outcome" not in (
+        challenge_turn.metadata_json or {}
+    )
+    challenge_outcome: str | None = None
+    feedback = result.feedback
+    if challenge_pending:
+        presented = (challenge_turn.metadata_json or {}).get("presented_line")
+        if pedagogy_engine.line_matches(payload.line, presented):
+            challenge_outcome = "missed"
+            feedback = (
+                "Careful — that repeats the slip in my attempt. "
+                "What should happen to keep both sides balanced?"
+            )
+        elif result.status in {"valid", "solved"}:
+            challenge_outcome = "spotted"
+            feedback = f"Nice catch — you spotted my mistake. {result.feedback or 'That step works.'}"
+        else:
+            challenge_outcome = "unresolved"
+        new_meta["challenge_outcome"] = challenge_outcome
+        challenge_turn.metadata_json = {
+            **(challenge_turn.metadata_json or {}),
+            "resolved_outcome": challenge_outcome,
+        }
+
+    state = pedagogy_engine.evaluate_pedagogical_state(
+        [*(t.metadata_json or {} for t in turns), new_meta],
+        prior_cpa=session.cpa_level or "ABSTRACT",
+        challenge_pending=challenge_pending,
+    )
+    if state.cpa_level != session.cpa_level:
+        db.add(
+            TutorTurn(
+                session_id=session.id,
+                role="TUTOR",
+                message="",
+                state=session.current_state,
+                pedagogical_action="CPA_TRANSITION",
+                problem_id=problem.id,
+                metadata_json={"from": session.cpa_level, "to": state.cpa_level},
+            )
+        )
+        session.cpa_level = state.cpa_level
+
+    # The line just graded becomes the newest accepted line when it lands.
+    latest_accepted = (
+        (result.normalized_line or payload.line)
+        if result.status in {"valid", "solved"}
+        else (accepted[-1] if accepted else None)
+    )
+    step_visual = None
+    if state.cpa_level != "ABSTRACT":
+        step_visual = visualization.step_visual(problem, latest_accepted)
+
+    reverse_challenge = None
+    if state.trigger_reverse_socratic:
+        anchor = latest_accepted or (start or "")
+        crafted = pedagogy_engine.craft_flawed_step(anchor)
+        if crafted is not None:
+            flawed_line, planted_code = crafted
+            db.add(
+                TutorTurn(
+                    session_id=session.id,
+                    role="TUTOR",
+                    message=f"I tried this next step: {flawed_line}",
+                    state=session.current_state,
+                    pedagogical_action="REVERSE_CHALLENGE",
+                    problem_id=problem.id,
+                    metadata_json={
+                        "presented_line": flawed_line,
+                        "planted_code": planted_code,
+                    },
+                )
+            )
+            reverse_challenge = {
+                "line": flawed_line,
+                "prompt": "I tried this next step, but something feels off. Can you spot my mistake?",
+            }
+
     db.add(
         TutorTurn(
             session_id=session.id,
@@ -648,23 +746,21 @@ def work_step(
             state=session.current_state,
             pedagogical_action="WORK_STEP",
             problem_id=problem.id,
-            metadata_json={
-                "step_status": result.status,
-                "line": payload.line[:200],
-                "normalized_line": result.normalized_line,
-                "misconception_code": result.misconception_code,
-                "revealed": bool(result.revealed_line),
-            },
+            metadata_json=new_meta,
         )
     )
     db.commit()
     return WorkStepOut(
         status=result.status,
-        feedback=result.feedback,
+        feedback=feedback,
         misconception_code=result.misconception_code,
         revealed_line=result.revealed_line,
         normalized_line=result.normalized_line,
         invalid_count=(invalid_count + 1 if result.status == "invalid" else 0),
+        cpa_level=state.cpa_level,
+        step_visual=step_visual,
+        reverse_challenge=reverse_challenge,
+        challenge_outcome=challenge_outcome,
     )
 
 

@@ -184,6 +184,7 @@ class TutorSession(Base):
     remediation_reason: Mapped[str | None] = mapped_column(String(120))
     session_goal: Mapped[str | None] = mapped_column(String(500))
     current_state: Mapped[TutorState] = mapped_column(Enum(TutorState), default=TutorState.DIAGNOSE)
+    cpa_level: Mapped[str] = mapped_column(String(10), default="ABSTRACT")
     starting_mastery: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
     ending_mastery: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
     status: Mapped[str] = mapped_column(String(30), default="ACTIVE")

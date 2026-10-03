@@ -42,6 +42,11 @@ class WorkStepIn(BaseModel):
     line: str = Field(min_length=1, max_length=200)
 
 
+class ReverseChallengeOut(BaseModel):
+    line: str
+    prompt: str
+
+
 class WorkStepOut(BaseModel):
     status: Literal["solved", "valid", "invalid", "unparseable", "duplicate"]
     feedback: str | None = None
@@ -49,6 +54,10 @@ class WorkStepOut(BaseModel):
     revealed_line: str | None = None
     normalized_line: str | None = None
     invalid_count: int = 0
+    cpa_level: str | None = None
+    step_visual: dict | None = None
+    reverse_challenge: ReverseChallengeOut | None = None
+    challenge_outcome: Literal["spotted", "missed", "unresolved"] | None = None
 
 
 class PhotoLineOut(BaseModel):

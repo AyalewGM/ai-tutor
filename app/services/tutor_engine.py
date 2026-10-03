@@ -40,6 +40,9 @@ class TutorContext:
     # what the learner wrote, what it followed, and the catalog code. Lets
     # the voice name the actual move instead of restating the generic ladder.
     step_evidence: "StepEvidence | None" = None
+    # CPA presentation level owned by the pedagogy engine. PICTORIAL/
+    # CONCRETE tell the explainer to describe the picture, not just symbols.
+    cpa_level: str = "ABSTRACT"
 
 
 @dataclass(frozen=True)
