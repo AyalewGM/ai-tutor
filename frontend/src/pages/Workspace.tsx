@@ -7,6 +7,7 @@ import Avatar from "../components/Avatar";
 import ProblemVisual from "../components/ProblemVisual";
 import VoiceChatControls from "../components/chat/VoiceChatControls";
 import MathText from "../components/MathText";
+import ChatMessage from "../components/chat/ChatMessage";
 import LearnPanel from "../components/LearnPanel";
 import LevelCrest from "../components/LevelCrest";
 import MathKeypad from "../components/MathKeypad";
@@ -929,12 +930,14 @@ export default function Workspace() {
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary font-bold text-primary-foreground">
                     T
                   </span>
-                  <div className="rounded-xl rounded-tl-sm bg-secondary px-4 py-3 text-sm leading-relaxed" aria-live="polite">
-                    {complete
-                      ? "Nice work. Your independent mastery check is complete."
-                      : workspace.coaching_message ??
-                        "Work through the problem carefully."}
-                  </div>
+                  <ChatMessage
+                    content={
+                      complete
+                        ? "Nice work. Your independent mastery check is complete."
+                        : (workspace.coaching_message ??
+                          "Work through the problem carefully.")
+                    }
+                  />
                 </div>
               </CardContent>
             </Card>

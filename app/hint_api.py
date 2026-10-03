@@ -11,6 +11,7 @@ from app.core.database import get_db
 from app.hint_models import HintEvent
 from app.identity import CurrentParent, require_parent_owns_session
 from app.models import Attempt, Problem, Skill, Student, TutorSession, TutorTurn
+from app.services import chat_cpa, visualization
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
@@ -121,10 +122,16 @@ def request_hint(
             session_id=session.id,
         )
     )
+    message = chat_cpa.sanitize_cpa_blocks(
+        generation.message, canonical_answer=problem.canonical_answer
+    )
+    block = visualization.chat_cpa_block(visualization.visualization_for(problem))
+    if block and "```json:cpa" not in message:
+        message = f"{message}\n\n{block}"
     turn = TutorTurn(
         session_id=session.id,
         role="TUTOR",
-        message=generation.message,
+        message=message,
         state=session.current_state,
         pedagogical_action="GIVE_HINT",
         problem_id=problem.id,
@@ -158,5 +165,5 @@ def request_hint(
         allowed=True,
         level=decision.level,
         trigger=request_trigger,
-        message=generation.message,
+        message=message,
     )

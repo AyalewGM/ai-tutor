@@ -6,6 +6,7 @@ never misrepresent the math. Unknown problem shapes return None — the
 renderer simply shows nothing.
 """
 
+import json
 import math
 import re
 from typing import Any
@@ -565,6 +566,11 @@ def _balance_scale(problem: Problem) -> dict | None:
     equation = starting_equation(problem.prompt)
     if equation is None:
         return None
+    return _balance_scale_for_equation(equation)
+
+
+def _balance_scale_for_equation(equation: str) -> dict | None:
+    """Balance-scale spec for any 'lhs = rhs' text, e.g. a learner's line."""
     lhs_text, _, rhs_text = equation.partition("=")
     lhs, rhs = _linear_side(lhs_text), _linear_side(rhs_text)
     if lhs is None or rhs is None:
@@ -699,6 +705,93 @@ def _tape_diagram(problem: Problem) -> dict | None:
             "aria_label": f"A bar split into {k + 1} equal parts: 1 for Leo and {k} for Mia, totaling {(k + 1) * x}.",
         }
     return None
+
+
+def step_visual(problem: Problem, line: str | None) -> dict | None:
+    """Visual anchored at the learner's *current* line, not the problem start.
+
+    CPA PICTORIAL/CONCRETE presentation: render the last accepted line (or the
+    problem's starting point) so the picture tracks where the learner actually
+    is. Equation lines become a balance scale of that line; other strands fall
+    back to the problem-level spec. Returns None when nothing honest exists.
+    """
+    anchor = line or None
+    if anchor is None:
+        from app.services.stepwork import starting_point
+
+        anchor = starting_point(problem)
+    if anchor and "=" in anchor:
+        spec = _balance_scale_for_equation(anchor)
+        if spec is not None:
+            return spec
+    return visualization_for(problem)
+
+
+def _pan_text(pan: dict) -> str:
+    """'3x + 12' / 'x' / '12' from a balance pan spec."""
+    x_count, units = int(pan.get("x_count", 0)), int(pan.get("units", 0))
+    parts = []
+    if x_count:
+        parts.append("x" if x_count == 1 else f"{x_count}x")
+    if units:
+        parts.append(str(units))
+    return " + ".join(parts) or "0"
+
+
+def chat_cpa_block(spec: dict | None) -> str | None:
+    """Translate a declarative spec into a ```json:cpa fenced block.
+
+    The chat CPAVisualizer renders payload types FRACTION_BARS and
+    BALANCE_SCALE; spec types with no honest chat payload (tape diagrams,
+    ten frames, …) return None and the tutor message goes out unadorned.
+    Pure formatting — the spec is already the application-owned truth.
+    """
+    if not spec:
+        return None
+    kind = spec.get("type")
+    payload: dict | None = None
+    if kind == "balance_scale":
+        payload = {
+            "type": "BALANCE_SCALE",
+            "title": "Balance scale",
+            "balanceScale": {
+                "leftExpr": _pan_text(spec.get("left") or {}),
+                "rightExpr": _pan_text(spec.get("right") or {}),
+            },
+        }
+    elif kind == "fraction_operation":
+        common = spec.get("common_denominator")
+        first, second = spec.get("first") or {}, spec.get("second") or {}
+        n1, d1 = first.get("numerator"), first.get("denominator")
+        n2, d2 = second.get("numerator"), second.get("denominator")
+        if common and all(isinstance(v, int) for v in (n1, d1, n2, d2)):
+            payload = {
+                "type": "FRACTION_BARS",
+                "title": "Same-size pieces",
+                "fractionBars": [
+                    {
+                        "numerator": n1 * common // d1,
+                        "denominator": common,
+                        "label": f"{n1}/{d1} =",
+                    },
+                    {
+                        "numerator": n2 * common // d2,
+                        "denominator": common,
+                        "label": f"{n2}/{d2} =",
+                    },
+                ],
+            }
+    elif kind in {"fraction_bar", "ratio_bar"}:
+        numerator, denominator = spec.get("numerator"), spec.get("denominator")
+        if isinstance(numerator, int) and isinstance(denominator, int):
+            payload = {
+                "type": "FRACTION_BARS",
+                "title": "Fraction bar",
+                "fractionBars": [{"numerator": numerator, "denominator": denominator}],
+            }
+    if payload is None:
+        return None
+    return "```json:cpa\n" + json.dumps(payload) + "\n```"
 
 
 def visualization_for(problem: Problem) -> dict | None:

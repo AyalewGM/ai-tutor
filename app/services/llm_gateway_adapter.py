@@ -26,6 +26,7 @@ class LLMGatewayAdapter:
             "remediation_strategy": context.remediation_strategy,
             "next_problem_prompt": context.next_problem_prompt,
             "step_evidence": (context.step_evidence.describe() if context.step_evidence else None),
+            "cpa_level": context.cpa_level,
         }
         try:
             response = httpx.post(

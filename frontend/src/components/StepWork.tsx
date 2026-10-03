@@ -2,8 +2,15 @@ import { useRef, useState } from "react";
 import { Camera, Check, X } from "lucide-react";
 
 import { ApiError, post, postForm } from "../api";
-import type { PhotoScanOut, StepStatus, WorkStepOut } from "../types";
+import type {
+  PhotoScanOut,
+  ReverseChallenge,
+  StepStatus,
+  VisualSpec,
+  WorkStepOut,
+} from "../types";
 import { cn } from "../lib/utils";
+import CPAVisualizer from "./CPAVisualizer";
 import MathKeypad from "./MathKeypad";
 import MathText from "./MathText";
 import { Button } from "./ui/button";
@@ -47,6 +54,9 @@ export default function StepWork({
   const [done, setDone] = useState(false);
   const [scanning, setScanning] = useState(false);
   const [scanned, setScanned] = useState<ScannedLine[] | null>(null);
+  const [cpaLevel, setCpaLevel] = useState<string | null>(null);
+  const [stepVisual, setStepVisual] = useState<VisualSpec | null>(null);
+  const [challenge, setChallenge] = useState<ReverseChallenge | null>(null);
   const draftRef = useRef<HTMLInputElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const nextId = useRef(0);
@@ -80,6 +90,9 @@ export default function StepWork({
     const shown = result.normalized_line ?? text;
     setLines((prev) => [...prev, { id: nextId.current++, text: shown, status: result.status }]);
     setFeedback(result.feedback ?? null);
+    setCpaLevel(result.cpa_level ?? null);
+    setStepVisual(result.step_visual ?? null);
+    setChallenge(result.reverse_challenge ?? null);
     if (result.status === "solved") {
       setDone(true);
       onSolved(shown);
@@ -194,6 +207,21 @@ export default function StepWork({
             </li>
           ))}
         </ol>
+      )}
+      {stepVisual && <CPAVisualizer spec={stepVisual} level={cpaLevel} />}
+      {challenge && (
+        <div
+          className="space-y-1 rounded-md border border-violet-500/40 bg-violet-500/5 px-3 py-2"
+          data-testid="reverse-challenge"
+        >
+          <p className="text-sm">{challenge.prompt}</p>
+          <p className="text-sm font-medium">
+            Tutor's attempt: <MathText text={challenge.line} />
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Write the step the way it should go — or copy mine if you think it's right.
+          </p>
+        </div>
       )}
       {feedback && (
         <p

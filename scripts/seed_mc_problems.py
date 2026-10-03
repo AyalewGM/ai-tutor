@@ -366,16 +366,32 @@ def seed() -> None:
         for skill in skills:
             by_code.setdefault(skill.code, []).append(skill)
 
-        created = skipped = 0
+        provenance = {
+            "origin": "AUTHORED",
+            "author": "AI Tutor curriculum team",
+            "license": "proprietary",
+            "source_uri": "https://www.montgomeryschoolsmd.org/curriculum/math/",
+        }
+        created = skipped = backfilled = 0
         for code, ptype, difficulty, prompt, correct_id, choices in MC_PROBLEMS:
             for skill in by_code.get(code, []):
-                exists = db.scalar(
-                    select(Problem.id).where(
+                # A (skill, prompt) can hold more than one row — an authored
+                # free-text problem and an MC twin — so backfill every match,
+                # not just the first.
+                existing = db.scalars(
+                    select(Problem).where(
                         Problem.primary_skill_id == skill.id,
                         Problem.prompt == prompt,
                     )
-                )
-                if exists:
+                ).all()
+                if existing:
+                    for row in existing:
+                        if "provenance" not in (row.solution or {}):
+                            row.solution = {
+                                **(row.solution or {}),
+                                "provenance": provenance,
+                            }
+                            backfilled += 1
                     skipped += 1
                     continue
                 db.add(
@@ -388,13 +404,20 @@ def seed() -> None:
                         answer_kind="MULTIPLE_CHOICE",
                         choices=choices,
                         source_type="CURATED",
-                        solution={"answer": correct_id, "format": "multiple_choice"},
+                        solution={
+                            "answer": correct_id,
+                            "format": "multiple_choice",
+                            "provenance": provenance,
+                        },
                     )
                 )
                 created += 1
         db.commit()
         missing = {row[0] for row in MC_PROBLEMS} - set(by_code)
-        print(f"created {created} MC problems, skipped {skipped} existing")
+        print(
+            f"created {created} MC problems, skipped {skipped} existing, "
+            f"backfilled provenance on {backfilled}"
+        )
         if missing:
             print(f"no skills found for codes: {sorted(missing)}")
 
