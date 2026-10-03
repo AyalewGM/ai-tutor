@@ -473,6 +473,7 @@ def _recent_patterns(
             Skill.curriculum_id == scope.curriculum_id,
         )
         .group_by(Misconception.code, Misconception.name)
+        .limit(500)
     ).all()
 
     # JSONB extraction can't be grouped by label portably — count in Python
@@ -558,6 +559,9 @@ def _step_trails(
             TutorSession.student_id == student_id,
             TutorTurn.pedagogical_action == "WORK_STEP",
             Skill.curriculum_id == scope.curriculum_id,
+            # "Recent" must stay a bounded window so the scan rides the
+            # (session_id, created_at) index instead of the full table.
+            TutorTurn.created_at >= datetime.now(UTC) - timedelta(days=90),
         )
         .order_by(desc(TutorTurn.created_at), desc(TutorTurn.id))
         .limit(400)

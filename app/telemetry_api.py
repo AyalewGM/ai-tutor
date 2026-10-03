@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
+from app.identity import CurrentUser
 from app.telemetry_kpis import KPI_POLICY_VERSION, pilot_kpis
 
 router = APIRouter(prefix="/telemetry", tags=["telemetry"])
@@ -30,8 +31,13 @@ class PilotKpisOut(BaseModel):
 
 
 @router.get("/kpis/{curriculum_id}", response_model=PilotKpisOut)
-def get_pilot_kpis(curriculum_id: uuid.UUID, db: DbSession) -> PilotKpisOut:
-    """Expose deterministic curriculum-scoped observational KPIs."""
+def get_pilot_kpis(
+    curriculum_id: uuid.UUID, _user: CurrentUser, db: DbSession
+) -> PilotKpisOut:
+    """Expose deterministic curriculum-scoped observational KPIs.
+
+    Aggregate-only data, but still behind authentication — platform usage
+    counts are not public."""
     results = pilot_kpis(db, curriculum_id)
     return PilotKpisOut(
         curriculum_id=curriculum_id,

@@ -14,6 +14,7 @@ from app.models import (
     Student,
     TutorTurn,
 )
+from tests.auth_helpers import authenticate_parent_for_student
 
 
 client = TestClient(app)
@@ -35,7 +36,8 @@ def test_tutor_session_persists_learning_evidence() -> None:
             school_system="MCPS",
         )
         db.add(student)
-        db.commit()
+        db.flush()
+        authenticate_parent_for_student(client, db, student)
         db.refresh(student)
         student_id = student.id
         skill_id = skill.id
