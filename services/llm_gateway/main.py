@@ -105,7 +105,19 @@ _CPA_CONTRACT = (
     "student's state, not the solution — for the wrong claim '2x + 3 = 11 "
     "so 2x = 11', emit leftExpr '2x' with leftValue 8 vs rightValue 11 so "
     "the scale visibly tilts, then ask why. Never render a solved equation. "
-    "Strict JSON only — double quotes, no trailing commas."
+    "Strict JSON only — double quotes, no trailing commas.\n"
+    "Examples — "
+    "tilt the scale for a one-sided move: 'Can I just subtract 3 from the "
+    "left?' -> text asks what happened to equilibrium, then {\"type\":"
+    "\"BALANCE_SCALE\",\"title\":\"Unbalanced Equation\",\"balanceScale\":"
+    "{\"leftExpr\":\"2x\",\"rightExpr\":\"11\",\"leftValue\":8,"
+    "\"rightValue\":11}}; "
+    "show equivalence with matching fills: 'Why is 2/4 the same as 1/2?' -> "
+    "text asks how the shaded lengths compare, then {\"type\":"
+    "\"FRACTION_BARS\",\"title\":\"Fraction Equivalence\",\"fractionBars\":["
+    "{\"numerator\":2,\"denominator\":4,\"label\":\"2/4\",\"color\":"
+    "\"bg-indigo-500\"},{\"numerator\":1,\"denominator\":2,\"label\":\"1/2\""
+    ",\"color\":\"bg-emerald-500\"}]}."
 )
 
 
