@@ -167,6 +167,27 @@ export interface LearnerWorkspace {
   recommended_next: { skill_id: string; skill_code: string; skill_name: string } | null;
   streak_days?: number;
   growth?: LearnerGrowth | null;
+  daily_goal?: DailyGoal | null;
+}
+
+export interface DailyGoal {
+  target: number;
+  done: number;
+  reached: boolean;
+}
+
+export interface SessionSummary {
+  attempts: number;
+  correct: number;
+  independent_correct: number;
+  minutes: number;
+  xp_earned: number;
+  smartscore_start: number | null;
+  smartscore_now: number;
+  skills_practiced: string[];
+  misconceptions: { code: string; name: string; resolved: boolean }[];
+  awards: Award[];
+  daily_goal: DailyGoal | null;
 }
 
 export interface Award {

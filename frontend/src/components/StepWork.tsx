@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Check, X } from "lucide-react";
 
 import { ApiError, post } from "../api";
 import type { StepStatus, WorkStepOut } from "../types";
 import { cn } from "../lib/utils";
+import MathKeypad from "./MathKeypad";
 import MathText from "./MathText";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -38,6 +39,28 @@ export default function StepWork({
   const [feedback, setFeedback] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
+  const draftRef = useRef<HTMLInputElement>(null);
+
+  function insertToken(token: string) {
+    const el = draftRef.current;
+    const s = el?.selectionStart ?? draft.length;
+    const e = el?.selectionEnd ?? s;
+    let next: string;
+    let cursor: number;
+    if (token === "\b") {
+      const from = s === e ? Math.max(0, s - 1) : s;
+      next = draft.slice(0, from) + draft.slice(e);
+      cursor = from;
+    } else {
+      next = draft.slice(0, s) + token + draft.slice(e);
+      cursor = s + token.length;
+    }
+    setDraft(next);
+    requestAnimationFrame(() => {
+      el?.focus();
+      el?.setSelectionRange(cursor, cursor);
+    });
+  }
 
   async function submitLine() {
     if (!draft.trim() || busy || done) return;
@@ -112,10 +135,12 @@ export default function StepWork({
         </p>
       )}
       {!done && (
-        <div className="flex gap-2">
-          <Input
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
+        <div className="space-y-2">
+          <div className="flex gap-2">
+            <Input
+              ref={draftRef}
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
@@ -138,6 +163,8 @@ export default function StepWork({
           >
             Check step
           </Button>
+          </div>
+          <MathKeypad onKey={insertToken} disabled={disabled || busy} />
         </div>
       )}
     </div>
