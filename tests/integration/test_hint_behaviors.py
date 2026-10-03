@@ -95,12 +95,20 @@ def test_confident_misconception_emits_and_persists_jit_hint() -> None:
 
 def test_level_three_hint_forces_assisted_success_until_new_problem() -> None:
     session_id, problem_id, student_id, _ = _create_guided_session()
+    # Each rung must be earned by an intervening attempt — no drilling to
+    # bottom-out by clicking through hints.
     for expected_level in (1, 2, 3):
         hint = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/hint", json={"problem_id": problem_id})
         assert hint.status_code == 200
         hint_payload = hint.json()
         assert hint_payload["allowed"] is True
         assert hint_payload["level"] == expected_level
+        if expected_level < 3:
+            miss = client.post(
+                f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
+                json={"problem_id": problem_id, "answer": "x = 999", "assistance_level": 0},
+            )
+            assert miss.status_code == 200
     problem = _problem(problem_id)
     assisted = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={"problem_id": problem_id, "answer": problem.canonical_answer, "assistance_level": 0})
     assert assisted.status_code == 200
@@ -130,3 +138,22 @@ def test_level_three_hint_forces_assisted_success_until_new_problem() -> None:
         progress = db.get(StudentSkill, {"student_id": student_id, "skill_id": skill_id})
         assert progress is not None
         assert progress.independent_correct_count == independent_correct_before + 1
+
+
+def test_rapid_hint_requests_hold_at_current_level() -> None:
+    session_id, problem_id, _, _ = _create_guided_session()
+    first = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/hint", json={"problem_id": problem_id})
+    assert first.status_code == 200 and first.json()["level"] == 1
+    # Second request with no intervening attempt: same rung, held trigger.
+    held = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/hint", json={"problem_id": problem_id})
+    assert held.status_code == 200
+    assert held.json()["level"] == 1
+    assert held.json()["trigger"] == "REPEAT_LEVEL"
+    # A wrong answer counts as engaging; the next request escalates.
+    miss = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
+        json={"problem_id": problem_id, "answer": "x = 999", "assistance_level": 0},
+    )
+    assert miss.status_code == 200
+    escalated = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/hint", json={"problem_id": problem_id})
+    assert escalated.status_code == 200 and escalated.json()["level"] == 2

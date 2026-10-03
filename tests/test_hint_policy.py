@@ -66,3 +66,28 @@ def test_hint_constraints_preserve_productive_struggle():
     assert "Do not solve" in hint_constraint(2)
     assert "meaningful" in hint_constraint(3)
     assert "near-transfer" in hint_constraint(4)
+
+
+def test_repeat_request_without_attempt_holds_level():
+    # Aleven & Koedinger 2000 / Baker et al. 2004: consecutive requests with
+    # no intervening attempt must not drill to bottom-out.
+    decision = select_hint(
+        state=TutorState.GUIDED_PRACTICE,
+        highest_level_used=2,
+        explicit_request=True,
+        attempt_since_last_hint=False,
+    )
+    assert decision.allowed is True
+    assert decision.level == 2
+    assert decision.trigger == "REPEAT_LEVEL"
+
+
+def test_attempt_between_requests_resumes_escalation():
+    decision = select_hint(
+        state=TutorState.GUIDED_PRACTICE,
+        highest_level_used=2,
+        explicit_request=True,
+        attempt_since_last_hint=True,
+    )
+    assert decision.level == 3
+    assert decision.trigger == "EXPLICIT_REQUEST"

@@ -18,6 +18,7 @@ def select_hint(
     state: TutorState,
     highest_level_used: int = 0,
     explicit_request: bool = False,
+    attempt_since_last_hint: bool = True,
     misconception_confidence: float | None = None,
     repeated_unsuccessful_attempts: int = 0,
 ) -> HintDecision:
@@ -28,6 +29,11 @@ def select_hint(
     used = max(0, min(4, highest_level_used))
 
     if explicit_request:
+        # Help-abuse guard (Aleven & Koedinger 2000; Baker et al. 2004):
+        # without an intervening attempt, repeated requests would let a
+        # learner click straight to bottom-out — serve the same rung again.
+        if used > 0 and not attempt_since_last_hint:
+            return HintDecision(True, used, "REPEAT_LEVEL")
         return HintDecision(True, min(4, used + 1), "EXPLICIT_REQUEST")
 
     if misconception_confidence is not None and misconception_confidence >= 0.75:

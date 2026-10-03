@@ -343,19 +343,21 @@ def test_hint_after_step_error_names_the_learners_line() -> None:
     wrong = _step(session_id, problem_id, "2x = 20")
     assert wrong["misconception_code"] == "EQ_001"
 
-    # First hint is a nudge; second hint quotes the actual wrong line.
+    # First hint is a nudge; the next one must be earned by an intervening
+    # attempt, and the voice tracks the latest wrong line.
     first = client.post(
         f"/api/v1/adaptive-tutor/sessions/{session_id}/hint",
         json={"problem_id": str(problem_id)},
     ).json()
+    assert _step(session_id, problem_id, "2x = 22")["status"] == "invalid"
     second = client.post(
         f"/api/v1/adaptive-tutor/sessions/{session_id}/hint",
         json={"problem_id": str(problem_id)},
     ).json()
     assert first["allowed"] and second["allowed"]
-    assert "2x = 20" not in first["message"]
-    assert "2x = 20" in second["message"]
-    assert "wrong direction" in second["message"]
+    assert "2x = 22" not in first["message"]
+    assert "2x = 22" in second["message"]
+    assert "undid the right operation" in second["message"]  # ARITH_001 voice
 
     # Once the learner corrects the line, the voice stops dwelling on the error.
     assert _step(session_id, problem_id, "2x = 8")["status"] == "valid"

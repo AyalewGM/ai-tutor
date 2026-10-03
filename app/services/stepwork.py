@@ -485,7 +485,10 @@ def _check_expression_step(
         feedback = _ERROR_FEEDBACK.get(code) or "That expression isn't equal to the line above."
         return StepCheck(
             status="invalid",
-            feedback=f"{feedback} Fully simplified, the line above is: {revealed}",
+            feedback=(
+                f"{feedback} Fully simplified, the line above is: {revealed} "
+                "— before continuing, say why that line is equal to it."
+            ),
             misconception_code=code,
             revealed_line=revealed,
         )
@@ -994,7 +997,12 @@ def _check_equation_step(
         feedback = _ERROR_FEEDBACK.get(code) or "Check that every operation applies to both sides."
         return StepCheck(
             status="invalid",
-            feedback=f"{feedback} One legal next line: {revealed}" if revealed else feedback,
+            feedback=(
+                f"{feedback} One legal next line: {revealed} "
+                "— before continuing, say why that move keeps both sides equal."
+                if revealed
+                else feedback
+            ),
             misconception_code=code,
             revealed_line=revealed,
         )
