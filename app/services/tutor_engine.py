@@ -197,9 +197,29 @@ _STEP_VOICE = {
         "In {attempted} you multiplied where you needed to divide. To undo a "
         "coefficient, divide both sides by it."
     ),
+    "EQ_004": (
+        "In {attempted} the coefficient was treated like an added number. "
+        "3x means 3 times x — undo it by dividing, not subtracting."
+    ),
+    "ARITH_001": (
+        "Your line {attempted} undid the right operation, but the arithmetic "
+        "on the other side is off. Recheck that calculation."
+    ),
     "DIST_001": (
         "Your line {attempted} multiplied only the first term inside the parentheses. "
         "The outside number has to multiply every term."
+    ),
+    "DIST_002": (
+        "In {attempted} the factor reached every term but a sign flipped. "
+        "Track the sign when multiplying the negative term."
+    ),
+    "ALG_002": (
+        "In {attempted} a term's sign changed. Keep the sign attached to "
+        "its term when you rewrite a line."
+    ),
+    "FRAC_001": (
+        "In {attempted} you found a common denominator but kept the old "
+        "numerators. Scale each numerator the same way you scaled the denominator."
     ),
     "NUM_003": (
         "In {attempted} the numerators and denominators were added straight across. "

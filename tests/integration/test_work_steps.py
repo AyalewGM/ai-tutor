@@ -6,7 +6,16 @@ from sqlalchemy.orm import Session
 
 from app.core.database import SessionLocal
 from app.main import app
-from app.models import Attempt, Curriculum, Problem, Skill, Student, TutorSession, TutorState
+from app.models import (
+    Attempt,
+    Curriculum,
+    Misconception,
+    Problem,
+    Skill,
+    Student,
+    TutorSession,
+    TutorState,
+)
 from tests.auth_helpers import authenticate_parent_for_student
 
 client = TestClient(app)
@@ -134,9 +143,11 @@ def test_step_misconception_counts_as_evidence_on_correct_final_answer() -> None
         db.commit()
         problem_id = problem.id
 
-    # Two inverse-direction errors mid-work, then a correct final answer.
+    # Two mid-work errors, then a correct final answer. The first is a
+    # wrong-direction inverse; the second removes the constant correctly but
+    # computes 14 - 6 wrong.
     assert _step(session_id, problem_id, "2x = 20")["misconception_code"] == "EQ_001"
-    assert _step(session_id, problem_id, "2x = 22")["status"] == "invalid"
+    assert _step(session_id, problem_id, "2x = 22")["misconception_code"] == "ARITH_001"
 
     result = client.post(
         f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
@@ -144,8 +155,8 @@ def test_step_misconception_counts_as_evidence_on_correct_final_answer() -> None
     )
     assert result.status_code == 200
     assert result.json()["evaluation"]["correct"] is True
-    # The recovered answer still records the step-level misconception.
-    assert result.json()["evaluation"]["misconception_code"] == "EQ_001"
+    # The recovered answer still records the latest step-level misconception.
+    assert result.json()["evaluation"]["misconception_code"] == "ARITH_001"
 
     with SessionLocal() as db:
         attempt = db.scalar(
@@ -155,6 +166,46 @@ def test_step_misconception_counts_as_evidence_on_correct_final_answer() -> None
         )
         assert attempt is not None
         assert attempt.misconception_id is not None
+
+
+def test_new_step_classifier_codes_persist_and_resolve() -> None:
+    student_id, _, skill_id = _fresh_learner()
+    session_id = _start_session(student_id, skill_id)
+    with SessionLocal() as db:
+        problem = Problem(
+            primary_skill_id=skill_id,
+            problem_type="SOLVE_EQUATION",
+            difficulty=1,
+            prompt="Solve 3x = 18.",
+            canonical_answer="x=6",
+            answer_kind="FREE_TEXT",
+            source_type="TEST",
+        )
+        db.add(problem)
+        db.commit()
+        problem_id = problem.id
+
+    # Multiplied by the coefficient instead of dividing.
+    assert _step(session_id, problem_id, "x = 54")["misconception_code"] == "EQ_003"
+
+    result = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
+        json={"problem_id": str(problem_id), "answer": "x = 6", "assistance_level": 0},
+    )
+    assert result.status_code == 200
+    assert result.json()["evaluation"]["correct"] is True
+    assert result.json()["evaluation"]["misconception_code"] == "EQ_003"
+
+    with SessionLocal() as db:
+        attempt = db.scalar(
+            select(Attempt)
+            .where(Attempt.session_id == uuid.UUID(session_id))
+            .order_by(Attempt.attempt_number.desc())
+        )
+        assert attempt is not None and attempt.misconception_id is not None
+        # The code resolved to the curriculum's EQ_003 Misconception row.
+        misconception = db.get(Misconception, attempt.misconception_id)
+        assert misconception is not None and misconception.code == "EQ_003"
 
 
 def test_work_step_rejects_unsupported_and_foreign_problems() -> None:
