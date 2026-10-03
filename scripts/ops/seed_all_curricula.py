@@ -48,6 +48,7 @@ STEPS: list[tuple[str, str]] = [
     ("seed_word_problems", "Authored word problems (pilot skills)"),
     ("seed_mc_problems", "Multiple-choice problems with misconception-coded distractors"),
     ("seed_learn_content", "Learn-mode concept content (applied across curricula)"),
+    ("ops.deepen_skill_breadth", "Companion problem types for type-thin skills"),
 ]
 
 
