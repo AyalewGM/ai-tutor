@@ -30,6 +30,7 @@ from app.parent_models import (
 )
 from app.services.placement import recommend_next_skill
 from app.services.problem_generation import content_readiness
+from app.services.regions import COUNTRIES
 from app.services.review_schedule import reviews_due
 from app.workspace_api import LearnContentOut, build_learn_content
 
@@ -43,6 +44,30 @@ class CurriculumChoice(BaseModel):
     version: str
     jurisdiction: str | None
     grade_level: str | None
+    country_code: str | None = None
+    region_code: str | None = None
+
+
+class RegionOption(BaseModel):
+    code: str
+    name: str
+    has_curriculum: bool
+
+
+class CountryOption(BaseModel):
+    code: str
+    name: str
+    regions: list[RegionOption]
+
+
+class FamilyRegionOut(BaseModel):
+    country_code: str
+    region_code: str
+
+
+class RegionsOut(BaseModel):
+    countries: list[CountryOption]
+    family: FamilyRegionOut | None
 
 
 AVATAR_IDS = [f"avatar-{i}" for i in range(1, 9)]
@@ -109,12 +134,69 @@ class LearnerLaunchpad(BaseModel):
     award_count: int
 
 
+@router.get("/regions", response_model=RegionsOut)
+def list_regions(access: CurrentLearningAccess, db: DbSession) -> RegionsOut:
+    """Country → state/province cascade data + the family's saved region."""
+    covered = set(
+        db.scalars(
+            select(Curriculum.region_code).where(
+                Curriculum.active.is_(True), Curriculum.region_code.is_not(None)
+            )
+        ).all()
+    )
+    parent = access.parent
+    return RegionsOut(
+        countries=[
+            CountryOption(
+                code=country_code,
+                name=country["name"],
+                regions=[
+                    RegionOption(
+                        code=region_code,
+                        name=region_name,
+                        has_curriculum=region_code in covered,
+                    )
+                    for region_code, region_name in sorted(
+                        country["regions"].items(), key=lambda item: item[1]
+                    )
+                ],
+            )
+            for country_code, country in COUNTRIES.items()
+        ],
+        family=(
+            FamilyRegionOut(
+                country_code=parent.country_code, region_code=parent.region_code
+            )
+            if parent.country_code and parent.region_code
+            else None
+        ),
+    )
+
+
 @router.get("/curricula", response_model=list[CurriculumChoice])
 def list_active_curricula(access: CurrentLearningAccess, db: DbSession) -> list[CurriculumChoice]:
     query = select(Curriculum).where(Curriculum.active.is_(True))
     if access.learner_id is not None:
         student = require_learning_owns_student(access, db.get(Student, access.learner_id))
         query = query.where(Curriculum.id == student.curriculum_id)
+    else:
+        # Family cascade: a region with coverage sees only its own curricula.
+        # A region without coverage (or country only) falls back to the whole
+        # country so the family can pick the closest grade-level fit.
+        parent = access.parent
+        if parent.region_code:
+            covered = db.scalar(
+                select(func.count(Curriculum.id)).where(
+                    Curriculum.active.is_(True),
+                    Curriculum.region_code == parent.region_code,
+                )
+            )
+            if covered:
+                query = query.where(Curriculum.region_code == parent.region_code)
+            elif parent.country_code:
+                query = query.where(Curriculum.country_code == parent.country_code)
+        elif parent.country_code:
+            query = query.where(Curriculum.country_code == parent.country_code)
     curricula = db.scalars(
         query.order_by(Curriculum.jurisdiction, Curriculum.grade_level, Curriculum.code, Curriculum.version)
     ).all()
@@ -125,6 +207,8 @@ def list_active_curricula(access: CurrentLearningAccess, db: DbSession) -> list[
             version=curriculum.version,
             jurisdiction=curriculum.jurisdiction,
             grade_level=curriculum.grade_level,
+            country_code=curriculum.country_code,
+            region_code=curriculum.region_code,
         )
         for curriculum in curricula
     ]

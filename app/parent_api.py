@@ -29,6 +29,8 @@ from app.parent_schemas import (
     LinkChildOut,
     ParentProfileOut,
     ParentProfileUpdateIn,
+    RegionOut,
+    RegionUpdateIn,
 )
 from app.schemas import (
     PasswordReauthSchema,
@@ -51,6 +53,7 @@ from app.services.parent_gate import (
     register_pin_attempt,
     require_parent_unlock,
 )
+from app.services.regions import country_name, region_name, valid_region
 
 router = APIRouter(prefix="/parents", tags=["parents"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -63,6 +66,28 @@ def _profile_out(user: CurrentUser, parent: ParentProfile) -> ParentProfileOut:
         user_id=user.id,
         display_name=user.display_name,
         email=user.email,
+        country_code=parent.country_code,
+        region_code=parent.region_code,
+    )
+
+
+@router.put("/region", response_model=RegionOut)
+def update_region(payload: RegionUpdateIn, parent: CurrentParent, db: DbSession) -> RegionOut:
+    """Family's chosen state/province — drives the curriculum cascade and
+    state-level usage analytics. No PIN unlock: this is set during first-run
+    onboarding before the family has a session habit, and it is low-sensitivity."""
+    country_code = payload.country_code.upper()
+    region_code = payload.region_code.upper()
+    if not valid_region(country_code, region_code):
+        raise HTTPException(status_code=422, detail="Unknown state or province")
+    parent.country_code = country_code
+    parent.region_code = region_code
+    db.commit()
+    return RegionOut(
+        country_code=country_code,
+        country_name=country_name(country_code),
+        region_code=region_code,
+        region_name=region_name(country_code, region_code),
     )
 
 

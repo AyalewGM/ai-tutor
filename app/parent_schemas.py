@@ -9,10 +9,24 @@ class ParentProfileOut(BaseModel):
     user_id: uuid.UUID
     display_name: str | None = None
     email: str
+    country_code: str | None = None
+    region_code: str | None = None
 
 
 class ParentProfileUpdateIn(BaseModel):
     display_name: str = Field(min_length=1, max_length=120)
+
+
+class RegionUpdateIn(BaseModel):
+    country_code: str = Field(min_length=2, max_length=2)
+    region_code: str = Field(min_length=2, max_length=3)
+
+
+class RegionOut(BaseModel):
+    country_code: str
+    country_name: str
+    region_code: str
+    region_name: str
 
 
 class ChildSummaryOut(BaseModel):

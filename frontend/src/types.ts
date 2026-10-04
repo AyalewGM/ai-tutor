@@ -14,6 +14,25 @@ export interface CurriculumChoice {
   version: string;
   jurisdiction: string | null;
   grade_level: string | null;
+  country_code: string | null;
+  region_code: string | null;
+}
+
+export interface RegionOption {
+  code: string;
+  name: string;
+  has_curriculum: boolean;
+}
+
+export interface CountryOption {
+  code: string;
+  name: string;
+  regions: RegionOption[];
+}
+
+export interface RegionsOut {
+  countries: CountryOption[];
+  family: { country_code: string; region_code: string } | null;
 }
 
 export interface SkillChoice {

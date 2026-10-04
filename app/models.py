@@ -14,6 +14,7 @@ from sqlalchemy import (
     String,
     Text,
     UniqueConstraint,
+    event,
 )
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
@@ -64,6 +65,10 @@ class Curriculum(Base):
     name: Mapped[str] = mapped_column(String(255))
     jurisdiction: Mapped[str | None] = mapped_column(String(255))
     grade_level: Mapped[str | None] = mapped_column(String(30))
+    # Normalized jurisdiction for the family profile cascade ("US"/"CA" +
+    # state/province code); NULL for ad-hoc/test curricula.
+    country_code: Mapped[str | None] = mapped_column(String(2))
+    region_code: Mapped[str | None] = mapped_column(String(20), index=True)
     authority_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("education_authorities.id"), index=True)
     version: Mapped[str] = mapped_column(String(80), default="1")
     effective_from: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
@@ -71,6 +76,24 @@ class Curriculum(Base):
     source_uri: Mapped[str | None] = mapped_column(Text)
     provenance_json: Mapped[dict | None] = mapped_column(JSONB)
     active: Mapped[bool] = mapped_column(Boolean, default=True)
+
+
+@event.listens_for(Curriculum, "before_insert")
+@event.listens_for(Curriculum, "before_update")
+def _normalize_curriculum_region(_mapper, _connection, target: "Curriculum") -> None:
+    """Fill normalized region codes from the display jurisdiction when unset.
+
+    The authority → jurisdiction tree and the pack loader set these
+    explicitly; this is the fallback so legacy seed scripts and ad-hoc
+    curriculum writes still land in the right region bucket.
+    """
+    if target.country_code or target.region_code:
+        return
+    from app.services.regions import infer_region
+
+    country, region = infer_region(target.jurisdiction)
+    target.country_code = target.country_code or country
+    target.region_code = target.region_code or region
 
 
 class Student(Base):

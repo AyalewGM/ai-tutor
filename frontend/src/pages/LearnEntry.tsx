@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import type { CurriculumChoice, DiagnosticOut, LearnerChoice, SessionOut, SkillChoice } from "../types";
+import type { CurriculumChoice, DiagnosticOut, LearnerChoice, RegionsOut, SessionOut, SkillChoice } from "../types";
 
 export default function LearnEntry() {
   const [learners, setLearners] = useState<LearnerChoice[]>([]);
@@ -31,6 +31,10 @@ export default function LearnEntry() {
   const [skillsLoading, setSkillsLoading] = useState(false);
   const [topicFilter, setTopicFilter] = useState("All topics");
   const [lessonOpen, setLessonOpen] = useState(false);
+  const [regions, setRegions] = useState<RegionsOut | null>(null);
+  const [regionPickerOpen, setRegionPickerOpen] = useState(false);
+  const [regionSaving, setRegionSaving] = useState(false);
+  const [pendingCountry, setPendingCountry] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,7 +42,43 @@ export default function LearnEntry() {
       .then((rows) => { setLearners(rows); if (rows.length === 1) setLearnerId(rows[0].id); })
       .catch(() => setError("Could not load learners"));
     api<CurriculumChoice[]>("/onboarding/curricula").then(setCurricula).catch(() => {});
+    api<RegionsOut>("/onboarding/regions")
+      .then((out) => {
+        setRegions(out);
+        if (!out.family) setRegionPickerOpen(true);
+      })
+      .catch(() => {});
   }, []);
+
+  const familyCountry = regions?.family?.country_code ?? "";
+  const familyRegion = regions?.family?.region_code ?? "";
+  const selectedCountry = regions?.countries.find((c) => c.code === familyCountry);
+  const selectedRegion = selectedCountry?.regions.find((r) => r.code === familyRegion);
+  const regionCovered = selectedRegion?.has_curriculum ?? false;
+
+  async function saveRegion(countryCode: string, regionCode: string) {
+    if (!countryCode || !regionCode) return;
+    setRegionSaving(true);
+    setError("");
+    try {
+      await api("/parents/region", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ country_code: countryCode, region_code: regionCode }),
+      });
+      setRegions((current) =>
+        current ? { ...current, family: { country_code: countryCode, region_code: regionCode } } : current,
+      );
+      setRegionPickerOpen(false);
+      setCurriculumId("");
+      const rows = await api<CurriculumChoice[]>("/onboarding/curricula");
+      setCurricula(rows);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Could not save your state");
+    } finally {
+      setRegionSaving(false);
+    }
+  }
 
   useEffect(() => {
     setSkills([]); setSkillId("");
@@ -363,6 +403,70 @@ export default function LearnEntry() {
                     autoComplete="off"
                   />
                 </div>
+                {regions && (
+                  <div className="space-y-1.5">
+                    <Label>Your state or province</Label>
+                    {regionPickerOpen ? (
+                      <div className="grid grid-cols-2 gap-2">
+                        <Select
+                          value={pendingCountry}
+                          onValueChange={(code) => {
+                            setPendingCountry(code);
+                          }}
+                        >
+                          <SelectTrigger aria-label="Country">
+                            <SelectValue placeholder="Country" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {regions.countries.map((country) => (
+                              <SelectItem key={country.code} value={country.code}>
+                                {country.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <Select
+                          value=""
+                          disabled={!pendingCountry || regionSaving}
+                          onValueChange={(code) => saveRegion(pendingCountry, code)}
+                        >
+                          <SelectTrigger aria-label="State or province">
+                            <SelectValue
+                              placeholder={
+                                pendingCountry ? "State / province" : "Pick a country first"
+                              }
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {regions.countries
+                              .find((c) => c.code === pendingCountry)
+                              ?.regions.map((region) => (
+                                <SelectItem key={region.code} value={region.code}>
+                                  {region.name}
+                                  {!region.has_curriculum ? " (coming soon)" : ""}
+                                </SelectItem>
+                              ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setPendingCountry(familyCountry);
+                          setRegionPickerOpen(true);
+                        }}
+                        className="flex w-full items-center justify-between rounded-md border border-border bg-card px-3 py-2 text-sm hover:border-primary/40"
+                      >
+                        <span>
+                          {selectedRegion?.name ?? familyRegion},{" "}
+                          {selectedCountry?.name ?? familyCountry}
+                        </span>
+                        <span className="text-xs font-medium text-primary">Change</span>
+                      </button>
+                    )}
+                  </div>
+                )}
                 <div className="space-y-1.5">
                   <Label htmlFor="curriculum">Exact curriculum</Label>
                   <Select value={curriculumId} onValueChange={setCurriculumId}>
@@ -372,11 +476,21 @@ export default function LearnEntry() {
                     <SelectContent>
                       {curricula.map((curriculum) => (
                         <SelectItem key={curriculum.id} value={curriculum.id}>
-                          {curriculum.code} ({curriculum.version})
+                          {curriculum.code}
+                          {curriculum.grade_level ? ` — Grade ${curriculum.grade_level}` : ""}
+                          {familyRegion && !regionCovered && curriculum.jurisdiction
+                            ? ` · ${curriculum.jurisdiction}`
+                            : ""}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
+                  {familyRegion && !regionCovered && selectedRegion && (
+                    <p className="text-xs text-muted-foreground">
+                      Mihur doesn't have a {selectedRegion.name} curriculum yet —
+                      pick the closest grade-level fit.
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-1.5">
                   <Label>Avatar</Label>
