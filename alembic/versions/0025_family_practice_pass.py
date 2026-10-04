@@ -5,8 +5,9 @@ Revises: 0024_tutor_turns_time_index
 """
 
 import sqlalchemy as sa
-from alembic import op
 from sqlalchemy.dialects import postgresql
+
+from alembic import op
 
 revision = "0025_family_practice_pass"
 down_revision = "0024_tutor_turns_time_index"
