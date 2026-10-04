@@ -150,6 +150,7 @@ class ParentRegisterSchema(BaseModel):
     parent_pin: str = Field(pattern=r"^\d{4}$")
     terms_accepted: Literal[True]
     coppa_consent_given: Literal[True]
+    turnstile_token: str | None = Field(default=None, max_length=2048)
 
 
 class StudentCreateSchema(BaseModel):

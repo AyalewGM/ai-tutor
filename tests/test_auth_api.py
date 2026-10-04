@@ -1,7 +1,14 @@
 from fastapi import HTTPException, Response
+from starlette.requests import Request
 
 from app import auth_api
 from app.auth_api import LoginRequest, _set_session_cookie, login
+
+
+def _request() -> Request:
+    return Request(
+        {"type": "http", "client": ("testclient", 1234), "headers": []}
+    )
 
 
 class MissingUserDb:
@@ -30,7 +37,7 @@ def test_unknown_parent_login_returns_generic_failure():
     payload = LoginRequest(email="synthetic.parent@example.com", password="not-a-real-password")
 
     try:
-        login(payload, Response(), MissingUserDb())
+        login(payload, _request(), Response(), MissingUserDb())
     except HTTPException as exc:
         assert exc.status_code == 401
         assert exc.detail == "Invalid email or password"

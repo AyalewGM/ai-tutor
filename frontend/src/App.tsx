@@ -10,6 +10,7 @@ import Pending from "./pages/Pending";
 import PracticePass from "./pages/PracticePass";
 import Privacy from "./pages/Privacy";
 import SkillMap from "./pages/SkillMap";
+import Unavailable from "./pages/Unavailable";
 import Workspace from "./pages/Workspace";
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/pending" element={<Pending />} />
+      <Route path="/unavailable" element={<Unavailable />} />
       <Route path="/practice/:token" element={<PracticePass />} />
       <Route path="/learn" element={<LearnEntry />} />
       <Route path="/parent" element={<ParentDashboard />} />

@@ -1,9 +1,10 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Sparkles, ShieldCheck, LineChart } from "lucide-react";
-import { ApiError, post } from "../api";
+import { api, ApiError, post } from "../api";
 import Brand from "../components/Brand";
-import type { SessionUser } from "../types";
+import Turnstile from "../components/Turnstile";
+import type { AuthConfig, SessionUser } from "../types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -19,9 +20,18 @@ export default function Login() {
   const [coppaConsent, setCoppaConsent] = useState(false);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [siteKey, setSiteKey] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileReset, setTurnstileReset] = useState(0);
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const next = (params.get("next") || "/learn").replace(/^\/app/, "");
+
+  useEffect(() => {
+    api<AuthConfig>("/auth/config")
+      .then((config) => setSiteKey(config.turnstile_site_key))
+      .catch(() => setSiteKey(null));
+  }, []);
 
   async function submit(event: FormEvent) {
     event.preventDefault();
@@ -37,15 +47,22 @@ export default function Login() {
           parent_pin: parentPin,
           terms_accepted: termsAccepted,
           coppa_consent_given: coppaConsent,
+          turnstile_token: turnstileToken || undefined,
         });
       } else {
-        session = await post<SessionUser>("/auth/login", { email, password });
+        session = await post<SessionUser>("/auth/login", {
+          email,
+          password,
+          turnstile_token: turnstileToken || undefined,
+        });
       }
       const awaitingApproval =
         session.approval_status === "PENDING" || session.approval_status === "REJECTED";
       navigate(awaitingApproval ? "/pending" : next, { replace: true });
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Something went wrong");
+      setTurnstileToken(null);
+      setTurnstileReset((n) => n + 1);
     } finally {
       setSubmitting(false);
     }
@@ -212,6 +229,14 @@ export default function Login() {
                       </Link>
                     </p>
                   </>
+                )}
+
+                {siteKey && (
+                  <Turnstile
+                    siteKey={siteKey}
+                    onToken={setTurnstileToken}
+                    resetSignal={turnstileReset}
+                  />
                 )}
 
                 {error && (

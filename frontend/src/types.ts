@@ -361,3 +361,7 @@ export interface SessionUser {
   approval_status: ApprovalStatus | null;
   rejection_reason: string | null;
 }
+
+export interface AuthConfig {
+  turnstile_site_key: string | null;
+}

@@ -12,6 +12,7 @@ from app.core.observability import configure_logging, request_logging_middleware
 from app.core.settings import settings
 from app.diagnostic_api import router as diagnostic_router
 from app.hint_api import router as hint_router
+from app.middleware.geo_restriction import geo_restriction_middleware
 from app.middleware.pii_sanitizer import PIISanitizerMiddleware
 from app.onboarding_api import router as onboarding_router
 from app.parent_api import router as parent_router
@@ -26,6 +27,10 @@ configure_logging()
 
 app = FastAPI(title=settings.app_name, version="0.1.0")
 app.add_middleware(PIISanitizerMiddleware)
+# Geo runs inside session identity (it reads authenticated_* state) and inside
+# request logging (blocks are logged). Registration order → outer→inner:
+# request_logging, session, geo, PII.
+app.middleware("http")(geo_restriction_middleware)
 app.middleware("http")(session_identity_middleware)
 app.middleware("http")(request_logging_middleware)
 app.include_router(auth_router, prefix=settings.api_prefix)

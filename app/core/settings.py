@@ -34,6 +34,36 @@ class Settings(BaseSettings):
     # Where "new family awaiting approval" notifications go.
     admin_notification_email: str | None = None
 
+    # Cloudflare edge protection. Only enable cloudflare_trusted once the
+    # origin is locked down so only Cloudflare can reach it — otherwise the
+    # CF-* headers are spoofable. geo_enforcement_enabled blocks every
+    # request whose country is missing, unknown, or outside allowed_countries
+    # (fail closed). Sign-in/config/health stay reachable so approved
+    # families can sign in while travelling.
+    cloudflare_trusted: bool = False
+    geo_enforcement_enabled: bool = False
+    allowed_countries: str = "US,CA"
+
+    # Sign-in / registration throttles (Redis-backed, fail closed). Only
+    # disable in tests/dev — production must keep this on.
+    auth_throttles_enabled: bool = True
+    login_rate_limit_per_ip: int = 20
+    login_rate_window_seconds: int = 900
+    register_rate_limit_per_ip: int = 5
+    register_rate_window_seconds: int = 3600
+    login_max_failed_attempts: int = 5
+    login_lockout_seconds: int = 900
+
+    # Cloudflare Turnstile bot check on sign-in/registration. Enabled when
+    # the secret key is set; fail closed in production.
+    turnstile_site_key: str | None = None
+    turnstile_secret_key: str | None = None
+    turnstile_timeout_seconds: float = 5.0
+
+    @property
+    def allowed_country_set(self) -> set[str]:
+        return {c.strip().upper() for c in self.allowed_countries.split(",") if c.strip()}
+
     photo_ocr_provider: str = "auto"  # auto | mathpix | stub | disabled
     mathpix_app_id: str | None = None
     mathpix_app_key: str | None = None
