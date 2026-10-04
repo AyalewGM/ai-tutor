@@ -10,7 +10,7 @@ from app.adaptive_api import _focus
 from app.api import _problem_out, _student_skill, _tutor_context
 from app.core.database import SessionLocal, get_db
 from app.hint_models import HintEvent
-from app.identity import CurrentParent, require_parent_owns_session
+from app.identity import CurrentLearningAccess, require_learning_owns_session
 from app.models import (
     Attempt,
     MasteryEvent,
@@ -95,9 +95,9 @@ def _publish_adaptive_event(
 
 @router.post("/sessions/{session_id}/respond", response_model=RespondOut)
 def respond(
-    session_id: uuid.UUID, payload: RespondIn, parent: CurrentParent, db: DbSession
+    session_id: uuid.UUID, payload: RespondIn, access: CurrentLearningAccess, db: DbSession
 ) -> RespondOut:
-    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
 
     active_skill_id = session.active_skill_id or session.primary_skill_id
     try:
@@ -609,7 +609,7 @@ def respond(
 
 @router.post("/sessions/{session_id}/work-step", response_model=WorkStepOut)
 def work_step(
-    session_id: uuid.UUID, payload: WorkStepIn, parent: CurrentParent, db: DbSession
+    session_id: uuid.UUID, payload: WorkStepIn, access: CurrentLearningAccess, db: DbSession
 ) -> WorkStepOut:
     """Grade one intermediate work line for a step-supporting problem.
 
@@ -617,7 +617,7 @@ def work_step(
     WORK_STEP turns, so the escalation policy is server-derived and cannot be
     reset by the client.
     """
-    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
     problem = db.get(Problem, payload.problem_id)
     active_skill_id = session.active_skill_id or session.primary_skill_id
     if problem is None or problem.primary_skill_id != active_skill_id:
@@ -787,7 +787,7 @@ OcrProvider = Annotated[photo_ocr.PhotoOcrProvider, Depends(photo_ocr.get_ocr_pr
 @router.post("/sessions/{session_id}/work-photo/scan", response_model=PhotoScanOut)
 async def work_photo_scan(
     session_id: uuid.UUID,
-    parent: CurrentParent,
+    access: CurrentLearningAccess,
     db: DbSession,
     ocr: OcrProvider,
     file: Annotated[UploadFile, File()],
@@ -800,7 +800,7 @@ async def work_photo_scan(
     only confirmed lines are submitted to ``work-step`` — so a misread can
     never be graded as a learner misconception.
     """
-    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
     problem = db.get(Problem, problem_id)
     active_skill_id = session.active_skill_id or session.primary_skill_id
     if problem is None or problem.primary_skill_id != active_skill_id:
