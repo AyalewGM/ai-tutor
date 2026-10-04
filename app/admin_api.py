@@ -253,6 +253,10 @@ class RejectIn(BaseModel):
     reason: str | None = Field(default=None, max_length=500)
 
 
+class FamilyAiLimitIn(BaseModel):
+    daily_limit: int | None = Field(default=None, ge=0)
+
+
 def _family_out(parent: ParentProfile, user: User, learner_count: int) -> FamilyOut:
     return FamilyOut(
         parent_profile_id=parent.id,
@@ -375,4 +379,43 @@ def reject_family(
         send_email,
         family_rejected_email(family_user.email, family_user.display_name, reason),
     )
+    return _family_out(parent, family_user, _learner_count(db, parent))
+
+
+@router.get("/ai-usage/summary")
+def ai_usage_summary(
+    db: DbSession,
+    _user: Annotated[User, Depends(require_staff(Permission.AI_USAGE_READ))],
+) -> dict:
+    """Month-to-date AI generations, denials, and estimated spend by family."""
+    from app.services.usage_metering import usage_summary
+
+    return usage_summary(db)
+
+
+@router.patch("/families/{parent_profile_id}/ai-limit", response_model=FamilyOut)
+def set_family_ai_limit(
+    parent_profile_id: uuid.UUID,
+    payload: FamilyAiLimitIn,
+    db: DbSession,
+    staff: Annotated[User, Depends(require_staff(Permission.AI_BUDGETS_MANAGE))],
+) -> FamilyOut:
+    parent = db.get(ParentProfile, parent_profile_id)
+    family_user = db.get(User, parent.user_id) if parent is not None else None
+    if parent is None or family_user is None:
+        raise HTTPException(404, "Family not found")
+    before = parent.ai_daily_limit
+    parent.ai_daily_limit = payload.daily_limit
+    db.flush()
+    record_admin_action(
+        db,
+        actor_user_id=staff.id,
+        actor_label=staff.email,
+        action="FAMILY_AI_LIMIT_SET",
+        target_type="parent_profile",
+        target_id=str(parent.id),
+        before={"ai_daily_limit": before},
+        after={"ai_daily_limit": payload.daily_limit},
+    )
+    db.commit()
     return _family_out(parent, family_user, _learner_count(db, parent))

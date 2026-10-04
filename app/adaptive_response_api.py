@@ -64,7 +64,8 @@ from app.services.review_schedule import (
 )
 from app.services.state_machine import Transition, determine_next_action
 from app.services.state_machine import TutorContext as StateContext
-from app.services.tutor_engine import fallback_message, tutor_engine
+from app.services.tutor_engine import fallback_message
+from app.services.usage_metering import ai_generate
 from app.telemetry import TelemetryEnvelope, publish_telemetry_fail_open
 
 router = APIRouter(prefix="/adaptive-tutor", tags=["adaptive-tutor"])
@@ -435,8 +436,12 @@ def respond(
         misconception=evidence.misconception,
         session_id=session.id,
     )
-    generation = tutor_engine.generate(
+    generation = ai_generate(
+        db,
         tutor_context,
+        student=student,
+        session_id=session.id,
+        action=tutor_action,
         # Correct-answer feedback needs no model call; the deterministic
         # fallback covers it. The LLM only engages where language adds
         # pedagogical value: misses, hints, misconceptions.

@@ -51,7 +51,12 @@ class OpenAIAdapter:
 
         if not response.output_text:
             raise TutorProviderError("OpenAI response contained no tutor output")
-        return json.loads(response.output_text)
+        data = json.loads(response.output_text)
+        usage = getattr(response, "usage", None)
+        if usage is not None:
+            data.setdefault("input_tokens", getattr(usage, "input_tokens", None))
+            data.setdefault("output_tokens", getattr(usage, "output_tokens", None))
+        return data
 
 
 class GeminiAdapter:
@@ -77,7 +82,12 @@ class GeminiAdapter:
 
         if not response.text:
             raise TutorProviderError("Gemini response contained no tutor output")
-        return json.loads(response.text)
+        data = json.loads(response.text)
+        usage = getattr(response, "usage_metadata", None)
+        if usage is not None:
+            data.setdefault("input_tokens", getattr(usage, "prompt_token_count", None))
+            data.setdefault("output_tokens", getattr(usage, "candidates_token_count", None))
+        return data
 
 
 def build_adapter() -> TutorProvider | None:

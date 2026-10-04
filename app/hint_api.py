@@ -18,7 +18,8 @@ from app.services.curriculum_scope import (
     require_skill_in_scope,
 )
 from app.services.hint_policy import hint_constraint, select_hint
-from app.services.tutor_engine import fallback_message, tutor_engine
+from app.services.tutor_engine import fallback_message
+from app.services.usage_metering import ai_generate
 
 router = APIRouter(prefix="/adaptive-tutor", tags=["adaptive-tutor"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -120,7 +121,13 @@ def request_hint(
         problem=problem,
         session_id=session.id,
     )
-    generation = tutor_engine.generate(tutor_context)
+    generation = ai_generate(
+        db,
+        tutor_context,
+        student=student,
+        session_id=session.id,
+        action="GIVE_HINT",
+    )
     message = chat_cpa.sanitize_cpa_blocks(
         generation.message, canonical_answer=problem.canonical_answer
     )

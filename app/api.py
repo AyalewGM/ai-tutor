@@ -48,7 +48,8 @@ from app.services.mastery import update_mastery
 from app.services.problem_selection import select_next_problem
 from app.services.state_machine import TutorContext as StateContext
 from app.services.state_machine import determine_next_action
-from app.services.tutor_engine import TutorContext, tutor_engine
+from app.services.tutor_engine import TutorContext
+from app.services.usage_metering import ai_generate
 
 router = APIRouter(prefix="/tutor", tags=["tutor"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -161,7 +162,8 @@ def create_session(
     db.add(session)
     db.flush()
 
-    generation = tutor_engine.generate(
+    generation = ai_generate(
+        db,
         _tutor_context(
             db,
             student=student,
@@ -170,7 +172,10 @@ def create_session(
             action="ASK_DIAGNOSTIC",
             hint_level=None,
             problem=problem,
-        )
+        ),
+        student=student,
+        session_id=session.id,
+        action="ASK_DIAGNOSTIC",
     )
     db.add(
         TutorTurn(
@@ -374,7 +379,8 @@ def respond(
         correct=evaluation.correct,
         session_id=session.id,
     )
-    generation = tutor_engine.generate(
+    generation = ai_generate(
+        db,
         _tutor_context(
             db,
             student=student,
@@ -386,7 +392,10 @@ def respond(
             next_problem=next_problem,
             student_answer=payload.answer,
             misconception=misconception,
-        )
+        ),
+        student=student,
+        session_id=session.id,
+        action=transition.action,
     )
     db.add(
         TutorTurn(
