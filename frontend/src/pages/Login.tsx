@@ -1,7 +1,8 @@
 import { FormEvent, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { GraduationCap, Sparkles, ShieldCheck, LineChart } from "lucide-react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Sparkles, ShieldCheck, LineChart } from "lucide-react";
 import { ApiError, post } from "../api";
+import Brand from "../components/Brand";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -49,11 +50,10 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Brand header */}
-      <header className="flex items-center gap-2 px-6 py-4">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-          <GraduationCap className="h-5 w-5" />
-        </div>
-        <span className="text-lg font-bold tracking-tight">AI Tutor</span>
+      <header className="flex items-center px-6 py-4">
+        <Link to="/" aria-label="Mihur home">
+          <Brand size="md" />
+        </Link>
       </header>
 
       <div className="flex flex-1 items-center justify-center px-4 pb-16">
@@ -199,6 +199,14 @@ export default function Login() {
                       />
                       I am the parent or guardian and consent to the privacy practices described for this family account.
                     </label>
+                    <p className="rounded-md bg-secondary px-3 py-2 text-xs text-muted-foreground">
+                      Mihur uses AI to help word hints and explanations. It never
+                      grades your child's work or gives answers, and it never
+                      receives your child's name.{" "}
+                      <Link to="/privacy#ai" className="font-medium text-primary underline-offset-2 hover:underline">
+                        How we use AI
+                      </Link>
+                    </p>
                   </>
                 )}
 

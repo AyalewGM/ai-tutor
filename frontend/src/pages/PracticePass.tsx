@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ApiError, post } from "../api";
+import Brand from "../components/Brand";
 
 type Activated = { student_id: string; nickname: string };
 
@@ -27,7 +28,8 @@ export default function PracticePass() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-lg items-center px-4 py-10">
+    <main className="mx-auto flex min-h-screen max-w-lg flex-col items-center justify-center gap-6 px-4 py-10">
+      <Brand size="lg" />
       <Card className="w-full">
         <CardHeader>
           <CardTitle>Ready to practice?</CardTitle>
