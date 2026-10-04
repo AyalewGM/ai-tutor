@@ -8,6 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.auth_models import AuthSession
+from app.parent_models import LearnerPassSession
 from app.core.database import SessionLocal
 
 SESSION_COOKIE = "ai_tutor_session"
@@ -44,6 +45,17 @@ def resolve_user_id(db: Session, token: str) -> uuid.UUID | None:
 
 
 async def session_identity_middleware(request: Request, call_next):
+    learner_token = request.cookies.get("ai_tutor_learner")
+    if learner_token:
+        with SessionLocal() as db:
+            learner_session = db.scalar(
+                select(LearnerPassSession).where(
+                    LearnerPassSession.token_hash == _digest(learner_token)
+                )
+            )
+            if learner_session is not None and learner_session.expires_at > datetime.now(UTC):
+                request.state.authenticated_learner_id = learner_session.student_id
+
     token = request.cookies.get(SESSION_COOKIE)
     if token:
         with SessionLocal() as db:
