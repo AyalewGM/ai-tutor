@@ -16,6 +16,9 @@ from app.models import Student
 from app.parent_models import FamilyPracticePass, LearnerPassSession, ParentStudentRelationship
 from app.services.parent_gate import require_parent_unlock
 
+# These models live here (rather than parent_models) so legacy test/bootstrap code
+# that creates Base.metadata before Alembic does not pre-create the new tables.
+# Alembic owns their lifecycle in deployed environments.
 router = APIRouter(prefix="/practice-pass", tags=["practice-pass"])
 DbSession = Annotated[Session, Depends(get_db)]
 LEARNER_COOKIE = "ai_tutor_learner"
