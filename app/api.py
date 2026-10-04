@@ -7,7 +7,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.identity import CurrentParent, require_parent_owns_session, require_parent_owns_student
+from app.identity import CurrentLearningAccess, require_learning_owns_session, require_learning_owns_student
 from app.models import (
     Attempt,
     Curriculum,
@@ -124,9 +124,9 @@ def _tutor_context(
 
 @router.post("/sessions", response_model=SessionOut)
 def create_session(
-    payload: SessionCreate, parent: CurrentParent, db: DbSession
+    payload: SessionCreate, access: CurrentLearningAccess, db: DbSession
 ) -> SessionOut:
-    student = require_parent_owns_student(parent, db.get(Student, payload.student_id))
+    student = require_learning_owns_student(access, db.get(Student, payload.student_id))
     try:
         scope = resolve_student_curriculum_scope(db, student)
         skill = require_skill_in_scope(db, skill_id=payload.skill_id, scope=scope)
@@ -197,9 +197,9 @@ def create_session(
 
 @router.post("/sessions/{session_id}/respond", response_model=RespondOut)
 def respond(
-    session_id: uuid.UUID, payload: RespondIn, parent: CurrentParent, db: DbSession
+    session_id: uuid.UUID, payload: RespondIn, access: CurrentLearningAccess, db: DbSession
 ) -> RespondOut:
-    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
     try:
         scope = require_session_scope(db, session)
         skill = require_skill_in_scope(db, skill_id=session.primary_skill_id, scope=scope)
