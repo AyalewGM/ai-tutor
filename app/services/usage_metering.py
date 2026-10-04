@@ -99,8 +99,10 @@ def _family_limit(db: Session, family_user_id) -> int | None:
     profile = db.scalar(
         select(ParentProfile).where(ParentProfile.user_id == family_user_id)
     )
-    if profile is not None and profile.ai_daily_limit is not None:
-        return profile.ai_daily_limit
+    if profile is not None:
+        from app.services.plans import effective_ai_daily_limit
+
+        return effective_ai_daily_limit(db, profile)
     return settings.family_ai_daily_generations
 
 

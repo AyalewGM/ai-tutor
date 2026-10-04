@@ -99,7 +99,6 @@ def register_parent(
             ParentProfile(
                 user_id=user.id,
                 subscription_tier="free",
-                max_students=1,
                 parent_pin_hash=_passwords.hash(payload.parent_pin),
                 coppa_consent_given=True,
                 consent_timestamp=accepted_at,

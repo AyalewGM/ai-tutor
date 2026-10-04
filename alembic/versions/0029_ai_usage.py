@@ -65,17 +65,22 @@ def upgrade() -> None:
             sa.Column("output_usd_per_1m", sa.Numeric(10, 4), nullable=False),
             sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False),
         )
-        op.execute(
-            sa.text(
-                "INSERT INTO ai_model_rates (provider, model, input_usd_per_1m, "
-                "output_usd_per_1m, updated_at) VALUES "
-                "('openai', 'gpt-5', 1.25, 10.00, now()), "
-                "('openai', 'gpt-5-mini', 0.25, 2.00, now()), "
-                "('openai', 'gpt-4o-mini', 0.15, 0.60, now()), "
-                "('gemini', 'gemini-3.8-flash', 0.30, 2.50, now()), "
-                "('gemini', 'gemini-2.5-flash', 0.30, 2.50, now())"
-            )
+
+    # 0001's Base.metadata.create_all pre-creates mapped tables on fresh
+    # databases, so the existence check above can skip the seed — run it
+    # unconditionally and idempotently instead.
+    op.execute(
+        sa.text(
+            "INSERT INTO ai_model_rates (provider, model, input_usd_per_1m, "
+            "output_usd_per_1m, updated_at) VALUES "
+            "('openai', 'gpt-5', 1.25, 10.00, now()), "
+            "('openai', 'gpt-5-mini', 0.25, 2.00, now()), "
+            "('openai', 'gpt-4o-mini', 0.15, 0.60, now()), "
+            "('gemini', 'gemini-3.8-flash', 0.30, 2.50, now()), "
+            "('gemini', 'gemini-2.5-flash', 0.30, 2.50, now()) "
+            "ON CONFLICT (provider, model) DO NOTHING"
         )
+    )
 
     parent_cols = {c["name"] for c in inspector.get_columns("parent_profiles")}
     if "ai_daily_limit" not in parent_cols:

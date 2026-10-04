@@ -83,6 +83,10 @@ class Settings(BaseSettings):
     family_ai_daily_generations: int = 50
     ai_monthly_cost_cap_usd: Decimal = Decimal("200.00")
     ai_budget_alert_pct: float = 0.8
+    # CAD pricing: fallback USD→CAD rate when no Bank of Canada average has
+    # been stored yet, and the fetch timeout for the recalc action.
+    usd_to_cad_fallback: Decimal = Decimal("1.36")
+    fx_fetch_timeout_seconds: float = 10.0
 
     model_config = SettingsConfigDict(
         env_file=".env",

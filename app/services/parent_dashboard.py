@@ -50,6 +50,7 @@ from app.services.awards import BADGE_XP, attempt_xp
 from app.services.curriculum_scope import CurriculumScopeError, resolve_student_curriculum_scope
 from app.services.parent_intelligence import ParentSkillEvidence, classify_parent_skill_progress
 from app.services.placement import recommend_next_skill
+from app.services.plans import effective_seats
 from app.services.review_schedule import RELEARNING, reviews_due
 
 
@@ -244,7 +245,7 @@ def link_child_with_claim(
             )
             or 0
         )
-        seat_limit = locked_parent.max_students or 1
+        seat_limit = effective_seats(db, locked_parent)
         if active_relationships >= seat_limit:
             raise HTTPException(
                 status_code=status.HTTP_402_PAYMENT_REQUIRED,

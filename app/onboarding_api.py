@@ -28,7 +28,9 @@ from app.parent_models import (
     ParentStudentRelationship,
     ParentStudentRelationshipEvent,
 )
+from app.plan_models import Plan
 from app.services.placement import recommend_next_skill
+from app.services.plans import currency_for, effective_seats, localized_price, upgrade_target
 from app.services.problem_generation import content_readiness
 from app.services.regions import COUNTRIES
 from app.services.review_schedule import reviews_due
@@ -68,6 +70,23 @@ class FamilyRegionOut(BaseModel):
 class RegionsOut(BaseModel):
     countries: list[CountryOption]
     family: FamilyRegionOut | None
+
+
+class PlanPriceOut(BaseModel):
+    currency: str
+    amount: str
+
+
+class PlanOption(BaseModel):
+    code: str
+    name: str
+    max_students: int
+    price: PlanPriceOut
+
+
+class PlansOut(BaseModel):
+    currency: str
+    plans: list[PlanOption]
 
 
 AVATAR_IDS = [f"avatar-{i}" for i in range(1, 9)]
@@ -164,9 +183,7 @@ def list_regions(access: CurrentLearningAccess, db: DbSession) -> RegionsOut:
             for country_code, country in COUNTRIES.items()
         ],
         family=(
-            FamilyRegionOut(
-                country_code=parent.country_code, region_code=parent.region_code
-            )
+            FamilyRegionOut(country_code=parent.country_code, region_code=parent.region_code)
             if parent.country_code and parent.region_code
             else None
         ),
@@ -198,7 +215,9 @@ def list_active_curricula(access: CurrentLearningAccess, db: DbSession) -> list[
         elif parent.country_code:
             query = query.where(Curriculum.country_code == parent.country_code)
     curricula = db.scalars(
-        query.order_by(Curriculum.jurisdiction, Curriculum.grade_level, Curriculum.code, Curriculum.version)
+        query.order_by(
+            Curriculum.jurisdiction, Curriculum.grade_level, Curriculum.code, Curriculum.version
+        )
     ).all()
     return [
         CurriculumChoice(
@@ -212,6 +231,28 @@ def list_active_curricula(access: CurrentLearningAccess, db: DbSession) -> list[
         )
         for curriculum in curricula
     ]
+
+
+@router.get("/plans", response_model=PlansOut)
+def list_plans(access: CurrentLearningAccess, db: DbSession) -> PlansOut:
+    """Active plans priced in the family's currency (CAD for Canada, USD
+    otherwise). CAD amounts are the stored 3-year-average conversion, not a
+    live quote."""
+    country = access.parent.country_code if access.parent else None
+    return PlansOut(
+        currency=currency_for(country),
+        plans=[
+            PlanOption(
+                code=plan.code,
+                name=plan.name,
+                max_students=plan.max_students,
+                price=PlanPriceOut(**localized_price(plan, country)),
+            )
+            for plan in db.scalars(
+                select(Plan).where(Plan.active.is_(True)).order_by(Plan.monthly_price_usd)
+            ).all()
+        ],
+    )
 
 
 @router.get("/learners", response_model=list[LearnerChoice])
@@ -298,16 +339,18 @@ def get_learner_launchpad(
     if student.curriculum_id is None:
         raise HTTPException(status_code=409, detail="Learner curriculum is unavailable")
 
-    skills = db.scalars(
-        select(Skill).where(Skill.curriculum_id == student.curriculum_id)
-    ).all()
+    skills = db.scalars(select(Skill).where(Skill.curriculum_id == student.curriculum_id)).all()
     skill_ids = [skill.id for skill in skills]
-    progress_rows = db.scalars(
-        select(StudentSkill).where(
-            StudentSkill.student_id == student.id,
-            StudentSkill.skill_id.in_(skill_ids),
-        )
-    ).all() if skill_ids else []
+    progress_rows = (
+        db.scalars(
+            select(StudentSkill).where(
+                StudentSkill.student_id == student.id,
+                StudentSkill.skill_id.in_(skill_ids),
+            )
+        ).all()
+        if skill_ids
+        else []
+    )
     progress_by_skill = {row.skill_id: row for row in progress_rows}
 
     active_session = db.scalar(
@@ -338,9 +381,7 @@ def get_learner_launchpad(
         placement = recommend_next_skill(
             db, student_id=student.id, curriculum_id=student.curriculum_id
         )
-        if placement is not None and content_readiness(
-            db, skill_id=placement.skill.id
-        ).ready:
+        if placement is not None and content_readiness(db, skill_id=placement.skill.id).ready:
             progress = progress_by_skill.get(placement.skill.id)
             recommended = LaunchpadSkill(
                 id=placement.skill.id,
@@ -350,20 +391,16 @@ def get_learner_launchpad(
                 mastery_score=float(progress.mastery_score) if progress else 0.0,
             )
 
-    review_items = reviews_due(
-        db, student_id=student.id, curriculum_id=student.curriculum_id
-    )
+    review_items = reviews_due(db, student_id=student.id, curriculum_id=student.curriculum_id)
     mastered_count = sum(row.status == SkillStatus.MASTERED for row in progress_rows)
     learning_count = sum(
-        row.status not in {SkillStatus.NOT_STARTED, SkillStatus.MASTERED}
-        for row in progress_rows
+        row.status not in {SkillStatus.NOT_STARTED, SkillStatus.MASTERED} for row in progress_rows
     )
-    ready_skill_count = sum(
-        content_readiness(db, skill_id=skill.id).ready for skill in skills
+    ready_skill_count = sum(content_readiness(db, skill_id=skill.id).ready for skill in skills)
+    award_count = (
+        db.scalar(select(func.count(LearnerAward.id)).where(LearnerAward.student_id == student.id))
+        or 0
     )
-    award_count = db.scalar(
-        select(func.count(LearnerAward.id)).where(LearnerAward.student_id == student.id)
-    ) or 0
     return LearnerLaunchpad(
         recommended=recommended,
         reviews_due=[
@@ -393,8 +430,9 @@ def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession)
         )
         or 0
     )
-    seat_limit = locked_parent.max_students or 1
+    seat_limit = effective_seats(db, locked_parent)
     if current_count >= seat_limit:
+        upgrade = upgrade_target(db, locked_parent)
         raise HTTPException(
             status_code=status.HTTP_402_PAYMENT_REQUIRED,
             detail={
@@ -402,7 +440,11 @@ def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession)
                 "subscription_tier": locked_parent.subscription_tier,
                 "current_students": current_count,
                 "max_students": seat_limit,
-                "upgrade": {"recommended_tier": "pro", "max_students": 5},
+                "upgrade": (
+                    {"recommended_tier": upgrade.code, "max_students": upgrade.max_students}
+                    if upgrade is not None
+                    else None
+                ),
             },
         )
 

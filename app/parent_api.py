@@ -53,6 +53,7 @@ from app.services.parent_gate import (
     register_pin_attempt,
     require_parent_unlock,
 )
+from app.services.plans import effective_seats, upgrade_target
 from app.services.regions import country_name, region_name, valid_region
 
 router = APIRouter(prefix="/parents", tags=["parents"])
@@ -137,6 +138,7 @@ def link_child(payload: LinkChildIn, parent: CurrentParent, db: DbSession) -> Li
     db.commit()
     return result
 
+
 @router.delete("/children/{student_id}", status_code=status.HTTP_204_NO_CONTENT)
 def remove_child(student_id: uuid.UUID, parent: CurrentParent, db: DbSession) -> Response:
     unlink_child(db, parent=parent, student_id=student_id)
@@ -153,7 +155,6 @@ def child_dashboard(
 ) -> ChildDashboardOut:
     require_parent_unlock(request, parent.user_id)
     return dashboard(db, parent=parent, student_id=student_id)
-
 
 
 @router.post(
@@ -185,8 +186,9 @@ def add_student(
         )
         or 0
     )
-    seat_limit = locked_parent.max_students or 1
+    seat_limit = effective_seats(db, locked_parent)
     if current_count >= seat_limit:
+        upgrade = upgrade_target(db, locked_parent)
         raise HTTPException(
             status_code=status.HTTP_402_PAYMENT_REQUIRED,
             detail={
@@ -195,11 +197,15 @@ def add_student(
                 "subscription_tier": locked_parent.subscription_tier,
                 "current_students": current_count,
                 "max_students": seat_limit,
-                "upgrade": {
-                    "recommended_tier": "pro",
-                    "max_students": 5,
-                    "action": "OPEN_BILLING",
-                },
+                "upgrade": (
+                    {
+                        "recommended_tier": upgrade.code,
+                        "max_students": upgrade.max_students,
+                        "action": "OPEN_BILLING",
+                    }
+                    if upgrade is not None
+                    else None
+                ),
             },
         )
 

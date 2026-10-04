@@ -26,6 +26,17 @@ class OnboardingDb:
         self.scalar_calls += 1
         return self.parent if self.scalar_calls == 1 else self.active_relationships
 
+    def scalars(self, _query):
+        # No plans visible to this mock: upgrade_target resolves None.
+        class _Result:
+            def first(self):
+                return None
+
+            def all(self):
+                return []
+
+        return _Result()
+
     def get(self, model, key):
         if model is Curriculum and self.curriculum is not None and self.curriculum.id == key:
             return self.curriculum
@@ -66,12 +77,8 @@ def test_parent_owned_learner_preserves_exact_curriculum_identity():
     )
 
     student = next(value for value in db.added if isinstance(value, Student))
-    enrollment = next(
-        value for value in db.added if isinstance(value, StudentCurriculumEnrollment)
-    )
-    relationship = next(
-        value for value in db.added if isinstance(value, ParentStudentRelationship)
-    )
+    enrollment = next(value for value in db.added if isinstance(value, StudentCurriculumEnrollment))
+    relationship = next(value for value in db.added if isinstance(value, ParentStudentRelationship))
     relationship_event = next(
         value for value in db.added if isinstance(value, ParentStudentRelationshipEvent)
     )
@@ -148,7 +155,6 @@ def test_unknown_avatar_is_rejected():
     assert exc_info.value.status_code == 422
     assert db.added == []
     assert not db.committed
-
 
 
 def test_free_parent_cannot_create_second_learner() -> None:
