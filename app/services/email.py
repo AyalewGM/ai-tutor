@@ -65,11 +65,11 @@ def new_family_notification(parent_email: str, display_name: str | None) -> Outb
     who = f"{display_name} <{parent_email}>" if display_name else parent_email
     return OutboundEmail(
         to=settings.admin_notification_email,
-        subject="New Mihur family awaiting approval",
+        subject="New Mihur family registered",
         body=(
-            f"A new family has registered and is waiting for approval:\n\n"
+            f"A new family has registered:\n\n"
             f"  {who}\n\n"
-            f"Review it in the admin dashboard: {settings.public_base_url}/admin\n"
+            f"See it in the admin dashboard: {settings.public_base_url}/admin\n"
         ),
     )
 

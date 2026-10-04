@@ -14,7 +14,6 @@ from fastapi.testclient import TestClient
 from sqlalchemy import select
 
 from app.core.database import SessionLocal
-from app.core.settings import settings
 from app.identity import current_user
 from app.main import app
 from app.models import Attempt, Curriculum, Problem, Skill, Student, TutorSession, User
@@ -29,10 +28,9 @@ client = TestClient(app)
 
 
 @pytest.fixture(autouse=True)
-def _approval_gate_off(monkeypatch):
-    # Families here are bootstrapped via POST /parents/profile; the pilot
-    # approval gate is covered in test_family_approval.py.
-    monkeypatch.setattr(settings, "require_family_approval", False)
+def _cookies():
+    yield
+    client.cookies.clear()
 
 
 def _problem(problem_id: str, curriculum_id) -> Problem:

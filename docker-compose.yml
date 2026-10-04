@@ -55,9 +55,6 @@ services:
       PHOTO_OCR_PROVIDER: ${PHOTO_OCR_PROVIDER:-auto}
       MATHPIX_APP_ID: ${MATHPIX_APP_ID:-}
       MATHPIX_APP_KEY: ${MATHPIX_APP_KEY:-}
-      # Dev/e2e default: families are auto-approved. The pilot stack
-      # (docker-compose.pilot.yml + .env.pilot) keeps the gate on.
-      REQUIRE_FAMILY_APPROVAL: ${REQUIRE_FAMILY_APPROVAL:-false}
       MFA_ENCRYPTION_KEY: ${MFA_ENCRYPTION_KEY:-}
       PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:3000}
       EMAIL_BACKEND: ${EMAIL_BACKEND:-console}

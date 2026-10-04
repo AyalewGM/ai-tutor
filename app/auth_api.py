@@ -13,9 +13,9 @@ from app.auth import SESSION_COOKIE, create_session, revoke_session
 from app.core.database import get_db
 from app.core.settings import settings
 from app.credential_models import UserCredential
-from app.identity import CurrentUser, initial_approval_status
+from app.identity import CurrentUser
 from app.models import User
-from app.parent_models import ParentProfile
+from app.parent_models import APPROVAL_APPROVED, ParentProfile
 from app.schemas import ParentRegisterSchema
 from app.services.auth_security import (
     clear_login_failures,
@@ -103,7 +103,7 @@ def register_parent(
                 coppa_consent_given=True,
                 consent_timestamp=accepted_at,
                 terms_accepted_at=accepted_at,
-                approval_status=initial_approval_status(),
+                approval_status=APPROVAL_APPROVED,
             )
         )
         token, _ = create_session(db, user.id)
@@ -113,10 +113,9 @@ def register_parent(
         # Do not expose whether an account exists.
         raise HTTPException(status_code=400, detail="Unable to create account") from exc
     _set_session_cookie(response, token)
-    if settings.require_family_approval:
-        notification = new_family_notification(user.email, user.display_name)
-        if notification is not None:
-            background.add_task(send_email, notification)
+    notification = new_family_notification(user.email, user.display_name)
+    if notification is not None:
+        background.add_task(send_email, notification)
     return _session_user(db, user)
 
 

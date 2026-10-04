@@ -56,9 +56,7 @@ export default function Login() {
           turnstile_token: turnstileToken || undefined,
         });
       }
-      const awaitingApproval =
-        session.approval_status === "PENDING" || session.approval_status === "REJECTED";
-      navigate(awaitingApproval ? "/pending" : next, { replace: true });
+      navigate(next, { replace: true });
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Something went wrong");
       setTurnstileToken(null);

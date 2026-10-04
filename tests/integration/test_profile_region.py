@@ -103,14 +103,15 @@ def test_update_region_rejects_invalid_values():
         assert client.put("/api/v1/parents/region", json=payload).status_code == 422
 
 
-def test_update_region_requires_approved_family():
+def test_update_region_ignores_historical_approval_status():
+    # approval_status no longer gates access (the pilot gate was removed).
     _, token = _parent(approval=APPROVAL_PENDING)
     client.cookies.set(SESSION_COOKIE, token)
     assert (
         client.put(
             "/api/v1/parents/region", json={"country_code": "US", "region_code": "MD"}
         ).status_code
-        == 403
+        == 200
     )
 
 

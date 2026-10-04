@@ -22,7 +22,7 @@ from starlette.responses import JSONResponse
 from app.core.database import SessionLocal
 from app.core.settings import settings
 from app.models import Student, User
-from app.parent_models import APPROVAL_APPROVED, ParentProfile
+from app.parent_models import ParentProfile
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +53,7 @@ def _request_country(request: Request) -> str:
 
 
 def _has_approved_session(request: Request) -> bool:
-    """Valid session for staff or an APPROVED family (parent or learner pass)."""
+    """Valid session for staff or a registered family (parent or learner pass)."""
     user_id = getattr(request.state, "authenticated_user_id", None)
     learner_id = getattr(request.state, "authenticated_learner_id", None)
     if user_id is None and learner_id is None:
@@ -67,7 +67,7 @@ def _has_approved_session(request: Request) -> bool:
                 parent = db.scalar(
                     select(ParentProfile).where(ParentProfile.user_id == user.id)
                 )
-                if parent is not None and parent.approval_status == APPROVAL_APPROVED:
+                if parent is not None:
                     return True
         if isinstance(learner_id, uuid.UUID):
             student = db.get(Student, learner_id)
@@ -77,7 +77,7 @@ def _has_approved_session(request: Request) -> bool:
                         ParentProfile.user_id == student.parent_id
                     )
                 )
-                if parent is not None and parent.approval_status == APPROVAL_APPROVED:
+                if parent is not None:
                     return True
     return False
 
