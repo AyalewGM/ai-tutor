@@ -7,7 +7,11 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.identity import CurrentLearningAccess, require_learning_owns_session, require_learning_owns_student
+from app.identity import (
+    CurrentLearningAccess,
+    require_learning_owns_session,
+    require_learning_owns_student,
+)
 from app.models import (
     Attempt,
     Curriculum,
