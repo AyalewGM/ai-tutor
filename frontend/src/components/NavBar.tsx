@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { GraduationCap, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { post } from "../api";
+import Brand from "./Brand";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -33,11 +34,8 @@ export default function NavBar() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/80 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4">
-        <Link to="/learn" className="flex items-center gap-2" aria-label="AI Tutor home">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <GraduationCap className="h-4 w-4" />
-          </span>
-          <span className="font-bold tracking-tight">AI Tutor</span>
+        <Link to="/learn" className="flex items-center" aria-label="Mihur home">
+          <Brand size="sm" />
         </Link>
         <nav className="flex items-center gap-1" aria-label="Primary navigation">
           {navLink("/learn", "Practice")}

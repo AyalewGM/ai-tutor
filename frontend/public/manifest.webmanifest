@@ -1,16 +1,15 @@
 {
-  "name": "AI Tutor",
-  "short_name": "AI Tutor",
-  "description": "Adaptive math tutoring that diagnoses misconceptions and verifies real mastery.",
+  "name": "Mihur — Mathematics Makes Sense",
+  "short_name": "Mihur",
+  "description": "Personalized mathematics learning that diagnoses misconceptions and verifies real mastery.",
   "start_url": "/learn",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#f8f7fc",
+  "background_color": "#f7f8fc",
   "theme_color": "#6730c3",
   "icons": [
     { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
-    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
