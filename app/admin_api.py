@@ -548,3 +548,81 @@ def recalc_cad_prices(
     )
     db.commit()
     return result
+
+
+class WindowCounts(BaseModel):
+    d1: int = Field(alias="1d")
+    d7: int = Field(alias="7d")
+    d30: int = Field(alias="30d")
+
+
+class SignupCounts(BaseModel):
+    d1: int = Field(alias="1d")
+    d7: int = Field(alias="7d")
+    d30: int = Field(alias="30d")
+    total: int
+
+
+class SignupDay(BaseModel):
+    date: str
+    count: int
+
+
+class MetricsOverviewOut(BaseModel):
+    as_of: datetime
+    active_learners: WindowCounts
+    active_families: WindowCounts
+    attempts: WindowCounts
+    tutor_sessions: WindowCounts
+    signups: SignupCounts
+    signups_daily: list[SignupDay]
+    learners_total: int
+
+
+class RegionActivityOut(BaseModel):
+    country_code: str
+    region_code: str
+    families: int
+    active_learners: int
+    attempts: int
+
+
+class CurriculumActivityOut(BaseModel):
+    code: str
+    name: str
+    learners_total: int
+    active_learners: int
+    attempts: int
+
+
+@router.get("/metrics/overview", response_model=MetricsOverviewOut)
+def metrics_overview(
+    db: DbSession,
+    _user: Annotated[User, Depends(require_staff(Permission.METRICS_READ))],
+) -> MetricsOverviewOut:
+    """DAU/WAU/MAU (learners and their families), sign-ups, and activity totals."""
+    from app.services.metrics import overview
+
+    return MetricsOverviewOut.model_validate(overview(db))
+
+
+@router.get("/metrics/by-region", response_model=list[RegionActivityOut])
+def metrics_by_region(
+    db: DbSession,
+    _user: Annotated[User, Depends(require_staff(Permission.METRICS_READ))],
+) -> list[RegionActivityOut]:
+    """30-day learning activity per family country/state (UNSET when unsaved)."""
+    from app.services.metrics import activity_by_region
+
+    return [RegionActivityOut.model_validate(row) for row in activity_by_region(db)]
+
+
+@router.get("/metrics/by-curriculum", response_model=list[CurriculumActivityOut])
+def metrics_by_curriculum(
+    db: DbSession,
+    _user: Annotated[User, Depends(require_staff(Permission.METRICS_READ))],
+) -> list[CurriculumActivityOut]:
+    """30-day attempts and active learners per practiced curriculum."""
+    from app.services.metrics import activity_by_curriculum
+
+    return [CurriculumActivityOut.model_validate(row) for row in activity_by_curriculum(db)]
