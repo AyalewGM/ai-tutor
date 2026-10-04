@@ -1,0 +1,226 @@
+"""Staff (admin) API.
+
+Access model:
+- Non-staff callers get 404 on every route, so the surface isn't discoverable.
+- Staff must pass a TOTP second factor on the current session before any
+  data route; only /me and the /mfa/* bootstrap routes work without it.
+- Every state-changing staff action is written to admin_audit_events.
+"""
+
+import uuid
+from collections.abc import Callable
+from datetime import UTC, datetime
+from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from pydantic import BaseModel, Field
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from app.admin_models import AdminAuditEvent, AdminMfa
+from app.auth import SESSION_COOKIE, resolve_session
+from app.auth_models import AuthSession
+from app.core.database import get_db
+from app.identity import CurrentUser
+from app.models import User
+from app.services import totp
+from app.services.admin_security import (
+    MfaNotConfigured,
+    clear_mfa_attempts,
+    decrypt_secret,
+    encrypt_secret,
+    record_admin_action,
+    register_mfa_attempt,
+)
+from app.services.permissions import Permission, has_permission, permissions_for
+
+router = APIRouter(prefix="/admin", tags=["admin"])
+DbSession = Annotated[Session, Depends(get_db)]
+
+MFA_REQUIRED = "MFA_REQUIRED"
+
+
+def _staff_user(user: CurrentUser) -> User:
+    if not has_permission(user.role, Permission.ADMIN_ACCESS):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+    return user
+
+
+StaffUser = Annotated[User, Depends(_staff_user)]
+
+
+def _staff_session(request: Request, user: StaffUser, db: DbSession) -> AuthSession:
+    token = request.cookies.get(SESSION_COOKIE)
+    session = resolve_session(db, token) if token else None
+    if session is None or session.user_id != user.id:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication required")
+    return session
+
+
+StaffSession = Annotated[AuthSession, Depends(_staff_session)]
+
+
+def require_staff(permission: Permission) -> Callable[..., User]:
+    """Dependency: staff user holding ``permission`` on an MFA-verified session."""
+
+    def dependency(user: StaffUser, session: StaffSession) -> User:
+        if session.mfa_verified_at is None:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=MFA_REQUIRED)
+        if not has_permission(user.role, permission):
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+        return user
+
+    return dependency
+
+
+class StaffMeOut(BaseModel):
+    email: str
+    role: str
+    permissions: list[str]
+    mfa_enrolled: bool
+    mfa_verified: bool
+
+
+class MfaSetupOut(BaseModel):
+    secret: str
+    otpauth_uri: str
+
+
+class MfaCodeIn(BaseModel):
+    code: str = Field(pattern=r"^\d{6}$")
+
+
+class AuditEventOut(BaseModel):
+    id: uuid.UUID
+    actor_label: str
+    action: str
+    target_type: str | None
+    target_id: str | None
+    before: dict | None
+    after: dict | None
+    created_at: datetime
+
+
+def _mfa_row(db: Session, user: User) -> AdminMfa | None:
+    return db.get(AdminMfa, user.id)
+
+
+def _mfa_unavailable(exc: MfaNotConfigured) -> HTTPException:
+    return HTTPException(
+        status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+        detail="Two-factor authentication is not configured on this server",
+    )
+
+
+@router.get("/me", response_model=StaffMeOut)
+def staff_me(user: StaffUser, session: StaffSession, db: DbSession) -> StaffMeOut:
+    mfa = _mfa_row(db, user)
+    return StaffMeOut(
+        email=user.email,
+        role=user.role,
+        permissions=sorted(permissions_for(user.role)),
+        mfa_enrolled=bool(mfa and mfa.enabled_at),
+        mfa_verified=session.mfa_verified_at is not None,
+    )
+
+
+@router.post("/mfa/setup", response_model=MfaSetupOut)
+def mfa_setup(user: StaffUser, db: DbSession) -> MfaSetupOut:
+    """Begin (or restart) enrollment. Refused once a factor is active —
+    resetting an active factor is an operator action (make_admin --reset-mfa)."""
+    mfa = _mfa_row(db, user)
+    if mfa is not None and mfa.enabled_at is not None:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Two-factor already enabled")
+    secret = totp.generate_secret()
+    try:
+        encrypted = encrypt_secret(secret)
+    except MfaNotConfigured as exc:
+        raise _mfa_unavailable(exc) from exc
+    if mfa is None:
+        db.add(AdminMfa(user_id=user.id, secret_encrypted=encrypted))
+    else:
+        mfa.secret_encrypted = encrypted
+        mfa.last_used_step = None
+    record_admin_action(
+        db, actor_user_id=user.id, actor_label=user.email, action="mfa.setup_started",
+        target_type="user", target_id=str(user.id),
+    )
+    db.commit()
+    return MfaSetupOut(secret=secret, otpauth_uri=totp.provisioning_uri(secret, user.email))
+
+
+def _check_code(user: User, mfa: AdminMfa, code: str) -> int:
+    register_mfa_attempt(user.id)
+    try:
+        secret = decrypt_secret(mfa.secret_encrypted)
+    except MfaNotConfigured as exc:
+        raise _mfa_unavailable(exc) from exc
+    step = totp.verify(secret, code, last_used_step=mfa.last_used_step)
+    if step is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid code")
+    clear_mfa_attempts(user.id)
+    return step
+
+
+@router.post("/mfa/confirm", response_model=StaffMeOut)
+def mfa_confirm(
+    payload: MfaCodeIn, user: StaffUser, session: StaffSession, db: DbSession
+) -> StaffMeOut:
+    """Finish enrollment with a first valid code; verifies this session too."""
+    mfa = _mfa_row(db, user)
+    if mfa is None or mfa.enabled_at is not None:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="No pending enrollment")
+    step = _check_code(user, mfa, payload.code)
+    now = datetime.now(UTC)
+    mfa.enabled_at = now
+    mfa.last_used_step = step
+    session.mfa_verified_at = now
+    record_admin_action(
+        db, actor_user_id=user.id, actor_label=user.email, action="mfa.enabled",
+        target_type="user", target_id=str(user.id),
+    )
+    db.commit()
+    return staff_me(user, session, db)
+
+
+@router.post("/mfa/verify", response_model=StaffMeOut)
+def mfa_verify(
+    payload: MfaCodeIn, user: StaffUser, session: StaffSession, db: DbSession
+) -> StaffMeOut:
+    """Second factor for a fresh sign-in."""
+    mfa = _mfa_row(db, user)
+    if mfa is None or mfa.enabled_at is None:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Two-factor not enrolled")
+    mfa.last_used_step = _check_code(user, mfa, payload.code)
+    session.mfa_verified_at = datetime.now(UTC)
+    record_admin_action(
+        db, actor_user_id=user.id, actor_label=user.email, action="admin.signed_in",
+        target_type="user", target_id=str(user.id),
+    )
+    db.commit()
+    return staff_me(user, session, db)
+
+
+@router.get("/audit-log", response_model=list[AuditEventOut])
+def audit_log(
+    db: DbSession,
+    _user: Annotated[User, Depends(require_staff(Permission.AUDIT_READ))],
+    limit: Annotated[int, Query(ge=1, le=200)] = 50,
+    before: datetime | None = None,
+) -> list[AuditEventOut]:
+    stmt = select(AdminAuditEvent).order_by(AdminAuditEvent.created_at.desc()).limit(limit)
+    if before is not None:
+        stmt = stmt.where(AdminAuditEvent.created_at < before)
+    return [
+        AuditEventOut(
+            id=e.id,
+            actor_label=e.actor_label,
+            action=e.action,
+            target_type=e.target_type,
+            target_id=e.target_id,
+            before=e.before_json,
+            after=e.after_json,
+            created_at=e.created_at,
+        )
+        for e in db.scalars(stmt)
+    ]

@@ -11,6 +11,12 @@ class Settings(BaseSettings):
     parent_pin_max_attempts: int = 5
     parent_pin_window_seconds: int = 300
 
+    # Fernet key encrypting staff TOTP secrets at rest. Generate with:
+    #   python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+    mfa_encryption_key: str | None = None
+    admin_mfa_max_attempts: int = 5
+    admin_mfa_window_seconds: int = 300
+
     photo_ocr_provider: str = "auto"  # auto | mathpix | stub | disabled
     mathpix_app_id: str | None = None
     mathpix_app_key: str | None = None
