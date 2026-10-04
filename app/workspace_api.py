@@ -9,7 +9,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.identity import CurrentParent, require_parent_owns_session
+from app.identity import CurrentLearningAccess, require_learning_owns_session
 from app.models import (
     Attempt,
     Curriculum,
@@ -301,10 +301,10 @@ def _current_tutor_turn(db: Session, session_id: uuid.UUID) -> TutorTurn | None:
 
 @router.get("/sessions/{session_id}", response_model=LearnerWorkspaceOut)
 def get_learner_workspace(
-    session_id: uuid.UUID, parent: CurrentParent, db: DbSession
+    session_id: uuid.UUID, access: CurrentLearningAccess, db: DbSession
 ) -> LearnerWorkspaceOut:
     """Reconstruct only an authorized family's learner-visible state."""
-    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
 
     try:
         scope = require_session_scope(db, session)
@@ -426,10 +426,10 @@ class DailyGoalPatchIn(BaseModel):
 
 @router.patch("/sessions/{session_id}/daily-goal", response_model=DailyGoalOut | None)
 def patch_daily_goal(
-    session_id: uuid.UUID, payload: DailyGoalPatchIn, parent: CurrentParent, db: DbSession
+    session_id: uuid.UUID, payload: DailyGoalPatchIn, access: CurrentLearningAccess, db: DbSession
 ) -> DailyGoalOut | None:
     """Set (or clear) the learner's daily question target."""
-    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
     learner = db.get(Student, session.student_id)
     if learner is None:
         raise HTTPException(409, "Session learner context is unavailable")
@@ -460,10 +460,10 @@ class SessionSummaryOut(BaseModel):
 
 @router.get("/sessions/{session_id}/summary", response_model=SessionSummaryOut)
 def get_session_summary(
-    session_id: uuid.UUID, parent: CurrentParent, db: DbSession
+    session_id: uuid.UUID, access: CurrentLearningAccess, db: DbSession
 ) -> SessionSummaryOut:
     """End-of-session recap, derived entirely from persisted evidence."""
-    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
     learner = db.get(Student, session.student_id)
     if learner is None:
         raise HTTPException(409, "Session learner context is unavailable")
@@ -580,10 +580,10 @@ class BadgeOut(BaseModel):
 
 @router.get("/sessions/{session_id}/badges", response_model=list[BadgeOut])
 def get_badge_collection(
-    session_id: uuid.UUID, parent: CurrentParent, db: DbSession
+    session_id: uuid.UUID, access: CurrentLearningAccess, db: DbSession
 ) -> list[BadgeOut]:
     """Full badge catalog for the learner owning this session."""
-    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
     return [BadgeOut(**entry) for entry in badge_collection(db, session.student_id)]
 
 
@@ -599,10 +599,10 @@ class SkillMapEntryOut(BaseModel):
 
 @router.get("/sessions/{session_id}/skill-map", response_model=list[SkillMapEntryOut])
 def get_skill_map(
-    session_id: uuid.UUID, parent: CurrentParent, db: DbSession
+    session_id: uuid.UUID, access: CurrentLearningAccess, db: DbSession
 ) -> list[SkillMapEntryOut]:
     """All curriculum skills with the learner's mastery, ordered for display."""
-    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
     try:
         scope = require_session_scope(db, session)
     except CurriculumScopeError as exc:
