@@ -6,6 +6,7 @@ import LearnEntry from "./pages/LearnEntry";
 import Login from "./pages/Login";
 import ParentDashboard from "./pages/ParentDashboard";
 import ParentSettings from "./pages/ParentSettings";
+import Pending from "./pages/Pending";
 import PracticePass from "./pages/PracticePass";
 import Privacy from "./pages/Privacy";
 import SkillMap from "./pages/SkillMap";
@@ -16,6 +17,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/pending" element={<Pending />} />
       <Route path="/practice/:token" element={<PracticePass />} />
       <Route path="/learn" element={<LearnEntry />} />
       <Route path="/parent" element={<ParentDashboard />} />

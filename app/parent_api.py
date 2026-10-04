@@ -10,7 +10,12 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.credential_models import UserCredential
-from app.identity import CurrentParent, CurrentUser, require_parent_role
+from app.identity import (
+    CurrentParent,
+    CurrentUser,
+    initial_approval_status,
+    require_parent_role,
+)
 from app.models import Attempt, MasteryEvent, Student, TutorSession
 from app.parent_models import (
     ParentProfile,
@@ -66,7 +71,9 @@ def create_or_load_profile(user: CurrentUser, db: DbSession) -> ParentProfileOut
     require_parent_role(user)
     parent = db.scalar(select(ParentProfile).where(ParentProfile.user_id == user.id))
     if parent is None:
-        parent = ParentProfile(user_id=user.id)
+        # Same gate as registration: a self-created profile must not
+        # bypass pilot approval by defaulting to APPROVED.
+        parent = ParentProfile(user_id=user.id, approval_status=initial_approval_status())
         db.add(parent)
         db.commit()
         db.refresh(parent)

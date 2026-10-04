@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Sparkles, ShieldCheck, LineChart } from "lucide-react";
 import { ApiError, post } from "../api";
 import Brand from "../components/Brand";
+import type { SessionUser } from "../types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -27,8 +28,9 @@ export default function Login() {
     setError("");
     setSubmitting(true);
     try {
+      let session: SessionUser;
       if (mode === "register") {
-        await post("/auth/register-parent", {
+        session = await post<SessionUser>("/auth/register-parent", {
           email,
           password,
           display_name: displayName || undefined,
@@ -37,9 +39,11 @@ export default function Login() {
           coppa_consent_given: coppaConsent,
         });
       } else {
-        await post("/auth/login", { email, password });
+        session = await post<SessionUser>("/auth/login", { email, password });
       }
-      navigate(next, { replace: true });
+      const awaitingApproval =
+        session.approval_status === "PENDING" || session.approval_status === "REJECTED";
+      navigate(awaitingApproval ? "/pending" : next, { replace: true });
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Something went wrong");
     } finally {

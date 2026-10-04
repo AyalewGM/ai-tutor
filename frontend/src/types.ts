@@ -351,3 +351,13 @@ export interface WeeklyDigest {
   days_since_practice: number | null;
   stall: boolean;
 }
+
+export type ApprovalStatus = "PENDING" | "APPROVED" | "REJECTED";
+
+export interface SessionUser {
+  id: string;
+  role: string;
+  display_name: string | null;
+  approval_status: ApprovalStatus | null;
+  rejection_reason: string | null;
+}

@@ -12,9 +12,9 @@ from collections.abc import Callable
 from datetime import UTC, datetime
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query, Request, status
 from pydantic import BaseModel, Field
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.admin_models import AdminAuditEvent, AdminMfa
@@ -23,6 +23,12 @@ from app.auth_models import AuthSession
 from app.core.database import get_db
 from app.identity import CurrentUser
 from app.models import User
+from app.parent_models import (
+    APPROVAL_APPROVED,
+    APPROVAL_REJECTED,
+    ParentProfile,
+    ParentStudentRelationship,
+)
 from app.services import totp
 from app.services.admin_security import (
     MfaNotConfigured,
@@ -32,6 +38,7 @@ from app.services.admin_security import (
     record_admin_action,
     register_mfa_attempt,
 )
+from app.services.email import family_approved_email, family_rejected_email, send_email
 from app.services.permissions import Permission, has_permission, permissions_for
 
 router = APIRouter(prefix="/admin", tags=["admin"])
@@ -224,3 +231,148 @@ def audit_log(
         )
         for e in db.scalars(stmt)
     ]
+
+
+# ---------------------------------------------------------------------------
+# Families: pilot approval queue
+# ---------------------------------------------------------------------------
+
+
+class FamilyOut(BaseModel):
+    parent_profile_id: uuid.UUID
+    email: str
+    display_name: str | None
+    approval_status: str
+    registered_at: datetime
+    decided_at: datetime | None
+    rejection_reason: str | None
+    learner_count: int
+
+
+class RejectIn(BaseModel):
+    reason: str | None = Field(default=None, max_length=500)
+
+
+def _family_out(parent: ParentProfile, user: User, learner_count: int) -> FamilyOut:
+    return FamilyOut(
+        parent_profile_id=parent.id,
+        email=user.email,
+        display_name=user.display_name,
+        approval_status=parent.approval_status,
+        registered_at=parent.created_at,
+        decided_at=parent.approval_decided_at,
+        rejection_reason=parent.rejection_reason,
+        learner_count=learner_count,
+    )
+
+
+def _learner_count(db: Session, parent: ParentProfile) -> int:
+    return int(
+        db.scalar(
+            select(func.count(ParentStudentRelationship.id)).where(
+                ParentStudentRelationship.parent_profile_id == parent.id,
+                ParentStudentRelationship.active.is_(True),
+            )
+        )
+        or 0
+    )
+
+
+@router.get("/families", response_model=list[FamilyOut])
+def list_families(
+    db: DbSession,
+    _user: Annotated[User, Depends(require_staff(Permission.FAMILIES_READ))],
+    approval_status: Annotated[
+        str | None, Query(alias="status", pattern="^(PENDING|APPROVED|REJECTED)$")
+    ] = None,
+    limit: Annotated[int, Query(ge=1, le=200)] = 50,
+    offset: Annotated[int, Query(ge=0)] = 0,
+) -> list[FamilyOut]:
+    learners = (
+        select(
+            ParentStudentRelationship.parent_profile_id,
+            func.count(ParentStudentRelationship.id).label("n"),
+        )
+        .where(ParentStudentRelationship.active.is_(True))
+        .group_by(ParentStudentRelationship.parent_profile_id)
+        .subquery()
+    )
+    stmt = (
+        select(ParentProfile, User, func.coalesce(learners.c.n, 0))
+        .join(User, User.id == ParentProfile.user_id)
+        .outerjoin(learners, learners.c.parent_profile_id == ParentProfile.id)
+        .order_by(ParentProfile.created_at.desc())
+        .limit(limit)
+        .offset(offset)
+    )
+    if approval_status:
+        stmt = stmt.where(ParentProfile.approval_status == approval_status)
+    return [_family_out(parent, user, int(n)) for parent, user, n in db.execute(stmt)]
+
+
+def _decide(
+    db: Session,
+    staff: User,
+    parent_profile_id: uuid.UUID,
+    new_status: str,
+    reason: str | None,
+) -> tuple[ParentProfile, User]:
+    parent = db.get(ParentProfile, parent_profile_id)
+    if parent is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Family not found")
+    if parent.approval_status == new_status:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail=f"Family is already {new_status}"
+        )
+    family_user = db.get(User, parent.user_id)
+    before = {"approval_status": parent.approval_status}
+    parent.approval_status = new_status
+    parent.approval_decided_at = datetime.now(UTC)
+    parent.approval_decided_by_user_id = staff.id
+    parent.rejection_reason = reason if new_status == APPROVAL_REJECTED else None
+    after = {"approval_status": new_status}
+    if parent.rejection_reason:
+        after["rejection_reason"] = parent.rejection_reason
+    record_admin_action(
+        db,
+        actor_user_id=staff.id,
+        actor_label=staff.email,
+        action="family.approved" if new_status == APPROVAL_APPROVED else "family.rejected",
+        target_type="parent_profile",
+        target_id=str(parent.id),
+        before=before,
+        after=after,
+    )
+    db.commit()
+    return parent, family_user
+
+
+@router.post("/families/{parent_profile_id}/approve", response_model=FamilyOut)
+def approve_family(
+    parent_profile_id: uuid.UUID,
+    background: BackgroundTasks,
+    db: DbSession,
+    staff: Annotated[User, Depends(require_staff(Permission.FAMILIES_APPROVE))],
+) -> FamilyOut:
+    parent, family_user = _decide(db, staff, parent_profile_id, APPROVAL_APPROVED, None)
+    background.add_task(
+        send_email, family_approved_email(family_user.email, family_user.display_name)
+    )
+    return _family_out(parent, family_user, _learner_count(db, parent))
+
+
+@router.post("/families/{parent_profile_id}/reject", response_model=FamilyOut)
+def reject_family(
+    parent_profile_id: uuid.UUID,
+    payload: RejectIn,
+    background: BackgroundTasks,
+    db: DbSession,
+    staff: Annotated[User, Depends(require_staff(Permission.FAMILIES_APPROVE))],
+) -> FamilyOut:
+    reason = (payload.reason or "").strip() or None
+    parent, family_user = _decide(db, staff, parent_profile_id, APPROVAL_REJECTED, reason)
+    background.add_task(
+        send_email,
+        family_rejected_email(family_user.email, family_user.display_name, reason),
+    )
+    return _family_out(parent, family_user, _learner_count(db, parent))

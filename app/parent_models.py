@@ -15,6 +15,9 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.database import Base
 
+APPROVAL_PENDING = "PENDING"
+APPROVAL_APPROVED = "APPROVED"
+APPROVAL_REJECTED = "REJECTED"
 
 class ParentProfile(Base):
     __tablename__ = "parent_profiles"
@@ -25,6 +28,10 @@ class ParentProfile(Base):
             "(subscription_tier = 'free' AND max_students = 1) OR "
             "(subscription_tier = 'pro' AND max_students = 5)",
             name="ck_parent_subscription_seat_policy",
+        ),
+        CheckConstraint(
+            "approval_status IN ('PENDING', 'APPROVED', 'REJECTED')",
+            name="ck_parent_approval_status",
         ),
     )
 
@@ -44,6 +51,20 @@ class ParentProfile(Base):
     )
     consent_timestamp: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     terms_accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # Pilot approval gate. Self-registered families start PENDING when
+    # REQUIRE_FAMILY_APPROVAL is on; operator-provisioned rows default APPROVED.
+    approval_status: Mapped[str] = mapped_column(
+        String(20),
+        default=APPROVAL_APPROVED,
+        server_default=APPROVAL_APPROVED,
+        nullable=False,
+        index=True,
+    )
+    approval_decided_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    approval_decided_by_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL")
+    )
+    rejection_reason: Mapped[str | None] = mapped_column(String(500))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=datetime.utcnow, nullable=False
     )

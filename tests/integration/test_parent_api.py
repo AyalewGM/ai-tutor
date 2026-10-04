@@ -7,6 +7,7 @@ from sqlalchemy import select
 
 from app import parent_api
 from app.core.database import SessionLocal
+from app.core.settings import settings
 from app.identity import current_user
 from app.main import app
 from app.models import Curriculum, Skill, SkillStatus, Student, StudentSkill, User
@@ -23,6 +24,9 @@ client = TestClient(app)
 @pytest.fixture(autouse=True)
 def _adult_unlock(monkeypatch):
     monkeypatch.setattr(parent_api, "require_parent_unlock", lambda *_args: None)
+    # These tests bootstrap families via POST /parents/profile; the pilot
+    # approval gate is covered in test_family_approval.py.
+    monkeypatch.setattr(settings, "require_family_approval", False)
 
 
 def _override_user(user: User) -> None:

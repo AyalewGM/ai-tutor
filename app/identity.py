@@ -7,8 +7,14 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
+from app.core.settings import settings
 from app.models import Student, TutorSession, User
-from app.parent_models import ParentProfile
+from app.parent_models import (
+    APPROVAL_APPROVED,
+    APPROVAL_PENDING,
+    APPROVAL_REJECTED,
+    ParentProfile,
+)
 
 DbSession = Annotated[Session, Depends(get_db)]
 
@@ -37,11 +43,29 @@ def require_parent_role(user: User) -> None:
         raise HTTPException(status_code=403, detail="Parent or guardian access required")
 
 
+FAMILY_PENDING_APPROVAL = "FAMILY_PENDING_APPROVAL"
+FAMILY_REJECTED = "FAMILY_REJECTED"
+
+
+def initial_approval_status() -> str:
+    """Status for a family that signed itself up."""
+    return APPROVAL_PENDING if settings.require_family_approval else APPROVAL_APPROVED
+
+
+def require_family_approved(parent: ParentProfile) -> None:
+    """Pilot gate: only APPROVED families reach learning and parent features."""
+    if parent.approval_status == APPROVAL_APPROVED:
+        return
+    detail = FAMILY_REJECTED if parent.approval_status == APPROVAL_REJECTED else FAMILY_PENDING_APPROVAL
+    raise HTTPException(status_code=403, detail=detail)
+
+
 def current_parent(user: CurrentUser, db: DbSession) -> ParentProfile:
     require_parent_role(user)
     parent = db.scalar(select(ParentProfile).where(ParentProfile.user_id == user.id))
     if parent is None:
         raise HTTPException(status_code=404, detail="Parent profile not initialized")
+    require_family_approved(parent)
     return parent
 
 
@@ -81,7 +105,7 @@ def current_learning_access(request: Request, db: DbSession) -> LearningAccess:
         if student is None or not student.active or student.parent_id is None:
             raise HTTPException(status_code=401, detail="Learner access unavailable")
         parent = db.scalar(select(ParentProfile).where(ParentProfile.user_id == student.parent_id))
-        if parent is None:
+        if parent is None or parent.approval_status != APPROVAL_APPROVED:
             raise HTTPException(status_code=401, detail="Learner access unavailable")
         return LearningAccess(parent=parent, learner_id=student.id)
     user = current_user(request, db)
