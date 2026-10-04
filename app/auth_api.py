@@ -17,7 +17,16 @@ from app.identity import CurrentUser, initial_approval_status
 from app.models import User
 from app.parent_models import ParentProfile
 from app.schemas import ParentRegisterSchema
+from app.services.auth_security import (
+    clear_login_failures,
+    client_ip,
+    enforce_login_rate_limit,
+    enforce_register_rate_limit,
+    ensure_not_locked_out,
+    record_login_failure,
+)
 from app.services.email import new_family_notification, send_email
+from app.services.turnstile import verify_turnstile
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -29,6 +38,12 @@ ParentRegistration = ParentRegisterSchema
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str = Field(min_length=1, max_length=128)
+    turnstile_token: str | None = Field(default=None, max_length=2048)
+
+
+class AuthConfigOut(BaseModel):
+    # Public so the sign-in page can render the bot check before submit.
+    turnstile_site_key: str | None = None
 
 
 class SessionUser(BaseModel):
@@ -66,10 +81,13 @@ def _set_session_cookie(response: Response, token: str) -> None:
 @router.post("/register-parent", response_model=SessionUser, status_code=status.HTTP_201_CREATED)
 def register_parent(
     payload: ParentRegistration,
+    request: Request,
     response: Response,
     background: BackgroundTasks,
     db: DbSession,
 ) -> SessionUser:
+    enforce_register_rate_limit(request)
+    verify_turnstile(payload.turnstile_token, client_ip(request))
     email = payload.email.strip().lower()
     user = User(email=email, display_name=payload.display_name, role="PARENT")
     db.add(user)
@@ -104,24 +122,39 @@ def register_parent(
 
 
 @router.post("/login", response_model=SessionUser)
-def login(payload: LoginRequest, response: Response, db: DbSession) -> SessionUser:
+def login(
+    payload: LoginRequest, request: Request, response: Response, db: DbSession
+) -> SessionUser:
+    enforce_login_rate_limit(request)
+    verify_turnstile(payload.turnstile_token, client_ip(request))
     email = payload.email.strip().lower()
+    # Generic 429 whether or not the account exists — no enumeration signal.
+    ensure_not_locked_out(email)
     user = db.scalar(select(User).where(func.lower(User.email) == email))
     credential = db.get(UserCredential, user.id) if user is not None else None
     if credential is None:
         # Perform an Argon2 operation on the unknown-account path to reduce timing leakage.
         _passwords.hash(payload.password)
+        record_login_failure(email)
         raise HTTPException(status_code=401, detail="Invalid email or password")
     try:
         valid = _passwords.verify(credential.password_hash, payload.password)
     except VerificationError:
         valid = False
     if not valid:
+        record_login_failure(email)
         raise HTTPException(status_code=401, detail="Invalid email or password")
+    clear_login_failures(email)
     token, _ = create_session(db, user.id)
     db.commit()
     _set_session_cookie(response, token)
     return _session_user(db, user)
+
+
+@router.get("/config", response_model=AuthConfigOut)
+def auth_config() -> AuthConfigOut:
+    """Public auth-page config — only ever the site key, never the secret."""
+    return AuthConfigOut(turnstile_site_key=settings.turnstile_site_key)
 
 
 @router.get("/me", response_model=SessionUser)

@@ -65,6 +65,19 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
       EMAIL_FROM: ${EMAIL_FROM:-}
       ADMIN_NOTIFICATION_EMAIL: ${ADMIN_NOTIFICATION_EMAIL:-}
+      # Cloudflare edge: off in dev — the app isn't behind Cloudflare locally.
+      # The pilot stack (.env.pilot) turns both on; docs/operations/CLOUDFLARE_SETUP.md.
+      CLOUDFLARE_TRUSTED: ${CLOUDFLARE_TRUSTED:-false}
+      GEO_ENFORCEMENT_ENABLED: ${GEO_ENFORCEMENT_ENABLED:-false}
+      ALLOWED_COUNTRIES: ${ALLOWED_COUNTRIES:-US,CA}
+      # Auth throttles stay on in dev (real code path) with generous limits so
+      # repeated e2e sign-ups/sign-ins don't trip them. Pilot uses real limits.
+      AUTH_THROTTLES_ENABLED: ${AUTH_THROTTLES_ENABLED:-true}
+      LOGIN_RATE_LIMIT_PER_IP: ${LOGIN_RATE_LIMIT_PER_IP:-200}
+      REGISTER_RATE_LIMIT_PER_IP: ${REGISTER_RATE_LIMIT_PER_IP:-50}
+      LOGIN_MAX_FAILED_ATTEMPTS: ${LOGIN_MAX_FAILED_ATTEMPTS:-50}
+      TURNSTILE_SITE_KEY: ${TURNSTILE_SITE_KEY:-}
+      TURNSTILE_SECRET_KEY: ${TURNSTILE_SECRET_KEY:-}
     ports:
       - "8002:8000"
     depends_on:

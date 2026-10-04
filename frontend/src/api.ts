@@ -38,6 +38,15 @@ export async function api<T>(path: string, options: RequestInit = {}): Promise<T
       window.location.assign("/pending");
       throw new ApiError(403, rawDetail);
     }
+    // Region restriction: the API blocked this request by country.
+    if (
+      response.status === 403 &&
+      rawDetail === "REGION_NOT_SUPPORTED" &&
+      window.location.pathname !== "/unavailable"
+    ) {
+      window.location.assign("/unavailable");
+      throw new ApiError(403, rawDetail);
+    }
     const detail =
       typeof rawDetail === "string"
         ? rawDetail
