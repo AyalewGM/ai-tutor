@@ -14,6 +14,7 @@ from app.hint_api import router as hint_router
 from app.middleware.pii_sanitizer import PIISanitizerMiddleware
 from app.onboarding_api import router as onboarding_router
 from app.parent_api import router as parent_router
+from app.practice_pass_api import router as practice_pass_router
 from app.privacy_api import router as privacy_router
 from app.services.llm_bootstrap import configure_tutor_engine
 from app.telemetry_api import router as telemetry_router
@@ -34,6 +35,7 @@ app.include_router(adaptive_response_router, prefix=settings.api_prefix)
 app.include_router(diagnostic_router, prefix=settings.api_prefix)
 app.include_router(hint_router, prefix=settings.api_prefix)
 app.include_router(parent_router, prefix=settings.api_prefix)
+app.include_router(practice_pass_router, prefix=settings.api_prefix)
 app.include_router(privacy_router, prefix=settings.api_prefix)
 app.include_router(learner_workspace_router, prefix=settings.api_prefix)
 app.include_router(telemetry_router, prefix=settings.api_prefix)
