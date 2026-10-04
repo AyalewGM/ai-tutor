@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import { api, ApiError } from "../../api";
 import StatCard from "../../components/dashboard/StatCard";
-import type { MetricsOverview } from "./types";
+import type { Conversion, MetricsOverview } from "./types";
 
 function fmt(n: number): string {
   return n.toLocaleString("en-US");
@@ -19,6 +19,7 @@ function fmt(n: number): string {
 
 export default function OverviewTab() {
   const [data, setData] = useState<MetricsOverview | null>(null);
+  const [conv, setConv] = useState<Conversion | null>(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export default function OverviewTab() {
       .catch((err) =>
         setError(err instanceof ApiError ? err.message : "Failed to load metrics"),
       );
+    api<Conversion>("/admin/metrics/conversion").then(setConv).catch(() => {});
   }, []);
 
   if (error) {
@@ -151,6 +153,62 @@ export default function OverviewTab() {
           </p>
         </section>
       </div>
+
+      {conv && (
+        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-dashboard">
+          <h2 className="text-base font-semibold text-slate-950">Plans &amp; conversion</h2>
+          <p className="mt-1 text-sm text-slate-500">
+            {fmt(conv.paid_families)} of {fmt(conv.families_total)} families on a paid plan
+            ({conv.paid_share_pct}%) · {fmt(conv.trialing_now)} trialing now.
+          </p>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-left text-xs uppercase tracking-wide text-slate-400">
+                  <th className="pb-2 font-medium">Plan</th>
+                  <th className="pb-2 text-right font-medium">Families</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {conv.plan_breakdown.map((row) => (
+                  <tr key={row.tier}>
+                    <td className="py-2 font-medium text-slate-700">{row.tier}</td>
+                    <td className="py-2 text-right tabular-nums text-slate-900">{fmt(row.families)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-left text-xs uppercase tracking-wide text-slate-400">
+                  <th className="pb-2 font-medium">Stripe funnel</th>
+                  <th className="pb-2 text-right font-medium">30d</th>
+                  <th className="pb-2 text-right font-medium">All time</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {([
+                  ["Trials started", conv.funnel.trials_started],
+                  ["Activations", conv.funnel.activations],
+                  ["Cancellations", conv.funnel.cancellations],
+                ] as const).map(([label, counts]) => (
+                  <tr key={label}>
+                    <td className="py-2 font-medium text-slate-700">{label}</td>
+                    <td className="py-2 text-right tabular-nums text-slate-900">{fmt(counts["30d"])}</td>
+                    <td className="py-2 text-right tabular-nums text-slate-900">{fmt(counts["total"])}</td>
+                  </tr>
+                ))}
+                <tr>
+                  <td className="py-2 font-medium text-slate-700">Trial → paid</td>
+                  <td className="py-2 text-right tabular-nums text-slate-900" colSpan={2}>
+                    {conv.trial_to_paid_pct === null ? "—" : `${conv.trial_to_paid_pct}%`}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

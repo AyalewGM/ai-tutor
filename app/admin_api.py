@@ -599,6 +599,22 @@ class CurriculumActivityOut(BaseModel):
     attempts: int
 
 
+class PlanFamiliesOut(BaseModel):
+    tier: str
+    families: int
+
+
+class ConversionOut(BaseModel):
+    as_of: datetime
+    plan_breakdown: list[PlanFamiliesOut]
+    families_total: int
+    paid_families: int
+    trialing_now: int
+    paid_share_pct: float
+    funnel: dict[str, dict[str, int]]
+    trial_to_paid_pct: float | None
+
+
 @router.get("/metrics/overview", response_model=MetricsOverviewOut)
 def metrics_overview(
     db: DbSession,
@@ -630,3 +646,14 @@ def metrics_by_curriculum(
     from app.services.metrics import activity_by_curriculum
 
     return [CurriculumActivityOut.model_validate(row) for row in activity_by_curriculum(db)]
+
+
+@router.get("/metrics/conversion", response_model=ConversionOut)
+def metrics_conversion(
+    db: DbSession,
+    _user: Annotated[User, Depends(require_staff(Permission.METRICS_READ))],
+) -> ConversionOut:
+    """Plan mix plus the Stripe trial funnel (starts, activations, cancels)."""
+    from app.services.metrics import conversion
+
+    return ConversionOut.model_validate(conversion(db))

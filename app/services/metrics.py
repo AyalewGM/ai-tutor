@@ -19,11 +19,14 @@ from datetime import UTC, datetime, timedelta
 from sqlalchemy import distinct, func, select
 from sqlalchemy.orm import Session
 
+from app.admin_models import AdminAuditEvent
 from app.models import Attempt, Curriculum, Student, TutorSession, User
 from app.parent_models import ParentProfile
+from app.services.plans import FREE_PLAN
 
 WINDOWS = {"1d": 1, "7d": 7, "30d": 30}
 BREAKDOWN_DAYS = 30
+FUNNEL_WINDOWS = {"30d": 30, "total": None}
 
 
 def _cutoff(now: datetime, days: int) -> datetime:
@@ -174,3 +177,65 @@ def activity_by_curriculum(db: Session, *, now: datetime | None = None) -> list[
         }
         for code, name, learners, active_learners, attempts in rows
     ]
+
+
+def conversion(db: Session, *, now: datetime | None = None) -> dict:
+    """Plan mix and the Stripe trial funnel.
+
+    "Paid family" = a profile whose effective tier isn't the free plan.
+    Funnel counts come from the webhook-written audit rows: a "trialing"
+    status is a started trial, "active" an activation (also fires on
+    renewals — it's an approximation), and a deleted event a cancellation.
+    """
+    now = now or datetime.now(UTC)
+    rows = db.execute(
+        select(ParentProfile.subscription_tier, func.count()).group_by(
+            ParentProfile.subscription_tier
+        )
+    ).all()
+    breakdown = sorted(
+        ({"tier": tier, "families": int(n)} for tier, n in rows),
+        key=lambda r: (r["tier"] == FREE_PLAN, -r["families"]),
+    )
+    total = sum(r["families"] for r in breakdown)
+    paid = sum(r["families"] for r in breakdown if r["tier"] != FREE_PLAN)
+    trialing = db.scalar(
+        select(func.count(ParentProfile.id)).where(
+            ParentProfile.subscription_status == "trialing"
+        )
+    ) or 0
+
+    status = AdminAuditEvent.after_json["status"].as_string()
+    base = AdminAuditEvent.actor_label == "stripe-webhook"
+
+    def funnel_count(days: int | None, status_value: str | None, *, deleted: bool = False) -> int:
+        stmt = select(func.count(AdminAuditEvent.id)).where(base)
+        if deleted:
+            stmt = stmt.where(AdminAuditEvent.action == "CUSTOMER_SUBSCRIPTION_DELETED")
+        else:
+            stmt = stmt.where(status == status_value)
+        if days is not None:
+            stmt = stmt.where(AdminAuditEvent.created_at >= _cutoff(now, days))
+        return db.scalar(stmt) or 0
+
+    funnel: dict[str, dict[str, int]] = {"trials_started": {}, "activations": {}, "cancellations": {}}
+    for label, days in FUNNEL_WINDOWS.items():
+        funnel["trials_started"][label] = funnel_count(days, "trialing")
+        funnel["activations"][label] = funnel_count(days, "active")
+        funnel["cancellations"][label] = funnel_count(days, None, deleted=True)
+
+    trials_total = funnel["trials_started"]["total"]
+    return {
+        "as_of": now,
+        "plan_breakdown": breakdown,
+        "families_total": total,
+        "paid_families": paid,
+        "trialing_now": int(trialing),
+        "paid_share_pct": round(paid / total * 100, 1) if total else 0.0,
+        "funnel": funnel,
+        "trial_to_paid_pct": (
+            round(funnel["activations"]["total"] / trials_total * 100, 1)
+            if trials_total
+            else None
+        ),
+    }
