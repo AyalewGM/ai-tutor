@@ -8,8 +8,8 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.auth_models import AuthSession
-from app.parent_models import LearnerPassSession
 from app.core.database import SessionLocal
+from app.parent_models import LearnerPassSession
 
 SESSION_COOKIE = "ai_tutor_session"
 SESSION_TTL = timedelta(hours=8)
