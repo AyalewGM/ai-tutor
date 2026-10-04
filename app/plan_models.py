@@ -28,6 +28,10 @@ class Plan(Base):
     monthly_price_cad: Mapped[int] = mapped_column(Integer, nullable=False)
     max_students: Mapped[int] = mapped_column(Integer, nullable=False)
     ai_daily_generations: Mapped[int] = mapped_column(Integer, nullable=False)
+    # Stripe Price ids for checkout — NULL until the operator creates the
+    # prices in Stripe and writes them here (via PATCH /admin/plans).
+    stripe_price_id_usd: Mapped[str | None] = mapped_column(String(255))
+    stripe_price_id_cad: Mapped[str | None] = mapped_column(String(255))
     active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False

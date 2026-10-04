@@ -24,6 +24,12 @@ class Settings(BaseSettings):
     # Base URL used in email links (no trailing slash).
     public_base_url: str = "http://localhost:3000"
 
+    # Stripe billing. Empty key = billing disabled (checkout returns 503).
+    # Trial requires a card: checkout sets payment_method_collection=always.
+    stripe_secret_key: str | None = None
+    stripe_webhook_secret: str | None = None
+    stripe_trial_days: int = 14
+
     # Outbound email. "console" logs a redacted summary and sends nothing;
     # "smtp" delivers (Gmail: smtp.gmail.com:587 with an app password).
     email_backend: str = "console"  # console | smtp

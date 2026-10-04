@@ -17,6 +17,7 @@ dependencies = [
   "redis>=5.2,<7.0",
   "openai>=1.0,<3.0",
   "google-genai>=1.0,<2.0",
+  "stripe>=15.0,<16.0",
   "sympy>=1.14,<1.15",
 ]
 

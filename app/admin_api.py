@@ -284,6 +284,8 @@ class PlanOut(BaseModel):
     monthly_price_cad: int
     max_students: int
     ai_daily_generations: int
+    stripe_price_id_usd: str | None
+    stripe_price_id_cad: str | None
     active: bool
     updated_at: datetime
 
@@ -294,6 +296,8 @@ class PlanUpdateIn(BaseModel):
     monthly_price_cad: int | None = Field(default=None, ge=0)
     max_students: int | None = Field(default=None, ge=1)
     ai_daily_generations: int | None = Field(default=None, ge=0)
+    stripe_price_id_usd: str | None = None
+    stripe_price_id_cad: str | None = None
     active: bool | None = None
 
 
