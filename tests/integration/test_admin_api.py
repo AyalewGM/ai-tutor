@@ -1,4 +1,5 @@
 import uuid
+from datetime import UTC, datetime
 
 import pytest
 from cryptography.fernet import Fernet
@@ -151,3 +152,46 @@ def test_make_admin_refuses_family_accounts_and_audits_grants(monkeypatch) -> No
     make_admin.revoke(staff_email)
     with SessionLocal() as db:
         assert db.get(User, staff_id).role == "STAFF_REVOKED"
+
+
+def _mfa_verified_staff(role: str) -> str:
+    with SessionLocal() as db:
+        user = User(email=f"{role.lower()}-{uuid.uuid4().hex[:8]}@example.test", role=role)
+        db.add(user)
+        db.flush()
+        token, session = create_session(db, user.id)
+        session.mfa_verified_at = datetime.now(UTC)
+        db.commit()
+        return token
+
+
+def test_support_role_scoped_to_family_approval() -> None:
+    client.cookies.set(SESSION_COOKIE, _mfa_verified_staff("SUPPORT"))
+    me = client.get("/api/v1/admin/me")
+    assert me.status_code == 200 and me.json()["role"] == "SUPPORT"
+    assert set(me.json()["permissions"]) == {
+        "admin.access", "admin.families.read", "admin.families.approve",
+    }
+    assert client.get("/api/v1/admin/families").status_code == 200
+    # Every other surface is a 404 (undiscoverable), not a 403.
+    assert client.get("/api/v1/admin/metrics/overview").status_code == 404
+    assert client.get("/api/v1/admin/ai-usage/summary").status_code == 404
+    assert client.get("/api/v1/admin/plans").status_code == 404
+    assert client.get("/api/v1/admin/audit-log").status_code == 404
+
+
+def test_analyst_role_read_only_reporting() -> None:
+    client.cookies.set(SESSION_COOKIE, _mfa_verified_staff("ANALYST"))
+    me = client.get("/api/v1/admin/me")
+    assert me.status_code == 200 and me.json()["role"] == "ANALYST"
+    assert set(me.json()["permissions"]) == {
+        "admin.access", "admin.metrics.read", "admin.ai_usage.read",
+    }
+    assert client.get("/api/v1/admin/metrics/overview").status_code == 200
+    assert client.get("/api/v1/admin/metrics/conversion").status_code == 200
+    assert client.get("/api/v1/admin/ai-usage/summary").status_code == 200
+    # GET /plans is METRICS_READ (read-only catalog), but writes need PLANS_MANAGE.
+    assert client.get("/api/v1/admin/plans").status_code == 200
+    assert client.patch("/api/v1/admin/plans/pro", json={"name": "X"}).status_code == 404
+    assert client.get("/api/v1/admin/families").status_code == 404
+    assert client.get("/api/v1/admin/audit-log").status_code == 404

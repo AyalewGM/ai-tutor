@@ -21,9 +21,18 @@ class Permission(StrEnum):
 
 ROLE_PERMISSIONS: dict[str, frozenset[Permission]] = {
     "ADMIN": frozenset(Permission),
-    # Planned (not yet assignable via make_admin):
-    # "SUPPORT": frozenset({ADMIN_ACCESS, FAMILIES_READ, FAMILIES_APPROVE}),
-    # "ANALYST": frozenset({ADMIN_ACCESS, METRICS_READ, AI_USAGE_READ}),
+    # Customer-facing staff: see and decide family approvals, nothing else.
+    "SUPPORT": frozenset({
+        Permission.ADMIN_ACCESS,
+        Permission.FAMILIES_READ,
+        Permission.FAMILIES_APPROVE,
+    }),
+    # Read-only reporting: metrics and AI spend, no write permissions.
+    "ANALYST": frozenset({
+        Permission.ADMIN_ACCESS,
+        Permission.METRICS_READ,
+        Permission.AI_USAGE_READ,
+    }),
 }
 
 STAFF_ROLES = frozenset(ROLE_PERMISSIONS)
