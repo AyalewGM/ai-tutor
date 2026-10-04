@@ -66,6 +66,14 @@ export function post<T>(path: string, payload?: unknown): Promise<T> {
   });
 }
 
+export function patch<T>(path: string, payload: unknown): Promise<T> {
+  return api<T>(path, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+}
+
 export function postForm<T>(path: string, form: FormData): Promise<T> {
   return api<T>(path, { method: "POST", body: form });
 }
