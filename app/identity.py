@@ -1,4 +1,5 @@
 import uuid
+from dataclasses import dataclass
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, Request
@@ -61,4 +62,43 @@ def require_parent_owns_session(
     if session is None or session.status != "ACTIVE":
         raise HTTPException(status_code=404, detail="Active tutor session not found")
     require_parent_owns_student(parent, db.get(Student, session.student_id))
+    return session
+
+
+@dataclass(frozen=True)
+class LearningAccess:
+    parent: ParentProfile
+    learner_id: uuid.UUID | None = None
+
+def current_learning_access(request: Request, db: DbSession) -> LearningAccess:
+    raw_learner_id = getattr(request.state, "authenticated_learner_id", None)
+    if raw_learner_id is not None:
+        try:
+            learner_id = raw_learner_id if isinstance(raw_learner_id, uuid.UUID) else uuid.UUID(str(raw_learner_id))
+        except (TypeError, ValueError) as exc:
+            raise HTTPException(status_code=401, detail="Invalid learner identity") from exc
+        student = db.get(Student, learner_id)
+        if student is None or not student.active or student.parent_id is None:
+            raise HTTPException(status_code=401, detail="Learner access unavailable")
+        parent = db.scalar(select(ParentProfile).where(ParentProfile.user_id == student.parent_id))
+        if parent is None:
+            raise HTTPException(status_code=401, detail="Learner access unavailable")
+        return LearningAccess(parent=parent, learner_id=student.id)
+    user = current_user(request, db)
+    return LearningAccess(parent=current_parent(user, db), learner_id=None)
+
+CurrentLearningAccess = Annotated[LearningAccess, Depends(current_learning_access)]
+
+def require_learning_owns_student(access: LearningAccess, student: Student | None) -> Student:
+    student = require_parent_owns_student(access.parent, student)
+    if access.learner_id is not None and student.id != access.learner_id:
+        raise HTTPException(status_code=404, detail="Learner not found")
+    return student
+
+def require_learning_owns_session(
+    db: Session, access: LearningAccess, session: TutorSession | None
+) -> TutorSession:
+    session = require_parent_owns_session(db, access.parent, session)
+    if access.learner_id is not None and session.student_id != access.learner_id:
+        raise HTTPException(status_code=404, detail="Active tutor session not found")
     return session

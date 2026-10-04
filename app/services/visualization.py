@@ -528,29 +528,55 @@ def _polynomial_sign_visual(problem: Problem) -> dict | None:
     }
 
 
-_LINEAR_SIDE = re.compile(
-    r"^\s*(?:(-?\d*)\s*\(\s*x\s*([+-])\s*(\d+)\s*\)|(-?\d*)\s*x\s*(?:([+-])\s*(\d+))?|(-?\d+))\s*$"
-)
+def _parse_int(text: str) -> int | None:
+    if not text:
+        return None
+    sign = -1 if text[0] == "-" else 1
+    digits = text[1:] if text[0] in "+-" else text
+    if not digits or not digits.isdigit():
+        return None
+    return sign * int(digits)
 
 
 def _linear_side(text: str) -> tuple[int, int] | None:
-    """Parse 'ax + b', 'a(x + b)', 'ax', or 'c' into (x-coefficient, constant)."""
-    match = _LINEAR_SIDE.match(text.replace("−", "-"))
-    if not match:
+    """Parse a small linear side without regex backtracking on learner input."""
+    value = "".join(text.replace("−", "-").split())
+    if not value or len(value) > 64:
         return None
-    if match.group(2):  # a(x ± b)
-        a = (
-            int(match.group(1) or "1")
-            if match.group(1) not in ("", "-")
-            else (-1 if match.group(1) == "-" else 1)
-        )
-        b = int(match.group(3)) * (1 if match.group(2) == "+" else -1)
+
+    # Bare constant.
+    constant = _parse_int(value)
+    if constant is not None:
+        return 0, constant
+
+    # Distributed form: a(x+b) or a(x-b).
+    if value.endswith(")") and "(" in value:
+        coeff_text, inner = value.split("(", 1)
+        if not inner.endswith(")"):
+            return None
+        inner = inner[:-1]
+        if not inner.startswith("x") or len(inner) < 3 or inner[1] not in "+-":
+            return None
+        a = -1 if coeff_text == "-" else (1 if coeff_text in ("", "+") else _parse_int(coeff_text))
+        b = _parse_int(inner[1:])
+        if a is None or b is None:
+            return None
         return a, a * b
-    if match.group(7) is not None:  # bare constant
-        return 0, int(match.group(7))
-    raw = match.group(4)
-    a = -1 if raw == "-" else (1 if raw in ("", None) else int(raw))
-    b = int(match.group(6)) * (1 if match.group(5) == "+" else -1) if match.group(6) else 0
+
+    # ax, ax+b, or ax-b.
+    if "x" not in value or value.count("x") != 1:
+        return None
+    coeff_text, tail = value.split("x", 1)
+    a = -1 if coeff_text == "-" else (1 if coeff_text in ("", "+") else _parse_int(coeff_text))
+    if a is None:
+        return None
+    if not tail:
+        return a, 0
+    if tail[0] not in "+-":
+        return None
+    b = _parse_int(tail)
+    if b is None:
+        return None
     return a, b
 
 

@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from app.api import _tutor_context
 from app.core.database import get_db
 from app.hint_models import HintEvent
-from app.identity import CurrentParent, require_parent_owns_session
+from app.identity import CurrentLearningAccess, require_learning_owns_session
 from app.models import Attempt, Problem, Skill, Student, TutorSession, TutorTurn
 from app.services import chat_cpa, visualization
 from app.services.curriculum_scope import (
@@ -38,9 +38,9 @@ class HintResponse(BaseModel):
 
 @router.post("/sessions/{session_id}/hint", response_model=HintResponse)
 def request_hint(
-    session_id: uuid.UUID, payload: HintRequest, parent: CurrentParent, db: DbSession
+    session_id: uuid.UUID, payload: HintRequest, access: CurrentLearningAccess, db: DbSession
 ) -> HintResponse:
-    session = require_parent_owns_session(db, parent, db.get(TutorSession, session_id))
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
     active_skill_id = session.active_skill_id or session.primary_skill_id
     try:
         scope = require_session_scope(db, session)

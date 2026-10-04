@@ -15,7 +15,7 @@ export async function api<T>(path: string, options: RequestInit = {}): Promise<T
   });
   // Auth endpoints legitimately return 401 (bad credentials) — let callers
   // surface the real error instead of redirecting back to /login in a loop.
-  if (response.status === 401 && !path.startsWith("/auth/")) {
+  if (response.status === 401 && !path.startsWith("/auth/") && !path.startsWith("/practice-pass/")) {
     const next = encodeURIComponent(window.location.pathname + window.location.search);
     window.location.assign(`/login?next=${next}`);
     throw new ApiError(401, "Authentication required");

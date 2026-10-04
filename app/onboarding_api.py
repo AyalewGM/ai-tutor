@@ -8,7 +8,12 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.curriculum_models import StudentCurriculumEnrollment
-from app.identity import CurrentParent, require_parent_owns_student
+from app.identity import (
+    CurrentLearningAccess,
+    CurrentParent,
+    require_learning_owns_student,
+    require_parent_owns_student,
+)
 from app.models import (
     Curriculum,
     LearnerAward,
@@ -105,11 +110,13 @@ class LearnerLaunchpad(BaseModel):
 
 
 @router.get("/curricula", response_model=list[CurriculumChoice])
-def list_active_curricula(parent: CurrentParent, db: DbSession) -> list[CurriculumChoice]:
+def list_active_curricula(access: CurrentLearningAccess, db: DbSession) -> list[CurriculumChoice]:
+    query = select(Curriculum).where(Curriculum.active.is_(True))
+    if access.learner_id is not None:
+        student = require_learning_owns_student(access, db.get(Student, access.learner_id))
+        query = query.where(Curriculum.id == student.curriculum_id)
     curricula = db.scalars(
-        select(Curriculum)
-        .where(Curriculum.active.is_(True))
-        .order_by(Curriculum.jurisdiction, Curriculum.grade_level, Curriculum.code, Curriculum.version)
+        query.order_by(Curriculum.jurisdiction, Curriculum.grade_level, Curriculum.code, Curriculum.version)
     ).all()
     return [
         CurriculumChoice(
@@ -124,11 +131,15 @@ def list_active_curricula(parent: CurrentParent, db: DbSession) -> list[Curricul
 
 
 @router.get("/learners", response_model=list[LearnerChoice])
-def list_learners(parent: CurrentParent, db: DbSession) -> list[LearnerChoice]:
+def list_learners(access: CurrentLearningAccess, db: DbSession) -> list[LearnerChoice]:
     rows = db.execute(
         select(Student, Curriculum)
         .join(Curriculum, Curriculum.id == Student.curriculum_id)
-        .where(Student.parent_id == parent.user_id, Student.active.is_(True))
+        .where(
+            Student.parent_id == access.parent.user_id,
+            Student.active.is_(True),
+            *([Student.id == access.learner_id] if access.learner_id is not None else []),
+        )
         .order_by(Student.first_name, Student.id)
     ).all()
     return [
@@ -173,9 +184,9 @@ def update_learner_avatar(
 
 @router.get("/learners/{student_id}/skills", response_model=list[SkillChoice])
 def list_learner_skills(
-    student_id: uuid.UUID, parent: CurrentParent, db: DbSession
+    student_id: uuid.UUID, access: CurrentLearningAccess, db: DbSession
 ) -> list[SkillChoice]:
-    student = require_parent_owns_student(parent, db.get(Student, student_id))
+    student = require_learning_owns_student(access, db.get(Student, student_id))
     if student.curriculum_id is None:
         raise HTTPException(status_code=409, detail="Learner curriculum is unavailable")
     skills = db.scalars(
@@ -197,9 +208,9 @@ def list_learner_skills(
 
 @router.get("/learners/{student_id}/launchpad", response_model=LearnerLaunchpad)
 def get_learner_launchpad(
-    student_id: uuid.UUID, parent: CurrentParent, db: DbSession
+    student_id: uuid.UUID, access: CurrentLearningAccess, db: DbSession
 ) -> LearnerLaunchpad:
-    student = require_parent_owns_student(parent, db.get(Student, student_id))
+    student = require_learning_owns_student(access, db.get(Student, student_id))
     if student.curriculum_id is None:
         raise HTTPException(status_code=409, detail="Learner curriculum is unavailable")
 

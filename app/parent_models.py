@@ -87,6 +87,34 @@ class ParentStudentRelationshipEvent(Base):
     )
 
 
+class FamilyPracticePass(Base):
+    __tablename__ = "family_practice_passes"
+    __table_args__ = (
+        UniqueConstraint("parent_profile_id", name="uq_family_practice_pass_parent"),
+        UniqueConstraint("token_hash", name="uq_family_practice_pass_token"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    parent_profile_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("parent_profiles.id", ondelete="CASCADE"), nullable=False, index=True)
+    student_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("students.id", ondelete="CASCADE"), nullable=False)
+    token_hash: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow, nullable=False)
+
+
+class LearnerPassSession(Base):
+    __tablename__ = "learner_pass_sessions"
+    __table_args__ = (UniqueConstraint("token_hash", name="uq_learner_pass_session_token"),)
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    practice_pass_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("family_practice_passes.id", ondelete="CASCADE"), nullable=False)
+    student_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("students.id", ondelete="CASCADE"), nullable=False, index=True)
+    token_hash: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow, nullable=False)
+
+
 class ChildLinkClaim(Base):
     __tablename__ = "child_link_claims"
 
