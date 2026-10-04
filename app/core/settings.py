@@ -17,6 +17,23 @@ class Settings(BaseSettings):
     admin_mfa_max_attempts: int = 5
     admin_mfa_window_seconds: int = 300
 
+    # Pilot gate: self-registered families wait for admin approval.
+    require_family_approval: bool = True
+    # Base URL used in email links (no trailing slash).
+    public_base_url: str = "http://localhost:3000"
+
+    # Outbound email. "console" logs a redacted summary and sends nothing;
+    # "smtp" delivers (Gmail: smtp.gmail.com:587 with an app password).
+    email_backend: str = "console"  # console | smtp
+    smtp_host: str = "smtp.gmail.com"
+    smtp_port: int = 587
+    smtp_username: str | None = None
+    smtp_password: str | None = None
+    smtp_timeout_seconds: float = 10.0
+    email_from: str | None = None
+    # Where "new family awaiting approval" notifications go.
+    admin_notification_email: str | None = None
+
     photo_ocr_provider: str = "auto"  # auto | mathpix | stub | disabled
     mathpix_app_id: str | None = None
     mathpix_app_key: str | None = None

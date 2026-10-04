@@ -3,7 +3,7 @@ from typing import Annotated
 
 from argon2 import PasswordHasher
 from argon2.exceptions import VerificationError
-from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request, Response, status
 from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
@@ -13,9 +13,11 @@ from app.auth import SESSION_COOKIE, create_session, revoke_session
 from app.core.database import get_db
 from app.core.settings import settings
 from app.credential_models import UserCredential
+from app.identity import CurrentUser, initial_approval_status
 from app.models import User
 from app.parent_models import ParentProfile
 from app.schemas import ParentRegisterSchema
+from app.services.email import new_family_notification, send_email
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -33,6 +35,20 @@ class SessionUser(BaseModel):
     id: str
     role: str
     display_name: str | None
+    # PENDING / APPROVED / REJECTED for families; None for staff accounts.
+    approval_status: str | None = None
+    rejection_reason: str | None = None
+
+
+def _session_user(db: Session, user: User) -> SessionUser:
+    parent = db.scalar(select(ParentProfile).where(ParentProfile.user_id == user.id))
+    return SessionUser(
+        id=str(user.id),
+        role=user.role,
+        display_name=user.display_name,
+        approval_status=parent.approval_status if parent else None,
+        rejection_reason=parent.rejection_reason if parent else None,
+    )
 
 
 def _set_session_cookie(response: Response, token: str) -> None:
@@ -48,7 +64,12 @@ def _set_session_cookie(response: Response, token: str) -> None:
 
 
 @router.post("/register-parent", response_model=SessionUser, status_code=status.HTTP_201_CREATED)
-def register_parent(payload: ParentRegistration, response: Response, db: DbSession) -> SessionUser:
+def register_parent(
+    payload: ParentRegistration,
+    response: Response,
+    background: BackgroundTasks,
+    db: DbSession,
+) -> SessionUser:
     email = payload.email.strip().lower()
     user = User(email=email, display_name=payload.display_name, role="PARENT")
     db.add(user)
@@ -65,6 +86,7 @@ def register_parent(payload: ParentRegistration, response: Response, db: DbSessi
                 coppa_consent_given=True,
                 consent_timestamp=accepted_at,
                 terms_accepted_at=accepted_at,
+                approval_status=initial_approval_status(),
             )
         )
         token, _ = create_session(db, user.id)
@@ -74,7 +96,11 @@ def register_parent(payload: ParentRegistration, response: Response, db: DbSessi
         # Do not expose whether an account exists.
         raise HTTPException(status_code=400, detail="Unable to create account") from exc
     _set_session_cookie(response, token)
-    return SessionUser(id=str(user.id), role=user.role, display_name=user.display_name)
+    if settings.require_family_approval:
+        notification = new_family_notification(user.email, user.display_name)
+        if notification is not None:
+            background.add_task(send_email, notification)
+    return _session_user(db, user)
 
 
 @router.post("/login", response_model=SessionUser)
@@ -95,7 +121,13 @@ def login(payload: LoginRequest, response: Response, db: DbSession) -> SessionUs
     token, _ = create_session(db, user.id)
     db.commit()
     _set_session_cookie(response, token)
-    return SessionUser(id=str(user.id), role=user.role, display_name=user.display_name)
+    return _session_user(db, user)
+
+
+@router.get("/me", response_model=SessionUser)
+def me(user: CurrentUser, db: DbSession) -> SessionUser:
+    """Who is signed in — deliberately ungated so pending families can see their status."""
+    return _session_user(db, user)
 
 
 @router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)

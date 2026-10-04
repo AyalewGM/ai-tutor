@@ -28,6 +28,16 @@ export async function api<T>(path: string, options: RequestInit = {}): Promise<T
   }
   if (!response.ok) {
     const rawDetail = (body as { detail?: unknown } | null)?.detail;
+    // Pilot approval gate: any family-only route bounces a pending or
+    // rejected family to the status page instead of showing a raw error.
+    if (
+      response.status === 403 &&
+      (rawDetail === "FAMILY_PENDING_APPROVAL" || rawDetail === "FAMILY_REJECTED") &&
+      window.location.pathname !== "/pending"
+    ) {
+      window.location.assign("/pending");
+      throw new ApiError(403, rawDetail);
+    }
     const detail =
       typeof rawDetail === "string"
         ? rawDetail
