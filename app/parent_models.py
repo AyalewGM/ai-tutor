@@ -65,6 +65,10 @@ class ParentProfile(Base):
         ForeignKey("users.id", ondelete="SET NULL")
     )
     rejection_reason: Mapped[str | None] = mapped_column(String(500))
+    # Family's chosen jurisdiction ("US"/"CA" + state/province code). Drives
+    # the curriculum cascade and feeds state-level usage analytics.
+    country_code: Mapped[str | None] = mapped_column(String(2))
+    region_code: Mapped[str | None] = mapped_column(String(3))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=datetime.utcnow, nullable=False
     )
