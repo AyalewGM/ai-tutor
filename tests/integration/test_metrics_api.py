@@ -157,3 +157,51 @@ def test_metrics_by_curriculum(metric_family):
     assert row["learners_total"] == 1
     assert row["active_learners"] == 1
     assert row["attempts"] == 2  # recent + 10-day-old attempt both in the 30d window
+
+
+def test_metrics_conversion(metric_family):
+    _staff_cookie()
+    from app.admin_models import AdminAuditEvent
+    from app.parent_models import ParentProfile as _PP
+
+    email = f"cv-{uuid.uuid4().hex[:8]}@example.com"
+    with SessionLocal() as db:
+        user = User(email=email, role="PARENT")
+        db.add(user)
+        db.flush()
+        db.add(
+            ParentProfile(
+                user_id=user.id, subscription_tier="pro",
+                subscription_status="trialing",
+            )
+        )
+        db.add(
+            AdminAuditEvent(
+                actor_user_id=None, actor_label="stripe-webhook",
+                action="CUSTOMER_SUBSCRIPTION_UPDATED", target_type="subscription",
+                target_id=str(user.id), after_json={"status": "trialing", "tier": "pro"},
+            )
+        )
+        db.commit()
+        user_id = user.id
+
+    resp = client.get("/api/v1/admin/metrics/conversion")
+    assert resp.status_code == 200
+    data = resp.json()
+    tiers = {row["tier"]: row["families"] for row in data["plan_breakdown"]}
+    assert tiers.get("pro", 0) >= 1
+    assert data["paid_families"] >= 1
+    assert data["trialing_now"] >= 1
+    assert data["families_total"] >= data["paid_families"]
+    assert data["funnel"]["trials_started"]["total"] >= 1
+    assert data["funnel"]["trials_started"]["30d"] >= 1
+    assert "activations" in data["funnel"] and "cancellations" in data["funnel"]
+
+    with SessionLocal() as db:
+        db.query(AdminAuditEvent).filter(
+            AdminAuditEvent.target_id == str(user_id)
+        ).delete()
+        db.query(_PP).filter(_PP.user_id == user_id).delete()
+        db.flush()
+        db.delete(db.get(User, user_id))
+        db.commit()

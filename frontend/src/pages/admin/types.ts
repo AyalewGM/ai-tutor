@@ -91,3 +91,14 @@ export type AuditEvent = {
   after: Record<string, unknown> | null;
   created_at: string;
 };
+
+export type Conversion = {
+  as_of: string;
+  plan_breakdown: { tier: string; families: number }[];
+  families_total: number;
+  paid_families: number;
+  trialing_now: number;
+  paid_share_pct: number;
+  funnel: { trials_started: Record<string, number>; activations: Record<string, number>; cancellations: Record<string, number> };
+  trial_to_paid_pct: number | null;
+};
