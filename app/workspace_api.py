@@ -49,6 +49,7 @@ WorkspaceAction = Literal["SUBMIT_ANSWER", "REQUEST_HINT", "I_DONT_UNDERSTAND"]
 
 
 class LearnerIdentityOut(BaseModel):
+    id: uuid.UUID | None = None
     first_name: str
     grade_level: str
     avatar_id: str = "avatar-1"
@@ -333,6 +334,7 @@ def get_learner_workspace(
         session_id=session.id,
         state=session.current_state,
         learner=LearnerIdentityOut(
+            id=learner.id,
             first_name=learner.first_name,
             grade_level=learner.grade_level,
             avatar_id=learner.avatar_id,
