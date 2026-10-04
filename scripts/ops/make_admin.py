@@ -45,7 +45,7 @@ def _prompt_password() -> str:
         return first
 
 
-def grant(email: str) -> str:
+def grant(email: str) -> None:
     with SessionLocal() as db:
         user = db.scalar(select(User).where(func.lower(User.email) == email))
         if user is not None and db.scalar(
@@ -69,10 +69,9 @@ def grant(email: str) -> str:
             target_type="user", target_id=str(user.id), before=before, after={"role": ADMIN_ROLE},
         )
         db.commit()
-    return f"{email} is now an admin. Sign in, then enroll two-factor at /admin."
 
 
-def reset_mfa(email: str) -> str:
+def reset_mfa(email: str) -> None:
     with SessionLocal() as db:
         user = db.scalar(select(User).where(func.lower(User.email) == email))
         if user is None:
@@ -86,10 +85,9 @@ def reset_mfa(email: str) -> str:
             target_type="user", target_id=str(user.id),
         )
         db.commit()
-    return f"Two-factor reset for {email}. They must enroll again on next sign-in."
 
 
-def revoke(email: str) -> str:
+def revoke(email: str) -> None:
     with SessionLocal() as db:
         user = db.scalar(select(User).where(func.lower(User.email) == email))
         if user is None:
@@ -104,7 +102,6 @@ def revoke(email: str) -> str:
             after={"role": REVOKED_ROLE},
         )
         db.commit()
-    return f"Staff access revoked for {email}; all sessions signed out."
 
 
 def main() -> None:
@@ -115,12 +112,17 @@ def main() -> None:
     group.add_argument("--reset-mfa", action="store_true", help="clear the two-factor enrollment")
     args = parser.parse_args()
     email = args.email.strip().lower()
+    # Status lines are built here from the email alone — nothing returned by
+    # a function that handled credentials is ever printed.
     if args.revoke:
-        print(revoke(email))
+        revoke(email)
+        print(f"Staff access revoked for {email}; all sessions signed out.")
     elif args.reset_mfa:
-        print(reset_mfa(email))
+        reset_mfa(email)
+        print(f"Two-factor cleared for {email}. They must enroll again on next sign-in.")
     else:
-        print(grant(email))
+        grant(email)
+        print(f"{email} is now an admin. Sign in, then enroll two-factor at /admin.")
 
 
 if __name__ == "__main__":
