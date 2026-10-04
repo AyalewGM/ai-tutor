@@ -17,12 +17,16 @@ MCPS_CONTEXT = "https://www.montgomeryschoolsmd.org/curriculum/math/"
 
 
 def _authority(db):
-    us = db.scalar(select(Jurisdiction).where(Jurisdiction.parent_id.is_(None), Jurisdiction.code == "US"))
+    us = db.scalar(
+        select(Jurisdiction).where(Jurisdiction.parent_id.is_(None), Jurisdiction.code == "US")
+    )
     if us is None:
         us = Jurisdiction(code="US", name="United States", jurisdiction_type="COUNTRY")
         db.add(us)
         db.flush()
-    md = db.scalar(select(Jurisdiction).where(Jurisdiction.parent_id == us.id, Jurisdiction.code == "MD"))
+    md = db.scalar(
+        select(Jurisdiction).where(Jurisdiction.parent_id == us.id, Jurisdiction.code == "MD")
+    )
     if md is None:
         md = Jurisdiction(
             parent_id=us.id,
@@ -76,8 +80,16 @@ def seed() -> None:
     try:
         authority = _authority(db)
         curriculum = db.scalar(select(Curriculum).where(Curriculum.code == CURRICULUM_CODE))
+        # A legacy-seed re-run can resurrect the superseded MCPS code after the
+        # Maryland row already exists (test order is not guaranteed). That row
+        # is a duplicate of an already-upgraded fixture — retire its code claim
+        # rather than re-upgrade or delete under foreign keys.
+        zombie = db.scalar(select(Curriculum).where(Curriculum.code == LEGACY_CODE))
+        if curriculum is not None and zombie is not None:
+            zombie.code = f"{LEGACY_CODE}__SUPERSEDED_{zombie.id.hex[:8]}"
+            zombie.active = False
         if curriculum is None:
-            curriculum = db.scalar(select(Curriculum).where(Curriculum.code == LEGACY_CODE))
+            curriculum = zombie
         if curriculum is None:
             raise RuntimeError("Algebra I seed did not create or locate its curriculum")
 
