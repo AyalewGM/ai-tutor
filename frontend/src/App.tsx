@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 import Badges from "./pages/Badges";
 import Diagnostic from "./pages/Diagnostic";
 import Landing from "./pages/Landing";
@@ -23,6 +24,7 @@ export default function App() {
       <Route path="/practice/:token" element={<PracticePass />} />
       <Route path="/learn" element={<LearnEntry />} />
       <Route path="/parent" element={<ParentDashboard />} />
+      <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/parent/settings" element={<ParentSettings />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/diagnostic/:sessionId" element={<Diagnostic />} />
