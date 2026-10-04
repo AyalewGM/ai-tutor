@@ -44,8 +44,9 @@ class ParentProfile(Base):
     )
     consent_timestamp: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     terms_accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    # Pilot approval gate. Self-registered families start PENDING when
-    # REQUIRE_FAMILY_APPROVAL is on; operator-provisioned rows default APPROVED.
+    # Historical approval-gate record. The gate was removed when paid trials
+    # shipped; all new families are APPROVED and the value no longer gates
+    # access — staff may still annotate families via the admin endpoints.
     approval_status: Mapped[str] = mapped_column(
         String(20),
         default=APPROVAL_APPROVED,

@@ -22,7 +22,6 @@ def outbox(monkeypatch):
     sent = []
     monkeypatch.setattr(auth_api, "send_email", sent.append)
     monkeypatch.setattr(admin_api, "send_email", sent.append)
-    monkeypatch.setattr(settings, "require_family_approval", True)
     monkeypatch.setattr(settings, "admin_notification_email", "owner@mihur.test")
     yield sent
     client.cookies.clear()
@@ -66,50 +65,48 @@ def _profile_id(email: str) -> uuid.UUID:
         )
 
 
-def test_new_family_is_pending_blocked_and_admin_is_notified(outbox) -> None:
+def test_new_family_is_approved_and_admin_is_notified(outbox) -> None:
     email, body = _register()
-    assert body["approval_status"] == "PENDING"
+    # The approval gate is gone: self-registered families get access
+    # immediately; the admin gets a heads-up email, not a decision request.
+    assert body["approval_status"] == "APPROVED"
     assert [m.to for m in outbox] == ["owner@mihur.test"]
     assert email in outbox[0].body and "/admin" in outbox[0].body
-
-    blocked = client.get("/api/v1/onboarding/learners")
-    assert blocked.status_code == 403
-    assert blocked.json()["detail"] == "FAMILY_PENDING_APPROVAL"
-    # Status stays readable so the pending page can explain what's happening.
-    me = client.get("/api/v1/auth/me")
-    assert me.status_code == 200 and me.json()["approval_status"] == "PENDING"
+    assert client.get("/api/v1/onboarding/learners").status_code == 200
 
 
-def test_admin_approves_family_who_then_gets_access(outbox) -> None:
+def test_admin_decision_endpoints_record_status_without_gating(outbox) -> None:
     family_email, _ = _register()
-    family_cookie = client.cookies.get(SESSION_COOKIE)
     profile_id = _profile_id(family_email)
 
     client.cookies.set(SESSION_COOKIE, _admin_token())
-    pending = client.get("/api/v1/admin/families", params={"status": "PENDING"})
-    assert pending.status_code == 200
-    assert str(profile_id) in {f["parent_profile_id"] for f in pending.json()}
-
     approved = client.post(f"/api/v1/admin/families/{profile_id}/approve")
-    assert approved.status_code == 200 and approved.json()["approval_status"] == "APPROVED"
-    assert client.post(f"/api/v1/admin/families/{profile_id}/approve").status_code == 409
-    assert outbox[-1].to == family_email and "approved" in outbox[-1].subject
+    assert approved.status_code == 409  # already APPROVED
+
+    rejected = client.post(
+        f"/api/v1/admin/families/{profile_id}/reject",
+        json={"reason": "Annotated during a support review."},
+    )
+    assert rejected.status_code == 200
+    assert outbox[-1].to == family_email and "Annotated" in outbox[-1].body
 
     with SessionLocal() as db:
         event = db.scalar(
             select(AdminAuditEvent).where(
                 AdminAuditEvent.target_id == str(profile_id),
-                AdminAuditEvent.action == "family.approved",
+                AdminAuditEvent.action == "family.rejected",
             )
         )
         assert event is not None
-        assert event.before_json == {"approval_status": "PENDING"}
+        assert event.before_json == {"approval_status": "APPROVED"}
 
-    client.cookies.set(SESSION_COOKIE, family_cookie)
-    assert client.get("/api/v1/onboarding/learners").status_code == 200
+    reapproved = client.post(f"/api/v1/admin/families/{profile_id}/approve")
+    assert reapproved.status_code == 200
+    assert reapproved.json()["approval_status"] == "APPROVED"
+    assert outbox[-1].to == family_email and "approved" in outbox[-1].subject
 
 
-def test_rejected_family_sees_reason_and_stays_blocked(outbox) -> None:
+def test_rejected_family_keeps_access_after_gate_removal(outbox) -> None:
     family_email, _ = _register()
     family_cookie = client.cookies.get(SESSION_COOKIE)
     profile_id = _profile_id(family_email)
@@ -120,11 +117,10 @@ def test_rejected_family_sees_reason_and_stays_blocked(outbox) -> None:
         json={"reason": "The pilot is limited to Maryland families right now."},
     )
     assert rejected.status_code == 200
-    assert "Maryland" in outbox[-1].body and outbox[-1].to == family_email
 
     client.cookies.set(SESSION_COOKIE, family_cookie)
-    blocked = client.get("/api/v1/onboarding/learners")
-    assert blocked.status_code == 403 and blocked.json()["detail"] == "FAMILY_REJECTED"
+    # REJECTED is now informational only — access is not revoked.
+    assert client.get("/api/v1/onboarding/learners").status_code == 200
     me = client.get("/api/v1/auth/me").json()
     assert me["approval_status"] == "REJECTED" and "Maryland" in me["rejection_reason"]
 
@@ -147,15 +143,7 @@ def test_family_routes_require_staff_with_mfa(outbox) -> None:
     assert client.get("/api/v1/admin/families").status_code == 403
 
 
-def test_gate_off_approves_immediately(outbox, monkeypatch) -> None:
-    monkeypatch.setattr(settings, "require_family_approval", False)
-    _, body = _register()
-    assert body["approval_status"] == "APPROVED"
-    assert outbox == []
-    assert client.get("/api/v1/onboarding/learners").status_code == 200
-
-
-def test_self_created_profile_cannot_bypass_the_gate(outbox) -> None:
+def test_self_created_profile_gets_access_immediately(outbox) -> None:
     with SessionLocal() as db:
         user = User(email=f"bare-{uuid.uuid4().hex[:8]}@example.test", role="PARENT")
         db.add(user)
@@ -164,4 +152,4 @@ def test_self_created_profile_cannot_bypass_the_gate(outbox) -> None:
         db.commit()
     client.cookies.set(SESSION_COOKIE, token)
     assert client.post("/api/v1/parents/profile").status_code == 200
-    assert client.get("/api/v1/onboarding/learners").json()["detail"] == "FAMILY_PENDING_APPROVAL"
+    assert client.get("/api/v1/onboarding/learners").status_code == 200

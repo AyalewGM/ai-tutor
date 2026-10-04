@@ -19,8 +19,6 @@ class Settings(BaseSettings):
     admin_mfa_max_attempts: int = 5
     admin_mfa_window_seconds: int = 300
 
-    # Pilot gate: self-registered families wait for admin approval.
-    require_family_approval: bool = True
     # Base URL used in email links (no trailing slash).
     public_base_url: str = "http://localhost:3000"
 

@@ -18,8 +18,7 @@ client = TestClient(app)
 
 
 @pytest.fixture(autouse=True)
-def _approved(monkeypatch):
-    monkeypatch.setattr(settings, "require_family_approval", False)
+def _cookies():
     yield
     client.cookies.clear()
 

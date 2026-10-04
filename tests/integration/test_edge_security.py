@@ -148,7 +148,9 @@ def test_geo_travel_exemption_denied_when_unknown(geo_on):
     assert client.get("/api/v1/auth/me").status_code == 403
 
 
-def test_geo_pending_family_gets_no_travel_exemption(geo_on):
+def test_geo_nonapproved_family_still_gets_travel_exemption(geo_on):
+    # approval_status is informational since the gate was removed — any
+    # registered family session is exempt.
     with SessionLocal() as db:
         user = User(email=f"pending-{uuid.uuid4()}@example.com", role="PARENT")
         db.add(user)
@@ -157,7 +159,7 @@ def test_geo_pending_family_gets_no_travel_exemption(geo_on):
         token, _ = create_session(db, user.id)
         db.commit()
     client.cookies.set(SESSION_COOKIE, token)
-    assert client.get("/api/v1/auth/me", headers={"CF-IPCountry": "FR"}).status_code == 403
+    assert client.get("/api/v1/auth/me", headers={"CF-IPCountry": "FR"}).status_code == 200
 
 
 def test_geo_registration_never_exempt(geo_on):
