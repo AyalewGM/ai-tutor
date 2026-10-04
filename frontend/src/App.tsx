@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import Badges from "./pages/Badges";
+import Billing from "./pages/Billing";
 import Catalog from "./pages/Catalog";
 import Diagnostic from "./pages/Diagnostic";
 import Landing from "./pages/Landing";
@@ -34,6 +35,7 @@ export default function App() {
       <Route path="/learn/:sessionId/map" element={<SkillMap />} />
       <Route path="/learn/:sessionId/catalog" element={<Catalog />} />
       <Route path="/learners/:studentId/catalog" element={<Catalog />} />
+      <Route path="/billing" element={<Billing />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

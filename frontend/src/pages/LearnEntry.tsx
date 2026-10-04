@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BookOpen, ChevronDown, ClipboardCheck, Play, UserPlus, Compass } from "lucide-react";
+import { BookOpen, ChevronDown, ClipboardCheck, CreditCard, Play, UserPlus, Compass } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
@@ -220,6 +220,11 @@ export default function LearnEntry() {
                     <Button variant="secondary" size="sm" asChild>
                       <Link to={`/learners/${selectedLearner.id}/catalog`}>
                         <BookOpen className="h-3.5 w-3.5" /> Catalog
+                      </Link>
+                    </Button>
+                    <Button variant="ghost" size="sm" asChild>
+                      <Link to="/billing">
+                        <CreditCard className="h-3.5 w-3.5" /> Plan
                       </Link>
                     </Button>
                   </div>

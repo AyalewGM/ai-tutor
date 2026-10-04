@@ -65,6 +65,13 @@ class ParentProfile(Base):
     # Per-family daily AI generation cap; NULL = settings default (plan-tier
     # value once plans land). Beyond it, messages use built-in fallbacks.
     ai_daily_limit: Mapped[int | None] = mapped_column(Integer)
+    # Stripe billing state — written only by the billing webhook handlers.
+    # subscription_status mirrors Stripe verbatim (trialing/active/past_due/
+    # canceled/...); subscription_tier stays the effective plan code.
+    stripe_customer_id: Mapped[str | None] = mapped_column(String(255))
+    stripe_subscription_id: Mapped[str | None] = mapped_column(String(255))
+    subscription_status: Mapped[str | None] = mapped_column(String(20))
+    trial_ends_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False
     )
