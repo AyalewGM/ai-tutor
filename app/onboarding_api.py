@@ -1,4 +1,5 @@
 import uuid
+from datetime import UTC, datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -6,6 +7,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from app.content_models import CurriculumExpectation, ExpectationSkillMapping
 from app.core.database import get_db
 from app.curriculum_models import StudentCurriculumEnrollment
 from app.identity import (
@@ -190,35 +192,48 @@ def list_regions(access: CurrentLearningAccess, db: DbSession) -> RegionsOut:
     )
 
 
-@router.get("/curricula", response_model=list[CurriculumChoice])
-def list_active_curricula(access: CurrentLearningAccess, db: DbSession) -> list[CurriculumChoice]:
+def _family_visible_curricula(db: Session, parent: ParentProfile) -> list[Curriculum]:
+    """Curricula a family may pick: a covered region sees only its own; an
+    uncovered region (or country-only profile) falls back to the whole
+    country so uncovered families can choose the closest grade-level fit."""
     query = select(Curriculum).where(Curriculum.active.is_(True))
-    if access.learner_id is not None:
-        student = require_learning_owns_student(access, db.get(Student, access.learner_id))
-        query = query.where(Curriculum.id == student.curriculum_id)
-    else:
-        # Family cascade: a region with coverage sees only its own curricula.
-        # A region without coverage (or country only) falls back to the whole
-        # country so the family can pick the closest grade-level fit.
-        parent = access.parent
-        if parent.region_code:
-            covered = db.scalar(
-                select(func.count(Curriculum.id)).where(
-                    Curriculum.active.is_(True),
-                    Curriculum.region_code == parent.region_code,
-                )
+    if parent.region_code:
+        covered = db.scalar(
+            select(func.count(Curriculum.id)).where(
+                Curriculum.active.is_(True),
+                Curriculum.region_code == parent.region_code,
             )
-            if covered:
-                query = query.where(Curriculum.region_code == parent.region_code)
-            elif parent.country_code:
-                query = query.where(Curriculum.country_code == parent.country_code)
+        )
+        if covered:
+            query = query.where(Curriculum.region_code == parent.region_code)
         elif parent.country_code:
             query = query.where(Curriculum.country_code == parent.country_code)
-    curricula = db.scalars(
+    elif parent.country_code:
+        query = query.where(Curriculum.country_code == parent.country_code)
+    return db.scalars(
         query.order_by(
             Curriculum.jurisdiction, Curriculum.grade_level, Curriculum.code, Curriculum.version
         )
     ).all()
+
+
+@router.get("/curricula", response_model=list[CurriculumChoice])
+def list_active_curricula(access: CurrentLearningAccess, db: DbSession) -> list[CurriculumChoice]:
+    if access.learner_id is not None:
+        student = require_learning_owns_student(access, db.get(Student, access.learner_id))
+        query = (
+            select(Curriculum)
+            .where(Curriculum.active.is_(True), Curriculum.id == student.curriculum_id)
+            .order_by(
+                Curriculum.jurisdiction,
+                Curriculum.grade_level,
+                Curriculum.code,
+                Curriculum.version,
+            )
+        )
+        curricula = db.scalars(query).all()
+    else:
+        curricula = _family_visible_curricula(db, access.parent)
     return [
         CurriculumChoice(
             id=curriculum.id,
@@ -411,6 +426,207 @@ def get_learner_launchpad(
         learning_count=learning_count,
         ready_skill_count=ready_skill_count,
         award_count=award_count,
+    )
+
+
+class CatalogSkillOut(BaseModel):
+    id: uuid.UUID
+    code: str
+    name: str
+    difficulty_level: int
+    mastery_score: float
+    status: str
+    content_ready: bool
+    has_lesson: bool
+
+
+class CatalogStrandOut(BaseModel):
+    name: str
+    skills: list[CatalogSkillOut]
+
+
+class CatalogOptionOut(BaseModel):
+    id: uuid.UUID
+    code: str
+    name: str
+    jurisdiction: str | None
+    grade_level: str | None
+    is_enrolled: bool
+
+
+class CurriculumCatalogOut(BaseModel):
+    curriculum_id: uuid.UUID
+    curriculum_name: str
+    jurisdiction: str | None
+    grade_level: str | None
+    is_enrolled: bool
+    can_select: bool
+    options: list[CatalogOptionOut]
+    strands: list[CatalogStrandOut]
+    skill_count: int
+    lesson_count: int
+
+
+class CurriculumSelectIn(BaseModel):
+    curriculum_id: uuid.UUID
+
+
+OTHER_STRAND = "More skills"
+
+
+def _catalog_strands(
+    db: Session, *, curriculum_id: uuid.UUID, student_id: uuid.UUID
+) -> list[CatalogStrandOut]:
+    strand_by_skill: dict[uuid.UUID, str] = {}
+    rows = db.execute(
+        select(ExpectationSkillMapping.skill_id, CurriculumExpectation.strand)
+        .join(
+            CurriculumExpectation,
+            CurriculumExpectation.id == ExpectationSkillMapping.expectation_id,
+        )
+        .where(
+            ExpectationSkillMapping.curriculum_id == curriculum_id,
+            CurriculumExpectation.active.is_(True),
+            CurriculumExpectation.strand.is_not(None),
+        )
+        .order_by(CurriculumExpectation.strand, CurriculumExpectation.source_identifier)
+    ).all()
+    for skill_id, strand in rows:
+        strand_by_skill.setdefault(skill_id, strand)
+
+    skills = db.scalars(
+        select(Skill)
+        .where(Skill.curriculum_id == curriculum_id)
+        .order_by(Skill.difficulty_level, Skill.code)
+    ).all()
+    progress = {
+        row.skill_id: row
+        for row in db.scalars(
+            select(StudentSkill).where(StudentSkill.student_id == student_id)
+        ).all()
+    }
+
+    grouped: dict[str, list[CatalogSkillOut]] = {}
+    for skill in skills:
+        row = progress.get(skill.id)
+        grouped.setdefault(strand_by_skill.get(skill.id, OTHER_STRAND), []).append(
+            CatalogSkillOut(
+                id=skill.id,
+                code=skill.code,
+                name=skill.name,
+                difficulty_level=skill.difficulty_level,
+                mastery_score=float(row.mastery_score) if row else 0.0,
+                status=row.status.value if row else SkillStatus.NOT_STARTED.value,
+                content_ready=content_readiness(db, skill_id=skill.id).ready,
+                has_lesson=build_learn_content(skill.learn_content) is not None,
+            )
+        )
+    ordered = sorted(
+        grouped.items(),
+        key=lambda item: (
+            item[0] == OTHER_STRAND,
+            min(skill.difficulty_level for skill in item[1]),
+            item[0],
+        ),
+    )
+    return [CatalogStrandOut(name=name, skills=items) for name, items in ordered]
+
+
+@router.get("/learners/{student_id}/catalog", response_model=CurriculumCatalogOut)
+def get_learner_catalog(
+    student_id: uuid.UUID,
+    access: CurrentLearningAccess,
+    db: DbSession,
+    curriculum_id: uuid.UUID | None = None,
+) -> CurriculumCatalogOut:
+    """Strand-grouped skill catalog for a curriculum in the family's visible
+    set, with the learner's mastery overlaid. Defaults to the enrolled
+    curriculum; uncovered-region families see their country's catalog."""
+    student = require_learning_owns_student(access, db.get(Student, student_id))
+    options = _family_visible_curricula(db, access.parent)
+    selected_id = curriculum_id or student.curriculum_id
+    selected = next((c for c in options if c.id == selected_id), None)
+    if selected is None:
+        raise HTTPException(status_code=404, detail="Curriculum not available")
+
+    strands = _catalog_strands(db, curriculum_id=selected.id, student_id=student.id)
+    return CurriculumCatalogOut(
+        curriculum_id=selected.id,
+        curriculum_name=selected.name,
+        jurisdiction=selected.jurisdiction,
+        grade_level=selected.grade_level,
+        is_enrolled=selected.id == student.curriculum_id,
+        can_select=access.learner_id is None,
+        options=[
+            CatalogOptionOut(
+                id=c.id,
+                code=c.code,
+                name=c.name,
+                jurisdiction=c.jurisdiction,
+                grade_level=c.grade_level,
+                is_enrolled=c.id == student.curriculum_id,
+            )
+            for c in options
+        ],
+        strands=strands,
+        skill_count=sum(len(s.skills) for s in strands),
+        lesson_count=sum(1 for s in strands for k in s.skills if k.has_lesson),
+    )
+
+
+@router.post("/learners/{student_id}/curriculum", response_model=LearnerChoice)
+def select_learner_curriculum(
+    student_id: uuid.UUID,
+    payload: CurriculumSelectIn,
+    parent: CurrentParent,
+    db: DbSession,
+) -> LearnerChoice:
+    """Parent switches the learner's enrolled curriculum. Deactivates the
+    prior enrollment, ends open sessions (they'd be out of scope anyway),
+    and opens a new enrollment — idempotent on re-select."""
+    student = require_parent_owns_student(parent, db.get(Student, student_id))
+    curriculum = next(
+        (c for c in _family_visible_curricula(db, parent) if c.id == payload.curriculum_id),
+        None,
+    )
+    if curriculum is None:
+        raise HTTPException(status_code=404, detail="Curriculum not available")
+
+    now = datetime.now(UTC)
+    if student.curriculum_id != curriculum.id:
+        for enrollment in db.scalars(
+            select(StudentCurriculumEnrollment).where(
+                StudentCurriculumEnrollment.student_id == student.id,
+                StudentCurriculumEnrollment.active.is_(True),
+            )
+        ).all():
+            enrollment.active = False
+            enrollment.effective_to = now
+        for session in db.scalars(
+            select(TutorSession).where(
+                TutorSession.student_id == student.id,
+                TutorSession.status == "ACTIVE",
+            )
+        ).all():
+            session.status = "ENDED"
+            session.ended_at = now
+        student.curriculum_id = curriculum.id
+        db.add(
+            StudentCurriculumEnrollment(
+                student_id=student.id,
+                curriculum_id=curriculum.id,
+                provenance_json={"source": "parent_catalog_select"},
+            )
+        )
+        db.commit()
+    return LearnerChoice(
+        id=student.id,
+        first_name=student.first_name,
+        curriculum_id=curriculum.id,
+        curriculum_code=curriculum.code,
+        curriculum_version=curriculum.version,
+        jurisdiction=curriculum.jurisdiction,
+        avatar_id=student.avatar_id,
     )
 
 

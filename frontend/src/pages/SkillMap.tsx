@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, CheckCircle2, CircleDashed, MapPin, PlayCircle } from "lucide-react";
+import { ArrowLeft, BookOpen, CheckCircle2, CircleDashed, MapPin, PlayCircle } from "lucide-react";
 import { ApiError, api } from "../api";
 import NavBar from "../components/NavBar";
 import { Button } from "@/components/ui/button";
@@ -90,6 +90,11 @@ export default function SkillMap() {
                   {mastered} / {entries.length} mastered
                 </span>
               )}
+              <Button variant="secondary" asChild>
+                <Link to={`/learn/${sessionId}/catalog`}>
+                  <BookOpen className="h-4 w-4" /> Catalog
+                </Link>
+              </Button>
               <Button variant="secondary" asChild>
                 <Link to={`/learn/${sessionId}`}>
                   <ArrowLeft className="h-4 w-4" /> Back to practice
