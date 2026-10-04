@@ -28,6 +28,7 @@ def fetch_spaced_repetition_prompt(
         current_problem_id=None,
         current_difficulty=item.progress.current_difficulty,
         state=TutorState.REVIEW,
+        student_id=student_id,
     )
     if problem is None:
         return None

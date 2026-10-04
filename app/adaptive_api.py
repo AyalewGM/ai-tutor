@@ -72,6 +72,7 @@ def create_session(payload: SessionCreate, access: CurrentLearningAccess, db: Db
         current_problem_id=None,
         current_difficulty=focus_progress.current_difficulty,
         state=opening_state,
+        student_id=student.id,
     )
     if problem is None:
         raise HTTPException(404, "No problem configured for this skill")

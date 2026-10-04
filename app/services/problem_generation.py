@@ -16,6 +16,68 @@ def _module_contextualizer():
     return problem_contextualizer.contextualizer
 
 
+def _metered_contextualize(
+    db: Session,
+    contextualizer,
+    *,
+    template: str,
+    parameters: dict,
+    canonical_answer: str,
+    student_id: uuid.UUID | None,
+    session_id: uuid.UUID | None,
+):
+    """Contextualizer call through the same budget gate + ledger as tutor
+    generations. Denied calls fall back to the template prompt, and a
+    successful narrative is billed with estimated tokens (the gateway does
+    not report usage). Returns the narrative result or None."""
+    from app.models import Student, TutorSession
+    from app.services.tutor_engine import TutorEngineResult
+    from app.services.usage_metering import (
+        check_ai_budget,
+        record_ai_usage,
+        record_budget_denial,
+    )
+
+    resolved_student_id = student_id
+    if resolved_student_id is None and session_id is not None:
+        tut_session = db.get(TutorSession, session_id)
+        resolved_student_id = tut_session.student_id if tut_session else None
+    family_user_id = None
+    if resolved_student_id is not None:
+        student = db.get(Student, resolved_student_id)
+        family_user_id = student.parent_id if student else None
+
+    if not check_ai_budget(db, family_user_id):
+        record_budget_denial(
+            db,
+            family_user_id=family_user_id,
+            student_id=resolved_student_id,
+            session_id=session_id,
+            action="contextualize",
+        )
+        return None
+    narrative = contextualizer.contextualize(
+        template=template,
+        parameters=parameters,
+        canonical_answer=canonical_answer,
+    )
+    if narrative is not None:
+        record_ai_usage(
+            db,
+            family_user_id=family_user_id,
+            student_id=resolved_student_id,
+            session_id=session_id,
+            action="contextualize",
+            result=TutorEngineResult(
+                message=narrative.prompt,
+                source="llm",
+                provider=narrative.provider,
+                model=narrative.model,
+            ),
+        )
+    return narrative
+
+
 @dataclass(frozen=True)
 class GeneratedProblem:
     prompt: str
@@ -1636,6 +1698,8 @@ def generate_problem(
     family: str | None = None,
     avoid_family: str | None = None,
     answer_kind: str | None = None,
+    student_id: uuid.UUID | None = None,
+    session_id: uuid.UUID | None = None,
     rng: random.Random | None = None,
 ) -> Problem | None:
     rng = rng or random.Random()
@@ -1679,13 +1743,17 @@ def generate_problem(
     prompt = generated.prompt
     contextualizer = _module_contextualizer()
     if generated.context is not None and contextualizer is not None:
-        narrative = contextualizer.contextualize(
+        narrative = _metered_contextualize(
+            db,
+            contextualizer,
             template=generated.context["template"],
             parameters=generated.context["parameters"],
             canonical_answer=generated.canonical_answer,
+            student_id=student_id,
+            session_id=session_id,
         )
-        if narrative:
-            prompt = narrative
+        if narrative is not None:
+            prompt = narrative.prompt
     family_id, parameters = _family_metadata(generated)
     problem = Problem(
         primary_skill_id=skill_id,
@@ -1713,6 +1781,8 @@ def regenerate_variant(
     db: Session,
     *,
     source_problem: Problem,
+    student_id: uuid.UUID | None = None,
+    session_id: uuid.UUID | None = None,
     rng: random.Random | None = None,
 ) -> Problem | None:
     """Re-serve a missed generated problem with fresh parameters (same template,
@@ -1728,6 +1798,8 @@ def regenerate_variant(
         difficulty=int(metadata.get("difficulty") or source_problem.difficulty),
         problem_type=generator,
         family=metadata.get("problem_family"),
+        student_id=student_id,
+        session_id=session_id,
         rng=rng,
     )
 

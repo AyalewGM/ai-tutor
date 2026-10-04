@@ -145,6 +145,7 @@ def create_session(
         current_problem_id=None,
         current_difficulty=progress.current_difficulty,
         state=TutorState.DIAGNOSE,
+        student_id=student.id,
     )
     if problem is None:
         raise HTTPException(404, "No problem configured for this skill")

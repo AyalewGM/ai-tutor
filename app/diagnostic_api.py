@@ -56,6 +56,7 @@ def _next_problem(
         current_problem_id=current_problem_id,
         current_difficulty=progress.current_difficulty,
         state=TutorState.DIAGNOSE,
+        student_id=student_id,
     )
 
 

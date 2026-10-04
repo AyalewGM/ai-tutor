@@ -1,9 +1,19 @@
 import re
+from dataclasses import dataclass
 from typing import Any, Protocol
 
 import httpx
 
 _NUMBER = re.compile(r"-?\d+(?:\.\d+)?")
+
+
+@dataclass(frozen=True)
+class ContextualizeResult:
+    """A validated narrative plus provider metadata for usage metering."""
+
+    prompt: str
+    provider: str | None
+    model: str | None
 
 
 class Contextualizer(Protocol):
@@ -13,7 +23,7 @@ class Contextualizer(Protocol):
         template: str,
         parameters: dict[str, Any],
         canonical_answer: str,
-    ) -> str | None:
+    ) -> ContextualizeResult | None:
         """Return a narrative word-problem prompt, or None when unavailable."""
         raise NotImplementedError
 
@@ -35,7 +45,7 @@ class GatewayContextualizer:
         template: str,
         parameters: dict[str, Any],
         canonical_answer: str,
-    ) -> str | None:
+    ) -> ContextualizeResult | None:
         try:
             response = httpx.post(
                 f"{self.base_url}/v1/contextualize",
@@ -62,7 +72,11 @@ class GatewayContextualizer:
         present = set(_NUMBER.findall(prompt))
         if not required.issubset(present):
             return None
-        return prompt
+        return ContextualizeResult(
+            prompt=prompt,
+            provider=data.get("provider"),
+            model=data.get("model"),
+        )
 
 
 contextualizer: Contextualizer | None = None
