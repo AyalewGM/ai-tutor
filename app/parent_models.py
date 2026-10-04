@@ -69,6 +69,9 @@ class ParentProfile(Base):
     # the curriculum cascade and feeds state-level usage analytics.
     country_code: Mapped[str | None] = mapped_column(String(2))
     region_code: Mapped[str | None] = mapped_column(String(3))
+    # Per-family daily AI generation cap; NULL = settings default (plan-tier
+    # value once plans land). Beyond it, messages use built-in fallbacks.
+    ai_daily_limit: Mapped[int | None] = mapped_column(Integer)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=datetime.utcnow, nullable=False
     )

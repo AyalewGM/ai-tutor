@@ -43,4 +43,9 @@ class LLMGatewayAdapter:
         required_metadata = {"request_id", "provider", "latency_ms"}
         if not required_metadata.issubset(data):
             raise TutorProviderError("LLM Gateway omitted required observability metadata")
+        # Token usage is optional gateway metadata — pass it through for the
+        # ledger when the upstream provider reports it.
+        for key in ("input_tokens", "output_tokens"):
+            if key not in data:
+                data[key] = None
         return data

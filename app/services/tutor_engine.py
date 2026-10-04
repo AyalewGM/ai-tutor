@@ -20,6 +20,8 @@ class TutorGeneration(BaseModel):
     provider: str | None = None
     model: str | None = None
     latency_ms: int | None = Field(default=None, ge=0)
+    input_tokens: int | None = Field(default=None, ge=0)
+    output_tokens: int | None = Field(default=None, ge=0)
 
 
 @dataclass(frozen=True)
@@ -68,6 +70,8 @@ class TutorEngineResult:
     provider: str | None = None
     latency_ms: int | None = None
     request_id: str | None = None
+    input_tokens: int | None = None
+    output_tokens: int | None = None
     expects_student_response: bool = True
 
 
@@ -105,6 +109,8 @@ class TutorEngine:
                         generation.latency_ms if generation.latency_ms is not None else elapsed_ms
                     ),
                     request_id=generation.request_id,
+                    input_tokens=generation.input_tokens,
+                    output_tokens=generation.output_tokens,
                     expects_student_response=generation.expects_student_response,
                 )
             except (TutorProviderError, RuntimeError, ValueError, TimeoutError):

@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -74,6 +76,13 @@ class Settings(BaseSettings):
     gemini_model: str = "gemini-3.8-flash"
     ai_timeout_seconds: float = 2.5
     llm_gateway_url: str = "http://localhost:8001"
+    # AI budgets: per-family daily generation cap (overridable per family via
+    # parent_profiles.ai_daily_limit), a global monthly USD cap, and the alert
+    # threshold. Denied calls fall back to built-in tutor messages.
+    ai_budgets_enabled: bool = True
+    family_ai_daily_generations: int = 50
+    ai_monthly_cost_cap_usd: Decimal = Decimal("200.00")
+    ai_budget_alert_pct: float = 0.8
 
     model_config = SettingsConfigDict(
         env_file=".env",

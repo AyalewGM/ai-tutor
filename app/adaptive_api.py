@@ -22,7 +22,7 @@ from app.services.curriculum_scope import (
 )
 from app.services.problem_selection import select_next_problem
 from app.services.review_schedule import REVIEW_REASON, due_review
-from app.services.tutor_engine import tutor_engine
+from app.services.usage_metering import ai_generate
 
 router = APIRouter(prefix="/adaptive-tutor", tags=["adaptive-tutor"])
 DbSession = Annotated[Session, Depends(get_db)]
@@ -94,7 +94,8 @@ def create_session(payload: SessionCreate, access: CurrentLearningAccess, db: Db
     db.add(session)
     db.flush()
 
-    generation = tutor_engine.generate(
+    generation = ai_generate(
+        db,
         _tutor_context(
             db,
             student=student,
@@ -103,7 +104,10 @@ def create_session(payload: SessionCreate, access: CurrentLearningAccess, db: Db
             action=opening_action,
             hint_level=None,
             problem=problem,
-        )
+        ),
+        student=student,
+        session_id=session.id,
+        action=opening_action,
     )
     db.add(
         TutorTurn(
