@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, String, Text, UniqueConstraint
 from sqlalchemy.dialects.postgresql import JSONB, UUID
@@ -104,7 +104,7 @@ class StudentCurriculumEnrollment(Base):
         ForeignKey("education_authorities.id"), index=True
     )
     active: Mapped[bool] = mapped_column(Boolean, default=True, index=True)
-    effective_from: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    effective_from: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
     effective_to: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     source_uri: Mapped[str | None] = mapped_column(Text)
     provenance_json: Mapped[dict | None] = mapped_column(JSONB)

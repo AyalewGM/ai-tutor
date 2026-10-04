@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 from decimal import Decimal
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, Numeric, String, Text
@@ -26,7 +26,7 @@ class DiagnosticSession(Base):
     placement_reason: Mapped[str | None] = mapped_column(String(120))
     question_count: Mapped[int] = mapped_column(Integer, default=0)
     max_questions: Mapped[int] = mapped_column(Integer, default=8)
-    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
@@ -45,4 +45,4 @@ class DiagnosticAttempt(Base):
     misconception_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("misconceptions.id"))
     evaluation_confidence: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
     sequence_number: Mapped[int] = mapped_column(Integer)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))

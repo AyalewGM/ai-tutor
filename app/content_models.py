@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, String, Text, UniqueConstraint
 from sqlalchemy.dialects.postgresql import JSONB, UUID
@@ -34,7 +34,7 @@ class CurriculumExpectation(Base):
     effective_from: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     effective_to: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     active: Mapped[bool] = mapped_column(Boolean, default=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
 
 
 class ExpectationSkillMapping(Base):
@@ -53,7 +53,7 @@ class ExpectationSkillMapping(Base):
     skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("skills.id"), index=True)
     mapping_type: Mapped[str] = mapped_column(String(40), default="ALIGNS_TO")
     provenance_json: Mapped[dict | None] = mapped_column(JSONB)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
 
 
 class ProblemContentMetadata(Base):
@@ -79,4 +79,4 @@ class ProblemContentMetadata(Base):
     mastery_eligible: Mapped[bool] = mapped_column(Boolean, default=False)
     llm_solution_required: Mapped[bool] = mapped_column(Boolean, default=False)
     provenance_json: Mapped[dict | None] = mapped_column(JSONB)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
