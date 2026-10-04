@@ -10,6 +10,7 @@ Access model:
 import uuid
 from collections.abc import Callable
 from datetime import UTC, datetime
+from decimal import Decimal
 from typing import Annotated
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query, Request, status
@@ -29,6 +30,7 @@ from app.parent_models import (
     ParentProfile,
     ParentStudentRelationship,
 )
+from app.plan_models import Plan
 from app.services import totp
 from app.services.admin_security import (
     MfaNotConfigured,
@@ -60,7 +62,9 @@ def _staff_session(request: Request, user: StaffUser, db: DbSession) -> AuthSess
     token = request.cookies.get(SESSION_COOKIE)
     session = resolve_session(db, token) if token else None
     if session is None or session.user_id != user.id:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication required")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication required"
+        )
     return session
 
 
@@ -137,7 +141,9 @@ def mfa_setup(user: StaffUser, db: DbSession) -> MfaSetupOut:
     resetting an active factor is an operator action (make_admin --reset-mfa)."""
     mfa = _mfa_row(db, user)
     if mfa is not None and mfa.enabled_at is not None:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Two-factor already enabled")
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail="Two-factor already enabled"
+        )
     secret = totp.generate_secret()
     try:
         encrypted = encrypt_secret(secret)
@@ -149,8 +155,12 @@ def mfa_setup(user: StaffUser, db: DbSession) -> MfaSetupOut:
         mfa.secret_encrypted = encrypted
         mfa.last_used_step = None
     record_admin_action(
-        db, actor_user_id=user.id, actor_label=user.email, action="mfa.setup_started",
-        target_type="user", target_id=str(user.id),
+        db,
+        actor_user_id=user.id,
+        actor_label=user.email,
+        action="mfa.setup_started",
+        target_type="user",
+        target_id=str(user.id),
     )
     db.commit()
     return MfaSetupOut(secret=secret, otpauth_uri=totp.provisioning_uri(secret, user.email))
@@ -183,8 +193,12 @@ def mfa_confirm(
     mfa.last_used_step = step
     session.mfa_verified_at = now
     record_admin_action(
-        db, actor_user_id=user.id, actor_label=user.email, action="mfa.enabled",
-        target_type="user", target_id=str(user.id),
+        db,
+        actor_user_id=user.id,
+        actor_label=user.email,
+        action="mfa.enabled",
+        target_type="user",
+        target_id=str(user.id),
     )
     db.commit()
     return staff_me(user, session, db)
@@ -201,8 +215,12 @@ def mfa_verify(
     mfa.last_used_step = _check_code(user, mfa, payload.code)
     session.mfa_verified_at = datetime.now(UTC)
     record_admin_action(
-        db, actor_user_id=user.id, actor_label=user.email, action="admin.signed_in",
-        target_type="user", target_id=str(user.id),
+        db,
+        actor_user_id=user.id,
+        actor_label=user.email,
+        action="admin.signed_in",
+        target_type="user",
+        target_id=str(user.id),
     )
     db.commit()
     return staff_me(user, session, db)
@@ -255,6 +273,28 @@ class RejectIn(BaseModel):
 
 class FamilyAiLimitIn(BaseModel):
     daily_limit: int | None = Field(default=None, ge=0)
+
+
+class PlanOut(BaseModel):
+    model_config = {"from_attributes": True}
+
+    code: str
+    name: str
+    monthly_price_usd: Decimal
+    monthly_price_cad: int
+    max_students: int
+    ai_daily_generations: int
+    active: bool
+    updated_at: datetime
+
+
+class PlanUpdateIn(BaseModel):
+    name: str | None = Field(default=None, min_length=1, max_length=120)
+    monthly_price_usd: Decimal | None = Field(default=None, ge=0)
+    monthly_price_cad: int | None = Field(default=None, ge=0)
+    max_students: int | None = Field(default=None, ge=1)
+    ai_daily_generations: int | None = Field(default=None, ge=0)
+    active: bool | None = None
 
 
 def _family_out(parent: ParentProfile, user: User, learner_count: int) -> FamilyOut:
@@ -419,3 +459,92 @@ def set_family_ai_limit(
     )
     db.commit()
     return _family_out(parent, family_user, _learner_count(db, parent))
+
+
+class PlansAdminOut(BaseModel):
+    usd_to_cad_rate: Decimal
+    plans: list[PlanOut]
+
+
+@router.get("/plans", response_model=PlansAdminOut)
+def list_plans(
+    db: DbSession,
+    _user: Annotated[User, Depends(require_staff(Permission.METRICS_READ))],
+) -> PlansAdminOut:
+    from app.services.plans import stored_fx_rate
+
+    rate, _computed_at = stored_fx_rate(db)
+    return PlansAdminOut(
+        usd_to_cad_rate=rate,
+        plans=[
+            PlanOut.model_validate(plan)
+            for plan in db.scalars(select(Plan).order_by(Plan.monthly_price_usd, Plan.code)).all()
+        ],
+    )
+
+
+@router.patch("/plans/{code}", response_model=PlanOut)
+def update_plan(
+    code: str,
+    payload: PlanUpdateIn,
+    db: DbSession,
+    staff: Annotated[User, Depends(require_staff(Permission.PLANS_MANAGE))],
+) -> PlanOut:
+    """Update a plan. If ``monthly_price_usd`` changes without an explicit
+    ``monthly_price_cad``, CAD is re-derived from the stored 3-yr-average rate
+    (cents dropped)."""
+    from app.services.plans import cad_for_usd
+
+    plan = db.get(Plan, code)
+    if plan is None:
+        raise HTTPException(404, "Plan not found")
+    before = PlanOut.model_validate(plan).model_dump(mode="json")
+
+    updates = payload.model_dump(exclude_unset=True)
+    for field, value in updates.items():
+        setattr(plan, field, value)
+    if "monthly_price_usd" in updates and "monthly_price_cad" not in updates:
+        plan.monthly_price_cad = cad_for_usd(db, plan.monthly_price_usd)
+    plan.updated_at = datetime.now(UTC)
+    db.flush()
+    record_admin_action(
+        db,
+        actor_user_id=staff.id,
+        actor_label=staff.email,
+        action="PLAN_UPDATED",
+        target_type="plan",
+        target_id=plan.code,
+        before=before,
+        after=PlanOut.model_validate(plan).model_dump(mode="json"),
+    )
+    db.commit()
+    return PlanOut.model_validate(plan)
+
+
+@router.post("/plans/recalc-cad")
+def recalc_cad_prices(
+    db: DbSession,
+    staff: Annotated[User, Depends(require_staff(Permission.PLANS_MANAGE))],
+) -> dict:
+    """Fetch the Bank of Canada 3-year-average USD→CAD rate, store it, and
+    re-price every plan's fixed CAD amount (whole dollars, cents dropped)."""
+    import httpx
+
+    from app.services.plans import recalculate_cad_prices
+
+    try:
+        result = recalculate_cad_prices(db)
+    except (httpx.HTTPError, ValueError) as exc:
+        raise HTTPException(502, f"Bank of Canada rate fetch failed: {exc}") from exc
+    record_admin_action(
+        db,
+        actor_user_id=staff.id,
+        actor_label=staff.email,
+        action="PLAN_CAD_RECALCULATED",
+        target_type="platform_setting",
+        target_id="usd_to_cad_3yr_avg",
+        before=None,
+        after=result,
+    )
+    db.commit()
+    return result

@@ -99,9 +99,7 @@ def test_generation_writes_ledger_row_with_reported_tokens():
         db.commit()
     assert result.source == "llm"
     with SessionLocal() as db:
-        event = db.scalar(
-            select(AiUsageEvent).where(AiUsageEvent.family_user_id == user.id)
-        )
+        event = db.scalar(select(AiUsageEvent).where(AiUsageEvent.family_user_id == user.id))
         assert event is not None
         assert event.source == "llm"
         assert event.provider == "metered" and event.model == "metered-model"
@@ -119,9 +117,7 @@ def test_missing_token_usage_is_estimated_and_flagged():
         db.commit()
     assert result.source == "llm" and result.input_tokens is None
     with SessionLocal() as db:
-        event = db.scalar(
-            select(AiUsageEvent).where(AiUsageEvent.family_user_id == user.id)
-        )
+        event = db.scalar(select(AiUsageEvent).where(AiUsageEvent.family_user_id == user.id))
         assert event.tokens_estimated is True
         assert event.input_tokens == 1500 and event.output_tokens == 300
     tutor_engine.provider = TokenProvider()
@@ -140,8 +136,11 @@ def test_db_rate_row_overrides_default_and_unknown_models_fallback():
         )
         db.commit()
         cost = estimate_cost(
-            db, provider="metered", model="metered-model",
-            input_tokens=1_000_000, output_tokens=1_000_000,
+            db,
+            provider="metered",
+            model="metered-model",
+            input_tokens=1_000_000,
+            output_tokens=1_000_000,
         )
         assert cost == Decimal("8.000000")
         unknown = estimate_cost(
@@ -156,7 +155,10 @@ def test_db_rate_row_overrides_default_and_unknown_models_fallback():
 
 def test_family_daily_limit_denies_and_ledgers_denial(monkeypatch):
     user, student = _family()
-    monkeypatch.setattr(settings, "family_ai_daily_generations", 2)
+    with SessionLocal() as db:
+        profile = db.scalar(select(ParentProfile).where(ParentProfile.user_id == user.id))
+        profile.ai_daily_limit = 2
+        db.commit()
     db = SessionLocal()
     ai_generate(db, _ctx(), student=student, action="GIVE_HINT")
     ai_generate(db, _ctx(), student=student, action="GIVE_HINT")
@@ -164,18 +166,24 @@ def test_family_daily_limit_denies_and_ledgers_denial(monkeypatch):
     db.commit()
     assert denied.source == "fallback"
     with SessionLocal() as check:
-        assert check.scalar(
-            select(func.count(AiUsageEvent.id)).where(
-                AiUsageEvent.family_user_id == user.id,
-                AiUsageEvent.source == "llm",
+        assert (
+            check.scalar(
+                select(func.count(AiUsageEvent.id)).where(
+                    AiUsageEvent.family_user_id == user.id,
+                    AiUsageEvent.source == "llm",
+                )
             )
-        ) == 2
-        assert check.scalar(
-            select(func.count(AiUsageEvent.id)).where(
-                AiUsageEvent.family_user_id == user.id,
-                AiUsageEvent.source == "budget_denied",
+            == 2
+        )
+        assert (
+            check.scalar(
+                select(func.count(AiUsageEvent.id)).where(
+                    AiUsageEvent.family_user_id == user.id,
+                    AiUsageEvent.source == "budget_denied",
+                )
             )
-        ) == 1
+            == 1
+        )
     db.close()
     _cleanup((user, student))
 
@@ -291,9 +299,7 @@ def test_ai_usage_summary_and_family_limit_admin_flow():
     with SessionLocal() as db:
         profile = db.scalar(select(ParentProfile).where(ParentProfile.user_id == user.id))
         pid = str(profile.id)
-    patch = client.patch(
-        f"/api/v1/admin/families/{pid}/ai-limit", json={"daily_limit": 25}
-    )
+    patch = client.patch(f"/api/v1/admin/families/{pid}/ai-limit", json={"daily_limit": 25})
     assert patch.status_code == 200
     with SessionLocal() as db:
         profile = db.scalar(select(ParentProfile).where(ParentProfile.user_id == user.id))

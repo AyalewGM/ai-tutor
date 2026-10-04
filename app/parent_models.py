@@ -22,13 +22,6 @@ APPROVAL_REJECTED = "REJECTED"
 class ParentProfile(Base):
     __tablename__ = "parent_profiles"
     __table_args__ = (
-        CheckConstraint("subscription_tier IN ('free', 'pro')", name="ck_parent_subscription_tier"),
-        CheckConstraint("max_students >= 1", name="ck_parent_max_students_positive"),
-        CheckConstraint(
-            "(subscription_tier = 'free' AND max_students = 1) OR "
-            "(subscription_tier = 'pro' AND max_students = 5)",
-            name="ck_parent_subscription_seat_policy",
-        ),
         CheckConstraint(
             "approval_status IN ('PENDING', 'APPROVED', 'REJECTED')",
             name="ck_parent_approval_status",
@@ -39,12 +32,12 @@ class ParentProfile(Base):
     user_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("users.id"), unique=True, nullable=False, index=True
     )
+    # The family's plan code ("free"/"pro" today). Seat and AI caps resolve
+    # through plans.*; the columns below are explicit per-family overrides.
     subscription_tier: Mapped[str] = mapped_column(
         String(20), default="free", server_default="free", nullable=False
     )
-    max_students: Mapped[int] = mapped_column(
-        Integer, default=1, server_default="1", nullable=False
-    )
+    max_students: Mapped[int | None] = mapped_column(Integer)
     parent_pin_hash: Mapped[str | None] = mapped_column(String(255))
     coppa_consent_given: Mapped[bool] = mapped_column(
         Boolean, default=False, server_default="false", nullable=False
