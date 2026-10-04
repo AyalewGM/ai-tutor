@@ -40,7 +40,7 @@ def test_all_generators_produce_evaluable_answers() -> None:
 
 def test_solve_equation_answers_satisfy_the_equation() -> None:
     rng = random.Random(11)
-    for difficulty in (1, 2, 3, 4, 5, 8):
+    for difficulty in (1, 2, 3, 4, 5):
         generated = GENERATORS["SOLVE_EQUATION"](rng, difficulty)
         x = int(generated.canonical_answer.split("=")[1])
         lhs, rhs = generated.prompt.split(" = ")
@@ -52,6 +52,20 @@ def test_solve_equation_answers_satisfy_the_equation() -> None:
         b = int(match.group(3) or 0)
         value = a * (x + b) if "(" in lhs else a * x + b
         assert value == int(rhs)
+
+
+def test_solve_equation_generates_classroom_multistep_tiers() -> None:
+    rng = random.Random(29)
+    both_sides = GENERATORS["SOLVE_EQUATION"](rng, 6)
+    assert both_sides.parameters["tier"] == "variables_both_sides"
+    assert " = " in both_sides.prompt
+    assert "x" in both_sides.prompt.split(" = ")[0]
+    assert "x" in both_sides.prompt.split(" = ")[1]
+
+    bracketed = GENERATORS["SOLVE_EQUATION"](rng, 7)
+    assert bracketed.parameters["tier"] == "brackets_both_sides"
+    assert "(" in bracketed.prompt and ")" in bracketed.prompt
+    assert "x" in bracketed.prompt.split(" = ")[1]
 
 
 def test_fraction_answers_are_reduced() -> None:

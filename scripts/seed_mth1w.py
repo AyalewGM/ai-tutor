@@ -126,8 +126,10 @@ def _expectation_pack() -> ContentPackInput:
         ExpectationSkillMappingInput("MTH1W.C1.4", "MTH1W.C.ALG.POLY"),
         ExpectationSkillMappingInput("MTH1W.C1.5", "MTH1W.C.ALG.EQ1"),
         ExpectationSkillMappingInput("MTH1W.C1.5", "MTH1W.C.ALG.EQ2"),
+        ExpectationSkillMappingInput("MTH1W.C1.5", "MTH1W.C.ALG.EQ3"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.ALG.EQ1"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.ALG.EQ2"),
+        ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.ALG.EQ3"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.REL"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.REL.SLOPE"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.REL.EVAL"),
@@ -254,6 +256,14 @@ def seed():
             "Solve ax + b = c and a(x + b) = c by undoing operations in reverse order.",
             3,
         )
+        alg_eq3 = _skill(
+            db,
+            curriculum,
+            "MTH1W.C.ALG.EQ3",
+            "Multi-Step Equations with Variables on Both Sides",
+            "Simplify each side, distribute through brackets when needed, collect variable terms on one side and constants on the other, then isolate the variable.",
+            4,
+        )
         rel_slope = _skill(
             db,
             curriculum,
@@ -295,8 +305,9 @@ def seed():
         _prerequisite(db, alg_poly, alg_like)
         _prerequisite(db, alg_eq1, alg_expr)
         _prerequisite(db, alg_eq2, alg_eq1)
+        _prerequisite(db, alg_eq3, alg_eq2)
         _prerequisite(db, rel_slope, relations)
-        _prerequisite(db, rel_slope, alg_eq2)
+        _prerequisite(db, rel_slope, alg_eq3)
         _prerequisite(db, rel_eval, rel_slope)
         _prerequisite(db, fin_pct, financial)
         _prerequisite(db, fin_pct, num_frac)
@@ -510,6 +521,20 @@ def seed():
             "then divide by the coefficient.",
         )
         _misconception(
+            alg_eq3,
+            "EQ_BOTH_001",
+            "Variable terms left on both sides",
+            "The learner starts isolating constants before collecting variable terms onto one side.",
+            "After simplifying each side, move all variable terms to one side and constants to the other before separating the coefficient.",
+        )
+        _misconception(
+            alg_eq3,
+            "DIST_003",
+            "Bracket not distributed before solving",
+            "The learner begins inverse operations before simplifying a bracketed expression.",
+            "Follow the classroom sequence: simplify each side first, distribute through brackets, collect like terms, then solve.",
+        )
+        _misconception(
             alg_eq2,
             "ARITH_001",
             "Arithmetic slip in isolation",
@@ -627,6 +652,16 @@ def seed():
                     "A ride costs $17 total. How many miles was the ride?"
                 ),
                 "7",
+                "ALGEBRA_WORD_PROBLEM",
+            ),
+            (alg_eq3, 5, "Solve 5x + 7 = 31 - 3x.", "x=3", "SOLVE_EQUATION"),
+            (alg_eq3, 6, "Solve 4x + 9 - 6x = 35 - 13x.", "x=26/11", "SOLVE_EQUATION"),
+            (alg_eq3, 7, "Solve -3(x - 5) + 4 = 28.", "x=-3", "SOLVE_EQUATION"),
+            (
+                alg_eq3,
+                7,
+                "A community garden has four boundary sections with lengths x, x + 12, x + 18, and x + 30 metres. Its total perimeter is also represented by 6x - 20. Find x.",
+                "40",
                 "ALGEBRA_WORD_PROBLEM",
             ),
             (

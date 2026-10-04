@@ -131,10 +131,39 @@ def _generate_solve_equation(rng: random.Random, difficulty: int) -> GeneratedPr
         a, b = rng.randint(2, 9), rng.randint(1, 15)
         prompt = f"{_fmt_expr(a, b)} = {a * x + b}"
         parameters = {"tier": "two_step", "a": a, "b": b, "x": x}
-    else:
+    elif difficulty == 5:
         a, b = rng.randint(2, 6), rng.randint(-9, 9)
         prompt = f"{a}({_fmt_expr(1, b)}) = {a * (x + b)}"
         parameters = {"tier": "distribute_equation", "a": a, "b": b, "x": x}
+    else:
+        # Ontario MTH1W classroom progression: simplify first, then collect
+        # variable terms on one side and constants on the other.  Generate an
+        # equation with variables on both sides and, at the highest tier,
+        # a bracket that must be distributed before solving.
+        a = rng.randint(2, 7)
+        c = rng.randint(1, a - 1)
+        b = rng.randint(-9, 12)
+        d = (a - c) * x + b
+        if difficulty >= 7:
+            k = rng.randint(2, 4)
+            inner_b = rng.randint(-5, 6)
+            left_constant = k * inner_b + b
+            d = (k - c) * x + left_constant
+            while k == c:
+                c = rng.randint(1, 6)
+                d = (k - c) * x + left_constant
+            prompt = f"{k}(x {'+' if inner_b >= 0 else '-'} {abs(inner_b)}) {'+' if b >= 0 else '-'} {abs(b)} = {_fmt_expr(c, d)}"
+            parameters = {
+                "tier": "brackets_both_sides",
+                "k": k,
+                "inner_b": inner_b,
+                "b": b,
+                "c": c,
+                "x": x,
+            }
+        else:
+            prompt = f"{_fmt_expr(a, b)} = {_fmt_expr(c, d)}"
+            parameters = {"tier": "variables_both_sides", "a": a, "b": b, "c": c, "d": d, "x": x}
     return GeneratedProblem(prompt, f"x={x}", difficulty, "SOLVE_EQUATION", parameters=parameters)
 
 
