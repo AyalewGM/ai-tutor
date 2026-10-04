@@ -8,6 +8,10 @@ Usage (inside the tutor-api container):
 Use a dedicated staff email. Family (parent) accounts are refused: staff and
 family access are deliberately separate identities. Passwords are prompted,
 never passed on the command line. Every change is written to the admin audit log.
+
+Roles: ADMIN (everything), SUPPORT (family approval queue), ANALYST
+(read-only metrics + AI usage). Grant with --role SUPPORT or --role ANALYST;
+re-running with a different --role changes the role.
 """
 
 from __future__ import annotations
@@ -26,6 +30,7 @@ from app.credential_models import UserCredential
 from app.models import User
 from app.parent_models import ParentProfile
 from app.services.admin_security import record_admin_action
+from app.services.permissions import STAFF_ROLES
 
 ADMIN_ROLE = "ADMIN"
 REVOKED_ROLE = "STAFF_REVOKED"
@@ -45,7 +50,7 @@ def _prompt_password() -> str:
         return first
 
 
-def grant(email: str) -> None:
+def grant(email: str, role: str = ADMIN_ROLE) -> None:
     with SessionLocal() as db:
         user = db.scalar(select(User).where(func.lower(User.email) == email))
         if user is not None and db.scalar(
@@ -56,17 +61,17 @@ def grant(email: str) -> None:
             )
         if user is None:
             password = _prompt_password()
-            user = User(email=email, display_name="Mihur Staff", role=ADMIN_ROLE)
+            user = User(email=email, display_name="Mihur Staff", role=role)
             db.add(user)
             db.flush()
             db.add(UserCredential(user_id=user.id, password_hash=PasswordHasher().hash(password)))
             before = None
         else:
             before = {"role": user.role}
-            user.role = ADMIN_ROLE
+            user.role = role
         record_admin_action(
             db, actor_user_id=None, actor_label=CLI_ACTOR, action="staff.role_granted",
-            target_type="user", target_id=str(user.id), before=before, after={"role": ADMIN_ROLE},
+            target_type="user", target_id=str(user.id), before=before, after={"role": role},
         )
         db.commit()
 
@@ -110,6 +115,10 @@ def main() -> None:
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--revoke", action="store_true", help="remove staff access")
     group.add_argument("--reset-mfa", action="store_true", help="clear the two-factor enrollment")
+    parser.add_argument(
+        "--role", default=ADMIN_ROLE, choices=sorted(STAFF_ROLES),
+        help="staff role to grant (default: ADMIN)",
+    )
     args = parser.parse_args()
     email = args.email.strip().lower()
     # Status lines are built here from the email alone — nothing returned by
@@ -121,8 +130,8 @@ def main() -> None:
         reset_mfa(email)
         print(f"Two-factor cleared for {email}. They must enroll again on next sign-in.")
     else:
-        grant(email)
-        print(f"{email} is now an admin. Sign in, then enroll two-factor at /admin.")
+        grant(email, role=args.role)
+        print(f"{email} is now {args.role}. Sign in, then enroll two-factor at /admin.")
 
 
 if __name__ == "__main__":
