@@ -250,7 +250,11 @@ class _StubContextualizer:
         self.narrative = narrative
 
     def contextualize(self, *, template, parameters, canonical_answer):
-        return self.narrative
+        from app.services.problem_contextualizer import ContextualizeResult
+
+        return ContextualizeResult(
+            prompt=self.narrative, provider="stub", model="stub-1"
+        )
 
 
 def test_word_problem_uses_contextualizer_narrative(monkeypatch) -> None:
@@ -278,6 +282,67 @@ def test_word_problem_uses_contextualizer_narrative(monkeypatch) -> None:
         assert problem.canonical_answer  # still code-computed, not model output
         db.rollback()
     monkeypatch.setattr(problem_contextualizer, "contextualizer", None)
+
+
+def test_contextualizer_call_is_metered_and_budget_gated(monkeypatch) -> None:
+    from app.models import User
+    from app.services import problem_contextualizer, usage_metering
+    from app.usage_models import AiUsageEvent
+
+    monkeypatch.setattr(
+        problem_contextualizer,
+        "contextualizer",
+        _StubContextualizer("A jacket costs $80. What is 20% of 80?"),
+    )
+    with SessionLocal() as db:
+        user = User(email=f"ctx-{uuid.uuid4().hex[:8]}@example.com", role="PARENT")
+        db.add(user)
+        db.flush()
+        student = Student(parent_id=user.id, first_name="L", grade_level="9")
+        db.add(student)
+        db.commit()
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MTH1W"))
+        skill = db.scalar(
+            select(Skill).where(Skill.curriculum_id == curriculum.id)
+        )
+
+        problem = generate_problem(
+            db, skill_id=skill.id, difficulty=1, problem_type="WORD_PROBLEM",
+            student_id=student.id, rng=random.Random(2),
+        )
+        event = db.scalar(
+            select(AiUsageEvent)
+            .where(AiUsageEvent.action == "contextualize")
+            .order_by(AiUsageEvent.created_at.desc())
+        )
+        assert problem is not None and problem.prompt.startswith("A jacket")
+        assert event is not None
+        assert event.source == "llm"
+        assert event.family_user_id == user.id
+        assert event.student_id == student.id
+        assert event.tokens_estimated is True
+        assert event.provider == "stub" and event.model == "stub-1"
+
+        monkeypatch.setattr(usage_metering, "check_ai_budget", lambda *a, **k: False)
+        denied = generate_problem(
+            db, skill_id=skill.id, difficulty=1, problem_type="WORD_PROBLEM",
+            student_id=student.id, rng=random.Random(3),
+        )
+        denial = db.scalar(
+            select(AiUsageEvent)
+            .where(
+                AiUsageEvent.action == "contextualize",
+                AiUsageEvent.source == "budget_denied",
+            )
+            .order_by(AiUsageEvent.created_at.desc())
+        )
+        assert denied is not None and denied.prompt != "A jacket costs $80. What is 20% of 80?"
+        assert denial is not None and denial.family_user_id == user.id
+
+        db.query(AiUsageEvent).filter(AiUsageEvent.family_user_id == user.id).delete()
+        db.delete(student)
+        db.delete(user)
+        db.commit()
 
 
 def test_gateway_contextualizer_rejects_unfaithful_numbers(monkeypatch) -> None:
@@ -319,11 +384,13 @@ def test_gateway_contextualizer_accepts_faithful_narrative(monkeypatch) -> None:
 
     monkeypatch.setattr(httpx, "post", fake_post)
     adapter = GatewayContextualizer("http://gateway", 1.0)
-    assert adapter.contextualize(
+    result = adapter.contextualize(
         template="percent_of",
         parameters={"percent": 13, "amount": 80},
         canonical_answer="10.40",
-    ) == "A $80 purchase has 13% tax. What is the tax?"
+    )
+    assert result is not None
+    assert result.prompt == "A $80 purchase has 13% tax. What is the tax?"
 
 
 def test_gateway_contextualizer_returns_none_on_failure(monkeypatch) -> None:

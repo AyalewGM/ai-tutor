@@ -15,6 +15,7 @@ def select_next_problem(
     current_difficulty: int,
     state: TutorState,
     correct: bool | None = None,
+    student_id: uuid.UUID | None = None,
     session_id: uuid.UUID | None = None,
 ) -> Problem | None:
     target_difficulty = current_difficulty
@@ -48,6 +49,8 @@ def select_next_problem(
             skill_id=skill_id,
             difficulty=target_difficulty,
             avoid_family=last_family,
+            student_id=student_id,
+            session_id=session_id,
         )
         if generated is not None:
             return generated

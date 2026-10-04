@@ -405,7 +405,9 @@ def respond(
     else:
         next_problem = None
         if evidence.evaluation.correct is False and problem.primary_skill_id == next_skill_id:
-            next_problem = regenerate_variant(db, source_problem=problem)
+            next_problem = regenerate_variant(
+                db, source_problem=problem, session_id=session.id
+            )
         if next_problem is None:
             next_problem = select_next_problem(
                 db,
