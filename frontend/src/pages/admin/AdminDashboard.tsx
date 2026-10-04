@@ -85,7 +85,7 @@ function MfaGate({
             (setup ? (
               <div className="space-y-3">
                 <div className="rounded-lg border border-dashed border-slate-300 bg-secondary/60 p-3 text-center">
-                  <p className="font-mono text-lg tracking-[0.2em] text-slate-900">
+                  <p className="break-all font-mono text-base font-semibold leading-7 tracking-widest text-slate-900">
                     {setup.secret}
                   </p>
                   <p className="mt-1 text-xs text-slate-500">
