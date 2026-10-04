@@ -3,6 +3,7 @@ from sqlalchemy import text
 
 from app.adaptive_api import router as adaptive_tutor_router
 from app.adaptive_response_api import router as adaptive_response_router
+from app.admin_api import router as admin_router
 from app.api import router as tutor_router
 from app.auth import session_identity_middleware
 from app.auth_api import router as auth_router
@@ -39,6 +40,7 @@ app.include_router(practice_pass_router, prefix=settings.api_prefix)
 app.include_router(privacy_router, prefix=settings.api_prefix)
 app.include_router(learner_workspace_router, prefix=settings.api_prefix)
 app.include_router(telemetry_router, prefix=settings.api_prefix)
+app.include_router(admin_router, prefix=settings.api_prefix)
 
 
 @app.get("/health")

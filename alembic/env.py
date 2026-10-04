@@ -2,6 +2,7 @@ from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config, pool
 
+import app.admin_models
 import app.auth_models
 import app.content_models
 import app.credential_models

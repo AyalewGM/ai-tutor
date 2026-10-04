@@ -12,6 +12,7 @@ dependencies = [
   "python-multipart>=0.0.12,<1.0",
   "alembic>=1.14,<2.0",
   "argon2-cffi>=23.1,<26.0",
+  "cryptography>=42.0,<51.0",
   "email-validator>=2.2,<3.0",
   "redis>=5.2,<7.0",
   "openai>=1.0,<3.0",

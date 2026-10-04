@@ -37,6 +37,14 @@ def revoke_session(db: Session, token: str) -> None:
         db.delete(session)
 
 
+def resolve_session(db: Session, token: str) -> AuthSession | None:
+    """The live (unexpired) session row for a cookie token, if any."""
+    session = db.scalar(select(AuthSession).where(AuthSession.token_hash == _digest(token)))
+    if session is None or session.expires_at <= datetime.now(UTC):
+        return None
+    return session
+
+
 def resolve_user_id(db: Session, token: str) -> uuid.UUID | None:
     session = db.scalar(select(AuthSession).where(AuthSession.token_hash == _digest(token)))
     if session is None or session.expires_at <= datetime.now(UTC):
