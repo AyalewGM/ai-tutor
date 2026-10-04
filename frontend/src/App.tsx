@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Badges from "./pages/Badges";
 import Diagnostic from "./pages/Diagnostic";
+import Landing from "./pages/Landing";
 import LearnEntry from "./pages/LearnEntry";
 import Login from "./pages/Login";
 import ParentDashboard from "./pages/ParentDashboard";
@@ -13,6 +14,7 @@ import Workspace from "./pages/Workspace";
 export default function App() {
   return (
     <Routes>
+      <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/practice/:token" element={<PracticePass />} />
       <Route path="/learn" element={<LearnEntry />} />
@@ -23,7 +25,7 @@ export default function App() {
       <Route path="/learn/:sessionId" element={<Workspace />} />
       <Route path="/learn/:sessionId/badges" element={<Badges />} />
       <Route path="/learn/:sessionId/map" element={<SkillMap />} />
-      <Route path="*" element={<Navigate to="/learn" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
