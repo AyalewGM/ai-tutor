@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api import _student_skill, _supports_steps, _tutor_context
 from app.core.database import get_db
-from app.identity import CurrentParent, require_parent_owns_student
+from app.identity import CurrentLearningAccess, require_learning_owns_student
 from app.models import Skill, Student, TutorSession, TutorState, TutorTurn
 from app.schemas import (
     LearningFocusOut,
@@ -39,8 +39,8 @@ def _focus(session: TutorSession) -> LearningFocusOut:
 
 
 @router.post("/sessions", response_model=SessionOut)
-def create_session(payload: SessionCreate, parent: CurrentParent, db: DbSession) -> SessionOut:
-    student = require_parent_owns_student(parent, db.get(Student, payload.student_id))
+def create_session(payload: SessionCreate, access: CurrentLearningAccess, db: DbSession) -> SessionOut:
+    student = require_learning_owns_student(access, db.get(Student, payload.student_id))
 
     try:
         scope = resolve_student_curriculum_scope(db, student)
