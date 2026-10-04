@@ -33,6 +33,7 @@ export default function App() {
       <Route path="/learn/:sessionId/badges" element={<Badges />} />
       <Route path="/learn/:sessionId/map" element={<SkillMap />} />
       <Route path="/learn/:sessionId/catalog" element={<Catalog />} />
+      <Route path="/learners/:studentId/catalog" element={<Catalog />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

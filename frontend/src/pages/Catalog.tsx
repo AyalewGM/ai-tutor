@@ -57,10 +57,13 @@ function SkillStatus({ skill }: { skill: CatalogSkill }) {
 }
 
 export default function Catalog() {
-  const { sessionId } = useParams<{ sessionId: string }>();
+  const { sessionId, studentId: studentParam } = useParams<{
+    sessionId?: string;
+    studentId?: string;
+  }>();
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
-  const [workspace, setWorkspace] = useState<LearnerWorkspace | null>(null);
+  const [studentId, setStudentId] = useState<string | null>(studentParam ?? null);
   const [catalog, setCatalog] = useState<CurriculumCatalog | null>(null);
   const [error, setError] = useState("");
   const [busySkill, setBusySkill] = useState<string | null>(null);
@@ -69,36 +72,42 @@ export default function Catalog() {
   const selectedCurriculum = params.get("curriculum");
 
   const loadCatalog = useCallback(
-    async (studentId: string) => {
+    async (sid: string) => {
       const query = selectedCurriculum ? `?curriculum_id=${selectedCurriculum}` : "";
       setCatalog(
-        await api<CurriculumCatalog>(
-          `/onboarding/learners/${studentId}/catalog${query}`,
-        ),
+        await api<CurriculumCatalog>(`/onboarding/learners/${sid}/catalog${query}`),
       );
     },
     [selectedCurriculum],
   );
 
   useEffect(() => {
-    api<LearnerWorkspace>(`/learner-workspace/sessions/${sessionId}`)
-      .then((ws) => {
-        setWorkspace(ws);
-        if (!ws.learner.id) throw new ApiError(409, "Learner identity unavailable");
-        return loadCatalog(ws.learner.id);
+    const resolve = sessionId
+      ? api<LearnerWorkspace>(`/learner-workspace/sessions/${sessionId}`).then(
+          (ws) => {
+            if (!ws.learner.id) throw new ApiError(409, "Learner identity unavailable");
+            return ws.learner.id;
+          },
+        )
+      : Promise.resolve(studentParam ?? null);
+    resolve
+      .then((sid) => {
+        if (!sid) throw new ApiError(404, "Learner not found");
+        setStudentId(sid);
+        return loadCatalog(sid);
       })
       .catch((err) =>
         setError(err instanceof ApiError ? err.message : "Could not load the catalog"),
       );
-  }, [sessionId, loadCatalog]);
+  }, [sessionId, studentParam, loadCatalog]);
 
   async function practice(skillId: string) {
-    if (!workspace?.learner.id) return;
+    if (!studentId) return;
     setBusySkill(skillId);
     setError("");
     try {
       const session = await post<{ session_id: string }>("/adaptive-tutor/sessions", {
-        student_id: workspace.learner.id,
+        student_id: studentId,
         skill_id: skillId,
       });
       navigate(`/learn/${session.session_id}`);
@@ -109,14 +118,14 @@ export default function Catalog() {
   }
 
   async function switchCurriculum() {
-    if (!workspace?.learner.id || !catalog) return;
+    if (!studentId || !catalog) return;
     setSwitching(true);
     setError("");
     try {
-      await post(`/onboarding/learners/${workspace.learner.id}/curriculum`, {
+      await post(`/onboarding/learners/${studentId}/curriculum`, {
         curriculum_id: catalog.curriculum_id,
       });
-      await loadCatalog(workspace.learner.id);
+      await loadCatalog(studentId);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Could not switch curriculum");
     } finally {
@@ -166,8 +175,9 @@ export default function Catalog() {
                 </>
               )}
               <Button variant="secondary" asChild>
-                <Link to={`/learn/${sessionId}`}>
-                  <ArrowLeft className="h-4 w-4" /> Back to practice
+                <Link to={sessionId ? `/learn/${sessionId}` : "/learn"}>
+                  <ArrowLeft className="h-4 w-4" />{" "}
+                  {sessionId ? "Back to practice" : "Back to learners"}
                 </Link>
               </Button>
             </div>

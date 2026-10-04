@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BookOpen, ChevronDown, ClipboardCheck, Play, UserPlus, Compass } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
@@ -217,6 +217,11 @@ export default function LearnEntry() {
                     <Badge variant="secondary">{selectedLearner.curriculum_version}</Badge>
                     {selectedLearner.jurisdiction && <Badge variant="secondary">{selectedLearner.jurisdiction}</Badge>}
                     <Badge variant="outline">{readyCount} ready skills</Badge>
+                    <Button variant="secondary" size="sm" asChild>
+                      <Link to={`/learners/${selectedLearner.id}/catalog`}>
+                        <BookOpen className="h-3.5 w-3.5" /> Catalog
+                      </Link>
+                    </Button>
                   </div>
                 </div>
                 {avatarPickerOpen && (
