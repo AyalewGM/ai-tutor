@@ -66,7 +66,7 @@ def overview(db: Session, *, now: datetime | None = None) -> dict:
     signups["total"] = db.scalar(select(func.count(User.id)).where(User.role == "PARENT"))
     daily = db.execute(
         select(
-            func.date_trunc("day", User.created_at).label("day"),
+            func.date_trunc("day", func.timezone("UTC", User.created_at)).label("day"),
             func.count(User.id),
         )
         .where(User.role == "PARENT", User.created_at >= _cutoff(now, 30))

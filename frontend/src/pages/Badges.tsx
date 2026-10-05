@@ -156,7 +156,8 @@ export default function Badges() {
                         }
                       />
                       <p className="text-xs text-muted-foreground">
-                        {badge.progress.current} / {badge.progress.target} in a row
+                        {badge.progress.current} / {badge.progress.target}{" "}
+                        {badge.progress.unit}
                       </p>
                     </div>
                   )}

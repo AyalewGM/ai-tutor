@@ -257,7 +257,7 @@ export interface Badge {
   earned: boolean;
   times_earned: number;
   skill_names: string[];
-  progress: { current: number; target: number } | null;
+  progress: { current: number; target: number; unit: string } | null;
 }
 
 export interface SkillMapEntry {
