@@ -417,6 +417,30 @@ def _frequency_table_model(problem: Problem) -> dict | None:
     return model
 
 
+def _probability_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    kind = params.get("kind")
+    if kind == "spinner":
+        sections = params.get("sections")
+        if not (isinstance(sections, list) and 2 <= len(sections) <= 8):
+            return None
+        return {
+            "type": "spinner",
+            "sections": sections,
+            "aria_label": f"A spinner divided into {len(sections)} equal sections.",
+        }
+    if kind == "bag":
+        marbles = params.get("marbles")
+        if not (isinstance(marbles, list) and 1 <= len(marbles) <= 12):
+            return None
+        return {
+            "type": "marble_bag",
+            "marbles": marbles,
+            "aria_label": f"A bag containing {len(marbles)} marbles.",
+        }
+    return None
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1268,6 +1292,8 @@ def visualization_for(problem: Problem) -> dict | None:
         return _scatterplot_model(problem)
     if problem.problem_type == "FREQUENCY_TABLE":
         return _frequency_table_model(problem)
+    if problem.problem_type == "PROBABILITY":
+        return _probability_model(problem)
     if problem.problem_type == "EXPONENTIAL_FUNCTION":
         return _exponential_graph_model(problem)
     return None

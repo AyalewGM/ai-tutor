@@ -2344,6 +2344,172 @@ def _generate_frequency_table(rng: random.Random, difficulty: int) -> GeneratedP
     )
 
 
+_PROBABILITY_COLORS = ("red", "blue", "green", "yellow")
+
+
+def _probability_items(
+    rng: random.Random, kind: str, n: int | None = None
+) -> tuple[list[str], str, int, int]:
+    """A spinner's equal sections or a bag's marbles as a color list,
+    with a target color appearing c times out of n (1 <= c < n)."""
+    if n is None:
+        n = rng.randint(4, 8) if kind == "spinner" else rng.randint(6, 12)
+    target = rng.choice(_PROBABILITY_COLORS)
+    c = rng.randint(1, n - 1)
+    others = [x for x in _PROBABILITY_COLORS if x != target]
+    items = [target] * c + [rng.choice(others) for _ in range(n - c)]
+    rng.shuffle(items)
+    return items, target, c, n
+
+
+def _generate_probability(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Probability items over rendered spinners and marble bags: classify
+    likelihood, find a simple probability or its complement, count
+    sample-space outcomes, or combine two independent/ exclusive events.
+
+    Every item renders its spinner or bag — the counts the learner
+    needs live in the visual, not the text."""
+    tiers = ["likelihood", "simple"]
+    if difficulty >= 2:
+        tiers += ["complement", "count_outcomes"]
+    if difficulty >= 3:
+        tiers += ["compound_twice", "compound_or"]
+    tier = rng.choice(tiers)
+    kind = rng.choice(["spinner", "bag"])
+    params: dict = {"tier": tier, "kind": kind}
+
+    def frac(num: int, den: int) -> str:
+        f = Fraction(num, den)
+        return _slope_text(f.numerator, f.denominator)
+
+    if tier == "likelihood":
+        outcome = rng.choice(
+            ["impossible", "unlikely", "equally likely", "likely", "certain"]
+        )
+        n = rng.randint(4, 8) if kind == "spinner" else rng.randint(6, 12)
+        target = rng.choice(_PROBABILITY_COLORS)
+        others = [x for x in _PROBABILITY_COLORS if x != target]
+        if outcome == "equally likely":
+            n = 2 * (rng.randint(2, 4) if kind == "spinner" else rng.randint(3, 6))
+            c = n // 2
+        elif outcome == "impossible":
+            c = 0
+        elif outcome == "certain":
+            c = n
+        elif outcome == "unlikely":
+            c = rng.randint(1, (n - 1) // 2)
+        else:
+            c = rng.randint(n // 2 + 1, n - 1)
+        items = [target] * c + [rng.choice(others) for _ in range(n - c)]
+        rng.shuffle(items)
+        params["target"], params["likelihood"] = target, outcome
+        if kind == "spinner":
+            prompt = (f"The spinner shown is spun once. How likely is it "
+                      f"to land on {target}?")
+        else:
+            prompt = (f"A marble is drawn from the bag at random. How "
+                      f"likely is it to be {target}?")
+        correct = "equally likely (50-50)" if outcome == "equally likely" else outcome
+        pool = [(t, "PROB_004") for t in
+                ["impossible", "unlikely", "equally likely (50-50)",
+                 "likely", "certain"] if t != correct]
+        rng.shuffle(pool)
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier in {"simple", "complement"}:
+        items, target, c, n = _probability_items(rng, kind)
+        params["target"] = target
+        if kind == "spinner":
+            stem = ("The spinner shown is spun once. What is the "
+                    "probability that it lands on ")
+            suffix = f"{target}?" if tier == "simple" else f"a section that is not {target}?"
+        else:
+            stem = ("A marble is drawn from the bag at random. What is "
+                    "the probability that it ")
+            suffix = f"is {target}?" if tier == "simple" else f"is not {target}?"
+        prompt = stem + suffix
+        if tier == "simple":
+            correct = frac(c, n)
+            pool = [
+                (frac(c, n - c), "PROB_001"),   # favourable over unfavourable
+                (frac(n - c, n), "PROB_003"),   # the complement instead
+                (frac(n, c), "PROB_001"),       # inverted
+                (frac(1, n), None),
+            ]
+        else:
+            correct = frac(n - c, n)
+            pool = [
+                (frac(c, n), "PROB_003"),       # answered the event itself
+                (frac(c, n - c), "PROB_001"),
+                (frac(n - c, c), "PROB_001"),
+                (frac(c + 1, n), None),
+                (frac(n - c - 1, n), None),
+            ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "count_outcomes":
+        # Spinner + coin: n × 2 outcomes, not n + 2.
+        kind = "spinner"
+        params["kind"] = "spinner"
+        n = rng.randint(4, 8)
+        colors = rng.sample(_PROBABILITY_COLORS, 2)
+        items = [rng.choice(colors) for _ in range(n)]
+        prompt = ("The spinner shown is spun once and a coin is flipped "
+                  "once. How many different outcomes are possible?")
+        pool = [
+            (str(n + 2), "PROB_002"),   # added instead of multiplied
+            (str(n), "PROB_002"),       # forgot the coin
+            (str(n * n), None),
+            (str(2 * n - 2), None),
+        ]
+        choices, answer = _mc_choices(rng, str(2 * n), pool)
+    elif tier == "compound_twice":
+        kind = "spinner"
+        params["kind"] = "spinner"
+        items, target, c, n = _probability_items(rng, "spinner")
+        params["target"] = target
+        prompt = (f"The spinner shown is spun twice. What is the "
+                  f"probability that it lands on {target} both times?")
+        pool = [
+            (frac(2 * c, n), "PROB_002"),      # added the probabilities
+            (frac(c, n), None),                # answered a single spin
+            (frac(c * c, n), "PROB_002"),      # squared only the numerator
+            (frac(c, n * n), "PROB_002"),      # squared only the denominator
+            (frac(2 * c * c, n * n), "PROB_002"),
+            (frac(c * c + 1, n * n), None),
+        ]
+        choices, answer = _mc_choices(rng, frac(c * c, n * n), pool)
+    else:  # compound_or
+        items, target, c, n = _probability_items(rng, kind)
+        second = rng.choice([x for x in _PROBABILITY_COLORS if x != target])
+        c2 = items.count(second)
+        if c2 == 0:
+            return _generate_probability(rng, difficulty)
+        params["target"], params["target_b"] = target, second
+        if kind == "spinner":
+            prompt = (f"The spinner shown is spun once. What is the "
+                      f"probability that it lands on {target} or {second}?")
+        else:
+            prompt = (f"A marble is drawn from the bag at random. What is "
+                      f"the probability that it is {target} or {second}?")
+        pool = [
+            (frac(c * c2, n * n), "PROB_002"),  # multiplied instead of added
+            (frac(c, n), "PROB_001"),           # counted only one colour
+            (frac(c2, n), "PROB_001"),
+            (frac(n - c - c2, n), "PROB_003"),  # the complement instead
+            (frac(c + c2, n * n), "PROB_002"),
+            (frac(c + c2 + 1, n), None),
+        ]
+        choices, answer = _mc_choices(rng, frac(c + c2, n), pool)
+
+    if kind == "spinner":
+        params["sections"] = items
+    else:
+        params["marbles"] = items
+    return GeneratedProblem(
+        prompt, answer, difficulty, "PROBABILITY",
+        parameters=params, answer_kind="MULTIPLE_CHOICE", choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -2993,6 +3159,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "STATISTICS": _generate_statistics,
     "EXPONENTIAL_FUNCTION": _generate_exponential,
     "FREQUENCY_TABLE": _generate_frequency_table,
+    "PROBABILITY": _generate_probability,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -3313,6 +3480,7 @@ PROMPT_SHARED_TYPES = {
     "STATISTICS",
     "EXPONENTIAL_FUNCTION",
     "FREQUENCY_TABLE",
+    "PROBABILITY",
 }
 
 
