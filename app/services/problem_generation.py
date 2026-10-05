@@ -2510,6 +2510,121 @@ def _generate_probability(rng: random.Random, difficulty: int) -> GeneratedProbl
     )
 
 
+_PYTHAGOREAN_TRIPLES = [
+    (3, 4, 5), (6, 8, 10), (5, 12, 13), (9, 12, 15), (8, 15, 17),
+    (12, 16, 20), (7, 24, 25), (20, 21, 29), (10, 24, 26), (15, 20, 25),
+]
+
+_RADICAL_LEGS = [
+    (1, 3), (2, 3), (1, 4), (2, 5), (3, 5), (4, 5),
+    (2, 7), (1, 7), (3, 7), (5, 6), (4, 6), (2, 6),
+]
+
+# Side triples that are close to but not Pythagorean — sorted so the
+# largest is last.
+_NEAR_TRIPLES = [
+    (4, 5, 6), (2, 3, 4), (5, 7, 9), (6, 7, 9), (7, 8, 10), (5, 6, 8),
+]
+
+
+def _generate_pythagorean(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Pythagorean-theorem items: find a hypotenuse or leg from a drawn
+    right triangle, reason about radical hypotenuses, test the converse
+    on a side triple, or find a distance on the coordinate plane.
+
+    The converse tier is text-only — rendering a right triangle would
+    answer the question. Radical answers stay multiple choice so √N
+    needs no typed input."""
+    tiers = ["hypotenuse"]
+    if difficulty >= 2:
+        tiers += ["leg", "radical_hypotenuse"]
+    if difficulty >= 3:
+        tiers.append("converse")
+    if difficulty >= 4:
+        tiers.append("distance")
+    tier = rng.choice(tiers)
+    choices = None
+    params: dict = {"tier": tier}
+
+    if tier in {"hypotenuse", "leg"}:
+        a, b, c = rng.choice(_PYTHAGOREAN_TRIPLES)
+        if rng.random() < 0.5:
+            a, b = b, a
+        if tier == "hypotenuse":
+            params["a"], params["b"], params["c"] = a, b, c
+            prompt = (f"The right triangle has legs of length {a} and {b}. "
+                      f"What is the length of the hypotenuse?")
+            answer = str(c)
+        else:
+            leg, other = (a, b) if rng.random() < 0.5 else (b, a)
+            params["a"], params["b"], params["c"] = leg, other, c
+            prompt = (f"The right triangle has a hypotenuse of length {c} "
+                      f"and one leg of length {leg}. What is the length of "
+                      f"the other leg?")
+            answer = str(other)
+        kind = "INTEGER"
+    elif tier == "radical_hypotenuse":
+        a, b = rng.choice(_RADICAL_LEGS)
+        params["a"], params["b"] = a, b
+        c2 = a * a + b * b
+        prompt = (f"The right triangle has legs of length {a} and {b}. "
+                  f"Which expression gives the exact length of the hypotenuse?")
+        correct = f"√{c2}"
+        pool = [
+            (str(a + b), "PYTH_002"),               # legs added
+            (str(c2), "PYTH_001"),                # sum of squares, no root
+            (f"√{abs(a * a - b * b)}", "PYTH_001"),
+            (str(a * b), None),
+        ]
+        rng.shuffle(pool)
+        choices, answer = _mc_choices(rng, correct, pool)
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "converse":
+        # Half the items are real triples, half near-misses.
+        if rng.random() < 0.5:
+            a, b, c = rng.choice(_PYTHAGOREAN_TRIPLES[:6])
+            yes = True
+        else:
+            a, b, c = rng.choice(_NEAR_TRIPLES)
+            yes = False
+        params["sides"] = [a, b, c]
+        prompt = (f"A triangle has sides of length {a}, {b}, and {c}. "
+                  f"Could it be a right triangle?")
+        if yes:
+            correct = f"Yes, because {a}² + {b}² = {c}²"
+            pool = [
+                (f"No, because {a}² + {b}² ≠ {c}²", "PYTH_003"),
+                (f"No, because {a} + {b} ≠ {c}", "PYTH_003"),
+                ("There is not enough information to decide", None),
+            ]
+        else:
+            correct = f"No, because {a}² + {b}² ≠ {c}²"
+            pool = [
+                (f"Yes, because {a}² + {b}² = {c}²", "PYTH_003"),
+                (f"Yes, because {a} + {b} > {c}", "PYTH_003"),
+                ("There is not enough information to decide", None),
+            ]
+        choices, answer = _mc_choices(rng, correct, pool)
+        kind = "MULTIPLE_CHOICE"
+    else:  # distance — leg deltas form a small triple so c is an integer
+        dx, dy, c = rng.choice([(3, 4, 5), (4, 3, 5), (6, 8, 10), (8, 6, 10)])
+        dx *= rng.choice([-1, 1])
+        dy *= rng.choice([-1, 1])
+        x1 = rng.randint(-9 + max(0, -dx), 9 - max(0, dx))
+        y1 = rng.randint(-9 + max(0, -dy), 9 - max(0, dy))
+        x2, y2 = x1 + dx, y1 + dy
+        params["points"] = [[x1, y1], [x2, y2]]
+        prompt = (f"What is the distance between point A({x1}, {y1}) "
+                  f"and point B({x2}, {y2})?")
+        answer = str(c)
+        kind = "INTEGER"
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "PYTHAGOREAN",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -3160,6 +3275,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "EXPONENTIAL_FUNCTION": _generate_exponential,
     "FREQUENCY_TABLE": _generate_frequency_table,
     "PROBABILITY": _generate_probability,
+    "PYTHAGOREAN": _generate_pythagorean,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -3481,6 +3597,7 @@ PROMPT_SHARED_TYPES = {
     "EXPONENTIAL_FUNCTION",
     "FREQUENCY_TABLE",
     "PROBABILITY",
+    "PYTHAGOREAN",
 }
 
 

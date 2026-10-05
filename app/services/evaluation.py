@@ -551,6 +551,52 @@ def _exponential_errors(prompt: str, answer: str, canonical: str) -> Misconcepti
     return None
 
 
+_PYTH_LEGS = re.compile(r"legsoflength(\d+)and(\d+)")
+_PYTH_LEG = re.compile(r"hypotenuseoflength(\d+)andonelegoflength(\d+)")
+_PYTH_DIST = re.compile(
+    r"distancebetweenpointa\((-?\d+),(-?\d+)\)andpointb\((-?\d+),(-?\d+)\)"
+)
+
+
+def _pythagorean_errors(prompt: str, answer: str, canonical: str) -> MisconceptionMatch | None:
+    """Pythagorean errors: legs added (a + b) or the sum of squares
+    reported without taking the root (a² + b²); same two errors for a
+    missing leg (c + a, c² ± a²) and for grid distance (|dx| + |dy|,
+    dx² + dy²)."""
+    student = _INTEGER_ANSWER.match(answer)
+    correct = _INTEGER_ANSWER.match(canonical)
+    if not student or not correct:
+        return None
+    s, t = int(student.group(1)), int(correct.group(1))
+    if s == t:
+        return None
+    legs = _PYTH_LEGS.search(prompt)
+    if legs:
+        a, b = int(legs.group(1)), int(legs.group(2))
+        if s == a + b:
+            return MisconceptionMatch("PYTH_002", 0.95)
+        if s == a * a + b * b:
+            return MisconceptionMatch("PYTH_001", 0.95)
+        return None
+    leg = _PYTH_LEG.search(prompt)
+    if leg:
+        c, a = int(leg.group(1)), int(leg.group(2))
+        if s in {c + a, c * c + a * a}:
+            return MisconceptionMatch("PYTH_002", 0.95)
+        if s == c * c - a * a:
+            return MisconceptionMatch("PYTH_001", 0.95)
+        return None
+    dist = _PYTH_DIST.search(prompt)
+    if dist:
+        dx = abs(int(dist.group(3)) - int(dist.group(1)))
+        dy = abs(int(dist.group(4)) - int(dist.group(2)))
+        if s == dx + dy:
+            return MisconceptionMatch("PYTH_002", 0.95)
+        if s == dx * dx + dy * dy:
+            return MisconceptionMatch("PYTH_001", 0.95)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -578,6 +624,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _system_intersection_swap,
     _best_fit_prediction_errors,
     _exponential_errors,
+    _pythagorean_errors,
 )
 
 

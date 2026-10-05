@@ -24,16 +24,18 @@ def test_grade8_seed_is_idempotent_and_curriculum_local():
         assert "M8.G.TRANS" in skills
         assert "M8.G.SIM" in skills
         assert "M8.SP.STAT" in skills
+        assert "M8.G.PYTH" in skills
 
         skill_ids = {
-            skills[code].id for code in ("M8.G.TRANS", "M8.G.SIM", "M8.SP.STAT")
+            skills[code].id
+            for code in ("M8.G.TRANS", "M8.G.SIM", "M8.SP.STAT", "M8.G.PYTH")
         }
         problems = list(
             db.scalars(
                 select(Problem).where(Problem.primary_skill_id.in_(skill_ids))
             )
         )
-        assert len(problems) == 15
+        assert len(problems) == 19
 
         misconceptions = list(
             db.scalars(
@@ -45,6 +47,7 @@ def test_grade8_seed_is_idempotent_and_curriculum_local():
             "SIM_001", "SIM_002", "SIM_003", "SIM_004",
             "STAT_001", "STAT_002", "STAT_003", "STAT_004", "STAT_005",
             "STAT_006", "STAT_007", "STAT_008",
+            "PYTH_001", "PYTH_002", "PYTH_003",
         }
     finally:
         db.close()
