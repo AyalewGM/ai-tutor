@@ -33,7 +33,7 @@ def test_grade8_seed_is_idempotent_and_curriculum_local():
                 select(Problem).where(Problem.primary_skill_id.in_(skill_ids))
             )
         )
-        assert len(problems) == 12
+        assert len(problems) == 15
 
         misconceptions = list(
             db.scalars(
@@ -44,6 +44,7 @@ def test_grade8_seed_is_idempotent_and_curriculum_local():
             "TR_001", "TR_002", "TR_003", "TR_004", "TR_005",
             "SIM_001", "SIM_002", "SIM_003", "SIM_004",
             "STAT_001", "STAT_002", "STAT_003", "STAT_004", "STAT_005",
+            "STAT_006", "STAT_007", "STAT_008",
         }
     finally:
         db.close()

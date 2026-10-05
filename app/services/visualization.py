@@ -387,6 +387,36 @@ def _scatterplot_model(problem: Problem) -> dict | None:
     return model
 
 
+def _frequency_table_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    rows = params.get("rows")
+    cols = params.get("cols")
+    cells = params.get("cells")
+    if not (
+        isinstance(rows, list) and len(rows) == 2
+        and isinstance(cols, list) and len(cols) == 2
+        and isinstance(cells, list) and len(cells) == 2
+        and all(isinstance(r, list) and len(r) == 2 for r in cells)
+    ):
+        return None
+    a, b = cells[0]
+    c, d = cells[1]
+    model: dict = {
+        "type": "frequency_table",
+        "row_labels": rows,
+        "col_labels": cols,
+        "cells": cells,
+        "aria_label": "A two-way frequency table of survey results.",
+    }
+    # Totals are withheld on tiers that ask for them — the empty Total
+    # row and column are the work the learner does.
+    if params.get("show_totals"):
+        model["row_totals"] = [a + b, c + d]
+        model["col_totals"] = [a + c, b + d]
+        model["grand_total"] = a + b + c + d
+    return model
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1236,6 +1266,8 @@ def visualization_for(problem: Problem) -> dict | None:
         return _system_model(problem)
     if problem.problem_type == "STATISTICS":
         return _scatterplot_model(problem)
+    if problem.problem_type == "FREQUENCY_TABLE":
+        return _frequency_table_model(problem)
     if problem.problem_type == "EXPONENTIAL_FUNCTION":
         return _exponential_graph_model(problem)
     return None
