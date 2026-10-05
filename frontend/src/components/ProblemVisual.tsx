@@ -78,6 +78,7 @@ export interface VisualSpec {
   leg_b?: string;
   hyp?: string;
   markers?: Array<{ label: string; position: number }>;
+  pairs?: number[][];
 }
 
 interface PanSpec {
@@ -1061,6 +1062,28 @@ function NumberLine({ spec, compare = false }: { spec: VisualSpec; compare?: boo
 }
 
 
+function XYTable({ spec }: { spec: VisualSpec }) {
+  const pairs = spec.pairs ?? [];
+  return (
+    <table className="viz-table" aria-label={spec.aria_label ?? "A table of x and y values"}>
+      <thead>
+        <tr>
+          <th scope="col">x</th>
+          <th scope="col">y</th>
+        </tr>
+      </thead>
+      <tbody>
+        {pairs.map((pair, i) => (
+          <tr key={i}>
+            <td>{pair[0]}</td>
+            <td>{pair[1]}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
 function RadicalLine({ spec }: { spec: VisualSpec }) {
   const min = spec.min ?? 0;
   const max = spec.max ?? 10;
@@ -1364,6 +1387,7 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "linear_system") return <LinearSystem spec={spec} />;
   if (spec.type === "scatterplot") return <Scatterplot spec={spec} />;
   if (spec.type === "frequency_table") return <FrequencyTable spec={spec} />;
+  if (spec.type === "xy_table") return <XYTable spec={spec} />;
   if (spec.type === "spinner") return <Spinner spec={spec} />;
   if (spec.type === "marble_bag") return <MarbleBag spec={spec} />;
   if (spec.type === "right_triangle") return <RightTriangle spec={spec} />;

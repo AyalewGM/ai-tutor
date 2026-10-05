@@ -509,6 +509,24 @@ def _radicals_model(problem: Problem) -> dict | None:
     }
 
 
+def _functions_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    if params.get("tier") == "graph_rate":
+        return _linear_graph_model(problem)
+    pairs = params.get("pairs")
+    if not (
+        isinstance(pairs, list)
+        and pairs
+        and all(isinstance(p, list) and len(p) == 2 for p in pairs)
+    ):
+        return None
+    return {
+        "type": "xy_table",
+        "pairs": pairs,
+        "aria_label": "A table of x and y values.",
+    }
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -547,7 +565,9 @@ def _linear_graph_model(problem: Problem) -> dict | None:
         "max": 10,
         # Marking the intercept's lattice neighbours is the low-difficulty
         # scaffold — it turns the slope read into a rise-over-run count.
-        "mark_lattice": bool(params.get("tier") in {"read_slope", "read_intercept"})
+        "mark_lattice": bool(
+            params.get("tier") in {"read_slope", "read_intercept", "graph_rate"}
+        )
         and problem.difficulty <= 2,
         "aria_label": "A line graphed on a coordinate plane.",
     }
@@ -1366,6 +1386,8 @@ def visualization_for(problem: Problem) -> dict | None:
         return _pythagorean_model(problem)
     if problem.problem_type == "RADICALS":
         return _radicals_model(problem)
+    if problem.problem_type == "FUNCTIONS":
+        return _functions_model(problem)
     if problem.problem_type == "EXPONENTIAL_FUNCTION":
         return _exponential_graph_model(problem)
     return None
