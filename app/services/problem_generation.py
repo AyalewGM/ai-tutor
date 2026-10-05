@@ -3108,6 +3108,136 @@ def _generate_proportional_graph(
     )
 
 
+_SIGNED_WORD_CONTEXTS = [
+    ("The temperature was {a} degrees and rose by {b} degrees. What is the temperature now?", 1),
+    ("The temperature was {a} degrees and fell by {b} degrees. What is the temperature now?", -1),
+    ("A diver was at an elevation of {a} feet and dove {b} feet deeper. What is the diver's elevation now?", -1),
+    ("A hiker was at an elevation of {a} feet and climbed {b} feet. What is the hiker's elevation now?", 1),
+]
+
+
+def _generate_signed_numbers(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Signed-rational arithmetic for 7.NS: add or subtract signed
+    integers, multiply and divide with the sign rules, additive
+    inverses, distance on the number line and context items.
+
+    `which_point` renders lettered markers on a `radical_line`;
+    every other tier is text-only since a drawn hop or landing
+    point would state the answer."""
+    tiers = ["add", "word", "inverse"]
+    if difficulty >= 2:
+        tiers += ["which_point", "subtract"]
+    if difficulty >= 3:
+        tiers += ["multiply", "divide"]
+    if difficulty >= 4:
+        tiers.append("distance")
+    tier = rng.choice(tiers)
+    params: dict = {"tier": tier}
+    choices = None
+    kind = "INTEGER"
+
+    def _term(v: int) -> str:
+        return f"({v})" if v < 0 else str(v)
+
+    if tier == "add":
+        a = rng.randint(-9, 9)
+        b = rng.randint(-9, 9)
+        while a == 0 or b == 0 or a + b == a:
+            a, b = rng.randint(-9, 9), rng.randint(-9, 9)
+        params.update(a=a, b=b)
+        prompt = f"Evaluate {a} + {_term(b)}."
+        answer = str(a + b)
+    elif tier == "word":
+        template, sign = rng.choice(_SIGNED_WORD_CONTEXTS)
+        a = rng.randint(-8, 8)
+        b = rng.randint(2, 9)
+        params.update(a=a, b=b, direction=sign)
+        prompt = template.format(a=a, b=b)
+        answer = str(a + sign * b)
+    elif tier == "inverse":
+        a = rng.randint(2, 15) * rng.choice([1, -1])
+        params["a"] = a
+        prompt = f"What number added to {a} gives 0?"
+        answer = str(-a)
+    elif tier == "which_point":
+        a = rng.randint(-8, 8)
+        # Opposite signs are where the kept-the-sign traps live.
+        b = rng.randint(2, 9) * (-1 if a > 0 else 1)
+        while a == 0 or not -10 <= a + b <= 10:
+            a, b = rng.randint(-8, 8), rng.randint(2, 9) * (-1 if a > 0 else 1)
+        result = a + b
+        wrong_magnitude = -(abs(a) + abs(b))
+        subtracted = a - b
+        candidates = [result, wrong_magnitude, subtracted, a, 0, -a]
+        spots: list[int] = []
+        for v in candidates:
+            if v not in spots and -12 <= v <= 12:
+                spots.append(v)
+        spots = spots[:4]
+        letters = ["A", "B", "C", "D"]
+        rng.shuffle(spots)
+        markers = [{"label": letters[i], "position": v}
+                   for i, v in enumerate(spots)]
+        lo = min(spots + [0]) - 1
+        hi = max(spots + [0]) + 1
+        params.update(a=a, b=b, markers=markers, min=lo, max=hi)
+        prompt = (f"On the number line, which letter marks the "
+                  f"value of {a} + {_term(b)}?")
+        pool = []
+        for m in markers:
+            v = m["position"]
+            if v == result:
+                pool.append((m["label"], None))
+                correct = m["label"]
+            elif v == wrong_magnitude:
+                pool.append((m["label"], "NEG_003"))
+            elif v == subtracted:
+                pool.append((m["label"], "NEG_001"))
+            else:
+                pool.append((m["label"], None))
+        choices, answer = _mc_choices(rng, correct, pool)
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "subtract":
+        a = rng.randint(-9, 9)
+        b = rng.randint(-9, 9)
+        while a == 0 or b == 0:
+            a, b = rng.randint(-9, 9), rng.randint(-9, 9)
+        params.update(a=a, b=b)
+        prompt = f"Evaluate {a} - {_term(b)}."
+        answer = str(a - b)
+    elif tier == "multiply":
+        a = rng.randint(-9, 9)
+        b = rng.randint(-9, 9)
+        while a == 0 or b == 0 or abs(a) == 1 or abs(b) == 1:
+            a, b = rng.randint(-9, 9), rng.randint(-9, 9)
+        params.update(a=a, b=b)
+        prompt = f"Evaluate {_term(a)} × {_term(b)}."
+        answer = str(a * b)
+    elif tier == "divide":
+        b = rng.randint(-9, 9)
+        while b == 0 or abs(b) == 1:
+            b = rng.randint(-9, 9)
+        q = rng.randint(-9, 9)
+        while q == 0 or abs(q) == 1:
+            q = rng.randint(-9, 9)
+        a = b * q
+        params.update(a=a, b=b)
+        prompt = f"Evaluate {_term(a)} ÷ {_term(b)}."
+        answer = str(q)
+    else:  # distance — |q - p| between two signed points
+        p = rng.randint(-9, 2)
+        q = rng.randint(p + 3, 10)
+        params.update(p=p, q=q)
+        prompt = (f"Point P is at {p} and point Q is at {q} on the "
+                  f"number line. What is the distance between them?")
+        answer = str(q - p)
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "SIGNED_NUMBERS",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -3762,6 +3892,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "RADICALS": _generate_radicals,
     "FUNCTIONS": _generate_functions,
     "PROPORTIONAL_GRAPH": _generate_proportional_graph,
+    "SIGNED_NUMBERS": _generate_signed_numbers,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -4087,6 +4218,7 @@ PROMPT_SHARED_TYPES = {
     "RADICALS",
     "FUNCTIONS",
     "PROPORTIONAL_GRAPH",
+    "SIGNED_NUMBERS",
 }
 
 

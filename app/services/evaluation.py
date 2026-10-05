@@ -667,6 +667,89 @@ def _proportional_errors(prompt: str, answer: str, canonical: str) -> Misconcept
     return None
 
 
+_SIGNED_ADD = re.compile(r"evaluate(-?\d+)\+\(?(-?\d+)\)?\.")
+_SIGNED_SUB = re.compile(r"evaluate(-?\d+)-\(?(-?\d+)\)?\.")
+_SIGNED_MUL = re.compile(r"evaluate\(?(-?\d+)\)?×\(?(-?\d+)\)?\.")
+_SIGNED_DIV = re.compile(r"evaluate\(?(-?\d+)\)?÷\(?(-?\d+)\)?\.")
+_SIGNED_INVERSE = re.compile(r"addedto(-?\d+)gives0")
+_SIGNED_DISTANCE = re.compile(
+    r"pointpisat(-?\d+)andpointqisat(-?\d+)")
+_SIGNED_TEMP = re.compile(
+    r"temperaturewas(-?\d+)degreesand(rose|fell)by(\d+)degrees")
+_SIGNED_ELEVATION = re.compile(
+    r"elevationof(-?\d+)feetand(dove|climbed)(\d+)feet")
+
+
+def _signed_number_errors(
+    prompt: str, answer: str, canonical: str
+) -> MisconceptionMatch | None:
+    """Signed-arithmetic errors: a − (−b) treated as a − b (NEG_001),
+    the sign rule missed on × and ÷ (NEG_002), magnitudes added while
+    keeping a sign (NEG_003), and the additive inverse or a signed
+    distance reported with the wrong sign (NEG_004)."""
+    student = _INTEGER_ANSWER.match(answer)
+    correct = _INTEGER_ANSWER.match(canonical)
+    if not student or not correct:
+        return None
+    s, t = int(student.group(1)), int(correct.group(1))
+    if s == t:
+        return None
+    add = _SIGNED_ADD.search(prompt)
+    if add:
+        a, b = int(add.group(1)), int(add.group(2))
+        if s in {-(abs(a) + abs(b)), abs(a) + abs(b)} and s != a + b:
+            return MisconceptionMatch("NEG_003", 0.9)
+        if s == a - b and s != a + b:
+            return MisconceptionMatch("NEG_001", 0.9)
+        return None
+    sub = _SIGNED_SUB.search(prompt)
+    if sub:
+        a, b = int(sub.group(1)), int(sub.group(2))
+        if b < 0 and s == a + b:
+            return MisconceptionMatch("NEG_001", 0.95)
+        if b > 0 and s == a + b:
+            return MisconceptionMatch("NEG_001", 0.9)
+        return None
+    mul = _SIGNED_MUL.search(prompt)
+    if mul:
+        a, b = int(mul.group(1)), int(mul.group(2))
+        if s == -a * b:
+            return MisconceptionMatch("NEG_002", 0.95)
+        return None
+    div = _SIGNED_DIV.search(prompt)
+    if div:
+        a, b = int(div.group(1)), int(div.group(2))
+        if b != 0 and s == -(a // b):
+            return MisconceptionMatch("NEG_002", 0.95)
+        return None
+    inv = _SIGNED_INVERSE.search(prompt)
+    if inv:
+        a = int(inv.group(1))
+        if s == a:
+            return MisconceptionMatch("NEG_004", 0.95)
+        return None
+    dist = _SIGNED_DISTANCE.search(prompt)
+    if dist:
+        p, q = int(dist.group(1)), int(dist.group(2))
+        if s in {p + q, -abs(q - p), abs(p) + abs(q)} and s != abs(q - p):
+            return MisconceptionMatch("NEG_004", 0.9)
+        return None
+    temp = _SIGNED_TEMP.search(prompt)
+    if temp:
+        a, sign, b = int(temp.group(1)), temp.group(2), int(temp.group(3))
+        moved = s - a
+        if abs(moved) == b and moved != (b if sign == "rose" else -b):
+            return MisconceptionMatch("NEG_003", 0.9)
+        return None
+    elev = _SIGNED_ELEVATION.search(prompt)
+    if elev:
+        a, sign, b = int(elev.group(1)), elev.group(2), int(elev.group(3))
+        moved = s - a
+        if abs(moved) == b and moved != (-b if sign == "dove" else b):
+            return MisconceptionMatch("NEG_003", 0.9)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -698,6 +781,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _radical_errors,
     _function_errors,
     _proportional_errors,
+    _signed_number_errors,
 )
 
 
