@@ -378,6 +378,118 @@ def _generate_linear_graph(rng: random.Random, difficulty: int) -> GeneratedProb
     )
 
 
+def _quad_params(rng: random.Random, *, integer_a: bool = False) -> tuple[int, int, int, int]:
+    """(a_num, a_den, h, k) for y = (a_num/a_den)(x - h)^2 + k.
+
+    The points one horizontal step either side of the vertex must stay inside
+    the ±9 grid the visual renders so the curve is never asked about off-screen.
+    """
+    while True:
+        if integer_a:
+            num, den = rng.choice([-2, -1, 1, 2]), 1
+        else:
+            num, den = rng.choice([(-2, 1), (-1, 1), (1, 1), (2, 1), (-1, 2), (1, 2)])
+        h = rng.randint(-5, 5)
+        k = rng.randint(-6, 6)
+        if abs(k + num / den) <= 9:
+            return num, den, h, k
+
+
+def _vertex_form_text(a: int, h: int, k: int) -> str:
+    coeff = "" if a == 1 else "-" if a == -1 else str(a)
+    inner = "x^2" if h == 0 else f"(x{'+' if h < 0 else '-'}{abs(h)})^2"
+    if k == 0:
+        return f"y={coeff}{inner}"
+    return f"y={coeff}{inner}{'+' if k > 0 else '-'}{abs(k)}"
+
+
+def _generate_quadratic_function(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Graph-first quadratic items: open direction, vertex, x-intercept count,
+    axis of symmetry, equation-from-graph — plus text-only evaluation.
+
+    a_num/a_den/h/k drive the parabola visual; graph tiers are always read
+    from the rendered curve, never from the prompt.
+    """
+    tiers = ["evaluate", "opens_direction"]
+    if difficulty >= 3:
+        tiers += ["vertex", "count_roots"]
+    if difficulty >= 4:
+        tiers.append("axis_of_symmetry")
+    if difficulty >= 5:
+        tiers.append("write_equation")
+    tier = rng.choice(tiers)
+    num, den, h, k = _quad_params(
+        rng, integer_a=tier in {"evaluate", "write_equation"}
+    )
+    a = num / den
+    params: dict = {"tier": tier, "a_num": num, "a_den": den, "h": h, "k": k}
+    kind = "FREE_TEXT"
+    choices = None
+
+    if tier == "evaluate":
+        b_std = -2 * num * h
+        c_std = num * h * h + k
+        x_val = rng.randint(-4, 4)
+        answer_val = num * x_val * x_val + b_std * x_val + c_std
+        a_txt = "" if num == 1 else "-" if num == -1 else str(num)
+        terms = f"{a_txt}x^2"
+        if b_std:
+            terms += f"{'+' if b_std > 0 else '-'}{abs(b_std) if abs(b_std) != 1 else ''}x"
+        if c_std:
+            terms += f"{'+' if c_std > 0 else '-'}{abs(c_std)}"
+        prompt = f"For f(x) = {terms}, what is f({x_val})?"
+        answer = str(answer_val)
+        kind = "INTEGER"
+    elif tier == "opens_direction":
+        correct = "Upward" if a > 0 else "Downward"
+        distractors = [
+            ("Downward" if a > 0 else "Upward", "QUAD_002"),
+            ("To the left", None),
+            ("To the right", None),
+        ]
+        prompt = "The parabola shown opens in which direction?"
+        choices, answer = _mc_choices(rng, correct, distractors)
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "vertex":
+        prompt = "What are the coordinates of the vertex of the parabola shown?"
+        answer = f"({h}, {k})"
+    elif tier == "count_roots":
+        roots = 1 if k == 0 else (2 if (a > 0) == (k < 0) else 0)
+        choices, answer = _mc_choices(
+            rng, str(roots), [(str(n), None) for n in range(4) if n != roots]
+        )
+        prompt = "How many times does the parabola cross the x-axis?"
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "axis_of_symmetry":
+        distractors = [
+            (f"x={k}" if k != h else f"x={k + 1}", "QUAD_003"),
+            (f"y={k}", None),
+        ]
+        if h != 0:
+            distractors.insert(0, (f"x={-h}", "QUAD_001"))
+        else:
+            distractors.append(("x=1", None))
+        prompt = "What is the equation of the parabola's axis of symmetry?"
+        choices, answer = _mc_choices(rng, f"x={h}", distractors)
+        kind = "MULTIPLE_CHOICE"
+    else:  # write_equation — integer a only
+        correct_text = _vertex_form_text(num, h, k)
+        distractors = [
+            (_vertex_form_text(-num, h, k), "QUAD_002"),
+            (_vertex_form_text(num, -h, k), "QUAD_001"),
+        ]
+        if h != k:
+            distractors.append((_vertex_form_text(num, k, h), "QUAD_003"))
+        prompt = "Which equation describes the parabola shown?"
+        choices, answer = _mc_choices(rng, correct_text, distractors)
+        kind = "MULTIPLE_CHOICE"
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "QUADRATIC_FUNCTION",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_integer_sum(rng: random.Random, difficulty: int) -> GeneratedProblem:
     if difficulty <= 2:
         a, b = rng.randint(1, 20), rng.randint(1, 20)
@@ -1545,6 +1657,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "SOLVE_EQUATION": _generate_solve_equation,
     "LINEAR_FUNCTION": _generate_linear_function,
     "LINEAR_GRAPH": _generate_linear_graph,
+    "QUADRATIC_FUNCTION": _generate_quadratic_function,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -1844,7 +1957,7 @@ def _possible_families(problem_type: str) -> set[str]:
 # Graph-read tiers share a constant prompt per tier ("What is the slope of the
 # line shown?") — the rendered parameters, not the text, distinguish them. The
 # prompt-dedupe check would otherwise starve these families entirely.
-PROMPT_SHARED_TYPES = {"LINEAR_GRAPH", "COORDINATE_PLANE"}
+PROMPT_SHARED_TYPES = {"LINEAR_GRAPH", "COORDINATE_PLANE", "QUADRATIC_FUNCTION"}
 
 
 def generate_problem(

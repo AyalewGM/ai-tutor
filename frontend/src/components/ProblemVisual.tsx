@@ -37,6 +37,10 @@ export interface VisualSpec {
   m_den?: number;
   labeled?: boolean;
   mark_lattice?: boolean;
+  a_num?: number;
+  a_den?: number;
+  h?: number;
+  k?: number;
 }
 
 interface PanSpec {
@@ -236,6 +240,67 @@ function LinearGraph({ spec }: { spec: VisualSpec }) {
       )}
       {lattice.map(([x, y]) => (
         <circle key={`${x},${y}`} cx={pos(x)} cy={yPos(y)} r="4.5" className="viz-point viz-point-a" />
+      ))}
+    </svg>
+  );
+}
+
+function ParabolaGraph({ spec }: { spec: VisualSpec }) {
+  const min = spec.min ?? -10;
+  const max = spec.max ?? 10;
+  const a = (spec.a_num ?? 1) / (spec.a_den ?? 1);
+  const h = spec.h ?? 0;
+  const k = spec.k ?? 0;
+  const size = 340;
+  const pad = 30;
+  const scale = (size - 2 * pad) / (max - min);
+  const pos = (v: number) => pad + (v - min) * scale;
+  const yPos = (v: number) => size - pos(v);
+  const ticks = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+  // Sample the curve; split the path wherever it leaves the window.
+  const f = (x: number) => a * (x - h) * (x - h) + k;
+  const step = (max - min) / 240;
+  const segments: [number, number][][] = [];
+  let segment: [number, number][] = [];
+  for (let x = min; x <= max + 1e-9; x += step) {
+    const y = f(x);
+    if (y >= min - 0.5 && y <= max + 0.5) {
+      segment.push([x, y]);
+    } else if (segment.length) {
+      segments.push(segment);
+      segment = [];
+    }
+  }
+  if (segment.length) segments.push(segment);
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} className="visual" role="img" aria-label={spec.aria_label ?? "A parabola graphed on a coordinate plane"}>
+      {ticks.map((t) => (
+        <g key={`g${t}`}>
+          <line x1={pad} y1={yPos(t)} x2={size - pad} y2={yPos(t)} className="viz-grid" />
+          <line x1={pos(t)} y1={pad} x2={pos(t)} y2={size - pad} className="viz-grid" />
+        </g>
+      ))}
+      <line x1={pad} y1={yPos(0)} x2={size - pad} y2={yPos(0)} className="viz-axis" />
+      <line x1={pos(0)} y1={pad} x2={pos(0)} y2={size - pad} className="viz-axis" />
+      {ticks.filter((t) => t % 2 === 0).map((t) => (
+        <g key={t}>
+          <line x1={pos(t)} y1={yPos(0) - 3} x2={pos(t)} y2={yPos(0) + 3} className="viz-tick" />
+          <line x1={pos(0) - 3} y1={yPos(t)} x2={pos(0) + 3} y2={yPos(t)} className="viz-tick" />
+          {t !== 0 && (
+            <>
+              <text x={pos(t)} y={yPos(0) + 15} textAnchor="middle" className="viz-tick-label">{t}</text>
+              <text x={pos(0) - 8} y={yPos(t) + 4} textAnchor="end" className="viz-tick-label">{t}</text>
+            </>
+          )}
+        </g>
+      ))}
+      {segments.map((points, i) => (
+        <polyline
+          key={i}
+          points={points.map(([x, y]) => `${pos(x)},${yPos(y)}`).join(" ")}
+          fill="none"
+          className="viz-curve"
+        />
       ))}
     </svg>
   );
@@ -524,6 +589,7 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "fraction_bar" || spec.type === "ratio_bar") return <FractionBar spec={spec} />;
   if (spec.type === "coordinate_plane" || spec.type === "coordinate_point") return <CoordinatePlane spec={spec} />;
   if (spec.type === "linear_graph") return <LinearGraph spec={spec} />;
+  if (spec.type === "parabola_graph") return <ParabolaGraph spec={spec} />;
   if (spec.type === "angle" || spec.type === "angle_diagram") return <AngleDiagram spec={spec} />;
   if (spec.type === "decimal_place_value") return <DecimalPlaceValue spec={spec} />;
   if (spec.type === "volume_model" || spec.type === "volume") return <VolumeModel spec={spec} />;

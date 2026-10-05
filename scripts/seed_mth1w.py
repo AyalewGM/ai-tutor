@@ -50,6 +50,7 @@ def _problem(
     *,
     answer_kind="FREE_TEXT",
     parameters=None,
+    choices=None,
 ):
     existing = db.scalar(
         select(Problem).where(
@@ -76,6 +77,7 @@ def _problem(
                 prompt=prompt,
                 canonical_answer=answer,
                 answer_kind=answer_kind,
+                choices=choices,
                 solution=solution,
                 source_type="CURATED",
             )
@@ -154,6 +156,7 @@ def _expectation_pack() -> ContentPackInput:
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.REL"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.REL.SLOPE"),
         ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.REL.EVAL"),
+        ExpectationSkillMappingInput("MTH1W.C", "MTH1W.C.QUAD"),
         ExpectationSkillMappingInput("MTH1W.F", "MTH1W.F.FIN"),
         ExpectationSkillMappingInput("MTH1W.F", "MTH1W.F.FIN.PCT"),
         ExpectationSkillMappingInput("MTH1W.F", "MTH1W.F.FIN.APP"),
@@ -301,6 +304,14 @@ def seed():
             "Evaluate a linear relation for a given input value.",
             3,
         )
+        quad = _skill(
+            db,
+            curriculum,
+            "MTH1W.C.QUAD",
+            "Quadratic Relations",
+            "Interpret quadratic relations using equations and graphs, including vertex, direction of opening, and intercepts.",
+            4,
+        )
         fin_pct = _skill(
             db,
             curriculum,
@@ -330,6 +341,7 @@ def seed():
         _prerequisite(db, rel_slope, relations)
         _prerequisite(db, rel_slope, alg_eq3)
         _prerequisite(db, rel_eval, rel_slope)
+        _prerequisite(db, quad, rel_eval)
         _prerequisite(db, fin_pct, financial)
         _prerequisite(db, fin_pct, num_frac)
         _prerequisite(db, fin_app, fin_pct)
@@ -634,6 +646,34 @@ def seed():
             "Substitute the input into mx as multiplication: m times x, then add b.",
         )
         _misconception(
+            quad,
+            "QUAD_001",
+            "Vertex x-coordinate sign error",
+            "The learner reports or writes the vertex's x-coordinate with the "
+            "opposite sign, treating y = a(x - h)^2 + k as if the shift were h "
+            "rather than -h inside the parentheses.",
+            "In y = a(x - h)^2 + k the vertex is (h, k): the minus inside the "
+            "parentheses means h itself is the x-shift.",
+        )
+        _misconception(
+            quad,
+            "QUAD_002",
+            "Opening direction misread",
+            "The learner reads an upward-opening parabola as downward or vice "
+            "versa, usually by misreading the sign of the leading coefficient.",
+            "Check the sign of a: positive opens upward, negative opens "
+            "downward — or look at whether the arms rise or fall.",
+        )
+        _misconception(
+            quad,
+            "QUAD_003",
+            "Vertex coordinates swapped",
+            "The learner interchanges the vertex's x- and y-coordinates, "
+            "writing (k, h) instead of (h, k) or x = k for the axis.",
+            "The axis of symmetry runs through the vertex's x-coordinate: "
+            "x = h, and the vertex sits at (h, k).",
+        )
+        _misconception(
             fin_app,
             "FIN_002",
             "Discount amount returned instead of final price",
@@ -754,28 +794,46 @@ def seed():
         graph_problems = [
             (
                 rel_slope, 2, "What is the slope of the line shown?", "3",
-                "FRACTION", {"tier": "read_slope", "m_num": 3, "m_den": 1, "b": 1},
+                "LINEAR_GRAPH", "FRACTION",
+                {"tier": "read_slope", "m_num": 3, "m_den": 1, "b": 1}, None,
             ),
             (
                 rel_slope, 3, "What is the y-intercept of the line shown?", "4",
-                "INTEGER",
-                {"tier": "read_intercept", "m_num": -1, "m_den": 2, "b": 4},
+                "LINEAR_GRAPH", "INTEGER",
+                {"tier": "read_intercept", "m_num": -1, "m_den": 2, "b": 4}, None,
             ),
             (
                 rel_eval, 3, "According to the graph, what is y when x = -2?", "7",
-                "INTEGER",
-                {"tier": "read_value", "m_num": -2, "m_den": 1, "b": 3, "x": -2},
+                "LINEAR_GRAPH", "INTEGER",
+                {"tier": "read_value", "m_num": -2, "m_den": 1, "b": 3, "x": -2}, None,
             ),
             (
                 relations, 3, "What is the slope of the line shown?", "1/2",
-                "FRACTION",
-                {"tier": "read_slope", "m_num": 1, "m_den": 2, "b": -1},
+                "LINEAR_GRAPH", "FRACTION",
+                {"tier": "read_slope", "m_num": 1, "m_den": 2, "b": -1}, None,
+            ),
+            (
+                quad, 3,
+                "What are the coordinates of the vertex of the parabola shown?",
+                "(-1, 2)", "QUADRATIC_FUNCTION", "FREE_TEXT",
+                {"tier": "vertex", "a_num": -1, "a_den": 1, "h": -1, "k": 2}, None,
+            ),
+            (
+                quad, 3, "How many times does the parabola cross the x-axis?", "b",
+                "QUADRATIC_FUNCTION", "MULTIPLE_CHOICE",
+                {"tier": "count_roots", "a_num": 1, "a_den": 1, "h": 0, "k": -4},
+                [
+                    {"id": "a", "text": "0"},
+                    {"id": "b", "text": "2"},
+                    {"id": "c", "text": "1"},
+                    {"id": "d", "text": "3"},
+                ],
             ),
         ]
-        for skill, difficulty, prompt, answer, answer_kind, parameters in graph_problems:
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in graph_problems:
             _problem(
-                db, skill, difficulty, prompt, answer, "LINEAR_GRAPH",
-                answer_kind=answer_kind, parameters=parameters,
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
             )
 
         persist_expectation_pack(db, _expectation_pack())
