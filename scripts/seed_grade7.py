@@ -242,8 +242,17 @@ def seed() -> None:
             "outcomes, and combine events for two spins or 'or' outcomes.",
             3,
         )
+        prop_graph = _skill(
+            db, curriculum, "M7.RP.GRAPH",
+            "Representing Proportional Relationships",
+            "Recognise proportional relationships in tables and graphs, "
+            "find the constant of proportionality, write y = kx "
+            "equations, and interpret the point (1, r) as the unit rate.",
+            2,
+        )
 
         _prerequisite(db, prop_rate, proportional)
+        _prerequisite(db, prop_graph, prop_rate)
         _prerequisite(db, pct_of, percent)
         _prerequisite(db, expr_dist, expressions)
         _prerequisite(db, expr_combine, expr_dist)
@@ -529,6 +538,43 @@ def seed() -> None:
             "below half is unlikely, exactly half is equally likely, "
             "above half is likely, and all is certain.",
         )
+        _misconception(
+            prop_graph,
+            "PROP_001",
+            "Constant rate confused with proportionality",
+            "The learner calls a table proportional because its rate of "
+            "change is constant, missing that y ÷ x must also be equal — "
+            "the graph must pass through the origin.",
+            "Proportional means both: a constant rate and the point "
+            "(0, 0). Check that y ÷ x is the same for every pair.",
+        )
+        _misconception(
+            prop_graph,
+            "PROP_002",
+            "Constant of proportionality inverted",
+            "The learner computes x ÷ y instead of y ÷ x, writing "
+            "y = (1/2)x for a table where k = 2.",
+            "k is y ÷ x: for every unit of x, y changes by k. Divide "
+            "the output by the input, never the reverse.",
+        )
+        _misconception(
+            prop_graph,
+            "PROP_003",
+            "Proportional relationship written additively",
+            "The learner writes y = x + k or finds k by subtracting "
+            "the pair values instead of dividing.",
+            "A proportional relationship is multiplicative: y = kx. "
+            "Check the equation by substituting a table pair.",
+        )
+        _misconception(
+            prop_graph,
+            "PROP_004",
+            "The (1, r) point misread",
+            "The learner calls (1, r) the y-intercept or an x-axis "
+            "crossing instead of the unit rate.",
+            "On a proportional graph the y-intercept is always 0; "
+            "(1, r) is the point at x = 1, so r is the unit rate.",
+        )
 
         problems = [
             (
@@ -717,6 +763,55 @@ def seed() -> None:
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in prob_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        # Proportional-relationship items — tables, k, y = kx, (1, r).
+        prop_graph_problems = [
+            (
+                prop_graph, 1,
+                "A batch uses 3 cups of flour for 12 muffins. How many cups of flour are needed for 36 muffins?",
+                "9", "PROPORTIONAL_GRAPH", "INTEGER",
+                {"tier": "solve_proportion", "a": 3, "b": 12, "scale": 3,
+                 "a_label": "cups of flour", "b_label": "muffins"},
+                None,
+            ),
+            (
+                prop_graph, 2,
+                "A relationship has the values (1, 5), (2, 7), (3, 9). Is the relationship proportional?",
+                "c", "PROPORTIONAL_GRAPH", "MULTIPLE_CHOICE",
+                {"tier": "identify_table", "pairs": [[1, 5], [2, 7], [3, 9]]},
+                [
+                    {"id": "a", "text": "Yes — the rate of change is constant", "misconception_code": "PROP_001"},
+                    {"id": "b", "text": "Yes — every y is larger than its x"},
+                    {"id": "c", "text": "No — y ÷ x is not the same for every pair"},
+                    {"id": "d", "text": "Cannot be determined without a graph"},
+                ],
+            ),
+            (
+                prop_graph, 2,
+                "The table shows a proportional relationship with the values (2, 6), (4, 12), (6, 18). What is the constant of proportionality?",
+                "3", "PROPORTIONAL_GRAPH", "FRACTION",
+                {"tier": "find_k", "k": "3", "pairs": [[2, 6], [4, 12], [6, 18]]},
+                None,
+            ),
+            (
+                prop_graph, 3,
+                "The table shows a proportional relationship with the values (2, 3), (4, 6), (6, 9). Which equation represents it?",
+                "b", "PROPORTIONAL_GRAPH", "MULTIPLE_CHOICE",
+                {"tier": "write_equation", "k": "3/2",
+                 "pairs": [[2, 3], [4, 6], [6, 9]]},
+                [
+                    {"id": "a", "text": "y = x + 3/2", "misconception_code": "PROP_003"},
+                    {"id": "b", "text": "y = (3/2)x"},
+                    {"id": "c", "text": "y = (2/3)x", "misconception_code": "PROP_002"},
+                    {"id": "d", "text": "y = x + 1", "misconception_code": "PROP_003"},
+                ],
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in prop_graph_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters, choices=choices,

@@ -2962,6 +2962,152 @@ def _generate_functions(rng: random.Random, difficulty: int) -> GeneratedProblem
     )
 
 
+# Constants of proportionality — mix of whole numbers and halves so k
+# is not always an integer.
+_PROP_K = [
+    1, 2, 3, 4, 6,
+    Fraction(1, 2), Fraction(3, 2), Fraction(5, 2), Fraction(7, 2),
+    Fraction(2, 3), Fraction(4, 3), Fraction(5, 3),
+]
+
+_PROP_CONTEXTS = [
+    ("cups of flour", "muffins"),
+    ("litres of paint", "square metres of wall"),
+    ("scoops of drink mix", "servings"),
+    ("tablespoons of sugar", "cookies"),
+]
+
+
+def _prop_pairs(rng: random.Random, k: Fraction | int) -> list[list[int]]:
+    """Three (x, y) pairs on y = kx with integral y values."""
+    den = k.denominator if isinstance(k, Fraction) else 1
+    xs = sorted(rng.sample([den * i for i in range(1, 7)], 3))
+    return [[x, int(k * x)] for x in xs]
+
+
+def _prop_shifted_pairs(rng: random.Random) -> list[list[int]]:
+    """Collinear (x, y) pairs on y = mx + b with b ≠ 0 — the constant-
+    rate trap that is not proportional."""
+    m, b = rng.choice([1, 2, 3]), rng.randint(1, 6)
+    x0 = rng.randint(1, 4)
+    return [[x0 + i, m * (x0 + i) + b] for i in range(3)]
+
+
+def _generate_proportional_graph(
+    rng: random.Random, difficulty: int
+) -> GeneratedProblem:
+    """Proportional-relationship items (7.RP.2): is a table
+    proportional, scale a recipe-style context, find k from a table or
+    a drawn line through the origin, write y = kx, or interpret the
+    (1, r) point.
+
+    Table tiers render `xy_table`; `graph_k` reuses the linear-graph
+    spec with b = 0. solve_proportion and unit_point are text-only."""
+    tiers = ["identify_table", "solve_proportion"]
+    if difficulty >= 2:
+        tiers += ["find_k", "graph_k"]
+    if difficulty >= 3:
+        tiers += ["write_equation", "unit_point"]
+    tier = rng.choice(tiers)
+    choices = None
+    params: dict = {"tier": tier}
+    kind = "MULTIPLE_CHOICE"
+
+    if tier == "identify_table":
+        proportional = rng.random() < 0.5
+        if proportional:
+            pairs = _prop_pairs(rng, rng.choice(_PROP_K))
+            correct = "Yes — y ÷ x is the same for every pair"
+            pool = [
+                ("No — the rate of change is not constant", "PROP_001"),
+                ("No — the pairs do not all have the same y value", "PROP_001"),
+                ("Cannot be determined without a graph", None),
+            ]
+        else:
+            pairs = _prop_shifted_pairs(rng)
+            correct = "No — y ÷ x is not the same for every pair"
+            pool = [
+                ("Yes — the rate of change is constant", "PROP_001"),
+                ("Yes — every y is larger than its x", None),
+                ("Cannot be determined without a graph", None),
+            ]
+        params["pairs"] = pairs
+        prompt = ("A relationship has the values "
+                  + ", ".join(f"({x}, {y})" for x, y in pairs)
+                  + ". Is the relationship proportional?")
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "solve_proportion":
+        a_label, b_label = rng.choice(_PROP_CONTEXTS)
+        rate = rng.choice([3, 4, 5, 6, 8])
+        a = rng.randint(2, 5)
+        b = a * rate
+        m = rng.randint(2, 4)
+        params.update(a=a, b=b, scale=m, a_label=a_label, b_label=b_label)
+        prompt = (f"A batch uses {a} {a_label} for {b} {b_label}. "
+                  f"How many {a_label} are needed for {b * m} {b_label}?")
+        answer = str(a * m)
+        kind = "INTEGER"
+    elif tier == "find_k":
+        k = rng.choice(_PROP_K)
+        pairs = _prop_pairs(rng, k)
+        params.update(k=str(k), pairs=pairs)
+        prompt = ("The table shows a proportional relationship with the "
+                  "values " + ", ".join(f"({x}, {y})" for x, y in pairs)
+                  + ". What is the constant of proportionality?")
+        answer = str(k)
+        kind = "FRACTION"
+    elif tier == "graph_k":
+        k = rng.choice(_PROP_K)
+        k = k if isinstance(k, Fraction) else Fraction(k)
+        params.update(m_num=k.numerator, m_den=k.denominator, b=0)
+        prompt = ("The graph shows a proportional relationship. "
+                  "What is the constant of proportionality?")
+        answer = str(k)
+        kind = "FRACTION"
+    elif tier == "write_equation":
+        k = rng.choice(_PROP_K)
+        pairs = _prop_pairs(rng, k)
+        params.update(k=str(k), pairs=pairs)
+        prompt = ("The table shows a proportional relationship with the "
+                  "values " + ", ".join(f"({x}, {y})" for x, y in pairs)
+                  + ". Which equation represents it?")
+        k_text = f"({k})" if isinstance(k, Fraction) else str(k)
+        inv_text = f"({Fraction(1, 1) / Fraction(k)})"
+        correct = f"y = {k_text}x" if isinstance(k, Fraction) else f"y = {k}x"
+        pool = [
+            (f"y = x + {k}", "PROP_003"),
+            (f"y = {inv_text}x" if Fraction(1, 1) / Fraction(k) != 1
+             else "y = x + 1", "PROP_002"),
+            (f"y = {int(k * 2) if k == int(k) else k * 2}x", None),
+            (f"y = {k}x + {pairs[0][0]}", None),
+        ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    else:  # unit_point — interpret the (1, r) point, 7.RP.2d
+        r = rng.choice([2, 3, 4, 5, 6])
+        x_label, y_label = rng.choice([
+            ("hour worked", "dollars earned"),
+            ("mile driven", "gallons used"),
+            ("item bought", "dollars spent"),
+            ("minute walked", "blocks covered"),
+        ])
+        params.update(r=r, x_label=x_label, y_label=y_label)
+        prompt = (f"The graph shows the proportional relationship between "
+                  f"{x_label}s (x) and {y_label} (y), passing through the "
+                  f"point (1, {r}). What does this point represent?")
+        correct = f"The unit rate — {r} {y_label} per {x_label}"
+        pool = [
+            ("The y-intercept of the graph", "PROP_004"),
+            ("The point where the graph crosses the x-axis", "PROP_004"),
+            (f"The value of x when y is {r}", "PROP_004"),
+        ]
+        choices, answer = _mc_choices(rng, correct, pool)
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "PROPORTIONAL_GRAPH",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -3615,6 +3761,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "PYTHAGOREAN": _generate_pythagorean,
     "RADICALS": _generate_radicals,
     "FUNCTIONS": _generate_functions,
+    "PROPORTIONAL_GRAPH": _generate_proportional_graph,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -3939,6 +4086,7 @@ PROMPT_SHARED_TYPES = {
     "PYTHAGOREAN",
     "RADICALS",
     "FUNCTIONS",
+    "PROPORTIONAL_GRAPH",
 }
 
 
