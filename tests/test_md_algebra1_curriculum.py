@@ -38,7 +38,7 @@ def test_md_algebra1_seed_upgrades_pilot_idempotently_with_isolation():
         assert all(edge.prerequisite_skill_id in skill_ids for edge in edges)
 
         problems = list(db.scalars(select(Problem).where(Problem.primary_skill_id.in_(skill_ids))))
-        assert len(problems) == 21
+        assert len(problems) == 25
         assert all(problem.solution["provenance"]["origin"] == "AUTHORED" for problem in problems)
         assert all(problem.solution["provenance"]["author"] == "AI Tutor curriculum team" for problem in problems)
         assert all(problem.solution["provenance"]["standards_source"] == MSDE_SOURCE for problem in problems)
