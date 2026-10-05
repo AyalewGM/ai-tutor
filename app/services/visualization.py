@@ -288,6 +288,31 @@ def _geometry_2d_model(problem: Problem) -> dict | None:
     return None
 
 
+def _transformation_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    preimage = params.get("preimage")
+    if (
+        not isinstance(preimage, list)
+        or not preimage
+        or not all(isinstance(p, list) and len(p) == 2 for p in preimage)
+    ):
+        return None
+    model: dict = {
+        "type": "transformation",
+        "preimage": preimage,
+        "aria_label": "A coordinate plane showing a figure to transform.",
+    }
+    image = params.get("image")
+    if isinstance(image, list) and image:
+        model["image"] = image
+        model["aria_label"] = "A coordinate plane showing a triangle and its image."
+    if isinstance(params.get("labels"), list):
+        model["labels"] = params["labels"]
+    if isinstance(params.get("image_labels"), list):
+        model["image_labels"] = params["image_labels"]
+    return model
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1101,4 +1126,6 @@ def visualization_for(problem: Problem) -> dict | None:
         return _solid_model(problem)
     if problem.problem_type == "GEOMETRY_2D":
         return _geometry_2d_model(problem)
+    if problem.problem_type == "TRANSFORMATION":
+        return _transformation_model(problem)
     return None

@@ -427,6 +427,51 @@ def _geo_angle_relationship_errors(prompt: str, answer: str, canonical: str) -> 
     return None
 
 
+_TRANSLATE_VECTORS = re.compile(r"(\d+)units(right|left)and(\d+)units(up|down)")
+_SCALE_FACTOR = re.compile(r"scalefactorof(\d+)")
+
+
+def _pair_ints(match: re.Match) -> tuple[int, int]:
+    return int(float(match.group(1))), int(float(match.group(2)))
+
+
+def _transformation_errors(prompt: str, answer: str, canonical: str) -> MisconceptionMatch | None:
+    """Ordered-pair errors under transformations: wrong-coordinate
+    reflection, wrong-direction or swapped-coordinate rotation, sign-flipped
+    translation, and partially-applied dilation."""
+    student = _ORDERED_PAIR.match(answer)
+    correct = _ORDERED_PAIR.match(canonical)
+    if not student or not correct:
+        return None
+    sx, sy = _pair_ints(student)
+    cx, cy = _pair_ints(correct)
+    if "reflect" in prompt and (sx, sy) == (-cx, -cy):
+        # Answered the preimage — negated the coordinate the axis keeps.
+        return MisconceptionMatch("TR_002", 0.95)
+    if "rotate" in prompt and (sx, sy) in {
+        (-cx, -cy), (cx, -cy), (-cx, cy), (cy, -cx), (-cy, cx)
+    }:
+        return MisconceptionMatch("TR_001", 0.95)
+    if "translate" in prompt:
+        vector = _TRANSLATE_VECTORS.search(prompt)
+        if vector:
+            dx = int(vector.group(1)) * (1 if vector.group(2) == "right" else -1)
+            dy = int(vector.group(3)) * (1 if vector.group(4) == "up" else -1)
+            if (sx, sy) in {
+                (cx - 2 * dx, cy), (cx, cy - 2 * dy), (cx - 2 * dx, cy - 2 * dy)
+            }:
+                return MisconceptionMatch("TR_003", 0.95)
+    if "dilate" in prompt:
+        factor = _SCALE_FACTOR.search(prompt)
+        if factor:
+            k = int(factor.group(1))
+            if k and cx % k == 0 and cy % k == 0:
+                px, py = cx // k, cy // k
+                if (sx, sy) in {(cx, py), (px, cy), (px + k, py + k)}:
+                    return MisconceptionMatch("TR_005", 0.95)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -450,6 +495,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _graph_vertex_errors,
     _solid_pyramid_forgot_third,
     _geo_angle_relationship_errors,
+    _transformation_errors,
 )
 
 

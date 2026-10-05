@@ -50,6 +50,10 @@ export interface VisualSpec {
   r?: number;
   kind?: string;
   mark?: string;
+  preimage?: number[][];
+  image?: number[][];
+  labels?: string[];
+  image_labels?: string[];
 }
 
 interface PanSpec {
@@ -523,6 +527,53 @@ function CompositeFigure({ spec }: { spec: VisualSpec }) {
   );
 }
 
+function TransformPlane({ spec }: { spec: VisualSpec }) {
+  const bound = 8;
+  const size = 320;
+  const pad = 26;
+  const scale = (size - 2 * pad) / (2 * bound);
+  const pos = (v: number) => pad + (v + bound) * scale;
+  const yPos = (v: number) => size - pos(v);
+  const ticks = Array.from({ length: 2 * bound + 1 }, (_, i) => i - bound);
+  const path = (points: number[][]) =>
+    points.map((p, i) => `${i === 0 ? "M" : "L"} ${pos(p[0])} ${yPos(p[1])}`).join(" ") + " Z";
+  const vertex = (p: number[], key: string, cls: string, label?: string) => (
+    <g key={key}>
+      <circle cx={pos(p[0])} cy={yPos(p[1])} r="5" className={cls} />
+      {label && (
+        <text x={pos(p[0]) + 8} y={yPos(p[1]) - 6} className="viz-label">{label}</text>
+      )}
+    </g>
+  );
+  const preimage = spec.preimage ?? [];
+  const image = spec.image ?? [];
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} className="visual" role="img" aria-label={spec.aria_label}>
+      {ticks.map((t) => (
+        <g key={`g${t}`}>
+          <line x1={pad} y1={yPos(t)} x2={size - pad} y2={yPos(t)} className="viz-grid" />
+          <line x1={pos(t)} y1={pad} x2={pos(t)} y2={size - pad} className="viz-grid" />
+        </g>
+      ))}
+      <line x1={pad} y1={yPos(0)} x2={size - pad} y2={yPos(0)} className="viz-axis" />
+      <line x1={pos(0)} y1={pad} x2={pos(0)} y2={size - pad} className="viz-axis" />
+      {ticks.filter((t) => t !== 0 && t % 2 === 0).map((t) => (
+        <g key={t}>
+          <text x={pos(t)} y={yPos(0) + 14} textAnchor="middle" className="viz-tick-label">{t}</text>
+          <text x={pos(0) - 7} y={yPos(t) + 4} textAnchor="end" className="viz-tick-label">{t}</text>
+        </g>
+      ))}
+      {preimage.length >= 3 && <path d={path(preimage)} className="viz-cell viz-cell-a" />}
+      {preimage.length === 1 && vertex(preimage[0], "pre", "viz-point viz-point-a", spec.labels?.[0])}
+      {preimage.length >= 3 &&
+        preimage.map((p, i) => vertex(p, `p${i}`, "viz-point viz-point-a", spec.labels?.[i]))}
+      {image.length >= 3 && <path d={path(image)} className="viz-hidden" />}
+      {image.length >= 3 &&
+        image.map((p, i) => vertex(p, `i${i}`, "viz-point", spec.image_labels?.[i]))}
+    </svg>
+  );
+}
+
 function NumberLine({ spec, compare = false }: { spec: VisualSpec; compare?: boolean }) {
   const min = spec.min ?? 0;
   const max = spec.max ?? 10;
@@ -837,5 +888,6 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "triangle_angles") return <TriangleAngles spec={spec} />;
   if (spec.type === "circle_measure") return <CircleMeasure spec={spec} />;
   if (spec.type === "composite_figure") return <CompositeFigure spec={spec} />;
+  if (spec.type === "transformation") return <TransformPlane spec={spec} />;
   return null;
 }
