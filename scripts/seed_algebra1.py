@@ -94,6 +94,7 @@ def seed_content(db, curriculum: Curriculum) -> None:
         quad_functions = _skill(db, curriculum, "A1.QUAD.FN", "Quadratic Functions", "Interpret and reason about quadratic relationships using equations and graphs.", 4)
         poly_functions = _skill(db, curriculum, "A1.POLY.FN", "Polynomial Functions", "Interpret polynomial functions: degree, zeros, end behavior, and graphs of factored forms.", 5)
         systems = _skill(db, curriculum, "A1.SYS.EQ", "Systems of Linear Equations", "Solve pairs of linear equations graphically and algebraically, and reason about the number of solutions.", 4)
+        exp_functions = _skill(db, curriculum, "A1.EXP.FN", "Exponential Functions", "Interpret exponential functions f(x) = a·b^x: evaluate them, distinguish growth from decay, read initial values and growth factors, and match equations to graphs.", 4)
 
         _prerequisite(db, expr_dist, expressions)
         _prerequisite(db, expr_combine, expr_dist)
@@ -104,6 +105,7 @@ def seed_content(db, curriculum: Curriculum) -> None:
         _prerequisite(db, quad_functions, linear_functions)
         _prerequisite(db, poly_functions, quad_functions)
         _prerequisite(db, systems, fn_slope)
+        _prerequisite(db, exp_functions, linear_functions)
 
         def _misconception(skill, code, name, description, strategy):
             if db.scalar(
@@ -369,6 +371,47 @@ def seed_content(db, curriculum: Curriculum) -> None:
             "no solution. Identical lines share every point — infinitely "
             "many solutions.",
         )
+        _misconception(
+            exp_functions,
+            "EXP_001",
+            "Growth and decay confused",
+            "The learner calls a decay curve growth, or reports the "
+            "reciprocal of the growth factor for a decaying function.",
+            "Look at the factor b: above 1 the function grows, between 0 "
+            "and 1 it decays. A decaying curve falls toward the x-axis "
+            "as x increases.",
+        )
+        _misconception(
+            exp_functions,
+            "EXP_002",
+            "Exponential treated as linear",
+            "The learner adds a fixed amount instead of multiplying by the "
+            "factor — extending 2, 6, 18, 54 by adding 36, or choosing "
+            "f(x) = ax + b for a curved graph.",
+            "Each term of an exponential pattern is the previous term "
+            "times the same factor. Check the ratio between consecutive "
+            "terms, not the difference.",
+        )
+        _misconception(
+            exp_functions,
+            "EXP_003",
+            "Initial value and growth factor swapped",
+            "The learner multiplies a and b before exponentiating — "
+            "computing (a·b)^x instead of a·b^x — or reports one when "
+            "asked for the other.",
+            "In a·b^x only b is raised to x: evaluate b^x first, then "
+            "multiply by a. The a value is what the function equals at "
+            "x = 0.",
+        )
+        _misconception(
+            exp_functions,
+            "EXP_004",
+            "Exponent not applied",
+            "The learner multiplies b by x — answering a + bx or a·b·x — "
+            "instead of raising b to the x power.",
+            "The exponent repeats the multiplication: b^x means b "
+            "multiplied by itself x times, not b times x.",
+        )
 
         problems = [
             (expressions, 1, "Simplify 4(x + 3).", "4x+12", "SIMPLIFY_EXPRESSION"),
@@ -508,6 +551,46 @@ def seed_content(db, curriculum: Curriculum) -> None:
                 "(3, 2)", "SYSTEM_OF_EQUATIONS", "FREE_TEXT",
                 {"tier": "solve", "a1": 1, "b1": 2, "c1": 7, "a2": 3, "b2": 1, "c2": 11},
                 None,
+            ),
+            (
+                exp_functions, 1,
+                "For f(x) = 2·3^x, what is f(2)?",
+                "18", "EXPONENTIAL_FUNCTION", "INTEGER",
+                {"tier": "evaluate", "a": 2, "b_num": 3, "b_den": 1, "x": 2},
+                None,
+            ),
+            (
+                exp_functions, 1,
+                "An exponential pattern continues: 3, 6, 12, 24. What is the next term?",
+                "48", "EXPONENTIAL_FUNCTION", "INTEGER",
+                {"tier": "next_value", "a": 3, "b_num": 2, "b_den": 1,
+                 "terms": [3, 6, 12, 24]},
+                None,
+            ),
+            (
+                exp_functions, 2,
+                "Does the graph show exponential growth or exponential decay?",
+                "b", "EXPONENTIAL_FUNCTION", "MULTIPLE_CHOICE",
+                {"tier": "growth_or_decay", "a": 4, "b_num": 1, "b_den": 2},
+                [
+                    {"id": "a", "text": "exponential growth", "misconception_code": "EXP_001"},
+                    {"id": "b", "text": "exponential decay"},
+                    {"id": "c", "text": "linear growth", "misconception_code": "EXP_002"},
+                    {"id": "d", "text": "linear decay", "misconception_code": "EXP_002"},
+                ],
+            ),
+            (
+                exp_functions, 3,
+                "Which function matches the graph shown?",
+                "c", "EXPONENTIAL_FUNCTION", "MULTIPLE_CHOICE",
+                {"tier": "write_equation", "a": 1, "b_num": 2, "b_den": 1,
+                 "mark_points": [[0, 1], [1, 2], [2, 4], [3, 8], [4, 16]]},
+                [
+                    {"id": "a", "text": "f(x) = 2·1^x", "misconception_code": "EXP_003"},
+                    {"id": "b", "text": "f(x) = 1·(1/2)^x", "misconception_code": "EXP_001"},
+                    {"id": "c", "text": "f(x) = 1·2^x"},
+                    {"id": "d", "text": "f(x) = 1x + 2", "misconception_code": "EXP_002"},
+                ],
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in graph_problems:

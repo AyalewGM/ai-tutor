@@ -474,6 +474,34 @@ def _polynomial_graph_model(problem: Problem) -> dict | None:
     }
 
 
+def _exponential_graph_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    if params.get("tier") in {"evaluate", "next_value"}:
+        return None
+    a = _int(params.get("a"))
+    b_num = _int(params.get("b_num"))
+    b_den = _int(params.get("b_den"))
+    if a is None or b_num is None or b_den is None or b_den == 0:
+        return None
+    model: dict = {
+        "type": "exponential_graph",
+        "a": a,
+        "b_num": b_num,
+        "b_den": b_den,
+        "x_min": -6,
+        "x_max": 6,
+        "y_min": -1,
+        "y_max": 16,
+        "aria_label": "An exponential curve graphed on a coordinate plane.",
+    }
+    # Marked lattice points scaffold the growth_factor and write_equation
+    # reads; the classify/intercept tiers leave the curve unmarked.
+    mark = params.get("mark_points")
+    if isinstance(mark, list) and mark:
+        model["mark_points"] = mark
+    return model
+
+
 def _volume_model(problem: Problem) -> dict | None:
     params = _params(problem)
     l = _int(params.get("length"))
@@ -1208,4 +1236,6 @@ def visualization_for(problem: Problem) -> dict | None:
         return _system_model(problem)
     if problem.problem_type == "STATISTICS":
         return _scatterplot_model(problem)
+    if problem.problem_type == "EXPONENTIAL_FUNCTION":
+        return _exponential_graph_model(problem)
     return None
