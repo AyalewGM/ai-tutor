@@ -74,27 +74,7 @@ def _problem(
         existing.solution = {**(existing.solution or {}), "provenance": provenance}
 
 
-def seed() -> None:
-    db = SessionLocal()
-    try:
-        authority = db.scalar(select(EducationAuthority).where(EducationAuthority.code == "MCPS"))
-        if authority is None:
-            raise RuntimeError("MCPS education authority must be seeded before Algebra I content")
-
-        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == CURRICULUM_CODE))
-        if curriculum is None:
-            curriculum = Curriculum(
-                code=CURRICULUM_CODE,
-                name="MCPS Algebra 1 — SY 2026-27 Pilot",
-                jurisdiction="Montgomery County, Maryland",
-                grade_level="Algebra 1",
-                authority_id=authority.id,
-                version="SY2026-27",
-                source_uri="https://www.montgomeryschoolsmd.org/curriculum/math/",
-            )
-            db.add(curriculum)
-            db.flush()
-
+def seed_content(db, curriculum: Curriculum) -> None:
         expressions = _skill(db, curriculum, "A1.EXPR", "Algebraic Expressions", "Interpret and simplify algebraic expressions.", 1)
         linear_equations = _skill(db, curriculum, "A1.LINEAR.EQ", "Linear Equations", "Solve one-variable linear equations and justify equivalent steps.", 2)
         linear_functions = _skill(db, curriculum, "A1.LINEAR.FN", "Linear Functions", "Represent and reason about linear relationships using equations, tables, and rates of change.", 3)
@@ -109,6 +89,7 @@ def seed() -> None:
         eq_two = _skill(db, curriculum, "A1.LINEAR.EQ.TWO", "Two-Step and Multi-Step Linear Equations", "Solve ax + b = c and a(x + b) = c forms.", 3)
         fn_slope = _skill(db, curriculum, "A1.LINEAR.FN.SLOPE", "Slope-Intercept Form", "Write linear equations in y = mx + b from slope and intercept.", 3)
         fn_eval = _skill(db, curriculum, "A1.LINEAR.FN.EVAL", "Evaluating Linear Functions", "Evaluate a linear function for a given input.", 3)
+        quad_functions = _skill(db, curriculum, "A1.QUAD.FN", "Quadratic Functions", "Interpret and reason about quadratic relationships using equations and graphs.", 4)
 
         _prerequisite(db, expr_dist, expressions)
         _prerequisite(db, expr_combine, expr_dist)
@@ -116,6 +97,7 @@ def seed() -> None:
         _prerequisite(db, eq_two, eq_one)
         _prerequisite(db, fn_slope, linear_functions)
         _prerequisite(db, fn_eval, fn_slope)
+        _prerequisite(db, quad_functions, linear_functions)
 
         def _misconception(skill, code, name, description, strategy):
             if db.scalar(
@@ -304,6 +286,34 @@ def seed() -> None:
             "Substitute the input into mx as multiplication: m times x, "
             "then add b.",
         )
+        _misconception(
+            quad_functions,
+            "QUAD_001",
+            "Vertex x-coordinate sign error",
+            "The learner reports or writes the vertex's x-coordinate with the "
+            "opposite sign, treating y = a(x - h)^2 + k as if the shift were h "
+            "rather than -h inside the parentheses.",
+            "In y = a(x - h)^2 + k the vertex is (h, k): the minus inside the "
+            "parentheses means h itself is the x-shift.",
+        )
+        _misconception(
+            quad_functions,
+            "QUAD_002",
+            "Opening direction misread",
+            "The learner reads an upward-opening parabola as downward or vice "
+            "versa, usually by misreading the sign of the leading coefficient.",
+            "Check the sign of a: positive opens upward, negative opens "
+            "downward — or look at whether the arms rise or fall.",
+        )
+        _misconception(
+            quad_functions,
+            "QUAD_003",
+            "Vertex coordinates swapped",
+            "The learner interchanges the vertex's x- and y-coordinates, "
+            "writing (k, h) instead of (h, k) or x = k for the axis.",
+            "The axis of symmetry runs through the vertex's x-coordinate: "
+            "x = h, and the vertex sits at (h, k).",
+        )
 
         problems = [
             (expressions, 1, "Simplify 4(x + 3).", "4x+12", "SIMPLIFY_EXPRESSION"),
@@ -335,28 +345,65 @@ def seed() -> None:
         graph_problems = [
             (
                 fn_slope, 2, "What is the slope of the line shown?", "2",
-                "FRACTION", {"tier": "read_slope", "m_num": 2, "m_den": 1, "b": 3},
+                "LINEAR_GRAPH", "FRACTION",
+                {"tier": "read_slope", "m_num": 2, "m_den": 1, "b": 3},
             ),
             (
                 fn_slope, 3, "What is the y-intercept of the line shown?", "-2",
-                "INTEGER", {"tier": "read_intercept", "m_num": 1, "m_den": 2, "b": -2},
+                "LINEAR_GRAPH", "INTEGER",
+                {"tier": "read_intercept", "m_num": 1, "m_den": 2, "b": -2},
             ),
             (
                 fn_eval, 3, "According to the graph, what is y when x = 2?", "5",
-                "INTEGER",
+                "LINEAR_GRAPH", "INTEGER",
                 {"tier": "read_value", "m_num": 2, "m_den": 1, "b": 1, "x": 2},
             ),
             (
                 linear_functions, 3, "What is the slope of the line shown?", "-3/2",
-                "FRACTION",
+                "LINEAR_GRAPH", "FRACTION",
                 {"tier": "read_slope", "m_num": -3, "m_den": 2, "b": 4},
             ),
+            (
+                quad_functions, 3,
+                "What are the coordinates of the vertex of the parabola shown?",
+                "(2, -1)", "QUADRATIC_FUNCTION", "FREE_TEXT",
+                {"tier": "vertex", "a_num": 1, "a_den": 1, "h": 2, "k": -1},
+            ),
+            (
+                quad_functions, 2, "For f(x) = x^2 - 4x + 3, what is f(5)?", "8",
+                "QUADRATIC_FUNCTION", "INTEGER",
+                {"tier": "evaluate", "a_num": 1, "a_den": 1, "h": 2, "k": -1},
+            ),
         ]
-        for skill, difficulty, prompt, answer, answer_kind, parameters in graph_problems:
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters in graph_problems:
             _problem(
-                db, skill, difficulty, prompt, answer, "LINEAR_GRAPH",
+                db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters,
             )
+
+
+def seed() -> None:
+    db = SessionLocal()
+    try:
+        authority = db.scalar(select(EducationAuthority).where(EducationAuthority.code == "MCPS"))
+        if authority is None:
+            raise RuntimeError("MCPS education authority must be seeded before Algebra I content")
+
+        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == CURRICULUM_CODE))
+        if curriculum is None:
+            curriculum = Curriculum(
+                code=CURRICULUM_CODE,
+                name="MCPS Algebra 1 — SY 2026-27 Pilot",
+                jurisdiction="Montgomery County, Maryland",
+                grade_level="Algebra 1",
+                authority_id=authority.id,
+                version="SY2026-27",
+                source_uri="https://www.montgomeryschoolsmd.org/curriculum/math/",
+            )
+            db.add(curriculum)
+            db.flush()
+
+        seed_content(db, curriculum)
 
         db.commit()
         print(f"Algebra I pilot seed complete. Curriculum={curriculum.id}")

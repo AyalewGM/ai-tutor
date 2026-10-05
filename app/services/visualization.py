@@ -268,6 +268,26 @@ def _linear_graph_model(problem: Problem) -> dict | None:
     }
 
 
+def _parabola_graph_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    a_num = _int(params.get("a_num"))
+    a_den = _int(params.get("a_den"))
+    h = _int(params.get("h"))
+    k = _int(params.get("k"))
+    if a_num is None or a_den is None or h is None or k is None or a_den == 0:
+        return None
+    return {
+        "type": "parabola_graph",
+        "a_num": a_num,
+        "a_den": a_den,
+        "h": h,
+        "k": k,
+        "min": -10,
+        "max": 10,
+        "aria_label": "A parabola graphed on a coordinate plane.",
+    }
+
+
 def _volume_model(problem: Problem) -> dict | None:
     params = _params(problem)
     l = _int(params.get("length"))
@@ -951,4 +971,6 @@ def visualization_for(problem: Problem) -> dict | None:
         return _coordinate_model(problem)
     if problem.problem_type == "LINEAR_GRAPH":
         return _linear_graph_model(problem)
+    if problem.problem_type == "QUADRATIC_FUNCTION":
+        return _parabola_graph_model(problem)
     return None

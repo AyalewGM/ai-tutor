@@ -378,6 +378,23 @@ def _graph_slope_sign_flip(prompt: str, answer: str, canonical: str) -> Misconce
     return None
 
 
+def _graph_vertex_errors(prompt: str, answer: str, canonical: str) -> MisconceptionMatch | None:
+    """Vertex reads: (h,k) answered as (-h,k) is a sign slip, as (k,h) a swap."""
+    if "vertexoftheparabola" not in prompt:
+        return None
+    student = _ORDERED_PAIR.match(answer)
+    correct = _ORDERED_PAIR.match(canonical)
+    if not student or not correct:
+        return None
+    sx, sy = student.groups()
+    cx, cy = correct.groups()
+    if (sx, sy) == (cy, cx):
+        return MisconceptionMatch("QUAD_003", 0.95)
+    if sx != cx and float(sx) == -float(cx):
+        return MisconceptionMatch("QUAD_001", 0.95)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -398,6 +415,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _elementary_area_perimeter_swap,
     _elementary_coordinate_order_swap,
     _graph_slope_sign_flip,
+    _graph_vertex_errors,
 )
 
 

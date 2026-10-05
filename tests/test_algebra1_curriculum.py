@@ -34,6 +34,7 @@ def test_algebra1_seed_is_idempotent_versioned_and_curriculum_local():
             "A1.LINEAR.EQ.TWO",
             "A1.LINEAR.FN.SLOPE",
             "A1.LINEAR.FN.EVAL",
+            "A1.QUAD.FN",
         }
         skill_ids = {skill.id for skill in skills}
 
@@ -42,13 +43,13 @@ def test_algebra1_seed_is_idempotent_versioned_and_curriculum_local():
                 select(SkillPrerequisite).where(SkillPrerequisite.skill_id.in_(skill_ids))
             )
         )
-        assert len(edges) == 8
+        assert len(edges) == 9
         assert all(edge.prerequisite_skill_id in skill_ids for edge in edges)
 
         problems = list(
             db.scalars(select(Problem).where(Problem.primary_skill_id.in_(skill_ids)))
         )
-        assert len(problems) == 25
+        assert len(problems) == 27
         assert all(problem.primary_skill_id in skill_ids for problem in problems)
 
         grade8_skill_ids = set(

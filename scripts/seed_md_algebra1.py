@@ -9,6 +9,7 @@ from app.curriculum_models import (
 )
 from app.models import Curriculum, Problem, Skill
 from scripts.seed_algebra1 import seed as seed_legacy_algebra1
+from scripts.seed_algebra1 import seed_content
 
 CURRICULUM_CODE = "MD_ALGEBRA_1_2026_27"
 LEGACY_CODE = "MCPS_ALGEBRA_1_2026_27"
@@ -100,6 +101,11 @@ def seed() -> None:
         curriculum.authority_id = authority.id
         curriculum.version = "MCCRS-revised-SY2026-27"
         curriculum.source_uri = MSDE_SOURCE
+
+        # Backfill content the legacy seed gained after this curriculum was
+        # upgraded (e.g. new skills like quadratics land here, not on a zombie
+        # MCPS row). All helpers dedupe, so this is a no-op when current.
+        seed_content(db, curriculum)
 
         skills = list(db.scalars(select(Skill).where(Skill.curriculum_id == curriculum.id)))
         for skill in skills:
