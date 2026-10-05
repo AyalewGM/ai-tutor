@@ -1,0 +1,279 @@
+"""Seed the MCPS Grade 8 transformations skill onto the existing
+MCPS_MATH_8 curriculum (created by seed_sprint1)."""
+
+from decimal import Decimal
+
+from sqlalchemy import select
+
+from app.core.database import SessionLocal
+from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, EducationAuthority
+from app.models import Curriculum, Misconception, Problem, Skill
+
+CURRICULUM_CODE = "MCPS_MATH_8"
+
+
+def _skill(
+    db,
+    curriculum: Curriculum,
+    code: str,
+    name: str,
+    description: str,
+    level: int,
+) -> Skill:
+    skill = db.scalar(
+        select(Skill).where(Skill.curriculum_id == curriculum.id, Skill.code == code)
+    )
+    if skill is None:
+        skill = Skill(
+            curriculum_id=curriculum.id,
+            code=code,
+            name=name,
+            description=description,
+            difficulty_level=level,
+            mastery_threshold=Decimal("0.850"),
+        )
+        db.add(skill)
+        db.flush()
+    canonical_code = "MATH." + code.split(".", 1)[1]
+    canonical = db.scalar(select(CanonicalSkill).where(CanonicalSkill.code == canonical_code))
+    if canonical is None:
+        canonical = CanonicalSkill(
+            code=canonical_code,
+            name=name,
+            description=description,
+            subject="MATHEMATICS",
+        )
+        db.add(canonical)
+        db.flush()
+    mapping = db.scalar(
+        select(CurriculumSkillMapping).where(CurriculumSkillMapping.skill_id == skill.id)
+    )
+    if mapping is None:
+        db.add(
+            CurriculumSkillMapping(
+                canonical_skill_id=canonical.id,
+                skill_id=skill.id,
+                mapping_type="EQUIVALENT",
+                provenance_json={
+                    "basis": "AI Tutor authored curriculum mapping",
+                    "curriculum_code": curriculum.code,
+                    "curriculum_version": curriculum.version,
+                },
+            )
+        )
+    return skill
+
+
+def _problem(
+    db,
+    skill: Skill,
+    difficulty: int,
+    prompt: str,
+    answer: str,
+    problem_type: str,
+    *,
+    answer_kind: str = "FREE_TEXT",
+    parameters: dict | None = None,
+    choices: list | None = None,
+) -> None:
+    provenance = {
+        "origin": "AUTHORED",
+        "author": "AI Tutor curriculum team",
+        "license": "proprietary",
+        "source_uri": "https://www.montgomeryschoolsmd.org/curriculum/math/ms/",
+    }
+    existing = db.scalar(
+        select(Problem).where(
+            Problem.primary_skill_id == skill.id,
+            Problem.prompt == prompt,
+        )
+    )
+    solution = {"answer": answer, "provenance": provenance}
+    if parameters is not None:
+        solution["problem_family"] = problem_type
+        solution["parameters"] = parameters
+    if existing is None:
+        db.add(
+            Problem(
+                primary_skill_id=skill.id,
+                problem_type=problem_type,
+                difficulty=difficulty,
+                prompt=prompt,
+                canonical_answer=answer,
+                answer_kind=answer_kind,
+                choices=choices,
+                solution=solution,
+                source_type="CURATED",
+            )
+        )
+    elif parameters is not None and "parameters" not in (existing.solution or {}):
+        existing.solution = {
+            **(existing.solution or {}),
+            "problem_family": problem_type,
+            "parameters": parameters,
+        }
+    elif "provenance" not in (existing.solution or {}):
+        existing.solution = {**(existing.solution or {}), "provenance": provenance}
+
+
+def seed() -> None:
+    db = SessionLocal()
+    try:
+        curriculum = db.scalar(
+            select(Curriculum).where(Curriculum.code == CURRICULUM_CODE)
+        )
+        if curriculum is None:
+            authority = db.scalar(
+                select(EducationAuthority).where(EducationAuthority.code == "MCPS")
+            )
+            if authority is None:
+                raise RuntimeError(
+                    "MCPS education authority must be seeded before Grade 8 content"
+                )
+            curriculum = Curriculum(
+                code=CURRICULUM_CODE,
+                name="MCPS Grade 8 Mathematics",
+                jurisdiction="Montgomery County, Maryland",
+                grade_level="8",
+                authority_id=authority.id,
+                version="1",
+                source_uri="https://www.montgomeryschoolsmd.org/curriculum/math/ms/",
+            )
+            db.add(curriculum)
+            db.flush()
+
+        transforms = _skill(
+            db, curriculum, "M8.G.TRANS",
+            "Transformations on the Coordinate Plane",
+            "Translate, reflect, rotate, and dilate points and figures on "
+            "the coordinate plane, and identify the transformation that "
+            "maps a figure onto its image.",
+            3,
+        )
+
+        def _misconception(skill, code, name, description, strategy):
+            if db.scalar(
+                select(Misconception).where(
+                    Misconception.skill_id == skill.id,
+                    Misconception.code == code,
+                )
+            ) is None:
+                db.add(
+                    Misconception(
+                        skill_id=skill.id,
+                        code=code,
+                        name=name,
+                        description=description,
+                        remediation_strategy=strategy,
+                    )
+                )
+
+        _misconception(
+            transforms,
+            "TR_001",
+            "Rotation applied with wrong direction or coordinate order",
+            "The learner turns the point the wrong way, swaps the "
+            "coordinates without adjusting signs, or rotates 90° when the "
+            "prompt asks for 180°.",
+            "Track one coordinate at a time: 90° clockwise sends (x, y) "
+            "to (y, −x). Mark the starting quadrant and check which "
+            "quadrant the image should land in.",
+        )
+        _misconception(
+            transforms,
+            "TR_002",
+            "Reflection negates the wrong coordinate",
+            "The learner negates the coordinate the axis keeps — for "
+            "example answering (2, 3) when reflecting (−2, 3) over the "
+            "x-axis.",
+            "A reflection keeps the coordinate that matches the axis: "
+            "over the x-axis, x stays and y flips; over the y-axis, y "
+            "stays and x flips.",
+        )
+        _misconception(
+            transforms,
+            "TR_003",
+            "Translation applied with the wrong direction",
+            "The learner moves left instead of right or down instead of "
+            "up on one or both axes.",
+            "Read the units in order: 'right' adds to x, 'left' subtracts, "
+            "'up' adds to y, 'down' subtracts. Move the point on the grid "
+            "one unit at a time.",
+        )
+        _misconception(
+            transforms,
+            "TR_004",
+            "Transformation misidentified",
+            "The learner names the wrong motion — calling a reflection a "
+            "rotation, or missing the direction of a translation.",
+            "Check whether the figure flipped (reflection), turned "
+            "(rotation), or slid (translation). Then match the axis, "
+            "angle, or vector.",
+        )
+        _misconception(
+            transforms,
+            "TR_005",
+            "Dilation applied partially",
+            "The learner scales only one coordinate, or adds the scale "
+            "factor instead of multiplying both coordinates by it.",
+            "A dilation centred at the origin multiplies every coordinate "
+            "by the scale factor: (x, y) → (kx, ky). Check that both "
+            "coordinates changed by the factor.",
+        )
+
+        problems = [
+            (
+                transforms, 1,
+                "Point P is shown on the grid. Translate it 3 units right and 2 units up. What are the coordinates of P'?",
+                "(5, 5)", "TRANSFORMATION", "FREE_TEXT",
+                {"tier": "translate", "x": 2, "y": 3, "dx": 3, "dy": 2,
+                 "preimage": [[2, 3]], "labels": ["P"]},
+                None,
+            ),
+            (
+                transforms, 2,
+                "Point P is shown on the grid. Reflect it over the x-axis. What are the coordinates of P'?",
+                "(3, -4)", "TRANSFORMATION", "FREE_TEXT",
+                {"tier": "reflect", "x": 3, "y": 4, "axis": "x-axis",
+                 "preimage": [[3, 4]], "labels": ["P"]},
+                None,
+            ),
+            (
+                transforms, 3,
+                "Point P is shown on the grid. Rotate it 90° clockwise about the origin. What are the coordinates of P'?",
+                "(4, 2)", "TRANSFORMATION", "FREE_TEXT",
+                {"tier": "rotate", "x": -2, "y": 4, "direction": "90° clockwise",
+                 "preimage": [[-2, 4]], "labels": ["P"]},
+                None,
+            ),
+            (
+                transforms, 4,
+                "Triangle ABC is mapped onto triangle A'B'C' as shown. Which transformation maps the preimage onto the image?",
+                "b", "TRANSFORMATION", "MULTIPLE_CHOICE",
+                {"tier": "identify", "motion": "reflect_x",
+                 "preimage": [[1, 2], [4, 2], [2, 5]],
+                 "image": [[1, -2], [4, -2], [2, -5]],
+                 "labels": ["A", "B", "C"],
+                 "image_labels": ["A'", "B'", "C'"]},
+                [
+                    {"id": "a", "text": "a translation 4 units down", "misconception_code": "TR_004"},
+                    {"id": "b", "text": "a reflection over the x-axis"},
+                    {"id": "c", "text": "a rotation of 180° about the origin", "misconception_code": "TR_004"},
+                    {"id": "d", "text": "a reflection over the y-axis", "misconception_code": "TR_004"},
+                ],
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        db.commit()
+        print(f"Grade 8 seed complete. Curriculum={curriculum.id}")
+    finally:
+        db.close()
+
+
+if __name__ == "__main__":
+    seed()

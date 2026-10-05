@@ -1420,6 +1420,171 @@ def _generate_geometry_2d(rng: random.Random, difficulty: int) -> GeneratedProbl
     )
 
 
+_TRANSFORM_BOUND = 8
+
+
+def _random_point(rng: random.Random, lo: int, hi: int) -> list[int]:
+    return [rng.randint(lo, hi), rng.randint(lo, hi)]
+
+
+def _random_triangle(rng: random.Random, region) -> list[list[int]]:
+    for _ in range(80):
+        tri = [region() for _ in range(3)]
+        (x1, y1), (x2, y2), (x3, y3) = tri
+        if (x2 - x1) * (y3 - y1) != (y2 - y1) * (x3 - x1):
+            return tri
+    raise AssertionError("could not build a non-collinear triangle")
+
+
+def _generate_transformation(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Rigid motions and dilations on the coordinate plane: translate,
+    reflect, rotate, or dilate a rendered point — or name the motion that
+    maps a rendered preimage triangle onto its image."""
+    tiers = ["translate"]
+    if difficulty >= 2:
+        tiers.append("reflect")
+    if difficulty >= 3:
+        tiers += ["rotate", "identify"]
+    if difficulty >= 4:
+        tiers.append("dilate")
+    tier = rng.choice(tiers)
+
+    if tier == "translate":
+        dx = rng.choice([d for d in range(-5, 6) if d != 0])
+        dy = rng.choice([d for d in range(-5, 6) if d != 0])
+        for _ in range(60):
+            x, y = _random_point(rng, -5, 5)
+            if abs(x + dx) <= _TRANSFORM_BOUND and abs(y + dy) <= _TRANSFORM_BOUND:
+                break
+        nx, ny = x + dx, y + dy
+        horizontal = f"{abs(dx)} units {'right' if dx > 0 else 'left'}"
+        vertical = f"{abs(dy)} units {'up' if dy > 0 else 'down'}"
+        prompt = (
+            f"Point P is shown on the grid. Translate it {horizontal} and "
+            f"{vertical}. What are the coordinates of P'?"
+        )
+        params = {"tier": tier, "x": x, "y": y, "dx": dx, "dy": dy,
+                  "preimage": [[x, y]], "labels": ["P"]}
+        answer = f"({nx}, {ny})"
+        kind = "FREE_TEXT"
+        choices = None
+    elif tier == "reflect":
+        axis = rng.choice(["x-axis", "y-axis"])
+        for _ in range(60):
+            x, y = _random_point(rng, -7, 7)
+            if x != 0 and y != 0:
+                break
+        nx, ny = (x, -y) if axis == "x-axis" else (-x, y)
+        prompt = (
+            f"Point P is shown on the grid. Reflect it over the {axis}. "
+            "What are the coordinates of P'?"
+        )
+        params = {"tier": tier, "x": x, "y": y, "axis": axis,
+                  "preimage": [[x, y]], "labels": ["P"]}
+        answer = f"({nx}, {ny})"
+        kind = "FREE_TEXT"
+        choices = None
+    elif tier == "rotate":
+        direction = rng.choice(["90° clockwise", "90° counterclockwise", "180°"])
+        for _ in range(60):
+            x, y = _random_point(rng, -7, 7)
+            if x != 0 and y != 0:
+                break
+        if direction == "90° clockwise":
+            nx, ny = y, -x
+        elif direction == "90° counterclockwise":
+            nx, ny = -y, x
+        else:
+            nx, ny = -x, -y
+        prompt = (
+            f"Point P is shown on the grid. Rotate it {direction} about the "
+            "origin. What are the coordinates of P'?"
+        )
+        params = {"tier": tier, "x": x, "y": y, "direction": direction,
+                  "preimage": [[x, y]], "labels": ["P"]}
+        answer = f"({nx}, {ny})"
+        kind = "FREE_TEXT"
+        choices = None
+    elif tier == "dilate":
+        k = rng.choice([2, 3])
+        for _ in range(60):
+            x, y = _random_point(rng, -3, 3)
+            if x != 0 and y != 0 and abs(k * x) <= _TRANSFORM_BOUND and abs(k * y) <= _TRANSFORM_BOUND:
+                break
+        prompt = (
+            f"Point P is shown on the grid. Dilate it by a scale factor of {k} "
+            "centred at the origin. What are the coordinates of P'?"
+        )
+        params = {"tier": tier, "x": x, "y": y, "k": k,
+                  "preimage": [[x, y]], "labels": ["P"]}
+        answer = f"({k * x}, {k * y})"
+        kind = "FREE_TEXT"
+        choices = None
+    else:  # identify — name the motion mapping the preimage onto the image
+        motion = rng.choice(
+            ["translate", "reflect_x", "reflect_y", "rotate_180", "rotate_90cw"]
+        )
+        if motion == "reflect_x":
+            tri = _random_triangle(rng, lambda: [rng.randint(-6, 6), rng.randint(1, 6)])
+            image = [[x, -y] for x, y in tri]
+            description = "a reflection over the x-axis"
+        elif motion == "reflect_y":
+            tri = _random_triangle(rng, lambda: [rng.randint(1, 6), rng.randint(-6, 6)])
+            image = [[-x, y] for x, y in tri]
+            description = "a reflection over the y-axis"
+        elif motion == "rotate_180":
+            tri = _random_triangle(rng, lambda: [rng.randint(1, 5), rng.randint(1, 5)])
+            image = [[-x, -y] for x, y in tri]
+            description = "a rotation of 180° about the origin"
+        elif motion == "rotate_90cw":
+            tri = _random_triangle(rng, lambda: [rng.randint(-5, -1), rng.randint(1, 5)])
+            image = [[y, -x] for x, y in tri]
+            description = "a rotation of 90° clockwise about the origin"
+        else:
+            dx = rng.choice([d for d in range(-4, 5) if d != 0])
+            dy = rng.choice([d for d in range(-4, 5) if d != 0])
+
+            def region():
+                return [rng.randint(-4, 4), rng.randint(-4, 4)]
+
+            tri = _random_triangle(rng, region)
+            while not all(
+                abs(x + dx) <= _TRANSFORM_BOUND and abs(y + dy) <= _TRANSFORM_BOUND
+                for x, y in tri
+            ):
+                tri = _random_triangle(rng, region)
+            image = [[x + dx, y + dy] for x, y in tri]
+            description = (
+                f"a translation {abs(dx)} units {'right' if dx > 0 else 'left'} "
+                f"and {abs(dy)} units {'up' if dy > 0 else 'down'}"
+            )
+        distractor_pool = [
+            "a reflection over the x-axis",
+            "a reflection over the y-axis",
+            "a rotation of 180° about the origin",
+            "a rotation of 90° clockwise about the origin",
+            "a translation 2 units right and 3 units up",
+        ]
+        distractors = [
+            (text, "TR_004") for text in distractor_pool if text != description
+        ]
+        rng.shuffle(distractors)
+        prompt = (
+            "Triangle ABC is mapped onto triangle A'B'C' as shown. "
+            "Which transformation maps the preimage onto the image?"
+        )
+        choices, answer = _mc_choices(rng, description, distractors[:3])
+        params = {"tier": tier, "motion": motion, "preimage": tri,
+                  "image": image, "labels": ["A", "B", "C"],
+                  "image_labels": ["A'", "B'", "C'"]}
+        kind = "MULTIPLE_CHOICE"
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "TRANSFORMATION",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -2063,6 +2228,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "POLYNOMIAL_FUNCTION": _generate_polynomial_function,
     "SOLID_VOLUME": _generate_solid_volume,
     "GEOMETRY_2D": _generate_geometry_2d,
+    "TRANSFORMATION": _generate_transformation,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -2377,6 +2543,7 @@ PROMPT_SHARED_TYPES = {
     "SOLID_VOLUME",
     "GEOMETRY_2D",
     "ANGLE_MEASUREMENT",
+    "TRANSFORMATION",
 }
 
 
