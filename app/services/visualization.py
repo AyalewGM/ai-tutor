@@ -288,6 +288,29 @@ def _parabola_graph_model(problem: Problem) -> dict | None:
     }
 
 
+def _polynomial_graph_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    if params.get("tier") not in {"count_roots", "write_equation"}:
+        return None
+    coeffs = params.get("coeffs")
+    if not isinstance(coeffs, list) or len(coeffs) < 2 or not all(
+        isinstance(c, (int, float)) for c in coeffs
+    ):
+        return None
+    roots = params.get("roots")
+    return {
+        "type": "polynomial_graph",
+        "coeffs": coeffs,
+        # Marked crossings are the read scaffold for equation matching —
+        # they must stay hidden when the question is counting them.
+        "roots": roots if isinstance(roots, list) else [],
+        "mark_roots": params.get("tier") == "write_equation",
+        "min": -10,
+        "max": 10,
+        "aria_label": "A polynomial curve graphed on a coordinate plane.",
+    }
+
+
 def _volume_model(problem: Problem) -> dict | None:
     params = _params(problem)
     l = _int(params.get("length"))
@@ -973,4 +996,6 @@ def visualization_for(problem: Problem) -> dict | None:
         return _linear_graph_model(problem)
     if problem.problem_type == "QUADRATIC_FUNCTION":
         return _parabola_graph_model(problem)
+    if problem.problem_type == "POLYNOMIAL_FUNCTION":
+        return _polynomial_graph_model(problem)
     return None

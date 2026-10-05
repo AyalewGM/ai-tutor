@@ -490,6 +490,178 @@ def _generate_quadratic_function(rng: random.Random, difficulty: int) -> Generat
     )
 
 
+def _poly_expand(a: int, roots: list[int]) -> list[int]:
+    """Coefficients of a·∏(x - r), highest degree first."""
+    coeffs = [a]
+    for r in roots:
+        out = [0] * (len(coeffs) + 1)
+        for i, c in enumerate(coeffs):
+            out[i] += c
+            out[i + 1] -= c * r
+        coeffs = out
+    return coeffs
+
+
+def _poly_val(coeffs: list[int], x: float) -> float:
+    total = 0.0
+    for c in coeffs:
+        total = total * x + c
+    return total
+
+
+def _poly_text(coeffs: list[int]) -> str:
+    degree = len(coeffs) - 1
+    parts: list[str] = []
+    for i, c in enumerate(coeffs):
+        if c == 0:
+            continue
+        power = degree - i
+        var = "" if power == 0 else "x" if power == 1 else f"x^{power}"
+        mag = var if var and abs(c) == 1 else f"{abs(c)}{var}"
+        if not parts:
+            parts.append(f"-{mag}" if c < 0 else mag)
+        else:
+            parts.append(f"{'+' if c > 0 else '-'}{mag}")
+    return "".join(parts) or "0"
+
+
+def _factor_text(r: int) -> str:
+    return "x" if r == 0 else f"(x{'+' if r < 0 else '-'}{abs(r)})"
+
+
+def _poly_graph_params(rng: random.Random, n_roots: int) -> tuple[int, list[int], list[int]]:
+    """(a, roots, coeffs) for a graphed polynomial in factored form.
+
+    Roots are distinct integers inside the window and every local extremum
+    between them stays within ±9 so the curve's turning points and crossings
+    are all readable on the rendered graph.
+    """
+    while True:
+        roots = sorted(rng.sample(range(-4, 5), n_roots))
+        a = rng.choice([-1, 1])
+        coeffs = _poly_expand(a, roots)
+        lo, hi = roots[0] - 1.2, roots[-1] + 1.2
+        if all(abs(_poly_val(coeffs, lo + i * 0.02)) <= 9 for i in range(int((hi - lo) / 0.02) + 1)):
+            return a, roots, coeffs
+
+
+_END_BEHAVIOR = {
+    (True, 1): "Rises to the left and rises to the right",
+    (True, -1): "Falls to the left and falls to the right",
+    (False, 1): "Falls to the left and rises to the right",
+    (False, -1): "Rises to the left and falls to the right",
+}
+
+
+def _generate_polynomial_function(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Polynomial items: evaluate/degree on text, zeros from factored form,
+    graph reads (crossing count, equation match) and end behavior.
+
+    roots + a own the truth; coeffs are the expanded coefficients the
+    renderer samples — the frontend never computes roots itself.
+    """
+    tiers = ["evaluate", "degree"]
+    if difficulty >= 3:
+        tiers += ["zeros_from_factors", "count_roots"]
+    if difficulty >= 4:
+        tiers.append("end_behavior")
+    if difficulty >= 5:
+        tiers.append("write_equation")
+    tier = rng.choice(tiers)
+    params: dict = {"tier": tier}
+    choices = None
+
+    if tier == "evaluate":
+        degree = rng.choice([2, 3])
+        coeffs = [rng.choice([-2, -1, 1, 2])] + [rng.randint(-4, 4) for _ in range(degree)]
+        x_val = rng.randint(-3, 3)
+        params.update(coeffs=coeffs, roots=[], a=0, x=x_val)
+        prompt = f"For p(x) = {_poly_text(coeffs)}, what is p({x_val})?"
+        answer = str(int(_poly_val(coeffs, x_val)))
+        kind = "INTEGER"
+    elif tier == "degree":
+        degree = rng.randint(2, 5)
+        # Guarantee at least two zero coefficients so the term-count
+        # distractor genuinely differs from the degree.
+        while True:
+            coeffs = [rng.choice([-3, -2, -1, 1, 2, 3])]
+            coeffs += [rng.randint(-5, 5) for _ in range(degree)]
+            coeffs[rng.randint(1, degree - 1)] = 0
+            terms = sum(1 for c in coeffs if c != 0)
+            if terms != degree:
+                break
+        distractors = [
+            (str(terms), "POLY_003"),
+            (str(abs(coeffs[0])), "POLY_003"),
+            (str(degree + 1), None),
+            (str(degree - 1), None),
+        ]
+        params.update(coeffs=coeffs, roots=[], a=0)
+        prompt = f"What is the degree of p(x) = {_poly_text(coeffs)}?"
+        choices, answer = _mc_choices(rng, str(degree), distractors)
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "zeros_from_factors":
+        n = rng.choice([2, 3])
+        roots = sorted(rng.sample(range(-4, 5), n))
+        params.update(a=1, roots=roots, coeffs=_poly_expand(1, roots))
+        def fmt(rs: list[int]) -> str:
+            return ", ".join(f"x = {r}" for r in rs)
+
+        distractors = [
+            (fmt([-r for r in roots]), "POLY_001"),
+            (fmt(roots[:-1]), None),
+            (fmt([r + 1 for r in roots]), None),
+        ]
+        factors = "".join(_factor_text(r) for r in roots)
+        prompt = f"What are the zeros of f(x) = {factors}?"
+        choices, answer = _mc_choices(rng, fmt(roots), distractors)
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "count_roots":
+        a, roots, coeffs = _poly_graph_params(rng, rng.choice([2, 3]))
+        params.update(a=a, roots=roots, coeffs=coeffs)
+        correct = str(len(roots))
+        choices, answer = _mc_choices(
+            rng, correct, [(str(n), None) for n in range(4) if str(n) != correct]
+        )
+        prompt = "How many times does the graph cross the x-axis?"
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "end_behavior":
+        degree = rng.randint(2, 4)
+        lead = rng.choice([-2, -1, 1, 2])
+        coeffs = [lead] + [rng.randint(-4, 4) for _ in range(degree)]
+        params.update(coeffs=coeffs, roots=[], a=lead)
+        even = degree % 2 == 0
+        correct = _END_BEHAVIOR[(even, 1 if lead > 0 else -1)]
+        distractors = [
+            (_END_BEHAVIOR[(not even, 1 if lead > 0 else -1)], "POLY_002"),
+            (_END_BEHAVIOR[(even, -1 if lead > 0 else 1)], "POLY_002"),
+            (_END_BEHAVIOR[(not even, -1 if lead > 0 else 1)], None),
+        ]
+        prompt = f"For p(x) = {_poly_text(coeffs)}, which describes the end behavior?"
+        choices, answer = _mc_choices(rng, correct, distractors)
+        kind = "MULTIPLE_CHOICE"
+    else:  # write_equation — read the factored form off a marked graph
+        a, roots, coeffs = _poly_graph_params(rng, 3)
+        params.update(a=a, roots=roots, coeffs=coeffs)
+        def eq(aa: int, rs: list[int]) -> str:
+            lead = "" if aa == 1 else "-" if aa == -1 else str(aa)
+            return f"y={lead}{''.join(_factor_text(r) for r in rs)}"
+
+        distractors = [
+            (eq(a, [-r for r in roots]), "POLY_001"),
+            (eq(-a, roots), None),
+            (eq(a, roots[:-1]), None),
+        ]
+        prompt = "Which equation describes the graph shown?"
+        choices, answer = _mc_choices(rng, eq(a, roots), distractors)
+        kind = "MULTIPLE_CHOICE"
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "POLYNOMIAL_FUNCTION",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_integer_sum(rng: random.Random, difficulty: int) -> GeneratedProblem:
     if difficulty <= 2:
         a, b = rng.randint(1, 20), rng.randint(1, 20)
@@ -1658,6 +1830,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "LINEAR_FUNCTION": _generate_linear_function,
     "LINEAR_GRAPH": _generate_linear_graph,
     "QUADRATIC_FUNCTION": _generate_quadratic_function,
+    "POLYNOMIAL_FUNCTION": _generate_polynomial_function,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -1931,7 +2104,14 @@ def _family_metadata(generated: GeneratedProblem) -> tuple[str, dict]:
 
 
 def _fingerprint(family: str, parameters: dict) -> tuple:
-    return (family, tuple(sorted(parameters.items())))
+    def freeze(value):
+        if isinstance(value, list):
+            return tuple(freeze(v) for v in value)
+        if isinstance(value, dict):
+            return tuple(sorted((k, freeze(v)) for k, v in value.items()))
+        return value
+
+    return (family, tuple(sorted((k, freeze(v)) for k, v in parameters.items())))
 
 
 def _existing_generated_keys(db: Session, skill_id: uuid.UUID) -> tuple[set, set]:
@@ -1957,7 +2137,7 @@ def _possible_families(problem_type: str) -> set[str]:
 # Graph-read tiers share a constant prompt per tier ("What is the slope of the
 # line shown?") — the rendered parameters, not the text, distinguish them. The
 # prompt-dedupe check would otherwise starve these families entirely.
-PROMPT_SHARED_TYPES = {"LINEAR_GRAPH", "COORDINATE_PLANE", "QUADRATIC_FUNCTION"}
+PROMPT_SHARED_TYPES = {"LINEAR_GRAPH", "COORDINATE_PLANE", "QUADRATIC_FUNCTION", "POLYNOMIAL_FUNCTION"}
 
 
 def generate_problem(
