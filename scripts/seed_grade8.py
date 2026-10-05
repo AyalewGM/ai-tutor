@@ -175,6 +175,15 @@ def seed() -> None:
             "find distances between points on the coordinate plane.",
             3,
         )
+        radicals = _skill(
+            db, curriculum, "M8.NS.RAD",
+            "Irrational Numbers and Square Roots",
+            "Classify square roots as rational or irrational, bound them "
+            "between consecutive whole numbers, locate them on the "
+            "number line, estimate their value, write √n in simplest "
+            "a√b form, and compare them with decimals.",
+            3,
+        )
 
         def _misconception(skill, code, name, description, strategy):
             if db.scalar(
@@ -397,6 +406,44 @@ def seed() -> None:
             "to c or the triangle inequality instead of a² + b² = c².",
             "A triangle is right exactly when the two shorter sides "
             "squared add to the longest side squared.",
+        )
+        _misconception(
+            radicals,
+            "RAD_001",
+            "Radicand halved instead of rooted",
+            "The learner estimates √n as n/2 — for example answering 25 "
+            "for √50 — treating the root as a division by two.",
+            "Compare against the nearest perfect squares: √50 sits "
+            "between √49 = 7 and √64 = 8, nowhere near 25.",
+        )
+        _misconception(
+            radicals,
+            "RAD_002",
+            "Wrong integer bound or marker chosen",
+            "The learner picks the lower tick, the upper bound when the "
+            "lower was asked, or the marker at a whole number instead "
+            "of the true position.",
+            "Bound first, then refine: √n lies between ⌊√n⌋ and ⌊√n⌋ + 1; "
+            "closeness to the nearer square decides which side it sits on.",
+        )
+        _misconception(
+            radicals,
+            "RAD_003",
+            "Simplest radical form mishandled",
+            "The learner leaves the square inside or outside the root — "
+            "writing 25√2 or 2√25 for √50 instead of 5√2.",
+            "Factor out the largest perfect square: √50 = √(25·2) = "
+            "√25·√2 = 5√2. The coefficient is the root, not the square.",
+        )
+        _misconception(
+            radicals,
+            "RAD_004",
+            "Rational and irrational confused",
+            "The learner calls every root irrational — including perfect "
+            "squares — or calls an irrational root rational because the "
+            "radicand is a whole number.",
+            "A root is rational only when it equals a whole number or a "
+            "fraction: √49 = 7 is rational, √50 is not.",
         )
 
         problems = [
@@ -666,6 +713,64 @@ def seed() -> None:
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in pyth_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        # Radical items — classification, bounding, locating, simplifying.
+        rad_problems = [
+            (
+                radicals, 1,
+                "Is √36 a rational or an irrational number?",
+                "b", "RADICALS", "MULTIPLE_CHOICE",
+                {"tier": "classify", "n": 36},
+                [
+                    {"id": "a", "text": "Irrational — every square root is irrational", "misconception_code": "RAD_004"},
+                    {"id": "b", "text": "Rational — √36 = 6 is a whole number"},
+                    {"id": "c", "text": "Irrational — its decimal never terminates or repeats", "misconception_code": "RAD_004"},
+                    {"id": "d", "text": "Cannot be determined without knowing n"},
+                ],
+            ),
+            (
+                radicals, 2,
+                "The value √50 lies between two consecutive whole numbers. What is the smaller of the two?",
+                "7", "RADICALS", "INTEGER",
+                {"tier": "between_integers", "n": 50},
+                None,
+            ),
+            (
+                radicals, 3,
+                "Which letter marks the position of √2 on the number line?",
+                "c", "RADICALS", "MULTIPLE_CHOICE",
+                {"tier": "locate", "n": 2, "lo": 0, "hi": 3,
+                 "markers": [
+                     {"label": "A", "position": 0.2},
+                     {"label": "B", "position": 0.78},
+                     {"label": "C", "position": 1.41},
+                     {"label": "D", "position": 2.81},
+                 ]},
+                [
+                    {"id": "a", "text": "A"},
+                    {"id": "b", "text": "B"},
+                    {"id": "c", "text": "C"},
+                    {"id": "d", "text": "D"},
+                ],
+            ),
+            (
+                radicals, 4,
+                "Which expression is √50 written in simplest form?",
+                "d", "RADICALS", "MULTIPLE_CHOICE",
+                {"tier": "simplify", "n": 50},
+                [
+                    {"id": "a", "text": "25√2", "misconception_code": "RAD_003"},
+                    {"id": "b", "text": "2√25", "misconception_code": "RAD_003"},
+                    {"id": "c", "text": "7", "misconception_code": "RAD_002"},
+                    {"id": "d", "text": "5√2"},
+                ],
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in rad_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters, choices=choices,
