@@ -573,6 +573,37 @@ def _signed_numbers_model(problem: Problem) -> dict | None:
     }
 
 
+def _inequality_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    if params.get("tier") != "graph":
+        return None
+    point = _int(params.get("point"))
+    lo, hi = _int(params.get("min")), _int(params.get("max"))
+    direction = params.get("direction")
+    closed = params.get("closed")
+    if (
+        point is None
+        or not isinstance(lo, int)
+        or not isinstance(hi, int)
+        or direction not in {"left", "right"}
+        or not isinstance(closed, bool)
+    ):
+        return None
+    side = "to the left" if direction == "left" else "to the right"
+    return {
+        "type": "inequality_line",
+        "min": lo,
+        "max": hi,
+        "point": point,
+        "direction": direction,
+        "closed": closed,
+        "aria_label": (
+            f"A number line shaded {side} of {point} with a "
+            f"{'closed' if closed else 'open'} circle at {point}."
+        ),
+    }
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1439,6 +1470,8 @@ def visualization_for(problem: Problem) -> dict | None:
         return _proportional_graph_model(problem)
     if problem.problem_type == "SIGNED_NUMBERS":
         return _signed_numbers_model(problem)
+    if problem.problem_type == "LINEAR_INEQUALITIES":
+        return _inequality_model(problem)
     if problem.problem_type == "EXPONENTIAL_FUNCTION":
         return _exponential_graph_model(problem)
     return None

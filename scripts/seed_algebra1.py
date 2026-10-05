@@ -95,6 +95,7 @@ def seed_content(db, curriculum: Curriculum) -> None:
         poly_functions = _skill(db, curriculum, "A1.POLY.FN", "Polynomial Functions", "Interpret polynomial functions: degree, zeros, end behavior, and graphs of factored forms.", 5)
         systems = _skill(db, curriculum, "A1.SYS.EQ", "Systems of Linear Equations", "Solve pairs of linear equations graphically and algebraically, and reason about the number of solutions.", 4)
         exp_functions = _skill(db, curriculum, "A1.EXP.FN", "Exponential Functions", "Interpret exponential functions f(x) = a·b^x: evaluate them, distinguish growth from decay, read initial values and growth factors, and match equations to graphs.", 4)
+        linear_inequalities = _skill(db, curriculum, "A1.LINEAR.INEQ", "Linear Inequalities", "Solve one-variable linear inequalities, apply the sign-flip rule, read and write compound forms, and match inequalities to number-line graphs.", 3)
 
         _prerequisite(db, expr_dist, expressions)
         _prerequisite(db, expr_combine, expr_dist)
@@ -106,6 +107,7 @@ def seed_content(db, curriculum: Curriculum) -> None:
         _prerequisite(db, poly_functions, quad_functions)
         _prerequisite(db, systems, fn_slope)
         _prerequisite(db, exp_functions, linear_functions)
+        _prerequisite(db, linear_inequalities, eq_two)
 
         def _misconception(skill, code, name, description, strategy):
             if db.scalar(
@@ -412,6 +414,48 @@ def seed_content(db, curriculum: Curriculum) -> None:
             "The exponent repeats the multiplication: b^x means b "
             "multiplied by itself x times, not b times x.",
         )
+        _misconception(
+            linear_inequalities,
+            "INEQ_001",
+            "Sign not flipped when dividing by a negative",
+            "The learner keeps the inequality direction after "
+            "multiplying or dividing both sides by a negative number.",
+            "Dividing or multiplying by a negative reverses the order: "
+            "−3x < 12 becomes x > −4, not x < −4.",
+        )
+        _misconception(
+            linear_inequalities,
+            "INEQ_002",
+            "Sign flipped unnecessarily",
+            "The learner flips the inequality symbol when the "
+            "coefficient was positive, or when only adding or "
+            "subtracting.",
+            "Only multiplication and division by a negative flip the "
+            "symbol; adding, subtracting, or dividing by a positive "
+            "leaves it alone.",
+        )
+        _misconception(
+            linear_inequalities,
+            "INEQ_003",
+            "Boundary included or excluded incorrectly",
+            "The learner confuses < with ≤, drawing an open circle "
+            "where a closed one belongs or writing a strict "
+            "inequality when the boundary is included.",
+            "Read the circle: open means the endpoint is not part of "
+            "the answer (<, >); closed means it is (≤, ≥).",
+        )
+        _misconception(
+            linear_inequalities,
+            "INEQ_004",
+            "Inequality direction or solution form misread",
+            "The learner reverses the shading direction on a graph, "
+            "swaps 'at least' for 'at most', solves only half of a "
+            "compound inequality, or hunts for a boundary value when "
+            "the variable terms cancel.",
+            "Test a value inside the claimed solution: if 0 works, "
+            "the shading must include it — and when x cancels, only "
+            "the constants decide.",
+        )
 
         problems = [
             (expressions, 1, "Simplify 4(x + 3).", "4x+12", "SIMPLIFY_EXPRESSION"),
@@ -594,6 +638,78 @@ def seed_content(db, curriculum: Curriculum) -> None:
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in graph_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        # Inequality items — solving, sign flips, graph reading and
+        # no-solution/all-reals cases.
+        ineq_problems = [
+            (
+                linear_inequalities, 1,
+                "Solve 2x + 3 < 9.",
+                "b", "LINEAR_INEQUALITIES", "MULTIPLE_CHOICE",
+                {"tier": "solve", "a": 2, "b": 3, "c": 9, "op": "<"},
+                [
+                    {"id": "a", "text": "x > 3", "misconception_code": "INEQ_002"},
+                    {"id": "b", "text": "x < 3"},
+                    {"id": "c", "text": "x ≤ 3", "misconception_code": "INEQ_003"},
+                    {"id": "d", "text": "x < 4"},
+                ],
+            ),
+            (
+                linear_inequalities, 2,
+                "Which inequality is equivalent to -3x < 12?",
+                "c", "LINEAR_INEQUALITIES", "MULTIPLE_CHOICE",
+                {"tier": "flip_or_not", "a": -3, "c": 12, "op": "<"},
+                [
+                    {"id": "a", "text": "x < -4", "misconception_code": "INEQ_001"},
+                    {"id": "b", "text": "x ≥ -4", "misconception_code": "INEQ_003"},
+                    {"id": "c", "text": "x > -4"},
+                    {"id": "d", "text": "x > 4", "misconception_code": "INEQ_004"},
+                ],
+            ),
+            (
+                linear_inequalities, 2,
+                "Which inequality matches the graph?",
+                "a", "LINEAR_INEQUALITIES", "MULTIPLE_CHOICE",
+                {"tier": "graph", "point": 2, "direction": "left",
+                 "closed": True, "min": -2, "max": 6},
+                [
+                    {"id": "a", "text": "x ≤ 2"},
+                    {"id": "b", "text": "x ≥ 2", "misconception_code": "INEQ_004"},
+                    {"id": "c", "text": "x < 2", "misconception_code": "INEQ_003"},
+                    {"id": "d", "text": "x > 2", "misconception_code": "INEQ_004"},
+                ],
+            ),
+            (
+                linear_inequalities, 3,
+                "Solve -4 < 2x + 2 ≤ 8.",
+                "d", "LINEAR_INEQUALITIES", "MULTIPLE_CHOICE",
+                {"tier": "compound", "a": 2, "b": 2, "c1": -4, "c2": 8,
+                 "op1": "<", "op2": "≤"},
+                [
+                    {"id": "a", "text": "-3 ≤ x < 3", "misconception_code": "INEQ_003"},
+                    {"id": "b", "text": "x ≤ 3", "misconception_code": "INEQ_004"},
+                    {"id": "c", "text": "-3 < x ≤ -3", "misconception_code": "INEQ_004"},
+                    {"id": "d", "text": "-3 < x ≤ 3"},
+                ],
+            ),
+            (
+                linear_inequalities, 4,
+                "Solve 5x + 7 > 5x + 3.",
+                "a", "LINEAR_INEQUALITIES", "MULTIPLE_CHOICE",
+                {"tier": "special", "a": 5, "b1": 7, "b2": 3, "op": ">"},
+                [
+                    {"id": "a", "text": "all real numbers"},
+                    {"id": "b", "text": "no solution", "misconception_code": "INEQ_004"},
+                    {"id": "c", "text": "x > -4", "misconception_code": "INEQ_004"},
+                    {"id": "d", "text": "x = 0"},
+                ],
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in ineq_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters, choices=choices,

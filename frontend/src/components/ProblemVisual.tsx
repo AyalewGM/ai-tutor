@@ -78,6 +78,9 @@ export interface VisualSpec {
   leg_b?: string;
   hyp?: string;
   markers?: Array<{ label: string; position: number }>;
+  point?: number;
+  direction?: "left" | "right";
+  closed?: boolean;
   pairs?: number[][];
 }
 
@@ -1084,6 +1087,47 @@ function XYTable({ spec }: { spec: VisualSpec }) {
   );
 }
 
+function InequalityLine({ spec }: { spec: VisualSpec }) {
+  const min = spec.min ?? 0;
+  const max = spec.max ?? 10;
+  const point = spec.point ?? 0;
+  const closed = spec.closed ?? false;
+  const left = spec.direction !== "right";
+  const width = 360;
+  const pad = 24;
+  const xFor = (v: number) => pad + ((v - min) / (max - min)) * (width - 2 * pad);
+  const y = 60;
+  const ticks = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+  const rayX1 = left ? pad - 4 : xFor(point);
+  const rayX2 = left ? xFor(point) : width - pad + 4;
+
+  return (
+    <svg viewBox={`0 0 ${width} 110`} className="visual" role="img" aria-label={spec.aria_label}>
+      <line x1={pad} y1={y} x2={width - pad} y2={y} className="viz-axis" />
+      {ticks.map((t) => (
+        <g key={t}>
+          <line x1={xFor(t)} y1={y - 5} x2={xFor(t)} y2={y + 5} className="viz-tick" />
+          <text x={xFor(t)} y={y + 20} textAnchor="middle" className="viz-tick-label">{t}</text>
+        </g>
+      ))}
+      <line x1={rayX1} y1={y} x2={rayX2} y2={y} className="viz-ineq-ray" />
+      <polygon
+        points={left
+          ? `${pad - 10},${y} ${pad},${y - 5} ${pad},${y + 5}`
+          : `${width - pad + 10},${y} ${width - pad},${y - 5} ${width - pad},${y + 5}`}
+        className="viz-ineq-tip"
+      />
+      <circle
+        cx={xFor(point)}
+        cy={y}
+        r="6"
+        className={closed ? "viz-point viz-point-a" : "viz-ineq-open"}
+      />
+      <text x={xFor(point)} y={y + 34} textAnchor="middle" className="viz-label">{point}</text>
+    </svg>
+  );
+}
+
 function RadicalLine({ spec }: { spec: VisualSpec }) {
   const min = spec.min ?? 0;
   const max = spec.max ?? 10;
@@ -1368,6 +1412,7 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "number_line") return <NumberLine spec={spec} />;
   if (spec.type === "number_line_compare") return <NumberLine spec={spec} compare />;
   if (spec.type === "radical_line") return <RadicalLine spec={spec} />;
+  if (spec.type === "inequality_line") return <InequalityLine spec={spec} />;
   if (spec.type === "array_model") return <ArrayModel spec={spec} />;
   if (spec.type === "fraction_bar" || spec.type === "ratio_bar") return <FractionBar spec={spec} />;
   if (spec.type === "coordinate_plane" || spec.type === "coordinate_point") return <CoordinatePlane spec={spec} />;

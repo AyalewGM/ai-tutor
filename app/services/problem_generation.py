@@ -3238,6 +3238,156 @@ def _generate_signed_numbers(rng: random.Random, difficulty: int) -> GeneratedPr
     )
 
 
+_INEQ_OPS = ("<", ">", "≤", "≥")
+
+
+def _ineq_flip(op: str) -> str:
+    return {"<": ">", ">": "<", "≤": "≥", "≥": "≤"}[op]
+
+
+def _ineq_strict(op: str) -> str:
+    return {"<": "≤", ">": "≥", "≤": "<", "≥": ">"}[op]
+
+
+_INEQ_WORD = [
+    ("A gym charges ${b} to join plus ${r} per month. For which values of m is the total cost {word} ${c}?", "m"),
+    ("Sarah has ${b} and earns ${r} per hour. For which values of h does she have {word} ${c}?", "h"),
+    ("A van rental costs ${b} plus ${r} per day. For which values of d is the cost {word} ${c}?", "d"),
+]
+
+
+def _generate_linear_inequalities(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """One-variable linear inequalities for A-REI.3: solve ax + b ⊙ c,
+    judge whether the sign flips, read an inequality number line,
+    choose the inequality a context asks for, solve compound forms
+    and recognise no-solution/all-reals cases.
+
+    The `graph` tier renders `inequality_line`; solving tiers stay
+    text-only since a rendered ray would state the answer."""
+    tiers = ["solve", "flip_or_not"]
+    if difficulty >= 2:
+        tiers += ["graph", "word"]
+    if difficulty >= 3:
+        tiers.append("compound")
+    if difficulty >= 4:
+        tiers.append("special")
+    tier = rng.choice(tiers)
+    params: dict = {"tier": tier}
+    kind = "MULTIPLE_CHOICE"
+
+    if tier == "solve":
+        a = rng.randint(2, 8) * rng.choice([1, 1, -1])  # bias positive
+        k = rng.randint(-6, 6)
+        b = rng.randint(-5, 5)
+        c = a * k + b
+        op = rng.choice(_INEQ_OPS)
+        need_flip = a < 0
+        result_op = _ineq_flip(op) if need_flip else op
+        params.update(a=a, b=b, c=c, op=op)
+        b_text = f"+ {b}" if b >= 0 else f"- {abs(b)}"
+        prompt = f"Solve {a}x {b_text} {op} {c}."
+        correct = f"x {result_op} {k}"
+        pool = [
+            (f"x {op} {k}" if need_flip else f"x {_ineq_flip(op)} {k}",
+             "INEQ_001" if need_flip else "INEQ_002"),
+            (f"x {_ineq_strict(result_op)} {k}", "INEQ_003"),
+            (f"x {result_op} {k + (1 if k < 8 else -1)}", None),
+        ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "flip_or_not":
+        a = -rng.randint(2, 8)
+        k = rng.randint(-6, 6)
+        c = a * k
+        op = rng.choice(_INEQ_OPS)
+        params.update(a=a, c=c, op=op)
+        prompt = f"Which inequality is equivalent to {a}x {op} {c}?"
+        correct = f"x {_ineq_flip(op)} {k}"
+        pool = [
+            (f"x {op} {k}", "INEQ_001"),
+            (f"x {_ineq_strict(_ineq_flip(op))} {k}", "INEQ_003"),
+            (f"x {_ineq_flip(op)} {-k}", "INEQ_004"),
+        ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "graph":
+        v = rng.randint(-6, 6)
+        closed = rng.random() < 0.5
+        left = rng.random() < 0.5
+        op = ("≤" if closed else "<") if left else ("≥" if closed else ">")
+        params.update(point=v, direction="left" if left else "right",
+                      closed=closed, min=v - 4, max=v + 4)
+        prompt = "Which inequality matches the graph?"
+        correct = f"x {op} {v}"
+        pool = [
+            (f"x {_ineq_flip(op)} {v}", "INEQ_004"),
+            (f"x {_ineq_strict(op)} {v}", "INEQ_003"),
+            (f"x {_ineq_flip(_ineq_strict(op))} {v}", "INEQ_004"),
+        ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "word":
+        setup, var = rng.choice(_INEQ_WORD)
+        r = rng.choice([5, 9, 10, 12, 15, 20])
+        k = rng.randint(3, 9)
+        b = rng.choice([10, 15, 20, 25, 40])
+        c = r * k + b
+        strict = rng.random() < 0.5
+        word = "more than" if strict else "at least"
+        op = ">" if strict else "≥"
+        params.update(r=r, b=b, c=c, op=op, var=var)
+        prompt = setup.format(b=b, r=r, c=c, word=word)
+        correct = f"{var} {op} {k}"
+        pool = [
+            (f"{var} {_ineq_strict(op)} {k}", "INEQ_003"),
+            (f"{var} {_ineq_flip(op)} {k}", "INEQ_004"),
+            (f"{var} {op} {k + 1}", None),
+        ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "compound":
+        a = rng.randint(2, 5)
+        k1 = rng.randint(-5, 3)
+        k2 = k1 + rng.randint(2, 5)
+        b = rng.randint(-4, 4)
+        c1, c2 = a * k1 + b, a * k2 + b
+        left_closed = rng.random() < 0.5
+        right_closed = rng.random() < 0.5
+        op1 = "≤" if left_closed else "<"
+        op2 = "≤" if right_closed else "<"
+        params.update(a=a, b=b, c1=c1, c2=c2, op1=op1, op2=op2)
+        b_text = f"+ {b}" if b >= 0 else f"- {abs(b)}"
+        prompt = f"Solve {c1} {op1} {a}x {b_text} {op2} {c2}."
+        correct = f"{k1} {op1} x {op2} {k2}"
+        pool = [
+            (f"{k1} {_ineq_strict(op1)} x {op2} {k2}", "INEQ_003"),
+            (f"x {op2} {k2}", "INEQ_004"),
+            (f"{-k2} {op1} x {op2} {-k1}", "INEQ_004"),
+        ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    else:  # special — x terms cancel to a true or false statement
+        a = rng.randint(2, 7)
+        b1, b2 = rng.sample(range(-6, 8), 2)
+        truthy = rng.random() < 0.5
+        op = rng.choice((">", "≥"))
+        # b1 - b2 decides truthiness once the x terms cancel; invert if needed
+        holds = b1 - b2 > 0
+        if holds != truthy:
+            b1, b2 = b2, b1
+        params.update(a=a, b1=b1, b2=b2, op=op)
+        b1_text = f"+ {b1}" if b1 >= 0 else f"- {abs(b1)}"
+        b2_text = f"+ {b2}" if b2 >= 0 else f"- {abs(b2)}"
+        prompt = f"Solve {a}x {b1_text} {op} {a}x {b2_text}."
+        correct = "all real numbers" if truthy else "no solution"
+        pool = [
+            ("no solution" if truthy else "all real numbers", "INEQ_004"),
+            (f"x {op} {b2 - b1}", "INEQ_004"),
+            ("x = 0", None),
+        ]
+        choices, answer = _mc_choices(rng, correct, pool)
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "LINEAR_INEQUALITIES",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -3893,6 +4043,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "FUNCTIONS": _generate_functions,
     "PROPORTIONAL_GRAPH": _generate_proportional_graph,
     "SIGNED_NUMBERS": _generate_signed_numbers,
+    "LINEAR_INEQUALITIES": _generate_linear_inequalities,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -4219,6 +4370,7 @@ PROMPT_SHARED_TYPES = {
     "FUNCTIONS",
     "PROPORTIONAL_GRAPH",
     "SIGNED_NUMBERS",
+    "LINEAR_INEQUALITIES",
 }
 
 
