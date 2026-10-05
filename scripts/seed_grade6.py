@@ -82,15 +82,21 @@ def seed():
         expression = _skill(db, curriculum, "M6.EE.EXPR", "Expressions", "Write and evaluate numerical and algebraic expressions.", 2, "MATH.EE.EXPRESSIONS")
         equation = _skill(db, curriculum, "M6.EE.EQUATION", "One-variable Equations", "Represent and solve one-variable equations.", 3, "MATH.EE.ONE_VARIABLE_EQUATIONS")
         statistics = _skill(db, curriculum, "M6.SP.STAT", "Center and Spread", "Find the mean, median, mode and range of a data set, read dot plots, and choose the best measure of center when data contain an outlier.", 2, "MATH.SP.CENTER_SPREAD")
+        geometry = _skill(db, curriculum, "M6.G.GEO", "Area, Volume and Distance", "Find the area of triangles, parallelograms and trapezoids, the volume and surface area of rectangular prisms, and distances between coordinate-plane points sharing an axis.", 2, "MATH.G.MEASURE")
         _edge(db, unit_rate, ratio)
         _edge(db, equation, expression)
         _edge(db, statistics, fraction)
+        _edge(db, geometry, fraction)
 
         for args in [
             (statistics, "STAT6_001", "Mean confused with median or total", "The learner reports the middle value, the sum of the data, or the spread instead of dividing the total by the count.", "The mean is the fair-share total: add every value, then divide by how many values there are."),
             (statistics, "STAT6_002", "Median read without ordering", "The learner picks the middle value of the list as printed, or misses that an even-sized set needs the mean of the two middle values.", "Order the data first, then find the middle; for an even count, average the two middle values."),
             (statistics, "STAT6_003", "Range or mode confused with center", "The learner reports the largest value or the most frequent value where the spread was asked, or treats range as the maximum.", "The range is max minus min; the mode is the most frequent value — neither describes the centre on its own."),
             (statistics, "STAT6_004", "Center measure chosen without regard to shape", "The learner chooses the mean for a data set with an outlier, or counts the wrong column on a dot plot.", "An outlier pulls the mean toward it but not the median; check a value in the middle of the data to see which measure fits."),
+            (geometry, "GEO6_001", "Halving or doubling step missed", "The learner reports base times height for a triangle or trapezoid, or sums only one of each face for a prism's surface area.", "Triangles and trapezoids are half of a parallelogram with the same base and height; a prism has three pairs of identical faces."),
+            (geometry, "GEO6_002", "Area confused with perimeter or edge sum", "The learner adds the labelled side lengths instead of multiplying the dimensions the formula needs.", "Area counts squares covering the shape — it is a product, not a sum of sides."),
+            (geometry, "GEO6_003", "Volume and surface area swapped", "The learner reports length times width times height when asked for surface area, or the face total when asked for volume.", "Volume fills the prism in cubes; surface area covers its six faces in squares."),
+            (geometry, "GEO6_004", "Wrong dimension or miscounted distance", "The learner multiplies the base by the slant side instead of the height, multiplies the two trapezoid bases, or counts a coordinate distance with the wrong sign handling.", "Area needs the perpendicular height, and distance counts unit steps along the shared axis."),
         ]:
             _misconception(db, *args)
 
@@ -139,6 +145,42 @@ def seed():
               {"id": "b", "text": "The range — it shows the spread", "misconception_code": "STAT6_003"},
               {"id": "c", "text": "The median — it is not pulled toward the outlier"},
               {"id": "d", "text": "The mode — it is the most frequent value", "misconception_code": "STAT6_004"}]),
+        ]:
+            _problem(db, args[0], args[1], args[2], difficulty=args[3],
+                     problem_type=args[4], answer_kind=args[5], parameters=args[6], choices=args[7])
+
+        # Geometry items — area, volume, surface area and distance (6.G).
+        for args in [
+            (geometry, "A triangle has a base of 8 units and a height of 6 units. What is its area in square units?",
+             "24", 1, "GEOMETRY_MEASURE", "INTEGER",
+             {"tier": "triangle_area", "shape": "triangle", "base": 8, "height": 6}, None),
+            (geometry, "A parallelogram has a base of 9 units, a slant side of 6 units and a height of 4 units. What is its area in square units?",
+             "b", 1, "GEOMETRY_MEASURE", "MULTIPLE_CHOICE",
+             {"tier": "parallelogram_area", "shape": "parallelogram", "base": 9, "height": 4, "slant": 6},
+             [{"id": "a", "text": "54", "misconception_code": "GEO6_004"},
+              {"id": "b", "text": "36"},
+              {"id": "c", "text": "30", "misconception_code": "GEO6_002"},
+              {"id": "d", "text": "13", "misconception_code": "GEO6_002"}]),
+            (geometry, "What is the distance between the points (2, -3) and (2, 4)?",
+             "7", 2, "GEOMETRY_MEASURE", "INTEGER",
+             {"tier": "distance", "points": [[2, -3], [2, 4]]}, None),
+            (geometry, "A rectangular prism is 5 units long, 3 units wide and 4 units tall. What is its volume in cubic units?",
+             "60", 2, "GEOMETRY_MEASURE", "INTEGER",
+             {"tier": "volume", "length": 5, "width": 3, "height": 4}, None),
+            (geometry, "A rectangular prism is 3 units long, 4 units wide and 5 units tall. What is its surface area in square units?",
+             "c", 3, "GEOMETRY_MEASURE", "MULTIPLE_CHOICE",
+             {"tier": "surface_area", "length": 3, "width": 4, "height": 5},
+             [{"id": "a", "text": "60", "misconception_code": "GEO6_003"},
+              {"id": "b", "text": "47", "misconception_code": "GEO6_001"},
+              {"id": "c", "text": "94"},
+              {"id": "d", "text": "12", "misconception_code": "GEO6_002"}]),
+            (geometry, "A trapezoid has bases of 4 and 10 units and a height of 6 units. What is its area in square units?",
+             "a", 3, "GEOMETRY_MEASURE", "MULTIPLE_CHOICE",
+             {"tier": "trapezoid_area", "shape": "trapezoid", "base": 10, "top": 4, "height": 6},
+             [{"id": "a", "text": "42"},
+              {"id": "b", "text": "84", "misconception_code": "GEO6_001"},
+              {"id": "c", "text": "40", "misconception_code": "GEO6_004"},
+              {"id": "d", "text": "20", "misconception_code": "GEO6_002"}]),
         ]:
             _problem(db, args[0], args[1], args[2], difficulty=args[3],
                      problem_type=args[4], answer_kind=args[5], parameters=args[6], choices=args[7])

@@ -16,11 +16,11 @@ def test_grade6_seed_is_idempotent_provenanced_and_isolated():
         assert grade6.grade_level == "6"
         assert grade6.source_uri == MSDE_SOURCE
         skills = list(db.scalars(select(Skill).where(Skill.curriculum_id == grade6.id)))
-        assert {s.code for s in skills} == {"M6.RP.RATIO", "M6.RP.UNIT_RATE", "M6.NS.FRACTION", "M6.EE.EXPR", "M6.EE.EQUATION", "M6.SP.STAT"}
+        assert {s.code for s in skills} == {"M6.RP.RATIO", "M6.RP.UNIT_RATE", "M6.NS.FRACTION", "M6.EE.EXPR", "M6.EE.EQUATION", "M6.SP.STAT", "M6.G.GEO"}
         ids = {s.id for s in skills}
-        assert len(list(db.scalars(select(Problem).where(Problem.primary_skill_id.in_(ids))))) == 15
+        assert len(list(db.scalars(select(Problem).where(Problem.primary_skill_id.in_(ids))))) == 21
         edges = list(db.scalars(select(SkillPrerequisite).where(SkillPrerequisite.skill_id.in_(ids))))
-        assert len(edges) == 3
+        assert len(edges) == 4
         assert all(e.prerequisite_skill_id in ids for e in edges)
         mappings = list(db.scalars(select(CurriculumSkillMapping).where(CurriculumSkillMapping.skill_id.in_(ids))))
         assert len(mappings) == len(skills)

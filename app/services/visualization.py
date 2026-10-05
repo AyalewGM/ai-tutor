@@ -627,6 +627,48 @@ def _center_spread_model(problem: Problem) -> dict | None:
     }
 
 
+def _geometry6_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    tier = params.get("tier")
+    shapes = {
+        "triangle_area": "triangle",
+        "parallelogram_area": "parallelogram",
+        "trapezoid_area": "trapezoid",
+    }
+    if tier in shapes:
+        base, height = _int(params.get("base")), _int(params.get("height"))
+        if base is None or height is None:
+            return None
+        spec = {
+            "type": "shape_area",
+            "shape": shapes[tier],
+            "base": base,
+            "height": height,
+        }
+        slant, top = _int(params.get("slant")), _int(params.get("top"))
+        if slant is not None:
+            spec["slant"] = slant
+        if top is not None:
+            spec["top"] = top
+        spec["aria_label"] = (
+            f"A {spec['shape']} with labelled base and height.")
+        return spec
+    if tier == "distance":
+        points = params.get("points")
+        if not (
+            isinstance(points, list) and len(points) == 2
+            and all(isinstance(p, list) and len(p) == 2 for p in points)
+        ):
+            return None
+        return {
+            "type": "distance_segment",
+            "points": points,
+            "labels": ["A", "B"],
+            "aria_label": "Two points on a coordinate plane joined by a segment.",
+        }
+    return None
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1497,6 +1539,8 @@ def visualization_for(problem: Problem) -> dict | None:
         return _inequality_model(problem)
     if problem.problem_type == "CENTER_SPREAD":
         return _center_spread_model(problem)
+    if problem.problem_type == "GEOMETRY_MEASURE":
+        return _geometry6_model(problem)
     if problem.problem_type == "EXPONENTIAL_FUNCTION":
         return _exponential_graph_model(problem)
     return None
