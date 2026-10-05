@@ -77,6 +77,7 @@ export interface VisualSpec {
   leg_a?: string;
   leg_b?: string;
   hyp?: string;
+  markers?: Array<{ label: string; position: number }>;
 }
 
 interface PanSpec {
@@ -1060,6 +1061,35 @@ function NumberLine({ spec, compare = false }: { spec: VisualSpec; compare?: boo
 }
 
 
+function RadicalLine({ spec }: { spec: VisualSpec }) {
+  const min = spec.min ?? 0;
+  const max = spec.max ?? 10;
+  const markers = spec.markers ?? [];
+  const width = 360;
+  const pad = 24;
+  const xFor = (v: number) => pad + ((v - min) / (max - min)) * (width - 2 * pad);
+  const y = 60;
+  const ticks = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+
+  return (
+    <svg viewBox={`0 0 ${width} 110`} className="visual" role="img" aria-label={spec.aria_label}>
+      <line x1={pad} y1={y} x2={width - pad} y2={y} className="viz-axis" />
+      {ticks.map((t) => (
+        <g key={t}>
+          <line x1={xFor(t)} y1={y - 5} x2={xFor(t)} y2={y + 5} className="viz-tick" />
+          <text x={xFor(t)} y={y + 20} textAnchor="middle" className="viz-tick-label">{t}</text>
+        </g>
+      ))}
+      {markers.map((m) => (
+        <g key={m.label}>
+          <circle cx={xFor(m.position)} cy={y} r="6" className="viz-point viz-point-a" />
+          <text x={xFor(m.position)} y={y - 14} textAnchor="middle" className="viz-label">{m.label}</text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
 function DecimalPlaceValue({ spec }: { spec: VisualSpec }) {
   const whole = Math.max(0, Math.floor(spec.whole ?? 0));
   const tenths = Math.min(9, Math.max(0, Math.floor(spec.tenths ?? 0)));
@@ -1314,6 +1344,7 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "polynomial_sign_change") return <PolynomialSignChange spec={spec} />;
   if (spec.type === "number_line") return <NumberLine spec={spec} />;
   if (spec.type === "number_line_compare") return <NumberLine spec={spec} compare />;
+  if (spec.type === "radical_line") return <RadicalLine spec={spec} />;
   if (spec.type === "array_model") return <ArrayModel spec={spec} />;
   if (spec.type === "fraction_bar" || spec.type === "ratio_bar") return <FractionBar spec={spec} />;
   if (spec.type === "coordinate_plane" || spec.type === "coordinate_point") return <CoordinatePlane spec={spec} />;

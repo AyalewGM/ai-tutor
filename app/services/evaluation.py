@@ -597,6 +597,26 @@ def _pythagorean_errors(prompt: str, answer: str, canonical: str) -> Misconcepti
     return None
 
 
+_RADICAL_BOUND = re.compile(
+    r"√(\d+)liesbetweentwoconsecutivewholenumbers"
+)
+
+
+def _radical_errors(prompt: str, answer: str, canonical: str) -> MisconceptionMatch | None:
+    """Radical estimation errors on the free-text bounding tier: halving
+    the radicand (√n ≈ n/2) or answering the larger bound when the
+    smaller was asked."""
+    bound = _RADICAL_BOUND.search(prompt)
+    if bound is None:
+        return None
+    n = int(bound.group(1))
+    if answer == str(n // 2):
+        return MisconceptionMatch("RAD_001", 0.9)
+    if answer == str(math.isqrt(n) + 1):
+        return MisconceptionMatch("RAD_002", 0.9)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -625,6 +645,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _best_fit_prediction_errors,
     _exponential_errors,
     _pythagorean_errors,
+    _radical_errors,
 )
 
 

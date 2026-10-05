@@ -1,3 +1,4 @@
+import math
 import random
 import uuid
 from collections.abc import Callable
@@ -2625,6 +2626,152 @@ def _generate_pythagorean(rng: random.Random, difficulty: int) -> GeneratedProbl
     )
 
 
+# n = a²·b with b squarefree — radicands that simplify as √n = a√b.
+_SQUAREFUL = [
+    (8, 2, 2), (12, 2, 3), (18, 3, 2), (20, 2, 5), (27, 3, 3),
+    (32, 4, 2), (45, 3, 5), (48, 4, 3), (50, 5, 2), (63, 3, 7),
+    (72, 6, 2), (75, 5, 3), (80, 4, 5), (98, 7, 2), (99, 3, 11),
+]
+
+
+def _nonsquare(rng: random.Random, lo: int = 2, hi: int = 99) -> int:
+    n = rng.randint(lo, hi)
+    while math.isqrt(n) ** 2 == n:
+        n = rng.randint(lo, hi)
+    return n
+
+
+def _generate_radicals(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Irrational-number items: classify √n, bound it between whole
+    numbers, locate it on a lettered number line, estimate it to the
+    nearest tenth, simplify a√b, or compare it with a decimal.
+
+    Only the locate tier draws a visual — the lettered markers are the
+    question itself; marking a position on any other tier would state
+    the answer."""
+    tiers = ["classify", "between_integers"]
+    if difficulty >= 2:
+        tiers += ["locate", "estimate"]
+    if difficulty >= 3:
+        tiers += ["simplify", "compare"]
+    tier = rng.choice(tiers)
+    choices = None
+    params: dict = {"tier": tier}
+    kind = "MULTIPLE_CHOICE"
+
+    if tier == "classify":
+        if rng.random() < 0.5:
+            root = rng.randint(2, 9)
+            n = root * root
+            correct = f"Rational — √{n} = {root} is a whole number"
+            pool = [
+                ("Irrational — every square root is irrational", "RAD_004"),
+                ("Irrational — its decimal never terminates or repeats", "RAD_004"),
+                ("Cannot be determined without knowing n", None),
+            ]
+        else:
+            n = _nonsquare(rng)
+            correct = (f"Irrational — √{n} is a non-terminating, "
+                       f"non-repeating decimal")
+            pool = [
+                (f"Rational — {n} is a whole number", "RAD_004"),
+                (f"Rational — √{n} can be written as a fraction", "RAD_004"),
+                ("Cannot be determined without knowing n", None),
+            ]
+        params["n"] = n
+        prompt = f"Is √{n} a rational or an irrational number?"
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "between_integers":
+        n = _nonsquare(rng)
+        params["n"] = n
+        prompt = (f"The value √{n} lies between two consecutive whole "
+                  f"numbers. What is the smaller of the two?")
+        answer = str(math.isqrt(n))
+        kind = "INTEGER"
+    elif tier == "locate":
+        n = _nonsquare(rng)
+        t = math.sqrt(n)
+        floor = math.isqrt(n)
+        hi = floor + 2
+        positions = [t]
+        for candidate in (
+            float(floor), t + 1.4, t - 1.4, floor - 0.8,
+            floor + 1.7, t * 0.55, n / 4,
+        ):
+            if 0.15 <= candidate <= hi - 0.15 and all(
+                abs(candidate - p) >= 0.45 for p in positions
+            ):
+                positions.append(candidate)
+            if len(positions) == 4:
+                break
+        positions.sort()
+        markers = [
+            {"label": chr(ord("A") + i), "position": round(p, 2)}
+            for i, p in enumerate(positions)
+        ]
+        floor_label = next(
+            (m["label"] for m in markers if m["position"] == float(floor)),
+            None,
+        )
+        correct = markers[positions.index(t)]["label"]
+        params.update(n=n, lo=0, hi=hi, markers=markers)
+        prompt = f"Which letter marks the position of √{n} on the number line?"
+        pool = [
+            (m["label"], "RAD_002" if m["label"] == floor_label else None)
+            for m in markers
+            if m["label"] != correct
+        ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "estimate":
+        n = _nonsquare(rng)
+        params["n"] = n
+        t = math.sqrt(n)
+        off = rng.choice([0.1, -0.1])
+        prompt = f"What is √{n} rounded to the nearest tenth?"
+        correct = f"{t:.1f}"
+        pool = [
+            (f"{math.isqrt(n)}.0", "RAD_002"),
+            (f"{n / 2:g}", "RAD_001"),
+            (f"{t + off:.1f}", None),
+            (f"{t - off:.1f}", None),
+        ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "simplify":
+        n, a, b = rng.choice(_SQUAREFUL)
+        params["n"] = n
+        prompt = f"Which expression is √{n} written in simplest form?"
+        correct = f"{a}√{b}"
+        pool = [
+            (f"{a * a}√{b}", "RAD_003"),
+            (f"{b}√{a * a}", "RAD_003"),
+            (f"{a}√{a * b}", "RAD_003"),
+            (str(math.isqrt(n)), "RAD_002"),
+            (str(a + b), None),
+        ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    else:  # compare
+        n = _nonsquare(rng)
+        t = math.sqrt(n)
+        floor = math.isqrt(n)
+        d = floor + rng.choice([0.3, 0.5, 0.8])
+        if abs(t - d) < 0.15:
+            d = floor + (0.15 if t < floor + 0.5 else 0.85)
+        params.update(n=n, d=d)
+        prompt = f"Which is greater: √{n} or {d:g}?"
+        correct = f"√{n}" if t > d else f"{d:g}"
+        pool = [
+            (f"{d:g}" if t > d else f"√{n}", "RAD_002"),
+            ("They are equal", "RAD_002"),
+            ("They cannot be compared", None),
+        ]
+        choices, answer = _mc_choices(rng, correct, pool)
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "RADICALS",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -3276,6 +3423,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "FREQUENCY_TABLE": _generate_frequency_table,
     "PROBABILITY": _generate_probability,
     "PYTHAGOREAN": _generate_pythagorean,
+    "RADICALS": _generate_radicals,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -3598,6 +3746,7 @@ PROMPT_SHARED_TYPES = {
     "FREQUENCY_TABLE",
     "PROBABILITY",
     "PYTHAGOREAN",
+    "RADICALS",
 }
 
 

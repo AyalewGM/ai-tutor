@@ -479,6 +479,36 @@ def _pythagorean_model(problem: Problem) -> dict | None:
     return None
 
 
+def _radicals_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    # Only the locate tier renders — the lettered markers are the
+    # question itself; any other tier's line would state the answer.
+    if params.get("tier") != "locate":
+        return None
+    markers = params.get("markers")
+    lo, hi = _int(params.get("lo")), _int(params.get("hi"))
+    if (
+        not isinstance(markers, list)
+        or not (2 <= len(markers) <= 6)
+        or lo is None
+        or hi is None
+        or not all(
+            isinstance(m, dict)
+            and isinstance(m.get("position"), (int, float))
+            and isinstance(m.get("label"), str)
+            for m in markers
+        )
+    ):
+        return None
+    return {
+        "type": "radical_line",
+        "min": lo,
+        "max": hi,
+        "markers": markers,
+        "aria_label": "A number line with lettered marker positions.",
+    }
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1334,6 +1364,8 @@ def visualization_for(problem: Problem) -> dict | None:
         return _probability_model(problem)
     if problem.problem_type == "PYTHAGOREAN":
         return _pythagorean_model(problem)
+    if problem.problem_type == "RADICALS":
+        return _radicals_model(problem)
     if problem.problem_type == "EXPONENTIAL_FUNCTION":
         return _exponential_graph_model(problem)
     return None
