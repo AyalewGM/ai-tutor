@@ -644,6 +644,29 @@ def _function_errors(prompt: str, answer: str, canonical: str) -> MisconceptionM
     return None
 
 
+def _proportional_errors(prompt: str, answer: str, canonical: str) -> MisconceptionMatch | None:
+    """Constant-of-proportionality errors on table prompts: k reported
+    inverted as x ÷ y (PROP_002) or found additively as y − x
+    (PROP_003)."""
+    if "constantofproportionality" not in prompt:
+        return None
+    pairs = _FUNC_PAIRS.findall(prompt)
+    if len(pairs) < 2:
+        return None
+    x1, y1 = int(pairs[0][0]), int(pairs[0][1])
+    if x1 == 0:
+        return None
+    student = _normalized_fraction(answer)
+    if student is None:
+        return None
+    inverted = _normalized_fraction(f"{x1}/{y1}")
+    if inverted is not None and student == inverted:
+        return MisconceptionMatch("PROP_002", 0.9)
+    if answer == str(y1 - x1):
+        return MisconceptionMatch("PROP_003", 0.9)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -674,6 +697,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _pythagorean_errors,
     _radical_errors,
     _function_errors,
+    _proportional_errors,
 )
 
 
