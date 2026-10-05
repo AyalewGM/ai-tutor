@@ -44,6 +44,10 @@ export interface VisualSpec {
   coeffs?: number[];
   roots?: number[];
   mark_roots?: boolean;
+  solid?: string;
+  l?: number;
+  w?: number;
+  r?: number;
 }
 
 interface PanSpec {
@@ -467,19 +471,63 @@ function DecimalPlaceValue({ spec }: { spec: VisualSpec }) {
   );
 }
 
-function VolumeModel({ spec }: { spec: VisualSpec }) {
-  const length = Math.max(1, Math.floor(spec.length ?? 1));
-  const width = Math.max(1, Math.floor(spec.width ?? 1));
-  const height = Math.max(1, Math.floor(spec.height ?? 1));
-  const volume = length * width * height;
+function SolidModel({ spec }: { spec: VisualSpec }) {
+  const solid = spec.solid ?? "rectangular_prism";
+  const label = spec.aria_label;
+  if (solid === "rectangular_prism") {
+    return (
+      <svg viewBox="0 0 360 210" className="visual elementary-visual" role="img" aria-label={label}>
+        <path d="M70 70 L230 70 L290 35 L130 35 Z" className="viz-cell" />
+        <path d="M230 70 L290 35 L290 135 L230 170 Z" className="viz-cell viz-cell-b" />
+        <rect x="70" y="70" width="160" height="100" className="viz-cell viz-cell-a" />
+        {spec.l != null && <text x="150" y="190" textAnchor="middle" className="viz-label">l = {spec.l}</text>}
+        {spec.h != null && <text x="216" y="125" textAnchor="middle" className="viz-label">h = {spec.h}</text>}
+        {spec.w != null && <text x="297" y="85" textAnchor="middle" className="viz-label">w = {spec.w}</text>}
+      </svg>
+    );
+  }
+  if (solid === "square_pyramid") {
+    // Base parallelogram uses the same projection as the prism top; hidden
+    // base edges and the altitude are dashed.
+    return (
+      <svg viewBox="0 0 360 210" className="visual elementary-visual" role="img" aria-label={label}>
+        <path d="M70 150 L130 115 L290 115" className="viz-hidden" />
+        <path d="M70 150 L230 150 L290 115" className="viz-cell" fill="none" />
+        <line x1="180" y1="40" x2="70" y2="150" className="viz-axis" />
+        <line x1="180" y1="40" x2="230" y2="150" className="viz-axis" />
+        <line x1="180" y1="40" x2="290" y2="115" className="viz-axis" />
+        <line x1="180" y1="40" x2="130" y2="115" className="viz-hidden" />
+        <line x1="180" y1="40" x2="180" y2="132" className="viz-hidden" />
+        {spec.b != null && <text x="150" y="170" textAnchor="middle" className="viz-label">b = {spec.b}</text>}
+        {spec.h != null && <text x="195" y="90" className="viz-label">h = {spec.h}</text>}
+      </svg>
+    );
+  }
+  if (solid === "cylinder") {
+    return (
+      <svg viewBox="0 0 360 210" className="visual elementary-visual" role="img" aria-label={label}>
+        <path d="M100 160 A80 22 0 0 0 260 160" className="viz-hidden" />
+        <path d="M100 160 A80 22 0 0 1 260 160" className="viz-axis" fill="none" />
+        <ellipse cx="180" cy="60" rx="80" ry="22" className="viz-cell viz-cell-a" />
+        <line x1="100" y1="60" x2="100" y2="160" className="viz-axis" />
+        <line x1="260" y1="60" x2="260" y2="160" className="viz-axis" />
+        <line x1="180" y1="60" x2="260" y2="60" className="viz-hidden" />
+        {spec.r != null && <text x="220" y="52" textAnchor="middle" className="viz-label">r = {spec.r}</text>}
+        {spec.h != null && <text x="278" y="115" className="viz-label">h = {spec.h}</text>}
+      </svg>
+    );
+  }
+  // cone
   return (
-    <svg viewBox="0 0 360 210" className="visual elementary-visual" role="img" aria-label={spec.aria_label}>
-      <path d="M70 70 L230 70 L290 35 L130 35 Z" className="viz-cell" />
-      <path d="M230 70 L290 35 L290 135 L230 170 Z" className="viz-cell viz-cell-b" />
-      <rect x="70" y="70" width="160" height="100" className="viz-cell viz-cell-a" />
-      <text x="150" y="125" textAnchor="middle" className="viz-term">{length} × {height}</text>
-      <text x="260" y="105" textAnchor="middle" className="viz-label">depth {width}</text>
-      <text x="180" y="195" textAnchor="middle" className="viz-label">Volume = {volume} cubic units</text>
+    <svg viewBox="0 0 360 210" className="visual elementary-visual" role="img" aria-label={label}>
+      <path d="M100 150 A80 20 0 0 0 260 150" className="viz-hidden" />
+      <path d="M100 150 A80 20 0 0 1 260 150" className="viz-axis" fill="none" />
+      <line x1="180" y1="45" x2="100" y2="150" className="viz-axis" />
+      <line x1="180" y1="45" x2="260" y2="150" className="viz-axis" />
+      <line x1="180" y1="45" x2="180" y2="150" className="viz-hidden" />
+      <line x1="180" y1="150" x2="260" y2="150" className="viz-hidden" />
+      {spec.r != null && <text x="220" y="168" textAnchor="middle" className="viz-label">r = {spec.r}</text>}
+      {spec.h != null && <text x="192" y="100" className="viz-label">h = {spec.h}</text>}
     </svg>
   );
 }
@@ -660,6 +708,6 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "polynomial_graph") return <PolynomialGraph spec={spec} />;
   if (spec.type === "angle" || spec.type === "angle_diagram") return <AngleDiagram spec={spec} />;
   if (spec.type === "decimal_place_value") return <DecimalPlaceValue spec={spec} />;
-  if (spec.type === "volume_model" || spec.type === "volume") return <VolumeModel spec={spec} />;
+  if (spec.type === "volume_model" || spec.type === "volume" || spec.type === "solid") return <SolidModel spec={spec} />;
   return null;
 }
