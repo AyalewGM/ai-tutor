@@ -1585,6 +1585,139 @@ def _generate_transformation(rng: random.Random, difficulty: int) -> GeneratedPr
     )
 
 
+_SIMILARITY_SHAPES = {
+    "triangle": [[0, 0], [6, 0], [2, 5]],
+    "wide": [[0, 0], [7, 0], [4, 3]],
+    "tall": [[0, 0], [3, 0], [1, 6]],
+}
+
+
+def _scale_verts(verts: list[list[float]], scale: float) -> list[list[float]]:
+    return [[round(vx * scale, 2), round(vy * scale, 2)] for vx, vy in verts]
+
+
+def _generate_similarity(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Similar and congruent figures: scale factors, proportional sides,
+    the k versus k² perimeter/area trap, and congruence classification.
+    Diagrams are always proportional — the drawn image is the preimage
+    scaled by k."""
+    tiers = ["scale_factor", "missing_side"]
+    if difficulty >= 3:
+        tiers += ["perimeter_area_effect", "classify"]
+    tier = rng.choice(tiers)
+
+    shape = _SIMILARITY_SHAPES["triangle"]
+    base_len = 6.0  # the base edge of the reference shape
+
+    if tier == "scale_factor":
+        a, k_num, k_den = rng.choice(
+            [(2, 2, 1), (3, 2, 1), (4, 2, 1), (4, 3, 2), (6, 3, 2), (2, 3, 1)]
+        )
+        image_a = a * k_num // k_den
+        s = a / base_len
+        preimage = _scale_verts(shape, s)
+        image = _scale_verts(shape, s * k_num / k_den)
+        correct = str(k_num) if k_den == 1 else f"{k_num}/{k_den}"
+        distractors = [
+            (f"{k_den}/{k_num}", "SIM_003"),
+            (str(k_num + 1), None),
+            (str(image_a - a), None),
+            (str(image_a), None),
+        ]
+        prompt = (
+            "The two triangles shown are similar. What is the scale factor "
+            "from the smaller triangle to the larger one?"
+        )
+        choices, answer = _mc_choices(rng, correct, distractors)
+        params = {
+            "tier": tier, "preimage": preimage, "image": image,
+            "pre_edge_labels": [str(a), None, None],
+            "image_edge_labels": [str(image_a), None, None],
+            "k_num": k_num, "k_den": k_den,
+        }
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "missing_side":
+        a = rng.choice([3, 4, 5, 6])
+        k = rng.choice([2, 3])
+        b = rng.choice([4, 5, 7])
+        s = a / base_len
+        preimage = _scale_verts(shape, s)
+        image = _scale_verts(shape, s * k)
+        correct = b * k
+        distractors = [
+            (str(b + a * (k - 1)), "SIM_001"),
+            (str(a + b), None),
+            (str(b * k + a), None),
+            (str(a * k), None),
+        ]
+        prompt = (
+            "The two triangles shown are similar. What is the length of "
+            "the side labeled ?"
+        )
+        choices, answer = _mc_choices(rng, str(correct), distractors)
+        params = {
+            "tier": tier, "preimage": preimage, "image": image,
+            "pre_edge_labels": [str(a), str(b), None],
+            "image_edge_labels": [str(a * k), "?", None],
+        }
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "perimeter_area_effect":
+        k = rng.choice([2, 3, 4])
+        measure = rng.choice(["perimeter", "area"])
+        s = 3 / base_len
+        preimage = _scale_verts(shape, s)
+        image = _scale_verts(shape, s * k)
+        correct_exp = k if measure == "perimeter" else k * k
+        wrong_exp = k * k if measure == "perimeter" else k
+        distractors = [
+            (f"multiplied by {wrong_exp}", "SIM_002"),
+            (f"multiplied by {k * 2}", None),
+            ("stays the same", None),
+        ]
+        prompt = (
+            f"The smaller triangle is scaled by a factor of {k} to produce "
+            f"the larger one shown. By what factor does its {measure} change?"
+        )
+        choices, answer = _mc_choices(
+            rng, f"multiplied by {correct_exp}", distractors
+        )
+        params = {
+            "tier": tier, "preimage": preimage, "image": image,
+            "measure": measure, "k": k,
+        }
+        kind = "MULTIPLE_CHOICE"
+    else:  # classify — congruent, similar, or neither
+        relation = rng.choice(["congruent", "similar", "neither"])
+        s = rng.choice([2, 3]) / base_len
+        preimage = _scale_verts(shape, s)
+        if relation == "congruent":
+            image = list(preimage)
+            correct = "congruent"
+        elif relation == "similar":
+            image = _scale_verts(shape, s * rng.choice([1.5, 2]))
+            correct = "similar but not congruent"
+        else:
+            image = _scale_verts(rng.choice([_SIMILARITY_SHAPES["wide"], _SIMILARITY_SHAPES["tall"]]), s)
+            correct = "neither congruent nor similar"
+        distractors = [
+            (text, "SIM_004")
+            for text in ("congruent", "similar but not congruent",
+                         "neither congruent nor similar")
+            if text != correct
+        ]
+        prompt = (
+            "How are the two triangles shown related?"
+        )
+        choices, answer = _mc_choices(rng, correct, distractors)
+        params = {"tier": tier, "preimage": preimage, "image": image}
+        kind = "MULTIPLE_CHOICE"
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "SIMILARITY",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -2229,6 +2362,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "SOLID_VOLUME": _generate_solid_volume,
     "GEOMETRY_2D": _generate_geometry_2d,
     "TRANSFORMATION": _generate_transformation,
+    "SIMILARITY": _generate_similarity,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -2544,6 +2678,7 @@ PROMPT_SHARED_TYPES = {
     "GEOMETRY_2D",
     "ANGLE_MEASUREMENT",
     "TRANSFORMATION",
+    "SIMILARITY",
 }
 
 

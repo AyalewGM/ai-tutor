@@ -313,6 +313,29 @@ def _transformation_model(problem: Problem) -> dict | None:
     return model
 
 
+def _similarity_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    preimage = params.get("preimage")
+    image = params.get("image")
+    if not (
+        isinstance(preimage, list)
+        and isinstance(image, list)
+        and preimage
+        and image
+    ):
+        return None
+    model: dict = {
+        "type": "similar_figures",
+        "preimage": preimage,
+        "image": image,
+        "aria_label": "Two triangles drawn to scale.",
+    }
+    for key in ("pre_edge_labels", "image_edge_labels"):
+        if isinstance(params.get(key), list):
+            model[key] = params[key]
+    return model
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1128,4 +1151,6 @@ def visualization_for(problem: Problem) -> dict | None:
         return _geometry_2d_model(problem)
     if problem.problem_type == "TRANSFORMATION":
         return _transformation_model(problem)
+    if problem.problem_type == "SIMILARITY":
+        return _similarity_model(problem)
     return None

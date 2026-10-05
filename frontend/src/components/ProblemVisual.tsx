@@ -54,6 +54,8 @@ export interface VisualSpec {
   image?: number[][];
   labels?: string[];
   image_labels?: string[];
+  pre_edge_labels?: (string | null)[];
+  image_edge_labels?: (string | null)[];
 }
 
 interface PanSpec {
@@ -574,6 +576,64 @@ function TransformPlane({ spec }: { spec: VisualSpec }) {
   );
 }
 
+function SimilarFigures({ spec }: { spec: VisualSpec }) {
+  const pre = spec.preimage ?? [];
+  const img = spec.image ?? [];
+  const extent = (pts: number[][]) => {
+    const xs = pts.map((p) => p[0]);
+    const ys = pts.map((p) => p[1]);
+    return Math.max(
+      Math.max(...xs) - Math.min(...xs),
+      Math.max(...ys) - Math.min(...ys),
+      1
+    );
+  };
+  // One shared unit keeps the figures proportional to each other.
+  const unit = 130 / Math.max(extent(pre), extent(img));
+  const draw = (pts: number[][], cx: number, baseY: number, labels?: (string | null)[]) => {
+    const xs = pts.map((p) => p[0]);
+    const ys = pts.map((p) => p[1]);
+    const ox = cx - ((Math.min(...xs) + Math.max(...xs)) / 2) * unit;
+    const oy = baseY - Math.min(...ys) * unit;
+    const sx = (v: number) => ox + v * unit;
+    const sy = (v: number) => oy - v * unit;
+    const path =
+      pts.map((p, i) => `${i === 0 ? "M" : "L"} ${sx(p[0])} ${sy(p[1])}`).join(" ") + " Z";
+    return (
+      <g>
+        <path d={path} className="viz-cell viz-cell-a" />
+        {labels?.map((label, i) => {
+          if (!label) return null;
+          const p1 = pts[i];
+          const p2 = pts[(i + 1) % pts.length];
+          const mx = (sx(p1[0]) + sx(p2[0])) / 2;
+          const my = (sy(p1[1]) + sy(p2[1])) / 2;
+          const ex = sx(p2[0]) - sx(p1[0]);
+          const ey = sy(p2[1]) - sy(p1[1]);
+          const len = Math.hypot(ex, ey) || 1;
+          return (
+            <text
+              key={i}
+              x={mx - (ey / len) * 12}
+              y={my + (ex / len) * 12}
+              textAnchor="middle"
+              className="viz-label"
+            >
+              {label}
+            </text>
+          );
+        })}
+      </g>
+    );
+  };
+  return (
+    <svg viewBox="0 0 360 200" className="visual" role="img" aria-label={spec.aria_label}>
+      {pre.length >= 3 && draw(pre, 90, 170, spec.pre_edge_labels)}
+      {img.length >= 3 && draw(img, 275, 170, spec.image_edge_labels)}
+    </svg>
+  );
+}
+
 function NumberLine({ spec, compare = false }: { spec: VisualSpec; compare?: boolean }) {
   const min = spec.min ?? 0;
   const max = spec.max ?? 10;
@@ -889,5 +949,6 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "circle_measure") return <CircleMeasure spec={spec} />;
   if (spec.type === "composite_figure") return <CompositeFigure spec={spec} />;
   if (spec.type === "transformation") return <TransformPlane spec={spec} />;
+  if (spec.type === "similar_figures") return <SimilarFigures spec={spec} />;
   return null;
 }

@@ -15,25 +15,38 @@ def test_grade8_seed_is_idempotent_and_curriculum_local():
         assert grade8 is not None
         assert grade8.grade_level == "8"
 
-        skill = db.scalar(
-            select(Skill).where(
-                Skill.curriculum_id == grade8.id,
-                Skill.code == "M8.G.TRANS",
+        skills = {
+            skill.code: skill
+            for skill in db.scalars(
+                select(Skill).where(Skill.curriculum_id == grade8.id)
             )
-        )
-        assert skill is not None
+        }
+        assert "M8.G.TRANS" in skills
+        assert "M8.G.SIM" in skills
 
         problems = list(
-            db.scalars(select(Problem).where(Problem.primary_skill_id == skill.id))
+            db.scalars(
+                select(Problem).where(
+                    Problem.primary_skill_id.in_(
+                        {skills["M8.G.TRANS"].id, skills["M8.G.SIM"].id}
+                    )
+                )
+            )
         )
-        assert len(problems) == 4
-        assert all(problem.primary_skill_id == skill.id for problem in problems)
+        assert len(problems) == 8
 
         misconceptions = list(
-            db.scalars(select(Misconception).where(Misconception.skill_id == skill.id))
+            db.scalars(
+                select(Misconception).where(
+                    Misconception.skill_id.in_(
+                        {skills["M8.G.TRANS"].id, skills["M8.G.SIM"].id}
+                    )
+                )
+            )
         )
         assert {m.code for m in misconceptions} == {
-            "TR_001", "TR_002", "TR_003", "TR_004", "TR_005"
+            "TR_001", "TR_002", "TR_003", "TR_004", "TR_005",
+            "SIM_001", "SIM_002", "SIM_003", "SIM_004",
         }
     finally:
         db.close()
