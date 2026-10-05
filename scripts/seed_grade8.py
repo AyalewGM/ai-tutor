@@ -150,6 +150,14 @@ def seed() -> None:
             "maps a figure onto its image.",
             3,
         )
+        similarity = _skill(
+            db, curriculum, "M8.G.SIM",
+            "Similarity and Congruence",
+            "Use scale factors and proportional sides on similar figures, "
+            "reason about how scaling affects perimeter and area, and "
+            "classify pairs of figures as congruent, similar, or neither.",
+            3,
+        )
 
         def _misconception(skill, code, name, description, strategy):
             if db.scalar(
@@ -220,6 +228,46 @@ def seed() -> None:
             "by the scale factor: (x, y) → (kx, ky). Check that both "
             "coordinates changed by the factor.",
         )
+        _misconception(
+            similarity,
+            "SIM_001",
+            "Missing side found by adding instead of scaling",
+            "The learner adds the difference between a pair of "
+            "corresponding sides instead of multiplying every side by the "
+            "scale factor.",
+            "Similar figures keep ratios, not differences: find the scale "
+            "factor from a known pair, then multiply the unknown side by "
+            "the same factor.",
+        )
+        _misconception(
+            similarity,
+            "SIM_002",
+            "Scale factor used where k² is needed, or vice versa",
+            "The learner reports the area ratio as k instead of k², or "
+            "the perimeter ratio as k² instead of k.",
+            "Lengths scale by k, perimeters by k, and areas by k²: each "
+            "dimension in the measure adds one power of the scale factor.",
+        )
+        _misconception(
+            similarity,
+            "SIM_003",
+            "Scale factor inverted",
+            "The learner divides larger by smaller in the wrong direction, "
+            "reporting the reciprocal of the intended scale factor.",
+            "Check the direction the question asks: 'smaller to larger' "
+            "means image ÷ preimage. A scale factor above 1 grows the "
+            "figure; below 1 shrinks it.",
+        )
+        _misconception(
+            similarity,
+            "SIM_004",
+            "Congruent, similar, and unrelated figures confused",
+            "The learner calls same-shape-different-size figures "
+            "congruent, or treats unequal figures as similar.",
+            "Congruent means same shape and same size; similar means same "
+            "shape at any size. Check the angle measures and whether all "
+            "sides scale by one factor.",
+        )
 
         problems = [
             (
@@ -264,6 +312,74 @@ def seed() -> None:
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        # Similarity items — proportional figure pairs with edge labels.
+        sim_problems = [
+            (
+                similarity, 1,
+                "The two triangles shown are similar. What is the scale factor from the smaller triangle to the larger one?",
+                "a", "SIMILARITY", "MULTIPLE_CHOICE",
+                {"tier": "scale_factor", "preimage": [[0, 0], [4, 0], [1.33, 3.33]],
+                 "image": [[0, 0], [8, 0], [2.67, 6.67]],
+                 "pre_edge_labels": ["4", None, None],
+                 "image_edge_labels": ["8", None, None],
+                 "k_num": 2, "k_den": 1},
+                [
+                    {"id": "a", "text": "2"},
+                    {"id": "b", "text": "1/2", "misconception_code": "SIM_003"},
+                    {"id": "c", "text": "4"},
+                    {"id": "d", "text": "3"},
+                ],
+            ),
+            (
+                similarity, 2,
+                "The two triangles shown are similar. What is the length of the side labeled ?",
+                "c", "SIMILARITY", "MULTIPLE_CHOICE",
+                {"tier": "missing_side", "preimage": [[0, 0], [4, 0], [1.33, 3.33]],
+                 "image": [[0, 0], [8, 0], [2.67, 6.67]],
+                 "pre_edge_labels": ["4", "5", None],
+                 "image_edge_labels": ["8", "?", None]},
+                [
+                    {"id": "a", "text": "9", "misconception_code": "SIM_001"},
+                    {"id": "b", "text": "8"},
+                    {"id": "c", "text": "10"},
+                    {"id": "d", "text": "12"},
+                ],
+            ),
+            (
+                similarity, 3,
+                "The smaller triangle is scaled by a factor of 3 to produce the larger one shown. By what factor does its area change?",
+                "b", "SIMILARITY", "MULTIPLE_CHOICE",
+                {"tier": "perimeter_area_effect", "measure": "area", "k": 3,
+                 "preimage": [[0, 0], [3, 0], [1, 2.5]],
+                 "image": [[0, 0], [9, 0], [3, 7.5]]},
+                [
+                    {"id": "a", "text": "multiplied by 3", "misconception_code": "SIM_002"},
+                    {"id": "b", "text": "multiplied by 9"},
+                    {"id": "c", "text": "multiplied by 6"},
+                    {"id": "d", "text": "stays the same"},
+                ],
+            ),
+            (
+                similarity, 4,
+                "How are the two triangles shown related?",
+                "a", "SIMILARITY", "MULTIPLE_CHOICE",
+                {"tier": "classify",
+                 "preimage": [[0, 0], [3, 0], [1, 2.5]],
+                 "image": [[0, 0], [6, 0], [2, 5]]},
+                [
+                    {"id": "a", "text": "similar but not congruent"},
+                    {"id": "b", "text": "congruent", "misconception_code": "SIM_004"},
+                    {"id": "c", "text": "neither congruent nor similar", "misconception_code": "SIM_004"},
+                    {"id": "d", "text": "similar only when rotated", "misconception_code": "SIM_004"},
+                ],
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in sim_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters, choices=choices,
