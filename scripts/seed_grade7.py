@@ -226,6 +226,14 @@ def seed() -> None:
             "and cones, and reason about faces, edges, and vertices.",
             3,
         )
+        plane_geo = _skill(
+            db, curriculum, "M7.G.GEO",
+            "Angles, Triangles, and Circles",
+            "Use complementary, supplementary, vertical, and linear-pair angle "
+            "relationships, apply the triangle angle sum, and compute circle "
+            "area and circumference.",
+            3,
+        )
 
         _prerequisite(db, prop_rate, proportional)
         _prerequisite(db, pct_of, percent)
@@ -406,6 +414,71 @@ def seed() -> None:
             "Count systematically: bases and lateral faces separately for "
             "faces; base edges and lateral edges separately for edges.",
         )
+        _misconception(
+            plane_geo,
+            "GEO_001",
+            "Area and circumference formulas swapped",
+            "The learner answers a circle-area question with 2πr, or a "
+            "circumference question with πr².",
+            "Area covers the inside of the circle: πr². Circumference is the "
+            "distance around: 2πr. Say 'inside or around?' first.",
+        )
+        _misconception(
+            plane_geo,
+            "GEO_002",
+            "Complementary and supplementary confused",
+            "The learner subtracts from 90° when the angles are "
+            "supplementary, or from 180° when they are complementary.",
+            "Check which pair it is: complementary angles make a right "
+            "angle (sum 90°); supplementary angles make a straight line "
+            "(sum 180°).",
+        )
+        _misconception(
+            plane_geo,
+            "GEO_003",
+            "Triangle angle sum uses the wrong total",
+            "The learner subtracts the two known angles from 360° or 90° "
+            "instead of 180°.",
+            "The three angles of any triangle add to 180°, not 360°. "
+            "Subtract the two known angles from 180°.",
+        )
+        _misconception(
+            plane_geo,
+            "GEO_004",
+            "Vertical angles and linear pairs confused",
+            "The learner treats vertical angles as supplementary, or "
+            "answers a linear-pair question with the equal vertical angle.",
+            "Vertical angles sit opposite each other and are equal. A "
+            "linear pair sits side by side on a line and sums to 180°.",
+        )
+        _misconception(
+            plane_geo,
+            "GEO_005",
+            "Composite figure mishandles the cut-out",
+            "The learner adds the missing notch to the area, or ignores it "
+            "and answers the full bounding rectangle.",
+            "The L-shape is the big rectangle with a corner removed: "
+            "compute W×H, then subtract the notch a×b.",
+        )
+        _misconception(
+            plane_geo,
+            "GEO_006",
+            "Radius and diameter confused",
+            "The learner uses the diameter where the radius is needed "
+            "(giving 4r²π for area) or halves a needed factor.",
+            "Check which measurement the diagram gives: r is centre-to-edge "
+            "and d is edge-to-edge, with d = 2r.",
+        )
+        _misconception(
+            plane_geo,
+            "GEO_007",
+            "Angle classification read from the wrong side of 90°",
+            "The learner calls an acute angle obtuse or vice versa — "
+            "reading the boundary at 90° backwards.",
+            "Acute angles are smaller than a right angle (under 90°); "
+            "obtuse angles are bigger (between 90° and 180°). Compare the "
+            "opening to a square corner first.",
+        )
 
         problems = [
             (
@@ -487,6 +560,48 @@ def seed() -> None:
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in solid_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        # Plane-geometry items — parameters feed the dedicated diagrams.
+        geo_problems = [
+            (
+                plane_geo, 1,
+                "The two angles shown are complementary. What is the measure of the missing angle?",
+                "55", "GEOMETRY_2D", "INTEGER",
+                {"tier": "complementary", "angle": 35},
+                None,
+            ),
+            (
+                plane_geo, 2,
+                "The two angles shown are supplementary. What is the measure of the missing angle?",
+                "110", "GEOMETRY_2D", "INTEGER",
+                {"tier": "supplementary", "angle": 70},
+                None,
+            ),
+            (
+                plane_geo, 3,
+                "What is the measure of the triangle's third angle, labeled ?",
+                "75", "GEOMETRY_2D", "INTEGER",
+                {"tier": "triangle_angle", "a": 45, "b": 60},
+                None,
+            ),
+            (
+                plane_geo, 4,
+                "The circle shown has radius 3. Which expression gives its area?",
+                "a", "GEOMETRY_2D", "MULTIPLE_CHOICE",
+                {"tier": "circle_area", "r": 3},
+                [
+                    {"id": "a", "text": "9π"},
+                    {"id": "b", "text": "6π", "misconception_code": "GEO_001"},
+                    {"id": "c", "text": "36π", "misconception_code": "GEO_006"},
+                    {"id": "d", "text": "18π"},
+                ],
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in geo_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters, choices=choices,

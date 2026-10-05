@@ -48,6 +48,8 @@ export interface VisualSpec {
   l?: number;
   w?: number;
   r?: number;
+  kind?: string;
+  mark?: string;
 }
 
 interface PanSpec {
@@ -395,7 +397,128 @@ function AngleDiagram({ spec }: { spec: VisualSpec }) {
       <line x1={cx} y1={cy} x2={ex} y2={ey} className="viz-axis" />
       {angle > 0 && <path d={`M ${cx + arcRadius} ${cy} A ${arcRadius} ${arcRadius} 0 ${largeArc} 0 ${ax} ${ay}`} className="viz-hop viz-hop-a" />}
       <circle cx={cx} cy={cy} r="4" className="viz-point viz-point-a" />
-      <text x={cx + 44} y={cy - 18} className="viz-label">{angle}°</text>
+      {spec.labeled !== false && <text x={cx + 44} y={cy - 18} className="viz-label">{angle}°</text>}
+    </svg>
+  );
+}
+
+function AnglePair({ spec }: { spec: VisualSpec }) {
+  const angle = spec.angle ?? 45;
+  const cx = 60;
+  const cy = 150;
+  const radians = (angle * Math.PI) / 180;
+  const mx = cx + 160 * Math.cos(radians);
+  const my = cy - 160 * Math.sin(radians);
+  const mid = radians / 2;
+  const label1 = { x: cx + 52 * Math.cos(mid), y: cy - 52 * Math.sin(mid) };
+  if (spec.kind === "complementary") {
+    const mid2 = (radians + Math.PI / 2) / 2;
+    const label2 = { x: cx + 66 * Math.cos(mid2), y: cy - 66 * Math.sin(mid2) };
+    return (
+      <svg viewBox="0 0 260 190" className="visual" role="img" aria-label={spec.aria_label}>
+        <line x1={cx} y1={cy} x2={cx + 190} y2={cy} className="viz-axis" />
+        <line x1={cx} y1={cy} x2={cx} y2={cy - 160} className="viz-axis" />
+        <line x1={cx} y1={cy} x2={mx} y2={my} className="viz-axis" />
+        <path d={`M ${cx + 30} ${cy} A 30 30 0 0 0 ${cx + 30 * Math.cos(radians)} ${cy - 30 * Math.sin(radians)}`} className="viz-hop viz-hop-a" />
+        <path d={`M ${cx + 44 * Math.cos(radians)} ${cy - 44 * Math.sin(radians)} A 44 44 0 0 0 ${cx} ${cy - 44}`} className="viz-hop" />
+        <text x={label1.x} y={label1.y} className="viz-label">{angle}°</text>
+        <text x={label2.x} y={label2.y} className="viz-label">?</text>
+      </svg>
+    );
+  }
+  // supplementary — the two rays span a straight line
+  const mid2 = (radians + Math.PI) / 2;
+  const label2 = { x: cx + 66 * Math.cos(mid2), y: cy - 66 * Math.sin(mid2) };
+  return (
+    <svg viewBox="0 0 340 190" className="visual" role="img" aria-label={spec.aria_label}>
+      <line x1={cx - 40} y1={cy} x2={cx + 260} y2={cy} className="viz-axis" />
+      <line x1={cx} y1={cy} x2={mx} y2={my} className="viz-axis" />
+      <path d={`M ${cx + 30} ${cy} A 30 30 0 0 0 ${cx + 30 * Math.cos(radians)} ${cy - 30 * Math.sin(radians)}`} className="viz-hop viz-hop-a" />
+      <path d={`M ${cx + 44 * Math.cos(radians)} ${cy - 44 * Math.sin(radians)} A 44 44 0 0 0 ${cx - 44} ${cy}`} className="viz-hop" />
+      <text x={label1.x} y={label1.y} className="viz-label">{angle}°</text>
+      <text x={label2.x} y={label2.y} className="viz-label">?</text>
+    </svg>
+  );
+}
+
+function IntersectingLines({ spec }: { spec: VisualSpec }) {
+  const angle = spec.angle ?? 60;
+  const cx = 180;
+  const cy = 105;
+  const radians = (angle * Math.PI) / 180;
+  const dx = 150 * Math.cos(radians);
+  const dy = 150 * Math.sin(radians);
+  // The marked sector sits between the right ray and the upper slanted ray.
+  const markAdjacent = spec.mark === "adjacent";
+  const qx = markAdjacent ? cx - 52 : cx + 52;
+  const qy = markAdjacent ? cy - 40 : cy + 40;
+  return (
+    <svg viewBox="0 0 360 210" className="visual" role="img" aria-label={spec.aria_label}>
+      <line x1={cx - 165} y1={cy} x2={cx + 165} y2={cy} className="viz-axis" />
+      <line x1={cx - dx} y1={cy + dy} x2={cx + dx} y2={cy - dy} className="viz-axis" />
+      <path
+        d={`M ${cx + 34} ${cy} A 34 34 0 0 0 ${cx + 34 * Math.cos(radians)} ${cy - 34 * Math.sin(radians)}`}
+        className="viz-hop viz-hop-a"
+      />
+      <text x={cx + 52} y={cy - 36} className="viz-label">{angle}°</text>
+      <text x={qx} y={qy} textAnchor="middle" className="viz-label">?</text>
+    </svg>
+  );
+}
+
+function TriangleAngles({ spec }: { spec: VisualSpec }) {
+  const a = spec.a ?? 60;
+  const b = spec.b ?? 60;
+  const x0 = 60;
+  const x1 = 300;
+  const y = 165;
+  const cot = (deg: number) => 1 / Math.tan((deg * Math.PI) / 180);
+  const height = (x1 - x0) / (cot(a) + cot(b));
+  const apexX = x0 + height * cot(a);
+  const apexY = y - height;
+  return (
+    <svg viewBox="0 0 360 200" className="visual" role="img" aria-label={spec.aria_label}>
+      <path d={`M ${x0} ${y} L ${x1} ${y} L ${apexX} ${apexY} Z`} className="viz-cell viz-cell-a" />
+      <text x={x0 + 20} y={y - 8} className="viz-label">{a}°</text>
+      <text x={x1 - 34} y={y - 8} className="viz-label">{b}°</text>
+      <text x={apexX} y={apexY + 26} textAnchor="middle" className="viz-label">?</text>
+    </svg>
+  );
+}
+
+function CircleMeasure({ spec }: { spec: VisualSpec }) {
+  const r = spec.r ?? 0;
+  return (
+    <svg viewBox="0 0 360 210" className="visual" role="img" aria-label={spec.aria_label}>
+      <circle cx="180" cy="105" r="82" className="viz-cell viz-cell-a" />
+      <line x1="180" y1="105" x2="262" y2="105" className="viz-axis" />
+      <circle cx="180" cy="105" r="4" className="viz-point viz-point-a" />
+      <text x="221" y="96" textAnchor="middle" className="viz-label">r = {r}</text>
+    </svg>
+  );
+}
+
+function CompositeFigure({ spec }: { spec: VisualSpec }) {
+  const w = spec.w ?? 8;
+  const h = spec.h ?? 8;
+  const a = spec.a ?? 3;
+  const b = spec.b ?? 3;
+  const unit = 20;
+  const ox = 60;
+  const oy = 15;
+  const px = (v: number) => ox + v * unit;
+  const py = (v: number) => oy + v * unit;
+  // L-shape: outer w×h minus an a×b notch at the top right.
+  const path =
+    `M ${px(0)} ${py(0)} L ${px(w - a)} ${py(0)} L ${px(w - a)} ${py(b)} ` +
+    `L ${px(w)} ${py(b)} L ${px(w)} ${py(h)} L ${px(0)} ${py(h)} Z`;
+  return (
+    <svg viewBox="0 0 360 240" className="visual" role="img" aria-label={spec.aria_label}>
+      <path d={path} className="viz-cell viz-cell-a" />
+      <text x={px(w / 2)} y={py(h) + 18} textAnchor="middle" className="viz-label">{w}</text>
+      <text x={px(0) - 14} y={py(h / 2)} textAnchor="middle" className="viz-label">{h}</text>
+      <text x={px(w - a / 2)} y={py(b) - 8} textAnchor="middle" className="viz-label">{a}</text>
+      <text x={px(w - a) + 14} y={py(b / 2)} textAnchor="middle" className="viz-label">{b}</text>
     </svg>
   );
 }
@@ -709,5 +832,10 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "angle" || spec.type === "angle_diagram") return <AngleDiagram spec={spec} />;
   if (spec.type === "decimal_place_value") return <DecimalPlaceValue spec={spec} />;
   if (spec.type === "volume_model" || spec.type === "volume" || spec.type === "solid") return <SolidModel spec={spec} />;
+  if (spec.type === "angle_pair") return <AnglePair spec={spec} />;
+  if (spec.type === "intersecting_lines") return <IntersectingLines spec={spec} />;
+  if (spec.type === "triangle_angles") return <TriangleAngles spec={spec} />;
+  if (spec.type === "circle_measure") return <CircleMeasure spec={spec} />;
+  if (spec.type === "composite_figure") return <CompositeFigure spec={spec} />;
   return null;
 }

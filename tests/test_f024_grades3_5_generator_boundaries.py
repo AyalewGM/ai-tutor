@@ -70,7 +70,10 @@ def test_grade4_fraction_geometry_measurement(seed):
     expected=p["length"]*p["width"] if p["measure"]=="area" else 2*(p["length"]+p["width"])
     assert x.canonical_answer==str(expected)
     x=_generate_angle_measurement(random.Random(seed),4); p=x.parameters
-    assert 0<p["angle"]<180 and x.canonical_answer==str(p["angle"])
+    expected=("acute" if p["angle"]<90 else "right" if p["angle"]==90 else
+              "straight" if p["angle"]==180 else "obtuse")
+    correct=[c for c in x.choices if c["id"]==x.canonical_answer]
+    assert 0<p["angle"]<=180 and correct and correct[0]["text"]==expected
     x=_generate_measurement_conversion(random.Random(seed),4); p=x.parameters
     assert x.canonical_answer==str(p["value"]*p["factor"])
 

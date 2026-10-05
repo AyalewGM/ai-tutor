@@ -220,8 +220,72 @@ def _angle_model(problem: Problem) -> dict | None:
     return {
         "type": "angle",
         "angle": angle,
+        # Classify tiers hide the degree label — it would hand over the answer.
+        "labeled": bool(params.get("labeled", True)),
         "aria_label": f"Angle measuring {angle} degrees.",
     }
+
+
+def _geometry_2d_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    tier = params.get("tier")
+    if tier in {"complementary", "supplementary"}:
+        angle = _int(params.get("angle"))
+        if angle is None or not (0 < angle < 180):
+            return None
+        return {
+            "type": "angle_pair",
+            "kind": tier,
+            "angle": angle,
+            "aria_label": "Two adjacent angles forming a right angle." if tier == "complementary" else "Two adjacent angles forming a straight line.",
+        }
+    if tier in {"linear_pair", "vertical_angles"}:
+        angle = _int(params.get("angle"))
+        mark = params.get("mark")
+        if angle is None or not (0 < angle < 180) or mark not in {"adjacent", "vertical"}:
+            return None
+        return {
+            "type": "intersecting_lines",
+            "angle": angle,
+            "mark": mark,
+            "aria_label": "Two intersecting lines with one angle labeled.",
+        }
+    if tier == "triangle_angle":
+        a = _int(params.get("a"))
+        b = _int(params.get("b"))
+        if a is None or b is None or not (0 < a < 180 and 0 < b < 180 and a + b < 180):
+            return None
+        return {
+            "type": "triangle_angles",
+            "a": a,
+            "b": b,
+            "aria_label": "A triangle with two labeled angles and one unknown.",
+        }
+    if tier in {"circle_area", "circle_circumference"}:
+        r = _int(params.get("r"))
+        if r is None or r <= 0:
+            return None
+        return {
+            "type": "circle_measure",
+            "r": r,
+            "aria_label": f"A circle with radius {r}.",
+        }
+    if tier == "composite_area":
+        w = _int(params.get("w"))
+        h = _int(params.get("h"))
+        a = _int(params.get("a"))
+        b = _int(params.get("b"))
+        if None in (w, h, a, b) or not (0 < a < w and 0 < b < h):
+            return None
+        return {
+            "type": "composite_figure",
+            "w": w,
+            "h": h,
+            "a": a,
+            "b": b,
+            "aria_label": "An L-shaped figure with labeled side lengths.",
+        }
+    return None
 
 
 def _coordinate_model(problem: Problem) -> dict | None:
@@ -1035,4 +1099,6 @@ def visualization_for(problem: Problem) -> dict | None:
         return _polynomial_graph_model(problem)
     if problem.problem_type == "SOLID_VOLUME":
         return _solid_model(problem)
+    if problem.problem_type == "GEOMETRY_2D":
+        return _geometry_2d_model(problem)
     return None

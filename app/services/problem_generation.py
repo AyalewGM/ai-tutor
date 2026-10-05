@@ -1145,14 +1145,30 @@ def _generate_decimal_place_value(rng: random.Random, difficulty: int) -> Genera
 
 
 def _generate_angle_measurement(rng: random.Random, difficulty: int) -> GeneratedProblem:
-    angle = rng.choice([30, 45, 60, 90, 120, 135, 150])
-    prompt = f"What is the measure of an angle that is {angle} degrees?"
+    """Classify a rendered angle — the degree label stays hidden in the
+    visual, so this is a real read rather than a number echo."""
+    angle = rng.choice([20, 30, 45, 60, 75, 80, 90, 100, 120, 135, 150, 160, 180])
+    cls = (
+        "acute" if angle < 90
+        else "right" if angle == 90
+        else "straight" if angle == 180
+        else "obtuse"
+    )
+    others = [c for c in ("acute", "right", "obtuse", "straight") if c != cls]
+    distractors: list[tuple[str, str | None]] = []
+    # The mirrored class (acute↔obtuse) is the diagnosable error.
+    mirror = "obtuse" if cls == "acute" else "acute" if cls == "obtuse" else None
+    for c in others:
+        distractors.append((c, "GEO_007" if c == mirror else None))
+    choices, answer = _mc_choices(rng, cls, distractors)
     return GeneratedProblem(
-        prompt,
-        str(angle),
+        "What kind of angle is shown?",
+        answer,
         difficulty,
         "ANGLE_MEASUREMENT",
-        parameters={"angle": angle},
+        parameters={"tier": "classify", "angle": angle, "labeled": False},
+        answer_kind="MULTIPLE_CHOICE",
+        choices=choices,
     )
 
 
@@ -1304,6 +1320,102 @@ def _generate_solid_volume(rng: random.Random, difficulty: int) -> GeneratedProb
 
     return GeneratedProblem(
         prompt, answer, difficulty, "SOLID_VOLUME",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
+def _generate_geometry_2d(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Plane geometry: angle relationships (complementary, supplementary,
+    linear pairs, vertical), triangle angle sums, circle measures in terms
+    of π, and composite-figure area — each with a dedicated diagram spec.
+    """
+    tiers = ["complementary", "supplementary"]
+    if difficulty >= 3:
+        tiers += ["linear_pair", "vertical_angles", "triangle_angle"]
+    if difficulty >= 4:
+        tiers += ["circle_area", "circle_circumference", "composite_area"]
+    tier = rng.choice(tiers)
+    choices = None
+
+    if tier == "complementary":
+        angle = rng.choice([15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75])
+        params = {"tier": tier, "angle": angle}
+        prompt = "The two angles shown are complementary. What is the measure of the missing angle?"
+        answer = str(90 - angle)
+        kind = "INTEGER"
+    elif tier == "supplementary":
+        angle = rng.choice([20, 30, 40, 45, 50, 60, 65, 70, 80, 100, 110, 120, 130, 140, 150])
+        params = {"tier": tier, "angle": angle}
+        prompt = "The two angles shown are supplementary. What is the measure of the missing angle?"
+        answer = str(180 - angle)
+        kind = "INTEGER"
+    elif tier == "linear_pair":
+        angle = rng.choice([30, 40, 45, 50, 60, 65, 70, 80, 100, 110, 120, 130, 140, 150])
+        params = {"tier": tier, "angle": angle, "mark": "adjacent"}
+        prompt = "The marked angle and the angle labeled ? form a linear pair. What is the measure of ?"
+        answer = str(180 - angle)
+        kind = "INTEGER"
+    elif tier == "vertical_angles":
+        angle = rng.choice([30, 40, 45, 50, 60, 65, 70, 80, 100, 110, 120, 130, 140, 150])
+        params = {"tier": tier, "angle": angle, "mark": "vertical"}
+        distractors = [
+            (str(180 - angle), "GEO_004"),
+            (str(90 - angle) if angle < 90 else str(angle - 10), None),
+            (str(angle + 10) if angle <= 170 else str(angle - 20), None),
+        ]
+        prompt = "The two lines shown intersect. What is the measure of the angle labeled ?"
+        choices, answer = _mc_choices(rng, str(angle), distractors)
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "triangle_angle":
+        a = rng.randint(25, 90)
+        b = rng.randint(25, 90)
+        while not (60 <= a + b <= 150):
+            a = rng.randint(25, 90)
+            b = rng.randint(25, 90)
+        params = {"tier": tier, "a": a, "b": b}
+        prompt = "What is the measure of the triangle's third angle, labeled ?"
+        answer = str(180 - a - b)
+        kind = "INTEGER"
+    elif tier == "circle_area":
+        r = rng.randint(2, 7)
+        params = {"tier": tier, "r": r}
+        distractors = [
+            (f"{2 * r}π", "GEO_001"),
+            (f"{4 * r * r}π", "GEO_006"),
+            (f"{2 * r * r}π", None),
+        ]
+        prompt = f"The circle shown has radius {r}. Which expression gives its area?"
+        choices, answer = _mc_choices(rng, f"{r * r}π", distractors)
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "circle_circumference":
+        r = rng.randint(2, 7)
+        params = {"tier": tier, "r": r}
+        distractors = [
+            (f"{r * r}π", "GEO_001"),
+            (f"{r}π", "GEO_006"),
+            (f"{4 * r}π", None),
+        ]
+        prompt = f"The circle shown has radius {r}. Which expression gives its circumference?"
+        choices, answer = _mc_choices(rng, f"{2 * r}π", distractors)
+        kind = "MULTIPLE_CHOICE"
+    else:  # composite_area — L-shape: outer W×H minus an a×b notch
+        w = rng.randint(5, 9)
+        h = rng.randint(5, 9)
+        a = rng.randint(2, w - 3)
+        b = rng.randint(2, h - 3)
+        params = {"tier": tier, "w": w, "h": h, "a": a, "b": b}
+        area = w * h - a * b
+        distractors = [
+            (str(w * h), "GEO_005"),
+            (str(w * h + a * b), "GEO_005"),
+            (str(a * b), None),
+        ]
+        prompt = "What is the area of the shaded L-shaped figure shown?"
+        choices, answer = _mc_choices(rng, str(area), distractors)
+        kind = "MULTIPLE_CHOICE"
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "GEOMETRY_2D",
         parameters=params, answer_kind=kind, choices=choices,
     )
 
@@ -1950,6 +2062,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "QUADRATIC_FUNCTION": _generate_quadratic_function,
     "POLYNOMIAL_FUNCTION": _generate_polynomial_function,
     "SOLID_VOLUME": _generate_solid_volume,
+    "GEOMETRY_2D": _generate_geometry_2d,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -2262,6 +2375,8 @@ PROMPT_SHARED_TYPES = {
     "QUADRATIC_FUNCTION",
     "POLYNOMIAL_FUNCTION",
     "SOLID_VOLUME",
+    "GEOMETRY_2D",
+    "ANGLE_MEASUREMENT",
 }
 
 
