@@ -81,6 +81,8 @@ export interface VisualSpec {
   point?: number;
   direction?: "left" | "right";
   closed?: boolean;
+  data?: number[];
+  highlight?: number;
   pairs?: number[][];
 }
 
@@ -1128,6 +1130,52 @@ function InequalityLine({ spec }: { spec: VisualSpec }) {
   );
 }
 
+function DotPlot({ spec }: { spec: VisualSpec }) {
+  const data = spec.data ?? [];
+  const min = spec.min ?? Math.min(...data, 0);
+  const max = spec.max ?? Math.max(...data, 10);
+  const width = 360;
+  const pad = 24;
+  const xFor = (v: number) => pad + ((v - min) / (max - min)) * (width - 2 * pad);
+  const axisY = 120;
+  const ticks = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+  const counts = new Map<number, number>();
+  for (const v of data) counts.set(v, (counts.get(v) ?? 0) + 1);
+  const stacks = new Map<number, number>();
+
+  return (
+    <svg viewBox={`0 0 ${width} 140`} className="visual" role="img" aria-label={spec.aria_label}>
+      <line x1={pad} y1={axisY} x2={width - pad} y2={axisY} className="viz-axis" />
+      {ticks.map((t) => (
+        <g key={t}>
+          <line x1={xFor(t)} y1={axisY - 5} x2={xFor(t)} y2={axisY + 5} className="viz-tick" />
+          <text
+            x={xFor(t)}
+            y={axisY + 18}
+            textAnchor="middle"
+            className={t === spec.highlight ? "viz-label" : "viz-tick-label"}
+          >
+            {t}
+          </text>
+        </g>
+      ))}
+      {data.map((v, i) => {
+        const stack = stacks.get(v) ?? 0;
+        stacks.set(v, stack + 1);
+        return (
+          <circle
+            key={i}
+            cx={xFor(v)}
+            cy={axisY - 11 - stack * 13}
+            r="5"
+            className="viz-point viz-point-a"
+          />
+        );
+      })}
+    </svg>
+  );
+}
+
 function RadicalLine({ spec }: { spec: VisualSpec }) {
   const min = spec.min ?? 0;
   const max = spec.max ?? 10;
@@ -1413,6 +1461,7 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "number_line_compare") return <NumberLine spec={spec} compare />;
   if (spec.type === "radical_line") return <RadicalLine spec={spec} />;
   if (spec.type === "inequality_line") return <InequalityLine spec={spec} />;
+  if (spec.type === "dot_plot" || spec.type === "line_plot") return <DotPlot spec={spec} />;
   if (spec.type === "array_model") return <ArrayModel spec={spec} />;
   if (spec.type === "fraction_bar" || spec.type === "ratio_bar") return <FractionBar spec={spec} />;
   if (spec.type === "coordinate_plane" || spec.type === "coordinate_point") return <CoordinatePlane spec={spec} />;

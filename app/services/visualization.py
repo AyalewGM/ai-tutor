@@ -604,6 +604,29 @@ def _inequality_model(problem: Problem) -> dict | None:
     }
 
 
+def _center_spread_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    if params.get("tier") not in {"dot_count", "dot_center"}:
+        return None
+    data = params.get("data")
+    lo, hi = _int(params.get("min")), _int(params.get("max"))
+    if not (
+        isinstance(data, list)
+        and data
+        and all(isinstance(v, (int, float)) for v in data)
+        and isinstance(lo, int)
+        and isinstance(hi, int)
+    ):
+        return None
+    return {
+        "type": "dot_plot",
+        "min": lo,
+        "max": hi,
+        "data": data,
+        "aria_label": "A dot plot of the data set.",
+    }
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1472,6 +1495,8 @@ def visualization_for(problem: Problem) -> dict | None:
         return _signed_numbers_model(problem)
     if problem.problem_type == "LINEAR_INEQUALITIES":
         return _inequality_model(problem)
+    if problem.problem_type == "CENTER_SPREAD":
+        return _center_spread_model(problem)
     if problem.problem_type == "EXPONENTIAL_FUNCTION":
         return _exponential_graph_model(problem)
     return None
