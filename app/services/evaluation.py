@@ -2,6 +2,7 @@ import math
 import re
 from collections.abc import Callable
 from dataclasses import dataclass
+from fractions import Fraction
 
 
 @dataclass(frozen=True)
@@ -514,6 +515,42 @@ def _best_fit_prediction_errors(
     return None
 
 
+_EXP_EVAL = re.compile(r"f\(x\)=(\d+)·\(?(\d+)(?:/(\d+))?\)?\^x")
+_EXP_INPUT = re.compile(r"whatisf\((-?\d+)\)\?")
+_EXP_SEQUENCE = re.compile(r"continues:(-?[\d,]+)\.")
+
+
+def _exponential_errors(prompt: str, answer: str, canonical: str) -> MisconceptionMatch | None:
+    """Exponential errors: (a·b)^x product-first evaluation, a + bx linear
+    treatment, and arithmetic extrapolation of a geometric pattern."""
+    student = _INTEGER_ANSWER.match(answer)
+    correct = _INTEGER_ANSWER.match(canonical)
+    if not student or not correct:
+        return None
+    s = int(student.group(1))
+    sequence = _EXP_SEQUENCE.search(prompt)
+    if sequence:
+        terms = [int(t) for t in sequence.group(1).split(",") if t]
+        if len(terms) >= 2 and s == terms[-1] + (terms[-1] - terms[-2]):
+            return MisconceptionMatch("EXP_002", 0.95)
+        return None
+    equation = _EXP_EVAL.search(prompt)
+    target = _EXP_INPUT.search(prompt)
+    if not equation or not target:
+        return None
+    a = int(equation.group(1))
+    b = Fraction(
+        int(equation.group(2)),
+        int(equation.group(3)) if equation.group(3) else 1,
+    )
+    x = int(target.group(1))
+    if Fraction(s) == (a * b) ** x:
+        return MisconceptionMatch("EXP_003", 0.95)
+    if s in {a + int(b) * x, a * int(b) * x} and b.denominator == 1:
+        return MisconceptionMatch("EXP_004", 0.95)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -540,6 +577,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _transformation_errors,
     _system_intersection_swap,
     _best_fit_prediction_errors,
+    _exponential_errors,
 )
 
 

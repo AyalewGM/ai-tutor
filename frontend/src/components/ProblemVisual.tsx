@@ -60,7 +60,12 @@ export interface VisualSpec {
   points?: number[][];
   x_max?: number;
   y_max?: number;
+  x_min?: number;
+  y_min?: number;
   fit?: { m_num: number; m_den: number; i_num: number; i_den: number };
+  b_num?: number;
+  b_den?: number;
+  mark_points?: number[][];
 }
 
 interface PanSpec {
@@ -385,6 +390,72 @@ function PolynomialGraph({ spec }: { spec: VisualSpec }) {
       ))}
       {roots.map((r) => (
         <circle key={r} cx={pos(r)} cy={yPos(0)} r="4.5" className="viz-point viz-point-a" />
+      ))}
+    </svg>
+  );
+}
+
+function ExponentialGraph({ spec }: { spec: VisualSpec }) {
+  const xMin = spec.x_min ?? -6;
+  const xMax = spec.x_max ?? 6;
+  const yMin = spec.y_min ?? -1;
+  const yMax = spec.y_max ?? 16;
+  const a = spec.a ?? 1;
+  const base = (spec.b_num ?? 2) / (spec.b_den ?? 1);
+  const size = 340;
+  const pad = 30;
+  const xFor = (v: number) => pad + ((v - xMin) / (xMax - xMin)) * (size - 2 * pad);
+  const yFor = (v: number) => size - pad - ((v - yMin) / (yMax - yMin)) * (size - 2 * pad);
+  const f = (x: number) => a * Math.pow(base, x);
+  const step = (xMax - xMin) / 240;
+  const segments: [number, number][][] = [];
+  let segment: [number, number][] = [];
+  for (let x = xMin; x <= xMax + 1e-9; x += step) {
+    const y = f(x);
+    if (y >= yMin - 0.5 && y <= yMax + 0.5) {
+      segment.push([x, y]);
+    } else if (segment.length) {
+      segments.push(segment);
+      segment = [];
+    }
+  }
+  if (segment.length) segments.push(segment);
+  const xTicks = Array.from({ length: xMax - xMin + 1 }, (_, i) => xMin + i).filter(
+    (t) => t % 2 === 0
+  );
+  const yTicks = Array.from({ length: yMax - yMin + 1 }, (_, i) => yMin + i).filter(
+    (t) => t % 2 === 0
+  );
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} className="visual" role="img" aria-label={spec.aria_label ?? "An exponential curve graphed on a coordinate plane"}>
+      {xTicks.map((t) => (
+        <line key={`v${t}`} x1={xFor(t)} y1={pad} x2={xFor(t)} y2={size - pad} className="viz-grid" />
+      ))}
+      {yTicks.map((t) => (
+        <line key={`h${t}`} x1={pad} y1={yFor(t)} x2={size - pad} y2={yFor(t)} className="viz-grid" />
+      ))}
+      {xMin <= 0 && xMax >= 0 && (
+        <line x1={xFor(0)} y1={pad} x2={xFor(0)} y2={size - pad} className="viz-axis" />
+      )}
+      {yMin <= 0 && yMax >= 0 && (
+        <line x1={pad} y1={yFor(0)} x2={size - pad} y2={yFor(0)} className="viz-axis" />
+      )}
+      {xTicks.filter((t) => t !== 0).map((t) => (
+        <text key={`xt${t}`} x={xFor(t)} y={yFor(0) + 15} textAnchor="middle" className="viz-tick-label">{t}</text>
+      ))}
+      {yTicks.filter((t) => t !== 0).map((t) => (
+        <text key={`yt${t}`} x={xFor(0) - 8} y={yFor(t) + 4} textAnchor="end" className="viz-tick-label">{t}</text>
+      ))}
+      {segments.map((points, i) => (
+        <polyline
+          key={i}
+          points={points.map(([x, y]) => `${xFor(x)},${yFor(y)}`).join(" ")}
+          fill="none"
+          className="viz-curve"
+        />
+      ))}
+      {(spec.mark_points ?? []).map((p, i) => (
+        <circle key={i} cx={xFor(p[0])} cy={yFor(p[1])} r="4.5" className="viz-point viz-point-a" />
       ))}
     </svg>
   );
@@ -1072,5 +1143,6 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "similar_figures") return <SimilarFigures spec={spec} />;
   if (spec.type === "linear_system") return <LinearSystem spec={spec} />;
   if (spec.type === "scatterplot") return <Scatterplot spec={spec} />;
+  if (spec.type === "exponential_graph") return <ExponentialGraph spec={spec} />;
   return null;
 }

@@ -1814,6 +1814,142 @@ def _generate_system(rng: random.Random, difficulty: int) -> GeneratedProblem:
     )
 
 
+# (a, b) pairs for y = a·b^x whose values stay integer on small x.
+_EXP_FITS = [
+    (1, Fraction(2)), (2, Fraction(2)), (3, Fraction(2)),
+    (1, Fraction(3)), (2, Fraction(3)), (4, Fraction(3)),
+    (1, Fraction(4)), (2, Fraction(4)),
+    (2, Fraction(1, 2)), (4, Fraction(1, 2)), (6, Fraction(1, 2)),
+    (8, Fraction(1, 2)), (16, Fraction(1, 2)),
+    (3, Fraction(1, 3)), (9, Fraction(1, 3)), (27, Fraction(1, 3)),
+    (4, Fraction(1, 4)), (16, Fraction(1, 4)),
+]
+# Graph tiers need the x=0 intercept inside the 0..16 view window.
+_EXP_GRAPH_FITS = [f for f in _EXP_FITS if f[0] <= 16]
+
+
+def _exp_lattice(a: int, b: Fraction) -> list[list[int]]:
+    """Integer-coordinate points on y = a·b^x inside the view window."""
+    points = []
+    for x in list(range(7)) + list(range(-1, -4, -1)):
+        y = a * b**x
+        if y.denominator != 1 or y > 16:
+            continue
+        points.append([x, int(y)])
+    return sorted(points)
+
+
+def _exp_text(a: int, b: Fraction) -> str:
+    base = str(b.numerator) if b.denominator == 1 else f"({b})"
+    return f"{a}·{base}^x"
+
+
+def _generate_exponential(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Exponential functions f(x) = a·b^x: evaluate at x, extend a
+    geometric pattern, classify a rendered curve as growth or decay, read
+    the initial value, find the growth factor from two marked points, or
+    match an equation to its graph."""
+    tiers = ["evaluate", "next_value"]
+    if difficulty >= 2:
+        tiers += ["growth_or_decay", "initial_value"]
+    if difficulty >= 3:
+        tiers += ["growth_factor", "write_equation"]
+    tier = rng.choice(tiers)
+    choices = None
+
+    if tier == "evaluate":
+        a, b = rng.choice(_EXP_FITS)
+        xs = [x for x in (1, 2, 3, 4) if (a * b**x).denominator == 1]
+        x_q = rng.choice(xs)
+        prompt = f"For f(x) = {_exp_text(a, b)}, what is f({x_q})?"
+        answer = str(int(a * b**x_q))
+        params = {"tier": tier, "a": a, "b_num": b.numerator,
+                  "b_den": b.denominator, "x": x_q}
+        kind = "INTEGER"
+    elif tier == "next_value":
+        a, b = rng.choice([f for f in _EXP_FITS if f[1] > 1])
+        # The window can start above a·b^0 — showing k..k+3 multiplies the
+        # distinct prompts without changing the underlying skill.
+        start = rng.choice([0, 1, 2])
+        terms = [int(a * b**k) for k in range(start, start + 4)]
+        prompt = (
+            f"An exponential pattern continues: {', '.join(map(str, terms))}. "
+            "What is the next term?"
+        )
+        answer = str(int(a * b**(start + 4)))
+        params = {"tier": tier, "a": a, "b_num": b.numerator,
+                  "b_den": b.denominator, "terms": terms}
+        kind = "INTEGER"
+    elif tier == "growth_or_decay":
+        a, b = rng.choice(_EXP_GRAPH_FITS)
+        prompt = "Does the graph show exponential growth or exponential decay?"
+        correct = "exponential growth" if b > 1 else "exponential decay"
+        distractors = [
+            ("exponential decay" if b > 1 else "exponential growth", "EXP_001"),
+            ("linear growth", "EXP_002"),
+            ("linear decay", "EXP_002"),
+        ]
+        choices, answer = _mc_choices(rng, correct, distractors)
+        params = {"tier": tier, "a": a, "b_num": b.numerator, "b_den": b.denominator}
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "initial_value":
+        a, b = rng.choice(_EXP_GRAPH_FITS)
+        prompt = (
+            "The graph shows an exponential function f(x) = a·b^x. "
+            "What is the initial value a (the value at x = 0)?"
+        )
+        f_at_1 = a * b
+        distractors = [
+            (str(b), "EXP_003"),
+            (str(f_at_1) if f_at_1.denominator == 1 else str(a + 1), "EXP_003"),
+            (str(a + 1), None),
+            (str(a - 1 or a + 2), None),
+        ]
+        choices, answer = _mc_choices(rng, str(a), distractors)
+        params = {"tier": tier, "a": a, "b_num": b.numerator, "b_den": b.denominator}
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "growth_factor":
+        a, b = rng.choice(_EXP_GRAPH_FITS)
+        ab = a * b
+        prompt = (
+            f"An exponential function passes through the points (0, {a}) "
+            f"and (1, {ab}), as shown. What is its growth factor b in "
+            "f(x) = a·b^x?"
+        )
+        b_text = str(b.numerator) if b.denominator == 1 else str(b)
+        distractors = [
+            (str(a), "EXP_003"),
+            (str(1 / b), "EXP_001"),
+            (str(ab), "EXP_003"),
+            (str(a + int(b)) if b.denominator == 1 else str(a + 1), None),
+            (str(int(ab) + 1), None),
+            (str(int(ab) + 2), None),
+        ]
+        choices, answer = _mc_choices(rng, b_text, distractors)
+        params = {"tier": tier, "a": a, "b_num": b.numerator, "b_den": b.denominator,
+                  "mark_points": _exp_lattice(a, b)}
+        kind = "MULTIPLE_CHOICE"
+    else:  # write_equation — marked lattice points scaffold the read
+        a, b = rng.choice(_EXP_GRAPH_FITS)
+        correct = f"f(x) = {_exp_text(a, b)}"
+        distractors = [
+            (f"f(x) = {_exp_text(b.numerator, Fraction(a))}", "EXP_003"),
+            (f"f(x) = {_exp_text(a, 1 / b)}", "EXP_001"),
+            (f"f(x) = {a}x + {b}", "EXP_002"),
+            (f"f(x) = {_exp_text(a + 1, b)}", None),
+        ]
+        prompt = "Which function matches the graph shown?"
+        choices, answer = _mc_choices(rng, correct, distractors)
+        params = {"tier": tier, "a": a, "b_num": b.numerator, "b_den": b.denominator,
+                  "mark_points": _exp_lattice(a, b)}
+        kind = "MULTIPLE_CHOICE"
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "EXPONENTIAL_FUNCTION",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 # (slope, intercept) pairs whose line stays meaningfully on the 0..10 grid.
 _SCATTER_FITS = {
     "positive": (
@@ -2650,6 +2786,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "SIMILARITY": _generate_similarity,
     "SYSTEM_OF_EQUATIONS": _generate_system,
     "STATISTICS": _generate_statistics,
+    "EXPONENTIAL_FUNCTION": _generate_exponential,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -2968,6 +3105,7 @@ PROMPT_SHARED_TYPES = {
     "SIMILARITY",
     "SYSTEM_OF_EQUATIONS",
     "STATISTICS",
+    "EXPONENTIAL_FUNCTION",
 }
 
 
