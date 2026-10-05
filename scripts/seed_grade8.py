@@ -329,6 +329,39 @@ def seed() -> None:
             "the slope is how fast the cloud rises. Check each candidate "
             "against both.",
         )
+        _misconception(
+            statistics,
+            "STAT_006",
+            "Joint, marginal, and conditional frequencies confused",
+            "The learner divides by the grand total when a group total "
+            "is needed, or reports a joint cell where a conditional "
+            "fraction was asked.",
+            "Find the group named after 'of the' or 'who' — that group "
+            "is the denominator. The joint cell in the matching row and "
+            "column is the numerator.",
+        )
+        _misconception(
+            statistics,
+            "STAT_007",
+            "Cell or total misread in a two-way table",
+            "The learner reports a different cell or a marginal total "
+            "instead of the value asked, or sums only part of the table "
+            "for a total.",
+            "Trace the row label and column label to the cell they "
+            "cross. A total adds every cell in its row, column, or the "
+            "whole table.",
+        )
+        _misconception(
+            statistics,
+            "STAT_008",
+            "Association in a two-way table misjudged",
+            "The learner claims there is no association when the "
+            "conditional rates clearly differ, or claims one when the "
+            "rates are the same.",
+            "Compare the fraction of 'yes' outcomes in each row: a big "
+            "gap between the rows signals an association; matching "
+            "fractions signal none.",
+        )
 
         problems = [
             (
@@ -498,6 +531,63 @@ def seed() -> None:
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in stat_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        # Two-way frequency table items — complete the 8.SP strand.
+        freq_problems = [
+            (
+                statistics, 2,
+                "The table shows the results of a survey of students. What fraction of the students surveyed play a sport and take an art class?",
+                "b", "FREQUENCY_TABLE", "MULTIPLE_CHOICE",
+                {"tier": "joint_frequency",
+                 "rows": ["Plays a sport", "Does not play a sport"],
+                 "cols": ["Takes an art class", "Does not take an art class"],
+                 "cells": [[12, 8], [6, 14]],
+                 "show_totals": True, "ri": 0, "ci": 0},
+                [
+                    {"id": "a", "text": "3/5", "misconception_code": "STAT_006"},
+                    {"id": "b", "text": "3/10"},
+                    {"id": "c", "text": "2/3", "misconception_code": "STAT_006"},
+                    {"id": "d", "text": "3/20", "misconception_code": "STAT_007"},
+                ],
+            ),
+            (
+                statistics, 3,
+                "The table shows the results of a survey of students. Of the students who play a sport, what fraction also take an art class?",
+                "c", "FREQUENCY_TABLE", "MULTIPLE_CHOICE",
+                {"tier": "conditional_frequency",
+                 "rows": ["Plays a sport", "Does not play a sport"],
+                 "cols": ["Takes an art class", "Does not take an art class"],
+                 "cells": [[12, 8], [9, 11]],
+                 "show_totals": True, "axis": "row", "index": 0, "target": 0},
+                [
+                    {"id": "a", "text": "3/10", "misconception_code": "STAT_006"},
+                    {"id": "b", "text": "9/20", "misconception_code": "STAT_006"},
+                    {"id": "c", "text": "3/5"},
+                    {"id": "d", "text": "2/5", "misconception_code": "STAT_006"},
+                ],
+            ),
+            (
+                statistics, 4,
+                "The table shows the results of a survey of students. Is there evidence of an association between riding the bus and eating school lunch?",
+                "a", "FREQUENCY_TABLE", "MULTIPLE_CHOICE",
+                {"tier": "association",
+                 "rows": ["Rides the bus", "Does not ride the bus"],
+                 "cols": ["Eats school lunch", "Brings lunch from home"],
+                 "cells": [[18, 6], [8, 20]],
+                 "show_totals": True, "associated": True},
+                [
+                    {"id": "a", "text": "Yes — students who ride the bus are more likely to eat school lunch"},
+                    {"id": "b", "text": "Yes — students who ride the bus are less likely to eat school lunch", "misconception_code": "STAT_008"},
+                    {"id": "c", "text": "No — the proportions are about the same for both groups", "misconception_code": "STAT_008"},
+                    {"id": "d", "text": "The table does not give enough information to decide"},
+                ],
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in freq_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters, choices=choices,

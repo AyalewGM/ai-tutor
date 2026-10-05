@@ -213,6 +213,11 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow:
 .viz-hop-label { fill:#334155; font-size:12px; font-weight:600; } .viz-arrow-a { fill:#2563eb; } .viz-arrow-b { fill:#059669; }
 .viz-point-a { fill:#2563eb; } .viz-point-b { fill:#059669; }
 .viz-fit { stroke:#7c3aed; stroke-width:2; stroke-dasharray:6 4; fill:none; }
+.viz-table { border-collapse:collapse; margin-top:.75rem; font-size:.95rem; }
+.viz-table th,.viz-table td { border:1.5px solid #475569; padding:.4rem .9rem; text-align:center; }
+.viz-table th { background:#f1f5f9; font-weight:600; text-align:left; }
+.viz-table td { background:#ffffff; min-width:3.5rem; }
+.viz-table .viz-table-total { background:#f8fafc; font-weight:600; }
 
 /* Parent/family surfaces */
 .parent-selector { display:grid; grid-template-columns:1fr minmax(220px,320px); gap:1rem; align-items:end; }

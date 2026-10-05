@@ -66,6 +66,12 @@ export interface VisualSpec {
   b_num?: number;
   b_den?: number;
   mark_points?: number[][];
+  row_labels?: string[];
+  col_labels?: string[];
+  cells?: number[][];
+  row_totals?: number[];
+  col_totals?: number[];
+  grand_total?: number;
 }
 
 interface PanSpec {
@@ -825,6 +831,42 @@ function Scatterplot({ spec }: { spec: VisualSpec }) {
   );
 }
 
+function FrequencyTable({ spec }: { spec: VisualSpec }) {
+  const cols = spec.col_labels ?? [];
+  const rows = spec.row_labels ?? [];
+  const cells = spec.cells ?? [];
+  // The Total row/column always render — empty when the tier asks the
+  // learner to produce them.
+  const showTotals = spec.row_totals != null;
+  return (
+    <table className="viz-table" aria-label={spec.aria_label ?? "A two-way frequency table"}>
+      <thead>
+        <tr>
+          <th scope="col" />
+          {cols.map((c, i) => <th key={i} scope="col">{c}</th>)}
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r, i) => (
+          <tr key={i}>
+            <th scope="row">{r}</th>
+            {(cells[i] ?? []).map((v, j) => <td key={j}>{v}</td>)}
+            <td className="viz-table-total">{showTotals ? spec.row_totals![i] : ""}</td>
+          </tr>
+        ))}
+        <tr>
+          <th scope="row">Total</th>
+          {cols.map((_, j) => (
+            <td key={j} className="viz-table-total">{showTotals ? spec.col_totals![j] : ""}</td>
+          ))}
+          <td className="viz-table-total">{showTotals ? spec.grand_total : ""}</td>
+        </tr>
+      </tbody>
+    </table>
+  );
+}
+
 function NumberLine({ spec, compare = false }: { spec: VisualSpec; compare?: boolean }) {
   const min = spec.min ?? 0;
   const max = spec.max ?? 10;
@@ -1143,6 +1185,7 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "similar_figures") return <SimilarFigures spec={spec} />;
   if (spec.type === "linear_system") return <LinearSystem spec={spec} />;
   if (spec.type === "scatterplot") return <Scatterplot spec={spec} />;
+  if (spec.type === "frequency_table") return <FrequencyTable spec={spec} />;
   if (spec.type === "exponential_graph") return <ExponentialGraph spec={spec} />;
   return null;
 }

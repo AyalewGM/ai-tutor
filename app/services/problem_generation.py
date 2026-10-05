@@ -2139,6 +2139,211 @@ def _generate_statistics(rng: random.Random, difficulty: int) -> GeneratedProble
     )
 
 
+_TABLE_CONTEXTS = [
+    {
+        "rows": ("Plays a sport", "Does not play a sport"),
+        "cols": ("Takes an art class", "Does not take an art class"),
+        "row_verb": ("play a sport", "do not play a sport"),
+        "col_verb": ("take an art class", "do not take an art class"),
+        "nouns": ("playing a sport", "taking an art class"),
+    },
+    {
+        "rows": ("Rides the bus", "Does not ride the bus"),
+        "cols": ("Eats school lunch", "Brings lunch from home"),
+        "row_verb": ("ride the bus", "do not ride the bus"),
+        "col_verb": ("eat school lunch", "bring lunch from home"),
+        "nouns": ("riding the bus", "eating school lunch"),
+    },
+    {
+        "rows": ("Plays in the band", "Does not play in the band"),
+        "cols": ("Studies a language", "Does not study a language"),
+        "row_verb": ("play in the band", "do not play in the band"),
+        "col_verb": ("study a language", "do not study a language"),
+        "nouns": ("playing in the band", "studying a language"),
+    },
+    {
+        "rows": ("Has a part-time job", "Does not have a part-time job"),
+        "cols": ("Belongs to a school club", "Does not belong to a school club"),
+        "row_verb": ("have a part-time job", "do not have a part-time job"),
+        "col_verb": ("belong to a school club", "do not belong to a school club"),
+        "nouns": ("having a part-time job", "belonging to a school club"),
+    },
+]
+
+
+def _generate_frequency_table(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Two-way frequency table items: read a cell, find a marginal or
+    grand total, compute a joint or conditional relative frequency, or
+    judge whether the two variables are associated.
+
+    Row/column totals render except on the marginal and grand_total
+    tiers, where the total is the answer — those tables show the Total
+    row and column with empty cells to fill."""
+    tiers = ["read_cell", "marginal"]
+    if difficulty >= 2:
+        tiers += ["grand_total", "joint_frequency"]
+    if difficulty >= 3:
+        tiers.append("conditional_frequency")
+    if difficulty >= 4:
+        tiers.append("association")
+    tier = rng.choice(tiers)
+
+    ctx = rng.choice(_TABLE_CONTEXTS)
+    associated = rng.random() < 0.5
+    for _ in range(60):
+        cells = [[rng.randint(4, 30), rng.randint(4, 30)],
+                 [rng.randint(4, 30), rng.randint(4, 30)]]
+        flat = cells[0] + cells[1]
+        # Equal cell values can't be told apart as distractors.
+        if len(set(flat)) < 4:
+            continue
+        if tier == "association":
+            p_yes = cells[0][0] / (cells[0][0] + cells[0][1])
+            p_no = cells[1][0] / (cells[1][0] + cells[1][1])
+            gap = abs(p_yes - p_no)
+            # The association has to be unambiguous either way.
+            if (associated and gap < 0.25) or (not associated and gap > 0.05):
+                continue
+        break
+    else:
+        return _generate_frequency_table(rng, difficulty)
+
+    row_totals = [cells[0][0] + cells[0][1], cells[1][0] + cells[1][1]]
+    col_totals = [cells[0][0] + cells[1][0], cells[0][1] + cells[1][1]]
+    grand = sum(row_totals)
+    params: dict = {
+        "tier": tier,
+        "rows": list(ctx["rows"]),
+        "cols": list(ctx["cols"]),
+        "cells": cells,
+        "show_totals": tier not in {"marginal", "grand_total"},
+    }
+
+    def frac(num: int, den: int) -> str:
+        f = Fraction(num, den)
+        return _slope_text(f.numerator, f.denominator)
+
+    if tier == "read_cell":
+        ri, ci = rng.randrange(2), rng.randrange(2)
+        params["ri"], params["ci"] = ri, ci
+        prompt = (
+            f"The table shows the results of a survey of students. "
+            f"How many students {ctx['row_verb'][ri]} and {ctx['col_verb'][ci]}?"
+        )
+        correct = str(cells[ri][ci])
+        pool = [(str(v), "STAT_007") for v in flat]
+        pool += [(str(row_totals[ri]), "STAT_007"),
+                 (str(col_totals[ci]), "STAT_007"),
+                 (str(grand), "STAT_007")]
+        rng.shuffle(pool)
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "marginal":
+        axis, i = rng.choice(["row", "col"]), rng.randrange(2)
+        params["axis"], params["index"] = axis, i
+        if axis == "row":
+            prompt = (f"The table shows the results of a survey of students. "
+                      f"How many students in total {ctx['row_verb'][i]}?")
+            correct, other = str(row_totals[i]), str(row_totals[1 - i])
+        else:
+            prompt = (f"The table shows the results of a survey of students. "
+                      f"How many students in total {ctx['col_verb'][i]}?")
+            correct, other = str(col_totals[i]), str(col_totals[1 - i])
+        pool = [(str(grand), "STAT_007"), (other, "STAT_007")]
+        pool += [(str(v), "STAT_007") for v in flat]
+        rng.shuffle(pool)
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "grand_total":
+        prompt = ("The table shows the results of a survey of students. "
+                  "How many students were surveyed in total?")
+        partials = {row_totals[0], row_totals[1], col_totals[0], col_totals[1],
+                    cells[0][0] + cells[0][1] + cells[1][0],
+                    cells[0][0] + cells[0][1] + cells[1][1],
+                    cells[0][0] + cells[1][0] + cells[1][1],
+                    cells[0][1] + cells[1][0] + cells[1][1]}
+        pool = [(str(p), "STAT_007") for p in partials]
+        pool += [(str(v), "STAT_007") for v in flat]
+        rng.shuffle(pool)
+        choices, answer = _mc_choices(rng, str(grand), pool)
+    elif tier == "joint_frequency":
+        ri, ci = rng.randrange(2), rng.randrange(2)
+        params["ri"], params["ci"] = ri, ci
+        cell = cells[ri][ci]
+        prompt = (
+            f"The table shows the results of a survey of students. "
+            f"What fraction of the students surveyed {ctx['row_verb'][ri]} "
+            f"and {ctx['col_verb'][ci]}?"
+        )
+        pool = [
+            # Conditional frequencies where the joint one was asked —
+            # keep these signature distractors ahead of the fillers so
+            # they always survive _mc_choices' three-option cut.
+            (frac(cell, row_totals[ri]), "STAT_006"),
+            (frac(cell, col_totals[ci]), "STAT_006"),
+            (frac(row_totals[ri], grand), "STAT_006"),
+        ]
+        pool += [(frac(v, grand), "STAT_007") for v in flat if v != cell]
+        choices, answer = _mc_choices(rng, frac(cell, grand), pool)
+    elif tier == "conditional_frequency":
+        axis, i, j = rng.choice(["row", "col"]), rng.randrange(2), rng.randrange(2)
+        params["axis"], params["index"], params["target"] = axis, i, j
+        if axis == "row":
+            given, target = ctx["row_verb"][i], ctx["col_verb"][j]
+            cell, denom = cells[i][j], row_totals[i]
+            wrong_group = frac(cells[1 - i][j], row_totals[1 - i])
+            wrong_denom = frac(cell, col_totals[j])
+            wrong_cell = frac(cells[i][1 - j], denom)
+            other_joint = frac(cells[1 - i][1 - j], grand)
+        else:
+            given, target = ctx["col_verb"][i], ctx["row_verb"][j]
+            cell, denom = cells[j][i], col_totals[i]
+            wrong_group = frac(cells[j][1 - i], col_totals[1 - i])
+            wrong_denom = frac(cell, row_totals[j])
+            wrong_cell = frac(cells[1 - j][i], denom)
+            other_joint = frac(cells[1 - j][1 - i], grand)
+        prompt = (
+            f"The table shows the results of a survey of students. "
+            f"Of the students who {given}, what fraction also {target}?"
+        )
+        pool = [
+            # The joint frequency where a conditional one was asked —
+            # signature distractors first so they always survive
+            # _mc_choices' three-option cut.
+            (frac(cell, grand), "STAT_006"),
+            (wrong_group, "STAT_006"),
+            (wrong_denom, "STAT_006"),
+            (wrong_cell, "STAT_006"),
+            (frac(denom - cell, denom), "STAT_006"),
+            (other_joint, "STAT_006"),
+        ]
+        choices, answer = _mc_choices(rng, frac(cell, denom), pool)
+    else:  # association
+        params["associated"] = associated
+        prompt = (
+            f"The table shows the results of a survey of students. "
+            f"Is there evidence of an association between {ctx['nouns'][0]} "
+            f"and {ctx['nouns'][1]}?"
+        )
+        more = (f"Yes — students who {ctx['row_verb'][0]} are more likely "
+                f"to {ctx['col_verb'][0]}")
+        less = (f"Yes — students who {ctx['row_verb'][0]} are less likely "
+                f"to {ctx['col_verb'][0]}")
+        same = "No — the proportions are about the same for both groups"
+        filler = "The table does not give enough information to decide"
+        if associated:
+            correct = more if cells[0][0] * row_totals[1] > cells[1][0] * row_totals[0] else less
+            pool = [(less if correct == more else more, "STAT_008"),
+                    (same, "STAT_008"), (filler, None)]
+        else:
+            correct = same
+            pool = [(more, "STAT_008"), (less, "STAT_008"), (filler, None)]
+        choices, answer = _mc_choices(rng, correct, pool)
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "FREQUENCY_TABLE",
+        parameters=params, answer_kind="MULTIPLE_CHOICE", choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -2787,6 +2992,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "SYSTEM_OF_EQUATIONS": _generate_system,
     "STATISTICS": _generate_statistics,
     "EXPONENTIAL_FUNCTION": _generate_exponential,
+    "FREQUENCY_TABLE": _generate_frequency_table,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -3106,6 +3312,7 @@ PROMPT_SHARED_TYPES = {
     "SYSTEM_OF_EQUATIONS",
     "STATISTICS",
     "EXPONENTIAL_FUNCTION",
+    "FREQUENCY_TABLE",
 }
 
 
