@@ -750,6 +750,34 @@ def _signed_number_errors(
     return None
 
 
+_MEAN_REVERSE = re.compile(
+    r"themeanof(\d+)testscoresis(\d+)\.(\d+)ofthescoresare([\d,]+)\.")
+
+
+def _center_spread_errors(
+    prompt: str, answer: str, canonical: str
+) -> MisconceptionMatch | None:
+    """Missing-score errors: the mean restated, the total n·mean
+    reported without subtracting the known scores, or the known
+    scores re-averaged (STAT6_001)."""
+    student = _INTEGER_ANSWER.match(answer)
+    correct = _INTEGER_ANSWER.match(canonical)
+    if not student or not correct:
+        return None
+    s, t = int(student.group(1)), int(correct.group(1))
+    if s == t:
+        return None
+    match = _MEAN_REVERSE.search(prompt)
+    if not match:
+        return None
+    n, mean = int(match.group(1)), int(match.group(2))
+    known = [int(v) for v in match.group(4).split(",")]
+    reaveraged = round(sum(known) / len(known)) if known else None
+    if s in {n * mean, mean, reaveraged}:
+        return MisconceptionMatch("STAT6_001", 0.9)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -782,6 +810,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _function_errors,
     _proportional_errors,
     _signed_number_errors,
+    _center_spread_errors,
 )
 
 

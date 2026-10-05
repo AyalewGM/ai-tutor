@@ -3388,6 +3388,172 @@ def _generate_linear_inequalities(rng: random.Random, difficulty: int) -> Genera
     )
 
 
+def _data_list(rng: random.Random, n: int, lo: int = 2, hi: int = 14) -> list[int]:
+    return sorted(rng.randint(lo, hi) for _ in range(n))
+
+
+def _median(data: list[int]) -> Fraction:
+    s = sorted(data)
+    n = len(s)
+    mid = n // 2
+    if n % 2:
+        return Fraction(s[mid])
+    return Fraction(s[mid - 1] + s[mid], 2)
+
+
+def _generate_center_spread(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Grade-6 statistics (6.SP): mean, median, mode and range of a
+    data list, dot-plot reading, reversing a mean to a missing value
+    and choosing the best measure of centre when an outlier exists.
+
+    `dot_count` and `dot_center` render a `dot_plot`; list-based tiers
+    put the data in the prompt so no visual is needed."""
+    tiers = ["mean", "range_mode"]
+    if difficulty >= 2:
+        tiers += ["median", "dot_count", "dot_center"]
+    if difficulty >= 3:
+        tiers += ["mean_reverse", "best_measure"]
+    tier = rng.choice(tiers)
+    params: dict = {"tier": tier}
+    kind = "MULTIPLE_CHOICE"
+    choices = None
+
+    def _fmt(v: Fraction) -> str:
+        return str(v.numerator) if v.denominator == 1 else str(v)
+
+    if tier == "mean":
+        n = rng.choice([4, 5])
+        k = rng.randint(4, 12)
+        # Build the list so the mean is exactly k.
+        data = [rng.randint(2, 14) for _ in range(n - 1)]
+        data.append(n * k - sum(data))
+        while data[-1] < 1 or data[-1] > 15:
+            data = [rng.randint(2, 14) for _ in range(n - 1)]
+            data.append(n * k - sum(data))
+        data.sort()
+        params["data"] = data
+        prompt = ("Find the mean of the data set: "
+                  + ", ".join(map(str, data)) + ".")
+        med = _median(data)
+        pool = [
+            (_fmt(med), "STAT6_001"),
+            (str(sum(data)), "STAT6_001"),
+            (str(data[-1] - data[0]), "STAT6_003"),
+        ]
+        correct = str(k)
+    elif tier == "median":
+        n = rng.choice([4, 5, 5, 6])
+        data = _data_list(rng, n)
+        display = data[:]
+        rng.shuffle(display)
+        params.update(data=data, display=display)
+        prompt = ("Find the median of the data set: "
+                  + ", ".join(map(str, display)) + ".")
+        med = _median(data)
+        mid = n // 2
+        unsorted_middle = display[mid]
+        mean = Fraction(sum(data), n)
+        pool = [
+            (str(unsorted_middle) if Fraction(unsorted_middle) != med
+             else _fmt(med + 1), "STAT6_002"),
+            (_fmt(mean) if mean != med else _fmt(med + 2), "STAT6_001"),
+            (str(data[-1] - data[0]), "STAT6_003"),
+        ]
+        correct = _fmt(med)
+    elif tier == "range_mode":
+        data = _data_list(rng, 6)
+        which = rng.choice(["range", "mode"])
+        if which == "mode":
+            data[1] = data[2] = data[3] = data[0]
+            data.sort()
+        params.update(data=data, which=which)
+        rng_max = data[-1]
+        rng_min = data[0]
+        if which == "range":
+            prompt = ("Find the range of the data set: "
+                      + ", ".join(map(str, data)) + ".")
+            correct = str(rng_max - rng_min)
+            pool = [
+                (str(rng_max), "STAT6_003"),
+                (str(rng_min), None),
+                (_fmt(Fraction(sum(data), len(data))), "STAT6_001"),
+            ]
+        else:
+            counts = {v: data.count(v) for v in set(data)}
+            mode = max(counts, key=counts.get)
+            prompt = ("Find the mode of the data set: "
+                      + ", ".join(map(str, data)) + ".")
+            correct = str(mode)
+            pool = [
+                (str(rng_max - rng_min), "STAT6_003"),
+                (_fmt(_median(data)), "STAT6_001"),
+                (str(rng_max), None),
+            ]
+    elif tier == "dot_count":
+        data = _data_list(rng, rng.randint(7, 11), 1, 8)
+        v = rng.choice(data)
+        params.update(data=data, value=v, min=min(data), max=max(data))
+        prompt = ("The dot plot shows the number of books each student "
+                  f"read. How many students read {v} books?")
+        correct = str(data.count(v))
+        pool = [
+            (str(v), "STAT6_004"),
+            (str(len(data)), None),
+            (str(data.count(v) + 1), None),
+        ]
+    elif tier == "dot_center":
+        data = _data_list(rng, rng.choice([7, 9]), 1, 9)
+        med = _median(data)
+        params.update(data=data, min=min(data), max=max(data))
+        prompt = ("The dot plot shows the data set. "
+                  "What is the median of the data?")
+        correct = _fmt(med)
+        mean = Fraction(sum(data), len(data))
+        pool = [
+            (_fmt(mean) if mean != med else _fmt(med + 1), "STAT6_001"),
+            (str(data[-1] - data[0]), "STAT6_003"),
+            (str(data[len(data) // 2 + 1]), "STAT6_002"),
+        ]
+    elif tier == "mean_reverse":
+        n = rng.choice([4, 5])
+        mean = rng.randint(6, 12)
+        known = [rng.randint(3, 15) for _ in range(n - 1)]
+        missing = n * mean - sum(known)
+        while missing < 1 or missing > 18:
+            known = [rng.randint(3, 15) for _ in range(n - 1)]
+            missing = n * mean - sum(known)
+        params.update(n=n, mean=mean, known=known)
+        prompt = (f"The mean of {n} test scores is {mean}. "
+                  f"{n - 1} of the scores are "
+                  + ", ".join(map(str, known))
+                  + ". What is the missing score?")
+        correct = str(missing)
+        kind = "INTEGER"
+    else:  # best_measure — outlier makes the median the better centre
+        data = _data_list(rng, 5, 2, 12)
+        outlier = rng.choice([30, 35, 40])
+        data.append(outlier)
+        params.update(data=data, outlier=outlier)
+        prompt = ("The data set " + ", ".join(map(str, data))
+                  + f" contains the outlier {outlier}. Which measure "
+                  "best describes the centre of the data?")
+        correct = "The median — it is not pulled toward the outlier"
+        pool = [
+            ("The mean — it uses every value", "STAT6_004"),
+            ("The range — it shows the spread", "STAT6_003"),
+            ("The mode — it is the most frequent value", "STAT6_004"),
+        ]
+
+    if kind == "MULTIPLE_CHOICE":
+        choices, answer = _mc_choices(rng, correct, pool)
+    else:
+        answer = correct
+    return GeneratedProblem(
+        prompt, answer, difficulty, "CENTER_SPREAD",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -4044,6 +4210,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "PROPORTIONAL_GRAPH": _generate_proportional_graph,
     "SIGNED_NUMBERS": _generate_signed_numbers,
     "LINEAR_INEQUALITIES": _generate_linear_inequalities,
+    "CENTER_SPREAD": _generate_center_spread,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -4371,6 +4538,7 @@ PROMPT_SHARED_TYPES = {
     "PROPORTIONAL_GRAPH",
     "SIGNED_NUMBERS",
     "LINEAR_INEQUALITIES",
+    "CENTER_SPREAD",
 }
 
 
