@@ -395,6 +395,19 @@ def _graph_vertex_errors(prompt: str, answer: str, canonical: str) -> Misconcept
     return None
 
 
+def _solid_pyramid_forgot_third(prompt: str, answer: str, canonical: str) -> MisconceptionMatch | None:
+    """Volume of a pyramid answered as base·height — the ⅓ was dropped."""
+    if "pyramid" not in prompt or "volume" not in prompt:
+        return None
+    student = _INTEGER_ANSWER.match(answer)
+    correct = _INTEGER_ANSWER.match(canonical)
+    if not student or not correct or correct.group(1) == "0":
+        return None
+    if int(student.group(1)) == int(correct.group(1)) * 3:
+        return MisconceptionMatch("SOLID_001", 0.95)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -416,6 +429,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _elementary_coordinate_order_swap,
     _graph_slope_sign_flip,
     _graph_vertex_errors,
+    _solid_pyramid_forgot_third,
 )
 
 

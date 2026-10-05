@@ -319,14 +319,49 @@ def _volume_model(problem: Problem) -> dict | None:
     if l is None or w is None or h is None:
         return None
     return {
-        "type": "volume",
-        "length": l,
-        "width": w,
-        "height": h,
-        "aria_label": (
-            f"Rectangular prism with length {l}, width {w}, height {h}, volume {l * w * h}."
-        ),
+        "type": "solid",
+        "solid": "rectangular_prism",
+        "l": l,
+        "w": w,
+        "h": h,
+        "aria_label": f"Rectangular prism with length {l}, width {w}, height {h}.",
     }
+
+
+_SOLID_DIM_KEYS = {
+    "rectangular_prism": ("l", "w", "h"),
+    "square_pyramid": ("b", "h"),
+    "cylinder": ("r", "h"),
+    "cone": ("r", "h"),
+}
+
+
+def _solid_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    solid = params.get("solid")
+    keys = _SOLID_DIM_KEYS.get(solid)
+    if keys is None:
+        return None
+    spec = {"type": "solid", "solid": solid}
+    # Property-counting tiers render the same solids unlabelled; every
+    # other tier must carry the dimensions its prompt references.
+    dims_optional = params.get("tier") in {"count_faces", "count_edges"}
+    for key in keys:
+        value = _int(params.get(key))
+        if value is None:
+            if not dims_optional:
+                return None
+        else:
+            spec[key] = value
+    names = {
+        "rectangular_prism": "rectangular prism",
+        "square_pyramid": "square pyramid",
+        "cylinder": "cylinder",
+        "cone": "cone",
+    }
+    dims = ", ".join(f"{key} = {spec[key]}" for key in keys if key in spec)
+    spec["aria_label"] = f"A {names[solid]}." if not dims else f"A {names[solid]} with {dims}."
+    return spec
 
 
 def _ruler_model(problem: Problem) -> dict | None:
@@ -998,4 +1033,6 @@ def visualization_for(problem: Problem) -> dict | None:
         return _parabola_graph_model(problem)
     if problem.problem_type == "POLYNOMIAL_FUNCTION":
         return _polynomial_graph_model(problem)
+    if problem.problem_type == "SOLID_VOLUME":
+        return _solid_model(problem)
     return None

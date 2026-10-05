@@ -1190,6 +1190,124 @@ def _generate_coordinate_plane(rng: random.Random, difficulty: int) -> Generated
     )
 
 
+_SOLID_PROPERTIES = {
+    # (faces, vertices, edges) — cylinders and cones are excluded because
+    # curved-surface counting is genuinely ambiguous at this level.
+    "rectangular_prism": (6, 8, 12),
+    "square_pyramid": (5, 5, 8),
+}
+
+
+def _generate_solid_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """3D solids: prism/pyramid volumes, surface area, cylinder/cone volumes
+    in terms of π, and faces/edges counting — all rendered isometrically.
+
+    The solid spec carries only dimensions; the backend owns every formula.
+    """
+    tiers = ["prism_volume", "count_faces"]
+    if difficulty >= 3:
+        tiers += ["pyramid_volume", "surface_area"]
+    if difficulty >= 4:
+        tiers += ["cylinder_volume", "cone_volume", "count_edges"]
+    tier = rng.choice(tiers)
+    choices = None
+
+    if tier == "prism_volume":
+        l, w, h = (rng.randint(2, 8) for _ in range(3))
+        params = {"tier": tier, "solid": "rectangular_prism", "l": l, "w": w, "h": h}
+        prompt = (
+            f"The rectangular prism shown has length {l}, width {w}, and "
+            f"height {h}. What is its volume in cubic units?"
+        )
+        answer = str(l * w * h)
+        kind = "INTEGER"
+    elif tier == "count_faces":
+        solid = rng.choice(list(_SOLID_PROPERTIES))
+        faces, vertices, _ = _SOLID_PROPERTIES[solid]
+        params = {"tier": tier, "solid": solid}
+        distractors = [
+            (str(vertices), "SOLID_003"),
+            (str(faces - 1), "SOLID_003"),
+            (str(faces + 1), None),
+        ]
+        prompt = "How many faces does the solid shown have?"
+        choices, answer = _mc_choices(rng, str(faces), distractors)
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "pyramid_volume":
+        b = rng.randint(3, 6)
+        h = rng.randint(3, 9)
+        while (b * b * h) % 3 != 0:
+            h = rng.randint(3, 9)
+        params = {"tier": tier, "solid": "square_pyramid", "b": b, "h": h}
+        prompt = (
+            f"The square pyramid shown has a base with side length {b} and "
+            f"height {h}. What is its volume in cubic units?"
+        )
+        answer = str(b * b * h // 3)
+        kind = "INTEGER"
+    elif tier == "surface_area":
+        l, w, h = (rng.randint(2, 7) for _ in range(3))
+        sa = 2 * (l * w + l * h + w * h)
+        params = {"tier": tier, "solid": "rectangular_prism", "l": l, "w": w, "h": h}
+        distractors = [
+            (str(l * w * h), "SOLID_002"),
+            (str(l * w + l * h + w * h), "SOLID_003"),
+            (str(sa - 2 * min(l * w, l * h, w * h)), "SOLID_003"),
+        ]
+        prompt = "What is the total surface area of the rectangular prism shown?"
+        choices, answer = _mc_choices(rng, str(sa), distractors)
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "cylinder_volume":
+        r = rng.randint(2, 5)
+        h = rng.choice([3, 6, 9])  # divisible by 3 keeps the cone distractor clean
+        params = {"tier": tier, "solid": "cylinder", "r": r, "h": h}
+        distractors = [
+            (f"{2 * r * h}π", "SOLID_002"),
+            (f"{r * r * h // 3}π", "SOLID_001"),
+            (f"{r * h}π", None),
+            (f"{r * r * h + h}π", None),
+        ]
+        prompt = (
+            f"The cylinder shown has radius {r} and height {h}. "
+            "Which expression gives its volume?"
+        )
+        choices, answer = _mc_choices(rng, f"{r * r * h}π", distractors)
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "cone_volume":
+        r = rng.randint(2, 4)
+        h = rng.choice([3, 6, 9])
+        params = {"tier": tier, "solid": "cone", "r": r, "h": h}
+        distractors = [
+            (f"{r * r * h}π", "SOLID_001"),
+            (f"{2 * r * h}π", "SOLID_002"),
+            (f"{r * h}π", None),
+            (f"{r * r * h // 3 + 2}π", None),
+        ]
+        prompt = (
+            f"The cone shown has radius {r} and height {h}. "
+            "Which expression gives its volume?"
+        )
+        choices, answer = _mc_choices(rng, f"{r * r * h // 3}π", distractors)
+        kind = "MULTIPLE_CHOICE"
+    else:  # count_edges
+        solid = rng.choice(list(_SOLID_PROPERTIES))
+        faces, vertices, edges = _SOLID_PROPERTIES[solid]
+        params = {"tier": tier, "solid": solid}
+        distractors = [
+            (str(vertices), "SOLID_003"),
+            (str(faces), "SOLID_003"),
+            (str(edges - 2), None),
+        ]
+        prompt = "How many edges does the solid shown have?"
+        choices, answer = _mc_choices(rng, str(edges), distractors)
+        kind = "MULTIPLE_CHOICE"
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "SOLID_VOLUME",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -1831,6 +1949,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "LINEAR_GRAPH": _generate_linear_graph,
     "QUADRATIC_FUNCTION": _generate_quadratic_function,
     "POLYNOMIAL_FUNCTION": _generate_polynomial_function,
+    "SOLID_VOLUME": _generate_solid_volume,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -2137,7 +2256,13 @@ def _possible_families(problem_type: str) -> set[str]:
 # Graph-read tiers share a constant prompt per tier ("What is the slope of the
 # line shown?") — the rendered parameters, not the text, distinguish them. The
 # prompt-dedupe check would otherwise starve these families entirely.
-PROMPT_SHARED_TYPES = {"LINEAR_GRAPH", "COORDINATE_PLANE", "QUADRATIC_FUNCTION", "POLYNOMIAL_FUNCTION"}
+PROMPT_SHARED_TYPES = {
+    "LINEAR_GRAPH",
+    "COORDINATE_PLANE",
+    "QUADRATIC_FUNCTION",
+    "POLYNOMIAL_FUNCTION",
+    "SOLID_VOLUME",
+}
 
 
 def generate_problem(

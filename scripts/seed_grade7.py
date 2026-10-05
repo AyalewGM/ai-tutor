@@ -76,6 +76,10 @@ def _problem(
     prompt: str,
     answer: str,
     problem_type: str,
+    *,
+    answer_kind: str = "FREE_TEXT",
+    parameters: dict | None = None,
+    choices: list | None = None,
 ) -> None:
     provenance = {
         "origin": "AUTHORED",
@@ -89,6 +93,10 @@ def _problem(
             Problem.prompt == prompt,
         )
     )
+    solution = {"answer": answer, "provenance": provenance}
+    if parameters is not None:
+        solution["problem_family"] = problem_type
+        solution["parameters"] = parameters
     if existing is None:
         db.add(
             Problem(
@@ -97,10 +105,18 @@ def _problem(
                 difficulty=difficulty,
                 prompt=prompt,
                 canonical_answer=answer,
-                solution={"answer": answer, "provenance": provenance},
+                answer_kind=answer_kind,
+                choices=choices,
+                solution=solution,
                 source_type="CURATED",
             )
         )
+    elif parameters is not None and "parameters" not in (existing.solution or {}):
+        existing.solution = {
+            **(existing.solution or {}),
+            "problem_family": problem_type,
+            "parameters": parameters,
+        }
     elif "provenance" not in (existing.solution or {}):
         existing.solution = {**(existing.solution or {}), "provenance": provenance}
 
@@ -201,6 +217,13 @@ def seed() -> None:
             db, curriculum, "M7.EE.EQUATION.TWO",
             "Two-Step Equations",
             "Solve ax + b = c by undoing operations in reverse order.",
+            3,
+        )
+        solids = _skill(
+            db, curriculum, "M7.G.SOLID",
+            "Volume and Surface Area of Solids",
+            "Compute volumes and surface areas of prisms, pyramids, cylinders, "
+            "and cones, and reason about faces, edges, and vertices.",
             3,
         )
 
@@ -354,6 +377,35 @@ def seed() -> None:
             "Undo operations in reverse order: remove the added constant first, "
             "then divide by the coefficient.",
         )
+        _misconception(
+            solids,
+            "SOLID_001",
+            "One-third factor dropped",
+            "The learner computes a pyramid or cone volume as base area times "
+            "height, forgetting the one-third factor for pointed solids.",
+            "A pyramid or cone fills exactly one third of the prism or "
+            "cylinder with the same base and height: V = (1/3)Bh.",
+        )
+        _misconception(
+            solids,
+            "SOLID_002",
+            "Surface area confused with volume",
+            "The learner answers a surface-area question with a volume "
+            "formula, or vice versa — for example giving lwh as the surface "
+            "area.",
+            "Surface area is the total area of all faces in square units; "
+            "volume is the space inside in cubic units. Name which one the "
+            "question wants first.",
+        )
+        _misconception(
+            solids,
+            "SOLID_003",
+            "Faces, edges, or vertices miscounted",
+            "The learner undercounts faces or edges by missing the hidden "
+            "ones, or confuses faces with vertices or edges.",
+            "Count systematically: bases and lateral faces separately for "
+            "faces; base edges and lateral edges separately for edges.",
+        )
 
         problems = [
             (
@@ -404,6 +456,41 @@ def seed() -> None:
         ]
         for skill, difficulty, prompt, answer, problem_type in problems:
             _problem(db, skill, difficulty, prompt, answer, problem_type)
+
+        # Solid items — parameters feed the isometric solid visual.
+        solid_problems = [
+            (
+                solids, 2,
+                "The rectangular prism shown has length 4, width 3, and height 5. What is its volume in cubic units?",
+                "60", "SOLID_VOLUME", "INTEGER",
+                {"tier": "prism_volume", "solid": "rectangular_prism", "l": 4, "w": 3, "h": 5},
+                None,
+            ),
+            (
+                solids, 3,
+                "The square pyramid shown has a base with side length 3 and height 6. What is its volume in cubic units?",
+                "18", "SOLID_VOLUME", "INTEGER",
+                {"tier": "pyramid_volume", "solid": "square_pyramid", "b": 3, "h": 6},
+                None,
+            ),
+            (
+                solids, 4,
+                "The cone shown has radius 3 and height 6. Which expression gives its volume?", "a",
+                "SOLID_VOLUME", "MULTIPLE_CHOICE",
+                {"tier": "cone_volume", "solid": "cone", "r": 3, "h": 6},
+                [
+                    {"id": "a", "text": "18π"},
+                    {"id": "b", "text": "54π", "misconception_code": "SOLID_001"},
+                    {"id": "c", "text": "36π", "misconception_code": "SOLID_002"},
+                    {"id": "d", "text": "20π"},
+                ],
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in solid_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
 
         db.commit()
         print(f"Grade 7 seed complete. Curriculum={curriculum.id}")
