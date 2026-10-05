@@ -360,6 +360,33 @@ def _system_model(problem: Problem) -> dict | None:
     }
 
 
+def _scatterplot_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    points = params.get("points")
+    if (
+        not isinstance(points, list)
+        or not points
+        or not all(isinstance(p, list) and len(p) == 2 for p in points)
+    ):
+        return None
+    model: dict = {
+        "type": "scatterplot",
+        "points": points,
+        "x_max": 10,
+        "y_max": 10,
+        "aria_label": "A scatterplot of data points.",
+    }
+    # The best-fit line is part of the predict prompt; drawing it elsewhere
+    # would answer the question.
+    fit = params.get("fit")
+    if isinstance(fit, dict) and all(
+        fit.get(k) is not None for k in ("m_num", "m_den", "i_num", "i_den")
+    ):
+        model["fit"] = fit
+        model["aria_label"] = "A scatterplot with its line of best fit."
+    return model
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1179,4 +1206,6 @@ def visualization_for(problem: Problem) -> dict | None:
         return _similarity_model(problem)
     if problem.problem_type == "SYSTEM_OF_EQUATIONS":
         return _system_model(problem)
+    if problem.problem_type == "STATISTICS":
+        return _scatterplot_model(problem)
     return None
