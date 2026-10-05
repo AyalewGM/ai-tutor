@@ -1,3 +1,4 @@
+import math
 import re
 from collections.abc import Callable
 from dataclasses import dataclass
@@ -338,6 +339,45 @@ def _elementary_coordinate_order_swap(
     return None
 
 
+_ORDERED_PAIR = re.compile(r"^\(?(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)\)?$")
+
+
+def _ordered_pairs_equal(answer: str, canonical: str) -> bool:
+    """'(3, 4)', '(3,4)' and '3,4' are the same point."""
+    a = _ORDERED_PAIR.match(answer)
+    c = _ORDERED_PAIR.match(canonical)
+    return bool(a and c and a.groups() == c.groups())
+
+
+def _normalized_fraction(text: str) -> tuple[int, int] | None:
+    """Parse to a reduced (num, den) with den > 0 so sign/inversion compare cleanly."""
+    value = _fraction_value(text)
+    if value is None:
+        return None
+    num, den = value
+    if den < 0:
+        num, den = -num, -den
+    common = math.gcd(abs(num), den)
+    return num // common, den // common
+
+
+def _graph_slope_sign_flip(prompt: str, answer: str, canonical: str) -> MisconceptionMatch | None:
+    if "slopeoftheline" not in prompt:
+        return None
+    student = _normalized_fraction(answer)
+    correct = _normalized_fraction(canonical)
+    if student is None or correct is None or correct[0] == 0:
+        return None
+    num, den = correct
+    if student == (-num, den):
+        return MisconceptionMatch("GR_002", 0.95)
+    if student == _normalized_fraction(f"{den}/{num}") or student == _normalized_fraction(
+        f"{-den}/{num}"
+    ):
+        return MisconceptionMatch("GR_001", 0.95)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -357,6 +397,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _elementary_equal_sharing_reverse,
     _elementary_area_perimeter_swap,
     _elementary_coordinate_order_swap,
+    _graph_slope_sign_flip,
 )
 
 
@@ -435,7 +476,7 @@ def evaluate_problem(
     canonical = _normalize(canonical_answer)
     normalized_prompt = _normalize(prompt)
 
-    if normalized == canonical:
+    if normalized == canonical or _ordered_pairs_equal(normalized, canonical):
         return EvaluationResult(True, 0.99, normalized)
 
     typed = _evaluate_typed(answer_kind, answer, canonical_answer, normalized)
