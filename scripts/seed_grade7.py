@@ -250,9 +250,19 @@ def seed() -> None:
             "equations, and interpret the point (1, r) as the unit rate.",
             2,
         )
+        signed = _skill(
+            db, curriculum, "M7.NS.RAT",
+            "Signed Number Operations",
+            "Add and subtract signed integers using number-line "
+            "reasoning, apply the sign rules for multiplication and "
+            "division, use additive inverses, and find distance "
+            "between signed points in context.",
+            1,
+        )
 
         _prerequisite(db, prop_rate, proportional)
         _prerequisite(db, prop_graph, prop_rate)
+        _prerequisite(db, prop_graph, signed)
         _prerequisite(db, pct_of, percent)
         _prerequisite(db, expr_dist, expressions)
         _prerequisite(db, expr_combine, expr_dist)
@@ -575,6 +585,63 @@ def seed() -> None:
             "On a proportional graph the y-intercept is always 0; "
             "(1, r) is the point at x = 1, so r is the unit rate.",
         )
+        _misconception(
+            signed,
+            "NUM_001",
+            "Sign flipped on a signed sum",
+            "The learner negates the correct sum, or adds magnitudes "
+            "and keeps a negative sign that does not belong.",
+            "Compute the magnitudes first, then set the sign by which "
+            "side of zero the sum lands on.",
+        )
+        _misconception(
+            signed,
+            "NUM_002",
+            "Magnitudes added instead of signed",
+            "The learner reports |a| + |b| and ignores that one addend "
+            "is negative.",
+            "Adding a negative moves left on the number line; the "
+            "magnitudes do not both contribute forward.",
+        )
+        _misconception(
+            signed,
+            "NEG_001",
+            "Subtraction of a negative treated as positive subtraction",
+            "The learner evaluates a − (−b) as a − b, or adds when a "
+            "subtraction was written.",
+            "Subtracting a negative is the same as adding its opposite: "
+            "3 − (−4) = 3 + 4. Rewrite the expression first, then add.",
+        )
+        _misconception(
+            signed,
+            "NEG_002",
+            "Product or quotient sign rule missed",
+            "The learner gives a negative answer for a product or "
+            "quotient of two negatives, or drops the sign for a "
+            "negative quotient.",
+            "Count the signs: same signs give a positive result, "
+            "different signs give a negative one.",
+        )
+        _misconception(
+            signed,
+            "NEG_003",
+            "Signed-addition direction error",
+            "The learner adds the magnitudes and keeps the sign, or "
+            "moves the wrong direction in a context such as "
+            "temperature or elevation change.",
+            "Mark the start on a number line, then move right for "
+            "adding and left for subtracting — opposite signs cancel.",
+        )
+        _misconception(
+            signed,
+            "NEG_004",
+            "Additive inverse or signed distance confused",
+            "The learner reports a instead of −a for 'added to a "
+            "gives 0', or reports a signed or partial value for a "
+            "distance.",
+            "An additive inverse has the same magnitude and opposite "
+            "sign; distance is always the positive difference.",
+        )
 
         problems = [
             (
@@ -812,6 +879,69 @@ def seed() -> None:
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in prop_graph_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        # Signed-number items — operations, inverses, marked sums and distance.
+        signed_problems = [
+            (
+                signed, 1,
+                "Evaluate -5 + 3.",
+                "-2", "SIGNED_NUMBERS", "INTEGER",
+                {"tier": "add", "a": -5, "b": 3},
+                None,
+            ),
+            (
+                signed, 1,
+                "The temperature was -4 degrees and rose by 9 degrees. What is the temperature now?",
+                "5", "SIGNED_NUMBERS", "INTEGER",
+                {"tier": "word", "a": -4, "b": 9, "direction": 1},
+                None,
+            ),
+            (
+                signed, 2,
+                "Evaluate 3 - (-4).",
+                "7", "SIGNED_NUMBERS", "INTEGER",
+                {"tier": "subtract", "a": 3, "b": -4},
+                None,
+            ),
+            (
+                signed, 2,
+                "On the number line, which letter marks the value of -4 + 7?",
+                "b", "SIGNED_NUMBERS", "MULTIPLE_CHOICE",
+                {"tier": "which_point", "a": -4, "b": 7,
+                 "markers": [
+                     {"label": "A", "position": -11},
+                     {"label": "B", "position": 3},
+                     {"label": "C", "position": -4},
+                     {"label": "D", "position": 0},
+                 ],
+                 "min": -12, "max": 4},
+                [
+                    {"id": "a", "text": "A", "misconception_code": "NEG_003"},
+                    {"id": "b", "text": "B"},
+                    {"id": "c", "text": "C"},
+                    {"id": "d", "text": "D"},
+                ],
+            ),
+            (
+                signed, 3,
+                "Evaluate (-6) × (-4).",
+                "24", "SIGNED_NUMBERS", "INTEGER",
+                {"tier": "multiply", "a": -6, "b": -4},
+                None,
+            ),
+            (
+                signed, 4,
+                "Point P is at -3 and point Q is at 5 on the number line. What is the distance between them?",
+                "8", "SIGNED_NUMBERS", "INTEGER",
+                {"tier": "distance", "p": -3, "q": 5},
+                None,
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in signed_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters, choices=choices,

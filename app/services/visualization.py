@@ -545,6 +545,34 @@ def _proportional_graph_model(problem: Problem) -> dict | None:
     }
 
 
+def _signed_numbers_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    if params.get("tier") != "which_point":
+        return None
+    markers = params.get("markers")
+    lo, hi = _int(params.get("min")), _int(params.get("max"))
+    if not (
+        isinstance(markers, list)
+        and markers
+        and all(
+            isinstance(m, dict)
+            and isinstance(m.get("position"), (int, float))
+            and isinstance(m.get("label"), str)
+            for m in markers
+        )
+        and isinstance(lo, int)
+        and isinstance(hi, int)
+    ):
+        return None
+    return {
+        "type": "radical_line",
+        "min": lo,
+        "max": hi,
+        "markers": markers,
+        "aria_label": "A number line with lettered marker positions.",
+    }
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1409,6 +1437,8 @@ def visualization_for(problem: Problem) -> dict | None:
         return _functions_model(problem)
     if problem.problem_type == "PROPORTIONAL_GRAPH":
         return _proportional_graph_model(problem)
+    if problem.problem_type == "SIGNED_NUMBERS":
+        return _signed_numbers_model(problem)
     if problem.problem_type == "EXPONENTIAL_FUNCTION":
         return _exponential_graph_model(problem)
     return None
