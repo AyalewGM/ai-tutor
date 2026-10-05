@@ -93,6 +93,7 @@ def seed_content(db, curriculum: Curriculum) -> None:
         fn_eval = _skill(db, curriculum, "A1.LINEAR.FN.EVAL", "Evaluating Linear Functions", "Evaluate a linear function for a given input.", 3)
         quad_functions = _skill(db, curriculum, "A1.QUAD.FN", "Quadratic Functions", "Interpret and reason about quadratic relationships using equations and graphs.", 4)
         poly_functions = _skill(db, curriculum, "A1.POLY.FN", "Polynomial Functions", "Interpret polynomial functions: degree, zeros, end behavior, and graphs of factored forms.", 5)
+        systems = _skill(db, curriculum, "A1.SYS.EQ", "Systems of Linear Equations", "Solve pairs of linear equations graphically and algebraically, and reason about the number of solutions.", 4)
 
         _prerequisite(db, expr_dist, expressions)
         _prerequisite(db, expr_combine, expr_dist)
@@ -102,6 +103,7 @@ def seed_content(db, curriculum: Curriculum) -> None:
         _prerequisite(db, fn_eval, fn_slope)
         _prerequisite(db, quad_functions, linear_functions)
         _prerequisite(db, poly_functions, quad_functions)
+        _prerequisite(db, systems, fn_slope)
 
         def _misconception(skill, code, name, description, strategy):
             if db.scalar(
@@ -348,6 +350,25 @@ def seed_content(db, curriculum: Curriculum) -> None:
             "The degree is the largest exponent on the variable — count "
             "exponents, not terms.",
         )
+        _misconception(
+            systems,
+            "SYS_001",
+            "Intersection coordinates swapped",
+            "The learner reports the intersection as (y, x) instead of "
+            "(x, y).",
+            "An ordered pair is always (x, y) — read across to the line's "
+            "x first, then up or down for y.",
+        )
+        _misconception(
+            systems,
+            "SYS_002",
+            "Parallel and coincident systems confused",
+            "The learner counts no solution for coincident lines, or "
+            "infinitely many for parallel ones.",
+            "Same slope different intercept means the lines never meet — "
+            "no solution. Identical lines share every point — infinitely "
+            "many solutions.",
+        )
 
         problems = [
             (expressions, 1, "Simplify 4(x + 3).", "4x+12", "SIMPLIFY_EXPRESSION"),
@@ -443,6 +464,50 @@ def seed_content(db, curriculum: Curriculum) -> None:
                     {"id": "c", "text": "1"},
                     {"id": "d", "text": "0"},
                 ],
+            ),
+            (
+                systems, 2,
+                "The system of equations shown has exactly one solution. What are its coordinates?",
+                "(2, 1)", "SYSTEM_OF_EQUATIONS", "FREE_TEXT",
+                {"tier": "graphical_solution",
+                 "lines": [{"m_num": 1, "m_den": 1, "i_num": -1, "i_den": 1},
+                           {"m_num": -1, "m_den": 1, "i_num": 3, "i_den": 1}]},
+                None,
+            ),
+            (
+                systems, 3,
+                "The two equations of a system are graphed. How many solutions does the system have?",
+                "b", "SYSTEM_OF_EQUATIONS", "MULTIPLE_CHOICE",
+                {"tier": "count_solutions", "case": "none",
+                 "lines": [{"m_num": 1, "m_den": 1, "i_num": 0, "i_den": 1},
+                           {"m_num": 1, "m_den": 1, "i_num": 3, "i_den": 1}]},
+                [
+                    {"id": "a", "text": "one solution"},
+                    {"id": "b", "text": "no solution"},
+                    {"id": "c", "text": "infinitely many solutions", "misconception_code": "SYS_002"},
+                    {"id": "d", "text": "two solutions"},
+                ],
+            ),
+            (
+                systems, 3,
+                "How many solutions does the graphed system have?",
+                "c", "SYSTEM_OF_EQUATIONS", "MULTIPLE_CHOICE",
+                {"tier": "count_solutions", "case": "infinite",
+                 "lines": [{"m_num": 2, "m_den": 1, "i_num": 1, "i_den": 1},
+                           {"m_num": 2, "m_den": 1, "i_num": 1, "i_den": 1}]},
+                [
+                    {"id": "a", "text": "one solution"},
+                    {"id": "b", "text": "no solution", "misconception_code": "SYS_002"},
+                    {"id": "c", "text": "infinitely many solutions"},
+                    {"id": "d", "text": "two solutions"},
+                ],
+            ),
+            (
+                systems, 4,
+                "Solve the system: x + 2y = 7 and 3x + y = 11. Write the solution as (x, y).",
+                "(3, 2)", "SYSTEM_OF_EQUATIONS", "FREE_TEXT",
+                {"tier": "solve", "a1": 1, "b1": 2, "c1": 7, "a2": 3, "b2": 1, "c2": 11},
+                None,
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in graph_problems:

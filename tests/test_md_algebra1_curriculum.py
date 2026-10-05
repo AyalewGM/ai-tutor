@@ -25,7 +25,7 @@ def test_md_algebra1_seed_upgrades_pilot_idempotently_with_isolation():
         assert authority.code == "MSDE"
 
         skills = list(db.scalars(select(Skill).where(Skill.curriculum_id == curriculum.id)))
-        assert len(skills) == 11
+        assert len(skills) == 12
         skill_ids = {skill.id for skill in skills}
         mappings = list(
             db.scalars(select(CurriculumSkillMapping).where(CurriculumSkillMapping.skill_id.in_(skill_ids)))
@@ -34,11 +34,11 @@ def test_md_algebra1_seed_upgrades_pilot_idempotently_with_isolation():
         assert all(mapping.provenance_json["standards_authority"] == "Maryland State Department of Education" for mapping in mappings)
 
         edges = list(db.scalars(select(SkillPrerequisite).where(SkillPrerequisite.skill_id.in_(skill_ids))))
-        assert len(edges) == 10
+        assert len(edges) == 11
         assert all(edge.prerequisite_skill_id in skill_ids for edge in edges)
 
         problems = list(db.scalars(select(Problem).where(Problem.primary_skill_id.in_(skill_ids))))
-        assert len(problems) == 30
+        assert len(problems) == 34
         assert all(problem.solution["provenance"]["origin"] == "AUTHORED" for problem in problems)
         assert all(problem.solution["provenance"]["author"] == "AI Tutor curriculum team" for problem in problems)
         assert all(problem.solution["provenance"]["standards_source"] == MSDE_SOURCE for problem in problems)

@@ -472,6 +472,21 @@ def _transformation_errors(prompt: str, answer: str, canonical: str) -> Misconce
     return None
 
 
+def _system_intersection_swap(prompt: str, answer: str, canonical: str) -> MisconceptionMatch | None:
+    """Answered a system's solution with the coordinates swapped."""
+    if "system" not in prompt and "intersect" not in prompt:
+        return None
+    student = _ORDERED_PAIR.match(answer)
+    correct = _ORDERED_PAIR.match(canonical)
+    if not student or not correct:
+        return None
+    sx, sy = _pair_ints(student)
+    cx, cy = _pair_ints(correct)
+    if (sx, sy) == (cy, cx) and cx != cy:
+        return MisconceptionMatch("SYS_001", 0.95)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -496,6 +511,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _solid_pyramid_forgot_third,
     _geo_angle_relationship_errors,
     _transformation_errors,
+    _system_intersection_swap,
 )
 
 
