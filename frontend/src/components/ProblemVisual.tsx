@@ -56,6 +56,7 @@ export interface VisualSpec {
   image_labels?: string[];
   pre_edge_labels?: (string | null)[];
   image_edge_labels?: (string | null)[];
+  lines?: Array<{ m_num: number; m_den: number; i_num: number; i_den: number }>;
 }
 
 interface PanSpec {
@@ -634,6 +635,65 @@ function SimilarFigures({ spec }: { spec: VisualSpec }) {
   );
 }
 
+function LinearSystem({ spec }: { spec: VisualSpec }) {
+  const min = spec.min ?? -9;
+  const max = spec.max ?? 9;
+  const size = 340;
+  const pad = 30;
+  const scale = (size - 2 * pad) / (max - min);
+  const pos = (v: number) => pad + (v - min) * scale;
+  const yPos = (v: number) => size - pos(v);
+  const ticks = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+  const endpointsFor = (line: { m_num: number; m_den: number; i_num: number; i_den: number }) => {
+    const m = line.m_num / line.m_den;
+    const intercept = line.i_num / line.i_den;
+    const xAt = (y: number) => (y - intercept) / m;
+    const candidates: [number, number][] =
+      m === 0
+        ? [[min, intercept], [max, intercept]]
+        : [
+            [min, m * min + intercept],
+            [max, m * max + intercept],
+            [xAt(min), min],
+            [xAt(max), max],
+          ];
+    return candidates
+      .filter(([x, y]) => x >= min - 1e-9 && x <= max + 1e-9 && y >= min - 1e-9 && y <= max + 1e-9)
+      .slice(0, 2);
+  };
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} className="visual" role="img" aria-label={spec.aria_label ?? "Two lines on a coordinate plane"}>
+      {ticks.map((t) => (
+        <g key={`g${t}`}>
+          <line x1={pad} y1={yPos(t)} x2={size - pad} y2={yPos(t)} className="viz-grid" />
+          <line x1={pos(t)} y1={pad} x2={pos(t)} y2={size - pad} className="viz-grid" />
+        </g>
+      ))}
+      <line x1={pad} y1={yPos(0)} x2={size - pad} y2={yPos(0)} className="viz-axis" />
+      <line x1={pos(0)} y1={pad} x2={pos(0)} y2={size - pad} className="viz-axis" />
+      {ticks.filter((t) => t !== 0 && t % 2 === 0).map((t) => (
+        <g key={t}>
+          <text x={pos(t)} y={yPos(0) + 15} textAnchor="middle" className="viz-tick-label">{t}</text>
+          <text x={pos(0) - 8} y={yPos(t) + 4} textAnchor="end" className="viz-tick-label">{t}</text>
+        </g>
+      ))}
+      {(spec.lines ?? []).map((line, i) => {
+        const endpoints = endpointsFor(line);
+        return endpoints.length === 2 ? (
+          <line
+            key={i}
+            x1={pos(endpoints[0][0])}
+            y1={yPos(endpoints[0][1])}
+            x2={pos(endpoints[1][0])}
+            y2={yPos(endpoints[1][1])}
+            className={i === 0 ? "viz-curve" : "viz-curve-b"}
+          />
+        ) : null;
+      })}
+    </svg>
+  );
+}
+
 function NumberLine({ spec, compare = false }: { spec: VisualSpec; compare?: boolean }) {
   const min = spec.min ?? 0;
   const max = spec.max ?? 10;
@@ -950,5 +1010,6 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "composite_figure") return <CompositeFigure spec={spec} />;
   if (spec.type === "transformation") return <TransformPlane spec={spec} />;
   if (spec.type === "similar_figures") return <SimilarFigures spec={spec} />;
+  if (spec.type === "linear_system") return <LinearSystem spec={spec} />;
   return null;
 }

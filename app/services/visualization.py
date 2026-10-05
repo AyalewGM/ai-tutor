@@ -336,6 +336,30 @@ def _similarity_model(problem: Problem) -> dict | None:
     return model
 
 
+def _system_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    # The solve tier is deliberately diagram-free: rendering both lines
+    # would hand the learner the intersection.
+    if params.get("tier") == "solve":
+        return None
+    lines = params.get("lines")
+    if not isinstance(lines, list) or len(lines) != 2:
+        return None
+    for line in lines:
+        if not isinstance(line, dict) or any(
+            line.get(k) is None
+            for k in ("m_num", "m_den", "i_num", "i_den")
+        ):
+            return None
+    return {
+        "type": "linear_system",
+        "lines": lines,
+        "min": -9,
+        "max": 9,
+        "aria_label": "Two lines graphed on a coordinate plane.",
+    }
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1153,4 +1177,6 @@ def visualization_for(problem: Problem) -> dict | None:
         return _transformation_model(problem)
     if problem.problem_type == "SIMILARITY":
         return _similarity_model(problem)
+    if problem.problem_type == "SYSTEM_OF_EQUATIONS":
+        return _system_model(problem)
     return None

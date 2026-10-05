@@ -1718,6 +1718,102 @@ def _generate_similarity(rng: random.Random, difficulty: int) -> GeneratedProble
     )
 
 
+_SYSTEM_SLOPES = [(1, 1), (-1, 1), (2, 1), (-2, 1), (1, 2), (-1, 2)]
+
+
+def _generate_system(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Systems of two linear equations: read the intersection off a
+    graphed pair of lines, count solutions (parallel versus coincident),
+    or solve a standard-form pair algebraically."""
+    tiers = ["graphical_solution"]
+    if difficulty >= 2:
+        tiers.append("count_solutions")
+    if difficulty >= 3:
+        tiers.append("solve")
+    tier = rng.choice(tiers)
+    choices = None
+
+    if tier == "count_solutions":
+        case = rng.choice(["one", "none", "infinite"])
+        m_num, m_den = rng.choice(_SYSTEM_SLOPES)
+        b1 = rng.randint(-4, 4)
+        if case == "one":
+            for _ in range(40):
+                m2_num, m2_den = rng.choice(_SYSTEM_SLOPES)
+                if (m2_num, m2_den) != (m_num, m_den):
+                    break
+            b2 = rng.randint(-4, 4)
+            correct = "one solution"
+        elif case == "none":
+            m2_num, m2_den = m_num, m_den
+            b2 = b1 + rng.choice([-3, -2, 2, 3])
+            while abs(b2) > 7:
+                b2 = b1 + rng.choice([-3, -2, 2, 3])
+            correct = "no solution"
+        else:
+            m2_num, m2_den, b2 = m_num, m_den, b1
+            correct = "infinitely many solutions"
+        options = ["one solution", "no solution",
+                   "infinitely many solutions", "two solutions"]
+        distractors = [
+            (text, "SYS_002" if text != "two solutions" else None)
+            for text in options if text != correct
+        ]
+        prompt = (
+            "The two equations of a system are graphed. How many "
+            "solutions does the system have?"
+        )
+        choices, answer = _mc_choices(rng, correct, distractors)
+        params = {"tier": tier, "case": case,
+                  "lines": [{"m_num": m_num, "m_den": m_den, "i_num": b1, "i_den": 1},
+                            {"m_num": m2_num, "m_den": m2_den, "i_num": b2, "i_den": 1}]}
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "graphical_solution":
+        for _ in range(80):
+            sx, sy = _random_point(rng, -4, 4)
+            (m1n, m1d), (m2n, m2d) = rng.sample(_SYSTEM_SLOPES, 2)
+            b1 = sy * m1d - m1n * sx
+            b2 = sy * m2d - m2n * sx
+            if b1 % m1d == 0 and b2 % m2d == 0:
+                b1 //= m1d
+                b2 //= m2d
+                if abs(b1) <= 7 and abs(b2) <= 7 and b1 != b2:
+                    break
+        prompt = (
+            "The system of equations shown has exactly one solution. "
+            "What are its coordinates?"
+        )
+        answer = f"({sx}, {sy})"
+        params = {"tier": tier,
+                  "lines": [{"m_num": m1n, "m_den": m1d, "i_num": b1, "i_den": 1},
+                            {"m_num": m2n, "m_den": m2d, "i_num": b2, "i_den": 1}]}
+        kind = "FREE_TEXT"
+    else:  # solve — standard-form pair with an integer intersection
+        for _ in range(80):
+            sx, sy = _random_point(rng, -4, 4)
+            a1, b1 = rng.sample([1, 2, 3], 2)
+            a2, b2 = rng.sample([1, 2, 3], 2)
+            if a1 * b2 != a2 * b1:
+                break
+        c1 = a1 * sx + b1 * sy
+        c2 = a2 * sx + b2 * sy
+        prompt = (
+            f"Solve the system: {a1}x + {b1}y = {c1} and "
+            f"{a2}x + {b2}y = {c2}. Write the solution as (x, y)."
+        )
+        answer = f"({sx}, {sy})"
+        # No diagram: the lines would give the intersection away. The
+        # visual tiers above are where graph-reading is the skill.
+        params = {"tier": tier, "a1": a1, "b1": b1, "c1": c1,
+                  "a2": a2, "b2": b2, "c2": c2}
+        kind = "FREE_TEXT"
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "SYSTEM_OF_EQUATIONS",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -2363,6 +2459,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "GEOMETRY_2D": _generate_geometry_2d,
     "TRANSFORMATION": _generate_transformation,
     "SIMILARITY": _generate_similarity,
+    "SYSTEM_OF_EQUATIONS": _generate_system,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -2679,6 +2776,7 @@ PROMPT_SHARED_TYPES = {
     "ANGLE_MEASUREMENT",
     "TRANSFORMATION",
     "SIMILARITY",
+    "SYSTEM_OF_EQUATIONS",
 }
 
 
