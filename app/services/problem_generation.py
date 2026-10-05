@@ -2772,6 +2772,196 @@ def _generate_radicals(rng: random.Random, difficulty: int) -> GeneratedProblem:
     )
 
 
+_FUNCTION_CONTEXTS = [
+    ("a gym charges a ${start} sign-up fee plus ${rate} per month",
+     "total cost in dollars after {var} months"),
+    ("a savings account starts at ${start} and adds ${rate} every week",
+     "the balance in dollars after {var} weeks"),
+    ("a plant is {start} cm tall and grows {rate} cm each week",
+     "its height in cm after {var} weeks"),
+    ("a taxi ride costs ${start} to start plus ${rate} per mile",
+     "the fare in dollars after {var} miles"),
+    ("a tank holds {start} litres and drains {rate} litres per hour",
+     "the litres remaining after {var} hours"),
+]
+
+
+def _rate_table(rng: random.Random, slope: int, intercept: int) -> list[list[int]]:
+    """Three collinear (x, y) pairs at unit spacing."""
+    x0 = rng.randint(0, 3)
+    return [[x0 + i, slope * (x0 + i) + intercept] for i in range(3)]
+
+
+def _generate_functions(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Function items (8.F): is a relation a function, rate of change
+    from a table or a drawn graph, linear vs nonlinear, comparing two
+    representations, and building y = mx + b from a situation.
+
+    Tables render as `xy_table`; graph_rate reuses the linear-graph
+    spec. The other tiers are text-only."""
+    tiers = ["is_function", "rate_table"]
+    if difficulty >= 2:
+        tiers += ["linear_or_not", "graph_rate"]
+    if difficulty >= 3:
+        tiers += ["compare_rates", "build_function"]
+    tier = rng.choice(tiers)
+    choices = None
+    params: dict = {"tier": tier}
+    kind = "MULTIPLE_CHOICE"
+
+    if tier == "is_function":
+        xs = rng.sample(range(-4, 9), 4)
+        pairs = [[x, rng.randint(-6, 9)] for x in xs]
+        is_fn = rng.random() < 0.6
+        if is_fn:
+            # A repeated output is the interesting correct case — it is
+            # still a function and the distractor leans on FUNC_001.
+            pairs[1][1] = pairs[0][1]
+        else:
+            pairs[1][0] = pairs[0][0]
+            while pairs[1][1] == pairs[0][1]:
+                pairs[1][1] = rng.randint(-6, 9)
+        rng.shuffle(pairs)
+        params["pairs"] = pairs
+        prompt = ("A relation has the values "
+                  + ", ".join(f"({x}, {y})" for x, y in pairs)
+                  + ". Is this relation a function?")
+        if is_fn:
+            correct = "Yes — every input has exactly one output"
+            pool = [
+                ("No — one input has two different outputs", "FUNC_001"),
+                ("No — two inputs share the same output", "FUNC_001"),
+                ("Cannot be determined without a graph", None),
+            ]
+        else:
+            correct = "No — one input has two different outputs"
+            pool = [
+                ("Yes — every input has exactly one output", "FUNC_001"),
+                ("Yes — all of the outputs are different numbers", "FUNC_001"),
+                ("Cannot be determined without a graph", None),
+            ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "rate_table":
+        m = rng.choice([-4, -3, -2, -1, 1, 2, 3, 4])
+        b = rng.randint(-5, 9)
+        pairs = _rate_table(rng, m, b)
+        params.update(m=m, b=b, pairs=pairs)
+        prompt = ("A function has the values "
+                  + ", ".join(f"({x}, {y})" for x, y in pairs)
+                  + ". What is its rate of change?")
+        answer = str(m)
+        kind = "INTEGER"
+    elif tier == "linear_or_not":
+        if rng.random() < 0.5:
+            m = rng.choice([-3, -2, -1, 2, 3, 4])
+            b = rng.randint(-6, 9)
+            linear = rng.random() < 0.5
+            if linear:
+                pairs = _rate_table(rng, m, b)
+            else:
+                x0 = rng.randint(0, 2)
+                pairs = [[x0 + i, m * (x0 + i) * (x0 + i) + b] for i in range(3)]
+            params.update(form="table", pairs=pairs)
+            prompt = ("A function has the values "
+                      + ", ".join(f"({x}, {y})" for x, y in pairs)
+                      + ". Is this function linear or nonlinear?")
+        else:
+            m = rng.choice([-3, -2, -1, 2, 3, 4])
+            b = rng.randint(-6, 9)
+            linear = rng.random() < 0.5
+            if linear:
+                sign = "+" if b >= 0 else "−"
+                equation = f"y = {m}x {sign} {abs(b)}" if b else f"y = {m}x"
+            else:
+                form, k = rng.choice([("x²", 1), ("x²", -1), ("x³", 1)])
+                sign = "+" if b >= 0 else "−"
+                coefficient = "" if k == 1 else "−"
+                equation = (f"y = {coefficient}{form} {sign} {abs(b)}"
+                            if b else f"y = {coefficient}{form}")
+            params.update(form="equation", equation=equation)
+            prompt = f"Is the function {equation} linear or nonlinear?"
+        if linear:
+            correct = "Linear — the rate of change is constant"
+            pool = [
+                ("Nonlinear — the rate of change is not constant", "FUNC_002"),
+                ("Cannot be determined from the information given", None),
+                ("Both linear and nonlinear depending on x", None),
+            ]
+        else:
+            correct = "Nonlinear — the rate of change is not constant"
+            pool = [
+                ("Linear — the rate of change is constant", "FUNC_002"),
+                ("Cannot be determined from the information given", None),
+                ("Both linear and nonlinear depending on x", None),
+            ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    elif tier == "graph_rate":
+        m = rng.choice([-4, -3, -2, -1, 1, 2, 3, 4])
+        b = rng.randint(-6, 6)
+        params.update(m_num=m, m_den=1, b=b)
+        prompt = "What is the rate of change of the function shown?"
+        answer = str(m)
+        kind = "INTEGER"
+    elif tier == "compare_rates":
+        # Positive slopes only — "greater" rate is ambiguous for
+        # negative slopes at this level.
+        m1 = rng.choice([1, 2, 3, 4])
+        m2 = rng.choice([1, 2, 3, 4])
+        b1, b2 = rng.randint(-6, 9), rng.randint(-5, 9)
+        pairs = _rate_table(rng, m2, b2)
+        params.update(m1=m1, b1=b1, m2=m2, pairs=pairs)
+        sign = "+" if b1 >= 0 else "−"
+        prompt = (f"Function A is y = {m1}x {sign} {abs(b1)}. Function B has "
+                  f"the values " + ", ".join(f"({x}, {y})" for x, y in pairs)
+                  + ". Which function has the greater rate of change?")
+        if m1 == m2:
+            correct = "They have the same rate of change"
+            pool = [
+                ("Function A", "FUNC_004"),
+                ("Function B", "FUNC_004"),
+                ("The one with the larger y-intercept", "FUNC_002"),
+            ]
+        else:
+            correct = "Function A" if m1 > m2 else "Function B"
+            pool = [
+                ("Function B" if m1 > m2 else "Function A", "FUNC_004"),
+                ("They have the same rate of change", "FUNC_004"),
+                ("The one with the larger y-intercept", "FUNC_002"),
+            ]
+        choices, answer = _mc_choices(rng, correct, pool)
+    else:  # build_function
+        template, unit = rng.choice(_FUNCTION_CONTEXTS)
+        start = rng.choice([5, 10, 15, 20, 25, 30, 40, 50])
+        rate = rng.choice([2, 3, 4, 5, 10, 15])
+        draining = "drains" in template
+        var = "m"
+        text = template.format(start=start, rate=rate, var=var)
+        unit_text = unit.format(var=var)
+        params.update(context=template, start=start, rate=rate,
+                      decreasing=draining)
+        prompt = (f"A situation: {text}. Which function gives {unit_text}?")
+        if draining:
+            correct = f"y = {start} − {rate}m"
+            pool = [
+                (f"y = {rate}m + {start}", "FUNC_003"),
+                (f"y = {start}m − {rate}", "FUNC_003"),
+                (f"y = {start + rate}m", "FUNC_003"),
+            ]
+        else:
+            correct = f"y = {rate}m + {start}"
+            pool = [
+                (f"y = {start}m + {rate}", "FUNC_003"),
+                (f"y = {rate}m", "FUNC_003"),
+                (f"y = {start + rate}m", "FUNC_003"),
+            ]
+        choices, answer = _mc_choices(rng, correct, pool)
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "FUNCTIONS",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -3424,6 +3614,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "PROBABILITY": _generate_probability,
     "PYTHAGOREAN": _generate_pythagorean,
     "RADICALS": _generate_radicals,
+    "FUNCTIONS": _generate_functions,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -3747,6 +3938,7 @@ PROMPT_SHARED_TYPES = {
     "PROBABILITY",
     "PYTHAGOREAN",
     "RADICALS",
+    "FUNCTIONS",
 }
 
 

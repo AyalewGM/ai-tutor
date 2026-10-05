@@ -617,6 +617,33 @@ def _radical_errors(prompt: str, answer: str, canonical: str) -> MisconceptionMa
     return None
 
 
+_FUNC_PAIRS = re.compile(r"\((-?\d+),(-?\d+)\)")
+
+
+def _function_errors(prompt: str, answer: str, canonical: str) -> MisconceptionMatch | None:
+    """Rate-of-change errors on table prompts: y ÷ x on a single pair or
+    Δx/Δy inverted (FUNC_004), or the y-intercept reported instead of
+    the rate (FUNC_002)."""
+    if "rateofchange" not in prompt:
+        return None
+    pairs = _FUNC_PAIRS.findall(prompt)
+    if len(pairs) < 2:
+        return None
+    x1, y1 = int(pairs[0][0]), int(pairs[0][1])
+    x2, y2 = int(pairs[1][0]), int(pairs[1][1])
+    dx, dy = x2 - x1, y2 - y1
+    if dx == 0 or dy % dx != 0:
+        return None
+    m, b = dy // dx, y1 - dy // dx * x1
+    if b != m and answer == str(b):
+        return MisconceptionMatch("FUNC_002", 0.9)
+    if x1 != 0 and y1 % x1 == 0 and y1 // x1 != m and answer == str(y1 // x1):
+        return MisconceptionMatch("FUNC_004", 0.9)
+    if dy != 0 and dx % dy == 0 and answer == str(dx // dy):
+        return MisconceptionMatch("FUNC_004", 0.9)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -646,6 +673,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _exponential_errors,
     _pythagorean_errors,
     _radical_errors,
+    _function_errors,
 )
 
 

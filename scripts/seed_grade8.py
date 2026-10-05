@@ -184,6 +184,15 @@ def seed() -> None:
             "a√b form, and compare them with decimals.",
             3,
         )
+        functions = _skill(
+            db, curriculum, "M8.F.FN",
+            "Functions and Linear Relationships",
+            "Decide whether a relation is a function, find rates of "
+            "change from tables and graphs, tell linear functions from "
+            "nonlinear ones, compare functions given in different "
+            "forms, and build y = mx + b from a situation.",
+            3,
+        )
 
         def _misconception(skill, code, name, description, strategy):
             if db.scalar(
@@ -444,6 +453,46 @@ def seed() -> None:
             "radicand is a whole number.",
             "A root is rational only when it equals a whole number or a "
             "fraction: √49 = 7 is rational, √50 is not.",
+        )
+        _misconception(
+            functions,
+            "FUNC_001",
+            "Function definition inverted",
+            "The learner says a repeated output breaks the function "
+            "definition, or accepts a repeated input with different "
+            "outputs as a function.",
+            "Check the inputs, not the outputs: each x may appear only "
+            "once, but different x values may share a y.",
+        )
+        _misconception(
+            functions,
+            "FUNC_002",
+            "Linear confused with nonlinear or intercept with rate",
+            "The learner calls any x–y equation linear, misses a "
+            "squared term, or reports the starting value instead of "
+            "the rate of change.",
+            "Linear means constant rate: in a table the first "
+            "differences match, in an equation the variable has no "
+            "exponent and is not in a denominator.",
+        )
+        _misconception(
+            functions,
+            "FUNC_003",
+            "Rate and initial value swapped",
+            "The learner writes the starting amount as the coefficient "
+            "or drops it entirely — y = 20m + 5 instead of y = 5m + 20.",
+            "The rate multiplies the variable; the starting value is "
+            "the constant term. Check: at m = 0 the function should "
+            "equal the starting amount.",
+        )
+        _misconception(
+            functions,
+            "FUNC_004",
+            "Rate of change computed from the wrong ratio",
+            "The learner divides y by x on one row, inverts Δx/Δy, or "
+            "compares representations by intercept instead of rate.",
+            "Rate of change is rise over run: pick two rows and "
+            "compute (y₂ − y₁) ÷ (x₂ − x₁).",
         )
 
         problems = [
@@ -771,6 +820,63 @@ def seed() -> None:
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in rad_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        # Function items — relations, rates, linearity, modelling.
+        func_problems = [
+            (
+                functions, 1,
+                "A relation has the values (2, 5), (4, 9), (2, 7), (6, 13). Is this relation a function?",
+                "b", "FUNCTIONS", "MULTIPLE_CHOICE",
+                {"tier": "is_function",
+                 "pairs": [[2, 5], [4, 9], [2, 7], [6, 13]]},
+                [
+                    {"id": "a", "text": "Yes — every input has exactly one output", "misconception_code": "FUNC_001"},
+                    {"id": "b", "text": "No — one input has two different outputs"},
+                    {"id": "c", "text": "Yes — all of the outputs are different numbers", "misconception_code": "FUNC_001"},
+                    {"id": "d", "text": "Cannot be determined without a graph"},
+                ],
+            ),
+            (
+                functions, 2,
+                "A function has the values (1, 3), (2, 7), (3, 11). What is its rate of change?",
+                "4", "FUNCTIONS", "INTEGER",
+                {"tier": "rate_table", "m": 4, "b": -1,
+                 "pairs": [[1, 3], [2, 7], [3, 11]]},
+                None,
+            ),
+            (
+                functions, 3,
+                "Is the function y = x² + 3 linear or nonlinear?",
+                "a", "FUNCTIONS", "MULTIPLE_CHOICE",
+                {"tier": "linear_or_not", "form": "equation",
+                 "equation": "y = x² + 3"},
+                [
+                    {"id": "a", "text": "Nonlinear — the rate of change is not constant"},
+                    {"id": "b", "text": "Linear — the rate of change is constant", "misconception_code": "FUNC_002"},
+                    {"id": "c", "text": "Cannot be determined from the information given"},
+                    {"id": "d", "text": "Both linear and nonlinear depending on x"},
+                ],
+            ),
+            (
+                functions, 4,
+                "A situation: a gym charges a $25 sign-up fee plus $10 per month. Which function gives total cost in dollars after m months?",
+                "c", "FUNCTIONS", "MULTIPLE_CHOICE",
+                {"tier": "build_function",
+                 "context": "a gym charges a ${start} sign-up fee plus ${rate} per month",
+                 "start": 25, "rate": 10, "decreasing": False},
+                [
+                    {"id": "a", "text": "y = 25m + 10", "misconception_code": "FUNC_003"},
+                    {"id": "b", "text": "y = 10m", "misconception_code": "FUNC_003"},
+                    {"id": "c", "text": "y = 10m + 25"},
+                    {"id": "d", "text": "y = 35m", "misconception_code": "FUNC_003"},
+                ],
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in func_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters, choices=choices,
