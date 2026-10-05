@@ -158,6 +158,15 @@ def seed() -> None:
             "classify pairs of figures as congruent, similar, or neither.",
             3,
         )
+        statistics = _skill(
+            db, curriculum, "M8.SP.STAT",
+            "Scatterplots and Bivariate Data",
+            "Read associations on scatterplots, identify outliers, use a "
+            "line of best fit to make predictions, choose the equation "
+            "that best fits a data set, and distinguish association from "
+            "causation.",
+            3,
+        )
 
         def _misconception(skill, code, name, description, strategy):
             if db.scalar(
@@ -267,6 +276,58 @@ def seed() -> None:
             "Congruent means same shape and same size; similar means same "
             "shape at any size. Check the angle measures and whether all "
             "sides scale by one factor.",
+        )
+        _misconception(
+            statistics,
+            "STAT_001",
+            "Association direction or strength misread",
+            "The learner calls a positive association negative, reads a "
+            "scattered cloud as a trend, or reports no relationship where "
+            "one is visible.",
+            "Trace the cloud left to right: rising points mean a positive "
+            "association, falling points negative, and a shapeless spread "
+            "means no association.",
+        )
+        _misconception(
+            statistics,
+            "STAT_002",
+            "Association treated as causation",
+            "The learner concludes that one variable causes the other "
+            "just because the scatterplot shows a strong association.",
+            "Association means the variables move together — a hidden "
+            "third factor may drive both. Ice cream sales and swimming "
+            "are both driven by hot weather.",
+        )
+        _misconception(
+            statistics,
+            "STAT_003",
+            "Outlier confused with the largest value",
+            "The learner picks the point with the biggest coordinates "
+            "instead of the point that breaks the pattern the other "
+            "points follow.",
+            "An outlier is a point that does not fit the trend — not the "
+            "largest point. Sketch the pattern first, then look for the "
+            "point that falls away from it.",
+        )
+        _misconception(
+            statistics,
+            "STAT_004",
+            "Intercept dropped when using the line of best fit",
+            "The learner computes slope times x and forgets to add the "
+            "intercept, or subtracts it instead of adding.",
+            "A prediction uses the whole equation: multiply x by the "
+            "slope, then add the y-intercept before answering.",
+        )
+        _misconception(
+            statistics,
+            "STAT_005",
+            "Slope and intercept of the best-fit line swapped",
+            "The learner chooses an equation with the slope and "
+            "y-intercept exchanged, or one whose intercept does not match "
+            "where the trend crosses the y-axis.",
+            "The intercept is where the trend line would hit the y-axis; "
+            "the slope is how fast the cloud rises. Check each candidate "
+            "against both.",
         )
 
         problems = [
@@ -380,6 +441,63 @@ def seed() -> None:
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in sim_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        # Statistics items — scatterplots on a shared 0..10 grid.
+        stat_problems = [
+            (
+                statistics, 1,
+                "What type of association does the scatterplot show between the two variables?",
+                "a", "STATISTICS", "MULTIPLE_CHOICE",
+                {"tier": "association", "points": [[1, 3], [2, 3], [3, 5], [4, 6], [5, 6], [6, 7], [7, 8], [8, 9]]},
+                [
+                    {"id": "a", "text": "a positive association"},
+                    {"id": "b", "text": "a negative association", "misconception_code": "STAT_001"},
+                    {"id": "c", "text": "no association", "misconception_code": "STAT_001"},
+                    {"id": "d", "text": "a curved (nonlinear) association", "misconception_code": "STAT_001"},
+                ],
+            ),
+            (
+                statistics, 2,
+                "Which point is the outlier in the scatterplot?",
+                "d", "STATISTICS", "MULTIPLE_CHOICE",
+                {"tier": "outlier", "points": [[1, 2], [2, 4], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [5, 1]]},
+                [
+                    {"id": "a", "text": "(7, 8)", "misconception_code": "STAT_003"},
+                    {"id": "b", "text": "(4, 5)"},
+                    {"id": "c", "text": "(6, 7)"},
+                    {"id": "d", "text": "(5, 1)"},
+                ],
+            ),
+            (
+                statistics, 3,
+                "The scatterplot shows data with the line of best fit y = 2x + 1. Use it to predict y when x = 3.",
+                "7", "STATISTICS", "INTEGER",
+                {"tier": "predict",
+                 "points": [[1, 3], [2, 5], [3, 6], [4, 9], [5, 10]],
+                 "fit": {"m_num": 2, "m_den": 1, "i_num": 1, "i_den": 1}},
+                None,
+            ),
+            (
+                statistics, 4,
+                "A scatterplot shows a strong positive association between ice cream sales and the number of swimmers at local pools. Which conclusion is most reasonable?",
+                "b", "STATISTICS", "MULTIPLE_CHOICE",
+                {"tier": "correlation_causation",
+                 "x_var": "ice cream sales",
+                 "y_var": "the number of swimmers at local pools",
+                 "direction": "positive"},
+                [
+                    {"id": "a", "text": "Changes in ice cream sales directly cause changes in the number of swimmers", "misconception_code": "STAT_002"},
+                    {"id": "b", "text": "The variables are associated, but one does not necessarily cause the other"},
+                    {"id": "c", "text": "Changes in the number of swimmers directly cause changes in ice cream sales", "misconception_code": "STAT_002"},
+                    {"id": "d", "text": "There is no relationship between the two variables", "misconception_code": "STAT_001"},
+                ],
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in stat_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters, choices=choices,

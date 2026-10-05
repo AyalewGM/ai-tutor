@@ -487,6 +487,33 @@ def _system_intersection_swap(prompt: str, answer: str, canonical: str) -> Misco
     return None
 
 
+_BEST_FIT_EQ = re.compile(r"y=(-?\d*)x([+-]\d+)")
+_PREDICT_X = re.compile(r"whenx=(-?\d+)")
+
+
+def _best_fit_prediction_errors(
+    prompt: str, answer: str, canonical: str
+) -> MisconceptionMatch | None:
+    """Predicting from y = mx + b with the intercept dropped (mx) or
+    sign-flipped (mx − b)."""
+    if "lineofbestfit" not in prompt:
+        return None
+    equation = _BEST_FIT_EQ.search(prompt)
+    target = _PREDICT_X.search(prompt)
+    student = _INTEGER_ANSWER.match(answer)
+    correct = _INTEGER_ANSWER.match(canonical)
+    if not (equation and target and student and correct):
+        return None
+    m_text = equation.group(1)
+    m = int(m_text) if m_text not in ("", "-") else (1 if m_text == "" else -1)
+    b = int(equation.group(2))
+    x = int(target.group(1))
+    s = int(student.group(1))
+    if s != int(correct.group(1)) and s in {m * x, m * x - b}:
+        return MisconceptionMatch("STAT_004", 0.95)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -512,6 +539,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _geo_angle_relationship_errors,
     _transformation_errors,
     _system_intersection_swap,
+    _best_fit_prediction_errors,
 )
 
 

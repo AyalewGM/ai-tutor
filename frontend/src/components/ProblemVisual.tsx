@@ -57,6 +57,10 @@ export interface VisualSpec {
   pre_edge_labels?: (string | null)[];
   image_edge_labels?: (string | null)[];
   lines?: Array<{ m_num: number; m_den: number; i_num: number; i_den: number }>;
+  points?: number[][];
+  x_max?: number;
+  y_max?: number;
+  fit?: { m_num: number; m_den: number; i_num: number; i_den: number };
 }
 
 interface PanSpec {
@@ -694,6 +698,62 @@ function LinearSystem({ spec }: { spec: VisualSpec }) {
   );
 }
 
+function Scatterplot({ spec }: { spec: VisualSpec }) {
+  const size = 320;
+  const pad = 36;
+  const xMax = spec.x_max ?? 10;
+  const yMax = spec.y_max ?? 10;
+  const span = size - pad - 14;
+  const xFor = (v: number) => pad + (v / xMax) * span;
+  const yFor = (v: number) => size - pad - (v / yMax) * span;
+  const ticks = Array.from({ length: xMax + 1 }, (_, i) => i);
+  const fit = spec.fit;
+  const fitEnds = () => {
+    if (!fit) return null;
+    const m = fit.m_num / fit.m_den;
+    const intercept = fit.i_num / fit.i_den;
+    const xAt = (y: number) => (y - intercept) / m;
+    const candidates: [number, number][] =
+      m === 0
+        ? [[0, intercept], [xMax, intercept]]
+        : [
+            [0, intercept],
+            [xMax, m * xMax + intercept],
+            [xAt(0), 0],
+            [xAt(yMax), yMax],
+          ];
+    const inside = candidates.filter(
+      ([x, y]) => x >= -1e-9 && x <= xMax + 1e-9 && y >= -1e-9 && y <= yMax + 1e-9
+    );
+    return inside.length >= 2 ? inside.slice(0, 2) : null;
+  };
+  const ends = fitEnds();
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} className="visual" role="img" aria-label={spec.aria_label ?? "A scatterplot"}>
+      {ticks.map((t) => (
+        <g key={`g${t}`}>
+          <line x1={pad} y1={yFor(t)} x2={size - 14} y2={yFor(t)} className="viz-grid" />
+          <line x1={xFor(t)} y1={14} x2={xFor(t)} y2={size - pad} className="viz-grid" />
+        </g>
+      ))}
+      <line x1={pad} y1={size - pad} x2={size - 14} y2={size - pad} className="viz-axis" />
+      <line x1={pad} y1={14} x2={pad} y2={size - pad} className="viz-axis" />
+      {ticks.filter((t) => t !== 0 && t % 2 === 0).map((t) => (
+        <g key={t}>
+          <text x={xFor(t)} y={size - pad + 16} textAnchor="middle" className="viz-tick-label">{t}</text>
+          <text x={pad - 8} y={yFor(t) + 4} textAnchor="end" className="viz-tick-label">{t}</text>
+        </g>
+      ))}
+      {ends && (
+        <line x1={xFor(ends[0][0])} y1={yFor(ends[0][1])} x2={xFor(ends[1][0])} y2={yFor(ends[1][1])} className="viz-fit" />
+      )}
+      {(spec.points ?? []).map((p, i) => (
+        <circle key={i} cx={xFor(p[0])} cy={yFor(p[1])} r="4.5" className="viz-point viz-point-a" />
+      ))}
+    </svg>
+  );
+}
+
 function NumberLine({ spec, compare = false }: { spec: VisualSpec; compare?: boolean }) {
   const min = spec.min ?? 0;
   const max = spec.max ?? 10;
@@ -1011,5 +1071,6 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "transformation") return <TransformPlane spec={spec} />;
   if (spec.type === "similar_figures") return <SimilarFigures spec={spec} />;
   if (spec.type === "linear_system") return <LinearSystem spec={spec} />;
+  if (spec.type === "scatterplot") return <Scatterplot spec={spec} />;
   return null;
 }

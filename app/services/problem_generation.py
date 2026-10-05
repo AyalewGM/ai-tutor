@@ -1814,6 +1814,195 @@ def _generate_system(rng: random.Random, difficulty: int) -> GeneratedProblem:
     )
 
 
+# (slope, intercept) pairs whose line stays meaningfully on the 0..10 grid.
+_SCATTER_FITS = {
+    "positive": (
+        [(Fraction(1), b) for b in (1, 2, 3, 4)]
+        + [(Fraction(2), b) for b in (1, 2)]
+        + [(Fraction(3), b) for b in (0, 1)]
+        + [(Fraction(1, 2), b) for b in (2, 3, 4)]
+        + [(Fraction(3, 2), b) for b in (1, 2)]
+    ),
+    "negative": (
+        [(Fraction(-1), b) for b in (8, 9, 10)]
+        + [(Fraction(-2), 10)]
+        + [(Fraction(-1, 2), b) for b in (6, 7, 8)]
+        + [(Fraction(-3, 2), b) for b in (9, 10)]
+    ),
+}
+
+
+def _scatter_cloud(
+    rng: random.Random, direction: str, *, integer_slope: bool = False
+) -> tuple[list[list[int]], Fraction | None, int | None]:
+    """An integer-coordinate cloud on a 0..10 grid trending along
+    y = m x + b, or scattered for 'none'. Returns (points, m, b);
+    m and b are None when there is no trend."""
+    if direction == "none":
+        xs = sorted(rng.sample(range(1, 10), 7))
+        return [[x, rng.randint(1, 9)] for x in xs], None, None
+    fits = [(m, b) for m, b in _SCATTER_FITS[direction]
+            if not integer_slope or m.denominator == 1]
+    m, b = rng.choice(fits)
+    xs = sorted(rng.sample(range(1, 10), 7))
+    points = []
+    for x in xs:
+        jitter = rng.choices([-1, 0, 1], weights=[1, 4, 1])[0]
+        y = int(m * x + b) + jitter
+        points.append([x, min(10, max(0, y))])
+    return points, m, b
+
+
+def _fit_equation_text(m: Fraction, b: int) -> str:
+    if m == 1:
+        coeff = ""
+    elif m == -1:
+        coeff = "-"
+    elif m.denominator == 1:
+        coeff = str(m.numerator)
+    else:
+        coeff = f"{m.numerator}/{m.denominator}"
+    equation = f"y = {coeff}x"
+    if b > 0:
+        equation += f" + {b}"
+    elif b < 0:
+        equation += f" - {abs(b)}"
+    return equation
+
+
+_CORRELATION_CONTEXTS = [
+    ("ice cream sales", "the number of swimmers at local pools", "positive"),
+    ("the number of firefighters at a fire", "the damage the fire causes", "positive"),
+    ("a student's shoe size", "their score on a spelling test", "positive"),
+    ("the outdoor temperature", "sales of hot drinks", "negative"),
+]
+
+
+def _generate_statistics(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Scatterplot items: read the association, find the outlier, predict
+    from a rendered line of best fit, match a cloud to its best-fit
+    equation, or separate association from causation.
+
+    The fit line renders only for the predict tier — drawing it for
+    best_fit_line would state the answer, and the other tiers have no
+    line to show."""
+    tiers = ["association"]
+    if difficulty >= 2:
+        tiers.append("outlier")
+    if difficulty >= 3:
+        tiers += ["predict", "best_fit_line"]
+    if difficulty >= 4:
+        tiers.append("correlation_causation")
+    tier = rng.choice(tiers)
+    choices = None
+    params: dict = {"tier": tier}
+
+    if tier == "association":
+        direction = rng.choice(["positive", "negative", "none"])
+        points, m, b = _scatter_cloud(rng, direction)
+        params["points"] = points
+        prompt = (
+            "What type of association does the scatterplot show between "
+            "the two variables?"
+        )
+        options = ["a positive association", "a negative association",
+                   "no association", "a curved (nonlinear) association"]
+        correct = f"a {direction} association" if direction != "none" else "no association"
+        distractors = [(text, "STAT_001") for text in options if text != correct]
+        choices, answer = _mc_choices(rng, correct, distractors)
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "outlier":
+        direction = rng.choice(["positive", "negative"])
+        points, m, b = _scatter_cloud(rng, direction, integer_slope=True)
+        # Candidates stay on-grid and at least 4 off the trend line, and
+        # never collide with a cloud point — a clamped or overlapping
+        # "outlier" would make the item ambiguous.
+        candidates = []
+        for x_out in (2, 5, 8):
+            line_y = int(m * x_out + b)
+            for step in (4, 5, 6):
+                y_out = line_y + step * (1 if line_y <= 5 else -1)
+                if 0 <= y_out <= 10 and [x_out, y_out] not in points:
+                    candidates.append([x_out, y_out])
+        if not candidates:
+            return _generate_statistics(rng, difficulty)
+        outlier = rng.choice(candidates)
+        points.append(outlier)
+        rng.shuffle(points)
+        params["points"] = points
+        prompt = "Which point is the outlier in the scatterplot?"
+        on_pattern = [p for p in points if p != outlier]
+        # The most extreme on-pattern point is the diagnostic distractor:
+        # picking it means "outlier = biggest value", not "breaks the pattern".
+        extreme = max(on_pattern, key=lambda p: abs(p[0] - 5) + abs(p[1] - 5))
+        others = [p for p in on_pattern if p != extreme]
+        rng.shuffle(others)
+        distractors = (
+            [(f"({extreme[0]}, {extreme[1]})", "STAT_003")]
+            + [(f"({p[0]}, {p[1]})", None) for p in others[:2]]
+        )
+        correct_text = f"({outlier[0]}, {outlier[1]})"
+        choices, answer = _mc_choices(rng, correct_text, distractors)
+        kind = "MULTIPLE_CHOICE"
+    elif tier == "predict":
+        points, m, b = _scatter_cloud(rng, "positive", integer_slope=True)
+        params["points"] = points
+        params["fit"] = {"m_num": m.numerator, "m_den": m.denominator,
+                         "i_num": b, "i_den": 1}
+        candidates = [x for x in range(2, 9) if 1 <= m * x + b <= 9]
+        x_q = rng.choice(candidates)
+        equation = _fit_equation_text(m, b)
+        prompt = (
+            f"The scatterplot shows data with the line of best fit "
+            f"{equation}. Use it to predict y when x = {x_q}."
+        )
+        answer = str(int(m * x_q + b))
+        kind = "INTEGER"
+    elif tier == "best_fit_line":
+        direction = rng.choice(["positive", "negative"])
+        points, m, b = _scatter_cloud(rng, direction, integer_slope=True)
+        params["points"] = points
+        prompt = "Which equation best fits the data shown in the scatterplot?"
+        correct = _fit_equation_text(m, b)
+        distractors = [
+            (_fit_equation_text(-m, b), "STAT_001"),
+            (_fit_equation_text(Fraction(b), m.numerator), "STAT_005"),
+            (_fit_equation_text(m, b + 2), None),
+            (_fit_equation_text(m + 1, b), None),
+            (_fit_equation_text(m, b - 2), None),
+        ]
+        choices, answer = _mc_choices(rng, correct, distractors)
+        kind = "MULTIPLE_CHOICE"
+    else:  # correlation_causation — text only, no diagram
+        x_var, y_var, direction = rng.choice(_CORRELATION_CONTEXTS)
+        # The context rides in params so prompt dedupe can tell the
+        # four contexts apart (points-less params would all collapse
+        # to one fingerprint).
+        params["x_var"] = x_var
+        params["y_var"] = y_var
+        params["direction"] = direction
+        prompt = (
+            f"A scatterplot shows a strong {direction} association between "
+            f"{x_var} and {y_var}. Which conclusion is most reasonable?"
+        )
+        correct = (
+            "The variables are associated, but one does not necessarily "
+            "cause the other"
+        )
+        distractors = [
+            (f"Changes in {x_var} directly cause changes in {y_var}", "STAT_002"),
+            (f"Changes in {y_var} directly cause changes in {x_var}", "STAT_002"),
+            ("There is no relationship between the two variables", "STAT_001"),
+        ]
+        choices, answer = _mc_choices(rng, correct, distractors)
+        kind = "MULTIPLE_CHOICE"
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "STATISTICS",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -2460,6 +2649,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "TRANSFORMATION": _generate_transformation,
     "SIMILARITY": _generate_similarity,
     "SYSTEM_OF_EQUATIONS": _generate_system,
+    "STATISTICS": _generate_statistics,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -2777,6 +2967,7 @@ PROMPT_SHARED_TYPES = {
     "TRANSFORMATION",
     "SIMILARITY",
     "SYSTEM_OF_EQUATIONS",
+    "STATISTICS",
 }
 
 
