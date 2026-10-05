@@ -43,6 +43,7 @@ def _problem(
     *,
     answer_kind: str = "FREE_TEXT",
     parameters: dict | None = None,
+    choices: list | None = None,
 ) -> None:
     provenance = {
         "origin": "AUTHORED",
@@ -64,6 +65,7 @@ def _problem(
                 prompt=prompt,
                 canonical_answer=answer,
                 answer_kind=answer_kind,
+                choices=choices,
                 solution=solution,
                 source_type="CURATED",
             )
@@ -90,6 +92,7 @@ def seed_content(db, curriculum: Curriculum) -> None:
         fn_slope = _skill(db, curriculum, "A1.LINEAR.FN.SLOPE", "Slope-Intercept Form", "Write linear equations in y = mx + b from slope and intercept.", 3)
         fn_eval = _skill(db, curriculum, "A1.LINEAR.FN.EVAL", "Evaluating Linear Functions", "Evaluate a linear function for a given input.", 3)
         quad_functions = _skill(db, curriculum, "A1.QUAD.FN", "Quadratic Functions", "Interpret and reason about quadratic relationships using equations and graphs.", 4)
+        poly_functions = _skill(db, curriculum, "A1.POLY.FN", "Polynomial Functions", "Interpret polynomial functions: degree, zeros, end behavior, and graphs of factored forms.", 5)
 
         _prerequisite(db, expr_dist, expressions)
         _prerequisite(db, expr_combine, expr_dist)
@@ -98,6 +101,7 @@ def seed_content(db, curriculum: Curriculum) -> None:
         _prerequisite(db, fn_slope, linear_functions)
         _prerequisite(db, fn_eval, fn_slope)
         _prerequisite(db, quad_functions, linear_functions)
+        _prerequisite(db, poly_functions, quad_functions)
 
         def _misconception(skill, code, name, description, strategy):
             if db.scalar(
@@ -314,6 +318,36 @@ def seed_content(db, curriculum: Curriculum) -> None:
             "The axis of symmetry runs through the vertex's x-coordinate: "
             "x = h, and the vertex sits at (h, k).",
         )
+        _misconception(
+            poly_functions,
+            "POLY_001",
+            "Zero sign error",
+            "The learner reads a factor (x - r) as giving the zero x = -r, "
+            "keeping the sign shown inside the parentheses instead of solving "
+            "x - r = 0.",
+            "Set each factor equal to zero and solve: (x - r) = 0 gives "
+            "x = r, so the zero has the opposite sign of what appears inside.",
+        )
+        _misconception(
+            poly_functions,
+            "POLY_002",
+            "End-behavior parity confusion",
+            "The learner describes end behavior without accounting for "
+            "whether the degree is even or odd, or ignores the sign of the "
+            "leading coefficient.",
+            "Check two things: even degree means both ends go the same way, "
+            "odd means opposite ways; then a positive leading coefficient "
+            "rises to the right, negative falls.",
+        )
+        _misconception(
+            poly_functions,
+            "POLY_003",
+            "Degree confused with term count",
+            "The learner reports the number of terms or the leading "
+            "coefficient as the degree instead of the greatest exponent.",
+            "The degree is the largest exponent on the variable — count "
+            "exponents, not terms.",
+        )
 
         problems = [
             (expressions, 1, "Simplify 4(x + 3).", "4x+12", "SIMPLIFY_EXPRESSION"),
@@ -347,38 +381,74 @@ def seed_content(db, curriculum: Curriculum) -> None:
                 fn_slope, 2, "What is the slope of the line shown?", "2",
                 "LINEAR_GRAPH", "FRACTION",
                 {"tier": "read_slope", "m_num": 2, "m_den": 1, "b": 3},
+                None,
             ),
             (
                 fn_slope, 3, "What is the y-intercept of the line shown?", "-2",
                 "LINEAR_GRAPH", "INTEGER",
                 {"tier": "read_intercept", "m_num": 1, "m_den": 2, "b": -2},
+                None,
             ),
             (
                 fn_eval, 3, "According to the graph, what is y when x = 2?", "5",
                 "LINEAR_GRAPH", "INTEGER",
                 {"tier": "read_value", "m_num": 2, "m_den": 1, "b": 1, "x": 2},
+                None,
             ),
             (
                 linear_functions, 3, "What is the slope of the line shown?", "-3/2",
                 "LINEAR_GRAPH", "FRACTION",
                 {"tier": "read_slope", "m_num": -3, "m_den": 2, "b": 4},
+                None,
             ),
             (
                 quad_functions, 3,
                 "What are the coordinates of the vertex of the parabola shown?",
                 "(2, -1)", "QUADRATIC_FUNCTION", "FREE_TEXT",
                 {"tier": "vertex", "a_num": 1, "a_den": 1, "h": 2, "k": -1},
+                None,
             ),
             (
                 quad_functions, 2, "For f(x) = x^2 - 4x + 3, what is f(5)?", "8",
                 "QUADRATIC_FUNCTION", "INTEGER",
                 {"tier": "evaluate", "a_num": 1, "a_den": 1, "h": 2, "k": -1},
+                None,
+            ),
+            (
+                poly_functions, 2, "For p(x) = x^3 - 2x + 1, what is p(2)?", "5",
+                "POLYNOMIAL_FUNCTION", "INTEGER",
+                {"tier": "evaluate", "a": 0, "roots": [], "coeffs": [1, 0, -2, 1], "x": 2},
+                None,
+            ),
+            (
+                poly_functions, 3,
+                "What are the zeros of f(x) = (x-1)(x+2)(x-3)?", "a",
+                "POLYNOMIAL_FUNCTION", "MULTIPLE_CHOICE",
+                {"tier": "zeros_from_factors", "a": 1, "roots": [-2, 1, 3], "coeffs": [1, 0, -7, 6]},
+                [
+                    {"id": "a", "text": "x = -2, x = 1, x = 3"},
+                    {"id": "b", "text": "x = 2, x = -1, x = -3", "misconception_code": "POLY_001"},
+                    {"id": "c", "text": "x = -2, x = 1"},
+                    {"id": "d", "text": "x = -1, x = 2, x = 4"},
+                ],
+            ),
+            (
+                poly_functions, 4,
+                "How many times does the graph cross the x-axis?", "b",
+                "POLYNOMIAL_FUNCTION", "MULTIPLE_CHOICE",
+                {"tier": "count_roots", "a": 1, "roots": [-2, 1, 3], "coeffs": [1, 0, -7, 6]},
+                [
+                    {"id": "a", "text": "2"},
+                    {"id": "b", "text": "3"},
+                    {"id": "c", "text": "1"},
+                    {"id": "d", "text": "0"},
+                ],
             ),
         ]
-        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters in graph_problems:
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in graph_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
-                answer_kind=answer_kind, parameters=parameters,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
             )
 
 
