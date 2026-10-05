@@ -72,6 +72,8 @@ export interface VisualSpec {
   row_totals?: number[];
   col_totals?: number[];
   grand_total?: number;
+  sections?: string[];
+  marbles?: string[];
 }
 
 interface PanSpec {
@@ -831,6 +833,83 @@ function Scatterplot({ spec }: { spec: VisualSpec }) {
   );
 }
 
+const COLOR_FILLS: Record<string, string> = {
+  red: "#ef4444",
+  blue: "#3b82f6",
+  green: "#22c55e",
+  yellow: "#eab308",
+  purple: "#a855f7",
+};
+
+function Spinner({ spec }: { spec: VisualSpec }) {
+  const sections = spec.sections ?? [];
+  const size = 300;
+  const cx = 150;
+  const cy = 150;
+  const radius = 120;
+  const labelRadius = 82;
+  const n = sections.length || 1;
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} className="visual" role="img" aria-label={spec.aria_label ?? "A spinner"}>
+      <circle cx={cx} cy={cy} r={radius + 6} className="viz-spinner-rim" />
+      {sections.map((color, i) => {
+        const a0 = (i / n) * 2 * Math.PI - Math.PI / 2;
+        const a1 = ((i + 1) / n) * 2 * Math.PI - Math.PI / 2;
+        const x0 = cx + radius * Math.cos(a0);
+        const y0 = cy + radius * Math.sin(a0);
+        const x1 = cx + radius * Math.cos(a1);
+        const y1 = cy + radius * Math.sin(a1);
+        const mid = (a0 + a1) / 2;
+        return (
+          <g key={i}>
+            <path
+              d={`M ${cx} ${cy} L ${x0} ${y0} A ${radius} ${radius} 0 0 1 ${x1} ${y1} Z`}
+              fill={COLOR_FILLS[color] ?? "#94a3b8"}
+              className="viz-sector"
+            />
+            <text
+              x={cx + labelRadius * Math.cos(mid)}
+              y={cy + labelRadius * Math.sin(mid) + 4}
+              textAnchor="middle"
+              className="viz-sector-label"
+            >
+              {color}
+            </text>
+          </g>
+        );
+      })}
+      <line x1={cx} y1={cy - 14} x2={cx} y2={cy - radius - 2} className="viz-arrow" markerEnd="url(#viz-arrowhead)" />
+      <circle cx={cx} cy={cy} r="7" className="viz-arrow" />
+      <defs>
+        <marker id="viz-arrowhead" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <path d="M 0 0 L 8 4 L 0 8 Z" className="viz-arrow" />
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+function MarbleBag({ spec }: { spec: VisualSpec }) {
+  const marbles = spec.marbles ?? [];
+  const perRow = 6;
+  const rows = Math.max(1, Math.ceil(marbles.length / perRow));
+  const width = 320;
+  const height = 110 + rows * 44;
+  return (
+    <svg viewBox={`0 0 ${width} ${height}`} className="visual" role="img" aria-label={spec.aria_label ?? "A bag of marbles"}>
+      <rect x="30" y="18" width={width - 60} height={height - 30} rx="22" className="viz-bag" />
+      {marbles.map((color, i) => {
+        const row = Math.floor(i / perRow);
+        const inRow = Math.min(perRow, marbles.length - row * perRow);
+        const gap = (width - 110) / Math.max(1, inRow - 1);
+        const x = inRow === 1 ? width / 2 : 55 + i % perRow * gap;
+        const y = 62 + row * 44;
+        return <circle key={i} cx={x} cy={y} r="15" fill={COLOR_FILLS[color] ?? "#94a3b8"} className="viz-sector" />;
+      })}
+    </svg>
+  );
+}
+
 function FrequencyTable({ spec }: { spec: VisualSpec }) {
   const cols = spec.col_labels ?? [];
   const rows = spec.row_labels ?? [];
@@ -1186,6 +1265,8 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "linear_system") return <LinearSystem spec={spec} />;
   if (spec.type === "scatterplot") return <Scatterplot spec={spec} />;
   if (spec.type === "frequency_table") return <FrequencyTable spec={spec} />;
+  if (spec.type === "spinner") return <Spinner spec={spec} />;
+  if (spec.type === "marble_bag") return <MarbleBag spec={spec} />;
   if (spec.type === "exponential_graph") return <ExponentialGraph spec={spec} />;
   return null;
 }

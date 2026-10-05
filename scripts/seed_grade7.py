@@ -234,6 +234,14 @@ def seed() -> None:
             "area and circumference.",
             3,
         )
+        probability = _skill(
+            db, curriculum, "M7.SP.PROB",
+            "Probability of Simple and Compound Events",
+            "Classify the likelihood of chance events, find probabilities of "
+            "simple events and their complements, count sample-space "
+            "outcomes, and combine events for two spins or 'or' outcomes.",
+            3,
+        )
 
         _prerequisite(db, prop_rate, proportional)
         _prerequisite(db, pct_of, percent)
@@ -479,6 +487,48 @@ def seed() -> None:
             "obtuse angles are bigger (between 90° and 180°). Compare the "
             "opening to a square corner first.",
         )
+        _misconception(
+            probability,
+            "PROB_001",
+            "Favourable or total outcomes miscounted",
+            "The learner divides by the wrong count — favourable over "
+            "unfavourable, total over favourable, or only one colour "
+            "when two were asked.",
+            "Probability is favourable outcomes over total outcomes: "
+            "count every section or marble for the denominator, and only "
+            "the ones the event names for the numerator.",
+        )
+        _misconception(
+            probability,
+            "PROB_002",
+            "Compound outcomes added or multiplied incorrectly",
+            "The learner adds two probabilities where they should be "
+            "multiplied, multiplies where they should be added, or "
+            "counts sample-space outcomes by adding the two event sizes.",
+            "'And' across independent events multiplies; 'or' across "
+            "mutually exclusive events adds; the sample space size is "
+            "the product of the two event sizes.",
+        )
+        _misconception(
+            probability,
+            "PROB_003",
+            "Complement handled incorrectly",
+            "The learner answers the probability of the event itself "
+            "when the question asks for 'not', or computes the "
+            "complement of the wrong event.",
+            "P(not A) = 1 − P(A): subtract the favourable count from "
+            "the total first, then form the fraction.",
+        )
+        _misconception(
+            probability,
+            "PROB_004",
+            "Likelihood of a chance event misclassified",
+            "The learner calls an impossible event unlikely, a likely "
+            "one unlikely, or confuses equally likely with likely.",
+            "Compare the count with half the total: zero is impossible, "
+            "below half is unlikely, exactly half is equally likely, "
+            "above half is likely, and all is certain.",
+        )
 
         problems = [
             (
@@ -602,6 +652,71 @@ def seed() -> None:
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in geo_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        # Probability items — spinners and marble bags rendered for real.
+        prob_problems = [
+            (
+                probability, 1,
+                "A marble is drawn from the bag at random. How likely is it to be red?",
+                "b", "PROBABILITY", "MULTIPLE_CHOICE",
+                {"tier": "likelihood", "kind": "bag",
+                 "marbles": ["blue", "blue", "blue", "blue", "blue", "red"],
+                 "target": "red", "likelihood": "unlikely"},
+                [
+                    {"id": "a", "text": "impossible", "misconception_code": "PROB_004"},
+                    {"id": "b", "text": "unlikely"},
+                    {"id": "c", "text": "likely", "misconception_code": "PROB_004"},
+                    {"id": "d", "text": "equally likely (50-50)", "misconception_code": "PROB_004"},
+                ],
+            ),
+            (
+                probability, 1,
+                "The spinner shown is spun once. What is the probability that it lands on blue?",
+                "a", "PROBABILITY", "MULTIPLE_CHOICE",
+                {"tier": "simple", "kind": "spinner",
+                 "sections": ["red", "blue", "green", "yellow"],
+                 "target": "blue"},
+                [
+                    {"id": "a", "text": "1/4"},
+                    {"id": "b", "text": "1/3", "misconception_code": "PROB_001"},
+                    {"id": "c", "text": "3/4", "misconception_code": "PROB_003"},
+                    {"id": "d", "text": "1/2"},
+                ],
+            ),
+            (
+                probability, 3,
+                "The spinner shown is spun twice. What is the probability that it lands on green both times?",
+                "b", "PROBABILITY", "MULTIPLE_CHOICE",
+                {"tier": "compound_twice", "kind": "spinner",
+                 "sections": ["red", "blue", "green", "yellow"],
+                 "target": "green"},
+                [
+                    {"id": "a", "text": "1/2", "misconception_code": "PROB_002"},
+                    {"id": "b", "text": "1/16"},
+                    {"id": "c", "text": "1/8", "misconception_code": "PROB_002"},
+                    {"id": "d", "text": "1/4"},
+                ],
+            ),
+            (
+                probability, 3,
+                "A marble is drawn from the bag at random. What is the probability that it is red or blue?",
+                "a", "PROBABILITY", "MULTIPLE_CHOICE",
+                {"tier": "compound_or", "kind": "bag",
+                 "marbles": ["red", "red", "red", "blue", "blue", "green", "green", "green"],
+                 "target": "red", "target_b": "blue"},
+                [
+                    {"id": "a", "text": "5/8"},
+                    {"id": "b", "text": "3/32", "misconception_code": "PROB_002"},
+                    {"id": "c", "text": "3/8", "misconception_code": "PROB_001"},
+                    {"id": "d", "text": "1/4", "misconception_code": "PROB_001"},
+                ],
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in prob_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters, choices=choices,
