@@ -33,7 +33,17 @@ def _prerequisite(db, skill: Skill, prerequisite: Skill) -> None:
         db.add(SkillPrerequisite(**key, importance_weight=Decimal("1.000")))
 
 
-def _problem(db, skill: Skill, difficulty: int, prompt: str, answer: str, problem_type: str) -> None:
+def _problem(
+    db,
+    skill: Skill,
+    difficulty: int,
+    prompt: str,
+    answer: str,
+    problem_type: str,
+    *,
+    answer_kind: str = "FREE_TEXT",
+    parameters: dict | None = None,
+) -> None:
     provenance = {
         "origin": "AUTHORED",
         "author": "AI Tutor curriculum team",
@@ -41,6 +51,10 @@ def _problem(db, skill: Skill, difficulty: int, prompt: str, answer: str, proble
         "source_uri": "https://www.montgomeryschoolsmd.org/curriculum/math/",
     }
     existing = db.scalar(select(Problem).where(Problem.primary_skill_id == skill.id, Problem.prompt == prompt))
+    solution = {"answer": answer, "provenance": provenance}
+    if parameters is not None:
+        solution["problem_family"] = problem_type
+        solution["parameters"] = parameters
     if existing is None:
         db.add(
             Problem(
@@ -49,10 +63,13 @@ def _problem(db, skill: Skill, difficulty: int, prompt: str, answer: str, proble
                 difficulty=difficulty,
                 prompt=prompt,
                 canonical_answer=answer,
-                solution={"answer": answer, "provenance": provenance},
+                answer_kind=answer_kind,
+                solution=solution,
                 source_type="CURATED",
             )
         )
+    elif parameters is not None and "parameters" not in (existing.solution or {}):
+        existing.solution = {**(existing.solution or {}), **{k: v for k, v in solution.items() if k != "answer"}}
     elif "provenance" not in (existing.solution or {}):
         existing.solution = {**(existing.solution or {}), "provenance": provenance}
 
@@ -244,6 +261,41 @@ def seed() -> None:
             "multiplies x and which stands alone.",
         )
         _misconception(
+            fn_slope,
+            "GR_001",
+            "Slope inverted on a graph",
+            "The learner reads run over rise instead of rise over run when "
+            "measuring the slope of a graphed line.",
+            "Trace one lattice step: count the vertical change first, then "
+            "divide by the horizontal change.",
+        )
+        _misconception(
+            fn_slope,
+            "GR_002",
+            "Slope sign misread",
+            "The learner reports a positive slope for a line falling left to "
+            "right, or a negative slope for a line rising.",
+            "Read the line left to right: rising means positive slope, "
+            "falling means negative.",
+        )
+        _misconception(
+            fn_slope,
+            "GR_003",
+            "x-intercept mistaken for y-intercept",
+            "The learner reports where the line crosses the x-axis when asked "
+            "for the y-intercept.",
+            "The y-intercept is the y-value where the line crosses the "
+            "vertical axis — where x = 0.",
+        )
+        _misconception(
+            fn_slope,
+            "COORDINATE_ORDER_SWAP",
+            "Coordinates listed in reverse order",
+            "The learner reads a plotted point as (y, x) instead of (x, y).",
+            "Run before you climb: the x-coordinate always comes first, "
+            "then the y-coordinate.",
+        )
+        _misconception(
             fn_eval,
             "REL_002",
             "Coefficient added to variable",
@@ -278,6 +330,33 @@ def seed() -> None:
         ]
         for skill, difficulty, prompt, answer, problem_type in problems:
             _problem(db, skill, difficulty, prompt, answer, problem_type)
+
+        # Graph-first items — parameters feed the coordinate-plane visual.
+        graph_problems = [
+            (
+                fn_slope, 2, "What is the slope of the line shown?", "2",
+                "FRACTION", {"tier": "read_slope", "m_num": 2, "m_den": 1, "b": 3},
+            ),
+            (
+                fn_slope, 3, "What is the y-intercept of the line shown?", "-2",
+                "INTEGER", {"tier": "read_intercept", "m_num": 1, "m_den": 2, "b": -2},
+            ),
+            (
+                fn_eval, 3, "According to the graph, what is y when x = 2?", "5",
+                "INTEGER",
+                {"tier": "read_value", "m_num": 2, "m_den": 1, "b": 1, "x": 2},
+            ),
+            (
+                linear_functions, 3, "What is the slope of the line shown?", "-3/2",
+                "FRACTION",
+                {"tier": "read_slope", "m_num": -3, "m_den": 2, "b": 4},
+            ),
+        ]
+        for skill, difficulty, prompt, answer, answer_kind, parameters in graph_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, "LINEAR_GRAPH",
+                answer_kind=answer_kind, parameters=parameters,
+            )
 
         db.commit()
         print(f"Algebra I pilot seed complete. Curriculum={curriculum.id}")

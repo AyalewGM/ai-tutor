@@ -100,7 +100,13 @@ def test_grade5_fraction_decimal_volume_coordinate(seed):
     x=_generate_volume(random.Random(seed),5); p=x.parameters
     assert x.canonical_answer==str(p["length"]*p["width"]*p["height"])
     x=_generate_coordinate_plane(random.Random(seed),5); p=x.parameters
-    assert 0<=p["x"]<=10 and 0<=p["y"]<=10 and x.canonical_answer==f'({p["x"]}, {p["y"]})'
+    assert -8<=p["x"]<=8 and p["x"]!=0 and -8<=p["y"]<=8 and p["y"]!=0
+    if p["tier"]=="read_point":
+        assert x.canonical_answer==f'({p["x"]}, {p["y"]})'
+    else:
+        correct=next(c for c in x.choices if c["id"]==x.canonical_answer)
+        quadrant="I" if p["x"]>0 and p["y"]>0 else "II" if p["x"]<0 and p["y"]>0 else "III" if p["x"]<0 else "IV"
+        assert correct["text"]==f"Quadrant {quadrant}"
 
 @pytest.mark.parametrize("generator,difficulty", [
     (_generate_equal_groups,3),(_generate_equal_sharing,3),(_generate_multiplication_within_100,3),

@@ -248,6 +248,136 @@ def _generate_linear_function(rng: random.Random, difficulty: int) -> GeneratedP
     return GeneratedProblem(prompt, answer, difficulty, "LINEAR_FUNCTION", parameters=parameters)
 
 
+def _linear_graph_params(
+    rng: random.Random, difficulty: int, *, integer_slope: bool = False
+) -> tuple[int, int, int]:
+    """(m_num, m_den, b) for a line y = (m_num/m_den)x + b.
+
+    The slope is a reduced fraction and the intercept is integer; parameters are
+    constrained so the lattice points one slope-step each side of the
+    y-intercept stay on the ±9 grid the visual renders.
+    """
+    denominators = [1] if difficulty <= 2 or integer_slope else [1, 1, 2, 3]
+    while True:
+        den = rng.choice(denominators)
+        num = rng.randint(-5, 5)
+        if num == 0 or Fraction(num, den).denominator != den:
+            continue
+        b = rng.randint(-6, 6)
+        if -9 <= b - num <= 9 and -9 <= b + num <= 9:
+            return num, den, b
+
+
+def _slope_text(num: int, den: int) -> str:
+    return str(num) if den == 1 else f"{num}/{den}"
+
+
+def _equation_text(m: int, b: int) -> str:
+    return f"y={_fmt_expr(m, b)}"
+
+
+def _mc_choices(
+    rng: random.Random, correct: str, distractors: list[tuple[str, str | None]]
+) -> tuple[list[dict], str]:
+    """Build the four-option choice list; returns (choices, correct_id)."""
+    seen = {correct}
+    unique: list[tuple[str, str | None]] = []
+    for text, code in distractors:
+        if text not in seen:
+            seen.add(text)
+            unique.append((text, code))
+    options = unique[:3] + [(correct, None)]
+    rng.shuffle(options)
+    choices = [
+        {
+            "id": chr(ord("a") + i),
+            "text": text,
+            **({"misconception_code": code} if code else {}),
+        }
+        for i, (text, code) in enumerate(options)
+    ]
+    return choices, next(c["id"] for c in choices if c["text"] == correct)
+
+
+def _generate_linear_graph(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Graph-first linear-function items: read slope/intercept/values off a
+    plotted line, pick the point on the line, or match the line's equation.
+
+    The m_num/m_den/b parameters drive the coordinate-plane visual, so the
+    prompt is always answered from the rendered graph — never from the text.
+    """
+    tiers = ["read_intercept", "read_slope"]
+    if difficulty >= 3:
+        tiers += ["read_value", "point_on_line"]
+    if difficulty >= 5:
+        tiers.append("write_equation")
+    tier = rng.choice(tiers)
+    num, den, b = _linear_graph_params(
+        rng, difficulty, integer_slope=(tier == "write_equation")
+    )
+    params: dict = {"tier": tier, "m_num": num, "m_den": den, "b": b}
+    prompt: str
+    answer: str
+    kind = "FREE_TEXT"
+    choices = None
+
+    if tier == "read_slope":
+        prompt = "What is the slope of the line shown?"
+        answer = _slope_text(num, den)
+        kind = "FRACTION"
+    elif tier == "read_intercept":
+        prompt = "What is the y-intercept of the line shown?"
+        answer = str(b)
+        kind = "INTEGER"
+    elif tier == "read_value":
+        ks = [k for k in (-3, -2, -1, 1, 2, 3) if abs(k * den) <= 9 and abs(b + k * num) <= 9]
+        if not ks:
+            return _generate_linear_graph(rng, difficulty)
+        k = rng.choice(ks)
+        x = k * den
+        y = b + k * num
+        params["x"] = x
+        prompt = f"According to the graph, what is y when x = {x}?"
+        answer = str(y)
+        kind = "INTEGER"
+    elif tier == "point_on_line":
+        ks = [k for k in (-3, -2, -1, 1, 2, 3) if abs(k * den) <= 9 and abs(b + k * num) <= 9]
+        if not ks:
+            return _generate_linear_graph(rng, difficulty)
+        k = rng.choice(ks)
+        x = k * den
+        y = b + k * num
+        params["x"] = x
+        correct_text = f"({x}, {y})"
+        distractors = [
+            (f"({y}, {x})", "COORDINATE_ORDER_SWAP"),
+            (f"({x}, {b - k * num})", "GR_002"),  # stepped the wrong direction
+            (f"({x + den}, {y})", None),
+        ]
+        prompt = "Which ordered pair is a point on this line?"
+        choices, answer = _mc_choices(rng, correct_text, distractors)
+        kind = "MULTIPLE_CHOICE"
+    else:  # write_equation — integer slopes only
+        correct_text = _equation_text(num, b)
+        distractors = [
+            (f"y={_fmt_expr(-num, b)}", "GR_002"),
+            (_equation_text(num + 1, b), None),
+            (_equation_text(num, b + 1 if b < 6 else b - 1), None),
+        ]
+        if b != 0 and b != num:
+            distractors.insert(0, (_equation_text(b, num), "REL_001"))
+        if b % num == 0 and b != 0:
+            distractors.insert(0, (_equation_text(num, -b // num), "GR_003"))
+        prompt = "Which equation describes the line shown?"
+        choices, answer = _mc_choices(rng, correct_text, distractors)
+        kind = "MULTIPLE_CHOICE"
+
+    return GeneratedProblem(
+        prompt, answer, difficulty, "LINEAR_GRAPH",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_integer_sum(rng: random.Random, difficulty: int) -> GeneratedProblem:
     if difficulty <= 2:
         a, b = rng.randint(1, 20), rng.randint(1, 20)
@@ -743,15 +873,36 @@ def _generate_angle_measurement(rng: random.Random, difficulty: int) -> Generate
 
 
 def _generate_coordinate_plane(rng: random.Random, difficulty: int) -> GeneratedProblem:
-    x = rng.randint(0, 10)
-    y = rng.randint(0, 10)
-    prompt = f"A point is located at ({x}, {y}) on a coordinate grid. What is the ordered pair?"
+    if difficulty <= 2:
+        x = rng.randint(0, 10)
+        y = rng.randint(0, 10)
+    else:
+        x = rng.choice([n for n in range(-8, 9) if n != 0])
+        y = rng.choice([n for n in range(-8, 9) if n != 0])
+    if difficulty >= 3 and rng.random() < 0.4:
+        quadrant = ("I" if x > 0 and y > 0 else
+                    "II" if x < 0 and y > 0 else
+                    "III" if x < 0 and y < 0 else "IV")
+        choices, answer = _mc_choices(
+            rng,
+            f"Quadrant {quadrant}",
+            [(f"Quadrant {q}", None) for q in ("I", "II", "III", "IV")],
+        )
+        return GeneratedProblem(
+            f"The point ({x}, {y}) is plotted on the coordinate plane. In which quadrant is it?",
+            answer,
+            difficulty,
+            "COORDINATE_PLANE",
+            parameters={"tier": "quadrant", "x": x, "y": y, "labeled": True},
+            answer_kind="MULTIPLE_CHOICE",
+            choices=choices,
+        )
     return GeneratedProblem(
-        prompt,
+        "What are the coordinates of the point shown?",
         f"({x}, {y})",
         difficulty,
         "COORDINATE_PLANE",
-        parameters={"x": x, "y": y},
+        parameters={"tier": "read_point", "x": x, "y": y, "labeled": False},
     )
 
 
@@ -1393,6 +1544,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "POLYNOMIAL_ADD_SUBTRACT": _generate_polynomial_add_subtract,
     "SOLVE_EQUATION": _generate_solve_equation,
     "LINEAR_FUNCTION": _generate_linear_function,
+    "LINEAR_GRAPH": _generate_linear_graph,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -1689,6 +1841,12 @@ def _possible_families(problem_type: str) -> set[str]:
     return {problem_type}
 
 
+# Graph-read tiers share a constant prompt per tier ("What is the slope of the
+# line shown?") — the rendered parameters, not the text, distinguish them. The
+# prompt-dedupe check would otherwise starve these families entirely.
+PROMPT_SHARED_TYPES = {"LINEAR_GRAPH", "COORDINATE_PLANE"}
+
+
 def generate_problem(
     db: Session,
     *,
@@ -1733,7 +1891,10 @@ def generate_problem(
         if can_avoid and family_id == avoid_family:
             continue
         if (
-            candidate.prompt not in existing_prompts
+            (
+                candidate.prompt not in existing_prompts
+                or family_id in PROMPT_SHARED_TYPES
+            )
             and _fingerprint(family_id, parameters) not in existing_keys
         ):
             generated = candidate

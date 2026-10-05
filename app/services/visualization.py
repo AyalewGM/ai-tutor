@@ -230,12 +230,41 @@ def _coordinate_model(problem: Problem) -> dict | None:
     y = _int(params.get("y"))
     if x is None or y is None:
         return None
+    labeled = params.get("labeled", True)
     return {
         "type": "coordinate_plane",
         "x": x,
         "y": y,
-        "max": max(x, y, 10) + 1,
-        "aria_label": f"Coordinate plane with point at ({x}, {y}).",
+        "labeled": bool(labeled),
+        "min": min(-10, min(x, y) - 2),
+        "max": max(10, max(x, y) + 2),
+        "aria_label": (
+            f"Coordinate plane with a point at ({x}, {y})."
+            if labeled
+            else "Coordinate plane with a point plotted — read its coordinates."
+        ),
+    }
+
+
+def _linear_graph_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    m_num = _int(params.get("m_num"))
+    m_den = _int(params.get("m_den"))
+    b = _int(params.get("b"))
+    if m_num is None or m_den is None or b is None or m_den == 0:
+        return None
+    return {
+        "type": "linear_graph",
+        "m_num": m_num,
+        "m_den": m_den,
+        "b": b,
+        "min": -10,
+        "max": 10,
+        # Marking the intercept's lattice neighbours is the low-difficulty
+        # scaffold — it turns the slope read into a rise-over-run count.
+        "mark_lattice": bool(params.get("tier") in {"read_slope", "read_intercept"})
+        and problem.difficulty <= 2,
+        "aria_label": "A line graphed on a coordinate plane.",
     }
 
 
@@ -920,4 +949,6 @@ def visualization_for(problem: Problem) -> dict | None:
         return _angle_model(problem)
     if problem.problem_type == "COORDINATE_PLANE":
         return _coordinate_model(problem)
+    if problem.problem_type == "LINEAR_GRAPH":
+        return _linear_graph_model(problem)
     return None

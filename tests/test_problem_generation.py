@@ -300,11 +300,29 @@ def test_contextualizer_call_is_metered_and_budget_gated(monkeypatch) -> None:
         db.flush()
         student = Student(parent_id=user.id, first_name="L", grade_level="9")
         db.add(student)
-        db.commit()
-        curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MTH1W"))
-        skill = db.scalar(
-            select(Skill).where(Skill.curriculum_id == curriculum.id)
+        # Fresh curriculum+skill: the metering helpers commit, so generated
+        # problems persist; a unique skill keeps the prompt pool empty.
+        curriculum = Curriculum(
+            code=f"CTX-{uuid.uuid4().hex[:8]}", name="Ctx test curriculum"
         )
+        db.add(curriculum)
+        db.flush()
+        skill = Skill(
+            curriculum_id=curriculum.id, code="CTX.WORD", name="Word problems"
+        )
+        db.add(skill)
+        db.flush()
+        db.add(
+            Problem(
+                primary_skill_id=skill.id,
+                problem_type="WORD_PROBLEM",
+                difficulty=1,
+                prompt="What is 15% of 40?",
+                canonical_answer="6",
+                solution=TEST_PROVENANCE,
+            )
+        )
+        db.commit()
 
         problem = generate_problem(
             db, skill_id=skill.id, difficulty=1, problem_type="WORD_PROBLEM",

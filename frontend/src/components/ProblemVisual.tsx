@@ -33,6 +33,10 @@ export interface VisualSpec {
   common_denominator?: number;
   total_label?: string;
   segments?: TapeSegment[];
+  m_num?: number;
+  m_den?: number;
+  labeled?: boolean;
+  mark_lattice?: boolean;
 }
 
 interface PanSpec {
@@ -128,24 +132,111 @@ function CoordinatePlane({ spec }: { spec: VisualSpec }) {
   const max = spec.max ?? 5;
   const px = spec.x ?? spec.a ?? 0;
   const py = spec.y ?? spec.b ?? 0;
+  const labeled = spec.labeled ?? true;
   const size = 320;
   const pad = 28;
   const scale = (size - 2 * pad) / (max - min);
   const pos = (v: number) => pad + (v - min) * scale;
   const yPos = (v: number) => size - pos(v);
   const ticks = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+  const labelEvery = max - min > 14 ? 2 : 1;
   return (
     <svg viewBox={`0 0 ${size} ${size}`} className="visual" role="img" aria-label={spec.aria_label ?? `Coordinate plane with point at ${px}, ${py}`}>
+      {ticks.map((t) => (
+        <g key={`g${t}`}>
+          <line x1={pad} y1={yPos(t)} x2={size - pad} y2={yPos(t)} className="viz-grid" />
+          <line x1={pos(t)} y1={pad} x2={pos(t)} y2={size - pad} className="viz-grid" />
+        </g>
+      ))}
       <line x1={pad} y1={yPos(0)} x2={size - pad} y2={yPos(0)} className="viz-axis" />
       <line x1={pos(0)} y1={pad} x2={pos(0)} y2={size - pad} className="viz-axis" />
       {ticks.map((t) => (
         <g key={t}>
           <line x1={pos(t)} y1={yPos(0) - 3} x2={pos(t)} y2={yPos(0) + 3} className="viz-tick" />
           <line x1={pos(0) - 3} y1={yPos(t)} x2={pos(0) + 3} y2={yPos(t)} className="viz-tick" />
+          {t !== 0 && t % labelEvery === 0 && (
+            <>
+              <text x={pos(t)} y={yPos(0) + 15} textAnchor="middle" className="viz-tick-label">{t}</text>
+              <text x={pos(0) - 8} y={yPos(t) + 4} textAnchor="end" className="viz-tick-label">{t}</text>
+            </>
+          )}
         </g>
       ))}
       <circle cx={pos(px)} cy={yPos(py)} r="6" className="viz-point viz-point-a" />
-      <text x={pos(px) + 8} y={yPos(py) - 8} className="viz-label">({px}, {py})</text>
+      {labeled && (
+        <text x={pos(px) + 8} y={yPos(py) - 8} className="viz-label">({px}, {py})</text>
+      )}
+    </svg>
+  );
+}
+
+function LinearGraph({ spec }: { spec: VisualSpec }) {
+  const min = spec.min ?? -10;
+  const max = spec.max ?? 10;
+  const mNum = spec.m_num ?? 0;
+  const mDen = spec.m_den ?? 1;
+  const intercept = spec.b ?? 0;
+  const m = mNum / mDen;
+  const size = 340;
+  const pad = 30;
+  const scale = (size - 2 * pad) / (max - min);
+  const pos = (v: number) => pad + (v - min) * scale;
+  const yPos = (v: number) => size - pos(v);
+  const ticks = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+  // Segment endpoints where the line crosses the visible window.
+  const xAt = (y: number) => (y - intercept) / m;
+  const endpoints = (
+    [
+      [min, m * min + intercept],
+      [max, m * max + intercept],
+      [xAt(min), min],
+      [xAt(max), max],
+    ] as [number, number][]
+  )
+    .filter(([x, y]) => x >= min - 1e-9 && x <= max + 1e-9 && y >= min - 1e-9 && y <= max + 1e-9)
+    .slice(0, 2);
+  const lattice = spec.mark_lattice
+    ? ([
+        [0, intercept],
+        [mDen, intercept + mNum],
+        [-mDen, intercept - mNum],
+      ] as [number, number][])
+        .filter(([x, y]) => x >= min && x <= max && y >= min && y <= max)
+    : [];
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} className="visual" role="img" aria-label={spec.aria_label ?? "A line graphed on a coordinate plane"}>
+      {ticks.map((t) => (
+        <g key={`g${t}`}>
+          <line x1={pad} y1={yPos(t)} x2={size - pad} y2={yPos(t)} className="viz-grid" />
+          <line x1={pos(t)} y1={pad} x2={pos(t)} y2={size - pad} className="viz-grid" />
+        </g>
+      ))}
+      <line x1={pad} y1={yPos(0)} x2={size - pad} y2={yPos(0)} className="viz-axis" />
+      <line x1={pos(0)} y1={pad} x2={pos(0)} y2={size - pad} className="viz-axis" />
+      {ticks.filter((t) => t % 2 === 0).map((t) => (
+        <g key={t}>
+          <line x1={pos(t)} y1={yPos(0) - 3} x2={pos(t)} y2={yPos(0) + 3} className="viz-tick" />
+          <line x1={pos(0) - 3} y1={yPos(t)} x2={pos(0) + 3} y2={yPos(t)} className="viz-tick" />
+          {t !== 0 && (
+            <>
+              <text x={pos(t)} y={yPos(0) + 15} textAnchor="middle" className="viz-tick-label">{t}</text>
+              <text x={pos(0) - 8} y={yPos(t) + 4} textAnchor="end" className="viz-tick-label">{t}</text>
+            </>
+          )}
+        </g>
+      ))}
+      {endpoints.length === 2 && (
+        <line
+          x1={pos(endpoints[0][0])}
+          y1={yPos(endpoints[0][1])}
+          x2={pos(endpoints[1][0])}
+          y2={yPos(endpoints[1][1])}
+          className="viz-curve"
+        />
+      )}
+      {lattice.map(([x, y]) => (
+        <circle key={`${x},${y}`} cx={pos(x)} cy={yPos(y)} r="4.5" className="viz-point viz-point-a" />
+      ))}
     </svg>
   );
 }
@@ -432,6 +523,7 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "array_model") return <ArrayModel spec={spec} />;
   if (spec.type === "fraction_bar" || spec.type === "ratio_bar") return <FractionBar spec={spec} />;
   if (spec.type === "coordinate_plane" || spec.type === "coordinate_point") return <CoordinatePlane spec={spec} />;
+  if (spec.type === "linear_graph") return <LinearGraph spec={spec} />;
   if (spec.type === "angle" || spec.type === "angle_diagram") return <AngleDiagram spec={spec} />;
   if (spec.type === "decimal_place_value") return <DecimalPlaceValue spec={spec} />;
   if (spec.type === "volume_model" || spec.type === "volume") return <VolumeModel spec={spec} />;
