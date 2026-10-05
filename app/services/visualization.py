@@ -441,6 +441,44 @@ def _probability_model(problem: Problem) -> dict | None:
     return None
 
 
+def _pythagorean_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    tier = params.get("tier")
+    if tier == "distance":
+        points = params.get("points")
+        if not (
+            isinstance(points, list) and len(points) == 2
+            and all(isinstance(p, list) and len(p) == 2 for p in points)
+        ):
+            return None
+        return {
+            "type": "distance_segment",
+            "points": points,
+            "labels": ["A", "B"],
+            "aria_label": "Two points on a coordinate plane joined by a segment.",
+        }
+    if tier in {"hypotenuse", "leg", "radical_hypotenuse"}:
+        a, b = _int(params.get("a")), _int(params.get("b"))
+        if a is None or b is None:
+            return None
+        labels = {"leg_a": str(a), "leg_b": str(b), "hyp": "?"}
+        if tier == "leg":
+            c = _int(params.get("c"))
+            if c is None:
+                return None
+            labels = {"leg_a": str(a), "leg_b": "?", "hyp": str(c)}
+        return {
+            "type": "right_triangle",
+            "a": a,
+            "b": b,
+            **labels,
+            "aria_label": "A right triangle with labeled sides.",
+        }
+    # Converse items stay text-only: a drawn right triangle would answer
+    # the question.
+    return None
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1294,6 +1332,8 @@ def visualization_for(problem: Problem) -> dict | None:
         return _frequency_table_model(problem)
     if problem.problem_type == "PROBABILITY":
         return _probability_model(problem)
+    if problem.problem_type == "PYTHAGOREAN":
+        return _pythagorean_model(problem)
     if problem.problem_type == "EXPONENTIAL_FUNCTION":
         return _exponential_graph_model(problem)
     return None

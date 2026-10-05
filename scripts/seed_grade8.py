@@ -167,6 +167,14 @@ def seed() -> None:
             "causation.",
             3,
         )
+        pythagorean = _skill(
+            db, curriculum, "M8.G.PYTH",
+            "The Pythagorean Theorem",
+            "Find missing side lengths of right triangles, apply the "
+            "converse to test for right triangles, and use the theorem to "
+            "find distances between points on the coordinate plane.",
+            3,
+        )
 
         def _misconception(skill, code, name, description, strategy):
             if db.scalar(
@@ -361,6 +369,34 @@ def seed() -> None:
             "Compare the fraction of 'yes' outcomes in each row: a big "
             "gap between the rows signals an association; matching "
             "fractions signal none.",
+        )
+        _misconception(
+            pythagorean,
+            "PYTH_001",
+            "Sum of squares never square-rooted",
+            "The learner computes a² + b² (or c² − a²) and reports it as "
+            "the side length, forgetting to take the square root.",
+            "The theorem gives the square of the side, not the side: "
+            "after squaring and adding, take the square root to finish.",
+        )
+        _misconception(
+            pythagorean,
+            "PYTH_002",
+            "Sides added or squares miscombined",
+            "The learner adds the legs directly for a hypotenuse, adds "
+            "the hypotenuse and leg for a missing leg, or adds |dx| + "
+            "|dy| for a distance.",
+            "Square first, then add or subtract, then root: c = √(a² + "
+            "b²) and a leg is √(c² − a²).",
+        )
+        _misconception(
+            pythagorean,
+            "PYTH_003",
+            "Converse misapplied when testing for a right triangle",
+            "The learner checks the wrong condition — comparing a + b "
+            "to c or the triangle inequality instead of a² + b² = c².",
+            "A triangle is right exactly when the two shorter sides "
+            "squared add to the longest side squared.",
         )
 
         problems = [
@@ -588,6 +624,48 @@ def seed() -> None:
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in freq_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        # Pythagorean items — rendered right triangles and grid segments.
+        pyth_problems = [
+            (
+                pythagorean, 1,
+                "The right triangle has legs of length 3 and 4. What is the length of the hypotenuse?",
+                "5", "PYTHAGOREAN", "INTEGER",
+                {"tier": "hypotenuse", "a": 3, "b": 4, "c": 5},
+                None,
+            ),
+            (
+                pythagorean, 2,
+                "The right triangle has a hypotenuse of length 13 and one leg of length 5. What is the length of the other leg?",
+                "12", "PYTHAGOREAN", "INTEGER",
+                {"tier": "leg", "a": 5, "b": 12, "c": 13},
+                None,
+            ),
+            (
+                pythagorean, 3,
+                "A triangle has sides of length 4, 5, and 6. Could it be a right triangle?",
+                "b", "PYTHAGOREAN", "MULTIPLE_CHOICE",
+                {"tier": "converse", "sides": [4, 5, 6]},
+                [
+                    {"id": "a", "text": "Yes, because 4² + 5² = 6²", "misconception_code": "PYTH_003"},
+                    {"id": "b", "text": "No, because 4² + 5² ≠ 6²"},
+                    {"id": "c", "text": "Yes, because 4 + 5 > 6", "misconception_code": "PYTH_003"},
+                    {"id": "d", "text": "There is not enough information to decide"},
+                ],
+            ),
+            (
+                pythagorean, 4,
+                "What is the distance between point A(1, 1) and point B(5, 4)?",
+                "5", "PYTHAGOREAN", "INTEGER",
+                {"tier": "distance", "points": [[1, 1], [5, 4]]},
+                None,
+            ),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in pyth_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters, choices=choices,

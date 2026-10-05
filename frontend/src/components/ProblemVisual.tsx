@@ -74,6 +74,9 @@ export interface VisualSpec {
   grand_total?: number;
   sections?: string[];
   marbles?: string[];
+  leg_a?: string;
+  leg_b?: string;
+  hyp?: string;
 }
 
 interface PanSpec {
@@ -777,6 +780,71 @@ function LinearSystem({ spec }: { spec: VisualSpec }) {
   );
 }
 
+function RightTriangle({ spec }: { spec: VisualSpec }) {
+  const a = spec.a ?? 3;
+  const b = spec.b ?? 4;
+  const width = 300;
+  const height = 230;
+  const pad = 42;
+  const unit = Math.min((width - 2 * pad) / b, (height - 2 * pad) / a);
+  const x0 = pad;
+  const y0 = height - pad;
+  const x1 = x0 + b * unit;
+  const y1 = y0 - a * unit;
+  const midHypX = (x0 + x1) / 2;
+  const midHypY = (y0 + y1) / 2;
+  return (
+    <svg viewBox={`0 0 ${width} ${height}`} className="visual" role="img" aria-label={spec.aria_label ?? "A right triangle"}>
+      <path d={`M ${x0} ${y0} L ${x1} ${y0} L ${x0} ${y1} Z`} className="viz-cell viz-cell-a" />
+      <rect x={x0} y={y0 - 14} width="14" height="14" className="viz-right-angle" />
+      <text x={(x0 + x1) / 2} y={y0 + 22} textAnchor="middle" className="viz-label">{spec.leg_b}</text>
+      <text x={x0 - 20} y={(y0 + y1) / 2 + 4} textAnchor="middle" className="viz-label">{spec.leg_a}</text>
+      <text x={midHypX + 16} y={midHypY - 8} textAnchor="middle" className="viz-label">{spec.hyp}</text>
+    </svg>
+  );
+}
+
+function DistanceSegment({ spec }: { spec: VisualSpec }) {
+  const bound = 9;
+  const size = 320;
+  const pad = 26;
+  const scale = (size - 2 * pad) / (2 * bound);
+  const pos = (v: number) => pad + (v + bound) * scale;
+  const yPos = (v: number) => size - pos(v);
+  const points = spec.points ?? [];
+  const labels = spec.labels ?? [];
+  const [p1, p2] = points;
+  const corner = p1 && p2 ? [p2[0], p1[1]] : null;
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} className="visual" role="img" aria-label={spec.aria_label ?? "Two points on a coordinate plane"}>
+      {Array.from({ length: 2 * bound + 1 }, (_, i) => i - bound).map((t) => (
+        <g key={`g${t}`}>
+          <line x1={pad} y1={yPos(t)} x2={size - pad} y2={yPos(t)} className={t === 0 ? "viz-axis" : "viz-grid"} />
+          <line x1={pos(t)} y1={pad} x2={pos(t)} y2={size - pad} className={t === 0 ? "viz-axis" : "viz-grid"} />
+        </g>
+      ))}
+      {p1 && p2 && corner && (
+        <g>
+          <line x1={pos(p1[0])} y1={yPos(p1[1])} x2={pos(corner[0])} y2={yPos(corner[1])} className="viz-hidden" />
+          <line x1={pos(corner[0])} y1={yPos(corner[1])} x2={pos(p2[0])} y2={yPos(p2[1])} className="viz-hidden" />
+          <rect
+            x={pos(corner[0]) + (p1[0] < corner[0] ? -9 : 0)}
+            y={yPos(corner[1]) + (p2[1] > corner[1] ? -9 : 0)}
+            width="9" height="9" className="viz-right-angle"
+          />
+          <line x1={pos(p1[0])} y1={yPos(p1[1])} x2={pos(p2[0])} y2={yPos(p2[1])} className="viz-curve" />
+        </g>
+      )}
+      {points.map((p, i) => (
+        <g key={i}>
+          <circle cx={pos(p[0])} cy={yPos(p[1])} r="5" className="viz-point viz-point-a" />
+          <text x={pos(p[0]) + 9} y={yPos(p[1]) - 7} className="viz-label">{labels[i]}</text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
 function Scatterplot({ spec }: { spec: VisualSpec }) {
   const size = 320;
   const pad = 36;
@@ -1267,6 +1335,8 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "frequency_table") return <FrequencyTable spec={spec} />;
   if (spec.type === "spinner") return <Spinner spec={spec} />;
   if (spec.type === "marble_bag") return <MarbleBag spec={spec} />;
+  if (spec.type === "right_triangle") return <RightTriangle spec={spec} />;
+  if (spec.type === "distance_segment") return <DistanceSegment spec={spec} />;
   if (spec.type === "exponential_graph") return <ExponentialGraph spec={spec} />;
   return null;
 }
