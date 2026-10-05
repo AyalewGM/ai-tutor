@@ -1,6 +1,5 @@
 import uuid
-from datetime import UTC, datetime, timedelta
-from itertools import pairwise
+from datetime import UTC, datetime
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -31,6 +30,7 @@ from app.services.awards import (
     award_out,
     badge_collection,
     learner_progress,
+    practice_streak_days,
 )
 from app.services.curriculum_scope import (
     CurriculumScopeError,
@@ -212,29 +212,6 @@ def _learn_content(skill: Skill, *, state: TutorState) -> LearnContentOut | None
     return build_learn_content(skill.learn_content)
 
 
-def _practice_streak_days(db: Session, student_id: uuid.UUID) -> int:
-    """Consecutive calendar days with at least one session, counting back from
-    today or yesterday (a streak isn't broken until a full day is missed)."""
-    days = db.scalars(
-        select(func.date(TutorSession.started_at))
-        .where(TutorSession.student_id == student_id)
-        .distinct()
-        .order_by(func.date(TutorSession.started_at).desc())
-    ).all()
-    if not days:
-        return 0
-    today = datetime.now(UTC).date()
-    if days[0] not in {today, today - timedelta(days=1)}:
-        return 0
-    streak = 1
-    for previous, current in pairwise(days):
-        if previous - current == timedelta(days=1):
-            streak += 1
-        else:
-            break
-    return streak
-
-
 def _answer_streak(db: Session, student_id: uuid.UUID, skill_id: uuid.UUID) -> int:
     """Trailing run of correct answers on this skill — the SmartScore streak.
 
@@ -401,7 +378,7 @@ def get_learner_workspace(
                 .limit(50)
             ).all()
         ],
-        streak_days=_practice_streak_days(db, session.student_id),
+        streak_days=practice_streak_days(db, session.student_id),
         growth=LearnerGrowthOut(**learner_progress(db, session.student_id)),
         daily_goal=_daily_goal(db, learner),
         recommended_next=(
@@ -568,6 +545,7 @@ def get_session_summary(
 class BadgeProgressOut(BaseModel):
     current: int
     target: int
+    unit: str = "in a row"
 
 
 class BadgeOut(BaseModel):

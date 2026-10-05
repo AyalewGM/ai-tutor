@@ -8,12 +8,13 @@ prerequisite-gap closure, difficulty promotion, and spaced-review passes.
 
 import uuid
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
+from itertools import pairwise
 
-from sqlalchemy import func, select
+from sqlalchemy import distinct, func, select
 from sqlalchemy.orm import Session
 
-from app.models import Attempt, LearnerAward, Problem, Skill
+from app.models import Attempt, LearnerAward, Problem, Skill, TutorSession
 
 
 @dataclass(frozen=True)
@@ -69,8 +70,85 @@ BADGE_CATALOG: dict[str, BadgeSpec] = {
             "You came back later and still had it — that's real learning",
             per_skill=True,
         ),
+        BadgeSpec(
+            "QUESTIONS_10",
+            "Ten Down",
+            "10 questions answered — every expert started exactly here",
+            per_skill=False,
+        ),
+        BadgeSpec(
+            "QUESTIONS_50",
+            "Half Century",
+            "50 questions answered — the practice is really adding up",
+            per_skill=False,
+        ),
+        BadgeSpec(
+            "QUESTIONS_100",
+            "Century Club",
+            "100 questions answered — that's serious dedication",
+            per_skill=False,
+        ),
+        BadgeSpec(
+            "QUESTIONS_500",
+            "Math Machine",
+            "500 questions answered — absolutely unstoppable effort",
+            per_skill=False,
+        ),
+        BadgeSpec(
+            "DAY_STREAK_3",
+            "Habit Builder",
+            "3 days of practice in a row — consistency is how skills stick",
+            per_skill=False,
+        ),
+        BadgeSpec(
+            "DAY_STREAK_7",
+            "Week of Wins",
+            "A full week of daily practice — that's a real routine",
+            per_skill=False,
+        ),
+        BadgeSpec(
+            "DAY_STREAK_30",
+            "Monthly Master",
+            "30 days of practice in a row — remarkable commitment",
+            per_skill=False,
+        ),
+        BadgeSpec(
+            "PERFECT_SESSION",
+            "Flawless",
+            "A whole session with every single answer right",
+            per_skill=False,
+        ),
+        BadgeSpec(
+            "EXPLORER_10",
+            "Trailblazer",
+            "Practiced 10 different skills — you try everything",
+            per_skill=False,
+        ),
+        BadgeSpec(
+            "COMEBACK",
+            "Welcome Back",
+            "Returned after a week away and nailed it",
+            per_skill=False,
+        ),
     )
 }
+
+QUESTION_MILESTONES = {
+    "QUESTIONS_10": 10,
+    "QUESTIONS_50": 50,
+    "QUESTIONS_100": 100,
+    "QUESTIONS_500": 500,
+}
+
+DAY_STREAK_MILESTONES = {
+    "DAY_STREAK_3": 3,
+    "DAY_STREAK_7": 7,
+    "DAY_STREAK_30": 30,
+}
+
+PERFECT_SESSION_MIN = 5
+EXPLORER_SKILL_TARGET = 10
+COMEBACK_GAP_DAYS = 7
 
 
 def _already_awarded(
@@ -101,6 +179,101 @@ def _consecutive_correct(db: Session, student_id: uuid.UUID) -> int:
         else:
             break
     return streak
+
+
+def practice_streak_days(db: Session, student_id: uuid.UUID) -> int:
+    """Consecutive calendar days with at least one session, counting back from
+    today or yesterday (a streak isn't broken until a full day is missed)."""
+    # Buckets in UTC — the session TimeZone would otherwise attribute evening
+    # practice to a different day than the UTC `today` below.
+    utc_day = func.date(func.timezone("UTC", TutorSession.started_at))
+    days = db.scalars(
+        select(utc_day)
+        .where(TutorSession.student_id == student_id)
+        .distinct()
+        .order_by(utc_day.desc())
+        .limit(40)
+    ).all()
+    if not days:
+        return 0
+    today = datetime.now(UTC).date()
+    if days[0] not in {today, today - timedelta(days=1)}:
+        return 0
+    streak = 1
+    for previous, current in pairwise(days):
+        if previous - current == timedelta(days=1):
+            streak += 1
+        else:
+            break
+    return streak
+
+
+def _answered_count(db: Session, student_id: uuid.UUID) -> int:
+    return (
+        db.scalar(
+            select(func.count(Attempt.id)).where(
+                Attempt.student_id == student_id,
+                Attempt.is_correct.isnot(None),
+            )
+        )
+        or 0
+    )
+
+
+def _distinct_skills_practiced(db: Session, student_id: uuid.UUID) -> int:
+    return (
+        db.scalar(
+            select(func.count(distinct(Problem.primary_skill_id)))
+            .select_from(Attempt)
+            .join(Problem, Attempt.problem_id == Problem.id)
+            .where(
+                Attempt.student_id == student_id,
+                Attempt.is_correct.isnot(None),
+            )
+        )
+        or 0
+    )
+
+
+def _clean_session_run(db: Session, session_id: uuid.UUID) -> int:
+    """Answered attempts in this session, or 0 if any was answered wrong."""
+    answered, wrong = db.execute(
+        select(
+            func.count(Attempt.id),
+            func.count(Attempt.id).filter(Attempt.is_correct.is_(False)),
+        ).where(
+            Attempt.session_id == session_id,
+            Attempt.is_correct.isnot(None),
+        )
+    ).one()
+    return int(answered) if not wrong else 0
+
+
+def _best_clean_run(db: Session, student_id: uuid.UUID) -> int:
+    """Longest all-correct run within any single session — the PERFECT_SESSION meter."""
+    rows = db.execute(
+        select(
+            func.count(Attempt.id),
+            func.count(Attempt.id).filter(Attempt.is_correct.is_(False)),
+        )
+        .where(Attempt.student_id == student_id, Attempt.is_correct.isnot(None))
+        .group_by(Attempt.session_id)
+    ).all()
+    return max((answered for answered, wrong in rows if not wrong), default=0)
+
+
+def _days_since_previous_attempt(db: Session, student_id: uuid.UUID) -> float | None:
+    """Gap in days between the current (latest) attempt and the one before it."""
+    previous_at = db.scalar(
+        select(Attempt.created_at)
+        .where(Attempt.student_id == student_id, Attempt.is_correct.isnot(None))
+        .order_by(Attempt.created_at.desc(), Attempt.id.desc())
+        .offset(1)
+        .limit(1)
+    )
+    if previous_at is None:
+        return None
+    return (datetime.now(UTC) - previous_at).total_seconds() / 86400
 
 
 def evaluate_awards(
@@ -135,6 +308,46 @@ def evaluate_awards(
     if review_passed:
         earned.append(("FRESH_EYES", active_skill_id))
 
+    # Volume/streak milestones — one query for the already-earned global set,
+    # then each meter only runs while one of its badges is still unearned.
+    earned_global = set(
+        db.scalars(
+            select(LearnerAward.badge_code).where(
+                LearnerAward.student_id == student_id,
+                LearnerAward.skill_id.is_(None),
+            )
+        ).all()
+    )
+
+    pending_questions = QUESTION_MILESTONES.keys() - earned_global
+    if pending_questions:
+        answered = _answered_count(db, student_id)
+        for code in pending_questions:
+            if answered >= QUESTION_MILESTONES[code]:
+                earned.append((code, None))
+
+    pending_streaks = DAY_STREAK_MILESTONES.keys() - earned_global
+    if pending_streaks:
+        days = practice_streak_days(db, student_id)
+        for code in pending_streaks:
+            if days >= DAY_STREAK_MILESTONES[code]:
+                earned.append((code, None))
+
+    if "EXPLORER_10" not in earned_global and (
+        _distinct_skills_practiced(db, student_id) >= EXPLORER_SKILL_TARGET
+    ):
+        earned.append(("EXPLORER_10", None))
+
+    if correct:
+        if "PERFECT_SESSION" not in earned_global and (
+            _clean_session_run(db, session_id) >= PERFECT_SESSION_MIN
+        ):
+            earned.append(("PERFECT_SESSION", None))
+        if "COMEBACK" not in earned_global:
+            gap = _days_since_previous_attempt(db, student_id)
+            if gap is not None and gap >= COMEBACK_GAP_DAYS:
+                earned.append(("COMEBACK", None))
+
     awards: list[LearnerAward] = []
     for code, skill_id in earned:
         spec = BADGE_CATALOG[code]
@@ -160,6 +373,30 @@ def _current_streak(db: Session, student_id: uuid.UUID) -> int:
 STREAK_TARGETS = {"STREAK_3": 3, "STREAK_5": 5}
 
 
+def _progress_meters(
+    db: Session, student_id: uuid.UUID
+) -> dict[str, tuple[int, int, str]]:
+    """current/target/unit triples for every metered global badge."""
+    streak = _current_streak(db, student_id)
+    answered = _answered_count(db, student_id)
+    days = practice_streak_days(db, student_id)
+    return {
+        **{c: (streak, t, "in a row") for c, t in STREAK_TARGETS.items()},
+        **{c: (answered, t, "answered") for c, t in QUESTION_MILESTONES.items()},
+        **{c: (days, t, "days") for c, t in DAY_STREAK_MILESTONES.items()},
+        "PERFECT_SESSION": (
+            _best_clean_run(db, student_id),
+            PERFECT_SESSION_MIN,
+            "in one session",
+        ),
+        "EXPLORER_10": (
+            _distinct_skills_practiced(db, student_id),
+            EXPLORER_SKILL_TARGET,
+            "skills",
+        ),
+    }
+
+
 def badge_collection(
     db: Session, student_id: uuid.UUID
 ) -> list[dict]:
@@ -175,7 +412,7 @@ def badge_collection(
         if row.skill_id is not None:
             earned_skill.setdefault(row.badge_code, []).append(row)
 
-    streak = _current_streak(db, student_id)
+    meters = _progress_meters(db, student_id)
     collection: list[dict] = []
     for code, spec in BADGE_CATALOG.items():
         if spec.per_skill:
@@ -197,10 +434,12 @@ def badge_collection(
             )
         else:
             progress = None
-            if code in STREAK_TARGETS:
+            if code in meters:
+                current, target, unit = meters[code]
                 progress = {
-                    "current": min(streak, STREAK_TARGETS[code]),
-                    "target": STREAK_TARGETS[code],
+                    "current": min(current, target),
+                    "target": target,
+                    "unit": unit,
                 }
             collection.append(
                 {
@@ -246,6 +485,16 @@ BADGE_XP: dict[str, int] = {
     "SKILL_MASTERED": 50,
     "GAP_FIXED": 40,
     "FRESH_EYES": 30,
+    "QUESTIONS_10": 10,
+    "QUESTIONS_50": 25,
+    "QUESTIONS_100": 40,
+    "QUESTIONS_500": 75,
+    "DAY_STREAK_3": 15,
+    "DAY_STREAK_7": 30,
+    "DAY_STREAK_30": 100,
+    "PERFECT_SESSION": 40,
+    "EXPLORER_10": 25,
+    "COMEBACK": 15,
 }
 
 LEVEL_TITLES = (

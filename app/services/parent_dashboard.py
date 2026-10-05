@@ -677,7 +677,7 @@ def _learning_trends(
     # Daily minutes — same duration convention as the grade-level summary.
     minutes_by_day: dict[str, int] = {}
     for session in sessions:
-        day = session.started_at.date().isoformat()
+        day = session.started_at.astimezone(UTC).date().isoformat()
         minutes = int(
             ((session.ended_at or session.started_at) - session.started_at).total_seconds() // 60
         )
@@ -698,7 +698,9 @@ def _learning_trends(
     for event in events:
         if not score_by_day:
             baseline = float(event.previous_score)
-        score_by_day[event.created_at.date().isoformat()] = float(event.new_score)
+        score_by_day[event.created_at.astimezone(UTC).date().isoformat()] = float(
+            event.new_score
+        )
     # Carry the pre-window score forward if earlier events exist.
     prior_event = db.scalar(
         select(MasteryEvent)
@@ -783,7 +785,9 @@ def _learning_trends(
         select(func.max(Attempt.created_at)).where(Attempt.student_id == student_id)
     )
     days_since = (
-        (now.date() - last_attempt_at.date()).days if last_attempt_at else None
+        (now.date() - last_attempt_at.astimezone(UTC).date()).days
+        if last_attempt_at
+        else None
     )
 
     digest = WeeklyDigestOut(
