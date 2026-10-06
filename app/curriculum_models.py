@@ -1,7 +1,7 @@
 import uuid
 from datetime import UTC, datetime
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, String, Text, UniqueConstraint
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -141,3 +141,124 @@ class CurriculumSkillMapping(Base):
     skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("skills.id"), index=True)
     mapping_type: Mapped[str] = mapped_column(String(40), default="EQUIVALENT")
     provenance_json: Mapped[dict | None] = mapped_column(JSONB)
+
+
+class CanonicalConcept(Base):
+    """Jurisdiction-independent mathematical concept."""
+
+    __tablename__ = "canonical_concepts"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    code: Mapped[str] = mapped_column(String(120), unique=True, index=True)
+    name: Mapped[str] = mapped_column(String(255))
+    description: Mapped[str | None] = mapped_column(Text)
+    subject: Mapped[str] = mapped_column(String(80), default="MATHEMATICS")
+
+
+class CanonicalSkillConcept(Base):
+    __tablename__ = "canonical_skill_concepts"
+    skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("canonical_skills.id"), primary_key=True)
+    concept_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("canonical_concepts.id"), primary_key=True)
+
+
+class CanonicalSkillPrerequisite(Base):
+    """Prerequisite graph for mathematical truth, independent of curriculum sequence."""
+
+    __tablename__ = "canonical_skill_prerequisites"
+    skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("canonical_skills.id"), primary_key=True)
+    prerequisite_skill_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("canonical_skills.id"), primary_key=True
+    )
+
+
+class CanonicalMisconception(Base):
+    __tablename__ = "canonical_misconceptions"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    code: Mapped[str] = mapped_column(String(120), unique=True, index=True)
+    name: Mapped[str] = mapped_column(String(255))
+    description: Mapped[str] = mapped_column(Text)
+    canonical_skill_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("canonical_skills.id"), index=True
+    )
+
+
+class ProblemFamily(Base):
+    """Reusable problem-generation family attached to canonical mathematics."""
+
+    __tablename__ = "problem_families"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    code: Mapped[str] = mapped_column(String(120), unique=True, index=True)
+    name: Mapped[str] = mapped_column(String(255))
+    canonical_skill_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("canonical_skills.id"), index=True
+    )
+    generator_key: Mapped[str] = mapped_column(String(160))
+    description: Mapped[str | None] = mapped_column(Text)
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
+
+
+class CurriculumVersion(Base):
+    """Version identity for an authoritative curriculum release."""
+
+    __tablename__ = "curriculum_versions"
+    __table_args__ = (
+        UniqueConstraint("curriculum_id", "version", name="uq_curriculum_versions_curriculum_version"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    curriculum_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("curricula.id"), index=True)
+    version: Mapped[str] = mapped_column(String(80))
+    effective_from: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    effective_to: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    source_uri: Mapped[str | None] = mapped_column(Text)
+    provenance_json: Mapped[dict | None] = mapped_column(JSONB)
+    review_status: Mapped[str] = mapped_column(String(30), default="DRAFT")
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
+
+
+class CurriculumStandard(Base):
+    """Authoritative standard/expectation; never owns mathematical correctness."""
+
+    __tablename__ = "curriculum_standards"
+    __table_args__ = (
+        UniqueConstraint("curriculum_version_id", "code", name="uq_curriculum_standard_version_code"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    curriculum_version_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("curriculum_versions.id"), index=True
+    )
+    code: Mapped[str] = mapped_column(String(160), index=True)
+    title: Mapped[str] = mapped_column(String(500))
+    description: Mapped[str | None] = mapped_column(Text)
+    strand: Mapped[str | None] = mapped_column(String(160))
+    sequence: Mapped[int | None] = mapped_column(Integer)
+    source_uri: Mapped[str | None] = mapped_column(Text)
+    provenance_json: Mapped[dict | None] = mapped_column(JSONB)
+
+
+class StandardSkillMapping(Base):
+    """Reviewed mapping from jurisdiction standard to canonical mathematical skill."""
+
+    __tablename__ = "standard_skill_mappings"
+    __table_args__ = (
+        UniqueConstraint(
+            "standard_id", "canonical_skill_id", name="uq_standard_canonical_skill_mapping"
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    standard_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("curriculum_standards.id"), index=True
+    )
+    canonical_skill_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("canonical_skills.id"), index=True
+    )
+    mapping_type: Mapped[str] = mapped_column(String(40), default="ALIGNS_TO")
+    coverage: Mapped[str | None] = mapped_column(String(40))
+    review_status: Mapped[str] = mapped_column(String(30), default="DRAFT")
+    provenance_json: Mapped[dict | None] = mapped_column(JSONB)
+    reviewed_by: Mapped[str | None] = mapped_column(String(120))
+    reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
