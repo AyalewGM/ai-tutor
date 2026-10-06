@@ -4,6 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.curriculum_ingestion_schema import CurriculumIngestionPack, validate_ingestion_pack
+from app.curriculum_lifecycle import set_curriculum_lifecycle
 from app.curriculum_models import (
     CanonicalSkill,
     CurriculumStandard,
@@ -49,6 +50,7 @@ def ingest_draft_pack(session: Session, pack: CurriculumIngestionPack) -> Curric
         "source_type": "OFFICIAL_CURRICULUM",
         "ingestion_schema_version": pack.schema_version,
         "authority_code": pack.authority_code.strip(),
+        "lifecycle_status": pack.lifecycle_status.strip().upper(),
     }
     if version is None:
         version = CurriculumVersion(
@@ -59,8 +61,8 @@ def ingest_draft_pack(session: Session, pack: CurriculumIngestionPack) -> Curric
             source_uri=pack.source_uri.strip(),
             provenance_json=version_provenance,
             review_status="DRAFT",
-            active=True,
         )
+        set_curriculum_lifecycle(version, pack.lifecycle_status)
         session.add(version)
         session.flush()
     else:
@@ -73,7 +75,7 @@ def ingest_draft_pack(session: Session, pack: CurriculumIngestionPack) -> Curric
         version.source_uri = pack.source_uri.strip()
         version.provenance_json = version_provenance
         version.review_status = "DRAFT"
-        version.active = True
+        set_curriculum_lifecycle(version, pack.lifecycle_status)
 
     standards: dict[str, CurriculumStandard] = {}
     for draft in pack.standards:
