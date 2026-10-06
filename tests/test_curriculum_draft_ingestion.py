@@ -17,7 +17,6 @@ from app.curriculum_models import (
     CurriculumVersion,
     StandardSkillMapping,
 )
-from app.models import Curriculum
 from scripts.seed_mth1w import seed as seed_mth1w
 
 
