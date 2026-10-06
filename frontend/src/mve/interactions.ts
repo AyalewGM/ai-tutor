@@ -66,21 +66,38 @@ export type MathInteractionEvent =
   | RegionSelectedEvent
   | PolygonCreatedEvent;
 
+function isPoint2D(value: unknown): value is Point2D {
+  return Array.isArray(value) &&
+    value.length === 2 &&
+    value.every((coordinate) => typeof coordinate === "number" && Number.isFinite(coordinate));
+}
+
 export function isMathInteractionEvent(value: unknown): value is MathInteractionEvent {
   if (!value || typeof value !== "object") return false;
-  const event = value as { schema_version?: unknown; type?: unknown };
-  return (
-    event.schema_version === 1 &&
-    typeof event.type === "string" &&
-    [
-      "POINT_PLACED",
-      "POINT_MOVED",
-      "SEGMENT_CREATED",
-      "LINE_CREATED",
-      "VERTEX_MOVED",
-      "TRANSFORMATION_APPLIED",
-      "REGION_SELECTED",
-      "POLYGON_CREATED",
-    ].includes(event.type)
-  );
+  const event = value as Record<string, unknown>;
+  if (event.schema_version !== 1 || typeof event.type !== "string") return false;
+  switch (event.type) {
+    case "POINT_PLACED":
+      return isPoint2D(event.point);
+    case "POINT_MOVED":
+      return isPoint2D(event.from) && isPoint2D(event.to);
+    case "SEGMENT_CREATED":
+      return isPoint2D(event.start) && isPoint2D(event.end);
+    case "LINE_CREATED":
+      return Array.isArray(event.through) && event.through.length === 2 &&
+        event.through.every(isPoint2D);
+    case "VERTEX_MOVED":
+      return Number.isInteger(event.vertex_index) && (event.vertex_index as number) >= 0 &&
+        isPoint2D(event.from) && isPoint2D(event.to);
+    case "TRANSFORMATION_APPLIED":
+      return ["translation", "rotation", "reflection", "dilation"].includes(String(event.transformation)) &&
+        !!event.parameters && typeof event.parameters === "object";
+    case "REGION_SELECTED":
+      return !!event.region && typeof event.region === "object";
+    case "POLYGON_CREATED":
+      return Array.isArray(event.vertices) && event.vertices.length >= 3 &&
+        event.vertices.every(isPoint2D);
+    default:
+      return false;
+  }
 }
