@@ -98,6 +98,30 @@ export interface XYTableSpec extends VisualSpecBase {
  * KnownVisualSpec. Existing renderers continue to accept this legacy shape
  * until migrated behind #178 rather than forcing a risky wholesale rewrite.
  */
+export interface PanSpec {
+  x_count: number;
+  units: number;
+}
+
+export interface FractionSpec {
+  numerator: number;
+  denominator: number;
+}
+
+export interface TapeSegment {
+  label: string;
+  span: number;
+  highlight: boolean;
+}
+
+export interface AlgebraTerm {
+  coefficient: number;
+  variable?: string | null;
+  degree: number;
+  label: string;
+  sign_changed?: boolean;
+}
+
 export interface LegacyVisualSpec extends VisualSpecBase {
   type: string;
   a?: number;
