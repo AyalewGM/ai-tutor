@@ -1,3 +1,6 @@
+import type { VisualSpec } from "./mve/contracts";
+export type { VisualSpec } from "./mve/contracts";
+
 export interface LearnerChoice {
   id: string;
   first_name: string;
@@ -71,16 +74,6 @@ export type TutorState =
   | "MASTERY_CHECK"
   | "COMPLETE"
   | "REVIEW";
-
-export interface VisualSpec {
-  type: string;
-  a?: number;
-  b?: number;
-  result?: number;
-  min?: number;
-  max?: number;
-  aria_label?: string;
-}
 
 export interface ProblemChoice {
   id: string;

@@ -98,9 +98,122 @@ export interface XYTableSpec extends VisualSpecBase {
  * KnownVisualSpec. Existing renderers continue to accept this legacy shape
  * until migrated behind #178 rather than forcing a risky wholesale rewrite.
  */
-export interface LegacyVisualSpec extends VisualSpecBase {
-  [key: string]: unknown;
+export interface PanSpec {
+  x_count: number;
+  units: number;
 }
+
+export interface FractionSpec {
+  numerator: number;
+  denominator: number;
+}
+
+export interface TapeSegment {
+  label: string;
+  span: number;
+  highlight: boolean;
+}
+
+export interface AlgebraTerm {
+  coefficient: number;
+  variable?: string | null;
+  degree: number;
+  label: string;
+  sign_changed?: boolean;
+}
+
+export interface LegacyVisualSpec extends VisualSpecBase {
+  type: string;
+  a?: number;
+  b?: number;
+  result?: number;
+  min?: number;
+  max?: number;
+  numerator?: number;
+  denominator?: number;
+  x?: number;
+  y?: number;
+  angle?: number;
+  rows?: number;
+  columns?: number;
+  whole?: number;
+  tenths?: number;
+  hundredths?: number;
+  length?: number;
+  width?: number;
+  height?: number;
+  mode?: "counters" | "squares";
+  aria_label?: string;
+  operation?: "+" | "-";
+  terms?: AlgebraTerm[];
+  groups?: Array<{ key: string; terms: AlgebraTerm[] }>;
+  left_terms?: AlgebraTerm[];
+  right_terms?: AlgebraTerm[];
+  transformed_right_terms?: AlgebraTerm[];
+  left?: PanSpec;
+  right?: PanSpec;
+  first?: FractionSpec;
+  second?: FractionSpec;
+  common_denominator?: number;
+  total_label?: string;
+  segments?: TapeSegment[];
+  m_num?: number;
+  m_den?: number;
+  labeled?: boolean;
+  mark_lattice?: boolean;
+  a_num?: number;
+  a_den?: number;
+  h?: number;
+  k?: number;
+  coeffs?: number[];
+  roots?: number[];
+  mark_roots?: boolean;
+  solid?: string;
+  l?: number;
+  w?: number;
+  r?: number;
+  kind?: string;
+  mark?: string;
+  preimage?: number[][];
+  image?: number[][];
+  labels?: string[];
+  image_labels?: string[];
+  pre_edge_labels?: (string | null)[];
+  image_edge_labels?: (string | null)[];
+  lines?: Array<{ m_num: number; m_den: number; i_num: number; i_den: number }>;
+  points?: number[][];
+  x_max?: number;
+  y_max?: number;
+  x_min?: number;
+  y_min?: number;
+  fit?: { m_num: number; m_den: number; i_num: number; i_den: number };
+  b_num?: number;
+  b_den?: number;
+  mark_points?: number[][];
+  row_labels?: string[];
+  col_labels?: string[];
+  cells?: number[][];
+  row_totals?: number[];
+  col_totals?: number[];
+  grand_total?: number;
+  sections?: string[];
+  marbles?: string[];
+  leg_a?: string;
+  leg_b?: string;
+  hyp?: string;
+  markers?: Array<{ label: string; position: number }>;
+  point?: number;
+  direction?: "left" | "right";
+  closed?: boolean;
+  data?: number[];
+  highlight?: number;
+  pairs?: number[][];
+  shape?: string;
+  base?: number;
+  top?: number;
+  slant?: number;
+}
+
 
 export type KnownVisualSpec =
   | CoordinatePlaneSpec
@@ -112,9 +225,9 @@ export type KnownVisualSpec =
  * Public transition type. The intersection keeps existing call sites source
  * compatible while KnownVisualSpec provides the typed migration target.
  */
-export type VisualSpec = KnownVisualSpec | LegacyVisualSpec;
+export type VisualSpec = LegacyVisualSpec;
 
-export function isKnownVisualSpec(spec: VisualSpec): spec is KnownVisualSpec {
+export function isKnownVisualSpec(spec: VisualSpec): spec is VisualSpec & KnownVisualSpec {
   return (
     spec.type === "coordinate_plane" ||
     spec.type === "coordinate_point" ||
