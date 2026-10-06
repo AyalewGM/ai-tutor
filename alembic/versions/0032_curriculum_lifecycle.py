@@ -22,6 +22,11 @@ depends_on = None
 def upgrade() -> None:
     bind = op.get_bind()
     inspector = sa.inspect(bind)
+    if "curriculum_versions" not in set(inspector.get_table_names()):
+        # Existing production databases predating the canonical curriculum
+        # schema reach 0032 without this table. 0033 creates it with the
+        # lifecycle column, so there is nothing to alter here.
+        return
     columns = {column["name"] for column in inspector.get_columns("curriculum_versions")}
     if "lifecycle_status" not in columns:
         op.add_column(
@@ -46,6 +51,8 @@ def upgrade() -> None:
 def downgrade() -> None:
     bind = op.get_bind()
     inspector = sa.inspect(bind)
+    if "curriculum_versions" not in set(inspector.get_table_names()):
+        return
     indexes = {index["name"] for index in inspector.get_indexes("curriculum_versions")}
     if "ix_curriculum_versions_lifecycle_status" in indexes:
         op.drop_index(
