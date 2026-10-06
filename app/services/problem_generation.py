@@ -3632,6 +3632,172 @@ def _generate_geometry6(rng: random.Random, difficulty: int) -> GeneratedProblem
     )
 
 
+def _generate_sequences(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Algebra-1 sequences (F-BF.2): extend arithmetic and geometric
+    sequences, read a common difference or ratio, evaluate an nth
+    term, classify a sequence and pick its explicit rule.
+
+    `table_term` renders an `xy_table` of positions and terms; the
+    other tiers put the sequence in the prompt so the nth-term
+    misconception rules can parse it back out."""
+    tiers = ["next_term", "common_value"]
+    if difficulty >= 2:
+        tiers += ["nth_term", "geometric_nth", "table_term", "classify"]
+    if difficulty >= 3:
+        tiers += ["explicit_rule"]
+    tier = rng.choice(tiers)
+    params: dict = {"tier": tier}
+    kind = "INTEGER"
+    choices = None
+
+    def _fmt_seq(seq: list[int]) -> str:
+        return ", ".join(map(str, seq))
+
+    if tier in {"next_term", "common_value"}:
+        geometric = rng.random() < (0.3 if tier == "common_value" else 0.4)
+        if geometric:
+            a1 = rng.randint(1, 6)
+            r = rng.choice([2, 3])
+            seq = [a1 * r ** i for i in range(4)]
+            params.update(sequence=seq, ratio=r, first=a1)
+            if tier == "next_term":
+                prompt = ("What is the next term in the sequence "
+                          + _fmt_seq(seq) + ", ...?")
+                correct = str(seq[-1] * r)
+                kind = "INTEGER"
+            else:
+                prompt = ("What is the common ratio of the sequence "
+                          + _fmt_seq(seq) + ", ...?")
+                correct = str(r)
+        else:
+            a1 = rng.randint(-8, 10)
+            d = rng.choice([-4, -3, -2, 2, 3, 4, 5, 6])
+            seq = [a1 + i * d for i in range(5)]
+            params.update(sequence=seq, difference=d, first=a1)
+            if tier == "next_term":
+                prompt = ("What is the next term in the sequence "
+                          + _fmt_seq(seq) + ", ...?")
+                correct = str(seq[-1] + d)
+            else:
+                prompt = ("What is the common difference of the sequence "
+                          + _fmt_seq(seq) + ", ...?")
+                correct = str(d)
+    elif tier == "nth_term":
+        a1 = rng.randint(-6, 10)
+        d = rng.choice([-4, -3, -2, 2, 3, 4, 5])
+        n = rng.randint(6, 12)
+        seq = [a1 + i * d for i in range(4)]
+        params.update(sequence=seq, difference=d, first=a1, n=n)
+        prompt = (f"Find the {n}th term of the sequence "
+                  + _fmt_seq(seq) + ", ...")
+        correct = str(a1 + (n - 1) * d)
+    elif tier == "geometric_nth":
+        a1 = rng.randint(1, 4)
+        r = rng.choice([2, 3])
+        n = rng.randint(4, 7)
+        seq = [a1 * r ** i for i in range(3)]
+        params.update(sequence=seq, ratio=r, first=a1, n=n)
+        prompt = (f"Find the {n}th term of the sequence "
+                  + _fmt_seq(seq) + ", ...")
+        correct = str(a1 * r ** (n - 1))
+    elif tier == "table_term":
+        geometric = rng.random() < 0.4
+        if geometric:
+            a1, r = rng.randint(1, 5), rng.choice([2, 3])
+            seq = [a1 * r ** i for i in range(5)]
+            params.update(pairs=[[i + 1, v] for i, v in enumerate(seq[:4])],
+                          ratio=r, first=a1)
+            correct = str(seq[4])
+        else:
+            a1 = rng.randint(-6, 10)
+            d = rng.choice([-4, -3, -2, 2, 3, 4, 5])
+            seq = [a1 + i * d for i in range(5)]
+            params.update(pairs=[[i + 1, v] for i, v in enumerate(seq[:4])],
+                          difference=d, first=a1)
+            correct = str(seq[4])
+        prompt = ("The table shows the first four terms of a sequence. "
+                  "What is the fifth term?")
+        kind = "MULTIPLE_CHOICE"
+        if geometric:
+            pool = [
+                (str(seq[3] + r), "SEQ_002"),
+                (str(r), "SEQ_003"),
+                (str(seq[3] * r * r), "SEQ_001"),
+            ]
+        else:
+            pool = [
+                (str(d), "SEQ_003"),
+                (str(seq[3] + 2 * d), "SEQ_001"),
+                (str(seq[0]), "SEQ_003"),
+            ]
+    elif tier == "classify":
+        a1, d = rng.randint(-5, 8), rng.choice([-3, -2, 2, 3, 4])
+        r = rng.choice([2, 3])
+        which = rng.choice(["arithmetic", "geometric", "neither"])
+        if which == "arithmetic":
+            seq = [a1 + i * d for i in range(4)]
+        elif which == "geometric":
+            a1 = rng.randint(1, 5)
+            seq = [a1 * r ** i for i in range(4)]
+        else:  # neither: +1,+2,+3... or fibonacci-style
+            seq = [a1]
+            step = abs(d)
+            for _ in range(3):
+                seq.append(seq[-1] + step)
+                step += 1
+        params.update(sequence=seq)
+        prompt = ("Is the sequence " + _fmt_seq(seq)
+                  + ", ... arithmetic, geometric or neither?")
+        correct = {"arithmetic": "Arithmetic — a common difference",
+                   "geometric": "Geometric — a common ratio",
+                   "neither": "Neither — no common difference or ratio"}[which]
+        pool = [
+            ({"arithmetic": "Geometric — a common ratio",
+              "geometric": "Arithmetic — a common difference",
+              "neither": "Arithmetic — a common difference"}[which], "SEQ_002"),
+            ({"arithmetic": "Neither — no common difference or ratio",
+              "geometric": "Neither — no common difference or ratio",
+              "neither": "Geometric — a common ratio"}[which], "SEQ_004"),
+            ("Cannot be determined from four terms", None),
+        ]
+        kind = "MULTIPLE_CHOICE"
+    else:  # explicit_rule — pick the nth-term rule
+        geometric = rng.random() < 0.4
+        if geometric:
+            a1, r = rng.randint(1, 5), rng.choice([2, 3])
+            seq = [a1 * r ** i for i in range(4)]
+            params.update(sequence=seq, ratio=r, first=a1)
+            correct = f"a(n) = {a1}·{r}^(n-1)"
+            pool = [
+                (f"a(n) = {a1}·{r}^n", "SEQ_001"),
+                (f"a(n) = {a1} + {r}(n-1)", "SEQ_002"),
+                (f"a(n) = {r}·{a1}^(n-1)", "SEQ_004"),
+            ]
+        else:
+            a1 = rng.randint(-5, 10)
+            d = rng.choice([2, 3, 4, 5])  # positive only — keeps "a(n) = a1 + d(n-1)" text clean
+            seq = [a1 + i * d for i in range(4)]
+            params.update(sequence=seq, difference=d, first=a1)
+            correct = f"a(n) = {a1} + {d}(n-1)"
+            pool = [
+                (f"a(n) = {a1} + {d}n", "SEQ_001"),
+                (f"a(n) = {d}n + {a1}", "SEQ_004"),
+                (f"a(n) = {a1}n + {d}", "SEQ_004"),
+            ]
+        prompt = ("Which rule gives the nth term of the sequence "
+                  + _fmt_seq(seq) + ", ...?")
+        kind = "MULTIPLE_CHOICE"
+
+    if kind == "MULTIPLE_CHOICE":
+        choices, answer = _mc_choices(rng, correct, pool)
+    else:
+        answer = correct
+    return GeneratedProblem(
+        prompt, answer, difficulty, "SEQUENCES",
+        parameters=params, answer_kind=kind, choices=choices,
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -4290,6 +4456,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "LINEAR_INEQUALITIES": _generate_linear_inequalities,
     "CENTER_SPREAD": _generate_center_spread,
     "GEOMETRY_MEASURE": _generate_geometry6,
+    "SEQUENCES": _generate_sequences,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -4619,6 +4786,7 @@ PROMPT_SHARED_TYPES = {
     "LINEAR_INEQUALITIES",
     "CENTER_SPREAD",
     "GEOMETRY_MEASURE",
+    "SEQUENCES",
 }
 
 

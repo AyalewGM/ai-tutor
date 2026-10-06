@@ -1079,12 +1079,13 @@ function NumberLine({ spec, compare = false }: { spec: VisualSpec; compare?: boo
 
 function XYTable({ spec }: { spec: VisualSpec }) {
   const pairs = spec.pairs ?? [];
+  const labels = spec.col_labels ?? ["x", "y"];
   return (
     <table className="viz-table" aria-label={spec.aria_label ?? "A table of x and y values"}>
       <thead>
         <tr>
-          <th scope="col">x</th>
-          <th scope="col">y</th>
+          <th scope="col">{labels[0]}</th>
+          <th scope="col">{labels[1]}</th>
         </tr>
       </thead>
       <tbody>
