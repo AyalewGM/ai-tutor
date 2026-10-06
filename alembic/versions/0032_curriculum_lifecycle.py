@@ -5,6 +5,7 @@ Revises: 0031_stripe_billing
 """
 
 import sqlalchemy as sa
+
 from alembic import op
 
 revision = "0032_curriculum_lifecycle"
