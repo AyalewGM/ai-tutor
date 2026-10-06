@@ -1,3 +1,6 @@
+import type { VisualSpec } from "./mve/contracts";
+export type { VisualSpec } from "./mve/contracts";
+
 export interface LearnerChoice {
   id: string;
   first_name: string;
