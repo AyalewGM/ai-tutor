@@ -1,6 +1,6 @@
 """create canonical curriculum scalability schema
 
-Revision ID: 0033_curriculum_scalability_schema
+Revision ID: 0033_curriculum_schema
 Revises: 0032_curriculum_lifecycle
 
 The legacy bootstrap can create current SQLAlchemy metadata on fresh databases.
@@ -13,7 +13,7 @@ from sqlalchemy.dialects import postgresql
 
 from alembic import op
 
-revision = "0033_curriculum_scalability_schema"
+revision = "0033_curriculum_schema"
 down_revision = "0032_curriculum_lifecycle"
 branch_labels = None
 depends_on = None
