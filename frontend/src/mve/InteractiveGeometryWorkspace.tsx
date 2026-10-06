@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import type { Point2D } from "./contracts";
+import type { MathSegment, Point2D } from "./contracts";
+import { validateParallel, validatePerpendicular } from "./geometryValidation";
 import { geometryObjectFromInteraction } from "./geometryInteractions";
 import type { MathInteractionEvent } from "./interactions";
 
@@ -7,12 +8,16 @@ export interface InteractiveGeometryWorkspaceProps {
   min?: number;
   max?: number;
   onObjectCreated?: (object: ReturnType<typeof geometryObjectFromInteraction>) => void;
+  referenceSegment?: MathSegment;
+  relationship?: "parallel" | "perpendicular";
 }
 
 export function InteractiveGeometryWorkspace({
   min = -5,
   max = 5,
   onObjectCreated,
+  referenceSegment,
+  relationship,
 }: InteractiveGeometryWorkspaceProps) {
   const [points, setPoints] = useState<Point2D[]>([]);
   const [message, setMessage] = useState("Select two points to create a segment.");
@@ -47,6 +52,20 @@ export function InteractiveGeometryWorkspace({
     const object = geometryObjectFromInteraction(event);
     onObjectCreated?.(object);
     setPoints([]);
+
+    if (object?.kind === "segment" && referenceSegment && relationship) {
+      const result =
+        relationship === "parallel"
+          ? validateParallel(object, referenceSegment)
+          : validatePerpendicular(object, referenceSegment);
+      setMessage(
+        result.correct
+          ? `Correct: the segment is ${relationship} to the reference segment.`
+          : `Try again: ${result.misconception ?? "relationship not satisfied"}.`,
+      );
+      return;
+    }
+
     setMessage(
       object
         ? `Segment created from (${next[0][0]}, ${next[0][1]}) to (${next[1][0]}, ${next[1][1]}).`
