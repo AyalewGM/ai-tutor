@@ -85,6 +85,25 @@ export interface TransformationSpec extends VisualSpecBase {
   image_labels?: string[];
 }
 
+export type SolidKind =
+  | "rectangular_prism"
+  | "square_pyramid"
+  | "rectangular_pyramid"
+  | "triangular_prism"
+  | "cylinder"
+  | "cone"
+  | "sphere";
+
+export interface SolidSpec extends VisualSpecBase {
+  type: "volume_model" | "volume" | "solid";
+  solid: SolidKind;
+  l?: number;
+  w?: number;
+  h?: number;
+  b?: number;
+  r?: number;
+}
+
 export interface XYTableSpec extends VisualSpecBase {
   type: "xy_table";
   pairs?: number[][];
@@ -219,6 +238,7 @@ export type KnownVisualSpec =
   | CoordinatePlaneSpec
   | LinearGraphSpec
   | TransformationSpec
+  | SolidSpec
   | XYTableSpec;
 
 /**
@@ -233,6 +253,9 @@ export function isKnownVisualSpec(spec: VisualSpec): spec is VisualSpec & KnownV
     spec.type === "coordinate_point" ||
     spec.type === "linear_graph" ||
     spec.type === "transformation" ||
+    spec.type === "volume_model" ||
+    spec.type === "volume" ||
+    spec.type === "solid" ||
     spec.type === "xy_table"
   );
 }
