@@ -1435,6 +1435,12 @@ registerRenderer("circle_measure", CircleMeasure);
 registerRenderer("similar_figures", SimilarFigures);
 registerRenderer("linear_system", LinearSystem);
 registerRenderer("scatterplot", Scatterplot);
+registerRenderer("parabola_graph", ParabolaGraph);
+registerRenderer("polynomial_graph", PolynomialGraph);
+registerRenderer("exponential_graph", ExponentialGraph);
+registerRenderer(["volume_model", "volume", "solid"], SolidModel);
+registerRenderer("composite_figure", CompositeFigure);
+registerRenderer("shape_area", ShapeArea);
 
 export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (!spec) return null;
@@ -1454,19 +1460,13 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "radical_line") return <RadicalLine spec={spec} />;
   if (spec.type === "inequality_line") return <InequalityLine spec={spec} />;
   if (spec.type === "dot_plot" || spec.type === "line_plot") return <DotPlot spec={spec} />;
-  if (spec.type === "shape_area") return <ShapeArea spec={spec} />;
   if (spec.type === "array_model") return <ArrayModel spec={spec} />;
   if (spec.type === "fraction_bar" || spec.type === "ratio_bar") return <FractionBar spec={spec} />;
-  if (spec.type === "parabola_graph") return <ParabolaGraph spec={spec} />;
-  if (spec.type === "polynomial_graph") return <PolynomialGraph spec={spec} />;
   if (spec.type === "decimal_place_value") return <DecimalPlaceValue spec={spec} />;
-  if (spec.type === "volume_model" || spec.type === "volume" || spec.type === "solid") return <SolidModel spec={spec} />;
-  if (spec.type === "composite_figure") return <CompositeFigure spec={spec} />;
   if (spec.type === "frequency_table") return <FrequencyTable spec={spec} />;
   if (spec.type === "spinner") return <Spinner spec={spec} />;
   if (spec.type === "marble_bag") return <MarbleBag spec={spec} />;
   if (spec.type === "right_triangle") return <RightTriangle spec={spec} />;
   if (spec.type === "distance_segment") return <DistanceSegment spec={spec} />;
-  if (spec.type === "exponential_graph") return <ExponentialGraph spec={spec} />;
   return null;
 }
