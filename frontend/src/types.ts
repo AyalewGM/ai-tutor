@@ -75,16 +75,6 @@ export type TutorState =
   | "COMPLETE"
   | "REVIEW";
 
-export interface VisualSpec {
-  type: string;
-  a?: number;
-  b?: number;
-  result?: number;
-  min?: number;
-  max?: number;
-  aria_label?: string;
-}
-
 export interface ProblemChoice {
   id: string;
   text: string;
