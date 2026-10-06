@@ -36,6 +36,43 @@ export interface MathPolygon {
   vertices: readonly Point2D[];
 }
 
+export interface MathAngle {
+  kind: "angle";
+  id?: string;
+  vertex: Point2D;
+  start: Point2D;
+  end: Point2D;
+}
+
+export interface MathFunctionGraph {
+  kind: "function_graph";
+  id?: string;
+  family: "linear" | "quadratic" | "polynomial" | "exponential";
+  coefficients?: readonly number[];
+  domain?: readonly [number, number];
+}
+
+export interface MathRegion {
+  kind: "region";
+  id?: string;
+  boundary: readonly Point2D[];
+}
+
+export interface MathNumberLine {
+  kind: "number_line";
+  id?: string;
+  min: number;
+  max: number;
+  points?: readonly number[];
+}
+
+export interface MathFraction {
+  kind: "fraction";
+  id?: string;
+  numerator: number;
+  denominator: number;
+}
+
 export interface MathTransformation {
   kind: "transformation";
   id?: string;
@@ -49,6 +86,11 @@ export type MathObject =
   | MathLine
   | MathSegment
   | MathPolygon
+  | MathAngle
+  | MathFunctionGraph
+  | MathRegion
+  | MathNumberLine
+  | MathFraction
   | MathTransformation;
 
 export interface VisualSpecBase {
@@ -66,6 +108,31 @@ export interface CoordinatePlaneSpec extends VisualSpecBase {
   y?: number;
   min?: number;
   max?: number;
+}
+
+export interface AngleVisualSpec extends VisualSpecBase {
+  type: "angle" | "angle_diagram";
+  angle?: number;
+}
+
+export interface NumberLineVisualSpec extends VisualSpecBase {
+  type: "number_line" | "number_line_compare";
+  min?: number;
+  max?: number;
+  point?: number;
+  markers?: Array<{ label: string; position: number }>;
+}
+
+export interface FractionBarVisualSpec extends VisualSpecBase {
+  type: "fraction_bar" | "ratio_bar";
+  numerator?: number;
+  denominator?: number;
+}
+
+export interface AlgebraTilesVisualSpec extends VisualSpecBase {
+  type: "algebra_tiles";
+  terms?: AlgebraTerm[];
+  groups?: Array<{ key: string; terms: AlgebraTerm[] }>;
 }
 
 export interface LinearGraphSpec extends VisualSpecBase {
@@ -236,6 +303,10 @@ export interface LegacyVisualSpec extends VisualSpecBase {
 
 export type KnownVisualSpec =
   | CoordinatePlaneSpec
+  | AngleVisualSpec
+  | NumberLineVisualSpec
+  | FractionBarVisualSpec
+  | AlgebraTilesVisualSpec
   | LinearGraphSpec
   | TransformationSpec
   | SolidSpec
@@ -251,6 +322,13 @@ export function isKnownVisualSpec(spec: VisualSpec): spec is VisualSpec & KnownV
   return (
     spec.type === "coordinate_plane" ||
     spec.type === "coordinate_point" ||
+    spec.type === "angle" ||
+    spec.type === "angle_diagram" ||
+    spec.type === "number_line" ||
+    spec.type === "number_line_compare" ||
+    spec.type === "fraction_bar" ||
+    spec.type === "ratio_bar" ||
+    spec.type === "algebra_tiles" ||
     spec.type === "linear_graph" ||
     spec.type === "transformation" ||
     spec.type === "volume_model" ||
