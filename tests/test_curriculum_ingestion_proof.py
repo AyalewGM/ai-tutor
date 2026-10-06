@@ -4,7 +4,6 @@ from app.core.database import SessionLocal
 from app.curriculum_draft_ingestion import ingest_draft_pack
 from app.curriculum_models import (
     CurriculumStandard,
-    CurriculumVersion,
     StandardSkillMapping,
 )
 from app.curriculum_publication import (
