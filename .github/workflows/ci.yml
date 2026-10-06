@@ -70,6 +70,10 @@ jobs:
         working-directory: frontend
         run: npm run check:mve
 
+      - name: MVE mathematical truth regression tests
+        working-directory: frontend
+        run: npm run test:mve
+
       - name: Build deployable images
         run: docker compose build tutor-api llm-gateway frontend
 

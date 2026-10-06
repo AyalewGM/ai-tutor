@@ -43,8 +43,10 @@ function polygonPoints(polygon: MathPolygon, min: number, max: number, size: num
 
 export function TriangleTranslationExplanation() {
   const frames = buildAnimationFrames(triangleTranslationAnimation);
-  const finalTriangle = frames.at(-1)?.objects.find(
-    (object): object is MathPolygon => object.kind === "polygon" && object.id === triangle.id,
+  const finalFrame = frames.length > 0 ? frames[frames.length - 1] : undefined;
+  const finalTriangle = finalFrame?.objects.find(
+    (object): object is MathPolygon =>
+      object.kind === "polygon" && object.id === triangle.id,
   );
   const size = 320;
   const min = 0;
@@ -75,7 +77,7 @@ export function TriangleTranslationExplanation() {
       </svg>
       {finalTriangle && (
         <p>
-          Final coordinates: {finalTriangle.vertices.map(([x, y]) => `(${x}, ${y})`).join(", ")}.
+          Final coordinates: {finalTriangle.vertices.map((vertex: Point2D) => `(${vertex[0]}, ${vertex[1]})`).join(", ")}.
         </p>
       )}
     </section>
