@@ -20,6 +20,7 @@ export function InteractiveGeometryWorkspace({
   relationship,
 }: InteractiveGeometryWorkspaceProps) {
   const [points, setPoints] = useState<Point2D[]>([]);
+  const [cursor, setCursor] = useState<Point2D>([0, 0]);
   const [message, setMessage] = useState("Select two points to create a segment.");
   const size = 320;
   const span = max - min;
@@ -33,6 +34,24 @@ export function InteractiveGeometryWorkspace({
     const x = Math.round(min + ((clientX - rect.left) / rect.width) * span);
     const y = Math.round(max - ((clientY - rect.top) / rect.height) * span);
     return [Math.max(min, Math.min(max, x)), Math.max(min, Math.min(max, y))];
+  }
+
+  function moveCursor(dx: number, dy: number) {
+    setCursor(([x, y]) => [
+      Math.max(min, Math.min(max, x + dx)),
+      Math.max(min, Math.min(max, y + dy)),
+    ]);
+  }
+
+  function handleKeyDown(event: React.KeyboardEvent<SVGSVGElement>) {
+    if (event.key === "ArrowLeft") { event.preventDefault(); moveCursor(-1, 0); }
+    else if (event.key === "ArrowRight") { event.preventDefault(); moveCursor(1, 0); }
+    else if (event.key === "ArrowUp") { event.preventDefault(); moveCursor(0, 1); }
+    else if (event.key === "ArrowDown") { event.preventDefault(); moveCursor(0, -1); }
+    else if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      addPoint(cursor);
+    }
   }
 
   function addPoint(point: Point2D) {
@@ -78,8 +97,9 @@ export function InteractiveGeometryWorkspace({
       <svg
         viewBox={`0 0 ${size} ${size}`}
         role="application"
-        aria-label="Interactive geometry workspace. Select two grid points to create a segment."
+        aria-label={`Interactive geometry workspace. Keyboard cursor at (${cursor[0]}, ${cursor[1]}). Use arrow keys to move and Enter or Space to select two endpoints.`}
         tabIndex={0}
+        onKeyDown={handleKeyDown}
         onClick={(event) => addPoint(toMathPoint(event.clientX, event.clientY, event.currentTarget.getBoundingClientRect()))}
       >
         {grid.map((value) => {
@@ -91,6 +111,15 @@ export function InteractiveGeometryWorkspace({
             </g>
           );
         })}
+        <circle
+          cx={((cursor[0] - min) / span) * size}
+          cy={((max - cursor[1]) / span) * size}
+          r={7}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          aria-hidden="true"
+        />
         {points.map(([x, y], index) => (
           <circle
             key={index}
@@ -101,6 +130,7 @@ export function InteractiveGeometryWorkspace({
           />
         ))}
       </svg>
+      <p>Keyboard: arrow keys move the mathematical cursor; Enter or Space selects a point.</p>
       <p aria-live="polite">{message}</p>
     </div>
   );
