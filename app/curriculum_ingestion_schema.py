@@ -4,7 +4,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from urllib.parse import urlparse
 
-SCHEMA_VERSION = "1.0"
+SCHEMA_VERSION = "1.1"
+_ALLOWED_LIFECYCLE_STATUSES = frozenset({"DRAFT", "PILOT", "IMPLEMENTED", "RETIRED"})
 _ALLOWED_MAPPING_TYPES = frozenset({"ALIGNS_TO", "EQUIVALENT", "PARTIAL"})
 
 
@@ -40,6 +41,7 @@ class CurriculumIngestionPack:
     source_uri: str
     standards: tuple[StandardDraft, ...]
     proposed_mappings: tuple[ProposedSkillMapping, ...] = ()
+    lifecycle_status: str = "DRAFT"
     effective_from: datetime | None = None
     effective_to: datetime | None = None
 
@@ -68,6 +70,11 @@ def validate_ingestion_pack(pack: CurriculumIngestionPack) -> None:
     _required(pack.curriculum_code, "Curriculum code")
     _required(pack.curriculum_version, "Curriculum version")
     _required(pack.authority_code, "Authority code")
+    lifecycle_status = _required(pack.lifecycle_status, "Lifecycle status").upper()
+    if lifecycle_status not in _ALLOWED_LIFECYCLE_STATUSES:
+        raise CurriculumPackValidationError(
+            f"Unsupported curriculum lifecycle status: {pack.lifecycle_status}"
+        )
     authoritative_source = _absolute_http_uri(pack.source_uri, "Official source URI")
     if pack.effective_from and pack.effective_to and pack.effective_from >= pack.effective_to:
         raise CurriculumPackValidationError("effective_from must precede effective_to")
