@@ -7,10 +7,20 @@ from app.models import Curriculum, Skill
 # Explicit, reviewed mathematical equivalences. This mapping never transfers
 # learner evidence; StudentSkill remains keyed to the curriculum-local Skill.
 EQUIVALENCES = {
+    # Ontario Grade 9 (MTH1W) -> shared mathematical identities.
+    ("MTH1W", "2021", "MTH1W.B.NUM.INT"): "MATH.NS.INTEGER_OPERATIONS",
+    ("MTH1W", "2021", "MTH1W.B.NUM.FRAC"): "MATH.NS.FRACTION_OPERATIONS",
     ("MTH1W", "2021", "MTH1W.C.ALG.EXPR"): "MATH.EE.EXPR",
+    ("MTH1W", "2021", "MTH1W.C.ALG.LIKE"): "MATH.EE.LIKE_TERMS",
+    ("MTH1W", "2021", "MTH1W.C.ALG.POLY"): "MATH.EE.POLYNOMIAL_OPERATIONS",
     ("MTH1W", "2021", "MTH1W.C.ALG.EQ1"): "MATH.EE.EQUATION.ONE",
     ("MTH1W", "2021", "MTH1W.C.ALG.EQ2"): "MATH.EE.EQUATION.TWO",
+    ("MTH1W", "2021", "MTH1W.C.ALG.EQ3"): "MATH.EE.EQUATION.MULTISTEP",
+    ("MTH1W", "2021", "MTH1W.C.REL.SLOPE"): "MATH.F.LINEAR.SLOPE_INTERCEPT",
+    ("MTH1W", "2021", "MTH1W.C.REL.EVAL"): "MATH.F.LINEAR.EVALUATE",
+    ("MTH1W", "2021", "MTH1W.C.QUAD"): "MATH.F.QUADRATIC.INTERPRET",
     ("MTH1W", "2021", "MTH1W.F.FIN.PCT"): "MATH.RP.PERCENT.OF",
+    ("MTH1W", "2021", "MTH1W.F.FIN.APP"): "MATH.RP.PERCENT.APPLICATIONS",
 }
 
 

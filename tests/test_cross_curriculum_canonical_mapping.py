@@ -90,3 +90,33 @@ def test_two_curricula_share_math_identity_without_sharing_evidence():
     finally:
         db.rollback()
         db.close()
+
+
+def test_ontario_mapping_is_broad_and_never_creates_canonical_learner_evidence():
+    seed_mth1w()
+    db = SessionLocal()
+    try:
+        map_existing_skills(db)
+        db.commit()
+        curriculum = db.scalar(
+            select(Curriculum).where(Curriculum.code == "MTH1W", Curriculum.version == "2021")
+        )
+        skills = list(db.scalars(select(Skill).where(Skill.curriculum_id == curriculum.id)))
+        mapped = list(
+            db.scalars(
+                select(CurriculumSkillMapping).where(
+                    CurriculumSkillMapping.skill_id.in_([skill.id for skill in skills])
+                )
+            )
+        )
+        mapped_codes = {
+            db.get(CanonicalSkill, mapping.canonical_skill_id).code for mapping in mapped
+        }
+        assert "MATH.EE.EXPR" in mapped_codes
+        assert "MATH.EE.EQUATION.MULTISTEP" in mapped_codes
+        assert "MATH.F.LINEAR.SLOPE_INTERCEPT" in mapped_codes
+        assert "MATH.RP.PERCENT.APPLICATIONS" in mapped_codes
+        assert not hasattr(CanonicalSkill, "mastery_score")
+        assert not hasattr(CurriculumSkillMapping, "mastery_score")
+    finally:
+        db.close()
