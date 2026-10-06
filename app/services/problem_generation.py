@@ -3554,6 +3554,84 @@ def _generate_center_spread(rng: random.Random, difficulty: int) -> GeneratedPro
     )
 
 
+def _generate_geometry6(rng: random.Random, difficulty: int) -> GeneratedProblem:
+    """Grade-6 geometry (6.G): area of triangles, parallelograms and
+    trapezoids, volume and surface area of rectangular prisms, and
+    coordinate-plane distance between points sharing an axis.
+
+    The shape tiers render a `shape_area` diagram and `distance`
+    reuses `distance_segment`; volume and surface area are text-only —
+    a labelled prism would still leave the same work, and drawing the
+    counted dimension would give the distance away."""
+    tiers = ["triangle_area", "parallelogram_area"]
+    if difficulty >= 2:
+        tiers += ["distance", "volume"]
+    if difficulty >= 3:
+        tiers += ["trapezoid_area", "surface_area"]
+    tier = rng.choice(tiers)
+    params: dict = {"tier": tier}
+
+    if tier == "triangle_area":
+        b, h = rng.randint(4, 12), rng.randint(3, 10)
+        while (b * h) % 2:
+            b, h = rng.randint(4, 12), rng.randint(3, 10)
+        params.update(shape="triangle", base=b, height=h)
+        prompt = (f"A triangle has a base of {b} units and a height of "
+                  f"{h} units. What is its area in square units?")
+        correct = str(b * h // 2)
+    elif tier == "parallelogram_area":
+        b, h = rng.randint(3, 12), rng.randint(2, 9)
+        slant = h + rng.randint(1, 4)
+        params.update(shape="parallelogram", base=b, height=h, slant=slant)
+        prompt = (f"A parallelogram has a base of {b} units, a slant side "
+                  f"of {slant} units and a height of {h} units. What is "
+                  "its area in square units?")
+        correct = str(b * h)
+    elif tier == "trapezoid_area":
+        b = rng.randint(9, 14)
+        top = rng.randint(3, b - 4)
+        h = rng.randint(3, 9)
+        while (b + top) * h % 2:
+            b = rng.randint(9, 14)
+            top = rng.randint(3, b - 4)
+            h = rng.randint(3, 9)
+        params.update(shape="trapezoid", base=b, top=top, height=h)
+        prompt = (f"A trapezoid has bases of {top} and {b} units and a "
+                  f"height of {h} units. What is its area in square units?")
+        correct = str((b + top) * h // 2)
+    elif tier == "distance":
+        if rng.random() < 0.5:  # vertical pair: shared x, distance |y2-y1|
+            x = rng.randint(-7, 7)
+            y1, y2 = rng.sample(range(-7, 8), 2)
+            p1, p2 = [x, y1], [x, y2]
+        else:
+            y = rng.randint(-7, 7)
+            x1, x2 = rng.sample(range(-7, 8), 2)
+            p1, p2 = [x1, y], [x2, y]
+        params.update(points=[p1, p2])
+        prompt = ("What is the distance between the points "
+                  f"({p1[0]}, {p1[1]}) and ({p2[0]}, {p2[1]})?")
+        correct = str(abs(p1[0] - p2[0]) + abs(p1[1] - p2[1]))
+    elif tier == "volume":
+        l, w, h = rng.randint(2, 9), rng.randint(2, 9), rng.randint(2, 9)
+        params.update(length=l, width=w, height=h)
+        prompt = (f"A rectangular prism is {l} units long, {w} units wide "
+                  f"and {h} units tall. What is its volume in cubic units?")
+        correct = str(l * w * h)
+    else:  # surface_area — the three face pairs of a prism
+        l, w, h = rng.randint(2, 7), rng.randint(2, 7), rng.randint(2, 7)
+        params.update(length=l, width=w, height=h)
+        prompt = (f"A rectangular prism is {l} units long, {w} units wide "
+                  f"and {h} units tall. What is its surface area in "
+                  "square units?")
+        correct = str(2 * (l * w + l * h + w * h))
+
+    return GeneratedProblem(
+        prompt, correct, difficulty, "GEOMETRY_MEASURE",
+        parameters=params, answer_kind="INTEGER",
+    )
+
+
 def _generate_volume(rng: random.Random, difficulty: int) -> GeneratedProblem:
     l = rng.randint(2, 6)
     w = rng.randint(2, 6)
@@ -4211,6 +4289,7 @@ GENERATORS: dict[str, Callable[[random.Random, int], GeneratedProblem]] = {
     "SIGNED_NUMBERS": _generate_signed_numbers,
     "LINEAR_INEQUALITIES": _generate_linear_inequalities,
     "CENTER_SPREAD": _generate_center_spread,
+    "GEOMETRY_MEASURE": _generate_geometry6,
     "LINEAR_RELATION": _generate_linear_relation,
     "INTEGER_OPERATIONS": _generate_integer_sum,
     "INTEGER_COMPARE": _generate_integer_compare,
@@ -4539,6 +4618,7 @@ PROMPT_SHARED_TYPES = {
     "SIGNED_NUMBERS",
     "LINEAR_INEQUALITIES",
     "CENTER_SPREAD",
+    "GEOMETRY_MEASURE",
 }
 
 

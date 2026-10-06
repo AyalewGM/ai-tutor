@@ -84,6 +84,10 @@ export interface VisualSpec {
   data?: number[];
   highlight?: number;
   pairs?: number[][];
+  shape?: string;
+  base?: number;
+  top?: number;
+  slant?: number;
 }
 
 interface PanSpec {
@@ -822,6 +826,8 @@ function DistanceSegment({ spec }: { spec: VisualSpec }) {
   const labels = spec.labels ?? [];
   const [p1, p2] = points;
   const corner = p1 && p2 ? [p2[0], p1[1]] : null;
+  const collinear =
+    p1 && p2 && (p1[0] === p2[0] || p1[1] === p2[1]);
   return (
     <svg viewBox={`0 0 ${size} ${size}`} className="visual" role="img" aria-label={spec.aria_label ?? "Two points on a coordinate plane"}>
       {Array.from({ length: 2 * bound + 1 }, (_, i) => i - bound).map((t) => (
@@ -832,13 +838,17 @@ function DistanceSegment({ spec }: { spec: VisualSpec }) {
       ))}
       {p1 && p2 && corner && (
         <g>
-          <line x1={pos(p1[0])} y1={yPos(p1[1])} x2={pos(corner[0])} y2={yPos(corner[1])} className="viz-hidden" />
-          <line x1={pos(corner[0])} y1={yPos(corner[1])} x2={pos(p2[0])} y2={yPos(p2[1])} className="viz-hidden" />
-          <rect
-            x={pos(corner[0]) + (p1[0] < corner[0] ? -9 : 0)}
-            y={yPos(corner[1]) + (p2[1] > corner[1] ? -9 : 0)}
-            width="9" height="9" className="viz-right-angle"
-          />
+          {!collinear && (
+            <>
+              <line x1={pos(p1[0])} y1={yPos(p1[1])} x2={pos(corner[0])} y2={yPos(corner[1])} className="viz-hidden" />
+              <line x1={pos(corner[0])} y1={yPos(corner[1])} x2={pos(p2[0])} y2={yPos(p2[1])} className="viz-hidden" />
+              <rect
+                x={pos(corner[0]) + (p1[0] < corner[0] ? -9 : 0)}
+                y={yPos(corner[1]) + (p2[1] > corner[1] ? -9 : 0)}
+                width="9" height="9" className="viz-right-angle"
+              />
+            </>
+          )}
           <line x1={pos(p1[0])} y1={yPos(p1[1])} x2={pos(p2[0])} y2={yPos(p2[1])} className="viz-curve" />
         </g>
       )}
@@ -1176,6 +1186,58 @@ function DotPlot({ spec }: { spec: VisualSpec }) {
   );
 }
 
+function ShapeArea({ spec }: { spec: VisualSpec }) {
+  const width = 360;
+  const height = 200;
+  const pad = 34;
+  const base = spec.base ?? 8;
+  const h = spec.height ?? 5;
+  const top = spec.top;
+  const shape = spec.shape ?? "triangle";
+  const unit = Math.min((width - 2 * pad - 30) / base, (height - 2 * pad) / h);
+  const bw = base * unit;
+  const hh = h * unit;
+  const botY = height - pad;
+  const topY = botY - hh;
+  const x0 = (width - bw) / 2;
+  const x1 = x0 + bw;
+  const midX = (x0 + x1) / 2;
+  const off = bw * 0.22;
+  const tw = (top ?? 0) * unit;
+
+  const points =
+    shape === "triangle"
+      ? `${x0},${botY} ${x1},${botY} ${midX},${topY}`
+      : shape === "trapezoid"
+        ? `${x0},${botY} ${x1},${botY} ${x1 - off},${topY} ${x0 + off + (bw - tw - 2 * off)},${topY}`
+        : `${x0},${botY} ${x1},${botY} ${x1 - off},${topY} ${x0 - off},${topY}`;
+  const heightX = shape === "trapezoid" ? x1 - off : midX;
+
+  return (
+    <svg viewBox={`0 0 ${width} ${height}`} className="visual" role="img" aria-label={spec.aria_label}>
+      <polygon points={points} className="viz-curve" fill="none" />
+      <line x1={heightX} y1={topY} x2={heightX} y2={botY} className="viz-hidden" />
+      <rect x={heightX} y={botY - 10} width="10" height="10" className="viz-right-angle" />
+      <text x={midX} y={botY + 20} textAnchor="middle" className="viz-label">
+        {base}
+      </text>
+      <text x={heightX + 8} y={(topY + botY) / 2} className="viz-label">
+        {h}
+      </text>
+      {shape === "trapezoid" && top != null && (
+        <text x={x1 - off - tw / 2} y={topY - 8} textAnchor="middle" className="viz-label">
+          {top}
+        </text>
+      )}
+      {shape === "parallelogram" && spec.slant != null && (
+        <text x={x0 - off / 2 - 10} y={(topY + botY) / 2} textAnchor="end" className="viz-label">
+          {spec.slant}
+        </text>
+      )}
+    </svg>
+  );
+}
+
 function RadicalLine({ spec }: { spec: VisualSpec }) {
   const min = spec.min ?? 0;
   const max = spec.max ?? 10;
@@ -1462,6 +1524,7 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "radical_line") return <RadicalLine spec={spec} />;
   if (spec.type === "inequality_line") return <InequalityLine spec={spec} />;
   if (spec.type === "dot_plot" || spec.type === "line_plot") return <DotPlot spec={spec} />;
+  if (spec.type === "shape_area") return <ShapeArea spec={spec} />;
   if (spec.type === "array_model") return <ArrayModel spec={spec} />;
   if (spec.type === "fraction_bar" || spec.type === "ratio_bar") return <FractionBar spec={spec} />;
   if (spec.type === "coordinate_plane" || spec.type === "coordinate_point") return <CoordinatePlane spec={spec} />;

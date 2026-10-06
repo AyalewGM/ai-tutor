@@ -778,6 +778,93 @@ def _center_spread_errors(
     return None
 
 
+_GEO_TRIANGLE = re.compile(
+    r"atrianglehasabaseof(\d+)unitsandaheightof(\d+)units")
+_GEO_PARALLELOGRAM = re.compile(
+    r"aparallelogramhasabaseof(\d+)units,aslantsideof(\d+)units"
+    r"andaheightof(\d+)units")
+_GEO_TRAPEZOID = re.compile(
+    r"atrapezoidhasbasesof(\d+)and(\d+)unitsandaheightof(\d+)units")
+_GEO_DISTANCE = re.compile(
+    r"whatisthedistancebetweenthepoints\((-?\d+),(-?\d+)\)"
+    r"and\((-?\d+),(-?\d+)\)")
+_GEO_PRISM = re.compile(
+    r"arectangularprismis(\d+)unitslong,(\d+)unitswideand(\d+)unitstall\.")
+_GEO_VOLUME = re.compile(r"whatisitsvolume")
+_GEO_SURFACE = re.compile(r"whatisitssurfacearea")
+
+
+def _geometry6_errors(
+    prompt: str, answer: str, canonical: str
+) -> MisconceptionMatch | None:
+    """Grade-6 measurement errors: the halving or doubling step missed
+    (GEO6_001), a perimeter or side sum reported for an area (GEO6_002),
+    volume and surface area swapped (GEO6_003) and the wrong dimension or
+    a miscounted axis distance used (GEO6_004)."""
+    student = _INTEGER_ANSWER.match(answer)
+    correct = _INTEGER_ANSWER.match(canonical)
+    if not student or not correct:
+        return None
+    s, t = int(student.group(1)), int(correct.group(1))
+    if s == t:
+        return None
+    match = _GEO_TRIANGLE.search(prompt)
+    if match:
+        b, h = int(match.group(1)), int(match.group(2))
+        if s == b * h:
+            return MisconceptionMatch("GEO6_001", 0.9)
+        if s in {b + h, 2 * (b + h)}:
+            return MisconceptionMatch("GEO6_002", 0.9)
+        return None
+    match = _GEO_PARALLELOGRAM.search(prompt)
+    if match:
+        b, slant, h = (int(match.group(i)) for i in (1, 2, 3))
+        if s in {2 * (b + slant), 2 * (b + h), b + h}:
+            return MisconceptionMatch("GEO6_002", 0.9)
+        if s == b * slant:
+            return MisconceptionMatch("GEO6_004", 0.9)
+        return None
+    match = _GEO_TRAPEZOID.search(prompt)
+    if match:
+        top, b, h = (int(match.group(i)) for i in (1, 2, 3))
+        if s == (b + top) * h:
+            return MisconceptionMatch("GEO6_001", 0.9)
+        if s == b + top + h:
+            return MisconceptionMatch("GEO6_002", 0.9)
+        if s == b * top:
+            return MisconceptionMatch("GEO6_004", 0.9)
+        return None
+    match = _GEO_DISTANCE.search(prompt)
+    if match:
+        x1, y1, x2, y2 = (int(match.group(i)) for i in (1, 2, 3, 4))
+        if x1 == x2:
+            added, subtracted = abs(y1) + abs(y2), abs(abs(y1) - abs(y2))
+        else:
+            added, subtracted = abs(x1) + abs(x2), abs(abs(x1) - abs(x2))
+        if s in {added, subtracted}:
+            return MisconceptionMatch("GEO6_004", 0.9)
+        return None
+    match = _GEO_PRISM.search(prompt)
+    if not match:
+        return None
+    l, w, h = (int(match.group(i)) for i in (1, 2, 3))
+    faces = 2 * (l * w + l * h + w * h)
+    if _GEO_VOLUME.search(prompt):
+        if s == l + w + h:
+            return MisconceptionMatch("GEO6_002", 0.9)
+        if s in {faces, l * w}:
+            return MisconceptionMatch("GEO6_003", 0.9)
+        return None
+    if _GEO_SURFACE.search(prompt):
+        if s == l * w * h:
+            return MisconceptionMatch("GEO6_003", 0.9)
+        if s == faces // 2:
+            return MisconceptionMatch("GEO6_001", 0.9)
+        if s == l + w + h:
+            return MisconceptionMatch("GEO6_002", 0.9)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -811,6 +898,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _proportional_errors,
     _signed_number_errors,
     _center_spread_errors,
+    _geometry6_errors,
 )
 
 
