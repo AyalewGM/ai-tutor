@@ -1,4 +1,5 @@
 import type { VisualSpec } from "../mve/contracts";
+import { getRenderer, registerRenderer } from "../mve/rendererRegistry";
 
 interface PanSpec {
   x_count: number;
@@ -1422,8 +1423,18 @@ function TapeDiagram({ spec }: { spec: VisualSpec }) {
   );
 }
 
+registerRenderer(["coordinate_plane", "coordinate_point"], CoordinatePlane);
+registerRenderer("linear_graph", LinearGraph);
+registerRenderer("transformation", TransformPlane);
+registerRenderer("xy_table", XYTable);
+
 export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (!spec) return null;
+  const registeredRenderer = getRenderer(spec.type);
+  if (registeredRenderer) {
+    const RegisteredRenderer = registeredRenderer;
+    return <RegisteredRenderer spec={spec} />;
+  }
   if (spec.type === "area_model") return <AreaModel spec={spec} />;
   if (spec.type === "balance_scale") return <BalanceScale spec={spec} />;
   if (spec.type === "fraction_operation") return <FractionOperation spec={spec} />;
