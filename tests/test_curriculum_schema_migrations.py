@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 REQUIRED_TABLES = {
     "curriculum_versions",
     "curriculum_standards",
