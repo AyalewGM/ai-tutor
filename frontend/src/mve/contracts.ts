@@ -99,7 +99,9 @@ export interface XYTableSpec extends VisualSpecBase {
  * until migrated behind #178 rather than forcing a risky wholesale rewrite.
  */
 export interface LegacyVisualSpec extends VisualSpecBase {
-  [key: string]: unknown;
+  // Temporary compatibility surface for the pre-MVE renderer. Keep this
+  // permissive only until each family is migrated to KnownVisualSpec.
+  [key: string]: any;
 }
 
 export type KnownVisualSpec =
