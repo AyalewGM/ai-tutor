@@ -215,6 +215,7 @@ class CurriculumVersion(Base):
     source_uri: Mapped[str | None] = mapped_column(Text)
     provenance_json: Mapped[dict | None] = mapped_column(JSONB)
     review_status: Mapped[str] = mapped_column(String(30), default="DRAFT")
+    lifecycle_status: Mapped[str] = mapped_column(String(30), default="DRAFT", index=True)
     active: Mapped[bool] = mapped_column(Boolean, default=True)
 
 
