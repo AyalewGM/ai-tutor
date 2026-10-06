@@ -1,6 +1,7 @@
 import type { MathAnimationSpec } from "./animation";
 import { isMathAnimationSpec } from "./animation";
 import type { MathInteractionEvent } from "./interactions";
+import { isMathInteractionEvent } from "./interactions";
 
 export interface PersistedMathWorkV1 {
   schema_version: 1;
@@ -25,7 +26,8 @@ export function isPersistedMathWorkV1(
   if (
     work.schema_version !== 1 ||
     typeof work.session_id !== "string" ||
-    !Array.isArray(work.interaction_events)
+    !Array.isArray(work.interaction_events) ||
+    !work.interaction_events.every(isMathInteractionEvent)
   ) {
     return false;
   }
@@ -34,11 +36,18 @@ export function isPersistedMathWorkV1(
     return false;
   }
 
-  return (
-    work.animation_step_index === undefined ||
-    (Number.isInteger(work.animation_step_index) &&
-      (work.animation_step_index as number) >= 0)
-  );
+  if (work.animation_step_index !== undefined) {
+    if (
+      !Number.isInteger(work.animation_step_index) ||
+      work.animation_step_index < 0 ||
+      work.animation === undefined ||
+      work.animation_step_index >= work.animation.steps.length
+    ) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 export function serializeMathWork(work: PersistedMathWorkV1): string {
