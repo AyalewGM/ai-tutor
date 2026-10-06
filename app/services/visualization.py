@@ -669,6 +669,25 @@ def _geometry6_model(problem: Problem) -> dict | None:
     return None
 
 
+def _sequences_model(problem: Problem) -> dict | None:
+    params = _params(problem)
+    if params.get("tier") != "table_term":
+        return None
+    pairs = params.get("pairs")
+    if not (
+        isinstance(pairs, list)
+        and pairs
+        and all(isinstance(p, list) and len(p) == 2 for p in pairs)
+    ):
+        return None
+    return {
+        "type": "xy_table",
+        "pairs": pairs,
+        "col_labels": ["n", "a(n)"],
+        "aria_label": "A table of sequence term numbers and values.",
+    }
+
+
 def _coordinate_model(problem: Problem) -> dict | None:
     params = _params(problem)
     x = _int(params.get("x"))
@@ -1541,6 +1560,8 @@ def visualization_for(problem: Problem) -> dict | None:
         return _center_spread_model(problem)
     if problem.problem_type == "GEOMETRY_MEASURE":
         return _geometry6_model(problem)
+    if problem.problem_type == "SEQUENCES":
+        return _sequences_model(problem)
     if problem.problem_type == "EXPONENTIAL_FUNCTION":
         return _exponential_graph_model(problem)
     return None

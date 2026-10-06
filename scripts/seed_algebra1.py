@@ -96,6 +96,7 @@ def seed_content(db, curriculum: Curriculum) -> None:
         systems = _skill(db, curriculum, "A1.SYS.EQ", "Systems of Linear Equations", "Solve pairs of linear equations graphically and algebraically, and reason about the number of solutions.", 4)
         exp_functions = _skill(db, curriculum, "A1.EXP.FN", "Exponential Functions", "Interpret exponential functions f(x) = a·b^x: evaluate them, distinguish growth from decay, read initial values and growth factors, and match equations to graphs.", 4)
         linear_inequalities = _skill(db, curriculum, "A1.LINEAR.INEQ", "Linear Inequalities", "Solve one-variable linear inequalities, apply the sign-flip rule, read and write compound forms, and match inequalities to number-line graphs.", 3)
+        sequences = _skill(db, curriculum, "A1.SEQ", "Arithmetic and Geometric Sequences", "Extend arithmetic and geometric sequences, find common differences and ratios, evaluate nth terms, classify sequences and write explicit rules.", 3)
 
         _prerequisite(db, expr_dist, expressions)
         _prerequisite(db, expr_combine, expr_dist)
@@ -108,6 +109,7 @@ def seed_content(db, curriculum: Curriculum) -> None:
         _prerequisite(db, systems, fn_slope)
         _prerequisite(db, exp_functions, linear_functions)
         _prerequisite(db, linear_inequalities, eq_two)
+        _prerequisite(db, sequences, linear_functions)
 
         def _misconception(skill, code, name, description, strategy):
             if db.scalar(
@@ -456,6 +458,46 @@ def seed_content(db, curriculum: Curriculum) -> None:
             "the shading must include it — and when x cancels, only "
             "the constants decide.",
         )
+        _misconception(
+            sequences,
+            "SEQ_001",
+            "Index off by one in the nth-term rule",
+            "The learner uses a1 + n·d or a1·r^n, counting one step "
+            "too many or too few from the first term.",
+            "The first term already sits at n = 1, so the rule steps "
+            "only n − 1 times: check the rule at n = 1 before trusting it.",
+        )
+        _misconception(
+            sequences,
+            "SEQ_002",
+            "Additive and multiplicative growth confused",
+            "The learner adds a difference to a geometric sequence, "
+            "multiplies a ratio into an arithmetic one, or subtracts "
+            "terms where a ratio belongs.",
+            "Test both relationships on a pair of terms: the same gap "
+            "means arithmetic, the same multiplier means geometric.",
+        )
+        _misconception(
+            sequences,
+            "SEQ_003",
+            "Common value reported as a term",
+            "The learner answers with the common difference, the "
+            "common ratio or the first term when a term of the "
+            "sequence was asked.",
+            "The common difference or ratio is the step size — apply "
+            "it to the last known term to reach the next one.",
+        )
+        _misconception(
+            sequences,
+            "SEQ_004",
+            "Sequence structure misread",
+            "The learner drops the sign of a negative difference, "
+            "swaps the first term and the growth value in a rule, or "
+            "misclassifies a sequence with changing steps.",
+            "Check each consecutive pair separately: a decreasing "
+            "sequence has a negative difference, and the multiplier in "
+            "a(n) = a1·r^(n-1) belongs to r, not a1.",
+        )
 
         problems = [
             (expressions, 1, "Simplify 4(x + 3).", "4x+12", "SIMPLIFY_EXPRESSION"),
@@ -710,6 +752,64 @@ def seed_content(db, curriculum: Curriculum) -> None:
             ),
         ]
         for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in ineq_problems:
+            _problem(
+                db, skill, difficulty, prompt, answer, ptype,
+                answer_kind=answer_kind, parameters=parameters, choices=choices,
+            )
+
+        seq_problems = [
+            (sequences, 1,
+             "What is the next term in the sequence 3, 7, 11, 15, 19, ...?",
+             "23", "SEQUENCES", "INTEGER",
+             {"tier": "next_term", "sequence": [3, 7, 11, 15, 19], "difference": 4, "first": 3},
+             None),
+            (sequences, 1,
+             "What is the common ratio of the sequence 2, 6, 18, 54, ...?",
+             "3", "SEQUENCES", "INTEGER",
+             {"tier": "common_value", "sequence": [2, 6, 18, 54], "ratio": 3, "first": 2},
+             None),
+            (sequences, 2,
+             "Find the 9th term of the sequence 4, 9, 14, 19, ...",
+             "44", "SEQUENCES", "INTEGER",
+             {"tier": "nth_term", "sequence": [4, 9, 14, 19], "difference": 5, "first": 4, "n": 9},
+             None),
+            (sequences, 2,
+             "Find the 5th term of the sequence 3, 6, 12, ...",
+             "48", "SEQUENCES", "INTEGER",
+             {"tier": "geometric_nth", "sequence": [3, 6, 12], "ratio": 2, "first": 3, "n": 5},
+             None),
+            (sequences, 2,
+             "The table shows the first four terms of a sequence. What is the fifth term?",
+             "c", "SEQUENCES", "MULTIPLE_CHOICE",
+             {"tier": "table_term", "pairs": [[1, 4], [2, 9], [3, 14], [4, 19]], "difference": 5, "first": 4},
+             [
+                 {"id": "a", "text": "5", "misconception_code": "SEQ_003"},
+                 {"id": "b", "text": "29", "misconception_code": "SEQ_001"},
+                 {"id": "c", "text": "24"},
+                 {"id": "d", "text": "4", "misconception_code": "SEQ_003"},
+             ]),
+            (sequences, 2,
+             "Is the sequence 5, 9, 13, 17, ... arithmetic, geometric or neither?",
+             "a", "SEQUENCES", "MULTIPLE_CHOICE",
+             {"tier": "classify", "sequence": [5, 9, 13, 17]},
+             [
+                 {"id": "a", "text": "Arithmetic — a common difference"},
+                 {"id": "b", "text": "Geometric — a common ratio", "misconception_code": "SEQ_002"},
+                 {"id": "c", "text": "Neither — no common difference or ratio", "misconception_code": "SEQ_004"},
+                 {"id": "d", "text": "Cannot be determined from four terms"},
+             ]),
+            (sequences, 3,
+             "Which rule gives the nth term of the sequence 5, 8, 11, 14, ...?",
+             "b", "SEQUENCES", "MULTIPLE_CHOICE",
+             {"tier": "explicit_rule", "sequence": [5, 8, 11, 14], "difference": 3, "first": 5},
+             [
+                 {"id": "a", "text": "a(n) = 5 + 3n", "misconception_code": "SEQ_001"},
+                 {"id": "b", "text": "a(n) = 5 + 3(n-1)"},
+                 {"id": "c", "text": "a(n) = 3n + 5", "misconception_code": "SEQ_004"},
+                 {"id": "d", "text": "a(n) = 5n + 3", "misconception_code": "SEQ_004"},
+             ]),
+        ]
+        for skill, difficulty, prompt, answer, ptype, answer_kind, parameters, choices in seq_problems:
             _problem(
                 db, skill, difficulty, prompt, answer, ptype,
                 answer_kind=answer_kind, parameters=parameters, choices=choices,

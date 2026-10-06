@@ -865,6 +865,103 @@ def _geometry6_errors(
     return None
 
 
+_SEQ_NEXT = re.compile(r"whatisthenextterminthesequence(-?\d+(?:,-?\d+)+),\.\.\.")
+_SEQ_DIFF = re.compile(r"whatisthecommondifferenceofthesequence(-?\d+(?:,-?\d+)+)")
+_SEQ_RATIO = re.compile(r"whatisthecommonratioofthesequence(-?\d+(?:,-?\d+)+)")
+_SEQ_NTH = re.compile(r"findthe(\d+)thtermofthesequence(-?\d+(?:,-?\d+)+)")
+
+
+def _seq_list(text: str) -> list[int]:
+    return [int(v) for v in text.split(",")]
+
+
+def _sequence_errors(
+    prompt: str, answer: str, canonical: str
+) -> MisconceptionMatch | None:
+    """Sequence errors: the index off by one in a(n) = a1 + (n-1)d or
+    a1·r^(n-1) (SEQ_001), additive/multiplicative growth confused
+    (SEQ_002), the common difference, ratio or first term reported as
+    a term (SEQ_003) and the common difference's sign dropped
+    (SEQ_004)."""
+    student = _INTEGER_ANSWER.match(answer)
+    correct = _INTEGER_ANSWER.match(canonical)
+    if not student or not correct:
+        return None
+    s, t = int(student.group(1)), int(correct.group(1))
+    if s == t:
+        return None
+    match = _SEQ_NEXT.search(prompt)
+    if match:
+        seq = _seq_list(match.group(1))
+        a1, last = seq[0], seq[-1]
+        if len(seq) > 1 and seq[1] != 0 and all(
+                seq[i - 1] != 0 and seq[i] % seq[i - 1] == 0
+                for i in range(1, len(seq))):
+            r = seq[1] // seq[0]
+            if a1 != 0 and all(seq[i] == a1 * r ** i for i in range(len(seq))):
+                if s == last + r:
+                    return MisconceptionMatch("SEQ_002", 0.9)
+                if s in {r, a1}:
+                    return MisconceptionMatch("SEQ_003", 0.9)
+                if s == last * r * r:
+                    return MisconceptionMatch("SEQ_001", 0.9)
+                return None
+        d = seq[1] - seq[0]
+        if not all(seq[i] - seq[i - 1] == d for i in range(1, len(seq))):
+            return None
+        if s == last * d:
+            return MisconceptionMatch("SEQ_002", 0.9)
+        if s in {d, a1}:
+            return MisconceptionMatch("SEQ_003", 0.9)
+        if s == last + 2 * d:
+            return MisconceptionMatch("SEQ_001", 0.9)
+        return None
+    match = _SEQ_DIFF.search(prompt)
+    if match:
+        seq = _seq_list(match.group(1))
+        d = seq[1] - seq[0]
+        if s == seq[0]:
+            return MisconceptionMatch("SEQ_003", 0.9)
+        if s == abs(d) and s != d:
+            return MisconceptionMatch("SEQ_004", 0.9)
+        return None
+    match = _SEQ_RATIO.search(prompt)
+    if match:
+        seq = _seq_list(match.group(1))
+        if s == seq[0]:
+            return MisconceptionMatch("SEQ_003", 0.9)
+        if s == seq[1] - seq[0]:
+            return MisconceptionMatch("SEQ_002", 0.9)
+        return None
+    match = _SEQ_NTH.search(prompt)
+    if not match:
+        return None
+    n, seq = int(match.group(1)), _seq_list(match.group(2))
+    a1 = seq[0]
+    if len(seq) > 1 and a1 != 0 and all(
+            seq[i - 1] != 0 and seq[i] % seq[i - 1] == 0
+            for i in range(1, len(seq))):
+        r = seq[1] // a1
+        if all(seq[i] == a1 * r ** i for i in range(len(seq))):
+            if s in {a1 * r ** n, a1 * r ** max(n - 2, 0)}:
+                return MisconceptionMatch("SEQ_001", 0.9)
+            if s == a1 + (n - 1) * r:
+                return MisconceptionMatch("SEQ_002", 0.9)
+            if s in {r, a1}:
+                return MisconceptionMatch("SEQ_003", 0.9)
+            return None
+    if len(seq) < 2:
+        return None
+    d = seq[1] - seq[0]
+    if not all(seq[i] - seq[i - 1] == d for i in range(1, len(seq))):
+        return None
+    if s == a1 + n * d:
+        return MisconceptionMatch("SEQ_001", 0.9)
+    if s in {d, a1}:
+        return MisconceptionMatch("SEQ_003", 0.9)
+    return None
+
+
 MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _partial_distribution,
     _distribution_sign_error,
@@ -899,6 +996,7 @@ MISCONCEPTION_RULES: tuple[MisconceptionRule, ...] = (
     _signed_number_errors,
     _center_spread_errors,
     _geometry6_errors,
+    _sequence_errors,
 )
 
 
