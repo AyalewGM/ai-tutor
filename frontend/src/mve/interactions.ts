@@ -51,6 +51,11 @@ export interface RegionSelectedEvent extends MathInteractionBase {
   region: MathObject;
 }
 
+export interface PolygonCreatedEvent extends MathInteractionBase {
+  type: "POLYGON_CREATED";
+  vertices: readonly Point2D[];
+}
+
 export type MathInteractionEvent =
   | PointPlacedEvent
   | PointMovedEvent
@@ -58,7 +63,8 @@ export type MathInteractionEvent =
   | LineCreatedEvent
   | VertexMovedEvent
   | TransformationAppliedEvent
-  | RegionSelectedEvent;
+  | RegionSelectedEvent
+  | PolygonCreatedEvent;
 
 export function isMathInteractionEvent(value: unknown): value is MathInteractionEvent {
   if (!value || typeof value !== "object") return false;
@@ -74,6 +80,7 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
       "VERTEX_MOVED",
       "TRANSFORMATION_APPLIED",
       "REGION_SELECTED",
+      "POLYGON_CREATED",
     ].includes(event.type)
   );
 }
