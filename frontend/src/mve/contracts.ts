@@ -112,9 +112,9 @@ export type KnownVisualSpec =
  * Public transition type. The intersection keeps existing call sites source
  * compatible while KnownVisualSpec provides the typed migration target.
  */
-export type VisualSpec = KnownVisualSpec | LegacyVisualSpec;
+export type VisualSpec = LegacyVisualSpec;
 
-export function isKnownVisualSpec(spec: VisualSpec): spec is KnownVisualSpec {
+export function isKnownVisualSpec(spec: VisualSpec): spec is VisualSpec & KnownVisualSpec {
   return (
     spec.type === "coordinate_plane" ||
     spec.type === "coordinate_point" ||
