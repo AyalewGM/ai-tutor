@@ -26,7 +26,7 @@ def test_elementary_data_pattern_batch_has_twelve_families() -> None:
 def test_elementary_data_patterns_are_deterministic_and_support_all_modes() -> None:
     for code in CODES:
         assert _build(code, 71) == _build(code, 71), code
-        assert domain.FAMILIES[code].modes == frozenset({"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}), code
+        assert {mode.value for mode in domain.FAMILIES[code].modes} == {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}, code
 
 
 def test_elementary_misconceptions_do_not_collide_with_truth() -> None:
