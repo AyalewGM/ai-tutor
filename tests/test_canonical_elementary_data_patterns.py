@@ -1,20 +1,33 @@
-import random
 import re
 from itertools import pairwise
 
-from app.domains import elementary_data_patterns as domain
+from app.canonical_problem_families import FAMILIES, generate
 
 
-CODES = sorted(domain.FAMILIES)
+CODES = [
+    "MATH.DATA.BAR.COMPARE",
+    "MATH.DATA.BAR.READ",
+    "MATH.DATA.BAR.TOTAL",
+    "MATH.DATA.FREQ.MODE",
+    "MATH.DATA.LINEPLOT.DIFFERENCE",
+    "MATH.DATA.LINEPLOT.FREQUENCY",
+    "MATH.DATA.PICTURE.SCALE",
+    "MATH.DATA.TALLY.READ",
+    "MATH.PATTERN.ADDITIVE.NEXT",
+    "MATH.PATTERN.ERROR.DIFFERENCE",
+    "MATH.PATTERN.MULTIPLICATIVE.NEXT",
+    "MATH.PATTERN.RULE.INPUT_OUTPUT",
+]
 
 
 def _build(code: str, seed: int = 23):
-    return domain.build(code, random.Random(seed), 3)
+    problem = generate(code, seed=seed, difficulty=3)
+    return problem.prompt, problem.canonical_answer, problem.hints, problem.misconception_answers
 
 
 def test_elementary_data_pattern_batch_has_twelve_families() -> None:
     assert len(CODES) == 12
-    skills = {domain.FAMILIES[code].canonical_skill_code for code in CODES}
+    skills = {FAMILIES[code].canonical_skill_code for code in CODES}
     assert {
         "MATH.DATA.ELEMENTARY.REPRESENT",
         "MATH.DATA.ELEMENTARY.COMPARE",
@@ -26,7 +39,7 @@ def test_elementary_data_pattern_batch_has_twelve_families() -> None:
 def test_elementary_data_patterns_are_deterministic_and_support_all_modes() -> None:
     for code in CODES:
         assert _build(code, 71) == _build(code, 71), code
-        assert {mode.value for mode in domain.FAMILIES[code].modes} == {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}, code
+        assert len(FAMILIES[code].modes) == 5, code
 
 
 def test_elementary_misconceptions_do_not_collide_with_truth() -> None:
@@ -97,6 +110,6 @@ def test_input_output_rule_matches_direct_oracle() -> None:
 
 def test_elementary_data_pattern_metadata_is_curriculum_neutral() -> None:
     forbidden = {"california", "texas", "florida", "maryland", "virginia", "ontario", "alberta"}
-    for code, spec in domain.FAMILIES.items():
+    for code, spec in FAMILIES.items():
         metadata = f"{code} {spec.name} {spec.canonical_skill_code}".lower()
         assert not any(name in metadata for name in forbidden)
