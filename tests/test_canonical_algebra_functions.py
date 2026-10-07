@@ -5,7 +5,7 @@ import pytest
 
 from app.canonical_problem_families import FAMILIES, LearningMode, generate
 
-ALG_CODES = [c for c in FAMILIES if c.startswith("MATH.ALG.") or c.startswith("MATH.FUNC.")]
+ALG_CODES = [c for c in FAMILIES if c.startswith(("MATH.ALG.", "MATH.FUNC."))]
 
 
 @pytest.mark.parametrize("code", ALG_CODES)
