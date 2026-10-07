@@ -1,7 +1,7 @@
 import random
 import re
+from itertools import pairwise
 
-from app.canonical_problem_families import LearningMode
 from app.domains import elementary_data_patterns as domain
 
 
@@ -26,7 +26,7 @@ def test_elementary_data_pattern_batch_has_twelve_families() -> None:
 def test_elementary_data_patterns_are_deterministic_and_support_all_modes() -> None:
     for code in CODES:
         assert _build(code, 71) == _build(code, 71), code
-        assert domain.FAMILIES[code].modes == frozenset(LearningMode), code
+        assert domain.FAMILIES[code].modes == frozenset({"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}), code
 
 
 def test_elementary_misconceptions_do_not_collide_with_truth() -> None:
@@ -68,7 +68,7 @@ def test_additive_pattern_uses_constant_difference() -> None:
     for seed in range(15):
         prompt, answer, _, _ = _build("MATH.PATTERN.ADDITIVE.NEXT", seed)
         values = [int(x) for x in re.search(r"\[(.*)\]", prompt).group(1).split(", ")]
-        differences = [b - a for a, b in zip(values, values[1:], strict=True)]
+        differences = [b - a for a, b in pairwise(values)]
         assert len(set(differences)) == 1
         assert int(answer) == values[-1] + differences[0]
 
@@ -77,7 +77,7 @@ def test_multiplicative_pattern_uses_constant_ratio() -> None:
     for seed in range(15):
         prompt, answer, _, _ = _build("MATH.PATTERN.MULTIPLICATIVE.NEXT", seed)
         values = [int(x) for x in re.search(r"\[(.*)\]", prompt).group(1).split(", ")]
-        ratios = [b // a for a, b in zip(values, values[1:], strict=True)]
+        ratios = [b // a for a, b in pairwise(values)]
         assert len(set(ratios)) == 1
         assert int(answer) == values[-1] * ratios[0]
 
