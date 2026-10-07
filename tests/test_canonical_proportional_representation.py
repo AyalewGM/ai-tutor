@@ -4,7 +4,6 @@ from fractions import Fraction
 
 from app.domains import proportional_representation as domain
 
-
 CODES = sorted(domain.FAMILIES)
 
 
