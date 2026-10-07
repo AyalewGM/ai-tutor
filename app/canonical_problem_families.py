@@ -70,13 +70,28 @@ def _rng(family_code: str, seed: str | int, difficulty: int) -> tuple[random.Ran
 ALL_MODES = frozenset(LearningMode)
 
 # Domain modules contribute families and build functions.
+from app.domains import addition as _add_mod
 from app.domains import decimals as _dec_mod
+from app.domains import division as _div_mod
+from app.domains import estimation as _est_mod
+from app.domains import factors_multiples as _fac_mod
 from app.domains import fractions as _frac_mod
+from app.domains import integers as _int_mod
+from app.domains import multiplication as _mul_mod
+from app.domains import order_of_operations as _ooo_mod
 from app.domains import percent as _pct_mod
+from app.domains import place_value as _pv_mod
+from app.domains import properties as _prop_math_mod
 from app.domains import proportions as _prop_mod
 from app.domains import ratios as _ratio_mod
+from app.domains import subtraction as _sub_mod
+from app.domains import whole_numbers as _wn_mod
 
-_DOMAIN_MODULES = [_frac_mod, _dec_mod, _ratio_mod, _prop_mod, _pct_mod]
+_DOMAIN_MODULES = [
+    _frac_mod, _dec_mod, _ratio_mod, _prop_mod, _pct_mod,
+    _add_mod, _sub_mod, _mul_mod, _div_mod,
+    _wn_mod, _pv_mod, _fac_mod, _ooo_mod, _int_mod, _est_mod, _prop_math_mod,
+]
 
 FAMILIES = {
     "MATH.EQ.ONE.ADD_DIRECT": ProblemFamilySpec(
