@@ -1,5 +1,6 @@
 import pytest
 
+from app.california_grade6_gap_audit import CA_GRADE6_GAPS, CA_GRADE6_STANDARD_CODES
 from app.california_grade7_gap_audit import CA_GRADE7_GAPS, CA_GRADE7_STANDARD_CODES
 from app.california_grade8_gap_audit import CA_GRADE8_GAPS, CA_GRADE8_STANDARD_CODES
 from app.curriculum_gap_analysis import (
@@ -116,3 +117,18 @@ def test_california_grade7_inventory_is_complete_and_exposes_true_gaps() -> None
         "gap:geometric-construction-conditions",
         "gap:solid-cross-sections",
     }
+
+
+def test_california_grade6_inventory_is_complete_and_exposes_true_gap() -> None:
+    assert len(CA_GRADE6_STANDARD_CODES) == 29
+    assert len(CA_GRADE6_GAPS) == 29
+    counts = gap_counts(CA_GRADE6_GAPS)
+    assert counts == {
+        GapStatus.COVERED: 13,
+        GapStatus.PARTIAL: 15,
+        GapStatus.GAP: 1,
+        GapStatus.AMBIGUOUS: 0,
+    }
+    assert {
+        item.rationale for item in CA_GRADE6_GAPS if item.status == GapStatus.GAP
+    } == {"gap:statistical-question-variability"}
