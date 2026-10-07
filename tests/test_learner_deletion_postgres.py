@@ -104,27 +104,26 @@ def test_postgres_learner_erase_isolated_and_preserves_shared_curriculum():
         db.rollback()
         # The target is gone, but remove the synthetic sibling/family fixture.
         try:
-            if user is None or parent is None:
-                return
-            sibling_row = db.scalar(
-                select(Student).where(
-                    Student.first_name == "SyntheticSibling",
-                    Student.parent_id == user.id,
-                )
-            )
-            if sibling_row is not None:
-                sibling_rel = db.scalar(
-                    select(ParentStudentRelationship).where(
-                        ParentStudentRelationship.parent_profile_id == parent.id,
-                        ParentStudentRelationship.student_id == sibling_row.id,
+            if user is not None and parent is not None:
+                sibling_row = db.scalar(
+                    select(Student).where(
+                        Student.first_name == "SyntheticSibling",
+                        Student.parent_id == user.id,
                     )
                 )
-                if sibling_rel is not None:
-                    erase_learner_transactional(db, parent=parent, learner_id=sibling_row.id)
-            db.flush()
-            db.delete(parent)
-            db.flush()
-            db.delete(user)
-            db.commit()
+                if sibling_row is not None:
+                    sibling_rel = db.scalar(
+                        select(ParentStudentRelationship).where(
+                            ParentStudentRelationship.parent_profile_id == parent.id,
+                            ParentStudentRelationship.student_id == sibling_row.id,
+                        )
+                    )
+                    if sibling_rel is not None:
+                        erase_learner_transactional(db, parent=parent, learner_id=sibling_row.id)
+                db.flush()
+                db.delete(parent)
+                db.flush()
+                db.delete(user)
+                db.commit()
         finally:
             db.close()
