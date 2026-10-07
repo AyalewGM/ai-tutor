@@ -153,7 +153,7 @@ def _build(family_code: str, rng: random.Random, difficulty: int):
             {"EQ.WORD.CONFUSE_START_WITH_RATE": str(added_each)},
         )
     if family_code == "MATH.EQ.TWO.WORD.COMPARISON":
-    base = rng.randint(3, 9 + difficulty)
+        base = rng.randint(3, 9 + difficulty)
         multiplier = rng.randint(2, 4 + difficulty)
         difference = rng.randint(1, 5 + difficulty)
         total = multiplier * base + difference
