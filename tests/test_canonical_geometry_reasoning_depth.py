@@ -3,7 +3,6 @@ import re
 
 from app.domains import geometry_reasoning_depth as domain
 
-
 CODES = sorted(domain.FAMILIES)
 
 
