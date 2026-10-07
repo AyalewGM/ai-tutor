@@ -49,6 +49,35 @@ WAVE1_VERIFIED_SOURCES: tuple[StateMathSource, ...] = (
         effective_note="Grade-specific through 8; high school uses traditional/integrated pathways.",
     ),
     StateMathSource(
+        state_code="TX",
+        authority_code="TEA",
+        authority_name="Texas Education Agency",
+        version="TEKS-MATH-2012",
+        source_uri="https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+        lifecycle_status="IMPLEMENTED",
+        grades=tuple(range(1, 10)),
+        grade9_structure=Grade9Structure.COURSE,
+        effective_note=(
+            "Regular Grades 1-8 TEKS are the adopted 2012 sequence; Algebra I is "
+            "course-organized. Advanced Grade 6-8 mathematics adopted in 2025 is "
+            "tracked separately and does not replace the regular sequence."
+        ),
+    ),
+    StateMathSource(
+        state_code="FL",
+        authority_code="FLDOE",
+        authority_name="Florida Department of Education",
+        version="BEST-MATH-2020",
+        source_uri="https://www.fldoe.org/core/fileparse.php/18736/urlt/StandardsMathematics.pdf",
+        lifecycle_status="IMPLEMENTED",
+        grades=tuple(range(1, 10)),
+        grade9_structure=Grade9Structure.COURSE,
+        effective_note=(
+            "B.E.S.T. Mathematics adopted February 12, 2020; Grades 1-8 are "
+            "grade-organized and Grade 9 coverage uses an explicit Algebra 1 course target."
+        ),
+    ),
+    StateMathSource(
         state_code="NY",
         authority_code="NYSED",
         authority_name="New York State Education Department",
