@@ -9,6 +9,10 @@ from app.california_grade5_gap_audit import CA_GRADE5_GAPS, CA_GRADE5_STANDARD_C
 from app.california_grade6_gap_audit import CA_GRADE6_GAPS, CA_GRADE6_STANDARD_CODES
 from app.california_grade7_gap_audit import CA_GRADE7_GAPS, CA_GRADE7_STANDARD_CODES
 from app.california_grade8_gap_audit import CA_GRADE8_GAPS, CA_GRADE8_STANDARD_CODES
+from app.california_grade9_inventory import (
+    CA_ALGEBRA_I_STANDARD_CODES,
+    CA_MATHEMATICS_I_STANDARD_CODES,
+)
 from app.curriculum_gap_analysis import (
     GapStatus,
     StandardGap,
@@ -214,3 +218,13 @@ def test_california_grade1_8_aggregate_is_complete_and_conservative() -> None:
         "gap:solid-cross-sections",
         "gap:statistical-question-variability",
     )
+
+
+def test_california_grade9_pathway_inventories_are_explicit_and_distinct() -> None:
+    assert len(CA_ALGEBRA_I_STANDARD_CODES) == 62
+    assert len(CA_MATHEMATICS_I_STANDARD_CODES) == 59
+    assert len(set(CA_ALGEBRA_I_STANDARD_CODES)) == 62
+    assert len(set(CA_MATHEMATICS_I_STANDARD_CODES)) == 59
+    assert "N-RN.1" in CA_ALGEBRA_I_STANDARD_CODES
+    assert "G-CO.12" in CA_MATHEMATICS_I_STANDARD_CODES
+    assert "G-CO.12" not in CA_ALGEBRA_I_STANDARD_CODES
