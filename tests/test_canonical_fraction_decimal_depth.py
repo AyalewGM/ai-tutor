@@ -9,7 +9,7 @@ CODES = sorted(domain.FAMILIES)
 
 
 def _build(code: str, seed: int = 31):
-    return domain.build(code, random.Random(seed), 3)
+    return domain.build(code, random.Random(seed), 3)[:4]
 
 
 def test_fraction_decimal_depth_has_sixteen_families() -> None:
@@ -89,3 +89,17 @@ def test_fraction_decimal_depth_is_curriculum_neutral() -> None:
     for code, spec in domain.FAMILIES.items():
         metadata = f"{code} {spec.name} {spec.canonical_skill_code}".lower()
         assert not any(name in metadata for name in forbidden)
+
+
+def test_conceptual_fraction_decimal_visual_specs_are_deterministic() -> None:
+    for code in (
+        "MATH.FRAC.UNIT.MEANING",
+        "MATH.DEC.FRACTION.TENTHS",
+        "MATH.DEC.FRACTION.HUNDREDTHS",
+    ):
+        first = domain.build(code, random.Random(83), 2)
+        second = domain.build(code, random.Random(83), 2)
+        assert len(first) == 5
+        assert first[4] == second[4]
+        assert isinstance(first[4].get("type"), str)
+        assert isinstance(first[4].get("aria_label"), str)
