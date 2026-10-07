@@ -1,6 +1,6 @@
 from app.us_state_curriculum_sources import (
-    Grade9Structure,
     WAVE1_VERIFIED_SOURCES,
+    Grade9Structure,
     source_for,
 )
 
