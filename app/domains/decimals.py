@@ -132,27 +132,34 @@ def build(family_code: str, rng: random.Random, difficulty: int):
     if family_code == "MATH.DEC.PLACE_VALUE":
         whole = rng.randint(1, 9 + difficulty * 10)
         tenths = rng.randint(1, 9)
-        # Ensure ones digit differs from tenths so WRONG_DIRECTION misconception is diagnostic
-        while whole % 10 == tenths:
-            whole = rng.randint(1, 9 + difficulty * 10)
         hundredths = rng.randint(0, 9) if difficulty >= 2 else 0
         thousandths = rng.randint(1, 9) if difficulty >= 3 else 0
+        # Build the number string and candidate targets
         num_str = f"{whole}.{tenths}{hundredths}{thousandths}".rstrip("0")
         if "." not in num_str:
             num_str += ".0"
+        whole_digits = str(whole)
         place_targets = [("tenths", tenths)]
         if hundredths:
             place_targets.append(("hundredths", hundredths))
         if thousandths:
             place_targets.append(("thousandths", thousandths))
         place_name, digit = rng.choice(place_targets)
+        # Mirror misconception: student reads from left of decimal at same
+        # distance. E.g. for tenths (1st right of '.') use ones (1st left).
+        mirror_pos = {"tenths": -1, "hundredths": -2, "thousandths": -3}[place_name]
+        idx = abs(mirror_pos) - 1
+        wrong_digit = int(whole_digits[-(idx + 1)]) if idx < len(whole_digits) else 0
+        # Ensure the misconception answer differs from the correct one
+        if wrong_digit == digit:
+            wrong_digit = (digit + 3) % 10
         prompt = f"In the number {num_str}, what digit is in the {place_name} place?"
         answer = str(digit)
         hints = (
             f"The {place_name} place is the {'first' if place_name == 'tenths' else 'second' if place_name == 'hundredths' else 'third'} digit after the decimal point.",
         )
         misconceptions = {
-            "DEC.PLACE.WRONG_DIRECTION": str(int(num_str.split(".")[0]) % 10),
+            "DEC.PLACE.WRONG_DIRECTION": str(wrong_digit),
         }
         return prompt, answer, hints, misconceptions
 
@@ -339,7 +346,7 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         }
         return prompt, answer, hints, misconceptions
 
-    # --- error: longer is larger ---
+    # --- error: longer is larger (structured MC) ---
     if family_code == "MATH.DEC.ERROR.LONGER_LARGER":
         # Construct a pair where the shorter decimal is larger
         a = Decimal(str(rng.randint(3, 9))) / Decimal(10)  # e.g. 0.6
@@ -352,15 +359,18 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         name = rng.choice(names)
         prompt = (
             f"{name} says {_dec_str(b)} > {_dec_str(a)} because {_dec_str(b)} "
-            f"has more digits. Is {name} correct? Explain."
+            f"has more digits. Is {name} correct? "
+            f"(A) No — {_dec_str(a)} is greater because the tenths digit is larger. "
+            f"(B) Yes — more digits means a larger number. "
+            f"(C) They are equal."
         )
-        answer = f"No. {_dec_str(a)} > {_dec_str(b)} because the tenths digit of {_dec_str(a)} is larger."
+        answer = "A"
         hints = (
             "Compare the tenths digit of each number first.",
             f"{_dec_str(a)} has {int(a * 10)} tenths; {_dec_str(b)} has {int(b * 10)} tenths.",
         )
         misconceptions = {
-            "DEC.ERROR.AGREE_LONGER": f"Yes, {_dec_str(b)} is greater.",
+            "DEC.ERROR.AGREE_LONGER": "B",
         }
         return prompt, answer, hints, misconceptions
 

@@ -370,15 +370,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         }
         return prompt, answer, hints, misconceptions
 
-    # --- error: additive reasoning ---
+    # --- error: additive reasoning (structured MC) ---
     if family_code == "MATH.RATIO.ERROR.ADDITIVE":
-        a = rng.randint(2, 5)
-        b = rng.randint(3, 6)
-        while a == b:
-            b = rng.randint(3, 6)
-        inc = rng.randint(2, 4 + difficulty)
-        new_a = a + inc
-        correct_b = b * new_a // a
         # Force clean multiplication
         mult = rng.randint(2, 4 + difficulty)
         a, b = rng.randint(2, 5), rng.randint(3, 7)
@@ -392,19 +385,22 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         prompt = (
             f"The ratio of red to blue paint is {a}:{b}. {name} needs {new_a} cups of red. "
             f"{name} says you need {additive_b} cups of blue because \"I added {new_a - a} to red "
-            f"so I add {new_a - a} to blue.\" What is wrong?"
+            f"so I add {new_a - a} to blue.\" "
+            f"What is the correct amount of blue paint? "
+            f"(A) {correct_b} cups "
+            f"(B) {additive_b} cups "
+            f"(C) {b} cups "
+            f"(D) {new_a} cups"
         )
-        answer = (
-            f"{name} used additive reasoning instead of multiplicative. "
-            f"Since {new_a} = {a} × {mult}, blue should be {b} × {mult} = {correct_b}."
-        )
+        answer = "A"
         hints = (
             f"How many times larger is {new_a} than {a}?",
             "Ratios scale by multiplication, not addition.",
-            f"Multiply both terms by {mult}.",
+            f"Multiply both terms by {mult}: blue = {b} × {mult} = {correct_b}.",
         )
         misconceptions = {
-            "RATIO.ERROR.AGREE_ADDITIVE": str(additive_b),
+            "RATIO.ERROR.AGREE_ADDITIVE": "B",
+            "RATIO.ERROR.ORIGINAL_ONLY": "C",
         }
         return prompt, answer, hints, misconceptions
 

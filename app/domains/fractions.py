@@ -213,23 +213,29 @@ def build(family_code: str, rng: random.Random, difficulty: int):
     if family_code == "MATH.FRAC.ESTIMATE.BENCHMARK":
         n, d = _proper_fraction(rng, 6 + difficulty * 4)
         val = Fraction(n, d)
-        if val < Fraction(1, 4):
-            answer = "closer to 0"
-        elif val < Fraction(3, 8):
-            answer = "closer to 1/4"
-        elif val < Fraction(5, 8):
-            answer = "closer to 1/2"
-        elif val < Fraction(7, 8):
-            answer = "closer to 3/4"
-        else:
-            answer = "closer to 1"
-        prompt = f"Is {_frac(n, d)} closer to 0, 1/4, 1/2, 3/4 or 1?"
+        benchmarks = [
+            (Fraction(1, 8), "0"),
+            (Fraction(3, 8), "1/4"),
+            (Fraction(5, 8), "1/2"),
+            (Fraction(7, 8), "3/4"),
+        ]
+        answer = "1"
+        for threshold, label in benchmarks:
+            if val < threshold:
+                answer = label
+                break
+        prompt = (
+            f"Which benchmark is {_frac(n, d)} closest to? "
+            f"(A) 0 (B) 1/4 (C) 1/2 (D) 3/4 (E) 1"
+        )
         hints = (
             "Think about where the fraction sits on a number line between 0 and 1.",
             f"Compare {_frac(n, d)} to 1/2 first — is it more or less than half?",
         )
+        # Misconception: student looks only at the numerator
+        wrong = "0" if n > d // 2 else "1"
         misconceptions = {
-            "FRAC.ESTIMATE.IGNORE_DENOM": "closer to 0" if n > d // 2 else "closer to 1",
+            "FRAC.ESTIMATE.IGNORE_DENOM": wrong,
         }
         return prompt, answer, hints, misconceptions
 
@@ -390,7 +396,7 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         }
         return prompt, answer, hints, misconceptions
 
-    # --- error analysis: adding denominators ---
+    # --- error analysis: adding denominators (structured MC) ---
     if family_code == "MATH.FRAC.ERROR.ADD_DENOM":
         max_d = 5 + difficulty * 2
         n1, d1 = _proper_fraction(rng, max_d)
@@ -404,17 +410,21 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         name = rng.choice(names)
         prompt = (
             f"{name} says that {_frac(n1, d1)} + {_frac(n2, d2)} = {wrong_answer}. "
-            f"What mistake did {name} make?"
+            f"What mistake did {name} make? "
+            f"(A) Added the denominators instead of finding a common denominator. "
+            f"(B) Subtracted instead of adding. "
+            f"(C) Multiplied the fractions. "
+            f"(D) There is no mistake."
         )
-        answer = f"{name} added the denominators. The correct answer is {correct}."
+        answer = "A"
         hints = (
             f"Check: is {wrong_answer} a correct sum?",
             "When adding fractions you must find a common denominator first — you cannot add the denominators.",
-            "Rewrite both fractions with a common denominator and try again.",
+            f"The correct answer is {correct}.",
         )
         misconceptions = {
-            "FRAC.ERROR.AGREES_WITH_WRONG": wrong_answer,
-            "FRAC.ERROR.CORRECT_BUT_NO_EXPLAIN": correct,
+            "FRAC.ERROR.AGREES_WITH_WRONG": "D",
+            "FRAC.ERROR.WRONG_OPERATION": "B",
         }
         return prompt, answer, hints, misconceptions
 

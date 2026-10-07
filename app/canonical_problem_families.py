@@ -210,6 +210,8 @@ def _build(family_code: str, rng: random.Random, difficulty: int):
     if family_code == "MATH.EQ.TWO.MODEL.FROM_CONTEXT":
         coefficient = rng.randint(2, 4 + difficulty)
         fee = rng.randint(2, 7 + difficulty)
+        while fee == coefficient:
+            fee = rng.randint(2, 7 + difficulty)
         units = rng.randint(3, 9 + difficulty)
         total = coefficient * units + fee
         return (

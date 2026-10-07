@@ -2,13 +2,23 @@
 
 Covers: fraction/decimal/percent conversion, percent of a quantity, finding the
 whole, finding the percent, discounts, markups, tax, tip, percent
-increase/decrease, reverse percent, multi-step applications, error analysis.
+increase/decrease, reverse percent, multi-step applications, estimation,
+error analysis.
+
+Mathematical correctness contract
+----------------------------------
+* Integer-result problems construct operands so ``whole * pct`` is exactly
+  divisible by 100.  No silent floor division.
+* Money problems use ``Decimal`` with explicit ``ROUND_HALF_UP`` to two
+  decimal places.  Answers use ``$X.XX`` format when cents are non-zero.
+* Percent-change problems derive the change from exact multiplication so
+  the stated percent is the *true* percent of the original.
 """
 
 from __future__ import annotations
 
 import random
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 from math import gcd
 
 from app.canonical_problem_families import (
@@ -19,6 +29,9 @@ from app.canonical_problem_families import (
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+_CENTS = Decimal("0.01")
+
 
 def _frac(n: int, d: int) -> str:
     if d == 1:
@@ -35,6 +48,28 @@ def _pct_to_frac(p: int) -> str:
 def _pct_to_dec(p: int) -> str:
     val = Decimal(str(p)) / Decimal(100)
     return f"{val.normalize():f}"
+
+
+def _exact_whole(rng: random.Random, pct: int, lo: int, hi: int) -> int:
+    """Return a random whole in [lo, hi] such that whole * pct / 100 is exact."""
+    divisor = 100 // gcd(pct, 100)  # smallest unit that makes pct exact
+    candidates = list(range(((lo + divisor - 1) // divisor) * divisor, hi + 1, divisor))
+    if not candidates:
+        return divisor  # safe fallback
+    return rng.choice(candidates)
+
+
+def _money(val: Decimal) -> str:
+    """Format a Decimal as a dollar string with proper cent handling."""
+    rounded = val.quantize(_CENTS, rounding=ROUND_HALF_UP)
+    if rounded == rounded.to_integral_value():
+        return f"${int(rounded)}"
+    return f"${rounded}"
+
+
+def _pct_of(amount: Decimal, pct: int) -> Decimal:
+    """Compute pct% of amount using exact Decimal arithmetic, rounded to cents."""
+    return (amount * pct / 100).quantize(_CENTS, rounding=ROUND_HALF_UP)
 
 
 # ---------------------------------------------------------------------------
@@ -142,7 +177,6 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             "To convert a percent to a decimal, divide by 100.",
             f"{p} ÷ 100 = {_pct_to_dec(p)}.",
         )
-        # Only one decimal-place error: student moves decimal once instead of twice
         misconceptions = {
             "PCT.CONVERT.MOVE_ONE_PLACE": str(Decimal(str(p)) / Decimal(10)),
         }
@@ -181,12 +215,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
     if family_code == "MATH.PCT.OF_QUANTITY":
         pct = rng.choice([10, 15, 20, 25, 30, 40, 50, 75] if difficulty <= 2
                          else [5, 12, 15, 20, 33, 40, 60, 75, 80])
-        whole = rng.randint(20, 100 + difficulty * 50)
-        # Ensure clean result for common percentages
-        whole = whole - (whole * pct % 100 != 0) * (whole % (100 // gcd(pct, 100)))
-        if whole <= 0:
-            whole = 100
-        part = whole * pct // 100
+        whole = _exact_whole(rng, pct, 20, 100 + difficulty * 50)
+        part = whole * pct // 100  # exact by construction
         contexts = [
             f"What is {pct}% of {whole}?",
             f"A class has {whole} students. {pct}% passed the test. How many students passed?",
@@ -207,11 +237,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
     # --- find the whole ---
     if family_code == "MATH.PCT.FIND_WHOLE":
         pct = rng.choice([10, 20, 25, 40, 50, 75])
-        whole = rng.randint(40, 200 + difficulty * 50)
-        whole = whole - (whole * pct % 100 != 0) * (whole % (100 // gcd(pct, 100)))
-        if whole <= 0:
-            whole = 100
-        part = whole * pct // 100
+        whole = _exact_whole(rng, pct, 40, 200 + difficulty * 50)
+        part = whole * pct // 100  # exact by construction
         prompt = f"{part} is {pct}% of what number?"
         answer = str(whole)
         hints = (
@@ -226,12 +253,10 @@ def build(family_code: str, rng: random.Random, difficulty: int):
 
     # --- find the percent ---
     if family_code == "MATH.PCT.FIND_PERCENT":
-        whole = rng.randint(20, 100 + difficulty * 50)
         pct = rng.choice([10, 20, 25, 30, 40, 50, 60, 75, 80])
-        part = whole * pct // 100
-        if part == 0:
-            part = 1
-            pct = round(part * 100 / whole)
+        whole = _exact_whole(rng, pct, 20, 100 + difficulty * 50)
+        part = whole * pct // 100  # exact by construction
+        # Verify: part / whole * 100 == pct exactly
         prompt = f"{part} is what percent of {whole}?"
         answer = f"{pct}%"
         hints = (
@@ -243,105 +268,96 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         }
         return prompt, answer, hints, misconceptions
 
-    # --- discount ---
+    # --- discount (money with Decimal) ---
     if family_code == "MATH.PCT.DISCOUNT":
         pct = rng.choice([10, 15, 20, 25, 30, 40])  # exclude 50: savings = sale price
-        price = rng.randint(20, 80 + difficulty * 30)
-        price = price - (price * pct % 100 != 0) * (price % (100 // gcd(pct, 100)))
-        if price <= 0:
-            price = 100
-        savings = price * pct // 100
+        # Use Decimal for realistic money amounts
+        price_cents = rng.randint(1500, 8000 + difficulty * 3000)
+        price = Decimal(price_cents) / Decimal(100)
+        savings = _pct_of(price, pct)
         sale = price - savings
         items = ["jacket", "backpack", "pair of shoes", "tablet", "bicycle helmet"]
         item = rng.choice(items)
-        prompt = f"A {item} costs ${price}. It is on sale for {pct}% off. What is the sale price?"
-        answer = f"${sale}"
+        prompt = f"A {item} costs {_money(price)}. It is on sale for {pct}% off. What is the sale price?"
+        answer = _money(sale)
         hints = (
-            f"Find {pct}% of ${price} to get the discount amount.",
-            f"Discount = ${savings}. Subtract from the original price.",
+            f"Find {pct}% of {_money(price)} to get the discount amount.",
+            f"Discount = {_money(savings)}. Subtract from the original price.",
         )
         misconceptions = {
-            "PCT.DISCOUNT.REPORT_SAVINGS": f"${savings}",
-            "PCT.DISCOUNT.ADD_INSTEAD": f"${price + savings}",
+            "PCT.DISCOUNT.REPORT_SAVINGS": _money(savings),
+            "PCT.DISCOUNT.ADD_INSTEAD": _money(price + savings),
         }
         return prompt, answer, hints, misconceptions
 
-    # --- markup ---
+    # --- markup (money with Decimal) ---
     if family_code == "MATH.PCT.MARKUP":
         pct = rng.choice([10, 20, 25, 30, 40, 50])
-        cost = rng.randint(10, 60 + difficulty * 20)
-        cost = cost - (cost * pct % 100 != 0) * (cost % (100 // gcd(pct, 100)))
-        if cost <= 0:
-            cost = 50
-        markup = cost * pct // 100
+        cost_cents = rng.randint(1000, 6000 + difficulty * 2000)
+        cost = Decimal(cost_cents) / Decimal(100)
+        markup = _pct_of(cost, pct)
         selling = cost + markup
         prompt = (
-            f"A store buys an item for ${cost} and marks it up by {pct}%. "
+            f"A store buys an item for {_money(cost)} and marks it up by {pct}%. "
             "What is the selling price?"
         )
-        answer = f"${selling}"
+        answer = _money(selling)
         hints = (
-            f"Markup = {pct}% of ${cost} = ${markup}.",
-            f"Selling price = cost + markup = ${cost} + ${markup}.",
+            f"Markup = {pct}% of {_money(cost)} = {_money(markup)}.",
+            f"Selling price = cost + markup = {_money(cost)} + {_money(markup)}.",
         )
         misconceptions = {
-            "PCT.MARKUP.REPORT_MARKUP_ONLY": f"${markup}",
-            "PCT.MARKUP.SUBTRACT": f"${cost - markup}",
+            "PCT.MARKUP.REPORT_MARKUP_ONLY": _money(markup),
+            "PCT.MARKUP.SUBTRACT": _money(cost - markup),
         }
         return prompt, answer, hints, misconceptions
 
-    # --- tax ---
+    # --- tax (money with Decimal) ---
     if family_code == "MATH.PCT.TAX":
         tax_pct = rng.choice([5, 6, 8, 10])
-        price = rng.randint(10, 80 + difficulty * 30)
-        price = price - (price * tax_pct % 100 != 0) * (price % (100 // gcd(tax_pct, 100)))
-        if price <= 0:
-            price = 100
-        tax = price * tax_pct // 100
+        price_cents = rng.randint(1000, 8000 + difficulty * 3000)
+        price = Decimal(price_cents) / Decimal(100)
+        tax = _pct_of(price, tax_pct)
         total = price + tax
         items = ["phone case", "board game", "water bottle", "headphones"]
         item = rng.choice(items)
-        prompt = f"A {item} costs ${price}. Sales tax is {tax_pct}%. What is the total cost?"
-        answer = f"${total}"
+        prompt = f"A {item} costs {_money(price)}. Sales tax is {tax_pct}%. What is the total cost?"
+        answer = _money(total)
         hints = (
-            f"Tax = {tax_pct}% of ${price} = ${tax}.",
-            f"Total = ${price} + ${tax}.",
+            f"Tax = {tax_pct}% of {_money(price)} = {_money(tax)}.",
+            f"Total = {_money(price)} + {_money(tax)}.",
         )
         misconceptions = {
-            "PCT.TAX.TAX_ONLY": f"${tax}",
-            "PCT.TAX.SUBTRACT_TAX": f"${price - tax}",
+            "PCT.TAX.TAX_ONLY": _money(tax),
+            "PCT.TAX.SUBTRACT_TAX": _money(price - tax),
         }
         return prompt, answer, hints, misconceptions
 
-    # --- tip ---
+    # --- tip (money with Decimal) ---
     if family_code == "MATH.PCT.TIP":
         tip_pct = rng.choice([10, 15, 18, 20])
-        bill = rng.randint(15, 60 + difficulty * 20)
-        bill = bill - (bill * tip_pct % 100 != 0) * (bill % (100 // gcd(tip_pct, 100)))
-        if bill <= 0:
-            bill = 40
-        tip = bill * tip_pct // 100
+        bill_cents = rng.randint(1500, 6000 + difficulty * 2000)
+        bill = Decimal(bill_cents) / Decimal(100)
+        tip = _pct_of(bill, tip_pct)
         total = bill + tip
-        prompt = f"A restaurant bill is ${bill}. You leave a {tip_pct}% tip. What is the total?"
-        answer = f"${total}"
+        prompt = f"A restaurant bill is {_money(bill)}. You leave a {tip_pct}% tip. What is the total?"
+        answer = _money(total)
         hints = (
-            f"Tip = {tip_pct}% of ${bill} = ${tip}.",
-            f"Total = bill + tip = ${bill} + ${tip}.",
+            f"Tip = {tip_pct}% of {_money(bill)} = {_money(tip)}.",
+            f"Total = bill + tip = {_money(bill)} + {_money(tip)}.",
         )
         misconceptions = {
-            "PCT.TIP.TIP_ONLY": f"${tip}",
-            "PCT.TIP.TIP_ON_TOTAL": f"${total + total * tip_pct // 100}",
+            "PCT.TIP.TIP_ONLY": _money(tip),
+            "PCT.TIP.TIP_ON_TOTAL": _money(total + _pct_of(total, tip_pct)),
         }
         return prompt, answer, hints, misconceptions
 
     # --- percent increase ---
     if family_code == "MATH.PCT.INCREASE":
-        original = rng.randint(20, 100 + difficulty * 30)
         increase_pct = rng.choice([10, 20, 25, 50])
-        increase = original * increase_pct // 100
-        if increase == 0:
-            increase = 1
-            increase_pct = round(100 * increase / original)
+        # Construct original so that increase is exact
+        original = _exact_whole(rng, increase_pct, 20, 100 + difficulty * 30)
+        increase = original * increase_pct // 100  # exact by construction
         new_val = original + increase
         prompt = (
             f"A quantity increases from {original} to {new_val}. "
@@ -352,20 +368,20 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             f"Change = {new_val} − {original} = {increase}.",
             f"Percent increase = change ÷ original × 100 = {increase} ÷ {original} × 100.",
         )
+        # Wrong-base misconception: divides by new value
+        wrong_base_pct = Decimal(increase * 100) / Decimal(new_val)
+        wrong_base_pct = int(wrong_base_pct.quantize(Decimal(1), rounding=ROUND_HALF_UP))
         misconceptions = {
-            "PCT.INCREASE.WRONG_BASE": f"{round(100 * increase / new_val)}%" if new_val else "0%",
+            "PCT.INCREASE.WRONG_BASE": f"{wrong_base_pct}%",
             "PCT.INCREASE.REPORT_NEW": str(new_val),
         }
         return prompt, answer, hints, misconceptions
 
     # --- percent decrease ---
     if family_code == "MATH.PCT.DECREASE":
-        original = rng.randint(40, 150 + difficulty * 30)
         decrease_pct = rng.choice([10, 20, 25, 50])
-        decrease = original * decrease_pct // 100
-        if decrease == 0:
-            decrease = 1
-            decrease_pct = round(100 * decrease / original)
+        original = _exact_whole(rng, decrease_pct, 40, 150 + difficulty * 30)
+        decrease = original * decrease_pct // 100  # exact by construction
         new_val = original - decrease
         prompt = (
             f"A quantity decreases from {original} to {new_val}. "
@@ -376,19 +392,18 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             f"Change = {original} − {new_val} = {decrease}.",
             "Percent decrease = change ÷ original × 100.",
         )
+        wrong_base_pct = Decimal(decrease * 100) / Decimal(new_val) if new_val else Decimal(0)
+        wrong_base_pct = int(wrong_base_pct.quantize(Decimal(1), rounding=ROUND_HALF_UP))
         misconceptions = {
-            "PCT.DECREASE.WRONG_BASE": f"{round(100 * decrease / new_val) if new_val else 0}%",
+            "PCT.DECREASE.WRONG_BASE": f"{wrong_base_pct}%",
         }
         return prompt, answer, hints, misconceptions
 
     # --- reverse percent ---
     if family_code == "MATH.PCT.REVERSE":
         pct = rng.choice([10, 20, 25, 40, 50])
-        original = rng.randint(40, 200 + difficulty * 50)
-        original = original - (original * pct % 100 != 0) * (original % (100 // gcd(pct, 100)))
-        if original <= 0:
-            original = 100
-        change = original * pct // 100
+        original = _exact_whole(rng, pct, 40, 200 + difficulty * 50)
+        change = original * pct // 100  # exact by construction
         direction = rng.choice(["increase", "decrease"])
         if direction == "increase":
             final = original + change
@@ -396,54 +411,53 @@ def build(family_code: str, rng: random.Random, difficulty: int):
                 f"After a {pct}% increase, a price is ${final}. "
                 "What was the original price?"
             )
-            divisor = 100 + pct
+            divisor_pct = 100 + pct
         else:
             final = original - change
             prompt = (
                 f"After a {pct}% discount, the sale price is ${final}. "
                 "What was the original price?"
             )
-            divisor = 100 - pct
+            divisor_pct = 100 - pct
         answer = f"${original}"
         hints = (
-            f"The final amount is {100 + pct if direction == 'increase' else 100 - pct}% of the original.",
-            f"Divide ${final} by {divisor / 100}.",
+            f"The final amount is {divisor_pct}% of the original.",
+            f"Divide ${final} by {Decimal(divisor_pct) / Decimal(100)}.",
         )
         # Classic error: apply pct to the final instead of dividing
+        wrong_change = final * pct // 100
         if direction == "increase":
-            wrong = final - final * pct // 100
+            wrong = final - wrong_change
         else:
-            wrong = final + final * pct // 100
+            wrong = final + wrong_change
         misconceptions = {
             "PCT.REVERSE.APPLY_TO_FINAL": f"${wrong}",
         }
         return prompt, answer, hints, misconceptions
 
-    # --- multi-step ---
+    # --- multi-step (money with Decimal) ---
     if family_code == "MATH.PCT.MULTI_STEP":
-        price = rng.randint(40, 120 + difficulty * 30)
         discount_pct = rng.choice([10, 20, 25])
         tax_pct = rng.choice([5, 8, 10])
-        price = price - (price * discount_pct % 100 != 0) * (price % (100 // gcd(discount_pct, 100)))
-        if price <= 0:
-            price = 100
-        discount = price * discount_pct // 100
+        price_cents = rng.randint(4000, 12000 + difficulty * 3000)
+        price = Decimal(price_cents) / Decimal(100)
+        discount = _pct_of(price, discount_pct)
         after_discount = price - discount
-        tax = after_discount * tax_pct // 100
+        tax = _pct_of(after_discount, tax_pct)
         total = after_discount + tax
         prompt = (
-            f"An item costs ${price}. It is {discount_pct}% off, and then you pay "
+            f"An item costs {_money(price)}. It is {discount_pct}% off, and then you pay "
             f"{tax_pct}% sales tax on the discounted price. What is the final cost?"
         )
-        answer = f"${total}"
+        answer = _money(total)
         hints = (
-            f"Step 1: Discount = {discount_pct}% of ${price} = ${discount}. After discount: ${after_discount}.",
-            f"Step 2: Tax = {tax_pct}% of ${after_discount} = ${tax}. Final: ${total}.",
+            f"Step 1: Discount = {discount_pct}% of {_money(price)} = {_money(discount)}. After discount: {_money(after_discount)}.",
+            f"Step 2: Tax = {tax_pct}% of {_money(after_discount)} = {_money(tax)}. Final: {_money(total)}.",
         )
         # Error: calculate tax on original price instead of discounted price
-        wrong_tax = price * tax_pct // 100
+        wrong_tax = _pct_of(price, tax_pct)
         misconceptions = {
-            "PCT.MULTI.TAX_ON_ORIGINAL": f"${price - discount + wrong_tax}",
+            "PCT.MULTI.TAX_ON_ORIGINAL": _money(price - discount + wrong_tax),
         }
         return prompt, answer, hints, misconceptions
 
@@ -454,9 +468,10 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         value = rng.randint(30, 200 + difficulty * 50)
         while value % 10 == 0:
             value = rng.randint(30, 200 + difficulty * 50)
-        exact = value * pct // 100
+        # Use Decimal for exact computation
+        exact = (Decimal(value) * pct / 100).quantize(Decimal(1), rounding=ROUND_HALF_UP)
         rounded = round(value, -1)
-        estimate = rounded * pct // 100
+        estimate = Decimal(rounded) * pct // 100
         prompt = (
             f"Estimate {pct}% of {value} by rounding {value} to the nearest ten first."
         )
@@ -470,32 +485,35 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         }
         return prompt, answer, hints, misconceptions
 
-    # --- error: wrong base ---
+    # --- error: wrong base (structured deterministic assessment) ---
     if family_code == "MATH.PCT.ERROR.BASE":
-        original = rng.randint(40, 150)
         pct = rng.choice([20, 25, 50])
-        increase = original * pct // 100
-        if increase == 0:
-            increase = 1
+        original = _exact_whole(rng, pct, 40, 150)
+        increase = original * pct // 100  # exact by construction
         new_val = original + increase
-        wrong_pct = round(100 * increase / new_val) if new_val else 0
+        wrong_pct = Decimal(increase * 100) / Decimal(new_val)
+        wrong_pct = int(wrong_pct.quantize(Decimal(1), rounding=ROUND_HALF_UP))
         names = ["Aisha", "Ben", "Clara", "Derek"]
         name = rng.choice(names)
         prompt = (
             f"A price increased from ${original} to ${new_val}. "
             f"{name} says the percent increase is {wrong_pct}% because "
-            f"{increase}/{new_val} = {wrong_pct}%. What is {name}'s mistake?"
+            f"{increase}/{new_val} = {wrong_pct}%. "
+            f"What is {name}'s error? "
+            f"(A) Divided by the new value instead of the original. "
+            f"(B) Subtracted instead of dividing. "
+            f"(C) Used the wrong change amount. "
+            f"(D) There is no error."
         )
-        answer = (
-            f"{name} divided by the new value instead of the original. "
-            f"Percent increase = {increase}/{original} × 100 = {pct}%."
-        )
+        answer = "A"
         hints = (
             "Percent change is always calculated relative to the original value.",
             f"The increase is {increase}. Divide by the starting value: {original}.",
+            f"Correct: {increase}/{original} × 100 = {pct}%.",
         )
         misconceptions = {
-            "PCT.ERROR.AGREE_WRONG_BASE": f"{wrong_pct}%",
+            "PCT.ERROR.AGREE_WRONG_BASE": "D",
+            "PCT.ERROR.WRONG_OPERATION": "B",
         }
         return prompt, answer, hints, misconceptions
 

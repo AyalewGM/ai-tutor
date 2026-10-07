@@ -8,11 +8,27 @@ from non-proportional, multi-step proportional reasoning, and reasoning tasks.
 from __future__ import annotations
 
 import random
+from decimal import ROUND_HALF_UP, Decimal
 
 from app.canonical_problem_families import (
     ALL_MODES,
     ProblemFamilySpec,
 )
+
+_CENTS = Decimal("0.01")
+
+
+def _money(val: Decimal) -> str:
+    """Format a Decimal as a dollar string with proper cent handling."""
+    rounded = val.quantize(_CENTS, rounding=ROUND_HALF_UP)
+    if rounded == rounded.to_integral_value():
+        return f"${int(rounded)}"
+    return f"${rounded}"
+
+
+def _pct_of(amount: Decimal, pct: int) -> Decimal:
+    """Compute pct% of amount using exact Decimal arithmetic, rounded to cents."""
+    return (amount * pct / 100).quantize(_CENTS, rounding=ROUND_HALF_UP)
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -79,7 +95,7 @@ FAMILIES: dict[str, ProblemFamilySpec] = {
 def build(family_code: str, rng: random.Random, difficulty: int):
     """Return (prompt, answer, hints, misconceptions) for *family_code*."""
 
-    # --- identify proportional ---
+    # --- identify proportional (structured: Yes/No) ---
     if family_code == "MATH.PROP.IDENTIFY":
         is_prop = rng.choice([True, False])
         k = rng.randint(2, 5 + difficulty)
@@ -90,23 +106,22 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             xs.append(xs[-1] + 1)
         if is_prop:
             pairs = [(x, k * x) for x in xs]
-            answer = "Yes, the relationship is proportional."
+            answer = "Yes"
         else:
             pairs = [(x, k * x + offset) for x in xs]
-            answer = "No, the relationship is not proportional."
+            answer = "No"
         table_str = " | ".join(f"({x}, {y})" for x, y in pairs)
-        prompt = f"Is the relationship shown in this table proportional? {table_str}"
+        prompt = (
+            f"Is the relationship shown in this table proportional? {table_str} "
+            f"Answer Yes or No."
+        )
         hints = (
             "Check whether y/x gives the same value for every pair.",
             (f"For the first pair, y/x = {pairs[0][1]}/{pairs[0][0]}."
              f" For the second, y/x = {pairs[1][1]}/{pairs[1][0]}."),
         )
         misconceptions = {
-            "PROP.IDENTIFY.CONSTANT_DIFF": (
-                "Yes, the relationship is proportional."
-                if not is_prop else
-                "No, the relationship is not proportional."
-            ),
+            "PROP.IDENTIFY.CONSTANT_DIFF": "Yes" if not is_prop else "No",
         }
         return prompt, answer, hints, misconceptions
 
@@ -222,7 +237,7 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         }
         return prompt, answer, hints, misconceptions
 
-    # --- non-proportional ---
+    # --- non-proportional (structured: Yes/No) ---
     if family_code == "MATH.PROP.NONPROPORTIONAL":
         k = rng.randint(2, 5 + difficulty)
         offset = rng.randint(1, 4 + difficulty)
@@ -234,46 +249,47 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         prompt = (
             f"A table shows: {table_str}. "
             "Jamie says this is proportional because the difference between "
-            "consecutive y-values is constant. Is Jamie correct?"
+            "consecutive y-values is constant. Is Jamie correct? "
+            "Answer Yes or No."
         )
-        answer = (
-            f"No. A constant difference means linear, not proportional. "
-            f"y/x is not constant: {pairs[0][1]}/{pairs[0][0]} ≠ {pairs[1][1]}/{pairs[1][0]}."
-        )
+        answer = "No"
         hints = (
             "Proportional means y/x is the same for every row, not just that y increases at a constant rate.",
             "Check: does dividing y by x give the same result each time?",
+            f"y/x for the first pair: {pairs[0][1]}/{pairs[0][0]} ≠ {pairs[1][1]}/{pairs[1][0]}.",
         )
         misconceptions = {
-            "PROP.NONPROP.CONSTANT_DIFF_IS_PROP": "Yes, it is proportional.",
+            "PROP.NONPROP.CONSTANT_DIFF_IS_PROP": "Yes",
         }
         return prompt, answer, hints, misconceptions
 
     # --- multi-step ---
     if family_code == "MATH.PROP.MULTISTEP":
-        price_per = rng.randint(2, 5 + difficulty)
+        price_per_cents = rng.randint(200, 500 + difficulty * 100)
+        price_per = Decimal(price_per_cents) / Decimal(100)
         qty = rng.randint(3, 8 + difficulty)
         tax_pct = rng.choice([5, 8, 10])
         subtotal = price_per * qty
-        tax = subtotal * tax_pct // 100
+        tax = _pct_of(subtotal, tax_pct)
         total = subtotal + tax
         prompt = (
-            f"Pens cost ${price_per} each. You buy {qty} pens and pay {tax_pct}% sales tax. "
+            f"Pens cost {_money(price_per)} each. You buy {qty} pens and pay {tax_pct}% sales tax. "
             "What is the total cost?"
         )
-        answer = f"${total}"
+        answer = _money(total)
         hints = (
-            f"First find the subtotal: {price_per} × {qty}.",
+            f"First find the subtotal: {_money(price_per)} × {qty}.",
             f"Then calculate {tax_pct}% of the subtotal and add it.",
-            f"${subtotal} + ${tax} = ${total}.",
+            f"{_money(subtotal)} + {_money(tax)} = {_money(total)}.",
         )
+        tax_on_one = _pct_of(price_per, tax_pct)
         misconceptions = {
-            "PROP.MULTI.TAX_ON_ONE": f"${price_per + price_per * tax_pct // 100}",
-            "PROP.MULTI.FORGET_TAX": f"${subtotal}",
+            "PROP.MULTI.TAX_ON_ONE": _money(price_per + tax_on_one),
+            "PROP.MULTI.FORGET_TAX": _money(subtotal),
         }
         return prompt, answer, hints, misconceptions
 
-    # --- why cross multiply ---
+    # --- why cross multiply (structured MC) ---
     if family_code == "MATH.PROP.CROSS_MULTIPLY.WHY":
         a = rng.randint(2, 5)
         b = rng.randint(2, 5)
@@ -283,20 +299,21 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             d = rng.randint(2, 5)
             c = rng.randint(2, 5)
         prompt = (
-            f"Explain why cross-multiplying works to solve {a}/{b} = {c}/{d}. "
-            "What mathematical property justifies this step?"
+            f"Why does cross-multiplying work to solve {a}/{b} = {c}/{d}? "
+            f"(A) Multiplying both sides by {b}×{d} clears the denominators. "
+            f"(B) You just multiply diagonally — it is a rule. "
+            f"(C) You flip both fractions and multiply. "
+            f"(D) You add the denominators."
         )
-        answer = (
-            f"Multiplying both sides of {a}/{b} = {c}/{d} by {b}×{d} eliminates "
-            f"both denominators, giving {a}×{d} = {b}×{c}. This is the multiplication "
-            "property of equality applied to clear fractions."
-        )
+        answer = "A"
         hints = (
             "Think about what happens when you multiply both sides by the LCD.",
             f"If {a}/{b} = {c}/{d}, multiplying both sides by {b}·{d} gives {a}·{d} = {b}·{c}.",
+            "This is the multiplication property of equality applied to clear fractions.",
         )
         misconceptions = {
-            "PROP.CROSS.JUST_A_RULE": "It works because you multiply diagonally.",
+            "PROP.CROSS.JUST_A_RULE": "B",
+            "PROP.CROSS.FLIP_AND_MULTIPLY": "C",
         }
         return prompt, answer, hints, misconceptions
 
