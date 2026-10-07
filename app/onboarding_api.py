@@ -31,6 +31,7 @@ from app.parent_models import (
     ParentStudentRelationshipEvent,
 )
 from app.plan_models import Plan
+from app.services.curriculum_defaults import resolve_default_curriculum
 from app.services.placement import recommend_next_skill
 from app.services.plans import currency_for, effective_seats, localized_price, upgrade_target
 from app.services.problem_generation import content_readiness
@@ -96,7 +97,8 @@ AVATAR_IDS = [f"avatar-{i}" for i in range(1, 9)]
 
 class LearnerCreate(BaseModel):
     first_name: str = Field(min_length=1, max_length=32, pattern=r"^[A-Za-z0-9_-]+$")
-    curriculum_id: uuid.UUID
+    grade_level: str | None = Field(default=None, min_length=1, max_length=30)
+    curriculum_id: uuid.UUID | None = None
     avatar_id: str = Field(default="avatar-1", max_length=80)
 
 
@@ -664,9 +666,35 @@ def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession)
             },
         )
 
-    curriculum = db.get(Curriculum, payload.curriculum_id)
-    if curriculum is None or not curriculum.active:
-        raise HTTPException(status_code=404, detail="Active curriculum not found")
+    if payload.curriculum_id is not None:
+        curriculum = next(
+            (
+                candidate
+                for candidate in _family_visible_curricula(db, locked_parent)
+                if candidate.id == payload.curriculum_id
+            ),
+            None,
+        )
+        if curriculum is None:
+            raise HTTPException(status_code=404, detail="Active curriculum not found")
+        enrollment_source = "parent_onboarding_override"
+    else:
+        resolution = resolve_default_curriculum(
+            db, parent=locked_parent, grade_level=payload.grade_level
+        )
+        if not resolution.resolved:
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "code": "CURRICULUM_SELECTION_REQUIRED",
+                    "reason": resolution.reason,
+                    "candidate_curriculum_ids": [
+                        str(candidate.id) for candidate in resolution.candidates
+                    ],
+                },
+            )
+        curriculum = resolution.curriculum
+        enrollment_source = "location_grade_default"
 
     first_name = payload.first_name.strip()
     if not first_name:
@@ -678,7 +706,7 @@ def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession)
         parent_id=parent.user_id,
         curriculum_id=curriculum.id,
         first_name=first_name,
-        grade_level=curriculum.grade_level or "UNSPECIFIED",
+        grade_level=payload.grade_level or curriculum.grade_level or "UNSPECIFIED",
         school_system=None,
         avatar_id=payload.avatar_id,
     )
@@ -688,7 +716,7 @@ def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession)
         StudentCurriculumEnrollment(
             student_id=student.id,
             curriculum_id=curriculum.id,
-            provenance_json={"source": "parent_onboarding"},
+            provenance_json={"source": enrollment_source},
         )
     )
     relationship = ParentStudentRelationship(
