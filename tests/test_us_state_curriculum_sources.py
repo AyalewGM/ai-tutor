@@ -16,7 +16,7 @@ def test_registry_preserves_high_school_structure_instead_of_inventing_grade9_eq
     assert source_for("CA").grade9_structure is Grade9Structure.PATHWAY
     assert source_for("NY").grade9_structure is Grade9Structure.COURSE
     assert source_for("NJ").grade9_structure is Grade9Structure.COURSE
-    assert source_for("VA").grade9_structure is Grade9Structure.COURSE
+    assert source_for("VA").grade9_structure is Grade9Structure.COURSE\n    assert source_for("TX").grade9_structure is Grade9Structure.COURSE\n    assert source_for("FL").grade9_structure is Grade9Structure.COURSE
 
 
 def test_unknown_state_fails_closed():
@@ -29,7 +29,7 @@ def test_authoritative_sources_are_state_agency_https_urls():
         assert source.source_uri.startswith("https://")
         assert any(
             host in source.source_uri
-            for host in ("cde.ca.gov", "nysed.gov", "nj.gov", "doe.virginia.gov")
+            for host in (\n                "cde.ca.gov",\n                "tea.texas.gov",\n                "fldoe.org",\n                "nysed.gov",\n                "nj.gov",\n                "doe.virginia.gov",\n            )
         )
 
 
@@ -42,11 +42,11 @@ def test_verified_sources_enrich_coverage_without_claiming_completion():
     )
 
     cells = national_coverage_matrix()
-    for code in ("CA", "NY", "NJ", "VA"):
+    for code in ("CA", "TX", "FL", "NY", "NJ", "VA"):
         cells = with_verified_state_source(cells, code)
 
-    verified = [cell for cell in cells if cell.state_code in {"CA", "NY", "NJ", "VA"}]
-    assert len(verified) == 36
+    verified = [cell for cell in cells if cell.state_code in {"CA", "TX", "FL", "NY", "NJ", "VA"}]
+    assert len(verified) == 54
     assert all(cell.source_verified for cell in verified)
     assert completed_cells(tuple(verified)) == 0
-    assert all(not state_complete(cells, code) for code in ("CA", "NY", "NJ", "VA"))
+    assert all(not state_complete(cells, code) for code in ("CA", "TX", "FL", "NY", "NJ", "VA"))
