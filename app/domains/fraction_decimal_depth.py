@@ -192,7 +192,7 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         a = rng.randint(12, 89) / 10
         b = rng.randint(11, 99) / 100
         correct = a + b
-        wrong = (int(round(a * 10)) + int(round(b * 100))) / 10
+        wrong = (round(a * 10) + round(b * 100)) / 10
         if abs(wrong - correct) < 1e-9:
             wrong += 1
         return (
@@ -219,7 +219,7 @@ def build(family_code: str, rng: random.Random, difficulty: int):
                 "type": "decimal_place_value",
                 "whole": 0,
                 "tenths": int(float(value) * 10) % 10,
-                "hundredths": int(round(float(value) * 100)) % 10,
+                "hundredths": round(float(value) * 100) % 10,
                 "value": float(value),
                 "aria_label": f"Decimal place-value chart representing {decimal_value}.",
             },
