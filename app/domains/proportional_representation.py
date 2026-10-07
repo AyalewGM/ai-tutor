@@ -65,7 +65,7 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             f"A proportional table contains the points {pairs}. What is the constant of proportionality k = y/x?",
             str(k),
             ("For a proportional relationship, y/x is constant.", "Divide any y-value by its matching x-value."),
-            {"PROP.CONSTANT.USE_DIFFERENCE": str(pairs[0][1] - pairs[0][0])},
+            {"PROP.CONSTANT.INVERT_RATIO": str(Fraction(pairs[0][0], pairs[0][1]))},
         )
 
     if family_code == "MATH.PROP.EQUATION.FROM_RATE":
@@ -82,10 +82,11 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         )
 
     if family_code == "MATH.PROP.GRAPH.ORIGIN":
+        k = rng.randint(2, 20) + (difficulty - 1) * 30
         return (
             (
-                "A relationship is proportional. Must its graph pass through (0,0)? "
-                "Answer yes or no."
+                f"A proportional relationship is modeled by y={k}x. "
+                "Must its graph pass through (0,0)? Answer yes or no."
             ),
             "yes",
             (
