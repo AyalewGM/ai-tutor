@@ -1,5 +1,6 @@
 import pytest
 
+from app.california_algebra1_gap_audit import CA_ALGEBRA_I_GAPS
 from app.california_gap_audit import california_grade1_8_summary, california_true_gap_keys
 from app.california_grade1_gap_audit import CA_GRADE1_GAPS, CA_GRADE1_STANDARD_CODES
 from app.california_grade2_gap_audit import CA_GRADE2_GAPS, CA_GRADE2_STANDARD_CODES
@@ -228,3 +229,13 @@ def test_california_grade9_pathway_inventories_are_explicit_and_distinct() -> No
     assert "N-RN.1" in CA_ALGEBRA_I_STANDARD_CODES
     assert "G-CO.12" in CA_MATHEMATICS_I_STANDARD_CODES
     assert "G-CO.12" not in CA_ALGEBRA_I_STANDARD_CODES
+
+
+def test_california_algebra1_full_inventory_is_classified_fail_closed() -> None:
+    assert len(CA_ALGEBRA_I_GAPS) == 62
+    assert gap_counts(CA_ALGEBRA_I_GAPS) == {
+        GapStatus.COVERED: 11,
+        GapStatus.PARTIAL: 36,
+        GapStatus.GAP: 15,
+        GapStatus.AMBIGUOUS: 0,
+    }
