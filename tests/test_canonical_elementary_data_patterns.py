@@ -20,7 +20,8 @@ CODES = [
 
 
 def _build(code: str, seed: int = 23):
-    problem = generate(code, seed=seed, difficulty=3)
+    difficulty = min(3, FAMILIES[code].max_difficulty)
+    problem = generate(code, seed=seed, difficulty=difficulty)
     return problem.prompt, problem.canonical_answer, problem.hints, problem.misconception_answers
 
 
