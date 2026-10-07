@@ -76,12 +76,14 @@ from app.domains import advanced_algebra_geometry_data as _advanced_mod
 from app.domains import advanced_algebra_highschool as _advanced_hs_mod
 from app.domains import advanced_number as _advanced_number_mod
 from app.domains import algebra_functions as _alg_mod
+from app.domains import bivariate_sampling as _bivariate_sampling_mod
 from app.domains import decimals as _dec_mod
 from app.domains import division as _div_mod
 from app.domains import elementary_data_patterns as _elementary_data_mod
 from app.domains import estimation as _est_mod
 from app.domains import factors_multiples as _fac_mod
 from app.domains import fractions as _frac_mod
+from app.domains import fraction_decimal_depth as _fraction_decimal_depth_mod
 from app.domains import geometry_measurement as _geo_mod
 from app.domains import integers as _int_mod
 from app.domains import measurement_spatial as _measurement_spatial_mod
@@ -97,9 +99,9 @@ from app.domains import subtraction as _sub_mod
 from app.domains import whole_numbers as _wn_mod
 
 _DOMAIN_MODULES = [
-    _frac_mod, _dec_mod, _ratio_mod, _prop_mod, _pct_mod, _alg_mod,
-    _advanced_number_mod, _advanced_mod, _advanced_hs_mod, _geo_mod, _data_mod,
-    _measurement_spatial_mod, _elementary_data_mod,
+    _frac_mod, _fraction_decimal_depth_mod, _dec_mod, _ratio_mod, _prop_mod, _pct_mod,
+    _alg_mod, _advanced_number_mod, _advanced_mod, _advanced_hs_mod, _geo_mod, _data_mod,
+    _measurement_spatial_mod, _elementary_data_mod, _bivariate_sampling_mod,
     _add_mod, _sub_mod, _mul_mod, _div_mod,
     _wn_mod, _pv_mod, _fac_mod, _ooo_mod, _int_mod, _est_mod, _prop_math_mod,
 ]
