@@ -1,8 +1,6 @@
 from types import SimpleNamespace
 from uuid import uuid4
 
-import pytest
-
 from app.canonical_problem_adapter import materialize_problem
 from app.canonical_problem_families import generate
 from app.services.visualization import visualization_for
@@ -30,14 +28,14 @@ VISUAL_FAMILIES = [
 ]
 
 
-@pytest.mark.parametrize("family_code", VISUAL_FAMILIES)
-def test_canonical_visual_specs_are_deterministic(family_code: str) -> None:
-    first = generate(family_code, seed=41, difficulty=3)
-    second = generate(family_code, seed=41, difficulty=3)
-    assert first.visual_spec == second.visual_spec
-    assert first.visual_spec is not None
-    assert isinstance(first.visual_spec["type"], str)
-    assert first.visual_spec.get("aria_label")
+def test_canonical_visual_specs_are_deterministic() -> None:
+    for family_code in VISUAL_FAMILIES:
+        first = generate(family_code, seed=41, difficulty=3)
+        second = generate(family_code, seed=41, difficulty=3)
+        assert first.visual_spec == second.visual_spec, family_code
+        assert first.visual_spec is not None, family_code
+        assert isinstance(first.visual_spec["type"], str), family_code
+        assert first.visual_spec.get("aria_label"), family_code
 
 
 def test_existing_nonvisual_family_remains_backward_compatible() -> None:
