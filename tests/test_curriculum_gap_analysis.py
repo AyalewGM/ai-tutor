@@ -1,5 +1,6 @@
 import pytest
 
+from app.california_grade2_gap_audit import CA_GRADE2_GAPS, CA_GRADE2_STANDARD_CODES
 from app.california_grade3_gap_audit import CA_GRADE3_GAPS, CA_GRADE3_STANDARD_CODES
 from app.california_grade4_gap_audit import CA_GRADE4_GAPS, CA_GRADE4_STANDARD_CODES
 from app.california_grade5_gap_audit import CA_GRADE5_GAPS, CA_GRADE5_STANDARD_CODES
@@ -169,6 +170,17 @@ def test_california_grade3_inventory_is_complete_without_fake_gaps() -> None:
     assert gap_counts(CA_GRADE3_GAPS) == {
         GapStatus.COVERED: 15,
         GapStatus.PARTIAL: 10,
+        GapStatus.GAP: 0,
+        GapStatus.AMBIGUOUS: 0,
+    }
+
+
+def test_california_grade2_inventory_is_complete_without_fake_gaps() -> None:
+    assert len(CA_GRADE2_STANDARD_CODES) == 26
+    assert len(CA_GRADE2_GAPS) == 26
+    assert gap_counts(CA_GRADE2_GAPS) == {
+        GapStatus.COVERED: 11,
+        GapStatus.PARTIAL: 15,
         GapStatus.GAP: 0,
         GapStatus.AMBIGUOUS: 0,
     }
