@@ -667,15 +667,8 @@ def create_learner(payload: LearnerCreate, parent: CurrentParent, db: DbSession)
         )
 
     if payload.curriculum_id is not None:
-        curriculum = next(
-            (
-                candidate
-                for candidate in _family_visible_curricula(db, locked_parent)
-                if candidate.id == payload.curriculum_id
-            ),
-            None,
-        )
-        if curriculum is None:
+        curriculum = db.get(Curriculum, payload.curriculum_id)
+        if curriculum is None or not curriculum.active:
             raise HTTPException(status_code=404, detail="Active curriculum not found")
         enrollment_source = "parent_onboarding_override"
     else:
