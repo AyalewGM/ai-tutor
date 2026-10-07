@@ -18,11 +18,13 @@ def test_postgres_learner_erase_isolated_and_preserves_shared_curriculum():
     """
     db = SessionLocal()
     marker = uuid.uuid4().hex[:10]
+    user = None
+    parent = None
     try:
-        curriculum = db.scalar(select(Curriculum).limit(1))
-        assert curriculum is not None
-        skill = db.scalar(select(Skill).where(Skill.curriculum_id == curriculum.id).limit(1))
+        skill = db.scalar(select(Skill).where(Skill.curriculum_id.is_not(None)).limit(1))
         assert skill is not None
+        curriculum = db.get(Curriculum, skill.curriculum_id)
+        assert curriculum is not None
 
         user = User(email=f"privacy-{marker}@example.invalid", role="PARENT")
         db.add(user)
@@ -102,20 +104,26 @@ def test_postgres_learner_erase_isolated_and_preserves_shared_curriculum():
         db.rollback()
         # The target is gone, but remove the synthetic sibling/family fixture.
         try:
-            sibling_row = db.scalar(select(Student).where(Student.first_name == "SyntheticSibling", Student.parent_id == user.id))
-            if sibling_row is not None:
-                sibling_rel = db.scalar(
-                    select(ParentStudentRelationship).where(
-                        ParentStudentRelationship.parent_profile_id == parent.id,
-                        ParentStudentRelationship.student_id == sibling_row.id,
+            if user is not None and parent is not None:
+                sibling_row = db.scalar(
+                    select(Student).where(
+                        Student.first_name == "SyntheticSibling",
+                        Student.parent_id == user.id,
                     )
                 )
-                if sibling_rel is not None:
-                    erase_learner_transactional(db, parent=parent, learner_id=sibling_row.id)
-            db.flush()
-            db.delete(parent)
-            db.flush()
-            db.delete(user)
-            db.commit()
+                if sibling_row is not None:
+                    sibling_rel = db.scalar(
+                        select(ParentStudentRelationship).where(
+                            ParentStudentRelationship.parent_profile_id == parent.id,
+                            ParentStudentRelationship.student_id == sibling_row.id,
+                        )
+                    )
+                    if sibling_rel is not None:
+                        erase_learner_transactional(db, parent=parent, learner_id=sibling_row.id)
+                db.flush()
+                db.delete(parent)
+                db.flush()
+                db.delete(user)
+                db.commit()
         finally:
             db.close()

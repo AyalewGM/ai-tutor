@@ -7,12 +7,7 @@ A proof slice never implies complete grade coverage.
 
 from dataclasses import dataclass, replace
 
-from app.california_curriculum import (
-    CA_AUTHORITY_CODE,
-    CA_CURRICULUM_VERSION,
-    CA_LIFECYCLE_STATUS,
-    CA_SOURCE_URI,
-)
+from app.us_state_curriculum_sources import source_for
 
 GRADES = tuple(range(1, 10))
 STATE_CODES = (
@@ -64,21 +59,32 @@ def state_complete(cells: tuple[CoverageCell, ...], state_code: str) -> bool:
     return len(state_cells) == len(GRADES) and all(cell.complete for cell in state_cells)
 
 
-def with_verified_california_source(
-    cells: tuple[CoverageCell, ...],
+def with_verified_state_source(
+    cells: tuple[CoverageCell, ...], state_code: str
 ) -> tuple[CoverageCell, ...]:
-    """Attach verified California source identity without overstating completion."""
+    """Attach verified source identity only; never mark content gates complete."""
 
+    source = source_for(state_code)
+    if source is None:
+        return cells
     return tuple(
         replace(
             cell,
-            authority_code=CA_AUTHORITY_CODE,
-            source_uri=CA_SOURCE_URI,
-            curriculum_version=CA_CURRICULUM_VERSION,
-            lifecycle_status=CA_LIFECYCLE_STATUS,
+            authority_code=source.authority_code,
+            source_uri=source.source_uri,
+            curriculum_version=source.version,
+            lifecycle_status=source.lifecycle_status,
             source_verified=True,
         )
-        if cell.state_code == "CA"
+        if cell.state_code == source.state_code
         else cell
         for cell in cells
     )
+
+
+def with_verified_california_source(
+    cells: tuple[CoverageCell, ...],
+) -> tuple[CoverageCell, ...]:
+    """Backward-compatible California wrapper over the shared source registry."""
+
+    return with_verified_state_source(cells, "CA")
