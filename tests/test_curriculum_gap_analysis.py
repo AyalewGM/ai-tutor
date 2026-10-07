@@ -1,5 +1,6 @@
 import pytest
 
+from app.california_grade7_gap_audit import CA_GRADE7_GAPS, CA_GRADE7_STANDARD_CODES
 from app.california_grade8_gap_audit import CA_GRADE8_GAPS, CA_GRADE8_STANDARD_CODES
 from app.curriculum_gap_analysis import (
     GapStatus,
@@ -95,4 +96,23 @@ def test_california_grade8_inventory_is_complete_and_exposes_depth_not_fake_gaps
     assert true_gaps == {
         "gap:irrational-number-concept",
         "gap:irrational-approximation",
+    }
+
+
+def test_california_grade7_inventory_is_complete_and_exposes_true_gaps() -> None:
+    assert len(CA_GRADE7_STANDARD_CODES) == 24
+    assert len(CA_GRADE7_GAPS) == 24
+    counts = gap_counts(CA_GRADE7_GAPS)
+    assert counts == {
+        GapStatus.COVERED: 13,
+        GapStatus.PARTIAL: 9,
+        GapStatus.GAP: 2,
+        GapStatus.AMBIGUOUS: 0,
+    }
+    true_gaps = {
+        item.rationale for item in CA_GRADE7_GAPS if item.status == GapStatus.GAP
+    }
+    assert true_gaps == {
+        "gap:geometric-construction-conditions",
+        "gap:solid-cross-sections",
     }
