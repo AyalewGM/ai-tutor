@@ -43,17 +43,17 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             values = [rng.randint(2, target + 3) for _ in range(n - 1)]
             values.append(n * target - sum(values))
         rng.shuffle(values)
-        return f"Find the mean of: {', '.join(map(str, values))}.", str(target), ("Add all values.", f"Divide the total by the {n} values."), {"DATA.MEAN.DIVIDE_BY_WRONG_COUNT": str(sum(values) // max(1, n - 1))}
+        return f"Find the mean of: {', '.join(map(str, values))}.", str(target), ("Add all values.", f"Divide the total by the {n} values."), {"DATA.MEAN.DIVIDE_BY_WRONG_COUNT": str(sum(values) // max(1, n - 1))}, {"type": "dot_plot", "data": values, "aria_label": "Dot plot of the data values used to find the mean."}
     if family_code == "MATH.DATA.MEDIAN":
         n = rng.choice([5, 7])
         values = rng.sample(range(2, 30), n)
         answer = int(statistics.median(values))
         wrong = values[n // 2]
-        return f"Find the median of: {', '.join(map(str, values))}.", str(answer), ("Order the data from least to greatest.", "Choose the middle value after ordering."), {"DATA.MEDIAN.NO_SORT": str(wrong)}
+        return f"Find the median of: {', '.join(map(str, values))}.", str(answer), ("Order the data from least to greatest.", "Choose the middle value after ordering."), {"DATA.MEDIAN.NO_SORT": str(wrong)}, {"type": "dot_plot", "data": values, "aria_label": "Dot plot of the data values used to find the median."}
     if family_code == "MATH.DATA.RANGE":
         values = rng.sample(range(1, 35), rng.choice([5, 6, 7]))
         answer = max(values) - min(values)
-        return f"Find the range of: {', '.join(map(str, values))}.", str(answer), ("Identify the greatest and least values.", "Subtract the least from the greatest."), {"DATA.RANGE.USE_MAX": str(max(values))}
+        return f"Find the range of: {', '.join(map(str, values))}.", str(answer), ("Identify the greatest and least values.", "Subtract the least from the greatest."), {"DATA.RANGE.USE_MAX": str(max(values))}, {"type": "dot_plot", "data": values, "aria_label": "Dot plot showing the spread of the data values."}
     if family_code == "MATH.DATA.MISSING_MEAN":
         n = rng.choice([4, 5, 6])
         mean = rng.randint(6, 18)
@@ -66,19 +66,19 @@ def build(family_code: str, rng: random.Random, difficulty: int):
     if family_code == "MATH.DATA.OUTLIER.CENTER":
         core = sorted(rng.sample(range(6, 16), 5))
         outlier = rng.randint(35, 50)
-        return f"The data are {', '.join(map(str, core + [outlier]))}. Which measure of center is less affected by the outlier: mean or median?", "median", ("An outlier pulls some measures toward an extreme.", "The median depends on position rather than the size of every value."), {"DATA.OUTLIER.MEAN": "mean"}
+        return f"The data are {', '.join(map(str, core + [outlier]))}. Which measure of center is less affected by the outlier: mean or median?", "median", ("An outlier pulls some measures toward an extreme.", "The median depends on position rather than the size of every value."), {"DATA.OUTLIER.MEAN": "mean"}, {"type": "dot_plot", "data": core + [outlier], "highlight": outlier, "aria_label": "Dot plot with one value far from the main cluster."}
     if family_code in {"MATH.DATA.FREQ.JOINT", "MATH.DATA.FREQ.CONDITIONAL"}:
         a, b, c, d = [rng.randint(4, 18) for _ in range(4)]
         total = a + b + c + d
         if family_code == "MATH.DATA.FREQ.JOINT":
-            return f"A two-way table has counts [[{a},{b}],[{c},{d}]]. What fraction of all observations are in the first-row, first-column cell?", _frac(a, total), ("Joint relative frequency uses the grand total.", f"Divide the cell count {a} by {total}."), {"DATA.FREQ.USE_ROW_TOTAL": _frac(a, a + b)}
-        return f"A two-way table has counts [[{a},{b}],[{c},{d}]]. Among observations in the first row, what fraction are in the first column?", _frac(a, a + b), ("Conditional frequency uses the total of the given group.", f"Use first-row total {a + b} as the denominator."), {"DATA.FREQ.USE_GRAND_TOTAL": _frac(a, total)}
+            return f"A two-way table has counts [[{a},{b}],[{c},{d}]]. What fraction of all observations are in the first-row, first-column cell?", _frac(a, total), ("Joint relative frequency uses the grand total.", f"Divide the cell count {a} by {total}."), {"DATA.FREQ.USE_ROW_TOTAL": _frac(a, a + b)}, {"type": "frequency_table", "row_labels": ["Group 1", "Group 2"], "col_labels": ["Category 1", "Category 2"], "cells": [[a, b], [c, d]], "row_totals": [a + b, c + d], "col_totals": [a + c, b + d], "grand_total": total, "aria_label": "Two-way frequency table with two groups and two categories."}
+        return f"A two-way table has counts [[{a},{b}],[{c},{d}]]. Among observations in the first row, what fraction are in the first column?", _frac(a, a + b), ("Conditional frequency uses the total of the given group.", f"Use first-row total {a + b} as the denominator."), {"DATA.FREQ.USE_GRAND_TOTAL": _frac(a, total)}, {"type": "frequency_table", "row_labels": ["Group 1", "Group 2"], "col_labels": ["Category 1", "Category 2"], "cells": [[a, b], [c, d]], "row_totals": [a + b, c + d], "col_totals": [a + c, b + d], "grand_total": total, "aria_label": "Two-way frequency table for conditional relative-frequency reasoning."}
     if family_code in {"MATH.PROB.SIMPLE", "MATH.PROB.COMPLEMENT"}:
         total = rng.randint(5, 12)
         favorable = rng.randint(1, total - 1)
         if family_code == "MATH.PROB.SIMPLE":
-            return f"A bag has {total} equally likely marbles, {favorable} of them blue. What is the probability of drawing blue?", _frac(favorable, total), ("Probability is favorable outcomes over all equally likely outcomes.", f"Use {favorable} over {total} and simplify."), {"PROB.SIMPLE.INVERT": _frac(total, favorable)}
-        return f"A bag has {total} equally likely marbles, {favorable} of them blue. What is the probability of drawing a marble that is not blue?", _frac(total - favorable, total), ("A complement includes every outcome outside the event.", "Subtract the event probability from 1."), {"PROB.COMPLEMENT.EVENT_ITSELF": _frac(favorable, total)}
+            return f"A bag has {total} equally likely marbles, {favorable} of them blue. What is the probability of drawing blue?", _frac(favorable, total), ("Probability is favorable outcomes over all equally likely outcomes.", f"Use {favorable} over {total} and simplify."), {"PROB.SIMPLE.INVERT": _frac(total, favorable)}, {"type": "marble_bag", "marbles": ["blue"] * favorable + ["red"] * (total - favorable), "aria_label": f"Bag containing {favorable} blue and {total - favorable} red marbles."}
+        return f"A bag has {total} equally likely marbles, {favorable} of them blue. What is the probability of drawing a marble that is not blue?", _frac(total - favorable, total), ("A complement includes every outcome outside the event.", "Subtract the event probability from 1."), {"PROB.COMPLEMENT.EVENT_ITSELF": _frac(favorable, total)}, {"type": "marble_bag", "marbles": ["blue"] * favorable + ["red"] * (total - favorable), "aria_label": f"Bag containing {favorable} blue and {total - favorable} non-blue marbles."}
     if family_code == "MATH.PROB.SAMPLE_SPACE":
         spinner = rng.randint(3, 8)
         die = rng.choice([4, 6, 8])

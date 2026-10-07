@@ -47,6 +47,7 @@ def materialize_problem(
             "hints": list(generated.hints),
             "misconception_answers": generated.misconception_answers,
             "provenance": generated.provenance,
+            "visual_spec": generated.visual_spec,
         },
         source_type="CANONICAL_GENERATED",
     )
