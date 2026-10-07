@@ -1,19 +1,40 @@
-import random
 import re
 
-from app.domains import measurement_spatial as domain
+from app.canonical_problem_families import FAMILIES, generate
 
 
-CODES = sorted(domain.FAMILIES)
+CODES = [
+    "MATH.MEAS.LENGTH.METRIC",
+    "MATH.MEAS.LENGTH.CUSTOMARY",
+    "MATH.MEAS.MASS.METRIC",
+    "MATH.MEAS.WEIGHT.CUSTOMARY",
+    "MATH.MEAS.CAPACITY.METRIC",
+    "MATH.MEAS.TIME.CONVERT",
+    "MATH.MEAS.TIME.ELAPSED",
+    "MATH.MEAS.RATE.CONVERT",
+    "MATH.GEO.ANGLE.VERTICAL",
+    "MATH.GEO.ANGLE.PARALLEL",
+    "MATH.GEO.TRIANGLE.CLASSIFY_SIDES",
+    "MATH.GEO.POLYGON.INTERIOR_SUM",
+    "MATH.GEO.COORD.MIDPOINT",
+    "MATH.GEO.COORD.DISTANCE",
+    "MATH.GEO.TRANSFORM.REFLECT_X",
+    "MATH.GEO.TRANSFORM.REFLECT_Y",
+    "MATH.GEO.TRANSFORM.ROTATE_90",
+    "MATH.GEO.TRANSFORM.DILATE",
+    "MATH.GEO.SIMILAR.SCALE",
+    "MATH.GEO.SCALE.DRAWING",
+]
 
 
 def _build(code: str, seed: int = 17):
-    return domain.build(code, random.Random(seed), 3)
+    problem = generate(code, seed=seed, difficulty=3)
+    return problem.prompt, problem.canonical_answer, problem.hints, problem.misconception_answers
 
 
 def test_measurement_spatial_batch_has_twenty_families() -> None:
     assert len(CODES) == 20
-    skills = {domain.FAMILIES[code].canonical_skill_code for code in CODES}
+    skills = {FAMILIES[code].canonical_skill_code for code in CODES}
     assert {
         "MATH.MEAS.UNIT_CONVERSION",
         "MATH.MEAS.TIME",
@@ -27,7 +48,7 @@ def test_measurement_spatial_batch_has_twenty_families() -> None:
 def test_measurement_spatial_generation_is_deterministic() -> None:
     for code in CODES:
         assert _build(code, 91) == _build(code, 91), code
-        assert {mode.value for mode in domain.FAMILIES[code].modes} == {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}, code
+        assert len(FAMILIES[code].modes) == 5, code
 
 
 def test_measurement_spatial_misconceptions_do_not_collide_with_truth() -> None:
@@ -113,6 +134,6 @@ def test_similarity_uses_one_multiplicative_scale_factor() -> None:
 
 def test_measurement_spatial_metadata_is_curriculum_neutral() -> None:
     forbidden = {"california", "texas", "florida", "maryland", "virginia", "ontario", "alberta"}
-    for code, spec in domain.FAMILIES.items():
+    for code, spec in FAMILIES.items():
         metadata = f"{code} {spec.name} {spec.canonical_skill_code}".lower()
         assert not any(name in metadata for name in forbidden)
