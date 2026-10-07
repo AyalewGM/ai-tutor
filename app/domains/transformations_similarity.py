@@ -34,20 +34,10 @@ FAMILIES = {
         "MATH.GEO.TRANSFORMATIONS", "TRANSFORMATION", 2, 4,
         "representation", "spatial_reasoning",
     ),
-    "MATH.GEO.TRANSFORM.COMPOSE": _spec(
-        "MATH.GEO.TRANSFORM.COMPOSE", "Compose a translation and reflection",
-        "MATH.GEO.TRANSFORMATIONS", "TRANSFORMATION", 3, 4,
-        "representation", "spatial_reasoning", "operation_sequence",
-    ),
     "MATH.GEO.RIGID.DISTANCE": _spec(
         "MATH.GEO.RIGID.DISTANCE", "Reason about distance under rigid motions",
         "MATH.GEO.CONGRUENCE", "GEOMETRIC_REASONING", 2, 4,
         "conceptual_understanding", "reasoning",
-    ),
-    "MATH.GEO.CONGRUENCE.RIGID": _spec(
-        "MATH.GEO.CONGRUENCE.RIGID", "Identify a congruence-preserving transformation",
-        "MATH.GEO.CONGRUENCE", "CLASSIFICATION", 2, 4,
-        "conceptual_understanding", "properties",
     ),
     "MATH.GEO.SIMILAR.REVERSE_SCALE": _spec(
         "MATH.GEO.SIMILAR.REVERSE_SCALE", "Recover an original similar-figure length",
@@ -58,11 +48,6 @@ FAMILIES = {
         "MATH.GEO.SIMILAR.PERIMETER_SCALE", "Scale perimeter under dilation",
         "MATH.GEO.SIMILARITY", "SIMILARITY", 2, 4,
         "proportional_reasoning", "measurement",
-    ),
-    "MATH.GEO.SIMILAR.AREA_SCALE": _spec(
-        "MATH.GEO.SIMILAR.AREA_SCALE", "Scale area under dilation",
-        "MATH.GEO.SIMILARITY", "SIMILARITY", 3, 4,
-        "proportional_reasoning", "reasoning", "measurement",
     ),
     "MATH.GEO.SIMILAR.VOLUME_SCALE": _spec(
         "MATH.GEO.SIMILAR.VOLUME_SCALE", "Scale volume under dilation",
@@ -125,16 +110,6 @@ def build(family_code: str, rng: random.Random, difficulty: int):
                 "aria_label": f"Coordinate plane with preimage point at ({x}, {y}) for a 180 degree rotation.",
             },
         )
-    if family_code == "MATH.GEO.TRANSFORM.COMPOSE":
-        x, y = rng.randint(-5, 5), rng.randint(-5, 5)
-        dx, dy = rng.choice([-3, -2, 2, 3]), rng.choice([-3, -2, 2, 3])
-        tx, ty = x + dx, y + dy
-        return (
-            f"Start at ({x},{y}). Translate by <{dx},{dy}>, then reflect across the x-axis. Give the final x,y.",
-            _point(tx, -ty),
-            ("Apply transformations in the stated order.", "Translate first; then keep x and negate y for the reflection."),
-            {"GEO.COMPOSE.REVERSE_ORDER": _point(x + dx, -y + dy)},
-        )
     if family_code == "MATH.GEO.RIGID.DISTANCE":
         length = rng.randint(3, 18)
         motion = rng.choice(["translation", "reflection", "rotation"])
@@ -143,18 +118,6 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             str(length),
             ("Translations, reflections, and rotations are rigid motions.", "Rigid motions preserve distance."),
             {"GEO.RIGID.CHANGE_LENGTH": str(length + rng.choice([1, 2, 3]))},
-        )
-    if family_code == "MATH.GEO.CONGRUENCE.RIGID":
-        scale = rng.choice([2, 3, 4])
-        return (
-            (
-                "Which transformation always preserves lengths and angles? "
-                f"(A) dilation by factor {scale} (B) translation "
-                "(C) horizontal stretch (D) vertical stretch"
-            ),
-            "B",
-            ("Congruence requires equal corresponding lengths and angles.", "A translation is a rigid motion."),
-            {"GEO.CONGRUENCE.DILATION": "A"},
         )
     if family_code == "MATH.GEO.SIMILAR.REVERSE_SCALE":
         original = rng.randint(3, 12)
@@ -174,15 +137,6 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             str(perimeter * scale),
             ("Every side length is multiplied by the scale factor.", "Perimeter is a sum of side lengths, so it scales by the same factor."),
             {"GEO.SIMILAR.PERIMETER.SQUARE_SCALE": str(perimeter * scale * scale)},
-        )
-    if family_code == "MATH.GEO.SIMILAR.AREA_SCALE":
-        area = rng.randint(6, 40)
-        scale = rng.choice([2, 3, 4])
-        return (
-            f"A figure has area {area} square units. It is dilated by scale factor {scale}. What is the image area?",
-            str(area * scale * scale),
-            ("A dilation multiplies each linear dimension by the scale factor.", "Area therefore scales by the square of the scale factor."),
-            {"GEO.SIMILAR.AREA.LINEAR_SCALE": str(area * scale)},
         )
     if family_code == "MATH.GEO.SIMILAR.VOLUME_SCALE":
         volume = rng.randint(4, 25)
