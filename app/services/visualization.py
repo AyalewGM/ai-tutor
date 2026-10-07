@@ -1424,6 +1424,10 @@ def chat_cpa_block(spec: dict | None) -> str | None:
 
 def visualization_for(problem: Problem) -> dict | None:
     """Return a declarative visual spec for a problem, or None."""
+    solution = problem.solution or {}
+    canonical_spec = solution.get("visual_spec")
+    if isinstance(canonical_spec, dict) and isinstance(canonical_spec.get("type"), str):
+        return canonical_spec
     if problem.problem_type == "SOLVE_EQUATION":
         return _balance_scale(problem)
     if problem.problem_type in {"FRACTION_OPERATIONS", "FRACTION_SUBTRACT"}:
