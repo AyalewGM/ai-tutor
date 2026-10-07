@@ -62,7 +62,7 @@ def test_mixed_addition_matches_fraction_oracle() -> None:
     for seed in range(15):
         prompt, answer, _, _ = _build("MATH.FRAC.MIXED.ADD", seed)
         match = re.fullmatch(
-            r"Add (\\d+) (\\d+)/(\\d+) \\+ (\\d+) (\\d+)/(\\d+)\\.",
+            r"Add (\d+) (\d+)/(\d+) \+ (\d+) (\d+)/(\d+)\.",
             prompt,
         )
         assert match
@@ -75,7 +75,7 @@ def test_mixed_subtraction_matches_fraction_oracle() -> None:
     for seed in range(15):
         prompt, answer, _, _ = _build("MATH.FRAC.MIXED.SUB", seed)
         match = re.fullmatch(
-            r"Subtract (\\d+) (\\d+)/(\\d+) - (\\d+) (\\d+)/(\\d+)\\.",
+            r"Subtract (\d+) (\d+)/(\d+) - (\d+) (\d+)/(\d+)\.",
             prompt,
         )
         assert match
