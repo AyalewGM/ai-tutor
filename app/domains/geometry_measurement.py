@@ -50,17 +50,17 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         b, h = rng.randint(4, 16), rng.randint(3, 12)
         if b * h % 2:
             b += 1
-        return f"A triangle has base {b} units and perpendicular height {h} units. What is its area?", str(b * h // 2), ("Use the perpendicular height.", "Triangle area is one half of base times height."), {"GEO.AREA.TRI.NO_HALF": str(b * h)}
+        return f"A triangle has base {b} units and perpendicular height {h} units. What is its area?", str(b * h // 2), ("Use the perpendicular height.", "Triangle area is one half of base times height."), {"GEO.AREA.TRI.NO_HALF": str(b * h)}, {"type": "shape_area", "shape": "triangle", "base": b, "height": h, "aria_label": f"Triangle with base {b} and perpendicular height {h}."}
     if family_code == "MATH.GEO.AREA.PARALLELOGRAM":
         b, h = rng.randint(4, 15), rng.randint(3, 11)
         slant = h + rng.randint(1, 5)
-        return f"A parallelogram has base {b}, perpendicular height {h}, and slant side {slant}. What is its area?", str(b * h), ("Use the perpendicular height, not the slant side.", "Multiply base by perpendicular height."), {"GEO.AREA.USE_SLANT": str(b * slant)}
+        return f"A parallelogram has base {b}, perpendicular height {h}, and slant side {slant}. What is its area?", str(b * h), ("Use the perpendicular height, not the slant side.", "Multiply base by perpendicular height."), {"GEO.AREA.USE_SLANT": str(b * slant)}, {"type": "shape_area", "shape": "parallelogram", "base": b, "height": h, "slant": slant, "aria_label": f"Parallelogram with base {b}, height {h}, and slant side {slant}."}
     if family_code == "MATH.GEO.AREA.TRAPEZOID":
         a, b, h = rng.randint(3, 8), rng.randint(9, 16), rng.randint(2, 10)
         if (a + b) * h % 2:
             h += 1
         correct = (a + b) * h // 2
-        return f"A trapezoid has parallel bases {a} and {b} and height {h}. What is its area?", str(correct), ("Add the parallel bases.", "Multiply their sum by the height, then divide by 2."), {"GEO.AREA.TRAP.NO_HALF": str((a + b) * h)}
+        return f"A trapezoid has parallel bases {a} and {b} and height {h}. What is its area?", str(correct), ("Add the parallel bases.", "Multiply their sum by the height, then divide by 2."), {"GEO.AREA.TRAP.NO_HALF": str((a + b) * h)}, {"type": "shape_area", "shape": "trapezoid", "base": b, "top": a, "height": h, "aria_label": f"Trapezoid with parallel bases {a} and {b} and height {h}."}
     if family_code == "MATH.GEO.AREA.COMPOSITE":
         w, h = rng.randint(8, 15), rng.randint(7, 13)
         a, b = rng.randint(2, w - 3), rng.randint(2, h - 3)
@@ -68,7 +68,7 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         return f"An L-shaped region is formed from a {w} by {h} rectangle with a {a} by {b} rectangular corner removed. What is its area?", str(correct), ("Find the area of the full outer rectangle.", "Subtract the area of the removed corner."), {"GEO.AREA.COMPOSITE.IGNORE_CUTOUT": str(w * h)}
     if family_code == "MATH.GEO.VOLUME.PRISM":
         l, w, h = rng.randint(2, 9), rng.randint(2, 9), rng.randint(2, 9)
-        return f"A rectangular prism has length {l}, width {w}, and height {h}. What is its volume?", str(l * w * h), ("Volume counts cubic units.", "Multiply length, width, and height."), {"GEO.VOLUME.OMIT_DIMENSION": str(l * w)}
+        return f"A rectangular prism has length {l}, width {w}, and height {h}. What is its volume?", str(l * w * h), ("Volume counts cubic units.", "Multiply length, width, and height."), {"GEO.VOLUME.OMIT_DIMENSION": str(l * w)}, {"type": "volume_model", "solid": "rectangular_prism", "l": l, "w": w, "h": h, "aria_label": f"Rectangular prism with dimensions {l} by {w} by {h}."}
     if family_code == "MATH.GEO.SURFACE.PRISM":
         l, w, h = rng.randint(2, 8), rng.randint(2, 8), rng.randint(2, 8)
         correct = 2 * (l * w + l * h + w * h)
@@ -77,18 +77,18 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         angle = rng.choice([25, 40, 65, 90, 105, 125, 150, 180])
         answer = "acute" if angle < 90 else "right" if angle == 90 else "obtuse" if angle < 180 else "straight"
         wrong = "obtuse" if answer == "acute" else "acute"
-        return f"Classify a {angle} degree angle.", answer, ("Compare the angle with 90 and 180 degrees.", "Use acute, right, obtuse, or straight."), {"GEO.ANGLE.CLASSIFY": wrong}
+        return f"Classify a {angle} degree angle.", answer, ("Compare the angle with 90 and 180 degrees.", "Use acute, right, obtuse, or straight."), {"GEO.ANGLE.CLASSIFY": wrong}, {"type": "angle", "angle": angle, "labeled": True, "aria_label": f"Angle measuring {angle} degrees."}
     if family_code == "MATH.GEO.ANGLE.COMPLEMENT":
         a = rng.randint(15, 75)
-        return f"Two angles are complementary. One angle measures {a} degrees. What is the other angle?", str(90 - a), ("Complementary angles total 90 degrees.", f"Subtract {a} from 90."), {"GEO.ANGLE.SUPPLEMENT_SWAP": str(180 - a)}
+        return f"Two angles are complementary. One angle measures {a} degrees. What is the other angle?", str(90 - a), ("Complementary angles total 90 degrees.", f"Subtract {a} from 90."), {"GEO.ANGLE.SUPPLEMENT_SWAP": str(180 - a)}, {"type": "angle_pair", "kind": "complementary", "angle": a, "aria_label": "Two adjacent angles forming a right angle; one is unknown."}
     if family_code == "MATH.GEO.ANGLE.SUPPLEMENT":
         a = rng.randint(20, 160)
-        return f"Two angles are supplementary. One angle measures {a} degrees. What is the other angle?", str(180 - a), ("Supplementary angles total 180 degrees.", f"Subtract {a} from 180."), {"GEO.ANGLE.COMPLEMENT_SWAP": str(abs(90 - a))}
+        return f"Two angles are supplementary. One angle measures {a} degrees. What is the other angle?", str(180 - a), ("Supplementary angles total 180 degrees.", f"Subtract {a} from 180."), {"GEO.ANGLE.COMPLEMENT_SWAP": str(abs(90 - a))}, {"type": "angle_pair", "kind": "supplementary", "angle": a, "aria_label": "Two adjacent angles forming a straight line; one is unknown."}
     if family_code == "MATH.GEO.TRIANGLE.MISSING_ANGLE":
         a, b = rng.randint(25, 80), rng.randint(25, 80)
         while a + b >= 155:
             b = rng.randint(25, 70)
-        return f"A triangle has angles of {a} degrees and {b} degrees. What is the third angle?", str(180 - a - b), ("The interior angles of a triangle total 180 degrees.", "Subtract both known angles from 180."), {"GEO.TRIANGLE.USE_360": str(360 - a - b)}
+        return f"A triangle has angles of {a} degrees and {b} degrees. What is the third angle?", str(180 - a - b), ("The interior angles of a triangle total 180 degrees.", "Subtract both known angles from 180."), {"GEO.TRIANGLE.USE_360": str(360 - a - b)}, {"type": "triangle_angles", "a": a, "b": b, "aria_label": "Triangle with two labeled angles and one unknown angle."}
     if family_code == "MATH.GEO.COORD.AXIS_DISTANCE":
         if rng.random() < 0.5:
             x = rng.randint(-6, 6)
@@ -103,10 +103,10 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         return f"What is the distance between ({p1[0]}, {p1[1]}) and ({p2[0]}, {p2[1]})?", str(distance), ("The points share one coordinate.", "Find the absolute difference of the coordinate that changes."), {"GEO.COORD.ADD_COORDINATES": str(wrong)}
     if family_code == "MATH.GEO.PYTHAGOREAN.HYPOTENUSE":
         a, b, c = rng.choice([(3, 4, 5), (5, 12, 13), (6, 8, 10), (8, 15, 17), (9, 12, 15)])
-        return f"A right triangle has legs {a} and {b}. What is the hypotenuse?", str(c), ("Use a squared plus b squared equals c squared.", "Take the square root after adding the squares."), {"GEO.PYTH.NO_ROOT": str(a * a + b * b)}
+        return f"A right triangle has legs {a} and {b}. What is the hypotenuse?", str(c), ("Use a squared plus b squared equals c squared.", "Take the square root after adding the squares."), {"GEO.PYTH.NO_ROOT": str(a * a + b * b)}, {"type": "right_triangle", "leg_a": str(a), "leg_b": str(b), "hyp": "?", "aria_label": f"Right triangle with legs {a} and {b} and unknown hypotenuse."}
     if family_code == "MATH.GEO.TRANSFORM.TRANSLATE_POINT":
         x, y = rng.randint(-6, 6), rng.randint(-6, 6)
         dx, dy = rng.choice([-4, -3, -2, 2, 3, 4]), rng.choice([-4, -3, -2, 2, 3, 4])
         answer = f"({x + dx},{y + dy})"
-        return f"Translate the point ({x}, {y}) by the vector <{dx}, {dy}>. Give the image point.", answer, ("Add the horizontal component to x.", "Add the vertical component to y."), {"GEO.TRANSFORM.SWAP_VECTOR": f"({x + dy},{y + dx})"}
+        return f"Translate the point ({x}, {y}) by the vector <{dx}, {dy}>. Give the image point.", answer, ("Add the horizontal component to x.", "Add the vertical component to y."), {"GEO.TRANSFORM.SWAP_VECTOR": f"({x + dy},{y + dx})"}, {"type": "coordinate_point", "x": x, "y": y, "min": -10, "max": 10, "aria_label": f"Coordinate plane with the preimage point at ({x}, {y})."}
     raise ValueError(f"No geometry/measurement builder for family: {family_code}")
