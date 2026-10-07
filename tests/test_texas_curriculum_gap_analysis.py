@@ -1,6 +1,7 @@
 from app.curriculum_gap_analysis import GapStatus, gap_counts
 from app.texas_grade1_gap_audit import TX_GRADE1_GAPS, TX_GRADE1_STANDARD_CODES
 from app.texas_grade2_gap_audit import TX_GRADE2_GAPS, TX_GRADE2_STANDARD_CODES
+from app.texas_grade3_gap_audit import TX_GRADE3_GAPS, TX_GRADE3_STANDARD_CODES
 
 
 def test_texas_grade1_content_inventory_is_complete() -> None:
@@ -43,4 +44,15 @@ def test_texas_grade2_financial_literacy_reuses_shared_gap() -> None:
     assert len(finance) == 6
     assert {item.rationale for item in finance} == {
         "gap:personal-financial-literacy-foundations"
+    }
+
+
+def test_texas_grade3_content_inventory_is_complete() -> None:
+    assert len(TX_GRADE3_STANDARD_CODES) == 46
+    assert len(TX_GRADE3_GAPS) == 46
+    assert gap_counts(TX_GRADE3_GAPS) == {
+        GapStatus.COVERED: 24,
+        GapStatus.PARTIAL: 16,
+        GapStatus.GAP: 6,
+        GapStatus.AMBIGUOUS: 0,
     }
