@@ -1,5 +1,5 @@
-import re
 from itertools import pairwise
+import re
 
 from app.canonical_problem_families import FAMILIES, LearningMode, generate
 
