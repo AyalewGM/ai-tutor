@@ -2,7 +2,6 @@ import re
 
 from app.canonical_problem_families import FAMILIES, LearningMode, generate
 
-
 CODES = [
     "MATH.MEAS.LENGTH.METRIC",
     "MATH.MEAS.LENGTH.CUSTOMARY",
