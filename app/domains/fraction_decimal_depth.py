@@ -83,7 +83,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
     if family_code == "MATH.FRAC.MIXED.ADD":
         denominator = rng.randint(3, 9)
         w1, w2 = rng.randint(1, 5), rng.randint(1, 5)
-        n1, n2 = rng.randint(1, denominator - 1), rng.randint(1, denominator - 1)
+        n1 = rng.randint(1, denominator - 1)
+        n2 = rng.randint(denominator - n1, denominator - 1)
         result = Fraction(w1 * denominator + n1, denominator) + Fraction(w2 * denominator + n2, denominator)
         whole, rem = divmod(result.numerator, result.denominator)
         answer = str(whole) if rem == 0 else f"{whole} {rem}/{result.denominator}"
@@ -121,9 +122,11 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         numerator = rng.randint(1, 5)
         small, large = sorted(rng.sample(range(numerator + 1, numerator + 9), 2))
         return (
-            f"A student says {numerator}/{large} > {numerator}/{small} because {large} > {small}. "
-            f"Which response is correct? (A) {numerator}/{small} is greater because equal numerators mean the smaller denominator makes larger pieces. "
-            "(B) The student is correct. (C) They are equal. (D) Denominators never matter.",
+            (
+                f"A student says {numerator}/{large} > {numerator}/{small} because {large} > {small}. "
+                f"Which response is correct? (A) {numerator}/{small} is greater because equal numerators mean the smaller denominator makes larger pieces. "
+                "(B) The student is correct. (C) They are equal. (D) Denominators never matter."
+            ),
             "A",
             ("Imagine dividing the same whole into different numbers of equal pieces.", "More equal pieces means each piece is smaller."),
             {"FRAC.COMPARE.BIGGER_DENOM": "B"},
@@ -187,9 +190,11 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         if abs(wrong - correct) < 1e-9:
             wrong += 1
         return (
-            f"A student adds {a:.1f} + {b:.2f} and gets {wrong:g} by lining up the last digits. "
-            f"Which response is correct? (A) The decimal points must align; the sum is {correct:.2f}. "
-            "(B) The student's alignment is correct. (C) Remove both decimal points. (D) Add only whole-number parts.",
+            (
+                f"A student adds {a:.1f} + {b:.2f} and gets {wrong:g} by lining up the last digits. "
+                f"Which response is correct? (A) The decimal points must align; the sum is {correct:.2f}. "
+                "(B) The student's alignment is correct. (C) Remove both decimal points. (D) Add only whole-number parts."
+            ),
             "A",
             ("Decimal digits represent place values.", "Align ones with ones, tenths with tenths, and hundredths with hundredths."),
             {"DEC.ALIGN.LAST_DIGITS": "B"},
