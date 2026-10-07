@@ -82,8 +82,8 @@ from app.domains import division as _div_mod
 from app.domains import elementary_data_patterns as _elementary_data_mod
 from app.domains import estimation as _est_mod
 from app.domains import factors_multiples as _fac_mod
-from app.domains import fractions as _frac_mod
 from app.domains import fraction_decimal_depth as _fraction_decimal_depth_mod
+from app.domains import fractions as _frac_mod
 from app.domains import geometry_measurement as _geo_mod
 from app.domains import integers as _int_mod
 from app.domains import measurement_spatial as _measurement_spatial_mod
