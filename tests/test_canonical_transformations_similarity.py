@@ -15,8 +15,8 @@ def _parse_point(text: str) -> tuple[int, int]:
     return int(x), int(y)
 
 
-def test_transform_similarity_batch_has_twelve_families() -> None:
-    assert len(CODES) == 12
+def test_transform_similarity_batch_has_nine_families() -> None:
+    assert len(CODES) == 9
     expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}
     assert all(
         {mode.value for mode in domain.FAMILIES[code].modes} == expected for code in CODES
@@ -60,20 +60,7 @@ def test_half_turn_matches_coordinate_rule() -> None:
         assert _parse_point(answer) == (-x, -y)
 
 
-def test_composition_applies_translation_before_reflection() -> None:
-    for seed in range(20):
-        prompt, answer, _, _ = _build("MATH.GEO.TRANSFORM.COMPOSE", seed)
-        match = re.fullmatch(
-            r"Start at \((-?\d+),(-?\d+)\)\. Translate by <(-?\d+),(-?\d+)>, "
-            r"then reflect across the x-axis\. Give the final x,y\.",
-            prompt,
-        )
-        assert match
-        x, y, dx, dy = map(int, match.groups())
-        assert _parse_point(answer) == (x + dx, -(y + dy))
-
-
-def test_perimeter_area_and_volume_use_correct_scale_powers() -> None:
+def test_perimeter_and_volume_use_correct_scale_powers() -> None:
     for seed in range(20):
         prompt, answer, _, _ = _build("MATH.GEO.SIMILAR.PERIMETER_SCALE", seed)
         perimeter, scale = map(
@@ -81,11 +68,6 @@ def test_perimeter_area_and_volume_use_correct_scale_powers() -> None:
         )
         assert int(answer) == perimeter * scale
 
-        prompt, answer, _, _ = _build("MATH.GEO.SIMILAR.AREA_SCALE", seed)
-        area, scale = map(
-            int, re.search(r"area (\d+).*scale factor (\d+)", prompt).groups()
-        )
-        assert int(answer) == area * scale**2
 
         prompt, answer, _, _ = _build("MATH.GEO.SIMILAR.VOLUME_SCALE", seed)
         volume, scale = map(
