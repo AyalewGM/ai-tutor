@@ -52,3 +52,34 @@ def test_family_is_curriculum_neutral():
 def test_out_of_range_difficulty_fails_closed():
     with pytest.raises(ValueError, match="difficulty outside family range"):
         generate("MATH.EQ.ONE.ADD_DIRECT", seed=1, difficulty=9)
+
+
+def test_equation_construction_is_distinct_from_solving():
+    problem = generate(
+        "MATH.EQ.TWO.MODEL.FROM_CONTEXT",
+        seed=23,
+        difficulty=3,
+        mode=LearningMode.DIAGNOSTIC,
+    )
+    spec = FAMILIES[problem.family_code]
+    assert problem.problem_type == "MODEL_EQUATION"
+    assert "representation" in spec.evidence_dimensions
+    assert "structure_identification" in spec.evidence_dimensions
+    assert problem.is_correct(problem.canonical_answer)
+    assert "EQ.MODEL.OMIT_FIXED_FEE" in problem.misconception_answers
+
+
+def test_every_family_supports_diagnostic_and_mastery_evidence():
+    for family_code in FAMILIES:
+        spec = FAMILIES[family_code]
+        difficulty = spec.min_difficulty
+        diagnostic = generate(
+            family_code, seed="diagnostic", difficulty=difficulty,
+            mode=LearningMode.DIAGNOSTIC,
+        )
+        mastery = generate(
+            family_code, seed="mastery", difficulty=difficulty,
+            mode=LearningMode.MASTERY,
+        )
+        assert diagnostic.variant_id != mastery.variant_id
+        assert diagnostic.canonical_skill_code == mastery.canonical_skill_code
