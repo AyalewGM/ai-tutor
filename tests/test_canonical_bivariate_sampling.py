@@ -1,9 +1,8 @@
-from fractions import Fraction
 import random
 import re
+from fractions import Fraction
 
 from app.domains import bivariate_sampling as domain
-
 
 CODES = sorted(domain.FAMILIES)
 
