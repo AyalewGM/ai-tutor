@@ -104,7 +104,7 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             f"Rotate ({x},{y}) 180 degrees about the origin. Give x,y.",
             _point(-x, -y),
             ("A half-turn sends each coordinate to its opposite.", "Negate both x and y."),
-            {"GEO.ROTATE.NEGATE_ONE": _point(-x, y)},
+            {"GEO.ROTATE.LEAVE_UNCHANGED": _point(x, y)},
             {
                 "type": "coordinate_point", "x": x, "y": y, "min": -10, "max": 10,
                 "aria_label": f"Coordinate plane with preimage point at ({x}, {y}) for a 180 degree rotation.",
