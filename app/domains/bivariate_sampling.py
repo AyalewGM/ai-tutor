@@ -263,6 +263,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
     if family_code == "MATH.DATA.TWOWAY.RELATIVE":
         yes = rng.randint(12, 40)
         no = rng.randint(8, 30)
+        while no == yes:
+            no = rng.randint(8, 30)
         total = yes + no
         fraction = Fraction(yes, total)
         return (
@@ -310,7 +312,7 @@ def build(family_code: str, rng: random.Random, difficulty: int):
                 "Expected count is probability multiplied by number of trials.",
                 f"Compute {numerator}/{denominator} × {trials}.",
             ),
-            {"PROB.EXPECTED.DIVIDE": str(trials // numerator)},
+            {"PROB.EXPECTED.ADD_DENOMINATOR": str(expected + denominator)},
         )
 
     if family_code == "MATH.PROB.THEORY.VS_EXPERIMENT":
