@@ -5,6 +5,7 @@ from app.texas_grade3_gap_audit import TX_GRADE3_GAPS, TX_GRADE3_STANDARD_CODES
 from app.texas_grade4_gap_audit import TX_GRADE4_GAPS, TX_GRADE4_STANDARD_CODES
 from app.texas_grade5_gap_audit import TX_GRADE5_GAPS, TX_GRADE5_STANDARD_CODES
 from app.texas_grade6_gap_audit import TX_GRADE6_GAPS, TX_GRADE6_STANDARD_CODES
+from app.texas_grade7_gap_audit import TX_GRADE7_GAPS, TX_GRADE7_STANDARD_CODES
 
 
 def test_texas_grade1_content_inventory_is_complete() -> None:
@@ -100,3 +101,14 @@ def test_texas_grade6_content_inventory_is_complete_and_reuses_ca_variability_ga
         item.rationale == "gap:statistical-question-variability"
         for item in TX_GRADE6_GAPS
     ) == 1
+
+
+def test_texas_grade7_content_inventory_is_complete() -> None:
+    assert len(TX_GRADE7_STANDARD_CODES) == 43
+    assert len(TX_GRADE7_GAPS) == 43
+    assert gap_counts(TX_GRADE7_GAPS) == {
+        GapStatus.COVERED: 19,
+        GapStatus.PARTIAL: 18,
+        GapStatus.GAP: 6,
+        GapStatus.AMBIGUOUS: 0,
+    }
