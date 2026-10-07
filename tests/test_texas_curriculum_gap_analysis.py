@@ -3,6 +3,7 @@ from app.texas_grade1_gap_audit import TX_GRADE1_GAPS, TX_GRADE1_STANDARD_CODES
 from app.texas_grade2_gap_audit import TX_GRADE2_GAPS, TX_GRADE2_STANDARD_CODES
 from app.texas_grade3_gap_audit import TX_GRADE3_GAPS, TX_GRADE3_STANDARD_CODES
 from app.texas_grade4_gap_audit import TX_GRADE4_GAPS, TX_GRADE4_STANDARD_CODES
+from app.texas_grade5_gap_audit import TX_GRADE5_GAPS, TX_GRADE5_STANDARD_CODES
 
 
 def test_texas_grade1_content_inventory_is_complete() -> None:
@@ -72,3 +73,14 @@ def test_texas_grade4_content_inventory_is_complete_and_reuses_ca_gap() -> None:
         item.rationale == "gap:angle-measure-draw-protractor"
         for item in TX_GRADE4_GAPS
     ) == 2
+
+
+def test_texas_grade5_content_inventory_is_complete() -> None:
+    assert len(TX_GRADE5_STANDARD_CODES) == 39
+    assert len(TX_GRADE5_GAPS) == 39
+    assert gap_counts(TX_GRADE5_GAPS) == {
+        GapStatus.COVERED: 17,
+        GapStatus.PARTIAL: 16,
+        GapStatus.GAP: 6,
+        GapStatus.AMBIGUOUS: 0,
+    }
