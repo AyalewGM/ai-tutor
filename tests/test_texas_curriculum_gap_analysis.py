@@ -1,6 +1,5 @@
 from app.curriculum_gap_analysis import GapStatus, gap_counts
 from app.texas_gap_audit import texas_grade1_8_summary, texas_true_gap_keys
-from app.wave1_gap_priority import wave1_grade1_8_priority
 from app.texas_grade1_gap_audit import TX_GRADE1_GAPS, TX_GRADE1_STANDARD_CODES
 from app.texas_grade2_gap_audit import TX_GRADE2_GAPS, TX_GRADE2_STANDARD_CODES
 from app.texas_grade3_gap_audit import TX_GRADE3_GAPS, TX_GRADE3_STANDARD_CODES
@@ -9,6 +8,7 @@ from app.texas_grade5_gap_audit import TX_GRADE5_GAPS, TX_GRADE5_STANDARD_CODES
 from app.texas_grade6_gap_audit import TX_GRADE6_GAPS, TX_GRADE6_STANDARD_CODES
 from app.texas_grade7_gap_audit import TX_GRADE7_GAPS, TX_GRADE7_STANDARD_CODES
 from app.texas_grade8_gap_audit import TX_GRADE8_GAPS, TX_GRADE8_STANDARD_CODES
+from app.wave1_gap_priority import wave1_grade1_8_priority
 
 
 def test_texas_grade1_content_inventory_is_complete() -> None:
