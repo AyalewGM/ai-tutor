@@ -4,7 +4,6 @@ from fractions import Fraction
 
 from app.domains import fraction_decimal_depth as domain
 
-
 CODES = sorted(domain.FAMILIES)
 
 
