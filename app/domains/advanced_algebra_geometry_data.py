@@ -75,9 +75,11 @@ def build(family_code: str, rng: random.Random, difficulty: int):
                 {"INEQ.NEGATIVE.NO_FLIP": f"x{original}{boundary}"},
             )
         return (
-            f"A student solves {coefficient}x {original} {total} as x {original} {boundary}. "
-            f"Which response is correct? (A) It should be x {solved} {boundary}. "
-            "(B) The student is correct. (C) Change only the boundary sign. (D) Equality is required.",
+            (
+                f"A student solves {coefficient}x {original} {total} as x {original} {boundary}. "
+                f"Which response is correct? (A) It should be x {solved} {boundary}. "
+                "(B) The student is correct. (C) Change only the boundary sign. (D) Equality is required."
+            ),
             "A",
             ("The solving step divides by a negative number.", "That operation reverses the inequality direction."),
             {"INEQ.NEGATIVE.NO_FLIP": "B"},
@@ -98,8 +100,10 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         fixed = rng.randint(1, 10)
         target = fixed + rate * rng.randint(4, 10)
         return (
-            f"A fundraiser already has {fixed} dollars and earns {rate} dollars per item. "
-            f"It needs at least {target} dollars. Which inequality models the number n of items?",
+            (
+                f"A fundraiser already has {fixed} dollars and earns {rate} dollars per item. "
+                f"It needs at least {target} dollars. Which inequality models the number n of items?"
+            ),
             f"{rate}n+{fixed}>={target}",
             ("'At least' includes equality.", "Combine the fixed amount and repeated earnings."),
             {"INEQ.WORD.STRICT_MINIMUM": f"{rate}n+{fixed}>{target}"},
@@ -122,8 +126,10 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             m2 = rng.randint(2, 8)
         answer = "A" if m1 > m2 else "B"
         return (
-            f"Function A is y={m1}x+3. Function B has values (0,2), (1,{2+m2}), (2,{2+2*m2}). "
-            "Which function has the greater rate of change? Answer A or B.",
+            (
+                f"Function A is y={m1}x+3. Function B has values (0,2), (1,{2+m2}), (2,{2+2*m2}). "
+                "Which function has the greater rate of change? Answer A or B."
+            ),
             answer,
             ("For A, the x coefficient is the rate.", "For B, compare the change in y when x increases by 1."),
             {"FUNC.COMPARE.USE_INTERCEPT": "B" if answer == "A" else "A"},
@@ -157,10 +163,12 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         )
     if family_code == "MATH.FUNC.ERROR.CONSTANT_RATE":
         return (
-            "A student says the table x=[1,2,3,4], y=[1,4,9,16] is linear because y always increases. "
-            "Which response is correct? (A) It is nonlinear because first differences are not constant. "
-            "(B) It is linear because all y-values increase. (C) It is linear because y is positive. "
-            "(D) There is not enough information.",
+            (
+                "A student says the table x=[1,2,3,4], y=[1,4,9,16] is linear because y always increases. "
+                "Which response is correct? (A) It is nonlinear because first differences are not constant. "
+                "(B) It is linear because all y-values increase. (C) It is linear because y is positive. "
+                "(D) There is not enough information."
+            ),
             "A",
             ("Increasing is not the same as constant rate of change.", "Compare consecutive first differences."),
             {"FUNC.LINEARITY.INCREASING_MEANS_LINEAR": "B"},
@@ -192,9 +200,11 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         diameter = 2 * rng.randint(3, 12)
         correct = diameter // 2
         return (
-            f"A circle has diameter {diameter}. A student uses {diameter} as r in A=pi*r^2. "
-            f"Which response is correct? (A) The radius should be {correct}. "
-            "(B) The student is correct. (C) The radius should be doubled. (D) Area uses no radius.",
+            (
+                f"A circle has diameter {diameter}. A student uses {diameter} as r in A=pi*r^2. "
+                f"Which response is correct? (A) The radius should be {correct}. "
+                "(B) The student is correct. (C) The radius should be doubled. (D) Area uses no radius."
+            ),
             "A",
             ("Diameter spans two radii.", "Divide the diameter by 2 before using a radius formula."),
             {"GEO.CIRCLE.DIAMETER_AS_RADIUS": "B"},
