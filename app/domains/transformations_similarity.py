@@ -147,8 +147,11 @@ def build(family_code: str, rng: random.Random, difficulty: int):
     if family_code == "MATH.GEO.CONGRUENCE.RIGID":
         scale = rng.choice([2, 3, 4])
         return (
-            "Which transformation always preserves lengths and angles? "
-            f"(A) dilation by factor {scale} (B) translation (C) horizontal stretch (D) vertical stretch",
+            (
+                "Which transformation always preserves lengths and angles? "
+                f"(A) dilation by factor {scale} (B) translation "
+                "(C) horizontal stretch (D) vertical stretch"
+            ),
             "B",
             ("Congruence requires equal corresponding lengths and angles.", "A translation is a rigid motion."),
             {"GEO.CONGRUENCE.DILATION": "A"},
@@ -205,8 +208,12 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         while a + b >= 150:
             b = rng.randint(25, 65)
         return (
-            f"Triangle P has angles {a} and {b} degrees. Triangle Q has angles {a} and {b} degrees. "
-            "Which conclusion is guaranteed? (A) similar by AA (B) congruent (C) not similar (D) equal area",
+            (
+                f"Triangle P has angles {a} and {b} degrees. "
+                f"Triangle Q has angles {a} and {b} degrees. "
+                "Which conclusion is guaranteed? (A) similar by AA "
+                "(B) congruent (C) not similar (D) equal area"
+            ),
             "A",
             ("Two matching angle pairs determine triangle similarity.", "AA establishes similarity, not necessarily congruence."),
             {"GEO.SIMILAR.AA.CONGRUENT": "B"},
