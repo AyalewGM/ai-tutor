@@ -5,7 +5,14 @@ authoritative-source, ingestion, mapping-review, and publication gate is true.
 A proof slice never implies complete grade coverage.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
+
+from app.california_curriculum import (
+    CA_AUTHORITY_CODE,
+    CA_CURRICULUM_VERSION,
+    CA_LIFECYCLE_STATUS,
+    CA_SOURCE_URI,
+)
 
 GRADES = tuple(range(1, 10))
 STATE_CODES = (
@@ -55,3 +62,23 @@ def completed_cells(cells: tuple[CoverageCell, ...]) -> int:
 def state_complete(cells: tuple[CoverageCell, ...], state_code: str) -> bool:
     state_cells = [cell for cell in cells if cell.state_code == state_code]
     return len(state_cells) == len(GRADES) and all(cell.complete for cell in state_cells)
+
+
+def with_verified_california_source(
+    cells: tuple[CoverageCell, ...],
+) -> tuple[CoverageCell, ...]:
+    """Attach verified California source identity without overstating completion."""
+
+    return tuple(
+        replace(
+            cell,
+            authority_code=CA_AUTHORITY_CODE,
+            source_uri=CA_SOURCE_URI,
+            curriculum_version=CA_CURRICULUM_VERSION,
+            lifecycle_status=CA_LIFECYCLE_STATUS,
+            source_verified=True,
+        )
+        if cell.state_code == "CA"
+        else cell
+        for cell in cells
+    )
