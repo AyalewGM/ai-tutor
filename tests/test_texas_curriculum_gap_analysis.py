@@ -1,4 +1,5 @@
 from app.curriculum_gap_analysis import GapStatus, gap_counts
+from app.texas_gap_audit import texas_grade1_8_summary, texas_true_gap_keys
 from app.texas_grade1_gap_audit import TX_GRADE1_GAPS, TX_GRADE1_STANDARD_CODES
 from app.texas_grade2_gap_audit import TX_GRADE2_GAPS, TX_GRADE2_STANDARD_CODES
 from app.texas_grade3_gap_audit import TX_GRADE3_GAPS, TX_GRADE3_STANDARD_CODES
@@ -130,3 +131,20 @@ def test_texas_grade8_content_inventory_is_complete_and_reuses_ca_number_gaps() 
     assert "gap:irrational-number-concept" in gap_keys
     assert "gap:irrational-approximation" in gap_keys
     assert "gap:mean-absolute-deviation" in gap_keys
+
+
+def test_texas_grade1_8_aggregate_is_complete_and_conservative() -> None:
+    assert texas_grade1_8_summary() == {
+        GapStatus.COVERED: 164,
+        GapStatus.PARTIAL: 138,
+        GapStatus.GAP: 55,
+        GapStatus.AMBIGUOUS: 0,
+    }
+    assert texas_true_gap_keys() == (
+        "gap:angle-measure-draw-protractor",
+        "gap:irrational-approximation",
+        "gap:irrational-number-concept",
+        "gap:mean-absolute-deviation",
+        "gap:personal-financial-literacy-foundations",
+        "gap:statistical-question-variability",
+    )
