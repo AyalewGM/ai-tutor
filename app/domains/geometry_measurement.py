@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import math
 import random
 
 from app.canonical_problem_families import ALL_MODES, ProblemFamilySpec
