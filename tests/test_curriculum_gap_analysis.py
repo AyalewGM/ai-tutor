@@ -1,5 +1,6 @@
 import pytest
 
+from app.california_grade5_gap_audit import CA_GRADE5_GAPS, CA_GRADE5_STANDARD_CODES
 from app.california_grade6_gap_audit import CA_GRADE6_GAPS, CA_GRADE6_STANDARD_CODES
 from app.california_grade7_gap_audit import CA_GRADE7_GAPS, CA_GRADE7_STANDARD_CODES
 from app.california_grade8_gap_audit import CA_GRADE8_GAPS, CA_GRADE8_STANDARD_CODES
@@ -132,3 +133,15 @@ def test_california_grade6_inventory_is_complete_and_exposes_true_gap() -> None:
     assert {
         item.rationale for item in CA_GRADE6_GAPS if item.status == GapStatus.GAP
     } == {"gap:statistical-question-variability"}
+
+
+def test_california_grade5_inventory_includes_ca_addition_and_no_fake_gap() -> None:
+    assert "5.OA.2.1" in CA_GRADE5_STANDARD_CODES
+    assert len(CA_GRADE5_STANDARD_CODES) == 27
+    assert len(CA_GRADE5_GAPS) == 27
+    assert gap_counts(CA_GRADE5_GAPS) == {
+        GapStatus.COVERED: 11,
+        GapStatus.PARTIAL: 16,
+        GapStatus.GAP: 0,
+        GapStatus.AMBIGUOUS: 0,
+    }
