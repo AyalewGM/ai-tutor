@@ -1,5 +1,6 @@
 import pytest
 
+from app.california_grade3_gap_audit import CA_GRADE3_GAPS, CA_GRADE3_STANDARD_CODES
 from app.california_grade4_gap_audit import CA_GRADE4_GAPS, CA_GRADE4_STANDARD_CODES
 from app.california_grade5_gap_audit import CA_GRADE5_GAPS, CA_GRADE5_STANDARD_CODES
 from app.california_grade6_gap_audit import CA_GRADE6_GAPS, CA_GRADE6_STANDARD_CODES
@@ -160,3 +161,14 @@ def test_california_grade4_inventory_is_complete_and_exposes_true_gap() -> None:
     assert {
         item.rationale for item in CA_GRADE4_GAPS if item.status == GapStatus.GAP
     } == {"gap:angle-measure-draw-protractor"}
+
+
+def test_california_grade3_inventory_is_complete_without_fake_gaps() -> None:
+    assert len(CA_GRADE3_STANDARD_CODES) == 25
+    assert len(CA_GRADE3_GAPS) == 25
+    assert gap_counts(CA_GRADE3_GAPS) == {
+        GapStatus.COVERED: 15,
+        GapStatus.PARTIAL: 10,
+        GapStatus.GAP: 0,
+        GapStatus.AMBIGUOUS: 0,
+    }
