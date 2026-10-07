@@ -2,7 +2,6 @@ import random
 import re
 from fractions import Fraction
 
-from app.canonical_problem_families import LearningMode
 from app.domains import fraction_decimal_depth as domain
 
 
@@ -15,7 +14,7 @@ def _build(code: str, seed: int = 31):
 
 def test_fraction_decimal_depth_has_sixteen_families() -> None:
     assert len(CODES) == 16
-    assert all(domain.FAMILIES[code].modes == frozenset(LearningMode) for code in CODES)
+    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}\n    assert all({mode.value for mode in domain.FAMILIES[code].modes} == expected for code in CODES)
 
 
 def test_fraction_decimal_depth_is_deterministic() -> None:
