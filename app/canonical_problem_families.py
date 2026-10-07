@@ -69,6 +69,15 @@ def _rng(family_code: str, seed: str | int, difficulty: int) -> tuple[random.Ran
 
 ALL_MODES = frozenset(LearningMode)
 
+# Domain modules contribute families and build functions.
+from app.domains import decimals as _dec_mod
+from app.domains import fractions as _frac_mod
+from app.domains import percent as _pct_mod
+from app.domains import proportions as _prop_mod
+from app.domains import ratios as _ratio_mod
+
+_DOMAIN_MODULES = [_frac_mod, _dec_mod, _ratio_mod, _prop_mod, _pct_mod]
+
 FAMILIES = {
     "MATH.EQ.ONE.ADD_DIRECT": ProblemFamilySpec(
         "MATH.EQ.ONE.ADD_DIRECT", "One-step additive equations",
@@ -102,6 +111,19 @@ FAMILIES = {
     ),
 }
 
+# Merge domain families into the top-level dict.
+for _mod in _DOMAIN_MODULES:
+    for _code, _spec in _mod.FAMILIES.items():
+        if _code in FAMILIES:
+            raise RuntimeError(f"Duplicate family code: {_code}")
+        FAMILIES[_code] = _spec
+
+# Build a lookup from family code to domain builder.
+_DOMAIN_BUILDERS: dict[str, object] = {}
+for _mod in _DOMAIN_MODULES:
+    for _code in _mod.FAMILIES:
+        _DOMAIN_BUILDERS[_code] = _mod.build
+
 
 def _build(family_code: str, rng: random.Random, difficulty: int):
     if family_code == "MATH.EQ.ONE.ADD_DIRECT":
@@ -119,6 +141,10 @@ def _build(family_code: str, rng: random.Random, difficulty: int):
         coefficient = rng.randint(2, 4 + difficulty)
         offset = rng.randint(1, 5 + difficulty * 2)
         total = coefficient * x + offset
+        # Ensure "skip constant" misconception differs from correct answer
+        while total // coefficient == x:
+            offset += 1
+            total = coefficient * x + offset
         return (
             f"Solve {coefficient}x + {offset} = {total}.", f"x={x}",
             (f"First undo the + {offset}.",
@@ -130,6 +156,10 @@ def _build(family_code: str, rng: random.Random, difficulty: int):
         rate = rng.randint(2, 5 + difficulty)
         fee = rng.randint(2, 7 + difficulty)
         total = fee + rate * units
+        # Ensure "ignore fee" misconception differs from correct answer
+        while total // rate == units:
+            fee += 1
+            total = fee + rate * units
         return (
             (
                 f"A bike rental costs a fixed ${fee} fee plus ${rate} per hour. "
@@ -144,6 +174,8 @@ def _build(family_code: str, rng: random.Random, difficulty: int):
         start = rng.randint(4, 12 + difficulty * 3)
         groups = rng.randint(2, 5 + difficulty)
         added_each = rng.randint(2, 6 + difficulty)
+        while added_each == start:
+            added_each = rng.randint(2, 6 + difficulty)
         final = start + groups * added_each
         return (
             (
@@ -161,6 +193,10 @@ def _build(family_code: str, rng: random.Random, difficulty: int):
         multiplier = rng.randint(2, 4 + difficulty)
         difference = rng.randint(1, 5 + difficulty)
         total = multiplier * base + difference
+        # Ensure the "divide-first" misconception differs from the correct answer
+        while total // multiplier == base:
+            difference += 1
+            total = multiplier * base + difference
         return (
             (
                 f"Mina has ${difference} more than {multiplier} times the amount Kai has. "
@@ -171,24 +207,30 @@ def _build(family_code: str, rng: random.Random, difficulty: int):
              f"Model Mina's amount as {multiplier}k + {difference} = {total}."),
             {"EQ.WORD.ADD_BEFORE_DIVIDE": str(total // multiplier)},
         )
-    coefficient = rng.randint(2, 4 + difficulty)
-    fee = rng.randint(2, 7 + difficulty)
-    units = rng.randint(3, 9 + difficulty)
-    total = coefficient * units + fee
-    return (
-        (
-            f"A club charges a ${fee} registration fee and ${coefficient} for each "
-            f"activity. Jordan paid ${total}. Write an equation using a for the "
-            "number of activities. Do not solve it."
-        ),
-        f"{coefficient}a+{fee}={total}",
-        ("Identify the repeated cost and multiply it by the unknown number of activities.",
-         "Then add the one-time registration fee and set it equal to the total."),
-        {
-            "EQ.MODEL.SWAP_RATE_AND_FEE": f"{fee}a+{coefficient}={total}",
-            "EQ.MODEL.OMIT_FIXED_FEE": f"{coefficient}a={total}",
-        },
-    )
+    if family_code == "MATH.EQ.TWO.MODEL.FROM_CONTEXT":
+        coefficient = rng.randint(2, 4 + difficulty)
+        fee = rng.randint(2, 7 + difficulty)
+        units = rng.randint(3, 9 + difficulty)
+        total = coefficient * units + fee
+        return (
+            (
+                f"A club charges a ${fee} registration fee and ${coefficient} for each "
+                f"activity. Jordan paid ${total}. Write an equation using a for the "
+                "number of activities. Do not solve it."
+            ),
+            f"{coefficient}a+{fee}={total}",
+            ("Identify the repeated cost and multiply it by the unknown number of activities.",
+             "Then add the one-time registration fee and set it equal to the total."),
+            {
+                "EQ.MODEL.SWAP_RATE_AND_FEE": f"{fee}a+{coefficient}={total}",
+                "EQ.MODEL.OMIT_FIXED_FEE": f"{coefficient}a={total}",
+            },
+        )
+    # Delegate to domain modules.
+    builder = _DOMAIN_BUILDERS.get(family_code)
+    if builder is not None:
+        return builder(family_code, rng, difficulty)
+    raise ValueError(f"No builder for family: {family_code}")
 
 
 def generate(
@@ -205,6 +247,17 @@ def generate(
         raise ValueError("learning mode is not eligible for family")
     rng, variant_id = _rng(family_code, seed, difficulty)
     prompt, answer, hints, misconceptions = _build(family_code, rng, difficulty)
+    # Safety: drop misconceptions matching the canonical answer or duplicating
+    # an earlier misconception's normalized value.
+    normalized_answer = _normalize(answer)
+    seen_values: set[str] = set()
+    clean_misconceptions: dict[str, str] = {}
+    for k, v in misconceptions.items():
+        nv = _normalize(v)
+        if nv != normalized_answer and nv not in seen_values:
+            clean_misconceptions[k] = v
+            seen_values.add(nv)
+    misconceptions = clean_misconceptions
     return GeneratedProblem(
         family_code=spec.code,
         canonical_skill_code=spec.canonical_skill_code,
