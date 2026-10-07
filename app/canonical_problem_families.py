@@ -96,13 +96,14 @@ from app.domains import proportions as _prop_mod
 from app.domains import ratios as _ratio_mod
 from app.domains import statistics_probability as _data_mod
 from app.domains import subtraction as _sub_mod
+from app.domains import transformations_similarity as _transform_similarity_mod
 from app.domains import whole_numbers as _wn_mod
 
 _DOMAIN_MODULES = [
     _frac_mod, _fraction_decimal_depth_mod, _dec_mod, _ratio_mod, _prop_mod, _pct_mod,
     _alg_mod, _advanced_number_mod, _advanced_mod, _advanced_hs_mod, _geo_mod, _data_mod,
-    _measurement_spatial_mod, _elementary_data_mod, _bivariate_sampling_mod,
-    _add_mod, _sub_mod, _mul_mod, _div_mod,
+    _measurement_spatial_mod, _transform_similarity_mod, _elementary_data_mod,
+    _bivariate_sampling_mod, _add_mod, _sub_mod, _mul_mod, _div_mod,
     _wn_mod, _pv_mod, _fac_mod, _ooo_mod, _int_mod, _est_mod, _prop_math_mod,
 ]
 
