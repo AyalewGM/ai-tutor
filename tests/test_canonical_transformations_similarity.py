@@ -3,7 +3,6 @@ import re
 
 from app.domains import transformations_similarity as domain
 
-
 CODES = sorted(domain.FAMILIES)
 
 
