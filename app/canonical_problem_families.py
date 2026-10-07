@@ -131,11 +131,13 @@ def _build(family_code: str, rng: random.Random, difficulty: int):
         fee = rng.randint(2, 7 + difficulty)
         total = fee + rate * units
         return (
-            f"A bike rental costs a fixed \${fee} fee plus \${rate} per hour. "
-            f"The total bill is \${total}. How many hours was the bike rented?",
+            (
+                f"A bike rental costs a fixed ${fee} fee plus ${rate} per hour. "
+                f"The total bill is ${total}. How many hours was the bike rented?"
+            ),
             str(units),
             (f"Represent the bill as {fee} + {rate}h = {total}.",
-             f"Remove the fixed \${fee} first, then divide by {rate}."),
+             f"Remove the fixed ${fee} first, then divide by {rate}."),
             {"EQ.WORD.IGNORE_FIXED_FEE": str(total // rate)},
         )
     if family_code == "MATH.EQ.TWO.WORD.UNKNOWN_START":
@@ -144,11 +146,13 @@ def _build(family_code: str, rng: random.Random, difficulty: int):
         added_each = rng.randint(2, 6 + difficulty)
         final = start + groups * added_each
         return (
-            f"A reading challenge began with an unknown number of pages already read. "
-            f"Then {added_each} pages were read on each of {groups} days, bringing "
-            f"the total to {final} pages. How many pages had been read at the start?",
+            (
+                "A reading challenge began with an unknown number of pages already read. "
+                f"Then {added_each} pages were read on each of {groups} days, bringing "
+                f"the total to {final} pages. How many pages had been read at the start?"
+            ),
             str(start),
-            (f"The unknown is the starting amount, not the daily amount.",
+            ("The unknown is the starting amount, not the daily amount.",
              f"Model it as s + {groups}({added_each}) = {final}."),
             {"EQ.WORD.CONFUSE_START_WITH_RATE": str(added_each)},
         )
@@ -158,8 +162,10 @@ def _build(family_code: str, rng: random.Random, difficulty: int):
         difference = rng.randint(1, 5 + difficulty)
         total = multiplier * base + difference
         return (
-            f"Mina has \${difference} more than {multiplier} times the amount Kai has. "
-            f"Mina has \${total}. How much money does Kai have?",
+            (
+                f"Mina has ${difference} more than {multiplier} times the amount Kai has. "
+                f"Mina has ${total}. How much money does Kai have?"
+            ),
             str(base),
             (f"If Kai has k dollars, {multiplier} times that amount is {multiplier}k.",
              f"Model Mina's amount as {multiplier}k + {difference} = {total}."),
@@ -170,9 +176,11 @@ def _build(family_code: str, rng: random.Random, difficulty: int):
     units = rng.randint(3, 9 + difficulty)
     total = coefficient * units + fee
     return (
-        f"A club charges a \${fee} registration fee and \${coefficient} for each "
-        f"activity. Jordan paid \${total}. Write an equation using a for the "
-        f"number of activities. Do not solve it.",
+        (
+            f"A club charges a ${fee} registration fee and ${coefficient} for each "
+            f"activity. Jordan paid ${total}. Write an equation using a for the "
+            "number of activities. Do not solve it."
+        ),
         f"{coefficient}a+{fee}={total}",
         ("Identify the repeated cost and multiply it by the unknown number of activities.",
          "Then add the one-time registration fee and set it equal to the total."),
