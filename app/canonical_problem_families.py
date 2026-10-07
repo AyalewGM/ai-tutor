@@ -33,6 +33,7 @@ class GeneratedProblem:
     hints: tuple[str, ...]
     misconception_answers: dict[str, str]
     provenance: dict[str, str]
+    visual_spec: dict[str, object] | None = None
 
     def is_correct(self, answer: str) -> bool:
         return _normalize(answer) == _normalize(self.canonical_answer)
@@ -267,7 +268,12 @@ def generate(
     if mode not in spec.modes:
         raise ValueError("learning mode is not eligible for family")
     rng, variant_id = _rng(family_code, seed, difficulty)
-    prompt, answer, hints, misconceptions = _build(family_code, rng, difficulty)
+    built = _build(family_code, rng, difficulty)
+    if len(built) == 4:
+        prompt, answer, hints, misconceptions = built
+        visual_spec = None
+    else:
+        prompt, answer, hints, misconceptions, visual_spec = built
     # Safety: drop misconceptions matching the canonical answer or duplicating
     # an earlier misconception's normalized value.
     normalized_answer = _normalize(answer)
@@ -292,4 +298,5 @@ def generate(
         misconception_answers=misconceptions,
         provenance={"origin": "MIHUR_AUTHORED", "license": "proprietary",
                     "generator": spec.code},
+        visual_spec=visual_spec,
     )
