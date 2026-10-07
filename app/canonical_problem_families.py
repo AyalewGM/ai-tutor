@@ -72,6 +72,7 @@ ALL_MODES = frozenset(LearningMode)
 # Domain modules contribute families and build functions.
 from app.domains import addition as _add_mod
 from app.domains import advanced_algebra_geometry_data as _advanced_mod
+from app.domains import advanced_algebra_highschool as _advanced_hs_mod
 from app.domains import advanced_number as _advanced_number_mod
 from app.domains import algebra_functions as _alg_mod
 from app.domains import decimals as _dec_mod
@@ -94,7 +95,7 @@ from app.domains import whole_numbers as _wn_mod
 
 _DOMAIN_MODULES = [
     _frac_mod, _dec_mod, _ratio_mod, _prop_mod, _pct_mod, _alg_mod,
-    _advanced_number_mod, _advanced_mod, _geo_mod, _data_mod,
+    _advanced_number_mod, _advanced_mod, _advanced_hs_mod, _geo_mod, _data_mod,
     _add_mod, _sub_mod, _mul_mod, _div_mod,
     _wn_mod, _pv_mod, _fac_mod, _ooo_mod, _int_mod, _est_mod, _prop_math_mod,
 ]
