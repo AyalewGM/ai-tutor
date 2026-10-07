@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import math
 import random
 
 from app.canonical_problem_families import ALL_MODES, ProblemFamilySpec
@@ -102,7 +101,7 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             prompt,
             str(elapsed),
             ("Convert both clock times to minutes after midnight.", "Subtract the start time from the end time."),
-            {"MEAS.TIME.SUBTRACT_CLOCK_DIGITS": str(abs((end_hour - start_hour) * 100 + end_minute - start_minute))},
+            {"MEAS.TIME.SUBTRACT_CLOCK_DIGITS": str(elapsed + 40)},
         )
     if family_code == "MATH.MEAS.RATE.CONVERT":
         mph = rng.choice([30, 45, 60, 75])
