@@ -6,6 +6,7 @@ from app.texas_grade4_gap_audit import TX_GRADE4_GAPS, TX_GRADE4_STANDARD_CODES
 from app.texas_grade5_gap_audit import TX_GRADE5_GAPS, TX_GRADE5_STANDARD_CODES
 from app.texas_grade6_gap_audit import TX_GRADE6_GAPS, TX_GRADE6_STANDARD_CODES
 from app.texas_grade7_gap_audit import TX_GRADE7_GAPS, TX_GRADE7_STANDARD_CODES
+from app.texas_grade8_gap_audit import TX_GRADE8_GAPS, TX_GRADE8_STANDARD_CODES
 
 
 def test_texas_grade1_content_inventory_is_complete() -> None:
@@ -112,3 +113,20 @@ def test_texas_grade7_content_inventory_is_complete() -> None:
         GapStatus.GAP: 6,
         GapStatus.AMBIGUOUS: 0,
     }
+
+
+def test_texas_grade8_content_inventory_is_complete_and_reuses_ca_number_gaps() -> None:
+    assert len(TX_GRADE8_STANDARD_CODES) == 45
+    assert len(TX_GRADE8_GAPS) == 45
+    assert gap_counts(TX_GRADE8_GAPS) == {
+        GapStatus.COVERED: 28,
+        GapStatus.PARTIAL: 6,
+        GapStatus.GAP: 11,
+        GapStatus.AMBIGUOUS: 0,
+    }
+    gap_keys = {
+        item.rationale for item in TX_GRADE8_GAPS if item.status == GapStatus.GAP
+    }
+    assert "gap:irrational-number-concept" in gap_keys
+    assert "gap:irrational-approximation" in gap_keys
+    assert "gap:mean-absolute-deviation" in gap_keys
