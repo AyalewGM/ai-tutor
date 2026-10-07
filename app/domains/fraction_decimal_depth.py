@@ -48,6 +48,12 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             f"1/{denominator}",
             ("A unit fraction names one equal part of a whole.", "The denominator tells how many equal parts make the whole."),
             {"FRAC.UNIT.USE_WHOLE": f"{denominator}/1"},
+            {
+                "type": "fraction_bar",
+                "numerator": 1,
+                "denominator": denominator,
+                "aria_label": f"Fraction bar divided into {denominator} equal parts with one part selected.",
+            },
         )
     if family_code == "MATH.FRAC.NUMBER_LINE":
         denominator = rng.randint(3, 10)
@@ -203,10 +209,19 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         denominator = 10 if family_code.endswith("TENTHS") else 100
         numerator = rng.randint(1, denominator - 1)
         value = Fraction(numerator, denominator)
+        decimal_value = f"{float(value):g}"
         return (
             f"Write {numerator}/{denominator} as a decimal.",
-            f"{float(value):g}",
+            decimal_value,
             ("The denominator names decimal place value.", "Tenths use one decimal place; hundredths use two."),
             {"DEC.FRACTION.DIVIDE_WRONG_WAY": f"{denominator/numerator:g}"},
+            {
+                "type": "decimal_place_value",
+                "whole": 0,
+                "tenths": int(float(value) * 10) % 10,
+                "hundredths": int(round(float(value) * 100)) % 10,
+                "value": float(value),
+                "aria_label": f"Decimal place-value chart representing {decimal_value}.",
+            },
         )
     raise ValueError(f"No fraction/decimal depth builder for family: {family_code}")
