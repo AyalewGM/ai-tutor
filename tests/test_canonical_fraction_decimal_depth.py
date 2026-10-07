@@ -48,6 +48,40 @@ def test_mixed_to_improper_preserves_fraction_value() -> None:
         assert Fraction(an, ad) == whole + Fraction(n, d)
 
 
+
+def _mixed_value(text: str) -> Fraction:
+    if " " not in text:
+        return Fraction(int(text), 1)
+    whole, fraction = text.split()
+    return Fraction(int(whole), 1) + Fraction(fraction)
+
+
+def test_mixed_addition_matches_fraction_oracle() -> None:
+    for seed in range(15):
+        prompt, answer, _, _ = _build("MATH.FRAC.MIXED.ADD", seed)
+        match = re.fullmatch(
+            r"Add (\\d+) (\\d+)/(\\d+) \\+ (\\d+) (\\d+)/(\\d+)\\.",
+            prompt,
+        )
+        assert match
+        w1, n1, d1, w2, n2, d2 = map(int, match.groups())
+        expected = Fraction(w1, 1) + Fraction(n1, d1) + Fraction(w2, 1) + Fraction(n2, d2)
+        assert _mixed_value(answer) == expected
+
+
+def test_mixed_subtraction_matches_fraction_oracle() -> None:
+    for seed in range(15):
+        prompt, answer, _, _ = _build("MATH.FRAC.MIXED.SUB", seed)
+        match = re.fullmatch(
+            r"Subtract (\\d+) (\\d+)/(\\d+) - (\\d+) (\\d+)/(\\d+)\\.",
+            prompt,
+        )
+        assert match
+        w1, n1, d1, w2, n2, d2 = map(int, match.groups())
+        expected = Fraction(w1, 1) + Fraction(n1, d1) - Fraction(w2, 1) - Fraction(n2, d2)
+        assert _mixed_value(answer) == expected
+
+
 def test_same_numerator_comparison_prefers_smaller_denominator() -> None:
     for seed in range(15):
         prompt, answer, _, _ = _build("MATH.FRAC.COMPARE.SAME_NUMERATOR", seed)
