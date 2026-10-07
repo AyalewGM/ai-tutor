@@ -1,6 +1,6 @@
 import re
 
-from app.canonical_problem_families import FAMILIES, generate
+from app.canonical_problem_families import FAMILIES, LearningMode, generate
 
 
 CODES = [
@@ -48,7 +48,7 @@ def test_measurement_spatial_batch_has_twenty_families() -> None:
 def test_measurement_spatial_generation_is_deterministic() -> None:
     for code in CODES:
         assert _build(code, 91) == _build(code, 91), code
-        assert len(FAMILIES[code].modes) == 5, code
+        assert FAMILIES[code].modes == frozenset(LearningMode), code
 
 
 def test_measurement_spatial_misconceptions_do_not_collide_with_truth() -> None:
