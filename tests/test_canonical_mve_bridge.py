@@ -1,8 +1,11 @@
-from types import SimpleNamespace
-
 from app.canonical_problem_adapter import materialize_problem
 from app.canonical_problem_families import generate
 from app.services.visualization import visualization_for
+
+
+class _Stub:
+    def __init__(self, **values) -> None:
+        self.__dict__.update(values)
 
 
 VISUAL_FAMILIES = [
@@ -44,7 +47,7 @@ def test_existing_nonvisual_family_remains_backward_compatible() -> None:
 
 def test_visualization_service_prefers_canonical_spec() -> None:
     generated = generate("MATH.GEO.ANGLE.COMPLEMENT", seed=9, difficulty=3)
-    problem = SimpleNamespace(
+    problem = _Stub(
         solution={"visual_spec": generated.visual_spec},
         problem_type="ANGLE_REASONING",
         prompt=generated.prompt,
@@ -53,7 +56,7 @@ def test_visualization_service_prefers_canonical_spec() -> None:
 
 
 def test_visualization_service_rejects_malformed_canonical_spec() -> None:
-    problem = SimpleNamespace(
+    problem = _Stub(
         solution={"visual_spec": {"angle": 45}},
         problem_type="UNSUPPORTED",
         prompt="No renderer should be selected.",
@@ -78,7 +81,7 @@ class _FakeDb:
 def test_materialization_preserves_visual_spec_without_evidence_transfer() -> None:
     generated = generate("MATH.PROB.SIMPLE", seed=17, difficulty=2)
     db = _FakeDb()
-    skill = SimpleNamespace(id="synthetic-skill-id")
+    skill = _Stub(id="synthetic-skill-id")
 
     problem = materialize_problem(db, generated=generated, curriculum_skill=skill)
 
