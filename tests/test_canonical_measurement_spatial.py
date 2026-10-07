@@ -1,7 +1,6 @@
 import random
 import re
 
-from app.canonical_problem_families import LearningMode
 from app.domains import measurement_spatial as domain
 
 
@@ -28,7 +27,7 @@ def test_measurement_spatial_batch_has_twenty_families() -> None:
 def test_measurement_spatial_generation_is_deterministic() -> None:
     for code in CODES:
         assert _build(code, 91) == _build(code, 91), code
-        assert domain.FAMILIES[code].modes == frozenset(LearningMode), code
+        assert domain.FAMILIES[code].modes == frozenset({"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}), code
 
 
 def test_measurement_spatial_misconceptions_do_not_collide_with_truth() -> None:
