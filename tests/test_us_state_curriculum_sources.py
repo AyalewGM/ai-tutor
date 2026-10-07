@@ -31,3 +31,22 @@ def test_authoritative_sources_are_state_agency_https_urls():
             host in source.source_uri
             for host in ("cde.ca.gov", "nysed.gov", "nj.gov", "doe.virginia.gov")
         )
+
+
+def test_verified_sources_enrich_coverage_without_claiming_completion():
+    from app.curriculum_coverage import (
+        completed_cells,
+        national_coverage_matrix,
+        state_complete,
+        with_verified_state_source,
+    )
+
+    cells = national_coverage_matrix()
+    for code in ("CA", "NY", "NJ", "VA"):
+        cells = with_verified_state_source(cells, code)
+
+    verified = [cell for cell in cells if cell.state_code in {"CA", "NY", "NJ", "VA"}]
+    assert len(verified) == 36
+    assert all(cell.source_verified for cell in verified)
+    assert completed_cells(tuple(verified)) == 0
+    assert all(not state_complete(cells, code) for code in ("CA", "NY", "NJ", "VA"))
