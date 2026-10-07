@@ -76,7 +76,7 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             f"Reflect ({x},{y}) across the line y=x. Give x,y.",
             _point(y, x),
             ("Reflection across y=x exchanges the coordinate roles.", "Swap x and y."),
-            {"GEO.REFLECT.NEGATE_BOTH": _point(-x, -y)},
+            {"GEO.REFLECT.LEAVE_UNCHANGED": _point(x, y)},
             {
                 "type": "coordinate_point", "x": x, "y": y, "min": -10, "max": 10,
                 "aria_label": f"Coordinate plane with preimage point at ({x}, {y}); reflect it across y equals x.",
