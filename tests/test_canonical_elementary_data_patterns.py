@@ -1,7 +1,7 @@
 import re
 from itertools import pairwise
 
-from app.canonical_problem_families import FAMILIES, generate
+from app.canonical_problem_families import FAMILIES, LearningMode, generate
 
 
 CODES = [
@@ -39,7 +39,7 @@ def test_elementary_data_pattern_batch_has_twelve_families() -> None:
 def test_elementary_data_patterns_are_deterministic_and_support_all_modes() -> None:
     for code in CODES:
         assert _build(code, 71) == _build(code, 71), code
-        assert len(FAMILIES[code].modes) == 5, code
+        assert FAMILIES[code].modes == frozenset(LearningMode), code
 
 
 def test_elementary_misconceptions_do_not_collide_with_truth() -> None:
