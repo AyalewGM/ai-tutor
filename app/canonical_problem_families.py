@@ -95,6 +95,11 @@ FAMILIES = {
         "MATH.EE.EQUATION.TWO", "WORD_PROBLEM", 3, 4, ALL_MODES,
         frozenset({"reasoning", "modeling", "comparison_structure"}),
     ),
+    "MATH.EQ.TWO.MODEL.FROM_CONTEXT": ProblemFamilySpec(
+        "MATH.EQ.TWO.MODEL.FROM_CONTEXT", "Construct an equation from context",
+        "MATH.EE.EQUATION.TWO", "MODEL_EQUATION", 2, 4, ALL_MODES,
+        frozenset({"representation", "modeling", "structure_identification"}),
+    ),
 }
 
 
@@ -147,17 +152,34 @@ def _build(family_code: str, rng: random.Random, difficulty: int):
              f"Model it as s + {groups}({added_each}) = {final}."),
             {"EQ.WORD.CONFUSE_START_WITH_RATE": str(added_each)},
         )
+    if family_code == "MATH.EQ.TWO.WORD.COMPARISON":
     base = rng.randint(3, 9 + difficulty)
-    multiplier = rng.randint(2, 4 + difficulty)
-    difference = rng.randint(1, 5 + difficulty)
-    total = multiplier * base + difference
+        multiplier = rng.randint(2, 4 + difficulty)
+        difference = rng.randint(1, 5 + difficulty)
+        total = multiplier * base + difference
+        return (
+            f"Mina has \${difference} more than {multiplier} times the amount Kai has. "
+            f"Mina has \${total}. How much money does Kai have?",
+            str(base),
+            (f"If Kai has k dollars, {multiplier} times that amount is {multiplier}k.",
+             f"Model Mina's amount as {multiplier}k + {difference} = {total}."),
+            {"EQ.WORD.ADD_BEFORE_DIVIDE": str(total // multiplier)},
+        )
+    coefficient = rng.randint(2, 4 + difficulty)
+    fee = rng.randint(2, 7 + difficulty)
+    units = rng.randint(3, 9 + difficulty)
+    total = coefficient * units + fee
     return (
-        f"Mina has \${difference} more than {multiplier} times the amount Kai has. "
-        f"Mina has \${total}. How much money does Kai have?",
-        str(base),
-        (f"If Kai has k dollars, {multiplier} times that amount is {multiplier}k.",
-         f"Model Mina's amount as {multiplier}k + {difference} = {total}."),
-        {"EQ.WORD.ADD_BEFORE_DIVIDE": str(total // multiplier)},
+        f"A club charges a \${fee} registration fee and \${coefficient} for each "
+        f"activity. Jordan paid \${total}. Write an equation using a for the "
+        f"number of activities. Do not solve it.",
+        f"{coefficient}a+{fee}={total}",
+        ("Identify the repeated cost and multiply it by the unknown number of activities.",
+         "Then add the one-time registration fee and set it equal to the total."),
+        {
+            "EQ.MODEL.SWAP_RATE_AND_FEE": f"{fee}a+{coefficient}={total}",
+            "EQ.MODEL.OMIT_FIXED_FEE": f"{coefficient}a={total}",
+        },
     )
 
 
