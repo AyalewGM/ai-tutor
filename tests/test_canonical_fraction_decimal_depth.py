@@ -14,7 +14,10 @@ def _build(code: str, seed: int = 31):
 
 def test_fraction_decimal_depth_has_sixteen_families() -> None:
     assert len(CODES) == 16
-    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}\n    assert all({mode.value for mode in domain.FAMILIES[code].modes} == expected for code in CODES)
+    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}
+    assert all(
+        {mode.value for mode in domain.FAMILIES[code].modes} == expected for code in CODES
+    )
 
 
 def test_fraction_decimal_depth_is_deterministic() -> None:
@@ -94,7 +97,7 @@ def test_decimal_rounding_matches_half_up_for_positive_values() -> None:
     for seed in range(15):
         prompt, answer, _, _ = _build("MATH.DEC.ROUND", seed)
         value = float(re.search(r"Round ([0-9.]+)", prompt).group(1))
-        hundredths_digit = int(round(value * 100)) % 10
+        hundredths_digit = round(value * 100) % 10
         truncated = int(value * 10) / 10
         expected = truncated + (0.1 if hundredths_digit >= 5 else 0)
         assert abs(float(answer) - expected) < 1e-9
