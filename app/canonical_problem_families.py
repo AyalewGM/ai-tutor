@@ -84,6 +84,7 @@ from app.domains import factors_multiples as _fac_mod
 from app.domains import fractions as _frac_mod
 from app.domains import geometry_measurement as _geo_mod
 from app.domains import integers as _int_mod
+from app.domains import measurement_spatial as _measurement_spatial_mod
 from app.domains import multiplication as _mul_mod
 from app.domains import order_of_operations as _ooo_mod
 from app.domains import percent as _pct_mod
