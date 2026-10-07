@@ -1,8 +1,7 @@
-from itertools import pairwise
 import re
+from itertools import pairwise
 
 from app.canonical_problem_families import FAMILIES, LearningMode, generate
-
 
 CODES = [
     "MATH.DATA.BAR.COMPARE",
