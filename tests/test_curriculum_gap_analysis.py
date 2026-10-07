@@ -3,6 +3,7 @@ import pytest
 from app.california_algebra1_gap_audit import CA_ALGEBRA_I_GAPS
 from app.california_gap_audit import california_grade1_8_summary, california_true_gap_keys
 from app.california_grade1_gap_audit import CA_GRADE1_GAPS, CA_GRADE1_STANDARD_CODES
+from app.california_math1_gap_audit import CA_MATHEMATICS_I_GAPS
 from app.california_grade2_gap_audit import CA_GRADE2_GAPS, CA_GRADE2_STANDARD_CODES
 from app.california_grade3_gap_audit import CA_GRADE3_GAPS, CA_GRADE3_STANDARD_CODES
 from app.california_grade4_gap_audit import CA_GRADE4_GAPS, CA_GRADE4_STANDARD_CODES
@@ -237,5 +238,15 @@ def test_california_algebra1_full_inventory_is_classified_fail_closed() -> None:
         GapStatus.COVERED: 11,
         GapStatus.PARTIAL: 36,
         GapStatus.GAP: 15,
+        GapStatus.AMBIGUOUS: 0,
+    }
+
+
+def test_california_mathematics1_full_inventory_reuses_shared_classification() -> None:
+    assert len(CA_MATHEMATICS_I_GAPS) == 59
+    assert gap_counts(CA_MATHEMATICS_I_GAPS) == {
+        GapStatus.COVERED: 10,
+        GapStatus.PARTIAL: 39,
+        GapStatus.GAP: 10,
         GapStatus.AMBIGUOUS: 0,
     }
