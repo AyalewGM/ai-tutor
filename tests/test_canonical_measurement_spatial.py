@@ -1,8 +1,8 @@
 import random
 import re
 
-from app.domains import measurement_spatial as domain
 from app.canonical_problem_families import LearningMode
+from app.domains import measurement_spatial as domain
 
 
 CODES = sorted(domain.FAMILIES)
