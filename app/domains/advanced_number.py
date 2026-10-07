@@ -87,8 +87,10 @@ def build(family_code: str, rng: random.Random, difficulty: int):
     if family_code == "MATH.RAT.NUMBER_LINE":
         value = _fraction(rng)
         return (
-            f"Which rational number is located exactly at {value} on a number line? "
-            f"(A) {value} (B) {-value} (C) {value + 1} (D) {value - 1}",
+            (
+                f"Which rational number is located exactly at {value} on a number line? "
+                f"(A) {value} (B) {-value} (C) {value + 1} (D) {value - 1}"
+            ),
             "A",
             ("A coordinate names its exact position on the number line.", "Keep the sign."),
             {"RAT.NUMBER_LINE.REFLECT": "B"},
@@ -103,9 +105,11 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             correct = -a + b
             claimed = -(a + b)
         return (
-            f"A student says -{a} + {b} = {claimed}. Which response is correct? "
-            f"(A) The correct value is {correct}. (B) The student is correct. "
-            "(C) Both signs should be positive. (D) The denominators must be added.",
+            (
+                f"A student says -{a} + {b} = {claimed}. Which response is correct? "
+                f"(A) The correct value is {correct}. (B) The student is correct. "
+                "(C) Both signs should be positive. (D) The denominators must be added."
+            ),
             "A",
             ("The addends have different signs.", "Compare magnitudes and keep the sign of the larger magnitude."),
             {"RAT.SIGN.ADD_MAGNITUDES": "B"},
