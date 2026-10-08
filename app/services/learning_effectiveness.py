@@ -282,7 +282,7 @@ def compute_effectiveness(
         transfer_perf = comp_score
         base_diff = None
         comp_diff = comparison.difficulty_mean
-        comparable = True  # single-skill absolute measurement
+        comparable = comp_diff is not None  # target difficulty must be recorded
     else:
         # GROWTH / RETENTION: same-skill comparison.
         # Use nullable arithmetic — if either score is None, the
@@ -302,39 +302,56 @@ def compute_effectiveness(
             gap = abs(float(comp_diff) - float(base_diff))
             comparable = gap <= MAX_DIFFICULTY_GAP
         else:
-            comparable = base_diff is None
+            comparable = False  # unknown difficulty is not proven comparable
 
-    # Evidence count
+    # Count answered items, not just items displayed.  Legacy assessments
+    # with no answered count retain their historical total as a fallback.
     base_items = (baseline.items_total or 0) if baseline else 0
     comp_items = comparison.items_total or 0
-    total_evidence = base_items + comp_items
-
-    # Insufficient evidence conditions:
-    # 1. Comparison has no score (incomplete/cancelled/insufficient items)
-    # 2. Not enough items in comparison
-    # 3. Not enough items in baseline (when baseline is required)
-    # 4. Baseline exists but has no score
-    # 5. Assessment has insufficient distinct-family coverage
-    comp_has_score = comparison.score is not None
-    base_has_score = baseline is None or baseline.score is not None
-    # coverage_sufficient defaults to True (column default at INSERT),
-    # but at Python construction time the attribute may be None.
-    # Treat None as True (no coverage limitation recorded).
-    _comp_cov = getattr(comparison, "coverage_sufficient", None)
-    comp_coverage = _comp_cov is not False
-    _base_cov = getattr(baseline, "coverage_sufficient", None) if baseline else None
-    base_coverage = baseline is None or _base_cov is not False
-    sufficient = (
-        comp_has_score
-        and base_has_score
-        and comp_coverage
-        and base_coverage
-        and comp_items >= MIN_EVIDENCE_ITEMS
-        and (baseline is None or base_items >= MIN_EVIDENCE_ITEMS)
+    base_answered = (
+        baseline.items_answered if baseline and baseline.items_answered is not None
+        else base_items
+    )
+    comp_answered = (
+        comparison.items_answered if comparison.items_answered is not None
+        else comp_items
+    )
+    # Transfer confidence is based solely on independent target-skill evidence.
+    # Source-skill baseline questions cannot strengthen transfer confidence.
+    total_evidence = (
+        comp_answered if measurement_type == "TRANSFER"
+        else base_answered + comp_answered
     )
 
+    # Growth and retention require a valid same-skill baseline.  Transfer
+    # measures absolute target performance and does not require one.
+    requires_baseline = measurement_type != "TRANSFER"
+    base_valid = (
+        not requires_baseline
+        or (
+            baseline is not None
+            and baseline.status == AssessmentStatus.COMPLETED
+            and baseline.score is not None
+            and baseline.independent_score is not None
+            and baseline.assessment_mode != "COMPROMISED"
+            and baseline.coverage_sufficient is not False
+            and base_answered >= MIN_EVIDENCE_ITEMS
+        )
+    )
+    comp_valid = (
+        comparison.status == AssessmentStatus.COMPLETED
+        and comparison.score is not None
+        and comparison.independent_score is not None
+        and comparison.assessment_mode != "COMPROMISED"
+        and comparison.coverage_sufficient is not False
+        and comp_answered >= MIN_EVIDENCE_ITEMS
+    )
+    sufficient = base_valid and comp_valid and comparable
+
     misconceptions = _analyse_misconceptions(baseline, comparison)
-    confidence = _compute_confidence(total_evidence)
+    # Volume alone never overrides compromised, incomplete, non-independent,
+    # uncovered, or difficulty-incomparable evidence.
+    confidence = _compute_confidence(total_evidence) if sufficient else "INSUFFICIENT"
 
     return EffectivenessMetrics(
         student_id=student_id,
@@ -747,7 +764,12 @@ def parent_summary(
     # What they understood initially
     if not report.has_baseline:
         initial = "Not assessed"
-    elif report.baseline and report.baseline.independent_score is not None:
+    elif (
+        report.baseline
+        and report.baseline.independent_score is not None
+        and report.baseline.assessment_mode != "COMPROMISED"
+        and report.baseline.coverage_sufficient is not False
+    ):
         score = float(report.baseline.independent_score)
         if score >= 0.8:
             initial = "Well"
@@ -774,11 +796,15 @@ def parent_summary(
     elif not report.has_post_instruction:
         improved = "Not assessed"
     else:
-        improved = "Not yet"
+        improved = "Not enough evidence"
 
     # Can solve independently
     if report.has_post_instruction and report.post_instruction:
-        if report.post_instruction.independent_score is None:
+        if (
+            report.post_instruction.independent_score is None
+            or report.post_instruction.assessment_mode == "COMPROMISED"
+            or report.post_instruction.coverage_sufficient is False
+        ):
             independent = "Not assessed"
         else:
             ind = float(report.post_instruction.independent_score)
@@ -788,20 +814,16 @@ def parent_summary(
                 independent = "Sometimes"
             else:
                 independent = "Not yet"
-    elif report.current_mastery is not None:
-        m = float(report.current_mastery)
-        if m >= 0.85:
-            independent = "Yes"
-        elif m >= 0.5:
-            independent = "Sometimes"
-        else:
-            independent = "Not yet"
     else:
+        # Guided/general mastery cannot establish independent performance.
         independent = "Not assessed"
 
     # Retention
     if report.has_retention and report.retention_metrics:
-        if report.retention_metrics.observed_improvement is None:
+        if (
+            not report.retention_metrics.evidence_sufficient
+            or report.retention_metrics.independent_improvement is None
+        ):
             remembers = "Not enough evidence"
         else:
             ret_imp = float(report.retention_metrics.observed_improvement)
@@ -818,7 +840,10 @@ def parent_summary(
 
     # Transfer — applying understanding to new problems
     if report.has_transfer and report.transfer_metrics:
-        if report.transfer_metrics.transfer_performance is None:
+        if (
+            not report.transfer_metrics.evidence_sufficient
+            or report.transfer_metrics.transfer_performance is None
+        ):
             transfer_label = "Not enough evidence"
         else:
             tp = float(report.transfer_metrics.transfer_performance)
