@@ -26,7 +26,7 @@ FAMILIES = {
         UNIT, "Compare exact unit prices", "MATH.FIN.UNIT_PRICE",
         "COMPARISON", 1, 4, ALL_MODES,
         frozenset({"financial_literacy", "ratio_reasoning", "comparison"}),
-        answer_contract=AnswerContract(AnswerKind.CATEGORY),
+        answer_contract=AnswerContract(AnswerKind.CATEGORY, choices=frozenset({"A", "B"})),
     ),
 }
 
@@ -37,8 +37,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         rate = rng.choice((10, 20, 25))
         discount = price * rate // 100
         return (
-            f"An item costs ${price}. A {rate}% discount applies before tax. "
-            "What is its price after the discount, in whole dollars?",
+            (f"An item costs ${price}. A {rate}% discount applies before tax. "
+             "What is its price after the discount, in whole dollars?"),
             str(price - discount),
             ("Find the discount amount from the original price.",
              "Subtract the discount from the original price."),
@@ -49,8 +49,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         rate = rng.choice((5, 10, 15))
         tax = price * rate // 100
         return (
-            f"An item costs ${price} before tax. Sales tax is {rate}%. "
-            "What is the total price including tax, in whole dollars?",
+            (f"An item costs ${price} before tax. Sales tax is {rate}%. "
+             "What is the total price including tax, in whole dollars?"),
             str(price + tax),
             ("Compute tax using the price before tax.",
              "Add the tax to the original price."),
@@ -67,9 +67,9 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         answer = "A" if unit_a < unit_b else "B"
         wrong = "B" if answer == "A" else "A"
         return (
-            f"Offer A: {count_a} identical notebooks for ${cost_a}. "
-            f"Offer B: {count_b} identical notebooks for ${cost_b}. "
-            "Which offer has the lower price per notebook? Answer A or B.",
+            (f"Offer A: {count_a} identical notebooks for ${cost_a}. "
+             f"Offer B: {count_b} identical notebooks for ${cost_b}. "
+             "Which offer has the lower price per notebook? Answer A or B."),
             answer,
             ("Divide each total price by its notebook count.",
              "Compare the two prices for one notebook, not the package totals."),
