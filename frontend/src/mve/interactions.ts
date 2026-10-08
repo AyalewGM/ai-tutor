@@ -56,6 +56,20 @@ export interface PolygonCreatedEvent extends MathInteractionBase {
   vertices: readonly Point2D[];
 }
 
+/** Semantic algebra actions: never raw text, coordinates, or child identifiers. */
+export interface DistributiveStepViewedEvent extends MathInteractionBase {
+  type: "DISTRIBUTIVE_STEP_VIEWED";
+  step_id: string;
+}
+
+export interface DistributiveCoefficientsCheckedEvent extends MathInteractionBase {
+  type: "DISTRIBUTIVE_COEFFICIENTS_CHECKED";
+  variable_coefficient: number;
+  constant_term: number;
+  correct: boolean;
+  misconception: "MISSED_SECOND_TERM" | "COEFFICIENT_ERROR" | "CONSTANT_ERROR" | null;
+}
+
 export type MathInteractionEvent =
   | PointPlacedEvent
   | PointMovedEvent
@@ -64,7 +78,9 @@ export type MathInteractionEvent =
   | VertexMovedEvent
   | TransformationAppliedEvent
   | RegionSelectedEvent
-  | PolygonCreatedEvent;
+  | PolygonCreatedEvent
+  | DistributiveStepViewedEvent
+  | DistributiveCoefficientsCheckedEvent;
 
 function isPoint2D(value: unknown): value is Point2D {
   return Array.isArray(value) &&
@@ -97,6 +113,18 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
     case "POLYGON_CREATED":
       return Array.isArray(event.vertices) && event.vertices.length >= 3 &&
         event.vertices.every(isPoint2D);
+    case "DISTRIBUTIVE_STEP_VIEWED":
+      return typeof event.step_id === "string" &&
+        ["identify", "distribute_variable", "distribute_constant", "simplify"].includes(event.step_id);
+    case "DISTRIBUTIVE_COEFFICIENTS_CHECKED":
+      return Number.isSafeInteger(event.variable_coefficient) &&
+        Number.isSafeInteger(event.constant_term) &&
+        Math.abs(event.variable_coefficient as number) <= 10000 &&
+        Math.abs(event.constant_term as number) <= 10000 &&
+        typeof event.correct === "boolean" &&
+        (event.misconception === null ||
+          ["MISSED_SECOND_TERM", "COEFFICIENT_ERROR", "CONSTANT_ERROR"].includes(String(event.misconception))) &&
+        event.correct === (event.misconception === null);
     default:
       return false;
   }

@@ -9,6 +9,7 @@ import VoiceChatControls from "../components/chat/VoiceChatControls";
 import MathText from "../components/MathText";
 import ChatMessage from "../components/chat/ChatMessage";
 import LearnPanel from "../components/LearnPanel";
+import { GuidedDistributivePractice } from "../mve/GuidedDistributivePractice";
 import LevelCrest from "../components/LevelCrest";
 import MathKeypad from "../components/MathKeypad";
 import ScratchPad from "../components/ScratchPad";
@@ -753,6 +754,13 @@ export default function Workspace() {
                       )}
                     </div>
                   )}
+                  {(workspace.state === "GUIDED_PRACTICE" || workspace.state === "REMEDIATION") &&
+                    /distributive|expand.*parenthes/i.test(workspace.focus.skill_name) && (
+                      <GuidedDistributivePractice
+                        key={workspace.focus.active_skill_id}
+                        independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                      />
+                    )}
                   <div className="problem-wrap">
                     <div className={`problem ${feedback}`} aria-live="polite">
                       <MathText
