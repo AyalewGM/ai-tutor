@@ -124,6 +124,13 @@ class LearningAssessment(Base):
     # Set to "COMPROMISED" if platform assistance was detected
     compromised_reason: Mapped[str | None] = mapped_column(String(200))
 
+    # Problem-family coverage — whether the assessment met its required
+    # distinct-family count.  An assessment with insufficient coverage
+    # cannot qualify as validated learning-effectiveness evidence.
+    coverage_sufficient: Mapped[bool] = mapped_column(Boolean, default=True)
+    requested_item_count: Mapped[int] = mapped_column(Integer, default=0)
+    available_distinct_families: Mapped[int] = mapped_column(Integer, default=0)
+
     # Aggregate results (filled on completion)
     items_total: Mapped[int] = mapped_column(Integer, default=0)
     items_answered: Mapped[int] = mapped_column(Integer, default=0)

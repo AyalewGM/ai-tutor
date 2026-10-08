@@ -1491,6 +1491,460 @@ class TestEndpointCoverageAudit:
 
 
 # ====================================================================
+# 24. Fix A — Missing evidence never converted to zero
+# ====================================================================
+
+
+class TestMissingEvidenceNeverZero:
+    """Verify that None scores are never silently converted to numeric zero."""
+
+    def test_missing_baseline_score_produces_none_improvement(self):
+        """When baseline.score is None, observed_improvement must be None."""
+        baseline = _mock_assessment(score=None, items_total=5)
+        comp = _mock_assessment(score="0.800", items_total=5)
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.observed_improvement is None
+
+    def test_missing_comparison_score_produces_none_improvement(self):
+        """When comparison.score is None, observed_improvement must be None."""
+        baseline = _mock_assessment(score="0.400", items_total=5)
+        comp = _mock_assessment(score=None, items_total=5)
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.observed_improvement is None
+
+    def test_missing_baseline_independent_score(self):
+        """When baseline.independent_score is None, independent_improvement is None."""
+        baseline = _mock_assessment(
+            score="0.400", independent_score=None, items_total=5,
+        )
+        comp = _mock_assessment(
+            score="0.800", independent_score="0.800", items_total=5,
+        )
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.independent_improvement is None
+        # observed_improvement can still be computed (both scores present)
+        assert m.observed_improvement is not None
+
+    def test_missing_comparison_independent_score(self):
+        """When comparison.independent_score is None (compromised), no independent improvement."""
+        baseline = _mock_assessment(
+            score="0.400", independent_score="0.400", items_total=5,
+        )
+        comp = _mock_assessment(
+            score="0.800", independent_score=None, items_total=5,
+        )
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.independent_improvement is None
+        assert m.observed_improvement == Decimal("0.400")
+
+    def test_both_scores_missing(self):
+        """Both scores None → both improvements None."""
+        baseline = _mock_assessment(score=None, items_total=5)
+        comp = _mock_assessment(score=None, items_total=5)
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.observed_improvement is None
+        assert m.independent_improvement is None
+
+    def test_no_baseline_produces_none_improvement(self):
+        """No baseline (None) → None improvement (not -0.800)."""
+        comp = _mock_assessment(score="0.800", items_total=5)
+        m = compute_effectiveness(
+            baseline=None, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.observed_improvement is None
+        assert m.independent_improvement is None
+
+    def test_valid_zero_baseline_retained(self):
+        """A genuine score of 0.000 must remain a valid measurement."""
+        baseline = _mock_assessment(
+            score="0.000", independent_score="0.000",
+            difficulty_mean="2.00", items_total=5,
+        )
+        comp = _mock_assessment(
+            score="0.600", independent_score="0.600",
+            difficulty_mean="2.00", items_total=5,
+        )
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.observed_improvement == Decimal("0.600")
+        assert m.independent_improvement == Decimal("0.600")
+
+    def test_valid_zero_comparison_retained(self):
+        """A genuine comparison score of 0.000 produces negative improvement."""
+        baseline = _mock_assessment(
+            score="0.600", independent_score="0.600",
+            difficulty_mean="2.00", items_total=5,
+        )
+        comp = _mock_assessment(
+            score="0.000", independent_score="0.000",
+            difficulty_mean="2.00", items_total=5,
+        )
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.observed_improvement == Decimal("-0.600")
+        assert m.independent_improvement == Decimal("-0.600")
+
+    def test_valid_negative_improvement(self):
+        """Score decrease is a valid negative improvement, not None."""
+        baseline = _mock_assessment(
+            score="0.800", independent_score="0.800",
+            difficulty_mean="2.00", items_total=5,
+        )
+        comp = _mock_assessment(
+            score="0.400", independent_score="0.400",
+            difficulty_mean="2.00", items_total=5,
+        )
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.observed_improvement == Decimal("-0.400")
+        assert m.independent_improvement == Decimal("-0.400")
+
+    def test_compromised_assessment_no_independent_evidence(self):
+        """Compromised assessment has independent_score=None → no improvement."""
+        baseline = _mock_assessment(
+            score="0.400", independent_score="0.400", items_total=5,
+        )
+        comp = _mock_assessment(
+            score="0.800", independent_score=None, items_total=5,
+        )
+        comp.assessment_mode = "COMPROMISED"
+        comp.compromised_reason = "Legacy endpoint bypass"
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.independent_improvement is None
+        # observed is still calculable
+        assert m.observed_improvement == Decimal("0.400")
+
+    def test_missing_baseline_means_insufficient_evidence(self):
+        """Missing baseline score → evidence_sufficient=False."""
+        baseline = _mock_assessment(score=None, items_total=5)
+        comp = _mock_assessment(score="0.800", items_total=5)
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.evidence_sufficient is False
+
+    def test_cancelled_comparison_no_improvement(self):
+        """Cancelled comparison (score=None) → None improvement, insufficient."""
+        baseline = _mock_assessment(score="0.400", items_total=5)
+        comp = _mock_assessment(score=None, items_total=5)
+        comp.status = AssessmentStatus.CANCELLED
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.observed_improvement is None
+        assert m.evidence_sufficient is False
+
+    def test_transfer_missing_score_produces_none_performance(self):
+        """Transfer with missing score → transfer_performance=None."""
+        comp = _mock_assessment(score=None, items_total=5)
+        m = compute_effectiveness(
+            baseline=None, comparison=comp,
+            measurement_type="TRANSFER",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.transfer_performance is None
+        assert m.observed_improvement is None
+        assert m.independent_improvement is None
+
+    def test_snapshot_serialisation_preserves_none(self):
+        """_metrics_dict preserves None for missing improvements."""
+        from app.services.learning_effectiveness import _metrics_dict
+        baseline = _mock_assessment(score=None, items_total=5)
+        comp = _mock_assessment(score="0.800", items_total=5)
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        d = _metrics_dict(m)
+        assert d["observed_improvement"] is None
+        assert d["independent_improvement"] is None
+
+    def test_parent_summary_missing_improvement_shows_not_assessed(self):
+        """Parent summary shows 'Not assessed' when independent_improvement is None."""
+        from app.services.learning_effectiveness import EffectivenessMetrics
+        growth = EffectivenessMetrics(
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+            measurement_type="GROWTH",
+            baseline_score=Decimal("0.400"),
+            baseline_independent_score=Decimal("0.400"),
+            comparison_score=Decimal("0.800"),
+            comparison_independent_score=None,
+            observed_improvement=Decimal("0.400"),
+            independent_improvement=None,
+            baseline_difficulty_mean=Decimal("2.00"),
+            comparison_difficulty_mean=Decimal("2.00"),
+            difficulty_comparable=True,
+            misconception_analysis=MisconceptionAnalysis(
+                baseline=[], comparison=[], resolved=[], persisting=[], new=[],
+            ),
+            evidence_count=10, evidence_sufficient=True,
+            confidence_level="HIGH",
+        )
+        report = SkillEffectivenessReport(
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+            skill_code="TEST", skill_name="Test",
+            has_post_instruction=True, growth=growth,
+        )
+        s = parent_summary(report)
+        assert s.has_improved == "Not assessed"
+
+    def test_parent_summary_missing_retention_shows_not_enough_evidence(self):
+        """Parent summary shows 'Not enough evidence' when retention improvement is None."""
+        from app.services.learning_effectiveness import EffectivenessMetrics
+        ret = EffectivenessMetrics(
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+            measurement_type="RETENTION",
+            baseline_score=Decimal("0.800"),
+            baseline_independent_score=Decimal("0.800"),
+            comparison_score=Decimal("0.700"),
+            comparison_independent_score=None,
+            observed_improvement=None,
+            independent_improvement=None,
+            baseline_difficulty_mean=Decimal("2.00"),
+            comparison_difficulty_mean=Decimal("2.00"),
+            difficulty_comparable=True,
+            misconception_analysis=MisconceptionAnalysis(
+                baseline=[], comparison=[], resolved=[], persisting=[], new=[],
+            ),
+            evidence_count=10, evidence_sufficient=True,
+            confidence_level="HIGH",
+        )
+        report = SkillEffectivenessReport(
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+            skill_code="TEST", skill_name="Test",
+            has_retention=True, retention_metrics=ret,
+        )
+        s = parent_summary(report)
+        assert s.remembers_after_days == "Not enough evidence"
+
+    def test_parent_summary_missing_transfer_shows_not_enough_evidence(self):
+        """Parent summary shows 'Not enough evidence' when transfer is None."""
+        transfer = _mock_transfer_metrics(transfer_performance=None)
+        report = SkillEffectivenessReport(
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+            skill_code="TEST", skill_name="Test",
+            has_transfer=True, transfer_metrics=transfer,
+        )
+        s = parent_summary(report)
+        assert s.applies_to_new_problems == "Not enough evidence"
+
+    def test_optional_decimal_preserves_none(self):
+        """_optional_decimal(None) returns None."""
+        from app.services.learning_effectiveness import _optional_decimal
+        assert _optional_decimal(None) is None
+
+    def test_optional_decimal_preserves_zero(self):
+        """_optional_decimal(Decimal('0')) returns Decimal('0'), not None."""
+        from app.services.learning_effectiveness import _optional_decimal
+        result = _optional_decimal(Decimal(0))
+        assert result == Decimal(0)
+        assert result is not None
+
+    def test_subtract_optional_none_left(self):
+        """_subtract_optional(None, x) returns None."""
+        from app.services.learning_effectiveness import _subtract_optional
+        assert _subtract_optional(None, Decimal("0.5")) is None
+
+    def test_subtract_optional_none_right(self):
+        """_subtract_optional(x, None) returns None."""
+        from app.services.learning_effectiveness import _subtract_optional
+        assert _subtract_optional(Decimal("0.5"), None) is None
+
+    def test_subtract_optional_both_present(self):
+        """_subtract_optional(0.8, 0.4) returns 0.400."""
+        from app.services.learning_effectiveness import _subtract_optional
+        result = _subtract_optional(Decimal("0.8"), Decimal("0.4"))
+        assert result == Decimal("0.400")
+
+
+# ====================================================================
+# 25. Fix B — Coverage sufficiency enforcement
+# ====================================================================
+
+
+class TestCoverageSufficiency:
+    """Verify assessment coverage is persisted and enforced."""
+
+    def test_model_has_coverage_fields(self):
+        """LearningAssessment has coverage_sufficient, requested_item_count, available_distinct_families."""
+        a = LearningAssessment(
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+            phase=AssessmentPhase.BASELINE,
+        )
+        assert hasattr(a, "coverage_sufficient")
+        assert hasattr(a, "requested_item_count")
+        assert hasattr(a, "available_distinct_families")
+
+    def test_selection_result_sufficient_true(self):
+        """SelectionResult.sufficient=True when enough families exist."""
+        from app.services.learning_assessment import SelectionResult
+        r = SelectionResult(
+            families=[("F1", 2), ("F2", 2), ("F3", 2)],
+            sufficient=True, available_count=5, excluded_count=0,
+            reused_families=[],
+        )
+        assert r.sufficient is True
+
+    def test_selection_result_sufficient_false(self):
+        """SelectionResult.sufficient=False when fewer families than requested."""
+        from app.services.learning_assessment import SelectionResult
+        r = SelectionResult(
+            families=[("F1", 2), ("F2", 2)],
+            sufficient=False, available_count=5, excluded_count=3,
+            reused_families=[],
+        )
+        assert r.sufficient is False
+
+    def test_zero_eligible_families_raises(self):
+        """Zero eligible families raises ValueError."""
+        from app.services.learning_assessment import _select_assessment_families
+        # All families excluded
+        result = _select_assessment_families(
+            "NONEXISTENT_SKILL_CODE",
+            count=5, difficulty=2,
+        )
+        assert result.families == []
+
+    def test_excluded_families_never_reintroduced(self):
+        """Excluded families do not appear in the result."""
+        # Get all families for a real skill
+        import app.canonical_problem_families as cpf
+        from app.services.learning_assessment import (
+            _families_for_skill,
+            _select_assessment_families,
+        )
+        if not cpf.FAMILIES:
+            pytest.skip("No canonical families defined")
+        first_skill = next(iter(cpf.FAMILIES.values())).canonical_skill_code
+        all_fams = _families_for_skill(first_skill)
+        if len(all_fams) < 2:
+            pytest.skip("Need at least 2 families to test exclusion")
+        exclude = set(all_fams[:1])  # exclude first family
+        result = _select_assessment_families(
+            first_skill, exclude_families=exclude,
+            count=5, difficulty=2,
+        )
+        for fam_code, _ in result.families:
+            assert fam_code not in exclude
+
+    def test_insufficient_coverage_marks_assessment(self):
+        """An assessment with insufficient coverage persists that fact."""
+        a = LearningAssessment(
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+            phase=AssessmentPhase.POST_INSTRUCTION,
+            coverage_sufficient=False,
+            requested_item_count=5,
+            available_distinct_families=2,
+        )
+        assert a.coverage_sufficient is False
+        assert a.requested_item_count == 5
+        assert a.available_distinct_families == 2
+
+    def test_insufficient_coverage_means_insufficient_evidence(self):
+        """Assessment with coverage_sufficient=False → evidence_sufficient=False."""
+        baseline = _mock_assessment(
+            score="0.400", independent_score="0.400",
+            difficulty_mean="2.00", items_total=5,
+        )
+        comp = _mock_assessment(
+            score="0.800", independent_score="0.800",
+            difficulty_mean="2.00", items_total=5,
+        )
+        comp.coverage_sufficient = False
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.evidence_sufficient is False
+
+    def test_sufficient_coverage_allows_evidence(self):
+        """Assessment with coverage_sufficient=True allows evidence_sufficient=True."""
+        baseline = _mock_assessment(
+            score="0.400", independent_score="0.400",
+            difficulty_mean="2.00", items_total=5,
+        )
+        comp = _mock_assessment(
+            score="0.800", independent_score="0.800",
+            difficulty_mean="2.00", items_total=5,
+        )
+        comp.coverage_sufficient = True
+        baseline.coverage_sufficient = True
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.evidence_sufficient is True
+
+    def test_insufficient_baseline_coverage_insufficient_evidence(self):
+        """Baseline with coverage_sufficient=False → insufficient evidence."""
+        baseline = _mock_assessment(
+            score="0.400", independent_score="0.400",
+            difficulty_mean="2.00", items_total=5,
+        )
+        baseline.coverage_sufficient = False
+        comp = _mock_assessment(
+            score="0.800", independent_score="0.800",
+            difficulty_mean="2.00", items_total=5,
+        )
+        comp.coverage_sufficient = True
+        m = compute_effectiveness(
+            baseline=baseline, comparison=comp,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert m.evidence_sufficient is False
+
+    def test_api_schema_has_coverage_fields(self):
+        """AssessmentOut includes coverage fields."""
+        from app.effectiveness_api import AssessmentOut
+        assert "coverage_sufficient" in AssessmentOut.model_fields
+        assert "requested_item_count" in AssessmentOut.model_fields
+        assert "available_distinct_families" in AssessmentOut.model_fields
+
+
+# ====================================================================
 # Test helpers
 # ====================================================================
 
@@ -1559,28 +2013,29 @@ def _mock_metrics(
 
 def _mock_transfer_metrics(
     *,
-    transfer_performance: str = "0.000",
+    transfer_performance: str | None = "0.000",
 ) -> object:
     """Create a mock EffectivenessMetrics for TRANSFER."""
     from app.services.learning_effectiveness import EffectivenessMetrics
+    tp = Decimal(transfer_performance) if transfer_performance is not None else None
     return EffectivenessMetrics(
         student_id=uuid.uuid4(),
         skill_id=uuid.uuid4(),
         measurement_type="TRANSFER",
         baseline_score=None,
         baseline_independent_score=None,
-        comparison_score=Decimal(transfer_performance),
-        comparison_independent_score=Decimal(transfer_performance),
+        comparison_score=tp,
+        comparison_independent_score=tp,
         observed_improvement=None,
         independent_improvement=None,
-        transfer_performance=Decimal(transfer_performance),
+        transfer_performance=tp,
         baseline_difficulty_mean=None,
         comparison_difficulty_mean=Decimal("2.00"),
         difficulty_comparable=True,
         misconception_analysis=MisconceptionAnalysis(
             baseline=[], comparison=[], resolved=[], persisting=[], new=[],
         ),
-        evidence_count=5,
-        evidence_sufficient=True,
-        confidence_level="MODERATE",
+        evidence_count=5 if tp is not None else 0,
+        evidence_sufficient=tp is not None,
+        confidence_level="MODERATE" if tp is not None else "INSUFFICIENT",
     )

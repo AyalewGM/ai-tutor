@@ -111,6 +111,9 @@ class AssessmentOut(BaseModel):
     scheduled_at: datetime
     started_at: datetime | None = None
     completed_at: datetime | None = None
+    coverage_sufficient: bool = True
+    requested_item_count: int = 0
+    available_distinct_families: int = 0
     items_total: int = 0
     items_answered: int = 0
     items_correct: int = 0
@@ -208,6 +211,9 @@ def _assessment_out(
         scheduled_at=assessment.scheduled_at,
         started_at=assessment.started_at,
         completed_at=assessment.completed_at,
+        coverage_sufficient=getattr(assessment, "coverage_sufficient", True),
+        requested_item_count=getattr(assessment, "requested_item_count", 0),
+        available_distinct_families=getattr(assessment, "available_distinct_families", 0),
         items_total=assessment.items_total or 0,
         items_answered=assessment.items_answered or 0,
         items_correct=assessment.items_correct or 0,

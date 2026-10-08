@@ -239,6 +239,9 @@ def create_baseline_assessment(
         started_at=now,
         family_codes_used=family_codes,
         items_total=len(selection.families),
+        coverage_sufficient=selection.sufficient,
+        requested_item_count=item_count,
+        available_distinct_families=selection.available_count - selection.excluded_count,
     )
     db.add(assessment)
     db.flush()
@@ -284,6 +287,7 @@ def create_post_instruction_assessment(
             f"All {selection.available_count} families already used."
         )
     family_codes = list({fc for fc, _ in selection.families})
+    distinct_available = selection.available_count - selection.excluded_count
 
     assessment = LearningAssessment(
         student_id=student_id,
@@ -294,6 +298,9 @@ def create_post_instruction_assessment(
         started_at=now,
         family_codes_used=family_codes,
         items_total=len(selection.families),
+        coverage_sufficient=selection.sufficient,
+        requested_item_count=item_count,
+        available_distinct_families=distinct_available,
     )
     db.add(assessment)
     db.flush()
@@ -366,11 +373,15 @@ def start_retention_assessment(
             f"No distinct families available for retention on {skill.code}"
         )
     family_codes = list({fc for fc, _ in selection.families})
+    distinct_available = selection.available_count - selection.excluded_count
 
     assessment.status = AssessmentStatus.IN_PROGRESS
     assessment.started_at = now
     assessment.family_codes_used = family_codes
     assessment.items_total = len(selection.families)
+    assessment.coverage_sufficient = selection.sufficient
+    assessment.requested_item_count = item_count
+    assessment.available_distinct_families = distinct_available
 
     seed_base = (
         f"retention:{assessment.student_id}:"
@@ -423,6 +434,9 @@ def create_transfer_assessment(
         started_at=now,
         family_codes_used=family_codes,
         items_total=len(selection.families),
+        coverage_sufficient=selection.sufficient,
+        requested_item_count=item_count,
+        available_distinct_families=selection.available_count,
     )
     db.add(assessment)
     db.flush()

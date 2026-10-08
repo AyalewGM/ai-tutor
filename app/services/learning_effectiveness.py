@@ -206,8 +206,39 @@ def _compute_confidence(evidence_count: int) -> str:
 
 
 def _safe_decimal(value: Decimal | None) -> Decimal:
-    """Return value or 0 if None."""
+    """Return value or 0 if None.
+
+    WARNING: only appropriate for display defaults and non-measurement
+    contexts.  NEVER use for computing learning improvement — a missing
+    score is not the same as a zero score.  Use ``_optional_decimal``
+    for measurement calculations.
+    """
     return value if value is not None else Decimal("0.000")
+
+
+def _optional_decimal(value: Decimal | None) -> Decimal | None:
+    """Convert to Decimal preserving None.
+
+    None means evidence is missing, unavailable, or invalid.
+    Decimal("0") means a valid assessment demonstrated zero performance.
+    These two states must never be interchangeable.
+    """
+    if value is None:
+        return None
+    return Decimal(str(value))
+
+
+def _subtract_optional(
+    a: Decimal | None, b: Decimal | None,
+) -> Decimal | None:
+    """Subtract two optional Decimal values.
+
+    Returns None when *either* operand is None — a missing score
+    must not be treated as zero in a learning-improvement calculation.
+    """
+    if a is None or b is None:
+        return None
+    return (a - b).quantize(Decimal("0.001"), rounding=ROUND_HALF_UP)
 
 
 def compute_effectiveness(
@@ -232,33 +263,39 @@ def compute_effectiveness(
     For TRANSFER, the comparison is on a *different* skill.  Cross-skill score
     differences are NOT reported as learning gains — only the absolute
     transfer performance is recorded.
+
+    Missing-value semantics:
+    - None means evidence is missing, unavailable, or invalid.
+    - Decimal("0") means a valid assessment demonstrated zero performance.
+    - If either score is None, the improvement is None (not zero).
     """
-    comp_score = _safe_decimal(comparison.score)
-    comp_ind = _safe_decimal(comparison.independent_score)
+    comp_score = _optional_decimal(comparison.score)
+    comp_ind = _optional_decimal(comparison.independent_score)
 
     transfer_perf: Decimal | None = None
     if measurement_type == "TRANSFER":
         # Transfer: report absolute performance on the target skill.
         # Do NOT subtract source-skill scores — different skills are
         # not directly comparable as improvement.
-        # observed_improvement / independent_improvement are None for
-        # transfer; the absolute score goes into transfer_performance.
         observed = None
         independent = None
-        transfer_perf = comp_score if comparison.score is not None else None
+        transfer_perf = comp_score
         base_diff = None
         comp_diff = comparison.difficulty_mean
         comparable = True  # single-skill absolute measurement
     else:
-        # GROWTH / RETENTION: same-skill comparison
-        base_score = _safe_decimal(baseline.score if baseline else None)
-        base_ind = _safe_decimal(baseline.independent_score if baseline else None)
-        observed = (comp_score - base_score).quantize(
-            Decimal("0.001"), rounding=ROUND_HALF_UP,
+        # GROWTH / RETENTION: same-skill comparison.
+        # Use nullable arithmetic — if either score is None, the
+        # improvement is None (we cannot compute a delta from
+        # missing evidence).
+        base_score = _optional_decimal(
+            baseline.score if baseline else None,
         )
-        independent = (comp_ind - base_ind).quantize(
-            Decimal("0.001"), rounding=ROUND_HALF_UP,
+        base_ind = _optional_decimal(
+            baseline.independent_score if baseline else None,
         )
+        observed = _subtract_optional(comp_score, base_score)
+        independent = _subtract_optional(comp_ind, base_ind)
         base_diff = baseline.difficulty_mean if baseline else None
         comp_diff = comparison.difficulty_mean
         if base_diff is not None and comp_diff is not None:
@@ -271,10 +308,29 @@ def compute_effectiveness(
     base_items = (baseline.items_total or 0) if baseline else 0
     comp_items = comparison.items_total or 0
     total_evidence = base_items + comp_items
-    # Insufficient evidence if comparison has no score (incomplete/cancelled)
+
+    # Insufficient evidence conditions:
+    # 1. Comparison has no score (incomplete/cancelled/insufficient items)
+    # 2. Not enough items in comparison
+    # 3. Not enough items in baseline (when baseline is required)
+    # 4. Baseline exists but has no score
+    # 5. Assessment has insufficient distinct-family coverage
     comp_has_score = comparison.score is not None
-    sufficient = comp_has_score and comp_items >= MIN_EVIDENCE_ITEMS and (
-        baseline is None or base_items >= MIN_EVIDENCE_ITEMS
+    base_has_score = baseline is None or baseline.score is not None
+    # coverage_sufficient defaults to True (column default at INSERT),
+    # but at Python construction time the attribute may be None.
+    # Treat None as True (no coverage limitation recorded).
+    _comp_cov = getattr(comparison, "coverage_sufficient", None)
+    comp_coverage = _comp_cov is not False
+    _base_cov = getattr(baseline, "coverage_sufficient", None) if baseline else None
+    base_coverage = baseline is None or _base_cov is not False
+    sufficient = (
+        comp_has_score
+        and base_has_score
+        and comp_coverage
+        and base_coverage
+        and comp_items >= MIN_EVIDENCE_ITEMS
+        and (baseline is None or base_items >= MIN_EVIDENCE_ITEMS)
     )
 
     misconceptions = _analyse_misconceptions(baseline, comparison)
@@ -704,13 +760,17 @@ def parent_summary(
 
     # Whether they've improved
     if report.growth and report.growth.evidence_sufficient:
-        imp = float(report.growth.independent_improvement or 0)
-        if imp >= 0.2:
-            improved = "Yes"
-        elif imp > 0:
-            improved = "Somewhat"
+        if report.growth.independent_improvement is None:
+            # Evidence exists but independent score missing (compromised/insufficient)
+            improved = "Not assessed"
         else:
-            improved = "Not yet"
+            imp = float(report.growth.independent_improvement)
+            if imp >= 0.2:
+                improved = "Yes"
+            elif imp > 0:
+                improved = "Somewhat"
+            else:
+                improved = "Not yet"
     elif not report.has_post_instruction:
         improved = "Not assessed"
     else:
@@ -718,13 +778,16 @@ def parent_summary(
 
     # Can solve independently
     if report.has_post_instruction and report.post_instruction:
-        ind = float(report.post_instruction.independent_score or 0)
-        if ind >= 0.8:
-            independent = "Yes"
-        elif ind >= 0.4:
-            independent = "Sometimes"
+        if report.post_instruction.independent_score is None:
+            independent = "Not assessed"
         else:
-            independent = "Not yet"
+            ind = float(report.post_instruction.independent_score)
+            if ind >= 0.8:
+                independent = "Yes"
+            elif ind >= 0.4:
+                independent = "Sometimes"
+            else:
+                independent = "Not yet"
     elif report.current_mastery is not None:
         m = float(report.current_mastery)
         if m >= 0.85:
@@ -738,13 +801,16 @@ def parent_summary(
 
     # Retention
     if report.has_retention and report.retention_metrics:
-        ret_imp = float(report.retention_metrics.observed_improvement or 0)
-        if ret_imp >= -0.1:
-            remembers = "Yes"
-        elif ret_imp >= -0.3:
-            remembers = "Partially"
+        if report.retention_metrics.observed_improvement is None:
+            remembers = "Not enough evidence"
         else:
-            remembers = "Not yet"
+            ret_imp = float(report.retention_metrics.observed_improvement)
+            if ret_imp >= -0.1:
+                remembers = "Yes"
+            elif ret_imp >= -0.3:
+                remembers = "Partially"
+            else:
+                remembers = "Not yet"
     elif report.retention_scheduled:
         remembers = "Waiting"
     else:
@@ -752,13 +818,16 @@ def parent_summary(
 
     # Transfer — applying understanding to new problems
     if report.has_transfer and report.transfer_metrics:
-        tp = float(report.transfer_metrics.transfer_performance or 0)
-        if tp >= 0.7:
-            transfer_label = "Well"
-        elif tp >= 0.4:
-            transfer_label = "Partially"
+        if report.transfer_metrics.transfer_performance is None:
+            transfer_label = "Not enough evidence"
         else:
-            transfer_label = "Not yet"
+            tp = float(report.transfer_metrics.transfer_performance)
+            if tp >= 0.7:
+                transfer_label = "Well"
+            elif tp >= 0.4:
+                transfer_label = "Partially"
+            else:
+                transfer_label = "Not yet"
     else:
         transfer_label = "Not assessed"
 
