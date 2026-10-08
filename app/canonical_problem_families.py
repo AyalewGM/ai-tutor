@@ -11,6 +11,8 @@ import random
 from dataclasses import dataclass
 from enum import StrEnum
 
+from app.answer_contracts import AnswerContract
+
 
 class LearningMode(StrEnum):
     DIAGNOSTIC = "DIAGNOSTIC"
