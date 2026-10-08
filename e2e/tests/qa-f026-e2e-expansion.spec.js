@@ -383,7 +383,8 @@ test('assisted success is recorded separately from independent mastery evidence'
 
   // Take a hint, then answer correctly: the success must count as assisted.
   // The hint message replaces the "Correct. Keep going." status text.
-  const statusPara = page.locator('p[aria-live="polite"]');
+  const statusPara = page.getByRole('button', { name: 'Hint' })
+    .locator('xpath=ancestor::form/following-sibling::p[@aria-live="polite"]');
   await page.getByRole('button', { name: 'Hint' }).click();
   await expect(statusPara).not.toHaveText('Correct. Keep going.', { timeout: 10000 });
   await solveCurrentProblem(page, firstProblem);
