@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ProblemVisual from "../components/ProblemVisual";
+import type { MathInteractionEvent } from "./interactions";
 
 /** Guided exploration only; never mount in independent assessment. */
 export interface InteractiveFractionBarsProps {
@@ -7,6 +8,7 @@ export interface InteractiveFractionBarsProps {
   denominator?: number;
   initialNumerator?: number;
   onFractionChange?: (value: { numerator: number; denominator: number }) => void;
+  onMathEvent?: (event: MathInteractionEvent) => void;
 }
 
 export function normalizeFractionParts(numerator: number, denominator: number) {
@@ -21,7 +23,7 @@ export function InteractiveFractionBars(props: InteractiveFractionBarsProps) {
 }
 
 function GuidedFractionBars({
-  denominator = 4, initialNumerator = 1, onFractionChange,
+  denominator = 4, initialNumerator = 1, onFractionChange, onMathEvent,
 }: InteractiveFractionBarsProps) {
   const initial = normalizeFractionParts(initialNumerator, denominator);
   const [numerator, setNumerator] = useState(initial.numerator);
@@ -37,6 +39,7 @@ function GuidedFractionBars({
     const value = normalizeFractionParts(next, d);
     setNumerator(value.numerator);
     onFractionChange?.(value);
+    onMathEvent?.({ schema_version: 1, type: "FRACTION_SHADING_CHANGED", ...value });
   };
   return (
     <section aria-label="Guided fraction bar exploration" data-mve-family="fractions"
