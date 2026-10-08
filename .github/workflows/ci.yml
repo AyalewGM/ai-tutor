@@ -78,6 +78,10 @@ jobs:
         run: docker compose build tutor-api llm-gateway frontend
 
       - name: Start Compose stack
+        # QA: deterministic stub OCR so the photo-intake happy path is covered
+        # in CI E2E (StubProvider exists for exactly this; Mathpix stays unset).
+        env:
+          PHOTO_OCR_PROVIDER: stub
         run: docker compose up -d --wait
 
       - name: Verify Tutor API health
@@ -112,6 +116,9 @@ jobs:
         working-directory: e2e
         env:
           E2E_BASE_URL: http://127.0.0.1:3000
+          # Matches PHOTO_OCR_PROVIDER=stub above; selects the stub happy-path
+          # photo test and skips the disabled-provider degradation test.
+          E2E_PHOTO_OCR: stub
         run: npm run test:e2e
 
       - name: Show container logs on failure
