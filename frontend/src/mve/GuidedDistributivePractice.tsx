@@ -10,7 +10,6 @@ export function GuidedDistributivePractice({ factor = 3, constant = 4, independe
   const [coefficient, setCoefficient] = useState("");
   const [term, setTerm] = useState("");
   const [feedback, setFeedback] = useState("");
-  if (independentAssessment) return null;
   const lesson = buildDistributiveLesson(factor, constant);
   const steps = lesson.animation.steps;
   const current = steps[step];
@@ -21,6 +20,7 @@ export function GuidedDistributivePractice({ factor = 3, constant = 4, independe
     const timeout = window.setTimeout(() => setStep(index => index + 1), reducedMotion ? 0 : current.duration_ms);
     return () => window.clearTimeout(timeout);
   }, [playing, step, steps.length, current.duration_ms]);
+  if (independentAssessment) return null;
   const check = () => {
     if (!/^-?\d+$/.test(coefficient.trim()) || !/^-?\d+$/.test(term.trim())) {
       setFeedback("Enter whole-number coefficients in both fields.");
