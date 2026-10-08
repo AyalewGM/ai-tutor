@@ -170,6 +170,7 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         food = rng.randint(6, 10 + difficulty * 3)
         travel = rng.randint(5, 10 + difficulty * 2)
         supplies = rng.randint(3, 8 + difficulty * 2)
+        income = max(income, food + travel + supplies + rng.randint(5, 20))
         return (
             f"A club has {income} dollars for an activity. It spends {food} dollars "
             f"on food, {travel} dollars on travel, and {supplies} dollars on supplies. "
