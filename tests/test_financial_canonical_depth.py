@@ -20,10 +20,10 @@ def test_financial_families(code, seed):
     assert p.misconception_answers
     assert all(not p.is_correct(v) and p.misconception_for(v) == k for k, v in p.misconception_answers.items())
     if code.endswith("SIMPLE"):
-        a, rate, years = map(int, re.search(r"deposit of (\\d+) dollars earns (\\d+)%.*for (\\d+) years", p.prompt).groups())
+        a, rate, years = map(int, re.search(r"deposit of (\d+) dollars earns (\d+)%.*for (\d+) years", p.prompt).groups())
         assert int(p.canonical_answer) == a * rate * years // 100
     else:
-        fee, cost, budget = map(int, re.search(r"charges (\\d+) dollars to join and (\\d+) dollars per visit.*With (\\d+) dollars", p.prompt).groups())
+        fee, cost, budget = map(int, re.search(r"charges (\d+) dollars to join and (\d+) dollars per visit.*With (\d+) dollars", p.prompt).groups())
         assert int(p.canonical_answer) == (budget - fee) // cost
 
 @pytest.mark.parametrize("code", CODES)
