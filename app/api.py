@@ -44,6 +44,7 @@ from app.services.curriculum_scope import (
     resolve_student_curriculum_scope,
 )
 from app.services.evaluation import evaluate_distributive_property
+from app.services.learning_assessment import ASSESSMENT_BLOCK_MESSAGE, check_assessment_guard
 from app.services.mastery import update_mastery
 from app.services.problem_selection import select_next_problem
 from app.services.state_machine import TutorContext as StateContext
@@ -380,37 +381,52 @@ def respond(
         correct=evaluation.correct,
         session_id=session.id,
     )
-    generation = ai_generate(
-        db,
-        _tutor_context(
-            db,
-            student=student,
-            skill=skill,
-            state=transition.state,
-            action=transition.action,
-            hint_level=transition.hint_level,
-            problem=problem,
-            next_problem=next_problem,
-            student_answer=payload.answer,
-            misconception=misconception,
-        ),
-        student=student,
-        session_id=session.id,
-        action=transition.action,
+
+    # --- Independent-assessment guard ---
+    assessment_guard = check_assessment_guard(
+        db, student_id=session.student_id,
     )
+    if assessment_guard.blocked:
+        tutor_message = ASSESSMENT_BLOCK_MESSAGE
+        gen_model: str | None = None
+        gen_source = "assessment_blocked"
+    else:
+        generation = ai_generate(
+            db,
+            _tutor_context(
+                db,
+                student=student,
+                skill=skill,
+                state=transition.state,
+                action=transition.action,
+                hint_level=transition.hint_level,
+                problem=problem,
+                next_problem=next_problem,
+                student_answer=payload.answer,
+                misconception=misconception,
+            ),
+            student=student,
+            session_id=session.id,
+            action=transition.action,
+        )
+        tutor_message = generation.message
+        gen_model = generation.model
+        gen_source = generation.source
+
     db.add(
         TutorTurn(
             session_id=session.id,
             role="TUTOR",
-            message=generation.message,
+            message=tutor_message,
             state=transition.state,
             pedagogical_action=transition.action,
             problem_id=next_problem.id if next_problem else problem.id,
             attempt_id=attempt.id,
-            llm_model=generation.model,
+            llm_model=gen_model,
             metadata_json={
                 "hint_level": transition.hint_level,
-                "generation_source": generation.source,
+                "generation_source": gen_source,
+                "assessment_blocked": assessment_guard.blocked,
                 "curriculum_id": str(scope.curriculum_id),
             },
         )
@@ -429,7 +445,7 @@ def respond(
         tutor=TutorOut(
             action=transition.action,
             hint_level=transition.hint_level,
-            message=generation.message,
+            message=tutor_message,
         ),
         mastery=MasteryOut(score=progress.mastery_score, confidence=progress.confidence_score),
         next_problem=_problem_out(next_problem),

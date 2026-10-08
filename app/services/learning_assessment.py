@@ -668,6 +668,54 @@ def has_active_assessment(
     return db.scalar(q) is not None
 
 
+# ---------------------------------------------------------------------------
+# Centralized independent-assessment guard
+# ---------------------------------------------------------------------------
+
+# Student-friendly message returned when assistance is blocked.
+ASSESSMENT_BLOCK_MESSAGE = (
+    "You're working on an independent assessment right now. "
+    "Hints and tutoring help are paused until you finish. "
+    "You can do this!"
+)
+
+
+class AssessmentGuardResult:
+    """Outcome of the centralized assessment guard check.
+
+    ``blocked`` is True when the student has an active independent
+    assessment and the request should not deliver tutoring assistance.
+    ``message`` contains a student-friendly explanation when blocked.
+    """
+    __slots__ = ("blocked", "message")
+
+    def __init__(self, *, blocked: bool, message: str = ""):
+        self.blocked = blocked
+        self.message = message
+
+
+def check_assessment_guard(
+    db: Session,
+    *,
+    student_id: uuid.UUID,
+) -> AssessmentGuardResult:
+    """Centralized guard: should tutoring assistance be blocked?
+
+    Returns a blocked result when the student has any IN_PROGRESS
+    independent assessment.  Callers must not deliver hints, LLM
+    explanations, revealed solution steps, or other assistance when
+    blocked.
+
+    A successfully blocked request does NOT mark the assessment
+    compromised — no assistance was actually delivered.
+    """
+    if has_active_assessment(db, student_id=student_id):
+        return AssessmentGuardResult(
+            blocked=True, message=ASSESSMENT_BLOCK_MESSAGE,
+        )
+    return AssessmentGuardResult(blocked=False)
+
+
 def mark_assessment_compromised(
     db: Session,
     *,
@@ -677,8 +725,16 @@ def mark_assessment_compromised(
 ) -> list[LearningAssessment]:
     """Mark all in-progress assessments for the student as compromised.
 
-    Called when platform assistance is detected during assessment.
-    Compromised assessments will be excluded from independent mastery.
+    Called when platform assistance was **actually delivered** during an
+    active assessment (e.g. a race condition where the guard was not
+    checked, or a code path that bypassed the guard).
+
+    Successfully *blocked* requests must NOT call this — a blocked
+    request means no assistance was delivered, so the assessment is
+    not compromised.
+
+    Compromised assessments produce ``independent_score=None`` on
+    completion and are excluded from independent mastery evidence.
     """
     q = select(LearningAssessment).where(
         LearningAssessment.student_id == student_id,

@@ -52,7 +52,10 @@ from app.services.curriculum_scope import (
 )
 from app.services.focus_controller import apply_focus_policy
 from app.services.hint_policy import assistance_level_for_hint, hint_constraint, select_hint
-from app.services.learning_assessment import has_active_assessment
+from app.services.learning_assessment import (
+    ASSESSMENT_BLOCK_MESSAGE,
+    check_assessment_guard,
+)
 from app.services.mastery_gate import evaluate_mastery_gate
 from app.services.mastery_gate_evidence import load_mastery_gate_evidence
 from app.services.problem_generation import regenerate_variant
@@ -377,14 +380,17 @@ def respond(
     elif engine_action == "REMEDIATE":
         progress.current_difficulty = max(1, progress.current_difficulty - 1)
 
+    # --- Independent-assessment guard: block ALL tutoring assistance ---
+    assessment_guard = check_assessment_guard(
+        db, student_id=session.student_id,
+    )
+
     jit_decision = select_hint(
         state=state_at_attempt,
         highest_level_used=int(highest_hint_level),
         misconception_confidence=evidence.evaluation.misconception_confidence,
         repeated_unsuccessful_attempts=(attempt_number if not evidence.evaluation.correct else 0),
-        independent_assessment_active=has_active_assessment(
-            db, student_id=session.student_id,
-        ),
+        independent_assessment_active=assessment_guard.blocked,
     )
     issue_jit_hint = (
         not evidence.evaluation.correct
@@ -429,42 +435,55 @@ def respond(
         tutor_skill = next_skill
         generation_state = transition.state
 
-    tutor_context = _tutor_context(
-        db,
-        student=student,
-        skill=tutor_skill,
-        state=generation_state,
-        action=tutor_action,
-        hint_level=tutor_hint_level,
-        problem=problem,
-        next_problem=next_problem,
-        student_answer=payload.answer,
-        misconception=evidence.misconception,
-        session_id=session.id,
-    )
-    generation = ai_generate(
-        db,
-        tutor_context,
-        student=student,
-        session_id=session.id,
-        action=tutor_action,
-        # Correct-answer feedback needs no model call; the deterministic
-        # fallback covers it. The LLM only engages where language adds
-        # pedagogical value: misses, hints, misconceptions.
-        use_llm=not evidence.evaluation.correct,
-    )
-    message = chat_cpa.sanitize_cpa_blocks(
-        generation.message, canonical_answer=problem.canonical_answer
-    )
-    answer_leak_blocked = False
-    if generation.source == "llm" and chat_cpa.text_reveals_answer(
-        message, problem.canonical_answer
-    ):
-        # The model stated the solved form in prose. Swap in the
-        # deterministic voice — Socratic integrity is not negotiable.
-        message = fallback_message(tutor_context)
+    # When an independent assessment is active, skip the LLM tutoring
+    # call entirely.  The student's answer has already been graded and
+    # recorded (grading is not assistance), but no explanatory feedback,
+    # hints, misconception guidance, or solution steps are delivered.
+    if assessment_guard.blocked:
+        message = ASSESSMENT_BLOCK_MESSAGE
+        answer_leak_blocked = False
+        generation_source = "assessment_blocked"
+        generation_model: str | None = None
+    else:
+        tutor_context = _tutor_context(
+            db,
+            student=student,
+            skill=tutor_skill,
+            state=generation_state,
+            action=tutor_action,
+            hint_level=tutor_hint_level,
+            problem=problem,
+            next_problem=next_problem,
+            student_answer=payload.answer,
+            misconception=evidence.misconception,
+            session_id=session.id,
+        )
+        generation = ai_generate(
+            db,
+            tutor_context,
+            student=student,
+            session_id=session.id,
+            action=tutor_action,
+            # Correct-answer feedback needs no model call; the deterministic
+            # fallback covers it. The LLM only engages where language adds
+            # pedagogical value: misses, hints, misconceptions.
+            use_llm=not evidence.evaluation.correct,
+        )
+        message = chat_cpa.sanitize_cpa_blocks(
+            generation.message, canonical_answer=problem.canonical_answer
+        )
+        answer_leak_blocked = False
+        if generation.source == "llm" and chat_cpa.text_reveals_answer(
+            message, problem.canonical_answer
+        ):
+            # The model stated the solved form in prose. Swap in the
+            # deterministic voice — Socratic integrity is not negotiable.
+            message = fallback_message(tutor_context)
+            answer_leak_blocked = True
+        generation_source = generation.source
+        generation_model = generation.model
         answer_leak_blocked = True
-    if not evidence.evaluation.correct:
+    if not assessment_guard.blocked and not evidence.evaluation.correct:
         block = visualization.chat_cpa_block(visualization.visualization_for(problem))
         if block and "```json:cpa" not in message:
             message = f"{message}\n\n{block}"
@@ -476,10 +495,11 @@ def respond(
         pedagogical_action=tutor_action,
         problem_id=next_problem.id if next_problem else problem.id,
         attempt_id=attempt.id,
-        llm_model=generation.model,
+        llm_model=generation_model,
         metadata_json={
-            "generation_source": generation.source,
+            "generation_source": generation_source,
             "answer_leak_blocked": answer_leak_blocked,
+            "assessment_blocked": assessment_guard.blocked,
             "target_skill_id": str(session.primary_skill_id),
             "active_skill_id": str(next_skill_id),
             "remediation_reason": session.remediation_reason,
@@ -500,7 +520,7 @@ def respond(
     db.add(turn)
     db.flush()
 
-    if issue_jit_hint:
+    if issue_jit_hint and not assessment_guard.blocked:
         db.add(
             HintEvent(
                 session_id=session.id,
@@ -511,9 +531,9 @@ def respond(
                 tutor_turn_id=turn.id,
                 level=jit_decision.level,
                 trigger=jit_decision.trigger,
-                generation_source=generation.source,
-                provider=generation.provider,
-                llm_model=generation.model,
+                generation_source=generation_source,
+                provider=None,
+                llm_model=generation_model,
             )
         )
 
@@ -577,20 +597,21 @@ def respond(
             skill_id=active_skill_id,
             payload=review_scheduled_payload,
         )
-    _publish_adaptive_event(
-        event_type="model.generation_completed",
-        session=session,
-        curriculum_id=scope.curriculum_id,
-        skill_id=next_skill_id,
-        payload={
-            "request_id": generation.request_id,
-            "source": generation.source,
-            "provider": generation.provider,
-            "model": generation.model,
-            "latency_ms": generation.latency_ms,
-            "success": generation.source == "llm",
-        },
-    )
+    if not assessment_guard.blocked:
+        _publish_adaptive_event(
+            event_type="model.generation_completed",
+            session=session,
+            curriculum_id=scope.curriculum_id,
+            skill_id=next_skill_id,
+            payload={
+                "request_id": generation.request_id,
+                "source": generation.source,
+                "provider": generation.provider,
+                "model": generation.model,
+                "latency_ms": generation.latency_ms,
+                "success": generation.source == "llm",
+            },
+        )
 
     return RespondOut(
         session_id=session.id,
@@ -629,6 +650,16 @@ def work_step(
     reset by the client.
     """
     session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+
+    # Block step-by-step assistance during independent assessment.
+    # Work-step feedback reveals solution lines and misconception
+    # guidance, which compromises assessment independence.
+    ws_guard = check_assessment_guard(db, student_id=session.student_id)
+    if ws_guard.blocked:
+        return WorkStepOut(
+            status="blocked",
+            feedback=ASSESSMENT_BLOCK_MESSAGE,
+        )
     problem = db.get(Problem, payload.problem_id)
     active_skill_id = session.active_skill_id or session.primary_skill_id
     if problem is None or problem.primary_skill_id != active_skill_id:

@@ -18,7 +18,7 @@ from app.services.curriculum_scope import (
     require_skill_in_scope,
 )
 from app.services.hint_policy import hint_constraint, select_hint
-from app.services.learning_assessment import has_active_assessment
+from app.services.learning_assessment import check_assessment_guard
 from app.services.tutor_engine import fallback_message
 from app.services.usage_metering import ai_generate
 
@@ -91,9 +91,8 @@ def request_hint(
             default=None,
         )
         attempt_since_last_hint = activity_at is not None and activity_at > last_hint_at
-    # Check if the student has an active independent assessment —
-    # hints must be blocked to preserve assessment integrity.
-    assessment_active = has_active_assessment(
+    # Centralized guard: block hints during independent assessment.
+    assessment_guard = check_assessment_guard(
         db, student_id=session.student_id,
     )
     decision = select_hint(
@@ -101,7 +100,7 @@ def request_hint(
         highest_level_used=int(highest),
         explicit_request=True,
         attempt_since_last_hint=attempt_since_last_hint,
-        independent_assessment_active=assessment_active,
+        independent_assessment_active=assessment_guard.blocked,
     )
     request_trigger = (
         "I_DONT_UNDERSTAND" if payload.reason == "I_DONT_UNDERSTAND" else decision.trigger

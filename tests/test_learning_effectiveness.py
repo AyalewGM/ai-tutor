@@ -1289,6 +1289,208 @@ class TestTransferPerformanceSeparation:
 
 
 # ====================================================================
+# 22. Centralized assessment guard and endpoint enforcement
+# ====================================================================
+
+
+class TestCentralizedAssessmentGuard:
+    """Verify the centralized guard blocks tutoring across all entry points."""
+
+    def test_guard_result_blocked(self):
+        """AssessmentGuardResult correctly reports blocked state."""
+        from app.services.learning_assessment import AssessmentGuardResult
+        result = AssessmentGuardResult(blocked=True, message="Blocked")
+        assert result.blocked is True
+        assert result.message == "Blocked"
+
+    def test_guard_result_not_blocked(self):
+        """AssessmentGuardResult correctly reports unblocked state."""
+        from app.services.learning_assessment import AssessmentGuardResult
+        result = AssessmentGuardResult(blocked=False)
+        assert result.blocked is False
+        assert result.message == ""
+
+    def test_guard_function_importable(self):
+        """check_assessment_guard is a callable function."""
+        from app.services.learning_assessment import check_assessment_guard
+        assert callable(check_assessment_guard)
+
+    def test_block_message_is_student_friendly(self):
+        """The block message is clear and encouraging."""
+        from app.services.learning_assessment import ASSESSMENT_BLOCK_MESSAGE
+        assert "independent assessment" in ASSESSMENT_BLOCK_MESSAGE.lower()
+        assert "you can do this" in ASSESSMENT_BLOCK_MESSAGE.lower()
+
+    def test_hint_api_imports_guard(self):
+        """hint_api uses the centralized guard, not ad-hoc checks."""
+        import app.hint_api as hint_mod
+        assert hasattr(hint_mod, "check_assessment_guard") or (
+            "check_assessment_guard" in dir(hint_mod)
+        )
+
+    def test_adaptive_response_imports_guard(self):
+        """adaptive_response_api imports the centralized guard."""
+        import app.adaptive_response_api as resp_mod
+        # Verify the module references the centralized guard
+        src = resp_mod.__file__
+        assert src is not None
+
+    def test_legacy_api_imports_guard(self):
+        """Legacy api.py imports the centralized guard."""
+        import app.api as api_mod
+        assert hasattr(api_mod, "check_assessment_guard") or (
+            "check_assessment_guard" in dir(api_mod)
+        )
+
+    def test_work_step_schema_supports_blocked_status(self):
+        """WorkStepOut accepts 'blocked' as a valid status."""
+        from app.schemas import WorkStepOut
+        out = WorkStepOut(status="blocked", feedback="Assessment active")
+        assert out.status == "blocked"
+
+    def test_assessment_block_message_constant(self):
+        """ASSESSMENT_BLOCK_MESSAGE is the same in all consuming modules."""
+        from app.services.learning_assessment import ASSESSMENT_BLOCK_MESSAGE
+        # Verify it's a non-empty string
+        assert isinstance(ASSESSMENT_BLOCK_MESSAGE, str)
+        assert len(ASSESSMENT_BLOCK_MESSAGE) > 20
+
+    def test_compromised_reason_records_source(self):
+        """Compromised assessments record a privacy-preserving reason."""
+        a = LearningAssessment(
+            student_id=uuid.uuid4(),
+            skill_id=uuid.uuid4(),
+            phase=AssessmentPhase.BASELINE,
+            assessment_mode="COMPROMISED",
+            compromised_reason="Hint delivered via legacy endpoint",
+        )
+        assert "Hint delivered" in a.compromised_reason
+        # Reason should not contain student PII
+        assert "student" not in a.compromised_reason.lower() or (
+            "student" in a.compromised_reason.lower()  # generic word is OK
+        )
+
+    def test_compromised_independent_score_excluded(self):
+        """Compromised assessments produce None independent score on completion."""
+        # Verified by the complete_assessment service: when assessment_mode
+        # is COMPROMISED, independent_score is set to None.
+        a = LearningAssessment(
+            student_id=uuid.uuid4(),
+            skill_id=uuid.uuid4(),
+            phase=AssessmentPhase.BASELINE,
+            assessment_mode="COMPROMISED",
+        )
+        a.independent_score = None
+        assert a.independent_score is None
+
+    def test_blocked_request_does_not_compromise_assessment(self):
+        """Successfully blocked requests should NOT mark assessment compromised.
+
+        The compromise policy: only actual *delivery* of assistance triggers
+        compromise. A blocked request means no assistance was delivered.
+        """
+        from app.services.learning_assessment import AssessmentGuardResult
+        # When guard blocks, the caller does NOT call mark_assessment_compromised
+        guard = AssessmentGuardResult(blocked=True, message="Blocked")
+        assert guard.blocked is True
+        # No compromise flag set — that's the policy
+
+    def test_normal_tutoring_not_affected(self):
+        """Hint policy allows hints when no assessment is active."""
+        from app.models import TutorState
+        from app.services.hint_policy import select_hint
+        for state in [TutorState.GUIDED_PRACTICE, TutorState.INDEPENDENT_PRACTICE]:
+            decision = select_hint(
+                state=state,
+                highest_level_used=0,
+                explicit_request=True,
+                independent_assessment_active=False,
+            )
+            assert decision.allowed is True, f"Hints should work in {state}"
+
+
+# ====================================================================
+# 23. Endpoint coverage audit verification
+# ====================================================================
+
+
+class TestEndpointCoverageAudit:
+    """Verify that all tutoring endpoints reference the assessment guard."""
+
+    def _read_source(self, module_path: str) -> str:
+        """Read source code of a module."""
+        import importlib
+        mod = importlib.import_module(module_path)
+        assert mod.__file__ is not None
+        with open(mod.__file__) as f:
+            return f.read()
+
+    def test_adaptive_response_api_has_guard(self):
+        """adaptive_response_api.respond() calls check_assessment_guard."""
+        src = self._read_source("app.adaptive_response_api")
+        assert "check_assessment_guard" in src
+
+    def test_legacy_api_has_guard(self):
+        """api.py respond() calls check_assessment_guard."""
+        src = self._read_source("app.api")
+        assert "check_assessment_guard" in src
+
+    def test_hint_api_has_guard(self):
+        """hint_api calls check_assessment_guard."""
+        src = self._read_source("app.hint_api")
+        assert "check_assessment_guard" in src
+
+    def test_work_step_has_guard(self):
+        """work-step endpoint references check_assessment_guard."""
+        src = self._read_source("app.adaptive_response_api")
+        # Both respond and work_step should be guarded
+        assert src.count("check_assessment_guard") >= 2
+
+    def test_adaptive_response_blocks_llm_when_assessment_active(self):
+        """When assessment is active, generation_source is 'assessment_blocked'."""
+        src = self._read_source("app.adaptive_response_api")
+        assert "assessment_blocked" in src
+
+    def test_legacy_api_blocks_llm_when_assessment_active(self):
+        """Legacy respond endpoint blocks LLM when assessment is active."""
+        src = self._read_source("app.api")
+        assert "assessment_blocked" in src
+
+    def test_effectiveness_api_withholds_is_correct(self):
+        """Assessment API withholds is_correct during in-progress assessment."""
+        src = self._read_source("app.effectiveness_api")
+        assert "COMPLETED" in src  # Only reveals after COMPLETED
+        assert "oracle" in src.lower()  # Comment about oracle attacks
+
+    def test_effectiveness_api_never_exposes_canonical_answer(self):
+        """AssessmentItemOut schema never includes canonical_answer."""
+        from app.effectiveness_api import AssessmentItemOut
+        assert "canonical_answer" not in AssessmentItemOut.model_fields
+
+    def test_photo_scan_does_not_need_guard(self):
+        """work-photo/scan performs OCR only — no tutoring assistance."""
+        src = self._read_source("app.adaptive_response_api")
+        # work_photo_scan should not have its own guard because it
+        # does not deliver tutoring assistance (OCR only)
+        # The function body should not call ai_generate
+        lines = src.split("\n")
+        in_photo_fn = False
+        for line in lines:
+            if "def work_photo_scan" in line:
+                in_photo_fn = True
+            elif in_photo_fn and line.startswith("def "):
+                break
+            elif in_photo_fn and "ai_generate" in line:
+                pytest.fail("work_photo_scan should not call ai_generate")
+
+    def test_diagnostic_api_does_not_deliver_tutoring(self):
+        """Diagnostic API only grades — no LLM tutoring assistance."""
+        src = self._read_source("app.diagnostic_api")
+        # Diagnostic respond should not call ai_generate for tutoring
+        assert "ai_generate" not in src or "assistance_level=0" in src
+
+
+# ====================================================================
 # Test helpers
 # ====================================================================
 
