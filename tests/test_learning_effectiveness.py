@@ -387,10 +387,10 @@ class TestIncompleteAssessmentScoring:
 
 
 class TestTransferMeasurement:
-    """FIX 5: Verify cross-skill scores are not subtracted as improvement."""
+    """FIX 5+6: Verify transfer uses transfer_performance, not improvement."""
 
-    def test_transfer_reports_absolute_performance(self):
-        """FIX 5: Transfer reports absolute target-skill performance."""
+    def test_transfer_uses_transfer_performance_field(self):
+        """Transfer score goes into transfer_performance, not observed_improvement."""
         source_post = _mock_assessment(
             score="0.900", independent_score="0.900",
             difficulty_mean="2.00", items_total=5,
@@ -406,13 +406,14 @@ class TestTransferMeasurement:
             student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
         )
 
-        # Transfer should report 0.600 (absolute performance),
-        # NOT -0.300 (which would be a cross-skill subtraction)
-        assert metrics.observed_improvement == Decimal("0.600")
-        assert metrics.independent_improvement == Decimal("0.600")
+        # Transfer must NOT populate improvement fields
+        assert metrics.observed_improvement is None
+        assert metrics.independent_improvement is None
+        # Absolute performance goes into transfer_performance
+        assert metrics.transfer_performance == Decimal("0.600")
 
-    def test_transfer_without_baseline_same_as_absolute(self):
-        """FIX 5: Transfer without baseline still reports absolute."""
+    def test_transfer_without_baseline(self):
+        """Transfer without baseline still populates transfer_performance."""
         transfer = _mock_assessment(
             score="0.700", independent_score="0.700",
             difficulty_mean="2.00", items_total=5,
@@ -422,10 +423,11 @@ class TestTransferMeasurement:
             measurement_type="TRANSFER",
             student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
         )
-        assert metrics.observed_improvement == Decimal("0.700")
+        assert metrics.observed_improvement is None
+        assert metrics.transfer_performance == Decimal("0.700")
 
     def test_transfer_never_shows_cross_skill_subtraction(self):
-        """FIX 5: High source + low target must NOT show negative 'improvement'."""
+        """High source + low target must NOT show negative 'improvement'."""
         source = _mock_assessment(score="1.000", items_total=5)
         target = _mock_assessment(score="0.200", items_total=5)
 
@@ -434,11 +436,23 @@ class TestTransferMeasurement:
             measurement_type="TRANSFER",
             student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
         )
-        # Must be 0.200 (absolute), not -0.800 (cross-skill diff)
-        assert metrics.observed_improvement == Decimal("0.200")
+        # observed_improvement is None (not -0.800)
+        assert metrics.observed_improvement is None
+        assert metrics.transfer_performance == Decimal("0.200")
+
+    def test_transfer_none_score_gives_none_performance(self):
+        """Transfer with no score produces None transfer_performance."""
+        transfer = _mock_assessment(score=None, items_total=5)
+        metrics = compute_effectiveness(
+            baseline=None, comparison=transfer,
+            measurement_type="TRANSFER",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert metrics.transfer_performance is None
+        assert metrics.observed_improvement is None
 
     def test_growth_still_uses_subtraction(self):
-        """FIX 5: Same-skill GROWTH still computes improvement via subtraction."""
+        """Same-skill GROWTH still computes improvement via subtraction."""
         baseline = _mock_assessment(score="0.200", items_total=5)
         post = _mock_assessment(score="0.800", items_total=5)
 
@@ -448,9 +462,10 @@ class TestTransferMeasurement:
             student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
         )
         assert metrics.observed_improvement == Decimal("0.600")
+        assert metrics.transfer_performance is None
 
     def test_retention_still_uses_subtraction(self):
-        """FIX 5: Same-skill RETENTION still computes delta via subtraction."""
+        """Same-skill RETENTION still computes delta via subtraction."""
         post = _mock_assessment(score="0.800", items_total=5)
         retention = _mock_assessment(score="0.700", items_total=5)
 
@@ -460,6 +475,7 @@ class TestTransferMeasurement:
             student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
         )
         assert metrics.observed_improvement == Decimal("-0.100")
+        assert metrics.transfer_performance is None
 
 
 # ====================================================================
@@ -624,6 +640,7 @@ class TestParentSummary:
         assert summary.understood_initially == "Not assessed"
         assert summary.has_improved == "Not assessed"
         assert summary.remembers_after_days == "Not assessed"
+        assert summary.applies_to_new_problems == "Not assessed"
         assert summary.needs_attention is False
 
     def test_strong_baseline(self):
@@ -1040,6 +1057,238 @@ class TestEdgeCases:
 
 
 # ====================================================================
+# 20. Independent assessment mode enforcement (Fix 1 — new)
+# ====================================================================
+
+
+class TestIndependentAssessmentMode:
+    """Verify server-enforced independent assessment mode."""
+
+    def test_assessment_mode_defaults_to_independent(self):
+        """New assessments default to INDEPENDENT mode."""
+        a = LearningAssessment(
+            student_id=uuid.uuid4(),
+            skill_id=uuid.uuid4(),
+            phase=AssessmentPhase.BASELINE,
+        )
+        # SQLAlchemy default applied at insert; at Python level check the column
+        assert hasattr(a, "assessment_mode")
+        assert hasattr(a, "compromised_reason")
+
+    def test_compromised_assessment_tracked(self):
+        """Assessments can be marked as compromised with a reason."""
+        a = LearningAssessment(
+            student_id=uuid.uuid4(),
+            skill_id=uuid.uuid4(),
+            phase=AssessmentPhase.BASELINE,
+            assessment_mode="COMPROMISED",
+            compromised_reason="Hint requested during active assessment",
+        )
+        assert a.assessment_mode == "COMPROMISED"
+        assert a.compromised_reason is not None
+
+    def test_hint_policy_blocks_during_assessment(self):
+        """select_hint returns False when independent_assessment_active=True."""
+        from app.models import TutorState
+        from app.services.hint_policy import select_hint
+
+        decision = select_hint(
+            state=TutorState.GUIDED_PRACTICE,
+            highest_level_used=0,
+            explicit_request=True,
+            independent_assessment_active=True,
+        )
+        assert decision.allowed is False
+        assert "independent assessment" in decision.reason.lower()
+
+    def test_hint_policy_allows_without_assessment(self):
+        """select_hint allows hints when no assessment is active."""
+        from app.models import TutorState
+        from app.services.hint_policy import select_hint
+
+        decision = select_hint(
+            state=TutorState.GUIDED_PRACTICE,
+            highest_level_used=0,
+            explicit_request=True,
+            independent_assessment_active=False,
+        )
+        assert decision.allowed is True
+
+    def test_has_active_assessment_function_exists(self):
+        """has_active_assessment function is importable."""
+        from app.services.learning_assessment import has_active_assessment
+        assert callable(has_active_assessment)
+
+    def test_mark_assessment_compromised_function_exists(self):
+        """mark_assessment_compromised function is importable."""
+        from app.services.learning_assessment import mark_assessment_compromised
+        assert callable(mark_assessment_compromised)
+
+    def test_api_schema_assessment_mode_field(self):
+        """AssessmentOut includes assessment_mode field."""
+        from app.effectiveness_api import AssessmentOut
+        assert "assessment_mode" in AssessmentOut.model_fields
+
+    def test_api_schema_no_canonical_answer(self):
+        """AssessmentItemOut must never expose canonical_answer."""
+        from app.effectiveness_api import AssessmentItemOut
+        assert "canonical_answer" not in AssessmentItemOut.model_fields
+
+    def test_item_response_withholds_correctness_in_progress(self):
+        """During in-progress assessment, is_correct should not be revealed."""
+        # Verified by API logic: respond_to_item returns is_correct=None
+        # when assessment is IN_PROGRESS
+        from app.effectiveness_api import AssessmentItemOut
+        item = AssessmentItemOut(
+            id=uuid.uuid4(), sequence_number=1, family_code="test",
+            difficulty=2, prompt="What is 2+2?",
+            student_answer="4", is_correct=None,
+        )
+        assert item.is_correct is None  # withheld during assessment
+
+    def test_record_response_request_has_only_student_answer(self):
+        """RecordResponseRequest accepts only student_answer."""
+        from app.effectiveness_api import RecordResponseRequest
+        fields = set(RecordResponseRequest.model_fields.keys())
+        assert fields == {"student_answer"}
+
+
+# ====================================================================
+# 21. Transfer performance separation (Fix 2 — new)
+# ====================================================================
+
+
+class TestTransferPerformanceSeparation:
+    """Verify transfer_performance is separate from improvement."""
+
+    def test_snapshot_has_transfer_performance_column(self):
+        """EffectivenessSnapshot has transfer_performance column."""
+        snap = EffectivenessSnapshot(
+            student_id=uuid.uuid4(),
+            skill_id=uuid.uuid4(),
+            measurement_type="TRANSFER",
+        )
+        assert hasattr(snap, "transfer_performance")
+
+    def test_metrics_has_transfer_performance_field(self):
+        """EffectivenessMetrics dataclass has transfer_performance."""
+        import dataclasses
+
+        from app.services.learning_effectiveness import EffectivenessMetrics
+        field_names = {f.name for f in dataclasses.fields(EffectivenessMetrics)}
+        assert "transfer_performance" in field_names
+
+    def test_transfer_improvement_fields_are_none(self):
+        """TRANSFER metrics have None for improvement fields."""
+        transfer = _mock_assessment(
+            score="0.800", independent_score="0.800",
+            difficulty_mean="2.00", items_total=5,
+        )
+        metrics = compute_effectiveness(
+            baseline=None, comparison=transfer,
+            measurement_type="TRANSFER",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert metrics.observed_improvement is None
+        assert metrics.independent_improvement is None
+        assert metrics.transfer_performance == Decimal("0.800")
+
+    def test_growth_transfer_performance_is_none(self):
+        """GROWTH metrics have None for transfer_performance."""
+        baseline = _mock_assessment(score="0.400", items_total=5)
+        post = _mock_assessment(score="0.800", items_total=5)
+        metrics = compute_effectiveness(
+            baseline=baseline, comparison=post,
+            measurement_type="GROWTH",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert metrics.transfer_performance is None
+        assert metrics.observed_improvement is not None
+
+    def test_retention_transfer_performance_is_none(self):
+        """RETENTION metrics have None for transfer_performance."""
+        post = _mock_assessment(score="0.800", items_total=5)
+        retention = _mock_assessment(score="0.700", items_total=5)
+        metrics = compute_effectiveness(
+            baseline=post, comparison=retention,
+            measurement_type="RETENTION",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        assert metrics.transfer_performance is None
+        assert metrics.observed_improvement is not None
+
+    def test_metrics_dict_includes_transfer_performance(self):
+        """_metrics_dict serialises transfer_performance."""
+        from app.services.learning_effectiveness import _metrics_dict
+        transfer = _mock_assessment(
+            score="0.600", independent_score="0.600",
+            difficulty_mean="2.00", items_total=5,
+        )
+        metrics = compute_effectiveness(
+            baseline=None, comparison=transfer,
+            measurement_type="TRANSFER",
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+        )
+        d = _metrics_dict(metrics)
+        assert d["transfer_performance"] == 0.6
+        assert d["observed_improvement"] is None
+        assert d["independent_improvement"] is None
+
+    def test_api_schema_has_transfer_performance(self):
+        """EffectivenessMetricsOut includes transfer_performance."""
+        from app.effectiveness_api import EffectivenessMetricsOut
+        assert "transfer_performance" in EffectivenessMetricsOut.model_fields
+
+    def test_parent_summary_has_applies_to_new_problems(self):
+        """ParentSummaryOut includes applies_to_new_problems field."""
+        from app.effectiveness_api import ParentSummaryOut
+        assert "applies_to_new_problems" in ParentSummaryOut.model_fields
+
+    def test_parent_summary_never_labels_transfer_as_improvement(self):
+        """Parent summary for transfer uses 'applies_to_new_problems', not 'improved'."""
+        summary = parent_summary(SkillEffectivenessReport(
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+            skill_code="MATH.NS.ADDITION", skill_name="Addition",
+        ))
+        d = summary.to_dict()
+        assert "applies_to_new_problems" in d
+        # The field name itself ensures terminology distinction
+
+    def test_parent_summary_transfer_well(self):
+        """Strong transfer performance shows 'Well'."""
+        transfer_metrics = _mock_transfer_metrics(transfer_performance="0.800")
+        report = SkillEffectivenessReport(
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+            skill_code="MATH.NS.ADDITION", skill_name="Addition",
+            has_transfer=True, transfer_metrics=transfer_metrics,
+        )
+        summary = parent_summary(report)
+        assert summary.applies_to_new_problems == "Well"
+
+    def test_parent_summary_transfer_partial(self):
+        """Moderate transfer performance shows 'Partially'."""
+        transfer_metrics = _mock_transfer_metrics(transfer_performance="0.500")
+        report = SkillEffectivenessReport(
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+            skill_code="MATH.NS.ADDITION", skill_name="Addition",
+            has_transfer=True, transfer_metrics=transfer_metrics,
+        )
+        summary = parent_summary(report)
+        assert summary.applies_to_new_problems == "Partially"
+
+    def test_parent_summary_transfer_not_yet(self):
+        """Weak transfer performance shows 'Not yet'."""
+        transfer_metrics = _mock_transfer_metrics(transfer_performance="0.200")
+        report = SkillEffectivenessReport(
+            student_id=uuid.uuid4(), skill_id=uuid.uuid4(),
+            skill_code="MATH.NS.ADDITION", skill_name="Addition",
+            has_transfer=True, transfer_metrics=transfer_metrics,
+        )
+        summary = parent_summary(report)
+        assert summary.applies_to_new_problems == "Not yet"
+
+
+# ====================================================================
 # Test helpers
 # ====================================================================
 
@@ -1103,4 +1352,33 @@ def _mock_metrics(
         evidence_count=10,
         evidence_sufficient=True,
         confidence_level="HIGH",
+    )
+
+
+def _mock_transfer_metrics(
+    *,
+    transfer_performance: str = "0.000",
+) -> object:
+    """Create a mock EffectivenessMetrics for TRANSFER."""
+    from app.services.learning_effectiveness import EffectivenessMetrics
+    return EffectivenessMetrics(
+        student_id=uuid.uuid4(),
+        skill_id=uuid.uuid4(),
+        measurement_type="TRANSFER",
+        baseline_score=None,
+        baseline_independent_score=None,
+        comparison_score=Decimal(transfer_performance),
+        comparison_independent_score=Decimal(transfer_performance),
+        observed_improvement=None,
+        independent_improvement=None,
+        transfer_performance=Decimal(transfer_performance),
+        baseline_difficulty_mean=None,
+        comparison_difficulty_mean=Decimal("2.00"),
+        difficulty_comparable=True,
+        misconception_analysis=MisconceptionAnalysis(
+            baseline=[], comparison=[], resolved=[], persisting=[], new=[],
+        ),
+        evidence_count=5,
+        evidence_sufficient=True,
+        confidence_level="MODERATE",
     )

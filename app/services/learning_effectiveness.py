@@ -84,6 +84,8 @@ class EffectivenessMetrics:
     comparison_score: Decimal | None
     comparison_independent_score: Decimal | None
 
+    # GROWTH / RETENTION: score delta (same-skill comparison)
+    # TRANSFER: None — cross-skill subtraction is never used
     observed_improvement: Decimal | None
     independent_improvement: Decimal | None
 
@@ -97,6 +99,9 @@ class EffectivenessMetrics:
     evidence_sufficient: bool
     confidence_level: str  # "INSUFFICIENT", "LOW", "MODERATE", "HIGH"
 
+    # Fields with defaults must come after all required fields
+    # TRANSFER only: absolute performance on the target skill
+    transfer_performance: Decimal | None = None
     baseline_assessment_id: uuid.UUID | None = None
     comparison_assessment_id: uuid.UUID | None = None
 
@@ -159,6 +164,7 @@ def _metrics_dict(m: EffectivenessMetrics | None) -> dict | None:
     return {
         "observed_improvement": float(m.observed_improvement) if m.observed_improvement is not None else None,
         "independent_improvement": float(m.independent_improvement) if m.independent_improvement is not None else None,
+        "transfer_performance": float(m.transfer_performance) if m.transfer_performance is not None else None,
         "difficulty_comparable": m.difficulty_comparable,
         "evidence_sufficient": m.evidence_sufficient,
         "confidence_level": m.confidence_level,
@@ -230,12 +236,16 @@ def compute_effectiveness(
     comp_score = _safe_decimal(comparison.score)
     comp_ind = _safe_decimal(comparison.independent_score)
 
+    transfer_perf: Decimal | None = None
     if measurement_type == "TRANSFER":
         # Transfer: report absolute performance on the target skill.
         # Do NOT subtract source-skill scores — different skills are
         # not directly comparable as improvement.
-        observed = comp_score
-        independent = comp_ind
+        # observed_improvement / independent_improvement are None for
+        # transfer; the absolute score goes into transfer_performance.
+        observed = None
+        independent = None
+        transfer_perf = comp_score if comparison.score is not None else None
         base_diff = None
         comp_diff = comparison.difficulty_mean
         comparable = True  # single-skill absolute measurement
@@ -280,6 +290,7 @@ def compute_effectiveness(
         comparison_independent_score=comparison.independent_score,
         observed_improvement=observed,
         independent_improvement=independent,
+        transfer_performance=transfer_perf,
         baseline_difficulty_mean=base_diff,
         comparison_difficulty_mean=comp_diff,
         difficulty_comparable=comparable,
@@ -335,6 +346,7 @@ def save_snapshot(
     snap.comparison_independent_score = metrics.comparison_independent_score
     snap.observed_improvement = metrics.observed_improvement
     snap.independent_improvement = metrics.independent_improvement
+    snap.transfer_performance = metrics.transfer_performance
     snap.baseline_difficulty_mean = metrics.baseline_difficulty_mean
     snap.comparison_difficulty_mean = metrics.comparison_difficulty_mean
     snap.difficulty_comparable = metrics.difficulty_comparable
@@ -618,6 +630,7 @@ def _snapshot_to_metrics(
         comparison_independent_score=snap.comparison_independent_score,
         observed_improvement=snap.observed_improvement,
         independent_improvement=snap.independent_improvement,
+        transfer_performance=snap.transfer_performance,
         baseline_difficulty_mean=snap.baseline_difficulty_mean,
         comparison_difficulty_mean=snap.comparison_difficulty_mean,
         difficulty_comparable=snap.difficulty_comparable,
@@ -651,6 +664,7 @@ class ParentEffectivenessSummary:
     has_improved: str           # "Yes", "Somewhat", "Not yet", "Not assessed"
     can_solve_independently: str  # "Yes", "Sometimes", "Not yet", "Not assessed"
     remembers_after_days: str   # "Yes", "Partially", "Not yet", "Waiting", "Not assessed"
+    applies_to_new_problems: str  # "Well", "Partially", "Not yet", "Not assessed"
     needs_attention: bool
     attention_reason: str | None = None
 
@@ -661,6 +675,7 @@ class ParentEffectivenessSummary:
             "has_improved": self.has_improved,
             "can_solve_independently": self.can_solve_independently,
             "remembers_after_days": self.remembers_after_days,
+            "applies_to_new_problems": self.applies_to_new_problems,
             "needs_attention": self.needs_attention,
             "attention_reason": self.attention_reason,
         }
@@ -735,6 +750,18 @@ def parent_summary(
     else:
         remembers = "Not assessed"
 
+    # Transfer — applying understanding to new problems
+    if report.has_transfer and report.transfer_metrics:
+        tp = float(report.transfer_metrics.transfer_performance or 0)
+        if tp >= 0.7:
+            transfer_label = "Well"
+        elif tp >= 0.4:
+            transfer_label = "Partially"
+        else:
+            transfer_label = "Not yet"
+    else:
+        transfer_label = "Not assessed"
+
     # Needs attention
     needs = False
     reason = None
@@ -754,6 +781,7 @@ def parent_summary(
         has_improved=improved,
         can_solve_independently=independent,
         remembers_after_days=remembers,
+        applies_to_new_problems=transfer_label,
         needs_attention=needs,
         attention_reason=reason,
     )

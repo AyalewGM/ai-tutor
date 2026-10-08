@@ -52,6 +52,7 @@ from app.services.curriculum_scope import (
 )
 from app.services.focus_controller import apply_focus_policy
 from app.services.hint_policy import assistance_level_for_hint, hint_constraint, select_hint
+from app.services.learning_assessment import has_active_assessment
 from app.services.mastery_gate import evaluate_mastery_gate
 from app.services.mastery_gate_evidence import load_mastery_gate_evidence
 from app.services.problem_generation import regenerate_variant
@@ -381,6 +382,9 @@ def respond(
         highest_level_used=int(highest_hint_level),
         misconception_confidence=evidence.evaluation.misconception_confidence,
         repeated_unsuccessful_attempts=(attempt_number if not evidence.evaluation.correct else 0),
+        independent_assessment_active=has_active_assessment(
+            db, student_id=session.student_id,
+        ),
     )
     issue_jit_hint = (
         not evidence.evaluation.correct

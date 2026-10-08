@@ -546,6 +546,10 @@ def complete_assessment(
     independent_items = [i for i in answered_items if i.assistance_level == 0]
     independent_correct = sum(1 for i in independent_items if i.is_correct)
 
+    # If the assessment was compromised (platform assistance detected),
+    # independent_score is set to None — it cannot represent independent mastery.
+    compromised = (assessment.assessment_mode or "INDEPENDENT") == "COMPROMISED"
+
     # Score denominator is items_total (unanswered items penalise)
     difficulties = [i.difficulty for i in answered_items]
     diff_mean = Decimal(str(sum(difficulties) / len(difficulties)))
@@ -561,9 +565,12 @@ def complete_assessment(
     assessment.score = Decimal(str(
         total_correct / total
     )).quantize(Decimal("0.001"), rounding=ROUND_HALF_UP)
-    assessment.independent_score = Decimal(str(
-        independent_correct / total
-    )).quantize(Decimal("0.001"), rounding=ROUND_HALF_UP)
+    assessment.independent_score = (
+        None if compromised
+        else Decimal(str(
+            independent_correct / total
+        )).quantize(Decimal("0.001"), rounding=ROUND_HALF_UP)
+    )
     assessment.difficulty_mean = diff_mean.quantize(
         Decimal("0.01"), rounding=ROUND_HALF_UP,
     )
@@ -638,6 +645,52 @@ def expire_overdue_retention_assessments(
     for a in overdue:
         a.status = AssessmentStatus.EXPIRED
     return list(overdue)
+
+
+def has_active_assessment(
+    db: Session,
+    *,
+    student_id: uuid.UUID,
+    skill_id: uuid.UUID | None = None,
+) -> bool:
+    """Check whether the student has an IN_PROGRESS assessment.
+
+    Used by hint and tutoring guards to enforce independent assessment mode.
+    When ``skill_id`` is provided, restricts to that skill; otherwise checks
+    any skill.
+    """
+    q = select(LearningAssessment.id).where(
+        LearningAssessment.student_id == student_id,
+        LearningAssessment.status == AssessmentStatus.IN_PROGRESS,
+    )
+    if skill_id is not None:
+        q = q.where(LearningAssessment.skill_id == skill_id)
+    return db.scalar(q) is not None
+
+
+def mark_assessment_compromised(
+    db: Session,
+    *,
+    student_id: uuid.UUID,
+    reason: str,
+    skill_id: uuid.UUID | None = None,
+) -> list[LearningAssessment]:
+    """Mark all in-progress assessments for the student as compromised.
+
+    Called when platform assistance is detected during assessment.
+    Compromised assessments will be excluded from independent mastery.
+    """
+    q = select(LearningAssessment).where(
+        LearningAssessment.student_id == student_id,
+        LearningAssessment.status == AssessmentStatus.IN_PROGRESS,
+    )
+    if skill_id is not None:
+        q = q.where(LearningAssessment.skill_id == skill_id)
+    assessments = list(db.scalars(q).all())
+    for a in assessments:
+        a.assessment_mode = "COMPROMISED"
+        a.compromised_reason = reason
+    return assessments
 
 
 def find_related_skills(

@@ -115,6 +115,15 @@ class LearningAssessment(Base):
     # prevent reuse in later phases.
     family_codes_used: Mapped[list | None] = mapped_column(JSONB)
 
+    # Server-enforced independent assessment mode.
+    # Records that this assessment was administered without Mihur hints,
+    # tutoring, or answer exposure within the platform's control.
+    assessment_mode: Mapped[str] = mapped_column(
+        String(30), default="INDEPENDENT",
+    )  # "INDEPENDENT" — no platform assistance available during assessment
+    # Set to "COMPROMISED" if platform assistance was detected
+    compromised_reason: Mapped[str | None] = mapped_column(String(200))
+
     # Aggregate results (filled on completion)
     items_total: Mapped[int] = mapped_column(Integer, default=0)
     items_answered: Mapped[int] = mapped_column(Integer, default=0)
@@ -229,9 +238,11 @@ class EffectivenessSnapshot(Base):
     comparison_score: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
     comparison_independent_score: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
 
-    # Computed metrics
+    # Computed metrics — GROWTH/RETENTION only
     observed_improvement: Mapped[Decimal | None] = mapped_column(Numeric(5, 3))
     independent_improvement: Mapped[Decimal | None] = mapped_column(Numeric(5, 3))
+    # TRANSFER only — absolute performance on target skill
+    transfer_performance: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
 
     # Difficulty comparability
     baseline_difficulty_mean: Mapped[Decimal | None] = mapped_column(Numeric(4, 2))

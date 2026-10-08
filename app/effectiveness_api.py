@@ -106,6 +106,7 @@ class AssessmentOut(BaseModel):
     skill_id: uuid.UUID
     phase: str
     status: str
+    assessment_mode: str = "INDEPENDENT"
     source_skill_id: uuid.UUID | None = None
     scheduled_at: datetime
     started_at: datetime | None = None
@@ -131,6 +132,7 @@ class EffectivenessMetricsOut(BaseModel):
     comparison_independent_score: float | None = None
     observed_improvement: float | None = None
     independent_improvement: float | None = None
+    transfer_performance: float | None = None
     difficulty_comparable: bool = True
     evidence_sufficient: bool = False
     confidence_level: str = "INSUFFICIENT"
@@ -162,6 +164,7 @@ class ParentSummaryOut(BaseModel):
     has_improved: str
     can_solve_independently: str
     remembers_after_days: str
+    applies_to_new_problems: str
     needs_attention: bool
     attention_reason: str | None = None
 
@@ -200,6 +203,7 @@ def _assessment_out(
         skill_id=assessment.skill_id,
         phase=assessment.phase.value if isinstance(assessment.phase, AssessmentPhase) else assessment.phase,
         status=assessment.status.value if isinstance(assessment.status, AssessmentStatus) else assessment.status,
+        assessment_mode=assessment.assessment_mode or "INDEPENDENT",
         source_skill_id=assessment.source_skill_id,
         scheduled_at=assessment.scheduled_at,
         started_at=assessment.started_at,
@@ -220,9 +224,21 @@ def _assessment_out(
                 difficulty=item.difficulty,
                 prompt=item.prompt,
                 student_answer=item.student_answer,
-                is_correct=item.is_correct,
+                # Withhold correctness and misconception info until
+                # assessment is completed — prevents oracle attacks
+                # where a client submits answers one at a time to
+                # learn the canonical answer.
+                is_correct=(
+                    item.is_correct
+                    if assessment.status == AssessmentStatus.COMPLETED
+                    else None
+                ),
                 assistance_level=item.assistance_level,
-                misconception_code=item.misconception_code,
+                misconception_code=(
+                    item.misconception_code
+                    if assessment.status == AssessmentStatus.COMPLETED
+                    else None
+                ),
             )
             for item in item_rows
         ],
@@ -363,6 +379,8 @@ def respond_to_item(
         student_answer=body.student_answer,
     )
     db.commit()
+    # Do not expose is_correct or misconception_code while the
+    # assessment is still in progress — prevents oracle attacks.
     return AssessmentItemOut(
         id=item.id,
         sequence_number=item.sequence_number,
@@ -370,9 +388,9 @@ def respond_to_item(
         difficulty=item.difficulty,
         prompt=item.prompt,
         student_answer=item.student_answer,
-        is_correct=item.is_correct,
+        is_correct=None,
         assistance_level=item.assistance_level,
-        misconception_code=item.misconception_code,
+        misconception_code=None,
     )
 
 
