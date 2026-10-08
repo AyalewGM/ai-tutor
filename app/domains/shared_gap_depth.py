@@ -77,8 +77,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         values = [value for d in distances for value in (center - d, center + d)]
         rng.shuffle(values)
         return (
-            f"Data values: {', '.join(map(str, values))}. "
-            "Find the mean absolute deviation (MAD). Give an integer or simplified fraction.",
+            (f"Data values: {', '.join(map(str, values))}. "
+            "Find the mean absolute deviation (MAD). Give an integer or simplified fraction."),
             str(Fraction(sum(distances), count)),
             (
                 "First calculate the arithmetic mean of the data.",
@@ -107,8 +107,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
             answer = "B"
         return (
             f"Set A: {', '.join(map(str, first))}. "
-            f"Set B: {', '.join(map(str, second))}. "
-            "Both sets have the same mean. Which has the larger MAD? Answer A or B.",
+            (f"Set B: {', '.join(map(str, second))}. "
+            "Both sets have the same mean. Which has the larger MAD? Answer A or B."),
             answer,
             (
                 "Compare distances from the common mean.",
@@ -136,8 +136,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         rounded = _nearest_tenth_of_sqrt(radicand)
         truncated = math.isqrt(100 * radicand)
         return (
-            f"Approximate sqrt({radicand}) to the nearest tenth. "
-            "Write exactly one decimal place.",
+            (f"Approximate sqrt({radicand}) to the nearest tenth. "
+            "Write exactly one decimal place."),
             f"{rounded // 10}.{rounded % 10}",
             (
                 f"The root is between {root} and {root + 1}.",
@@ -156,8 +156,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         total_b = quantity_b * unit_b
         return (
             f"Pack A has {quantity_a} notebooks for {_money(total_a)}. "
-            f"Pack B has {quantity_b} notebooks for {_money(total_b)}. "
-            "Which pack costs less per notebook? Answer A or B.",
+            (f"Pack B has {quantity_b} notebooks for {_money(total_b)}. "
+            "Which pack costs less per notebook? Answer A or B."),
             "A" if unit_a < unit_b else "B",
             (
                 "A lower package price does not always mean a lower unit price.",
@@ -173,8 +173,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         income = max(income, food + travel + supplies + rng.randint(5, 20))
         return (
             f"A club has {income} dollars for an activity. It spends {food} dollars "
-            f"on food, {travel} dollars on travel, and {supplies} dollars on supplies. "
-            "How many dollars remain? Answer with a whole number.",
+            (f"on food, {travel} dollars on travel, and {supplies} dollars on supplies. "
+            "How many dollars remain? Answer with a whole number."),
             str(income - food - travel - supplies),
             (
                 "Add all three expenses before subtracting.",
@@ -190,8 +190,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         goal = starting + (weeks - 1) * weekly + remainder
         return (
             f"A student has {starting} dollars saved and adds {weekly} dollars "
-            f"each week. The goal is {goal} dollars. What is the minimum whole "
-            "number of weeks needed to reach or exceed the goal?",
+            (f"each week. The goal is {goal} dollars. What is the minimum whole "
+            "number of weeks needed to reach or exceed the goal?"),
             str(weeks),
             (
                 "Subtract the initial savings from the goal.",
@@ -205,8 +205,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         savings = price * percent // 100
         return (
             f"A board game costs {price} dollars before a {percent}% discount. "
-            "What is the price after the discount, before tax? "
-            "Answer with a whole number of dollars.",
+            ("What is the price after the discount, before tax? "
+            "Answer with a whole number of dollars."),
             str(price - savings),
             (
                 f"Find {percent}% of the original price.",
