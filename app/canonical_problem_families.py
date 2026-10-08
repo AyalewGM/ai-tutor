@@ -58,6 +58,7 @@ class ProblemFamilySpec:
     max_difficulty: int
     modes: frozenset[LearningMode]
     evidence_dimensions: frozenset[str]
+    answer_contract: AnswerContract | None = None
 
 
 def _normalize(answer: str) -> str:
