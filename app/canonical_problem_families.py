@@ -95,8 +95,8 @@ from app.domains import place_value as _pv_mod
 from app.domains import properties as _prop_math_mod
 from app.domains import proportional_representation as _prop_repr_mod
 from app.domains import proportions as _prop_mod
-from app.domains import shared_gap_depth as _shared_gap_mod
 from app.domains import ratios as _ratio_mod
+from app.domains import shared_gap_depth as _shared_gap_mod
 from app.domains import statistics_probability as _data_mod
 from app.domains import subtraction as _sub_mod
 from app.domains import transformations_similarity as _transform_similarity_mod
