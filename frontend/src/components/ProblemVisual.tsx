@@ -889,11 +889,21 @@ function MarbleBag({ spec }: { spec: VisualSpec }) {
   const marbles = spec.marbles ?? [];
   const perRow = 6;
   const rows = Math.max(1, Math.ceil(marbles.length / perRow));
+  // WCAG 1.4.1: color must not be the only visual means of conveying
+  // information. The legend below the bag maps each swatch to its color name
+  // in text, so learners who cannot distinguish the hues can still identify
+  // which marbles are which. Counts are intentionally omitted from the
+  // legend: prompts state the counts they need, and counting questions must
+  // not be answered by the key. Colors are sorted for a deterministic layout.
+  const legendColors = [...new Set(marbles)].sort();
+  const legendPerRow = 3;
+  const legendRows = Math.max(1, Math.ceil(legendColors.length / legendPerRow));
   const width = 320;
-  const height = 110 + rows * 44;
+  const bagHeight = 110 + rows * 44;
+  const height = bagHeight + legendRows * 28;
   return (
     <svg viewBox={`0 0 ${width} ${height}`} className="visual" role="img" aria-label={spec.aria_label ?? "A bag of marbles"}>
-      <rect x="30" y="18" width={width - 60} height={height - 30} rx="22" className="viz-bag" />
+      <rect x="30" y="18" width={width - 60} height={bagHeight - 30} rx="22" className="viz-bag" />
       {marbles.map((color, i) => {
         const row = Math.floor(i / perRow);
         const inRow = Math.min(perRow, marbles.length - row * perRow);
@@ -901,6 +911,20 @@ function MarbleBag({ spec }: { spec: VisualSpec }) {
         const x = inRow === 1 ? width / 2 : 55 + i % perRow * gap;
         const y = 62 + row * 44;
         return <circle key={i} cx={x} cy={y} r="15" fill={COLOR_FILLS[color] ?? "#94a3b8"} className="viz-sector" />;
+      })}
+      {legendColors.map((color, i) => {
+        const row = Math.floor(i / legendPerRow);
+        const inRow = Math.min(legendPerRow, legendColors.length - row * legendPerRow);
+        const slot = (width - 40) / legendPerRow;
+        const xOffset = ((legendPerRow - inRow) * slot) / 2;
+        const cx = 20 + xOffset + (i % legendPerRow) * slot + slot / 2;
+        const cy = bagHeight + 14 + row * 28;
+        return (
+          <g key={color}>
+            <circle cx={cx - 26} cy={cy} r="7" fill={COLOR_FILLS[color] ?? "#94a3b8"} className="viz-sector" />
+            <text x={cx - 14} y={cy + 4.5} className="viz-legend-label">{color}</text>
+          </g>
+        );
       })}
     </svg>
   );
