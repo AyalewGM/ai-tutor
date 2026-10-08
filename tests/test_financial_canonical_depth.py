@@ -2,6 +2,7 @@
 import re
 
 import pytest
+
 from app.canonical_problem_families import FAMILIES, LearningMode, generate
 
 CODES = ("MATH.FIN.INTEREST.SIMPLE", "MATH.FIN.BUDGET.CAPACITY")
