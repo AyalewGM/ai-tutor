@@ -96,6 +96,8 @@ from app.domains import division as _div_mod
 from app.domains import elementary_data_patterns as _elementary_data_mod
 from app.domains import estimation as _est_mod
 from app.domains import factors_multiples as _fac_mod
+from app.domains import financial_budget_capacity as _financial_budget_mod
+from app.domains import financial_simple_interest as _financial_interest_mod
 from app.domains import fraction_decimal_depth as _fraction_decimal_depth_mod
 from app.domains import fractions as _frac_mod
 from app.domains import geometry_measurement as _geo_mod
@@ -115,8 +117,6 @@ from app.domains import statistics_probability as _data_mod
 from app.domains import subtraction as _sub_mod
 from app.domains import transformations_similarity as _transform_similarity_mod
 from app.domains import triangle_congruence_depth as _triangle_congruence_mod
-from app.domains import financial_simple_interest as _financial_interest_mod
-from app.domains import financial_budget_capacity as _financial_budget_mod
 from app.domains import whole_numbers as _wn_mod
 
 _DOMAIN_MODULES = [

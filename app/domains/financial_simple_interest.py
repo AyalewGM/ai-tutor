@@ -2,8 +2,8 @@
 
 import random
 
-from app.canonical_problem_families import ALL_MODES, ProblemFamilySpec
 from app.answer_contracts import AnswerContract, AnswerKind
+from app.canonical_problem_families import ALL_MODES, ProblemFamilySpec
 
 CODE = "MATH.FIN.INTEREST.SIMPLE"
 FAMILIES = {
@@ -24,8 +24,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
     years = rng.randint(2, 2 + difficulty)
     interest = principal * rate * years // 100
     return (
-        f"A deposit of {principal} dollars earns {rate}% simple interest "
-        f"annually for {years} years. How many dollars of interest are earned?",
+        (f"A deposit of {principal} dollars earns {rate}% simple interest "
+         f"annually for {years} years. How many dollars of interest are earned?"),
         str(interest),
         ("Use the original principal each year.", "Multiply principal, rate, and years."),
         {"FIN.INTEREST.REPORT_BALANCE": str(principal + interest)},

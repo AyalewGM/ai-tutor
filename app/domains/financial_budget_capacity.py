@@ -2,8 +2,8 @@
 
 import random
 
-from app.canonical_problem_families import ALL_MODES, ProblemFamilySpec
 from app.answer_contracts import AnswerContract, AnswerKind
+from app.canonical_problem_families import ALL_MODES, ProblemFamilySpec
 
 CODE = "MATH.FIN.BUDGET.CAPACITY"
 FAMILIES = {CODE: ProblemFamilySpec(
@@ -23,8 +23,8 @@ def build(family_code: str, rng: random.Random, difficulty: int):
     remainder = rng.randint(1, cost - 1)
     budget = fee + cost * visits + remainder
     return (
-        f"A center charges {fee} dollars to join and {cost} dollars per visit. "
-        f"With {budget} dollars, what is the maximum whole number of visits?",
+        (f"A center charges {fee} dollars to join and {cost} dollars per visit. "
+         f"With {budget} dollars, what is the maximum whole number of visits?"),
         str(visits),
         ("Subtract the joining fee first.", "Divide by the visit cost and round down."),
         {"FIN.BUDGET.IGNORE_FEE": str(budget // cost),

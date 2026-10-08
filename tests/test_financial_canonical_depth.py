@@ -1,5 +1,6 @@
 """Deterministic checks for financial content and strict opt-in grading."""
 import re
+
 import pytest
 from app.canonical_problem_families import FAMILIES, LearningMode, generate
 
