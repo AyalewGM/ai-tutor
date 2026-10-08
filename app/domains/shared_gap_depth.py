@@ -106,9 +106,11 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         else:
             answer = "B"
         return (
-            f"Set A: {', '.join(map(str, first))}. "
+            (
+                f"Set A: {', '.join(map(str, first))}. "
             f"Set B: {', '.join(map(str, second))}. "
-            "Both sets have the same mean. Which has the larger MAD? Answer A or B.",
+            "Both sets have the same mean. Which has the larger MAD? Answer A or B."
+            ),
             answer,
             (
                 "Compare distances from the common mean.",
@@ -174,9 +176,11 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         supplies = rng.randint(3, 8 + difficulty * 2)
         income = max(income, food + travel + supplies + rng.randint(5, 20))
         return (
-            f"A club has {income} dollars for an activity. It spends {food} dollars "
+            (
+                f"A club has {income} dollars for an activity. It spends {food} dollars "
             f"on food, {travel} dollars on travel, and {supplies} dollars on supplies. "
-            "How many dollars remain? Answer with a whole number.",
+            "How many dollars remain? Answer with a whole number."
+            ),
             str(income - food - travel - supplies),
             (
                 "Add all three expenses before subtracting.",
@@ -191,9 +195,11 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         remainder = rng.randint(1, weekly - 1)
         goal = starting + (weeks - 1) * weekly + remainder
         return (
-            f"A student has {starting} dollars saved and adds {weekly} dollars "
+            (
+                f"A student has {starting} dollars saved and adds {weekly} dollars "
             f"each week. The goal is {goal} dollars. What is the minimum whole "
-            "number of weeks needed to reach or exceed the goal?",
+            "number of weeks needed to reach or exceed the goal?"
+            ),
             str(weeks),
             (
                 "Subtract the initial savings from the goal.",
@@ -206,9 +212,11 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         percent = rng.choice([10, 20, 25, 50])
         savings = price * percent // 100
         return (
-            f"A board game costs {price} dollars before a {percent}% discount. "
+            (
+                f"A board game costs {price} dollars before a {percent}% discount. "
             "What is the price after the discount, before tax? "
-            "Answer with a whole number of dollars.",
+            "Answer with a whole number of dollars."
+            ),
             str(price - savings),
             (
                 f"Find {percent}% of the original price.",
