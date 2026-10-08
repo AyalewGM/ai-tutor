@@ -62,9 +62,16 @@ def _normalize(answer: str) -> str:
     return "".join(answer.lower().split()).replace("*", "")
 
 
-def _rng(family_code: str, seed: str | int, difficulty: int) -> tuple[random.Random, str]:
-    raw = f"{family_code}|{seed}|{difficulty}".encode()
-    digest = hashlib.sha256(raw).hexdigest()
+def _rng(
+    family_code: str, seed: str | int, difficulty: int, mode: LearningMode
+) -> tuple[random.Random, str]:
+    # Preserve existing INDEPENDENT variant IDs and materialized Problem keys.
+    # Other modes must have disjoint variants so diagnostic/guided items cannot
+    # silently reappear as independent, mastery, or spaced-review evidence.
+    key = f"{family_code}|{seed}|{difficulty}"
+    if mode != LearningMode.INDEPENDENT:
+        key += f"|mode={mode.value}"
+    digest = hashlib.sha256(key.encode()).hexdigest()
     return random.Random(int(digest[:16], 16)), digest[:16]
 
 
@@ -100,13 +107,14 @@ from app.domains import shared_gap_depth as _shared_gap_mod
 from app.domains import statistics_probability as _data_mod
 from app.domains import subtraction as _sub_mod
 from app.domains import transformations_similarity as _transform_similarity_mod
+from app.domains import triangle_congruence_depth as _triangle_congruence_mod
 from app.domains import whole_numbers as _wn_mod
 
 _DOMAIN_MODULES = [
     _frac_mod, _fraction_decimal_depth_mod, _dec_mod, _ratio_mod, _prop_mod, _prop_repr_mod, _pct_mod,
     _alg_mod, _advanced_number_mod, _advanced_mod, _advanced_hs_mod, _geo_mod, _geo_reasoning_mod, _data_mod,
     _measurement_spatial_mod, _transform_similarity_mod, _elementary_data_mod,
-    _bivariate_sampling_mod, _shared_gap_mod,
+    _bivariate_sampling_mod, _shared_gap_mod, _triangle_congruence_mod,
     _add_mod, _sub_mod, _mul_mod, _div_mod,
     _wn_mod, _pv_mod, _fac_mod, _ooo_mod, _int_mod, _est_mod, _prop_math_mod,
 ]
@@ -280,7 +288,7 @@ def generate(
         raise ValueError("difficulty outside family range")
     if mode not in spec.modes:
         raise ValueError("learning mode is not eligible for family")
-    rng, variant_id = _rng(family_code, seed, difficulty)
+    rng, variant_id = _rng(family_code, seed, difficulty, mode)
     built = _build(family_code, rng, difficulty)
     if len(built) == 4:
         prompt, answer, hints, misconceptions = built
