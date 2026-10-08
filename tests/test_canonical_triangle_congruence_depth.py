@@ -23,7 +23,7 @@ def test_six_reusable_families_have_original_canonical_provenance():
         spec = FAMILIES[code]
         assert spec.canonical_skill_code == "MATH.GEO.CONGRUENCE"
         assert spec.modes == frozenset(LearningMode)
-        assert "congruence" in spec.name.lower() or code.endswith("CPCTC")
+        assert "congruence_criteria" in spec.evidence_dimensions or code.endswith("CPCTC")
         generated = generate(code, seed=20261008, difficulty=3)
         assert generated.provenance["origin"] == "MIHUR_AUTHORED"
         assert generated.is_correct(generated.canonical_answer)
