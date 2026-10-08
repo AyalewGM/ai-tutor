@@ -4,21 +4,27 @@ import test from "node:test";
 
 const workspace = await readFile(new URL("../pages/Workspace.tsx", import.meta.url), "utf8");
 const guided = await readFile(new URL("./GuidedDistributivePractice.tsx", import.meta.url), "utf8");
+const player = await readFile(new URL("./PedagogicalAnimation.tsx", import.meta.url), "utf8");
 
-test("guided MVE mounts only for guided or remediation states", () => {
+test("guided MVE is limited to guided and remediation states", () => {
   assert.match(workspace, /workspace\.state === "GUIDED_PRACTICE" \|\| workspace\.state === "REMEDIATION"/);
   assert.match(workspace, /GuidedDistributivePractice key=/);
-  assert.doesNotMatch(workspace, /workspace\.state === "INDEPENDENT_PRACTICE"\) &&\s*<GuidedDistributivePractice/);
+  assert.match(workspace, /independentAssessment=/);
+  assert.match(guided, /if \(props\.independentAssessment\) return null/);
 });
-test("guided MVE provides accessible transport and nonvisual steps", () => {
+
+test("guided MVE delegates accessible playback to the existing player", () => {
+  assert.match(guided, /<PedagogicalAnimation/);
   for (const label of ["Pause", "Play", "Previous step", "Next step", "Replay"]) {
-    assert.ok(guided.includes(label), `missing ${label}`);
+    assert.ok(player.includes(label), `missing ${label}`);
   }
-  assert.match(guided, /aria-live="polite"/);
-  assert.match(guided, /prefers-reduced-motion: reduce/);
-  assert.match(guided, /independentAssessment\) return null/);
+  assert.match(player, /aria-live="polite"/);
+  assert.match(player, /prefers-reduced-motion: reduce/);
+  assert.match(player, /clearTimeout\(timer\)/);
+  assert.match(player, /aria-label="Animation playback controls"/);
 });
-test("guided MVE reuses deterministic misconception classification", () => {
+
+test("guided MVE uses deterministic misconception classification", () => {
   assert.match(guided, /checkDistributiveCoefficients\(lesson/);
   assert.match(guided, /MISSED_SECOND_TERM/);
   assert.match(guided, /COEFFICIENT_ERROR/);
