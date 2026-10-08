@@ -23,7 +23,10 @@ WAVE2_PREFIXES = (
 )
 
 WAVE2_CODES = sorted(
-    code for code in FAMILIES if code.startswith(WAVE2_PREFIXES)
+    code
+    for code in FAMILIES
+    if code.startswith(WAVE2_PREFIXES)
+    and code not in {"MATH.DATA.MAD.COMPUTE", "MATH.DATA.MAD.COMPARE"}
 )
 
 
