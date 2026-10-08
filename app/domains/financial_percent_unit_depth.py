@@ -34,7 +34,7 @@ FAMILIES = {
 def build(family_code: str, rng: random.Random, difficulty: int):
     if family_code == DISCOUNT:
         price = 20 * rng.randint(3, 8 + difficulty)
-        rate = rng.choice((10, 20, 25, 50))
+        rate = rng.choice((10, 20, 25))
         discount = price * rate // 100
         return (
             f"An item costs ${price}. A {rate}% discount applies before tax. "
