@@ -97,8 +97,8 @@ from app.domains import elementary_data_patterns as _elementary_data_mod
 from app.domains import estimation as _est_mod
 from app.domains import factors_multiples as _fac_mod
 from app.domains import financial_budget_capacity as _financial_budget_mod
-from app.domains import financial_simple_interest as _financial_interest_mod
 from app.domains import financial_percent_unit_depth as _financial_percent_unit_mod
+from app.domains import financial_simple_interest as _financial_interest_mod
 from app.domains import fraction_decimal_depth as _fraction_decimal_depth_mod
 from app.domains import fractions as _frac_mod
 from app.domains import geometry_measurement as _geo_mod
