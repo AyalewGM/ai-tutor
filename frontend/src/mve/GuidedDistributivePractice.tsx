@@ -1,53 +1,101 @@
-import { useEffect, useState } from "react";
+import { useCallback, useMemo, useState, type FormEvent } from "react";
+import ProblemVisual from "../components/ProblemVisual";
+import { PedagogicalAnimation } from "./PedagogicalAnimation";
 import { buildDistributiveLesson, checkDistributiveCoefficients } from "./distributiveLesson";
+import type { AnimationStep } from "./animation";
+import type { MathInteractionEvent } from "./interactions";
 
-/** Guided-only activity. Never mount while an independent assessment is active. */
-export function GuidedDistributivePractice({ factor = 3, constant = 4, independentAssessment = false }: {
-  factor?: number; constant?: number; independentAssessment?: boolean;
+interface GuidedDistributivePracticeProps {
+  factor?: number;
+  constant?: number;
+  /** Fail closed: independent assessment must never mount the worked explanation. */
+  independentAssessment: boolean;
+  /** Optional normalized mathematical events, never raw keystrokes or child data. */
+  onMathEvent?: (event: MathInteractionEvent) => void;
+}
+
+export function GuidedDistributivePractice(props: GuidedDistributivePracticeProps) {
+  if (props.independentAssessment) return null;
+  return <GuidedDistributiveActivity
+    factor={props.factor ?? 3}
+    constant={props.constant ?? 4}
+    onMathEvent={props.onMathEvent}
+  />;
+}
+
+function GuidedDistributiveActivity({
+  factor, constant, onMathEvent,
+}: {
+  factor: number;
+  constant: number;
+  onMathEvent?: (event: MathInteractionEvent) => void;
 }) {
-  const [step, setStep] = useState(0);
-  const [playing, setPlaying] = useState(false);
+  const lesson = useMemo(() => buildDistributiveLesson(factor, constant), [factor, constant]);
+  const [stepId, setStepId] = useState("identify");
   const [coefficient, setCoefficient] = useState("");
   const [term, setTerm] = useState("");
   const [feedback, setFeedback] = useState("");
-  const lesson = buildDistributiveLesson(factor, constant);
-  const steps = lesson.animation.steps;
-  const current = steps[step];
-  useEffect(() => {
-    if (!playing) return;
-    if (step >= steps.length - 1) { setPlaying(false); return; }
-    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-    const timeout = window.setTimeout(() => setStep(index => index + 1), reducedMotion ? 0 : current.duration_ms);
-    return () => window.clearTimeout(timeout);
-  }, [playing, step, steps.length, current.duration_ms]);
-  if (independentAssessment) return null;
-  const check = () => {
-    if (!/^-?\d+$/.test(coefficient.trim()) || !/^-?\d+$/.test(term.trim())) {
-      setFeedback("Enter whole-number coefficients in both fields.");
+
+  const onStepChange = useCallback((step: AnimationStep) => {
+    setStepId(step.id);
+    onMathEvent?.({ schema_version: 1, type: "DISTRIBUTIVE_STEP_VIEWED", step_id: step.id });
+  }, [onMathEvent]);
+
+  const stepIndex = lesson.animation.steps.findIndex((step) => step.id === stepId);
+  const expression = stepIndex < 1 ? lesson.original
+    : stepIndex === 1 ? `${lesson.factor} × ${lesson.variable} + ${lesson.factor} × (${lesson.constant})`
+    : stepIndex === 2 ? lesson.expanded : lesson.simplified;
+
+  const check = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const validInteger = (text: string) => /^-?\d+$/.test(text.trim()) &&
+      Number.isSafeInteger(Number(text.trim())) && Math.abs(Number(text.trim())) <= 10000;
+    if (!validInteger(coefficient) || !validInteger(term)) {
+      setFeedback("Enter whole numbers in both fields.");
       return;
     }
-    const result = checkDistributiveCoefficients(lesson, Number(coefficient), Number(term));
-    setFeedback(result.correct ? "Correct: both terms were multiplied." :
-      result.misconception === "MISSED_SECOND_TERM" ? "Check the constant term: distribute to both terms." :
-      result.misconception === "COEFFICIENT_ERROR" ? "Check the coefficient of x against the outside factor." :
-      "Recheck the constant product using the area model.");
+    const variableCoefficient = Number(coefficient.trim());
+    const constantTerm = Number(term.trim());
+    const result = checkDistributiveCoefficients(lesson, variableCoefficient, constantTerm);
+    onMathEvent?.({
+      schema_version: 1,
+      type: "DISTRIBUTIVE_COEFFICIENTS_CHECKED",
+      variable_coefficient: variableCoefficient,
+      constant_term: constantTerm,
+      correct: result.correct,
+      misconception: result.misconception,
+    });
+    setFeedback(result.correct ? "Correct: you multiplied both terms." :
+      result.misconception === "MISSED_SECOND_TERM" ? "Multiply the outside factor by the constant too." :
+      result.misconception === "COEFFICIENT_ERROR" ? "Check the coefficient of the variable against the outside factor." :
+      "Check the constant product using the area model.");
   };
-  return <section aria-label="Guided distributive property lesson" data-mve-family="distributive">
-    <h3>Distribute across both terms</h3>
-    <p>{lesson.original}</p>
-    <p role="status" aria-live="polite">Step {step + 1} of {steps.length}: {current.description}</p>
-    <div role="group" aria-label="Explanation controls">
-      <button type="button" onClick={() => setPlaying(!playing)} aria-pressed={playing}>{playing ? "Pause" : "Play"}</button>
-      <button type="button" onClick={() => { setPlaying(false); setStep(Math.max(0, step - 1)); }} disabled={step === 0}>Previous step</button>
-      <button type="button" onClick={() => { setPlaying(false); setStep(Math.min(steps.length - 1, step + 1)); }} disabled={step === steps.length - 1}>Next step</button>
-      <button type="button" onClick={() => { setPlaying(false); setStep(0); }}>Replay</button>
-    </div>
-    <p>Use the controls to read each explanation step. No motion is required.</p>
-    <fieldset><legend>Try the expanded expression: coefficient of x and constant</legend>
-      <label>Coefficient of x <input inputMode="numeric" value={coefficient} onChange={e => setCoefficient(e.target.value)} /></label>
-      <label>Constant term <input inputMode="numeric" value={term} onChange={e => setTerm(e.target.value)} /></label>
-      <button type="button" onClick={check}>Check my work</button>
-    </fieldset>
-    <p role="status" aria-live="polite">{feedback}</p>
-  </section>;
+
+  return (
+    <section aria-label="Guided distributive property lesson" data-mve-family="distributive"
+      className="space-y-3 rounded-lg border p-4">
+      <h3 className="font-semibold">Explore the distributive property</h3>
+      <p className="text-sm">Worked example, separate from your current question.</p>
+      <p aria-label="Current mathematical expression" className="text-lg font-medium">{expression}</p>
+      <PedagogicalAnimation spec={lesson.animation} autoPlay={false} onStepChange={onStepChange} />
+      {stepIndex >= 1 && <ProblemVisual spec={lesson.areaModel} />}
+      <form onSubmit={check} className="space-y-2">
+        <fieldset className="space-y-2">
+          <legend className="font-medium">Try the expanded expression</legend>
+          <label className="block">Coefficient of {lesson.variable}
+            <input className="ml-2 rounded border p-2" inputMode="numeric" type="text"
+              value={coefficient} onChange={(event) => setCoefficient(event.target.value)} />
+          </label>
+          <label className="block">Constant term
+            <input className="ml-2 rounded border p-2" inputMode="numeric" type="text"
+              value={term} onChange={(event) => setTerm(event.target.value)} />
+          </label>
+        </fieldset>
+        <button type="submit" className="rounded bg-primary px-3 py-2 text-primary-foreground">
+          Check my work
+        </button>
+      </form>
+      <p role="status" aria-live="polite" aria-atomic="true">{feedback}</p>
+    </section>
+  );
 }
