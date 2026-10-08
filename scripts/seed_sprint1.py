@@ -59,6 +59,7 @@ def _problem(
     prompt: str,
     answer: str,
     problem_type: str,
+    visual_spec: dict | None = None,
 ) -> None:
     existing = db.scalar(
         select(Problem).where(
@@ -73,6 +74,9 @@ def _problem(
         "source_uri": "https://www.montgomeryschoolsmd.org/curriculum/middleschool/grade8/",
     }
     if existing is None:
+        solution = {"answer": answer, "provenance": provenance}
+        if visual_spec is not None:
+            solution["visual_spec"] = visual_spec
         db.add(
             Problem(
                 primary_skill_id=skill.id,
@@ -80,7 +84,7 @@ def _problem(
                 difficulty=difficulty,
                 prompt=prompt,
                 canonical_answer=answer,
-                solution={"answer": answer, "provenance": provenance},
+                solution=solution,
                 source_type="CURATED",
             )
         )
@@ -192,6 +196,32 @@ def seed() -> None:
         _prerequisite(db, dist_pos, distributive)
         _prerequisite(db, dist_neg, dist_pos)
         _prerequisite(db, combine_eq, multi_step)
+
+        # QA accessibility fixture (not curriculum content): a deterministic
+        # marble-bag problem whose visual exercises the MarbleBag
+        # color-encoding regression test. Synthetic data only.
+        marble_prob = _skill(
+            db, curriculum, "M8.PROB.MARBLE_QA",
+            "Marble Bag Probability (QA)",
+            "Identify marble colors in a probability bag visual.",
+            2,
+        )
+        _problem(
+            db,
+            skill=marble_prob,
+            difficulty=1,
+            prompt=(
+                "A bag has 8 equally likely marbles: 3 blue and 5 red. "
+                "What is the probability of drawing a blue marble?"
+            ),
+            answer="3/8",
+            problem_type="WORD_PROBLEM",
+            visual_spec={
+                "type": "marble_bag",
+                "marbles": ["blue"] * 3 + ["red"] * 5,
+                "aria_label": "Bag containing 3 blue and 5 red marbles.",
+            },
+        )
 
         def _misconception(
             skill: Skill, code: str, name: str, description: str, strategy: str

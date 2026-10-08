@@ -383,7 +383,9 @@ test('assisted success is recorded separately from independent mastery evidence'
 
   // Take a hint, then answer correctly: the success must count as assisted.
   // The hint message replaces the "Correct. Keep going." status text.
-  const statusPara = page.locator('p[aria-live="polite"]');
+  // The workspace status paragraph (not the MVE guided-practice live
+  // regions, which share aria-live="polite" but carry role="status").
+  const statusPara = page.locator('p[aria-live="polite"]:not([role])');
   await page.getByRole('button', { name: 'Hint' }).click();
   await expect(statusPara).not.toHaveText('Correct. Keep going.', { timeout: 10000 });
   await solveCurrentProblem(page, firstProblem);
