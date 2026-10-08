@@ -168,3 +168,35 @@ def test_guided_mastery_cannot_substitute_for_independent_assessment():
         current_mastery=Decimal("0.990"),
     )
     assert parent_summary(report).can_solve_independently == "Not assessed"
+
+
+def test_transfer_confidence_excludes_source_baseline_answered_items():
+    """A large source-skill baseline cannot inflate target-skill transfer confidence."""
+    source_baseline = _assessment(items=100, answered=100)
+    target_transfer = _assessment(
+        items=5,
+        answered=5,
+        phase=AssessmentPhase.TRANSFER,
+    )
+    with_source = _measure(source_baseline, target_transfer, "TRANSFER")
+    without_source = _measure(None, target_transfer, "TRANSFER")
+
+    assert with_source.evidence_count == 5
+    assert without_source.evidence_count == 5
+    assert with_source.confidence_level == without_source.confidence_level
+    assert with_source.evidence_sufficient is True
+    assert with_source.confidence_level == "MODERATE"
+
+
+def test_transfer_target_unanswered_items_cannot_be_rescued_by_source_evidence():
+    source_baseline = _assessment(items=100, answered=100)
+    target_transfer = _assessment(
+        items=30,
+        answered=1,
+        phase=AssessmentPhase.TRANSFER,
+    )
+    metrics = _measure(source_baseline, target_transfer, "TRANSFER")
+
+    assert metrics.evidence_count == 1
+    assert metrics.evidence_sufficient is False
+    assert metrics.confidence_level == "INSUFFICIENT"
