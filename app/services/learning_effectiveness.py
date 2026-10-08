@@ -316,7 +316,12 @@ def compute_effectiveness(
         comparison.items_answered if comparison.items_answered is not None
         else comp_items
     )
-    total_evidence = base_answered + comp_answered
+    # Transfer confidence is based solely on independent target-skill evidence.
+    # Source-skill baseline questions cannot strengthen transfer confidence.
+    total_evidence = (
+        comp_answered if measurement_type == "TRANSFER"
+        else base_answered + comp_answered
+    )
 
     # Growth and retention require a valid same-skill baseline.  Transfer
     # measures absolute target performance and does not require one.
