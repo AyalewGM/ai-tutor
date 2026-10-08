@@ -155,9 +155,11 @@ def build(family_code: str, rng: random.Random, difficulty: int):
         total_a = quantity_a * unit_a
         total_b = quantity_b * unit_b
         return (
-            f"Pack A has {quantity_a} notebooks for {_money(total_a)}. "
-            f"Pack B has {quantity_b} notebooks for {_money(total_b)}. "
-            "Which pack costs less per notebook? Answer A or B."),
+            (
+                f"Pack A has {quantity_a} notebooks for {_money(total_a)}. "
+                f"Pack B has {quantity_b} notebooks for {_money(total_b)}. "
+                "Which pack costs less per notebook? Answer A or B."
+            ),
             "A" if unit_a < unit_b else "B",
             (
                 "A lower package price does not always mean a lower unit price.",
