@@ -70,6 +70,12 @@ export interface DistributiveCoefficientsCheckedEvent extends MathInteractionBas
   misconception: "MISSED_SECOND_TERM" | "COEFFICIENT_ERROR" | "CONSTANT_ERROR" | null;
 }
 
+export interface FractionShadingChangedEvent extends MathInteractionBase {
+  type: "FRACTION_SHADING_CHANGED";
+  numerator: number;
+  denominator: number;
+}
+
 export type MathInteractionEvent =
   | PointPlacedEvent
   | PointMovedEvent
@@ -80,7 +86,8 @@ export type MathInteractionEvent =
   | RegionSelectedEvent
   | PolygonCreatedEvent
   | DistributiveStepViewedEvent
-  | DistributiveCoefficientsCheckedEvent;
+  | DistributiveCoefficientsCheckedEvent
+  | FractionShadingChangedEvent;
 
 function isPoint2D(value: unknown): value is Point2D {
   return Array.isArray(value) &&
@@ -113,6 +120,12 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
     case "POLYGON_CREATED":
       return Array.isArray(event.vertices) && event.vertices.length >= 3 &&
         event.vertices.every(isPoint2D);
+    case "FRACTION_SHADING_CHANGED":
+      return Number.isSafeInteger(event.denominator) &&
+        (event.denominator as number) >= 1 && (event.denominator as number) <= 12 &&
+        Number.isSafeInteger(event.numerator) &&
+        (event.numerator as number) >= 0 &&
+        (event.numerator as number) <= (event.denominator as number);
     case "DISTRIBUTIVE_STEP_VIEWED":
       return typeof event.step_id === "string" &&
         ["identify", "distribute_variable", "distribute_constant", "simplify"].includes(event.step_id);
