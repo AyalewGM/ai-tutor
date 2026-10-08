@@ -3,6 +3,7 @@
 import random
 
 from app.canonical_problem_families import ALL_MODES, ProblemFamilySpec
+from app.answer_contracts import AnswerContract, AnswerKind
 
 CODE = "MATH.FIN.INTEREST.SIMPLE"
 FAMILIES = {
@@ -10,6 +11,7 @@ FAMILIES = {
         CODE, "Calculate simple interest", "MATH.FIN.INTEREST",
         "WORD_PROBLEM", 2, 4, ALL_MODES,
         frozenset({"financial_literacy", "percent_reasoning", "modeling"}),
+        answer_contract=AnswerContract(AnswerKind.INTEGER),
     ),
 }
 

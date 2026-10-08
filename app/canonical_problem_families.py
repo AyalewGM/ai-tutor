@@ -36,14 +36,18 @@ class GeneratedProblem:
     misconception_answers: dict[str, str]
     provenance: dict[str, str]
     visual_spec: dict[str, object] | None = None
+    answer_contract: AnswerContract | None = None
 
     def is_correct(self, answer: str) -> bool:
+        if self.answer_contract is not None:
+            return self.answer_contract.equivalent(answer, self.canonical_answer)
         return _normalize(answer) == _normalize(self.canonical_answer)
 
     def misconception_for(self, answer: str) -> str | None:
         normalized = _normalize(answer)
         for code, candidate in self.misconception_answers.items():
-            if normalized == _normalize(candidate):
+            if (self.answer_contract.equivalent(answer, candidate) if self.answer_contract is not None
+                    else normalized == _normalize(candidate)):
                 return code
         return None
 
@@ -111,6 +115,8 @@ from app.domains import statistics_probability as _data_mod
 from app.domains import subtraction as _sub_mod
 from app.domains import transformations_similarity as _transform_similarity_mod
 from app.domains import triangle_congruence_depth as _triangle_congruence_mod
+from app.domains import financial_simple_interest as _financial_interest_mod
+from app.domains import financial_budget_capacity as _financial_budget_mod
 from app.domains import whole_numbers as _wn_mod
 
 _DOMAIN_MODULES = [
@@ -118,6 +124,7 @@ _DOMAIN_MODULES = [
     _alg_mod, _advanced_number_mod, _advanced_mod, _advanced_hs_mod, _geo_mod, _geo_reasoning_mod, _data_mod,
     _measurement_spatial_mod, _transform_similarity_mod, _elementary_data_mod,
     _bivariate_sampling_mod, _shared_gap_mod, _triangle_congruence_mod,
+    _financial_interest_mod, _financial_budget_mod,
     _add_mod, _sub_mod, _mul_mod, _div_mod,
     _wn_mod, _pv_mod, _fac_mod, _ooo_mod, _int_mod, _est_mod, _prop_math_mod,
 ]
@@ -323,4 +330,5 @@ def generate(
         provenance={"origin": "MIHUR_AUTHORED", "license": "proprietary",
                     "generator": spec.code},
         visual_spec=visual_spec,
+        answer_contract=spec.answer_contract,
     )
