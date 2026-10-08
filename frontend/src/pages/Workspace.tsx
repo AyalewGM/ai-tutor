@@ -756,7 +756,10 @@ export default function Workspace() {
                   )}
                   {(workspace.state === "GUIDED_PRACTICE" || workspace.state === "REMEDIATION") &&
                     /distributive|expand.*parenthes/i.test(workspace.focus.skill_name) && (
-                      <GuidedDistributivePractice key={workspace.focus.active_skill_id} />
+                      <GuidedDistributivePractice
+                        key={workspace.focus.active_skill_id}
+                        independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                      />
                     )}
                   <div className="problem-wrap">
                     <div className={`problem ${feedback}`} aria-live="polite">
