@@ -12,6 +12,7 @@ from app.core.database import SessionLocal
 from app.core.observability import configure_logging, request_logging_middleware
 from app.core.settings import settings
 from app.diagnostic_api import router as diagnostic_router
+from app.effectiveness_api import router as effectiveness_router
 from app.hint_api import router as hint_router
 from app.middleware.geo_restriction import geo_restriction_middleware
 from app.middleware.pii_sanitizer import PIISanitizerMiddleware
@@ -48,6 +49,7 @@ app.include_router(learner_workspace_router, prefix=settings.api_prefix)
 app.include_router(telemetry_router, prefix=settings.api_prefix)
 app.include_router(admin_router, prefix=settings.api_prefix)
 app.include_router(billing_router, prefix=settings.api_prefix)
+app.include_router(effectiveness_router, prefix=settings.api_prefix)
 
 
 @app.get("/health")

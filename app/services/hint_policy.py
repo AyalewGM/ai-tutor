@@ -21,10 +21,17 @@ def select_hint(
     attempt_since_last_hint: bool = True,
     misconception_confidence: float | None = None,
     repeated_unsuccessful_attempts: int = 0,
+    independent_assessment_active: bool = False,
 ) -> HintDecision:
     """Choose support level deterministically; generation never owns pedagogy."""
     if state in ASSESSMENT_STATES:
         return HintDecision(False, reason="Hints are disabled during assessment.")
+
+    if independent_assessment_active:
+        return HintDecision(
+            False,
+            reason="Hints are disabled while an independent assessment is in progress.",
+        )
 
     used = max(0, min(4, highest_level_used))
 

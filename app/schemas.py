@@ -48,7 +48,7 @@ class ReverseChallengeOut(BaseModel):
 
 
 class WorkStepOut(BaseModel):
-    status: Literal["solved", "valid", "invalid", "unparseable", "duplicate"]
+    status: Literal["solved", "valid", "invalid", "unparseable", "duplicate", "blocked"]
     feedback: str | None = None
     misconception_code: str | None = None
     revealed_line: str | None = None

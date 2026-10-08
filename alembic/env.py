@@ -8,6 +8,7 @@ import app.content_models
 import app.credential_models
 import app.curriculum_models
 import app.diagnostic_models
+import app.effectiveness_models
 import app.models
 import app.parent_models
 import app.plan_models
