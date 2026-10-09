@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ProblemVisual from "../components/ProblemVisual";
 import type { MathInteractionEvent } from "./interactions";
-import { normalizeFractionParts } from "./fractionMath";
+import { normalizeFractionParts, changeShadedParts } from "./fractionMath";
 
 /** Guided exploration only; never mount in independent assessment. */
 export interface InteractiveFractionBarsProps {
@@ -32,6 +32,7 @@ function GuidedFractionBars({
   const current = previousDenominator === d ? numerator : initial.numerator;
   const update = (next: number) => {
     const value = normalizeFractionParts(next, d);
+    if (value.numerator === current) return;
     setNumerator(value.numerator);
     onFractionChange?.(value);
     onMathEvent?.({ schema_version: 1, type: "FRACTION_SHADING_CHANGED", ...value });
@@ -49,9 +50,9 @@ function GuidedFractionBars({
       }} />
       <p role="status" aria-live="polite">{current} of {d} equal parts shaded</p>
       <div className="flex flex-wrap gap-2" aria-label="Fraction exploration controls">
-        <button type="button" onClick={() => update(current - 1)} disabled={current === 0}
-          className="rounded border px-3 py-2">Shade one fewer part</button>
-        <button type="button" onClick={() => update(current + 1)} disabled={current === d}
+        <button type="button" onClick={() => update(changeShadedParts({ numerator: current, denominator: d }, -1).numerator)} disabled={current === 0}
+          className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Shade one fewer part</button>
+        <button type="button" onClick={() => update(changeShadedParts({ numerator: current, denominator: d }, 1).numerator)} disabled={current === d}
           className="rounded border px-3 py-2">Shade one more part</button>
         <button type="button" onClick={() => update(0)} disabled={current === 0}
           className="rounded border px-3 py-2">Clear shading</button>
