@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ProblemVisual from "../components/ProblemVisual";
 import type { MathInteractionEvent } from "./interactions";
+import { normalizeFractionParts, changeShadedParts } from "./fractionMath";
 
 /** Guided exploration only; never mount in independent assessment. */
 export interface InteractiveFractionBarsProps {
@@ -9,12 +10,6 @@ export interface InteractiveFractionBarsProps {
   initialNumerator?: number;
   onFractionChange?: (value: { numerator: number; denominator: number }) => void;
   onMathEvent?: (event: MathInteractionEvent) => void;
-}
-
-export function normalizeFractionParts(numerator: number, denominator: number) {
-  const d = Number.isSafeInteger(denominator) ? Math.min(12, Math.max(1, denominator)) : 4;
-  const n = Number.isSafeInteger(numerator) ? Math.min(d, Math.max(0, numerator)) : 0;
-  return { numerator: n, denominator: d };
 }
 
 export function InteractiveFractionBars(props: InteractiveFractionBarsProps) {
