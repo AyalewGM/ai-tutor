@@ -1,0 +1,1188 @@
+{
+  "package_id": "draft-word-problem-structures-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "purpose": "Deep original word-problem structures; CONTENT not curriculum mapping",
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "runtime_activation": false,
+  "copyright_policy": "Original Mihur-authored problem stories and solutions; no copied proprietary exercises.",
+  "practice_items": [
+    {
+      "item_id": "draft-structures-additive_word_problems-01",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "grade_suggestion": "2–5",
+      "problem_structure": "result-unknown",
+      "question": "A school had 148 library books and received 76 more. How many books does it have now?",
+      "operation": "add",
+      "operands": [
+        148,
+        76
+      ],
+      "expected": "224",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using add and check units before calculating.",
+        "Adding the change to the starting amount gives 148+76=224."
+      ],
+      "worked_solution": "Adding the change to the starting amount gives 148+76=224.",
+      "misconception_tag": "Treating the new books as the total",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-additive_word_problems-02",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "grade_suggestion": "2–5",
+      "problem_structure": "change-unknown",
+      "question": "A garden had 95 flowers and now has 143. How many flowers were planted?",
+      "operation": "subtract",
+      "operands": [
+        143,
+        95
+      ],
+      "expected": "48",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using subtract and check units before calculating.",
+        "The added amount is final minus start: 143−95=48."
+      ],
+      "worked_solution": "The added amount is final minus start: 143−95=48.",
+      "misconception_tag": "Adding start and final",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-additive_word_problems-03",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "grade_suggestion": "2–5",
+      "problem_structure": "start-unknown",
+      "question": "After 37 passengers boarded, a bus held 82 passengers. How many were aboard before boarding?",
+      "operation": "subtract",
+      "operands": [
+        82,
+        37
+      ],
+      "expected": "45",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using subtract and check units before calculating.",
+        "The original count is 82−37=45."
+      ],
+      "worked_solution": "The original count is 82−37=45.",
+      "misconception_tag": "Assuming final is the starting count",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-additive_word_problems-04",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "grade_suggestion": "2–5",
+      "problem_structure": "comparison-difference",
+      "question": "A team scored 213 points and another scored 168. How many more did the first team score?",
+      "operation": "subtract",
+      "operands": [
+        213,
+        168
+      ],
+      "expected": "45",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using subtract and check units before calculating.",
+        "Difference is 213−168=45."
+      ],
+      "worked_solution": "Difference is 213−168=45.",
+      "misconception_tag": "Adding compared quantities",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-additive_word_problems-05",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "grade_suggestion": "2–5",
+      "problem_structure": "comparison-smaller-unknown",
+      "question": "One shelf holds 125 books, which is 38 more than another shelf. How many books are on the other shelf?",
+      "operation": "subtract",
+      "operands": [
+        125,
+        38
+      ],
+      "expected": "87",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using subtract and check units before calculating.",
+        "The smaller quantity is 125−38=87."
+      ],
+      "worked_solution": "The smaller quantity is 125−38=87.",
+      "misconception_tag": "Adding when the smaller amount is asked",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-additive_word_problems-06",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "grade_suggestion": "2–5",
+      "problem_structure": "comparison-larger-unknown",
+      "question": "A park has 79 maple trees, which is 26 fewer than oak trees. How many oak trees are there?",
+      "operation": "add",
+      "operands": [
+        79,
+        26
+      ],
+      "expected": "105",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using add and check units before calculating.",
+        "Oak count is 79+26=105."
+      ],
+      "worked_solution": "Oak count is 79+26=105.",
+      "misconception_tag": "Subtracting fewer from smaller quantity",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-additive_word_problems-07",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "grade_suggestion": "2–5",
+      "problem_structure": "two-change-unknown",
+      "question": "A museum starts with 240 visitors, admits 85, then 47 leave. How many visitors remain?",
+      "operation": "add_subtract",
+      "operands": [
+        240,
+        85,
+        47
+      ],
+      "expected": "278",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using add subtract and check units before calculating.",
+        "240+85−47=278."
+      ],
+      "worked_solution": "240+85−47=278.",
+      "misconception_tag": "Ignoring one of the two changes",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-additive_word_problems-08",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "grade_suggestion": "2–5",
+      "problem_structure": "part-part-whole",
+      "question": "Of 326 donated toys, 148 are puzzles and 93 are dolls. The rest are blocks. How many blocks are there?",
+      "operation": "subtract_three",
+      "operands": [
+        326,
+        148,
+        93
+      ],
+      "expected": "85",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using subtract three and check units before calculating.",
+        "326−148−93=85."
+      ],
+      "worked_solution": "326−148−93=85.",
+      "misconception_tag": "Confusing parts with total",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-multiplicative_word_problems-01",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "grade_suggestion": "3–6",
+      "problem_structure": "equal-groups",
+      "question": "Nine classrooms each receive 14 notebooks. How many notebooks are distributed?",
+      "operation": "multiply",
+      "operands": [
+        9,
+        14
+      ],
+      "expected": "126",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using multiply and check units before calculating.",
+        "9×14=126 notebooks."
+      ],
+      "worked_solution": "9×14=126 notebooks.",
+      "misconception_tag": "Adding the factors",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-multiplicative_word_problems-02",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "grade_suggestion": "3–6",
+      "problem_structure": "partitive-division",
+      "question": "A teacher shares 156 pencils equally among 12 classrooms. How many pencils per classroom?",
+      "operation": "divide",
+      "operands": [
+        156,
+        12
+      ],
+      "expected": "13",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using divide and check units before calculating.",
+        "156÷12=13 per classroom."
+      ],
+      "worked_solution": "156÷12=13 per classroom.",
+      "misconception_tag": "Treating the number of classrooms as a multiplier",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-multiplicative_word_problems-03",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "grade_suggestion": "3–6",
+      "problem_structure": "measurement-division",
+      "question": "A baker has 168 cookies and packs 14 per box. How many full boxes are needed?",
+      "operation": "divide",
+      "operands": [
+        168,
+        14
+      ],
+      "expected": "12",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using divide and check units before calculating.",
+        "168÷14=12 boxes."
+      ],
+      "worked_solution": "168÷14=12 boxes.",
+      "misconception_tag": "Confusing box size with number of boxes",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-multiplicative_word_problems-04",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "grade_suggestion": "3–6",
+      "problem_structure": "multiplicative-comparison-larger",
+      "question": "A whale weighs 8 times as much as a 75 kg seal. What is the whale's mass in kg?",
+      "operation": "multiply",
+      "operands": [
+        8,
+        75
+      ],
+      "expected": "600",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using multiply and check units before calculating.",
+        "8×75=600 kg."
+      ],
+      "worked_solution": "8×75=600 kg.",
+      "misconception_tag": "Using addition for 'times as much'",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-multiplicative_word_problems-05",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "grade_suggestion": "3–6",
+      "problem_structure": "multiplicative-comparison-smaller",
+      "question": "A stadium has 936 seats, which is 6 times as many as a theater. How many seats does the theater have?",
+      "operation": "divide",
+      "operands": [
+        936,
+        6
+      ],
+      "expected": "156",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using divide and check units before calculating.",
+        "936÷6=156 seats."
+      ],
+      "worked_solution": "936÷6=156 seats.",
+      "misconception_tag": "Multiplying when the smaller amount is sought",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-multiplicative_word_problems-06",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "grade_suggestion": "3–6",
+      "problem_structure": "rectangular-array",
+      "question": "A hall has 17 rows with 24 chairs in each row. How many chairs are there?",
+      "operation": "multiply",
+      "operands": [
+        17,
+        24
+      ],
+      "expected": "408",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using multiply and check units before calculating.",
+        "17×24=408 chairs."
+      ],
+      "worked_solution": "17×24=408 chairs.",
+      "misconception_tag": "Counting rows and columns as a sum",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-multiplicative_word_problems-07",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "grade_suggestion": "3–6",
+      "problem_structure": "remainder-interpretation",
+      "question": "A group of 74 students travels in vans holding at most 8 students. What is the minimum number of vans required?",
+      "operation": "ceil_divide",
+      "operands": [
+        74,
+        8
+      ],
+      "expected": "10",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using ceil divide and check units before calculating.",
+        "Nine vans hold 72, so a tenth van is required."
+      ],
+      "worked_solution": "Nine vans hold 72, so a tenth van is required.",
+      "misconception_tag": "Discarding a nonzero remainder",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-multiplicative_word_problems-08",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "grade_suggestion": "3–6",
+      "problem_structure": "two-stage-equal-groups",
+      "question": "Six schools each send 8 teams, and every team has 5 students. How many students attend?",
+      "operation": "multiply_three",
+      "operands": [
+        6,
+        8,
+        5
+      ],
+      "expected": "240",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using multiply three and check units before calculating.",
+        "6×8×5=240 students."
+      ],
+      "worked_solution": "6×8×5=240 students.",
+      "misconception_tag": "Omitting one grouping level",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-fraction_word_problems-01",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "grade_suggestion": "4–7",
+      "problem_structure": "fraction-of-set",
+      "question": "Three fifths of 45 students choose art. How many students choose art?",
+      "operation": "fraction_of",
+      "operands": [
+        3,
+        5,
+        45
+      ],
+      "expected": "27",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using fraction of and check units before calculating.",
+        "3/5×45=27 students."
+      ],
+      "worked_solution": "3/5×45=27 students.",
+      "misconception_tag": "Using denominator as multiplier",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-fraction_word_problems-02",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "grade_suggestion": "4–7",
+      "problem_structure": "remaining-fraction",
+      "question": "A gardener plants two thirds of 36 bulbs. How many bulbs remain unplanted?",
+      "operation": "fraction_remaining",
+      "operands": [
+        2,
+        3,
+        36
+      ],
+      "expected": "12",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using fraction remaining and check units before calculating.",
+        "1/3 of 36 remains, or 12 bulbs."
+      ],
+      "worked_solution": "1/3 of 36 remains, or 12 bulbs.",
+      "misconception_tag": "Reporting planted rather than remaining",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-fraction_word_problems-03",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "grade_suggestion": "4–7",
+      "problem_structure": "fraction-as-operator",
+      "question": "A recipe needs 3/4 cup of oats per batch. How many cups for 8 batches?",
+      "operation": "fraction_times",
+      "operands": [
+        3,
+        4,
+        8
+      ],
+      "expected": "6",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using fraction times and check units before calculating.",
+        "3/4×8=6 cups."
+      ],
+      "worked_solution": "3/4×8=6 cups.",
+      "misconception_tag": "Dividing batches by fraction",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-fraction_word_problems-04",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "grade_suggestion": "4–7",
+      "problem_structure": "fraction-of-unknown-whole",
+      "question": "Twelve marbles are 3/7 of a collection. How many marbles are in the collection?",
+      "operation": "whole_from_part",
+      "operands": [
+        12,
+        3,
+        7
+      ],
+      "expected": "28",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using whole from part and check units before calculating.",
+        "12÷3×7=28 marbles."
+      ],
+      "worked_solution": "12÷3×7=28 marbles.",
+      "misconception_tag": "Multiplying 12 by 3/7",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-fraction_word_problems-05",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "grade_suggestion": "4–7",
+      "problem_structure": "part-to-whole",
+      "question": "A basket contains 18 oranges and 12 apples. What fraction of all fruit are apples? Give simplest fraction.",
+      "operation": "fraction_part_total",
+      "operands": [
+        12,
+        30
+      ],
+      "expected": "2/5",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using fraction part total and check units before calculating.",
+        "12/30=2/5."
+      ],
+      "worked_solution": "12/30=2/5.",
+      "misconception_tag": "Using apples:oranges rather than apples:total",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-fraction_word_problems-06",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "grade_suggestion": "4–7",
+      "problem_structure": "fraction-comparison",
+      "question": "One student finishes 3/4 of a book and another finishes 5/8. What fraction of the book separates their progress? Give simplest fraction.",
+      "operation": "fraction_difference",
+      "operands": [
+        3,
+        4,
+        5,
+        8
+      ],
+      "expected": "1/8",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using fraction difference and check units before calculating.",
+        "3/4−5/8=1/8."
+      ],
+      "worked_solution": "3/4−5/8=1/8.",
+      "misconception_tag": "Subtracting numerators and denominators separately",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-fraction_word_problems-07",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "grade_suggestion": "4–7",
+      "problem_structure": "fraction-missing-addend",
+      "question": "A container holds 7/8 litre after 3/8 litre was added. How many litres were in it before? Give simplest fraction.",
+      "operation": "fraction_difference",
+      "operands": [
+        7,
+        8,
+        3,
+        8
+      ],
+      "expected": "1/2",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using fraction difference and check units before calculating.",
+        "7/8−3/8=1/2 litre."
+      ],
+      "worked_solution": "7/8−3/8=1/2 litre.",
+      "misconception_tag": "Adding when starting amount is sought",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-fraction_word_problems-08",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "grade_suggestion": "4–7",
+      "problem_structure": "fraction-multi-step",
+      "question": "A baker has 5/6 kg of flour and uses 1/3 kg, then buys 1/2 kg. How many kg now? Give simplest fraction.",
+      "operation": "fraction_add_subtract",
+      "operands": [
+        5,
+        6,
+        1,
+        3,
+        1,
+        2
+      ],
+      "expected": "1/1",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using fraction add subtract and check units before calculating.",
+        "5/6−1/3+1/2=1 kg."
+      ],
+      "worked_solution": "5/6−1/3+1/2=1 kg.",
+      "misconception_tag": "Ignoring the different denominators",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-ratio_rate_word_problems-01",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "grade_suggestion": "6–9",
+      "problem_structure": "unit-price",
+      "question": "Five notebooks cost $17.50. What is the price of one notebook in dollars? Give two decimals.",
+      "operation": "cents_unit",
+      "operands": [
+        1750,
+        5
+      ],
+      "expected": "3.50",
+      "answer_contract": "decimal_2_places",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using cents unit and check units before calculating.",
+        "1750 cents ÷5=350 cents = $3.50."
+      ],
+      "worked_solution": "1750 cents ÷5=350 cents = $3.50.",
+      "misconception_tag": "Using dollars without converting to cents",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-ratio_rate_word_problems-02",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "grade_suggestion": "6–9",
+      "problem_structure": "scale-factor",
+      "question": "A map uses 2 cm for 15 km. How many km does 8 cm represent?",
+      "operation": "scale",
+      "operands": [
+        15,
+        2,
+        8
+      ],
+      "expected": "60",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using scale and check units before calculating.",
+        "15/2×8=60 km."
+      ],
+      "worked_solution": "15/2×8=60 km.",
+      "misconception_tag": "Adding the scale values",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-ratio_rate_word_problems-03",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "grade_suggestion": "6–9",
+      "problem_structure": "proportional-partition",
+      "question": "A 64-point award is split in a 3:5 ratio. How many points go to the larger share?",
+      "operation": "ratio_share",
+      "operands": [
+        64,
+        3,
+        5
+      ],
+      "expected": "40",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using ratio share and check units before calculating.",
+        "64×5/(3+5)=40 points."
+      ],
+      "worked_solution": "64×5/(3+5)=40 points.",
+      "misconception_tag": "Using 5 as the total parts",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-ratio_rate_word_problems-04",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "grade_suggestion": "6–9",
+      "problem_structure": "percent-discount",
+      "question": "A $160 jacket has a 15% discount. What is the sale price in dollars?",
+      "operation": "discount",
+      "operands": [
+        160,
+        15
+      ],
+      "expected": "136",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using discount and check units before calculating.",
+        "160−(15/100×160)=136 dollars."
+      ],
+      "worked_solution": "160−(15/100×160)=136 dollars.",
+      "misconception_tag": "Reporting discount rather than final price",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-ratio_rate_word_problems-05",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "grade_suggestion": "6–9",
+      "problem_structure": "percent-increase",
+      "question": "A $200 service fee increases by 12%. What is the new fee in dollars?",
+      "operation": "increase",
+      "operands": [
+        200,
+        12
+      ],
+      "expected": "224",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using increase and check units before calculating.",
+        "200+(12/100×200)=224 dollars."
+      ],
+      "worked_solution": "200+(12/100×200)=224 dollars.",
+      "misconception_tag": "Applying percentage to wrong base",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-ratio_rate_word_problems-06",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "grade_suggestion": "6–9",
+      "problem_structure": "rate-time-distance",
+      "question": "A train travels at 72 km/h for 5/2 hours. How many km does it travel?",
+      "operation": "rate_time",
+      "operands": [
+        72,
+        5,
+        2
+      ],
+      "expected": "180",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using rate time and check units before calculating.",
+        "72×5/2=180 km."
+      ],
+      "worked_solution": "72×5/2=180 km.",
+      "misconception_tag": "Dividing speed by time",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-ratio_rate_word_problems-07",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "grade_suggestion": "6–9",
+      "problem_structure": "nonproportional-fixed-fee",
+      "question": "A bike rental charges $9 to start and $4 per hour. What is the cost of 7 hours in dollars?",
+      "operation": "fixed_rate",
+      "operands": [
+        9,
+        4,
+        7
+      ],
+      "expected": "37",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using fixed rate and check units before calculating.",
+        "9+4×7=37 dollars."
+      ],
+      "worked_solution": "9+4×7=37 dollars.",
+      "misconception_tag": "Multiplying fixed fee by hours",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-ratio_rate_word_problems-08",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "grade_suggestion": "6–9",
+      "problem_structure": "inverse-rate",
+      "question": "A pump transfers 90 litres in 6 minutes at a constant rate. How many minutes for 150 litres?",
+      "operation": "inverse_rate",
+      "operands": [
+        90,
+        6,
+        150
+      ],
+      "expected": "10",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using inverse rate and check units before calculating.",
+        "90/6=15 L/min, so 150/15=10 minutes."
+      ],
+      "worked_solution": "90/6=15 L/min, so 150/15=10 minutes.",
+      "misconception_tag": "Assuming time and litres have the same units",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-geometry_measurement_word_problems-01",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "grade_suggestion": "3–9",
+      "problem_structure": "missing-rectangle-side",
+      "question": "A rectangular garden has area 96 m² and width 8 m. What is its length in metres?",
+      "operation": "divide",
+      "operands": [
+        96,
+        8
+      ],
+      "expected": "12",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using divide and check units before calculating.",
+        "Length=96÷8=12 m."
+      ],
+      "worked_solution": "Length=96÷8=12 m.",
+      "misconception_tag": "Using perimeter formula for area",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-geometry_measurement_word_problems-02",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "grade_suggestion": "3–9",
+      "problem_structure": "missing-perimeter-side",
+      "question": "A rectangle has perimeter 54 cm and width 11 cm. What is its length in cm?",
+      "operation": "perimeter_missing",
+      "operands": [
+        54,
+        11
+      ],
+      "expected": "16",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using perimeter missing and check units before calculating.",
+        "Half perimeter is 27, so length=27−11=16 cm."
+      ],
+      "worked_solution": "Half perimeter is 27, so length=27−11=16 cm.",
+      "misconception_tag": "Subtracting width once from full perimeter",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-geometry_measurement_word_problems-03",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "grade_suggestion": "3–9",
+      "problem_structure": "composite-area",
+      "question": "A floor has a 12 m by 8 m section and a nonoverlapping 5 m by 4 m section. What is the total area in m²?",
+      "operation": "composite_area",
+      "operands": [
+        12,
+        8,
+        5,
+        4
+      ],
+      "expected": "116",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using composite area and check units before calculating.",
+        "12×8+5×4=116 m²."
+      ],
+      "worked_solution": "12×8+5×4=116 m².",
+      "misconception_tag": "Ignoring the smaller section",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-geometry_measurement_word_problems-04",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "grade_suggestion": "3–9",
+      "problem_structure": "area-difference",
+      "question": "A 15 m by 10 m field contains a 4 m by 6 m pond. How many m² of land remain outside the pond?",
+      "operation": "area_difference",
+      "operands": [
+        15,
+        10,
+        4,
+        6
+      ],
+      "expected": "126",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using area difference and check units before calculating.",
+        "15×10−4×6=126 m²."
+      ],
+      "worked_solution": "15×10−4×6=126 m².",
+      "misconception_tag": "Adding pond area",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-geometry_measurement_word_problems-05",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "grade_suggestion": "3–9",
+      "problem_structure": "unit-conversion",
+      "question": "A ribbon is 3 m 45 cm long. How many centimetres long is it?",
+      "operation": "metres_cm",
+      "operands": [
+        3,
+        45
+      ],
+      "expected": "345",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using metres cm and check units before calculating.",
+        "3×100+45=345 cm."
+      ],
+      "worked_solution": "3×100+45=345 cm.",
+      "misconception_tag": "Using 10 cm per metre",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-geometry_measurement_word_problems-06",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "grade_suggestion": "3–9",
+      "problem_structure": "elapsed-time",
+      "question": "A movie begins at 2:35 PM and lasts 105 minutes. At what minute after 3:00 PM does it finish?",
+      "operation": "elapsed_after_three",
+      "operands": [
+        35,
+        105
+      ],
+      "expected": "80",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using elapsed after three and check units before calculating.",
+        "2:35+105 min=4:20, which is 80 min after 3:00."
+      ],
+      "worked_solution": "2:35+105 min=4:20, which is 80 min after 3:00.",
+      "misconception_tag": "Mixing clock minutes and base-ten",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-geometry_measurement_word_problems-07",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "grade_suggestion": "3–9",
+      "problem_structure": "volume-rectangular-prism",
+      "question": "A box measures 5 cm by 7 cm by 8 cm. What is its volume in cm³?",
+      "operation": "volume",
+      "operands": [
+        5,
+        7,
+        8
+      ],
+      "expected": "280",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using volume and check units before calculating.",
+        "5×7×8=280 cm³."
+      ],
+      "worked_solution": "5×7×8=280 cm³.",
+      "misconception_tag": "Using area instead of volume",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-geometry_measurement_word_problems-08",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "grade_suggestion": "3–9",
+      "problem_structure": "similar-scale-area",
+      "question": "A square's side doubles from 6 cm to 12 cm. By how many square centimetres does its area increase?",
+      "operation": "square_area_increase",
+      "operands": [
+        6,
+        12
+      ],
+      "expected": "108",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using square area increase and check units before calculating.",
+        "12²−6²=144−36=108 cm²."
+      ],
+      "worked_solution": "12²−6²=144−36=108 cm².",
+      "misconception_tag": "Assuming area doubles when side doubles",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-algebra_reasoning_word_problems-01",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "grade_suggestion": "7–9",
+      "problem_structure": "unknown-start",
+      "question": "A number is tripled and then increased by 7 to give 52. What was the number?",
+      "operation": "linear_one",
+      "operands": [
+        3,
+        7,
+        52
+      ],
+      "expected": "15",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using linear one and check units before calculating.",
+        "3x+7=52, so x=15."
+      ],
+      "worked_solution": "3x+7=52, so x=15.",
+      "misconception_tag": "Undoing operations in wrong order",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-algebra_reasoning_word_problems-02",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "grade_suggestion": "7–9",
+      "problem_structure": "two-sided-equation",
+      "question": "A taxi plan costs 12+4x dollars and another costs 24+2x. For how many trips x do they cost the same?",
+      "operation": "two_plans",
+      "operands": [
+        12,
+        4,
+        24,
+        2
+      ],
+      "expected": "6",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using two plans and check units before calculating.",
+        "12+4x=24+2x, so x=6."
+      ],
+      "worked_solution": "12+4x=24+2x, so x=6.",
+      "misconception_tag": "Equating rates without fixed fees",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-algebra_reasoning_word_problems-03",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "grade_suggestion": "7–9",
+      "problem_structure": "consecutive-integers",
+      "question": "Three consecutive integers sum to 72. What is the largest?",
+      "operation": "consecutive_three",
+      "operands": [
+        72
+      ],
+      "expected": "25",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using consecutive three and check units before calculating.",
+        "x+(x+1)+(x+2)=72; x=23, largest=25."
+      ],
+      "worked_solution": "x+(x+1)+(x+2)=72; x=23, largest=25.",
+      "misconception_tag": "Using three equal integers",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-algebra_reasoning_word_problems-04",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "grade_suggestion": "7–9",
+      "problem_structure": "linear-pattern",
+      "question": "A pattern has 7 tiles in stage 1 and gains 4 tiles per stage. How many tiles are in stage 9?",
+      "operation": "arithmetic_pattern",
+      "operands": [
+        7,
+        4,
+        9
+      ],
+      "expected": "39",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using arithmetic pattern and check units before calculating.",
+        "7+4×(9−1)=39 tiles."
+      ],
+      "worked_solution": "7+4×(9−1)=39 tiles.",
+      "misconception_tag": "Multiplying stage number without subtracting one",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-algebra_reasoning_word_problems-05",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "grade_suggestion": "7–9",
+      "problem_structure": "constant-rate-reverse",
+      "question": "A tank has 140 L and drains 8 L/min. How many minutes until 44 L remain?",
+      "operation": "linear_decrease",
+      "operands": [
+        140,
+        8,
+        44
+      ],
+      "expected": "12",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using linear decrease and check units before calculating.",
+        "140−8t=44, so t=12."
+      ],
+      "worked_solution": "140−8t=44, so t=12.",
+      "misconception_tag": "Adding drain instead of subtracting",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-algebra_reasoning_word_problems-06",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "grade_suggestion": "7–9",
+      "problem_structure": "two-unknowns",
+      "question": "A theater sold 30 tickets: adult tickets cost $12 and child tickets $8. Revenue was $320. How many adult tickets were sold?",
+      "operation": "ticket_system",
+      "operands": [
+        30,
+        12,
+        8,
+        320
+      ],
+      "expected": "20",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using ticket system and check units before calculating.",
+        "12a+8(30−a)=320; 4a=80, so a=20."
+      ],
+      "worked_solution": "12a+8(30−a)=320; 4a=80, so a=20.",
+      "misconception_tag": "Assuming all tickets have same price",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-algebra_reasoning_word_problems-07",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "grade_suggestion": "7–9",
+      "problem_structure": "inequality-minimum",
+      "question": "A club has $35 and saves $9 each week. What is the minimum number of whole weeks needed to have at least $100?",
+      "operation": "ceil_threshold",
+      "operands": [
+        35,
+        9,
+        100
+      ],
+      "expected": "8",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using ceil threshold and check units before calculating.",
+        "35+9w≥100; w≥65/9, so 8 whole weeks."
+      ],
+      "worked_solution": "35+9w≥100; w≥65/9, so 8 whole weeks.",
+      "misconception_tag": "Rounding weeks down",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-structures-algebra_reasoning_word_problems-08",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "grade_suggestion": "7–9",
+      "problem_structure": "coordinate-slope",
+      "question": "A delivery service's cumulative distance is 18 km at hour 2 and 42 km at hour 6. At a constant rate, how many km per hour does it travel?",
+      "operation": "slope",
+      "operands": [
+        18,
+        2,
+        42,
+        6
+      ],
+      "expected": "6",
+      "answer_contract": "integer",
+      "hints": [
+        "Identify the unknown quantity and distinguish it from the given quantities.",
+        "Represent the situation using slope and check units before calculating.",
+        "(42−18)/(6−2)=6 km/h."
+      ],
+      "worked_solution": "(42−18)/(6−2)=6 km/h.",
+      "misconception_tag": "Using change in distance without dividing by time",
+      "review_status": "PENDING"
+    }
+  ],
+  "coverage": [
+    {
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "grade_suggestion": "2–5",
+      "structures": [
+        "result-unknown",
+        "change-unknown",
+        "start-unknown",
+        "comparison-difference",
+        "comparison-smaller-unknown",
+        "comparison-larger-unknown",
+        "two-change-unknown",
+        "part-part-whole"
+      ]
+    },
+    {
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "grade_suggestion": "3–6",
+      "structures": [
+        "equal-groups",
+        "partitive-division",
+        "measurement-division",
+        "multiplicative-comparison-larger",
+        "multiplicative-comparison-smaller",
+        "rectangular-array",
+        "remainder-interpretation",
+        "two-stage-equal-groups"
+      ]
+    },
+    {
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "grade_suggestion": "4–7",
+      "structures": [
+        "fraction-of-set",
+        "remaining-fraction",
+        "fraction-as-operator",
+        "fraction-of-unknown-whole",
+        "part-to-whole",
+        "fraction-comparison",
+        "fraction-missing-addend",
+        "fraction-multi-step"
+      ]
+    },
+    {
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "grade_suggestion": "6–9",
+      "structures": [
+        "unit-price",
+        "scale-factor",
+        "proportional-partition",
+        "percent-discount",
+        "percent-increase",
+        "rate-time-distance",
+        "nonproportional-fixed-fee",
+        "inverse-rate"
+      ]
+    },
+    {
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "grade_suggestion": "3–9",
+      "structures": [
+        "missing-rectangle-side",
+        "missing-perimeter-side",
+        "composite-area",
+        "area-difference",
+        "unit-conversion",
+        "elapsed-time",
+        "volume-rectangular-prism",
+        "similar-scale-area"
+      ]
+    },
+    {
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "grade_suggestion": "7–9",
+      "structures": [
+        "unknown-start",
+        "two-sided-equation",
+        "consecutive-integers",
+        "linear-pattern",
+        "constant-rate-reverse",
+        "two-unknowns",
+        "inequality-minimum",
+        "coordinate-slope"
+      ]
+    }
+  ]
+}
