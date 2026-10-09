@@ -9,8 +9,11 @@ import pytest
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 
-from app.canonical_taxonomy_reconciliation import PersistedSkillIdentity, validate_identity_revision
 from app.canonical_skill_taxonomy import CanonicalTaxonomy
+from app.canonical_taxonomy_reconciliation import (
+    PersistedSkillIdentity,
+    validate_identity_revision,
+)
 from app.curriculum_models import CanonicalSkill
 from app.models import Attempt, Problem, Skill, StudentSkill
 
