@@ -94,3 +94,31 @@ def test_every_skill_has_complete_difficulty_progression() -> None:
             by_id[item_id]["provisional_skill"] == ladder["provisional_skill"]
             for item_id in ladder["items"]
         )
+
+
+MVE = json.loads(
+    (PATH.parent / "interactive_mve.draft.json").read_text(encoding="utf-8")
+)
+
+
+def test_interactive_storyboards_are_accessible_and_draft_only() -> None:
+    assert MVE["status"] == "DRAFT_UNVERIFIED"
+    assert MVE["review_status"] == "PENDING"
+    specs = MVE["specs"]
+    assert len(specs) == 8
+    assert len({spec["spec_id"] for spec in specs}) == 8
+    assert {spec["provisional_skill"] for spec in specs} == {
+        x["provisional_skill"] for x in DATA["difficulty_ladders"]
+    }
+    for spec in specs:
+        assert spec["activation"] is False
+        assert spec["review_status"] == "PENDING"
+        assert len(spec["states"]) == 3
+        assert [state["name"] for state in spec["states"]] == [
+            "observe", "manipulate", "reflect"
+        ]
+        assert all(state["narration"] for state in spec["states"])
+        assert spec["mathematical_invariant"]
+        assert spec["misconception_feedback"]
+        assert spec["assessment_prompt"]
+        assert all(spec["accessibility"].values())
