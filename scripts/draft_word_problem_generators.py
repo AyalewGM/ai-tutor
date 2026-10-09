@@ -307,8 +307,11 @@ def generate(seed: int = 20261009, variants_per_structure: int = 6) -> dict:
     """Generate deterministic, reviewable variants; no runtime side effects."""
     if not isinstance(seed, int) or isinstance(seed, bool):
         raise TypeError("seed must be an integer")
-    if (\n        not isinstance(variants_per_structure, int)\n        or isinstance(variants_per_structure, bool)\n        or not 1 <= variants_per_structure <= 50\n    ):
+    if not isinstance(variants_per_structure, int) or isinstance(variants_per_structure, bool):
+        raise TypeError("variants_per_structure must be an integer")
+    if not 1 <= variants_per_structure <= 50:
         raise ValueError("variants_per_structure must be between 1 and 50")
+
     items = [
         _generate_one(structure, variant, seed)
         for structure in STRUCTURES
