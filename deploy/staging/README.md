@@ -171,7 +171,7 @@ throwaway container; no credentials copied. Assert name does not exist before cr
 Create a new empty `mihur_restore_<timestamp>` DB. Stream archive with docker exec -i
 and `pg_restore --exit-on-error --no-owner --no-privileges` into that new target only.
 No --clean, DROP, overwrite, schema downgrade, production source or source restoration.
-Keep source DB stopped for consistent comparison, and run drill with all application
+Keep source application writers stopped for consistent comparison, and run drill with all application
 services stopped to fit RAM. Container tmpfs is disposable and not a recovery strategy.
 
 Compare schema/Alembic revision, per-table row counts AND ordered primary-key row-content

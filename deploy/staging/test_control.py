@@ -48,8 +48,16 @@ class Guards(unittest.TestCase):
                 control.inventory()
 
     def test_empty_inventory_allowed(self):
-        with patch.object(control, "run", side_effect=["", ""]):
+        with patch.object(control, "run", side_effect=["", "", ""]):
             control.inventory()
+
+    def test_non_internal_network_blocks(self):
+        network = {"Name": "mihur-staging_staging", "Internal": False,
+                   "Labels": {"com.docker.compose.project": "mihur-staging"}}
+        with patch.object(control, "run", side_effect=["", "", "network",
+                                                      json.dumps([network])]):
+            with self.assertRaisesRegex(RuntimeError, "non-isolated"):
+                control.inventory()
 
     def test_arbitrary_action_blocked_before_preflight(self):
         with patch.object(control.sys, "argv", ["control.py", "down"]), \

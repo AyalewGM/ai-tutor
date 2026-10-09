@@ -87,6 +87,17 @@ def inventory():
                     "Foreign/externally backed volume; STOP")
 
 
+    networks = run(DOCKER + ["network", "ls", "-q"]).split()
+    if networks:
+        for network in json.loads(run(DOCKER + ["network", "inspect", *networks])):
+            if network["Name"] in {"bridge", "host", "none"}:
+                continue
+            require(network["Name"] == PROJECT + "_staging"
+                    and network.get("Internal") is True
+                    and (network.get("Labels") or {}).get("com.docker.compose.project")
+                    == PROJECT, "Foreign or non-isolated Docker network; STOP")
+
+
 def preflight():
     require(os.geteuid() == 0, "Run via sudo on the verified dedicated staging VPS")
     for path in (ENV, MARKER):
@@ -105,7 +116,7 @@ def preflight():
     require(not run(["git", "-C", str(ROOT), "status", "--porcelain"]),
             "Checkout must be clean")
     run(DOCKER + ["compose", "version"], False)
-    info = json.loads(run(DOCKER + ["info", "--format", "{{json .}} "]))
+    info = json.loads(run(DOCKER + ["info", "--format", "{{json .}}"]))
     require(info.get("MemoryLimit") and info.get("SwapLimit"),
             "Docker memory/swap limit support required")
     inventory()
