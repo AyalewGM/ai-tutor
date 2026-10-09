@@ -24,7 +24,7 @@ test("native keyboard controls and live status avoid motion dependence", () => {
 });
 
 test("deterministic bounded fraction state and no answer scoring", () => {
-  assert.match(source, /import \{ normalizeFractionParts \} from "\.\/fractionMath"/);
+  assert.match(source, /import \{ normalizeFractionParts, changeShadedParts, describeFraction \} from "\.\/fractionMath"/);
   assert.doesNotMatch(source, /mastery|correct_index|gradeAnswer/);
 });
 
