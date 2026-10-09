@@ -22,9 +22,9 @@ def test_generatorless_canonical_skill_additive_persistence():
     engine = create_engine(url)
     try:
         with Session(engine) as session:
-            original = dict(session.execute(select(CanonicalSkill.code, CanonicalSkill.id)))
-            mastery = set(session.execute(select(StudentSkill.student_id, StudentSkill.skill_id)))
-            events = dict(session.execute(select(MasteryEvent.id, MasteryEvent.skill_id)))
+            original = dict(session.execute(select(CanonicalSkill.code, CanonicalSkill.id)).all())
+            mastery = set(session.execute(select(StudentSkill.student_id, StudentSkill.skill_id)).all())
+            events = dict(session.execute(select(MasteryEvent.id, MasteryEvent.skill_id)).all())
             code = f"MATH.TEST.GENERATORLESS.{uuid4().hex.upper()}"
             definition = CanonicalSkillDefinition(
                 code=code,
