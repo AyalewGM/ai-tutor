@@ -1,5 +1,5 @@
 """Tests for authoritative canonical target registry in #282."""
-from app.canonical_problem_families import FAMILIES, _DOMAIN_MODULES
+from app.canonical_problem_families import _DOMAIN_MODULES, FAMILIES
 
 
 def test_all_domain_families_registered_in_public_registry():
