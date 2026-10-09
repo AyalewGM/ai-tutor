@@ -24,8 +24,6 @@ test("native keyboard controls and live status avoid motion dependence", () => {
 });
 
 test("deterministic bounded fraction state and no answer scoring", () => {
-  assert.match(source, /Number\.isSafeInteger\(denominator\)/);
-  assert.match(source, /Math\.min\(12, Math\.max\(1, denominator\)\)/);
-  assert.match(source, /Math\.min\(d, Math\.max\(0, numerator\)\)/);
+  assert.match(source, /import \{ normalizeFractionParts \} from "\.\/fractionMath"/);
   assert.doesNotMatch(source, /mastery|correct_index|gradeAnswer/);
 });
