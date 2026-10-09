@@ -15,7 +15,7 @@ from app.canonical_taxonomy_reconciliation import (
     validate_identity_revision,
 )
 from app.curriculum_models import CanonicalSkill
-from app.models import Attempt, Problem, Skill, StudentSkill
+from app.models import Attempt, MasteryEvent, Problem, Skill, StudentSkill
 
 
 def test_database_identity_and_evidence_references():
@@ -33,8 +33,12 @@ def test_database_identity_and_evidence_references():
             validate_identity_revision(snapshot, dict(snapshot), CanonicalTaxonomy("db-check", {}))
             local_ids = set(session.execute(select(Skill.id)).scalars())
             assert set(session.execute(select(StudentSkill.skill_id)).scalars()) <= local_ids
+            mastery_events = session.execute(select(MasteryEvent)).scalars().all()
+            assert {event.skill_id for event in mastery_events} <= local_ids
             problem_skills = dict(session.execute(select(Problem.id, Problem.primary_skill_id)))
             assert set(problem_skills.values()) <= local_ids
+            attempt_ids = set(session.execute(select(Attempt.id)).scalars())
+            assert {event.attempt_id for event in mastery_events if event.attempt_id} <= attempt_ids
             for attempt in session.execute(select(Attempt)).scalars():
                 assert attempt.problem_id in problem_skills
                 assert problem_skills[attempt.problem_id] in local_ids
