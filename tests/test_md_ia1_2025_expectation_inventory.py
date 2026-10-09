@@ -1,7 +1,6 @@
 import json
 from pathlib import Path
 
-
 MANIFEST = (
     Path(__file__).parents[1]
     / "docs"
