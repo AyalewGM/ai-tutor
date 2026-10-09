@@ -11,7 +11,7 @@ Source: owner-provided Grok-generated Grades 4–5 package in ChatGPT, 2026-10-0
 | Practice questions | 25 | `practice.normalized.json` |
 | Worked examples | 5 | `supporting.normalized.json` |
 | Misconception/remediation entries | 5 | `supporting.normalized.json` |
-| Interactive specifications | 1 | `supporting.normalized.json` (design only) |
+| Interactive specifications | 1 | `supporting.normalized.json` (design only) |\n| Human reasoning rubrics | 4 | `reasoning_rubrics.draft.json` (manual review only) |
 
 ## Corrections applied
 
@@ -21,12 +21,12 @@ Source: owner-provided Grok-generated Grades 4–5 package in ChatGPT, 2026-10-0
 4. **Two-answer question:** `q-eq-03` uses two distinct answer slots, with distinct multipliers from 2–5. A single accepted answer is insufficient. The pair is represented as semicolon-delimited normalized expected values pending a future structured answer interface; this is **not** a runtime parser.
 5. **Mixed-number scope:** `q-add-04` now explicitly requests an improper fraction only (`7/5`). The original mixed-number answer `1 2/5` is mathematically valid but excluded by the stated package scope.
 6. **Reasoning rubrics:** `q-rep-06`, `q-eq-02`, `q-eq-05`, and `q-eq-06` require **human reasoning review**. Exact numeric or choice validation alone cannot assess the requested explanation. No keyword-match auto-mastery.
-7. **Misconception fidelity:** `misc-04` now shows a genuinely incorrect tick/interval count; `misc-05` explicitly states an invalid gap-to-one comparison. They remain pending pedagogical review.
-8. **Visual model:** The combined result may exceed one whole; render an additional unit bar rather than exceeding a single unit bar. Interactive implementation belongs to the MVE lane, not this draft PR.
+7. **Human reasoning evidence:** Four explicit draft rubrics require complete, mathematically valid justifications; a bare yes/no or selected fraction is insufficient. These are human-review checklists, not automated scoring contracts.\n8. **Misconception fidelity:** `misc-04` now shows a genuinely incorrect tick/interval count; `misc-05` explicitly states an invalid gap-to-one comparison. They remain pending pedagogical review.
+9. **Visual model:** The combined result may exceed one whole; render an additional unit bar rather than exceeding a single unit bar. Interactive implementation belongs to the MVE lane, not this draft PR.
 
 ## Validation
 
-`tests/test_draft_g45_fraction_intake.py` contains deterministic exact-rational oracles for all 25 items, checks intermediate forms, comparison/equivalence relations, item uniqueness, inventory, draft-only metadata, disallowed ambiguous answer formats, strict parser behavior, and exhaustive bounded state invariants for the proposed fraction bar.
+`tests/test_draft_g45_fraction_intake.py` contains deterministic exact-rational oracles for all 25 items, checks intermediate forms, comparison/equivalence relations, item uniqueness, inventory, draft-only metadata, disallowed ambiguous answer formats, strict parser behavior, and exhaustive bounded state invariants for the proposed fraction bar, and complete fail-closed human reasoning rubric coverage.
 
 **Execution evidence:** The test suite has not been executed in this ChatGPT environment against a checked-out repository. CI results must be examined on the draft PR; a passing test suite is necessary but insufficient for mathematical/pedagogical approval.
 
