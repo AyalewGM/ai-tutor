@@ -31,7 +31,7 @@ def _make(
 ) -> dict:
     return {
         "item_id": f"draft-depth-{structure}-{variant:03d}",
-        "provisional_skill": structure.split("-")[0].upper(),
+        "provisional_skill": (\n            "FOUNDATIONAL"\n            if structure.startswith(("place-", "addition-", "subtraction-"))\n            else structure.split("-")[0].upper()\n        ),
         "structure": structure,
         "status": STATUS,
         "review_status": "PENDING",
