@@ -1,0 +1,262 @@
+{
+  "package_id": "draft-g45-fractions-pilot-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "source": "Owner-supplied Grok content in ChatGPT conversation",
+  "method": "Manual source-to-normalized crosswalk using the original owner-provided transcript. This is editorial evidence, not an independent review verdict.",
+  "practice_item_count": 25,
+  "supporting_item_count": 11,
+  "practice_revisions": [
+    {
+      "item_id": "q-rep-01",
+      "source_observation": "Original expected 4/6 with 2/3 accepted",
+      "normalization": "Expected normalized to 2/3; original 4/6 retained as intermediate",
+      "review_note": "Formatting/value preserved; simplest-form grading decision needs reviewer approval",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-rep-02",
+      "source_observation": "Number line three 1/5 jumps",
+      "normalization": "Equivalent shorter prompt and explanation",
+      "review_note": "No mathematical change",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-rep-03",
+      "source_observation": "10 counters, 7 red",
+      "normalization": "Equivalent shorter wording",
+      "review_note": "No mathematical change",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-rep-04",
+      "source_observation": "8 equal pieces, 5 taken",
+      "normalization": "Equivalent shorter wording",
+      "review_note": "No mathematical change",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-rep-05",
+      "source_observation": "4 pizza slices, one eaten",
+      "normalization": "Equivalent shorter wording",
+      "review_note": "No mathematical change",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-rep-06",
+      "source_observation": "Written numerator/denominator explanation",
+      "normalization": "Numeric anchor 2/3 plus manual rubric",
+      "review_note": "Original model answer condensed; human review essential",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-01",
+      "source_observation": "1/3 with denominator 9",
+      "normalization": "Fixed-denominator contract 3/9",
+      "review_note": "Must not grade simplest 1/3 as compliant with requested denominator",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-02",
+      "source_observation": "2/4 versus 3/6, explain",
+      "normalization": "Boolean true plus manual justification rubric",
+      "review_note": "Correct verdict alone insufficient",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-03",
+      "source_observation": "Two different fractions equivalent to 2/5",
+      "normalization": "Constrained two distinct multipliers 2–5; 4/10 and 6/15 examples",
+      "review_note": "Answer serialization semicolon is editorial, not runtime parser",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-04",
+      "source_observation": "Simplify 8/12",
+      "normalization": "2/3 with simplest-form contract",
+      "review_note": "No mathematical change",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-05",
+      "source_observation": "Select 6/8 or 6/12 with explanation",
+      "normalization": "6/8 plus human reasoning rubric",
+      "review_note": "Must explicitly reject 6/12 as equivalent",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-06",
+      "source_observation": "4/6 versus 10/15 true/false and justify",
+      "normalization": "True plus human reasoning rubric",
+      "review_note": "Verdict without justification is incomplete",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-07",
+      "source_observation": "5/6 = 10/□",
+      "normalization": "Positive integer 12",
+      "review_note": "No mathematical change",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-cmp-01",
+      "source_observation": "3/8 versus 5/8",
+      "normalization": "Comparison symbol <",
+      "review_note": "No mathematical change",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-cmp-02",
+      "source_observation": "2/3 versus 3/5",
+      "normalization": "Fraction choice 2/3",
+      "review_note": "No mathematical change",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-cmp-03",
+      "source_observation": "Order 1/2,1/4,3/4",
+      "normalization": "Semicolon sequence 1/4;1/2;3/4",
+      "review_note": "Editorial serialization only; no runtime parser",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-cmp-04",
+      "source_observation": "5/6 versus 5/8",
+      "normalization": "Comparison symbol >",
+      "review_note": "No mathematical change",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-cmp-05",
+      "source_observation": "7/10 versus 2/3",
+      "normalization": "Comparison symbol >",
+      "review_note": "No mathematical change",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-cmp-06",
+      "source_observation": "Closest to 1: 5/6 versus 7/8",
+      "normalization": "Fraction choice 7/8",
+      "review_note": "No mathematical change",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-add-01",
+      "source_observation": "2/7 + 3/7",
+      "normalization": "5/7; denominator 7 explicitly permitted",
+      "review_note": "Original denominator exception corrected",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-add-02",
+      "source_observation": "5/9 − 2/9, 3/9 or 1/3",
+      "normalization": "1/3 expected, 3/9 intermediate; simplest requested",
+      "review_note": "Original denominator 9 exception corrected",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-add-03",
+      "source_observation": "3/8 + 2/8 cups",
+      "normalization": "5/8; equivalent shorter wording",
+      "review_note": "No mathematical change",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-add-04",
+      "source_observation": "4/5 + 3/5; original allows improper or mixed",
+      "normalization": "Prompt changed to improper fraction only; 7/5 expected",
+      "review_note": "Deliberate scope change: mixed numbers excluded; reviewer must approve",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-add-05",
+      "source_observation": "11/12 − 5/12, 6/12 or 1/2",
+      "normalization": "1/2 expected; 6/12 intermediate",
+      "review_note": "Simplest requested",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-add-06",
+      "source_observation": "7/10 − 3/10 board, 4/10 or 2/5",
+      "normalization": "2/5 expected; 4/10 intermediate",
+      "review_note": "Simplest requested",
+      "review_status": "PENDING"
+    }
+  ],
+  "supporting_revisions": [
+    {
+      "source_id": "we-01",
+      "normalization": "Two original solution strategies (part-whole counting; verbal definition) collapsed into one two-step explanation",
+      "review_note": "Restore distinct strategies before publishability review",
+      "review_status": "PENDING"
+    },
+    {
+      "source_id": "we-02",
+      "normalization": "Original scale-factor strategy preserved in shortened steps",
+      "review_note": "Check visual pedagogy separately",
+      "review_status": "PENDING"
+    },
+    {
+      "source_id": "we-03",
+      "normalization": "Common denominator and gap-to-one strategies retained in condensed two-step explanation",
+      "review_note": "Review explanation that smaller gap means greater fraction for positive values below one",
+      "review_status": "PENDING"
+    },
+    {
+      "source_id": "we-04",
+      "normalization": "Original answer 6/9 or 2/3 normalized to 2/3",
+      "review_note": "Intermediate 6/9 remains in steps",
+      "review_status": "PENDING"
+    },
+    {
+      "source_id": "we-05",
+      "normalization": "Original 5/10 or 1/2 m normalized to 1/2",
+      "review_note": "Unit meter remains in prompt and steps",
+      "review_status": "PENDING"
+    },
+    {
+      "source_id": "misc-01",
+      "normalization": "Original incorrect-addition example and remediation condensed",
+      "review_note": "Review wording: denominators remain constant for like-denominator addition",
+      "review_status": "PENDING"
+    },
+    {
+      "source_id": "misc-02",
+      "normalization": "Original numerator-only multiplier example preserved",
+      "review_note": "Ensure area models show same whole",
+      "review_status": "PENDING"
+    },
+    {
+      "source_id": "misc-03",
+      "normalization": "Original larger-denominator misconception preserved",
+      "review_note": "Ensure comparison uses equal wholes",
+      "review_status": "PENDING"
+    },
+    {
+      "source_id": "misc-04",
+      "normalization": "Original incorrect-reasoning example was actually partially correct",
+      "review_note": "Replaced with genuine incorrect first tick=1/5 on four-interval number line",
+      "review_status": "PENDING"
+    },
+    {
+      "source_id": "misc-05",
+      "normalization": "Original gap-to-one incorrect reasoning was ambiguous",
+      "review_note": "Replaced with explicit invalid comparison 4/5 > 5/6",
+      "review_status": "PENDING"
+    },
+    {
+      "source_id": "viz-fraction-bar-01",
+      "normalization": "Original interaction, feedback, and accessibility spec condensed into state and invariant checklist",
+      "review_note": "MVE implementer must consult original for full animation/accessibility contract; no code delivered",
+      "review_status": "PENDING"
+    }
+  ],
+  "open_decisions": [
+    "Approve or revise mixed-number exclusion on q-add-04",
+    "Approve policy for unsimplified equivalents when simplest form is requested",
+    "Approve explicit denominator exception set and derived-denominator rules",
+    "Restore source-level hints, strategies, and assessment objectives where necessary for content richness",
+    "Review explanation rubrics and misconception diagnostic validity",
+    "Do not claim originality or official curriculum alignment"
+  ]
+}
