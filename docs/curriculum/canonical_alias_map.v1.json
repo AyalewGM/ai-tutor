@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "mapping_version": "draft-1",
+  "mapping_version": "draft-2-batch1",
   "authority": "app.canonical_problem_families.FAMILIES[*].canonical_skill_code",
   "release_status": "DRAFT_NOT_FOR_RUNTIME",
   "aliases": [
@@ -14,10 +14,15 @@
     },
     {
       "alias": "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_20",
-      "status": "UNMAPPED",
-      "relation": null,
-      "target_skill_codes": [],
-      "evidence": [],
+      "status": "PROPOSED",
+      "relation": "ALL_OF",
+      "target_skill_codes": [
+        "MATH.NS.ADDITION",
+        "MATH.NS.SUBTRACTION"
+      ],
+      "evidence": [
+        "1.OA G1: add AND subtract within 20 = the within-20 band of both operation skills (facts, missing operands, word subtypes). Canonical skills are broader; range is a parameter-level constraint. Review record: docs/devin/mapping-review-batch1.md"
+      ],
       "reviewed_by": null
     },
     {
@@ -70,10 +75,15 @@
     },
     {
       "alias": "MATH.ELEMENTARY.ARITHMETIC.WORD_PROBLEM_WITHIN_20",
-      "status": "UNMAPPED",
-      "relation": null,
-      "target_skill_codes": [],
-      "evidence": [],
+      "status": "PROPOSED",
+      "relation": "ALL_OF",
+      "target_skill_codes": [
+        "MATH.NS.ADDITION",
+        "MATH.NS.SUBTRACTION"
+      ],
+      "evidence": [
+        "1.OA G1: single-step contextual add/sub problems with unknowns in various positions; both skills carry WORD.* families (result/change/start-unknown, compare). Shares targets with ADD_SUB_WITHIN_20 pending taxonomy-granularity review. Review record: docs/devin/mapping-review-batch1.md"
+      ],
       "reviewed_by": null
     },
     {
@@ -278,10 +288,15 @@
     },
     {
       "alias": "MATH.ELEMENTARY.NUMBER_SENSE.COUNT_COMPARE_TO_120",
-      "status": "UNMAPPED",
-      "relation": null,
-      "target_skill_codes": [],
-      "evidence": [],
+      "status": "PROPOSED",
+      "relation": "ALL_OF",
+      "target_skill_codes": [
+        "MATH.NS.COUNTING",
+        "MATH.NS.COMPARE_ORDER"
+      ],
+      "evidence": [
+        "1.NBT G1: count/represent/compare/order whole numbers to 120 = counting sequences plus magnitude comparison. Targets are unbounded-range; range constraint lives in problem parameters. Review record: docs/devin/mapping-review-batch1.md"
+      ],
       "reviewed_by": null
     },
     {
@@ -334,10 +349,15 @@
     },
     {
       "alias": "MATH.ELEMENTARY.PLACE_VALUE.TENS_ONES",
-      "status": "UNMAPPED",
-      "relation": null,
-      "target_skill_codes": [],
-      "evidence": [],
+      "status": "PROPOSED",
+      "relation": "ALL_OF",
+      "target_skill_codes": [
+        "MATH.NS.PLACE_VALUE",
+        "MATH.NS.COMPOSE_DECOMPOSE"
+      ],
+      "evidence": [
+        "1.NBT G1: two-digit numbers as tens and ones = place-value identification plus compose/decompose of place-value parts. Review record: docs/devin/mapping-review-batch1.md"
+      ],
       "reviewed_by": null
     }
   ]
