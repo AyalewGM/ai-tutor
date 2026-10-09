@@ -10,6 +10,7 @@ import MathText from "../components/MathText";
 import ChatMessage from "../components/chat/ChatMessage";
 import LearnPanel from "../components/LearnPanel";
 import { GuidedDistributivePractice } from "../mve/GuidedDistributivePractice";
+import { GuidedConceptPractice } from "../mve/GuidedConceptPractice";
 import LevelCrest from "../components/LevelCrest";
 import MathKeypad from "../components/MathKeypad";
 import ScratchPad from "../components/ScratchPad";
@@ -30,6 +31,9 @@ import type {
   SessionSummary,
   TutorState,
 } from "../types";
+
+// Off by default until mathematical review, QA, and owner approval.
+const conceptGuidedPilotEnabled = import.meta.env.VITE_ENABLE_CONCEPT_GUIDED_PILOT === "true";
 
 const STEP_ORDER = [
   "DIAGNOSE",
@@ -760,6 +764,18 @@ export default function Workspace() {
                         key={workspace.focus.active_skill_id}
                         independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
                       />
+                    )}
+                  {conceptGuidedPilotEnabled &&
+                    (workspace.state === "GUIDED_PRACTICE" || workspace.state === "REMEDIATION") &&
+                    /equivalent fractions|fraction equivalence/i.test(workspace.focus.skill_name) && (
+                      <GuidedConceptPractice key={workspace.focus.active_skill_id}
+                        concept="fraction-equivalence" independentAssessment={false} />
+                    )}
+                  {conceptGuidedPilotEnabled &&
+                    (workspace.state === "GUIDED_PRACTICE" || workspace.state === "REMEDIATION") &&
+                    /ratio partition|sharing.*ratio|divide.*ratio/i.test(workspace.focus.skill_name) && (
+                      <GuidedConceptPractice key={workspace.focus.active_skill_id}
+                        concept="ratio-partition" independentAssessment={false} />
                     )}
                   <div className="problem-wrap">
                     <div className={`problem ${feedback}`} aria-live="polite">
