@@ -42,3 +42,11 @@ test("semantic equivalent-fraction explanation remains guided and screen-reader 
   assert.match(source, /aria-atomic="true"/);
   assert.match(source, /if \(props\.independentAssessment\) return null/);
 });
+
+test("all fraction buttons share a labeled control group and status description", () => {
+  assert.match(source, /role="group"/);
+  assert.match(source, /aria-label="Fraction exploration controls"/);
+  assert.equal((source.match(/aria-describedby=\{statusId\}/g) ?? []).length, 3);
+  assert.equal((source.match(/focus-visible:outline-offset-2/g) ?? []).length, 3);
+  assert.match(source, /id=\{statusId\} role="status"/);
+});
