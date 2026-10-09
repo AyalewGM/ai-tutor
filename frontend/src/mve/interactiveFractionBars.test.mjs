@@ -27,3 +27,12 @@ test("deterministic bounded fraction state and no answer scoring", () => {
   assert.match(source, /import \{ normalizeFractionParts \} from "\.\/fractionMath"/);
   assert.doesNotMatch(source, /mastery|correct_index|gradeAnswer/);
 });
+
+
+test("keyboard focus visibility and no duplicate events at bounds", () => {
+  assert.match(source, /focus-visible:outline/);
+  assert.match(source, /if \(value\.numerator === current\) return/);
+  assert.match(source, /changeShadedParts\(/);
+  assert.match(source, /onMathEvent\?\.\(\{ schema_version: 1, type: "FRACTION_SHADING_CHANGED"/);
+  assert.doesNotMatch(source, /animate-|transition-|motion\.|requestAnimationFrame/);
+});
