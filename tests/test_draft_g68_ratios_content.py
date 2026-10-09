@@ -83,3 +83,73 @@ def test_original_math_relations_exact() -> None:
     assert Fraction(8, 100) * 250 == 20
     assert Fraction(45, Fraction(18, 6)) == 15
     assert Fraction(10, 4) == Fraction(5, 2)
+
+
+ENRICHMENT = json.loads(
+    (PATH.parent / "enrichment.draft.json").read_text(encoding="utf-8")
+)
+ENRICHMENT_ORACLES = {
+    "RATIO_INTERPRETATION": ["2:3", "2/5", "64", "2/5"],
+    "UNIT_RATE": ["3", "6", "15", "3/2"],
+    "EQUIVALENT_RATIOS": ["27", "12", "44", "12"],
+    "PERCENT_AS_RATIO": ["30", "25", "90", "25"],
+    "PROPORTIONAL_REASONING": ["36", "35", "8", "15"],
+}
+
+
+def test_enrichment_original_ladders_and_isolation() -> None:
+    assert ENRICHMENT["status"] == "DRAFT_UNVERIFIED"
+    assert ENRICHMENT["review_status"] == "PENDING"
+    assert ENRICHMENT["runtime_activation"] is False
+    assert ENRICHMENT["canonical_skill_ids"] == []
+    assert ENRICHMENT["curriculum_mappings"] == []
+    items = ENRICHMENT["practice_items"]
+    assert len(items) == 20
+    assert len({x["item_id"] for x in items}) == 20
+    assert len({x["question"] for x in items}) == 20
+    assert len(ENRICHMENT["difficulty_ladders"]) == 5
+    assert all(
+        len(x["hints"]) == 3
+        and x["worked_solution"]
+        and x["diagnostic_misconception"]
+        and x["review_status"] == "PENDING"
+        for x in items
+    )
+    for ladder in ENRICHMENT["difficulty_ladders"]:
+        assert ladder["progression"] == [
+            "Fluency", "Conceptual", "Transfer", "Error analysis"
+        ]
+        assert len(ladder["items"]) == 4
+
+
+def test_enrichment_independent_exact_answers() -> None:
+    for skill, expected in ENRICHMENT_ORACLES.items():
+        items = [
+            x for x in ENRICHMENT["practice_items"]
+            if x["provisional_skill"] == skill
+        ]
+        assert len(items) == len(expected) == 4
+        for item, answer in zip(items, expected):
+            assert item["expected"] == answer
+            if ":" in answer:
+                assert item["answer_contract"] == "ratio_pair"
+                a, b = (int(v) for v in answer.split(":"))
+                assert a > 0 and b > 0
+                assert Fraction(a, b).denominator == b
+            else:
+                assert Fraction(item["expected"]) == Fraction(answer)
+                if item["answer_contract"] == "simplest_fraction":
+                    assert str(Fraction(answer)) == answer
+
+
+def test_enrichment_transfer_and_error_analysis_oracles() -> None:
+    assert 40 + Fraction(3, 5) * 40 == 64
+    assert Fraction(8, 20) == Fraction(2, 5)
+    assert Fraction(9, Fraction(3, 2)) == 6
+    assert Fraction(12, 8) == Fraction(3, 2)
+    assert Fraction(12, 3) * 11 == 44
+    assert Fraction(4, 6) == Fraction(8, 12)
+    assert 120 - Fraction(25, 100) * 120 == 90
+    assert Fraction(100 - 80, 80) * 100 == 25
+    assert Fraction(6, Fraction(3, 4)) == 8
+    assert Fraction(6, 2) * 5 == 15
