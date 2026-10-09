@@ -13,3 +13,29 @@ export function changeShadedParts(current: FractionParts, delta: -1 | 1): Fracti
   const safe = normalizeFractionParts(current.numerator, current.denominator);
   return normalizeFractionParts(safe.numerator + delta, safe.denominator);
 }
+
+/** Greatest common divisor, used only for explanatory equivalence. */
+function gcd(a: number, b: number): number {
+  while (b !== 0) {
+    const remainder = a % b;
+    a = b;
+    b = remainder;
+  }
+  return a;
+}
+
+/** Reduce a displayed fraction without changing its shaded-parts representation. */
+export function simplifyFraction(parts: FractionParts): FractionParts {
+  const safe = normalizeFractionParts(parts.numerator, parts.denominator);
+  const factor = gcd(safe.numerator, safe.denominator);
+  return { numerator: safe.numerator / factor, denominator: safe.denominator / factor };
+}
+
+/** Produce a deterministic, non-assessment explanation of the shaded fraction. */
+export function describeFraction(parts: FractionParts): string {
+  const safe = normalizeFractionParts(parts.numerator, parts.denominator);
+  const reduced = simplifyFraction(safe);
+  const equivalent = reduced.numerator !== safe.numerator || reduced.denominator !== safe.denominator;
+  const detail = equivalent ? ` This is equivalent to ${reduced.numerator}/${reduced.denominator}.` : "";
+  return `${safe.numerator} out of ${safe.denominator} equal parts are shaded.${detail}`;
+}
