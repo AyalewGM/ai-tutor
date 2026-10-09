@@ -385,8 +385,9 @@ test('assisted success is recorded separately from independent mastery evidence'
 
   // Take a hint, then answer correctly: the success must count as assisted.
   // The hint message replaces the "Correct. Keep going." status text.
-  const statusPara = page.getByRole('button', { name: 'Hint' })
-    .locator('xpath=ancestor::form/following-sibling::p[@aria-live="polite"]');
+  // The workspace status paragraph (not the MVE guided-practice live
+  // regions, which share aria-live="polite" but carry role="status").
+  const statusPara = page.locator('p[aria-live="polite"]:not([role])');
   await page.getByRole('button', { name: 'Hint' }).click();
   await expect(statusPara).not.toHaveText('Correct. Keep going.', { timeout: 10000 });
   await solveCurrentProblem(page, firstProblem);
@@ -459,8 +460,8 @@ test('mastery check re-imposes assessment restrictions and completes on independ
   await expect(page.getByRole('button', { name: 'Hint' })).toBeDisabled();
   await expect(page.getByRole('button', { name: "I don't understand" })).toBeDisabled();
 
-  // Mastery success transitions directly to completion rather than the
-  // intermediate guided-practice status.
+  // The mastery-check success transitions directly to completion, not the
+  // intermediate 'Correct. Keep going.' status used during guided practice.
   await solveCurrentProblem(page, null, false);
   await expect(page.getByText('Skill complete')).toBeVisible({ timeout: 15000 });
   await expect(page.getByText('You answered correctly and independently in the mastery check.')).toBeVisible();

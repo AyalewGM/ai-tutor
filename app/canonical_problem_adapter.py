@@ -42,6 +42,10 @@ def materialize_problem(
             "canonical_source_key": source_key,
             "canonical_skill_code": generated.canonical_skill_code,
             "family_code": generated.family_code,
+            # Legacy readers (e.g. services.problem_selection._last_attempt_family)
+            # consume the generator-era "problem_family" key; provide both so
+            # canonical problems participate in same-family avoidance.
+            "problem_family": generated.family_code,
             "variant_id": generated.variant_id,
             "mode": generated.mode.value,
             "hints": list(generated.hints),
