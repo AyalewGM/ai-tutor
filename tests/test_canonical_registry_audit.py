@@ -53,7 +53,7 @@ def test_legacy_pack_family_codes_are_a_separate_namespace():
 def test_no_new_orphan_math_literals():
     """Orphan MATH.* literals are documented, not silently added."""
     assert set(REPORT["source_literals"]["orphan_literals"]) == {
-        "MATH.RP.PERCENT.APPLICATION",
+        # Newly surfaced source-only literals are explicitly audited as orphans.\n        # This inventory is NOT a canonical registration or curriculum mapping.\n        "MATH.ARITHMETIC.ADD_SUB_WITHIN_20",\n        "MATH.ARITHMETIC.WORD_PROBLEM_WITHIN_20",\n        "MATH.NUMBER_SENSE.COUNT_COMPARE_TO_120",\n        "MATH.PLACE_VALUE.TENS_ONES",\n        "MATH.RP.PERCENT.APPLICATION",
         "MATH.RP.PERCENT.MULTI",
         "MATH.RP.PROPORTION",
         "MATH.RP.RATIO.CONCEPT",
