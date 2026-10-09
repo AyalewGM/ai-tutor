@@ -1,17 +1,19 @@
 {
   "schema_version": 1,
   "review_status": "DRAFT_REQUEST_CHANGES",
-  "revision": "2026-10-09-r2",
+  "revision": "2026-10-09-r3",
   "source_review": {
     "issue": 293,
     "pr": 308,
-    "reviewed_head": "ef74870f91f064a12803fb3eb0ba045682e23207"
+    "reviewed_head": "26445b9e4100b2bc68f398d4f0d3094f74a05226",
+    "pr_comment": 6087502667
   },
   "authority": "NONE_NOT_FOR_RUNTIME",
   "notes": [
-    "Reviewer suggestions are not approvals; these are independently rewritten candidate scope cards.",
+    "Independent review findings are inputs, not approvals; r3 is authored by Curriculum Content for re-review.",
     "Prerequisites are concepts, not approved canonical code edges.",
     "Identity relationships and component decomposition require Architecture decision.",
+    "Proposed atomic component labels are code-free and create no canonical identities.",
     "No mapping, assessment, mastery or jurisdiction coverage is conferred."
   ],
   "skills": [
@@ -97,16 +99,18 @@
         "MATH.NS.SUBTRACTION"
       ],
       "components": [
-        "joining",
-        "separating",
-        "putting_together_taking_apart",
-        "comparing",
-        "unknown_position"
+        "join_result_change_start_unknown",
+        "separate_result_change_start_unknown",
+        "part_whole_part_or_whole_unknown",
+        "compare_difference_larger_smaller_unknown"
       ],
       "inclusions": [
         "One-operation discrete nonnegative quantity situations",
-        "Unknown as result, change, start, part, whole or compared quantity",
-        "All modeled quantities, including hidden answer, in 0..20",
+        "Join situations with result, change or start unknown",
+        "Separate situations with result, change or start unknown",
+        "Put-together/take-apart situations with part or whole unknown",
+        "Compare situations with difference, larger or smaller quantity unknown",
+        "All modeled quantities, including every inferred answer, in 0..20",
         "Model or equation tied to a contextual answer"
       ],
       "exclusions": [
@@ -126,30 +130,71 @@
         {
           "input": "7 counters, then 5 more: how many?",
           "answer": "12",
-          "component": "result_unknown"
+          "structure": "join",
+          "unknown_role": "result"
         },
         {
           "input": "Start with 7, end with 12: how many added?",
           "answer": "5",
-          "component": "change_unknown"
+          "structure": "join",
+          "unknown_role": "change"
+        },
+        {
+          "input": "Some counters; add 5, ending with 12: start?",
+          "answer": "7",
+          "structure": "join",
+          "unknown_role": "start"
+        },
+        {
+          "input": "12 counters; remove 5: how many remain?",
+          "answer": "7",
+          "structure": "separate",
+          "unknown_role": "result"
+        },
+        {
+          "input": "12 counters; some removed, leaving 7: how many removed?",
+          "answer": "5",
+          "structure": "separate",
+          "unknown_role": "change"
         },
         {
           "input": "Some counters; remove 5, leaving 7: start?",
           "answer": "12",
-          "component": "start_unknown"
+          "structure": "separate",
+          "unknown_role": "start"
         },
         {
-          "input": "12 total, 7 red: how many not red?",
+          "input": "7 red and 5 blue counters: how many total?",
+          "answer": "12",
+          "structure": "part_whole",
+          "unknown_role": "whole"
+        },
+        {
+          "input": "12 total, 7 red: how many are not red?",
           "answer": "5",
-          "component": "part_unknown"
+          "structure": "part_whole",
+          "unknown_role": "part"
         },
         {
-          "input": "A has 12, five more than B: B has?",
+          "input": "A has 12 and B has 7: how many more does A have?",
+          "answer": "5",
+          "structure": "compare",
+          "unknown_role": "difference"
+        },
+        {
+          "input": "B has 7; A has 5 more: how many does A have?",
+          "answer": "12",
+          "structure": "compare",
+          "unknown_role": "larger"
+        },
+        {
+          "input": "A has 12, five more than B: how many does B have?",
           "answer": "7",
-          "component": "smaller_unknown"
+          "structure": "compare",
+          "unknown_role": "smaller"
         },
         {
-          "input": "18 counters, 5 more: how many?",
+          "input": "18 counters, then 5 more: how many?",
           "valid": false,
           "rationale": "Hidden answer 23 exceeds 20"
         }
@@ -160,16 +205,59 @@
         "Answers without interpreting units or unknown position"
       ],
       "assessment_criteria": [
-        "Demonstrate result, change/start, part and comparison unknowns",
-        "Evaluate story-to-equation/model translation independently from arithmetic",
-        "Require answer with correct contextual interpretation",
-        "Accept valid inverse operations and drawings",
-        "No credit for only result-unknown prompts"
-      ]
+        "Satisfy every required structure and unknown-role cell in assessment_evidence_matrix",
+        "Retain per-cell evidence rather than collapsing attempts into arithmetic accuracy",
+        "Evaluate story-to-equation or story-to-model translation independently from calculation",
+        "Require the final answer to identify the contextual quantity",
+        "Accept valid inverse-operation, object and drawing strategies",
+        "Do not award the composite claim from result-unknown prompts alone"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "A composite mastery claim requires independent, unassisted evidence for every listed role; evidence for one cell never satisfies another.",
+        "required": [
+          {
+            "structure": "join",
+            "unknown_roles": [
+              "result",
+              "change",
+              "start"
+            ]
+          },
+          {
+            "structure": "separate",
+            "unknown_roles": [
+              "result",
+              "change",
+              "start"
+            ]
+          },
+          {
+            "structure": "part_whole",
+            "unknown_roles": [
+              "part",
+              "whole"
+            ]
+          },
+          {
+            "structure": "compare",
+            "unknown_roles": [
+              "difference",
+              "larger",
+              "smaller"
+            ]
+          }
+        ],
+        "evidence_separation": [
+          "Score situation-to-model translation separately from arithmetic execution",
+          "Require contextual interpretation with the correct quantity and unit",
+          "Accept mathematically equivalent equations, inverse operations, objects or drawings",
+          "Hinted or keyword-only responses do not satisfy independent evidence"
+        ]
+      }
     },
     {
       "code": "MATH.NUMBER_SENSE.COUNT_COMPARE_TO_120",
-      "identity_decision": "PENDING_DECOMPOSITION",
+      "identity_decision": "PENDING_ARCHITECTURE_DECOMPOSITION",
       "possible_overlaps": [
         "MATH.NS.COUNTING",
         "MATH.NS.COMPARE_ORDER"
@@ -224,12 +312,66 @@
         "Infers comparison competence from reciting a sequence"
       ],
       "assessment_criteria": [
-        "Independent evidence for counting AND comparison before any composite claim",
+        "Architecture must decide atomic identities before any canonical promotion",
+        "Store counting and comparison evidence separately",
+        "If retained as a profile, require both atomic results without duplicating mastery credit",
         "Count from nonzero arbitrary starts and across 99/100",
-        "Compare <, =, > including numbers around 100",
-        "Do not infer backward, skip or collection-counting mastery",
-        "Architecture must decide whether to split identity into two skills"
-      ]
+        "Compare <, = and > including pairs around 100",
+        "Do not infer backward, skip, collection-counting, numeral-writing or place-value mastery"
+      ],
+      "architecture_recommendation": "SPLIT_ATOMIC_SKILLS",
+      "proposed_atomic_components": [
+        {
+          "provisional_label": "forward_sequence_by_one_to_120",
+          "canonical_code": "UNASSIGNED",
+          "inclusions": [
+            "Continue a forward-by-one whole-number sequence from an arbitrary start in 0..120 without exceeding 120",
+            "Cross the 99-to-100 boundary"
+          ],
+          "exclusions": [
+            "Backward counting",
+            "Skip counting",
+            "Counting physical collections",
+            "Magnitude comparison",
+            "Numeral reading or writing as a separate skill"
+          ],
+          "assessment_evidence": [
+            "Multiple nonzero arbitrary starts",
+            "At least one sequence crossing 99 to 100",
+            "Boundary endpoint 120",
+            "No comparison evidence substituted"
+          ]
+        },
+        {
+          "provisional_label": "compare_whole_numbers_to_120",
+          "canonical_code": "UNASSIGNED",
+          "inclusions": [
+            "Compare two whole numbers in 0..120 by magnitude",
+            "Represent less than, equal to and greater than relationships"
+          ],
+          "exclusions": [
+            "Sequence production",
+            "Ordering lists of three or more numbers unless separately included",
+            "Assuming place-value explanation from a correct symbol alone"
+          ],
+          "assessment_evidence": [
+            "Less-than, equal and greater-than cases",
+            "Pairs around 99, 100 and 120",
+            "Explanation or representation sampled separately when required",
+            "No counting-sequence evidence substituted"
+          ]
+        }
+      ],
+      "composite_policy_if_retained": {
+        "role": "REPORTING_PROFILE_ONLY",
+        "rule": "A composite result is the conjunction of separately stored atomic results.",
+        "prohibitions": [
+          "No evidence propagation between components",
+          "No duplicate mastery credit",
+          "No replacement of atomic attempt history",
+          "No inference of place-value mastery"
+        ]
+      }
     },
     {
       "code": "MATH.PLACE_VALUE.TENS_ONES",
