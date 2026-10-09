@@ -122,3 +122,93 @@ def test_interactive_storyboards_are_accessible_and_draft_only() -> None:
         assert spec["misconception_feedback"]
         assert spec["assessment_prompt"]
         assert all(spec["accessibility"].values())
+
+
+ADAPTIVE = json.loads(
+    (PATH.parent / "adaptive_teaching.draft.json").read_text(encoding="utf-8")
+)
+
+
+def test_every_skill_item_has_a_linked_adaptive_pathway() -> None:
+    assert ADAPTIVE["status"] == "DRAFT_UNVERIFIED"
+    assert ADAPTIVE["review_status"] == "PENDING"
+    assert ADAPTIVE["runtime_activation"] is False
+    assert ADAPTIVE["canonical_skill_ids"] == []
+    assert ADAPTIVE["curriculum_mappings"] == []
+    items = {x["item_id"]: x for x in DATA["practice_items"]}
+    paths = ADAPTIVE["pathways"]
+    assert len(paths) == 64
+    assert len({x["pathway_id"] for x in paths}) == 64
+    assert {x["linked_item_id"] for x in paths} == set(items)
+    for path in paths:
+        item = items[path["linked_item_id"]]
+        assert path["provisional_skill"] == item["provisional_skill"]
+        assert path["level"] == item["level"]
+        assert path["misconception_trigger"] == item["misconception_tag"]
+        assert [x["id"] for x in path["adaptive_stages"]] == [
+            "diagnose", "represent", "visualize", "symbolize", "verify"
+        ]
+        assert all(x["instruction"] for x in path["adaptive_stages"])
+        assert len(path["branch_on_incorrect"]) == 3
+        assert all(path["branch_on_incorrect"].values())
+        assert all(path["branch_on_correct"].values())
+        assert path["mastery_evidence"]["correct_answer"] == item["expected"]
+        assert path["mastery_evidence"]["require_explanation"] is True
+        assert path["mastery_evidence"]["require_independent_check"] is True
+        assert path["mastery_evidence"]["require_unseen_transfer"] is True
+
+
+def test_diagnostic_answer_keys_and_misconception_feedback() -> None:
+    diagnostics = ADAPTIVE["diagnostics"]
+    assert len(diagnostics) == 8
+    assert {x["provisional_skill"] for x in diagnostics} == {
+        x["provisional_skill"] for x in DATA["difficulty_ladders"]
+    }
+    for diag in diagnostics:
+        assert diag["review_status"] == "PENDING"
+        assert len(diag["choices"]) == 3
+        assert len(set(diag["choices"])) == 3
+        assert diag["choices"][diag["correct_index"]] == diag["expected"]
+        assert {x["choice_index"] for x in diag["incorrect_feedback"]} == (
+            {0, 1, 2} - {diag["correct_index"]}
+        )
+        assert all(x["feedback"] for x in diag["incorrect_feedback"])
+        assert diag["concrete"] and diag["visual"] and diag["symbolic"]
+        assert diag["alternative_method"] and diag["independent_check"]
+        assert diag["transfer"]["question"]
+    assert {x["correct_index"] for x in diagnostics} == {0, 1, 2}
+
+
+def test_diagnostics_and_unseen_transfer_exact_oracles() -> None:
+    diagnostic_expected = {
+        "ADDITION_REGROUP": ("125", "124"),
+        "SUBTRACTION_REGROUP": ("145", "236"),
+        "MULTIPLICATION_GROUPS": ("104", "112"),
+        "DIVISION_GROUPS": ("12", "12"),
+        "LIKE_FRACTION_ADDITION": ("1", "1"),
+        "DECIMAL_ADDITION": ("8.43", "9.61"),
+        "RECTANGLE_PERIMETER": ("46", "54"),
+        "RECTANGLE_AREA": ("126", "180"),
+    }
+    for diag in ADAPTIVE["diagnostics"]:
+        key = diag["provisional_skill"]
+        expected, transfer = diagnostic_expected[key]
+        assert diag["expected"] == expected
+        assert diag["transfer"]["expected"] == transfer
+        operands = diag["operands"]
+        op = diag["operation"]
+        if op == "fraction_add":
+            from fractions import Fraction
+
+            actual = Fraction(operands["a"] + operands["b"], operands["d"])
+            assert str(actual) == expected
+        else:
+            item = {"operation": op, "operands": operands}
+            assert expected_from_operands(item) == expected
+
+
+def test_unseen_transfer_questions_are_not_repeated_practice_items() -> None:
+    existing = {x["question"] for x in DATA["practice_items"]}
+    transfers = [x["transfer"]["question"] for x in ADAPTIVE["diagnostics"]]
+    assert len(set(transfers)) == 8
+    assert not (set(transfers) & existing)
