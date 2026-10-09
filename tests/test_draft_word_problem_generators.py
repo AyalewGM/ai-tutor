@@ -128,7 +128,7 @@ def test_domain_specific_mathematical_invariants(seed: int) -> None:
             assert int(item["expected"]) > a["length"] * a["width"]
 
 
-@pytest.mark.parametrize("bad", [-1, 0, 51, 1.5, "6", None])
+@pytest.mark.parametrize("bad", [-1, 0, 51])
 def test_invalid_variant_count_fails_closed(bad: object) -> None:
     with pytest.raises(ValueError):
         generate(7, bad)
@@ -136,5 +136,11 @@ def test_invalid_variant_count_fails_closed(bad: object) -> None:
 
 @pytest.mark.parametrize("bad", [True, "7", 1.5, None])
 def test_invalid_seed_fails_closed(bad: object) -> None:
-    with pytest.raises(ValueError):
+    with pytest.raises(TypeError):
         generate(bad)
+
+
+@pytest.mark.parametrize("bad", [True, 1.5, "6", None])
+def test_invalid_variant_type_fails_closed(bad: object) -> None:
+    with pytest.raises(TypeError):
+        generate(7, bad)
