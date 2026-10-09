@@ -98,3 +98,44 @@ interactive animations or proof of student mastery.
 | Release | Explicit owner/engineering approval, isolation and no historical mastery rewrite |
 
 No row should be marked verified solely because a generator exists or tests pass.
+
+## Conceptual expansion wave: 12 more structures
+
+The isolated `scripts/draft_conceptual_depth_generators.py` adds
+12 **new reasoning structures** across four high-value domains:
+
+| Domain | Distinct conceptual structures |
+| --- | --- |
+| Fractions | Equivalence by scaling, comparing unlike fractions, adding unlike fractions |
+| Signed numbers | Temperature change below zero, subtracting a negative, distance on a number line |
+| Proportional reasoning | Recipe scaling, partitioning by ratio, recovering original price after a discount |
+| Algebra | Two-sided linear equations, signed slope from two points, linear function evaluation |
+
+At the default six seeded variations each, this wave yields 72 additional
+parameterized draft items. Unlike merely increasing the variant count,
+these 12 structures require **12 different conceptual invariants, visual
+models, Socratic sequences and misconception responses**.
+
+Each item provides a deterministic exact answer, plausible wrong answer
+with feedback, three non-answer-revealing teaching hints, alternate
+solution strategy, independent arithmetic check and explicit mastery
+requirements. The adaptive responses are *specifications*, not a live
+adaptive tutoring engine. The generator does not grant mastery.
+
+```bash
+python -m scripts.draft_conceptual_depth_generators --seed 20261009 --variants 6 > /tmp/mihur-concept-wave.json
+pytest -q tests/test_draft_conceptual_depth_generators.py
+```
+
+The independent tests recompute answers from operands for all 12
+structures over multiple seeds, reject diagnostic collisions and verify
+structural support. Mathematical reviewers must still evaluate whether
+the distractors, contexts, explanations and conceptual boundaries are
+pedagogically correct; automated arithmetic tests are not approval.
+
+**CI caveat:** The preceding PR head had passing code/security checks,
+but its latest CI failed because GitHub Actions hit Docker Hub
+unauthenticated pull limits (HTTP 429) while initializing Postgres and
+building base images. This is an infrastructure dependency failure,
+not evidence that the new mathematics is invalid. The new exact-head
+CI must be checked separately.
