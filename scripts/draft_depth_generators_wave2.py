@@ -110,7 +110,7 @@ def _one(structure: str, variant: int, seed: int) -> dict:
             "Base-ten blocks showing a traded ten.",
             f"{result} + {bottom} = {top}.")
     if structure == "fraction-equivalent":
-        denominator, numerator, factor = n(3, 11), n(1, 2), n(2, 7)
+        denominator, numerator, factor = n(3, 11), n(1, 2), n(3, 7)
         denominator = max(denominator, numerator + 1)
         return _make(structure, variant,
             f"Complete the equivalent fraction: {numerator}/{denominator} = ?/{denominator * factor}. What numerator is missing?",
@@ -148,8 +148,8 @@ def _one(structure: str, variant: int, seed: int) -> dict:
             "Fraction bars converted to a common denominator.",
             f"{ans} − {Fraction(a,d1)} = {Fraction(b,d2)}.")
     if structure == "fraction-of-remaining":
-        denominator, numerator, whole_unit = r.choice([(3, 1), (4, 1), (5, 2), (6, 1)]), None, n(4, 18)
-        denominator, numerator = denominator
+        denominator, numerator = r.choice([(3, 1), (4, 1), (5, 2), (6, 1)])
+        whole_unit = n(4, 18)
         whole = denominator * whole_unit
         used = numerator * whole_unit
         remain = whole - used
