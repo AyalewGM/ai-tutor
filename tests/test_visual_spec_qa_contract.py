@@ -14,7 +14,6 @@ import pytest
 
 from app.services import visualization
 
-
 # ---------------------------------------------------------------------------
 # Schema contract: every visual spec must have a type and type-specific fields
 # ---------------------------------------------------------------------------
