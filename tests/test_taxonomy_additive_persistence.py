@@ -12,7 +12,7 @@ from app.canonical_skill_taxonomy import (
     SkillReviewState,
 )
 from app.curriculum_models import CanonicalSkill
-from app.models import StudentSkill
+from app.models import MasteryEvent, StudentSkill
 
 
 def test_generatorless_canonical_skill_additive_persistence():
@@ -24,6 +24,7 @@ def test_generatorless_canonical_skill_additive_persistence():
         with Session(engine) as session:
             original = dict(session.execute(select(CanonicalSkill.code, CanonicalSkill.id)))
             mastery = set(session.execute(select(StudentSkill.student_id, StudentSkill.skill_id)))
+            events = dict(session.execute(select(MasteryEvent.id, MasteryEvent.skill_id)))
             code = f"MATH.TEST.GENERATORLESS.{uuid4().hex.upper()}"
             definition = CanonicalSkillDefinition(
                 code=code,
@@ -51,6 +52,9 @@ def test_generatorless_canonical_skill_additive_persistence():
                 assert set(
                     session.execute(select(StudentSkill.student_id, StudentSkill.skill_id))
                 ) == mastery
+                assert dict(
+                    session.execute(select(MasteryEvent.id, MasteryEvent.skill_id))
+                ) == events
             finally:
                 session.rollback()
             assert session.scalar(
