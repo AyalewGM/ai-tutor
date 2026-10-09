@@ -1,0 +1,299 @@
+{
+  "schema_version": 1,
+  "review_status": "DRAFT_REQUEST_CHANGES",
+  "revision": "2026-10-09-r2",
+  "source_review": {
+    "issue": 293,
+    "pr": 308,
+    "reviewed_head": "ef74870f91f064a12803fb3eb0ba045682e23207"
+  },
+  "authority": "NONE_NOT_FOR_RUNTIME",
+  "notes": [
+    "Reviewer suggestions are not approvals; these are independently rewritten candidate scope cards.",
+    "Prerequisites are concepts, not approved canonical code edges.",
+    "Identity relationships and component decomposition require Architecture decision.",
+    "No mapping, assessment, mastery or jurisdiction coverage is conferred."
+  ],
+  "skills": [
+    {
+      "code": "MATH.ARITHMETIC.ADD_SUB_WITHIN_20",
+      "identity_decision": "PENDING_ARCHITECTURE",
+      "possible_overlaps": [
+        "MATH.NS.ADDITION",
+        "MATH.NS.SUBTRACTION"
+      ],
+      "components": [
+        "addition",
+        "subtraction"
+      ],
+      "inclusions": [
+        "Two-input a+b with integers a,b>=0 and a+b<=20",
+        "Two-input a-b with integers 0<=b<=a<=20",
+        "Zero operands and zero results",
+        "Use of diagrams, counting, decomposition or mental strategies"
+      ],
+      "exclusions": [
+        "Negative differences",
+        "Sums exceeding 20",
+        "Three-addend expressions",
+        "Unknown-operand equations",
+        "Contextual word-problem interpretation",
+        "Automatic fluency within 10"
+      ],
+      "prerequisite_concepts": [
+        "one-to-one correspondence",
+        "cardinality",
+        "joining and removal of quantities"
+      ],
+      "examples": [
+        {
+          "input": "8+6",
+          "answer": "14",
+          "component": "addition",
+          "rationale": "Crosses ten"
+        },
+        {
+          "input": "13-4",
+          "answer": "9",
+          "component": "subtraction",
+          "rationale": "Crosses ten"
+        },
+        {
+          "input": "20-20",
+          "answer": "0",
+          "component": "subtraction",
+          "rationale": "Boundary and zero"
+        },
+        {
+          "input": "15+7",
+          "valid": false,
+          "rationale": "Sum exceeds 20"
+        },
+        {
+          "input": "4-9",
+          "valid": false,
+          "rationale": "Negative result"
+        }
+      ],
+      "misconception_probes": [
+        "Count-on includes the initial number as an increment",
+        "Reverses subtraction operands",
+        "Assumes addition evidence proves subtraction"
+      ],
+      "assessment_criteria": [
+        "Independent correct evidence for addition AND subtraction",
+        "Both crossing-ten and non-crossing-ten cases",
+        "Include zero and 20 boundaries",
+        "Allow equivalent correct strategies",
+        "Do not infer contextual mastery or fluency"
+      ]
+    },
+    {
+      "code": "MATH.ARITHMETIC.WORD_PROBLEM_WITHIN_20",
+      "identity_decision": "PENDING_ARCHITECTURE",
+      "possible_overlaps": [
+        "MATH.NS.WORD_PROBLEMS",
+        "MATH.NS.ADDITION",
+        "MATH.NS.SUBTRACTION"
+      ],
+      "components": [
+        "joining",
+        "separating",
+        "putting_together_taking_apart",
+        "comparing",
+        "unknown_position"
+      ],
+      "inclusions": [
+        "One-operation discrete nonnegative quantity situations",
+        "Unknown as result, change, start, part, whole or compared quantity",
+        "All modeled quantities, including hidden answer, in 0..20",
+        "Model or equation tied to a contextual answer"
+      ],
+      "exclusions": [
+        "Multi-step stories",
+        "Three-addend situations",
+        "Underdetermined or contradictory scenarios",
+        "Any quantity including unknown greater than 20",
+        "Keyword-only operation selection as mastery"
+      ],
+      "prerequisite_concepts": [
+        "cardinality",
+        "part-whole relationships",
+        "quantity comparison",
+        "representing unknown quantities"
+      ],
+      "examples": [
+        {
+          "input": "7 counters, then 5 more: how many?",
+          "answer": "12",
+          "component": "result_unknown"
+        },
+        {
+          "input": "Start with 7, end with 12: how many added?",
+          "answer": "5",
+          "component": "change_unknown"
+        },
+        {
+          "input": "Some counters; remove 5, leaving 7: start?",
+          "answer": "12",
+          "component": "start_unknown"
+        },
+        {
+          "input": "12 total, 7 red: how many not red?",
+          "answer": "5",
+          "component": "part_unknown"
+        },
+        {
+          "input": "A has 12, five more than B: B has?",
+          "answer": "7",
+          "component": "smaller_unknown"
+        },
+        {
+          "input": "18 counters, 5 more: how many?",
+          "valid": false,
+          "rationale": "Hidden answer 23 exceeds 20"
+        }
+      ],
+      "misconception_probes": [
+        "Treats the word 'more' as an instruction to add",
+        "Reverses the compared and reference quantities",
+        "Answers without interpreting units or unknown position"
+      ],
+      "assessment_criteria": [
+        "Demonstrate result, change/start, part and comparison unknowns",
+        "Evaluate story-to-equation/model translation independently from arithmetic",
+        "Require answer with correct contextual interpretation",
+        "Accept valid inverse operations and drawings",
+        "No credit for only result-unknown prompts"
+      ]
+    },
+    {
+      "code": "MATH.NUMBER_SENSE.COUNT_COMPARE_TO_120",
+      "identity_decision": "PENDING_DECOMPOSITION",
+      "possible_overlaps": [
+        "MATH.NS.COUNTING",
+        "MATH.NS.COMPARE_ORDER"
+      ],
+      "components": [
+        "forward_sequence_by_one",
+        "magnitude_comparison"
+      ],
+      "inclusions": [
+        "Forward by ones from arbitrary start in 0..120 without exceeding 120",
+        "Compare two integers in 0..120 using <, =, or >",
+        "Explicitly separate evidence for the two components"
+      ],
+      "exclusions": [
+        "Backward counting",
+        "Skip counting",
+        "Counting physical collections",
+        "Reading and writing arbitrary numerals as a separate skill",
+        "Assuming place-value understanding solely from ordering"
+      ],
+      "prerequisite_concepts": [
+        "ordered count sequence",
+        "cardinality for magnitude meaning",
+        "hundreds concept when explaining 100..120 in base ten"
+      ],
+      "examples": [
+        {
+          "input": "Continue: 117, 118, __, __",
+          "answer": "119, 120",
+          "component": "forward_sequence_by_one"
+        },
+        {
+          "input": "Continue: 99, __, 101",
+          "answer": "100",
+          "component": "forward_sequence_by_one"
+        },
+        {
+          "input": "Compare 109 and 99",
+          "answer": "109 > 99",
+          "component": "magnitude_comparison"
+        },
+        {
+          "input": "Compare 100 and 100",
+          "answer": "100 = 100",
+          "component": "magnitude_comparison"
+        }
+      ],
+      "misconception_probes": [
+        "Skips 100 when transitioning from 99",
+        "Compares only last digits",
+        "Reverses inequality signs",
+        "Infers comparison competence from reciting a sequence"
+      ],
+      "assessment_criteria": [
+        "Independent evidence for counting AND comparison before any composite claim",
+        "Count from nonzero arbitrary starts and across 99/100",
+        "Compare <, =, > including numbers around 100",
+        "Do not infer backward, skip or collection-counting mastery",
+        "Architecture must decide whether to split identity into two skills"
+      ]
+    },
+    {
+      "code": "MATH.PLACE_VALUE.TENS_ONES",
+      "identity_decision": "PENDING_ARCHITECTURE",
+      "possible_overlaps": [
+        "MATH.NS.PLACE_VALUE",
+        "MATH.NS.COMPOSE_DECOMPOSE"
+      ],
+      "components": [
+        "canonical_base_ten",
+        "ten_as_unit",
+        "digit_value"
+      ],
+      "inclusions": [
+        "Two-digit whole numbers 10..99",
+        "Canonical n=10*t+u with 1<=t<=9 and 0<=u<=9",
+        "Ten ones may be regrouped as one ten",
+        "Teens and multiples of ten including zero ones"
+      ],
+      "exclusions": [
+        "Hundreds and larger places",
+        "Requiring noncanonical regroupings such as 3 tens + 15 ones for 45",
+        "Conflating digit and positional value"
+      ],
+      "prerequisite_concepts": [
+        "grouping equal quantities",
+        "cardinality",
+        "counting tens and units"
+      ],
+      "examples": [
+        {
+          "input": "45: tens digit and value?",
+          "answer": "4; 40",
+          "component": "digit_value"
+        },
+        {
+          "input": "40: tens and ones?",
+          "answer": "4 tens and 0 ones",
+          "component": "canonical_base_ten"
+        },
+        {
+          "input": "14: expanded form?",
+          "answer": "10+4",
+          "component": "canonical_base_ten"
+        },
+        {
+          "input": "385: tens and ones?",
+          "valid": false,
+          "rationale": "Outside two-digit scope"
+        }
+      ],
+      "misconception_probes": [
+        "Claims the 4 in 45 represents four units",
+        "Omits zero ones for 40",
+        "Fails to treat a group of ten as ten units",
+        "Equates any valid regrouping with canonical digits"
+      ],
+      "assessment_criteria": [
+        "Explain ten-as-a-unit with objects, diagrams or grouping",
+        "Link numerals, digit values and canonical expanded form",
+        "Include teen and zero-ones cases",
+        "Distinguish 4 from 40 in 45",
+        "Do not infer noncanonical regrouping mastery"
+      ]
+    }
+  ]
+}
