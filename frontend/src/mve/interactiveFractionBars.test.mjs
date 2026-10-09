@@ -1,0 +1,31 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import test from "node:test";
+
+const source = await readFile(new URL("./InteractiveFractionBars.tsx", import.meta.url), "utf8");
+
+test("guided fraction exploration fails closed in independent assessment", () => {
+  assert.match(source, /if \(props\.independentAssessment\) return null/);
+  assert.match(source, /return <GuidedFractionBars/);
+});
+
+test("fraction exploration reuses the registered fraction bar renderer", () => {
+  assert.match(source, /import ProblemVisual from/);
+  assert.match(source, /type: "fraction_bar"/);
+  assert.match(source, /aria_label:/);
+});
+
+test("native keyboard controls and live status avoid motion dependence", () => {
+  assert.match(source, /<button type="button"/);
+  assert.match(source, /disabled=\{current === 0\}/);
+  assert.match(source, /disabled=\{current === d\}/);
+  assert.match(source, /aria-live="polite"/);
+  assert.doesNotMatch(source, /setInterval|setTimeout|autoPlay/);
+});
+
+test("deterministic bounded fraction state and no answer scoring", () => {
+  assert.match(source, /Number\.isSafeInteger\(denominator\)/);
+  assert.match(source, /Math\.min\(12, Math\.max\(1, denominator\)\)/);
+  assert.match(source, /Math\.min\(d, Math\.max\(0, numerator\)\)/);
+  assert.doesNotMatch(source, /mastery|correct_index|gradeAnswer/);
+});
