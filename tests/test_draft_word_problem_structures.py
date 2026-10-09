@@ -217,3 +217,43 @@ def test_diagnostic_answer_positions_are_balanced() -> None:
         for path in PATHWAYS["pathways"]
     ]
     assert [positions.count(i) for i in range(3)] == [16, 16, 16]
+
+
+LESSONS = json.loads(
+    (PATH.parent / "teaching_lessons.draft.json").read_text(encoding="utf-8")
+)
+
+
+def test_six_concrete_visual_symbolic_teaching_lessons() -> None:
+    assert LESSONS["status"] == "DRAFT_UNVERIFIED"
+    assert LESSONS["runtime_activation"] is False
+    assert LESSONS["canonical_skill_ids"] == []
+    assert LESSONS["curriculum_mappings"] == []
+    lessons = LESSONS["lessons"]
+    assert len(lessons) == 6
+    assert len({x["lesson_id"] for x in lessons}) == 6
+    assert {x["skill"] for x in lessons} == {
+        x["provisional_skill"] for x in DATA["coverage"]
+    }
+    for lesson in lessons:
+        assert lesson["status"] == "DRAFT_UNVERIFIED"
+        assert lesson["review_status"] == "PENDING"
+        assert lesson["activation"] is False
+        assert lesson["concrete"] and lesson["visual"] and lesson["symbolic"]
+        assert lesson["alternative"] and lesson["self_check"]
+        assert lesson["diagnosis"] and lesson["remediation"]
+        assert len(lesson["socratic"]) == 3
+        assert lesson["mastery"] and lesson["mastery_answer"]
+
+
+def test_teaching_lesson_mastery_exits_have_independent_oracles() -> None:
+    answers = {
+        "ADDITIVE_WORD_PROBLEMS": 121 - 78,
+        "MULTIPLICATIVE_WORD_PROBLEMS": math.ceil(Fraction(65, 12)),
+        "FRACTION_WORD_PROBLEMS": Fraction(15 * 8, 3),
+        "RATIO_RATE_WORD_PROBLEMS": 6 + 5 * 8,
+        "GEOMETRY_MEASUREMENT_WORD_PROBLEMS": Fraction(68, 2) - 14,
+        "ALGEBRA_REASONING_WORD_PROBLEMS": Fraction(303 - 25 * 9, 15 - 9),
+    }
+    for lesson in LESSONS["lessons"]:
+        assert lesson["mastery_answer"] == str(int(answers[lesson["skill"]]))
