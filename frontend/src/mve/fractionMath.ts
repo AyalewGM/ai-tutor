@@ -39,3 +39,36 @@ export function describeFraction(parts: FractionParts): string {
   const detail = equivalent ? ` This is equivalent to ${reduced.numerator}/${reduced.denominator}.` : "";
   return `${safe.numerator} out of ${safe.denominator} equal parts are shaded.${detail}`;
 }
+
+/** Fraction comparison never uses floating-point division or learner evidence. */
+export type FractionRelation = "LESS_THAN" | "EQUAL_TO" | "GREATER_THAN";
+
+/** Invalid reference fractions must not be silently replaced by defaults. */
+export function isValidFractionParts(value: unknown): value is FractionParts {
+  if (!value || typeof value !== "object") return false;
+  const parts = value as Partial<FractionParts>;
+  return Number.isSafeInteger(parts.denominator) &&
+    (parts.denominator as number) >= 1 && (parts.denominator as number) <= 12 &&
+    Number.isSafeInteger(parts.numerator) &&
+    (parts.numerator as number) >= 0 &&
+    (parts.numerator as number) <= (parts.denominator as number);
+}
+
+/** Null means invalid input; callers must fail closed rather than invent a comparison. */
+export function compareFractions(left: unknown, right: unknown): FractionRelation | null {
+  if (!isValidFractionParts(left) || !isValidFractionParts(right)) return null;
+  const crossLeft = left.numerator * right.denominator;
+  const crossRight = right.numerator * left.denominator;
+  if (crossLeft < crossRight) return "LESS_THAN";
+  if (crossLeft > crossRight) return "GREATER_THAN";
+  return "EQUAL_TO";
+}
+
+/** Explanatory feedback only; this does not score answers or mastery. */
+export function describeFractionComparison(left: FractionParts, right: FractionParts): string | null {
+  const relation = compareFractions(left, right);
+  if (relation === null) return null;
+  const phrase = relation === "LESS_THAN" ? "less than" :
+    relation === "GREATER_THAN" ? "greater than" : "equal to";
+  return `${left.numerator}/${left.denominator} is ${phrase} ${right.numerator}/${right.denominator}.`;
+}
