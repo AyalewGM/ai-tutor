@@ -1,0 +1,149 @@
+{
+  "package_id": "draft-word-problem-teaching-lessons-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "runtime_activation": false,
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "copyright_policy": "Original Mihur-authored lesson text and assessment questions.",
+  "lessons": [
+    {
+      "skill": "ADDITIVE_WORD_PROBLEMS",
+      "title": "Unknown quantities: what changes, what stays",
+      "anchor": "A garden had 95 flowers and now has 143. How many were planted?",
+      "diagnosis": "A learner adds 95+143 because both numbers appear in the story.",
+      "concrete": "Start with 95 counters. Add unknown counters until the collection reaches 143.",
+      "visual": "Draw a tape bar of length 143 with a known segment 95 and an unknown segment.",
+      "symbolic": "95 + x = 143; x = 143 − 95 = 48.",
+      "alternative": "Count on: 95→100 is 5, 100→140 is 40, 140→143 is 3; 5+40+3=48.",
+      "self_check": "95+48=143. The change is smaller than the final total.",
+      "socratic": [
+        "Which number describes the final amount?",
+        "Is the unknown the start, the change, or the end?",
+        "How can we undo adding an unknown amount?"
+      ],
+      "remediation": "If the student adds 95+143, label each quantity on the tape and ask whether the total can be smaller than that sum.",
+      "mastery": "A shelf had 78 books and now has 121. How many were added?",
+      "mastery_answer": "43",
+      "lesson_id": "lesson-01",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "activation": false
+    },
+    {
+      "skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "title": "Equal groups, inverse operations and remainder meaning",
+      "anchor": "A group of 74 students travels in vans holding at most 8 students. What is the minimum number of vans?",
+      "diagnosis": "A learner divides 74 by 8, truncates to 9 and forgets the two students left over.",
+      "concrete": "Place 74 tokens into trays holding at most eight; fill nine trays and place the remaining two in another.",
+      "visual": "Draw nine full boxes of 8 and one partial box of 2.",
+      "symbolic": "74 = 8×9 + 2, so 10 vans are required.",
+      "alternative": "Check capacity: 9×8=72 is too small; 10×8=80 is sufficient.",
+      "self_check": "All 74 students have seats; no van holds more than 8.",
+      "socratic": [
+        "What does the quotient 9 remainder 2 mean in this story?",
+        "Can the two remaining students travel without a van?",
+        "What is the smallest whole number of vans with enough seats?"
+      ],
+      "remediation": "Ask the learner to model the two leftover students as tokens that must be seated.",
+      "mastery": "A camp has 65 students and buses hold at most 12. What is the minimum number of buses?",
+      "mastery_answer": "6",
+      "lesson_id": "lesson-02",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "activation": false
+    },
+    {
+      "skill": "FRACTION_WORD_PROBLEMS",
+      "title": "Identify the whole before calculating a fraction",
+      "anchor": "Twelve marbles are 3/7 of a collection. How many marbles are in the collection?",
+      "diagnosis": "A learner computes 12×3/7 and treats the given part as the whole.",
+      "concrete": "Build three equal groups of four counters to represent the known 12; extend to seven groups.",
+      "visual": "Draw a seven-section bar. Shade three sections labeled 12 in total; each section is 4.",
+      "symbolic": "(3/7)×w = 12; w = 12×7/3 = 28.",
+      "alternative": "Unit fraction: 1/7 = 12÷3=4; whole 7/7=4×7=28.",
+      "self_check": "3/7 of 28 is 12.",
+      "socratic": [
+        "Does 12 describe the entire collection or only three sevenths?",
+        "How many marbles belong to one seventh?",
+        "How many sevenths make a whole?"
+      ],
+      "remediation": "Use seven equal boxes before writing an equation; the learner must label the three known boxes.",
+      "mastery": "Fifteen beads are 3/8 of a set. How many beads are in the set?",
+      "mastery_answer": "40",
+      "lesson_id": "lesson-03",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "activation": false
+    },
+    {
+      "skill": "RATIO_RATE_WORD_PROBLEMS",
+      "title": "Separate fixed fees from per-unit rates",
+      "anchor": "A bike rental charges $9 to start and $4 per hour. What is the cost of 7 hours?",
+      "diagnosis": "A learner calculates 9×7+4, mistakenly multiplying the fixed fee.",
+      "concrete": "Show one $9 entry ticket and seven $4 hour tokens.",
+      "visual": "Use a bar with one fixed $9 block followed by seven equal $4 blocks.",
+      "symbolic": "C(h)=9+4h; C(7)=9+28=37.",
+      "alternative": "Make a table: 0 h→$9, 1 h→$13, 2 h→$17; continue adding $4 to 7 h.",
+      "self_check": "Seven hours cost more than six by exactly $4, not $9.",
+      "socratic": [
+        "Which amount is charged only once?",
+        "What changes with each extra hour?",
+        "Would doubling the hours double the entire bill?"
+      ],
+      "remediation": "Ask the learner to model a zero-hour bill; it should still be $9.",
+      "mastery": "A rental has a $6 setup charge plus $5 per hour. What is the cost for 8 hours?",
+      "mastery_answer": "46",
+      "lesson_id": "lesson-04",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "activation": false
+    },
+    {
+      "skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "title": "Area, perimeter and missing dimensions",
+      "anchor": "A rectangle has perimeter 54 cm and width 11 cm. What is its length?",
+      "diagnosis": "A learner subtracts 11 from 54, counting only one width.",
+      "concrete": "Trace the four edges of a paper rectangle; mark opposite edges equal.",
+      "visual": "Label two widths 11 and two unknown lengths x around the boundary.",
+      "symbolic": "2x+2×11=54; 2x=32; x=16 cm.",
+      "alternative": "Half the perimeter is length+width: 54÷2=27; length=27−11=16.",
+      "self_check": "2×(16+11)=54 cm. Perimeter uses cm, not cm².",
+      "socratic": [
+        "How many sides does the perimeter include?",
+        "Why can we halve the perimeter first?",
+        "How can you verify the missing side?"
+      ],
+      "remediation": "Have the learner trace every edge and count both equal widths before calculating.",
+      "mastery": "A rectangle has perimeter 68 cm and width 14 cm. What is its length?",
+      "mastery_answer": "20",
+      "lesson_id": "lesson-05",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "activation": false
+    },
+    {
+      "skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "title": "Represent two ticket types with one variable",
+      "anchor": "A theater sold 30 tickets: adults cost $12, children cost $8, total revenue $320. How many adults?",
+      "diagnosis": "A learner assumes all 30 tickets have the same price.",
+      "concrete": "Arrange 30 ticket cards, each initially priced at $8. Upgrading a card to adult adds $4.",
+      "visual": "Show a baseline bar of 30×$8=$240 and an extra $80 made from $4 upgrades.",
+      "symbolic": "12a+8(30−a)=320; 4a=80; a=20.",
+      "alternative": "Start with all children: $240; remaining $80 at $4 extra per adult means 20 adults.",
+      "self_check": "20 adults and 10 children yield 20×12+10×8=320.",
+      "socratic": [
+        "How many children are there if adults are a?",
+        "What revenue would all-child tickets produce?",
+        "How much extra revenue does one adult ticket create?"
+      ],
+      "remediation": "Use the upgrade-card model before asking the learner to write a two-term revenue equation.",
+      "mastery": "A concert sells 25 tickets: adults $15, children $9, total $303. How many adult tickets?",
+      "mastery_answer": "13",
+      "lesson_id": "lesson-06",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "activation": false
+    }
+  ]
+}
