@@ -10,7 +10,7 @@ from app.canonical_skill_taxonomy import (
 )
 
 CANDIDATE_TAXONOMY = CanonicalTaxonomy(
-    version="0.1.0-candidates-r4",
+    version="0.1.0-candidates-r5",
     skills={
         "MATH.ARITHMETIC.ADD_WITHIN_20": CanonicalSkillDefinition(
             code="MATH.ARITHMETIC.ADD_WITHIN_20",
@@ -50,10 +50,11 @@ CANDIDATE_TAXONOMY = CanonicalTaxonomy(
             code="MATH.NUMBER_SENSE.COUNT_FORWARD_BY_ONE_TO_120",
             name="Count forward by ones to 120",
             description=(
-                "Continue a forward-by-one whole-number sequence from an arbitrary "
-                "starting value in 0–120 without exceeding 120, including sequences "
-                "that cross from 99 to 100. Backward counting, skip counting, "
-                "collection counting and magnitude comparison are separate skills."
+                "Continue a forward-by-one whole-number sequence from a starting "
+                "value in 0–119, producing one or more successors without exceeding "
+                "120, including sequences that cross from 99 to 100. Backward counting, "
+                "skip counting, collection counting and magnitude comparison are "
+                "separate skills."
             ),
             review_state=SkillReviewState.DRAFT,
         ),
@@ -62,8 +63,8 @@ CANDIDATE_TAXONOMY = CanonicalTaxonomy(
             name="Compare whole numbers to 120",
             description=(
                 "Compare two whole numbers in the inclusive range 0–120 by magnitude "
-                "and represent the relationship with <, =, or >. Include equal cases "
-                "and pairs around 99, 100 and 120. Sequence production, ordering lists "
+                "and represent the relationship with <, =, or >. Include zero, equal "
+                "cases and pairs around 99, 100 and 120. Sequence production, ordering lists "
                 "and place-value explanation are separate skills."
             ),
             review_state=SkillReviewState.DRAFT,
