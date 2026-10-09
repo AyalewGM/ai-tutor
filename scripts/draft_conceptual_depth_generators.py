@@ -172,7 +172,7 @@ def _make(structure: str, index: int, seed: int) -> dict:
         batches, target, ingredient = n(2, 5), n(7, 15), n(3, 12)
         question = f"A recipe uses {ingredient} cups for {batches} batches. How many cups for {target} batches? Give an exact fraction if needed."
         operands = {"batches": batches, "target": target, "ingredient": ingredient}
-        answer, wrong = Fraction(ingredient * target, batches), Fraction(ingredient + target - batches)
+        answer, wrong = Fraction(ingredient * target, batches), Fraction(ingredient * target)
         op = "ratio_recipe"
         check = f"{answer} / {target} = {Fraction(ingredient, batches)} cups per batch."
     elif structure == "ratio-partition":
@@ -180,7 +180,7 @@ def _make(structure: str, index: int, seed: int) -> dict:
         total = (a + b) * unit
         question = f"A prize of ${total} is shared in ratio {a}:{b}. How many dollars does the first person receive?"
         operands = {"a": a, "b": b, "total": total}
-        answer, wrong = Fraction(a * unit), Fraction(total, a)
+        answer, wrong = Fraction(a * unit), Fraction(total)
         op = "ratio_partition"
         check = f"First share {answer}; second share {b * unit}; sum {total}."
     elif structure == "percent-original-price":
@@ -205,7 +205,7 @@ def _make(structure: str, index: int, seed: int) -> dict:
         x2, y2 = x1 + run, y1 + rise
         question = f"Find the slope of the line through ({x1}, {y1}) and ({x2}, {y2}). Give an exact fraction."
         operands = {"x1": x1, "y1": y1, "x2": x2, "y2": y2}
-        answer, wrong = Fraction(rise, run), Fraction(run, rise)
+        answer, wrong = Fraction(rise, run), Fraction(-rise, run)
         op = "algebra_slope"
         check = f"Rise {rise}, run {run}, slope {answer}."
     elif structure == "algebra-linear-evaluation":
