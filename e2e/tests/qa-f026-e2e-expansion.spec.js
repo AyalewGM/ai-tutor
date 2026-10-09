@@ -151,7 +151,7 @@ async function submitStepOrAnswer(page, text) {
   }
 }
 
-async function solveCurrentProblem(page, prevProblemText = null) {
+async function solveCurrentProblem(page, prevProblemText = null, expectContinue = true) {
   // After "Correct. Keep going." the workspace transitions to the next problem.
   // Wait for the problem text to actually change before reading it; otherwise
   // the answer computed for the new problem can be submitted against the old
@@ -167,7 +167,9 @@ async function solveCurrentProblem(page, prevProblemText = null) {
   const answer = solve(problemText);
   expect(answer, `No synthetic solver for problem: "${problemText}"`).toBeTruthy();
   await submitStepOrAnswer(page, answer);
-  await expect(page.getByText('Correct. Keep going.')).toBeVisible({ timeout: 15000 });
+  if (expectContinue) {
+    await expect(page.getByText('Correct. Keep going.')).toBeVisible({ timeout: 15000 });
+  }
   return problemText;
 }
 
@@ -458,8 +460,9 @@ test('mastery check re-imposes assessment restrictions and completes on independ
   await expect(page.getByRole('button', { name: 'Hint' })).toBeDisabled();
   await expect(page.getByRole('button', { name: "I don't understand" })).toBeDisabled();
 
-  // Solving the check independently completes the skill.
-  await solveCurrentProblem(page);
+  // Mastery success transitions directly to completion rather than the
+  // intermediate guided-practice status.
+  await solveCurrentProblem(page, null, false);
   await expect(page.getByText('Skill complete')).toBeVisible({ timeout: 15000 });
   await expect(page.getByText('You answered correctly and independently in the mastery check.')).toBeVisible();
 });
