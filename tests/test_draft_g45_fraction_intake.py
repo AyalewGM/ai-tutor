@@ -171,3 +171,44 @@ def test_parser_rejects_mixed_numbers_and_ambiguous_inputs() -> None:
             pass
         else:
             raise AssertionError(f"unsafe answer accepted: {invalid!r}")
+
+def test_human_reasoning_rubrics_are_complete_and_fail_closed() -> None:
+    rubrics = json.loads(
+        (DRAFT / "reasoning_rubrics.draft.json").read_text(encoding="utf-8")
+    )
+    assert rubrics["status"] == "DRAFT_UNVERIFIED"
+    assert rubrics["review_status"] == "PENDING"
+    assert rubrics["auto_grade"] is False
+    required_ids = {
+        item["item_id"]
+        for item in PRACTICE["practice_items"]
+        if item["answer_contract"]
+        in {"human_rubric", "boolean_with_human_justification", "choice_with_human_justification"}
+    }
+    indexed = {rubric["item_id"]: rubric for rubric in rubrics["rubrics"]}
+    assert len(indexed) == len(rubrics["rubrics"])
+    assert set(indexed) == required_ids
+    for rubric in indexed.values():
+        assert rubric["assessment_mode"] == "human_only"
+        assert rubric["decision"]
+        assert rubric["acceptable_evidence"]
+        assert rubric["non_evidence"]
+        assert rubric["common_errors"]
+        assert len(rubric["criteria"]) >= 2
+        assert all(c["required"] and c["description"] for c in rubric["criteria"])
+
+
+def test_equivalence_pair_multiplier_constraints() -> None:
+    pair = next(
+        item for item in PRACTICE["practice_items"] if item["item_id"] == "q-eq-03"
+    )
+    answers = pair["expected"].split(";")
+    multipliers = []
+    for answer in answers:
+        numerator, denominator = map(int, answer.split("/"))
+        assert numerator % 2 == 0 and denominator % 5 == 0
+        multiplier = numerator // 2
+        assert denominator // 5 == multiplier
+        assert multiplier in PRACTICE["policies"]["equivalence_multipliers"]
+        multipliers.append(multiplier)
+    assert len(multipliers) == len(set(multipliers)) == 2
