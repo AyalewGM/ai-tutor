@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ProblemVisual from "../components/ProblemVisual";
 import type { MathInteractionEvent } from "./interactions";
-import { normalizeFractionParts, changeShadedParts } from "./fractionMath";
+import { normalizeFractionParts } from "./fractionMath";
 
 /** Guided exploration only; never mount in independent assessment. */
 export interface InteractiveFractionBarsProps {
