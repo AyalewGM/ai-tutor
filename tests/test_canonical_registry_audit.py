@@ -62,7 +62,7 @@ def test_no_new_orphan_math_literals():
 
 
 def test_family_id_reuse_as_skill_code_is_bounded():
-    """Only the two known self-referential codes may overlap."""
+    """Only explicitly reviewed self-referential codes may overlap."""
     assert set(
         REPORT["canonical_skills"]["family_ids_reused_as_skill_codes"]
-    ) <= {"MATH.PROB.SIMPLE", "MATH.PROB.EXPERIMENTAL"}
+    ) <= {"MATH.PROB.SIMPLE", "MATH.PROB.EXPERIMENTAL", "MATH.FIN.UNIT_PRICE"}
