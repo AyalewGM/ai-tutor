@@ -10,6 +10,8 @@
   "policies": {
     "positive_fractions_only": true,
     "operational_denominators": [
+      2,
+      3,
       4,
       5,
       6,
