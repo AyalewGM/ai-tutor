@@ -1,18 +1,22 @@
 {
   "schema_version": 1,
   "review_status": "DRAFT_PENDING_INDEPENDENT_REVIEW",
-  "revision": "2026-10-09-r4",
+  "revision": "2026-10-09-r5",
   "source_review": {
     "issue": 293,
     "pr": 308,
-    "prior_reviewed_head": "26445b9e4100b2bc68f398d4f0d3094f74a05226",
-    "prior_pr_comment": 6087502667,
+    "prior_reviewed_head": "4119edb849b66d004dcea1a0d73f4eee51e94335",
+    "prior_pr_comment": 6089339369,
+    "prior_issue_comment": 6089339537,
     "architecture_decision_head": "e8a2dbcc888d9cc5e8846ca4d4619cb9be61c688",
     "architecture_comment": 6087637547
   },
   "authority": "NONE_NOT_FOR_RUNTIME",
   "notes": [
-    "r4 is authored by Curriculum Content in response to the accepted Architecture decomposition; it is not mathematical approval.",
+    "r5 is authored by Curriculum Content in response to the independent r4 boundary findings; it is not mathematical approval.",
+    "r5 changes only COUNT_FORWARD_BY_ONE_TO_120 and COMPARE_WHOLE_NUMBERS_TO_120; the four r4-approved mathematical scope cards are unchanged.",
+    "Count-forward starts are limited to 0..119 when at least one successor is requested; 120 remains a valid endpoint.",
+    "Whole-number comparison now includes explicit lower-boundary zero equality and strict-comparison evidence.",
     "ADD_SUB_WITHIN_20 and COUNT_COMPARE_TO_120 are removed as candidate identities and represented only by noncanonical ALL_OF reporting profiles.",
     "Prerequisites are concepts, not approved canonical code edges.",
     "All six candidate definitions remain DRAFT; production TAXONOMY remains empty.",
@@ -319,7 +323,8 @@
         "forward_sequence_by_one"
       ],
       "inclusions": [
-        "Continue a forward-by-one whole-number sequence from an arbitrary start in 0..120 without exceeding 120",
+        "Continue a forward-by-one whole-number sequence from a start in 0..119, producing one or more successors without exceeding 120",
+        "Use 120 as a permissible endpoint, not as a start when a successor is required",
         "Cross the 99-to-100 boundary",
         "Supply one or more missing consecutive numerals"
       ],
@@ -337,12 +342,19 @@
       ],
       "examples": [
         {
+          "input": "Continue: 0, __, 2",
+          "answer": "1",
+          "rationale": "Lower-boundary start"
+        },
+        {
           "input": "Continue: 117, 118, __, __",
-          "answer": "119, 120"
+          "answer": "119, 120",
+          "rationale": "Ends at the upper boundary"
         },
         {
           "input": "Continue: 99, __, 101",
-          "answer": "100"
+          "answer": "100",
+          "rationale": "Crosses from two digits to three"
         },
         {
           "input": "Continue: 36, __, 38",
@@ -351,7 +363,7 @@
         {
           "input": "Continue: 120, __",
           "valid": false,
-          "rationale": "Would exceed the upper boundary"
+          "rationale": "A successor would exceed 120; 120 is an endpoint, not a valid start for a continuation task"
         }
       ],
       "misconception_probes": [
@@ -360,9 +372,11 @@
         "Changes a non-leading digit without applying the successor relationship"
       ],
       "assessment_criteria": [
-        "Multiple nonzero arbitrary starts",
+        "Include a continuation beginning at the lower boundary 0",
+        "Use multiple additional arbitrary starts in 1..119",
         "At least one sequence crossing 99 to 100",
         "Include endpoint 120",
+        "Constrain requested sequence length so no successor exceeds 120",
         "Retain independent sequence-production evidence",
         "Do not substitute comparison, backward, skip or collection-counting evidence"
       ]
@@ -380,6 +394,7 @@
       "inclusions": [
         "Compare two whole numbers in 0..120 by magnitude",
         "Represent less than, equal to and greater than relationships",
+        "Include lower-boundary zero equality and strict comparisons involving zero",
         "Include pairs around 99, 100 and 120"
       ],
       "exclusions": [
@@ -394,6 +409,16 @@
         "meaning of less than, equal to and greater than"
       ],
       "examples": [
+        {
+          "input": "Compare 0 and 0",
+          "answer": "0 = 0",
+          "rationale": "Lower-boundary equality"
+        },
+        {
+          "input": "Compare 0 and 1",
+          "answer": "0 < 1",
+          "rationale": "Lower-boundary strict comparison"
+        },
         {
           "input": "Compare 109 and 99",
           "answer": "109 > 99"
@@ -420,6 +445,7 @@
       ],
       "assessment_criteria": [
         "Independent less-than, equal and greater-than cases",
+        "Include 0=0 and at least one strict comparison involving 0",
         "Pairs around 99, 100 and 120",
         "Sample explanation or representation separately when required",
         "Retain independent comparison evidence",
