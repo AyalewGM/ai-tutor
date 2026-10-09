@@ -1,0 +1,135 @@
+{
+  "package_id": "draft-g45-fractions-pilot-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "purpose": "Draft-only human reasoning assessment criteria; not an automated scorer, canonical contract or mastery updater",
+  "auto_grade": false,
+  "criteria_policy": "All required criteria must be evidenced; alternative mathematically valid justifications accepted by reviewer",
+  "rubrics": [
+    {
+      "item_id": "q-rep-06",
+      "assessment_mode": "human_only",
+      "prompt_focus": "Explain numerator and denominator in 2/3",
+      "criteria": [
+        {
+          "id": "equal_parts",
+          "required": true,
+          "description": "States that the same whole is partitioned into three equal parts"
+        },
+        {
+          "id": "denominator_role",
+          "required": true,
+          "description": "Identifies 3 as denominator determining the number of equal parts of one whole"
+        },
+        {
+          "id": "numerator_role",
+          "required": true,
+          "description": "Identifies 2 as numerator counting two of those equal parts"
+        }
+      ],
+      "acceptable_evidence": [
+        "Three equal parts in a whole; numerator two means two parts are considered",
+        "Denominator 3 means thirds; numerator 2 means two thirds"
+      ],
+      "non_evidence": [
+        "2 out of 3 without explaining numerator and denominator",
+        "Three parts of unequal size"
+      ],
+      "common_errors": [
+        "Reverses numerator and denominator",
+        "Treats denominator as the number shaded"
+      ],
+      "decision": "Human reviewer confirms all three criteria. Numeric answer alone never establishes conceptual mastery."
+    },
+    {
+      "item_id": "q-eq-02",
+      "assessment_mode": "human_only",
+      "prompt_focus": "Are 2/4 and 3/6 equivalent? Show why",
+      "criteria": [
+        {
+          "id": "decision",
+          "required": true,
+          "description": "Concludes yes"
+        },
+        {
+          "id": "value_preservation",
+          "required": true,
+          "description": "Shows both equal 1/2, or a correct same-value area/number-line argument, or correct cross-products 2×6=4×3=12"
+        }
+      ],
+      "acceptable_evidence": [
+        "Both simplify to 1/2",
+        "2×6 and 3×4 both equal 12"
+      ],
+      "non_evidence": [
+        "Yes because 2 and 3 are close",
+        "Yes without any mathematical reasoning"
+      ],
+      "common_errors": [
+        "Compares numerators alone",
+        "Confuses equivalent with identical numerator/denominator"
+      ],
+      "decision": "Correct yes/no alone is insufficient; a reviewer must verify mathematically valid justification."
+    },
+    {
+      "item_id": "q-eq-05",
+      "assessment_mode": "human_only",
+      "prompt_focus": "Choose 6/8 or 6/12 as equivalent to 3/4 and explain",
+      "criteria": [
+        {
+          "id": "choice",
+          "required": true,
+          "description": "Chooses 6/8 and rejects 6/12"
+        },
+        {
+          "id": "valid_reason",
+          "required": true,
+          "description": "Demonstrates 6/8=3/4 by factor 2 or simplification, and distinguishes 6/12=1/2"
+        }
+      ],
+      "acceptable_evidence": [
+        "3/4 × 2/2 = 6/8, whereas 6/12 = 1/2",
+        "6/8 reduces to 3/4; 6/12 reduces to 1/2"
+      ],
+      "non_evidence": [
+        "6/8 because it looks right",
+        "Both because the numerators match"
+      ],
+      "common_errors": [
+        "Assumes matching numerator implies equivalence",
+        "Multiplies only numerator"
+      ],
+      "decision": "Both selection and contrast must be mathematically valid; no automatic reasoning credit."
+    },
+    {
+      "item_id": "q-eq-06",
+      "assessment_mode": "human_only",
+      "prompt_focus": "True/false 4/6 and 10/15 equivalence with justification",
+      "criteria": [
+        {
+          "id": "decision",
+          "required": true,
+          "description": "Concludes true"
+        },
+        {
+          "id": "valid_reason",
+          "required": true,
+          "description": "Simplifies both to 2/3 or demonstrates correct cross-product equality 4×15=6×10=60"
+        }
+      ],
+      "acceptable_evidence": [
+        "4/6 = 2/3 and 10/15 = 2/3",
+        "4×15=60 and 6×10=60"
+      ],
+      "non_evidence": [
+        "True without proof",
+        "True because 4<10 and 6<15"
+      ],
+      "common_errors": [
+        "Incorrect cross multiplication",
+        "Divides only one term"
+      ],
+      "decision": "Human reviewer verifies both verdict and justification."
+    }
+  ]
+}
