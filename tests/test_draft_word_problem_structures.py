@@ -37,9 +37,7 @@ def exact_answer(item: dict) -> str:
         value = Fraction(a[0] * a[2], a[1])
     elif op == "fraction_remaining":
         value = Fraction((a[1] - a[0]) * a[2], a[1])
-    elif op == "fraction_times":
-        value = Fraction(a[0] * a[2], a[1])
-    elif op == "whole_from_part":
+    elif op in {"fraction_times", "whole_from_part"}:
         value = Fraction(a[0] * a[2], a[1])
     elif op == "fraction_part_total":
         value = Fraction(a[0], a[1])
