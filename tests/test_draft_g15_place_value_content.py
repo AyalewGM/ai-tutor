@@ -65,18 +65,18 @@ def test_place_value_mathematical_properties() -> None:
     assert 6000 + 300 + 40 + 2 == 6342
     assert 70000 + 900 + 5 == 70905
     assert 300000 + 40000 + 600 + 8 == 340608
-    assert 85 > 58
-    assert 307 < 370
-    assert 4109 > 4091
-    assert 2405 < 2450 < 2540
-    assert 20001 > 19999
-    assert 305004 < 305040
-    assert 46 < 50 and 46 - 40 > 50 - 46
+    assert max(85, 58) == 85
+    assert min(307, 370) == 307
+    assert max(4109, 4091) == 4109
+    assert sorted((2405, 2450, 2540)) == [2405, 2450, 2540]
+    assert max(20001, 19999) == 20001
+    assert min(305004, 305040) == 305004
+    assert min(46 - 40, 50 - 46) == 50 - 46
     assert 72 - 70 < 80 - 72
     assert 349 - 300 < 400 - 349
     assert 650 - 600 == 700 - 650
     assert 48760 - 48000 > 49000 - 48760
     assert 305499 - 305000 < 306000 - 305499
     assert 300 + 5 == 305
-    assert 5900 > 5090
+    assert max(5900, 5090) == 5900
     assert 70000 + 50 == 70050
