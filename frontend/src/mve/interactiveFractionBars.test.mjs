@@ -36,3 +36,9 @@ test("keyboard focus visibility and no duplicate events at bounds", () => {
   assert.match(source, /onMathEvent\?\.\(\{ schema_version: 1, type: "FRACTION_SHADING_CHANGED"/);
   assert.doesNotMatch(source, /animate-|transition-|motion\.|requestAnimationFrame/);
 });
+
+test("semantic equivalent-fraction explanation remains guided and screen-reader readable", () => {
+  assert.match(source, /describeFraction\(\{ numerator: current, denominator: d \}\)/);
+  assert.match(source, /aria-atomic="true"/);
+  assert.match(source, /if \(props\.independentAssessment\) return null/);
+});
