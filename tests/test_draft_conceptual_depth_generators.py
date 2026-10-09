@@ -1,9 +1,9 @@
 """Independent mathematical and teaching-depth checks for conceptual draft wave."""
 from __future__ import annotations
 
+import json
 from collections import Counter
 from fractions import Fraction
-import json
 from pathlib import Path
 
 import pytest
