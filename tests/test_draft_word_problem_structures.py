@@ -154,3 +154,53 @@ def test_word_problem_interpretation_edge_cases() -> None:
     assert by_structure["inequality-minimum"]["expected"] == "8"
     assert by_structure["fraction-of-unknown-whole"]["expected"] == "28"
     assert by_structure["two-unknowns"]["expected"] == "20"
+
+
+PATHWAYS = json.loads(
+    (PATH.parent / "adaptive_pathways.draft.json").read_text(encoding="utf-8")
+)
+
+
+def test_every_word_problem_has_a_diagnostic_and_mastery_path() -> None:
+    assert PATHWAYS["status"] == "DRAFT_UNVERIFIED"
+    assert PATHWAYS["review_status"] == "PENDING"
+    assert PATHWAYS["runtime_activation"] is False
+    assert PATHWAYS["canonical_skill_ids"] == []
+    assert PATHWAYS["curriculum_mappings"] == []
+    by_id = {item["item_id"]: item for item in DATA["practice_items"]}
+    paths = PATHWAYS["pathways"]
+    assert len(paths) == 48
+    assert len({path["pathway_id"] for path in paths}) == 48
+    assert {path["linked_item_id"] for path in paths} == set(by_id)
+    for path in paths:
+        item = by_id[path["linked_item_id"]]
+        diagnostic = path["diagnostic"]
+        learning = path["learning_path"]
+        mastery = path["mastery_exit"]
+        assert path["review_status"] == "PENDING"
+        assert path["provisional_skill"] == item["provisional_skill"]
+        assert path["problem_structure"] == item["problem_structure"]
+        assert len(diagnostic["choices"]) == 3
+        assert len(set(diagnostic["choices"])) == 3
+        assert diagnostic["correct_index"] == 0
+        assert len(diagnostic["misconception_distractors"]) == 2
+        assert {x["choice_index"] for x in diagnostic["misconception_distractors"]} == {1, 2}
+        assert all(x["feedback"] for x in diagnostic["misconception_distractors"])
+        assert item["question"] in diagnostic["prompt"]
+        assert item["worked_solution"] in diagnostic["explanation"]
+        assert len(learning["remediation_sequence"]) == 3
+        assert all(learning["remediation_sequence"])
+        assert learning["remediation_trigger"] == item["misconception_tag"]
+        assert learning["concrete_visual_model"]
+        assert learning["alternative_method"]
+        assert mastery["expected_answer"] == item["expected"]
+        assert mastery["independent_review_required"] is True
+        assert len(mastery["required_evidence"]) == 3
+
+
+def test_diagnostics_use_distinct_setups_for_every_structure() -> None:
+    correct = [
+        path["diagnostic"]["choices"][0]
+        for path in PATHWAYS["pathways"]
+    ]
+    assert len(set(correct)) == len(correct)
