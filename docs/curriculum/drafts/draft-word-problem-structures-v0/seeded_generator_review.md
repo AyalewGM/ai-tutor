@@ -65,3 +65,36 @@ structures or 108 independently reviewed questions.
 **Important:** Passing tests validates specified arithmetic invariants, not
 pedagogical effectiveness, originality clearance of external sources, curriculum
 coverage, or mastery-assessment validity.
+
+## Conceptual depth added in the same PR
+
+`seeded_teaching_depth.draft.json` now defines **18 original teaching
+blueprints**, one per generator structure. Each contains:
+
+- a mathematical invariant that the learner must understand;
+- concrete, visual and symbolic representations;
+- an alternative strategy that is not simply a repeated solution;
+- a misconception-specific teaching intervention;
+- three Socratic prompts and differentiated support after repeated errors;
+- an independently authored transfer problem, answer and explanation rubric;
+- a textual alternative to proposed animations.
+
+`tests/test_draft_seeded_teaching_depth.py` verifies complete structural
+linkage, unique teaching concepts, independent transfer questions and exact
+transfer answer keys. These are **lesson specifications**, not live
+interactive animations or proof of student mastery.
+
+### Production acceptance criteria (per approved skill)
+
+| Dimension | Minimum evidence before claiming deep coverage |
+| --- | --- |
+| Mathematical identity | Independently approved canonical skill definition and prerequisites |
+| Practice | Multiple distinct reasoning structures, bounded seeded generators, exact oracles |
+| Diagnostics | Meaningful misconception distractors with mathematically accurate feedback |
+| Instruction | Concrete, visual, symbolic and alternative methods, with accessible text |
+| Adaptation | Distinct response to repeated mistakes; avoid disclosing answers prematurely |
+| Assessment | Unseen transfer with explanation and independent verification |
+| Quality | Independent mathematical review, curriculum review where claimed, Muse QA |
+| Release | Explicit owner/engineering approval, isolation and no historical mastery rewrite |
+
+No row should be marked verified solely because a generator exists or tests pass.
