@@ -1,6 +1,6 @@
 """Draft candidates are visible without conferring mathematical authority."""
-from app.canonical_taxonomy_candidates import CANDIDATE_TAXONOMY
 from app.canonical_skill_taxonomy import TAXONOMY
+from app.canonical_taxonomy_candidates import CANDIDATE_TAXONOMY
 
 
 def test_candidates_are_not_approved_taxonomy():
