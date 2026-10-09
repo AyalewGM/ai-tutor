@@ -205,7 +205,7 @@ def _generate_one(structure: str, variant: int, seed: int) -> dict:
             "100-part percent bar with the discount segment removed.",
             f"{final} + {discount} = {price}.")
     if structure == "ratio-fixed-fee":
-        fee, hourly, hours = n(4, 30), n(3, 18), n(2, 12)
+        fee, hourly, hours = n(19, 30), n(3, 18), n(2, 12)
         cost = fee + hourly * hours
         return _item("RATIO_RATE_WORD_PROBLEMS", structure, variant,
             f"A tool rental charges a fixed ${fee} fee plus ${hourly} per hour. What is the cost for {hours} hours?",
