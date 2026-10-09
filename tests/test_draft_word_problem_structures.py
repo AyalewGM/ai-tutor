@@ -182,9 +182,14 @@ def test_every_word_problem_has_a_diagnostic_and_mastery_path() -> None:
         assert path["problem_structure"] == item["problem_structure"]
         assert len(diagnostic["choices"]) == 3
         assert len(set(diagnostic["choices"])) == 3
-        assert diagnostic["correct_index"] == 0
+        assert diagnostic["correct_index"] in {0, 1, 2}
+        correct_setup = diagnostic["choices"][diagnostic["correct_index"]]
+        assert correct_setup in diagnostic["explanation"]
+        assert correct_setup in learning["remediation_sequence"][1]
         assert len(diagnostic["misconception_distractors"]) == 2
-        assert {x["choice_index"] for x in diagnostic["misconception_distractors"]} == {1, 2}
+        assert {x["choice_index"] for x in diagnostic["misconception_distractors"]} == (
+            {0, 1, 2} - {diagnostic["correct_index"]}
+        )
         assert all(x["feedback"] for x in diagnostic["misconception_distractors"])
         assert item["question"] in diagnostic["prompt"]
         assert item["worked_solution"] in diagnostic["explanation"]
@@ -200,7 +205,15 @@ def test_every_word_problem_has_a_diagnostic_and_mastery_path() -> None:
 
 def test_diagnostics_use_distinct_setups_for_every_structure() -> None:
     correct = [
-        path["diagnostic"]["choices"][0]
+        path["diagnostic"]["choices"][path["diagnostic"]["correct_index"]]
         for path in PATHWAYS["pathways"]
     ]
     assert len(set(correct)) == len(correct)
+
+
+def test_diagnostic_answer_positions_are_balanced() -> None:
+    positions = [
+        path["diagnostic"]["correct_index"]
+        for path in PATHWAYS["pathways"]
+    ]
+    assert [positions.count(i) for i in range(3)] == [16, 16, 16]
