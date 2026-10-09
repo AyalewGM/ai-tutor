@@ -24,7 +24,8 @@
       "The official standards PDF has seven pages and lists Algebra I standards by conceptual category and cluster.",
       "Top-level standards are inventoried; lettered subparts and MCAP evidence-statement subclaims require separate detailed review.",
       "Editorial summaries are not official quotations or independently accepted equivalence judgments.",
-      "The 2026-27 implementation label comes from the current MSDE standards landing page, not the PDF publication date."
+      "The 2026-27 implementation label comes from the current MSDE standards landing page, not the PDF publication date.",
+      "Source page locators were cross-checked against the seven-page official MSDE August 2022 PDF; A.REI.D.12 starts on page 4."
     ]
   },
   "inventory": {
@@ -486,7 +487,7 @@
     {
       "expectation_id": "A.REI.D.12",
       "domain": "Algebra",
-      "source_page": 3,
+      "source_page": 4,
       "source_url": "https://msde.maryland.gov/media/17798",
       "scope_summary": "Graph linear inequalities and systems as half-plane regions",
       "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
