@@ -11,7 +11,7 @@ Source: owner-provided Grok-generated Grades 4–5 package in ChatGPT, 2026-10-0
 | Practice questions | 25 | `practice.normalized.json` |
 | Worked examples | 5 | `supporting.normalized.json` |
 | Misconception/remediation entries | 5 | `supporting.normalized.json` |
-| Interactive specifications | 1 | `supporting.normalized.json` (design only) |\n| Human reasoning rubrics | 4 | `reasoning_rubrics.draft.json` (manual review only) |
+| Interactive specifications | 1 | `supporting.normalized.json` (design only) |\n| Human reasoning rubrics | 4 | `reasoning_rubrics.draft.json` (manual review only) |\n| Source-fidelity revision crosswalk | 36 assets | `source_fidelity_review.draft.json` (pending independent review) |
 
 ## Corrections applied
 
@@ -26,7 +26,7 @@ Source: owner-provided Grok-generated Grades 4–5 package in ChatGPT, 2026-10-0
 
 ## Validation
 
-`tests/test_draft_g45_fraction_intake.py` contains deterministic exact-rational oracles for all 25 items, checks intermediate forms, comparison/equivalence relations, item uniqueness, inventory, draft-only metadata, disallowed ambiguous answer formats, strict parser behavior, and exhaustive bounded state invariants for the proposed fraction bar, and complete fail-closed human reasoning rubric coverage.
+`tests/test_draft_g45_fraction_intake.py` contains deterministic exact-rational oracles for all 25 items, checks intermediate forms, comparison/equivalence relations, item uniqueness, inventory, draft-only metadata, disallowed ambiguous answer formats, strict parser behavior, and exhaustive bounded state invariants for the proposed fraction bar, complete fail-closed human reasoning rubric coverage, independent exact arithmetic checks for the five worked examples and five misconception examples, and a 36-asset revision crosswalk.
 
 **Execution evidence:** The test suite has not been executed in this ChatGPT environment against a checked-out repository. CI results must be examined on the draft PR; a passing test suite is necessary but insufficient for mathematical/pedagogical approval.
 
@@ -34,7 +34,7 @@ Source: owner-provided Grok-generated Grades 4–5 package in ChatGPT, 2026-10-0
 
 - No authoritative canonical skill IDs, official curriculum mappings, generator registrations, runtime activation, historical mastery changes, or claims of published Grade 4/5 coverage.
 - Independent mathematical review requested through #293; Muse QA independently checks test execution and fidelity against original owner-provided package.
-- Some original step-by-step hints, alternative phrasings, and detailed pedagogical rationale have been condensed in the normalized intake. Compare with original transcript before accepting a publishable source-of-truth conversion.
+- Some original step-by-step hints, alternative phrasings, and detailed pedagogical rationale have been condensed in the normalized intake. The 36-asset crosswalk identifies changes but does not replace the original verbatim source. Compare with original transcript before accepting a publishable source-of-truth conversion.
 - Exact arithmetic tests do **not** prove contextual wording, explanatory adequacy, accessibility, originality, or source-curriculum alignment.
 - Avoid overlap with taxonomy foundation #282 / PR #308 and MVE fraction arithmetic PR #303.
 - On review approval only, propose a coherent **separate** expansion to 100 practice questions, 15 worked examples, 15 misconceptions and 5 interactive specifications; no automatic publication.
