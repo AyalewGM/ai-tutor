@@ -1,0 +1,344 @@
+{
+  "schema_version": 1,
+  "mapping_version": "draft-1",
+  "authority": "app.canonical_problem_families.FAMILIES[*].canonical_skill_code",
+  "release_status": "DRAFT_NOT_FOR_RUNTIME",
+  "aliases": [
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_100",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_20",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.EQUATION_BALANCE",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.LONG_DIVISION",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.MULTI_DIGIT_MULTIPLICATION",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.MULTI_STEP_WORD_PROBLEMS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.ORDER_OF_OPERATIONS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.WORD_PROBLEM_WITHIN_100",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.WORD_PROBLEM_WITHIN_20",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.DATA.PICTURE_BAR_GRAPHS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.DECIMALS.PLACE_VALUE_OPERATIONS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.DIVISION.EQUAL_SHARING",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.FRACTIONS.ADD_SUBTRACT_UNLIKE",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.FRACTIONS.DECIMAL_NOTATION",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.FRACTIONS.EQUIVALENCE_OPERATIONS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.FRACTIONS.FRACTIONS_AS_NUMBERS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.FRACTIONS.MULTIPLY_DIVIDE",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.GEOMETRY.ANGLES_LINES_SHAPES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.GEOMETRY.CLASSIFY_2D_FIGURES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.GEOMETRY.COORDINATE_PLANE",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.GEOMETRY.IDENTIFY_COMPOSE_SHAPES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.GEOMETRY.QUADRILATERAL_ATTRIBUTES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.GEOMETRY.SHAPES_EQUAL_SHARES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.AREA_PERIMETER",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.CONVERSION",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.LENGTH_COMPARE",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.MONEY_COUNT",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.TELL_TIME_FIVE_MINUTES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.TELL_TIME_HOUR_HALF_HOUR",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.TELL_TIME_MINUTE_ELAPSED",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.VOLUME",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MULTIPLICATION.EQUAL_GROUPS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MULTIPLICATION.MULTIPLICATIVE_COMPARISON",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MULTIPLICATION.PROPERTIES_FACT_FAMILIES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.NUMBER_SENSE.COUNT_COMPARE_TO_120",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.NUMBER_SENSE.FACTORS_MULTIPLES_PATTERNS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.NUMBER_SENSE.PATTERNS_TWO_RULES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.NUMBER_SENSE.SKIP_COUNTING_PATTERNS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.PLACE_VALUE.HUNDREDS_TENS_ONES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.PLACE_VALUE.MULTI_DIGIT",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.PLACE_VALUE.ROUNDING_THREE_DIGIT",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.PLACE_VALUE.TENS_ONES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "evidence": [],
+      "reviewed_by": null
+    }
+  ]
+}
