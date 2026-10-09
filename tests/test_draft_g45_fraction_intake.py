@@ -212,3 +212,72 @@ def test_equivalence_pair_multiplier_constraints() -> None:
         assert multiplier in PRACTICE["policies"]["equivalence_multipliers"]
         multipliers.append(multiplier)
     assert len(multipliers) == len(set(multipliers)) == 2
+
+def test_source_fidelity_crosswalk_covers_every_draft_asset() -> None:
+    crosswalk = json.loads(
+        (DRAFT / "source_fidelity_review.draft.json").read_text(encoding="utf-8")
+    )
+    assert crosswalk["status"] == "DRAFT_UNVERIFIED"
+    assert crosswalk["review_status"] == "PENDING"
+    practice_ids = {item["item_id"] for item in PRACTICE["practice_items"]}
+    support_ids = {
+        item["example_id"] for item in SUPPORT["worked_examples"]
+    } | {
+        item["misconception_id"] for item in SUPPORT["misconceptions"]
+    } | {
+        item["spec_id"] for item in SUPPORT["visualization_specs"]
+    }
+    practice = crosswalk["practice_revisions"]
+    supporting = crosswalk["supporting_revisions"]
+    assert len(practice) == crosswalk["practice_item_count"] == 25
+    assert len(supporting) == crosswalk["supporting_item_count"] == 11
+    assert {item["item_id"] for item in practice} == practice_ids
+    assert {item["source_id"] for item in supporting} == support_ids
+    assert all(item["review_status"] == "PENDING" for item in practice + supporting)
+    assert all(item["normalization"] and item["review_note"] for item in supporting)
+    assert all(item["normalization"] and item["review_note"] for item in practice)
+
+
+def test_worked_examples_exact_math_and_required_forms() -> None:
+    examples = {x["example_id"]: x for x in SUPPORT["worked_examples"]}
+    assert parse_fraction(examples["we-01"]["final_answer"]) == Fraction(5, 8)
+    # The specified denominator 20 is essential; 3/5 alone does not answer it.
+    assert examples["we-02"]["final_answer"] == "12/20"
+    assert parse_fraction(examples["we-02"]["final_answer"]) == Fraction(3, 5)
+    left, right = examples["we-03"]["final_answer"].split(" < ")
+    assert parse_fraction(left) == Fraction(3, 4)
+    assert parse_fraction(right) == Fraction(5, 6)
+    assert parse_fraction(left) < parse_fraction(right)
+    assert parse_fraction(examples["we-04"]["final_answer"]) == (
+        Fraction(4, 9) + Fraction(2, 9)
+    )
+    assert is_simplest(examples["we-04"]["final_answer"])
+    assert parse_fraction(examples["we-05"]["final_answer"]) == (
+        Fraction(9, 10) - Fraction(4, 10)
+    )
+    assert is_simplest(examples["we-05"]["final_answer"])
+    assert all(example["steps"] for example in examples.values())
+
+
+def test_misconception_examples_are_mathematically_false() -> None:
+    # The examples must demonstrate actual wrong reasoning, not a true statement.
+    assert Fraction(1, 5) + Fraction(2, 5) != Fraction(3, 10)
+    assert Fraction(2, 3) != Fraction(4, 3)
+    assert not (Fraction(1, 8) > Fraction(1, 3))
+    assert Fraction(1, 4) != Fraction(1, 5)
+    assert not (Fraction(4, 5) > Fraction(5, 6))
+    misconceptions = SUPPORT["misconceptions"]
+    assert len({x["misconception_id"] for x in misconceptions}) == 5
+    assert all(
+        x["incorrect"] and x["diagnostic"] and x["correct"] and x["remediation"]
+        and x["review_status"] == "PENDING"
+        for x in misconceptions
+    )
+
+
+def test_misconception_diagnostics_exact_oracles() -> None:
+    assert Fraction(2, 6) + Fraction(3, 6) == Fraction(5, 6)
+    assert Fraction(3, 4) != Fraction(6, 4)
+    assert Fraction(1, 4) > Fraction(1, 6)
+    assert Fraction(3, 5) == 3 * Fraction(1, 5)
+    assert 1 - Fraction(7, 8) < 1 - Fraction(5, 6)
