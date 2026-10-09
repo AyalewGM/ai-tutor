@@ -20,7 +20,7 @@ ORACLES = {
 
 
 def test_isolated_draft_inventory_and_scaffolding() -> None:
-    assert DATA["status"] == DATA["review_status"].replace("PENDING", "DRAFT_UNVERIFIED")
+    assert DATA["status"] == "DRAFT_UNVERIFIED"
     assert DATA["review_status"] == "PENDING"
     assert DATA["runtime_activation"] is False
     assert DATA["mastery_updater"] is False
