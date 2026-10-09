@@ -460,8 +460,8 @@ test('mastery check re-imposes assessment restrictions and completes on independ
   await expect(page.getByRole('button', { name: 'Hint' })).toBeDisabled();
   await expect(page.getByRole('button', { name: "I don't understand" })).toBeDisabled();
 
-  // Mastery success transitions directly to completion rather than the
-  // intermediate guided-practice status.
+  // The mastery-check success transitions directly to completion, not the
+  // intermediate 'Correct. Keep going.' status used during guided practice.
   await solveCurrentProblem(page, null, false);
   await expect(page.getByText('Skill complete')).toBeVisible({ timeout: 15000 });
   await expect(page.getByText('You answered correctly and independently in the mastery check.')).toBeVisible();

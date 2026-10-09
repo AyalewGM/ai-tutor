@@ -9,7 +9,11 @@ from app.curriculum_models import CanonicalSkill, ProblemFamily
 
 def test_registry_is_idempotent_and_canonical_only():
     engine = create_engine("sqlite:///:memory:")
-    Base.metadata.create_all(engine)
+    # Create only the two JSONB-free tables the registry touches; the full
+    # schema uses PostgreSQL JSONB, which SQLite cannot render.
+    Base.metadata.create_all(
+        engine, tables=[CanonicalSkill.__table__, ProblemFamily.__table__]
+    )
     with Session(engine) as db:
         assert register_problem_families(db) == len(FAMILIES)
         db.commit()
