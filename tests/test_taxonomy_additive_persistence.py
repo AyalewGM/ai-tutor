@@ -47,13 +47,13 @@ def test_generatorless_canonical_skill_additive_persistence():
                     select(CanonicalSkill.id).where(CanonicalSkill.code == code)
                 ) is not None
                 assert dict(
-                    session.execute(select(CanonicalSkill.code, CanonicalSkill.id))
+                    session.execute(select(CanonicalSkill.code, CanonicalSkill.id)).all()
                 ).items() >= original.items()
                 assert set(
-                    session.execute(select(StudentSkill.student_id, StudentSkill.skill_id))
+                    session.execute(select(StudentSkill.student_id, StudentSkill.skill_id)).all()
                 ) == mastery
                 assert dict(
-                    session.execute(select(MasteryEvent.id, MasteryEvent.skill_id))
+                    session.execute(select(MasteryEvent.id, MasteryEvent.skill_id)).all()
                 ) == events
             finally:
                 session.rollback()
