@@ -97,6 +97,7 @@ from app.domains import elementary_data_patterns as _elementary_data_mod
 from app.domains import estimation as _est_mod
 from app.domains import factors_multiples as _fac_mod
 from app.domains import financial_budget_capacity as _financial_budget_mod
+from app.domains import financial_percent_unit_depth as _financial_percent_unit_mod
 from app.domains import financial_simple_interest as _financial_interest_mod
 from app.domains import fraction_decimal_depth as _fraction_decimal_depth_mod
 from app.domains import fractions as _frac_mod
@@ -124,7 +125,7 @@ _DOMAIN_MODULES = [
     _alg_mod, _advanced_number_mod, _advanced_mod, _advanced_hs_mod, _geo_mod, _geo_reasoning_mod, _data_mod,
     _measurement_spatial_mod, _transform_similarity_mod, _elementary_data_mod,
     _bivariate_sampling_mod, _shared_gap_mod, _triangle_congruence_mod,
-    _financial_interest_mod, _financial_budget_mod,
+    _financial_interest_mod, _financial_budget_mod, _financial_percent_unit_mod,
     _add_mod, _sub_mod, _mul_mod, _div_mod,
     _wn_mod, _pv_mod, _fac_mod, _ooo_mod, _int_mod, _est_mod, _prop_math_mod,
 ]
