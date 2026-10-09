@@ -191,7 +191,7 @@ def _generate_one(structure: str, variant: int, seed: int) -> dict:
             "Double number line connecting item count to total dollars.",
             f"{units} x ${unit_price} = ${total}.")
     if structure == "ratio-percent-discount":
-        percent = rng.choice([10, 20, 25, 50])
+        percent = rng.choice([10, 20, 25])
         price = 20 * n(3, 25)
         discount = price * percent // 100
         final = price - discount
