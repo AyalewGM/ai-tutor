@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from collections import Counter
 from fractions import Fraction
+import json
+from pathlib import Path
 
 import pytest
 
@@ -117,3 +119,47 @@ def test_invalid_variant_type_rejected(bad: object) -> None:
 def test_variant_bounds_rejected(bad: int) -> None:
     with pytest.raises(ValueError):
         generate(7, bad)
+
+
+def test_independent_unseen_transfer_per_concept() -> None:
+    path = (
+        Path(__file__).resolve().parents[1]
+        / "docs/curriculum/drafts/draft-word-problem-structures-v0"
+        / "conceptual_transfer.draft.json"
+    )
+    data = json.loads(path.read_text(encoding="utf-8"))
+    assert data["status"] == "DRAFT_UNVERIFIED"
+    assert data["review_status"] == "PENDING"
+    assert data["runtime_activation"] is False
+    assert data["mastery_activation"] is False
+    assert data["canonical_skill_ids"] == []
+    assert data["curriculum_mappings"] == []
+    transfers = data["transfers"]
+    assert len(transfers) == 12
+    assert {x["provisional_structure"] for x in transfers} == set(STRUCTURES)
+    assert len({x["question"] for x in transfers}) == 12
+    independent_answers = {
+        "fraction-equivalence": Fraction(5 * 36, 9),
+        "fraction-compare": Fraction(1 if 7 * 8 > 5 * 10 else 2),
+        "fraction-unlike-add": Fraction(3, 4) + Fraction(5, 6),
+        "integer-temperature-change": Fraction(-9 - 7),
+        "integer-subtract-negative": Fraction(-12 + 7),
+        "integer-distance": Fraction(abs(9 - (-13))),
+        "ratio-recipe-scale": Fraction(7 * 10, 4),
+        "ratio-partition": Fraction(168 * 3, 3 + 5),
+        "percent-original-price": Fraction(96 * 100, 100 - 20),
+        "algebra-two-sided": Fraction(47 - 5, 9 - 3),
+        "algebra-slope": Fraction(-1 - 11, 5 - (-3)),
+        "algebra-linear-evaluation": Fraction(7 * 9 + 11),
+    }
+    for transfer in transfers:
+        assert transfer["status"] == "DRAFT_UNVERIFIED"
+        assert transfer["review_status"] == "PENDING"
+        assert Fraction(transfer["expected"]) == independent_answers[
+            transfer["provisional_structure"]
+        ]
+        assert transfer["required_reasoning"]
+        assert transfer["independent_check"]
+        assert len(transfer["assessment_rubric"]) == 3
+    training = {x["question"] for x in generate(20261009, 10)["items"]}
+    assert not (training & {x["question"] for x in transfers})
