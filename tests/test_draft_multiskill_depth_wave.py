@@ -198,8 +198,6 @@ def test_diagnostics_and_unseen_transfer_exact_oracles() -> None:
         operands = diag["operands"]
         op = diag["operation"]
         if op == "fraction_add":
-            from fractions import Fraction
-
             actual = Fraction(operands["a"] + operands["b"], operands["d"])
             assert str(actual) == expected
         else:
