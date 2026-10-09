@@ -306,7 +306,7 @@ STRUCTURES = (
 def generate(seed: int = 20261009, variants_per_structure: int = 6) -> dict:
     """Generate deterministic, reviewable variants; no runtime side effects."""
     if not isinstance(seed, int) or isinstance(seed, bool):
-        raise ValueError("seed must be an integer")
+        raise TypeError("seed must be an integer")
     if (\n        not isinstance(variants_per_structure, int)\n        or isinstance(variants_per_structure, bool)\n        or not 1 <= variants_per_structure <= 50\n    ):
         raise ValueError("variants_per_structure must be between 1 and 50")
     items = [
