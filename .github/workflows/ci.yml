@@ -40,6 +40,9 @@ jobs:
       - name: Lint
         run: ruff check .
 
+      - name: Validate canonical alias inventory (read-only)
+        run: python scripts/validate_canonical_alias_map.py
+
       - name: Migrate database
         run: alembic upgrade head
 
