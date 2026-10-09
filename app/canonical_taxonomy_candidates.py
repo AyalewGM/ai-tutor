@@ -10,15 +10,27 @@ from app.canonical_skill_taxonomy import (
 )
 
 CANDIDATE_TAXONOMY = CanonicalTaxonomy(
-    version="0.1.0-candidates-r3",
+    version="0.1.0-candidates-r4",
     skills={
-        "MATH.ARITHMETIC.ADD_SUB_WITHIN_20": CanonicalSkillDefinition(
-            code="MATH.ARITHMETIC.ADD_SUB_WITHIN_20",
-            name="Add and subtract within 20",
+        "MATH.ARITHMETIC.ADD_WITHIN_20": CanonicalSkillDefinition(
+            code="MATH.ARITHMETIC.ADD_WITHIN_20",
+            name="Add within 20",
             description=(
-                "Find a sum or nonnegative difference of two whole-number inputs, "
-                "where each input and the result lie in the inclusive range 0–20. "
-                "Addition and subtraction require separate demonstrations."
+                "Find the sum a+b of two whole-number inputs where a>=0, b>=0, "
+                "and a+b lies in the inclusive range 0–20. Include zero, "
+                "crossing-ten and non-crossing-ten cases; contextual modeling, "
+                "unknown-addend equations and automatic fluency are separate skills."
+            ),
+            review_state=SkillReviewState.DRAFT,
+        ),
+        "MATH.ARITHMETIC.SUBTRACT_WITHIN_20": CanonicalSkillDefinition(
+            code="MATH.ARITHMETIC.SUBTRACT_WITHIN_20",
+            name="Subtract within 20",
+            description=(
+                "Find the nonnegative difference a-b of two whole-number inputs "
+                "where 0<=b<=a<=20. Include zero results, crossing-ten and "
+                "non-crossing-ten cases; contextual modeling, unknown-subtrahend "
+                "equations and automatic fluency are separate skills."
             ),
             review_state=SkillReviewState.DRAFT,
         ),
@@ -34,15 +46,25 @@ CANDIDATE_TAXONOMY = CanonicalTaxonomy(
             ),
             review_state=SkillReviewState.DRAFT,
         ),
-        "MATH.NUMBER_SENSE.COUNT_COMPARE_TO_120": CanonicalSkillDefinition(
-            code="MATH.NUMBER_SENSE.COUNT_COMPARE_TO_120",
-            name="Count and compare whole numbers to 120",
+        "MATH.NUMBER_SENSE.COUNT_FORWARD_BY_ONE_TO_120": CanonicalSkillDefinition(
+            code="MATH.NUMBER_SENSE.COUNT_FORWARD_BY_ONE_TO_120",
+            name="Count forward by ones to 120",
             description=(
-                "Draft composite placeholder pending Architecture decomposition: "
-                "continue a forward-by-one whole-number sequence from an arbitrary "
-                "starting value through at most 120, and independently compare two "
-                "whole-number magnitudes in 0–120. Store evidence separately and do "
-                "not infer either component from the other."
+                "Continue a forward-by-one whole-number sequence from an arbitrary "
+                "starting value in 0–120 without exceeding 120, including sequences "
+                "that cross from 99 to 100. Backward counting, skip counting, "
+                "collection counting and magnitude comparison are separate skills."
+            ),
+            review_state=SkillReviewState.DRAFT,
+        ),
+        "MATH.NUMBER_SENSE.COMPARE_WHOLE_NUMBERS_TO_120": CanonicalSkillDefinition(
+            code="MATH.NUMBER_SENSE.COMPARE_WHOLE_NUMBERS_TO_120",
+            name="Compare whole numbers to 120",
+            description=(
+                "Compare two whole numbers in the inclusive range 0–120 by magnitude "
+                "and represent the relationship with <, =, or >. Include equal cases "
+                "and pairs around 99, 100 and 120. Sequence production, ordering lists "
+                "and place-value explanation are separate skills."
             ),
             review_state=SkillReviewState.DRAFT,
         ),
