@@ -75,6 +75,8 @@ test("interactive teaching is gated and does not award mastery", async () => {
   assert.match(ui, /type="submit"/);
   assert.match(ui, /Show another representation/);
   assert.match(ui, /ProblemVisual/);
+  assert.match(workspace, /VITE_ENABLE_CONCEPT_GUIDED_PILOT === "true"/);
+  assert.match(workspace, /conceptGuidedPilotEnabled &&/);
   assert.match(workspace, /workspace\.state === "GUIDED_PRACTICE"/);
   assert.match(workspace, /workspace\.state === "REMEDIATION"/);
   assert.match(workspace, /concept="fraction-equivalence"/);
