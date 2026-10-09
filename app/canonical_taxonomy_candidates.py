@@ -10,7 +10,7 @@ from app.canonical_skill_taxonomy import (
 )
 
 CANDIDATE_TAXONOMY = CanonicalTaxonomy(
-    version="0.1.0-candidates",
+    version="0.1.0-candidates-r3",
     skills={
         "MATH.ARITHMETIC.ADD_SUB_WITHIN_20": CanonicalSkillDefinition(
             code="MATH.ARITHMETIC.ADD_SUB_WITHIN_20",
@@ -26,9 +26,11 @@ CANDIDATE_TAXONOMY = CanonicalTaxonomy(
             code="MATH.ARITHMETIC.WORD_PROBLEM_WITHIN_20",
             name="One-step addition and subtraction word problems within 20",
             description=(
-                "Model and answer a single-operation joining, separating, part-whole, "
-                "or comparison story with the unknown in any meaningful position. "
-                "Every quantity, including the answer, lies between 0 and 20."
+                "Model and solve a one-operation join, separate, part-whole, or "
+                "comparison story. The unknown may be the result, change, start, part, "
+                "whole, difference, larger quantity, or smaller quantity. Every modeled "
+                "quantity, including an inferred answer, lies in the inclusive range 0–20. "
+                "Each structure and unknown role requires distinct assessment evidence."
             ),
             review_state=SkillReviewState.DRAFT,
         ),
@@ -36,10 +38,11 @@ CANDIDATE_TAXONOMY = CanonicalTaxonomy(
             code="MATH.NUMBER_SENSE.COUNT_COMPARE_TO_120",
             name="Count and compare whole numbers to 120",
             description=(
-                "Composite candidate: continue a forward-by-one number sequence "
-                "from an arbitrary starting value through at most 120, and "
-                "independently compare whole-number magnitudes in 0–120. "
-                "Do not infer either component from the other."
+                "Draft composite placeholder pending Architecture decomposition: "
+                "continue a forward-by-one whole-number sequence from an arbitrary "
+                "starting value through at most 120, and independently compare two "
+                "whole-number magnitudes in 0–120. Store evidence separately and do "
+                "not infer either component from the other."
             ),
             review_state=SkillReviewState.DRAFT,
         ),
