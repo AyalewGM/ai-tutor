@@ -35,7 +35,7 @@ def test_database_identity_and_evidence_references():
             assert set(session.execute(select(StudentSkill.skill_id)).scalars()) <= local_ids
             mastery_events = session.execute(select(MasteryEvent)).scalars().all()
             assert {event.skill_id for event in mastery_events} <= local_ids
-            problem_skills = dict(session.execute(select(Problem.id, Problem.primary_skill_id)))
+            problem_skills = dict(session.execute(select(Problem.id, Problem.primary_skill_id)).all())
             assert set(problem_skills.values()) <= local_ids
             attempt_ids = set(session.execute(select(Attempt.id)).scalars())
             assert {event.attempt_id for event in mastery_events if event.attempt_id} <= attempt_ids
