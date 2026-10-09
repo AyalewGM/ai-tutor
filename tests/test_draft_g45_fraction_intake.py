@@ -90,7 +90,7 @@ def test_all_answers_match_independent_exact_oracles() -> None:
             answers = text.split(";")
             assert len(answers) == len(set(answers)) == 2
             assert all(parse_fraction(x) == expected for x in answers)
-            assert {parse_fraction(x).denominator for x in answers} == {10, 15}
+            assert {int(x.split("/")[1]) for x in answers} == {10, 15}
         elif contract == "ordered_fraction_sequence":
             assert [parse_fraction(x) for x in text.split(";")] == expected
         elif contract in {"boolean_with_human_justification"}:
