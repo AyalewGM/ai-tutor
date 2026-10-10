@@ -1,40 +1,57 @@
-# Maryland cross-grade canonical scope candidates — r1
+# Maryland cross-grade canonical scope candidates — r2
 
 **Status:** DRAFT / not authoritative / not for runtime  
-**Architecture basis:** [Issue #282 decision 6093222041](https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6093222041)  
+**Architecture basis:** [Issue #282 decision 6094147290](https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6094147290)  
+**Independent review basis:** [PR #326 review 6094115259](https://github.com/AyalewGM/ai-tutor/pull/326#issuecomment-6094115259)  
 **Source-mapping context:** draft PR #325; all expectation relations remain `PROVISIONAL_NOT_ACCEPTED`.
 
-## Purpose
+## Purpose and r2 disposition
 
-The existing local seeds `M7.G.GEO` and `M7.SP.PROB` combine independently assessable mathematics now placed across Maryland Grades 7 and 8. Architecture determined that neither local seed may become one canonical atom or an equivalence alias. This artifact supplies eight bounded, machine-readable candidate cards for independent mathematical review.
+The local seeds `M7.G.GEO` and `M7.SP.PROB` combine independently assessable mathematics now placed across Maryland Grades 7 and 8. They remain preserved local composites, never canonical atoms or equivalence aliases.
 
-| Proposed candidate | Boundary |
+Independent Mathematical Review approved five r1 cards for mathematical scope and requested changes to three. Architecture then directed Content to replace the broad angle candidate with four bounded components, correct likelihood-scale semantics, and remove expected-count mastery from experimental frequency. This r2 implements only that handoff.
+
+The five unchanged, mathematically approved cards remain DRAFT:
+
+- `MATH.GEO.CIRCLE.CIRCUMFERENCE`
+- `MATH.GEO.CIRCLE.AREA`
+- `MATH.GEO.TRIANGLE.ANGLE_RELATIONSHIPS`
+- `MATH.PROB.MODEL.COMPARE_THEORY_EXPERIMENT`
+- `MATH.PROB.COMPOUND.SAMPLE_SPACE`
+
+The six changed or new cards require limited independent re-review:
+
+| Draft candidate | r2 boundary |
 |---|---|
-| `MATH.GEO.CIRCLE.CIRCUMFERENCE` | Linear measure around a circle via (C=2\pi r=\pi d) |
-| `MATH.GEO.CIRCLE.AREA` | Square measure via (A=\pi r^2) |
-| `MATH.GEO.ANGLE.RELATIONSHIPS` | Complementary, supplementary, vertical, adjacent and linear-pair reasoning |
-| `MATH.GEO.TRIANGLE.ANGLE_RELATIONSHIPS` | Triangle interior-sum and exterior-angle reasoning |
-| `MATH.PROB.EVENT.LIKELIHOOD_0_TO_1` | Interpret and compare likelihood on the inclusive probability scale |
-| `MATH.PROB.EXPERIMENTAL.FREQUENCY` | Experimental probability, long-run relative frequency and expected-count uncertainty |
-| `MATH.PROB.MODEL.COMPARE_THEORY_EXPERIMENT` | Compare theoretical models with finite experimental evidence |
-| `MATH.PROB.COMPOUND.SAMPLE_SPACE` | Two-stage sample spaces and bounded compound-event probabilities |
+| `MATH.GEO.ANGLE.COMPLEMENT` | Complementary-angle reasoning from an explicit 90° total |
+| `MATH.GEO.ANGLE.SUPPLEMENT` | Supplementary reasoning from an explicit 180° total; linear pair is an evidence context |
+| `MATH.GEO.ANGLE.VERTICAL_EQUALITY` | Equality of opposite, nonadjacent angles at an intersection |
+| `MATH.GEO.ANGLE.ADJACENT_ADDITION` | Angle addition only with a supplied whole, total, or partition |
+| `MATH.PROB.EVENT.LIKELIHOOD_0_TO_1` | Fraction/decimal bounds [0,1], percent bounds 0%–100%, and precise equal-likelihood semantics |
+| `MATH.PROB.EXPERIMENTAL.FREQUENCY` | Successes/trials and long-run stabilization; expected count is excluded from mastery |
 
-Each card includes inclusions, exclusions, prerequisite concepts, boundary examples, misconception probes and independent assessment criteria. Circle area and circumference are separate because they use different measures, formulas, units and misconception evidence. The three Grade 7 probability operations are separated from Grade 8 compound-event/sample-space evidence.
+## Angle composition and identity safety
 
-## Existing-code overlap
+`MATH.GEO.ANGLE.RELATIONSHIPS` is removed as a proposed atom. The Maryland angle-relationships outcome is represented only as a fail-closed reporting `ALL_OF` over the four bounded members. The profile receives no row, UUID, variant, attempt, diagnostic attempt, mastery event, evidence propagation, or duplicate credit.
 
-Repository generators already include circle circumference, circle area, complementary/supplementary angle, triangle missing-angle, experimental-probability, expected-count and theory-versus-experiment families. Those are recorded only as possible overlaps. A generator or passing test does not prove that a proposed canonical identity is mathematically complete, independently assessed or standards-aligned.
+The existing reviewed candidate registry in PR #308 and its inactive production taxonomy do not confirm persisted/reviewed complement or supplement identities. Accordingly, the familiar complement/supplement spellings in this artifact remain DRAFT candidates; generator-family literals are overlap evidence only and confer no identity or alias authority.
+
+## Probability separation
+
+Likelihood representations are now explicit: fractions and decimals lie in [0,1], while percent notation lies from 0% through 100%. For one event and its complement, probability 0.5 means equal likelihood; two distinct events may be equally likely at probabilities other than 0.5.
+
+Experimental frequency remains successes divided by trials plus qualitative long-run stabilization. Expected-count reasoning `n × p` is a distinct competency. The expectation-versus-guarantee example remains only as a non-credit misconception contrast and cannot establish expected-count mastery.
 
 ## Deliberate deferral
 
-`M8.G.TRANS` and `M8.G.SIM` are not re-authored here. Architecture preserves them as legacy placement identifiers with no current Maryland Grade 8 equivalence. New placement-neutral transformation, congruence, dilation and similarity candidates require authoritative Integrated Algebra I/II scope reconciliation before Content authors definitions.
+`M8.G.TRANS` and `M8.G.SIM` are not re-authored here. Architecture preserves them as legacy placement identifiers with no current Maryland Grade 8 equivalence. New placement-neutral transformation, congruence, dilation and similarity candidates require authoritative Integrated Algebra I/II reconciliation before Content authors definitions.
 
 ## Required review sequence
 
-1. Independent Mathematical Review checks every card's correctness, boundaries, decomposition, prerequisites, examples, misconceptions and assessment evidence.
-2. Architecture confirms or revises proposed code identity where overlap with historical broad identities remains.
-3. Standards Mapping independently reviews expectation-to-skill relations; no relation is accepted from this artifact.
+1. Independent Mathematical Review re-reviews only the six changed/new r2 cards at the exact new head.
+2. Architecture identity decisions remain binding; no generator literal becomes alias authority.
+3. Standards Mapping independently reviews expectation-to-skill relations; no relation is accepted here.
 4. Muse evaluates implemented assessment and persistence behavior only after accepted contracts exist.
 5. Devin/integration remains blocked from runtime activation.
 
-Production `TAXONOMY`, historical UUIDs, variants and learner evidence are unchanged. This bundle is separate from PR #308 so its already-approved r5 definitions and Gate-4 validation head are not disturbed.
+Production `TAXONOMY`, historical UUIDs, local-seed meanings, variants and learner evidence remain unchanged. PR #308 is untouched.
