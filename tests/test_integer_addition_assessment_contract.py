@@ -20,7 +20,6 @@ from app.effectiveness_api import AssessmentItemOut, RecordResponseRequest
 from app.effectiveness_models import AssessmentItem
 from app.services.learning_assessment import record_item_response
 
-
 FAMILY = "MATH.INT.ADD"
 # The independent oracle parses integer operands from the actual prompt;
 # it does not read the generated canonical_answer to compute its expectation.
