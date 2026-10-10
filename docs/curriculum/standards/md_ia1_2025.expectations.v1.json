@@ -1,0 +1,769 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "MD-IA1-2025-expectation-inventory-v1",
+  "status": "DRAFT_PROPOSED_NOT_VERIFIED",
+  "jurisdiction": {
+    "country": "United States",
+    "state": "Maryland",
+    "authority": "Maryland State Department of Education",
+    "authority_code": "MSDE"
+  },
+  "curriculum": {
+    "course_code": "MD_INTEGRATED_ALGEBRA_1_2027_28",
+    "course_title": "Integrated Algebra 1",
+    "standards_version": "2025 MCCRS",
+    "adopted_date": "2025-07",
+    "implementation_school_year": "2027-2028"
+  },
+  "provenance": {
+    "authoritative_crosswalk_url": "https://msde.maryland.gov/media/17822",
+    "legacy_source_url": "https://www.marylandpublicschools.org/about/Documents/DCAA/Math/revised/Integrated-Algebra-1-Crosswalk-A.pdf",
+    "checked_date": "2026-10-09",
+    "source_notes": [
+      "The current MSDE media artifact identifies itself as the Integrated Algebra 1 Maryland College and Career Ready Standards for Mathematics crosswalk.",
+      "It records adoption in July 2025 and implementation in SY 2027-2028.",
+      "Scope summaries are editorial paraphrases; reviewers must compare them with the official wording."
+    ]
+  },
+  "reconciliation": {
+    "official_expectation_count": 30,
+    "repository_existing_expectation_rows": 13,
+    "unmapped_expectations": 17,
+    "traditional_algebra_course_code": "MD_ALGEBRA_1_2026_27",
+    "traditional_pack_status": "SEPARATE_COURSE_IDENTITY_NOT_CROSSWALKED_BY_THIS_MANIFEST",
+    "warning": "Traditional Algebra I local skills and Integrated Algebra I expectation identities must not be merged or treated as equivalents by course-name similarity."
+  },
+  "safety": {
+    "activation": "FORBIDDEN",
+    "mapping_review_required": true,
+    "new_canonical_ids_created": false,
+    "learner_mastery_mutation": false,
+    "verified_coverage_claim": false
+  },
+  "classification_legend": {
+    "standards_mapped": "A repository-specific expectation row and target were located; this does not mean the mapping is accepted or complete.",
+    "reviewed_skill": "Independent mathematical approval must cover the exact atomic target and definition.",
+    "generator_available": "A generator must target the exact reviewed identity; local content is not enough.",
+    "validated_practice": "Practice must be independently validated against both expectation and skill scope.",
+    "assessment_ready": "An accepted independent assessment contract must exist.",
+    "verified_mastery_evidence": "Learner evidence is never inferred from mappings, generators, practice, or tests."
+  },
+  "expectations": [
+    {
+      "expectation_id": "IA1.AT.A.1",
+      "domain": "AT",
+      "cluster": "A",
+      "source_page": 2,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Rewrite and interpret linear and exponential expressions to explain key relationship properties.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.AT.A.1"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.B.2",
+      "domain": "AT",
+      "cluster": "B",
+      "source_page": 3,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Create and solve one-variable linear, exponential, and isolated absolute-value equations; justify and interpret solutions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.B.3",
+      "domain": "AT",
+      "cluster": "B",
+      "source_page": 4,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Create and solve one-variable inequalities; represent and interpret solution sets in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.B.4",
+      "domain": "AT",
+      "cluster": "B",
+      "source_page": 4,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Create and graph linear and exponential equations in two variables and interpret their solution sets.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.B.5",
+      "domain": "AT",
+      "cluster": "B",
+      "source_page": 5,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Create, solve, and analyze contextual systems of two linear equations in two variables.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.B.6",
+      "domain": "AT",
+      "cluster": "B",
+      "source_page": 5,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Create and graph linear inequalities in two variables as contextual half-plane constraints.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.B.7",
+      "domain": "AT",
+      "cluster": "B",
+      "source_page": 6,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Represent and analyze contextual systems of two linear inequalities and their intersecting solution regions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.B.8",
+      "domain": "AT",
+      "cluster": "B",
+      "source_page": 6,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Model and solve optimization problems using systems of linear inequalities and justified feasible optima.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.AT.B.8"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.B.9",
+      "domain": "AT",
+      "cluster": "B",
+      "source_page": 6,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Use technology to solve a linear–exponential system and interpret its contextual solution.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.C.10",
+      "domain": "AT",
+      "cluster": "C",
+      "source_page": 7,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Identify, represent, and analyze functions using domain, range, notation, tables, graphs, equations, and context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.AT.C.10"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.C.11",
+      "domain": "AT",
+      "cluster": "C",
+      "source_page": 8,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Calculate or estimate and interpret average rate of change for linear and exponential functions across representations.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.AT.C.11"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.C.12",
+      "domain": "AT",
+      "cluster": "C",
+      "source_page": 8,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Compare key properties of linear and exponential functions presented in different representations.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.AT.C.12"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.D.13",
+      "domain": "AT",
+      "cluster": "D",
+      "source_page": 8,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Analyze and model arithmetic and geometric sequences using recursive and explicit representations.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.AT.D.13"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.D.14",
+      "domain": "AT",
+      "cluster": "D",
+      "source_page": 9,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Represent functions with tables and graphs and interpret contextual features, including piecewise and absolute-value functions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.AT.D.14"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.D.15",
+      "domain": "AT",
+      "cluster": "D",
+      "source_page": 10,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Distinguish and construct linear versus exponential contextual models.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.AT.D.15"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.D.16",
+      "domain": "AT",
+      "cluster": "D",
+      "source_page": 10,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Analyze how input and output changes transform a function graph and affect contextual meaning.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.AT.D.16"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.AT.D.17",
+      "domain": "AT",
+      "cluster": "D",
+      "source_page": 11,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Find and interpret the inverse of a linear function in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.AT.D.17"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.GR.A.1",
+      "domain": "GR",
+      "cluster": "A",
+      "source_page": 12,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Apply rotations, reflections, and translations and use preserved properties to verify congruence.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.GR.A.1"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.GR.A.2",
+      "domain": "GR",
+      "cluster": "A",
+      "source_page": 12,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Use rigid-motion congruence to connect corresponding triangle sides and angles.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.GR.B.3",
+      "domain": "GR",
+      "cluster": "B",
+      "source_page": 13,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Apply triangle-congruence theorems to verify congruence and solve unknown measures.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.GR.B.4",
+      "domain": "GR",
+      "cluster": "B",
+      "source_page": 13,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Apply angle and slope criteria for parallel and perpendicular lines.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.GR.B.5",
+      "domain": "GR",
+      "cluster": "B",
+      "source_page": 13,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Use angle relationships and slope criteria to verify parallelogram properties.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.DS.A.1",
+      "domain": "DS",
+      "cluster": "A",
+      "source_page": 14,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Distinguish correlation from causation.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.DS.A.1"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.DS.A.2",
+      "domain": "DS",
+      "cluster": "A",
+      "source_page": 14,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Use random samples to reason about population parameters and sample representativeness.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.DS.A.3",
+      "domain": "DS",
+      "cluster": "A",
+      "source_page": 14,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Evaluate data representations, collection methods, and claims in arguments or reports.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.DS.A.4",
+      "domain": "DS",
+      "cluster": "A",
+      "source_page": 15,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Plan statistical investigations with answerable questions and valid data-collection methods.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.DS.B.5",
+      "domain": "DS",
+      "cluster": "B",
+      "source_page": 15,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Analyze and compare one-variable data visualizations using shape, center, and spread.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.DS.B.6",
+      "domain": "DS",
+      "cluster": "B",
+      "source_page": 16,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Construct and interpret two-way frequency tables, associations, independence, and joint or marginal probability.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "MATH.IA1.DS.B.6"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
+        "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
+      ]
+    },
+    {
+      "expectation_id": "IA1.DS.B.7",
+      "domain": "DS",
+      "cluster": "B",
+      "source_page": 16,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Model two-variable quantitative data with scatter plots and linear or exponential functions and assess fit.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    },
+    {
+      "expectation_id": "IA1.DS.B.8",
+      "domain": "DS",
+      "cluster": "B",
+      "source_page": 16,
+      "source_locator": "https://msde.maryland.gov/media/17822",
+      "scope_summary": "Interpret components of linear and exponential data models, with and without technology.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_IA1_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No expectation-specific repository mapping was found.",
+        "Do not invent a canonical ID to fill this gap."
+      ]
+    }
+  ]
+}
