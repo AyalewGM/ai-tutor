@@ -19,6 +19,7 @@ import ChatMessage from "../components/chat/ChatMessage";
 import LearnPanel from "../components/LearnPanel";
 import { GuidedDistributivePractice } from "../mve/GuidedDistributivePractice";
 import { InteractiveFractionBars, fractionComparisonTarget } from "../mve/InteractiveFractionBars";
+import { InteractiveFractionAddition } from "../mve/InteractiveFractionAddition";
 import LevelCrest from "../components/LevelCrest";
 import MathKeypad from "../components/MathKeypad";
 import ScratchPad from "../components/ScratchPad";
@@ -819,6 +820,20 @@ export default function Workspace() {
                             fractionComparisonTarget(workspace.problem.visual) ??
                             undefined
                           }
+                        />
+                      )}
+                    {(workspace.state === "GUIDED_PRACTICE" ||
+                      workspace.state === "REMEDIATION") &&
+                      workspace.problem?.visual?.type === "fraction_operation" &&
+                      workspace.problem.visual.operation === "+" && (
+                        <InteractiveFractionAddition
+                          key={workspace.problem.id}
+                          independentAssessment={
+                            workspace.state !== "GUIDED_PRACTICE" &&
+                            workspace.state !== "REMEDIATION"
+                          }
+                          first={workspace.problem.visual.first}
+                          second={workspace.problem.visual.second}
                         />
                       )}
                     <ScratchPad />

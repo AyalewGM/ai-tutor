@@ -69,3 +69,25 @@ test("simplification events reject forged reductions", () => {
   // Out of bounds:
   assert.equal(isMathInteractionEvent(simplified(fraction(2, 0), fraction(1, 2))), false);
 });
+
+const addition = (first, second, cd, sn, sd) => ({
+  schema_version: 1, type: "FRACTION_ADDITION_EXPLORED",
+  first, second, common_denominator: cd, sum_numerator: sn, sum_denominator: sd,
+});
+
+test("addition events accept only exact LCM-recomputed sums", () => {
+  assert.equal(isMathInteractionEvent(addition(fraction(1, 4), fraction(1, 2), 4, 3, 4)), true);
+  assert.equal(isMathInteractionEvent(addition(fraction(1, 3), fraction(1, 4), 12, 7, 12)), true);
+  assert.equal(isMathInteractionEvent(addition(fraction(3, 4), fraction(1, 2), 4, 5, 4)), true);
+});
+
+test("addition events reject forged sums and wrong denominators", () => {
+  // Wrong sum:
+  assert.equal(isMathInteractionEvent(addition(fraction(1, 4), fraction(1, 2), 4, 4, 4)), false);
+  // Common denominator is a multiple but not the LCM:
+  assert.equal(isMathInteractionEvent(addition(fraction(1, 4), fraction(1, 2), 8, 6, 8)), false);
+  // Sum denominator mismatched:
+  assert.equal(isMathInteractionEvent(addition(fraction(1, 4), fraction(1, 2), 4, 3, 8)), false);
+  // Out of bounds operand:
+  assert.equal(isMathInteractionEvent(addition(fraction(1, 0), fraction(1, 2), 2, 1, 2)), false);
+});

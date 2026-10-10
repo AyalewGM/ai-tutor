@@ -7,7 +7,7 @@ const source = await readFile(new URL("./fractionMath.ts", import.meta.url), "ut
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
 }).outputText;
-const { normalizeFractionParts, changeShadedParts, simplifyFraction, describeFraction, compareFractions, describeFractionComparison, isValidFractionParts, scaleFraction, validScaleFactors, describeEquivalence, describeSimplification } = await import(
+const { normalizeFractionParts, changeShadedParts, simplifyFraction, describeFraction, compareFractions, describeFractionComparison, isValidFractionParts, scaleFraction, validScaleFactors, describeEquivalence, describeSimplification, planFractionAddition, describeFractionAddition } = await import(
   `data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`
 );
 
@@ -99,4 +99,40 @@ test("simplification explanation divides by the exact common factor", () => {
     "Dividing numerator and denominator by 4 keeps the same amount shaded: 0/4 = 0/1.");
   assert.equal(describeSimplification({ numerator: 3, denominator: 4 }), null);
   assert.equal(describeSimplification({ numerator: 1, denominator: 7 }), null);
+});
+
+test("addition plans use the exact LCM and recompute scaled operands", () => {
+  assert.deepEqual(planFractionAddition({ numerator: 1, denominator: 4 }, { numerator: 1, denominator: 2 }), {
+    common_denominator: 4,
+    first_scaled: { numerator: 1, denominator: 4 },
+    second_scaled: { numerator: 2, denominator: 4 },
+    sum_numerator: 3, sum_denominator: 4,
+  });
+  assert.deepEqual(planFractionAddition({ numerator: 1, denominator: 3 }, { numerator: 1, denominator: 4 }),
+    {
+      common_denominator: 12,
+      first_scaled: { numerator: 4, denominator: 12 },
+      second_scaled: { numerator: 3, denominator: 12 },
+      sum_numerator: 7, sum_denominator: 12,
+    });
+});
+
+test("addition plans fail closed on invalid operands and out-of-model sums", () => {
+  assert.equal(planFractionAddition({ numerator: 1, denominator: 0 }, { numerator: 1, denominator: 2 }), null);
+  assert.equal(planFractionAddition(null, { numerator: 1, denominator: 2 }), null);
+  assert.equal(planFractionAddition({ numerator: 1, denominator: 7 }, { numerator: 1, denominator: 5 }), null);
+});
+
+test("addition plans allow bounded improper sums up to two wholes", () => {
+  const plan = planFractionAddition({ numerator: 12, denominator: 12 }, { numerator: 11, denominator: 12 });
+  assert.equal(plan.sum_numerator, 23);
+  assert.equal(plan.sum_denominator, 12);
+});
+
+test("addition explanation reports whole-number overflow honestly", () => {
+  const plan = planFractionAddition({ numerator: 3, denominator: 4 }, { numerator: 1, denominator: 2 });
+  assert.equal(describeFractionAddition(plan),
+    "With equal parts, 3/4 + 2/4 = 5/4, which is more than one whole: 1 and 1/4.");
+  const exact = planFractionAddition({ numerator: 1, denominator: 2 }, { numerator: 1, denominator: 4 });
+  assert.equal(describeFractionAddition(exact), "With equal parts, 2/4 + 1/4 = 3/4.");
 });

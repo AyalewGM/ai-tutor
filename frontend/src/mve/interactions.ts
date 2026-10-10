@@ -97,6 +97,15 @@ export interface FractionSimplifiedEvent extends MathInteractionBase {
   reduced: { numerator: number; denominator: number };
 }
 
+export interface FractionAdditionExploredEvent extends MathInteractionBase {
+  type: "FRACTION_ADDITION_EXPLORED";
+  first: { numerator: number; denominator: number };
+  second: { numerator: number; denominator: number };
+  common_denominator: number;
+  sum_numerator: number;
+  sum_denominator: number;
+}
+
 export interface IntegerDisplacementChangedEvent extends MathInteractionBase {
   type: "INTEGER_DISPLACEMENT_CHANGED";
   start: number;
@@ -142,7 +151,8 @@ export type MathInteractionEvent =
   | FractionShadingChangedEvent
   | FractionComparedEvent
   | FractionEquivalenceExploredEvent
-  | FractionSimplifiedEvent;
+  | FractionSimplifiedEvent
+  | FractionAdditionExploredEvent;
 
 function isPoint2D(value: unknown): value is Point2D {
   return Array.isArray(value) &&
@@ -249,6 +259,19 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
       // result must be genuine lowest terms.
       if (o.numerator * r.denominator !== r.numerator * o.denominator) return false;
       return gcdOf(r.numerator, r.denominator) === 1;
+    }
+    case "FRACTION_ADDITION_EXPLORED": {
+      if (!isBoundedFractionParts(event.first) || !isBoundedFractionParts(event.second)) return false;
+      const f = event.first;
+      const s = event.second;
+      const cd = event.common_denominator;
+      if (!Number.isSafeInteger(cd) || (cd as number) < 1 || (cd as number) > 24) return false;
+      // Fabricated sums fail: common_denominator must be the exact LCM and the
+      // sum must recompute exactly from the scaled operands.
+      if (cd !== (f.denominator / gcdOf(f.denominator, s.denominator)) * s.denominator) return false;
+      if (event.sum_denominator !== cd) return false;
+      const expected = f.numerator * ((cd as number) / f.denominator) + s.numerator * ((cd as number) / s.denominator);
+      return event.sum_numerator === expected;
     }
     case "DISTRIBUTIVE_STEP_VIEWED":
       return typeof event.step_id === "string" &&

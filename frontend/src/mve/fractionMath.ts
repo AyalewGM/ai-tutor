@@ -101,6 +101,43 @@ export function describeSimplification(parts: FractionParts): string | null {
   );
 }
 
+/** Exact common-denominator addition plan; null keeps callers fail-closed. */
+export interface FractionAddition {
+  common_denominator: number;
+  first_scaled: FractionParts;
+  second_scaled: FractionParts;
+  sum_numerator: number;
+  sum_denominator: number;
+}
+
+export function planFractionAddition(first: unknown, second: unknown, limit = 24): FractionAddition | null {
+  if (!isValidFractionParts(first) || !isValidFractionParts(second)) return null;
+  const lcd = (first.denominator / gcd(first.denominator, second.denominator)) * second.denominator;
+  if (lcd > limit) return null;
+  const sum = first.numerator * (lcd / first.denominator) + second.numerator * (lcd / second.denominator);
+  if (sum > 2 * lcd) return null;
+  return {
+    common_denominator: lcd,
+    first_scaled: { numerator: first.numerator * (lcd / first.denominator), denominator: lcd },
+    second_scaled: { numerator: second.numerator * (lcd / second.denominator), denominator: lcd },
+    sum_numerator: sum,
+    sum_denominator: lcd,
+  };
+}
+
+/** Deterministic addition explanation, including honest >1 sums. */
+export function describeFractionAddition(plan: FractionAddition): string {
+  const { first_scaled, second_scaled, sum_numerator: s, sum_denominator: d } = plan;
+  const whole = Math.floor(s / d);
+  const rest = s % d;
+  const tail =
+    s === 0 ? "" :
+    whole === 0 ? ` ${s}/${d}.` :
+    rest === 0 ? ` ${s}/${d}, which is ${whole} whole${whole === 1 ? "" : "s"}.` :
+    ` ${s}/${d}, which is more than one whole: ${whole} and ${rest}/${d}.`;
+  return `With equal parts, ${first_scaled.numerator}/${d} + ${second_scaled.numerator}/${d} =${tail}`;
+}
+
 /** Explanatory feedback only; this does not score answers or mastery. */
 export function describeFractionComparison(left: FractionParts, right: FractionParts): string | null {
   const relation = compareFractions(left, right);
