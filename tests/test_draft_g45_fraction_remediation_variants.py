@@ -29,7 +29,7 @@ def _independent_oracle(item: dict[str, str]) -> Fraction:
         a, b, c, d = nums
         return max(Fraction(a, b), Fraction(c, d))
     if family == "remaining-whole":
-        total, first, second = nums
+        total, _, first, _, second = nums
         after_first = Fraction(total) * (1 - Fraction(1, first))
         return after_first * (1 - Fraction(1, second))
     raise AssertionError(family)
