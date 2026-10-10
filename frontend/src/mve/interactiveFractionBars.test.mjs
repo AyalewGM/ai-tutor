@@ -24,7 +24,9 @@ test("native keyboard controls and live status avoid motion dependence", () => {
 });
 
 test("deterministic bounded fraction state and no answer scoring", () => {
-  assert.match(source, /import \{ normalizeFractionParts, changeShadedParts, describeFraction \} from "\.\/fractionMath"/);
+  for (const helper of ["normalizeFractionParts", "changeShadedParts", "describeFraction"]) {
+    assert.match(source, new RegExp(`import \\{[^}]*\\b${helper}\\b[^}]*\\} from "\\.\\/fractionMath"`));
+  }
   assert.doesNotMatch(source, /mastery|correct_index|gradeAnswer/);
 });
 
@@ -47,7 +49,8 @@ test("all fraction buttons share a labeled control group and status description"
   assert.match(source, /role="group"/);
   assert.match(source, /aria-label="Fraction exploration controls"/);
   assert.equal((source.match(/aria-describedby=\{statusId\}/g) ?? []).length, 3);
-  assert.equal((source.match(/focus-visible:outline-offset-2/g) ?? []).length, 3);
+  const buttonCount = (source.match(/<button type="button"/g) ?? []).length;
+  assert.equal((source.match(/focus-visible:outline-offset-2/g) ?? []).length, buttonCount);
   assert.match(source, /id=\{statusId\} role="status"/);
 });
 
