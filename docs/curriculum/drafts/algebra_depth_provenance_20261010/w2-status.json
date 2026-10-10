@@ -1,7 +1,8 @@
 {
   "package_id": "W2-G9-QUADRATIC-PATTERNS",
-  "revision": "DRAFT_V1",
+  "revision": "G9_DEPTH_R3_2026-10-10",
   "source_pr": 328,
+  "source_head": "2445f197259ff27b5c99dd2b45c4bcbc2e5292f8",
   "canonical": "MATH.F.QUADRATIC.INTERPRET",
   "canonical_review": "UNKNOWN",
   "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
@@ -10,10 +11,12 @@
     "w2-maryland-source.json"
   ],
   "math_review": "PENDING",
-  "pedagogy_review": "PENDING",
+  "pedagogy_review": "CHANGES_REQUIRED",
+  "pedagogy_evidence": "https://github.com/AyalewGM/ai-tutor/pull/328#issuecomment-6102771431",
   "muse_qa": "PENDING",
-  "practice": "NOT_VERIFIED",
-  "assessment": "NOT_VERIFIED",
+  "practice": "DRAFT_OFFLINE_GENERATOR_NOT_WIRED",
+  "assessment": "RESERVED_NAMESPACE_DRAFT_CONTRACT_BACKEND_NOT_IMPLEMENTED",
   "runtime_activation": false,
-  "mastery_writes": false
+  "mastery_writes": false,
+  "learner_data_writes": false
 }

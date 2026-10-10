@@ -9,8 +9,8 @@
   "sources": [
     "main exact-head 13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
     "PR #327 exact-head 5d4e613b4aa241384809e048c60ee082e6f14fe4",
-    "PR #328 current exact-head 64f673bfcfd75dfd104e88549681ff29f583b548",
-    "PR #325 exact-head 9343c2a25baaaacb5b127d1d6c9c4537a5671224",
+    "PR #328 current exact-head 2445f197259ff27b5c99dd2b45c4bcbc2e5292f8",
+    "PR #325 exact-head c1fa26a560ebea022202bace38d51e91ca5d08fa",
     "Pedagogical review pinned #327 5d4e613b4aa241384809e048c60ee082e6f14fe4 and #328 09fea6d0dc5c8d70d96d8c4e2812b6e1b7a98da4"
   ],
   "packages": [
@@ -50,7 +50,7 @@
       "seedable_practice": {
         "generator_status": "DRAFT_OFFLINE_GENERATOR_NOT_WIRED",
         "deterministic_replay": "LOCAL_TESTED_100_SEEDS_PER_FAMILY",
-        "invalid_value_rejection": "NEGATIVE_SEED_AND_MODE_REJECTED_LOCALLY",
+        "invalid_value_rejection": "NEGATIVE_NONINTEGER_BOOLEAN_SEED_AND_INVALID_MODE_REJECTED_LOCALLY",
         "independent_oracle": "LOCAL_EXACT_ORACLE_TESTED_NOT_INDEPENDENTLY_VERIFIED",
         "unseen_assessment": "RESERVED_MODE_SEPARATED_NAMESPACE_DRAFT_CONTRACT",
         "oracle_module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py"
@@ -62,7 +62,7 @@
         "browser_verified": false
       },
       "package_id": "W1-G9-LINEAR-MODELING",
-      "revision": "G9_DEPTH_R2_2026-10-10",
+      "revision": "G9_DEPTH_R3_2026-10-10",
       "source_package": {
         "pr": 327,
         "path": "docs/curriculum/drafts/learning-packages-wave1/content.draft.json",
@@ -220,7 +220,7 @@
       "seedable_practice": {
         "generator_status": "DRAFT_OFFLINE_GENERATOR_NOT_WIRED",
         "deterministic_replay": "LOCAL_TESTED_100_SEEDS_PER_FAMILY",
-        "invalid_value_rejection": "NEGATIVE_SEED_AND_MODE_REJECTED_LOCALLY",
+        "invalid_value_rejection": "NEGATIVE_NONINTEGER_BOOLEAN_SEED_AND_INVALID_MODE_REJECTED_LOCALLY",
         "independent_oracle": "LOCAL_EXACT_ORACLE_TESTED_NOT_INDEPENDENTLY_VERIFIED",
         "unseen_assessment": "RESERVED_MODE_SEPARATED_NAMESPACE_DRAFT_CONTRACT",
         "oracle_module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py"
@@ -232,7 +232,7 @@
         "browser_verified": false
       },
       "package_id": "W2-G9-QUADRATIC-PATTERNS",
-      "revision": "G9_DEPTH_R2_2026-10-10",
+      "revision": "G9_DEPTH_R3_2026-10-10",
       "source_package": {
         "pr": 328,
         "path": "docs/curriculum/drafts/learning-packages-wave2/content.draft.json",
@@ -389,7 +389,7 @@
       "seedable_practice": {
         "generator_status": "DRAFT_OFFLINE_GENERATOR_NOT_WIRED",
         "deterministic_replay": "LOCAL_TESTED_100_SEEDS_PER_FAMILY",
-        "invalid_value_rejection": "NEGATIVE_SEED_AND_MODE_REJECTED_LOCALLY",
+        "invalid_value_rejection": "NEGATIVE_NONINTEGER_BOOLEAN_SEED_AND_INVALID_MODE_REJECTED_LOCALLY",
         "independent_oracle": "LOCAL_EXACT_ORACLE_TESTED_NOT_INDEPENDENTLY_VERIFIED",
         "unseen_assessment": "RESERVED_MODE_SEPARATED_NAMESPACE_DRAFT_CONTRACT",
         "oracle_module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py"
@@ -401,7 +401,7 @@
         "browser_verified": false
       },
       "package_id": "W4-G9-EXPO-MODELING",
-      "revision": "G9_DEPTH_R2_2026-10-10",
+      "revision": "G9_DEPTH_R3_2026-10-10",
       "source_package": {
         "pr": 328,
         "path": "docs/curriculum/drafts/learning-packages-wave2/content.draft.json",
@@ -533,7 +533,7 @@
   "oracle_evidence": {
     "module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py",
     "test": "tests/test_algebra_depth_seeded_oracles.py",
-    "local_result": "303 passed",
+    "local_result": "314 passed",
     "scope": "100 exact deterministic seeds for each of linear-plan crossover, quadratic rectangle area, and exponential repeated change, plus namespace/non-disclosure checks",
     "limitation": "LOCAL_CONTENT_ORACLE_EVIDENCE_NOT_INDEPENDENT_BACKEND_OR_MASTERY_VERIFICATION"
   }

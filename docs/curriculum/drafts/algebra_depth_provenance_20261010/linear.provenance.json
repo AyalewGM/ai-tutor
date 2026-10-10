@@ -1,15 +1,20 @@
 {
   "package_id": "W1-G9-LINEAR-MODELING",
-  "revision": "DRAFT_1",
+  "revision": "G9_DEPTH_R3_2026-10-10",
   "source_pr": 327,
+  "source_head": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
   "canonical_skill": "MATH.F.LINEAR.SLOPE_INTERCEPT",
-  "canonical_approval": "UNKNOWN",
+  "canonical_approval": "UNKNOWN_NOT_AUTHORITATIVE",
   "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
   "mathematical_review": "PENDING",
-  "pedagogical_review": "PENDING",
+  "pedagogical_review": "CHANGES_REQUIRED",
+  "pedagogy_evidence": "https://github.com/AyalewGM/ai-tutor/pull/327#issuecomment-6102771217",
   "muse_qa": "PENDING",
-  "practice": "UNKNOWN",
-  "independent_oracle": "UNKNOWN",
+  "practice": "DRAFT_OFFLINE_GENERATOR_NOT_WIRED",
+  "independent_oracle": "LOCAL_TESTED_NOT_INDEPENDENTLY_VERIFIED",
+  "unseen_assessment": "RESERVED_NAMESPACE_DRAFT_CONTRACT",
+  "backend_trusted_scoring": "UNKNOWN_NOT_IMPLEMENTED",
   "runtime_activation": false,
-  "mastery_writes": false
+  "mastery_writes": false,
+  "learner_data_writes": false
 }

@@ -11,8 +11,10 @@ MODES = frozenset({"guided", "independent"})
 
 
 def _rng(seed: int, mode: str, family_salt: int) -> random.Random:
-    if mode not in MODES:
+    if not isinstance(mode, str) or mode not in MODES:
         raise ValueError(f"unsupported mode: {mode}")
+    if isinstance(seed, bool) or not isinstance(seed, int):
+        raise TypeError("seed must be an integer")
     if seed < 0:
         raise ValueError("seed must be nonnegative")
     mode_salt = 104_729 if mode == "independent" else 13_337
@@ -65,7 +67,6 @@ def generate_linear_plan(seed: int, mode: str) -> dict:
             "rate_a": rate_a,
             "fee_b": fee_b,
             "rate_b": rate_b,
-            "crossover": crossover,
         },
         answer=f"n={crossover}; cost={answer}",
     )
