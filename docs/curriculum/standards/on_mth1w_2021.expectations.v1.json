@@ -1,0 +1,1039 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "ON-MTH1W-2021-expectation-inventory-v1",
+  "status": "DRAFT_PROPOSED_NOT_VERIFIED",
+  "jurisdiction": {
+    "country": "Canada",
+    "province": "Ontario",
+    "authority": "Ontario Ministry of Education",
+    "authority_code": "ON_MIN_ED"
+  },
+  "curriculum": {
+    "course_code": "MTH1W",
+    "grade": 9,
+    "title": "Mathematics, Grade 9, De-streamed",
+    "version": "2021",
+    "issued_date": "2021-06-09",
+    "effective_date": "2021-09",
+    "language": "en"
+  },
+  "provenance": {
+    "authoritative_course_url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w",
+    "authoritative_expectations_url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/strands",
+    "authoritative_expectation_chart_url": "https://assets-us-01.kc-usercontent.com/fbd574c4-da36-0066-a0c5-849ffb2de96e/2c41223a-5f39-4dd2-b94c-c75d2fae1fbd/Math_9_strand%20chart_AODA_06-May-21.pdf",
+    "checked_date": "2026-10-09",
+    "source_notes": [
+      "Expectation identifiers and strand membership were checked against Ontario's official course pages and official expectation chart.",
+      "Scope summaries are concise editorial paraphrases for indexing; reviewers must use the linked official wording for source-fidelity decisions."
+    ]
+  },
+  "safety": {
+    "activation": "FORBIDDEN",
+    "mapping_review_required": true,
+    "canonical_taxonomy_gate": "PR #308 production TAXONOMY is empty; no DRAFT candidate is an authorized target.",
+    "learner_mastery_mutation": false,
+    "verified_coverage_claim": false
+  },
+  "classification_legend": {
+    "standards_mapped": "A repository-specific expectation-to-local/canonical crosswalk was located; this does not mean accepted.",
+    "reviewed_skill": "Independent mathematical approval of the exact canonical identity and definition exists.",
+    "generator_available": "A generator targets the exact reviewed canonical identity.",
+    "validated_practice": "Practice was independently validated against the exact expectation and skill scope.",
+    "assessment_ready": "Independent assessment evidence contract is accepted for the exact identity.",
+    "verified_mastery_evidence": "Learner evidence is valid for this mapping; never inferred from any earlier field."
+  },
+  "expectations": [
+    {
+      "expectation_id": "MTH1W.B1.1",
+      "strand": "B",
+      "group": "B1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b1",
+      "scope_summary": "Research a number concept in a specific culture, trace its development and use, and explain current relevance.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.B1.2",
+      "strand": "B",
+      "group": "B1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b1",
+      "scope_summary": "Define subsets of a number system and compare their similarities and differences.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.B1.3",
+      "strand": "B",
+      "group": "B1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b1",
+      "scope_summary": "Use patterns and number relationships to explain density, infinity, and limits in number sets.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.B2.1",
+      "strand": "B",
+      "group": "B2",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b2",
+      "scope_summary": "Analyse exponent sign and magnitude patterns; apply them to scientific notation and evaluation of powers.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.B2.2",
+      "strand": "B",
+      "group": "B2",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b2",
+      "scope_summary": "Analyse exponent-operation relationships and simplify numerical and algebraic power expressions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.B3.1",
+      "strand": "B",
+      "group": "B3",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b3",
+      "scope_summary": "Use integers to describe location, direction, quantity, and change in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.B3.2",
+      "strand": "B",
+      "group": "B3",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b3",
+      "scope_summary": "Relate unit fractions to other fractional quantities, including measurement-tool contexts.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.B3.3",
+      "strand": "B",
+      "group": "B3",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b3",
+      "scope_summary": "Explain how positive and negative signs affect ratios, rates, fractions, and decimals in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.B3.4",
+      "strand": "B",
+      "group": "B3",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b3",
+      "scope_summary": "Solve contextual problems with operations on positive and negative fractions and mixed numbers, including formulas, measurement, and linear relations.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.B3.5",
+      "strand": "B",
+      "group": "B3",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b3",
+      "scope_summary": "Pose and solve rate, percentage, and proportion problems across data, measurement, geometry, linear relations, and financial contexts.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C1.1",
+      "strand": "C",
+      "group": "C1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+      "scope_summary": "Research an algebraic concept in a specific culture, trace its development and use, and explain current relevance.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C1.2",
+      "strand": "C",
+      "group": "C1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+      "scope_summary": "Create algebraic expressions that generalize relationships shown in words, numbers, or visual representations.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_REQUIRES_REVIEW",
+      "repository_existing_crosswalks": [
+        {
+          "local_skill_code": "MTH1W.C.ALG.EXPR",
+          "canonical_skill_code": "MATH.EE.EXPR",
+          "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+          "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "EXISTS_IN_REPOSITORY_UNVERIFIED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Canonical target must exist in the reviewed taxonomy and retain stable identity.",
+        "Standards mapping requires independent source-fidelity and mathematical-scope review."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C1.3",
+      "strand": "C",
+      "group": "C1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+      "scope_summary": "Compare algebraic expressions using concrete, numerical, graphical, and algebraic evidence to identify and justify equivalence.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_REQUIRES_REVIEW",
+      "repository_existing_crosswalks": [
+        {
+          "local_skill_code": "MTH1W.C.ALG.LIKE",
+          "canonical_skill_code": "MATH.EE.LIKE_TERMS",
+          "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+          "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "EXISTS_IN_REPOSITORY_UNVERIFIED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Canonical target must exist in the reviewed taxonomy and retain stable identity.",
+        "Standards mapping requires independent source-fidelity and mathematical-scope review."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C1.4",
+      "strand": "C",
+      "group": "C1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+      "scope_summary": "Simplify algebraic expressions using properties of operations with varied tools and representations.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_REQUIRES_REVIEW",
+      "repository_existing_crosswalks": [
+        {
+          "local_skill_code": "MTH1W.C.ALG.LIKE",
+          "canonical_skill_code": "MATH.EE.LIKE_TERMS",
+          "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+          "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+        },
+        {
+          "local_skill_code": "MTH1W.C.ALG.POLY",
+          "canonical_skill_code": "MATH.EE.POLYNOMIAL_OPERATIONS",
+          "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+          "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "EXISTS_IN_REPOSITORY_UNVERIFIED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Canonical target must exist in the reviewed taxonomy and retain stable identity.",
+        "Standards mapping requires independent source-fidelity and mathematical-scope review."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C1.5",
+      "strand": "C",
+      "group": "C1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+      "scope_summary": "Create and solve contextual equations and verify solutions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_REQUIRES_REVIEW",
+      "repository_existing_crosswalks": [
+        {
+          "local_skill_code": "MTH1W.C.ALG.EQ1",
+          "canonical_skill_code": "MATH.EE.EQUATION.ONE",
+          "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+          "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+        },
+        {
+          "local_skill_code": "MTH1W.C.ALG.EQ2",
+          "canonical_skill_code": "MATH.EE.EQUATION.TWO",
+          "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+          "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+        },
+        {
+          "local_skill_code": "MTH1W.C.ALG.EQ3",
+          "canonical_skill_code": "MATH.EE.EQUATION.MULTISTEP",
+          "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+          "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "EXISTS_IN_REPOSITORY_UNVERIFIED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Canonical target must exist in the reviewed taxonomy and retain stable identity.",
+        "Standards mapping requires independent source-fidelity and mathematical-scope review."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C2.1",
+      "strand": "C",
+      "group": "C2",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c2",
+      "scope_summary": "Use code to demonstrate algebraic variables, parameters, equations, and inequalities.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C2.2",
+      "strand": "C",
+      "group": "C2",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c2",
+      "scope_summary": "Decompose situations into computational steps and create code that represents mathematical relationships or solves problems.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C2.3",
+      "strand": "C",
+      "group": "C2",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c2",
+      "scope_summary": "Predict code outcomes and modify constraints, parameters, or outcomes for related mathematical situations.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C3.1",
+      "strand": "C",
+      "group": "C3",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+      "scope_summary": "Compare graph shapes of linear and non-linear relations to reason about rates of change, patterns, and predictions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C3.2",
+      "strand": "C",
+      "group": "C3",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+      "scope_summary": "Represent linear relations with concrete materials, tables, graphs, and equations; connect rate of change and initial value across forms.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C3.3",
+      "strand": "C",
+      "group": "C3",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+      "scope_summary": "Compare two relations of the form y=ax+b graphically and algebraically and interpret their intersection in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C4.1",
+      "strand": "C",
+      "group": "C4",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c4",
+      "scope_summary": "Compare characteristics of graphs, tables, and equations for linear and non-linear relations.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C4.2",
+      "strand": "C",
+      "group": "C4",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c4",
+      "scope_summary": "Graph specified equation and inequality forms with constants and identify their characteristics, points, and regions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C4.3",
+      "strand": "C",
+      "group": "C4",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c4",
+      "scope_summary": "Translate, reflect, and rotate lines of the form y=ax and describe effects on graphs and equations.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.C4.4",
+      "strand": "C",
+      "group": "C4",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c4",
+      "scope_summary": "Determine line equations from graphs, tables, and concrete representations by connecting rate to slope and initial value to y-intercept; use them to solve problems.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.D1.1",
+      "strand": "D",
+      "group": "D1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d1",
+      "scope_summary": "Analyse a current large-data context and consequences of data collection, storage, representation, and use.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.D1.2",
+      "strand": "D",
+      "group": "D1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d1",
+      "scope_summary": "Represent and statistically analyse real-life one-variable data, including quartiles and box plots.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.D1.3",
+      "strand": "D",
+      "group": "D1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d1",
+      "scope_summary": "Create scatter plots, test regression models with technology, determine correlation, and make appropriate predictions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.D2.1",
+      "strand": "D",
+      "group": "D2",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d2",
+      "scope_summary": "Explain the value and real-life decision uses of mathematical modelling.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.D2.2",
+      "strand": "D",
+      "group": "D2",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d2",
+      "scope_summary": "Identify a data-requiring question of interest and the information needed to answer it.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.D2.3",
+      "strand": "D",
+      "group": "D2",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d2",
+      "scope_summary": "Plan and carry out data collection, identifying source, assumptions, variables, and invariants.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.D2.4",
+      "strand": "D",
+      "group": "D2",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d2",
+      "scope_summary": "Select displays and analyses to construct a model that answers the question while respecting data, context, and assumptions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.D2.5",
+      "strand": "D",
+      "group": "D2",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d2",
+      "scope_summary": "Report how a model answers the question, its fit and limitations, and supported predictions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.E1.1",
+      "strand": "E",
+      "group": "E1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/e/e1",
+      "scope_summary": "Research a geometric concept or measurement system in a specific culture or community and connect its relevance to careers and other disciplines.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.E1.2",
+      "strand": "E",
+      "group": "E1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/e/e1",
+      "scope_summary": "Create and analyse designs involving geometric relationships and circle and triangle properties using varied tools.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.E1.3",
+      "strand": "E",
+      "group": "E1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/e/e1",
+      "scope_summary": "Solve problems within and between measurement systems, including culturally situated systems, using representations and technology when appropriate.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.E1.4",
+      "strand": "E",
+      "group": "E1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/e/e1",
+      "scope_summary": "Analyse how changes in dimensions affect perimeter or circumference, area, surface area, and volume.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.E1.5",
+      "strand": "E",
+      "group": "E1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/e/e1",
+      "scope_summary": "Solve real-life right-triangle side-length problems, including composite shapes.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.E1.6",
+      "strand": "E",
+      "group": "E1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/e/e1",
+      "scope_summary": "Use prism–pyramid and cylinder–cone volume relationships to solve problems in varied units.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.F1.1",
+      "strand": "F",
+      "group": "F1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/f/f1",
+      "scope_summary": "Analyse a past or current financial situation and apply contextual mathematical knowledge to inform decisions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.F1.2",
+      "strand": "F",
+      "group": "F1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/f/f1",
+      "scope_summary": "Identify appreciation and depreciation situations and answer questions using associated graphs.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.F1.3",
+      "strand": "F",
+      "group": "F1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/f/f1",
+      "scope_summary": "Compare how interest rate, borrowing duration, interest method, and down payment affect total purchase cost.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    },
+    {
+      "expectation_id": "MTH1W.F1.4",
+      "strand": "F",
+      "group": "F1",
+      "source_locator": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/f/f1",
+      "scope_summary": "Modify budgets for changed circumstances and justify the changes.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_NOT_REPRODUCED",
+      "proposed_mapping_status": "NO_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_EVIDENCE",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No specific expectation-to-canonical proposal has been authored.",
+        "Canonical taxonomy identity/review gate remains unresolved."
+      ]
+    }
+  ]
+}
