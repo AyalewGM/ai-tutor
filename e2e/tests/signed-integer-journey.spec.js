@@ -150,7 +150,14 @@ async function startSignedNumbersSession(page) {
 }
 
 async function currentProblemText(page) {
-  return ((await page.locator('.problem').textContent()) || '').trim();
+  return page.locator('.problem').evaluate((problem) => {
+    // KaTeX renders equivalent MathML and visual trees. Reading the parent
+    // textContent concatenates both representations and corrupts expressions
+    // such as "5 × 7". Keep the visible tree for the synthetic solver.
+    const clone = problem.cloneNode(true);
+    clone.querySelectorAll('.katex-mathml').forEach((node) => node.remove());
+    return (clone.textContent || '').trim();
+  });
 }
 
 async function currentStateLabel(page) {
