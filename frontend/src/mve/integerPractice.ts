@@ -26,7 +26,7 @@ export function exactIntegerSum(a: number, b: number): number {
 
 export function checkIntegerAnswer(task: IntegerTask, response: string): Readonly<{correct:boolean; diagnosis:IntegerDiagnosis; guidance:string}> {
   const raw = response.trim();
-  if (!/^-?(0|[1-9]\d*)$/.test(raw) || raw.length > 5) {
+  if (!/^(0|-?[1-9]\d*)$/.test(raw) || raw.length > 5) {
     return {correct:false,diagnosis:"INVALID",guidance:"Enter one integer, without decimals or symbols."};
   }
   const n = Number(raw);
