@@ -1,0 +1,15 @@
+{
+  "package_id": "W1-G9-LINEAR-MODELING",
+  "revision": "DRAFT_1",
+  "source_pr": 327,
+  "canonical_skill": "MATH.F.LINEAR.SLOPE_INTERCEPT",
+  "canonical_approval": "UNKNOWN",
+  "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+  "mathematical_review": "PENDING",
+  "pedagogical_review": "PENDING",
+  "muse_qa": "PENDING",
+  "practice": "UNKNOWN",
+  "independent_oracle": "UNKNOWN",
+  "runtime_activation": false,
+  "mastery_writes": false
+}
