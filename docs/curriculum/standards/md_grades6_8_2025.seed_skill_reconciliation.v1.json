@@ -1,0 +1,728 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "md-grades6-8-2025-seed-skill-reconciliation-wave1",
+  "purpose": "Source-grounded reconciliation of existing local seed scopes against Maryland's revised Grades 6-8 expectations. This is not an accepted standards mapping.",
+  "source": {
+    "jurisdiction": "Maryland",
+    "issuing_authority": "Maryland State Department of Education",
+    "framework": "Maryland Comprehensive Curricular Framework for Mathematics",
+    "adoption_date": "2025-07-29",
+    "implementation_school_year": "2026-2027",
+    "checked_date": "2026-10-09",
+    "landing_page": "https://msde.maryland.gov/academics-0/curriculum-academic-standards/mathematics",
+    "grade_documents": {
+      "6": {
+        "crosswalk": "https://msde.maryland.gov/media/17816",
+        "companion": "https://msde.maryland.gov/media/17817"
+      },
+      "7": {
+        "crosswalk": "https://msde.maryland.gov/media/17818",
+        "companion": "https://msde.maryland.gov/media/17819"
+      },
+      "8": {
+        "crosswalk": "https://msde.maryland.gov/media/17820",
+        "companion": "https://msde.maryland.gov/media/17821"
+      }
+    }
+  },
+  "global_constraints": [
+    "No row is VERIFIED or ACCEPTED.",
+    "No canonical identifier is created or activated.",
+    "Local generator or seeder availability is not mathematical, standards, assessment, or mastery evidence.",
+    "Cross-grade placements require Architecture and independent standards/mathematical review before implementation.",
+    "Historical student records and mastery evidence remain untouched."
+  ],
+  "row_count": 28,
+  "grade_counts": {
+    "6": 7,
+    "7": 15,
+    "8": 6
+  },
+  "rows": [
+    {
+      "grade": 6,
+      "local_seed_code": "M6.RP.RATIO",
+      "local_seed_scope": "Reason about ratios and equivalent ratios.",
+      "official_targets": [
+        "6.AT.A.1",
+        "6.AT.A.3"
+      ],
+      "relation": "COMPOSITE_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "One local seed spans ratio language and multi-representation ratio/rate reasoning; equivalence is not established."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 6,
+      "local_seed_code": "M6.RP.UNIT_RATE",
+      "local_seed_scope": "Find and interpret unit rates.",
+      "official_targets": [
+        "6.AT.A.2",
+        "6.AT.A.3"
+      ],
+      "relation": "COMPOSITE_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "The current expectation limits 6.AT.A.2 examples to whole-number numerators and denominators; 6.AT.A.3 also carries unit-rate applications."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 6,
+      "local_seed_code": "M6.NS.FRACTION",
+      "local_seed_scope": "Divide fractions in mathematical and contextual problems.",
+      "official_targets": [
+        "6.NOS.A.1"
+      ],
+      "relation": "CLOSE_SCOPE_REVIEW_REQUIRED",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "Official scope requires estimation, visual models, equations, and explanation in context; title similarity is not sufficient evidence."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 6,
+      "local_seed_code": "M6.EE.EXPR",
+      "local_seed_scope": "Write and evaluate numerical and algebraic expressions.",
+      "official_targets": [
+        "6.AT.B.5",
+        "6.AT.B.6",
+        "6.AT.B.7"
+      ],
+      "relation": "COMPOSITE_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "Potentially spans exponents, variable expressions, and equivalent expressions; evidence must be decomposed before acceptance."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 6,
+      "local_seed_code": "M6.EE.EQUATION",
+      "local_seed_scope": "Represent and solve one-variable equations.",
+      "official_targets": [
+        "6.AT.C.8"
+      ],
+      "relation": "PARTIAL_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "Official scope is contextual one-step equations with nonnegative rational numbers, substitution, solution interpretation, and number-line representation."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 6,
+      "local_seed_code": "M6.SP.STAT",
+      "local_seed_scope": "Find mean, median, mode, range, read dot plots, choose best center with outlier.",
+      "official_targets": [
+        "6.DS.A.3",
+        "6.DS.A.4",
+        "6.DS.B.5",
+        "6.DS.B.6"
+      ],
+      "relation": "COMPOSITE_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "Local wording omits official histogram, box-plot, IQR, distribution-shape, and context-linked summary evidence; mode/range alone do not establish coverage."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 6,
+      "local_seed_code": "M6.G.GEO",
+      "local_seed_scope": "Area of triangles/parallelograms/trapezoids; volume and surface area of rectangular prisms; axis-aligned coordinate distances.",
+      "official_targets": [
+        "6.GR.A.1",
+        "6.GR.A.2",
+        "6.GR.A.3",
+        "6.GR.A.4"
+      ],
+      "relation": "COMPOSITE_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "Official family includes polygon decomposition, fractional-edge prism volume, coordinate polygons, and nets/surface area of prisms and pyramids."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.RP.PROP",
+      "local_seed_scope": "Identify and reason about proportional relationships.",
+      "official_targets": [
+        "7.AT.A.2"
+      ],
+      "relation": "PARTIAL_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.RP.PERCENT",
+      "local_seed_scope": "Solve proportional percent problems.",
+      "official_targets": [
+        "7.AT.A.4"
+      ],
+      "relation": "PARTIAL_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "Must demonstrate the full current family such as tax, markup/markdown, tips, commission, fees, percent change, and percent error where applicable."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.EE.EXPR",
+      "local_seed_scope": "Use properties to create and interpret equivalent expressions.",
+      "official_targets": [
+        "7.AT.B.5",
+        "7.AT.B.6"
+      ],
+      "relation": "COMPOSITE_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.EE.EQUATION",
+      "local_seed_scope": "Solve contextual equations and inequalities with rational numbers.",
+      "official_targets": [
+        "7.AT.C.7",
+        "7.AT.C.8",
+        "7.AT.C.9"
+      ],
+      "relation": "COMPOSITE_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "Equation-versus-inequality choice, solution method, graphing, and contextual interpretation require separate evidence."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.RP.PROP.RATE",
+      "local_seed_scope": "Compute unit rates, including fractional quantities.",
+      "official_targets": [
+        "7.AT.A.1"
+      ],
+      "relation": "CLOSE_SCOPE_REVIEW_REQUIRED",
+      "displaced_or_extra_scope": [],
+      "notes": [],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.RP.PERCENT.OF",
+      "local_seed_scope": "Find a percent of a quantity.",
+      "official_targets": [
+        "7.AT.A.4"
+      ],
+      "relation": "NARROW_SUBSCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "This is only one subcase of the official percent problem family."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.EE.EXPR.DIST",
+      "local_seed_scope": "Expand expressions using the distributive property.",
+      "official_targets": [
+        "7.AT.B.5"
+      ],
+      "relation": "NARROW_SUBSCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.EE.EXPR.COMBINE",
+      "local_seed_scope": "Combine like terms.",
+      "official_targets": [
+        "7.AT.B.5"
+      ],
+      "relation": "NARROW_SUBSCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.EE.EQUATION.ONE",
+      "local_seed_scope": "Solve one-step equations x+a=b and ax=b.",
+      "official_targets": [
+        "7.AT.C.8"
+      ],
+      "relation": "NARROW_SUBSCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.EE.EQUATION.TWO",
+      "local_seed_scope": "Solve equations ax+b=c.",
+      "official_targets": [
+        "7.AT.C.8"
+      ],
+      "relation": "NARROW_SUBSCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.G.SOLID",
+      "local_seed_scope": "Volume and surface area of prisms, pyramids, cylinders, and cones; faces, edges, and vertices.",
+      "official_targets": [
+        "7.GR.A.2",
+        "7.GR.B.4"
+      ],
+      "relation": "PARTIAL_OR_EXTRA_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "Official scope includes slices of 3D figures and contextual area/surface-area/volume work including spheres; local faces/edges/vertices wording is not itself a current expectation."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.G.GEO",
+      "local_seed_scope": "Angles, triangles, and circles, including angle relationships, triangle angle sum, and circle measures.",
+      "official_targets": [
+        "7.GR.B.3"
+      ],
+      "relation": "CROSS_GRADE_COMPOSITE",
+      "displaced_or_extra_scope": [
+        {
+          "local_scope": "complementary, supplementary, vertical, and linear-pair angles",
+          "current_md_target": "8.GR.A.1"
+        },
+        {
+          "local_scope": "triangle angle sum",
+          "current_md_target": "8.GR.A.3"
+        }
+      ],
+      "notes": [
+        "Only the circle portion aligns directly to current Grade 7."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.SP.PROB",
+      "local_seed_scope": "Simple and compound probability, complements, sample spaces, and two-stage outcomes.",
+      "official_targets": [
+        "7.DS.C.4",
+        "7.DS.C.5",
+        "7.DS.C.6"
+      ],
+      "relation": "CROSS_GRADE_COMPOSITE",
+      "displaced_or_extra_scope": [
+        {
+          "local_scope": "compound events and organized sample spaces",
+          "current_md_target": "8.DS.C.6"
+        }
+      ],
+      "notes": [
+        "Current Grade 7 carries probability scale, long-run frequency, and probability-model comparison."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.RP.GRAPH",
+      "local_seed_scope": "Represent proportional relationships with tables, graphs, constants of proportionality, unit equations, and (1,r).",
+      "official_targets": [
+        "7.AT.A.2",
+        "7.AT.A.3"
+      ],
+      "relation": "COMPOSITE_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 7,
+      "local_seed_code": "M7.NS.RAT",
+      "local_seed_scope": "Operate with signed integers and rational numbers; use inverses and distance.",
+      "official_targets": [
+        "7.NOS.A.1",
+        "7.NOS.A.2",
+        "7.NOS.A.3"
+      ],
+      "relation": "COMPOSITE_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 8,
+      "local_seed_code": "M8.G.TRANS",
+      "local_seed_scope": "Perform and describe transformations on the coordinate plane.",
+      "official_targets": [],
+      "relation": "OUT_OF_GRADE_CURRENT_2025",
+      "displaced_or_extra_scope": [
+        {
+          "legacy_expectations": [
+            "8.G.A.1",
+            "8.G.A.3"
+          ],
+          "current_placement": [
+            "Integrated Algebra I",
+            "Integrated Algebra II"
+          ]
+        }
+      ],
+      "notes": [
+        "The 2025 Grade 8 crosswalk moves the former transformation expectations to Integrated Algebra I and Integrated Algebra II; no current Grade 8 target is asserted."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 8,
+      "local_seed_code": "M8.G.SIM",
+      "local_seed_scope": "Reason about similarity, congruence, scale factors, perimeter, and area.",
+      "official_targets": [],
+      "relation": "OUT_OF_GRADE_CURRENT_2025",
+      "displaced_or_extra_scope": [
+        {
+          "legacy_expectations": [
+            "8.G.A.2",
+            "8.G.A.4"
+          ],
+          "current_placement": [
+            "Integrated Algebra I",
+            "Integrated Algebra II"
+          ]
+        }
+      ],
+      "notes": [
+        "The 2025 Grade 8 crosswalk moves former rigid-motion congruence to Integrated Algebra I and transformational similarity to Integrated Algebra II; possible Grade 7 scale-drawing overlap needs separate review."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 8,
+      "local_seed_code": "M8.SP.STAT",
+      "local_seed_scope": "Analyze scatterplots, bivariate patterns, outliers, lines of best fit, and association versus causation.",
+      "official_targets": [
+        "8.DS.A.1",
+        "8.DS.B.2",
+        "8.DS.B.3",
+        "8.DS.B.4"
+      ],
+      "relation": "COMPOSITE_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "Does not establish 8.DS.C.5 two-way-table or 8.DS.C.6 compound-event evidence."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 8,
+      "local_seed_code": "M8.G.PYTH",
+      "local_seed_scope": "Use the Pythagorean theorem, converse, and distance applications.",
+      "official_targets": [
+        "8.GR.B.4",
+        "8.GR.B.5"
+      ],
+      "relation": "PARTIAL_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "Official scope also calls for reasoning/proof and acute-versus-obtuse classification using inequalities."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 8,
+      "local_seed_code": "M8.NS.RAD",
+      "local_seed_scope": "Classify irrational numbers and work with square roots, including radical simplification.",
+      "official_targets": [
+        "8.NOS.A.1",
+        "8.NOS.A.2"
+      ],
+      "relation": "PARTIAL_OR_EXTRA_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "Irrational classification, approximation, ordering, and location are current targets; 'simplify radicals' requires separate placement review rather than automatic equivalence."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    },
+    {
+      "grade": 8,
+      "local_seed_code": "M8.F.FN",
+      "local_seed_scope": "Identify, compare, and represent functions and linear relationships.",
+      "official_targets": [
+        "8.AT.C.6",
+        "8.AT.C.7",
+        "8.AT.D.10",
+        "8.AT.D.11"
+      ],
+      "relation": "COMPOSITE_SCOPE",
+      "displaced_or_extra_scope": [],
+      "notes": [
+        "Needs target-by-target evidence for function recognition, cross-representation comparison, model construction, and qualitative graph interpretation."
+      ],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "readiness": {
+        "source_expectation": "SOURCE_VERIFIED",
+        "canonical_identity": "NOT_REVIEWED",
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "assessment": "NOT_AUDITED",
+        "verified_mastery": "NOT_ESTABLISHED"
+      }
+    }
+  ]
+}
