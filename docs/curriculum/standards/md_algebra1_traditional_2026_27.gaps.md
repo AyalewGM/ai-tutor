@@ -61,3 +61,26 @@ The official seven-page August 2022 Algebra I standards PDF explicitly contains 
 **Important:** Subpart IDs are source-indexing keys, not new canonical IDs. A correct answer to one subpart cannot automatically satisfy the parent standard. Architecture must decide exact atomic and `ALL_OF` semantics; independent mathematical review must validate scopes. This manifest grants no generator, assessment, coverage or learner mastery credit.
 
 Source-locator correction: `A.REI.D.12` starts on official **page 4**, not page 3. The `N.Q.A.2` editorial summary now retains the official measurement-accuracy requirement. Both corrections are source fidelity only.
+
+## Actual seed-to-official-standard reconciliation (third review layer)
+
+I inspected the actual repository seed `scripts/seed_algebra1.py` (not just course metadata) and found **15 curriculum-local skills**: three broad anchors (`A1.EXPR`, `A1.LINEAR.EQ`, `A1.LINEAR.FN`) and 12 narrower skills for distribution, combining like terms, equation solving, linear functions, quadratics, polynomials, systems, exponentials, inequalities, and sequences.
+
+A new versioned [read-only reconciliation manifest](md_algebra1_2026_27.seed_skill_reconciliation.v1.json) records **25 provisional relations** from those 15 local skills to **17 of the 40** official parent standards. The remaining **23** parent standards have no candidate relation in this first seed-focused pass. A relation means a potential mathematical topic overlap, **not verified mapping, partial coverage, or mastery**. One relation (`A1.LINEAR.INEQ` → `A.CED.A.1`) is specifically `UNCONFIRMED_RELATED` because solving inequalities does not imply constructing them from context.
+
+| Existing seed group | Illustrative official candidates | Why no full coverage is claimed |
+|---|---|---|
+| Expressions, distribution, like terms | `A.SSE.A.1`, `A.SSE.A.2` | Interpretation and structure subskills are not interchangeable |
+| One/two/multi-step equations | `A.REI.A.1`, `A.REI.B.3` | Justification and inequalities need separate evidence |
+| Slope/intercept and function evaluation | `F.IF.A.2`, `F.IF.B.6`, `F.LE.A.2` | Contextual interpretation and exponential modeling not established |
+| Quadratic and polynomial functions | `F.IF.C.7`, `F.IF.C.8`, `A.APR.B.3` | Multi-family graphing, equivalent forms, and zeros need separate evidence |
+| Systems, exponential functions, inequalities, sequences | `A.REI.C.6`, `F.LE.A.1`, `A.REI.B.3`, `F.IF.A.3` | Composite requirements and modeling constraints remain untested |
+
+**Additional architecture risk found in existing seed infrastructure:** the historical state-authority seeder derives `MATH.ALGEBRA1.*` canonical-looking codes from local `A1.*` codes and creates `EQUIVALENT` relations (see `scripts/seed_maryland_algebra1.py` from the F-019 implementation). This predates independent atomic identity review. The new manifest records those codes as legacy-looking references, **not approved canonical identities**. This PR deliberately does not change the seeder, existing database relations, student UUIDs, or historical mastery.
+
+### Next handoff
+
+- **Architecture #282:** determine whether each existing broad anchor is composite and whether the 25 candidate relations are partial, unknown, or invalid; define required `ALL_OF` sub-evidence where relevant.
+- **Mathematical Review #293:** independently check exact local skill scopes, official standards requirements, and any proposed atomic decompositions.
+- **Standards Mapping reviewer:** verify source fidelity, 40 parent IDs, 17 lettered subparts, and the 25 candidate rationales. No `EQUIVALENT` claim has been made by this mapping agent.
+- **Muse QA (after acceptance):** inspect actual generators, curated practice, assessment contracts, and historical evidence isolation; a curated item in the seed is not proof of generator availability.
