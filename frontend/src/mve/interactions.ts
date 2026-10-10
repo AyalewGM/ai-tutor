@@ -1,3 +1,4 @@
+import type { IntegerOperation } from "./integerNumberLine";
 import type { MathObject, Point2D } from "./contracts";
 
 /**
@@ -76,7 +77,17 @@ export interface FractionShadingChangedEvent extends MathInteractionBase {
   denominator: number;
 }
 
+export interface IntegerDisplacementChangedEvent extends MathInteractionBase {
+  type: "INTEGER_DISPLACEMENT_CHANGED";
+  start: number;
+  operand: number;
+  operation: IntegerOperation;
+  displacement: number;
+  result: number;
+}
+
 export type MathInteractionEvent =
+  | IntegerDisplacementChangedEvent
   | PointPlacedEvent
   | PointMovedEvent
   | SegmentCreatedEvent
@@ -100,6 +111,13 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "INTEGER_DISPLACEMENT_CHANGED": {
+      if (Object.keys(event).some(key => !["schema_version", "type", "start", "operand", "operation", "displacement", "result"].includes(key))) return false;
+      if (![event.start, event.operand].every(v => Number.isSafeInteger(v) && Math.abs(v as number) <= 10) ||
+          (event.operation !== "add" && event.operation !== "subtract")) return false;
+      const delta = event.operation === "add" ? event.operand as number : -(event.operand as number);
+      return event.displacement === delta && event.result === (event.start as number) + delta;
+    }
     case "POINT_PLACED":
       return isPoint2D(event.point);
     case "POINT_MOVED":
