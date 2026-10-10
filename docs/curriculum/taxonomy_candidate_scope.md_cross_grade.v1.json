@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "artifact_id": "md-cross-grade-canonical-scope-cards-r1",
-  "revision": "2026-10-10-r1",
-  "review_state": "DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+  "artifact_id": "md-cross-grade-canonical-scope-cards-r2",
+  "revision": "2026-10-10-r2",
+  "review_state": "DRAFT_CORRECTIONS_PENDING_LIMITED_INDEPENDENT_MATHEMATICAL_REVIEW",
   "authority": "NONE_NOT_FOR_RUNTIME",
   "architecture_basis": {
     "issue": 282,
-    "comment_id": 6093222041,
-    "decision": "Cross-grade local composites are not canonical atoms; bounded candidates require independent review."
+    "comment_id": 6094147290,
+    "decision": "Broad angle relationships is reporting-only ALL_OF; complement, supplement, vertical equality and supplied-total adjacent-angle addition require distinct evidence. Expected count is distinct from experimental frequency."
   },
   "standards_context": {
     "jurisdiction": "Maryland",
@@ -27,7 +27,7 @@
     "note": "Expectation references are provenance for the authoring request, not accepted standards mappings."
   },
   "constraints": [
-    "No card is mathematically approved.",
+    "Five unchanged r1 cards have mathematical-scope approval; the six changed or new r2 cards remain pending limited independent review.",
     "No proposed code is authoritative until Architecture confirms identity and Independent Mathematical Review approves scope.",
     "Existing broad canonical identities, local seed identifiers, UUIDs, variants and learner evidence remain unchanged.",
     "Generator availability is overlap evidence only and is not mathematical proof, standards coverage, assessment readiness or mastery evidence.",
@@ -170,64 +170,246 @@
       ]
     },
     {
-      "code": "MATH.GEO.ANGLE.RELATIONSHIPS",
-      "name": "Determine unknown angles from angle relationships",
+      "code": "MATH.GEO.ANGLE.COMPLEMENT",
+      "name": "Reason with complementary angles",
       "review_state": "DRAFT",
       "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
       "possible_overlaps": [
         "MATH.GEO.ANGLES",
-        "MATH.GEO.ANGLE.COMPLEMENT",
-        "MATH.GEO.ANGLE.SUPPLEMENT"
+        "generator family MATH.GEO.ANGLE.COMPLEMENT",
+        "unconfirmed historical or persisted spelling MATH.GEO.ANGLE.COMPLEMENT"
       ],
-      "scope": "Identify and use complementary, supplementary, vertical-angle, adjacent-angle, and linear-pair relationships to determine unknown angle measures and justify the equation used.",
+      "scope": "Identify and use the fact that two complementary angles have measures summing to 90° to determine an unknown positive angle measure and justify the equation used.",
       "inclusions": [
-        "Whole-number and rational degree measures from 0° to 180° where geometrically valid",
-        "Complementary pairs sum to 90°",
-        "Supplementary and linear-pair angles sum to 180°",
-        "Vertical angles are equal",
-        "Adjacent angles are not assumed complementary or supplementary without structure",
-        "One- and two-step linear equations arising from these relationships"
+        "Positive whole-number and rational degree measures strictly between 0° and 90°",
+        "Diagram and diagram-independent verbal cases",
+        "One- and two-step linear equations whose geometrically valid solution gives complementary constituent angles",
+        "Verification that the two measures sum to 90°"
       ],
       "exclusions": [
+        "Supplementary or linear-pair evidence",
+        "Vertical-angle equality",
+        "Adjacent-angle addition without a supplied 90° total",
         "Triangle interior or exterior-angle theorems",
-        "Parallel-line transversal theorems unless independently defined",
-        "Angle construction accuracy",
-        "Congruence or transformation evidence",
-        "Classifying a single angle as the full skill"
+        "Treating a generator-family literal as canonical identity authority"
       ],
       "prerequisites": [
         "angle measure",
+        "addition and subtraction of rational numbers",
         "equality and one-variable linear equations",
-        "acute, right, obtuse, and straight angles"
+        "meaning of a right angle"
       ],
       "examples": [
         {
-          "prompt": "Two angles form a linear pair. One is 68°. Find the other.",
-          "answer": "112°",
-          "evidence": "linear pair"
+          "prompt": "Two angles are complementary. One measures 37°. Find the other.",
+          "answer": "53°",
+          "evidence": "complement total"
         },
         {
-          "prompt": "Vertical angles measure (3x+5)° and 80°. Find x.",
+          "prompt": "Complementary angles measure (2x+10)° and 40°. Find x.",
+          "answer": "20",
+          "evidence": "equation from 90° total"
+        },
+        {
+          "prompt": "Angles measuring 50° and 50° are complementary.",
+          "valid": false,
+          "rationale": "Their measures sum to 100°, not 90°"
+        }
+      ],
+      "misconceptions": [
+        "uses 180° instead of 90°",
+        "assumes adjacency alone makes angles complementary",
+        "accepts zero or negative constituent angles",
+        "reverses the unknown-angle subtraction"
+      ],
+      "assessment_criteria": [
+        "independent numeric and algebraic complementary-angle evidence",
+        "include a diagram-independent verbal case and a diagram case",
+        "require an equation or justification using a 90° total",
+        "include a validity or misconception probe",
+        "do not infer supplementary, vertical, adjacent-addition or triangle-angle mastery"
+      ]
+    },
+    {
+      "code": "MATH.GEO.ANGLE.SUPPLEMENT",
+      "name": "Reason with supplementary angles",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.ANGLES",
+        "generator family MATH.GEO.ANGLE.SUPPLEMENT",
+        "unconfirmed historical or persisted spelling MATH.GEO.ANGLE.SUPPLEMENT"
+      ],
+      "scope": "Identify and use the fact that two supplementary angles have measures summing to 180° to determine an unknown positive angle measure and justify the equation used; a linear pair is an included geometric context, not a separate identity.",
+      "inclusions": [
+        "Positive whole-number and rational degree measures strictly between 0° and 180°",
+        "Linear-pair and nonadjacent supplementary contexts",
+        "One- and two-step linear equations whose geometrically valid solution gives supplementary constituent angles",
+        "Verification that the two measures sum to 180°"
+      ],
+      "exclusions": [
+        "Complementary-angle evidence",
+        "Vertical-angle equality",
+        "Assuming every adjacent pair is supplementary",
+        "Triangle interior or exterior-angle theorems",
+        "Treating linear-pair context as a second mastery credit"
+      ],
+      "prerequisites": [
+        "angle measure",
+        "addition and subtraction of rational numbers",
+        "equality and one-variable linear equations",
+        "meaning of a straight angle"
+      ],
+      "examples": [
+        {
+          "prompt": "Two angles form a linear pair. One measures 68°. Find the other.",
+          "answer": "112°",
+          "evidence": "supplementary linear-pair context"
+        },
+        {
+          "prompt": "Supplementary angles measure (3x+5)° and 80°. Find x.",
+          "answer": "95/3",
+          "evidence": "equation from 180° total"
+        },
+        {
+          "prompt": "Two adjacent angles measure 70° and 80°, so they are supplementary.",
+          "valid": false,
+          "rationale": "Adjacency alone does not establish a 180° total, and these measures sum to 150°"
+        }
+      ],
+      "misconceptions": [
+        "uses 90° instead of 180°",
+        "treats all adjacent angles as supplementary",
+        "uses 360° for a linear pair",
+        "awards separate credit for the same linear-pair evidence"
+      ],
+      "assessment_criteria": [
+        "independent numeric and algebraic supplementary-angle evidence",
+        "include both a linear-pair context and a nonadjacent stated-supplement context",
+        "require an equation or justification using a 180° total",
+        "include an adjacency-alone rejection probe",
+        "do not infer complement, vertical, adjacent-addition or triangle-angle mastery"
+      ]
+    },
+    {
+      "code": "MATH.GEO.ANGLE.VERTICAL_EQUALITY",
+      "name": "Reason with vertical-angle equality",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.ANGLES",
+        "broad historical angle-relationship identities",
+        "generator implementations that include vertical angles"
+      ],
+      "scope": "Identify opposite angles formed by two intersecting lines as vertical angles, use their equality to determine unknown positive angle measures, and justify the equality from the intersection structure.",
+      "inclusions": [
+        "Whole-number and rational degree measures strictly between 0° and 180°",
+        "Numeric and one- or two-step algebraic unknowns",
+        "Selecting the opposite nonadjacent pair at an intersection",
+        "Verification that vertical angles have equal measures"
+      ],
+      "exclusions": [
+        "Adjacent-angle sums",
+        "Supplementary linear-pair evidence",
+        "Parallel-line transversal theorems",
+        "Triangle angle relationships",
+        "Assuming visually similar angles are vertical without intersection structure"
+      ],
+      "prerequisites": [
+        "angle measure",
+        "intersecting lines and opposite rays",
+        "equality and one-variable linear equations"
+      ],
+      "examples": [
+        {
+          "prompt": "Opposite angles formed by intersecting lines measure (3x+5)° and 80°. Find x.",
           "answer": "25",
           "evidence": "vertical equality"
         },
         {
-          "prompt": "Two adjacent angles are 30° and 40°, so they are complementary.",
+          "prompt": "At an intersection, one angle is 47°. Find its vertical angle.",
+          "answer": "47°",
+          "evidence": "opposite pair"
+        },
+        {
+          "prompt": "Two adjacent angles at an intersection are vertical angles.",
           "valid": false,
-          "rationale": "Adjacency alone does not establish a 90° total"
+          "rationale": "Vertical angles are opposite and nonadjacent"
         }
       ],
       "misconceptions": [
-        "treats all adjacent angles as supplementary",
         "confuses vertical with adjacent angles",
-        "uses 360° for a linear pair",
-        "reverses complementary and supplementary totals"
+        "assumes every equal-looking pair is vertical",
+        "uses a 180° sum instead of equality for the opposite pair",
+        "accepts a nonpositive or straight constituent angle"
       ],
       "assessment_criteria": [
-        "evidence across at least three relationship types including vertical and linear-pair/supplementary",
-        "require a relationship-based equation or justification",
-        "include a diagram-independent verbal case and a diagram case",
-        "do not substitute triangle-angle evidence"
+        "independent numeric and algebraic vertical-angle evidence",
+        "require identification of the opposite nonadjacent pair",
+        "require an equality-based equation or justification",
+        "include a vertical-versus-adjacent misconception probe",
+        "do not infer supplementary, adjacent-addition or triangle-angle mastery"
+      ]
+    },
+    {
+      "code": "MATH.GEO.ANGLE.ADJACENT_ADDITION",
+      "name": "Reason with adjacent-angle addition",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.ANGLES",
+        "angle-addition principle",
+        "broad historical angle-relationship identities"
+      ],
+      "scope": "Use addition of nonoverlapping adjacent angle measures to determine a missing part or supplied whole when the total or partition relation is explicitly given; adjacency alone supplies no numerical total.",
+      "inclusions": [
+        "Positive whole-number and rational constituent measures",
+        "A supplied whole angle, total measure, or explicit partition relation",
+        "Numeric missing-part, missing-whole and bounded one- or two-step algebraic cases",
+        "Verification that the adjacent parts sum to the supplied whole"
+      ],
+      "exclusions": [
+        "Inferring a 90°, 180°, or 360° total from adjacency alone",
+        "Overlapping angle regions",
+        "Complementary or supplementary credit unless that total is explicitly part of the primary item",
+        "Triangle interior or exterior-angle theorems",
+        "Multiple mastery credits from one primary attempt"
+      ],
+      "prerequisites": [
+        "angle measure",
+        "part-whole addition",
+        "addition and subtraction of rational numbers",
+        "equality and one-variable linear equations"
+      ],
+      "examples": [
+        {
+          "prompt": "Adjacent angles partition an 85° angle. One part is 32°. Find the other.",
+          "answer": "53°",
+          "evidence": "supplied whole"
+        },
+        {
+          "prompt": "Adjacent angles measure (x+12)° and 28° and together form a 70° angle. Find x.",
+          "answer": "30",
+          "evidence": "explicit partition equation"
+        },
+        {
+          "prompt": "Two adjacent angles measure 30° and 40°, so their total must be 90°.",
+          "valid": false,
+          "rationale": "Adjacency alone supplies no fixed total; the two stated measures sum to 70°"
+        }
+      ],
+      "misconceptions": [
+        "assumes adjacent angles are automatically complementary",
+        "assumes adjacent angles are automatically supplementary",
+        "double-counts an overlapping region",
+        "subtracts from an unstated conventional total"
+      ],
+      "assessment_criteria": [
+        "independent missing-part and missing-whole evidence with an explicitly supplied total or partition",
+        "include numeric and algebraic cases",
+        "require an addition equation or part-whole justification",
+        "include an adjacency-alone no-total rejection probe",
+        "one primary atom per attempt; do not award complement, supplement or reporting-profile credit from the same evidence"
       ]
     },
     {
@@ -301,10 +483,12 @@
       ],
       "scope": "Represent and interpret event likelihood on the inclusive probability scale from 0 to 1, connecting 0 with impossible, 1 with certain, and intermediate values with relative likelihood.",
       "inclusions": [
-        "Fractions, decimals, and percents in [0,1]",
+        "Fraction and decimal probability representations in the inclusive interval [0,1]",
+        "Percent probability representations from 0% to 100% inclusive",
+        "Conversion among equivalent fraction, decimal, and percent representations",
         "Ordering and comparing likelihoods",
         "Impossible, unlikely, equally likely, likely, and certain interpretations",
-        "Complementary verbal reasoning such as an event becoming more or less likely"
+        "For one event and its complement, p=0.5 means the two are equally likely; distinct events can have equal probability at values other than 0.5"
       ],
       "exclusions": [
         "Computing experimental relative frequency from data",
@@ -324,25 +508,39 @@
           "answer": "0, 0.25, 0.5, 0.9, 1"
         },
         {
-          "prompt": "An event has probability 0.7. Is it more likely than an event with probability 0.4?",
-          "answer": "yes"
+          "prompt": "Express 1/4 as a decimal and percent probability.",
+          "answer": "0.25 and 25%",
+          "evidence": "cross-representation equivalence"
         },
         {
-          "prompt": "A probability is 1.2.",
+          "prompt": "An event has probability 0.5. Compare the event with its complement.",
+          "answer": "They are equally likely.",
+          "evidence": "event-complement meaning of 0.5"
+        },
+        {
+          "prompt": "Two distinct events each have probability 0.3. Can they be equally likely?",
+          "answer": "yes",
+          "evidence": "equal probability need not be 0.5"
+        },
+        {
+          "prompt": "A probability is 120%.",
           "valid": false,
-          "rationale": "Probabilities must lie from 0 to 1 inclusive"
+          "rationale": "Percent probability must lie from 0% to 100% inclusive"
         }
       ],
       "misconceptions": [
         "treats probability 0.7 as 7 percent",
         "believes likely means guaranteed",
         "orders fractions by denominator alone",
-        "accepts values outside [0,1]"
+        "accepts fractions or decimals outside [0,1] or percents outside 0%..100%",
+        "claims that two distinct events can be equally likely only when both have probability 0.5"
       ],
       "assessment_criteria": [
-        "include 0, 0.5, and 1 boundaries",
-        "compare multiple representations",
-        "require interpretation as well as ordering",
+        "include probability boundaries 0 and 1 and percent boundaries 0% and 100%",
+        "require observable fraction-decimal-percent equivalence evidence",
+        "compare and order multiple representations",
+        "distinguish event-versus-complement equality at p=0.5 from equal probability of two distinct events",
+        "require interpretation as well as representation",
         "do not infer experimental-frequency or compound-event mastery"
       ]
     },
@@ -354,7 +552,7 @@
       "possible_overlaps": [
         "MATH.PROB.EXPERIMENTAL",
         "generator family MATH.PROB.EXPERIMENTAL",
-        "generator family MATH.PROB.EXPECTED_COUNT"
+        "distinct generator family MATH.PROB.EXPECTED_COUNT"
       ],
       "scope": "Compute and interpret experimental probability as successes divided by trials, and reason that relative frequency tends to stabilize near an underlying probability over many comparable trials without requiring exact agreement.",
       "inclusions": [
@@ -362,10 +560,11 @@
         "Relative frequency as a fraction, decimal, or percent",
         "Comparing results from different trial counts",
         "Qualitative long-run stabilization",
-        "Using a probability to predict an approximate count with stated uncertainty"
+        "Recognizing that finite experimental frequency need not equal a theoretical probability exactly"
       ],
       "exclusions": [
-        "Treating predicted count as guaranteed",
+        "Expected-count prediction using n×p as mastery evidence",
+        "Treating predicted or expected count as guaranteed",
         "Inferring causation from frequency",
         "Formal confidence intervals or hypothesis tests",
         "Compound-event enumeration",
@@ -374,8 +573,7 @@
       "prerequisites": [
         "ratios and unit rates",
         "fractions, decimals, and percents",
-        "event and trial language",
-        "multiplication for expected counts"
+        "event and trial language"
       ],
       "examples": [
         {
@@ -400,9 +598,10 @@
       ],
       "assessment_criteria": [
         "independent computation and interpretation evidence",
-        "compare samples with different totals",
+        "compare samples with different totals using relative rather than raw frequency",
         "include a long-run qualitative explanation",
-        "distinguish expected count from guaranteed count",
+        "include expected-count-versus-guarantee only as a non-credit misconception contrast",
+        "do not award or infer expected-count mastery",
         "do not infer formal statistical inference"
       ]
     },
@@ -528,6 +727,24 @@
         "include AND, OR, and complement evidence",
         "require denominator justification from elementary outcomes",
         "do not infer general conditional probability"
+      ]
+    }
+  ],
+  "noncanonical_profiles": [
+    {
+      "label": "md_angle_relationships",
+      "role": "REPORTING_ONLY_FAIL_CLOSED_ALL_OF",
+      "members": [
+        "MATH.GEO.ANGLE.COMPLEMENT",
+        "MATH.GEO.ANGLE.SUPPLEMENT",
+        "MATH.GEO.ANGLE.VERTICAL_EQUALITY",
+        "MATH.GEO.ANGLE.ADJACENT_ADDITION"
+      ],
+      "prohibitions": [
+        "No canonical row or UUID",
+        "No variant, attempt, diagnostic attempt or mastery event",
+        "No evidence propagation or duplicate credit",
+        "Satisfied only when every required member has separately accepted evidence"
       ]
     }
   ]
