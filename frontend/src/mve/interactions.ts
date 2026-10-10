@@ -104,7 +104,16 @@ export interface ExplorerDatasetChangedEvent extends MathInteractionBase {
   values: readonly number[];
 }
 
+export interface ProbabilityTreeChangedEvent extends MathInteractionBase {
+  type: "PROBABILITY_TREE_CHANGED";
+  first_favorable: number;
+  first_total: number;
+  second_favorable: number;
+  second_total: number;
+}
+
 export type MathInteractionEvent =
+  | ProbabilityTreeChangedEvent
   | ExplorerDatasetChangedEvent
   | BalanceOperationAppliedEvent
   | LinearParametersChangedEvent
@@ -132,6 +141,15 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "PROBABILITY_TREE_CHANGED":
+      return Object.keys(event).every(key => [
+        "schema_version", "type", "first_favorable", "first_total", "second_favorable", "second_total",
+      ].includes(key)) &&
+        [event.first_favorable, event.first_total, event.second_favorable, event.second_total].every(Number.isSafeInteger) &&
+        (event.first_total as number) >= 2 && (event.first_total as number) <= 12 &&
+        (event.second_total as number) >= 2 && (event.second_total as number) <= 12 &&
+        (event.first_favorable as number) >= 1 && (event.first_favorable as number) < (event.first_total as number) &&
+        (event.second_favorable as number) >= 1 && (event.second_favorable as number) < (event.second_total as number);
     case "EXPLORER_DATASET_CHANGED":
       return Object.keys(event).every(key => ["schema_version", "type", "values"].includes(key)) &&
         Array.isArray(event.values) && event.values.length >= 1 && event.values.length <= 6 &&

@@ -177,6 +177,16 @@ export interface XYTableSpec extends VisualSpecBase {
   col_labels?: string[];
 }
 
+export interface ProbabilityTreeSpec extends VisualSpecBase {
+  type: "probability_tree";
+  first_label?: string;
+  first_favorable?: number;
+  first_total?: number;
+  second_label?: string;
+  second_favorable?: number;
+  second_total?: number;
+}
+
 /**
  * Compatibility spec for existing deterministic renderers.
  *
@@ -299,6 +309,12 @@ export interface LegacyVisualSpec extends VisualSpecBase {
   base?: number;
   top?: number;
   slant?: number;
+  first_label?: string;
+  first_favorable?: number;
+  first_total?: number;
+  second_label?: string;
+  second_favorable?: number;
+  second_total?: number;
 }
 
 
@@ -311,7 +327,8 @@ export type KnownVisualSpec =
   | LinearGraphSpec
   | TransformationSpec
   | SolidSpec
-  | XYTableSpec;
+  | XYTableSpec
+  | ProbabilityTreeSpec;
 
 /**
  * Public transition type. The intersection keeps existing call sites source
@@ -335,6 +352,7 @@ export function isKnownVisualSpec(spec: VisualSpec): spec is VisualSpec & KnownV
     spec.type === "volume_model" ||
     spec.type === "volume" ||
     spec.type === "solid" ||
-    spec.type === "xy_table"
+    spec.type === "xy_table" ||
+    spec.type === "probability_tree"
   );
 }

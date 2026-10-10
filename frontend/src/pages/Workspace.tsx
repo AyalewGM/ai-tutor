@@ -1,5 +1,7 @@
 import { InteractiveDotPlotExplorer } from "../mve/InteractiveDotPlotExplorer";
 import { showDotPlotExploration } from "../mve/dotPlotExplorer";
+import { InteractiveProbabilityTree } from "../mve/InteractiveProbabilityTree";
+import { showProbabilityTreeExploration } from "../mve/probabilityTree";
 import { InteractiveEquationBalance } from "../mve/InteractiveEquationBalance";
 import { showBalanceExploration } from "../mve/equationBalance";
 import { InteractiveLinearExplorer } from "../mve/InteractiveLinearExplorer";
@@ -789,6 +791,12 @@ export default function Workspace() {
                   )}
                   {showDotPlotExploration(workspace.state, workspace.focus.skill_name) && (
                     <InteractiveDotPlotExplorer
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
+                  {showProbabilityTreeExploration(workspace.state, workspace.focus.skill_name) && (
+                    <InteractiveProbabilityTree
                       key={workspace.focus.active_skill_id}
                       independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
                     />

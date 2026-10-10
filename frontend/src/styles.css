@@ -210,6 +210,7 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow:
 .viz-term { fill:#0f172a; font-size:15px; font-weight:700; } .viz-cell-a { fill:#dbeafe; } .viz-cell-b { fill:#fef3c7; }
 .viz-hop { fill:none; stroke-width:2; } .viz-hop-a { stroke:#2563eb; } .viz-hop-b { stroke:#059669; }
 .viz-grid { stroke:#e2e8f0; stroke-width:1; } .viz-curve { stroke:#7c3aed; stroke-width:2.5; } .viz-curve-b { stroke:#059669; stroke-width:2.5; }
+.viz-segment { stroke:#475569; stroke-width:2; fill:none; }
 .viz-hop-label { fill:#334155; font-size:12px; font-weight:600; } .viz-arrow-a { fill:#2563eb; } .viz-arrow-b { fill:#059669; }
 .viz-point-a { fill:#2563eb; } .viz-point-b { fill:#059669; }
 .viz-ineq-ray { stroke:#2563eb; stroke-width:5; }
