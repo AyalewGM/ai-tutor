@@ -489,11 +489,31 @@
         "disposition": "PRESERVED_CROSS_GRADE_LEGACY_COMPOSITE_NOT_CANONICAL",
         "mapping_consequence": "NO_SINGLE_GRADE_7_EQUIVALENCE",
         "required_scope_boundaries": [
-          "circle circumference/area evidence for current Grade 7 scope",
-          "angle-relationship evidence for 8.GR.A.1",
+          "separate circle circumference and circle area evidence for current Grade 7 scope",
+          "complementary-angle evidence for 8.GR.A.1",
+          "supplementary-angle evidence for 8.GR.A.1, with linear pair as a context rather than a separate identity",
+          "vertical-angle evidence for 8.GR.A.1",
+          "adjacent-angle addition with a supplied whole or total for 8.GR.A.1",
           "triangle angle-sum/exterior-angle evidence for 8.GR.A.3"
         ],
         "reporting_policy": "A complete historical local-seed view may use fail-closed ALL_OF only after every member atom is independently accepted; the view carries no separate evidence or credit."
+      },
+      "canonical_candidate_evidence": {
+        "mathematically_approved_draft_scopes": [
+          "MATH.GEO.CIRCLE.CIRCUMFERENCE",
+          "MATH.GEO.CIRCLE.AREA",
+          "MATH.GEO.TRIANGLE.ANGLE_RELATIONSHIPS"
+        ],
+        "rejected_broad_atom": "MATH.GEO.ANGLE.RELATIONSHIPS",
+        "rejected_broad_atom_verdict": "REQUEST_CHANGES_AND_ARCHITECTURE_REPORTING_ONLY_ALL_OF",
+        "pending_component_review": [
+          "complementary angles",
+          "supplementary angles",
+          "vertical angles",
+          "adjacent-angle addition"
+        ],
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "activation": "NOT_AUTHORIZED"
       }
     },
     {
@@ -529,10 +549,25 @@
         "disposition": "PRESERVED_CROSS_GRADE_LEGACY_COMPOSITE_NOT_CANONICAL",
         "mapping_consequence": "NO_SINGLE_GRADE_7_EQUIVALENCE",
         "required_scope_boundaries": [
-          "probability-model, long-run-frequency and model-comparison evidence for 7.DS.C.4-7.DS.C.6",
+          "probability likelihood scale for 7.DS.C.4, pending corrected draft and re-review",
+          "experimental relative frequency for 7.DS.C.5, excluding expected-count mastery and pending corrected draft and re-review",
+          "theory-versus-experiment comparison for 7.DS.C.6",
           "compound-event and organized-sample-space evidence for 8.DS.C.6"
         ],
-        "reporting_policy": "Evidence cannot transfer between Grade 7 probability-model scope and Grade 8 compound-event scope; any aggregate is reporting-only ALL_OF."
+        "reporting_policy": "Evidence cannot transfer between Grade 7 probability-model scope and Grade 8 compound-event scope; any aggregate is reporting-only ALL_OF.",
+        "expected_count_policy": "Expected count n×p is a separate competency; it neither satisfies nor is satisfied by experimental-frequency evidence."
+      },
+      "canonical_candidate_evidence": {
+        "mathematically_approved_draft_scopes": [
+          "MATH.PROB.MODEL.COMPARE_THEORY_EXPERIMENT",
+          "MATH.PROB.COMPOUND.SAMPLE_SPACE"
+        ],
+        "request_changes_draft_scopes": [
+          "MATH.PROB.EVENT.LIKELIHOOD_0_TO_1",
+          "MATH.PROB.EXPERIMENTAL.FREQUENCY"
+        ],
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "activation": "NOT_AUTHORIZED"
       }
     },
     {
@@ -678,7 +713,21 @@
         "validated_practice": "NOT_AUDITED",
         "assessment": "NOT_AUDITED",
         "verified_mastery": "NOT_ESTABLISHED"
-      }
+      },
+      "source_grounded_unmapped_expectations": [
+        {
+          "expectation_id": "8.DS.C.5",
+          "source_url": "https://msde.maryland.gov/media/17820",
+          "status": "OFFICIAL_SOURCE_EXPECTATION_NOT_ESTABLISHED_BY_LOCAL_ROW",
+          "note": "Two-way tables, row/column relative frequencies, and categorical association are official Grade 8 scope but are not among this local seed's reconciled targets."
+        },
+        {
+          "expectation_id": "8.DS.C.6",
+          "source_url": "https://msde.maryland.gov/media/17820",
+          "status": "OFFICIAL_SOURCE_EXPECTATION_NOT_ESTABLISHED_BY_LOCAL_ROW",
+          "note": "Compound-event/sample-space scope is official Grade 8 content; displaced legacy evidence exists under M7.SP.PROB but this local statistics row does not establish it."
+        }
+      ]
     },
     {
       "grade": 8,
@@ -769,5 +818,12 @@
       "Legacy composites and ALL_OF profiles are reporting-only and carry no canonical row, UUID, variant, attempt or mastery event.",
       "Current mappings remain provisional until bounded scope cards, independent mathematical review and independent standards review are complete."
     ]
+  },
+  "governance_evidence": {
+    "architecture_issue": 282,
+    "latest_architecture_comment": 6094147290,
+    "independent_math_review_issue": 293,
+    "latest_math_review_comment": 6094115335,
+    "note": "These decisions constrain candidate identity and evidence boundaries; every standards relation remains PROVISIONAL_NOT_ACCEPTED."
   }
 }
