@@ -1,0 +1,984 @@
+{
+  "schema_version": "0.2.0",
+  "batch": "Mihur teaching-depth wave 2",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "scope": "Six original teaching-depth packages across Grades 1–9; not comprehensive coverage.",
+  "mapping_evidence": "PR #325 provisional only",
+  "deduplication_required_against": [
+    "#309",
+    "#315",
+    "#316",
+    "#317",
+    "#319",
+    "#327"
+  ],
+  "packages": [
+    {
+      "id": "W2-G1-ADDITION-UNKNOWN",
+      "grades": "Grades 1–2",
+      "concept": "Addition/subtraction unknown-position structures",
+      "existing_reuse": "Existing elementary addition and subtraction word-problem families; deepen representations",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "mathematical_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "A child has 8 counters, receives some, and now has 13. Ask how many arrived.",
+        "Show 5 red and 4 blue counters; ask what total means."
+      ],
+      "lesson_sequence": [
+        "Elicit a prediction from a contextual concrete model.",
+        "Manipulate a visual representation and describe what stays invariant.",
+        "Translate visual steps into exact mathematical statements.",
+        "Contrast correct and incorrect reasoning through a counterexample.",
+        "Fade scaffolds and require independent explanation and transfer."
+      ],
+      "worked_examples": [
+        {
+          "prompt": "8 + □ = 13",
+          "steps": [
+            "Start with eight counters.",
+            "Add counters until thirteen are visible.",
+            "Count added counters."
+          ],
+          "answer": "5"
+        },
+        {
+          "prompt": "□ + 7 = 12",
+          "steps": [
+            "Place seven known counters in a ten-frame.",
+            "Fill remaining places to reach twelve."
+          ],
+          "answer": "5"
+        },
+        {
+          "prompt": "14 − □ = 9",
+          "steps": [
+            "Start with fourteen counters.",
+            "Remove until nine remain.",
+            "Count removed."
+          ],
+          "answer": "5"
+        },
+        {
+          "prompt": "□ − 6 = 8",
+          "steps": [
+            "Show eight counters remaining.",
+            "Put six removed counters back to reconstruct the start."
+          ],
+          "answer": "14"
+        },
+        {
+          "prompt": "9 + 6 = □",
+          "steps": [
+            "Make ten using one from six.",
+            "Ten plus five gives fifteen."
+          ],
+          "answer": "15"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "wrong_idea": "Answer uses total rather than unknown",
+          "probe": "For 8+□=13, is 13 the missing part?",
+          "hints": [
+            "What does the box represent?",
+            "Which counters were added?"
+          ],
+          "repair": "Color the starting and arriving counters differently."
+        },
+        {
+          "wrong_idea": "Subtraction always means smaller number first",
+          "probe": "For □−6=8, is the start 2?",
+          "hints": [
+            "Could two counters lose six?",
+            "Reverse the removal with an addition."
+          ],
+          "repair": "Act out take-away and restore six."
+        },
+        {
+          "wrong_idea": "Equal sign means 'write answer next'",
+          "probe": "Is 8+5=7+6 true?",
+          "hints": [
+            "Count each side.",
+            "Does the equal sign mean both sides have same value?"
+          ],
+          "repair": "Balance a virtual scale with two expressions."
+        }
+      ],
+      "guided_practice": [
+        {
+          "prompt": "□+4=11",
+          "answer": "7",
+          "reason": "11−4",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "17−□=8",
+          "answer": "9",
+          "reason": "17−8",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "□−5=9",
+          "answer": "14",
+          "reason": "9+5",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "6+8=□",
+          "answer": "14",
+          "reason": "6+8",
+          "scaffold_allowed": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "prompt": "□+9=16",
+          "answer": "7",
+          "oracle_reason": "16−9",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        },
+        {
+          "prompt": "18−□=11",
+          "answer": "7",
+          "oracle_reason": "18−11",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        },
+        {
+          "prompt": "Transfer: 6 apples are in a basket; after adding some, there are 15. How many were added?",
+          "answer": "9",
+          "oracle_reason": "15−6",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        }
+      ],
+      "interactive_spec": {
+        "scene": "ten-frames, counters, balance scale",
+        "controls": [
+          "drag counters",
+          "toggle hidden start/change/result",
+          "show number bond",
+          "balance expressions"
+        ],
+        "events": [
+          "UNKNOWN_POSITION_IDENTIFIED",
+          "COUNTER_EXCHANGE",
+          "EQUALITY_EXPLAIN"
+        ],
+        "accessibility": "keyboard add/remove, spoken count and equation, no reliance on color",
+        "assessment": "disable manipulatives and hints"
+      },
+      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW"
+    },
+    {
+      "id": "W2-G5-DECIMAL-PLACE-VALUE",
+      "grades": "Grades 4–5",
+      "concept": "Decimal place value and fraction conversion",
+      "existing_reuse": "Existing decimal/fraction families; deepen hundred-grid and number-line bridges",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "mathematical_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Mark 0.35 on a 0–1 number line.",
+        "Explain why 0.5 and 0.50 represent the same quantity."
+      ],
+      "lesson_sequence": [
+        "Elicit a prediction from a contextual concrete model.",
+        "Manipulate a visual representation and describe what stays invariant.",
+        "Translate visual steps into exact mathematical statements.",
+        "Contrast correct and incorrect reasoning through a counterexample.",
+        "Fade scaffolds and require independent explanation and transfer."
+      ],
+      "worked_examples": [
+        {
+          "prompt": "Represent 0.37",
+          "steps": [
+            "Shade 37 of 100 equal grid squares.",
+            "Record 3 tenths and 7 hundredths."
+          ],
+          "answer": "37/100"
+        },
+        {
+          "prompt": "Compare 0.6 and 0.58",
+          "steps": [
+            "Write 0.6 as 0.60.",
+            "Compare sixty hundredths with fifty-eight hundredths."
+          ],
+          "answer": "0.6 > 0.58"
+        },
+        {
+          "prompt": "Convert 3/4 to decimal",
+          "steps": [
+            "Make equivalent hundredths: 75/100.",
+            "Write seventy-five hundredths."
+          ],
+          "answer": "0.75"
+        },
+        {
+          "prompt": "Compute 1.25 + 0.4",
+          "steps": [
+            "Align tenths and hundredths.",
+            "Add 1.25+0.40."
+          ],
+          "answer": "1.65"
+        },
+        {
+          "prompt": "Compute 2 − 0.35",
+          "steps": [
+            "Rewrite 2 as 2.00.",
+            "Subtract 0.35 using hundredths."
+          ],
+          "answer": "1.65"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "wrong_idea": "Longer decimal always larger",
+          "probe": "Is 0.58 greater than 0.6 because 58>6?",
+          "hints": [
+            "How many hundredths are in six tenths?",
+            "Compare with common place values."
+          ],
+          "repair": "Overlay hundred-grids for 0.60 and 0.58."
+        },
+        {
+          "wrong_idea": "Trailing zeros change value",
+          "probe": "Does 0.50 represent more than 0.5?",
+          "hints": [
+            "What is one tenth in hundredths?",
+            "How many grid squares are shaded?"
+          ],
+          "repair": "Partition tenths into ten hundredths."
+        },
+        {
+          "wrong_idea": "Misaligned decimal addition",
+          "probe": "Is 1.25+0.4 equal to 1.29?",
+          "hints": [
+            "What place does the 4 occupy?",
+            "Where should decimal points align?"
+          ],
+          "repair": "Drag digits into a place-value chart."
+        }
+      ],
+      "guided_practice": [
+        {
+          "prompt": "Write 0.42 as fraction",
+          "answer": "21/50",
+          "reason": "42/100=21/50",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "Compare 0.09 and 0.1",
+          "answer": "0.1",
+          "reason": "0.10>0.09",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "1.6+0.25",
+          "answer": "1.85",
+          "reason": "1.60+0.25",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "2.4−0.75",
+          "answer": "1.65",
+          "reason": "2.40−0.75",
+          "scaffold_allowed": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "prompt": "Convert 7/20 to decimal",
+          "answer": "0.35",
+          "oracle_reason": "7/20=35/100",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        },
+        {
+          "prompt": "Which is larger 0.704 or 0.74?",
+          "answer": "0.74",
+          "oracle_reason": "0.740>0.704",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        },
+        {
+          "prompt": "Transfer: A ribbon is 2.5 m; 0.85 m is cut. How much remains?",
+          "answer": "1.65 m",
+          "oracle_reason": "2.50−0.85",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        }
+      ],
+      "interactive_spec": {
+        "scene": "100-grid and linked number line",
+        "controls": [
+          "shade cells",
+          "change grid partition",
+          "drag decimal marker",
+          "align decimal digits"
+        ],
+        "events": [
+          "DECIMAL_PARTITION",
+          "DECIMAL_COMPARE",
+          "DECIMAL_REGROUP"
+        ],
+        "accessibility": "keyboard grid cell selection, fraction and decimal text equivalents",
+        "assessment": "hide hundred-grid scaffold"
+      },
+      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW"
+    },
+    {
+      "id": "W2-G6-RATIO-DOUBLE-LINE",
+      "grades": "Grades 6–7",
+      "concept": "Ratio reasoning and unit rates",
+      "existing_reuse": "Existing ratio families and PR #315; deepen double-number-line reasoning",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "mathematical_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Three notebooks cost $12; ask price of one.",
+        "Compare a 2:3 paint mixture with a 4:6 mixture."
+      ],
+      "lesson_sequence": [
+        "Elicit a prediction from a contextual concrete model.",
+        "Manipulate a visual representation and describe what stays invariant.",
+        "Translate visual steps into exact mathematical statements.",
+        "Contrast correct and incorrect reasoning through a counterexample.",
+        "Fade scaffolds and require independent explanation and transfer."
+      ],
+      "worked_examples": [
+        {
+          "prompt": "3 notebooks cost $12",
+          "steps": [
+            "Plot 0,3,6 notebooks against $0,$12,$24.",
+            "One notebook costs 12÷3."
+          ],
+          "answer": "$4 each"
+        },
+        {
+          "prompt": "2 cups concentrate for 5 cups water",
+          "steps": [
+            "Double both parts.",
+            "Four cups concentrate require ten cups water."
+          ],
+          "answer": "4:10"
+        },
+        {
+          "prompt": "Travel 150 km in 3 h",
+          "steps": [
+            "Split 150 km into three equal hourly parts.",
+            "Distance per hour is 50 km."
+          ],
+          "answer": "50 km/h"
+        },
+        {
+          "prompt": "4 pencils cost $6",
+          "steps": [
+            "Unit price is 6÷4.",
+            "Two pencils cost twice the unit price."
+          ],
+          "answer": "$3"
+        },
+        {
+          "prompt": "Compare 6 km in 20 min and 9 km in 30 min",
+          "steps": [
+            "6/20=0.3 km/min.",
+            "9/30=0.3 km/min.",
+            "Rates match."
+          ],
+          "answer": "same rate"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "wrong_idea": "Add equal quantities to ratio parts",
+          "probe": "Is 2:3 equivalent to 3:4?",
+          "hints": [
+            "Does each part scale by same factor?",
+            "Try doubling instead of adding."
+          ],
+          "repair": "Scale linked tape bars by one factor."
+        },
+        {
+          "wrong_idea": "Invert unit rate",
+          "probe": "If 3 items cost $12, is price per item 3/12 dollars?",
+          "hints": [
+            "What unit must the answer have?",
+            "Which quantity is divided by number of items?"
+          ],
+          "repair": "Attach units to the two line axes."
+        },
+        {
+          "wrong_idea": "Confuse additive and multiplicative relationships",
+          "probe": "From 2:5 to 4:7, are ratios preserved?",
+          "hints": [
+            "What factor maps 2 to 4?",
+            "Apply that factor to 5."
+          ],
+          "repair": "Use linked ratio table to test constant multiplicative factor."
+        }
+      ],
+      "guided_practice": [
+        {
+          "prompt": "5 kg apples cost $20: price per kg",
+          "answer": "$4",
+          "reason": "20/5",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "2:7 scale to first term 6",
+          "answer": "6:21",
+          "reason": "multiply by 3",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "90 km in 2 h",
+          "answer": "45 km/h",
+          "reason": "90/2",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "8 tickets cost $36: 2 tickets",
+          "answer": "$9",
+          "reason": "36/8×2",
+          "scaffold_allowed": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "prompt": "7 pens cost $21. Find cost of 5 pens.",
+          "answer": "$15",
+          "oracle_reason": "21/7×5",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        },
+        {
+          "prompt": "A 3:4 recipe is scaled to 12 cups of first ingredient. Find second.",
+          "answer": "16 cups",
+          "oracle_reason": "factor 4",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        },
+        {
+          "prompt": "Transfer: Runner A travels 12 km in 1.5 h; runner B 18 km in 2 h. Who is faster?",
+          "answer": "runner B",
+          "oracle_reason": "8 km/h vs 9 km/h",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        }
+      ],
+      "interactive_spec": {
+        "scene": "two aligned number lines with linked points",
+        "controls": [
+          "scale both axes",
+          "add paired values",
+          "compare rates",
+          "toggle unit labels"
+        ],
+        "events": [
+          "RATIO_SCALE",
+          "UNIT_RATE_IDENTIFIED",
+          "RATIO_COUNTEREXAMPLE"
+        ],
+        "accessibility": "paired value table, keyboard axis controls, units spoken",
+        "assessment": "disable linked markers"
+      },
+      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW"
+    },
+    {
+      "id": "W2-G7-DISTRIBUTIONS-IQR",
+      "grades": "Grades 6–8",
+      "concept": "Five-number summary, box plots and spread",
+      "existing_reuse": "MATH.DATA.IQR and MATH.DATA.FIVE_NUMBER existing; deepen interpretation, not duplicate",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "mathematical_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Given 2,3,4,5,6,7,8,9, find median.",
+        "Ask which data set is more spread out: [2,3,4,5,6] or [4,4,4,4,4]."
+      ],
+      "lesson_sequence": [
+        "Elicit a prediction from a contextual concrete model.",
+        "Manipulate a visual representation and describe what stays invariant.",
+        "Translate visual steps into exact mathematical statements.",
+        "Contrast correct and incorrect reasoning through a counterexample.",
+        "Fade scaffolds and require independent explanation and transfer."
+      ],
+      "worked_examples": [
+        {
+          "prompt": "Find five-number summary of 1,2,3,4,5,6,7,8",
+          "steps": [
+            "Minimum=1 maximum=8.",
+            "Median=(4+5)/2=4.5.",
+            "Lower-half median=(2+3)/2=2.5; upper-half median=(6+7)/2=6.5."
+          ],
+          "answer": "1, 2.5, 4.5, 6.5, 8"
+        },
+        {
+          "prompt": "Find IQR for same data",
+          "steps": [
+            "Q3=6.5 and Q1=2.5.",
+            "Subtract Q3−Q1."
+          ],
+          "answer": "4"
+        },
+        {
+          "prompt": "Summary: 2,4,7,10,13",
+          "steps": [
+            "Box extends Q1=4 to Q3=10.",
+            "Median line at 7; whiskers at 2 and 13."
+          ],
+          "answer": "box 4–10; median 7"
+        },
+        {
+          "prompt": "Compare IQR 4 and IQR 9",
+          "steps": [
+            "IQR measures middle-half spread.",
+            "9 is greater than 4."
+          ],
+          "answer": "second has larger middle-half spread"
+        },
+        {
+          "prompt": "Data 1,1,2,2,9,9,10,10",
+          "steps": [
+            "Median=(2+9)/2=5.5.",
+            "Q1=(1+2)/2=1.5, Q3=(9+10)/2=9.5.",
+            "IQR=8."
+          ],
+          "answer": "8"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "wrong_idea": "Range confused with IQR",
+          "probe": "For summary 2,4,7,10,13, is IQR 11?",
+          "hints": [
+            "Which two quartiles bound the box?",
+            "Is maximum minus minimum the same as IQR?"
+          ],
+          "repair": "Color the middle 50% only."
+        },
+        {
+          "wrong_idea": "Median always one data point",
+          "probe": "Can median of 1,2,3,4 be 2.5?",
+          "hints": [
+            "How many middle positions exist?",
+            "What happens with even count?"
+          ],
+          "repair": "Highlight two central dots and midpoint."
+        },
+        {
+          "wrong_idea": "IQR means whole-data spread",
+          "probe": "If two samples have same IQR, must their ranges match?",
+          "hints": [
+            "What does the box omit?",
+            "Can whiskers have different lengths?"
+          ],
+          "repair": "Manipulate extremes without moving middle quartiles."
+        }
+      ],
+      "guided_practice": [
+        {
+          "prompt": "Summary 0,2,5,8,12: IQR",
+          "answer": "6",
+          "reason": "8−2",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "Median of 2,4,6,8",
+          "answer": "5",
+          "reason": "(4+6)/2",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "Summary 1,3,4,9,11: range",
+          "answer": "10",
+          "reason": "11−1",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "Compare IQR 2 and 5",
+          "answer": "5 has larger middle-half spread",
+          "reason": "5>2",
+          "scaffold_allowed": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "prompt": "Summary 3,5,8,11,15: IQR",
+          "answer": "6",
+          "oracle_reason": "11−5",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        },
+        {
+          "prompt": "For sorted 2,4,6,8,10,12,14,16: median",
+          "answer": "9",
+          "oracle_reason": "(8+10)/2",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        },
+        {
+          "prompt": "Transfer: Two box plots have equal medians, IQRs 3 and 7. Which middle half is more spread out?",
+          "answer": "IQR 7 plot",
+          "oracle_reason": "7>3",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        }
+      ],
+      "interactive_spec": {
+        "scene": "dot plot linked to box plot",
+        "controls": [
+          "move observations",
+          "snap quartile markers",
+          "show median halves",
+          "compare two plots"
+        ],
+        "events": [
+          "QUARTILE_MARKED",
+          "IQR_INTERPRETED",
+          "DISTRIBUTION_COMPARED"
+        ],
+        "accessibility": "full ordered data table and five-number readout; keyboard quartile markers",
+        "assessment": "no auto-calculated quartile display"
+      },
+      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW"
+    },
+    {
+      "id": "W2-G8-CUBE-NETS",
+      "grades": "Grades 6–8",
+      "concept": "Valid cube nets and surface-area reasoning",
+      "existing_reuse": "MATH.GEO.NET.CUBE.SURFACE exists; deepen foldability not just numeric face area",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "mathematical_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Show six squares in a straight row; ask if they can form a cube without overlap.",
+        "Ask how many faces a cube has."
+      ],
+      "lesson_sequence": [
+        "Elicit a prediction from a contextual concrete model.",
+        "Manipulate a visual representation and describe what stays invariant.",
+        "Translate visual steps into exact mathematical statements.",
+        "Contrast correct and incorrect reasoning through a counterexample.",
+        "Fade scaffolds and require independent explanation and transfer."
+      ],
+      "worked_examples": [
+        {
+          "prompt": "Cube edge 3 cm: surface area",
+          "steps": [
+            "Each square face has area 3×3=9 cm².",
+            "Six congruent faces give 6×9."
+          ],
+          "answer": "54 cm²"
+        },
+        {
+          "prompt": "Cube edge 1/2 m: surface area",
+          "steps": [
+            "Each face area is 1/4 m².",
+            "Six faces give 6/4 m²."
+          ],
+          "answer": "3/2 m²"
+        },
+        {
+          "prompt": "Four squares in a row with one attached above second and one below second",
+          "steps": [
+            "Fold the four in a row around the sides.",
+            "Top and bottom attachments close opposite faces."
+          ],
+          "answer": "valid cube net"
+        },
+        {
+          "prompt": "Six squares in a straight line",
+          "steps": [
+            "After four side faces wrap, further squares overlap rather than closing top and bottom."
+          ],
+          "answer": "invalid cube net"
+        },
+        {
+          "prompt": "Cube with 24 cm² surface area: face area",
+          "steps": [
+            "All six faces equal.",
+            "Divide 24 by 6."
+          ],
+          "answer": "4 cm²"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "wrong_idea": "Six squares automatically means valid net",
+          "probe": "Can six squares in a straight row form a cube?",
+          "hints": [
+            "Does folding avoid overlap?",
+            "Which square becomes the top face?"
+          ],
+          "repair": "Fold a net with collisions highlighted."
+        },
+        {
+          "wrong_idea": "Surface area confused with edge sum",
+          "probe": "Is a cube with edge 3 cm area 36 cm²?",
+          "hints": [
+            "What is the area of one face?",
+            "How many faces?"
+          ],
+          "repair": "Highlight each square face separately."
+        },
+        {
+          "wrong_idea": "Units of surface area confused with volume",
+          "probe": "Is cube surface area measured in cm³?",
+          "hints": [
+            "Are we covering faces or filling space?",
+            "What is the dimension of a square face?"
+          ],
+          "repair": "Toggle face coverage versus unit-cube filling."
+        }
+      ],
+      "guided_practice": [
+        {
+          "prompt": "Edge 2 cm cube surface area",
+          "answer": "24 cm²",
+          "reason": "6×4",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "Edge 5 cm cube face area",
+          "answer": "25 cm²",
+          "reason": "5×5",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "Surface area 96 cm²: area of one face",
+          "answer": "16 cm²",
+          "reason": "96/6",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "Is six-in-line a cube net?",
+          "answer": "no",
+          "reason": "folding overlap",
+          "scaffold_allowed": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "prompt": "Cube edge 4 cm: surface area",
+          "answer": "96 cm²",
+          "oracle_reason": "6×16",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        },
+        {
+          "prompt": "Surface area 150 cm²: edge length",
+          "answer": "5 cm",
+          "oracle_reason": "150/6=25; sqrt25=5",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        },
+        {
+          "prompt": "Transfer: two cubes edges 2 and 4 cm. Surface area factor?",
+          "answer": "4",
+          "oracle_reason": "area scales with square of length ratio",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        }
+      ],
+      "interactive_spec": {
+        "scene": "unfolded square grid and rotatable cube",
+        "controls": [
+          "fold each hinge",
+          "detect face collisions",
+          "label face identities",
+          "toggle face-area tiles"
+        ],
+        "events": [
+          "NET_FOLD",
+          "NET_COLLISION",
+          "FACE_AREA_EXPLAIN"
+        ],
+        "accessibility": "keyboard hinge folding, 2D face adjacency description, static sequence alternative",
+        "assessment": "no foldability indicator"
+      },
+      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW"
+    },
+    {
+      "id": "W2-G9-QUADRATIC-PATTERNS",
+      "grades": "Grade 9 / Algebra I",
+      "concept": "Quadratic tables, area models and factorization",
+      "existing_reuse": "Existing algebra/functions families and Grade 9 draft PR #317; deepen non-linear structure",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "mathematical_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Sequence 1,4,9,16: ask how differences change.",
+        "Compare y=x+2 with y=x²+2 for x=0,1,2."
+      ],
+      "lesson_sequence": [
+        "Elicit a prediction from a contextual concrete model.",
+        "Manipulate a visual representation and describe what stays invariant.",
+        "Translate visual steps into exact mathematical statements.",
+        "Contrast correct and incorrect reasoning through a counterexample.",
+        "Fade scaffolds and require independent explanation and transfer."
+      ],
+      "worked_examples": [
+        {
+          "prompt": "Area of square side x+3",
+          "steps": [
+            "Partition into x², 3x, 3x, 9.",
+            "Combine terms."
+          ],
+          "answer": "x²+6x+9"
+        },
+        {
+          "prompt": "Factor x²+5x+6",
+          "steps": [
+            "Find numbers multiplying to 6 and summing to 5.",
+            "Use 2 and 3."
+          ],
+          "answer": "(x+2)(x+3)"
+        },
+        {
+          "prompt": "Solve x²=49",
+          "steps": [
+            "Square roots give two real candidates.",
+            "Both 7 and −7 square to 49."
+          ],
+          "answer": "x=±7"
+        },
+        {
+          "prompt": "Evaluate y=x²−4x+3 at x=2",
+          "steps": [
+            "Compute 2²−4×2+3.",
+            "4−8+3=−1."
+          ],
+          "answer": "−1"
+        },
+        {
+          "prompt": "Table x=0,1,2,3 and y=1,4,9,16",
+          "steps": [
+            "First differences 3,5,7.",
+            "Second differences constant 2.",
+            "Model (x+1)² for given inputs."
+          ],
+          "answer": "y=(x+1)²"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "wrong_idea": "Quadratic grows by constant first difference",
+          "probe": "Do squares 1,4,9,16 increase by 3 each time?",
+          "hints": [
+            "Find each successive difference.",
+            "Compare second differences."
+          ],
+          "repair": "Animate growing square border."
+        },
+        {
+          "wrong_idea": "Forget negative root",
+          "probe": "Does x²=49 only have solution 7?",
+          "hints": [
+            "What is (−7)×(−7)?",
+            "Are both signs allowed in a real-number equation?"
+          ],
+          "repair": "Mirror points at ±7 on number line."
+        },
+        {
+          "wrong_idea": "Factor by matching sum only",
+          "probe": "Does (x+1)(x+5) equal x²+5x+6?",
+          "hints": [
+            "Multiply first and last terms.",
+            "What is the coefficient of x?"
+          ],
+          "repair": "Area-tile expansion and regrouping."
+        }
+      ],
+      "guided_practice": [
+        {
+          "prompt": "Factor x²+7x+12",
+          "answer": "(x+3)(x+4)",
+          "reason": "3+4=7, 3×4=12",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "Evaluate x²−3 at x=−2",
+          "answer": "1",
+          "reason": "4−3",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "Solve x²=16",
+          "answer": "x=−4 or 4",
+          "reason": "both roots",
+          "scaffold_allowed": true
+        },
+        {
+          "prompt": "Expand (x+2)(x+4)",
+          "answer": "x²+6x+8",
+          "reason": "distributive law",
+          "scaffold_allowed": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "prompt": "Factor x²+9x+20",
+          "answer": "(x+4)(x+5)",
+          "oracle_reason": "sum9 product20",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        },
+        {
+          "prompt": "Solve x²−25=0",
+          "answer": "x=−5 or 5",
+          "oracle_reason": "difference of squares",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        },
+        {
+          "prompt": "Transfer: A rectangular garden has sides x+2 and x+5. Express its area.",
+          "answer": "x²+7x+10",
+          "oracle_reason": "distribute products",
+          "hints_allowed": false,
+          "feedback_after_submission": true
+        }
+      ],
+      "interactive_spec": {
+        "scene": "algebra tiles and growing square pattern",
+        "controls": [
+          "assemble rectangle with tiles",
+          "link table to area",
+          "reflect roots on number line",
+          "toggle first and second differences"
+        ],
+        "events": [
+          "QUADRATIC_TILE_EXPANSION",
+          "FACTOR_PAIR_FOUND",
+          "ROOT_SYMMETRY"
+        ],
+        "accessibility": "text expression for tile arrangement, keyboard controls, table alternatives",
+        "assessment": "hide tiles and linked tables"
+      },
+      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW"
+    }
+  ]
+}
