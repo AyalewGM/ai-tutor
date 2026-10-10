@@ -28,7 +28,19 @@ export function checkIntegerPractice(index: number, answer: string) {
   if (Math.abs(value) > 20) return { correct: false, feedback: "Enter a whole number from -20 to 20." };
   const item = INTEGER_PRACTICE[index];
   const model = integerModel(item.start, item.operand, item.operation);
-  return { correct: value === model.result, feedback: value === model.result ? "Correct. " + model.explanation : "Try again. " + model.explanation };
+  if (value === model.result) return { correct: true, feedback: "Correct. " + model.explanation };
+  const wrongDirection = (value - item.start) * model.displacement < 0;
+  const misconception = wrongDirection ? " Check the direction of movement on the number line." :
+    item.operation === "subtract" && item.operand < 0 ? " Remember that subtracting a negative means moving right." :
+    item.operation === "add" && item.operand < 0 ? " Remember that adding a negative means moving left." :
+    " Recount the signed units from the starting integer.";
+  return { correct: false, feedback: "Try again." + misconception };
+}
+
+/** Stable deterministic practice index for an externally supplied seed. */
+export function integerPracticeIndexFromSeed(seed: number): number {
+  if (!Number.isSafeInteger(seed)) throw new RangeError("Expected a safe integer seed");
+  return ((seed % INTEGER_PRACTICE.length) + INTEGER_PRACTICE.length) % INTEGER_PRACTICE.length;
 }
 
 export function showIntegerExploration(state: string, skillName: string): boolean {
