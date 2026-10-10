@@ -1,1 +1,19 @@
-{"package_id":"W2-G9-QUADRATIC-PATTERNS","status":"DRAFT_UNVERIFIED","runtime_activation":false}
+{
+  "package_id": "W2-G9-QUADRATIC-PATTERNS",
+  "revision": "DRAFT_V1",
+  "source_pr": 328,
+  "canonical": "MATH.F.QUADRATIC.INTERPRET",
+  "canonical_review": "UNKNOWN",
+  "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+  "curriculum_reference_files": [
+    "w2-ontario-source.json",
+    "w2-maryland-source.json"
+  ],
+  "math_review": "PENDING",
+  "pedagogy_review": "PENDING",
+  "muse_qa": "PENDING",
+  "practice": "NOT_VERIFIED",
+  "assessment": "NOT_VERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false
+}
