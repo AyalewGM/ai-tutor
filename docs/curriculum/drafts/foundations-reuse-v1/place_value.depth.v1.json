@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "package_id": "W1-G2-PLACE-VALUE-REGROUP",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "source_pr": 327,
+  "existing_family": "MATH.PV.COMPOSE_NONSTANDARD",
+  "implementation": "DESIGN_ONLY",
+  "preserved_invariant": "100h + 10t + o",
+  "sequence": [
+    {
+      "phase": "OBSERVE",
+      "prompt": "Count 3 hundred-flats, 5 rods and 2 cubes."
+    },
+    {
+      "phase": "PREDICT",
+      "prompt": "Record counts expected after trading one flat for ten rods."
+    },
+    {
+      "phase": "MANIPULATE",
+      "prompt": "Exchange one flat for ten rods, preserving total."
+    },
+    {
+      "phase": "EXPLAIN",
+      "prompt": "Justify 300+50+2 = 200+150+2."
+    },
+    {
+      "phase": "PRACTICE",
+      "prompt": "Represent 2 hundreds, 14 tens, 7 ones and trade."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "prompt": "Challenge the claim that exchanging changes total."
+    },
+    {
+      "phase": "TRANSFER",
+      "prompt": "Interpret 4 boxes of 100, 13 tens-packs, 6 loose cards."
+    },
+    {
+      "phase": "VERIFY",
+      "prompt": "Unhinted independent server-controlled item; no practice mastery."
+    }
+  ],
+  "misconception_repairs": [
+    {
+      "error": "DIGIT_VS_VALUE",
+      "probe": "What is five tens worth?",
+      "repair": "Make five groups of ten and compare with the digit five."
+    },
+    {
+      "error": "EXCHANGE_CREATES_VALUE",
+      "probe": "Do ten tens have the same units as a hundred?",
+      "repair": "Compare both totals after a physical trade."
+    },
+    {
+      "error": "NONSTANDARD_COUNT",
+      "probe": "Does fourteen tens mean fourteen ones?",
+      "repair": "Trade ten rods for one flat while keeping quantities constant."
+    }
+  ],
+  "accessibility": {
+    "keyboard_exchange": true,
+    "text_inventory": true,
+    "reduced_motion": true,
+    "no_visual_only_proof": true
+  },
+  "oracle_teacher_only": {
+    "initial": 352,
+    "exchanged": 352,
+    "practice": 347,
+    "transfer": 536
+  },
+  "review_status": "PENDING"
+}

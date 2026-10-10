@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "package_id": "W2-G1-ADDITION-UNKNOWN",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "source_pr": 328,
+  "existing_family": "MATH.ADD.WORD.CHANGE_UNKNOWN",
+  "implementation": "DESIGN_ONLY",
+  "invariant": "start + change = result",
+  "stages": [
+    {
+      "phase": "OBSERVE",
+      "prompt": "There are eight counters; after some arrive there are thirteen. Identify the unknown."
+    },
+    {
+      "phase": "PREDICT",
+      "prompt": "Predict whether the unknown change is smaller than the final total; explain."
+    },
+    {
+      "phase": "MANIPULATE",
+      "prompt": "Represent start and change as distinct counter sets and narrate the total."
+    },
+    {
+      "phase": "EXPLAIN",
+      "prompt": "Describe why 8 + unknown = 13 and how subtraction checks it."
+    },
+    {
+      "phase": "PRACTICE",
+      "prompt": "Start with nine stickers and end with seventeen; find the change."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "prompt": "Evaluate the mistake 'seventeen was added because that is the ending total'."
+    },
+    {
+      "phase": "TRANSFER",
+      "prompt": "Eleven bottles become nineteen after a refill. How many were added?"
+    },
+    {
+      "phase": "VERIFY",
+      "prompt": "Fresh unhinted problem scored by backend; guided counters award no mastery."
+    }
+  ],
+  "misconception_repairs": [
+    {
+      "error": "RESULT_AS_CHANGE",
+      "probe": "Would adding the final total to the starting number match the story?",
+      "repair": "Label start, change and result separately."
+    },
+    {
+      "error": "START_UNKNOWN_CONFUSION",
+      "probe": "Could losing six from two counters leave eight?",
+      "repair": "Reverse a take-away with an add-back."
+    },
+    {
+      "error": "EQUAL_SIGN_AS_NEXT",
+      "probe": "Can two expressions on opposite sides of '=' represent the same amount?",
+      "repair": "Check a balanced pair with two groups."
+    }
+  ],
+  "accessibility": {
+    "keyboard_counters": true,
+    "spoken_start_change_result": true,
+    "reduced_motion": true,
+    "assessment_scaffolds": false
+  },
+  "oracle_teacher_only": {
+    "practice": 8,
+    "transfer": 8
+  },
+  "review_status": "PENDING"
+}
