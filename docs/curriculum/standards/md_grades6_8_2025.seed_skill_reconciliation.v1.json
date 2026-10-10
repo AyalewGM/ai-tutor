@@ -30,7 +30,8 @@
     "No canonical identifier is created or activated.",
     "Local generator or seeder availability is not mathematical, standards, assessment, or mastery evidence.",
     "Cross-grade placements require Architecture and independent standards/mathematical review before implementation.",
-    "Historical student records and mastery evidence remain untouched."
+    "Historical student records and mastery evidence remain untouched.",
+    "Architecture has decided identity boundaries for four cross-grade/out-of-grade local seeds, but no standards mapping or canonical definition is accepted."
   ],
   "row_count": 28,
   "grade_counts": {
@@ -483,6 +484,16 @@
         "validated_practice": "NOT_AUDITED",
         "assessment": "NOT_AUDITED",
         "verified_mastery": "NOT_ESTABLISHED"
+      },
+      "architecture_disposition": {
+        "disposition": "PRESERVED_CROSS_GRADE_LEGACY_COMPOSITE_NOT_CANONICAL",
+        "mapping_consequence": "NO_SINGLE_GRADE_7_EQUIVALENCE",
+        "required_scope_boundaries": [
+          "circle circumference/area evidence for current Grade 7 scope",
+          "angle-relationship evidence for 8.GR.A.1",
+          "triangle angle-sum/exterior-angle evidence for 8.GR.A.3"
+        ],
+        "reporting_policy": "A complete historical local-seed view may use fail-closed ALL_OF only after every member atom is independently accepted; the view carries no separate evidence or credit."
       }
     },
     {
@@ -513,6 +524,15 @@
         "validated_practice": "NOT_AUDITED",
         "assessment": "NOT_AUDITED",
         "verified_mastery": "NOT_ESTABLISHED"
+      },
+      "architecture_disposition": {
+        "disposition": "PRESERVED_CROSS_GRADE_LEGACY_COMPOSITE_NOT_CANONICAL",
+        "mapping_consequence": "NO_SINGLE_GRADE_7_EQUIVALENCE",
+        "required_scope_boundaries": [
+          "probability-model, long-run-frequency and model-comparison evidence for 7.DS.C.4-7.DS.C.6",
+          "compound-event and organized-sample-space evidence for 8.DS.C.6"
+        ],
+        "reporting_policy": "Evidence cannot transfer between Grade 7 probability-model scope and Grade 8 compound-event scope; any aggregate is reporting-only ALL_OF."
       }
     },
     {
@@ -590,6 +610,11 @@
         "validated_practice": "NOT_AUDITED",
         "assessment": "NOT_AUDITED",
         "verified_mastery": "NOT_ESTABLISHED"
+      },
+      "architecture_disposition": {
+        "disposition": "PRESERVED_LEGACY_PLACEMENT_IDENTIFIER",
+        "mapping_consequence": "NO_CURRENT_MARYLAND_GRADE_8_EQUIVALENCE",
+        "future_mapping_rule": "Integrated Algebra I/II mappings must target later reviewed placement-neutral atoms; historical Grade 8 evidence is not reinterpreted."
       }
     },
     {
@@ -622,6 +647,11 @@
         "validated_practice": "NOT_AUDITED",
         "assessment": "NOT_AUDITED",
         "verified_mastery": "NOT_ESTABLISHED"
+      },
+      "architecture_disposition": {
+        "disposition": "PRESERVED_LEGACY_PLACEMENT_IDENTIFIER",
+        "mapping_consequence": "NO_CURRENT_MARYLAND_GRADE_8_EQUIVALENCE",
+        "future_mapping_rule": "Integrated Algebra I/II or possible Grade 7 scale-drawing mappings require separate bounded reviewed atoms; historical Grade 8 evidence is not reinterpreted."
       }
     },
     {
@@ -724,5 +754,20 @@
         "verified_mastery": "NOT_ESTABLISHED"
       }
     }
-  ]
+  ],
+  "architecture_decision": {
+    "issue": 282,
+    "comment_id": 6093222041,
+    "decision_date": "2026-10-09",
+    "status": "IDENTITY_BOUNDARIES_DECIDED_MAPPINGS_NOT_ACCEPTED",
+    "evidence_head": "28bee94c88c76879ee33033e0b70979ddc1937e5",
+    "principles": [
+      "Jurisdiction, grade and course placement are mapping metadata, not canonical mathematical identity.",
+      "A cross-grade local seed is not a canonical atom or an equivalence alias.",
+      "Historical identifiers and learner evidence are immutable; no backfill, rekey, evidence copy, grade reassignment or retroactive reinterpretation.",
+      "One attempt has one primary accepted atomic skill.",
+      "Legacy composites and ALL_OF profiles are reporting-only and carry no canonical row, UUID, variant, attempt or mastery event.",
+      "Current mappings remain provisional until bounded scope cards, independent mathematical review and independent standards review are complete."
+    ]
+  }
 }
