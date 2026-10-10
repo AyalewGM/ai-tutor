@@ -50,3 +50,22 @@ All seven are separately tracked. A generator does not prove a skill is reviewed
 5. **Engineering + MVE + Muse QA:** Integrate accepted packages in substantial batches; validate exact-head CI/AppSec, mathematical determinism, independent mastery separation, accessibility, and child privacy.
 
 **Ownership:** This PR contains only coordination data, no production mappings, canonical ID changes, learner evidence changes, deployment, or approval to merge the existing draft PRs.
+
+## Wave 1 extension — actual Grade 6–8 seed evidence
+
+The initial Wave 1 register identified an official-standards *inventory gap* for Grades 6–8. I have now inspected five existing seed scripts and added [a separate machine-readable local-skill audit](grades6_8_existing_seed_evidence.wave1.v1.json), with a test that checks the exact codes against the scripts on `main`.
+
+| Repository seed | Grade | Local skill rows directly identified |
+|---|---:|---:|
+| `scripts/seed_grade6.py` (Maryland) | 6 | 7 |
+| `scripts/seed_dc_grade6.py` (DC) | 6 | 5 |
+| `scripts/seed_va_grade6.py` (Virginia) | 6 | 5 |
+| `scripts/seed_grade7.py` (Maryland) | 7 | 15 |
+| `scripts/seed_grade8.py` (Maryland) | 8 | 6 |
+| **Total in these five scripts** | | **38 local rows** |
+
+**Important:** These 38 are curriculum-local seed entries, not 38 independently verified mathematical skills, and not 38 mapped official expectations. The Grade 8 script extends a pre-existing Grade 8 curriculum; its six rows are explicitly a **partial** inventory, not a complete Grade 8 count. Source-authority URLs in the seeders do not themselves provide expectation-level alignment. The machine-readable audit deliberately records **zero independently accepted mappings in this evidence layer**, not zero actual product content.
+
+**Prioritized Grade 6–8 mapping questions:** (1) ratio/rate/proportional reasoning, (2) signed and rational arithmetic, (3) expression/equation/inequality scope, (4) geometry/transformations/Pythagorean reasoning, (5) data/statistics/probability/functions. All five have *some existing local seed evidence*; none can be marked curriculum-complete until official expectation IDs, reviewed canonical definitions, generators, validated practice and assessment contracts are checked independently.
+
+**Next source acquisition:** identify authoritative expectation identifiers and versions for Maryland Grades 6–8, DC Grade 6 and Virginia Grade 6; then compare those official requirements with the 38 local rows and all other seed/pack sources. Grade 1–5 standards inventory and Grade 8's additional legacy seed remain separate unresolved tasks.
