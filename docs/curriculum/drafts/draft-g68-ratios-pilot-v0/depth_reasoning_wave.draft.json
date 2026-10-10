@@ -1,0 +1,364 @@
+{
+  "package_id": "draft-g68-ratios-depth-wave-v1",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "grade_band": "6-8",
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "runtime_activation": false,
+  "mastery_updater": false,
+  "items": [
+    {
+      "item_id": "g68-depth-01",
+      "provisional_topic": "ratio-interpretation",
+      "question": "A club has 18 junior and 12 senior members. What fraction of all members are senior, in simplest form?",
+      "expected": "2/5",
+      "answer_contract": "exact_fraction",
+      "worked_reasoning": "The whole is 30 members, not 18.",
+      "misconception": {
+        "plausible_wrong_answer": "2/3",
+        "feedback": "Do not confuse senior-to-junior with senior-to-total."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "A garden has 16 roses and 24 tulips. What fraction are roses?",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-02",
+      "provisional_topic": "equivalent-ratios",
+      "question": "A recipe uses 3 cups flour for every 2 cups milk. How many cups of milk are needed for 12 cups flour?",
+      "expected": "8",
+      "answer_contract": "nonnegative_number",
+      "worked_reasoning": "Four equal recipe batches use 4×2 cups milk.",
+      "misconception": {
+        "plausible_wrong_answer": "11",
+        "feedback": "Scaling a ratio multiplies both parts; do not add the same number."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "For 5 parts concentrate to 3 parts water, find water for 20 parts concentrate.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-03",
+      "provisional_topic": "unit-rates",
+      "question": "A cyclist travels 84 km in 4 hours at a constant speed. What is the speed in km/h?",
+      "expected": "21",
+      "answer_contract": "nonnegative_number",
+      "worked_reasoning": "84 ÷ 4 gives the distance for one hour.",
+      "misconception": {
+        "plausible_wrong_answer": "336",
+        "feedback": "Unit rate means per one hour, so divide total distance by hours."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "A car travels 135 km in 3 hours. Find its unit speed.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-04",
+      "provisional_topic": "unit-rates",
+      "question": "Shop A sells 6 pencils for $9; shop B sells 8 pencils for $10. Which shop has the lower cost per pencil? Answer A or B.",
+      "expected": "B",
+      "answer_contract": "choice",
+      "worked_reasoning": "A costs $1.50 per pencil; B costs $1.25.",
+      "misconception": {
+        "plausible_wrong_answer": "A",
+        "feedback": "Compare prices for one pencil, not total package prices."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "Compare 5 notebooks for $12 and 8 notebooks for $18.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-05",
+      "provisional_topic": "proportionality",
+      "question": "A taxi charges $4 plus $3 per kilometre. Is total cost proportional to distance? Answer yes or no.",
+      "expected": "no",
+      "answer_contract": "choice",
+      "worked_reasoning": "At zero kilometres the cost is $4, not $0.",
+      "misconception": {
+        "plausible_wrong_answer": "yes",
+        "feedback": "A proportional relationship must have the form y=kx and pass through (0,0)."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "Decide whether $2 per kilometre with no booking fee is proportional.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-06",
+      "provisional_topic": "percent",
+      "question": "A jacket costs $80 before a 25% discount. What is the sale price in dollars?",
+      "expected": "60",
+      "answer_contract": "nonnegative_number",
+      "worked_reasoning": "25% of 80 is 20; subtract from 80.",
+      "misconception": {
+        "plausible_wrong_answer": "20",
+        "feedback": "The discount amount is not the final sale price."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "Find the final price of a $120 item discounted by 15%.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-07",
+      "provisional_topic": "percent",
+      "question": "A school had 240 students. Enrollment rises by 15%. How many students are enrolled now?",
+      "expected": "276",
+      "answer_contract": "nonnegative_number",
+      "worked_reasoning": "15% of 240 is 36; add to 240.",
+      "misconception": {
+        "plausible_wrong_answer": "36",
+        "feedback": "A percent increase is the change, not the new total."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "A $200 fee increases by 8%. Find the new fee.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-08",
+      "provisional_topic": "percent",
+      "question": "A team wins 18 games, which is 60% of its games. How many games did it play?",
+      "expected": "30",
+      "answer_contract": "nonnegative_number",
+      "worked_reasoning": "Divide 18 by 0.60 to recover the whole.",
+      "misconception": {
+        "plausible_wrong_answer": "10.8",
+        "feedback": "18 is the part; the whole must be larger."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "If 35 is 70% of a quantity, find the whole.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-09",
+      "provisional_topic": "scale",
+      "question": "On a map, 1 cm represents 5 km. Two towns are 7 cm apart on the map. How far apart are they in kilometres?",
+      "expected": "35",
+      "answer_contract": "nonnegative_number",
+      "worked_reasoning": "Seven 1-cm segments each represent 5 km.",
+      "misconception": {
+        "plausible_wrong_answer": "7/5",
+        "feedback": "Multiply the map distance by kilometres per centimetre."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "A 4-cm road at 1 cm to 8 km represents what distance?",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-10",
+      "provisional_topic": "proportionality",
+      "question": "A table gives x=2,4,6 and y=7,14,21. What is the constant of proportionality y/x?",
+      "expected": "7/2",
+      "answer_contract": "exact_fraction",
+      "worked_reasoning": "Each y/x ratio is 3.5.",
+      "misconception": {
+        "plausible_wrong_answer": "2/7",
+        "feedback": "The constant is output per unit input, y divided by x."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "A table gives x=3,6,9 and y=12,24,36. Find k.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-11",
+      "provisional_topic": "equivalent-ratios",
+      "question": "A juice mix has 2 parts syrup to 5 parts water. To make 28 cups of the mix, how many cups should be syrup?",
+      "expected": "8",
+      "answer_contract": "nonnegative_number",
+      "worked_reasoning": "There are 7 total parts; 28 ÷ 7 = 4 cups per part; syrup uses 2 parts.",
+      "misconception": {
+        "plausible_wrong_answer": "2/5",
+        "feedback": "A part-to-part ratio is not itself the fraction of the whole mixture."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "Make 42 cups at 3 parts syrup to 4 parts water; find syrup.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-12",
+      "provisional_topic": "error-analysis",
+      "question": "A learner says the pairs (2,6) and (5,9) have the same ratio because both second numbers are 4 more than the first. What should the second number be when the first is 5 to preserve the original ratio?",
+      "expected": "15",
+      "answer_contract": "nonnegative_number",
+      "worked_reasoning": "The first ratio is 1:3, so 5 corresponds to 15.",
+      "misconception": {
+        "plausible_wrong_answer": "9",
+        "feedback": "Equal additive differences do not preserve a multiplicative ratio."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "Explain why (3,12) and (6,15) are not equivalent ratios.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-13",
+      "provisional_topic": "unit-rates",
+      "question": "A tap fills 900 mL in 3 minutes at a constant rate. How many litres does it fill in 5 minutes?",
+      "expected": "3/2",
+      "answer_contract": "exact_fraction",
+      "worked_reasoning": "The rate is 300 mL/min; in 5 minutes it fills 1500 mL = 1.5 L.",
+      "misconception": {
+        "plausible_wrong_answer": "1500",
+        "feedback": "The question requests litres, not millilitres."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "A tap fills 1200 mL in 4 minutes. Find litres in 6 minutes.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-14",
+      "provisional_topic": "percent",
+      "question": "A $100 item is discounted by 20%, then its discounted price increases by 10%. What is the final price in dollars?",
+      "expected": "88",
+      "answer_contract": "nonnegative_number",
+      "worked_reasoning": "After discount the price is $80; 10% of 80 is $8.",
+      "misconception": {
+        "plausible_wrong_answer": "90",
+        "feedback": "The second percent applies to the new $80 base, not the original $100."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "A $200 item rises 10%, then falls 10%. Find the final price.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-15",
+      "provisional_topic": "scale",
+      "question": "A 48 km trip is shown as 6 cm on a map. What distance in kilometres does 1 cm represent?",
+      "expected": "8",
+      "answer_contract": "nonnegative_number",
+      "worked_reasoning": "Divide 48 km by 6 cm.",
+      "misconception": {
+        "plausible_wrong_answer": "288",
+        "feedback": "The scale is kilometres per one centimetre, not their product."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "A 35 km route measures 5 cm. Find km per cm.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g68-depth-16",
+      "provisional_topic": "proportionality",
+      "question": "At a constant rate, 7 kg of rice costs $28. What is the cost of 11 kg in dollars?",
+      "expected": "44",
+      "answer_contract": "nonnegative_number",
+      "worked_reasoning": "The unit price is $4/kg, then 11×4 = 44.",
+      "misconception": {
+        "plausible_wrong_answer": "32",
+        "feedback": "Adding four dollars to the seven-kilogram price does not scale to eleven kilograms."
+      },
+      "socratic_hints": [
+        "What quantities are being compared, and in what order?",
+        "Which quantity is the whole, the unit, or the constant rate?",
+        "Can you verify the relationship with a table, equivalent ratio, or inverse calculation?"
+      ],
+      "transfer_prompt": "At $6/kg, find the price of 13 kg.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    }
+  ]
+}
