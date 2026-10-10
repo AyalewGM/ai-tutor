@@ -46,3 +46,24 @@ test("MVE safety: assessment never mounts guided activity",async()=>{
   assert.match(component,/Move left 1/);
   assert.doesNotMatch(component,/mastery_score|updateMastery|setTimeout|setInterval/);
 });
+
+
+test("diagnoses distinct errors and ignores forged answer fields", () => {
+  const t = {seed: 9, a: -3, b: -4, answer: 999, prompt: "synthetic"};
+  assert.equal(api.checkIntegerAnswer(t, "-7").diagnosis, "CORRECT");
+  assert.equal(api.checkIntegerAnswer(t, "1").diagnosis, "WRONG_DIRECTION");
+  assert.equal(api.checkIntegerAnswer(t, "7").diagnosis, "IGNORED_NEGATIVE");
+  assert.equal(api.checkIntegerAnswer(t, "-6").diagnosis, "OFF_BY_ONE");
+  assert.equal(api.checkIntegerAnswer({...t, a: 2, b: 3}, "-5").diagnosis, "SIGN_REVERSAL");
+  assert.equal(api.checkIntegerAnswer(t, "999").correct, false);
+});
+
+test("number-line boundaries are fixed and seed changes remount guided state", async () => {
+  const source = await readFile(new URL("./GuidedIntegerNumberLine.tsx", import.meta.url), "utf8");
+  assert.match(source, /<IntegerActivity key=\{seed\} seed=\{seed\}/);
+  assert.match(source, /const min = -20;/);
+  assert.match(source, /const max = 20;/);
+  assert.doesNotMatch(source, /task\.answer\s*[+-]/);
+  assert.match(source, /disabled=\{position <= min\}/);
+  assert.match(source, /disabled=\{position >= max\}/);
+});
