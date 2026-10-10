@@ -64,6 +64,31 @@ export function compareFractions(left: unknown, right: unknown): FractionRelatio
   return "EQUAL_TO";
 }
 
+/** Scale a fraction by a whole-number factor; null keeps callers fail-closed. */
+export function scaleFraction(parts: FractionParts, factor: unknown): FractionParts | null {
+  if (!isValidFractionParts(parts)) return null;
+  if (!Number.isSafeInteger(factor) || (factor as number) < 2) return null;
+  const numerator = parts.numerator * (factor as number);
+  const denominator = parts.denominator * (factor as number);
+  if (denominator > 12) return null;
+  return { numerator, denominator };
+}
+
+/** Multipliers that keep the scaled denominator inside the bounded range. */
+export function validScaleFactors(parts: FractionParts, factors: readonly number[] = [2, 3, 4]): number[] {
+  return factors.filter((factor) => scaleFraction(parts, factor) !== null);
+}
+
+/** Deterministic equivalence explanation for guided exploration. */
+export function describeEquivalence(parts: FractionParts, factor: number): string | null {
+  const scaled = scaleFraction(parts, factor);
+  if (scaled === null) return null;
+  return (
+    `Multiplying numerator and denominator by ${factor} keeps the same amount shaded: ` +
+    `${parts.numerator}/${parts.denominator} = ${scaled.numerator}/${scaled.denominator}.`
+  );
+}
+
 /** Explanatory feedback only; this does not score answers or mastery. */
 export function describeFractionComparison(left: FractionParts, right: FractionParts): string | null {
   const relation = compareFractions(left, right);

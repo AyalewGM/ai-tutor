@@ -83,6 +83,13 @@ export interface FractionComparedEvent extends MathInteractionBase {
   relation: "LESS_THAN" | "EQUAL_TO" | "GREATER_THAN";
 }
 
+export interface FractionEquivalenceExploredEvent extends MathInteractionBase {
+  type: "FRACTION_EQUIVALENCE_EXPLORED";
+  original: { numerator: number; denominator: number };
+  scaled: { numerator: number; denominator: number };
+  scale_factor: number;
+}
+
 export type MathInteractionEvent =
   | PointPlacedEvent
   | PointMovedEvent
@@ -95,7 +102,8 @@ export type MathInteractionEvent =
   | DistributiveStepViewedEvent
   | DistributiveCoefficientsCheckedEvent
   | FractionShadingChangedEvent
-  | FractionComparedEvent;
+  | FractionComparedEvent
+  | FractionEquivalenceExploredEvent;
 
 function isPoint2D(value: unknown): value is Point2D {
   return Array.isArray(value) &&
@@ -146,6 +154,21 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
       const a = event.left.numerator * event.right.denominator;
       const b = event.right.numerator * event.left.denominator;
       return event.relation === (a < b ? "LESS_THAN" : a > b ? "GREATER_THAN" : "EQUAL_TO");
+    }
+    case "FRACTION_EQUIVALENCE_EXPLORED": {
+      const valid = (v: unknown): v is { numerator: number; denominator: number } => {
+        if (!v || typeof v !== "object") return false;
+        const p = v as Record<string, unknown>;
+        return Number.isSafeInteger(p.denominator) && (p.denominator as number) >= 1 &&
+          (p.denominator as number) <= 12 && Number.isSafeInteger(p.numerator) &&
+          (p.numerator as number) >= 0 && (p.numerator as number) <= (p.denominator as number);
+      };
+      if (!valid(event.original) || !valid(event.scaled)) return false;
+      const k = event.scale_factor;
+      if (!Number.isSafeInteger(k) || (k as number) < 2) return false;
+      // Fabricated equivalences fail: scaled parts must equal original * k exactly.
+      return event.scaled.numerator === event.original.numerator * (k as number) &&
+        event.scaled.denominator === event.original.denominator * (k as number);
     }
     case "DISTRIBUTIVE_STEP_VIEWED":
       return typeof event.step_id === "string" &&

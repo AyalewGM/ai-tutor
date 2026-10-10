@@ -68,3 +68,12 @@ test("comparison feedback resets when reference changes and description remains 
   assert.match(source, /id=\{comparisonStatusId\} role="status"/);
   assert.match(source, /showComparison \? describeFractionComparison/);
 });
+
+test("equivalence construction uses validated scaling and resets with state", () => {
+  assert.match(source, /validScaleFactors\(currentParts\)/);
+  assert.match(source, /scaleFraction\(currentParts, factor\)/);
+  assert.match(source, /type: "FRACTION_EQUIVALENCE_EXPLORED"/);
+  assert.match(source, /setScaleFactor\(null\)/);
+  assert.match(source, /id=\{equivalenceStatusId\} role="status"/);
+  assert.match(source, /if \(props\.independentAssessment\) return null/);
+});

@@ -119,3 +119,19 @@ test("comparison bar emits a second fraction_bar spec for the target", () => {
   assert.equal(globalThis.__mveVisualCalls.length, 2);
   assert.deepEqual(globalThis.__mveVisualCalls[1].numerator, 3);
 });
+
+test("equivalence section offers only in-bounds multipliers", () => {
+  const fourths = render({ independentAssessment: false, denominator: 4, initialNumerator: 1 });
+  assert.match(fourths, /Multiply by 2/);
+  assert.match(fourths, /Multiply by 3/);
+  assert.doesNotMatch(fourths, /Multiply by 4/);
+  assert.match(fourths, /Choose a multiplier to see an equivalent fraction\./);
+  const sevenths = render({ independentAssessment: false, denominator: 7, initialNumerator: 1 });
+  assert.doesNotMatch(sevenths, /Multiply by/);
+});
+
+test("equivalence construction emits no bar until a multiplier is chosen", () => {
+  globalThis.__mveVisualCalls.length = 0;
+  render({ independentAssessment: false, denominator: 4, initialNumerator: 1 });
+  assert.equal(globalThis.__mveVisualCalls.length, 1);
+});

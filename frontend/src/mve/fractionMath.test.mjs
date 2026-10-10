@@ -7,7 +7,7 @@ const source = await readFile(new URL("./fractionMath.ts", import.meta.url), "ut
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
 }).outputText;
-const { normalizeFractionParts, changeShadedParts, simplifyFraction, describeFraction, compareFractions, describeFractionComparison, isValidFractionParts } = await import(
+const { normalizeFractionParts, changeShadedParts, simplifyFraction, describeFraction, compareFractions, describeFractionComparison, isValidFractionParts, scaleFraction, validScaleFactors, describeEquivalence } = await import(
   `data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`
 );
 
@@ -66,4 +66,26 @@ test("comparison feedback is explanatory, not mastery grading", () => {
   assert.equal(describeFractionComparison({ numerator: 1, denominator: 2 }, { numerator: 2, denominator: 4 }),
     "1/2 is equal to 2/4.");
   assert.equal(describeFractionComparison({ numerator: 1, denominator: 0 }, { numerator: 1, denominator: 2 }), null);
+});
+
+test("equivalence construction scales exactly and stays inside bounds", () => {
+  assert.deepEqual(scaleFraction({ numerator: 1, denominator: 2 }, 2), { numerator: 2, denominator: 4 });
+  assert.deepEqual(scaleFraction({ numerator: 3, denominator: 4 }, 3), { numerator: 9, denominator: 12 });
+  assert.equal(scaleFraction({ numerator: 3, denominator: 4 }, 4), null);
+  assert.equal(scaleFraction({ numerator: 1, denominator: 2 }, 1), null);
+  assert.equal(scaleFraction({ numerator: 1, denominator: 2 }, 1.5), null);
+  assert.equal(scaleFraction({ numerator: 2, denominator: 0 }, 2), null);
+});
+
+test("offered multipliers keep scaled denominators within the visual range", () => {
+  assert.deepEqual(validScaleFactors({ numerator: 1, denominator: 2 }), [2, 3, 4]);
+  assert.deepEqual(validScaleFactors({ numerator: 1, denominator: 4 }), [2, 3]);
+  assert.deepEqual(validScaleFactors({ numerator: 1, denominator: 6 }), [2]);
+  assert.deepEqual(validScaleFactors({ numerator: 1, denominator: 7 }), []);
+});
+
+test("equivalence explanation is deterministic text, not a grade", () => {
+  assert.equal(describeEquivalence({ numerator: 1, denominator: 2 }, 2),
+    "Multiplying numerator and denominator by 2 keeps the same amount shaded: 1/2 = 2/4.");
+  assert.equal(describeEquivalence({ numerator: 1, denominator: 7 }, 2), null);
 });

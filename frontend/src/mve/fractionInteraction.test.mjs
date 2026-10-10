@@ -28,3 +28,22 @@ test("semantic comparison rejects forged relations and invalid bounds", () => {
   assert.equal(isMathInteractionEvent(event(fraction(NaN, 2), fraction(1, 2), "EQUAL_TO")), false);
   assert.equal(isMathInteractionEvent(event(fraction(1, 2), fraction(1, 2), "CORRECT")), false);
 });
+
+const equivalence = (original, scaled, scale_factor) => ({
+  schema_version: 1, type: "FRACTION_EQUIVALENCE_EXPLORED", original, scaled, scale_factor,
+});
+
+test("equivalence events accept only exact whole-number scalings", () => {
+  assert.equal(isMathInteractionEvent(equivalence(fraction(1, 2), fraction(2, 4), 2)), true);
+  assert.equal(isMathInteractionEvent(equivalence(fraction(3, 4), fraction(9, 12), 3)), true);
+  assert.equal(isMathInteractionEvent(equivalence(fraction(0, 4), fraction(0, 8), 2)), true);
+});
+
+test("equivalence events reject fabricated scalings and invalid bounds", () => {
+  assert.equal(isMathInteractionEvent(equivalence(fraction(1, 2), fraction(3, 4), 2)), false);
+  assert.equal(isMathInteractionEvent(equivalence(fraction(1, 2), fraction(2, 4), 3)), false);
+  assert.equal(isMathInteractionEvent(equivalence(fraction(1, 2), fraction(1, 2), 1)), false);
+  assert.equal(isMathInteractionEvent(equivalence(fraction(1, 2), fraction(4, 14), 4)), false);
+  assert.equal(isMathInteractionEvent(equivalence(fraction(1, 2), fraction(2, 4), 1.5)), false);
+  assert.equal(isMathInteractionEvent(equivalence(fraction(1, 2), fraction(5, 4), 2)), false);
+});
