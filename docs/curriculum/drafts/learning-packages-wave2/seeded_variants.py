@@ -107,14 +107,14 @@ def _ratios(rng: Random, variant: int):
                 "unit_rate", "Link ticket counts and costs on two number lines.")
     if variant == 1:
         a, b, scale = rng.randint(2, 6), rng.randint(3, 9), rng.randint(2, 5)
-        return (f"A mix uses {a} cups juice per {b} cups water. "
-                f"For {a*scale} cups juice, how many cups water?",
+        return ((f"A mix uses {a} cups juice per {b} cups water. "
+                f"For {a*scale} cups juice, how many cups water?"),
                 str(b * scale), {"a": a, "b": b, "scale": scale},
                 "equivalent_ratio", "Scale both aligned lines by the same factor.")
     speed_a = rng.randint(3, 9)
     speed_b = rng.choice([n for n in range(3, 11) if n != speed_a])
-    return (f"Runner A covers {2*speed_a} km in 2 h; runner B covers "
-            f"{3*speed_b} km in 3 h. Who is faster (A or B)?",
+    return ((f"Runner A covers {2*speed_a} km in 2 h; runner B covers "
+            f"{3*speed_b} km in 3 h. Who is faster (A or B)?"),
             "A" if speed_a > speed_b else "B",
             {"distance_a": 2*speed_a, "time_a": 2, "distance_b": 3*speed_b, "time_b": 3},
             "rate_comparison_transfer", "Compare distance per hour, not distance alone.")
@@ -125,8 +125,8 @@ def _distributions(rng: Random, variant: int):
         values = sorted(rng.sample(range(2, 42), 8))
         q1 = Fraction(values[1] + values[2], 2)
         q3 = Fraction(values[5] + values[6], 2)
-        return (f"For sorted data {', '.join(map(str, values))}, find the IQR "
-                "using median-of-halves quartiles.", _number(q3 - q1),
+        return ((f"For sorted data {', '.join(map(str, values))}, find the IQR "
+                "using median-of-halves quartiles."), _number(q3 - q1),
                 {"values": values}, "raw_data_iqr",
                 "Mark medians of the lower and upper four observations.")
     if variant == 1:
@@ -137,8 +137,8 @@ def _distributions(rng: Random, variant: int):
                 str(q3-q1), {"q1": q1, "median": median, "q3": q3},
                 "summary_iqr", "Subtract Q1 from Q3, not minimum from maximum.")
     a, b = rng.sample(range(2, 13), 2)
-    return (f"Class A has IQR {a}; class B has IQR {b}. "
-            "Which class has the more spread-out middle half (A or B)?",
+    return ((f"Class A has IQR {a}; class B has IQR {b}. "
+            "Which class has the more spread-out middle half (A or B)?"),
             "A" if a > b else "B", {"iqr_a": a, "iqr_b": b},
             "compare_distributions_transfer", "Compare middle-half box widths.")
 
@@ -158,8 +158,8 @@ def _cube_nets(rng: Random, variant: int):
                 str(edge), {"surface_area": 6*edge*edge}, "inverse_surface_area",
                 "Divide by six to get one face, then find its side.")
     cells = _VALID_NET if rng.choice([True, False]) else _INVALID_NET
-    return ("Can these six unit squares fold to a cube without overlap? "
-            f"Coordinates: {list(cells)}. Answer yes or no.",
+    return (("Can these six unit squares fold to a cube without overlap? "
+            f"Coordinates: {list(cells)}. Answer yes or no."),
             "yes" if is_cube_net(cells) else "no",
             {"cells": [list(c) for c in cells]}, "cube_net_transfer",
             "Trace hinge folds and check each cube face is used once.")
