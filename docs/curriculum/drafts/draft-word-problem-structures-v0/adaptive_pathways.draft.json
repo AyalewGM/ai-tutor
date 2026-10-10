@@ -1,0 +1,2412 @@
+{
+  "package_id": "draft-word-problem-adaptive-pathways-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "purpose": "Original item-linked diagnostics, differentiated remediation and mastery evidence for all 48 distinct reasoning structures",
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "runtime_activation": false,
+  "content_source": "Original Mihur-authored diagnostic setups and coaching, linked to existing draft word-problem items.",
+  "pathways": [
+    {
+      "pathway_id": "path-001",
+      "linked_item_id": "draft-structures-additive_word_problems-01",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "problem_structure": "result-unknown",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A school had 148 library books and received 76 more. How many books does it have now?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "148 + 76",
+          "148 − 76",
+          "148 × 76"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Treating the new books as the total. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Treating the new books as the total. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 148 + 76. Adding the change to the starting amount gives 148+76=224."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Tape diagram: label the known total and parts, or initial/change/final quantities.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Treating the new books as the total",
+        "remediation_sequence": [
+          "Represent the original story visually: Tape diagram: label the known total and parts, or initial/change/final quantities.",
+          "Rebuild the correct mathematical setup: 148 + 76",
+          "Solve and independently verify: Use inverse operations to check whether the computed unknown reconstructs the given total."
+        ],
+        "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"148 + 76\" is the correct setup. Show a second check.",
+        "expected_answer": "224",
+        "required_evidence": [
+          "Identify the unknown before choosing an operation; solve and check with the inverse.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-002",
+      "linked_item_id": "draft-structures-additive_word_problems-02",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "problem_structure": "change-unknown",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A garden had 95 flowers and now has 143. How many flowers were planted?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "143 + 95",
+          "143 × 95",
+          "143 − 95"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Adding start and final. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Adding start and final. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 143 − 95. The added amount is final minus start: 143−95=48."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Tape diagram: label the known total and parts, or initial/change/final quantities.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Adding start and final",
+        "remediation_sequence": [
+          "Represent the original story visually: Tape diagram: label the known total and parts, or initial/change/final quantities.",
+          "Rebuild the correct mathematical setup: 143 − 95",
+          "Solve and independently verify: Use inverse operations to check whether the computed unknown reconstructs the given total."
+        ],
+        "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"143 − 95\" is the correct setup. Show a second check.",
+        "expected_answer": "48",
+        "required_evidence": [
+          "Identify the unknown before choosing an operation; solve and check with the inverse.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-003",
+      "linked_item_id": "draft-structures-additive_word_problems-03",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "problem_structure": "start-unknown",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"After 37 passengers boarded, a bus held 82 passengers. How many were aboard before boarding?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "82 × 37",
+          "82 − 37",
+          "82 + 37"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Assuming final is the starting count. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Assuming final is the starting count. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 82 − 37. The original count is 82−37=45."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Tape diagram: label the known total and parts, or initial/change/final quantities.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Assuming final is the starting count",
+        "remediation_sequence": [
+          "Represent the original story visually: Tape diagram: label the known total and parts, or initial/change/final quantities.",
+          "Rebuild the correct mathematical setup: 82 − 37",
+          "Solve and independently verify: Use inverse operations to check whether the computed unknown reconstructs the given total."
+        ],
+        "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"82 − 37\" is the correct setup. Show a second check.",
+        "expected_answer": "45",
+        "required_evidence": [
+          "Identify the unknown before choosing an operation; solve and check with the inverse.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-004",
+      "linked_item_id": "draft-structures-additive_word_problems-04",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "problem_structure": "comparison-difference",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A team scored 213 points and another scored 168. How many more did the first team score?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "213 − 168",
+          "213 + 168",
+          "213 × 168"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Adding compared quantities. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Adding compared quantities. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 213 − 168. Difference is 213−168=45."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Tape diagram: label the known total and parts, or initial/change/final quantities.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Adding compared quantities",
+        "remediation_sequence": [
+          "Represent the original story visually: Tape diagram: label the known total and parts, or initial/change/final quantities.",
+          "Rebuild the correct mathematical setup: 213 − 168",
+          "Solve and independently verify: Use inverse operations to check whether the computed unknown reconstructs the given total."
+        ],
+        "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"213 − 168\" is the correct setup. Show a second check.",
+        "expected_answer": "45",
+        "required_evidence": [
+          "Identify the unknown before choosing an operation; solve and check with the inverse.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-005",
+      "linked_item_id": "draft-structures-additive_word_problems-05",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "problem_structure": "comparison-smaller-unknown",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"One shelf holds 125 books, which is 38 more than another shelf. How many books are on the other shelf?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "125 + 38",
+          "125 × 38",
+          "125 − 38"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Adding when the smaller amount is asked. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Adding when the smaller amount is asked. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 125 − 38. The smaller quantity is 125−38=87."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Tape diagram: label the known total and parts, or initial/change/final quantities.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Adding when the smaller amount is asked",
+        "remediation_sequence": [
+          "Represent the original story visually: Tape diagram: label the known total and parts, or initial/change/final quantities.",
+          "Rebuild the correct mathematical setup: 125 − 38",
+          "Solve and independently verify: Use inverse operations to check whether the computed unknown reconstructs the given total."
+        ],
+        "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"125 − 38\" is the correct setup. Show a second check.",
+        "expected_answer": "87",
+        "required_evidence": [
+          "Identify the unknown before choosing an operation; solve and check with the inverse.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-006",
+      "linked_item_id": "draft-structures-additive_word_problems-06",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "problem_structure": "comparison-larger-unknown",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A park has 79 maple trees, which is 26 fewer than oak trees. How many oak trees are there?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "79 × 26",
+          "79 + 26",
+          "79 − 26"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Subtracting fewer from smaller quantity. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Subtracting fewer from smaller quantity. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 79 + 26. Oak count is 79+26=105."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Tape diagram: label the known total and parts, or initial/change/final quantities.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Subtracting fewer from smaller quantity",
+        "remediation_sequence": [
+          "Represent the original story visually: Tape diagram: label the known total and parts, or initial/change/final quantities.",
+          "Rebuild the correct mathematical setup: 79 + 26",
+          "Solve and independently verify: Use inverse operations to check whether the computed unknown reconstructs the given total."
+        ],
+        "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"79 + 26\" is the correct setup. Show a second check.",
+        "expected_answer": "105",
+        "required_evidence": [
+          "Identify the unknown before choosing an operation; solve and check with the inverse.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-007",
+      "linked_item_id": "draft-structures-additive_word_problems-07",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "problem_structure": "two-change-unknown",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A museum starts with 240 visitors, admits 85, then 47 leave. How many visitors remain?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "240 + 85 − 47",
+          "240 − 85 − 47",
+          "240 + 85 + 47"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Ignoring one of the two changes. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Ignoring one of the two changes. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 240 + 85 − 47. 240+85−47=278."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Tape diagram: label the known total and parts, or initial/change/final quantities.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Ignoring one of the two changes",
+        "remediation_sequence": [
+          "Represent the original story visually: Tape diagram: label the known total and parts, or initial/change/final quantities.",
+          "Rebuild the correct mathematical setup: 240 + 85 − 47",
+          "Solve and independently verify: Use inverse operations to check whether the computed unknown reconstructs the given total."
+        ],
+        "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"240 + 85 − 47\" is the correct setup. Show a second check.",
+        "expected_answer": "278",
+        "required_evidence": [
+          "Identify the unknown before choosing an operation; solve and check with the inverse.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-008",
+      "linked_item_id": "draft-structures-additive_word_problems-08",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "problem_structure": "part-part-whole",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"Of 326 donated toys, 148 are puzzles and 93 are dolls. The rest are blocks. How many blocks are there?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "326 + 148 + 93",
+          "326 − 148 + 93",
+          "326 − 148 − 93"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Confusing parts with total. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Confusing parts with total. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 326 − 148 − 93. 326−148−93=85."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Tape diagram: label the known total and parts, or initial/change/final quantities.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Confusing parts with total",
+        "remediation_sequence": [
+          "Represent the original story visually: Tape diagram: label the known total and parts, or initial/change/final quantities.",
+          "Rebuild the correct mathematical setup: 326 − 148 − 93",
+          "Solve and independently verify: Use inverse operations to check whether the computed unknown reconstructs the given total."
+        ],
+        "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"326 − 148 − 93\" is the correct setup. Show a second check.",
+        "expected_answer": "85",
+        "required_evidence": [
+          "Identify the unknown before choosing an operation; solve and check with the inverse.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-009",
+      "linked_item_id": "draft-structures-multiplicative_word_problems-01",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "problem_structure": "equal-groups",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"Nine classrooms each receive 14 notebooks. How many notebooks are distributed?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "9 ÷ 14",
+          "9 × 14",
+          "9 + 14"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Adding the factors. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Adding the factors. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 9 × 14. 9×14=126 notebooks."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Equal-group diagram or array with explicit group count and group size.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Adding the factors",
+        "remediation_sequence": [
+          "Represent the original story visually: Equal-group diagram or array with explicit group count and group size.",
+          "Rebuild the correct mathematical setup: 9 × 14",
+          "Solve and independently verify: Verify multiplication with repeated addition or division with the inverse multiplication fact."
+        ],
+        "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"9 × 14\" is the correct setup. Show a second check.",
+        "expected_answer": "126",
+        "required_evidence": [
+          "Explain the unit attached to each factor and interpret any remainder in context.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-010",
+      "linked_item_id": "draft-structures-multiplicative_word_problems-02",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "problem_structure": "partitive-division",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A teacher shares 156 pencils equally among 12 classrooms. How many pencils per classroom?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "156 ÷ 12",
+          "156 × 12",
+          "156 − 12"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Treating the number of classrooms as a multiplier. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Treating the number of classrooms as a multiplier. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 156 ÷ 12. 156÷12=13 per classroom."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Equal-group diagram or array with explicit group count and group size.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Treating the number of classrooms as a multiplier",
+        "remediation_sequence": [
+          "Represent the original story visually: Equal-group diagram or array with explicit group count and group size.",
+          "Rebuild the correct mathematical setup: 156 ÷ 12",
+          "Solve and independently verify: Verify multiplication with repeated addition or division with the inverse multiplication fact."
+        ],
+        "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"156 ÷ 12\" is the correct setup. Show a second check.",
+        "expected_answer": "13",
+        "required_evidence": [
+          "Explain the unit attached to each factor and interpret any remainder in context.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-011",
+      "linked_item_id": "draft-structures-multiplicative_word_problems-03",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "problem_structure": "measurement-division",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A baker has 168 cookies and packs 14 per box. How many full boxes are needed?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "168 × 14",
+          "168 − 14",
+          "168 ÷ 14"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Confusing box size with number of boxes. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Confusing box size with number of boxes. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 168 ÷ 14. 168÷14=12 boxes."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Equal-group diagram or array with explicit group count and group size.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Confusing box size with number of boxes",
+        "remediation_sequence": [
+          "Represent the original story visually: Equal-group diagram or array with explicit group count and group size.",
+          "Rebuild the correct mathematical setup: 168 ÷ 14",
+          "Solve and independently verify: Verify multiplication with repeated addition or division with the inverse multiplication fact."
+        ],
+        "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"168 ÷ 14\" is the correct setup. Show a second check.",
+        "expected_answer": "12",
+        "required_evidence": [
+          "Explain the unit attached to each factor and interpret any remainder in context.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-012",
+      "linked_item_id": "draft-structures-multiplicative_word_problems-04",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "problem_structure": "multiplicative-comparison-larger",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A whale weighs 8 times as much as a 75 kg seal. What is the whale's mass in kg?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "8 ÷ 75",
+          "8 × 75",
+          "8 + 75"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Using addition for 'times as much'. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Using addition for 'times as much'. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 8 × 75. 8×75=600 kg."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Equal-group diagram or array with explicit group count and group size.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Using addition for 'times as much'",
+        "remediation_sequence": [
+          "Represent the original story visually: Equal-group diagram or array with explicit group count and group size.",
+          "Rebuild the correct mathematical setup: 8 × 75",
+          "Solve and independently verify: Verify multiplication with repeated addition or division with the inverse multiplication fact."
+        ],
+        "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"8 × 75\" is the correct setup. Show a second check.",
+        "expected_answer": "600",
+        "required_evidence": [
+          "Explain the unit attached to each factor and interpret any remainder in context.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-013",
+      "linked_item_id": "draft-structures-multiplicative_word_problems-05",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "problem_structure": "multiplicative-comparison-smaller",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A stadium has 936 seats, which is 6 times as many as a theater. How many seats does the theater have?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "936 ÷ 6",
+          "936 × 6",
+          "936 − 6"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Multiplying when the smaller amount is sought. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Multiplying when the smaller amount is sought. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 936 ÷ 6. 936÷6=156 seats."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Equal-group diagram or array with explicit group count and group size.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Multiplying when the smaller amount is sought",
+        "remediation_sequence": [
+          "Represent the original story visually: Equal-group diagram or array with explicit group count and group size.",
+          "Rebuild the correct mathematical setup: 936 ÷ 6",
+          "Solve and independently verify: Verify multiplication with repeated addition or division with the inverse multiplication fact."
+        ],
+        "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"936 ÷ 6\" is the correct setup. Show a second check.",
+        "expected_answer": "156",
+        "required_evidence": [
+          "Explain the unit attached to each factor and interpret any remainder in context.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-014",
+      "linked_item_id": "draft-structures-multiplicative_word_problems-06",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "problem_structure": "rectangular-array",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A hall has 17 rows with 24 chairs in each row. How many chairs are there?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "17 + 24",
+          "17 ÷ 24",
+          "17 × 24"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Counting rows and columns as a sum. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Counting rows and columns as a sum. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 17 × 24. 17×24=408 chairs."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Equal-group diagram or array with explicit group count and group size.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Counting rows and columns as a sum",
+        "remediation_sequence": [
+          "Represent the original story visually: Equal-group diagram or array with explicit group count and group size.",
+          "Rebuild the correct mathematical setup: 17 × 24",
+          "Solve and independently verify: Verify multiplication with repeated addition or division with the inverse multiplication fact."
+        ],
+        "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"17 × 24\" is the correct setup. Show a second check.",
+        "expected_answer": "408",
+        "required_evidence": [
+          "Explain the unit attached to each factor and interpret any remainder in context.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-015",
+      "linked_item_id": "draft-structures-multiplicative_word_problems-07",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "problem_structure": "remainder-interpretation",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A group of 74 students travels in vans holding at most 8 students. What is the minimum number of vans required?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "74 × 8",
+          "round up (74 ÷ 8)",
+          "round down (74 ÷ 8)"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Discarding a nonzero remainder. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Discarding a nonzero remainder. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: round up (74 ÷ 8). Nine vans hold 72, so a tenth van is required."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Equal-group diagram or array with explicit group count and group size.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Discarding a nonzero remainder",
+        "remediation_sequence": [
+          "Represent the original story visually: Equal-group diagram or array with explicit group count and group size.",
+          "Rebuild the correct mathematical setup: round up (74 ÷ 8)",
+          "Solve and independently verify: Verify multiplication with repeated addition or division with the inverse multiplication fact."
+        ],
+        "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"round up (74 ÷ 8)\" is the correct setup. Show a second check.",
+        "expected_answer": "10",
+        "required_evidence": [
+          "Explain the unit attached to each factor and interpret any remainder in context.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-016",
+      "linked_item_id": "draft-structures-multiplicative_word_problems-08",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "problem_structure": "two-stage-equal-groups",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"Six schools each send 8 teams, and every team has 5 students. How many students attend?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "6 × 8 × 5",
+          "6 + 8 + 5",
+          "6 × (8 + 5)"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Omitting one grouping level. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Omitting one grouping level. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 6 × 8 × 5. 6×8×5=240 students."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Equal-group diagram or array with explicit group count and group size.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Omitting one grouping level",
+        "remediation_sequence": [
+          "Represent the original story visually: Equal-group diagram or array with explicit group count and group size.",
+          "Rebuild the correct mathematical setup: 6 × 8 × 5",
+          "Solve and independently verify: Verify multiplication with repeated addition or division with the inverse multiplication fact."
+        ],
+        "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"6 × 8 × 5\" is the correct setup. Show a second check.",
+        "expected_answer": "240",
+        "required_evidence": [
+          "Explain the unit attached to each factor and interpret any remainder in context.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-017",
+      "linked_item_id": "draft-structures-fraction_word_problems-01",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "problem_structure": "fraction-of-set",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"Three fifths of 45 students choose art. How many students choose art?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "3/5 + 45",
+          "45 ÷ 3/5",
+          "3/5 × 45"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Using denominator as multiplier. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Using denominator as multiplier. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 3/5 × 45. 3/5×45=27 students."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Using denominator as multiplier",
+        "remediation_sequence": [
+          "Represent the original story visually: Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+          "Rebuild the correct mathematical setup: 3/5 × 45",
+          "Solve and independently verify: Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+        ],
+        "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"3/5 × 45\" is the correct setup. Show a second check.",
+        "expected_answer": "27",
+        "required_evidence": [
+          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-018",
+      "linked_item_id": "draft-structures-fraction_word_problems-02",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "problem_structure": "remaining-fraction",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A gardener plants two thirds of 36 bulbs. How many bulbs remain unplanted?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "36 − 2",
+          "(1 − 2/3) × 36",
+          "2/3 × 36"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Reporting planted rather than remaining. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Reporting planted rather than remaining. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: (1 − 2/3) × 36. 1/3 of 36 remains, or 12 bulbs."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Reporting planted rather than remaining",
+        "remediation_sequence": [
+          "Represent the original story visually: Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+          "Rebuild the correct mathematical setup: (1 − 2/3) × 36",
+          "Solve and independently verify: Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+        ],
+        "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"(1 − 2/3) × 36\" is the correct setup. Show a second check.",
+        "expected_answer": "12",
+        "required_evidence": [
+          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-019",
+      "linked_item_id": "draft-structures-fraction_word_problems-03",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "problem_structure": "fraction-as-operator",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A recipe needs 3/4 cup of oats per batch. How many cups for 8 batches?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "3/4 × 8",
+          "3/4 ÷ 8",
+          "3/4 + 8"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Dividing batches by fraction. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Dividing batches by fraction. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 3/4 × 8. 3/4×8=6 cups."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Dividing batches by fraction",
+        "remediation_sequence": [
+          "Represent the original story visually: Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+          "Rebuild the correct mathematical setup: 3/4 × 8",
+          "Solve and independently verify: Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+        ],
+        "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"3/4 × 8\" is the correct setup. Show a second check.",
+        "expected_answer": "6",
+        "required_evidence": [
+          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-020",
+      "linked_item_id": "draft-structures-fraction_word_problems-04",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "problem_structure": "fraction-of-unknown-whole",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"Twelve marbles are 3/7 of a collection. How many marbles are in the collection?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "12 × 3 ÷ 7",
+          "12 + 3 + 7",
+          "12 ÷ 3 × 7"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Multiplying 12 by 3/7. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Multiplying 12 by 3/7. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 12 ÷ 3 × 7. 12÷3×7=28 marbles."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Multiplying 12 by 3/7",
+        "remediation_sequence": [
+          "Represent the original story visually: Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+          "Rebuild the correct mathematical setup: 12 ÷ 3 × 7",
+          "Solve and independently verify: Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+        ],
+        "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"12 ÷ 3 × 7\" is the correct setup. Show a second check.",
+        "expected_answer": "28",
+        "required_evidence": [
+          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-021",
+      "linked_item_id": "draft-structures-fraction_word_problems-05",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "problem_structure": "part-to-whole",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A basket contains 18 oranges and 12 apples. What fraction of all fruit are apples? Give simplest fraction.\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "12/(30 − 12)",
+          "12/30",
+          "30/12"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Using apples:oranges rather than apples:total. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Using apples:oranges rather than apples:total. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 12/30. 12/30=2/5."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Using apples:oranges rather than apples:total",
+        "remediation_sequence": [
+          "Represent the original story visually: Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+          "Rebuild the correct mathematical setup: 12/30",
+          "Solve and independently verify: Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+        ],
+        "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"12/30\" is the correct setup. Show a second check.",
+        "expected_answer": "2/5",
+        "required_evidence": [
+          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-022",
+      "linked_item_id": "draft-structures-fraction_word_problems-06",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "problem_structure": "fraction-comparison",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"One student finishes 3/4 of a book and another finishes 5/8. What fraction of the book separates their progress? Give simplest fraction.\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "3/4 − 5/8",
+          "(3 − 5)/(4 − 8)",
+          "3/4 + 5/8"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Subtracting numerators and denominators separately. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Subtracting numerators and denominators separately. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 3/4 − 5/8. 3/4−5/8=1/8."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Subtracting numerators and denominators separately",
+        "remediation_sequence": [
+          "Represent the original story visually: Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+          "Rebuild the correct mathematical setup: 3/4 − 5/8",
+          "Solve and independently verify: Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+        ],
+        "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"3/4 − 5/8\" is the correct setup. Show a second check.",
+        "expected_answer": "1/8",
+        "required_evidence": [
+          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-023",
+      "linked_item_id": "draft-structures-fraction_word_problems-07",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "problem_structure": "fraction-missing-addend",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A container holds 7/8 litre after 3/8 litre was added. How many litres were in it before? Give simplest fraction.\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "(7 − 3)/(8 − 8)",
+          "7/8 + 3/8",
+          "7/8 − 3/8"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Adding when starting amount is sought. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Adding when starting amount is sought. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 7/8 − 3/8. 7/8−3/8=1/2 litre."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Adding when starting amount is sought",
+        "remediation_sequence": [
+          "Represent the original story visually: Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+          "Rebuild the correct mathematical setup: 7/8 − 3/8",
+          "Solve and independently verify: Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+        ],
+        "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"7/8 − 3/8\" is the correct setup. Show a second check.",
+        "expected_answer": "1/2",
+        "required_evidence": [
+          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-024",
+      "linked_item_id": "draft-structures-fraction_word_problems-08",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "problem_structure": "fraction-multi-step",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A baker has 5/6 kg of flour and uses 1/3 kg, then buys 1/4 kg. How many kg now? Give simplest fraction.\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "5/6 − 1/3 − 1/4",
+          "5/6 − 1/3 + 1/4",
+          "5/6 + 1/3 + 1/4"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Ignoring the different denominators. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Ignoring the different denominators. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 5/6 − 1/3 + 1/4. 5/6−1/3+1/4=3/4 kg."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Ignoring the different denominators",
+        "remediation_sequence": [
+          "Represent the original story visually: Partitioned bar model using one consistent whole; shade or unshade fractional parts.",
+          "Rebuild the correct mathematical setup: 5/6 − 1/3 + 1/4",
+          "Solve and independently verify: Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+        ],
+        "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"5/6 − 1/3 + 1/4\" is the correct setup. Show a second check.",
+        "expected_answer": "3/4",
+        "required_evidence": [
+          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-025",
+      "linked_item_id": "draft-structures-ratio_rate_word_problems-01",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "problem_structure": "unit-price",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"Five notebooks cost $17.50. What is the price of one notebook in dollars? Give two decimals.\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "(1750 cents ÷ 5) converted to dollars",
+          "1750 cents × 5",
+          "1750 cents + 5"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Using dollars without converting to cents. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Using dollars without converting to cents. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: (1750 cents ÷ 5) converted to dollars. 1750 cents ÷5=350 cents = $3.50."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Double number line or ratio table with quantities and units labeled.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Using dollars without converting to cents",
+        "remediation_sequence": [
+          "Represent the original story visually: Double number line or ratio table with quantities and units labeled.",
+          "Rebuild the correct mathematical setup: (1750 cents ÷ 5) converted to dollars",
+          "Solve and independently verify: Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+        ],
+        "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"(1750 cents ÷ 5) converted to dollars\" is the correct setup. Show a second check.",
+        "expected_answer": "3.50",
+        "required_evidence": [
+          "Justify whether the relationship is proportional before scaling or applying percent.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-026",
+      "linked_item_id": "draft-structures-ratio_rate_word_problems-02",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "problem_structure": "scale-factor",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A map uses 2 cm for 15 km. How many km does 8 cm represent?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "15 × 2 × 8",
+          "15 + 2 + 8",
+          "15 ÷ 2 × 8"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Adding the scale values. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Adding the scale values. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 15 ÷ 2 × 8. 15/2×8=60 km."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Double number line or ratio table with quantities and units labeled.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Adding the scale values",
+        "remediation_sequence": [
+          "Represent the original story visually: Double number line or ratio table with quantities and units labeled.",
+          "Rebuild the correct mathematical setup: 15 ÷ 2 × 8",
+          "Solve and independently verify: Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+        ],
+        "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"15 ÷ 2 × 8\" is the correct setup. Show a second check.",
+        "expected_answer": "60",
+        "required_evidence": [
+          "Justify whether the relationship is proportional before scaling or applying percent.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-027",
+      "linked_item_id": "draft-structures-ratio_rate_word_problems-03",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "problem_structure": "proportional-partition",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A 64-point award is split in a 3:5 ratio. How many points go to the larger share?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "64 ÷ 5",
+          "64 × 5/(3+5)",
+          "64 × 5/3"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Using 5 as the total parts. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Using 5 as the total parts. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 64 × 5/(3+5). 64×5/(3+5)=40 points."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Double number line or ratio table with quantities and units labeled.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Using 5 as the total parts",
+        "remediation_sequence": [
+          "Represent the original story visually: Double number line or ratio table with quantities and units labeled.",
+          "Rebuild the correct mathematical setup: 64 × 5/(3+5)",
+          "Solve and independently verify: Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+        ],
+        "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"64 × 5/(3+5)\" is the correct setup. Show a second check.",
+        "expected_answer": "40",
+        "required_evidence": [
+          "Justify whether the relationship is proportional before scaling or applying percent.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-028",
+      "linked_item_id": "draft-structures-ratio_rate_word_problems-04",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "problem_structure": "percent-discount",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A $160 jacket has a 15% discount. What is the sale price in dollars?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "160 × (1 − 15/100)",
+          "160 × 15/100",
+          "160 × (1 + 15/100)"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Reporting discount rather than final price. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Reporting discount rather than final price. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 160 × (1 − 15/100). 160−(15/100×160)=136 dollars."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Double number line or ratio table with quantities and units labeled.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Reporting discount rather than final price",
+        "remediation_sequence": [
+          "Represent the original story visually: Double number line or ratio table with quantities and units labeled.",
+          "Rebuild the correct mathematical setup: 160 × (1 − 15/100)",
+          "Solve and independently verify: Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+        ],
+        "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"160 × (1 − 15/100)\" is the correct setup. Show a second check.",
+        "expected_answer": "136",
+        "required_evidence": [
+          "Justify whether the relationship is proportional before scaling or applying percent.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-029",
+      "linked_item_id": "draft-structures-ratio_rate_word_problems-05",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "problem_structure": "percent-increase",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A $200 service fee increases by 12%. What is the new fee in dollars?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "200 × (1 − 12/100)",
+          "200 × 12/100",
+          "200 × (1 + 12/100)"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Applying percentage to wrong base. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Applying percentage to wrong base. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 200 × (1 + 12/100). 200+(12/100×200)=224 dollars."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Double number line or ratio table with quantities and units labeled.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Applying percentage to wrong base",
+        "remediation_sequence": [
+          "Represent the original story visually: Double number line or ratio table with quantities and units labeled.",
+          "Rebuild the correct mathematical setup: 200 × (1 + 12/100)",
+          "Solve and independently verify: Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+        ],
+        "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"200 × (1 + 12/100)\" is the correct setup. Show a second check.",
+        "expected_answer": "224",
+        "required_evidence": [
+          "Justify whether the relationship is proportional before scaling or applying percent.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-030",
+      "linked_item_id": "draft-structures-ratio_rate_word_problems-06",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "problem_structure": "rate-time-distance",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A train travels at 72 km/h for 5/2 hours. How many km does it travel?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "72 + 5/2",
+          "72 × (5/2)",
+          "72 ÷ (5/2)"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Dividing speed by time. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Dividing speed by time. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 72 × (5/2). 72×5/2=180 km."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Double number line or ratio table with quantities and units labeled.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Dividing speed by time",
+        "remediation_sequence": [
+          "Represent the original story visually: Double number line or ratio table with quantities and units labeled.",
+          "Rebuild the correct mathematical setup: 72 × (5/2)",
+          "Solve and independently verify: Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+        ],
+        "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"72 × (5/2)\" is the correct setup. Show a second check.",
+        "expected_answer": "180",
+        "required_evidence": [
+          "Justify whether the relationship is proportional before scaling or applying percent.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-031",
+      "linked_item_id": "draft-structures-ratio_rate_word_problems-07",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "problem_structure": "nonproportional-fixed-fee",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A bike rental charges $9 to start and $4 per hour. What is the cost of 7 hours in dollars?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "9 + 4 × 7",
+          "9 × 7 + 4",
+          "9 + 4 + 7"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Multiplying fixed fee by hours. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Multiplying fixed fee by hours. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 9 + 4 × 7. 9+4×7=37 dollars."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Double number line or ratio table with quantities and units labeled.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Multiplying fixed fee by hours",
+        "remediation_sequence": [
+          "Represent the original story visually: Double number line or ratio table with quantities and units labeled.",
+          "Rebuild the correct mathematical setup: 9 + 4 × 7",
+          "Solve and independently verify: Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+        ],
+        "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"9 + 4 × 7\" is the correct setup. Show a second check.",
+        "expected_answer": "37",
+        "required_evidence": [
+          "Justify whether the relationship is proportional before scaling or applying percent.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-032",
+      "linked_item_id": "draft-structures-ratio_rate_word_problems-08",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "problem_structure": "inverse-rate",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A pump transfers 90 litres in 6 minutes at a constant rate. How many minutes for 150 litres?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "150 × (90 ÷ 6)",
+          "150 ÷ (90 × 6)",
+          "150 ÷ (90 ÷ 6)"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Assuming time and litres have the same units. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Assuming time and litres have the same units. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 150 ÷ (90 ÷ 6). 90/6=15 L/min, so 150/15=10 minutes."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Double number line or ratio table with quantities and units labeled.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Assuming time and litres have the same units",
+        "remediation_sequence": [
+          "Represent the original story visually: Double number line or ratio table with quantities and units labeled.",
+          "Rebuild the correct mathematical setup: 150 ÷ (90 ÷ 6)",
+          "Solve and independently verify: Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+        ],
+        "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"150 ÷ (90 ÷ 6)\" is the correct setup. Show a second check.",
+        "expected_answer": "10",
+        "required_evidence": [
+          "Justify whether the relationship is proportional before scaling or applying percent.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-033",
+      "linked_item_id": "draft-structures-geometry_measurement_word_problems-01",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "problem_structure": "missing-rectangle-side",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A rectangular garden has area 96 m² and width 8 m. What is its length in metres?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "96 − 8",
+          "96 ÷ 8",
+          "96 × 8"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Using perimeter formula for area. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Using perimeter formula for area. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 96 ÷ 8. Length=96÷8=12 m."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Annotated diagram with each dimension and measurement unit.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Using perimeter formula for area",
+        "remediation_sequence": [
+          "Represent the original story visually: Annotated diagram with each dimension and measurement unit.",
+          "Rebuild the correct mathematical setup: 96 ÷ 8",
+          "Solve and independently verify: Decompose composite shapes or use inverse area/perimeter formulas to verify."
+        ],
+        "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"96 ÷ 8\" is the correct setup. Show a second check.",
+        "expected_answer": "12",
+        "required_evidence": [
+          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-034",
+      "linked_item_id": "draft-structures-geometry_measurement_word_problems-02",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "problem_structure": "missing-perimeter-side",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A rectangle has perimeter 54 cm and width 11 cm. What is its length in cm?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "54 ÷ 2 − 11",
+          "54 − 11",
+          "54 ÷ 11"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Subtracting width once from full perimeter. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Subtracting width once from full perimeter. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 54 ÷ 2 − 11. Half perimeter is 27, so length=27−11=16 cm."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Annotated diagram with each dimension and measurement unit.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Subtracting width once from full perimeter",
+        "remediation_sequence": [
+          "Represent the original story visually: Annotated diagram with each dimension and measurement unit.",
+          "Rebuild the correct mathematical setup: 54 ÷ 2 − 11",
+          "Solve and independently verify: Decompose composite shapes or use inverse area/perimeter formulas to verify."
+        ],
+        "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"54 ÷ 2 − 11\" is the correct setup. Show a second check.",
+        "expected_answer": "16",
+        "required_evidence": [
+          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-035",
+      "linked_item_id": "draft-structures-geometry_measurement_word_problems-03",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "problem_structure": "composite-area",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A floor has a 12 m by 8 m section and a nonoverlapping 5 m by 4 m section. What is the total area in m²?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "12×8 − 5×4",
+          "12+8+5+4",
+          "12×8 + 5×4"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Ignoring the smaller section. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Ignoring the smaller section. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 12×8 + 5×4. 12×8+5×4=116 m²."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Annotated diagram with each dimension and measurement unit.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Ignoring the smaller section",
+        "remediation_sequence": [
+          "Represent the original story visually: Annotated diagram with each dimension and measurement unit.",
+          "Rebuild the correct mathematical setup: 12×8 + 5×4",
+          "Solve and independently verify: Decompose composite shapes or use inverse area/perimeter formulas to verify."
+        ],
+        "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"12×8 + 5×4\" is the correct setup. Show a second check.",
+        "expected_answer": "116",
+        "required_evidence": [
+          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-036",
+      "linked_item_id": "draft-structures-geometry_measurement_word_problems-04",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "problem_structure": "area-difference",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A 15 m by 10 m field contains a 4 m by 6 m pond. How many m² of land remain outside the pond?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "15+10−4−6",
+          "15×10 − 4×6",
+          "15×10 + 4×6"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Adding pond area. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Adding pond area. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 15×10 − 4×6. 15×10−4×6=126 m²."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Annotated diagram with each dimension and measurement unit.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Adding pond area",
+        "remediation_sequence": [
+          "Represent the original story visually: Annotated diagram with each dimension and measurement unit.",
+          "Rebuild the correct mathematical setup: 15×10 − 4×6",
+          "Solve and independently verify: Decompose composite shapes or use inverse area/perimeter formulas to verify."
+        ],
+        "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"15×10 − 4×6\" is the correct setup. Show a second check.",
+        "expected_answer": "126",
+        "required_evidence": [
+          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-037",
+      "linked_item_id": "draft-structures-geometry_measurement_word_problems-05",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "problem_structure": "unit-conversion",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A ribbon is 3 m 45 cm long. How many centimetres long is it?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "3×100 + 45",
+          "3×10 + 45",
+          "3+45"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Using 10 cm per metre. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Using 10 cm per metre. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 3×100 + 45. 3×100+45=345 cm."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Annotated diagram with each dimension and measurement unit.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Using 10 cm per metre",
+        "remediation_sequence": [
+          "Represent the original story visually: Annotated diagram with each dimension and measurement unit.",
+          "Rebuild the correct mathematical setup: 3×100 + 45",
+          "Solve and independently verify: Decompose composite shapes or use inverse area/perimeter formulas to verify."
+        ],
+        "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"3×100 + 45\" is the correct setup. Show a second check.",
+        "expected_answer": "345",
+        "required_evidence": [
+          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-038",
+      "linked_item_id": "draft-structures-geometry_measurement_word_problems-06",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "problem_structure": "elapsed-time",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A movie begins at 2:35 PM and lasts 105 minutes. At what minute after 3:00 PM does it finish?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "35 + 105 minutes",
+          "105 − 35 minutes",
+          "35 + 105 − 60 minutes"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Mixing clock minutes and base-ten. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Mixing clock minutes and base-ten. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 35 + 105 − 60 minutes. 2:35+105 min=4:20, which is 80 min after 3:00."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Annotated diagram with each dimension and measurement unit.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Mixing clock minutes and base-ten",
+        "remediation_sequence": [
+          "Represent the original story visually: Annotated diagram with each dimension and measurement unit.",
+          "Rebuild the correct mathematical setup: 35 + 105 − 60 minutes",
+          "Solve and independently verify: Decompose composite shapes or use inverse area/perimeter formulas to verify."
+        ],
+        "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"35 + 105 − 60 minutes\" is the correct setup. Show a second check.",
+        "expected_answer": "80",
+        "required_evidence": [
+          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-039",
+      "linked_item_id": "draft-structures-geometry_measurement_word_problems-07",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "problem_structure": "volume-rectangular-prism",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A box measures 5 cm by 7 cm by 8 cm. What is its volume in cm³?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "5+7+8",
+          "5 × 7 × 8",
+          "5 × 7"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Using area instead of volume. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Using area instead of volume. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 5 × 7 × 8. 5×7×8=280 cm³."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Annotated diagram with each dimension and measurement unit.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Using area instead of volume",
+        "remediation_sequence": [
+          "Represent the original story visually: Annotated diagram with each dimension and measurement unit.",
+          "Rebuild the correct mathematical setup: 5 × 7 × 8",
+          "Solve and independently verify: Decompose composite shapes or use inverse area/perimeter formulas to verify."
+        ],
+        "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"5 × 7 × 8\" is the correct setup. Show a second check.",
+        "expected_answer": "280",
+        "required_evidence": [
+          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-040",
+      "linked_item_id": "draft-structures-geometry_measurement_word_problems-08",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "problem_structure": "similar-scale-area",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A square's side doubles from 6 cm to 12 cm. By how many square centimetres does its area increase?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "12² − 6²",
+          "12 − 6",
+          "2×(12 − 6)"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Assuming area doubles when side doubles. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Assuming area doubles when side doubles. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 12² − 6². 12²−6²=144−36=108 cm²."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Annotated diagram with each dimension and measurement unit.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Assuming area doubles when side doubles",
+        "remediation_sequence": [
+          "Represent the original story visually: Annotated diagram with each dimension and measurement unit.",
+          "Rebuild the correct mathematical setup: 12² − 6²",
+          "Solve and independently verify: Decompose composite shapes or use inverse area/perimeter formulas to verify."
+        ],
+        "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"12² − 6²\" is the correct setup. Show a second check.",
+        "expected_answer": "108",
+        "required_evidence": [
+          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-041",
+      "linked_item_id": "draft-structures-algebra_reasoning_word_problems-01",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "problem_structure": "unknown-start",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A number is tripled and then increased by 7 to give 52. What was the number?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "(52 + 7) ÷ 3",
+          "52 ÷ (3 + 7)",
+          "(52 − 7) ÷ 3"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Undoing operations in wrong order. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Undoing operations in wrong order. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: (52 − 7) ÷ 3. 3x+7=52, so x=15."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Variable-definition box and equation balancing diagram or input-output table.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Undoing operations in wrong order",
+        "remediation_sequence": [
+          "Represent the original story visually: Variable-definition box and equation balancing diagram or input-output table.",
+          "Rebuild the correct mathematical setup: (52 − 7) ÷ 3",
+          "Solve and independently verify: Check the solution by substitution into the original context."
+        ],
+        "alternative_method": "Check the solution by substitution into the original context."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"(52 − 7) ÷ 3\" is the correct setup. Show a second check.",
+        "expected_answer": "15",
+        "required_evidence": [
+          "Define variables, justify the equation, solve, and substitute to verify constraints.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-042",
+      "linked_item_id": "draft-structures-algebra_reasoning_word_problems-02",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "problem_structure": "two-sided-equation",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A taxi plan costs 12+4x dollars and another costs 24+2x. For how many trips x do they cost the same?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "solve 12+4 = 24+2",
+          "solve 12+4x = 24+2x",
+          "solve 4x = 2x"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Equating rates without fixed fees. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Equating rates without fixed fees. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: solve 12+4x = 24+2x. 12+4x=24+2x, so x=6."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Variable-definition box and equation balancing diagram or input-output table.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Equating rates without fixed fees",
+        "remediation_sequence": [
+          "Represent the original story visually: Variable-definition box and equation balancing diagram or input-output table.",
+          "Rebuild the correct mathematical setup: solve 12+4x = 24+2x",
+          "Solve and independently verify: Check the solution by substitution into the original context."
+        ],
+        "alternative_method": "Check the solution by substitution into the original context."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"solve 12+4x = 24+2x\" is the correct setup. Show a second check.",
+        "expected_answer": "6",
+        "required_evidence": [
+          "Define variables, justify the equation, solve, and substitute to verify constraints.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-043",
+      "linked_item_id": "draft-structures-algebra_reasoning_word_problems-03",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "problem_structure": "consecutive-integers",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"Three consecutive integers sum to 72. What is the largest?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "solve x+(x+1)+(x+2)=72; report x+2",
+          "solve 3x=72; report x",
+          "solve x+(x+2)+(x+4)=72; report x+4"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Using three equal integers. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Using three equal integers. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: solve x+(x+1)+(x+2)=72; report x+2. x+(x+1)+(x+2)=72; x=23, largest=25."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Variable-definition box and equation balancing diagram or input-output table.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Using three equal integers",
+        "remediation_sequence": [
+          "Represent the original story visually: Variable-definition box and equation balancing diagram or input-output table.",
+          "Rebuild the correct mathematical setup: solve x+(x+1)+(x+2)=72; report x+2",
+          "Solve and independently verify: Check the solution by substitution into the original context."
+        ],
+        "alternative_method": "Check the solution by substitution into the original context."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"solve x+(x+1)+(x+2)=72; report x+2\" is the correct setup. Show a second check.",
+        "expected_answer": "25",
+        "required_evidence": [
+          "Define variables, justify the equation, solve, and substitute to verify constraints.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-044",
+      "linked_item_id": "draft-structures-algebra_reasoning_word_problems-04",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "problem_structure": "linear-pattern",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A pattern has 7 tiles in stage 1 and gains 4 tiles per stage. How many tiles are in stage 9?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "7 + 4×9",
+          "7×9",
+          "7 + 4×(9−1)"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Multiplying stage number without subtracting one. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Multiplying stage number without subtracting one. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: 7 + 4×(9−1). 7+4×(9−1)=39 tiles."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Variable-definition box and equation balancing diagram or input-output table.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Multiplying stage number without subtracting one",
+        "remediation_sequence": [
+          "Represent the original story visually: Variable-definition box and equation balancing diagram or input-output table.",
+          "Rebuild the correct mathematical setup: 7 + 4×(9−1)",
+          "Solve and independently verify: Check the solution by substitution into the original context."
+        ],
+        "alternative_method": "Check the solution by substitution into the original context."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"7 + 4×(9−1)\" is the correct setup. Show a second check.",
+        "expected_answer": "39",
+        "required_evidence": [
+          "Define variables, justify the equation, solve, and substitute to verify constraints.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-045",
+      "linked_item_id": "draft-structures-algebra_reasoning_word_problems-05",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "problem_structure": "constant-rate-reverse",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A tank has 140 L and drains 8 L/min. How many minutes until 44 L remain?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "140 ÷ 8",
+          "(140 − 44) ÷ 8",
+          "(140 + 44) ÷ 8"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Adding drain instead of subtracting. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Adding drain instead of subtracting. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: (140 − 44) ÷ 8. 140−8t=44, so t=12."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Variable-definition box and equation balancing diagram or input-output table.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Adding drain instead of subtracting",
+        "remediation_sequence": [
+          "Represent the original story visually: Variable-definition box and equation balancing diagram or input-output table.",
+          "Rebuild the correct mathematical setup: (140 − 44) ÷ 8",
+          "Solve and independently verify: Check the solution by substitution into the original context."
+        ],
+        "alternative_method": "Check the solution by substitution into the original context."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"(140 − 44) ÷ 8\" is the correct setup. Show a second check.",
+        "expected_answer": "12",
+        "required_evidence": [
+          "Define variables, justify the equation, solve, and substitute to verify constraints.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-046",
+      "linked_item_id": "draft-structures-algebra_reasoning_word_problems-06",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "problem_structure": "two-unknowns",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A theater sold 30 tickets: adult tickets cost $12 and child tickets $8. Revenue was $320. How many adult tickets were sold?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "solve 12x+8(30−x)=320",
+          "solve 12x+8x=320",
+          "solve 12x+8(30+x)=320"
+        ],
+        "correct_index": 0,
+        "misconception_distractors": [
+          {
+            "choice_index": 1,
+            "feedback": "This setup does not represent the required relationship. Assuming all tickets have same price. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 2,
+            "feedback": "Check the quantities and units. Assuming all tickets have same price. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: solve 12x+8(30−x)=320. 12a+8(30−a)=320; 4a=80, so a=20."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Variable-definition box and equation balancing diagram or input-output table.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Assuming all tickets have same price",
+        "remediation_sequence": [
+          "Represent the original story visually: Variable-definition box and equation balancing diagram or input-output table.",
+          "Rebuild the correct mathematical setup: solve 12x+8(30−x)=320",
+          "Solve and independently verify: Check the solution by substitution into the original context."
+        ],
+        "alternative_method": "Check the solution by substitution into the original context."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"solve 12x+8(30−x)=320\" is the correct setup. Show a second check.",
+        "expected_answer": "20",
+        "required_evidence": [
+          "Define variables, justify the equation, solve, and substitute to verify constraints.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-047",
+      "linked_item_id": "draft-structures-algebra_reasoning_word_problems-07",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "problem_structure": "inequality-minimum",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A club has $35 and saves $9 each week. What is the minimum number of whole weeks needed to have at least $100?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "round down ((100−35) ÷ 9)",
+          "(100+35) ÷ 9",
+          "round up ((100−35) ÷ 9)"
+        ],
+        "correct_index": 2,
+        "misconception_distractors": [
+          {
+            "choice_index": 0,
+            "feedback": "This setup does not represent the required relationship. Rounding weeks down. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 1,
+            "feedback": "Check the quantities and units. Rounding weeks down. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: round up ((100−35) ÷ 9). 35+9w≥100; w≥65/9, so 8 whole weeks."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Variable-definition box and equation balancing diagram or input-output table.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Rounding weeks down",
+        "remediation_sequence": [
+          "Represent the original story visually: Variable-definition box and equation balancing diagram or input-output table.",
+          "Rebuild the correct mathematical setup: round up ((100−35) ÷ 9)",
+          "Solve and independently verify: Check the solution by substitution into the original context."
+        ],
+        "alternative_method": "Check the solution by substitution into the original context."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"round up ((100−35) ÷ 9)\" is the correct setup. Show a second check.",
+        "expected_answer": "8",
+        "required_evidence": [
+          "Define variables, justify the equation, solve, and substitute to verify constraints.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "path-048",
+      "linked_item_id": "draft-structures-algebra_reasoning_word_problems-08",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "problem_structure": "coordinate-slope",
+      "status": "DRAFT_UNVERIFIED",
+      "diagnostic": {
+        "prompt": "For the situation: \"A delivery service's cumulative distance is 18 km at hour 2 and 42 km at hour 6. At a constant rate, how many km per hour does it travel?\" Which mathematical setup correctly represents the unknown?",
+        "choices": [
+          "(6−2) ÷ (42−18)",
+          "(42−18) ÷ (6−2)",
+          "(42−18) ÷ 6"
+        ],
+        "correct_index": 1,
+        "misconception_distractors": [
+          {
+            "choice_index": 2,
+            "feedback": "This setup does not represent the required relationship. Using change in distance without dividing by time. Re-read what is known and what is asked."
+          },
+          {
+            "choice_index": 0,
+            "feedback": "Check the quantities and units. Using change in distance without dividing by time. Represent the story before calculating."
+          }
+        ],
+        "explanation": "Correct setup: (42−18) ÷ (6−2). (42−18)/(6−2)=6 km/h."
+      },
+      "learning_path": {
+        "concrete_visual_model": "Variable-definition box and equation balancing diagram or input-output table.",
+        "socratic_prompt_1": "What does the unknown represent, and what units will its answer use?",
+        "socratic_prompt_2": "Which known quantities combine, compare, scale, or change to produce the unknown?",
+        "remediation_trigger": "Using change in distance without dividing by time",
+        "remediation_sequence": [
+          "Represent the original story visually: Variable-definition box and equation balancing diagram or input-output table.",
+          "Rebuild the correct mathematical setup: (42−18) ÷ (6−2)",
+          "Solve and independently verify: Check the solution by substitution into the original context."
+        ],
+        "alternative_method": "Check the solution by substitution into the original context."
+      },
+      "mastery_exit": {
+        "prompt": "Without looking at the hints, solve the original situation and explain why \"(42−18) ÷ (6−2)\" is the correct setup. Show a second check.",
+        "expected_answer": "6",
+        "required_evidence": [
+          "Define variables, justify the equation, solve, and substitute to verify constraints.",
+          "Correct numeric answer and appropriate units",
+          "Explanation rejects the two diagnostic distractors"
+        ],
+        "independent_review_required": true
+      },
+      "review_status": "PENDING"
+    }
+  ]
+}

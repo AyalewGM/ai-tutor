@@ -1,0 +1,803 @@
+{
+  "package_id": "draft-seeded-generator-teaching-depth-v1",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "runtime_activation": false,
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "purpose": "18 original conceptual teaching blueprints and independent transfer checks aligned to draft seeded generator structures; content specifications only",
+  "lessons": [
+    {
+      "lesson_id": "seeded-depth-01",
+      "problem_structure": "add-start-unknown",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Reconstructing an unknown beginning",
+      "conceptual_invariant": "A change is not a starting quantity. The final amount already contains the change.",
+      "representations": {
+        "concrete": "Show a covered starting collection, add a visible group, then uncover the original.",
+        "visual": "Tape diagram: whole = hidden start + visible change.",
+        "symbolic": "Write start + change = end; isolate start by subtracting change."
+      },
+      "alternative_strategy": "Count backwards from the final amount by the added amount.",
+      "misconception_intervention": "If a learner adds end and change, ask whether that would produce more than the known final amount.",
+      "socratic_questions": [
+        "Which quantity describes the whole after the delivery?",
+        "Where should the unknown go in the bar?",
+        "What inverse operation recovers the start?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "A school has 187 pencils after receiving 68 new pencils. How many did it have before?",
+        "expected": "119",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Tape diagram: whole = hidden start + visible change.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-02",
+      "problem_structure": "add-comparison",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Comparing aligned quantities",
+      "conceptual_invariant": "How many more is a difference, not a total.",
+      "representations": {
+        "concrete": "Line up two physical stacks of counters and remove matching pairs.",
+        "visual": "Two aligned bars; the unmatched extension is the difference.",
+        "symbolic": "larger - smaller = difference."
+      },
+      "alternative_strategy": "Count up from the smaller amount to the larger amount.",
+      "misconception_intervention": "If a learner adds the quantities, ask them to highlight only the extra segment.",
+      "socratic_questions": [
+        "Are we combining the collections or comparing them?",
+        "Which part of the longer bar is unmatched?",
+        "How could you count up instead of subtract?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "One class collected 236 cans and another collected 179. How many more did the first collect?",
+        "expected": "57",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Two aligned bars; the unmatched extension is the difference.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-03",
+      "problem_structure": "add-two-changes",
+      "provisional_skill": "ADDITIVE_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Tracking opposite changes",
+      "conceptual_invariant": "Increases and decreases must keep their signs and order.",
+      "representations": {
+        "concrete": "Move counters into and out of a tray, tracking the total after each move.",
+        "visual": "Number line with a forward jump and backward jump.",
+        "symbolic": "end = start + incoming - outgoing."
+      },
+      "alternative_strategy": "Reverse the process: start = end + outgoing - incoming.",
+      "misconception_intervention": "If the learner adds both changes, ask what giving items away means physically.",
+      "socratic_questions": [
+        "Which action increases the count?",
+        "Which action decreases it?",
+        "Can you reverse both changes to verify?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "A classroom starts with 230 sheets, receives 95, then uses 78. How many remain?",
+        "expected": "247",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Number line with a forward jump and backward jump.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-04",
+      "problem_structure": "multiply-equal-groups",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Groups and factors",
+      "conceptual_invariant": "Equal groups are multiplicative, not a sum of the two factors.",
+      "representations": {
+        "concrete": "Make five identical trays with fourteen counters each.",
+        "visual": "Rectangular array split into tens and leftover columns.",
+        "symbolic": "groups × items per group = total."
+      },
+      "alternative_strategy": "Use the distributive property, multiplying tens and ones separately.",
+      "misconception_intervention": "If the learner adds factors, count how many trays would be left unrepresented.",
+      "socratic_questions": [
+        "What does each factor count?",
+        "Can you draw one row per group?",
+        "How can a ten-and-seven split help?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "Nine boxes contain 17 chalk sticks each. How many chalk sticks?",
+        "expected": "153",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Rectangular array split into tens and leftover columns.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-05",
+      "problem_structure": "multiply-remainder-capacity",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Interpreting remainders in context",
+      "conceptual_invariant": "A remainder can require an additional container; quotient truncation is not always meaningful.",
+      "representations": {
+        "concrete": "Seat 53 counters in vehicles with seven seats each; leave a partially filled final vehicle.",
+        "visual": "Draw full seven-seat boxes and one partial box.",
+        "symbolic": "minimum vehicles = ceiling(total / capacity)."
+      },
+      "alternative_strategy": "Compare capacities of the lower and upper whole-number quotient.",
+      "misconception_intervention": "If the learner rounds down, show the unseated students.",
+      "socratic_questions": [
+        "What does the remainder represent?",
+        "Are all passengers seated after using only full vans?",
+        "What is the smallest sufficient whole number?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "Eighty-three campers travel in vans holding at most nine. How many vans are required?",
+        "expected": "10",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Draw full seven-seat boxes and one partial box.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-06",
+      "problem_structure": "multiply-two-stage",
+      "provisional_skill": "MULTIPLICATIVE_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Nested multiplicative structures",
+      "conceptual_invariant": "A product of three factors describes three nested levels, not two.",
+      "representations": {
+        "concrete": "Build three shelves with four boxes on each and five tokens in each box.",
+        "visual": "Tree diagram from shelves to boxes to items.",
+        "symbolic": "total = shelves × boxes per shelf × items per box."
+      },
+      "alternative_strategy": "Find boxes first, then multiply by items per box.",
+      "misconception_intervention": "If a learner stops after multiplying shelves by boxes, ask what is inside each box.",
+      "socratic_questions": [
+        "What is counted at each level?",
+        "How many bins exist altogether?",
+        "How many balls are in those bins?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "Five racks each hold six bins, each bin has eight balls. How many balls?",
+        "expected": "240",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Tree diagram from shelves to boxes to items.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-07",
+      "problem_structure": "fraction-of-set",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Taking a fraction of a known whole",
+      "conceptual_invariant": "The denominator partitions the whole into equal groups.",
+      "representations": {
+        "concrete": "Arrange 36 counters into six equal groups, then select four groups.",
+        "visual": "Bar model partitioned into denominator equal sections.",
+        "symbolic": "part = whole × numerator / denominator."
+      },
+      "alternative_strategy": "Find the unit fraction first, then scale by the numerator.",
+      "misconception_intervention": "If a learner multiplies by the denominator, ask how a proper fraction could exceed the whole.",
+      "socratic_questions": [
+        "Which number is the whole?",
+        "How many marbles are in one eighth?",
+        "How many groups make five eighths?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "What is 5/8 of a collection of 64 marbles?",
+        "expected": "40",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Bar model partitioned into denominator equal sections.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-08",
+      "problem_structure": "fraction-unknown-whole",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Reconstructing the whole from a part",
+      "conceptual_invariant": "A known fraction of the whole must be scaled up, not down.",
+      "representations": {
+        "concrete": "Place 15 tokens into three equal groups and extend to eight groups.",
+        "visual": "Eight-section bar with three known sections totaling 15.",
+        "symbolic": "whole = known part × denominator / numerator."
+      },
+      "alternative_strategy": "Use the unit fraction: one section = known part / numerator.",
+      "misconception_intervention": "If a learner multiplies the known part by a proper fraction, ask whether a whole can be smaller than its part.",
+      "socratic_questions": [
+        "Do the 21 beads represent the whole?",
+        "How much is one seventh?",
+        "How many sevenths complete the whole?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "Twenty-one beads are 3/7 of a set. How many beads are in the set?",
+        "expected": "49",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Eight-section bar with three known sections totaling 15.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-09",
+      "problem_structure": "fraction-like-addition",
+      "provisional_skill": "FRACTION_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Combining equal-sized fractional parts",
+      "conceptual_invariant": "Only numerators are combined when denominator units match.",
+      "representations": {
+        "concrete": "Join three sixth-size strips and two sixth-size strips.",
+        "visual": "Two aligned bars with identical sixth-size partitions.",
+        "symbolic": "a/d + b/d = (a+b)/d; simplify."
+      },
+      "alternative_strategy": "Use fraction complements to benchmark against one whole.",
+      "misconception_intervention": "If a learner adds denominators, compare the physical size of one sixth before and after.",
+      "socratic_questions": [
+        "Are the fractional pieces the same size?",
+        "How many pieces do we have altogether?",
+        "Does the unit size change when pieces combine?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "Compute 7/12 + 5/12 as a simplified number.",
+        "expected": "1",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Two aligned bars with identical sixth-size partitions.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-10",
+      "problem_structure": "ratio-unit-price",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Unit rates and scaling",
+      "conceptual_invariant": "A unit price is cost per one item, not cost times the number of items.",
+      "representations": {
+        "concrete": "Split a known total price into equal item-price envelopes.",
+        "visual": "Double number line showing items and dollars, including one item.",
+        "symbolic": "unit price = total dollars / item count."
+      },
+      "alternative_strategy": "Divide by a common factor in a ratio table.",
+      "misconception_intervention": "If the learner multiplies, ask what cost for two items would mean.",
+      "socratic_questions": [
+        "What does the total price cover?",
+        "What would one equal share cost?",
+        "How can you multiply back to check?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "Eight identical notebooks cost $104. What is the price of one notebook?",
+        "expected": "13",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Double number line showing items and dollars, including one item.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-11",
+      "problem_structure": "ratio-percent-discount",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Percentage and remaining amount",
+      "conceptual_invariant": "A discount is a reduction from the original price; the discount amount is not the final price.",
+      "representations": {
+        "concrete": "Use a 100-square grid, cross out the discount percentage.",
+        "visual": "Percent bar with discounted segment and remaining segment.",
+        "symbolic": "final = original × (100 - discount percent) / 100."
+      },
+      "alternative_strategy": "Compute discount amount first, then subtract it.",
+      "misconception_intervention": "If a learner reports the discount alone, ask which amount is paid at checkout.",
+      "socratic_questions": [
+        "What does 100% represent?",
+        "What fraction of the original price remains?",
+        "Is the final price smaller than the original?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "A $160 jacket is discounted by 25%. What is the final price?",
+        "expected": "120",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Percent bar with discounted segment and remaining segment.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-12",
+      "problem_structure": "ratio-fixed-fee",
+      "provisional_skill": "RATIO_RATE_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Distinguishing fixed and variable charges",
+      "conceptual_invariant": "A one-time charge must not be multiplied by the number of hours.",
+      "representations": {
+        "concrete": "Place one fixed-fee token next to repeated hourly tokens.",
+        "visual": "Bar diagram: one fixed block plus equal per-hour blocks.",
+        "symbolic": "total = fixed fee + hourly rate × hours."
+      },
+      "alternative_strategy": "Create a table starting at zero hours to expose the fixed intercept.",
+      "misconception_intervention": "If the learner multiplies the fixed fee, ask whether it is paid again every hour.",
+      "socratic_questions": [
+        "What is paid even for zero hours?",
+        "Which amount repeats each hour?",
+        "Does doubling time double the fixed charge?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "A rental costs $14 once plus $6 per hour. What is the cost for nine hours?",
+        "expected": "68",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Bar diagram: one fixed block plus equal per-hour blocks.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-13",
+      "problem_structure": "geometry-perimeter",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Boundary length and linear units",
+      "conceptual_invariant": "Perimeter measures the distance around an object.",
+      "representations": {
+        "concrete": "Trace all four edges of a rectangle with string.",
+        "visual": "Outline diagram with opposite sides labeled equally.",
+        "symbolic": "P = 2(length + width)."
+      },
+      "alternative_strategy": "Add all four side lengths individually.",
+      "misconception_intervention": "If the learner multiplies length and width, ask whether tiles or fencing are being measured.",
+      "socratic_questions": [
+        "Are we measuring inside or around?",
+        "How many edges have the longer length?",
+        "What units belong to the answer?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "A rectangular field is 23 m long and 8 m wide. How much fencing surrounds it?",
+        "expected": "62",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Outline diagram with opposite sides labeled equally.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-14",
+      "problem_structure": "geometry-area",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Covering a two-dimensional surface",
+      "conceptual_invariant": "Area counts unit squares, not boundary length.",
+      "representations": {
+        "concrete": "Cover a rectangle with unit-square tiles.",
+        "visual": "Array grid with labeled rows and columns.",
+        "symbolic": "A = length × width, in square units."
+      },
+      "alternative_strategy": "Split the grid into two rectangles and add their areas.",
+      "misconception_intervention": "If the learner uses perimeter, ask how many tiles cover the inside.",
+      "socratic_questions": [
+        "What does one unit square represent?",
+        "How many squares are in one row?",
+        "Why is the answer in square centimetres?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "A poster measures 17 cm by 12 cm. What is its area?",
+        "expected": "204",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Array grid with labeled rows and columns.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-15",
+      "problem_structure": "geometry-volume",
+      "provisional_skill": "GEOMETRY_MEASUREMENT_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Counting unit cubes in layers",
+      "conceptual_invariant": "Volume counts unit cubes across three dimensions.",
+      "representations": {
+        "concrete": "Stack layers of unit cubes, each matching the base.",
+        "visual": "Three-dimensional prism with one layer highlighted and multiple layers stacked.",
+        "symbolic": "V = length × width × height, in cubic units."
+      },
+      "alternative_strategy": "Find base area, then multiply by number of layers.",
+      "misconception_intervention": "If the learner stops at base area, ask how many layers are in the box.",
+      "socratic_questions": [
+        "How many cubes fit in one layer?",
+        "How many identical layers are there?",
+        "Why are the units cubic?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "A storage box is 8 cm by 5 cm by 7 cm. What is its volume?",
+        "expected": "280",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Three-dimensional prism with one layer highlighted and multiple layers stacked.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-16",
+      "problem_structure": "algebra-unknown-start",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Solving an equation with a fixed term",
+      "conceptual_invariant": "A constant charge and a repeated charge must be separated.",
+      "representations": {
+        "concrete": "Use one fixed-cost block and equal ticket-cost blocks.",
+        "visual": "Balance diagram with the total on one side and fixed plus variable blocks on the other.",
+        "symbolic": "multiplier × count + fee = total; solve for count."
+      },
+      "alternative_strategy": "Undo addition, then undo multiplication.",
+      "misconception_intervention": "If a learner divides the total before removing the fee, ask whether the fee repeats per ticket.",
+      "socratic_questions": [
+        "What is the unknown quantity?",
+        "Which part is paid once?",
+        "What inverse steps isolate the ticket count?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "A group pays $18 for supplies and $7 per ticket, totaling $95. How many tickets?",
+        "expected": "11",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Balance diagram with the total on one side and fixed plus variable blocks on the other.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-17",
+      "problem_structure": "algebra-linear-pattern",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Position versus number of jumps",
+      "conceptual_invariant": "Term n is reached after n-1 increases from the first term.",
+      "representations": {
+        "concrete": "Place counters in an increasing sequence, marking the first term.",
+        "visual": "Number line showing equal jumps from term 1 to term n.",
+        "symbolic": "term(n) = first + (n-1) × step."
+      },
+      "alternative_strategy": "Build a short input-output table to confirm the rule.",
+      "misconception_intervention": "If the learner uses n jumps, ask whether term 1 already contains the starting amount.",
+      "socratic_questions": [
+        "What is term one?",
+        "How many jumps occur between term one and term fourteen?",
+        "Can you test the formula at term two?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "A pattern begins at 11 and increases by 6. What is term 14?",
+        "expected": "89",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Number line showing equal jumps from term 1 to term n.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    },
+    {
+      "lesson_id": "seeded-depth-18",
+      "problem_structure": "algebra-two-ticket-types",
+      "provisional_skill": "ALGEBRA_REASONING_WORD_PROBLEMS",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false,
+      "title": "Two unknown quantities with a shared total",
+      "conceptual_invariant": "Total ticket count and total revenue constrain the same two categories.",
+      "representations": {
+        "concrete": "Start with all child-ticket cards and replace some with higher-priced adult cards.",
+        "visual": "Two-color bar showing baseline child revenue and extra adult-price increments.",
+        "symbolic": "adult price × a + child price × (total-a) = revenue."
+      },
+      "alternative_strategy": "Use the all-child baseline and divide extra revenue by adult premium.",
+      "misconception_intervention": "If the learner assumes one price, show how swapping one child ticket for an adult ticket changes revenue.",
+      "socratic_questions": [
+        "How many child tickets if adult count is a?",
+        "How much more does an adult ticket cost?",
+        "Can both ticket count and revenue be checked?"
+      ],
+      "adaptive_path": {
+        "initial": "Ask the learner to name the unknown and predict a reasonable answer range.",
+        "after_first_error": "Show the concrete model; ask the first Socratic question without revealing the answer.",
+        "after_second_error": "Show the visual model; ask the second Socratic question and identify the misconception.",
+        "after_third_error": "Explain the symbolic method and alternative strategy; require a new problem rather than awarding mastery.",
+        "after_correct": "Request an explanation and independent inverse, substitution or unit check."
+      },
+      "transfer_mastery": {
+        "question": "A show sells 24 tickets: adult tickets cost $15 and child tickets cost $9. Total revenue is $276. How many adult tickets?",
+        "expected": "10",
+        "required_evidence": [
+          "correct exact answer",
+          "explain why the operation models the story",
+          "verify independently without copying the worked example"
+        ],
+        "separate_from_generator": true
+      },
+      "accessibility": {
+        "text_alternative": "Two-color bar showing baseline child revenue and extra adult-price increments.",
+        "animation_optional": true
+      },
+      "independent_review_required": true
+    }
+  ]
+}
