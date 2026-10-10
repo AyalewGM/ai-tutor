@@ -1,9 +1,13 @@
+import { GuidedIntegerNumberLine } from "../mve/GuidedIntegerNumberLine";
 import MathText from "./MathText";
 import type { LearnContent } from "../types";
 
-export default function LearnPanel({ learn }: { learn: LearnContent }) {
+export default function LearnPanel({ learn, integerPracticeSeed, independentAssessment = false }: { learn: LearnContent; integerPracticeSeed?: number; independentAssessment?: boolean }) {
   return (
     <div className="space-y-3">
+      {integerPracticeSeed !== undefined && !independentAssessment && (
+        <GuidedIntegerNumberLine seed={integerPracticeSeed} independentAssessment={false} />
+      )}
       <MathText text={learn.summary} />
       {learn.examples.map((example, index) => (
         <div key={index} className="rounded-md bg-card p-3 text-sm">
