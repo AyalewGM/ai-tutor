@@ -7,7 +7,7 @@ const source = await readFile(new URL("./fractionMath.ts", import.meta.url), "ut
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
 }).outputText;
-const { normalizeFractionParts, changeShadedParts, simplifyFraction, describeFraction } = await import(
+const { normalizeFractionParts, changeShadedParts, simplifyFraction, describeFraction, compareFractions, describeFractionComparison, isValidFractionParts } = await import(
   `data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`
 );
 
@@ -48,4 +48,22 @@ test("accessible explanations are deterministic and do not grade mastery", () =>
     "2 out of 4 equal parts are shaded. This is equivalent to 1/2.");
   assert.equal(describeFraction({ numerator: 3, denominator: 4 }),
     "3 out of 4 equal parts are shaded.");
+});
+
+test("cross multiplication compares unlike denominators exactly", () => {
+  assert.equal(compareFractions({ numerator: 1, denominator: 2 }, { numerator: 2, denominator: 4 }), "EQUAL_TO");
+  assert.equal(compareFractions({ numerator: 2, denominator: 3 }, { numerator: 3, denominator: 4 }), "LESS_THAN");
+  assert.equal(compareFractions({ numerator: 5, denominator: 6 }, { numerator: 3, denominator: 4 }), "GREATER_THAN");
+  assert.equal(compareFractions({ numerator: 0, denominator: 2 }, { numerator: 0, denominator: 12 }), "EQUAL_TO");
+});
+test("comparison rejects malformed inputs rather than normalizing them", () => {
+  for (const invalid of [null, {}, { numerator: -1, denominator: 4 }, { numerator: 2, denominator: 0 }, { numerator: 2, denominator: 13 }, { numerator: 1.5, denominator: 4 }]) {
+    assert.equal(isValidFractionParts(invalid), false);
+    assert.equal(compareFractions(invalid, { numerator: 1, denominator: 2 }), null);
+  }
+});
+test("comparison feedback is explanatory, not mastery grading", () => {
+  assert.equal(describeFractionComparison({ numerator: 1, denominator: 2 }, { numerator: 2, denominator: 4 }),
+    "1/2 is equal to 2/4.");
+  assert.equal(describeFractionComparison({ numerator: 1, denominator: 0 }, { numerator: 1, denominator: 2 }), null);
 });
