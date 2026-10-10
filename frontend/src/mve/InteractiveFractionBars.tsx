@@ -1,20 +1,18 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import ProblemVisual from "../components/ProblemVisual";
 import type { MathInteractionEvent } from "./interactions";
+import type { VisualSpec } from "./contracts";
+import { normalizeFractionParts, changeShadedParts, describeFraction, compareFractions, describeFractionComparison, isValidFractionParts, validScaleFactors, scaleFraction, describeEquivalence, simplifyFraction, describeSimplification, type FractionParts } from "./fractionMath";
 
 /** Guided exploration only; never mount in independent assessment. */
 export interface InteractiveFractionBarsProps {
   independentAssessment: boolean;
   denominator?: number;
   initialNumerator?: number;
+  /** Optional guided comparison target. Invalid targets are not rendered. */
+  compareWith?: FractionParts;
   onFractionChange?: (value: { numerator: number; denominator: number }) => void;
   onMathEvent?: (event: MathInteractionEvent) => void;
-}
-
-export function normalizeFractionParts(numerator: number, denominator: number) {
-  const d = Number.isSafeInteger(denominator) ? Math.min(12, Math.max(1, denominator)) : 4;
-  const n = Number.isSafeInteger(numerator) ? Math.min(d, Math.max(0, numerator)) : 0;
-  return { numerator: n, denominator: d };
 }
 
 export function InteractiveFractionBars(props: InteractiveFractionBarsProps) {
@@ -22,25 +20,68 @@ export function InteractiveFractionBars(props: InteractiveFractionBarsProps) {
   return <GuidedFractionBars {...props} />;
 }
 
+/**
+ * Derive a validated guided comparison target from a fraction-bar spec.
+ * Backends may attach a second `MathFraction` in `spec.math`; anything else
+ * (or nothing) yields null so the comparison section stays hidden.
+ */
+export function fractionComparisonTarget(spec: {
+  type?: string;
+  numerator?: number;
+  denominator?: number;
+  math?: VisualSpec["math"];
+} | null | undefined): FractionParts | null {
+  if (!spec || (spec.type !== "fraction_bar" && spec.type !== "ratio_bar")) return null;
+  const objects = Array.isArray(spec.math) ? spec.math : spec.math ? [spec.math] : [];
+  for (const obj of objects) {
+    if (obj.kind !== "fraction") continue;
+    const parts = { numerator: obj.numerator, denominator: obj.denominator };
+    if (!isValidFractionParts(parts)) continue;
+    if (parts.numerator === spec.numerator && parts.denominator === spec.denominator) continue;
+    return parts;
+  }
+  return null;
+}
+
 function GuidedFractionBars({
-  denominator = 4, initialNumerator = 1, onFractionChange, onMathEvent,
+  denominator = 4, initialNumerator = 1, compareWith, onFractionChange, onMathEvent,
 }: InteractiveFractionBarsProps) {
+  const statusId = useId();
+  const comparisonStatusId = useId();
+  const equivalenceStatusId = useId();
   const initial = normalizeFractionParts(initialNumerator, denominator);
   const [numerator, setNumerator] = useState(initial.numerator);
   const [previousDenominator, setPreviousDenominator] = useState(initial.denominator);
   const d = initial.denominator;
+  const target = isValidFractionParts(compareWith) ? compareWith : null;
+  const [showComparison, setShowComparison] = useState(false);
+  const [equivalence, setEquivalence] = useState<{ parts: FractionParts; explanation: string } | null>(null);
+  const [lastTargetKey, setLastTargetKey] = useState<string | null>(null);
+  const targetKey = target ? `${target.numerator}/${target.denominator}` : null;
+  if (lastTargetKey !== targetKey) {
+    setLastTargetKey(targetKey);
+    setShowComparison(false);
+  }
   // Reset local exploration when the example's denominator changes.
   if (previousDenominator !== d) {
     setPreviousDenominator(d);
     setNumerator(initial.numerator);
+    setShowComparison(false);
+    setEquivalence(null);
   }
   const current = previousDenominator === d ? numerator : initial.numerator;
   const update = (next: number) => {
     const value = normalizeFractionParts(next, d);
+    if (value.numerator === current) return;
     setNumerator(value.numerator);
+    setShowComparison(false);
+    setEquivalence(null);
     onFractionChange?.(value);
     onMathEvent?.({ schema_version: 1, type: "FRACTION_SHADING_CHANGED", ...value });
   };
+  const currentParts = { numerator: current, denominator: d };
+  const scaleFactors = validScaleFactors(currentParts);
+  const simplification = describeSimplification(currentParts);
   return (
     <section aria-label="Guided fraction bar exploration" data-mve-family="fractions"
       className="space-y-3 rounded-lg border p-4">
@@ -52,15 +93,77 @@ function GuidedFractionBars({
         denominator: d,
         aria_label: `${current} of ${d} equal parts shaded`,
       }} />
-      <p role="status" aria-live="polite">{current} of {d} equal parts shaded</p>
-      <div className="flex flex-wrap gap-2" aria-label="Fraction exploration controls">
-        <button type="button" onClick={() => update(current - 1)} disabled={current === 0}
-          className="rounded border px-3 py-2">Shade one fewer part</button>
-        <button type="button" onClick={() => update(current + 1)} disabled={current === d}
-          className="rounded border px-3 py-2">Shade one more part</button>
-        <button type="button" onClick={() => update(0)} disabled={current === 0}
-          className="rounded border px-3 py-2">Clear shading</button>
+      <p id={statusId} role="status" aria-live="polite" aria-atomic="true">{describeFraction({ numerator: current, denominator: d })}</p>
+      <div role="group" className="flex flex-wrap gap-2" aria-label="Fraction exploration controls">
+        <button type="button" onClick={() => update(changeShadedParts({ numerator: current, denominator: d }, -1).numerator)} disabled={current === 0} aria-describedby={statusId}
+          className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Shade one fewer part</button>
+        <button type="button" onClick={() => update(changeShadedParts({ numerator: current, denominator: d }, 1).numerator)} disabled={current === d} aria-describedby={statusId}
+          className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Shade one more part</button>
+        <button type="button" onClick={() => update(0)} disabled={current === 0} aria-describedby={statusId}
+          className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Clear shading</button>
       </div>
+      {target && (
+        <div className="space-y-2" aria-label="Guided fraction comparison">
+          <p className="text-sm">Compare your shaded fraction with {target.numerator}/{target.denominator}.</p>
+          <ProblemVisual spec={{
+            type: "fraction_bar", numerator: target.numerator, denominator: target.denominator,
+            aria_label: `${target.numerator} of ${target.denominator} equal parts shaded in comparison bar`,
+          }} />
+          <button type="button" aria-describedby={comparisonStatusId}
+            className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            onClick={() => {
+              const left = { numerator: current, denominator: d };
+              const relation = compareFractions(left, target);
+              if (relation === null) return;
+              setShowComparison(true);
+              onMathEvent?.({ schema_version: 1, type: "FRACTION_COMPARED", left, right: target, relation });
+            }}>Explain comparison</button>
+          <p id={comparisonStatusId} role="status" aria-live="polite" aria-atomic="true">
+            {showComparison ? describeFractionComparison({ numerator: current, denominator: d }, target) : "Select Explain comparison to explore the relationship."}
+          </p>
+        </div>
+      )}
+      {(scaleFactors.length > 0 || simplification !== null) && (
+        <div className="space-y-2" aria-label="Equivalent fraction construction">
+          <p className="text-sm">Build an equivalent fraction by multiplying or dividing numerator and denominator by the same number.</p>
+          <div role="group" className="flex flex-wrap gap-2" aria-label="Equivalent fraction controls">
+            {scaleFactors.map((factor) => (
+              <button type="button" key={factor} aria-describedby={equivalenceStatusId}
+                className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                onClick={() => {
+                  const result = scaleFraction(currentParts, factor);
+                  const explanation = describeEquivalence(currentParts, factor);
+                  if (result === null || explanation === null) return;
+                  setEquivalence({ parts: result, explanation });
+                  onMathEvent?.({
+                    schema_version: 1, type: "FRACTION_EQUIVALENCE_EXPLORED",
+                    original: currentParts, scaled: result, scale_factor: factor,
+                  });
+                }}>Multiply by {factor}</button>
+            ))}
+            <button type="button" disabled={simplification === null} aria-describedby={equivalenceStatusId}
+              className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              onClick={() => {
+                if (simplification === null) return;
+                const reduced = simplifyFraction(currentParts);
+                setEquivalence({ parts: reduced, explanation: simplification });
+                onMathEvent?.({
+                  schema_version: 1, type: "FRACTION_SIMPLIFIED",
+                  original: currentParts, reduced,
+                });
+              }}>Show simplest form</button>
+          </div>
+          {equivalence && (
+            <ProblemVisual spec={{
+              type: "fraction_bar", numerator: equivalence.parts.numerator, denominator: equivalence.parts.denominator,
+              aria_label: `Equivalent fraction: ${equivalence.parts.numerator} of ${equivalence.parts.denominator} equal parts shaded`,
+            }} />
+          )}
+          <p id={equivalenceStatusId} role="status" aria-live="polite" aria-atomic="true">
+            {equivalence ? equivalence.explanation : "Choose a multiplier or the simplest form to see an equivalent fraction."}
+          </p>
+        </div>
+      )}
       <p className="text-sm">Each part is one-{d === 2 ? "half" : d === 3 ? "third" : d === 4 ? "fourth" : `${d}th`} of the whole.</p>
     </section>
   );

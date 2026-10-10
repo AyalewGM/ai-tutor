@@ -77,6 +77,35 @@ export interface FractionShadingChangedEvent extends MathInteractionBase {
   denominator: number;
 }
 
+export interface FractionComparedEvent extends MathInteractionBase {
+  type: "FRACTION_COMPARED";
+  left: { numerator: number; denominator: number };
+  right: { numerator: number; denominator: number };
+  relation: "LESS_THAN" | "EQUAL_TO" | "GREATER_THAN";
+}
+
+export interface FractionEquivalenceExploredEvent extends MathInteractionBase {
+  type: "FRACTION_EQUIVALENCE_EXPLORED";
+  original: { numerator: number; denominator: number };
+  scaled: { numerator: number; denominator: number };
+  scale_factor: number;
+}
+
+export interface FractionSimplifiedEvent extends MathInteractionBase {
+  type: "FRACTION_SIMPLIFIED";
+  original: { numerator: number; denominator: number };
+  reduced: { numerator: number; denominator: number };
+}
+
+export interface FractionAdditionExploredEvent extends MathInteractionBase {
+  type: "FRACTION_ADDITION_EXPLORED";
+  first: { numerator: number; denominator: number };
+  second: { numerator: number; denominator: number };
+  common_denominator: number;
+  sum_numerator: number;
+  sum_denominator: number;
+}
+
 export interface IntegerDisplacementChangedEvent extends MathInteractionBase {
   type: "INTEGER_DISPLACEMENT_CHANGED";
   start: number;
@@ -119,12 +148,33 @@ export type MathInteractionEvent =
   | PolygonCreatedEvent
   | DistributiveStepViewedEvent
   | DistributiveCoefficientsCheckedEvent
-  | FractionShadingChangedEvent;
+  | FractionShadingChangedEvent
+  | FractionComparedEvent
+  | FractionEquivalenceExploredEvent
+  | FractionSimplifiedEvent
+  | FractionAdditionExploredEvent;
 
 function isPoint2D(value: unknown): value is Point2D {
   return Array.isArray(value) &&
     value.length === 2 &&
     value.every((coordinate) => typeof coordinate === "number" && Number.isFinite(coordinate));
+}
+
+function isBoundedFractionParts(value: unknown): value is { numerator: number; denominator: number } {
+  if (!value || typeof value !== "object") return false;
+  const p = value as Record<string, unknown>;
+  return Number.isSafeInteger(p.denominator) && (p.denominator as number) >= 1 &&
+    (p.denominator as number) <= 12 && Number.isSafeInteger(p.numerator) &&
+    (p.numerator as number) >= 0 && (p.numerator as number) <= (p.denominator as number);
+}
+
+function gcdOf(a: number, b: number): number {
+  while (b !== 0) {
+    const remainder = a % b;
+    a = b;
+    b = remainder;
+  }
+  return a;
 }
 
 export function isMathInteractionEvent(value: unknown): value is MathInteractionEvent {
@@ -186,6 +236,43 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
         Number.isSafeInteger(event.numerator) &&
         (event.numerator as number) >= 0 &&
         (event.numerator as number) <= (event.denominator as number);
+    case "FRACTION_COMPARED": {
+      if (!isBoundedFractionParts(event.left) || !isBoundedFractionParts(event.right)) return false;
+      const a = event.left.numerator * event.right.denominator;
+      const b = event.right.numerator * event.left.denominator;
+      return event.relation === (a < b ? "LESS_THAN" : a > b ? "GREATER_THAN" : "EQUAL_TO");
+    }
+    case "FRACTION_EQUIVALENCE_EXPLORED": {
+      if (!isBoundedFractionParts(event.original) || !isBoundedFractionParts(event.scaled)) return false;
+      const k = event.scale_factor;
+      if (!Number.isSafeInteger(k) || (k as number) < 2) return false;
+      // Fabricated equivalences fail: scaled parts must equal original * k exactly.
+      return event.scaled.numerator === event.original.numerator * (k as number) &&
+        event.scaled.denominator === event.original.denominator * (k as number);
+    }
+    case "FRACTION_SIMPLIFIED": {
+      if (!isBoundedFractionParts(event.original) || !isBoundedFractionParts(event.reduced)) return false;
+      const o = event.original;
+      const r = event.reduced;
+      if (o.numerator === r.numerator && o.denominator === r.denominator) return false;
+      // Fabricated simplifications fail: values must be exactly equal and the
+      // result must be genuine lowest terms.
+      if (o.numerator * r.denominator !== r.numerator * o.denominator) return false;
+      return gcdOf(r.numerator, r.denominator) === 1;
+    }
+    case "FRACTION_ADDITION_EXPLORED": {
+      if (!isBoundedFractionParts(event.first) || !isBoundedFractionParts(event.second)) return false;
+      const f = event.first;
+      const s = event.second;
+      const cd = event.common_denominator;
+      if (!Number.isSafeInteger(cd) || (cd as number) < 1 || (cd as number) > 24) return false;
+      // Fabricated sums fail: common_denominator must be the exact LCM and the
+      // sum must recompute exactly from the scaled operands.
+      if (cd !== (f.denominator / gcdOf(f.denominator, s.denominator)) * s.denominator) return false;
+      if (event.sum_denominator !== cd) return false;
+      const expected = f.numerator * ((cd as number) / f.denominator) + s.numerator * ((cd as number) / s.denominator);
+      return event.sum_numerator === expected;
+    }
     case "DISTRIBUTIVE_STEP_VIEWED":
       return typeof event.step_id === "string" &&
         ["identify", "distribute_variable", "distribute_constant", "simplify"].includes(event.step_id);
