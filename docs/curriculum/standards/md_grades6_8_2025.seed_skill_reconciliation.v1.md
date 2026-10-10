@@ -79,6 +79,16 @@ Architecture Issue #282 decision [6093222041](https://github.com/AyalewGM/ai-tut
 
 This narrows the authoring handoff but does not create canonical IDs, approve definitions or accept standards mappings.
 
+## Independent review and refined identity consequences
+
+At PR #326 head `c5afa4517effca24411cefa11c8cb1d0c2150b60`, Independent Mathematical Review approved five draft scopes and requested changes to three. Architecture then recorded the identity consequences in Issue #282 comment 6094147290. These are governance inputs, not accepted Maryland mappings.
+
+- Circle circumference, circle area, and triangle interior/exterior-angle reasoning have mathematically approved DRAFT scope cards. They remain unactivated and unmapped.
+- The broad `MATH.GEO.ANGLE.RELATIONSHIPS` proposal is not a canonical atom. Current **8.GR.A.1** must ultimately map to independently reviewed complementary, supplementary, vertical-angle, and supplied-total adjacent-angle components, or to a fail-closed reporting-only `ALL_OF` of those accepted atoms.
+- `MATH.PROB.COMPOUND.SAMPLE_SPACE` has mathematical-scope approval as a DRAFT candidate relevant to **8.DS.C.6**. This does not accept the standards relation or establish assessment readiness.
+- Likelihood-scale and experimental-frequency cards require correction and re-review. Expected count `n×p` is a distinct competency and cannot be credited from successes/trials evidence.
+- The official Grade 8 crosswalk independently establishes **8.DS.C.5**. Its appearance as a gap candidate does not mean `M8.SP.STAT` maps to it; that local row expressly does not establish two-way-table evidence.
+
 ## Owner handoff
 
 1. **Architecture (#282):** decide cross-grade identity/granularity for `M7.G.GEO`, `M7.SP.PROB`, `M8.G.TRANS`, and `M8.G.SIM`; preserve historical identifiers and prohibit double credit.
