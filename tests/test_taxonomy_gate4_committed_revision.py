@@ -10,9 +10,6 @@ from decimal import Decimal
 from uuid import uuid4
 
 import pytest
-from sqlalchemy import MetaData, Table, create_engine, delete, inspect, select
-from sqlalchemy.orm import Session
-
 from app.canonical_skill_taxonomy import (
     CanonicalSkillDefinition,
     CanonicalTaxonomy,
@@ -23,10 +20,11 @@ from app.canonical_taxonomy_reconciliation import (
     PersistedSkillIdentity,
     validate_identity_revision,
 )
-from app.curriculum_models import CanonicalSkill
+from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
 from app.diagnostic_models import DiagnosticAttempt, DiagnosticSession
 from app.models import (
     Attempt,
+    Curriculum,
     MasteryEvent,
     Problem,
     Skill,
@@ -35,7 +33,8 @@ from app.models import (
     TutorSession,
 )
 from scripts.validate_canonical_alias_map import validate_manifest
-
+from sqlalchemy import MetaData, Table, create_engine, delete, inspect, select
+from sqlalchemy.orm import Session
 
 ALL_OF_PROFILE_CODES = {
     "MATH.ARITHMETIC.ADD_SUB_WITHIN_20",
@@ -130,8 +129,8 @@ def test_committed_taxonomy_revision_preserves_evidence_variants_and_credit():
     engine = create_engine(url)
 
     suffix = uuid4().hex.upper()
-    historical_code = f"MATH.TEST.GATE4.HISTORICAL.{suffix}"
-    reviewed_code = f"MATH.TEST.GATE4.REVIEWED.{suffix}"
+    historical_code = f"MATH.NS.GATE4.HISTORICAL.{suffix}"
+    reviewed_code = f"MATH.ARITHMETIC.GATE4.BOUNDED.{suffix}"
     draft_code = f"MATH.TEST.GATE4.DRAFT.{suffix}"
     historical_id = uuid4()
     reviewed_id = uuid4()
@@ -141,13 +140,11 @@ def test_committed_taxonomy_revision_preserves_evidence_variants_and_credit():
     fixture_ids = {}
 
     try:
-        # Create deterministic evidence against an existing broad MATH.NS.* skill,
-        # plus a persisted variant identifier associated to the historical identity.
+        # Create a curriculum-local skill mapped to a broad canonical MATH.NS.*
+        # identity, then persist evidence and a variant association against it.
         with Session(engine) as session:
-            broad_skill = session.scalar(
-                select(Skill).where(Skill.code.like("MATH.NS.%")).limit(1)
-            )
-            assert broad_skill is not None, "CI seed must include a broad MATH.NS.* skill"
+            curriculum = session.scalar(select(Curriculum).limit(1))
+            assert curriculum is not None, "CI must seed a local curriculum"
 
             historical = CanonicalSkill(
                 id=historical_id,
@@ -155,11 +152,26 @@ def test_committed_taxonomy_revision_preserves_evidence_variants_and_credit():
                 name="Gate-4 historical identity",
                 description="Synthetic historical identity for isolated regression",
             )
+            local_skill = Skill(
+                curriculum_id=curriculum.id,
+                code=f"GATE4.LOCAL.{suffix}",
+                name="Gate-4 local broad-skill evidence fixture",
+                description="Synthetic isolated regression fixture",
+                difficulty_level=1,
+            )
             student = Student(first_name="Gate4 synthetic", grade_level="1")
-            session.add_all([historical, student])
+            session.add_all([historical, local_skill, student])
+            session.flush()
+            mapping = CurriculumSkillMapping(
+                canonical_skill_id=historical.id,
+                skill_id=local_skill.id,
+                mapping_type="EQUIVALENT",
+                provenance_json={"fixture": "gate4-isolated"},
+            )
+            session.add(mapping)
             session.flush()
             problem = Problem(
-                primary_skill_id=broad_skill.id,
+                primary_skill_id=local_skill.id,
                 problem_type="GATE4_TEST",
                 difficulty=1,
                 prompt="1+1?",
@@ -174,12 +186,12 @@ def test_committed_taxonomy_revision_preserves_evidence_variants_and_credit():
             session.flush()
             tutor = TutorSession(
                 student_id=student.id,
-                primary_skill_id=broad_skill.id,
+                primary_skill_id=local_skill.id,
             )
             diagnostic = DiagnosticSession(
                 student_id=student.id,
-                target_skill_id=broad_skill.id,
-                current_skill_id=broad_skill.id,
+                target_skill_id=local_skill.id,
+                current_skill_id=local_skill.id,
             )
             session.add_all([tutor, diagnostic])
             session.flush()
@@ -192,7 +204,7 @@ def test_committed_taxonomy_revision_preserves_evidence_variants_and_credit():
             )
             diagnostic_attempt = DiagnosticAttempt(
                 diagnostic_session_id=diagnostic.id,
-                skill_id=broad_skill.id,
+                skill_id=local_skill.id,
                 problem_id=problem.id,
                 student_answer="2",
                 is_correct=True,
@@ -202,7 +214,7 @@ def test_committed_taxonomy_revision_preserves_evidence_variants_and_credit():
             session.flush()
             mastery = MasteryEvent(
                 student_id=student.id,
-                skill_id=broad_skill.id,
+                skill_id=local_skill.id,
                 attempt_id=attempt.id,
                 previous_score=Decimal("0.100"),
                 new_score=Decimal("0.200"),
@@ -224,8 +236,10 @@ def test_committed_taxonomy_revision_preserves_evidence_variants_and_credit():
                 TutorSession: tutor.id,
                 Problem: problem.id,
                 Student: student.id,
+                CurriculumSkillMapping: mapping.id,
+                Skill: local_skill.id,
             }
-            broad_skill_id = broad_skill.id
+            local_skill_id = local_skill.id
             session.commit()
             fixture_ready = True
 
@@ -236,6 +250,7 @@ def test_committed_taxonomy_revision_preserves_evidence_variants_and_credit():
         variant_table_names = {name for name in names if "variant" in name.lower()}
         snapshot_names = evidence_names | variant_table_names | {
             "canonical_skills",
+            "curriculum_skill_mappings",
             "problems",
             "student_skills",
         }
@@ -280,6 +295,10 @@ def test_committed_taxonomy_revision_preserves_evidence_variants_and_credit():
         assert after["diagnostic_attempts"] == before["diagnostic_attempts"]
         assert after["mastery_events"] == before["mastery_events"]
         assert after["student_skills"] == before["student_skills"]
+        assert (
+            after["curriculum_skill_mappings"]
+            == before["curriculum_skill_mappings"]
+        )
         for name in variant_table_names:
             assert after[name] == before[name]
 
@@ -296,15 +315,28 @@ def test_committed_taxonomy_revision_preserves_evidence_variants_and_credit():
                 "canonical_skill_code": historical_code,
             }
 
-            # A bounded child identity cannot inherit broad MATH.NS.* evidence.
+            # A bounded child identity cannot inherit the local evidence mapped
+            # to the historical broad MATH.NS.* canonical identity.
+            persisted_mapping = session.get(
+                CurriculumSkillMapping,
+                fixture_ids[CurriculumSkillMapping],
+            )
+            assert persisted_mapping.canonical_skill_id == historical_id
+            assert persisted_mapping.skill_id == local_skill_id
             assert session.scalar(
-                select(MasteryEvent.id).where(MasteryEvent.skill_id == reviewed_id)
+                select(CurriculumSkillMapping.id).where(
+                    CurriculumSkillMapping.canonical_skill_id == reviewed_id
+                )
             ) is None
             assert session.scalar(
-                select(StudentSkill.student_id).where(StudentSkill.skill_id == reviewed_id)
+                select(StudentSkill.student_id).where(
+                    StudentSkill.skill_id == local_skill_id
+                )
             ) is None
             assert session.scalar(
-                select(MasteryEvent.id).where(MasteryEvent.skill_id == broad_skill_id)
+                select(MasteryEvent.id).where(
+                    MasteryEvent.skill_id == local_skill_id
+                )
             ) == fixture_ids[MasteryEvent]
 
             # ALL_OF profiles are reporting-only: no canonical UUID, mastery,
