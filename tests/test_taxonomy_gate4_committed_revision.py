@@ -4,6 +4,7 @@ Requires TEST_DATABASE_URL and MIHUR_GATE4_ISOLATED_DB=1. Seed at least one
 Attempt, DiagnosticAttempt and MasteryEvent before running. No production use.
 """
 import os
+from decimal import Decimal
 from uuid import uuid4
 
 import pytest
@@ -20,6 +21,8 @@ from app.canonical_taxonomy_reconciliation import (
     validate_identity_revision,
 )
 from app.curriculum_models import CanonicalSkill
+from app.diagnostic_models import DiagnosticAttempt, DiagnosticSession
+from app.models import Attempt, MasteryEvent, Problem, Skill, Student, TutorSession
 
 
 def test_committed_taxonomy_revision_preserves_all_three_evidence_models():
@@ -33,7 +36,61 @@ def test_committed_taxonomy_revision_preserves_all_three_evidence_models():
     code = f"MATH.TEST.GATE4.{uuid4().hex.upper()}"
     new_id = uuid4()
     committed = False
+    fixture_ready = False
+    fixture_ids = {}
     try:
+
+        # Create representative persisted evidence in the isolated migrated DB.
+        with Session(engine) as session:
+            skill = session.scalar(select(Skill).limit(1))
+            assert skill is not None, "CI must seed at least one local skill"
+            student = Student(first_name="Gate4 synthetic", grade_level="1")
+            session.add(student)
+            session.flush()
+            problem = Problem(
+                primary_skill_id=skill.id, problem_type="GATE4_TEST",
+                difficulty=1, prompt="1+1?", canonical_answer="2",
+            )
+            session.add(problem)
+            session.flush()
+            tutor = TutorSession(student_id=student.id, primary_skill_id=skill.id)
+            diagnostic = DiagnosticSession(
+                student_id=student.id, target_skill_id=skill.id,
+                current_skill_id=skill.id,
+            )
+            session.add_all([tutor, diagnostic])
+            session.flush()
+            attempt = Attempt(
+                session_id=tutor.id, student_id=student.id,
+                problem_id=problem.id, student_answer="2", is_correct=True,
+            )
+            diagnostic_attempt = DiagnosticAttempt(
+                diagnostic_session_id=diagnostic.id, skill_id=skill.id,
+                problem_id=problem.id, student_answer="2",
+                is_correct=True, sequence_number=1,
+            )
+            session.add_all([attempt, diagnostic_attempt])
+            session.flush()
+            mastery = MasteryEvent(
+                student_id=student.id, skill_id=skill.id, attempt_id=attempt.id,
+                previous_score=Decimal("0.100"), new_score=Decimal("0.200"),
+                previous_confidence=Decimal("0.100"),
+                new_confidence=Decimal("0.200"), reason="gate4-synthetic",
+            )
+            session.add(mastery)
+            session.flush()
+            fixture_ids = {
+                MasteryEvent: mastery.id,
+                DiagnosticAttempt: diagnostic_attempt.id,
+                Attempt: attempt.id,
+                DiagnosticSession: diagnostic.id,
+                TutorSession: tutor.id,
+                Problem: problem.id,
+                Student: student.id,
+            }
+            session.commit()
+            fixture_ready = True
+
         with engine.connect() as connection:
             inspector = inspect(connection)
             names = set(inspector.get_table_names())
@@ -49,7 +106,15 @@ def test_committed_taxonomy_revision_preserves_all_three_evidence_models():
                 name: [dict(row) for row in connection.execute(select(table)).mappings()]
                 for name, table in evidence_tables.items()
             }
-            assert all(before.values()), "Seed one or more records in each evidence table"
+            assert all(before.values()), "All three evidence tables must be populated"
+            variant_tables = {
+                name: Table(name, metadata, autoload_with=connection)
+                for name in names if "variant" in name.lower()
+            }
+            variants_before = {
+                name: [dict(row) for row in connection.execute(select(table)).mappings()]
+                for name, table in variant_tables.items()
+            }
 
         with Session(engine) as session:
             original = {
@@ -85,6 +150,11 @@ def test_committed_taxonomy_revision_preserves_all_three_evidence_models():
                 for name, table in evidence_tables.items()
             }
             assert after == before, "Committed taxonomy revision mutated learner evidence"
+            assert {
+                name: [dict(row) for row in connection.execute(select(table)).mappings()]
+                for name, table in variant_tables.items()
+            } == variants_before, "Historical variant references changed"
+            assert len(after["mastery_events"]) == len(before["mastery_events"])
         with Session(engine) as session:
             current = {
                 row.code: PersistedSkillIdentity(row.code, row.id)
@@ -101,4 +171,8 @@ def test_committed_taxonomy_revision_preserves_all_three_evidence_models():
                         CanonicalSkill.code == code,
                     )
                 )
+        if fixture_ready:
+            with engine.begin() as connection:
+                for model, row_id in fixture_ids.items():
+                    connection.execute(delete(model).where(model.id == row_id))
         engine.dispose()
