@@ -39,7 +39,9 @@
     "aliases_unmapped": 38,
     "aliases_proposed": 4,
     "grades6_8_authoritative_expectation_inventory_in_this_register": false,
-    "accepted_coverage_claims": 0
+    "accepted_coverage_claims": 0,
+    "grade1_aliases_independently_accepted": 0,
+    "grade1_alias_gate": "GATE_5_OPEN"
   },
   "readiness_contract": {
     "source_inventory": "DRAFT_SOURCE_LINKED",
@@ -1423,5 +1425,121 @@
     "auto_promote_mastery": false,
     "change_canonical_registry": false,
     "mutate_student_records": false
+  },
+  "grade1_alias_gate": {
+    "status": "GATE_5_OPEN_ZERO_OF_SEVEN_ALIASES_ACCEPTED",
+    "snapshot_note": "This review-state layer does not rewrite the 42-row alias-map snapshot above. It records later independent mathematical and Architecture evidence; every relation remains provisional and inactive.",
+    "independent_review": {
+      "ref": "Issue #293 comment 6097860935",
+      "pinned_pr_308_head": "e20cc4ef565ea6e8b2fe319c136f80b3eb0e89f8",
+      "result": "0_OF_7_ACCEPTED"
+    },
+    "architecture": {
+      "decomposition_ref": "Issue #282 comment 6103218496",
+      "gate_ref": "Issue #282 comment 6103246330",
+      "gate": "GATE_5_OPEN_NOT_PASSED"
+    },
+    "aliases": [
+      {
+        "alias": "MATH.ELEMENTARY.NUMBER_SENSE.COUNT_COMPARE_TO_120",
+        "review_disposition": "NEEDS_SPLIT",
+        "architecture_disposition": "REPORTING_ONLY_ALL_OF_FOUR_ATOMS",
+        "component_scope_status": "TWO_EXISTING_DRAFT_TWO_NEW_DRAFT_REQUIRED",
+        "candidate_components": [
+          "MATH.NUMBER_SENSE.COUNT_FORWARD_BY_ONE_TO_120",
+          "MATH.NUMBER_SENSE.COMPARE_WHOLE_NUMBERS_TO_120",
+          "MATH.NUMBER_SENSE.REPRESENT_NUMERALS_TO_120",
+          "MATH.NUMBER_SENSE.ORDER_WHOLE_NUMBERS_TO_120"
+        ],
+        "mapping_status": "PROVISIONAL_NOT_ACCEPTED"
+      },
+      {
+        "alias": "MATH.ELEMENTARY.PLACE_VALUE.TENS_ONES",
+        "review_disposition": "REJECTED_CURRENT_TARGET_SET",
+        "architecture_disposition": "EXACT_BOUNDED_IDENTITY_ONLY_AFTER_REVIEWED_AUTHORITY",
+        "candidate_components": [
+          "MATH.PLACE_VALUE.TENS_ONES"
+        ],
+        "excluded_evidence": [
+          "HUNDREDS_TASKS",
+          "BROAD_PLACE_VALUE",
+          "BROAD_COMPOSE_DECOMPOSE"
+        ],
+        "mapping_status": "PROVISIONAL_NOT_ACCEPTED"
+      },
+      {
+        "alias": "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_20",
+        "review_disposition": "NEEDS_SPLIT",
+        "architecture_disposition": "REPORTING_ONLY_ALL_OF_SEPARATE_ADDITION_AND_SUBTRACTION",
+        "candidate_components": [
+          "MATH.ARITHMETIC.ADD_WITHIN_20",
+          "MATH.ARITHMETIC.SUBTRACT_WITHIN_20"
+        ],
+        "mapping_status": "PROVISIONAL_NOT_ACCEPTED"
+      },
+      {
+        "alias": "MATH.ELEMENTARY.ARITHMETIC.WORD_PROBLEM_WITHIN_20",
+        "review_disposition": "REJECTED_CURRENT_TARGET_SET",
+        "architecture_disposition": "EXACT_BOUNDED_MODELING_IDENTITY_ONLY_AFTER_COMPLETE_STRUCTURE_UNKNOWN_ROLE_REVIEW",
+        "candidate_components": [
+          "MATH.ARITHMETIC.WORD_PROBLEM_WITHIN_20"
+        ],
+        "excluded_evidence": [
+          "RAW_ADDITION_MASTERY",
+          "RAW_SUBTRACTION_MASTERY"
+        ],
+        "mapping_status": "PROVISIONAL_NOT_ACCEPTED"
+      },
+      {
+        "alias": "MATH.ELEMENTARY.ARITHMETIC.EQUATION_BALANCE",
+        "review_disposition": "UNMAPPED",
+        "architecture_disposition": "REPORTING_ONLY_ALL_OF_THREE_ATOMS",
+        "component_scope_status": "NEW_DRAFTS_REQUIRED",
+        "candidate_components": [
+          "MATH.EARLY_ALGEBRA.EQUALITY_RELATION",
+          "MATH.EARLY_ALGEBRA.ADDITION_EQUATION_UNKNOWN_WITHIN_20",
+          "MATH.EARLY_ALGEBRA.SUBTRACTION_EQUATION_UNKNOWN_WITHIN_20"
+        ],
+        "mapping_status": "PROVISIONAL_NOT_ACCEPTED"
+      },
+      {
+        "alias": "MATH.ELEMENTARY.GEOMETRY.IDENTIFY_COMPOSE_SHAPES",
+        "review_disposition": "UNMAPPED",
+        "architecture_disposition": "REPORTING_ONLY_ALL_OF_THREE_ATOMS",
+        "component_scope_status": "NEW_DRAFTS_REQUIRED_WITH_2D_3D_REVIEW",
+        "candidate_components": [
+          "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES",
+          "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES",
+          "MATH.GEOMETRY.SHAPE.COMPOSE"
+        ],
+        "mapping_status": "PROVISIONAL_NOT_ACCEPTED"
+      },
+      {
+        "alias": "MATH.ELEMENTARY.MEASUREMENT.TELL_TIME_HOUR_HALF_HOUR",
+        "review_disposition": "UNMAPPED",
+        "architecture_disposition": "REPORTING_ONLY_ALL_OF_READ_AND_REPRESENT",
+        "component_scope_status": "NEW_DRAFTS_REQUIRED",
+        "candidate_components": [
+          "MATH.MEASUREMENT.TIME.READ_HOUR_HALF_HOUR",
+          "MATH.MEASUREMENT.TIME.REPRESENT_HOUR_HALF_HOUR"
+        ],
+        "mapping_status": "PROVISIONAL_NOT_ACCEPTED"
+      }
+    ],
+    "evidence_dimensions": {
+      "standards_mapped": "PROVISIONAL_NOT_ACCEPTED",
+      "mathematically_reviewed_skill_exists": "MIXED_EXISTING_DRAFT_AND_NEW_DRAFT_REQUIRED",
+      "generator_available": "NOT_AUDITED_BY_THIS_DECISION",
+      "validated_practice": "NOT_AUDITED",
+      "assessment_ready": "NOT_AUDITED",
+      "verified_mastery_evidence": "NOT_INFERRED"
+    },
+    "preservation": {
+      "rewrite_historical_uuid": false,
+      "rewrite_student_mastery": false,
+      "copy_evidence_between_atoms": false,
+      "reporting_profiles_create_credit": false,
+      "activate_drafts": false
+    }
   }
 }
