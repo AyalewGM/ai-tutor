@@ -1,0 +1,175 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "MG-G7-RATIONAL-SCALE-INVERSE",
+  "revision": "middle-grades-rational-scale-v1-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "conceptual_invariants": [
+    "The product sign records whether direction is preserved or reversed.",
+    "Product magnitude is the product of magnitudes.",
+    "a divided by nonzero b is the unique scale q for which q times b equals a."
+  ],
+  "learning_sequence": [
+    {
+      "phase": "OBSERVE",
+      "representations": [
+        "CONCRETE",
+        "VISUAL"
+      ],
+      "prompt": "Compare oriented fraction-strip transformations with scale factors 1/2 and -1/2. Record what changes about arrow length and direction without calculating a rule."
+    },
+    {
+      "phase": "PREDICT",
+      "representations": [
+        "VISUAL"
+      ],
+      "prompt": "For each signed scale card, predict the output direction and whether its magnitude grows or shrinks before placing the exact endpoint."
+    },
+    {
+      "phase": "MANIPULATE",
+      "representations": [
+        "CONCRETE",
+        "VISUAL"
+      ],
+      "prompt": "Apply a scale to an oriented strip: resize by the factor magnitude and reflect exactly once for each negative factor. Narrate direction and magnitude separately."
+    },
+    {
+      "phase": "EXPLAIN",
+      "representations": [
+        "VISUAL",
+        "SYMBOLIC"
+      ],
+      "prompt": "Explain why (-3/4)(-2/3)=1/2 using two direction reversals and magnitude 3/4 times 2/3. Verify by exact fraction multiplication."
+    },
+    {
+      "phase": "PRACTICE",
+      "representations": [
+        "VISUAL",
+        "SYMBOLIC"
+      ],
+      "prompt": "Solve distinct tasks: a positive shrink of a negative quantity, a double-negative scale, and a missing-scale division equation. State sign reasoning before computing magnitude."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "representations": [
+        "VISUAL",
+        "SYMBOLIC"
+      ],
+      "prompt": "Analyze a peer's claim that any product containing a negative is negative. Use the number of direction reversals to locate the exact reasoning error and select the matching repair."
+    },
+    {
+      "phase": "TRANSFER",
+      "representations": [
+        "SYMBOLIC"
+      ],
+      "prompt": "A coordinate transformation follows y=(-3/2)x. For x=-4/5, determine y and explain how direction and magnitude predict the sign before calculation."
+    },
+    {
+      "phase": "VERIFY",
+      "representations": [
+        "SYMBOLIC"
+      ],
+      "prompt": "Server-controlled unseen variants sample multiplication and division-as-missing-scale without diagrams, hints, worked steps, answer reveal, or guided-practice mastery credit."
+    }
+  ],
+  "misconception_pathways": [
+    {
+      "id": "ONE_NEGATIVE_MEANS_ALWAYS_NEGATIVE",
+      "observed_reasoning": "The learner ignores that two negative factors create two direction reversals.",
+      "diagnostic_probe": "Start with a right-pointing arrow. What direction remains after reflecting it twice?",
+      "socratic_prompts": [
+        "How many direction reversals occur?",
+        "What happens after the first reflection?",
+        "What happens after the second reflection?"
+      ],
+      "repair": "Separate sign as direction reversal from magnitude multiplication, then recheck a different double-negative product."
+    },
+    {
+      "id": "NEGATIVE_MEANS_SMALLER_MAGNITUDE",
+      "observed_reasoning": "The learner treats the negative sign as a command to reduce magnitude.",
+      "diagnostic_probe": "Which has greater magnitude: -6/5 or 3/5, and which lies farther from zero?",
+      "socratic_prompts": [
+        "Ignore direction temporarily; compare distances from zero.",
+        "Does reflection change arrow length?",
+        "Restore direction after comparing magnitudes."
+      ],
+      "repair": "Track magnitude with strip length and sign with orientation in separate fields."
+    },
+    {
+      "id": "DIVIDE_STRAIGHT_ACROSS",
+      "observed_reasoning": "The learner divides numerators and denominators componentwise even when the quotients are not integers.",
+      "diagnostic_probe": "What number q makes q times 3/4 equal -3/2?",
+      "socratic_prompts": [
+        "Rewrite division as a missing-factor equation.",
+        "Which multiplication undoes multiplying by 3/4?",
+        "Check the proposed quotient by multiplication."
+      ],
+      "repair": "Use the reciprocal as an inverse transformation and require a multiplication check."
+    },
+    {
+      "id": "RECIPROCAL_WRONG_OPERAND",
+      "observed_reasoning": "The learner inverts the dividend instead of the divisor.",
+      "diagnostic_probe": "In a divided by b, which factor must multiply b to return a?",
+      "socratic_prompts": [
+        "Name the divisor.",
+        "What operation undoes multiplication by that divisor?",
+        "Multiply your quotient by the original divisor."
+      ],
+      "repair": "Label dividend, divisor and quotient before applying the reciprocal, then perform the inverse check."
+    }
+  ],
+  "guided_examples": [
+    {
+      "id": "guided-positive-shrink",
+      "expression": "(-4/3)(1/2)",
+      "answer_teacher_only": "-2/3"
+    },
+    {
+      "id": "guided-double-negative",
+      "expression": "(-3/4)(-2/3)",
+      "answer_teacher_only": "1/2"
+    },
+    {
+      "id": "guided-missing-scale",
+      "expression": "q(3/4)=-3/2",
+      "answer_teacher_only": "-2"
+    }
+  ],
+  "transfer_oracle_teacher_only": {
+    "equation": "y=(-3/2)(-4/5)",
+    "answer": "6/5"
+  },
+  "independent_assessment_contract": {
+    "variant_namespace": "middle-grades-rational-scale-v1:independent",
+    "server_controlled_required": true,
+    "hints_allowed": false,
+    "worked_steps_visible_before_submission": false,
+    "answer_in_client_payload": false,
+    "feedback_after_submission": true,
+    "guided_practice_credit": false,
+    "historical_mastery_mutation": false,
+    "reserved_seeds": [
+      701,
+      702,
+      703
+    ],
+    "status": "CONTENT_CONTRACT_ONLY_BACKEND_NOT_IMPLEMENTED"
+  },
+  "accessibility_contract": {
+    "keyboard_only": "Select factor, reflect, scale and submit without drag gestures.",
+    "screen_reader_state": "Announce input sign, input magnitude, scale sign, scale magnitude, reflection count and exact output.",
+    "nonvisual_equivalent": "A structured table exposes direction and magnitude independently from the visual arrow.",
+    "focus_recovery": "After a rejected action, focus returns to that action with a concise reason and preserved work.",
+    "reduced_motion": "Replace animation with discrete before/after states.",
+    "color_independence": true,
+    "independent_scaffolds": false
+  },
+  "review_status": {
+    "mathematics": "PENDING",
+    "standards": "PENDING",
+    "pedagogy": "PENDING",
+    "muse_qa": "PENDING",
+    "release": "NOT_APPROVED"
+  }
+}

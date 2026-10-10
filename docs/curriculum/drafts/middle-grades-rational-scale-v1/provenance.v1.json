@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "MG-G7-RATIONAL-SCALE-INVERSE",
+  "revision": "middle-grades-rational-scale-v1-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "learner_data_writes": false,
+  "reviewed_at_utc": "2026-10-10",
+  "source_heads": {
+    "main": "13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
+    "standards_pr_325": "9343c2a25baaaacb5b127d1d6c9c4537a5671224",
+    "learning_packages_pr_327": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
+    "learning_packages_pr_328": "64f673bfcfd75dfd104e88549681ff29f583b548"
+  },
+  "reuse_first_audit": {
+    "existing_work": [
+      "app/domains/advanced_number.py:MATH.RAT.MUL",
+      "app/domains/advanced_number.py:MATH.RAT.DIV",
+      "app/domains/advanced_number.py:MATH.RAT.NUMBER_LINE",
+      "tests/test_canonical_depth_wave2.py",
+      "frontend/src/mve/linearExplorer.ts exact rational helper",
+      "PR #315 ratio pilot",
+      "PR #328 ratio/double-number-line, signed-integer, and data/spatial packages"
+    ],
+    "actual_gap": "No complete reviewed package connects signed rational multiplication to direction-and-scale transformations, division to a missing scale factor, misconception-specific diagnosis, and structurally different unseen transfer.",
+    "planned_improvement": "A draft-only eight-phase package using oriented fraction strips, reflection/scale transformations, inverse equations, targeted repairs, and reserved independent variant namespaces.",
+    "verification": "Local deterministic exact-Fraction tests plus independent standards, mathematics, pedagogy, backend, and Muse reviews before integration."
+  },
+  "standards": {
+    "jurisdiction": "Maryland",
+    "publisher": "Maryland State Department of Education",
+    "publication": "Maryland Comprehensive Curricular Framework for Mathematics",
+    "publication_version": "Adopted 2025-07-29 for 2026-2027 implementation",
+    "official_landing_url": "https://msde.maryland.gov/academics-0/curriculum-academic-standards/mathematics",
+    "official_grade_7_crosswalk_url": "https://msde.maryland.gov/media/17818",
+    "official_grade_7_companion_url": "https://msde.maryland.gov/media/17819",
+    "candidate_expectation_ids": [
+      "7.NOS.A.2",
+      "7.NOS.A.3"
+    ],
+    "candidate_selection_basis": "Provisional subset of PR #325 composite M7.NS.RAT trace; exact package-to-expectation fit requires independent Standards Mapping review.",
+    "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+    "mapping_approval": "NONE"
+  },
+  "canonical": {
+    "existing_family": "MATH.NS.RATIONAL.OPERATIONS",
+    "reused_generators": [
+      "MATH.RAT.MUL",
+      "MATH.RAT.DIV"
+    ],
+    "canonical_identity_change": false,
+    "canonical_approval": "UNKNOWN_NOT_INDEPENDENTLY_REVIEWED_FOR_THIS_PACKAGE"
+  },
+  "mve": {
+    "reused_helper": "frontend/src/mve/linearExplorer.ts",
+    "reuse_scope": "Exact bounded-rational normalization only; no existing learner experience is claimed.",
+    "experience_implementation": "NOT_IMPLEMENTED",
+    "accessibility_verdict": "PENDING_MUSE"
+  },
+  "pedagogical_evidence": {
+    "references": [
+      "https://github.com/AyalewGM/ai-tutor/pull/328#issuecomment-6102771431",
+      "https://github.com/AyalewGM/ai-tutor/issues/278#issuecomment-6102774171",
+      "docs/curriculum/drafts/learning-packages-wave2/SEEDABLE_VARIANTS_REVIEW.md"
+    ],
+    "rationale": "Independent review requires authentic phase progression, diagnosis tied to observed reasoning, domain-specific accessibility, and genuinely unseen verification; references are evidence constraints, not copied instructional material.",
+    "status": "NEW_PACKAGE_AWAITING_INDEPENDENT_REVIEW"
+  },
+  "coverage": {
+    "mihur_phases": [
+      "OBSERVE",
+      "PREDICT",
+      "MANIPULATE",
+      "EXPLAIN",
+      "PRACTICE",
+      "DIAGNOSE",
+      "TRANSFER",
+      "VERIFY"
+    ],
+    "representation_progression": [
+      "CONCRETE",
+      "VISUAL",
+      "SYMBOLIC"
+    ],
+    "misconception_pathways": "DRAFT_CONTRACT",
+    "scope_boundary": {
+      "included": [
+        "signed rational multiplication as direction and scale",
+        "signed rational division as a missing scale factor",
+        "inverse verification"
+      ],
+      "excluded": [
+        "signed-integer addition or subtraction",
+        "ratio or double-number-line instruction",
+        "statistics or geometry packages",
+        "production assessment API or scoring changes"
+      ]
+    }
+  },
+  "practice_and_assessment": {
+    "seeded_practice": "DRAFT_GENERATOR_LOCAL_ONLY",
+    "independent_exact_oracle": "LOCAL_TESTED_NOT_INDEPENDENTLY_VERIFIED",
+    "unseen_assessment": "RESERVED_NAMESPACE_DRAFT_CONTRACT",
+    "server_trusted_scoring": "REQUIRED_NOT_IMPLEMENTED",
+    "hints_in_independent_mode": false,
+    "guided_practice_credit": false,
+    "historical_mastery_affected": false
+  },
+  "approvals": {
+    "standards": "PENDING",
+    "mathematics": "PENDING",
+    "pedagogy": "PENDING",
+    "muse_accessibility_and_assessment": "PENDING",
+    "engineering_integration": "NOT_REQUESTED",
+    "release": "NOT_APPROVED"
+  }
+}
