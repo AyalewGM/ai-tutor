@@ -7,7 +7,7 @@ import os
 from uuid import uuid4
 
 import pytest
-from sqlalchemy import MetaData, Table, create_engine, delete, inspect, insert, select
+from sqlalchemy import MetaData, Table, create_engine, delete, inspect, select
 from sqlalchemy.orm import Session
 
 from app.canonical_skill_taxonomy import (
@@ -85,9 +85,10 @@ def test_committed_taxonomy_revision_preserves_all_three_evidence_models():
                 for name, table in evidence_tables.items()
             }
             assert after == before, "Committed taxonomy revision mutated learner evidence"
+        with Session(engine) as session:
             current = {
                 row.code: PersistedSkillIdentity(row.code, row.id)
-                for row in connection.execute(select(CanonicalSkill)).scalars()
+                for row in session.scalars(select(CanonicalSkill))
             }
             assert all(current[k] == v for k, v in original.items())
     finally:
