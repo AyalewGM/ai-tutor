@@ -18,7 +18,7 @@ def _load() -> dict:
 
 def test_scope_bundle_is_draft_and_non_authoritative() -> None:
     data = _load()
-    assert data["revision"] == "2026-10-10-r2"
+    assert data["revision"] == "2026-10-10-r3"
     assert data["review_state"] == (
         "DRAFT_CORRECTIONS_PENDING_LIMITED_INDEPENDENT_MATHEMATICAL_REVIEW"
     )
@@ -102,7 +102,7 @@ def test_decomposition_keeps_distinct_evidence_distinct() -> None:
     ]["exclusions"]
 
 
-def test_r2_closes_reviewed_probability_boundaries() -> None:
+def test_r3_closes_reviewed_scope_boundaries() -> None:
     by_code = {card["code"]: card for card in _load()["cards"]}
 
     likelihood = by_code["MATH.PROB.EVENT.LIKELIHOOD_0_TO_1"]
@@ -122,6 +122,41 @@ def test_r2_closes_reviewed_probability_boundaries() -> None:
         "assessment_criteria"
     ]
     assert "multiplication for expected counts" not in experimental["prerequisites"]
+    assert "independent repeated trials" in experimental["scope"]
+    assert "unchanged conditions" in experimental["scope"]
+    assert "constant event probability" in experimental["scope"]
+    assert any(
+        example.get("evidence") == "changed-condition boundary"
+        for example in experimental["examples"]
+    )
+
+    adjacent = by_code["MATH.GEO.ANGLE.ADJACENT_ADDITION"]
+    assert "whole is supplied and a part is missing" in adjacent["scope"]
+    assert "every constituent part is supplied and the whole is missing" in adjacent[
+        "scope"
+    ]
+    assert any(
+        example.get("evidence") == "missing whole from supplied parts"
+        for example in adjacent["examples"]
+    )
+    assert (
+        "independent missing-whole evidence with all nonoverlapping constituent parts "
+        "supplied"
+        in adjacent["assessment_criteria"]
+    )
+
+    assert "finite discrete probability model" in likelihood["scope"]
+    assert "every elementary outcome has positive probability" in likelihood["scope"]
+    endpoint_evidence = {
+        example.get("evidence")
+        for example in likelihood["examples"]
+    }
+    assert "finite-discrete probability-zero event" in endpoint_evidence
+    assert "finite-discrete probability-one event" in endpoint_evidence
+    assert any(
+        "continuous probability model" in misconception
+        for misconception in likelihood["misconceptions"]
+    )
 
 
 def test_bundle_does_not_claim_runtime_mapping_or_mastery() -> None:
