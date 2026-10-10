@@ -1,0 +1,238 @@
+{
+  "schema_version": "1.0.0",
+  "status": "DRAFT_CONCEPT_GAP_CANDIDATES_REQUIRING_INDEPENDENT_REVIEW",
+  "based_on": "docs/curriculum/standards/md_grades6_8_2025.seed_skill_reconciliation.v1.json",
+  "source_authority": "Maryland State Department of Education 2025 Grades 6–8 crosswalks and companion guides",
+  "source_urls": [
+    "https://msde.maryland.gov/media/17816",
+    "https://msde.maryland.gov/media/17818",
+    "https://msde.maryland.gov/media/17820"
+  ],
+  "classification_note": "These are specific curriculum/content evidence gaps or placement conflicts grounded in source-to-local-seed reconciliation, not proven absence from all Mihur generators/packs. Confirm full repository and independent assessments before classifying as truly missing.",
+  "candidates": [
+    {
+      "id": "MD6_STAT_DISTRIBUTIONS",
+      "local_skill_code": "M6.SP.STAT",
+      "official_expectation_id": "6.DS.A.4",
+      "concept": "Histogram and box plot construction and interpretation",
+      "evidence": "Local scope notes explicitly omit histogram and box-plot evidence",
+      "priority": "HIGH",
+      "gap_type": "CONTENT_EVIDENCE_GAP",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD6_STAT_VARIABILITY",
+      "local_skill_code": "M6.SP.STAT",
+      "official_expectation_id": "6.DS.B.5",
+      "concept": "Interquartile range and distribution-shape/context interpretation",
+      "evidence": "Current seeder's statistics title does not demonstrate variability reasoning",
+      "priority": "HIGH",
+      "gap_type": "CONTENT_EVIDENCE_GAP",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD6_GEOM_NETS",
+      "local_skill_code": "M6.G.GEO",
+      "official_expectation_id": "6.GR.A.4",
+      "concept": "Nets and surface area of prisms/pyramids",
+      "evidence": "Broad local geometry seed does not prove nets or 3D visualization",
+      "priority": "HIGH",
+      "gap_type": "CONTENT_EVIDENCE_GAP",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD6_GEOM_VOLUME",
+      "local_skill_code": "M6.G.GEO",
+      "official_expectation_id": "6.GR.A.2",
+      "concept": "Volume with fractional side lengths",
+      "evidence": "Existing local seed not independently verified for fractional-edge volume",
+      "priority": "MEDIUM",
+      "gap_type": "ASSESSMENT_EVIDENCE_GAP",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD7_INEQUALITIES",
+      "local_skill_code": "M7.EE.EQUATION",
+      "official_expectation_id": "7.AT.C.9",
+      "concept": "Inequality solving, solution graphing and contextual interpretation",
+      "evidence": "Local equation seed spans equation and inequality scope; no target-specific evidence",
+      "priority": "HIGH",
+      "gap_type": "CONTENT_EVIDENCE_GAP",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD7_PERCENT_CONTEXT",
+      "local_skill_code": "M7.RP.PERCENT",
+      "official_expectation_id": "7.AT.A.4",
+      "concept": "Percent change, tax, tips, fees, markdown, commission and percent error",
+      "evidence": "Percent-of seed covers only narrow subcase of broad contextual family",
+      "priority": "HIGH",
+      "gap_type": "CONTENT_DEPTH_GAP",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD7_CROSS_GRADE_ANGLES",
+      "local_skill_code": "M7.G.GEO",
+      "official_expectation_id": "8.GR.A.1",
+      "concept": "Angle relationships belong to current Maryland Grade 8",
+      "evidence": "Existing Grade 7 local skill contains displaced Grade 8 scope",
+      "priority": "HIGH",
+      "gap_type": "PLACEMENT_CONFLICT",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD7_CROSS_GRADE_PROBABILITY",
+      "local_skill_code": "M7.SP.PROB",
+      "official_expectation_id": "8.DS.C.6",
+      "concept": "Compound events and organized sample spaces belong to current Maryland Grade 8",
+      "evidence": "Existing Grade 7 local skill contains displaced Grade 8 scope",
+      "priority": "HIGH",
+      "gap_type": "PLACEMENT_CONFLICT",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD8_TWO_WAY_TABLE",
+      "local_skill_code": "M8.SP.STAT",
+      "official_expectation_id": "8.DS.C.5",
+      "concept": "Two-way tables and categorical association",
+      "evidence": "Grade 8 local statistics seed does not establish this specific target",
+      "priority": "HIGH",
+      "gap_type": "CONTENT_EVIDENCE_GAP",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD8_COMPOUND_PROBABILITY",
+      "local_skill_code": "M8.SP.STAT",
+      "official_expectation_id": "8.DS.C.6",
+      "concept": "Compound events and sample spaces",
+      "evidence": "Current Grade 8 statistics seed lacks verified target evidence; Grade 7 seed has displaced legacy scope",
+      "priority": "HIGH",
+      "gap_type": "CONTENT_EVIDENCE_GAP",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD8_PYTH_PROOF",
+      "local_skill_code": "M8.G.PYTH",
+      "official_expectation_id": "8.GR.B.4",
+      "concept": "Pythagorean theorem reasoning and proof",
+      "evidence": "Formula use alone insufficient to prove conceptual reasoning",
+      "priority": "MEDIUM",
+      "gap_type": "CONTENT_DEPTH_GAP",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD8_FUNCTION_REPRESENTATIONS",
+      "local_skill_code": "M8.F.FN",
+      "official_expectation_id": "8.AT.C.7",
+      "concept": "Compare functions across representations",
+      "evidence": "Generic function seed does not prove target-specific comparison assessments",
+      "priority": "HIGH",
+      "gap_type": "ASSESSMENT_EVIDENCE_GAP",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD8_TRANSFORMATION_PLACEMENT",
+      "local_skill_code": "M8.G.TRANS",
+      "official_expectation_id": null,
+      "concept": "Rigid transformations moved from Grade 8 to Integrated Algebra courses",
+      "evidence": "No current Grade 8 expectation asserted in 2025 reconciliation",
+      "priority": "HIGH",
+      "gap_type": "PLACEMENT_CONFLICT",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    },
+    {
+      "id": "MD8_SIMILARITY_PLACEMENT",
+      "local_skill_code": "M8.G.SIM",
+      "official_expectation_id": null,
+      "concept": "Transformation-based similarity moved from Grade 8 to Integrated Algebra courses",
+      "evidence": "No current Grade 8 expectation asserted in 2025 reconciliation",
+      "priority": "HIGH",
+      "gap_type": "PLACEMENT_CONFLICT",
+      "repo_wide_absence_proven": false,
+      "mathematical_review": "PENDING",
+      "content_production": "NOT_AUTHORIZED_AS_APPROVED",
+      "verification_next": "Audit canonical family, all relevant seed scripts, generators, worked examples, misconception remedies and independent assessments; review current standard expectation scope."
+    }
+  ],
+  "counts": {
+    "candidates": 14,
+    "confirmed_repo_wide_missing": 0,
+    "placement_conflicts": 4
+  },
+  "handoff_batches": [
+    {
+      "id": "BATCH_MD6_DATA_GEOMETRY",
+      "candidate_ids": [
+        "MD6_STAT_DISTRIBUTIONS",
+        "MD6_STAT_VARIABILITY",
+        "MD6_GEOM_NETS",
+        "MD6_GEOM_VOLUME"
+      ]
+    },
+    {
+      "id": "BATCH_MD7_CONTEXTUAL_PREALGEBRA",
+      "candidate_ids": [
+        "MD7_INEQUALITIES",
+        "MD7_PERCENT_CONTEXT",
+        "MD7_CROSS_GRADE_ANGLES",
+        "MD7_CROSS_GRADE_PROBABILITY"
+      ]
+    },
+    {
+      "id": "BATCH_MD8_DATA_FUNCTIONS_GEOMETRY",
+      "candidate_ids": [
+        "MD8_TWO_WAY_TABLE",
+        "MD8_COMPOUND_PROBABILITY",
+        "MD8_PYTH_PROOF",
+        "MD8_FUNCTION_REPRESENTATIONS",
+        "MD8_TRANSFORMATION_PLACEMENT",
+        "MD8_SIMILARITY_PLACEMENT"
+      ]
+    }
+  ],
+  "safety": {
+    "verified_coverage_claim": false,
+    "student_data_changes": false,
+    "canonical_identity_changes": false,
+    "release_activation": false
+  }
+}
