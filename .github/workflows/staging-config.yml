@@ -1,0 +1,24 @@
+name: Staging configuration
+on:
+  pull_request:
+    paths: ['deploy/staging/**', '.github/workflows/staging-config.yml']
+  push:
+    branches: [main]
+    paths: ['deploy/staging/**', '.github/workflows/staging-config.yml']
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exercise fail-closed guards
+        run: python -m unittest discover -s deploy/staging -p 'test_*.py' -v
+      - name: Validate standalone Compose (synthetic placeholders, no deployment)
+        shell: bash
+        run: |
+          export STAGING_DB_PASSWORD=$(printf 'a%.0s' {1..64})
+          for name in API GATEWAY FRONTEND DB REDIS PROXY; do
+            export "STAGING_${name}_IMAGE=example/image@sha256:$(printf 'b%.0s' {1..64})"
+          done
+          docker compose -f deploy/staging/compose.yml config --quiet
