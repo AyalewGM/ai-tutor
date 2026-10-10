@@ -90,6 +90,12 @@ export interface FractionEquivalenceExploredEvent extends MathInteractionBase {
   scale_factor: number;
 }
 
+export interface FractionSimplifiedEvent extends MathInteractionBase {
+  type: "FRACTION_SIMPLIFIED";
+  original: { numerator: number; denominator: number };
+  reduced: { numerator: number; denominator: number };
+}
+
 export type MathInteractionEvent =
   | PointPlacedEvent
   | PointMovedEvent
@@ -103,12 +109,30 @@ export type MathInteractionEvent =
   | DistributiveCoefficientsCheckedEvent
   | FractionShadingChangedEvent
   | FractionComparedEvent
-  | FractionEquivalenceExploredEvent;
+  | FractionEquivalenceExploredEvent
+  | FractionSimplifiedEvent;
 
 function isPoint2D(value: unknown): value is Point2D {
   return Array.isArray(value) &&
     value.length === 2 &&
     value.every((coordinate) => typeof coordinate === "number" && Number.isFinite(coordinate));
+}
+
+function isBoundedFractionParts(value: unknown): value is { numerator: number; denominator: number } {
+  if (!value || typeof value !== "object") return false;
+  const p = value as Record<string, unknown>;
+  return Number.isSafeInteger(p.denominator) && (p.denominator as number) >= 1 &&
+    (p.denominator as number) <= 12 && Number.isSafeInteger(p.numerator) &&
+    (p.numerator as number) >= 0 && (p.numerator as number) <= (p.denominator as number);
+}
+
+function gcdOf(a: number, b: number): number {
+  while (b !== 0) {
+    const remainder = a % b;
+    a = b;
+    b = remainder;
+  }
+  return a;
 }
 
 export function isMathInteractionEvent(value: unknown): value is MathInteractionEvent {
@@ -143,32 +167,28 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
         (event.numerator as number) >= 0 &&
         (event.numerator as number) <= (event.denominator as number);
     case "FRACTION_COMPARED": {
-      const valid = (v: unknown): v is { numerator: number; denominator: number } => {
-        if (!v || typeof v !== "object") return false;
-        const p = v as Record<string, unknown>;
-        return Number.isSafeInteger(p.denominator) && (p.denominator as number) >= 1 &&
-          (p.denominator as number) <= 12 && Number.isSafeInteger(p.numerator) &&
-          (p.numerator as number) >= 0 && (p.numerator as number) <= (p.denominator as number);
-      };
-      if (!valid(event.left) || !valid(event.right)) return false;
+      if (!isBoundedFractionParts(event.left) || !isBoundedFractionParts(event.right)) return false;
       const a = event.left.numerator * event.right.denominator;
       const b = event.right.numerator * event.left.denominator;
       return event.relation === (a < b ? "LESS_THAN" : a > b ? "GREATER_THAN" : "EQUAL_TO");
     }
     case "FRACTION_EQUIVALENCE_EXPLORED": {
-      const valid = (v: unknown): v is { numerator: number; denominator: number } => {
-        if (!v || typeof v !== "object") return false;
-        const p = v as Record<string, unknown>;
-        return Number.isSafeInteger(p.denominator) && (p.denominator as number) >= 1 &&
-          (p.denominator as number) <= 12 && Number.isSafeInteger(p.numerator) &&
-          (p.numerator as number) >= 0 && (p.numerator as number) <= (p.denominator as number);
-      };
-      if (!valid(event.original) || !valid(event.scaled)) return false;
+      if (!isBoundedFractionParts(event.original) || !isBoundedFractionParts(event.scaled)) return false;
       const k = event.scale_factor;
       if (!Number.isSafeInteger(k) || (k as number) < 2) return false;
       // Fabricated equivalences fail: scaled parts must equal original * k exactly.
       return event.scaled.numerator === event.original.numerator * (k as number) &&
         event.scaled.denominator === event.original.denominator * (k as number);
+    }
+    case "FRACTION_SIMPLIFIED": {
+      if (!isBoundedFractionParts(event.original) || !isBoundedFractionParts(event.reduced)) return false;
+      const o = event.original;
+      const r = event.reduced;
+      if (o.numerator === r.numerator && o.denominator === r.denominator) return false;
+      // Fabricated simplifications fail: values must be exactly equal and the
+      // result must be genuine lowest terms.
+      if (o.numerator * r.denominator !== r.numerator * o.denominator) return false;
+      return gcdOf(r.numerator, r.denominator) === 1;
     }
     case "DISTRIBUTIVE_STEP_VIEWED":
       return typeof event.step_id === "string" &&

@@ -7,7 +7,7 @@ const source = await readFile(new URL("./fractionMath.ts", import.meta.url), "ut
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
 }).outputText;
-const { normalizeFractionParts, changeShadedParts, simplifyFraction, describeFraction, compareFractions, describeFractionComparison, isValidFractionParts, scaleFraction, validScaleFactors, describeEquivalence } = await import(
+const { normalizeFractionParts, changeShadedParts, simplifyFraction, describeFraction, compareFractions, describeFractionComparison, isValidFractionParts, scaleFraction, validScaleFactors, describeEquivalence, describeSimplification } = await import(
   `data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`
 );
 
@@ -88,4 +88,15 @@ test("equivalence explanation is deterministic text, not a grade", () => {
   assert.equal(describeEquivalence({ numerator: 1, denominator: 2 }, 2),
     "Multiplying numerator and denominator by 2 keeps the same amount shaded: 1/2 = 2/4.");
   assert.equal(describeEquivalence({ numerator: 1, denominator: 7 }, 2), null);
+});
+
+test("simplification explanation divides by the exact common factor", () => {
+  assert.equal(describeSimplification({ numerator: 2, denominator: 4 }),
+    "Dividing numerator and denominator by 2 keeps the same amount shaded: 2/4 = 1/2.");
+  assert.equal(describeSimplification({ numerator: 6, denominator: 12 }),
+    "Dividing numerator and denominator by 6 keeps the same amount shaded: 6/12 = 1/2.");
+  assert.equal(describeSimplification({ numerator: 0, denominator: 4 }),
+    "Dividing numerator and denominator by 4 keeps the same amount shaded: 0/4 = 0/1.");
+  assert.equal(describeSimplification({ numerator: 3, denominator: 4 }), null);
+  assert.equal(describeSimplification({ numerator: 1, denominator: 7 }), null);
 });

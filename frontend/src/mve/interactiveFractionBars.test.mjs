@@ -73,7 +73,14 @@ test("equivalence construction uses validated scaling and resets with state", ()
   assert.match(source, /validScaleFactors\(currentParts\)/);
   assert.match(source, /scaleFraction\(currentParts, factor\)/);
   assert.match(source, /type: "FRACTION_EQUIVALENCE_EXPLORED"/);
-  assert.match(source, /setScaleFactor\(null\)/);
+  assert.match(source, /setEquivalence\(null\)/);
   assert.match(source, /id=\{equivalenceStatusId\} role="status"/);
   assert.match(source, /if \(props\.independentAssessment\) return null/);
+});
+
+test("simplification control is fail-closed and emits a semantic event", () => {
+  assert.match(source, /describeSimplification\(currentParts\)/);
+  assert.match(source, /simplifyFraction\(currentParts\)/);
+  assert.match(source, /type: "FRACTION_SIMPLIFIED"/);
+  assert.match(source, /disabled=\{simplification === null\}/);
 });

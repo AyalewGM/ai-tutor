@@ -125,9 +125,22 @@ test("equivalence section offers only in-bounds multipliers", () => {
   assert.match(fourths, /Multiply by 2/);
   assert.match(fourths, /Multiply by 3/);
   assert.doesNotMatch(fourths, /Multiply by 4/);
-  assert.match(fourths, /Choose a multiplier to see an equivalent fraction\./);
+  assert.match(fourths, /Choose a multiplier or the simplest form/);
   const sevenths = render({ independentAssessment: false, denominator: 7, initialNumerator: 1 });
   assert.doesNotMatch(sevenths, /Multiply by/);
+  assert.doesNotMatch(sevenths, /Show simplest form/);
+});
+
+test("simplest-form control reflects whether the fraction is reducible", () => {
+  const reducible = render({ independentAssessment: false, denominator: 4, initialNumerator: 2 });
+  assert.match(reducible, /<button type="button"[^>]*aria-describedby[^>]*>Show simplest form<\/button>/);
+  assert.doesNotMatch(reducible, /<button type="button" disabled=""[^>]*>Show simplest form<\/button>/);
+  const lowest = render({ independentAssessment: false, denominator: 4, initialNumerator: 3 });
+  assert.match(lowest, /<button type="button" disabled=""[^>]*>Show simplest form<\/button>/);
+  // Reducible twelfths offer the section even when no multipliers fit.
+  const twelfths = render({ independentAssessment: false, denominator: 12, initialNumerator: 6 });
+  assert.match(twelfths, /Show simplest form/);
+  assert.doesNotMatch(twelfths, /Multiply by/);
 });
 
 test("equivalence construction emits no bar until a multiplier is chosen", () => {

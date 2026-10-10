@@ -89,6 +89,18 @@ export function describeEquivalence(parts: FractionParts, factor: number): strin
   );
 }
 
+/** Deterministic simplification explanation; null when already lowest terms. */
+export function describeSimplification(parts: FractionParts): string | null {
+  const safe = normalizeFractionParts(parts.numerator, parts.denominator);
+  const reduced = simplifyFraction(safe);
+  if (reduced.numerator === safe.numerator && reduced.denominator === safe.denominator) return null;
+  const divisor = safe.denominator / reduced.denominator;
+  return (
+    `Dividing numerator and denominator by ${divisor} keeps the same amount shaded: ` +
+    `${safe.numerator}/${safe.denominator} = ${reduced.numerator}/${reduced.denominator}.`
+  );
+}
+
 /** Explanatory feedback only; this does not score answers or mastery. */
 export function describeFractionComparison(left: FractionParts, right: FractionParts): string | null {
   const relation = compareFractions(left, right);

@@ -47,3 +47,25 @@ test("equivalence events reject fabricated scalings and invalid bounds", () => {
   assert.equal(isMathInteractionEvent(equivalence(fraction(1, 2), fraction(2, 4), 1.5)), false);
   assert.equal(isMathInteractionEvent(equivalence(fraction(1, 2), fraction(5, 4), 2)), false);
 });
+
+const simplified = (original, reduced) => ({
+  schema_version: 1, type: "FRACTION_SIMPLIFIED", original, reduced,
+});
+
+test("simplification events accept only exact lowest-term reductions", () => {
+  assert.equal(isMathInteractionEvent(simplified(fraction(2, 4), fraction(1, 2))), true);
+  assert.equal(isMathInteractionEvent(simplified(fraction(6, 12), fraction(1, 2))), true);
+  assert.equal(isMathInteractionEvent(simplified(fraction(0, 4), fraction(0, 1))), true);
+});
+
+test("simplification events reject forged reductions", () => {
+  // Not value-equal:
+  assert.equal(isMathInteractionEvent(simplified(fraction(2, 4), fraction(1, 3))), false);
+  // Not lowest terms:
+  assert.equal(isMathInteractionEvent(simplified(fraction(4, 8), fraction(2, 4))), false);
+  assert.equal(isMathInteractionEvent(simplified(fraction(0, 4), fraction(0, 2))), false);
+  // No-op is not a simplification:
+  assert.equal(isMathInteractionEvent(simplified(fraction(1, 2), fraction(1, 2))), false);
+  // Out of bounds:
+  assert.equal(isMathInteractionEvent(simplified(fraction(2, 0), fraction(1, 2))), false);
+});
