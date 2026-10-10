@@ -76,6 +76,13 @@ export interface FractionShadingChangedEvent extends MathInteractionBase {
   denominator: number;
 }
 
+export interface FractionComparedEvent extends MathInteractionBase {
+  type: "FRACTION_COMPARED";
+  left: { numerator: number; denominator: number };
+  right: { numerator: number; denominator: number };
+  relation: "LESS_THAN" | "EQUAL_TO" | "GREATER_THAN";
+}
+
 export type MathInteractionEvent =
   | PointPlacedEvent
   | PointMovedEvent
@@ -87,7 +94,8 @@ export type MathInteractionEvent =
   | PolygonCreatedEvent
   | DistributiveStepViewedEvent
   | DistributiveCoefficientsCheckedEvent
-  | FractionShadingChangedEvent;
+  | FractionShadingChangedEvent
+  | FractionComparedEvent;
 
 function isPoint2D(value: unknown): value is Point2D {
   return Array.isArray(value) &&
@@ -126,6 +134,19 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
         Number.isSafeInteger(event.numerator) &&
         (event.numerator as number) >= 0 &&
         (event.numerator as number) <= (event.denominator as number);
+    case "FRACTION_COMPARED": {
+      const valid = (v: unknown): v is { numerator: number; denominator: number } => {
+        if (!v || typeof v !== "object") return false;
+        const p = v as Record<string, unknown>;
+        return Number.isSafeInteger(p.denominator) && (p.denominator as number) >= 1 &&
+          (p.denominator as number) <= 12 && Number.isSafeInteger(p.numerator) &&
+          (p.numerator as number) >= 0 && (p.numerator as number) <= (p.denominator as number);
+      };
+      if (!valid(event.left) || !valid(event.right)) return false;
+      const a = event.left.numerator * event.right.denominator;
+      const b = event.right.numerator * event.left.denominator;
+      return event.relation === (a < b ? "LESS_THAN" : a > b ? "GREATER_THAN" : "EQUAL_TO");
+    }
     case "DISTRIBUTIVE_STEP_VIEWED":
       return typeof event.step_id === "string" &&
         ["identify", "distribute_variable", "distribute_constant", "simplify"].includes(event.step_id);
