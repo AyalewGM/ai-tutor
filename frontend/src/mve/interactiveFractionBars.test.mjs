@@ -58,3 +58,10 @@ test("guided comparison uses validated target and exact semantic relation", () =
   assert.match(source, /describeFractionComparison\(/);
   assert.match(source, /if \(props\.independentAssessment\) return null/);
 });
+
+test("comparison feedback resets when reference changes and description remains mounted", () => {
+  assert.match(source, /lastTargetKey !== targetKey/);
+  assert.match(source, /setShowComparison\(false\)/);
+  assert.match(source, /id=\{comparisonStatusId\} role="status"/);
+  assert.match(source, /showComparison \? describeFractionComparison/);
+});
