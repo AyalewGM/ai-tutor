@@ -1,0 +1,159 @@
+{
+  "package_id": "draft-interactive-adaptive-lessons-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "runtime_activation": false,
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "purpose": "Reviewable interaction and adaptive pedagogy specifications; no executable student UI or verified mastery",
+  "lessons": [
+    {
+      "lesson_id": "draft-interactive-1",
+      "provisional_structure": "place-value-compose",
+      "title": "Base-ten place value",
+      "interaction": {
+        "concrete": "Build hundreds, tens, and ones with movable base-ten blocks; regroup 10 ones as one ten.",
+        "learner_action": "Drag blocks into place-value columns and narrate each place's contribution.",
+        "symbolic_reveal": "Reveal the expanded form only after the learner builds the number.",
+        "accessibility": "Keyboard equivalent, spoken instructions, text-only alternative, and reduced-motion behavior required before implementation"
+      },
+      "adaptive_branches": [
+        {
+          "trigger": "correct_model_and_explanation",
+          "next": "independent_practice"
+        },
+        {
+          "trigger": "incorrect_answer",
+          "diagnosis": "Misplacing a digit in the wrong column",
+          "next": "targeted_manipulative_hint_then_new_variant"
+        },
+        {
+          "trigger": "repeated_misconception",
+          "next": "prerequisite_micro_lesson_and_diagnostic"
+        },
+        {
+          "trigger": "correct_answer_without_explanation",
+          "next": "request_reasoning_before_mastery"
+        }
+      ],
+      "assessment": {
+        "diagnostic": "New seed and no answer reveal before attempt",
+        "guided": "Learner-controlled manipulatives with hints",
+        "independent": "Fresh parameters and no hints",
+        "transfer": "Build a new number from different blocks without hints",
+        "mastery": "Pending independent assessment rubric; never update student mastery from this draft"
+      }
+    },
+    {
+      "lesson_id": "draft-interactive-2",
+      "provisional_structure": "fraction-unlike-add",
+      "title": "Adding unlike fractions",
+      "interaction": {
+        "concrete": "Overlay two fraction strips; subdivide both into a common unit without changing the whole.",
+        "learner_action": "Select a common partition and drag the shaded pieces into one combined strip.",
+        "symbolic_reveal": "Show the exact sum only after the learner identifies equivalent fractions.",
+        "accessibility": "Keyboard equivalent, spoken instructions, text-only alternative, and reduced-motion behavior required before implementation"
+      },
+      "adaptive_branches": [
+        {
+          "trigger": "correct_model_and_explanation",
+          "next": "independent_practice"
+        },
+        {
+          "trigger": "incorrect_answer",
+          "diagnosis": "Adding denominators",
+          "next": "targeted_manipulative_hint_then_new_variant"
+        },
+        {
+          "trigger": "repeated_misconception",
+          "next": "prerequisite_micro_lesson_and_diagnostic"
+        },
+        {
+          "trigger": "correct_answer_without_explanation",
+          "next": "request_reasoning_before_mastery"
+        }
+      ],
+      "assessment": {
+        "diagnostic": "New seed and no answer reveal before attempt",
+        "guided": "Learner-controlled manipulatives with hints",
+        "independent": "Fresh parameters and no hints",
+        "transfer": "Solve an unlike-fraction subtraction with a new common denominator",
+        "mastery": "Pending independent assessment rubric; never update student mastery from this draft"
+      }
+    },
+    {
+      "lesson_id": "draft-interactive-3",
+      "provisional_structure": "ratio-proportional-table",
+      "title": "Constant ratios",
+      "interaction": {
+        "concrete": "Grow two linked quantities in a ratio table and double number line.",
+        "learner_action": "Predict the missing entry before scaling both quantities.",
+        "symbolic_reveal": "Display the constant multiplier after the learner explains the relationship.",
+        "accessibility": "Keyboard equivalent, spoken instructions, text-only alternative, and reduced-motion behavior required before implementation"
+      },
+      "adaptive_branches": [
+        {
+          "trigger": "correct_model_and_explanation",
+          "next": "independent_practice"
+        },
+        {
+          "trigger": "incorrect_answer",
+          "diagnosis": "Additive rather than multiplicative scaling",
+          "next": "targeted_manipulative_hint_then_new_variant"
+        },
+        {
+          "trigger": "repeated_misconception",
+          "next": "prerequisite_micro_lesson_and_diagnostic"
+        },
+        {
+          "trigger": "correct_answer_without_explanation",
+          "next": "request_reasoning_before_mastery"
+        }
+      ],
+      "assessment": {
+        "diagnostic": "New seed and no answer reveal before attempt",
+        "guided": "Learner-controlled manipulatives with hints",
+        "independent": "Fresh parameters and no hints",
+        "transfer": "Distinguish a fixed-fee nonproportional table from a proportional one",
+        "mastery": "Pending independent assessment rubric; never update student mastery from this draft"
+      }
+    },
+    {
+      "lesson_id": "draft-interactive-4",
+      "provisional_structure": "algebra-distributive",
+      "title": "Distributive property",
+      "interaction": {
+        "concrete": "Use a split rectangle with colored columns to visualize equal rows.",
+        "learner_action": "Move the split line and explain why both parts are multiplied.",
+        "symbolic_reveal": "Reveal equivalent expanded expressions only after a verbal justification.",
+        "accessibility": "Keyboard equivalent, spoken instructions, text-only alternative, and reduced-motion behavior required before implementation"
+      },
+      "adaptive_branches": [
+        {
+          "trigger": "correct_model_and_explanation",
+          "next": "independent_practice"
+        },
+        {
+          "trigger": "incorrect_answer",
+          "diagnosis": "Multiplying only the first addend",
+          "next": "targeted_manipulative_hint_then_new_variant"
+        },
+        {
+          "trigger": "repeated_misconception",
+          "next": "prerequisite_micro_lesson_and_diagnostic"
+        },
+        {
+          "trigger": "correct_answer_without_explanation",
+          "next": "request_reasoning_before_mastery"
+        }
+      ],
+      "assessment": {
+        "diagnostic": "New seed and no answer reveal before attempt",
+        "guided": "Learner-controlled manipulatives with hints",
+        "independent": "Fresh parameters and no hints",
+        "transfer": "Apply distribution to a new signed-coefficient expression",
+        "mastery": "Pending independent assessment rubric; never update student mastery from this draft"
+      }
+    }
+  ]
+}
