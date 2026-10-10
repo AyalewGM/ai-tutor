@@ -137,7 +137,7 @@ def test_architecture_decision_preserves_legacy_composites_and_fails_closed() ->
     )
 
     by_code = {row["local_seed_code"]: row for row in data["rows"]}
-    for code in {"M7.G.GEO", "M7.SP.PROB"}:
+    for code in ("M7.G.GEO", "M7.SP.PROB"):
         disposition = by_code[code]["architecture_disposition"]
         assert disposition["disposition"] == (
             "PRESERVED_CROSS_GRADE_LEGACY_COMPOSITE_NOT_CANONICAL"
@@ -148,7 +148,7 @@ def test_architecture_decision_preserves_legacy_composites_and_fails_closed() ->
         assert disposition["required_scope_boundaries"]
         assert "ALL_OF" in disposition["reporting_policy"]
 
-    for code in {"M8.G.TRANS", "M8.G.SIM"}:
+    for code in ("M8.G.TRANS", "M8.G.SIM"):
         disposition = by_code[code]["architecture_disposition"]
         assert disposition["disposition"] == (
             "PRESERVED_LEGACY_PLACEMENT_IDENTIFIER"
