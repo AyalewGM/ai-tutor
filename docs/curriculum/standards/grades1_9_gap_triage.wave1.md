@@ -84,3 +84,20 @@ Added [Ontario Grades 1–8 source acquisition matrix](on_grades1_8_2020.strand_
 **Assessment caveat:** The [official Grade 6 Ontario curriculum page](https://www.dcp.edu.gov.on.ca/en/curriculum/elementary-mathematics/grades/g6-math/strands) states that schools were asked from 2021–22 not to assess/evaluate/report on overall social-emotional learning expectations, while continuing instruction. Strand A must not be automatically converted to deterministic mastery requirements; confirm the policy for the relevant grade and year.
 
 **Next gate:** retrieve each grade's official specific-expectation IDs and exact scope, then reconcile Mihur's actual Ontario elementary packs. The machine-readable 48-cell grid deliberately gives **zero accepted mappings**, rather than falsely equating strand presence with curriculum completeness.
+
+
+## Grade 1 alias Gate 5 reconciliation
+
+Independent Mathematical Review [#293 comment 6097860935](https://github.com/AyalewGM/ai-tutor/issues/293#issuecomment-6097860935) accepted **0 of 7** reviewed Grade 1 aliases as currently encoded. Architecture [#282 comment 6103218496](https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6103218496) then fixed the decomposition boundaries, and [#282 comment 6103246330](https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6103246330) opened Gate 5 for collision audit, authored DRAFT scope cards, independent mathematical review, and Muse verification.
+
+| Grade 1 alias | Review disposition | Architecture consequence | Standards-mapping state |
+|---|---|---|---|
+| `COUNT_COMPARE_TO_120` | NEEDS_SPLIT | Reporting-only `ALL_OF`: count forward, pairwise compare, numeral representation, and list ordering | `PROVISIONAL_NOT_ACCEPTED` |
+| `TENS_ONES` | REJECTED current broad target set | Exact bounded tens/ones identity only after reviewed authority; hundreds evidence excluded | `PROVISIONAL_NOT_ACCEPTED` |
+| `ADD_SUB_WITHIN_20` | NEEDS_SPLIT | Reporting-only `ALL_OF` of separate bounded addition and subtraction atoms | `PROVISIONAL_NOT_ACCEPTED` |
+| `WORD_PROBLEM_WITHIN_20` | REJECTED current computational targets | Exact bounded modeling identity only after a complete structure/unknown-role review | `PROVISIONAL_NOT_ACCEPTED` |
+| `EQUATION_BALANCE` | UNMAPPED | Reporting-only `ALL_OF`: equality relation, addition unknown, subtraction unknown | `PROVISIONAL_NOT_ACCEPTED` |
+| `IDENTIFY_COMPOSE_SHAPES` | UNMAPPED | Reporting-only `ALL_OF`: defining attributes, construct from attributes, compose shapes | `PROVISIONAL_NOT_ACCEPTED` |
+| `TELL_TIME_HOUR_HALF_HOUR` | UNMAPPED | Reporting-only `ALL_OF` of reading and representing time | `PROVISIONAL_NOT_ACCEPTED` |
+
+The original 42-row alias-map inventory remains a historical snapshot (38 `UNMAPPED`, 4 `PROPOSED`). This later review-state layer does not rewrite those source rows or treat Architecture-suggested labels as accepted canonical authority. Component availability is mixed: some bounded DRAFT definitions exist, while ten newly decomposed scopes still require collision-audited authoring and independent review. No generator, validated-practice, assessment-readiness, mastery, activation, or coverage status changes here.
