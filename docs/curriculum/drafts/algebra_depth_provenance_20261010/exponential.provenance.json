@@ -1,0 +1,36 @@
+{
+  "package_id": "W4-G9-EXPO-MODELING",
+  "revision": "DRAFT_1",
+  "source_pr": 328,
+  "canonical_skill": "MATH.F.EXPONENTIAL",
+  "canonical_approval": "UNKNOWN",
+  "reused_generators": [
+    "MATH.EXPFUNC.COMPARE.LINEAR",
+    "MATH.EXPFUNC.MODEL"
+  ],
+  "reused_mve": "UNKNOWN",
+  "ontario_source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+  "ontario_version": "MTH1W 2021",
+  "ontario_expectation_ids": [
+    "MTH1W.C3.1"
+  ],
+  "maryland_source": "https://msde.maryland.gov/media/17798",
+  "maryland_version": "August 2022",
+  "maryland_expectation_ids": [
+    "F.LE.A.1",
+    "F.LE.A.2"
+  ],
+  "integrated_source": "https://msde.maryland.gov/media/17822",
+  "integrated_version": "July 2025",
+  "integrated_expectation_ids": [
+    "IA1.AT.D.15"
+  ],
+  "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+  "mathematical_review": "PENDING",
+  "pedagogical_review": "PENDING",
+  "muse_qa": "PENDING",
+  "practice_oracle": "NOT_EXECUTED",
+  "unseen_assessment": "DRAFT_ONLY",
+  "runtime_activation": false,
+  "mastery_writes": false
+}
