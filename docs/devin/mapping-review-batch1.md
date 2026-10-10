@@ -1,7 +1,25 @@
 # Batch 1 mapping review — Grade 1 aliases (#282, Devin proposals)
 
-**Status:** PROPOSED — awaiting independent mathematical review. `reviewed_by` is intentionally null; Devin does not approve its own proposals.
+**Status:** REVIEWED — 0 of 7 approved. Independent mathematical review completed 2026-10-10 (issue #293); all seven aliases were returned to `UNMAPPED` in manifest `draft-3-review-dispositions` and earn zero coverage credit.
 **Evidence basis:** DC/MD/VA pack skill descriptions, standards refs, pack problem families, sampled pack problems, and runtime `FAMILIES` family coverage. Pack problems flagged where seed data looks wrong.
+
+## Independent review outcome (2026-10-10, issue #293)
+
+| Alias | Verdict | Summary |
+|---|---|---|
+| `COUNT_COMPARE_TO_120` | NEEDS_SPLIT | Alias combines sequence production, numeral representation, pairwise comparison and ordering; r5 identities cover only sequence continuation + pairwise comparison. Broad `MATH.NS.COUNTING`/`COMPARE_ORDER` are not range-equivalent and cannot transfer mastery. |
+| `TENS_ONES` | REJECTED (target set) | Broad pair exceeds the two-digit 10–99 ten-as-unit contract. Future target is the bounded `MATH.PLACE_VALUE.TENS_ONES` identity once it becomes reviewed authority. Pack mixes hundreds tasks — evidence not scope-pure. |
+| `ADD_SUB_WITHIN_20` | NEEDS_SPLIT | Add and subtract jurisdiction skills share one alias; `ALL_OF` would falsely require both. Split to bounded addition and bounded subtraction identities; combined result may exist only as a reporting profile, no mastery row. |
+| `WORD_PROBLEM_WITHIN_20` | REJECTED (target set) | `ADDITION`+`SUBTRACTION` do not establish contextual modeling, unknown-role coverage, comparison semantics or answer interpretation. Await the bounded word-problem candidate after taxonomy authority activation. Stored pack answers are incorrect — not assessment-ready. |
+| `EQUATION_BALANCE` | UNMAPPED | Equality as symmetric relation, true/false equations and varied unknown positions uncovered; do not substitute the older-grade one-step-equation identity. |
+| `IDENTIFY_COMPOSE_SHAPES` | UNMAPPED | Requires a distinct reviewed identity/evidence contract. |
+| `TELL_TIME_HOUR_HALF_HOUR` | UNMAPPED | Requires a distinct reviewed identity. |
+
+Additional assessment-evidence defects recorded by the review: successor-of-16 fixture stores 13; subtraction word problems store 22/20 where the answer is 8; clock prompts disagree on minute 0 vs 30; G1 place-value fixtures include 3-digit tasks under a two-digit alias; word-problem samples lack the structure/unknown-role matrix.
+
+**Strategic consequence for batches 2–6:** broad `FAMILIES`-derived canonical codes were judged not range-equivalent — they cannot transfer mastery. No further `ALL_OF`-of-broad-codes proposals will be authored; future mappings must target the bounded atomic identities from the independent taxonomy (PR #308) once they become reviewed authority.
+
+The proposal records below are retained for provenance only; their target sets were rejected or split and are no longer candidates.
 
 ## Records
 

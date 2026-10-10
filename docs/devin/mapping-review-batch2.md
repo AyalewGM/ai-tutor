@@ -1,10 +1,13 @@
 # Batch 2 mapping review — Grade 2 aliases (#282, Devin draft)
 
-**Status:** DRAFT ANALYSIS — not submitted to the manifest. Held pending
-batch-1 reviewer answers (#293) on range constraints, shared targets,
-and missing-skill handling, since the same questions apply here.
-`reviewed_by` is intentionally empty everywhere; Devin does not approve
-its own proposals.
+**Status:** SUPERSEDED — never submitted to the manifest. The batch-1
+independent review (#293, 2026-10-10) answered the held questions:
+broad `FAMILIES`-derived codes are not range-equivalent and cannot
+transfer mastery, so every candidate `ALL_OF` target set below would be
+rejected on the same grounds. Future mappings must target bounded atomic
+identities from the independent taxonomy (PR #308) once they become
+reviewed authority. This document is retained as evidence, not as live
+proposals.
 
 Scope: seven of eight Grade-2 aliases. `TELL_TIME_FIVE_MINUTES` deferred
 to a measurement batch — clock-face reading is already a documented gap
@@ -71,9 +74,9 @@ from batch 1 (`TELL_TIME_HOUR_HALF_HOUR`), and it shares that gap.
 | Proposed with caveat (medium) | 2, 4, 5 (partial) |
 | Impossible today (missing canonical capability) | 6, 7 |
 
-## Open questions carried from batch 1
+## Open questions — answered by the batch-1 independent review (#293, 2026-10-10)
 
-1. Range constraints (≤1000, ≤100, ≤20) are not expressible on canonical skill targets — confirm the parameter-level convention.
-2. Repeated identical target sets (±20/±100 and word-problem pairs) — confirm granularity is acceptable.
-3. Missing capabilities now total: equal-sign meaning (G1), shape identify/compose (G1–G2), clock reading (G1–G2), length measurement (G2), money counting (G2). These are candidate new canonical skills — Curriculum-owned decision.
-4. Third wrong pack seed answer found (`72 − 38 → 110`). Cumulative data-quality flag for Curriculum.
+1. ~~Range constraints~~ **Answered — rejected.** Broad targets are "not range-equivalent and cannot transfer mastery"; bounded atomic identities are required.
+2. ~~Shared target sets~~ **Answered — rejected.** `ADD_SUB`/`WORD_PROBLEM` sharing `ADDITION`+`SUBTRACTION` was REJECTED for word problems and NEEDS_SPLIT for the operation alias; combined results may exist only as reporting profiles with separate evidence and no mastery row.
+3. ~~Missing capabilities~~ **Answered.** Equal-sign meaning, shape identify/compose, clock reading (and by extension G2 length/money) require distinct reviewed canonical identities — authoring them is Curriculum-owned; aliases stay UNMAPPED meanwhile.
+4. Third wrong pack seed answer found (`72 − 38 → 110`). Cumulative data-quality flag for Curriculum — the review independently confirmed additional wrong stored answers and scope-impure fixtures.

@@ -152,8 +152,9 @@ class TestReviewedResolution:
 
 
 class TestMergedManifest:
-    """The real manifest currently on main: 4 PROPOSED, 38 UNMAPPED,
-    zero REVIEWED — so every alias must resolve UNRESOLVED."""
+    """The real manifest on main after the batch-1 independent review
+    (#293, 2026-10-10): all 42 aliases UNMAPPED — the review approved
+    none — so every alias must resolve UNRESOLVED."""
 
     def test_every_real_alias_is_unresolved(self):
         manifest = load_manifest()
@@ -163,16 +164,11 @@ class TestMergedManifest:
             assert r.status == ResolutionStatus.UNRESOLVED, alias
             assert r.target_skill_codes == ()
 
-    def test_resolution_grants_no_targets_for_proposed_entries(self):
+    def test_no_entries_carry_targets(self):
+        """Reviewed-rejected proposals must not leak residual targets."""
         manifest = load_manifest()
-        proposed = [
-            a
-            for a, e in manifest.entries.items()
-            if e["status"] == "PROPOSED"
-        ]
-        assert len(proposed) == 4  # batch-1 proposals are pending review
-        for alias in proposed:
-            assert (
-                resolve_alias(manifest, alias).status
-                == ResolutionStatus.UNRESOLVED
-            )
+        for alias, e in manifest.entries.items():
+            assert e["status"] == "UNMAPPED", alias
+            assert e["relation"] is None, alias
+            assert e["target_skill_codes"] == [], alias
+            assert e["reviewed_by"] is None, alias
