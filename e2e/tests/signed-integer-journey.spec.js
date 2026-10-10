@@ -328,10 +328,11 @@ test('signed-integer guided practice mounts only in guided states and never scor
   await expect(page.getByText(`${SKILL_NAME} · Independent Practice`)).toBeVisible({ timeout: 10000 });
   await expect(interactiveExplorer(page)).toHaveCount(0);
   await expect(guidedWidget(page)).toHaveCount(0);
-  // The learn panel still exists in independent practice (lesson review is
-  // allowed); opening it must reveal the lesson but never the guided widget.
-  await openLearnPanel(page);
-  await expect(page.getByText('Key words')).toBeVisible();
+  // Independent practice is an assessment state. The entire lesson panel,
+  // including worked examples, answers, terms, hints and the guided widget,
+  // must fail closed instead of remaining available for review.
+  await expect(learnToggle(page)).toHaveCount(0);
+  await expect(page.getByText('Key words')).toHaveCount(0);
   await expect(guidedWidget(page)).toHaveCount(0);
 });
 
