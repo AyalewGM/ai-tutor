@@ -161,12 +161,10 @@ async function currentProblemText(page) {
 }
 
 async function currentStateLabel(page) {
-  // Read the "Skill · State" paragraph element directly — regexing all of
-  // main's textContent can absorb the next element's text when the following
-  // prompt starts with a letter (SIGNED_NUMBERS prompts do).
-  const el = page.locator('p', { hasText: `${SKILL_NAME} · ` }).first();
-  if (!(await el.count())) return '';
-  const text = (await el.textContent()) || '';
+  // Snapshot all paragraph text in one operation. A count-then-textContent
+  // sequence races when the completion screen replaces the workspace.
+  const texts = await page.locator('p').allTextContents();
+  const text = texts.find((value) => value.includes(`${SKILL_NAME} · `)) || '';
   const m = text.match(/·\s*([A-Za-z ]+?)\s*$/);
   return m ? m[1].trim() : '';
 }
