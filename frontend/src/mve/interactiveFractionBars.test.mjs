@@ -50,3 +50,11 @@ test("all fraction buttons share a labeled control group and status description"
   assert.equal((source.match(/focus-visible:outline-offset-2/g) ?? []).length, 3);
   assert.match(source, /id=\{statusId\} role="status"/);
 });
+
+test("guided comparison uses validated target and exact semantic relation", () => {
+  assert.match(source, /isValidFractionParts\(compareWith\)/);
+  assert.match(source, /compareFractions\(left, target\)/);
+  assert.match(source, /type: "FRACTION_COMPARED"/);
+  assert.match(source, /describeFractionComparison\(/);
+  assert.match(source, /if \(props\.independentAssessment\) return null/);
+});
