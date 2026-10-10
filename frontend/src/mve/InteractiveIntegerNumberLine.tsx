@@ -1,10 +1,11 @@
 import { useId, useState } from "react";
 import ProblemVisual from "../components/ProblemVisual";
-import { checkIntegerPractice, INTEGER_PRACTICE, integerModel, type IntegerOperation } from "./integerNumberLine";
+import { checkIntegerPractice, INTEGER_PRACTICE, integerModel, integerPracticeIndexFromSeed, type IntegerOperation } from "./integerNumberLine";
 import type { MathInteractionEvent } from "./interactions";
 
 export interface InteractiveIntegerNumberLineProps {
   independentAssessment: boolean;
+  seed?: number;
   onMathEvent?: (event: MathInteractionEvent) => void;
 }
 
@@ -14,14 +15,22 @@ export function InteractiveIntegerNumberLine(props: InteractiveIntegerNumberLine
   return <GuidedIntegerNumberLine {...props} />;
 }
 
-function GuidedIntegerNumberLine({ onMathEvent }: InteractiveIntegerNumberLineProps) {
+function GuidedIntegerNumberLine({ seed = 0, onMathEvent }: InteractiveIntegerNumberLineProps) {
   const id = useId();
   const [start, setStart] = useState(-2);
   const [operand, setOperand] = useState(-3);
   const [operation, setOperation] = useState<IntegerOperation>("subtract");
-  const [index, setIndex] = useState(0);
+  const seededIndex = integerPracticeIndexFromSeed(seed);
+  const [index, setIndex] = useState(seededIndex);
+  const [previousSeed, setPreviousSeed] = useState(seed);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
+  if (previousSeed !== seed) {
+    setPreviousSeed(seed);
+    setIndex(seededIndex);
+    setAnswer("");
+    setFeedback("");
+  }
   const model = integerModel(start, operand, operation);
   const practice = INTEGER_PRACTICE[index];
   const control = "rounded border p-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600";
