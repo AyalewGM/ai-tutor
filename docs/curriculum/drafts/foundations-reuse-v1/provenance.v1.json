@@ -5,7 +5,7 @@
   "runtime_activation": false,
   "mastery_writes": false,
   "reviewed_at_utc": "2026-10-10",
-  "overview": "Evidence inventory does NOT establish verified mapping, mathematical acceptance, functioning interaction, assessment readiness, or mastery. Does not modify upstream draft packages.",
+  "overview": "Draft generator/MVE references and local arithmetic examples do not establish independently verified scoring, accepted standards, mathematics approval, mastery or runtime readiness. Preserve all review gates and test against exact upstream heads before promotion.",
   "reconciliation_required_before_merge": true,
   "inspected_repository_sources": [
     "app/domains/place_value.py",
@@ -87,7 +87,7 @@
       },
       "practice": {
         "seeded_generator_contract": "EXISTING_GENERATOR_REFERENCE_NOT_EXECUTED",
-        "independent_exact_oracle": "DRAFT_TESTED_LOCAL_ONLY",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
         "unseen_transfer_assessment": "DRAFT_CONTRACT",
         "authoritative_backend_verification": "NOT_EVIDENCED",
         "historical_mastery_affected": false
@@ -148,7 +148,7 @@
       },
       "practice": {
         "seeded_generator_contract": "EXISTING_GENERATOR_REFERENCE_NOT_EXECUTED",
-        "independent_exact_oracle": "DRAFT_TESTED_LOCAL_ONLY",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
         "unseen_transfer_assessment": "DRAFT_CONTRACT",
         "authoritative_backend_verification": "NOT_EVIDENCED",
         "historical_mastery_affected": false
@@ -170,7 +170,7 @@
       "proposed_revision": "foundations-reuse-v1",
       "upstream_draft": {
         "pull_request": 328,
-        "pinned_head_sha": "b8e59c082dd29bf91beea2843c68188f9651aeab",
+        "pinned_head_sha": "8328a079ffc197360b92a7464c2249ce79488229",
         "path": "docs/curriculum/drafts/learning-packages-wave2/content.draft.json",
         "status": "DRAFT_UNVERIFIED"
       },
@@ -204,7 +204,7 @@
       },
       "practice": {
         "seeded_generator_contract": "EXISTING_GENERATOR_REFERENCE_NOT_EXECUTED",
-        "independent_exact_oracle": "DRAFT_TESTED_LOCAL_ONLY",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
         "unseen_transfer_assessment": "DRAFT_CONTRACT",
         "authoritative_backend_verification": "NOT_EVIDENCED",
         "historical_mastery_affected": false
@@ -226,7 +226,7 @@
       "proposed_revision": "foundations-reuse-v1",
       "upstream_draft": {
         "pull_request": 328,
-        "pinned_head_sha": "b8e59c082dd29bf91beea2843c68188f9651aeab",
+        "pinned_head_sha": "8328a079ffc197360b92a7464c2249ce79488229",
         "path": "docs/curriculum/drafts/learning-packages-wave2/content.draft.json",
         "status": "DRAFT_UNVERIFIED"
       },
@@ -260,7 +260,7 @@
       },
       "practice": {
         "seeded_generator_contract": "EXISTING_GENERATOR_REFERENCE_NOT_EXECUTED",
-        "independent_exact_oracle": "DRAFT_TESTED_LOCAL_ONLY",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
         "unseen_transfer_assessment": "UNKNOWN",
         "authoritative_backend_verification": "NOT_EVIDENCED",
         "historical_mastery_affected": false
@@ -282,7 +282,7 @@
       "proposed_revision": "foundations-reuse-v1",
       "upstream_draft": {
         "pull_request": 328,
-        "pinned_head_sha": "b8e59c082dd29bf91beea2843c68188f9651aeab",
+        "pinned_head_sha": "8328a079ffc197360b92a7464c2249ce79488229",
         "path": "docs/curriculum/drafts/learning-packages-wave3/content.draft.json",
         "status": "DRAFT_UNVERIFIED"
       },
@@ -316,7 +316,7 @@
       },
       "practice": {
         "seeded_generator_contract": "EXISTING_GENERATOR_REFERENCE_NOT_EXECUTED",
-        "independent_exact_oracle": "DRAFT_TESTED_LOCAL_ONLY",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
         "unseen_transfer_assessment": "UNKNOWN",
         "authoritative_backend_verification": "NOT_EVIDENCED",
         "historical_mastery_affected": false
@@ -338,7 +338,7 @@
       "proposed_revision": "foundations-reuse-v1",
       "upstream_draft": {
         "pull_request": 328,
-        "pinned_head_sha": "b8e59c082dd29bf91beea2843c68188f9651aeab",
+        "pinned_head_sha": "8328a079ffc197360b92a7464c2249ce79488229",
         "path": "docs/curriculum/drafts/learning-packages-wave3/content.draft.json",
         "status": "DRAFT_UNVERIFIED"
       },
@@ -374,7 +374,7 @@
       },
       "practice": {
         "seeded_generator_contract": "UNKNOWN",
-        "independent_exact_oracle": "DRAFT_TESTED_LOCAL_ONLY",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
         "unseen_transfer_assessment": "UNKNOWN",
         "authoritative_backend_verification": "NOT_EVIDENCED",
         "historical_mastery_affected": false
@@ -396,7 +396,7 @@
       "proposed_revision": "foundations-reuse-v1",
       "upstream_draft": {
         "pull_request": 328,
-        "pinned_head_sha": "b8e59c082dd29bf91beea2843c68188f9651aeab",
+        "pinned_head_sha": "8328a079ffc197360b92a7464c2249ce79488229",
         "path": "docs/curriculum/drafts/learning-packages-wave4/content.draft.json",
         "status": "DRAFT_UNVERIFIED"
       },
@@ -428,7 +428,7 @@
       },
       "practice": {
         "seeded_generator_contract": "UNKNOWN",
-        "independent_exact_oracle": "DRAFT_TESTED_LOCAL_ONLY",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
         "unseen_transfer_assessment": "UNKNOWN",
         "authoritative_backend_verification": "NOT_EVIDENCED",
         "historical_mastery_affected": false
@@ -450,7 +450,7 @@
       "proposed_revision": "foundations-reuse-v1",
       "upstream_draft": {
         "pull_request": 328,
-        "pinned_head_sha": "b8e59c082dd29bf91beea2843c68188f9651aeab",
+        "pinned_head_sha": "8328a079ffc197360b92a7464c2249ce79488229",
         "path": "docs/curriculum/drafts/learning-packages-wave4/content.draft.json",
         "status": "DRAFT_UNVERIFIED"
       },
@@ -482,7 +482,7 @@
       },
       "practice": {
         "seeded_generator_contract": "EXISTING_GENERATOR_REFERENCE_NOT_EXECUTED",
-        "independent_exact_oracle": "DRAFT_TESTED_LOCAL_ONLY",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
         "unseen_transfer_assessment": "UNKNOWN",
         "authoritative_backend_verification": "NOT_EVIDENCED",
         "historical_mastery_affected": false
