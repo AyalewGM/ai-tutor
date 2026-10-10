@@ -1,0 +1,1427 @@
+{
+  "schema_version": "1.0.0",
+  "status": "DRAFT_EVIDENCE_BASED_GAP_TRIAGE_NOT_VERIFIED_COVERAGE",
+  "created_date": "2026-10-09",
+  "purpose": "Coordinate Grades 1-9 gaps and substantial content packages without conflating inventory, proposed mapping, approved identity, generators, assessment, or learner mastery.",
+  "provenance": {
+    "ontario": "PR #310 ddfadad41694f0ebb856a12d787f86d096be64d6",
+    "maryland_integrated": "PR #322 3cefc0cb358b6882ae855d0475a01b98251878a1",
+    "maryland_traditional": "PR #323 df7338657dcd9ed69002b5a670d44143bee203cc",
+    "alias_map": "main:docs/curriculum/canonical_alias_map.v1.json",
+    "caveat": "Cross-PR snapshot: all referenced draft inventories require independent source verification and are not on main."
+  },
+  "inventory_summary": {
+    "grade9_courses": [
+      {
+        "code": "ON_MTH1W_2021",
+        "expectations": 43,
+        "existing_or_provisional": 4,
+        "no_candidate": 39,
+        "accepted": 0
+      },
+      {
+        "code": "MD_INTEGRATED_ALGEBRA_1_2027_28",
+        "expectations": 30,
+        "existing_or_provisional": 13,
+        "no_candidate": 17,
+        "accepted": 0
+      },
+      {
+        "code": "MD_ALGEBRA_1_2026_27",
+        "expectations": 40,
+        "existing_or_provisional": 17,
+        "no_candidate": 23,
+        "accepted": 0
+      }
+    ],
+    "grade9_expectations_total": 113,
+    "grade1_5_pack_aliases": 42,
+    "aliases_unmapped": 38,
+    "aliases_proposed": 4,
+    "grades6_8_authoritative_expectation_inventory_in_this_register": false,
+    "accepted_coverage_claims": 0
+  },
+  "readiness_contract": {
+    "source_inventory": "DRAFT_SOURCE_LINKED",
+    "canonical_identity": "REQUIRES_INDEPENDENT_MATHEMATICAL_REVIEW",
+    "mapping": "NO_ACCEPTED_COVERAGE",
+    "generator": "NOT_AUDITED",
+    "validated_practice": "NOT_AUDITED",
+    "assessment": "NOT_AUDITED",
+    "verified_mastery": "NEVER_INFERRED_FROM_CONTENT"
+  },
+  "priority_method": {
+    "scale": "ordinal priority based on prerequisite dependency, repeated jurisdictional demand, severity of missing evidence, and production readiness; not a quantitative completeness metric",
+    "no_fabricated_weights": true
+  },
+  "priority_batches": [
+    {
+      "id": "W1_FOUNDATIONAL_NUMBER_OPERATIONS",
+      "rank": 1,
+      "band": "1-5",
+      "scope": "Place value, arithmetic, word-problem structures, fractions and prerequisite misconception models",
+      "reason": "High prerequisite centrality; unresolved Grade 1 alias-to-registry identity gate; fraction content intake already underway",
+      "exact_source_ids": [],
+      "alias_focus": [
+        "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_20",
+        "MATH.ELEMENTARY.ARITHMETIC.LONG_DIVISION",
+        "MATH.ELEMENTARY.ARITHMETIC.MULTI_DIGIT_MULTIPLICATION",
+        "MATH.ELEMENTARY.ARITHMETIC.WORD_PROBLEM_WITHIN_20",
+        "MATH.ELEMENTARY.DECIMALS.PLACE_VALUE_OPERATIONS",
+        "MATH.ELEMENTARY.DIVISION.EQUAL_SHARING",
+        "MATH.ELEMENTARY.FRACTIONS.ADD_SUBTRACT_UNLIKE",
+        "MATH.ELEMENTARY.FRACTIONS.DECIMAL_NOTATION",
+        "MATH.ELEMENTARY.FRACTIONS.EQUIVALENCE_OPERATIONS",
+        "MATH.ELEMENTARY.FRACTIONS.FRACTIONS_AS_NUMBERS",
+        "MATH.ELEMENTARY.FRACTIONS.MULTIPLY_DIVIDE",
+        "MATH.ELEMENTARY.MULTIPLICATION.EQUAL_GROUPS",
+        "MATH.ELEMENTARY.MULTIPLICATION.MULTIPLICATIVE_COMPARISON",
+        "MATH.ELEMENTARY.MULTIPLICATION.PROPERTIES_FACT_FAMILIES",
+        "MATH.ELEMENTARY.PLACE_VALUE.HUNDREDS_TENS_ONES",
+        "MATH.ELEMENTARY.PLACE_VALUE.MULTI_DIGIT",
+        "MATH.ELEMENTARY.PLACE_VALUE.ROUNDING_THREE_DIGIT",
+        "MATH.ELEMENTARY.PLACE_VALUE.TENS_ONES"
+      ],
+      "owners": [
+        "Curriculum Mapping",
+        "Architecture #282",
+        "Independent Math Review #293",
+        "Content Production #311"
+      ],
+      "production_gate": "Do not activate any unresolved alias; identify official Grade 1-5 standards versions and verify full jurisdiction coverage before claiming it"
+    },
+    {
+      "id": "W2_RATIOS_RATIONALS_PREALGEBRA",
+      "rank": 2,
+      "band": "6-8",
+      "scope": "Ratios, proportions, signed rational arithmetic, exponents, expressions, linear equations and conceptual transitions",
+      "reason": "Prerequisite bridge from elementary arithmetic to Grade 9 algebra; mapping sources for Grades 6–8 not yet inventoried in this register",
+      "exact_source_ids": [],
+      "alias_focus": [
+        "MATH.ELEMENTARY.ARITHMETIC.EQUATION_BALANCE",
+        "MATH.ELEMENTARY.ARITHMETIC.ORDER_OF_OPERATIONS",
+        "MATH.ELEMENTARY.DECIMALS.PLACE_VALUE_OPERATIONS",
+        "MATH.ELEMENTARY.FRACTIONS.EQUIVALENCE_OPERATIONS"
+      ],
+      "owners": [
+        "Curriculum Mapping",
+        "Independent Math Review",
+        "Content Production #312"
+      ],
+      "production_gate": "Collect authoritative Grade 6–8 expectation inventories before claiming any grade-level mapping"
+    },
+    {
+      "id": "W3_LINEAR_FUNCTIONS_AND_MODELING",
+      "rank": 3,
+      "band": "9",
+      "scope": "Linear relationships, rates, equations, systems, inequalities, representations and contextual modeling",
+      "reason": "Repeated cross-jurisdictional expectations and known incomplete mapping evidence; reusable mathematical identities likely but not approved",
+      "exact_source_ids": [
+        "MTH1W.C3.1",
+        "MTH1W.C3.2",
+        "MTH1W.C3.3",
+        "MTH1W.C4.2",
+        "MTH1W.C4.4",
+        "IA1.AT.B.2",
+        "IA1.AT.B.3",
+        "IA1.AT.B.4",
+        "IA1.AT.B.5",
+        "IA1.AT.B.6",
+        "IA1.AT.B.7",
+        "IA1.AT.C.11",
+        "A.REI.B.3",
+        "A.REI.C.6",
+        "A.REI.D.12",
+        "F.IF.B.6",
+        "F.LE.A.2"
+      ],
+      "alias_focus": [],
+      "owners": [
+        "Curriculum Mapping",
+        "Independent Math Review",
+        "Content Production #306",
+        "Engineering/MVE",
+        "Muse QA"
+      ],
+      "production_gate": "Review distinct expectation boundaries and ensure exact-target practice plus independent assessments"
+    },
+    {
+      "id": "W4_GRADE9_DATA_FINANCIAL_GEOMETRY",
+      "rank": 4,
+      "band": "9",
+      "scope": "Statistical modeling, two-way tables, geometry, measurement, financial decisions and computational modeling",
+      "reason": "Visible no-specific-mapping clusters outside the algebra-heavy seed; prevents algebra-only Grade 9 coverage claims",
+      "exact_source_ids": [
+        "MTH1W.D1.2",
+        "MTH1W.D1.3",
+        "MTH1W.D2.3",
+        "MTH1W.D2.4",
+        "MTH1W.E1.4",
+        "MTH1W.E1.5",
+        "MTH1W.E1.6",
+        "MTH1W.F1.2",
+        "MTH1W.F1.3",
+        "MTH1W.F1.4",
+        "IA1.GR.B.3",
+        "IA1.DS.A.2",
+        "IA1.DS.B.5",
+        "IA1.DS.B.7",
+        "S.ID.B.6",
+        "S.ID.C.8"
+      ],
+      "alias_focus": [],
+      "owners": [
+        "Curriculum Mapping",
+        "Independent Math Review",
+        "Content Production"
+      ],
+      "production_gate": "Separate mathematical skills from cross-curricular contexts; preserve source expectation semantics"
+    }
+  ],
+  "courses": [
+    {
+      "code": "ON_MTH1W_2021",
+      "grade_band": "9",
+      "ref": "PR-310@ddfadad",
+      "url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w",
+      "items": [
+        {
+          "id": "MTH1W.B1.1",
+          "scope": "Research a number concept in a specific culture, trace its development and use, and explain current relevance.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.B1.2",
+          "scope": "Define subsets of a number system and compare their similarities and differences.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.B1.3",
+          "scope": "Use patterns and number relationships to explain density, infinity, and limits in number sets.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.B2.1",
+          "scope": "Analyse exponent sign and magnitude patterns; apply them to scientific notation and evaluation of powers.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b2",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.B2.2",
+          "scope": "Analyse exponent-operation relationships and simplify numerical and algebraic power expressions.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b2",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.B3.1",
+          "scope": "Use integers to describe location, direction, quantity, and change in context.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b3",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.B3.2",
+          "scope": "Relate unit fractions to other fractional quantities, including measurement-tool contexts.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b3",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.B3.3",
+          "scope": "Explain how positive and negative signs affect ratios, rates, fractions, and decimals in context.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b3",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.B3.4",
+          "scope": "Solve contextual problems with operations on positive and negative fractions and mixed numbers, including formulas, measurement, and linear relations.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b3",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.B3.5",
+          "scope": "Pose and solve rate, percentage, and proportion problems across data, measurement, geometry, linear relations, and financial contexts.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/b/b3",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.C1.1",
+          "scope": "Research an algebraic concept in a specific culture, trace its development and use, and explain current relevance.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.C1.2",
+          "scope": "Create algebraic expressions that generalize relationships shown in words, numbers, or visual representations.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+          "existing_reference": [
+            {
+              "local_skill_code": "MTH1W.C.ALG.EXPR",
+              "canonical_skill_code": "MATH.EE.EXPR",
+              "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+              "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+            }
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "MTH1W.C1.3",
+          "scope": "Compare algebraic expressions using concrete, numerical, graphical, and algebraic evidence to identify and justify equivalence.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+          "existing_reference": [
+            {
+              "local_skill_code": "MTH1W.C.ALG.LIKE",
+              "canonical_skill_code": "MATH.EE.LIKE_TERMS",
+              "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+              "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+            }
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "MTH1W.C1.4",
+          "scope": "Simplify algebraic expressions using properties of operations with varied tools and representations.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+          "existing_reference": [
+            {
+              "local_skill_code": "MTH1W.C.ALG.LIKE",
+              "canonical_skill_code": "MATH.EE.LIKE_TERMS",
+              "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+              "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+            },
+            {
+              "local_skill_code": "MTH1W.C.ALG.POLY",
+              "canonical_skill_code": "MATH.EE.POLYNOMIAL_OPERATIONS",
+              "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+              "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+            }
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "MTH1W.C1.5",
+          "scope": "Create and solve contextual equations and verify solutions.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+          "existing_reference": [
+            {
+              "local_skill_code": "MTH1W.C.ALG.EQ1",
+              "canonical_skill_code": "MATH.EE.EQUATION.ONE",
+              "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+              "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+            },
+            {
+              "local_skill_code": "MTH1W.C.ALG.EQ2",
+              "canonical_skill_code": "MATH.EE.EQUATION.TWO",
+              "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+              "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+            },
+            {
+              "local_skill_code": "MTH1W.C.ALG.EQ3",
+              "canonical_skill_code": "MATH.EE.EQUATION.MULTISTEP",
+              "source": "scripts/seed_mth1w.py + scripts/map_canonical_curricula.py",
+              "acceptance_status": "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
+            }
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "MTH1W.C2.1",
+          "scope": "Use code to demonstrate algebraic variables, parameters, equations, and inequalities.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c2",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.C2.2",
+          "scope": "Decompose situations into computational steps and create code that represents mathematical relationships or solves problems.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c2",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.C2.3",
+          "scope": "Predict code outcomes and modify constraints, parameters, or outcomes for related mathematical situations.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c2",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.C3.1",
+          "scope": "Compare graph shapes of linear and non-linear relations to reason about rates of change, patterns, and predictions.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.C3.2",
+          "scope": "Represent linear relations with concrete materials, tables, graphs, and equations; connect rate of change and initial value across forms.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.C3.3",
+          "scope": "Compare two relations of the form y=ax+b graphically and algebraically and interpret their intersection in context.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.C4.1",
+          "scope": "Compare characteristics of graphs, tables, and equations for linear and non-linear relations.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c4",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.C4.2",
+          "scope": "Graph specified equation and inequality forms with constants and identify their characteristics, points, and regions.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c4",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.C4.3",
+          "scope": "Translate, reflect, and rotate lines of the form y=ax and describe effects on graphs and equations.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c4",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.C4.4",
+          "scope": "Determine line equations from graphs, tables, and concrete representations by connecting rate to slope and initial value to y-intercept; use them to solve problems.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c4",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.D1.1",
+          "scope": "Analyse a current large-data context and consequences of data collection, storage, representation, and use.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.D1.2",
+          "scope": "Represent and statistically analyse real-life one-variable data, including quartiles and box plots.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.D1.3",
+          "scope": "Create scatter plots, test regression models with technology, determine correlation, and make appropriate predictions.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.D2.1",
+          "scope": "Explain the value and real-life decision uses of mathematical modelling.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d2",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.D2.2",
+          "scope": "Identify a data-requiring question of interest and the information needed to answer it.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d2",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.D2.3",
+          "scope": "Plan and carry out data collection, identifying source, assumptions, variables, and invariants.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d2",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.D2.4",
+          "scope": "Select displays and analyses to construct a model that answers the question while respecting data, context, and assumptions.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d2",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.D2.5",
+          "scope": "Report how a model answers the question, its fit and limitations, and supported predictions.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/d/d2",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.E1.1",
+          "scope": "Research a geometric concept or measurement system in a specific culture or community and connect its relevance to careers and other disciplines.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/e/e1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.E1.2",
+          "scope": "Create and analyse designs involving geometric relationships and circle and triangle properties using varied tools.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/e/e1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.E1.3",
+          "scope": "Solve problems within and between measurement systems, including culturally situated systems, using representations and technology when appropriate.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/e/e1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.E1.4",
+          "scope": "Analyse how changes in dimensions affect perimeter or circumference, area, surface area, and volume.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/e/e1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.E1.5",
+          "scope": "Solve real-life right-triangle side-length problems, including composite shapes.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/e/e1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.E1.6",
+          "scope": "Use prism–pyramid and cylinder–cone volume relationships to solve problems in varied units.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/e/e1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.F1.1",
+          "scope": "Analyse a past or current financial situation and apply contextual mathematical knowledge to inform decisions.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/f/f1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.F1.2",
+          "scope": "Identify appreciation and depreciation situations and answer questions using associated graphs.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/f/f1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.F1.3",
+          "scope": "Compare how interest rate, borrowing duration, interest method, and down payment affect total purchase cost.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/f/f1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "MTH1W.F1.4",
+          "scope": "Modify budgets for changed circumstances and justify the changes.",
+          "source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/f/f1",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        }
+      ]
+    },
+    {
+      "code": "MD_INTEGRATED_ALGEBRA_1_2027_28",
+      "grade_band": "9",
+      "ref": "PR-322@3cefc0c",
+      "url": "https://msde.maryland.gov/media/17822",
+      "items": [
+        {
+          "id": "IA1.AT.A.1",
+          "scope": "Rewrite and interpret linear and exponential expressions to explain key relationship properties.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.AT.A.1"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.AT.B.2",
+          "scope": "Create and solve one-variable linear, exponential, and isolated absolute-value equations; justify and interpret solutions.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.AT.B.3",
+          "scope": "Create and solve one-variable inequalities; represent and interpret solution sets in context.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.AT.B.4",
+          "scope": "Create and graph linear and exponential equations in two variables and interpret their solution sets.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.AT.B.5",
+          "scope": "Create, solve, and analyze contextual systems of two linear equations in two variables.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.AT.B.6",
+          "scope": "Create and graph linear inequalities in two variables as contextual half-plane constraints.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.AT.B.7",
+          "scope": "Represent and analyze contextual systems of two linear inequalities and their intersecting solution regions.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.AT.B.8",
+          "scope": "Model and solve optimization problems using systems of linear inequalities and justified feasible optima.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.AT.B.8"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.AT.B.9",
+          "scope": "Use technology to solve a linear–exponential system and interpret its contextual solution.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.AT.C.10",
+          "scope": "Identify, represent, and analyze functions using domain, range, notation, tables, graphs, equations, and context.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.AT.C.10"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.AT.C.11",
+          "scope": "Calculate or estimate and interpret average rate of change for linear and exponential functions across representations.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.AT.C.11"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.AT.C.12",
+          "scope": "Compare key properties of linear and exponential functions presented in different representations.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.AT.C.12"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.AT.D.13",
+          "scope": "Analyze and model arithmetic and geometric sequences using recursive and explicit representations.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.AT.D.13"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.AT.D.14",
+          "scope": "Represent functions with tables and graphs and interpret contextual features, including piecewise and absolute-value functions.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.AT.D.14"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.AT.D.15",
+          "scope": "Distinguish and construct linear versus exponential contextual models.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.AT.D.15"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.AT.D.16",
+          "scope": "Analyze how input and output changes transform a function graph and affect contextual meaning.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.AT.D.16"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.AT.D.17",
+          "scope": "Find and interpret the inverse of a linear function in context.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.AT.D.17"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.GR.A.1",
+          "scope": "Apply rotations, reflections, and translations and use preserved properties to verify congruence.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.GR.A.1"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.GR.A.2",
+          "scope": "Use rigid-motion congruence to connect corresponding triangle sides and angles.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.GR.B.3",
+          "scope": "Apply triangle-congruence theorems to verify congruence and solve unknown measures.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.GR.B.4",
+          "scope": "Apply angle and slope criteria for parallel and perpendicular lines.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.GR.B.5",
+          "scope": "Use angle relationships and slope criteria to verify parallelogram properties.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.DS.A.1",
+          "scope": "Distinguish correlation from causation.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.DS.A.1"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.DS.A.2",
+          "scope": "Use random samples to reason about population parameters and sample representativeness.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.DS.A.3",
+          "scope": "Evaluate data representations, collection methods, and claims in arguments or reports.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.DS.A.4",
+          "scope": "Plan statistical investigations with answerable questions and valid data-collection methods.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.DS.B.5",
+          "scope": "Analyze and compare one-variable data visualizations using shape, center, and spread.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.DS.B.6",
+          "scope": "Construct and interpret two-way frequency tables, associations, independence, and joint or marginal probability.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [
+            "MATH.IA1.DS.B.6"
+          ],
+          "provisional_relation": "EXISTING_REVIEW_REQUIRED"
+        },
+        {
+          "id": "IA1.DS.B.7",
+          "scope": "Model two-variable quantitative data with scatter plots and linear or exponential functions and assess fit.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "IA1.DS.B.8",
+          "scope": "Interpret components of linear and exponential data models, with and without technology.",
+          "source": "https://msde.maryland.gov/media/17822",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        }
+      ]
+    },
+    {
+      "code": "MD_ALGEBRA_1_2026_27",
+      "grade_band": "9",
+      "ref": "PR-323@df73386",
+      "url": "https://msde.maryland.gov/media/17798",
+      "items": [
+        {
+          "id": "N.RN.B.3",
+          "scope": "Rational and irrational number closure and mixed-operation reasoning",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "N.Q.A.1",
+          "scope": "Units, scale, and origin in quantitative multi-step modeling",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "N.Q.A.2",
+          "scope": "Define quantities appropriate to descriptive modeling and select accuracy consistent with measurement limits",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "N.Q.A.3",
+          "scope": "Report measurement quantities with appropriate precision",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "A.SSE.A.1",
+          "scope": "Interpret terms, factors, and composite parts of contextual expressions",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.EXPR"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "A.SSE.A.2",
+          "scope": "Recognize expression structure for equivalent rewriting",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.EXPR",
+            "A1.EXPR.DIST",
+            "A1.EXPR.COMBINE"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "A.SSE.B.3",
+          "scope": "Equivalent expression forms reveal quadratic and exponential properties",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "A.APR.A.1",
+          "scope": "Polynomial closure and addition, subtraction, multiplication",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "A.APR.B.3",
+          "scope": "Polynomial zeros, factors, and graphical implications",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.POLY.FN"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "A.CED.A.1",
+          "scope": "Create one-variable equations and inequalities for contexts",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.LINEAR.INEQ"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "A.CED.A.2",
+          "scope": "Create and graph multivariable equations with units and scales",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "A.CED.A.3",
+          "scope": "Represent contextual constraints using equations, inequalities, systems",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "A.CED.A.4",
+          "scope": "Rearrange formulas to isolate quantities",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "A.REI.A.1",
+          "scope": "Justify each equivalence-preserving equation-solving step",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.LINEAR.EQ"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "A.REI.B.3",
+          "scope": "Solve linear equations and inequalities in one variable",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.LINEAR.EQ",
+            "A1.LINEAR.EQ.ONE",
+            "A1.LINEAR.EQ.TWO",
+            "A1.LINEAR.INEQ"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "A.REI.B.4",
+          "scope": "Solve quadratics with appropriate methods and solution types",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "A.REI.C.5",
+          "scope": "Justify solution preservation under linear-system elimination",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "A.REI.C.6",
+          "scope": "Solve linear systems exactly and approximately",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.SYS.EQ"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "A.REI.D.10",
+          "scope": "Interpret graphs as solution sets of two-variable equations",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "A.REI.D.11",
+          "scope": "Interpret graph intersections as equation solutions",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.SYS.EQ"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "A.REI.D.12",
+          "scope": "Graph linear inequalities and systems as half-plane regions",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "F.IF.A.1",
+          "scope": "Define functions by unique output for each domain input",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "F.IF.A.2",
+          "scope": "Evaluate and interpret function notation",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.LINEAR.FN.EVAL"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "F.IF.A.3",
+          "scope": "Understand integer-domain sequences as functions",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.SEQ"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "F.IF.B.4",
+          "scope": "Interpret contextual graph and table features",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "F.IF.B.5",
+          "scope": "Connect function domain to graph and context",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "F.IF.B.6",
+          "scope": "Calculate and interpret average rate of change",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.LINEAR.FN",
+            "A1.LINEAR.FN.SLOPE"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "F.IF.C.7",
+          "scope": "Graph functions and display defining features",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.QUAD.FN",
+            "A1.POLY.FN"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "F.IF.C.8",
+          "scope": "Rewrite function expressions to expose properties",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.QUAD.FN"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "F.IF.C.9",
+          "scope": "Compare function properties across representations",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "F.BF.A.1",
+          "scope": "Construct explicit or recursive function rules from context",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.SEQ"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "F.BF.B.3",
+          "scope": "Explain graphical transformations and symmetry of functions",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "F.LE.A.1",
+          "scope": "Distinguish linear and exponential growth models",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.LINEAR.FN",
+            "A1.EXP.FN"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "F.LE.A.2",
+          "scope": "Construct linear and exponential models from representations",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.LINEAR.FN.SLOPE"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "F.LE.A.3",
+          "scope": "Compare eventual growth of exponential and polynomial models",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "F.LE.B.5",
+          "scope": "Interpret model parameters in context",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [
+            "A1.EXP.FN"
+          ],
+          "provisional_relation": "CANDIDATE_PARTIAL_OR_RELATED"
+        },
+        {
+          "id": "S.ID.B.6",
+          "scope": "Fit and evaluate models for bivariate quantitative data",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "S.ID.C.7",
+          "scope": "Interpret linear-model slope and intercept contextually",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "S.ID.C.8",
+          "scope": "Compute and interpret correlation coefficients",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        },
+        {
+          "id": "S.ID.C.9",
+          "scope": "Distinguish correlation from causation",
+          "source": "https://msde.maryland.gov/media/17798",
+          "existing_reference": [],
+          "provisional_relation": "NONE_IDENTIFIED"
+        }
+      ]
+    }
+  ],
+  "grade1_5_aliases": [
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_100",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.ADD_SUB_WITHIN_20",
+      "status": "PROPOSED",
+      "relation": "ALL_OF",
+      "target_skill_codes": [
+        "MATH.NS.ADDITION",
+        "MATH.NS.SUBTRACTION"
+      ],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.EQUATION_BALANCE",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.LONG_DIVISION",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.MULTI_DIGIT_MULTIPLICATION",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.MULTI_STEP_WORD_PROBLEMS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.ORDER_OF_OPERATIONS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.WORD_PROBLEM_WITHIN_100",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.ARITHMETIC.WORD_PROBLEM_WITHIN_20",
+      "status": "PROPOSED",
+      "relation": "ALL_OF",
+      "target_skill_codes": [
+        "MATH.NS.ADDITION",
+        "MATH.NS.SUBTRACTION"
+      ],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.DATA.PICTURE_BAR_GRAPHS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.DECIMALS.PLACE_VALUE_OPERATIONS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.DIVISION.EQUAL_SHARING",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.FRACTIONS.ADD_SUBTRACT_UNLIKE",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.FRACTIONS.DECIMAL_NOTATION",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.FRACTIONS.EQUIVALENCE_OPERATIONS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.FRACTIONS.FRACTIONS_AS_NUMBERS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.FRACTIONS.MULTIPLY_DIVIDE",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.GEOMETRY.ANGLES_LINES_SHAPES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.GEOMETRY.CLASSIFY_2D_FIGURES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.GEOMETRY.COORDINATE_PLANE",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.GEOMETRY.IDENTIFY_COMPOSE_SHAPES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.GEOMETRY.QUADRILATERAL_ATTRIBUTES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.GEOMETRY.SHAPES_EQUAL_SHARES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.AREA_PERIMETER",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.CONVERSION",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.LENGTH_COMPARE",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.MONEY_COUNT",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.TELL_TIME_FIVE_MINUTES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.TELL_TIME_HOUR_HALF_HOUR",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.TELL_TIME_MINUTE_ELAPSED",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MEASUREMENT.VOLUME",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MULTIPLICATION.EQUAL_GROUPS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MULTIPLICATION.MULTIPLICATIVE_COMPARISON",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.MULTIPLICATION.PROPERTIES_FACT_FAMILIES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.NUMBER_SENSE.COUNT_COMPARE_TO_120",
+      "status": "PROPOSED",
+      "relation": "ALL_OF",
+      "target_skill_codes": [
+        "MATH.NS.COUNTING",
+        "MATH.NS.COMPARE_ORDER"
+      ],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.NUMBER_SENSE.FACTORS_MULTIPLES_PATTERNS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.NUMBER_SENSE.PATTERNS_TWO_RULES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.NUMBER_SENSE.SKIP_COUNTING_PATTERNS",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.PLACE_VALUE.HUNDREDS_TENS_ONES",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.PLACE_VALUE.MULTI_DIGIT",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.PLACE_VALUE.ROUNDING_THREE_DIGIT",
+      "status": "UNMAPPED",
+      "relation": null,
+      "target_skill_codes": [],
+      "reviewed_by": null
+    },
+    {
+      "alias": "MATH.ELEMENTARY.PLACE_VALUE.TENS_ONES",
+      "status": "PROPOSED",
+      "relation": "ALL_OF",
+      "target_skill_codes": [
+        "MATH.NS.PLACE_VALUE",
+        "MATH.NS.COMPOSE_DECOMPOSE"
+      ],
+      "reviewed_by": null
+    }
+  ],
+  "safety": {
+    "activation": "FORBIDDEN",
+    "auto_accept_relations": false,
+    "auto_promote_mastery": false,
+    "change_canonical_registry": false,
+    "mutate_student_records": false
+  }
+}
