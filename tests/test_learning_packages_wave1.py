@@ -53,10 +53,10 @@ def test_independent_volume_oracles():
 
 def test_independent_percent_oracles():
     from decimal import Decimal
-    assert Decimal("0.045") * Decimal("200") == Decimal("9")
-    assert Decimal("160") * Decimal("1.03") == Decimal("164.80")
-    assert abs(Decimal("36") - Decimal("40")) / Decimal("40") * 100 == 10
-    assert Decimal("0.075") * Decimal("120") == Decimal("9")
+    assert Decimal("0.045") * Decimal(200) == Decimal(9)
+    assert Decimal(160) * Decimal("1.03") == Decimal("164.80")
+    assert abs(Decimal(36) - Decimal(40)) / Decimal(40) * 100 == 10
+    assert Decimal("0.075") * Decimal(120) == Decimal(9)
 
 
 def test_independent_linear_oracles():
