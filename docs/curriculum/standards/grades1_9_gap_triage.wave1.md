@@ -69,3 +69,18 @@ The initial Wave 1 register identified an official-standards *inventory gap* for
 **Prioritized Grade 6–8 mapping questions:** (1) ratio/rate/proportional reasoning, (2) signed and rational arithmetic, (3) expression/equation/inequality scope, (4) geometry/transformations/Pythagorean reasoning, (5) data/statistics/probability/functions. All five have *some existing local seed evidence*; none can be marked curriculum-complete until official expectation IDs, reviewed canonical definitions, generators, validated practice and assessment contracts are checked independently.
 
 **Next source acquisition:** identify authoritative expectation identifiers and versions for Maryland Grades 6–8, DC Grade 6 and Virginia Grade 6; then compare those official requirements with the 38 local rows and all other seed/pack sources. Grade 1–5 standards inventory and Grade 8's additional legacy seed remain separate unresolved tasks.
+
+## Wave 1 extension — Ontario Grades 1–8 strand-level source acquisition
+
+Added [Ontario Grades 1–8 source acquisition matrix](on_grades1_8_2020.strand_acquisition.wave1.v1.json) based on the [Ontario Ministry's 2020 curriculum overview](https://www.ontario.ca/page/math-curriculum-grades-1-8) and [official curriculum portal](https://www.dcp.edu.gov.on.ca/en/curriculum/elementary-mathematics?grades=n7). This covers **8 grades × 6 official strands = 48 grade-strand audit cells**: A Social-Emotional Learning and Mathematical Processes, B Number, C Algebra (including coding/modelling), D Data, E Spatial Sense, F Financial Literacy. **These 48 cells are neither 48 expectations nor 48 missing concepts**; official *specific expectation IDs* have not yet been transcribed or independently reviewed. Government overview examples are included only when directly described by that source; blanks do not mean the strand is absent.
+
+**High-impact potential alignment gaps to investigate (not confirmed missing content):**
+
+1. **Number progression and fractions, Grades 1–5:** equal-sharing fraction foundations in Grade 1, array multiplication and fraction equivalence in Grade 3, decimals and multi-digit division in Grade 4, percentage and fraction operations in Grade 5. Verify exact B1/B2 expectation IDs and Mihur's content depth.
+2. **Coding and mathematical modelling, Grades 1–8:** Ontario includes these in Algebra across elementary grades. A U.S. equation-solving seed does not prove Ontario coding/modeling readiness. Verify grade-specific C-strand IDs and whether deterministic interactive coding pedagogy exists.
+3. **Financial literacy, Grades 1–8:** explicit F-strand progressions include Canadian coins, transactions, value comparisons, budgeting and credit/debt. Grade 9 financial content does not establish elementary-grade coverage.
+4. **Grade 6–8 transitions:** integer/rational operations, scientific notation, algebraic relationships, data, spatial reasoning and modeling require expectation-specific comparisons with existing Maryland/DC/Virginia seeds.
+
+**Assessment caveat:** The [official Grade 6 Ontario curriculum page](https://www.dcp.edu.gov.on.ca/en/curriculum/elementary-mathematics/grades/g6-math/strands) states that schools were asked from 2021–22 not to assess/evaluate/report on overall social-emotional learning expectations, while continuing instruction. Strand A must not be automatically converted to deterministic mastery requirements; confirm the policy for the relevant grade and year.
+
+**Next gate:** retrieve each grade's official specific-expectation IDs and exact scope, then reconcile Mihur's actual Ontario elementary packs. The machine-readable 48-cell grid deliberately gives **zero accepted mappings**, rather than falsely equating strand presence with curriculum completeness.
