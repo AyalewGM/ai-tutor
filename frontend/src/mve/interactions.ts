@@ -86,7 +86,15 @@ export interface IntegerDisplacementChangedEvent extends MathInteractionBase {
   result: number;
 }
 
+export interface LinearParametersChangedEvent extends MathInteractionBase {
+  type: "LINEAR_PARAMETERS_CHANGED";
+  rise: number;
+  run: number;
+  intercept: number;
+}
+
 export type MathInteractionEvent =
+  | LinearParametersChangedEvent
   | IntegerDisplacementChangedEvent
   | PointPlacedEvent
   | PointMovedEvent
@@ -111,6 +119,11 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "LINEAR_PARAMETERS_CHANGED":
+      return Object.keys(event).every(key => ["schema_version", "type", "rise", "run", "intercept"].includes(key)) &&
+        Number.isSafeInteger(event.rise) && Math.abs(event.rise as number) <= 6 &&
+        Number.isSafeInteger(event.run) && (event.run as number) >= 1 && (event.run as number) <= 6 &&
+        Number.isSafeInteger(event.intercept) && Math.abs(event.intercept as number) <= 4;
     case "INTEGER_DISPLACEMENT_CHANGED": {
       if (Object.keys(event).some(key => !["schema_version", "type", "start", "operand", "operation", "displacement", "result"].includes(key))) return false;
       if (![event.start, event.operand].every(v => Number.isSafeInteger(v) && Math.abs(v as number) <= 10) ||

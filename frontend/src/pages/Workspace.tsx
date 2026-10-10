@@ -1,3 +1,5 @@
+import { InteractiveLinearExplorer } from "../mve/InteractiveLinearExplorer";
+import { showLinearExploration } from "../mve/linearExplorer";
 import { InteractiveIntegerNumberLine } from "../mve/InteractiveIntegerNumberLine";
 import { showIntegerExploration } from "../mve/integerNumberLine";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
@@ -765,6 +767,12 @@ export default function Workspace() {
                     )}
                   {showIntegerExploration(workspace.state, workspace.focus.skill_name) && (
                     <InteractiveIntegerNumberLine
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
+                  {showLinearExploration(workspace.state, workspace.focus.skill_name) && (
+                    <InteractiveLinearExplorer
                       key={workspace.focus.active_skill_id}
                       independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
                     />
