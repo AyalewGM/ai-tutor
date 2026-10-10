@@ -176,7 +176,14 @@
       "mathematical_review": "DRAFT_SCOPE_APPROVED_NOT_MAPPING_ACCEPTED",
       "content_production": "NOT_AUTHORIZED_AS_APPROVED",
       "verification_next": "Obtain independent standards-mapping acceptance and Muse assessment evidence; mathematical scope approval alone does not establish coverage, readiness, or mastery.",
-      "traceability_basis": "LOCAL_RECONCILIATION_TARGET",
+      "traceability_basis": "OFFICIAL_SOURCE_EXPECTATION_GAP",
+      "source_traceability": {
+        "expectation_id": "8.DS.C.6",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "source_version": "Grade 8 MCCRS Mathematics Crosswalk, July 2025; adopted July 29, 2025; implementation SY 2026-2027",
+        "official_scope": "Model a compound-event sample space with an organized list, table, tree diagram, or simulation; identify favorable outcomes and compute their fraction of the full space.",
+        "local_row_relation": "NOT_ESTABLISHED_BY_M8.SP.STAT"
+      },
       "canonical_candidate_evidence": {
         "reviewed_code": "MATH.PROB.COMPOUND.SAMPLE_SPACE",
         "verdict": "APPROVE_MATHEMATICAL_SCOPE_ONLY",
