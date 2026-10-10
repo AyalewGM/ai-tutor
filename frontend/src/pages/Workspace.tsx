@@ -4,8 +4,6 @@ import { InteractiveEquationBalance } from "../mve/InteractiveEquationBalance";
 import { showBalanceExploration } from "../mve/equationBalance";
 import { InteractiveLinearExplorer } from "../mve/InteractiveLinearExplorer";
 import { showLinearExploration } from "../mve/linearExplorer";
-import { InteractiveIntegerNumberLine } from "../mve/InteractiveIntegerNumberLine";
-import { showIntegerExploration } from "../mve/integerNumberLine";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BookOpen, CheckCircle2, ChevronDown, Flag, Lightbulb, Map as MapIcon, HelpCircle, RefreshCcw, Target, Undo2 } from "lucide-react";
@@ -17,8 +15,9 @@ import VoiceChatControls from "../components/chat/VoiceChatControls";
 import MathText from "../components/MathText";
 import ChatMessage from "../components/chat/ChatMessage";
 import LearnPanel from "../components/LearnPanel";
+import { integerAdditionEligible } from "../learningFlowInteractions";
 import { GuidedDistributivePractice } from "../mve/GuidedDistributivePractice";
-import { integerPracticeEligible, integerSeedFromString } from "../mve/integerPractice";
+import { integerSeedFromString } from "../mve/integerPractice";
 import LevelCrest from "../components/LevelCrest";
 import MathKeypad from "../components/MathKeypad";
 import ScratchPad from "../components/ScratchPad";
@@ -761,10 +760,7 @@ export default function Workspace() {
                           <LearnPanel
                             learn={learn}
                             integerPracticeSeed={
-                              integerPracticeEligible(
-                                workspace.state,
-                                workspace.focus.skill_name,
-                              )
+                              integerAdditionEligible(workspace.state, learn)
                                 ? integerSeedFromString(
                                     workspace.problem?.id ??
                                       workspace.focus.active_skill_id,
@@ -787,12 +783,6 @@ export default function Workspace() {
                         independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
                       />
                     )}
-                  {showIntegerExploration(workspace.state, workspace.focus.skill_name) && (
-                    <InteractiveIntegerNumberLine
-                      key={workspace.focus.active_skill_id}
-                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
-                    />
-                  )}
                   {showLinearExploration(workspace.state, workspace.focus.skill_name) && (
                     <InteractiveLinearExplorer
                       key={workspace.focus.active_skill_id}

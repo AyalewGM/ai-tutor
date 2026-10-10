@@ -22,6 +22,7 @@ def _content(
     *examples: dict,
     key_terms: list[tuple[str, str]] | None = None,
     watch_out: list[str] | None = None,
+    guided_interactions: list[str] | None = None,
 ) -> dict:
     return {
         "summary": summary,
@@ -31,6 +32,7 @@ def _content(
             for term, definition in (key_terms or [])
         ],
         "watch_out": list(watch_out or []),
+        "guided_interactions": list(guided_interactions or []),
     }
 
 
@@ -384,6 +386,7 @@ INTEGER_OPS = _content(
         "Sign slips on subtraction: −4 − (−9) becomes −4 + 9.",
         "Forgetting that negative × negative is positive — different signs are negative.",
     ],
+    guided_interactions=["MATH.INT.ADD"],
 )
 
 SLOPE_INTERCEPT = _content(

@@ -8,8 +8,8 @@
  *
  * Verified along the way:
  *   - the LearnPanel-hosted GuidedIntegerNumberLine (data-mve-family=
- *     "integer-addition") and the InteractiveIntegerNumberLine mount only in
- *     guided states and never inside assessment states (DIAGNOSE,
+ *     "integer-addition") mounts only from the explicit MATH.INT.ADD lesson
+ *     contract in guided states and never inside assessment states (DIAGNOSE,
  *     INDEPENDENT_PRACTICE, MASTERY_CHECK) — guided-practice isolation;
  *   - the guided widget's deterministic task, Socratic prompts, marker walk,
  *     misconception diagnosis (WRONG_DIRECTION) and correction loop;
@@ -275,9 +275,9 @@ test('signed-integer guided practice mounts only in guided states and never scor
   await expect(page.getByText(`${SKILL_NAME} · Guided Practice`)).toBeVisible({ timeout: 10000 });
   await expect(page.getByRole('button', { name: 'Hint' })).toBeEnabled();
 
-  // The standalone exploration mounts directly; the reviewed guided widget
-  // lives inside the collapsible learn panel.
-  await expect(interactiveExplorer(page)).toBeVisible();
+  // The broader add/subtract explorer stays disabled for this addition-only
+  // slice; only the explicitly authorized guided addition widget may mount.
+  await expect(interactiveExplorer(page)).toHaveCount(0);
   await openLearnPanel(page);
   await expect(guidedWidget(page)).toBeVisible();
 
@@ -324,9 +324,8 @@ test('signed-integer guided practice mounts only in guided states and never scor
     .textContent();
   expect(secondPrompt).not.toBe(firstPrompt);
 
-  // Solving on, the state machine reaches INDEPENDENT_PRACTICE — still not an
-  // ASSESSMENT_STATE, so the lesson stays available, but both guided widgets
-  // are gated to GUIDED_PRACTICE/REMEDIATION and must unmount.
+  // Solving on, the state machine reaches INDEPENDENT_PRACTICE. The lesson
+  // and every guided interaction must fail closed before independent evidence.
   let prev = first;
   for (let i = 0; i < 6; i++) {
     if ((await settledStateLabel(page)) === 'Independent Practice') break;
@@ -352,7 +351,7 @@ test('signed-integer journey reaches mastery check and completes on independent 
   await registerFamily(page, 'intm');
   await startSignedNumbersSession(page);
 
-  const widgetSeen = { guided: false, explorer: false };
+  const widgetSeen = { guided: false };
   const seen = [];
   let sawMasteryCheck = false;
   let completed = false;
@@ -379,12 +378,12 @@ test('signed-integer journey reaches mastery check and completes on independent 
       continue;
     }
     if (state === 'Guided Practice' && !widgetSeen.guided) {
-      // Confirm both integer widgets are live at least once mid-journey.
-      await expect(interactiveExplorer(page)).toBeVisible();
+      // The broad add/subtract explorer must remain absent; the exact
+      // MATH.INT.ADD lesson contract enables only the reviewed guided widget.
+      await expect(interactiveExplorer(page)).toHaveCount(0);
       await openLearnPanel(page);
       await expect(guidedWidget(page)).toBeVisible();
       widgetSeen.guided = true;
-      widgetSeen.explorer = true;
     }
     if (state === 'Independent Practice' || state === 'Diagnose') {
       await expect(guidedWidget(page)).toHaveCount(0);
