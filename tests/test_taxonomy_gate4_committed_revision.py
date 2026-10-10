@@ -10,15 +10,18 @@ from decimal import Decimal
 from uuid import uuid4
 
 import pytest
-from app.canonical_taxonomy_reconciliation import (
-    PersistedSkillIdentity,
-    validate_identity_revision,
-)
+from sqlalchemy import MetaData, Table, create_engine, delete, inspect, select
+from sqlalchemy.orm import Session
+
 from app.canonical_skill_taxonomy import (
     CanonicalSkillDefinition,
     CanonicalTaxonomy,
     SkillReviewState,
     TaxonomyError,
+)
+from app.canonical_taxonomy_reconciliation import (
+    PersistedSkillIdentity,
+    validate_identity_revision,
 )
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
 from app.diagnostic_models import DiagnosticAttempt, DiagnosticSession
@@ -33,8 +36,6 @@ from app.models import (
     TutorSession,
 )
 from scripts.validate_canonical_alias_map import validate_manifest
-from sqlalchemy import MetaData, Table, create_engine, delete, inspect, select
-from sqlalchemy.orm import Session
 
 ALL_OF_PROFILE_CODES = {
     "MATH.ARITHMETIC.ADD_SUB_WITHIN_20",
