@@ -23,12 +23,19 @@ function GuidedFractionBars({
   denominator = 4, initialNumerator = 1, compareWith, onFractionChange, onMathEvent,
 }: InteractiveFractionBarsProps) {
   const statusId = useId();
+  const comparisonStatusId = useId();
   const initial = normalizeFractionParts(initialNumerator, denominator);
   const [numerator, setNumerator] = useState(initial.numerator);
   const [previousDenominator, setPreviousDenominator] = useState(initial.denominator);
   const d = initial.denominator;
   const target = isValidFractionParts(compareWith) ? compareWith : null;
   const [showComparison, setShowComparison] = useState(false);
+  const [lastTargetKey, setLastTargetKey] = useState<string | null>(null);
+  const targetKey = target ? `${target.numerator}/${target.denominator}` : null;
+  if (lastTargetKey !== targetKey) {
+    setLastTargetKey(targetKey);
+    setShowComparison(false);
+  }
   // Reset local exploration when the example's denominator changes.
   if (previousDenominator !== d) {
     setPreviousDenominator(d);
@@ -71,7 +78,7 @@ function GuidedFractionBars({
             type: "fraction_bar", numerator: target.numerator, denominator: target.denominator,
             aria_label: `${target.numerator} of ${target.denominator} equal parts shaded in comparison bar`,
           }} />
-          <button type="button" aria-describedby={statusId}
+          <button type="button" aria-describedby={comparisonStatusId}
             className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             onClick={() => {
               const left = { numerator: current, denominator: d };
@@ -81,7 +88,7 @@ function GuidedFractionBars({
               onMathEvent?.({ schema_version: 1, type: "FRACTION_COMPARED", left, right: target, relation });
             }}>Explain comparison</button>
           {showComparison && (
-            <p role="status" aria-live="polite" aria-atomic="true">
+            <p id={comparisonStatusId} role="status" aria-live="polite" aria-atomic="true">
               {describeFractionComparison({ numerator: current, denominator: d }, target)}
             </p>
           )}
