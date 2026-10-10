@@ -1,0 +1,780 @@
+{
+  "schema_version": 1,
+  "artifact_id": "md-cross-grade-canonical-scope-cards-r3",
+  "revision": "2026-10-10-r3",
+  "review_state": "DRAFT_CORRECTIONS_PENDING_LIMITED_INDEPENDENT_MATHEMATICAL_REVIEW",
+  "authority": "NONE_NOT_FOR_RUNTIME",
+  "architecture_basis": {
+    "issue": 282,
+    "comment_id": 6094147290,
+    "decision": "Broad angle relationships is reporting-only ALL_OF; complement, supplement, vertical equality and supplied-total adjacent-angle addition require distinct evidence. Expected count is distinct from experimental frequency."
+  },
+  "standards_context": {
+    "jurisdiction": "Maryland",
+    "source_adoption_date": "2025-07-29",
+    "implementation_school_year": "2026-2027",
+    "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+    "source_manifest_pr": 325,
+    "source_expectations": [
+      "7.GR.B.3",
+      "7.DS.C.4",
+      "7.DS.C.5",
+      "7.DS.C.6",
+      "8.GR.A.1",
+      "8.GR.A.3",
+      "8.DS.C.6"
+    ],
+    "note": "Expectation references are provenance for the authoring request, not accepted standards mappings."
+  },
+  "constraints": [
+    "Eight unchanged r1/r2 cards have mathematical-scope approval; the three corrected r3 cards remain pending limited independent review.",
+    "No proposed code is authoritative until Architecture confirms identity and Independent Mathematical Review approves scope.",
+    "Existing broad canonical identities, local seed identifiers, UUIDs, variants and learner evidence remain unchanged.",
+    "Generator availability is overlap evidence only and is not mathematical proof, standards coverage, assessment readiness or mastery evidence.",
+    "Production TAXONOMY remains unchanged and empty.",
+    "M8.G.TRANS and M8.G.SIM are deferred until authoritative Integrated Algebra I/II scope reconciliation; no historical evidence is reinterpreted."
+  ],
+  "cards": [
+    {
+      "code": "MATH.GEO.CIRCLE.CIRCUMFERENCE",
+      "name": "Reason with circle circumference",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.CIRCLES",
+        "generator family MATH.GEO.CIRCLE.CIRCUMFERENCE",
+        "MATH.GEO.CIRCLE.RADIUS_DIAMETER"
+      ],
+      "scope": "Use C=2πr=πd to determine or interpret the circumference of a circle from radius, diameter, or a one-step inverse condition, with units and requested exact or approximate form.",
+      "inclusions": [
+        "Positive rational radius or diameter",
+        "Exact answers in terms of π when requested",
+        "Decimal approximations only to a stated precision",
+        "One-step inverse cases such as C=10π implies d=10",
+        "Contextual interpretation as distance around a circle"
+      ],
+      "exclusions": [
+        "Circle area evidence",
+        "Arc length or sector measures",
+        "Arbitrary symbolic manipulation beyond one-step inversion",
+        "Treating a decimal approximation of π as exact",
+        "Inferring mastery from radius-diameter conversion alone"
+      ],
+      "prerequisites": [
+        "meaning of radius and diameter",
+        "multiplication with rational numbers",
+        "units of length",
+        "meaning of π as circumference-to-diameter ratio"
+      ],
+      "examples": [
+        {
+          "prompt": "A circle has radius 7 cm. Give its circumference exactly.",
+          "answer": "14π cm",
+          "evidence": "direct radius"
+        },
+        {
+          "prompt": "A circle has circumference 10π m. Find its diameter.",
+          "answer": "10 m",
+          "evidence": "one-step inverse"
+        },
+        {
+          "prompt": "A circle has diameter 8 cm. Give its circumference to the nearest tenth using π≈3.14159.",
+          "answer": "25.1 cm",
+          "evidence": "specified approximation"
+        },
+        {
+          "prompt": "A circle has radius 5 cm. Its circumference is 25π cm.",
+          "valid": false,
+          "rationale": "25π is the area, not the circumference"
+        }
+      ],
+      "misconceptions": [
+        "uses πr² for circumference",
+        "uses radius as diameter or diameter as radius",
+        "drops linear units",
+        "reports 3.14-based value as exact"
+      ],
+      "assessment_criteria": [
+        "independent evidence from both radius and diameter",
+        "at least one exact-π and one stated-precision response",
+        "at least one contextual interpretation with linear units",
+        "separate direct and inverse evidence",
+        "do not infer area mastery"
+      ]
+    },
+    {
+      "code": "MATH.GEO.CIRCLE.AREA",
+      "name": "Reason with circle area",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.CIRCLES",
+        "generator family MATH.GEO.CIRCLE.AREA",
+        "MATH.GEO.CIRCLE.RADIUS_DIAMETER"
+      ],
+      "scope": "Use A=πr² to determine or interpret the area of a circle from radius or diameter, and solve bounded one-step inverse cases where A/π is a perfect square, with correct square units and requested exact or approximate form.",
+      "inclusions": [
+        "Positive rational radius or diameter",
+        "Radius extraction from a supplied diameter",
+        "Exact answers in terms of π",
+        "Stated-precision approximations",
+        "Inverse cases whose radius is rational and evident from a perfect-square quotient"
+      ],
+      "exclusions": [
+        "Circumference evidence",
+        "Sector area",
+        "Surface area of cylinders or spheres",
+        "Unbounded radical-solving tasks",
+        "Treating πr as area"
+      ],
+      "prerequisites": [
+        "meaning of radius and diameter",
+        "squaring positive rational numbers",
+        "units of area",
+        "multiplication by π"
+      ],
+      "examples": [
+        {
+          "prompt": "A circle has radius 6 cm. Give its area exactly.",
+          "answer": "36π cm²",
+          "evidence": "direct radius"
+        },
+        {
+          "prompt": "A circle has diameter 10 m. Give its area exactly.",
+          "answer": "25π m²",
+          "evidence": "diameter-to-radius"
+        },
+        {
+          "prompt": "A circle has area 49π cm². Find its radius.",
+          "answer": "7 cm",
+          "evidence": "bounded inverse"
+        },
+        {
+          "prompt": "A circle has radius 4 cm. Its area is 8π cm².",
+          "valid": false,
+          "rationale": "The radius must be squared"
+        }
+      ],
+      "misconceptions": [
+        "uses 2πr for area",
+        "fails to halve a diameter before squaring",
+        "squares π as well as the radius",
+        "uses linear rather than square units"
+      ],
+      "assessment_criteria": [
+        "independent radius and diameter cases",
+        "exact-π and stated-precision evidence",
+        "at least one square-unit interpretation",
+        "one bounded inverse case",
+        "do not infer circumference mastery"
+      ]
+    },
+    {
+      "code": "MATH.GEO.ANGLE.COMPLEMENT",
+      "name": "Reason with complementary angles",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.ANGLES",
+        "generator family MATH.GEO.ANGLE.COMPLEMENT",
+        "unconfirmed historical or persisted spelling MATH.GEO.ANGLE.COMPLEMENT"
+      ],
+      "scope": "Identify and use the fact that two complementary angles have measures summing to 90° to determine an unknown positive angle measure and justify the equation used.",
+      "inclusions": [
+        "Positive whole-number and rational degree measures strictly between 0° and 90°",
+        "Diagram and diagram-independent verbal cases",
+        "One- and two-step linear equations whose geometrically valid solution gives complementary constituent angles",
+        "Verification that the two measures sum to 90°"
+      ],
+      "exclusions": [
+        "Supplementary or linear-pair evidence",
+        "Vertical-angle equality",
+        "Adjacent-angle addition without a supplied 90° total",
+        "Triangle interior or exterior-angle theorems",
+        "Treating a generator-family literal as canonical identity authority"
+      ],
+      "prerequisites": [
+        "angle measure",
+        "addition and subtraction of rational numbers",
+        "equality and one-variable linear equations",
+        "meaning of a right angle"
+      ],
+      "examples": [
+        {
+          "prompt": "Two angles are complementary. One measures 37°. Find the other.",
+          "answer": "53°",
+          "evidence": "complement total"
+        },
+        {
+          "prompt": "Complementary angles measure (2x+10)° and 40°. Find x.",
+          "answer": "20",
+          "evidence": "equation from 90° total"
+        },
+        {
+          "prompt": "Angles measuring 50° and 50° are complementary.",
+          "valid": false,
+          "rationale": "Their measures sum to 100°, not 90°"
+        }
+      ],
+      "misconceptions": [
+        "uses 180° instead of 90°",
+        "assumes adjacency alone makes angles complementary",
+        "accepts zero or negative constituent angles",
+        "reverses the unknown-angle subtraction"
+      ],
+      "assessment_criteria": [
+        "independent numeric and algebraic complementary-angle evidence",
+        "include a diagram-independent verbal case and a diagram case",
+        "require an equation or justification using a 90° total",
+        "include a validity or misconception probe",
+        "do not infer supplementary, vertical, adjacent-addition or triangle-angle mastery"
+      ]
+    },
+    {
+      "code": "MATH.GEO.ANGLE.SUPPLEMENT",
+      "name": "Reason with supplementary angles",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.ANGLES",
+        "generator family MATH.GEO.ANGLE.SUPPLEMENT",
+        "unconfirmed historical or persisted spelling MATH.GEO.ANGLE.SUPPLEMENT"
+      ],
+      "scope": "Identify and use the fact that two supplementary angles have measures summing to 180° to determine an unknown positive angle measure and justify the equation used; a linear pair is an included geometric context, not a separate identity.",
+      "inclusions": [
+        "Positive whole-number and rational degree measures strictly between 0° and 180°",
+        "Linear-pair and nonadjacent supplementary contexts",
+        "One- and two-step linear equations whose geometrically valid solution gives supplementary constituent angles",
+        "Verification that the two measures sum to 180°"
+      ],
+      "exclusions": [
+        "Complementary-angle evidence",
+        "Vertical-angle equality",
+        "Assuming every adjacent pair is supplementary",
+        "Triangle interior or exterior-angle theorems",
+        "Treating linear-pair context as a second mastery credit"
+      ],
+      "prerequisites": [
+        "angle measure",
+        "addition and subtraction of rational numbers",
+        "equality and one-variable linear equations",
+        "meaning of a straight angle"
+      ],
+      "examples": [
+        {
+          "prompt": "Two angles form a linear pair. One measures 68°. Find the other.",
+          "answer": "112°",
+          "evidence": "supplementary linear-pair context"
+        },
+        {
+          "prompt": "Supplementary angles measure (3x+5)° and 80°. Find x.",
+          "answer": "95/3",
+          "evidence": "equation from 180° total"
+        },
+        {
+          "prompt": "Two adjacent angles measure 70° and 80°, so they are supplementary.",
+          "valid": false,
+          "rationale": "Adjacency alone does not establish a 180° total, and these measures sum to 150°"
+        }
+      ],
+      "misconceptions": [
+        "uses 90° instead of 180°",
+        "treats all adjacent angles as supplementary",
+        "uses 360° for a linear pair",
+        "awards separate credit for the same linear-pair evidence"
+      ],
+      "assessment_criteria": [
+        "independent numeric and algebraic supplementary-angle evidence",
+        "include both a linear-pair context and a nonadjacent stated-supplement context",
+        "require an equation or justification using a 180° total",
+        "include an adjacency-alone rejection probe",
+        "do not infer complement, vertical, adjacent-addition or triangle-angle mastery"
+      ]
+    },
+    {
+      "code": "MATH.GEO.ANGLE.VERTICAL_EQUALITY",
+      "name": "Reason with vertical-angle equality",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.ANGLES",
+        "broad historical angle-relationship identities",
+        "generator implementations that include vertical angles"
+      ],
+      "scope": "Identify opposite angles formed by two intersecting lines as vertical angles, use their equality to determine unknown positive angle measures, and justify the equality from the intersection structure.",
+      "inclusions": [
+        "Whole-number and rational degree measures strictly between 0° and 180°",
+        "Numeric and one- or two-step algebraic unknowns",
+        "Selecting the opposite nonadjacent pair at an intersection",
+        "Verification that vertical angles have equal measures"
+      ],
+      "exclusions": [
+        "Adjacent-angle sums",
+        "Supplementary linear-pair evidence",
+        "Parallel-line transversal theorems",
+        "Triangle angle relationships",
+        "Assuming visually similar angles are vertical without intersection structure"
+      ],
+      "prerequisites": [
+        "angle measure",
+        "intersecting lines and opposite rays",
+        "equality and one-variable linear equations"
+      ],
+      "examples": [
+        {
+          "prompt": "Opposite angles formed by intersecting lines measure (3x+5)° and 80°. Find x.",
+          "answer": "25",
+          "evidence": "vertical equality"
+        },
+        {
+          "prompt": "At an intersection, one angle is 47°. Find its vertical angle.",
+          "answer": "47°",
+          "evidence": "opposite pair"
+        },
+        {
+          "prompt": "Two adjacent angles at an intersection are vertical angles.",
+          "valid": false,
+          "rationale": "Vertical angles are opposite and nonadjacent"
+        }
+      ],
+      "misconceptions": [
+        "confuses vertical with adjacent angles",
+        "assumes every equal-looking pair is vertical",
+        "uses a 180° sum instead of equality for the opposite pair",
+        "accepts a nonpositive or straight constituent angle"
+      ],
+      "assessment_criteria": [
+        "independent numeric and algebraic vertical-angle evidence",
+        "require identification of the opposite nonadjacent pair",
+        "require an equality-based equation or justification",
+        "include a vertical-versus-adjacent misconception probe",
+        "do not infer supplementary, adjacent-addition or triangle-angle mastery"
+      ]
+    },
+    {
+      "code": "MATH.GEO.ANGLE.ADJACENT_ADDITION",
+      "name": "Reason with adjacent-angle addition",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.ANGLES",
+        "angle-addition principle",
+        "broad historical angle-relationship identities"
+      ],
+      "scope": "Use addition of nonoverlapping adjacent angle measures in either explicit part-whole structure: the whole is supplied and a part is missing, or every constituent part is supplied and the whole is missing; adjacency alone supplies no numerical total.",
+      "inclusions": [
+        "Positive whole-number and rational constituent measures",
+        "A supplied whole or total with one constituent part missing",
+        "All nonoverlapping constituent parts supplied with the whole angle missing",
+        "Numeric missing-part, missing-whole, and bounded one- or two-step algebraic cases",
+        "Verification that the adjacent nonoverlapping parts sum to the whole"
+      ],
+      "exclusions": [
+        "Inferring a 90°, 180°, or 360° total from adjacency alone",
+        "Overlapping angle regions",
+        "Complementary or supplementary credit unless that total is explicitly part of the primary item",
+        "Triangle interior or exterior-angle theorems",
+        "Multiple mastery credits from one primary attempt"
+      ],
+      "prerequisites": [
+        "angle measure",
+        "part-whole addition",
+        "addition and subtraction of rational numbers",
+        "equality and one-variable linear equations"
+      ],
+      "examples": [
+        {
+          "prompt": "Adjacent angles partition an 85° angle. One part is 32°. Find the other.",
+          "answer": "53°",
+          "evidence": "supplied whole"
+        },
+        {
+          "prompt": "Adjacent angles measure (x+12)° and 28° and together form a 70° angle. Find x.",
+          "answer": "30",
+          "evidence": "explicit partition equation"
+        },
+        {
+          "prompt": "Two nonoverlapping adjacent angles measure 32° and 53°. Find the measure of the whole angle they form.",
+          "answer": "85°",
+          "evidence": "missing whole from supplied parts"
+        },
+        {
+          "prompt": "Two adjacent angles measure 30° and 40°, so their total must be 90°.",
+          "valid": false,
+          "rationale": "Adjacency alone supplies no fixed total; the two stated measures sum to 70°"
+        }
+      ],
+      "misconceptions": [
+        "assumes adjacent angles are automatically complementary",
+        "assumes adjacent angles are automatically supplementary",
+        "double-counts an overlapping region",
+        "subtracts from an unstated conventional total"
+      ],
+      "assessment_criteria": [
+        "independent missing-part evidence with an explicitly supplied whole or total",
+        "independent missing-whole evidence with all nonoverlapping constituent parts supplied",
+        "include numeric and algebraic cases",
+        "require an addition equation or part-whole justification",
+        "include an adjacency-alone no-total rejection probe",
+        "one primary atom per attempt; do not award complement, supplement or reporting-profile credit from the same evidence"
+      ]
+    },
+    {
+      "code": "MATH.GEO.TRIANGLE.ANGLE_RELATIONSHIPS",
+      "name": "Reason with triangle interior and exterior angles",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.TRIANGLES",
+        "MATH.GEO.TRIANGLE.MISSING_ANGLE"
+      ],
+      "scope": "Use the 180° interior-angle sum and the exterior-angle theorem to determine unknown triangle angle measures, test geometric validity, and justify relationships.",
+      "inclusions": [
+        "Missing interior angles",
+        "Exterior angle equals the sum of the two remote interior angles",
+        "Linear-pair connection at a triangle vertex",
+        "Whole-number and rational degree measures",
+        "Rejecting nonpositive or impossible angle sets"
+      ],
+      "exclusions": [
+        "Triangle congruence or similarity",
+        "Side-length triangle inequality",
+        "Pythagorean theorem",
+        "Polygon interior-angle sums beyond triangles",
+        "Assuming a diagram is drawn to scale"
+      ],
+      "prerequisites": [
+        "angle measure",
+        "supplementary linear pairs",
+        "addition and subtraction of rational numbers",
+        "one-variable linear equations"
+      ],
+      "examples": [
+        {
+          "prompt": "A triangle has angles 48° and 67°. Find the third angle.",
+          "answer": "65°",
+          "evidence": "interior sum"
+        },
+        {
+          "prompt": "A triangle has remote interior angles 42° and 73°. Find the adjacent exterior angle.",
+          "answer": "115°",
+          "evidence": "exterior theorem"
+        },
+        {
+          "prompt": "A triangle has angles 90°, 60°, and 40°.",
+          "valid": false,
+          "rationale": "The interior sum is 190°, not 180°"
+        }
+      ],
+      "misconceptions": [
+        "uses 360° as a triangle interior sum",
+        "adds the adjacent interior angle to remote interior angles for the exterior theorem",
+        "trusts visual scale over stated measures",
+        "accepts zero or negative angles"
+      ],
+      "assessment_criteria": [
+        "separate interior-sum and exterior-angle evidence",
+        "at least one validity/rejection probe",
+        "require a theorem-based equation or explanation",
+        "do not infer congruence, similarity, or side-length reasoning"
+      ]
+    },
+    {
+      "code": "MATH.PROB.EVENT.LIKELIHOOD_0_TO_1",
+      "name": "Quantify event likelihood from 0 to 1",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.PROB.EXPERIMENTAL",
+        "broad historical probability identities"
+      ],
+      "scope": "Within a finite discrete probability model in which every elementary outcome has positive probability, represent and interpret event likelihood on the inclusive scale from 0 to 1; probability 0 identifies an impossible event, probability 1 identifies a certain event, and intermediate values compare relative likelihood.",
+      "inclusions": [
+        "Finite discrete probability models whose elementary outcomes all have positive probability",
+        "Fraction and decimal probability representations in the inclusive interval [0,1]",
+        "Percent probability representations from 0% to 100% inclusive",
+        "Conversion among equivalent fraction, decimal, and percent representations",
+        "Ordering and comparing likelihoods",
+        "Impossible, unlikely, equally likely, likely, and certain interpretations within the bounded finite-discrete model",
+        "For one event and its complement, p=0.5 means the two are equally likely; distinct events can have equal probability at values other than 0.5"
+      ],
+      "exclusions": [
+        "Computing experimental relative frequency from data",
+        "Constructing compound sample spaces",
+        "Continuous or general probability spaces where a probability-zero event need not be impossible",
+        "Formal odds notation",
+        "Probability values below 0 or above 1",
+        "Claiming that a likely event must occur"
+      ],
+      "prerequisites": [
+        "fractions, decimals, and percents as equivalent representations",
+        "comparison of rational numbers",
+        "event and outcome language"
+      ],
+      "examples": [
+        {
+          "prompt": "Place probabilities 0, 0.25, 0.5, 0.9, and 1 from impossible to certain.",
+          "answer": "0, 0.25, 0.5, 0.9, 1"
+        },
+        {
+          "prompt": "In the finite sample space for one fair six-sided die, what is the probability of rolling 7?",
+          "answer": "0; the event is impossible in this model.",
+          "evidence": "finite-discrete probability-zero event"
+        },
+        {
+          "prompt": "In the finite sample space for one fair six-sided die, what is the probability of rolling a number from 1 through 6?",
+          "answer": "1; the event is certain in this model.",
+          "evidence": "finite-discrete probability-one event"
+        },
+        {
+          "prompt": "Express 1/4 as a decimal and percent probability.",
+          "answer": "0.25 and 25%",
+          "evidence": "cross-representation equivalence"
+        },
+        {
+          "prompt": "An event has probability 0.5. Compare the event with its complement.",
+          "answer": "They are equally likely.",
+          "evidence": "event-complement meaning of 0.5"
+        },
+        {
+          "prompt": "Two distinct events each have probability 0.3. Can they be equally likely?",
+          "answer": "yes",
+          "evidence": "equal probability need not be 0.5"
+        },
+        {
+          "prompt": "A probability is 120%.",
+          "valid": false,
+          "rationale": "Percent probability must lie from 0% to 100% inclusive"
+        }
+      ],
+      "misconceptions": [
+        "treats probability 0.7 as 7 percent",
+        "believes likely means guaranteed",
+        "orders fractions by denominator alone",
+        "accepts fractions or decimals outside [0,1] or percents outside 0%..100%",
+        "claims that two distinct events can be equally likely only when both have probability 0.5",
+        "applies the finite-discrete 0/impossible converse to an excluded continuous probability model"
+      ],
+      "assessment_criteria": [
+        "include finite-discrete event-model evidence for probability 0 as impossible and probability 1 as certain",
+        "include percent boundaries 0% and 100%",
+        "require observable fraction-decimal-percent equivalence evidence",
+        "compare and order multiple representations",
+        "distinguish event-versus-complement equality at p=0.5 from equal probability of two distinct events",
+        "require interpretation as well as representation",
+        "do not infer experimental-frequency or compound-event mastery"
+      ]
+    },
+    {
+      "code": "MATH.PROB.EXPERIMENTAL.FREQUENCY",
+      "name": "Estimate probability using long-run relative frequency",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.PROB.EXPERIMENTAL",
+        "generator family MATH.PROB.EXPERIMENTAL",
+        "distinct generator family MATH.PROB.EXPECTED_COUNT"
+      ],
+      "scope": "Compute and interpret experimental probability as successes divided by trials, and reason qualitatively that relative frequency tends to stabilize near an underlying probability over many independent repeated trials conducted under unchanged conditions with a constant event probability, without requiring exact agreement.",
+      "inclusions": [
+        "Finite independent repeated trials under unchanged conditions with constant event probability",
+        "Clearly identified event counts and total trial counts",
+        "Relative frequency as a fraction, decimal, or percent",
+        "Comparing results from different trial counts",
+        "Qualitative long-run stabilization under the stated stable repeated-trial model",
+        "Recognizing that finite experimental frequency need not equal a theoretical probability exactly"
+      ],
+      "exclusions": [
+        "Expected-count prediction using n×p as mastery evidence",
+        "Treating predicted or expected count as guaranteed",
+        "Inferring causation from frequency",
+        "Formal confidence intervals or hypothesis tests",
+        "Compound-event enumeration",
+        "Replacing a theoretical model solely because one finite experiment differs"
+      ],
+      "prerequisites": [
+        "ratios and unit rates",
+        "fractions, decimals, and percents",
+        "event and trial language"
+      ],
+      "examples": [
+        {
+          "prompt": "A spinner lands blue 18 times in 30 trials. Find the experimental probability.",
+          "answer": "3/5"
+        },
+        {
+          "prompt": "A fair coin gives 47 heads in 100 flips. Does this disprove probability 1/2?",
+          "answer": "no; finite results can vary"
+        },
+        {
+          "prompt": "A spinner is changed after 50 trials, then 50 more trials are combined with the first results. May the combined frequency be treated as stabilizing to one unchanged underlying probability?",
+          "answer": "not without a model that accounts for the changed conditions",
+          "evidence": "changed-condition boundary"
+        },
+        {
+          "prompt": "An event with probability 0.3 will occur exactly 30 times in 100 trials.",
+          "valid": false,
+          "rationale": "30 is an expectation, not a guarantee"
+        }
+      ],
+      "misconceptions": [
+        "reverses successes and trials",
+        "uses raw count instead of relative frequency when trial totals differ",
+        "expects exact theoretical frequency in every sample",
+        "treats more trials as making all outcomes identical",
+        "expects stabilization to one unchanged probability when conditions change or trials are dependent or adaptive"
+      ],
+      "assessment_criteria": [
+        "independent computation and interpretation evidence",
+        "compare samples with different totals using relative rather than raw frequency",
+        "include a long-run qualitative explanation under independent unchanged-condition trials with constant event probability",
+        "include a changed-condition or dependent/adaptive-trial probe that rejects unjustified stabilization",
+        "include expected-count-versus-guarantee only as a non-credit misconception contrast",
+        "do not award or infer expected-count mastery",
+        "do not infer formal statistical inference"
+      ]
+    },
+    {
+      "code": "MATH.PROB.MODEL.COMPARE_THEORY_EXPERIMENT",
+      "name": "Compare theoretical and experimental probability models",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.PROB.EXPERIMENTAL",
+        "generator family MATH.PROB.THEORY.VS_EXPERIMENT"
+      ],
+      "scope": "Compare a stated theoretical probability model with experimental relative-frequency evidence, explain plausible random variation, and identify when persistent discrepancies justify questioning assumptions or model fit.",
+      "inclusions": [
+        "Calculate both theoretical and experimental probabilities",
+        "Compare using common representations",
+        "Explain finite-sample variation",
+        "Recognize that larger repeated samples generally provide more stable evidence",
+        "Identify structural reasons a model may be inappropriate when supplied"
+      ],
+      "exclusions": [
+        "Automatically rejecting a model after any mismatch",
+        "Formal goodness-of-fit tests",
+        "Unstated causal conclusions",
+        "Compound-event sample-space construction",
+        "Assuming experimental data proves exact theoretical probability"
+      ],
+      "prerequisites": [
+        "experimental relative frequency",
+        "probability scale from 0 to 1",
+        "equivalent rational representations",
+        "difference and absolute difference"
+      ],
+      "examples": [
+        {
+          "prompt": "A model predicts 1/2; an event occurs 52 times in 100 trials. Is the result necessarily inconsistent?",
+          "answer": "no; the difference can be random variation"
+        },
+        {
+          "prompt": "A supposedly fair die shows 6 on 240 of 300 trials. What should be questioned?",
+          "answer": "the fairness/model assumptions"
+        },
+        {
+          "prompt": "Experimental probability differs from theory, so theory is always wrong.",
+          "valid": false,
+          "rationale": "Finite samples vary"
+        }
+      ],
+      "misconceptions": [
+        "expects exact equality in finite trials",
+        "replaces theory with one observed proportion",
+        "ignores sample size",
+        "compares raw counts with unequal trial totals"
+      ],
+      "assessment_criteria": [
+        "compute or identify both model and observed proportion",
+        "include one plausible-variation case and one clear model-mismatch case",
+        "require explanation referencing sample size or assumptions",
+        "do not infer formal statistical-test mastery"
+      ]
+    },
+    {
+      "code": "MATH.PROB.COMPOUND.SAMPLE_SPACE",
+      "name": "Represent sample spaces and probabilities for compound events",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "M7.SP.PROB legacy local composite",
+        "broad historical probability identities"
+      ],
+      "scope": "Construct and use an organized sample space for a finite two-stage experiment to determine probabilities of compound events, distinguishing ordered outcomes and updating outcome counts when dependence is explicitly described.",
+      "inclusions": [
+        "Organized lists, tables, and tree diagrams",
+        "Two-stage experiments with equally likely elementary outcomes",
+        "AND and OR event descriptions in ordinary language",
+        "Complement of an event",
+        "With-replacement cases and explicitly bounded without-replacement cases",
+        "Probability as favorable elementary outcomes over total equally likely outcomes"
+      ],
+      "exclusions": [
+        "Assuming stages are independent without evidence",
+        "General conditional-probability notation",
+        "Bayes theorem",
+        "Continuous probability",
+        "Three or more stages unless separately reviewed",
+        "Counting unordered pairs when order changes the outcome"
+      ],
+      "prerequisites": [
+        "simple event probability",
+        "multiplication principle for counting",
+        "fractions",
+        "event, outcome, and sample-space language"
+      ],
+      "examples": [
+        {
+          "prompt": "Flip a coin twice. List the ordered sample space.",
+          "answer": "HH, HT, TH, TT"
+        },
+        {
+          "prompt": "Roll a fair die and flip a fair coin. Find P(even and heads).",
+          "answer": "1/4"
+        },
+        {
+          "prompt": "When drawing without replacement, use the same denominator on the second draw.",
+          "valid": false,
+          "rationale": "The available outcome count changes"
+        },
+        {
+          "prompt": "HT and TH are the same ordered outcome.",
+          "valid": false,
+          "rationale": "They differ when trial order is recorded"
+        }
+      ],
+      "misconceptions": [
+        "adds probabilities for an AND event without justification",
+        "multiplies dependent stages as though unchanged",
+        "omits ordered outcomes",
+        "counts favorable outcomes over a non-equally-likely list"
+      ],
+      "assessment_criteria": [
+        "construct an explicit sample space in at least two representations",
+        "separate independent and explicitly dependent cases",
+        "include AND, OR, and complement evidence",
+        "require denominator justification from elementary outcomes",
+        "do not infer general conditional probability"
+      ]
+    }
+  ],
+  "noncanonical_profiles": [
+    {
+      "label": "md_angle_relationships",
+      "role": "REPORTING_ONLY_FAIL_CLOSED_ALL_OF",
+      "members": [
+        "MATH.GEO.ANGLE.COMPLEMENT",
+        "MATH.GEO.ANGLE.SUPPLEMENT",
+        "MATH.GEO.ANGLE.VERTICAL_EQUALITY",
+        "MATH.GEO.ANGLE.ADJACENT_ADDITION"
+      ],
+      "prohibitions": [
+        "No canonical row or UUID",
+        "No variant, attempt, diagnostic attempt or mastery event",
+        "No evidence propagation or duplicate credit",
+        "Satisfied only when every required member has separately accepted evidence"
+      ]
+    }
+  ]
+}
