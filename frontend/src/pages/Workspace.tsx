@@ -739,7 +739,7 @@ export default function Workspace() {
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {learn && (
+                  {learn && (workspace.state === "GUIDED_PRACTICE" || workspace.state === "REMEDIATION") && (
                     <div className="rounded-lg border border-accent/50 bg-accent/5">
                       <button
                         type="button"
