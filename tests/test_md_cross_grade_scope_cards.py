@@ -1,0 +1,97 @@
+"""Fail-closed checks for Maryland cross-grade draft scope cards."""
+
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+MANIFEST = (
+    ROOT
+    / "docs"
+    / "curriculum"
+    / "taxonomy_candidate_scope.md_cross_grade.v1.json"
+)
+
+
+def _load() -> dict:
+    return json.loads(MANIFEST.read_text(encoding="utf-8"))
+
+
+def test_scope_bundle_is_draft_and_non_authoritative() -> None:
+    data = _load()
+    assert data["revision"] == "2026-10-10-r1"
+    assert data["review_state"] == "DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW"
+    assert data["authority"] == "NONE_NOT_FOR_RUNTIME"
+    assert data["standards_context"]["mapping_status"] == "PROVISIONAL_NOT_ACCEPTED"
+    assert data["architecture_basis"]["issue"] == 282
+    assert data["architecture_basis"]["comment_id"] == 6093222041
+
+
+def test_eight_bounded_candidates_are_complete_and_unique() -> None:
+    cards = _load()["cards"]
+    expected = {
+        "MATH.GEO.CIRCLE.CIRCUMFERENCE",
+        "MATH.GEO.CIRCLE.AREA",
+        "MATH.GEO.ANGLE.RELATIONSHIPS",
+        "MATH.GEO.TRIANGLE.ANGLE_RELATIONSHIPS",
+        "MATH.PROB.EVENT.LIKELIHOOD_0_TO_1",
+        "MATH.PROB.EXPERIMENTAL.FREQUENCY",
+        "MATH.PROB.MODEL.COMPARE_THEORY_EXPERIMENT",
+        "MATH.PROB.COMPOUND.SAMPLE_SPACE",
+    }
+    assert {card["code"] for card in cards} == expected
+    assert len(cards) == len(expected)
+
+    required = {
+        "scope",
+        "inclusions",
+        "exclusions",
+        "prerequisites",
+        "examples",
+        "misconceptions",
+        "assessment_criteria",
+        "possible_overlaps",
+    }
+    for card in cards:
+        assert card["review_state"] == "DRAFT"
+        assert card["identity_status"] == (
+            "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW"
+        )
+        assert required <= card.keys()
+        assert all(card[field] for field in required)
+        assert any(example.get("valid") is False for example in card["examples"])
+
+
+def test_decomposition_keeps_distinct_evidence_distinct() -> None:
+    by_code = {card["code"]: card for card in _load()["cards"]}
+
+    circumference = by_code["MATH.GEO.CIRCLE.CIRCUMFERENCE"]
+    area = by_code["MATH.GEO.CIRCLE.AREA"]
+    assert "Circle area evidence" in circumference["exclusions"]
+    assert "Circumference evidence" in area["exclusions"]
+
+    angle = by_code["MATH.GEO.ANGLE.RELATIONSHIPS"]
+    triangle = by_code["MATH.GEO.TRIANGLE.ANGLE_RELATIONSHIPS"]
+    assert "Triangle interior or exterior-angle theorems" in angle["exclusions"]
+    assert "supplementary linear pairs" in triangle["prerequisites"]
+
+    simple_probability = {
+        "MATH.PROB.EVENT.LIKELIHOOD_0_TO_1",
+        "MATH.PROB.EXPERIMENTAL.FREQUENCY",
+        "MATH.PROB.MODEL.COMPARE_THEORY_EXPERIMENT",
+    }
+    assert simple_probability < set(by_code)
+    assert "Compound-event sample-space construction" in by_code[
+        "MATH.PROB.MODEL.COMPARE_THEORY_EXPERIMENT"
+    ]["exclusions"]
+
+
+def test_bundle_does_not_claim_runtime_mapping_or_mastery() -> None:
+    data = _load()
+    serialized = json.dumps(data).lower()
+    assert "canonical_uuid" not in serialized
+    assert "reviewed" not in {
+        card["review_state"].lower() for card in data["cards"]
+    }
+    assert "student_id" not in serialized
+    assert "verified_mastery" not in serialized
+    assert "accepted_mapping" not in serialized
