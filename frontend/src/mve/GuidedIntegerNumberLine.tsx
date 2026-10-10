@@ -6,7 +6,7 @@ export function GuidedIntegerNumberLine({seed = 17, independentAssessment = fals
   seed?: number; independentAssessment: boolean;
 }) {
   if (independentAssessment) return null;
-  return <IntegerActivity seed={seed} />;
+  return <IntegerActivity key={seed} seed={seed} />;
 }
 
 function IntegerActivity({seed}: {seed: number}) {
@@ -16,8 +16,8 @@ function IntegerActivity({seed}: {seed: number}) {
   const [hint, setHint] = useState(0);
   const [response, setResponse] = useState("");
   const [feedback, setFeedback] = useState("");
-  const min = Math.min(-18, task.a - 10, task.answer - 2);
-  const max = Math.max(18, task.a + 10, task.answer + 2);
+  const min = -20;
+  const max = 20;
   const points = Array.from({length: max - min + 1}, (_, i) => i + min);
   const move = (delta:number) => setPosition(p => Math.max(min, Math.min(max, p + delta)));
 
