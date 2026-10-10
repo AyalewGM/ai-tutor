@@ -40,20 +40,20 @@ function solveSignedNumbers(text) {
   const t = text.trim().replace(/\s+/g, ' ');
   let m;
   // add tier: "Evaluate -5 + 3." / "Evaluate -5 + (-3)."
-  if ((m = t.match(/^Evaluate (-?\d+) \+ \(?(-?\d+)\)?\.$/))) {
+  if ((m = t.match(/^Evaluate\s+\(?(-?\d+)\)?\s*\+\s*\(?(-?\d+)\)?\.$/))) {
     return String(parseInt(m[1], 10) + parseInt(m[2], 10));
   }
   // subtract tier: "Evaluate 3 - (-4)." / "Evaluate -4 - 9."
-  if ((m = t.match(/^Evaluate (-?\d+) - \(?(-?\d+)\)?\.$/))) {
+  if ((m = t.match(/^Evaluate\s+\(?(-?\d+)\)?\s*-\s*\(?(-?\d+)\)?\.$/))) {
     return String(parseInt(m[1], 10) - parseInt(m[2], 10));
   }
   // multiply tier: "Evaluate (-6) × (-4)." / "Evaluate -6 × 4."
-  if ((m = t.match(/^Evaluate \(?(-?\d+)\)? × \(?(-?\d+)\)?\.$/))) {
+  if ((m = t.match(/^Evaluate\s+\(?(-?\d+)\)?\s*×\s*\(?(-?\d+)\)?\.$/))) {
     return String(parseInt(m[1], 10) * parseInt(m[2], 10));
   }
   // divide tier: "Evaluate (-24) ÷ (-6)." / "Evaluate 24 ÷ -6." is not
   // generated (divisor is parenthesized), but tolerate both forms.
-  if ((m = t.match(/^Evaluate \(?(-?\d+)\)? ÷ \(?(-?\d+)\)?\.$/))) {
+  if ((m = t.match(/^Evaluate\s+\(?(-?\d+)\)?\s*÷\s*\(?(-?\d+)\)?\.$/))) {
     return String(parseInt(m[1], 10) / parseInt(m[2], 10));
   }
   // word tier contexts.
