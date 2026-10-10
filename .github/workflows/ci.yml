@@ -115,6 +115,9 @@ jobs:
         working-directory: e2e
         run: npx playwright install --with-deps chromium
 
+      - name: Guided MVE keyboard and assessment browser checks
+        run: node e2e/mve-guided-browser.mjs
+
       - name: Run synthetic browser E2E
         working-directory: e2e
         env:

@@ -1,3 +1,11 @@
+import { InteractiveDotPlotExplorer } from "../mve/InteractiveDotPlotExplorer";
+import { showDotPlotExploration } from "../mve/dotPlotExplorer";
+import { InteractiveEquationBalance } from "../mve/InteractiveEquationBalance";
+import { showBalanceExploration } from "../mve/equationBalance";
+import { InteractiveLinearExplorer } from "../mve/InteractiveLinearExplorer";
+import { showLinearExploration } from "../mve/linearExplorer";
+import { InteractiveIntegerNumberLine } from "../mve/InteractiveIntegerNumberLine";
+import { showIntegerExploration } from "../mve/integerNumberLine";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BookOpen, CheckCircle2, ChevronDown, Flag, Lightbulb, Map as MapIcon, HelpCircle, RefreshCcw, Target, Undo2 } from "lucide-react";
@@ -762,6 +770,30 @@ export default function Workspace() {
                         independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
                       />
                     )}
+                  {showIntegerExploration(workspace.state, workspace.focus.skill_name) && (
+                    <InteractiveIntegerNumberLine
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
+                  {showLinearExploration(workspace.state, workspace.focus.skill_name) && (
+                    <InteractiveLinearExplorer
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
+                  {showBalanceExploration(workspace.state, workspace.focus.skill_name) && (
+                    <InteractiveEquationBalance
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
+                  {showDotPlotExploration(workspace.state, workspace.focus.skill_name) && (
+                    <InteractiveDotPlotExplorer
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
                   <div className="problem-wrap">
                     <div className={`problem ${feedback}`} aria-live="polite">
                       <MathText

@@ -1,3 +1,4 @@
+import type { IntegerOperation } from "./integerNumberLine";
 import type { MathObject, Point2D } from "./contracts";
 
 /**
@@ -96,7 +97,38 @@ export interface FractionSimplifiedEvent extends MathInteractionBase {
   reduced: { numerator: number; denominator: number };
 }
 
+export interface IntegerDisplacementChangedEvent extends MathInteractionBase {
+  type: "INTEGER_DISPLACEMENT_CHANGED";
+  start: number;
+  operand: number;
+  operation: IntegerOperation;
+  displacement: number;
+  result: number;
+}
+
+export interface LinearParametersChangedEvent extends MathInteractionBase {
+  type: "LINEAR_PARAMETERS_CHANGED";
+  rise: number;
+  run: number;
+  intercept: number;
+}
+
+export interface BalanceOperationAppliedEvent extends MathInteractionBase {
+  type: "BALANCE_OPERATION_APPLIED";
+  operation: "add_unit" | "remove_unit" | "remove_x" | "divide_two" | "divide_three";
+  left_x: number; left_units: number; right_x: number; right_units: number;
+}
+
+export interface ExplorerDatasetChangedEvent extends MathInteractionBase {
+  type: "EXPLORER_DATASET_CHANGED";
+  values: readonly number[];
+}
+
 export type MathInteractionEvent =
+  | ExplorerDatasetChangedEvent
+  | BalanceOperationAppliedEvent
+  | LinearParametersChangedEvent
+  | IntegerDisplacementChangedEvent
   | PointPlacedEvent
   | PointMovedEvent
   | SegmentCreatedEvent
@@ -140,6 +172,34 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "EXPLORER_DATASET_CHANGED":
+      return Object.keys(event).every(key => ["schema_version", "type", "values"].includes(key)) &&
+        Array.isArray(event.values) && event.values.length >= 1 && event.values.length <= 6 &&
+        Array.from(event.values).every(value => Number.isSafeInteger(value) && value >= 0 && value <= 12);
+    case "BALANCE_OPERATION_APPLIED": {
+      if (!Object.keys(event).every(key => ["schema_version", "type", "operation", "left_x", "left_units", "right_x", "right_units"].includes(key))) return false;
+      const values = [event.left_x, event.left_units, event.right_x, event.right_units];
+      if (!values.every(Number.isSafeInteger)) return false;
+      const [lx, lu, rx, ru] = values as number[];
+      if (rx < 0 || lx > 3 || lx <= rx || lu < 0 || ru > 12 || ru < lu) return false;
+      if (event.operation === "add_unit") return ru < 12;
+      if (event.operation === "remove_unit") return lu > 0;
+      if (event.operation === "remove_x") return rx > 0;
+      const divisor = event.operation === "divide_two" ? 2 : event.operation === "divide_three" ? 3 : 0;
+      return divisor > 0 && (values as number[]).every(value => value % divisor === 0);
+    }
+    case "LINEAR_PARAMETERS_CHANGED":
+      return Object.keys(event).every(key => ["schema_version", "type", "rise", "run", "intercept"].includes(key)) &&
+        Number.isSafeInteger(event.rise) && Math.abs(event.rise as number) <= 6 &&
+        Number.isSafeInteger(event.run) && (event.run as number) >= 1 && (event.run as number) <= 6 &&
+        Number.isSafeInteger(event.intercept) && Math.abs(event.intercept as number) <= 4;
+    case "INTEGER_DISPLACEMENT_CHANGED": {
+      if (Object.keys(event).some(key => !["schema_version", "type", "start", "operand", "operation", "displacement", "result"].includes(key))) return false;
+      if (![event.start, event.operand].every(v => Number.isSafeInteger(v) && Math.abs(v as number) <= 10) ||
+          (event.operation !== "add" && event.operation !== "subtract")) return false;
+      const delta = event.operation === "add" ? event.operand as number : -(event.operand as number);
+      return event.displacement === delta && event.result === (event.start as number) + delta;
+    }
     case "POINT_PLACED":
       return isPoint2D(event.point);
     case "POINT_MOVED":
