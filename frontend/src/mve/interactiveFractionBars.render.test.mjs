@@ -48,7 +48,7 @@ await build({
   outfile: bundlePath,
 });
 
-const { InteractiveFractionBars } = await import(bundlePath);
+const { InteractiveFractionBars, fractionComparisonTarget } = await import(bundlePath);
 const render = (props) =>
   renderToStaticMarkup(React.createElement(InteractiveFractionBars, props));
 
@@ -147,4 +147,24 @@ test("equivalence construction emits no bar until a multiplier is chosen", () =>
   globalThis.__mveVisualCalls.length = 0;
   render({ independentAssessment: false, denominator: 4, initialNumerator: 1 });
   assert.equal(globalThis.__mveVisualCalls.length, 1);
+});
+
+test("comparison target derives only from validated spec.math fractions", () => {
+  const spec = { type: "fraction_bar", numerator: 1, denominator: 2 };
+  assert.deepEqual(
+    fractionComparisonTarget({ ...spec, math: [{ kind: "fraction", numerator: 3, denominator: 4 }] }),
+    { numerator: 3, denominator: 4 });
+  assert.deepEqual(
+    fractionComparisonTarget({ ...spec, math: { kind: "fraction", numerator: 3, denominator: 4 } }),
+    { numerator: 3, denominator: 4 });
+  assert.equal(
+    fractionComparisonTarget({ ...spec, math: [{ kind: "fraction", numerator: 1, denominator: 2 }] }), null);
+  assert.equal(
+    fractionComparisonTarget({ ...spec, math: [{ kind: "fraction", numerator: 9, denominator: 4 }] }), null);
+  assert.equal(
+    fractionComparisonTarget({ ...spec, math: [{ kind: "point", x: 1, y: 2 }] }), null);
+  assert.equal(fractionComparisonTarget(spec), null);
+  assert.equal(
+    fractionComparisonTarget({ type: "number_line", math: [{ kind: "fraction", numerator: 3, denominator: 4 }] }), null);
+  assert.equal(fractionComparisonTarget(null), null);
 });

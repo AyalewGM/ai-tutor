@@ -1,6 +1,7 @@
 import { useId, useState } from "react";
 import ProblemVisual from "../components/ProblemVisual";
 import type { MathInteractionEvent } from "./interactions";
+import type { VisualSpec } from "./contracts";
 import { normalizeFractionParts, changeShadedParts, describeFraction, compareFractions, describeFractionComparison, isValidFractionParts, validScaleFactors, scaleFraction, describeEquivalence, simplifyFraction, describeSimplification, type FractionParts } from "./fractionMath";
 
 /** Guided exploration only; never mount in independent assessment. */
@@ -17,6 +18,29 @@ export interface InteractiveFractionBarsProps {
 export function InteractiveFractionBars(props: InteractiveFractionBarsProps) {
   if (props.independentAssessment) return null;
   return <GuidedFractionBars {...props} />;
+}
+
+/**
+ * Derive a validated guided comparison target from a fraction-bar spec.
+ * Backends may attach a second `MathFraction` in `spec.math`; anything else
+ * (or nothing) yields null so the comparison section stays hidden.
+ */
+export function fractionComparisonTarget(spec: {
+  type?: string;
+  numerator?: number;
+  denominator?: number;
+  math?: VisualSpec["math"];
+} | null | undefined): FractionParts | null {
+  if (!spec || (spec.type !== "fraction_bar" && spec.type !== "ratio_bar")) return null;
+  const objects = Array.isArray(spec.math) ? spec.math : spec.math ? [spec.math] : [];
+  for (const obj of objects) {
+    if (obj.kind !== "fraction") continue;
+    const parts = { numerator: obj.numerator, denominator: obj.denominator };
+    if (!isValidFractionParts(parts)) continue;
+    if (parts.numerator === spec.numerator && parts.denominator === spec.denominator) continue;
+    return parts;
+  }
+  return null;
 }
 
 function GuidedFractionBars({

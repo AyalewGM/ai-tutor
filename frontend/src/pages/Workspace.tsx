@@ -10,6 +10,7 @@ import MathText from "../components/MathText";
 import ChatMessage from "../components/chat/ChatMessage";
 import LearnPanel from "../components/LearnPanel";
 import { GuidedDistributivePractice } from "../mve/GuidedDistributivePractice";
+import { InteractiveFractionBars, fractionComparisonTarget } from "../mve/InteractiveFractionBars";
 import LevelCrest from "../components/LevelCrest";
 import MathKeypad from "../components/MathKeypad";
 import ScratchPad from "../components/ScratchPad";
@@ -771,6 +772,23 @@ export default function Workspace() {
                       />
                     </div>
                     <ProblemVisual spec={workspace.problem?.visual ?? null} />
+                    {(workspace.state === "GUIDED_PRACTICE" ||
+                      workspace.state === "REMEDIATION") &&
+                      workspace.problem?.visual?.type === "fraction_bar" && (
+                        <InteractiveFractionBars
+                          key={workspace.problem.id}
+                          independentAssessment={
+                            workspace.state !== "GUIDED_PRACTICE" &&
+                            workspace.state !== "REMEDIATION"
+                          }
+                          denominator={workspace.problem.visual.denominator}
+                          initialNumerator={workspace.problem.visual.numerator}
+                          compareWith={
+                            fractionComparisonTarget(workspace.problem.visual) ??
+                            undefined
+                          }
+                        />
+                      )}
                     <ScratchPad />
                     {feedback === "correct" && <ConfettiBurst trigger={celebrate} />}
                   </div>
