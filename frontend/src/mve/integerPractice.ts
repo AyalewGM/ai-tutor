@@ -27,7 +27,7 @@ export function checkIntegerAnswer(
 ): Readonly<{correct: boolean; diagnosis: IntegerDiagnosis; guidance: string}> {
   const expected = exactIntegerSum(task.a, task.b);
   const raw = response.trim();
-  if (!/^(0|-?[1-9]\\d*)$/.test(raw) || raw.length > 5 || !Number.isSafeInteger(Number(raw))) {
+  if (!/^(0|-?[1-9]\d*)$/.test(raw) || raw.length > 5 || !Number.isSafeInteger(Number(raw))) {
     return { correct: false, diagnosis: "INVALID", guidance: "Enter one whole integer, without decimals, extra signs or leading zeroes." };
   }
   const n = Number(raw);
