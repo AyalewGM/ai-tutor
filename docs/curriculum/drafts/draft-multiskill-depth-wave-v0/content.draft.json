@@ -1,0 +1,1645 @@
+{
+  "package_id": "draft-multiskill-depth-wave-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "purpose": "Reusable, original content depth patterns for arithmetic, fractions, decimals and geometry; not curriculum mapping",
+  "copyright_policy": "Original Mihur-authored question text, not copied from IXL, Kumon, Zearn or school boards.",
+  "content_research_observations": [
+    "Incremental difficulty and repetition with purposeful variation",
+    "Worked explanations, progressive hints and misconception diagnosis",
+    "Representations, transfer contexts, and explicit error-analysis questions"
+  ],
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "runtime_activation": false,
+  "practice_items": [
+    {
+      "item_id": "draft-depth-addition_regroup-01",
+      "provisional_skill": "ADDITION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "fluency",
+      "question": "Compute 28 + 17.",
+      "operands": {
+        "a": 28,
+        "b": 17
+      },
+      "operation": "add",
+      "expected": "45",
+      "answer_contract": "integer",
+      "hints": [
+        "Align place values and regroup when a column totals ten or more",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "28 + 17 = 45. Check by subtracting 17 from 45."
+      ],
+      "worked_solution": "28 + 17 = 45. Check by subtracting 17 from 45.",
+      "misconception_tag": "Forgetting to regroup a set of ten",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-addition_regroup-02",
+      "provisional_skill": "ADDITION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "fluency",
+      "question": "A class collected 46 cans on Monday and 35 on Tuesday. How many cans in total?",
+      "operands": {
+        "a": 46,
+        "b": 35
+      },
+      "operation": "add",
+      "expected": "81",
+      "answer_contract": "integer",
+      "hints": [
+        "Align place values and regroup when a column totals ten or more",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "46 + 35 = 81. Check by subtracting 35 from 81."
+      ],
+      "worked_solution": "46 + 35 = 81. Check by subtracting 35 from 81.",
+      "misconception_tag": "Forgetting to regroup a set of ten",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-addition_regroup-03",
+      "provisional_skill": "ADDITION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "guided-representation",
+      "question": "Compute 158 + 67; show where regrouping occurs.",
+      "operands": {
+        "a": 158,
+        "b": 67
+      },
+      "operation": "add",
+      "expected": "225",
+      "answer_contract": "integer",
+      "hints": [
+        "Align place values and regroup when a column totals ten or more",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "158 + 67 = 225. Check by subtracting 67 from 225."
+      ],
+      "worked_solution": "158 + 67 = 225. Check by subtracting 67 from 225.",
+      "misconception_tag": "Forgetting to regroup a set of ten",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-addition_regroup-04",
+      "provisional_skill": "ADDITION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "guided-representation",
+      "question": "A library received 276 books, then 148 more. How many books were added?",
+      "operands": {
+        "a": 276,
+        "b": 148
+      },
+      "operation": "add",
+      "expected": "424",
+      "answer_contract": "integer",
+      "hints": [
+        "Align place values and regroup when a column totals ten or more",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "276 + 148 = 424. Check by subtracting 148 from 424."
+      ],
+      "worked_solution": "276 + 148 = 424. Check by subtracting 148 from 424.",
+      "misconception_tag": "Forgetting to regroup a set of ten",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-addition_regroup-05",
+      "provisional_skill": "ADDITION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "contextual-transfer",
+      "question": "A student adds 329 and 186. What is the correct sum?",
+      "operands": {
+        "a": 329,
+        "b": 186
+      },
+      "operation": "add",
+      "expected": "515",
+      "answer_contract": "integer",
+      "hints": [
+        "Align place values and regroup when a column totals ten or more",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "329 + 186 = 515. Check by subtracting 186 from 515."
+      ],
+      "worked_solution": "329 + 186 = 515. Check by subtracting 186 from 515.",
+      "misconception_tag": "Forgetting to regroup a set of ten",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-addition_regroup-06",
+      "provisional_skill": "ADDITION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "contextual-transfer",
+      "question": "Two teams score 478 and 257 points. What is their combined score?",
+      "operands": {
+        "a": 478,
+        "b": 257
+      },
+      "operation": "add",
+      "expected": "735",
+      "answer_contract": "integer",
+      "hints": [
+        "Align place values and regroup when a column totals ten or more",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "478 + 257 = 735. Check by subtracting 257 from 735."
+      ],
+      "worked_solution": "478 + 257 = 735. Check by subtracting 257 from 735.",
+      "misconception_tag": "Forgetting to regroup a set of ten",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-addition_regroup-07",
+      "provisional_skill": "ADDITION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "error-analysis",
+      "question": "A student forgets to carry while adding 605 and 198. Find the correct total.",
+      "operands": {
+        "a": 605,
+        "b": 198
+      },
+      "operation": "add",
+      "expected": "803",
+      "answer_contract": "integer",
+      "hints": [
+        "Align place values and regroup when a column totals ten or more",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "605 + 198 = 803. Check by subtracting 198 from 803."
+      ],
+      "worked_solution": "605 + 198 = 803. Check by subtracting 198 from 803.",
+      "misconception_tag": "Forgetting to regroup a set of ten",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-addition_regroup-08",
+      "provisional_skill": "ADDITION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "error-analysis",
+      "question": "A school has 749 students in one group and 386 in another. How many students altogether?",
+      "operands": {
+        "a": 749,
+        "b": 386
+      },
+      "operation": "add",
+      "expected": "1135",
+      "answer_contract": "integer",
+      "hints": [
+        "Align place values and regroup when a column totals ten or more",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "749 + 386 = 1135. Check by subtracting 386 from 1135."
+      ],
+      "worked_solution": "749 + 386 = 1135. Check by subtracting 386 from 1135.",
+      "misconception_tag": "Forgetting to regroup a set of ten",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-subtraction_regroup-01",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "fluency",
+      "question": "Compute 52 − 18.",
+      "operands": {
+        "a": 52,
+        "b": 18
+      },
+      "operation": "subtract",
+      "expected": "34",
+      "answer_contract": "integer",
+      "hints": [
+        "Regroup one higher place into ten of the next lower place",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "52 − 18 = 34. Check 34 + 18 = 52."
+      ],
+      "worked_solution": "52 − 18 = 34. Check 34 + 18 = 52.",
+      "misconception_tag": "Subtracting smaller digit from larger regardless of position",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-subtraction_regroup-02",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "fluency",
+      "question": "There are 73 tickets; 29 are sold. How many remain?",
+      "operands": {
+        "a": 73,
+        "b": 29
+      },
+      "operation": "subtract",
+      "expected": "44",
+      "answer_contract": "integer",
+      "hints": [
+        "Regroup one higher place into ten of the next lower place",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "73 − 29 = 44. Check 44 + 29 = 73."
+      ],
+      "worked_solution": "73 − 29 = 44. Check 44 + 29 = 73.",
+      "misconception_tag": "Subtracting smaller digit from larger regardless of position",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-subtraction_regroup-03",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "guided-representation",
+      "question": "Compute 204 − 76; explain any regrouping across zero.",
+      "operands": {
+        "a": 204,
+        "b": 76
+      },
+      "operation": "subtract",
+      "expected": "128",
+      "answer_contract": "integer",
+      "hints": [
+        "Regroup one higher place into ten of the next lower place",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "204 − 76 = 128. Check 128 + 76 = 204."
+      ],
+      "worked_solution": "204 − 76 = 128. Check 128 + 76 = 204.",
+      "misconception_tag": "Subtracting smaller digit from larger regardless of position",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-subtraction_regroup-04",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "guided-representation",
+      "question": "A warehouse ships 187 of its 315 boxes. How many are left?",
+      "operands": {
+        "a": 315,
+        "b": 187
+      },
+      "operation": "subtract",
+      "expected": "128",
+      "answer_contract": "integer",
+      "hints": [
+        "Regroup one higher place into ten of the next lower place",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "315 − 187 = 128. Check 128 + 187 = 315."
+      ],
+      "worked_solution": "315 − 187 = 128. Check 128 + 187 = 315.",
+      "misconception_tag": "Subtracting smaller digit from larger regardless of position",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-subtraction_regroup-05",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "contextual-transfer",
+      "question": "A student subtracts 258 from 602 without regrouping. What is the correct difference?",
+      "operands": {
+        "a": 602,
+        "b": 258
+      },
+      "operation": "subtract",
+      "expected": "344",
+      "answer_contract": "integer",
+      "hints": [
+        "Regroup one higher place into ten of the next lower place",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "602 − 258 = 344. Check 344 + 258 = 602."
+      ],
+      "worked_solution": "602 − 258 = 344. Check 344 + 258 = 602.",
+      "misconception_tag": "Subtracting smaller digit from larger regardless of position",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-subtraction_regroup-06",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "contextual-transfer",
+      "question": "A club has 840 dollars and spends 375. How much remains?",
+      "operands": {
+        "a": 840,
+        "b": 375
+      },
+      "operation": "subtract",
+      "expected": "465",
+      "answer_contract": "integer",
+      "hints": [
+        "Regroup one higher place into ten of the next lower place",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "840 − 375 = 465. Check 465 + 375 = 840."
+      ],
+      "worked_solution": "840 − 375 = 465. Check 465 + 375 = 840.",
+      "misconception_tag": "Subtracting smaller digit from larger regardless of position",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-subtraction_regroup-07",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "error-analysis",
+      "question": "Check a student's subtraction of 468 from 1003 by adding back. What is the correct difference?",
+      "operands": {
+        "a": 1003,
+        "b": 468
+      },
+      "operation": "subtract",
+      "expected": "535",
+      "answer_contract": "integer",
+      "hints": [
+        "Regroup one higher place into ten of the next lower place",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "1003 − 468 = 535. Check 535 + 468 = 1003."
+      ],
+      "worked_solution": "1003 − 468 = 535. Check 535 + 468 = 1003.",
+      "misconception_tag": "Subtracting smaller digit from larger regardless of position",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-subtraction_regroup-08",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "grade_suggestion": "2-4",
+      "level": "error-analysis",
+      "question": "A town has 1200 trees; 587 are removed. How many remain?",
+      "operands": {
+        "a": 1200,
+        "b": 587
+      },
+      "operation": "subtract",
+      "expected": "613",
+      "answer_contract": "integer",
+      "hints": [
+        "Regroup one higher place into ten of the next lower place",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "1200 − 587 = 613. Check 613 + 587 = 1200."
+      ],
+      "worked_solution": "1200 − 587 = 613. Check 613 + 587 = 1200.",
+      "misconception_tag": "Subtracting smaller digit from larger regardless of position",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-multiplication_groups-01",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "fluency",
+      "question": "Compute 6 × 7.",
+      "operands": {
+        "a": 6,
+        "b": 7
+      },
+      "operation": "multiply",
+      "expected": "42",
+      "answer_contract": "integer",
+      "hints": [
+        "Model equal groups or an array; use partial products",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "6 groups of 7 make 42; verify by equal groups or partial products."
+      ],
+      "worked_solution": "6 groups of 7 make 42; verify by equal groups or partial products.",
+      "misconception_tag": "Using addition of factors rather than equal-group multiplication",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-multiplication_groups-02",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "fluency",
+      "question": "There are 8 equal boxes with 9 pencils each. How many pencils?",
+      "operands": {
+        "a": 8,
+        "b": 9
+      },
+      "operation": "multiply",
+      "expected": "72",
+      "answer_contract": "integer",
+      "hints": [
+        "Model equal groups or an array; use partial products",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "8 groups of 9 make 72; verify by equal groups or partial products."
+      ],
+      "worked_solution": "8 groups of 9 make 72; verify by equal groups or partial products.",
+      "misconception_tag": "Using addition of factors rather than equal-group multiplication",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-multiplication_groups-03",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "guided-representation",
+      "question": "An array has 12 rows of 6 tiles. How many tiles?",
+      "operands": {
+        "a": 12,
+        "b": 6
+      },
+      "operation": "multiply",
+      "expected": "72",
+      "answer_contract": "integer",
+      "hints": [
+        "Model equal groups or an array; use partial products",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "12 groups of 6 make 72; verify by equal groups or partial products."
+      ],
+      "worked_solution": "12 groups of 6 make 72; verify by equal groups or partial products.",
+      "misconception_tag": "Using addition of factors rather than equal-group multiplication",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-multiplication_groups-04",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "guided-representation",
+      "question": "A hall has 14 rows with 8 seats each. How many seats?",
+      "operands": {
+        "a": 14,
+        "b": 8
+      },
+      "operation": "multiply",
+      "expected": "112",
+      "answer_contract": "integer",
+      "hints": [
+        "Model equal groups or an array; use partial products",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "14 groups of 8 make 112; verify by equal groups or partial products."
+      ],
+      "worked_solution": "14 groups of 8 make 112; verify by equal groups or partial products.",
+      "misconception_tag": "Using addition of factors rather than equal-group multiplication",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-multiplication_groups-05",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "contextual-transfer",
+      "question": "A student adds 16+7 for 16 groups of 7. What is the correct product?",
+      "operands": {
+        "a": 16,
+        "b": 7
+      },
+      "operation": "multiply",
+      "expected": "112",
+      "answer_contract": "integer",
+      "hints": [
+        "Model equal groups or an array; use partial products",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "16 groups of 7 make 112; verify by equal groups or partial products."
+      ],
+      "worked_solution": "16 groups of 7 make 112; verify by equal groups or partial products.",
+      "misconception_tag": "Using addition of factors rather than equal-group multiplication",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-multiplication_groups-06",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "contextual-transfer",
+      "question": "A store packs 24 bundles of 9 items. How many items?",
+      "operands": {
+        "a": 24,
+        "b": 9
+      },
+      "operation": "multiply",
+      "expected": "216",
+      "answer_contract": "integer",
+      "hints": [
+        "Model equal groups or an array; use partial products",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "24 groups of 9 make 216; verify by equal groups or partial products."
+      ],
+      "worked_solution": "24 groups of 9 make 216; verify by equal groups or partial products.",
+      "misconception_tag": "Using addition of factors rather than equal-group multiplication",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-multiplication_groups-07",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "error-analysis",
+      "question": "A student reverses the operation and adds instead of multiplying. What is 35 × 12?",
+      "operands": {
+        "a": 35,
+        "b": 12
+      },
+      "operation": "multiply",
+      "expected": "420",
+      "answer_contract": "integer",
+      "hints": [
+        "Model equal groups or an array; use partial products",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "35 groups of 12 make 420; verify by equal groups or partial products."
+      ],
+      "worked_solution": "35 groups of 12 make 420; verify by equal groups or partial products.",
+      "misconception_tag": "Using addition of factors rather than equal-group multiplication",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-multiplication_groups-08",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "error-analysis",
+      "question": "There are 42 teams of 15 participants. How many participants?",
+      "operands": {
+        "a": 42,
+        "b": 15
+      },
+      "operation": "multiply",
+      "expected": "630",
+      "answer_contract": "integer",
+      "hints": [
+        "Model equal groups or an array; use partial products",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "42 groups of 15 make 630; verify by equal groups or partial products."
+      ],
+      "worked_solution": "42 groups of 15 make 630; verify by equal groups or partial products.",
+      "misconception_tag": "Using addition of factors rather than equal-group multiplication",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-division_groups-01",
+      "provisional_skill": "DIVISION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "fluency",
+      "question": "Compute 42 ÷ 6.",
+      "operands": {
+        "a": 42,
+        "b": 6
+      },
+      "operation": "divide",
+      "expected": "7",
+      "answer_contract": "integer",
+      "hints": [
+        "Use the inverse multiplication fact to verify the quotient",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "42 ÷ 6 = 7; check 7 × 6 = 42."
+      ],
+      "worked_solution": "42 ÷ 6 = 7; check 7 × 6 = 42.",
+      "misconception_tag": "Confusing number of groups with items per group",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-division_groups-02",
+      "provisional_skill": "DIVISION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "fluency",
+      "question": "Share 72 stickers equally among 8 children. How many each?",
+      "operands": {
+        "a": 72,
+        "b": 8
+      },
+      "operation": "divide",
+      "expected": "9",
+      "answer_contract": "integer",
+      "hints": [
+        "Use the inverse multiplication fact to verify the quotient",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "72 ÷ 8 = 9; check 9 × 8 = 72."
+      ],
+      "worked_solution": "72 ÷ 8 = 9; check 9 × 8 = 72.",
+      "misconception_tag": "Confusing number of groups with items per group",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-division_groups-03",
+      "provisional_skill": "DIVISION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "guided-representation",
+      "question": "Place 96 counters into groups of 12. How many groups?",
+      "operands": {
+        "a": 96,
+        "b": 12
+      },
+      "operation": "divide",
+      "expected": "8",
+      "answer_contract": "integer",
+      "hints": [
+        "Use the inverse multiplication fact to verify the quotient",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "96 ÷ 12 = 8; check 8 × 12 = 96."
+      ],
+      "worked_solution": "96 ÷ 12 = 8; check 8 × 12 = 96.",
+      "misconception_tag": "Confusing number of groups with items per group",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-division_groups-04",
+      "provisional_skill": "DIVISION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "guided-representation",
+      "question": "Pack 144 books into boxes holding 9 books each. How many boxes?",
+      "operands": {
+        "a": 144,
+        "b": 9
+      },
+      "operation": "divide",
+      "expected": "16",
+      "answer_contract": "integer",
+      "hints": [
+        "Use the inverse multiplication fact to verify the quotient",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "144 ÷ 9 = 16; check 16 × 9 = 144."
+      ],
+      "worked_solution": "144 ÷ 9 = 16; check 16 × 9 = 144.",
+      "misconception_tag": "Confusing number of groups with items per group",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-division_groups-05",
+      "provisional_skill": "DIVISION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "contextual-transfer",
+      "question": "A student multiplies 168 by 7 instead of dividing. What is the correct quotient?",
+      "operands": {
+        "a": 168,
+        "b": 7
+      },
+      "operation": "divide",
+      "expected": "24",
+      "answer_contract": "integer",
+      "hints": [
+        "Use the inverse multiplication fact to verify the quotient",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "168 ÷ 7 = 24; check 24 × 7 = 168."
+      ],
+      "worked_solution": "168 ÷ 7 = 24; check 24 × 7 = 168.",
+      "misconception_tag": "Confusing number of groups with items per group",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-division_groups-06",
+      "provisional_skill": "DIVISION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "contextual-transfer",
+      "question": "Split 216 marbles into 12 equal bags. How many per bag?",
+      "operands": {
+        "a": 216,
+        "b": 12
+      },
+      "operation": "divide",
+      "expected": "18",
+      "answer_contract": "integer",
+      "hints": [
+        "Use the inverse multiplication fact to verify the quotient",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "216 ÷ 12 = 18; check 18 × 12 = 216."
+      ],
+      "worked_solution": "216 ÷ 12 = 18; check 18 × 12 = 216.",
+      "misconception_tag": "Confusing number of groups with items per group",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-division_groups-07",
+      "provisional_skill": "DIVISION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "error-analysis",
+      "question": "A student uses subtraction once instead of repeated grouping. Find 360 ÷ 15.",
+      "operands": {
+        "a": 360,
+        "b": 15
+      },
+      "operation": "divide",
+      "expected": "24",
+      "answer_contract": "integer",
+      "hints": [
+        "Use the inverse multiplication fact to verify the quotient",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "360 ÷ 15 = 24; check 24 × 15 = 360."
+      ],
+      "worked_solution": "360 ÷ 15 = 24; check 24 × 15 = 360.",
+      "misconception_tag": "Confusing number of groups with items per group",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-division_groups-08",
+      "provisional_skill": "DIVISION_GROUPS",
+      "grade_suggestion": "3-5",
+      "level": "error-analysis",
+      "question": "A school has 504 chairs arranged in 18 equal rows. How many chairs per row?",
+      "operands": {
+        "a": 504,
+        "b": 18
+      },
+      "operation": "divide",
+      "expected": "28",
+      "answer_contract": "integer",
+      "hints": [
+        "Use the inverse multiplication fact to verify the quotient",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "504 ÷ 18 = 28; check 28 × 18 = 504."
+      ],
+      "worked_solution": "504 ÷ 18 = 28; check 28 × 18 = 504.",
+      "misconception_tag": "Confusing number of groups with items per group",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-like_fraction_addition-01",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "fluency",
+      "question": "Add 1/5 + 3/5. Give the simplest fraction.",
+      "operands": {
+        "a": 1,
+        "b": 3,
+        "d": 5
+      },
+      "operation": "fraction_add",
+      "expected": "4/5",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Keep the shared denominator, add numerators, then simplify",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "1/5 + 3/5 = 4/5 = 4/5."
+      ],
+      "worked_solution": "1/5 + 3/5 = 4/5 = 4/5.",
+      "misconception_tag": "Adding denominators when denominators already match",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-like_fraction_addition-02",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "fluency",
+      "question": "A ribbon is 2/8 m long; another is 3/8 m. Find the total length in metres as a simplest fraction.",
+      "operands": {
+        "a": 2,
+        "b": 3,
+        "d": 8
+      },
+      "operation": "fraction_add",
+      "expected": "5/8",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Keep the shared denominator, add numerators, then simplify",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "2/8 + 3/8 = 5/8 = 5/8."
+      ],
+      "worked_solution": "2/8 + 3/8 = 5/8 = 5/8.",
+      "misconception_tag": "Adding denominators when denominators already match",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-like_fraction_addition-03",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "guided-representation",
+      "question": "Combine 3/7 and 2/7 of a unit. Give the simplest fraction.",
+      "operands": {
+        "a": 3,
+        "b": 2,
+        "d": 7
+      },
+      "operation": "fraction_add",
+      "expected": "5/7",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Keep the shared denominator, add numerators, then simplify",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "3/7 + 2/7 = 5/7 = 5/7."
+      ],
+      "worked_solution": "3/7 + 2/7 = 5/7 = 5/7.",
+      "misconception_tag": "Adding denominators when denominators already match",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-like_fraction_addition-04",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "guided-representation",
+      "question": "A recipe uses 4/9 cup of flour, then 5/9 more. How many cups altogether? Answer as a simplest fraction.",
+      "operands": {
+        "a": 4,
+        "b": 5,
+        "d": 9
+      },
+      "operation": "fraction_add",
+      "expected": "1/1",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Keep the shared denominator, add numerators, then simplify",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "4/9 + 5/9 = 9/9 = 1/1."
+      ],
+      "worked_solution": "4/9 + 5/9 = 9/9 = 1/1.",
+      "misconception_tag": "Adding denominators when denominators already match",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-like_fraction_addition-05",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "contextual-transfer",
+      "question": "A student adds denominators while computing 5/11 + 4/11. Find the correct simplest fraction.",
+      "operands": {
+        "a": 5,
+        "b": 4,
+        "d": 11
+      },
+      "operation": "fraction_add",
+      "expected": "9/11",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Keep the shared denominator, add numerators, then simplify",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "5/11 + 4/11 = 9/11 = 9/11."
+      ],
+      "worked_solution": "5/11 + 4/11 = 9/11 = 9/11.",
+      "misconception_tag": "Adding denominators when denominators already match",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-like_fraction_addition-06",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "contextual-transfer",
+      "question": "Two walks are 7/12 km and 5/12 km. What is the combined distance in km?",
+      "operands": {
+        "a": 7,
+        "b": 5,
+        "d": 12
+      },
+      "operation": "fraction_add",
+      "expected": "1/1",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Keep the shared denominator, add numerators, then simplify",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "7/12 + 5/12 = 12/12 = 1/1."
+      ],
+      "worked_solution": "7/12 + 5/12 = 12/12 = 1/1.",
+      "misconception_tag": "Adding denominators when denominators already match",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-like_fraction_addition-07",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "error-analysis",
+      "question": "A student claims 7/13 + 6/13 = (7+6)/(13+13). Give the correct simplest fraction.",
+      "operands": {
+        "a": 7,
+        "b": 6,
+        "d": 13
+      },
+      "operation": "fraction_add",
+      "expected": "1/1",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Keep the shared denominator, add numerators, then simplify",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "7/13 + 6/13 = 13/13 = 1/1."
+      ],
+      "worked_solution": "7/13 + 6/13 = 13/13 = 1/1.",
+      "misconception_tag": "Adding denominators when denominators already match",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-like_fraction_addition-08",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "error-analysis",
+      "question": "A container has 9/15 litre, then receives 8/15 litre. How many litres? Give the simplest fraction.",
+      "operands": {
+        "a": 9,
+        "b": 8,
+        "d": 15
+      },
+      "operation": "fraction_add",
+      "expected": "17/15",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Keep the shared denominator, add numerators, then simplify",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "9/15 + 8/15 = 17/15 = 17/15."
+      ],
+      "worked_solution": "9/15 + 8/15 = 17/15 = 17/15.",
+      "misconception_tag": "Adding denominators when denominators already match",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-decimal_addition-01",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "fluency",
+      "question": "Compute 1.25 + 2.35. Give the exact decimal to two places.",
+      "operands": {
+        "a_cents": 125,
+        "b_cents": 235
+      },
+      "operation": "decimal_cents_add",
+      "expected": "3.60",
+      "answer_contract": "decimal_2_places",
+      "hints": [
+        "Write both numbers in hundredths and align decimal points",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "1.25 + 2.35 = 3.60, with hundredths aligned."
+      ],
+      "worked_solution": "1.25 + 2.35 = 3.60, with hundredths aligned.",
+      "misconception_tag": "Misaligning decimal place values",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-decimal_addition-02",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "fluency",
+      "question": "Two items cost $2.40 and $1.75. What is their total cost in dollars?",
+      "operands": {
+        "a_cents": 240,
+        "b_cents": 175
+      },
+      "operation": "decimal_cents_add",
+      "expected": "4.15",
+      "answer_contract": "decimal_2_places",
+      "hints": [
+        "Write both numbers in hundredths and align decimal points",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "2.40 + 1.75 = 4.15, with hundredths aligned."
+      ],
+      "worked_solution": "2.40 + 1.75 = 4.15, with hundredths aligned.",
+      "misconception_tag": "Misaligning decimal place values",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-decimal_addition-03",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "guided-representation",
+      "question": "Compute 3.75 + 4.60; align decimal points.",
+      "operands": {
+        "a_cents": 375,
+        "b_cents": 460
+      },
+      "operation": "decimal_cents_add",
+      "expected": "8.35",
+      "answer_contract": "decimal_2_places",
+      "hints": [
+        "Write both numbers in hundredths and align decimal points",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "3.75 + 4.60 = 8.35, with hundredths aligned."
+      ],
+      "worked_solution": "3.75 + 4.60 = 8.35, with hundredths aligned.",
+      "misconception_tag": "Misaligning decimal place values",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-decimal_addition-04",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "guided-representation",
+      "question": "A shopper buys goods for $10.99 and $2.85. What is the total bill in dollars?",
+      "operands": {
+        "a_cents": 1099,
+        "b_cents": 285
+      },
+      "operation": "decimal_cents_add",
+      "expected": "13.84",
+      "answer_contract": "decimal_2_places",
+      "hints": [
+        "Write both numbers in hundredths and align decimal points",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "10.99 + 2.85 = 13.84, with hundredths aligned."
+      ],
+      "worked_solution": "10.99 + 2.85 = 13.84, with hundredths aligned.",
+      "misconception_tag": "Misaligning decimal place values",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-decimal_addition-05",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "contextual-transfer",
+      "question": "A student ignores decimal alignment when adding 6.40 and 8.75. What is the correct total?",
+      "operands": {
+        "a_cents": 640,
+        "b_cents": 875
+      },
+      "operation": "decimal_cents_add",
+      "expected": "15.15",
+      "answer_contract": "decimal_2_places",
+      "hints": [
+        "Write both numbers in hundredths and align decimal points",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "6.40 + 8.75 = 15.15, with hundredths aligned."
+      ],
+      "worked_solution": "6.40 + 8.75 = 15.15, with hundredths aligned.",
+      "misconception_tag": "Misaligning decimal place values",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-decimal_addition-06",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "contextual-transfer",
+      "question": "A fundraiser receives $7.25 and $13.95. How much altogether?",
+      "operands": {
+        "a_cents": 725,
+        "b_cents": 1395
+      },
+      "operation": "decimal_cents_add",
+      "expected": "21.20",
+      "answer_contract": "decimal_2_places",
+      "hints": [
+        "Write both numbers in hundredths and align decimal points",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "7.25 + 13.95 = 21.20, with hundredths aligned."
+      ],
+      "worked_solution": "7.25 + 13.95 = 21.20, with hundredths aligned.",
+      "misconception_tag": "Misaligning decimal place values",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-decimal_addition-07",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "error-analysis",
+      "question": "A student treats decimal digits as whole numbers while adding 15.55 and 16.85. Give the correct total.",
+      "operands": {
+        "a_cents": 1555,
+        "b_cents": 1685
+      },
+      "operation": "decimal_cents_add",
+      "expected": "32.40",
+      "answer_contract": "decimal_2_places",
+      "hints": [
+        "Write both numbers in hundredths and align decimal points",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "15.55 + 16.85 = 32.40, with hundredths aligned."
+      ],
+      "worked_solution": "15.55 + 16.85 = 32.40, with hundredths aligned.",
+      "misconception_tag": "Misaligning decimal place values",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-decimal_addition-08",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "grade_suggestion": "4-6",
+      "level": "error-analysis",
+      "question": "Two account deposits are $26.75 and $9.40. What is the combined deposit?",
+      "operands": {
+        "a_cents": 2675,
+        "b_cents": 940
+      },
+      "operation": "decimal_cents_add",
+      "expected": "36.15",
+      "answer_contract": "decimal_2_places",
+      "hints": [
+        "Write both numbers in hundredths and align decimal points",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "26.75 + 9.40 = 36.15, with hundredths aligned."
+      ],
+      "worked_solution": "26.75 + 9.40 = 36.15, with hundredths aligned.",
+      "misconception_tag": "Misaligning decimal place values",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_perimeter-01",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "grade_suggestion": "3-6",
+      "level": "fluency",
+      "question": "Find the perimeter of a rectangle with sides 4 cm and 7 cm. Give the number of centimetres.",
+      "operands": {
+        "length": 4,
+        "width": 7
+      },
+      "operation": "perimeter",
+      "expected": "22",
+      "answer_contract": "integer",
+      "hints": [
+        "A rectangle has two lengths and two widths: 2×(length+width)",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "2×(4+7) = 22 units of boundary length."
+      ],
+      "worked_solution": "2×(4+7) = 22 units of boundary length.",
+      "misconception_tag": "Confusing perimeter with area or adding only two sides",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_perimeter-02",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "grade_suggestion": "3-6",
+      "level": "fluency",
+      "question": "A garden is 5 m by 9 m. How many metres of fencing surround it?",
+      "operands": {
+        "length": 5,
+        "width": 9
+      },
+      "operation": "perimeter",
+      "expected": "28",
+      "answer_contract": "integer",
+      "hints": [
+        "A rectangle has two lengths and two widths: 2×(length+width)",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "2×(5+9) = 28 units of boundary length."
+      ],
+      "worked_solution": "2×(5+9) = 28 units of boundary length.",
+      "misconception_tag": "Confusing perimeter with area or adding only two sides",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_perimeter-03",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "grade_suggestion": "3-6",
+      "level": "guided-representation",
+      "question": "Find the boundary length of a 8-by-12 rectangle.",
+      "operands": {
+        "length": 8,
+        "width": 12
+      },
+      "operation": "perimeter",
+      "expected": "40",
+      "answer_contract": "integer",
+      "hints": [
+        "A rectangle has two lengths and two widths: 2×(length+width)",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "2×(8+12) = 40 units of boundary length."
+      ],
+      "worked_solution": "2×(8+12) = 40 units of boundary length.",
+      "misconception_tag": "Confusing perimeter with area or adding only two sides",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_perimeter-04",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "grade_suggestion": "3-6",
+      "level": "guided-representation",
+      "question": "A frame measures 11 cm by 14 cm. What is its perimeter in centimetres?",
+      "operands": {
+        "length": 11,
+        "width": 14
+      },
+      "operation": "perimeter",
+      "expected": "50",
+      "answer_contract": "integer",
+      "hints": [
+        "A rectangle has two lengths and two widths: 2×(length+width)",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "2×(11+14) = 50 units of boundary length."
+      ],
+      "worked_solution": "2×(11+14) = 50 units of boundary length.",
+      "misconception_tag": "Confusing perimeter with area or adding only two sides",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_perimeter-05",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "grade_suggestion": "3-6",
+      "level": "contextual-transfer",
+      "question": "A student finds area instead of perimeter for a 13-by-17 rectangle. Give the correct perimeter.",
+      "operands": {
+        "length": 13,
+        "width": 17
+      },
+      "operation": "perimeter",
+      "expected": "60",
+      "answer_contract": "integer",
+      "hints": [
+        "A rectangle has two lengths and two widths: 2×(length+width)",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "2×(13+17) = 60 units of boundary length."
+      ],
+      "worked_solution": "2×(13+17) = 60 units of boundary length.",
+      "misconception_tag": "Confusing perimeter with area or adding only two sides",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_perimeter-06",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "grade_suggestion": "3-6",
+      "level": "contextual-transfer",
+      "question": "A rectangular playground is 18 m wide and 25 m long. Find the fence length.",
+      "operands": {
+        "length": 18,
+        "width": 25
+      },
+      "operation": "perimeter",
+      "expected": "86",
+      "answer_contract": "integer",
+      "hints": [
+        "A rectangle has two lengths and two widths: 2×(length+width)",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "2×(18+25) = 86 units of boundary length."
+      ],
+      "worked_solution": "2×(18+25) = 86 units of boundary length.",
+      "misconception_tag": "Confusing perimeter with area or adding only two sides",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_perimeter-07",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "grade_suggestion": "3-6",
+      "level": "error-analysis",
+      "question": "A student adds only two sides of a 23-by-31 rectangle. What is the full perimeter?",
+      "operands": {
+        "length": 23,
+        "width": 31
+      },
+      "operation": "perimeter",
+      "expected": "108",
+      "answer_contract": "integer",
+      "hints": [
+        "A rectangle has two lengths and two widths: 2×(length+width)",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "2×(23+31) = 108 units of boundary length."
+      ],
+      "worked_solution": "2×(23+31) = 108 units of boundary length.",
+      "misconception_tag": "Confusing perimeter with area or adding only two sides",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_perimeter-08",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "grade_suggestion": "3-6",
+      "level": "error-analysis",
+      "question": "A field measures 36 m by 44 m. How many metres to walk once around its edge?",
+      "operands": {
+        "length": 36,
+        "width": 44
+      },
+      "operation": "perimeter",
+      "expected": "160",
+      "answer_contract": "integer",
+      "hints": [
+        "A rectangle has two lengths and two widths: 2×(length+width)",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "2×(36+44) = 160 units of boundary length."
+      ],
+      "worked_solution": "2×(36+44) = 160 units of boundary length.",
+      "misconception_tag": "Confusing perimeter with area or adding only two sides",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_area-01",
+      "provisional_skill": "RECTANGLE_AREA",
+      "grade_suggestion": "3-6",
+      "level": "fluency",
+      "question": "Find the area of a 3 cm by 6 cm rectangle. Give the number of square centimetres.",
+      "operands": {
+        "length": 3,
+        "width": 6
+      },
+      "operation": "area",
+      "expected": "18",
+      "answer_contract": "integer",
+      "hints": [
+        "Area counts unit squares: multiply length by width",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "3 × 6 = 18 square units."
+      ],
+      "worked_solution": "3 × 6 = 18 square units.",
+      "misconception_tag": "Adding side lengths instead of counting square units",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_area-02",
+      "provisional_skill": "RECTANGLE_AREA",
+      "grade_suggestion": "3-6",
+      "level": "fluency",
+      "question": "A tiled floor is 4 m by 9 m. How many square metres is its area?",
+      "operands": {
+        "length": 4,
+        "width": 9
+      },
+      "operation": "area",
+      "expected": "36",
+      "answer_contract": "integer",
+      "hints": [
+        "Area counts unit squares: multiply length by width",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "4 × 9 = 36 square units."
+      ],
+      "worked_solution": "4 × 9 = 36 square units.",
+      "misconception_tag": "Adding side lengths instead of counting square units",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_area-03",
+      "provisional_skill": "RECTANGLE_AREA",
+      "grade_suggestion": "3-6",
+      "level": "guided-representation",
+      "question": "An array is 7 units across and 11 units down. How many unit squares?",
+      "operands": {
+        "length": 7,
+        "width": 11
+      },
+      "operation": "area",
+      "expected": "77",
+      "answer_contract": "integer",
+      "hints": [
+        "Area counts unit squares: multiply length by width",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "7 × 11 = 77 square units."
+      ],
+      "worked_solution": "7 × 11 = 77 square units.",
+      "misconception_tag": "Adding side lengths instead of counting square units",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_area-04",
+      "provisional_skill": "RECTANGLE_AREA",
+      "grade_suggestion": "3-6",
+      "level": "guided-representation",
+      "question": "A rectangular rug measures 8 m by 13 m. What is its area in square metres?",
+      "operands": {
+        "length": 8,
+        "width": 13
+      },
+      "operation": "area",
+      "expected": "104",
+      "answer_contract": "integer",
+      "hints": [
+        "Area counts unit squares: multiply length by width",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "8 × 13 = 104 square units."
+      ],
+      "worked_solution": "8 × 13 = 104 square units.",
+      "misconception_tag": "Adding side lengths instead of counting square units",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_area-05",
+      "provisional_skill": "RECTANGLE_AREA",
+      "grade_suggestion": "3-6",
+      "level": "contextual-transfer",
+      "question": "A student computes perimeter for a 12-by-14 rectangle. Find its correct area.",
+      "operands": {
+        "length": 12,
+        "width": 14
+      },
+      "operation": "area",
+      "expected": "168",
+      "answer_contract": "integer",
+      "hints": [
+        "Area counts unit squares: multiply length by width",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "12 × 14 = 168 square units."
+      ],
+      "worked_solution": "12 × 14 = 168 square units.",
+      "misconception_tag": "Adding side lengths instead of counting square units",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_area-06",
+      "provisional_skill": "RECTANGLE_AREA",
+      "grade_suggestion": "3-6",
+      "level": "contextual-transfer",
+      "question": "A rectangular poster is 16 cm wide and 19 cm high. Find its area in square centimetres.",
+      "operands": {
+        "length": 16,
+        "width": 19
+      },
+      "operation": "area",
+      "expected": "304",
+      "answer_contract": "integer",
+      "hints": [
+        "Area counts unit squares: multiply length by width",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "16 × 19 = 304 square units."
+      ],
+      "worked_solution": "16 × 19 = 304 square units.",
+      "misconception_tag": "Adding side lengths instead of counting square units",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_area-07",
+      "provisional_skill": "RECTANGLE_AREA",
+      "grade_suggestion": "3-6",
+      "level": "error-analysis",
+      "question": "A student adds side lengths to find the area of a 21-by-24 rectangle. Give the correct area.",
+      "operands": {
+        "length": 21,
+        "width": 24
+      },
+      "operation": "area",
+      "expected": "504",
+      "answer_contract": "integer",
+      "hints": [
+        "Area counts unit squares: multiply length by width",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "21 × 24 = 504 square units."
+      ],
+      "worked_solution": "21 × 24 = 504 square units.",
+      "misconception_tag": "Adding side lengths instead of counting square units",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-depth-rectangle_area-08",
+      "provisional_skill": "RECTANGLE_AREA",
+      "grade_suggestion": "3-6",
+      "level": "error-analysis",
+      "question": "A garden bed is 32 m long and 35 m wide. How many square metres does it cover?",
+      "operands": {
+        "length": 32,
+        "width": 35
+      },
+      "operation": "area",
+      "expected": "1120",
+      "answer_contract": "integer",
+      "hints": [
+        "Area counts unit squares: multiply length by width",
+        "Translate the story or representation into an exact arithmetic expression using the given values.",
+        "32 × 35 = 1120 square units."
+      ],
+      "worked_solution": "32 × 35 = 1120 square units.",
+      "misconception_tag": "Adding side lengths instead of counting square units",
+      "review_status": "PENDING"
+    }
+  ],
+  "difficulty_ladders": [
+    {
+      "provisional_skill": "ADDITION_REGROUP",
+      "levels": [
+        "fluency",
+        "guided-representation",
+        "contextual-transfer",
+        "error-analysis"
+      ],
+      "items": [
+        "draft-depth-addition_regroup-01",
+        "draft-depth-addition_regroup-02",
+        "draft-depth-addition_regroup-03",
+        "draft-depth-addition_regroup-04",
+        "draft-depth-addition_regroup-05",
+        "draft-depth-addition_regroup-06",
+        "draft-depth-addition_regroup-07",
+        "draft-depth-addition_regroup-08"
+      ]
+    },
+    {
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "levels": [
+        "fluency",
+        "guided-representation",
+        "contextual-transfer",
+        "error-analysis"
+      ],
+      "items": [
+        "draft-depth-subtraction_regroup-01",
+        "draft-depth-subtraction_regroup-02",
+        "draft-depth-subtraction_regroup-03",
+        "draft-depth-subtraction_regroup-04",
+        "draft-depth-subtraction_regroup-05",
+        "draft-depth-subtraction_regroup-06",
+        "draft-depth-subtraction_regroup-07",
+        "draft-depth-subtraction_regroup-08"
+      ]
+    },
+    {
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "levels": [
+        "fluency",
+        "guided-representation",
+        "contextual-transfer",
+        "error-analysis"
+      ],
+      "items": [
+        "draft-depth-multiplication_groups-01",
+        "draft-depth-multiplication_groups-02",
+        "draft-depth-multiplication_groups-03",
+        "draft-depth-multiplication_groups-04",
+        "draft-depth-multiplication_groups-05",
+        "draft-depth-multiplication_groups-06",
+        "draft-depth-multiplication_groups-07",
+        "draft-depth-multiplication_groups-08"
+      ]
+    },
+    {
+      "provisional_skill": "DIVISION_GROUPS",
+      "levels": [
+        "fluency",
+        "guided-representation",
+        "contextual-transfer",
+        "error-analysis"
+      ],
+      "items": [
+        "draft-depth-division_groups-01",
+        "draft-depth-division_groups-02",
+        "draft-depth-division_groups-03",
+        "draft-depth-division_groups-04",
+        "draft-depth-division_groups-05",
+        "draft-depth-division_groups-06",
+        "draft-depth-division_groups-07",
+        "draft-depth-division_groups-08"
+      ]
+    },
+    {
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "levels": [
+        "fluency",
+        "guided-representation",
+        "contextual-transfer",
+        "error-analysis"
+      ],
+      "items": [
+        "draft-depth-like_fraction_addition-01",
+        "draft-depth-like_fraction_addition-02",
+        "draft-depth-like_fraction_addition-03",
+        "draft-depth-like_fraction_addition-04",
+        "draft-depth-like_fraction_addition-05",
+        "draft-depth-like_fraction_addition-06",
+        "draft-depth-like_fraction_addition-07",
+        "draft-depth-like_fraction_addition-08"
+      ]
+    },
+    {
+      "provisional_skill": "DECIMAL_ADDITION",
+      "levels": [
+        "fluency",
+        "guided-representation",
+        "contextual-transfer",
+        "error-analysis"
+      ],
+      "items": [
+        "draft-depth-decimal_addition-01",
+        "draft-depth-decimal_addition-02",
+        "draft-depth-decimal_addition-03",
+        "draft-depth-decimal_addition-04",
+        "draft-depth-decimal_addition-05",
+        "draft-depth-decimal_addition-06",
+        "draft-depth-decimal_addition-07",
+        "draft-depth-decimal_addition-08"
+      ]
+    },
+    {
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "levels": [
+        "fluency",
+        "guided-representation",
+        "contextual-transfer",
+        "error-analysis"
+      ],
+      "items": [
+        "draft-depth-rectangle_perimeter-01",
+        "draft-depth-rectangle_perimeter-02",
+        "draft-depth-rectangle_perimeter-03",
+        "draft-depth-rectangle_perimeter-04",
+        "draft-depth-rectangle_perimeter-05",
+        "draft-depth-rectangle_perimeter-06",
+        "draft-depth-rectangle_perimeter-07",
+        "draft-depth-rectangle_perimeter-08"
+      ]
+    },
+    {
+      "provisional_skill": "RECTANGLE_AREA",
+      "levels": [
+        "fluency",
+        "guided-representation",
+        "contextual-transfer",
+        "error-analysis"
+      ],
+      "items": [
+        "draft-depth-rectangle_area-01",
+        "draft-depth-rectangle_area-02",
+        "draft-depth-rectangle_area-03",
+        "draft-depth-rectangle_area-04",
+        "draft-depth-rectangle_area-05",
+        "draft-depth-rectangle_area-06",
+        "draft-depth-rectangle_area-07",
+        "draft-depth-rectangle_area-08"
+      ]
+    }
+  ],
+  "misconceptions": [
+    {
+      "misconception_id": "draft-depth-misc-1",
+      "provisional_skill": "ADDITION_REGROUP",
+      "incorrect_pattern": "Forgetting to regroup a set of ten",
+      "remediation": "Use addition regroup with a concrete or visual representation; ask the student to explain each step and check the result independently.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "draft-depth-misc-2",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "incorrect_pattern": "Subtracting smaller digit from larger regardless of position",
+      "remediation": "Use subtraction regroup with a concrete or visual representation; ask the student to explain each step and check the result independently.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "draft-depth-misc-3",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "incorrect_pattern": "Using addition of factors rather than equal-group multiplication",
+      "remediation": "Use multiplication groups with a concrete or visual representation; ask the student to explain each step and check the result independently.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "draft-depth-misc-4",
+      "provisional_skill": "DIVISION_GROUPS",
+      "incorrect_pattern": "Confusing number of groups with items per group",
+      "remediation": "Use division groups with a concrete or visual representation; ask the student to explain each step and check the result independently.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "draft-depth-misc-5",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "incorrect_pattern": "Adding denominators when denominators already match",
+      "remediation": "Use like fraction addition with a concrete or visual representation; ask the student to explain each step and check the result independently.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "draft-depth-misc-6",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "incorrect_pattern": "Misaligning decimal place values",
+      "remediation": "Use decimal addition with a concrete or visual representation; ask the student to explain each step and check the result independently.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "draft-depth-misc-7",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "incorrect_pattern": "Confusing perimeter with area or adding only two sides",
+      "remediation": "Use rectangle perimeter with a concrete or visual representation; ask the student to explain each step and check the result independently.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "draft-depth-misc-8",
+      "provisional_skill": "RECTANGLE_AREA",
+      "incorrect_pattern": "Adding side lengths instead of counting square units",
+      "remediation": "Use rectangle area with a concrete or visual representation; ask the student to explain each step and check the result independently.",
+      "review_status": "PENDING"
+    }
+  ]
+}
