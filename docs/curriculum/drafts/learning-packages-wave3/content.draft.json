@@ -1,0 +1,852 @@
+{
+  "schema_version": "0.3.0",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "purpose": "Wave 3 extension on existing Wave 2 draft PR, not new PR; Grades 1–9 cross-grade depth. Not an assertion of comprehensive or verified standards coverage.",
+  "source_for_prioritization": "PR #325 provisional gap register",
+  "packages": [
+    {
+      "id": "W3-G3-MULTIPLICATIVE-ARRAYS",
+      "grade_band": "Grades 2–4",
+      "title": "Multiplication, division and equal groups",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "canonical_identity": "REUSE_EXISTING_OR_REQUEST_REVIEW",
+      "independent_math_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Ask learner to predict a solution and explain the representation.",
+        "Ask learner to critique a plausible but incorrect strategy."
+      ],
+      "teaching_phases": [
+        {
+          "mode": "CONCRETE",
+          "action": "Build or sort real-world objects in a physical context."
+        },
+        {
+          "mode": "VISUAL",
+          "action": "Explore the linked interactive representation and explain invariants."
+        },
+        {
+          "mode": "SYMBOLIC",
+          "action": "Translate model to an equation with units and justification."
+        },
+        {
+          "mode": "REFLECTION",
+          "action": "Contrast two methods, detect a misconception, and defend correctness."
+        },
+        {
+          "mode": "TRANSFER",
+          "action": "Solve unseen context without visual or hint scaffolds."
+        }
+      ],
+      "worked_examples": [
+        {
+          "question": "Four rows of six tiles",
+          "steps": [
+            "Arrange four equal rows of six.",
+            "Count 6+6+6+6=24.",
+            "Write 4×6=24."
+          ],
+          "answer": "24"
+        },
+        {
+          "question": "24 tiles in groups of 6",
+          "steps": [
+            "Divide 24 equally into groups of 6.",
+            "Count 4 groups."
+          ],
+          "answer": "4 groups"
+        },
+        {
+          "question": "Three bags hold 7 marbles each",
+          "steps": [
+            "Represent 3 equal sets of 7.",
+            "Add 7+7+7."
+          ],
+          "answer": "21 marbles"
+        },
+        {
+          "question": "28 chairs in 4 equal rows",
+          "steps": [
+            "Draw 4 rows, distribute equally.",
+            "28÷4=7."
+          ],
+          "answer": "7 per row"
+        },
+        {
+          "question": "Compare 3×8 and 8×3",
+          "steps": [
+            "Rotate the 3-by-8 rectangle.",
+            "Total tiles unchanged."
+          ],
+          "answer": "both 24"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "claim": "Multiplication always increases",
+          "diagnostic": "Is 0×9 greater than 9?",
+          "socratic_hints": [
+            "How many groups are there?",
+            "What does an empty group contribute?"
+          ],
+          "repair": "Build zero groups and compare count."
+        },
+        {
+          "claim": "Mix divisor and quotient",
+          "diagnostic": "24 shared among 6 groups gives 6 per group?",
+          "socratic_hints": [
+            "How many equal groups?",
+            "Can every group hold six without leftover?"
+          ],
+          "repair": "Physically partition 24 into six groups of four."
+        },
+        {
+          "claim": "Commutativity applied to division",
+          "diagnostic": "Is 12÷3 equal to 3÷12?",
+          "socratic_hints": [
+            "What is the whole being shared?",
+            "How many groups or how large is a group?"
+          ],
+          "repair": "Contrast twelve shared into three vs three into twelve."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "5 rows of 4",
+          "answer": "20",
+          "verification": "5×4",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "32 objects split into 8 groups",
+          "answer": "4 per group",
+          "verification": "32÷8",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "3 boxes of 9",
+          "answer": "27",
+          "verification": "3×9",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "18 tiles in rows of 3",
+          "answer": "6 rows",
+          "verification": "18÷3",
+          "scaffold_allowed": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "7 rows of 6 stickers: total",
+          "answer": "42",
+          "oracle": "7×6",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        },
+        {
+          "question": "45 apples split equally into 5 baskets",
+          "answer": "9 per basket",
+          "oracle": "45÷5",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        },
+        {
+          "question": "Transfer: 36 desks arranged 6 per row; how many rows?",
+          "answer": "6",
+          "oracle": "36÷6",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        }
+      ],
+      "interactive_spec": {
+        "scene": "tile array, equal-group baskets and rotating rectangle",
+        "keyboard": "every manipulation has a keyboard command",
+        "screen_reader": "announce complete mathematical state and selection",
+        "reduced_motion": true,
+        "scaffold_disable_on_assessment": true
+      },
+      "implementation_note": "DRAFT content contract only, not a tested generator or deployed UI"
+    },
+    {
+      "id": "W3-G5-FRACTION-ADDITION",
+      "grade_band": "Grades 4–6",
+      "title": "Adding and subtracting unlike-denominator fractions",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "canonical_identity": "REUSE_EXISTING_OR_REQUEST_REVIEW",
+      "independent_math_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Ask learner to predict a solution and explain the representation.",
+        "Ask learner to critique a plausible but incorrect strategy."
+      ],
+      "teaching_phases": [
+        {
+          "mode": "CONCRETE",
+          "action": "Build or sort real-world objects in a physical context."
+        },
+        {
+          "mode": "VISUAL",
+          "action": "Explore the linked interactive representation and explain invariants."
+        },
+        {
+          "mode": "SYMBOLIC",
+          "action": "Translate model to an equation with units and justification."
+        },
+        {
+          "mode": "REFLECTION",
+          "action": "Contrast two methods, detect a misconception, and defend correctness."
+        },
+        {
+          "mode": "TRANSFER",
+          "action": "Solve unseen context without visual or hint scaffolds."
+        }
+      ],
+      "worked_examples": [
+        {
+          "question": "1/2+1/4",
+          "steps": [
+            "Divide equal whole into fourths.",
+            "2/4+1/4=3/4."
+          ],
+          "answer": "3/4"
+        },
+        {
+          "question": "2/3+1/6",
+          "steps": [
+            "Convert 2/3 to 4/6.",
+            "4/6+1/6=5/6."
+          ],
+          "answer": "5/6"
+        },
+        {
+          "question": "5/6−1/3",
+          "steps": [
+            "Rewrite 1/3 as 2/6.",
+            "5/6−2/6=3/6."
+          ],
+          "answer": "1/2"
+        },
+        {
+          "question": "3/4+2/5",
+          "steps": [
+            "Use twentieths: 15/20+8/20.",
+            "Sum 23/20=1+3/20."
+          ],
+          "answer": "1 3/20"
+        },
+        {
+          "question": "1 1/2−3/4",
+          "steps": [
+            "Rewrite 1 1/2 as 6/4.",
+            "6/4−3/4=3/4."
+          ],
+          "answer": "3/4"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "claim": "Add denominators",
+          "diagnostic": "Does 1/2+1/4 equal 2/6?",
+          "socratic_hints": [
+            "Are halves and fourths same size?",
+            "Can we repartition to identical units?"
+          ],
+          "repair": "Overlay same-size fraction bars and count fourths."
+        },
+        {
+          "claim": "Compare unlike wholes",
+          "diagnostic": "Can half of a large pizza be added to quarter of a smaller one as equal units?",
+          "socratic_hints": [
+            "What counts as the whole?",
+            "Do the models measure equal-sized wholes?"
+          ],
+          "repair": "Normalize to one agreed whole before partition."
+        },
+        {
+          "claim": "Forget mixed-number whole",
+          "diagnostic": "Is 3/4+2/5 only 3/20?",
+          "socratic_hints": [
+            "How many twentieths total?",
+            "Can improper sum exceed one?"
+          ],
+          "repair": "Fill one full bar then count extra pieces."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "1/3+1/6",
+          "answer": "1/2",
+          "verification": "2/6+1/6",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "3/5−1/10",
+          "answer": "1/2",
+          "verification": "6/10−1/10",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "1/4+1/2",
+          "answer": "3/4",
+          "verification": "1/4+2/4",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "2/3+3/4",
+          "answer": "1 5/12",
+          "verification": "8/12+9/12=17/12",
+          "scaffold_allowed": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "5/8+1/4",
+          "answer": "7/8",
+          "oracle": "5/8+2/8",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        },
+        {
+          "question": "7/10−2/5",
+          "answer": "3/10",
+          "oracle": "7/10−4/10",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        },
+        {
+          "question": "Transfer: a recipe uses 2/3 cup flour and 3/8 cup oats. Combined amount?",
+          "answer": "1 1/24 cups",
+          "oracle": "16/24+9/24=25/24",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        }
+      ],
+      "interactive_spec": {
+        "scene": "equal-size fraction bars, partitioning and common-unit number line",
+        "keyboard": "every manipulation has a keyboard command",
+        "screen_reader": "announce complete mathematical state and selection",
+        "reduced_motion": true,
+        "scaffold_disable_on_assessment": true
+      },
+      "implementation_note": "DRAFT content contract only, not a tested generator or deployed UI"
+    },
+    {
+      "id": "W3-G7-SIGNED-NUMBERS",
+      "grade_band": "Grades 6–8",
+      "title": "Integer operations and contextual signed quantities",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "canonical_identity": "REUSE_EXISTING_OR_REQUEST_REVIEW",
+      "independent_math_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Ask learner to predict a solution and explain the representation.",
+        "Ask learner to critique a plausible but incorrect strategy."
+      ],
+      "teaching_phases": [
+        {
+          "mode": "CONCRETE",
+          "action": "Build or sort real-world objects in a physical context."
+        },
+        {
+          "mode": "VISUAL",
+          "action": "Explore the linked interactive representation and explain invariants."
+        },
+        {
+          "mode": "SYMBOLIC",
+          "action": "Translate model to an equation with units and justification."
+        },
+        {
+          "mode": "REFLECTION",
+          "action": "Contrast two methods, detect a misconception, and defend correctness."
+        },
+        {
+          "mode": "TRANSFER",
+          "action": "Solve unseen context without visual or hint scaffolds."
+        }
+      ],
+      "worked_examples": [
+        {
+          "question": "−3+8",
+          "steps": [
+            "Begin at −3 on number line.",
+            "Move eight units right."
+          ],
+          "answer": "5"
+        },
+        {
+          "question": "−4−6",
+          "steps": [
+            "Start −4 and move six left."
+          ],
+          "answer": "−10"
+        },
+        {
+          "question": "−3×4",
+          "steps": [
+            "Interpret as four groups of −3.",
+            "Sum four negative threes."
+          ],
+          "answer": "−12"
+        },
+        {
+          "question": "−4×−3",
+          "steps": [
+            "Multiply magnitudes: 4×3=12.",
+            "Opposite of −4×3 is 12 by distributivity."
+          ],
+          "answer": "12"
+        },
+        {
+          "question": "Temperature −2°C increases 7°C then drops 4°C",
+          "steps": [
+            "−2+7=5.",
+            "5−4=1."
+          ],
+          "answer": "1°C"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "claim": "Two negatives always make a positive",
+          "diagnostic": "Does −4−6 equal 10?",
+          "socratic_hints": [
+            "Are you adding numbers or multiplying signs?",
+            "Which way does subtraction move?"
+          ],
+          "repair": "Separate signed addition from signed multiplication on number line."
+        },
+        {
+          "claim": "Ignore direction",
+          "diagnostic": "Does −3+8 end at −11?",
+          "socratic_hints": [
+            "What does positive eight mean?",
+            "From −3, which direction moves?"
+          ],
+          "repair": "Walk right eight spaces from −3."
+        },
+        {
+          "claim": "Misapply multiplication sign",
+          "diagnostic": "Does (−4)(−3)=−12?",
+          "socratic_hints": [
+            "What is (−4)×3?",
+            "What result preserves distributive law across 3+(−3)=0?"
+          ],
+          "repair": "Use distributive equation to justify positive product."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "−7+12",
+          "answer": "5",
+          "verification": "signed sum",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "−6−5",
+          "answer": "−11",
+          "verification": "six below zero minus five",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "(−3)×(−5)",
+          "answer": "15",
+          "verification": "negative × negative",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "−20÷4",
+          "answer": "−5",
+          "verification": "negative quotient",
+          "scaffold_allowed": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "−8+3",
+          "answer": "−5",
+          "oracle": "five below zero",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        },
+        {
+          "question": "(−6)(4)",
+          "answer": "−24",
+          "oracle": "four groups of −6",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        },
+        {
+          "question": "Transfer: balance −$15 plus deposit $38 then withdrawal $9",
+          "answer": "$14",
+          "oracle": "−15+38−9=14",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        }
+      ],
+      "interactive_spec": {
+        "scene": "bidirectional integer number line and signed counter chips",
+        "keyboard": "every manipulation has a keyboard command",
+        "screen_reader": "announce complete mathematical state and selection",
+        "reduced_motion": true,
+        "scaffold_disable_on_assessment": true
+      },
+      "implementation_note": "DRAFT content contract only, not a tested generator or deployed UI"
+    },
+    {
+      "id": "W3-G8-COORDINATE-TRANSFORM",
+      "grade_band": "Grades 7–9",
+      "title": "Coordinate-plane translations and reflections",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "canonical_identity": "REUSE_EXISTING_OR_REQUEST_REVIEW",
+      "independent_math_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Ask learner to predict a solution and explain the representation.",
+        "Ask learner to critique a plausible but incorrect strategy."
+      ],
+      "teaching_phases": [
+        {
+          "mode": "CONCRETE",
+          "action": "Build or sort real-world objects in a physical context."
+        },
+        {
+          "mode": "VISUAL",
+          "action": "Explore the linked interactive representation and explain invariants."
+        },
+        {
+          "mode": "SYMBOLIC",
+          "action": "Translate model to an equation with units and justification."
+        },
+        {
+          "mode": "REFLECTION",
+          "action": "Contrast two methods, detect a misconception, and defend correctness."
+        },
+        {
+          "mode": "TRANSFER",
+          "action": "Solve unseen context without visual or hint scaffolds."
+        }
+      ],
+      "worked_examples": [
+        {
+          "question": "Translate (2,3) by (−4,1)",
+          "steps": [
+            "Add −4 to x and 1 to y.",
+            "(2−4,3+1)."
+          ],
+          "answer": "(−2,4)"
+        },
+        {
+          "question": "Reflect (−3,5) across y-axis",
+          "steps": [
+            "Change x sign and keep y."
+          ],
+          "answer": "(3,5)"
+        },
+        {
+          "question": "Reflect (4,−2) across x-axis",
+          "steps": [
+            "Keep x; change y sign."
+          ],
+          "answer": "(4,2)"
+        },
+        {
+          "question": "Rotate (2,1) by 180° about origin",
+          "steps": [
+            "Reverse both coordinate signs."
+          ],
+          "answer": "(−2,−1)"
+        },
+        {
+          "question": "Triangle vertices (0,0),(2,0),(0,3) translate right 5",
+          "steps": [
+            "Add five to every x coordinate."
+          ],
+          "answer": "(5,0),(7,0),(5,3)"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "claim": "Confuse x/y reflection",
+          "diagnostic": "Does reflection across y-axis change y coordinate?",
+          "socratic_hints": [
+            "Where is y-axis located?",
+            "Which coordinate measures distance perpendicular to y-axis?"
+          ],
+          "repair": "Mirror points horizontally, compare coordinates."
+        },
+        {
+          "claim": "Translate only one vertex",
+          "diagnostic": "Can translated triangle preserve shape if only one vertex moves?",
+          "socratic_hints": [
+            "What motion applies to entire figure?",
+            "Does every point receive same vector?"
+          ],
+          "repair": "Attach all vertices to a rigid translation handle."
+        },
+        {
+          "claim": "Reflection versus rotation",
+          "diagnostic": "Does 180° rotation keep point (2,1) at (−2,1)?",
+          "socratic_hints": [
+            "What happens to both horizontal and vertical directions?",
+            "Try half-turn with a paper tracing."
+          ],
+          "repair": "Rotate a traced grid through a half turn."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "Translate (1,−2) by (3,4)",
+          "answer": "(4,2)",
+          "verification": "add vector",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "Reflect (−5,−2) across x-axis",
+          "answer": "(−5,2)",
+          "verification": "flip y",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "Reflect (4,7) across y-axis",
+          "answer": "(−4,7)",
+          "verification": "flip x",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "Rotate (−2,3) by 180°",
+          "answer": "(2,−3)",
+          "verification": "both signs flip",
+          "scaffold_allowed": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "Translate (−3,4) by (5,−7)",
+          "answer": "(2,−3)",
+          "oracle": "add x,y components",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        },
+        {
+          "question": "Reflect (6,−8) across y-axis",
+          "answer": "(−6,−8)",
+          "oracle": "flip x",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        },
+        {
+          "question": "Transfer: a point starts (1,2), reflects across x-axis, then shifts left 3. Final?",
+          "answer": "(−2,−2)",
+          "oracle": "(1,−2) then (−2,−2)",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        }
+      ],
+      "interactive_spec": {
+        "scene": "coordinate plane with draggable rigid polygons and accessible coordinate table",
+        "keyboard": "every manipulation has a keyboard command",
+        "screen_reader": "announce complete mathematical state and selection",
+        "reduced_motion": true,
+        "scaffold_disable_on_assessment": true
+      },
+      "implementation_note": "DRAFT content contract only, not a tested generator or deployed UI"
+    },
+    {
+      "id": "W3-G9-SYSTEMS-LINEAR",
+      "grade_band": "Grade 9 / Algebra I",
+      "title": "Systems of linear equations by graphing, substitution and elimination",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "canonical_identity": "REUSE_EXISTING_OR_REQUEST_REVIEW",
+      "independent_math_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Ask learner to predict a solution and explain the representation.",
+        "Ask learner to critique a plausible but incorrect strategy."
+      ],
+      "teaching_phases": [
+        {
+          "mode": "CONCRETE",
+          "action": "Build or sort real-world objects in a physical context."
+        },
+        {
+          "mode": "VISUAL",
+          "action": "Explore the linked interactive representation and explain invariants."
+        },
+        {
+          "mode": "SYMBOLIC",
+          "action": "Translate model to an equation with units and justification."
+        },
+        {
+          "mode": "REFLECTION",
+          "action": "Contrast two methods, detect a misconception, and defend correctness."
+        },
+        {
+          "mode": "TRANSFER",
+          "action": "Solve unseen context without visual or hint scaffolds."
+        }
+      ],
+      "worked_examples": [
+        {
+          "question": "Solve y=x+1 and y=−x+5",
+          "steps": [
+            "Set x+1=−x+5.",
+            "2x=4, x=2.",
+            "y=3."
+          ],
+          "answer": "(2,3)"
+        },
+        {
+          "question": "Solve x+y=10 and x−y=2",
+          "steps": [
+            "Add equations: 2x=12.",
+            "x=6, y=4."
+          ],
+          "answer": "(6,4)"
+        },
+        {
+          "question": "Solve y=2x and x+y=12",
+          "steps": [
+            "Substitute: x+2x=12.",
+            "x=4, y=8."
+          ],
+          "answer": "(4,8)"
+        },
+        {
+          "question": "Solve y=3x+2 and y=3x−1",
+          "steps": [
+            "Both slopes are 3 with distinct intercepts.",
+            "Lines are parallel."
+          ],
+          "answer": "no solution"
+        },
+        {
+          "question": "Solve 2x+y=7 and 4x+2y=14",
+          "steps": [
+            "Second equation is twice first.",
+            "Every solution of first solves second."
+          ],
+          "answer": "infinitely many solutions"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "claim": "Intersection is x coordinate only",
+          "diagnostic": "Is answer to y=x+1 and y=−x+5 just x=2?",
+          "socratic_hints": [
+            "What does a point contain?",
+            "Substitute x into both equations."
+          ],
+          "repair": "Return ordered pair and verify."
+        },
+        {
+          "claim": "All two equations have one solution",
+          "diagnostic": "Do y=3x+2 and y=3x−1 intersect?",
+          "socratic_hints": [
+            "Compare slopes.",
+            "Compare intercepts."
+          ],
+          "repair": "Graph parallel lines and label no solution."
+        },
+        {
+          "claim": "Eliminate by adding without signs",
+          "diagnostic": "For x+y=10 and x−y=2, can we add to get 2y=12?",
+          "socratic_hints": [
+            "Which terms cancel?",
+            "Which terms double?"
+          ],
+          "repair": "Align column additions before solving."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "y=x+2 and y=−x+8",
+          "answer": "(3,5)",
+          "verification": "x+2=−x+8",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "x+y=7 and x−y=1",
+          "answer": "(4,3)",
+          "verification": "2x=8",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "y=2x+1 and y=2x−3",
+          "answer": "no solution",
+          "verification": "parallel distinct lines",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "y=x+4 and 2y=2x+8",
+          "answer": "infinitely many solutions",
+          "verification": "equivalent equations",
+          "scaffold_allowed": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "y=3x−2 and y=x+4",
+          "answer": "(3,7)",
+          "oracle": "3x−2=x+4",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        },
+        {
+          "question": "x+y=9 and 2x−y=3",
+          "answer": "(4,5)",
+          "oracle": "3x=12",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        },
+        {
+          "question": "Transfer: adult tickets $8 and child tickets $5; 10 tickets cost $65. How many adult?",
+          "answer": "5 adult tickets",
+          "oracle": "a+c=10,8a+5c=65 implies 3a=15",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        }
+      ],
+      "interactive_spec": {
+        "scene": "linked linear graph/table/algebra equation editor",
+        "keyboard": "every manipulation has a keyboard command",
+        "screen_reader": "announce complete mathematical state and selection",
+        "reduced_motion": true,
+        "scaffold_disable_on_assessment": true
+      },
+      "implementation_note": "DRAFT content contract only, not a tested generator or deployed UI"
+    }
+  ]
+}
