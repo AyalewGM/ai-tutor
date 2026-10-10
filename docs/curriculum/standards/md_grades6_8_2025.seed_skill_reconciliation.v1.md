@@ -67,6 +67,18 @@ Therefore `M8.G.TRANS` and `M8.G.SIM` have no asserted current Grade 8 target in
 - **Grade 8 Pythagorean work:** local scope does not by itself establish reasoning/proof or acute/obtuse classification using inequalities in 8.GR.B.4.
 - **Grade 8 radicals:** “simplify radicals” is extra local wording relative to the two directly reconciled number-system targets, 8.NOS.A.1–A.2, and needs placement review.
 
+## Architecture disposition recorded
+
+Architecture Issue #282 decision [6093222041](https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6093222041) resolves the identity behavior while leaving every mapping provisional:
+
+- Grade/course placement is mapping metadata, not canonical mathematical identity.
+- `M7.G.GEO` and `M7.SP.PROB` are preserved cross-grade local composites, not canonical atoms or equivalence aliases. New bounded scope cards must separate their Grade 7 and Grade 8 evidence.
+- `M8.G.TRANS` and `M8.G.SIM` are preserved legacy-placement identifiers with no current Maryland Grade 8 equivalence. Later Integrated Algebra I/II mappings must target independently reviewed, placement-neutral atoms.
+- Historical identifiers, variants and learner evidence are immutable. There is no backfill, rekey, evidence copy, grade reassignment or retroactive reinterpretation.
+- A legacy composite may be reported only through fail-closed `ALL_OF` over accepted atoms. It carries no canonical row, UUID, variant, attempt, mastery event or duplicate credit.
+
+This narrows the authoring handoff but does not create canonical IDs, approve definitions or accept standards mappings.
+
 ## Owner handoff
 
 1. **Architecture (#282):** decide cross-grade identity/granularity for `M7.G.GEO`, `M7.SP.PROB`, `M8.G.TRANS`, and `M8.G.SIM`; preserve historical identifiers and prohibit double credit.
