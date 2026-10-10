@@ -1,0 +1,534 @@
+{
+  "schema_version": 1,
+  "artifact_id": "md-cross-grade-canonical-scope-cards-r1",
+  "revision": "2026-10-10-r1",
+  "review_state": "DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+  "authority": "NONE_NOT_FOR_RUNTIME",
+  "architecture_basis": {
+    "issue": 282,
+    "comment_id": 6093222041,
+    "decision": "Cross-grade local composites are not canonical atoms; bounded candidates require independent review."
+  },
+  "standards_context": {
+    "jurisdiction": "Maryland",
+    "source_adoption_date": "2025-07-29",
+    "implementation_school_year": "2026-2027",
+    "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+    "source_manifest_pr": 325,
+    "source_expectations": [
+      "7.GR.B.3",
+      "7.DS.C.4",
+      "7.DS.C.5",
+      "7.DS.C.6",
+      "8.GR.A.1",
+      "8.GR.A.3",
+      "8.DS.C.6"
+    ],
+    "note": "Expectation references are provenance for the authoring request, not accepted standards mappings."
+  },
+  "constraints": [
+    "No card is mathematically approved.",
+    "No proposed code is authoritative until Architecture confirms identity and Independent Mathematical Review approves scope.",
+    "Existing broad canonical identities, local seed identifiers, UUIDs, variants and learner evidence remain unchanged.",
+    "Generator availability is overlap evidence only and is not mathematical proof, standards coverage, assessment readiness or mastery evidence.",
+    "Production TAXONOMY remains unchanged and empty.",
+    "M8.G.TRANS and M8.G.SIM are deferred until authoritative Integrated Algebra I/II scope reconciliation; no historical evidence is reinterpreted."
+  ],
+  "cards": [
+    {
+      "code": "MATH.GEO.CIRCLE.CIRCUMFERENCE",
+      "name": "Reason with circle circumference",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.CIRCLES",
+        "generator family MATH.GEO.CIRCLE.CIRCUMFERENCE",
+        "MATH.GEO.CIRCLE.RADIUS_DIAMETER"
+      ],
+      "scope": "Use C=2πr=πd to determine or interpret the circumference of a circle from radius, diameter, or a one-step inverse condition, with units and requested exact or approximate form.",
+      "inclusions": [
+        "Positive rational radius or diameter",
+        "Exact answers in terms of π when requested",
+        "Decimal approximations only to a stated precision",
+        "One-step inverse cases such as C=10π implies d=10",
+        "Contextual interpretation as distance around a circle"
+      ],
+      "exclusions": [
+        "Circle area evidence",
+        "Arc length or sector measures",
+        "Arbitrary symbolic manipulation beyond one-step inversion",
+        "Treating a decimal approximation of π as exact",
+        "Inferring mastery from radius-diameter conversion alone"
+      ],
+      "prerequisites": [
+        "meaning of radius and diameter",
+        "multiplication with rational numbers",
+        "units of length",
+        "meaning of π as circumference-to-diameter ratio"
+      ],
+      "examples": [
+        {
+          "prompt": "A circle has radius 7 cm. Give its circumference exactly.",
+          "answer": "14π cm",
+          "evidence": "direct radius"
+        },
+        {
+          "prompt": "A circle has circumference 10π m. Find its diameter.",
+          "answer": "10 m",
+          "evidence": "one-step inverse"
+        },
+        {
+          "prompt": "A circle has diameter 8 cm. Give its circumference to the nearest tenth using π≈3.14159.",
+          "answer": "25.1 cm",
+          "evidence": "specified approximation"
+        },
+        {
+          "prompt": "A circle has radius 5 cm. Its circumference is 25π cm.",
+          "valid": false,
+          "rationale": "25π is the area, not the circumference"
+        }
+      ],
+      "misconceptions": [
+        "uses πr² for circumference",
+        "uses radius as diameter or diameter as radius",
+        "drops linear units",
+        "reports 3.14-based value as exact"
+      ],
+      "assessment_criteria": [
+        "independent evidence from both radius and diameter",
+        "at least one exact-π and one stated-precision response",
+        "at least one contextual interpretation with linear units",
+        "separate direct and inverse evidence",
+        "do not infer area mastery"
+      ]
+    },
+    {
+      "code": "MATH.GEO.CIRCLE.AREA",
+      "name": "Reason with circle area",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.CIRCLES",
+        "generator family MATH.GEO.CIRCLE.AREA",
+        "MATH.GEO.CIRCLE.RADIUS_DIAMETER"
+      ],
+      "scope": "Use A=πr² to determine or interpret the area of a circle from radius or diameter, and solve bounded one-step inverse cases where A/π is a perfect square, with correct square units and requested exact or approximate form.",
+      "inclusions": [
+        "Positive rational radius or diameter",
+        "Radius extraction from a supplied diameter",
+        "Exact answers in terms of π",
+        "Stated-precision approximations",
+        "Inverse cases whose radius is rational and evident from a perfect-square quotient"
+      ],
+      "exclusions": [
+        "Circumference evidence",
+        "Sector area",
+        "Surface area of cylinders or spheres",
+        "Unbounded radical-solving tasks",
+        "Treating πr as area"
+      ],
+      "prerequisites": [
+        "meaning of radius and diameter",
+        "squaring positive rational numbers",
+        "units of area",
+        "multiplication by π"
+      ],
+      "examples": [
+        {
+          "prompt": "A circle has radius 6 cm. Give its area exactly.",
+          "answer": "36π cm²",
+          "evidence": "direct radius"
+        },
+        {
+          "prompt": "A circle has diameter 10 m. Give its area exactly.",
+          "answer": "25π m²",
+          "evidence": "diameter-to-radius"
+        },
+        {
+          "prompt": "A circle has area 49π cm². Find its radius.",
+          "answer": "7 cm",
+          "evidence": "bounded inverse"
+        },
+        {
+          "prompt": "A circle has radius 4 cm. Its area is 8π cm².",
+          "valid": false,
+          "rationale": "The radius must be squared"
+        }
+      ],
+      "misconceptions": [
+        "uses 2πr for area",
+        "fails to halve a diameter before squaring",
+        "squares π as well as the radius",
+        "uses linear rather than square units"
+      ],
+      "assessment_criteria": [
+        "independent radius and diameter cases",
+        "exact-π and stated-precision evidence",
+        "at least one square-unit interpretation",
+        "one bounded inverse case",
+        "do not infer circumference mastery"
+      ]
+    },
+    {
+      "code": "MATH.GEO.ANGLE.RELATIONSHIPS",
+      "name": "Determine unknown angles from angle relationships",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.ANGLES",
+        "MATH.GEO.ANGLE.COMPLEMENT",
+        "MATH.GEO.ANGLE.SUPPLEMENT"
+      ],
+      "scope": "Identify and use complementary, supplementary, vertical-angle, adjacent-angle, and linear-pair relationships to determine unknown angle measures and justify the equation used.",
+      "inclusions": [
+        "Whole-number and rational degree measures from 0° to 180° where geometrically valid",
+        "Complementary pairs sum to 90°",
+        "Supplementary and linear-pair angles sum to 180°",
+        "Vertical angles are equal",
+        "Adjacent angles are not assumed complementary or supplementary without structure",
+        "One- and two-step linear equations arising from these relationships"
+      ],
+      "exclusions": [
+        "Triangle interior or exterior-angle theorems",
+        "Parallel-line transversal theorems unless independently defined",
+        "Angle construction accuracy",
+        "Congruence or transformation evidence",
+        "Classifying a single angle as the full skill"
+      ],
+      "prerequisites": [
+        "angle measure",
+        "equality and one-variable linear equations",
+        "acute, right, obtuse, and straight angles"
+      ],
+      "examples": [
+        {
+          "prompt": "Two angles form a linear pair. One is 68°. Find the other.",
+          "answer": "112°",
+          "evidence": "linear pair"
+        },
+        {
+          "prompt": "Vertical angles measure (3x+5)° and 80°. Find x.",
+          "answer": "25",
+          "evidence": "vertical equality"
+        },
+        {
+          "prompt": "Two adjacent angles are 30° and 40°, so they are complementary.",
+          "valid": false,
+          "rationale": "Adjacency alone does not establish a 90° total"
+        }
+      ],
+      "misconceptions": [
+        "treats all adjacent angles as supplementary",
+        "confuses vertical with adjacent angles",
+        "uses 360° for a linear pair",
+        "reverses complementary and supplementary totals"
+      ],
+      "assessment_criteria": [
+        "evidence across at least three relationship types including vertical and linear-pair/supplementary",
+        "require a relationship-based equation or justification",
+        "include a diagram-independent verbal case and a diagram case",
+        "do not substitute triangle-angle evidence"
+      ]
+    },
+    {
+      "code": "MATH.GEO.TRIANGLE.ANGLE_RELATIONSHIPS",
+      "name": "Reason with triangle interior and exterior angles",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.GEO.TRIANGLES",
+        "MATH.GEO.TRIANGLE.MISSING_ANGLE"
+      ],
+      "scope": "Use the 180° interior-angle sum and the exterior-angle theorem to determine unknown triangle angle measures, test geometric validity, and justify relationships.",
+      "inclusions": [
+        "Missing interior angles",
+        "Exterior angle equals the sum of the two remote interior angles",
+        "Linear-pair connection at a triangle vertex",
+        "Whole-number and rational degree measures",
+        "Rejecting nonpositive or impossible angle sets"
+      ],
+      "exclusions": [
+        "Triangle congruence or similarity",
+        "Side-length triangle inequality",
+        "Pythagorean theorem",
+        "Polygon interior-angle sums beyond triangles",
+        "Assuming a diagram is drawn to scale"
+      ],
+      "prerequisites": [
+        "angle measure",
+        "supplementary linear pairs",
+        "addition and subtraction of rational numbers",
+        "one-variable linear equations"
+      ],
+      "examples": [
+        {
+          "prompt": "A triangle has angles 48° and 67°. Find the third angle.",
+          "answer": "65°",
+          "evidence": "interior sum"
+        },
+        {
+          "prompt": "A triangle has remote interior angles 42° and 73°. Find the adjacent exterior angle.",
+          "answer": "115°",
+          "evidence": "exterior theorem"
+        },
+        {
+          "prompt": "A triangle has angles 90°, 60°, and 40°.",
+          "valid": false,
+          "rationale": "The interior sum is 190°, not 180°"
+        }
+      ],
+      "misconceptions": [
+        "uses 360° as a triangle interior sum",
+        "adds the adjacent interior angle to remote interior angles for the exterior theorem",
+        "trusts visual scale over stated measures",
+        "accepts zero or negative angles"
+      ],
+      "assessment_criteria": [
+        "separate interior-sum and exterior-angle evidence",
+        "at least one validity/rejection probe",
+        "require a theorem-based equation or explanation",
+        "do not infer congruence, similarity, or side-length reasoning"
+      ]
+    },
+    {
+      "code": "MATH.PROB.EVENT.LIKELIHOOD_0_TO_1",
+      "name": "Quantify event likelihood from 0 to 1",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.PROB.EXPERIMENTAL",
+        "broad historical probability identities"
+      ],
+      "scope": "Represent and interpret event likelihood on the inclusive probability scale from 0 to 1, connecting 0 with impossible, 1 with certain, and intermediate values with relative likelihood.",
+      "inclusions": [
+        "Fractions, decimals, and percents in [0,1]",
+        "Ordering and comparing likelihoods",
+        "Impossible, unlikely, equally likely, likely, and certain interpretations",
+        "Complementary verbal reasoning such as an event becoming more or less likely"
+      ],
+      "exclusions": [
+        "Computing experimental relative frequency from data",
+        "Constructing compound sample spaces",
+        "Formal odds notation",
+        "Probability values below 0 or above 1",
+        "Claiming that a likely event must occur"
+      ],
+      "prerequisites": [
+        "fractions, decimals, and percents as equivalent representations",
+        "comparison of rational numbers",
+        "event and outcome language"
+      ],
+      "examples": [
+        {
+          "prompt": "Place probabilities 0, 0.25, 0.5, 0.9, and 1 from impossible to certain.",
+          "answer": "0, 0.25, 0.5, 0.9, 1"
+        },
+        {
+          "prompt": "An event has probability 0.7. Is it more likely than an event with probability 0.4?",
+          "answer": "yes"
+        },
+        {
+          "prompt": "A probability is 1.2.",
+          "valid": false,
+          "rationale": "Probabilities must lie from 0 to 1 inclusive"
+        }
+      ],
+      "misconceptions": [
+        "treats probability 0.7 as 7 percent",
+        "believes likely means guaranteed",
+        "orders fractions by denominator alone",
+        "accepts values outside [0,1]"
+      ],
+      "assessment_criteria": [
+        "include 0, 0.5, and 1 boundaries",
+        "compare multiple representations",
+        "require interpretation as well as ordering",
+        "do not infer experimental-frequency or compound-event mastery"
+      ]
+    },
+    {
+      "code": "MATH.PROB.EXPERIMENTAL.FREQUENCY",
+      "name": "Estimate probability using long-run relative frequency",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.PROB.EXPERIMENTAL",
+        "generator family MATH.PROB.EXPERIMENTAL",
+        "generator family MATH.PROB.EXPECTED_COUNT"
+      ],
+      "scope": "Compute and interpret experimental probability as successes divided by trials, and reason that relative frequency tends to stabilize near an underlying probability over many comparable trials without requiring exact agreement.",
+      "inclusions": [
+        "Finite repeated trials with clearly identified event counts",
+        "Relative frequency as a fraction, decimal, or percent",
+        "Comparing results from different trial counts",
+        "Qualitative long-run stabilization",
+        "Using a probability to predict an approximate count with stated uncertainty"
+      ],
+      "exclusions": [
+        "Treating predicted count as guaranteed",
+        "Inferring causation from frequency",
+        "Formal confidence intervals or hypothesis tests",
+        "Compound-event enumeration",
+        "Replacing a theoretical model solely because one finite experiment differs"
+      ],
+      "prerequisites": [
+        "ratios and unit rates",
+        "fractions, decimals, and percents",
+        "event and trial language",
+        "multiplication for expected counts"
+      ],
+      "examples": [
+        {
+          "prompt": "A spinner lands blue 18 times in 30 trials. Find the experimental probability.",
+          "answer": "3/5"
+        },
+        {
+          "prompt": "A fair coin gives 47 heads in 100 flips. Does this disprove probability 1/2?",
+          "answer": "no; finite results can vary"
+        },
+        {
+          "prompt": "An event with probability 0.3 will occur exactly 30 times in 100 trials.",
+          "valid": false,
+          "rationale": "30 is an expectation, not a guarantee"
+        }
+      ],
+      "misconceptions": [
+        "reverses successes and trials",
+        "uses raw count instead of relative frequency when trial totals differ",
+        "expects exact theoretical frequency in every sample",
+        "treats more trials as making all outcomes identical"
+      ],
+      "assessment_criteria": [
+        "independent computation and interpretation evidence",
+        "compare samples with different totals",
+        "include a long-run qualitative explanation",
+        "distinguish expected count from guaranteed count",
+        "do not infer formal statistical inference"
+      ]
+    },
+    {
+      "code": "MATH.PROB.MODEL.COMPARE_THEORY_EXPERIMENT",
+      "name": "Compare theoretical and experimental probability models",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "MATH.PROB.EXPERIMENTAL",
+        "generator family MATH.PROB.THEORY.VS_EXPERIMENT"
+      ],
+      "scope": "Compare a stated theoretical probability model with experimental relative-frequency evidence, explain plausible random variation, and identify when persistent discrepancies justify questioning assumptions or model fit.",
+      "inclusions": [
+        "Calculate both theoretical and experimental probabilities",
+        "Compare using common representations",
+        "Explain finite-sample variation",
+        "Recognize that larger repeated samples generally provide more stable evidence",
+        "Identify structural reasons a model may be inappropriate when supplied"
+      ],
+      "exclusions": [
+        "Automatically rejecting a model after any mismatch",
+        "Formal goodness-of-fit tests",
+        "Unstated causal conclusions",
+        "Compound-event sample-space construction",
+        "Assuming experimental data proves exact theoretical probability"
+      ],
+      "prerequisites": [
+        "experimental relative frequency",
+        "probability scale from 0 to 1",
+        "equivalent rational representations",
+        "difference and absolute difference"
+      ],
+      "examples": [
+        {
+          "prompt": "A model predicts 1/2; an event occurs 52 times in 100 trials. Is the result necessarily inconsistent?",
+          "answer": "no; the difference can be random variation"
+        },
+        {
+          "prompt": "A supposedly fair die shows 6 on 240 of 300 trials. What should be questioned?",
+          "answer": "the fairness/model assumptions"
+        },
+        {
+          "prompt": "Experimental probability differs from theory, so theory is always wrong.",
+          "valid": false,
+          "rationale": "Finite samples vary"
+        }
+      ],
+      "misconceptions": [
+        "expects exact equality in finite trials",
+        "replaces theory with one observed proportion",
+        "ignores sample size",
+        "compares raw counts with unequal trial totals"
+      ],
+      "assessment_criteria": [
+        "compute or identify both model and observed proportion",
+        "include one plausible-variation case and one clear model-mismatch case",
+        "require explanation referencing sample size or assumptions",
+        "do not infer formal statistical-test mastery"
+      ]
+    },
+    {
+      "code": "MATH.PROB.COMPOUND.SAMPLE_SPACE",
+      "name": "Represent sample spaces and probabilities for compound events",
+      "review_state": "DRAFT",
+      "identity_status": "PROPOSED_BOUNDED_ATOM_PENDING_ARCHITECTURE_AND_MATH_REVIEW",
+      "possible_overlaps": [
+        "M7.SP.PROB legacy local composite",
+        "broad historical probability identities"
+      ],
+      "scope": "Construct and use an organized sample space for a finite two-stage experiment to determine probabilities of compound events, distinguishing ordered outcomes and updating outcome counts when dependence is explicitly described.",
+      "inclusions": [
+        "Organized lists, tables, and tree diagrams",
+        "Two-stage experiments with equally likely elementary outcomes",
+        "AND and OR event descriptions in ordinary language",
+        "Complement of an event",
+        "With-replacement cases and explicitly bounded without-replacement cases",
+        "Probability as favorable elementary outcomes over total equally likely outcomes"
+      ],
+      "exclusions": [
+        "Assuming stages are independent without evidence",
+        "General conditional-probability notation",
+        "Bayes theorem",
+        "Continuous probability",
+        "Three or more stages unless separately reviewed",
+        "Counting unordered pairs when order changes the outcome"
+      ],
+      "prerequisites": [
+        "simple event probability",
+        "multiplication principle for counting",
+        "fractions",
+        "event, outcome, and sample-space language"
+      ],
+      "examples": [
+        {
+          "prompt": "Flip a coin twice. List the ordered sample space.",
+          "answer": "HH, HT, TH, TT"
+        },
+        {
+          "prompt": "Roll a fair die and flip a fair coin. Find P(even and heads).",
+          "answer": "1/4"
+        },
+        {
+          "prompt": "When drawing without replacement, use the same denominator on the second draw.",
+          "valid": false,
+          "rationale": "The available outcome count changes"
+        },
+        {
+          "prompt": "HT and TH are the same ordered outcome.",
+          "valid": false,
+          "rationale": "They differ when trial order is recorded"
+        }
+      ],
+      "misconceptions": [
+        "adds probabilities for an AND event without justification",
+        "multiplies dependent stages as though unchanged",
+        "omits ordered outcomes",
+        "counts favorable outcomes over a non-equally-likely list"
+      ],
+      "assessment_criteria": [
+        "construct an explicit sample space in at least two representations",
+        "separate independent and explicitly dependent cases",
+        "include AND, OR, and complement evidence",
+        "require denominator justification from elementary outcomes",
+        "do not infer general conditional probability"
+      ]
+    }
+  ]
+}
