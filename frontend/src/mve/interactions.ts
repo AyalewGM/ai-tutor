@@ -93,7 +93,14 @@ export interface LinearParametersChangedEvent extends MathInteractionBase {
   intercept: number;
 }
 
+export interface BalanceOperationAppliedEvent extends MathInteractionBase {
+  type: "BALANCE_OPERATION_APPLIED";
+  operation: "add_unit" | "remove_unit" | "remove_x" | "divide_two" | "divide_three";
+  left_x: number; left_units: number; right_x: number; right_units: number;
+}
+
 export type MathInteractionEvent =
+  | BalanceOperationAppliedEvent
   | LinearParametersChangedEvent
   | IntegerDisplacementChangedEvent
   | PointPlacedEvent
@@ -119,6 +126,18 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "BALANCE_OPERATION_APPLIED": {
+      if (!Object.keys(event).every(key => ["schema_version", "type", "operation", "left_x", "left_units", "right_x", "right_units"].includes(key))) return false;
+      const values = [event.left_x, event.left_units, event.right_x, event.right_units];
+      if (!values.every(Number.isSafeInteger)) return false;
+      const [lx, lu, rx, ru] = values as number[];
+      if (rx < 0 || lx > 3 || lx <= rx || lu < 0 || ru > 12 || ru < lu) return false;
+      if (event.operation === "add_unit") return ru < 12;
+      if (event.operation === "remove_unit") return lu > 0;
+      if (event.operation === "remove_x") return rx > 0;
+      const divisor = event.operation === "divide_two" ? 2 : event.operation === "divide_three" ? 3 : 0;
+      return divisor > 0 && (values as number[]).every(value => value % divisor === 0);
+    }
     case "LINEAR_PARAMETERS_CHANGED":
       return Object.keys(event).every(key => ["schema_version", "type", "rise", "run", "intercept"].includes(key)) &&
         Number.isSafeInteger(event.rise) && Math.abs(event.rise as number) <= 6 &&

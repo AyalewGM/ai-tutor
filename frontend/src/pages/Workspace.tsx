@@ -1,3 +1,5 @@
+import { InteractiveEquationBalance } from "../mve/InteractiveEquationBalance";
+import { showBalanceExploration } from "../mve/equationBalance";
 import { InteractiveLinearExplorer } from "../mve/InteractiveLinearExplorer";
 import { showLinearExploration } from "../mve/linearExplorer";
 import { InteractiveIntegerNumberLine } from "../mve/InteractiveIntegerNumberLine";
@@ -773,6 +775,12 @@ export default function Workspace() {
                   )}
                   {showLinearExploration(workspace.state, workspace.focus.skill_name) && (
                     <InteractiveLinearExplorer
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
+                  {showBalanceExploration(workspace.state, workspace.focus.skill_name) && (
+                    <InteractiveEquationBalance
                       key={workspace.focus.active_skill_id}
                       independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
                     />
