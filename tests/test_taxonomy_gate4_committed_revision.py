@@ -10,15 +10,15 @@ from decimal import Decimal
 from uuid import uuid4
 
 import pytest
+from app.canonical_taxonomy_reconciliation import (
+    PersistedSkillIdentity,
+    validate_identity_revision,
+)
 from app.canonical_skill_taxonomy import (
     CanonicalSkillDefinition,
     CanonicalTaxonomy,
     SkillReviewState,
     TaxonomyError,
-)
-from app.canonical_taxonomy_reconciliation import (
-    PersistedSkillIdentity,
-    validate_identity_revision,
 )
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
 from app.diagnostic_models import DiagnosticAttempt, DiagnosticSession
