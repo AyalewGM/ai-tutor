@@ -47,6 +47,10 @@ test("practice specifications score deterministically and reject malformed input
     assert.equal(math.checkIntegerPractice(i, String(answer + 1)).correct, false);
   }
   for (const input of ["", "1.0", "2e0", "NaN", "100", "21", "-21"]) assert.equal(math.checkIntegerPractice(0, input).correct, false);
+  const wrong = math.checkIntegerPractice(1, "2");
+  assert.equal(wrong.correct, false);
+  assert.equal(wrong.feedback.includes("to 3"), false);
+  assert.equal(wrong.feedback.includes("result"), false);
   assert.throws(() => math.checkIntegerPractice(-1, "0"));
 });
 test("real rendered component has labeled keyboard controls, live feedback and SVG", () => {
@@ -90,4 +94,31 @@ test("actual React handlers update movement, emit bounded events and check pract
   tree = nodes(render());
   assert.equal(tree.find(n => n.props.id === "test-answer").props.value, "");
   assert.equal(tree.find(n => n.props.id === "test-feedback").props.children, "");
+});
+
+test("seed mapping is deterministic and bounded", () => {
+  for (const seed of [-11, -1, 0, 1, 5, 11, 100]) {
+    const index = math.integerPracticeIndexFromSeed(seed);
+    assert.ok(index >= 0 && index < math.INTEGER_PRACTICE.length);
+    assert.equal(index, math.integerPracticeIndexFromSeed(seed));
+  }
+  assert.throws(() => math.integerPracticeIndexFromSeed(1.5));
+});
+
+test("changing seed resets practice index, answer and feedback", () => {
+  let state = [], cursor = 0;
+  const hooked = load("./InteractiveIntegerNumberLine.tsx", { ...imports, react: {
+    useId: () => "seedtest",
+    useState: initial => { const i = cursor++; if (!(i in state)) state[i] = initial; return [state[i], value => { state[i] = value; }]; },
+  } });
+  function render(seed) { cursor = 0; const wrapper = hooked.InteractiveIntegerNumberLine({ independentAssessment: false, seed }); return wrapper.type(wrapper.props); }
+  function nodes(node) { return !node || typeof node !== "object" ? [] : [node, ...React.Children.toArray(node.props?.children).flatMap(nodes)]; }
+  let tree = nodes(render(0));
+  tree.find(n => n.props.id === "seedtest-answer").props.onChange({ target: { value: "2" } });
+  tree = nodes(render(0));
+  tree.find(n => n.type === "button" && n.props.children === "Check practice").props.onClick();
+  tree = nodes(render(3));
+  assert.equal(tree.find(n => n.props.id === "seedtest-answer").props.value, "");
+  assert.equal(tree.find(n => n.props.id === "seedtest-feedback").props.children, "");
+  assert.ok(tree.some(n => typeof n.props?.children === "string" && n.props.children.includes("Separate practice 4 of")));
 });
