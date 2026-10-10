@@ -1,0 +1,503 @@
+{
+  "schema_version": "1.0.0",
+  "status": "DRAFT_REPOSITORY_SKILL_TO_OFFICIAL_STANDARD_RECONCILIATION",
+  "course_code": "MD_ALGEBRA_1_2026_27",
+  "provenance": {
+    "repo_source": "scripts/seed_algebra1.py",
+    "authority_source": "https://msde.maryland.gov/media/17798",
+    "date": "2026-10-09",
+    "review_required": true
+  },
+  "summary": {
+    "seed_local_skills": 15,
+    "official_parent_standards": 40,
+    "standards_with_at_least_one_provisional_relation": 17,
+    "standards_with_no_provisional_relation": 23,
+    "proposed_relations": 25,
+    "accepted_relations": 0,
+    "verified_coverage": 0
+  },
+  "relation_semantics": {
+    "POTENTIAL_PARTIAL": "Subject-matter overlap only; never full or accepted coverage",
+    "UNCONFIRMED_RELATED": "Adjacent topic with no demonstrated requirement-level overlap; do not count as mapped"
+  },
+  "safety": {
+    "activation": "FORBIDDEN",
+    "canonical_id_creation": false,
+    "learner_mastery_mutation": false,
+    "source_code_mutation": false,
+    "full_standard_coverage_from_partial": false
+  },
+  "skills": [
+    {
+      "curriculum_local_skill_code": "A1.EXPR",
+      "local_name": "Algebraic Expressions",
+      "local_description": "Interpret and simplify algebraic expressions.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.EXPR",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "A.SSE.A.1",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Interpreting expressions is one part; does not establish all contextual subparts",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        },
+        {
+          "official_parent_standard_id": "A.SSE.A.2",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Simplification is related to recognizing structure but lacks specific evidence",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.LINEAR.EQ",
+      "local_name": "Linear Equations",
+      "local_description": "Solve one-variable linear equations and justify equivalent steps.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.LINEAR_EQ",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "A.REI.B.3",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "One-variable linear equations; inequality coverage is not demonstrated",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        },
+        {
+          "official_parent_standard_id": "A.REI.A.1",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Description mentions justified steps; proof-grade justification needs separate assessment",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.LINEAR.FN",
+      "local_name": "Linear Functions",
+      "local_description": "Represent and reason about linear relationships using equations, tables, and rates of change.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.LINEAR_FN",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "F.IF.B.6",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Rates of change are named but average rate and contextual interpretation not established",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        },
+        {
+          "official_parent_standard_id": "F.LE.A.1",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Linear relationships do not demonstrate linear-versus-exponential comparisons",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.EXPR.DIST",
+      "local_name": "Distribution in Expressions",
+      "local_description": "Expand a(x + b) forms using the distributive property.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.EXPR_DIST",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "A.SSE.A.2",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Distributive rewrite can expose structure; no full standard equivalence",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.EXPR.COMBINE",
+      "local_name": "Combining Like Terms",
+      "local_description": "Combine like terms to simplify multi-term expressions.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.EXPR_COMBINE",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "A.SSE.A.2",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Like-term rewriting is one expression structure case",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.LINEAR.EQ.ONE",
+      "local_name": "One-Step Linear Equations",
+      "local_description": "Solve x + a = b and ax = b with a single inverse operation.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.LINEAR_EQ_ONE",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "A.REI.B.3",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Only one-step equations, not inequalities or multi-step",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.LINEAR.EQ.TWO",
+      "local_name": "Two-Step and Multi-Step Linear Equations",
+      "local_description": "Solve ax + b = c and a(x + b) = c forms.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.LINEAR_EQ_TWO",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "A.REI.B.3",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Two-step and multi-step equations; inequality evidence not in scope",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.LINEAR.FN.SLOPE",
+      "local_name": "Slope-Intercept Form",
+      "local_description": "Write linear equations in y = mx + b from slope and intercept.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.LINEAR_FN_SLOPE",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "F.LE.A.2",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Linear equation from slope/intercept, not full linear and exponential modeling",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        },
+        {
+          "official_parent_standard_id": "F.IF.B.6",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Slope is related to rate of change; interval calculation and interpretation not assured",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.LINEAR.FN.EVAL",
+      "local_name": "Evaluating Linear Functions",
+      "local_description": "Evaluate a linear function for a given input.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.LINEAR_FN_EVAL",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "F.IF.A.2",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Evaluate function input; contextual interpretation unverified",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.QUAD.FN",
+      "local_name": "Quadratic Functions",
+      "local_description": "Interpret and reason about quadratic relationships using equations and graphs.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.QUAD_FN",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "F.IF.C.7",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Quadratic graph features only; other required function families missing",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        },
+        {
+          "official_parent_standard_id": "F.IF.C.8",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Quadratic properties are relevant but equivalent-form rewriting unverified",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.POLY.FN",
+      "local_name": "Polynomial Functions",
+      "local_description": "Interpret polynomial functions: degree, zeros, end behavior, and graphs of factored forms.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.POLY_FN",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "A.APR.B.3",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Polynomial zeros and graph interpretation are related; full factorization and multiplicity not established",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        },
+        {
+          "official_parent_standard_id": "F.IF.C.7",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Polynomial graph work is not complete required function-family coverage",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.SYS.EQ",
+      "local_name": "Systems of Linear Equations",
+      "local_description": "Solve pairs of linear equations graphically and algebraically, and reason about the number of solutions.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.SYS_EQ",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "A.REI.C.6",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Graphical and algebraic two-equation systems; exact/approximate solution requirements unverified",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        },
+        {
+          "official_parent_standard_id": "A.REI.D.11",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Intersection solutions are related; all equation-family intersection cases not established",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.EXP.FN",
+      "local_name": "Exponential Functions",
+      "local_description": "Interpret exponential functions f(x) = a·b^x: evaluate them, distinguish growth from decay, read initial values and growth factors, and match equations to graphs.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.EXP_FN",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "F.LE.A.1",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Exponential growth/decay is covered locally but comparison with linear models not established",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        },
+        {
+          "official_parent_standard_id": "F.LE.B.5",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Initial value and growth factor interpretation is related; contextual parameter evidence not verified",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.LINEAR.INEQ",
+      "local_name": "Linear Inequalities",
+      "local_description": "Solve one-variable linear inequalities, apply the sign-flip rule, read and write compound forms, and match inequalities to number-line graphs.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.LINEAR_INEQ",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "A.REI.B.3",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "One-variable inequalities; equations and justification not covered by this local skill",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        },
+        {
+          "official_parent_standard_id": "A.CED.A.1",
+          "relation": "UNCONFIRMED_RELATED",
+          "rationale": "Solving inequalities is not equivalent to creating them from contexts",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    },
+    {
+      "curriculum_local_skill_code": "A1.SEQ",
+      "local_name": "Arithmetic and Geometric Sequences",
+      "local_description": "Extend arithmetic and geometric sequences, find common differences and ratios, evaluate nth terms, classify sequences and write explicit rules.",
+      "seed_source": "scripts/seed_algebra1.py",
+      "legacy_canonical_looking_code": "MATH.ALGEBRA1.SEQ",
+      "legacy_code_status": "EXISTING_SEED_DERIVED_NOT_REVIEWED_ATOMIC_CANONICAL_ID",
+      "proposed_relations": [
+        {
+          "official_parent_standard_id": "F.IF.A.3",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Arithmetic/geometric sequences as functions require explicit domain and function interpretation",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        },
+        {
+          "official_parent_standard_id": "F.BF.A.1",
+          "relation": "POTENTIAL_PARTIAL",
+          "rationale": "Explicit nth-term rules only; recursive contextual construction not established",
+          "source": "https://msde.maryland.gov/media/17798",
+          "review_status": "PROPOSED_UNVERIFIED"
+        }
+      ],
+      "classification": {
+        "standards_mapped": "PROPOSED_ONLY_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_ACCEPTED_REVIEW_FOR_THIS_EXACT_RELATION",
+        "generator_available": "NOT_AUDITED",
+        "validated_practice": "NOT_VERIFIED",
+        "assessment_ready": "NOT_VERIFIED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      }
+    }
+  ],
+  "unrelated_or_unmatched_official_standards": [
+    "N.RN.B.3",
+    "N.Q.A.1",
+    "N.Q.A.2",
+    "N.Q.A.3",
+    "A.SSE.B.3",
+    "A.APR.A.1",
+    "A.CED.A.2",
+    "A.CED.A.3",
+    "A.CED.A.4",
+    "A.REI.B.4",
+    "A.REI.C.5",
+    "A.REI.D.10",
+    "A.REI.D.12",
+    "F.IF.A.1",
+    "F.IF.B.4",
+    "F.IF.B.5",
+    "F.IF.C.9",
+    "F.BF.B.3",
+    "F.LE.A.3",
+    "S.ID.B.6",
+    "S.ID.C.7",
+    "S.ID.C.8",
+    "S.ID.C.9"
+  ]
+}
