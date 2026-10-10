@@ -18,20 +18,25 @@ def _load() -> dict:
 
 def test_scope_bundle_is_draft_and_non_authoritative() -> None:
     data = _load()
-    assert data["revision"] == "2026-10-10-r1"
-    assert data["review_state"] == "DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW"
+    assert data["revision"] == "2026-10-10-r2"
+    assert data["review_state"] == (
+        "DRAFT_CORRECTIONS_PENDING_LIMITED_INDEPENDENT_MATHEMATICAL_REVIEW"
+    )
     assert data["authority"] == "NONE_NOT_FOR_RUNTIME"
     assert data["standards_context"]["mapping_status"] == "PROVISIONAL_NOT_ACCEPTED"
     assert data["architecture_basis"]["issue"] == 282
-    assert data["architecture_basis"]["comment_id"] == 6093222041
+    assert data["architecture_basis"]["comment_id"] == 6094147290
 
 
-def test_eight_bounded_candidates_are_complete_and_unique() -> None:
+def test_eleven_bounded_candidates_are_complete_and_unique() -> None:
     cards = _load()["cards"]
     expected = {
         "MATH.GEO.CIRCLE.CIRCUMFERENCE",
         "MATH.GEO.CIRCLE.AREA",
-        "MATH.GEO.ANGLE.RELATIONSHIPS",
+        "MATH.GEO.ANGLE.COMPLEMENT",
+        "MATH.GEO.ANGLE.SUPPLEMENT",
+        "MATH.GEO.ANGLE.VERTICAL_EQUALITY",
+        "MATH.GEO.ANGLE.ADJACENT_ADDITION",
         "MATH.GEO.TRIANGLE.ANGLE_RELATIONSHIPS",
         "MATH.PROB.EVENT.LIKELIHOOD_0_TO_1",
         "MATH.PROB.EXPERIMENTAL.FREQUENCY",
@@ -62,16 +67,28 @@ def test_eight_bounded_candidates_are_complete_and_unique() -> None:
 
 
 def test_decomposition_keeps_distinct_evidence_distinct() -> None:
-    by_code = {card["code"]: card for card in _load()["cards"]}
+    data = _load()
+    by_code = {card["code"]: card for card in data["cards"]}
 
     circumference = by_code["MATH.GEO.CIRCLE.CIRCUMFERENCE"]
     area = by_code["MATH.GEO.CIRCLE.AREA"]
     assert "Circle area evidence" in circumference["exclusions"]
     assert "Circumference evidence" in area["exclusions"]
 
-    angle = by_code["MATH.GEO.ANGLE.RELATIONSHIPS"]
+    assert "MATH.GEO.ANGLE.RELATIONSHIPS" not in by_code
+    angle_members = {
+        "MATH.GEO.ANGLE.COMPLEMENT",
+        "MATH.GEO.ANGLE.SUPPLEMENT",
+        "MATH.GEO.ANGLE.VERTICAL_EQUALITY",
+        "MATH.GEO.ANGLE.ADJACENT_ADDITION",
+    }
+    assert angle_members < set(by_code)
+    profile = data["noncanonical_profiles"][0]
+    assert profile["role"] == "REPORTING_ONLY_FAIL_CLOSED_ALL_OF"
+    assert set(profile["members"]) == angle_members
+    assert "No evidence propagation or duplicate credit" in profile["prohibitions"]
+
     triangle = by_code["MATH.GEO.TRIANGLE.ANGLE_RELATIONSHIPS"]
-    assert "Triangle interior or exterior-angle theorems" in angle["exclusions"]
     assert "supplementary linear pairs" in triangle["prerequisites"]
 
     simple_probability = {
@@ -83,6 +100,28 @@ def test_decomposition_keeps_distinct_evidence_distinct() -> None:
     assert "Compound-event sample-space construction" in by_code[
         "MATH.PROB.MODEL.COMPARE_THEORY_EXPERIMENT"
     ]["exclusions"]
+
+
+def test_r2_closes_reviewed_probability_boundaries() -> None:
+    by_code = {card["code"]: card for card in _load()["cards"]}
+
+    likelihood = by_code["MATH.PROB.EVENT.LIKELIHOOD_0_TO_1"]
+    inclusions = " ".join(likelihood["inclusions"])
+    assert "[0,1]" in inclusions
+    assert "0% to 100%" in inclusions
+    assert any(
+        example.get("evidence") == "cross-representation equivalence"
+        for example in likelihood["examples"]
+    )
+
+    experimental = by_code["MATH.PROB.EXPERIMENTAL.FREQUENCY"]
+    assert "Expected-count prediction using n×p as mastery evidence" in experimental[
+        "exclusions"
+    ]
+    assert "do not award or infer expected-count mastery" in experimental[
+        "assessment_criteria"
+    ]
+    assert "multiplication for expected counts" not in experimental["prerequisites"]
 
 
 def test_bundle_does_not_claim_runtime_mapping_or_mastery() -> None:
