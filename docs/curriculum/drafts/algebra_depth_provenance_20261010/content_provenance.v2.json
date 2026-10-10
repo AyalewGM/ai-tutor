@@ -7,9 +7,11 @@
   "main_taxonomy_context": "PR #308 merged; this does NOT approve these Grade 9 candidate identities",
   "mapping_pr_325_status": "DRAFT_PROVISIONAL_NOT_ACCEPTED",
   "sources": [
+    "main exact-head 13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
     "PR #327 exact-head 5d4e613b4aa241384809e048c60ee082e6f14fe4",
-    "PR #328 exact-head 8328a079ffc197360b92a7464c2249ce79488229",
-    "PR #325 exact-head 9343c2a25baaaacb5b127d1d6c9c4537a5671224"
+    "PR #328 current exact-head 64f673bfcfd75dfd104e88549681ff29f583b548",
+    "PR #325 exact-head 9343c2a25baaaacb5b127d1d6c9c4537a5671224",
+    "Pedagogical review pinned #327 5d4e613b4aa241384809e048c60ee082e6f14fe4 and #328 09fea6d0dc5c8d70d96d8c4e2812b6e1b7a98da4"
   ],
   "packages": [
     {
@@ -20,9 +22,10 @@
         "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
         "canonical_identity": "UNKNOWN",
         "mathematical": "PENDING",
-        "pedagogical": "PENDING",
+        "pedagogical": "CHANGES_REQUIRED",
         "muse_qa": "PENDING",
-        "engineering_release": "NOT_AUTHORIZED"
+        "engineering_release": "NOT_AUTHORIZED",
+        "pedagogy_evidence": "PR #327 comment 6102771217"
       },
       "pedagogical_evidence": [
         {
@@ -38,18 +41,19 @@
       ],
       "independent_assessment": {
         "transfer": "SPEC_ONLY_NOT_IMPLEMENTED",
-        "variant_freshness": "UNKNOWN",
-        "backend_trusted_scoring": "UNKNOWN",
-        "worked_answers_hidden": "NOT_VERIFIED",
+        "variant_freshness": "LOCAL_MODE_NAMESPACE_SEPARATION_TESTED_BACKEND_NOT_IMPLEMENTED",
+        "backend_trusted_scoring": "UNKNOWN_NOT_IMPLEMENTED",
+        "worked_answers_hidden": "LOCAL_PUBLIC_PAYLOAD_TEST_ONLY",
         "guided_hints_forbidden": true,
         "mastery_credit": "NEVER_FROM_GUIDED_PRACTICE"
       },
       "seedable_practice": {
-        "generator_status": "EXISTING_FAMILY_REUSE_CANDIDATE_NOT_WIRED",
-        "deterministic_replay": "NOT_EXECUTED_AT_RUNTIME",
-        "invalid_value_rejection": "UNKNOWN",
-        "independent_oracle": "NOT_INDEPENDENTLY_VERIFIED",
-        "unseen_assessment": "SPEC_ONLY"
+        "generator_status": "DRAFT_OFFLINE_GENERATOR_NOT_WIRED",
+        "deterministic_replay": "LOCAL_TESTED_100_SEEDS_PER_FAMILY",
+        "invalid_value_rejection": "NEGATIVE_SEED_AND_MODE_REJECTED_LOCALLY",
+        "independent_oracle": "LOCAL_EXACT_ORACLE_TESTED_NOT_INDEPENDENTLY_VERIFIED",
+        "unseen_assessment": "RESERVED_MODE_SEPARATED_NAMESPACE_DRAFT_CONTRACT",
+        "oracle_module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py"
       },
       "accessibility": {
         "keyboard": "SPEC_ONLY",
@@ -188,9 +192,10 @@
         "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
         "canonical_identity": "UNKNOWN",
         "mathematical": "PENDING",
-        "pedagogical": "PENDING",
+        "pedagogical": "CHANGES_REQUIRED",
         "muse_qa": "PENDING",
-        "engineering_release": "NOT_AUTHORIZED"
+        "engineering_release": "NOT_AUTHORIZED",
+        "pedagogy_evidence": "PR #328 comment 6102771431"
       },
       "pedagogical_evidence": [
         {
@@ -206,18 +211,19 @@
       ],
       "independent_assessment": {
         "transfer": "SPEC_ONLY_NOT_IMPLEMENTED",
-        "variant_freshness": "UNKNOWN",
-        "backend_trusted_scoring": "UNKNOWN",
-        "worked_answers_hidden": "NOT_VERIFIED",
+        "variant_freshness": "LOCAL_MODE_NAMESPACE_SEPARATION_TESTED_BACKEND_NOT_IMPLEMENTED",
+        "backend_trusted_scoring": "UNKNOWN_NOT_IMPLEMENTED",
+        "worked_answers_hidden": "LOCAL_PUBLIC_PAYLOAD_TEST_ONLY",
         "guided_hints_forbidden": true,
         "mastery_credit": "NEVER_FROM_GUIDED_PRACTICE"
       },
       "seedable_practice": {
-        "generator_status": "EXISTING_FAMILY_REUSE_CANDIDATE_NOT_WIRED",
-        "deterministic_replay": "NOT_EXECUTED_AT_RUNTIME",
-        "invalid_value_rejection": "UNKNOWN",
-        "independent_oracle": "NOT_INDEPENDENTLY_VERIFIED",
-        "unseen_assessment": "SPEC_ONLY"
+        "generator_status": "DRAFT_OFFLINE_GENERATOR_NOT_WIRED",
+        "deterministic_replay": "LOCAL_TESTED_100_SEEDS_PER_FAMILY",
+        "invalid_value_rejection": "NEGATIVE_SEED_AND_MODE_REJECTED_LOCALLY",
+        "independent_oracle": "LOCAL_EXACT_ORACLE_TESTED_NOT_INDEPENDENTLY_VERIFIED",
+        "unseen_assessment": "RESERVED_MODE_SEPARATED_NAMESPACE_DRAFT_CONTRACT",
+        "oracle_module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py"
       },
       "accessibility": {
         "keyboard": "SPEC_ONLY",
@@ -355,9 +361,10 @@
         "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
         "canonical_identity": "UNKNOWN",
         "mathematical": "PENDING",
-        "pedagogical": "PENDING",
+        "pedagogical": "UNKNOWN_NOT_REVIEWED_SOURCE_UNLOCATED",
         "muse_qa": "PENDING",
-        "engineering_release": "NOT_AUTHORIZED"
+        "engineering_release": "NOT_AUTHORIZED",
+        "pedagogy_evidence": "NONE"
       },
       "pedagogical_evidence": [
         {
@@ -373,18 +380,19 @@
       ],
       "independent_assessment": {
         "transfer": "SPEC_ONLY_NOT_IMPLEMENTED",
-        "variant_freshness": "UNKNOWN",
-        "backend_trusted_scoring": "UNKNOWN",
-        "worked_answers_hidden": "NOT_VERIFIED",
+        "variant_freshness": "LOCAL_MODE_NAMESPACE_SEPARATION_TESTED_BACKEND_NOT_IMPLEMENTED",
+        "backend_trusted_scoring": "UNKNOWN_NOT_IMPLEMENTED",
+        "worked_answers_hidden": "LOCAL_PUBLIC_PAYLOAD_TEST_ONLY",
         "guided_hints_forbidden": true,
         "mastery_credit": "NEVER_FROM_GUIDED_PRACTICE"
       },
       "seedable_practice": {
-        "generator_status": "EXISTING_FAMILY_REUSE_CANDIDATE_NOT_WIRED",
-        "deterministic_replay": "NOT_EXECUTED_AT_RUNTIME",
-        "invalid_value_rejection": "UNKNOWN",
-        "independent_oracle": "NOT_INDEPENDENTLY_VERIFIED",
-        "unseen_assessment": "SPEC_ONLY"
+        "generator_status": "DRAFT_OFFLINE_GENERATOR_NOT_WIRED",
+        "deterministic_replay": "LOCAL_TESTED_100_SEEDS_PER_FAMILY",
+        "invalid_value_rejection": "NEGATIVE_SEED_AND_MODE_REJECTED_LOCALLY",
+        "independent_oracle": "LOCAL_EXACT_ORACLE_TESTED_NOT_INDEPENDENTLY_VERIFIED",
+        "unseen_assessment": "RESERVED_MODE_SEPARATED_NAMESPACE_DRAFT_CONTRACT",
+        "oracle_module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py"
       },
       "accessibility": {
         "keyboard": "SPEC_ONLY",
@@ -521,5 +529,12 @@
         "observed": "REUSE_AUDIT_FOUND_SOURCE_CLAIM_ERROR"
       }
     }
-  ]
+  ],
+  "oracle_evidence": {
+    "module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py",
+    "test": "tests/test_algebra_depth_seeded_oracles.py",
+    "local_result": "303 passed",
+    "scope": "100 exact deterministic seeds for each of linear-plan crossover, quadratic rectangle area, and exponential repeated change, plus namespace/non-disclosure checks",
+    "limitation": "LOCAL_CONTENT_ORACLE_EVIDENCE_NOT_INDEPENDENT_BACKEND_OR_MASTERY_VERIFICATION"
+  }
 }

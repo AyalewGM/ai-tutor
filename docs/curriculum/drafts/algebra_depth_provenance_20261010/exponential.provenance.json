@@ -1,18 +1,21 @@
 {
   "package_id": "W4-G9-EXPO-MODELING",
-  "revision": "DRAFT_1",
-  "source_pr": 328,
+  "revision": "G9_DEPTH_R3_2026-10-10",
+  "source_pr": "UNKNOWN",
+  "source_package_verified": false,
+  "source_status": "UNKNOWN_UNLOCATED",
+  "prior_unverified_source_pr_claim": 328,
   "canonical_skill": "MATH.F.EXPONENTIAL",
-  "canonical_approval": "UNKNOWN",
+  "canonical_approval": "UNKNOWN_NOT_AUTHORITATIVE",
   "reused_generators": [
     "MATH.EXPFUNC.COMPARE.LINEAR",
     "MATH.EXPFUNC.MODEL"
   ],
-  "reused_mve": "UNKNOWN",
+  "reused_mve": "UNKNOWN_SPEC_ONLY_NOT_IMPLEMENTED",
   "ontario_source": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
   "ontario_version": "MTH1W 2021",
   "ontario_expectation_ids": [
-    "MTH1W.C3.1"
+    "C3.1"
   ],
   "maryland_source": "https://msde.maryland.gov/media/17798",
   "maryland_version": "August 2022",
@@ -27,10 +30,13 @@
   ],
   "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
   "mathematical_review": "PENDING",
-  "pedagogical_review": "PENDING",
+  "pedagogical_review": "UNKNOWN_NOT_REVIEWED_SOURCE_UNLOCATED",
   "muse_qa": "PENDING",
-  "practice_oracle": "NOT_EXECUTED",
-  "unseen_assessment": "DRAFT_ONLY",
+  "practice_oracle": "LOCAL_TESTED_NOT_INDEPENDENTLY_VERIFIED",
+  "oracle_module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py",
+  "unseen_assessment": "RESERVED_NAMESPACE_DRAFT_CONTRACT",
+  "backend_trusted_scoring": "UNKNOWN_NOT_IMPLEMENTED",
   "runtime_activation": false,
-  "mastery_writes": false
+  "mastery_writes": false,
+  "learner_data_writes": false
 }
