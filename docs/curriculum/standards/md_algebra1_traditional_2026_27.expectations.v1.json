@@ -1,0 +1,928 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "MD-ALGEBRA-I-TRADITIONAL-2026-27-EXPECTATIONS-V1",
+  "status": "DRAFT_PROPOSED_NOT_VERIFIED",
+  "jurisdiction": {
+    "country": "United States",
+    "state": "Maryland",
+    "authority": "Maryland State Department of Education"
+  },
+  "course": {
+    "course_code": "MD_ALGEBRA_1_2026_27",
+    "title": "Algebra I (traditional pathway)",
+    "implementation_school_year": "2026-2027",
+    "standards_document_date": "August 2022",
+    "assessment_evidence_document_date": "August 2024",
+    "distinct_from_course_code": "MD_INTEGRATED_ALGEBRA_1_2027_28"
+  },
+  "provenance": {
+    "standards_url": "https://msde.maryland.gov/media/17798",
+    "assessment_evidence_url": "https://msde.maryland.gov/media/17801",
+    "authority_index_url": "https://msde.maryland.gov/academics-0/curriculum-academic-standards/mathematics",
+    "source_checked": "2026-10-09",
+    "notes": [
+      "The official standards PDF has seven pages and lists Algebra I standards by conceptual category and cluster.",
+      "Top-level standards are inventoried; lettered subparts and MCAP evidence-statement subclaims require separate detailed review.",
+      "Editorial summaries are not official quotations or independently accepted equivalence judgments.",
+      "The 2026-27 implementation label comes from the current MSDE standards landing page, not the PDF publication date.",
+      "Source page locators were cross-checked against the seven-page official MSDE August 2022 PDF; A.REI.D.12 starts on page 4."
+    ]
+  },
+  "inventory": {
+    "top_level_standards": 40,
+    "source_pages": 7,
+    "repository_local_skills_reported_in_prior_audit": 15,
+    "repository_local_skill_status": "NOT_RECONCILED_WITH_OFFICIAL_EXPECTATION_IDS",
+    "accepted_mappings": 0,
+    "verified_coverage": 0
+  },
+  "safety": {
+    "activation": "FORBIDDEN",
+    "mapping_review_required": true,
+    "new_canonical_ids_created": false,
+    "learner_mastery_mutation": false,
+    "verified_coverage_claim": false
+  },
+  "expectations": [
+    {
+      "expectation_id": "N.RN.B.3",
+      "domain": "Number and Quantity",
+      "source_page": 1,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Rational and irrational number closure and mixed-operation reasoning",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "N.Q.A.1",
+      "domain": "Number and Quantity",
+      "source_page": 1,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Units, scale, and origin in quantitative multi-step modeling",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "N.Q.A.2",
+      "domain": "Number and Quantity",
+      "source_page": 1,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Define quantities appropriate to descriptive modeling and select accuracy consistent with measurement limits",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "N.Q.A.3",
+      "domain": "Number and Quantity",
+      "source_page": 1,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Report measurement quantities with appropriate precision",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.SSE.A.1",
+      "domain": "Algebra",
+      "source_page": 1,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Interpret terms, factors, and composite parts of contextual expressions",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.SSE.A.2",
+      "domain": "Algebra",
+      "source_page": 1,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Recognize expression structure for equivalent rewriting",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.SSE.B.3",
+      "domain": "Algebra",
+      "source_page": 2,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Equivalent expression forms reveal quadratic and exponential properties",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.APR.A.1",
+      "domain": "Algebra",
+      "source_page": 2,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Polynomial closure and addition, subtraction, multiplication",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.APR.B.3",
+      "domain": "Algebra",
+      "source_page": 2,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Polynomial zeros, factors, and graphical implications",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.CED.A.1",
+      "domain": "Algebra",
+      "source_page": 2,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Create one-variable equations and inequalities for contexts",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.CED.A.2",
+      "domain": "Algebra",
+      "source_page": 2,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Create and graph multivariable equations with units and scales",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.CED.A.3",
+      "domain": "Algebra",
+      "source_page": 2,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Represent contextual constraints using equations, inequalities, systems",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.CED.A.4",
+      "domain": "Algebra",
+      "source_page": 2,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Rearrange formulas to isolate quantities",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.REI.A.1",
+      "domain": "Algebra",
+      "source_page": 3,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Justify each equivalence-preserving equation-solving step",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.REI.B.3",
+      "domain": "Algebra",
+      "source_page": 3,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Solve linear equations and inequalities in one variable",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.REI.B.4",
+      "domain": "Algebra",
+      "source_page": 3,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Solve quadratics with appropriate methods and solution types",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.REI.C.5",
+      "domain": "Algebra",
+      "source_page": 3,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Justify solution preservation under linear-system elimination",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.REI.C.6",
+      "domain": "Algebra",
+      "source_page": 3,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Solve linear systems exactly and approximately",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.REI.D.10",
+      "domain": "Algebra",
+      "source_page": 3,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Interpret graphs as solution sets of two-variable equations",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.REI.D.11",
+      "domain": "Algebra",
+      "source_page": 3,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Interpret graph intersections as equation solutions",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "A.REI.D.12",
+      "domain": "Algebra",
+      "source_page": 4,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Graph linear inequalities and systems as half-plane regions",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.IF.A.1",
+      "domain": "Functions",
+      "source_page": 4,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Define functions by unique output for each domain input",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.IF.A.2",
+      "domain": "Functions",
+      "source_page": 4,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Evaluate and interpret function notation",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.IF.A.3",
+      "domain": "Functions",
+      "source_page": 4,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Understand integer-domain sequences as functions",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.IF.B.4",
+      "domain": "Functions",
+      "source_page": 4,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Interpret contextual graph and table features",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.IF.B.5",
+      "domain": "Functions",
+      "source_page": 4,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Connect function domain to graph and context",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.IF.B.6",
+      "domain": "Functions",
+      "source_page": 4,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Calculate and interpret average rate of change",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.IF.C.7",
+      "domain": "Functions",
+      "source_page": 5,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Graph functions and display defining features",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.IF.C.8",
+      "domain": "Functions",
+      "source_page": 5,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Rewrite function expressions to expose properties",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.IF.C.9",
+      "domain": "Functions",
+      "source_page": 5,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Compare function properties across representations",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.BF.A.1",
+      "domain": "Functions",
+      "source_page": 5,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Construct explicit or recursive function rules from context",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.BF.B.3",
+      "domain": "Functions",
+      "source_page": 5,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Explain graphical transformations and symmetry of functions",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.LE.A.1",
+      "domain": "Functions",
+      "source_page": 6,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Distinguish linear and exponential growth models",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.LE.A.2",
+      "domain": "Functions",
+      "source_page": 6,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Construct linear and exponential models from representations",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.LE.A.3",
+      "domain": "Functions",
+      "source_page": 6,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Compare eventual growth of exponential and polynomial models",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "F.LE.B.5",
+      "domain": "Functions",
+      "source_page": 6,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Interpret model parameters in context",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "S.ID.B.6",
+      "domain": "Statistics",
+      "source_page": 6,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Fit and evaluate models for bivariate quantitative data",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "S.ID.C.7",
+      "domain": "Statistics",
+      "source_page": 7,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Interpret linear-model slope and intercept contextually",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "S.ID.C.8",
+      "domain": "Statistics",
+      "source_page": 7,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Compute and interpret correlation coefficients",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    },
+    {
+      "expectation_id": "S.ID.C.9",
+      "domain": "Statistics",
+      "source_page": 7,
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "scope_summary": "Distinguish correlation from causation",
+      "scope_summary_type": "EDITORIAL_PARAPHRASE_REQUIRES_SOURCE_REVIEW",
+      "proposed_mapping_status": "NOT_PROPOSED",
+      "proposed_canonical_skill_ids": [],
+      "classification": {
+        "standards_mapped": "NO_ACCEPTED_MAPPING",
+        "mathematically_reviewed_skill": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "No independently accepted exact-target canonical mapping",
+        "No verified generator, practice, assessment, or learner-evidence audit"
+      ]
+    }
+  ]
+}
