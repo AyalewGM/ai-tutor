@@ -29,11 +29,15 @@ const { GuidedIntegerNumberLine } = await import(bundlePath);
 const render = (props) =>
   renderToStaticMarkup(React.createElement(GuidedIntegerNumberLine, props));
 
-test("mounts nothing during independent assessment", () => {
+test("mounts nothing unless guided mode is explicitly confirmed", () => {
   assert.equal(render({ seed: 17, independentAssessment: true }), "");
+  assert.equal(render({ seed: 17 }), "");
+  assert.equal(render({ seed: 17, independentAssessment: null }), "");
+  assert.equal(render({ seed: -1, independentAssessment: false }), "");
+  assert.equal(render({ seed: 1.5, independentAssessment: false }), "");
 });
 
-test("guided render shows the seeded task, controls and live status", () => {
+test("guided render shows the seeded task, native controls and live status", () => {
   const html = render({ seed: 17, independentAssessment: false });
   assert.match(html, /Explore adding signed integers/);
   assert.match(html, /Move left 1/);
@@ -41,7 +45,9 @@ test("guided render shows the seeded task, controls and live status", () => {
   assert.match(html, /Ask a guiding question/);
   assert.match(html, /Try another task/);
   assert.match(html, /Check my reasoning/);
-  assert.match(html, /role="status" aria-live="polite"/);
+  assert.match(html, /role="group" aria-label="Move the number-line marker"/);
+  assert.match(html, /role="status" aria-live="polite" aria-atomic="true"/);
+  assert.match(html, /aria-describedby="[^"]+-prompt [^"]+-feedback"/);
   assert.match(html, /You are still at the start/);
 });
 
@@ -63,5 +69,5 @@ test("markers start on the task's starting integer without revealing the answer"
   assert.match(html, new RegExp(`starting at ${a}, current position ${a}`));
   // The blue start marker and the orange position marker coincide at the start.
   assert.equal((html.match(/<circle/g) ?? []).length, 2);
-  assert.doesNotMatch(html, /answer =|the answer is/i);
+  assert.doesNotMatch(html, /answer =|the answer is|marker already shows the answer/i);
 });

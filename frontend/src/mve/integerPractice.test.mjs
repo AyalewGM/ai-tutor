@@ -38,15 +38,15 @@ test("hint progression does not leak answer and is context-based",()=>{
   assert.ok(hints.every(s=>typeof s==="string" && s.length>12));
 });
 
-test("MVE safety: assessment never mounts guided activity",async()=>{
+test("MVE safety: assessment and malformed runtime inputs fail closed",async()=>{
   const component=await readFile(new URL("./GuidedIntegerNumberLine.tsx",import.meta.url),"utf8");
-  assert.match(component,/if \(independentAssessment\) return null/);
+  assert.match(component,/independentAssessment !== false/);
+  assert.match(component,/Number\.isSafeInteger\(seed\)/);
   assert.match(component,/role="status"/);
   assert.match(component,/aria-live="polite"/);
   assert.match(component,/Move left 1/);
   assert.doesNotMatch(component,/mastery_score|updateMastery|setTimeout|setInterval/);
 });
-
 
 test("diagnoses distinct errors and ignores forged answer fields", () => {
   const t = {seed: 9, a: -3, b: -4, answer: 999, prompt: "synthetic"};
@@ -58,9 +58,13 @@ test("diagnoses distinct errors and ignores forged answer fields", () => {
   assert.equal(api.checkIntegerAnswer(t, "999").correct, false);
 });
 
-test("number-line boundaries are fixed and seed changes remount guided state", async () => {
+test("task identity resets guided state without answer leakage", async () => {
   const source = await readFile(new URL("./GuidedIntegerNumberLine.tsx", import.meta.url), "utf8");
-  assert.match(source, /<IntegerActivity key=\{seed\} seed=\{seed\}/);
+  assert.match(source, /<IntegerSession key=\{seed\} seed=\{seed\}/);
+  assert.match(source, /<IntegerActivity key=\{task\.seed\}/);
+  assert.doesNotMatch(source, /taskKey|task\.prompt\s*!==/);
+  assert.doesNotMatch(source, /marker already shows the answer/i);
+  assert.match(source, /setFeedback\(check\.guidance\)/);
   assert.match(source, /const min = -20;/);
   assert.match(source, /const max = 20;/);
   assert.doesNotMatch(source, /task\.answer\s*[+-]/);
@@ -88,15 +92,16 @@ test("integerPracticeEligible gates on guided states and integer-addition skills
   assert.equal(api.integerPracticeEligible("GUIDED_PRACTICE", "Fraction equivalence"), false);
 });
 
-test("guided activity announces displacement, cycles variants and keeps focus styling", async () => {
+test("guided activity exposes equivalent keyboard and screen-reader contracts without motion", async () => {
   const source = await readFile(new URL("./GuidedIntegerNumberLine.tsx", import.meta.url), "utf8");
   assert.match(source, /units \$\{travelled > 0 \? "right" : "left"\} of your start/);
+  assert.match(source, /role="group" aria-label="Move the number-line marker"/);
+  assert.match(source, /aria-describedby=\{`\$\{id\}-prompt \$\{id\}-feedback`\}/);
+  assert.match(source, /aria-atomic="true"/);
   assert.match(source, /Try another task/);
-  assert.match(source, /setOffset\(o => o \+ 1\)/);
-  assert.match(source, /marker already shows the answer/);
-  assert.match(source, /Walk the move on the line to see why/);
   const buttons = (source.match(/<button type="button"|<button type="submit"/g) ?? []).length;
   assert.ok(buttons >= 5);
   assert.equal((source.match(/className=\{control\}/g) ?? []).length, buttons);
   assert.match(source, /focus-visible:outline-offset-2/);
+  assert.doesNotMatch(source, /animation|animate-|transition-|requestAnimationFrame/);
 });
