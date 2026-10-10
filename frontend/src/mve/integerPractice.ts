@@ -57,3 +57,16 @@ export function socraticIntegerPrompts(task: IntegerTask): readonly string[] {
     "Which endpoint did you reach, and how can you check without counting twice?"
   ];
 }
+
+/** Deterministic seed from an opaque identifier, inside buildIntegerTask's range. */
+export function integerSeedFromString(value: string): number {
+  let hash = 0;
+  for (const ch of value) hash = (Math.imul(hash, 31) + ch.charCodeAt(0)) | 0;
+  return hash >>> 1;
+}
+
+/** Signed-integer guided practice teaches addition for integer skills only. */
+export function integerPracticeEligible(state: string, skillName: string): boolean {
+  return ["GUIDED_PRACTICE", "REMEDIATION"].includes(state) &&
+    /^(?:add integers|integer addition|integer operations|signed number operations)$/i.test(skillName);
+}

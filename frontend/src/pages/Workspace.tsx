@@ -18,6 +18,7 @@ import MathText from "../components/MathText";
 import ChatMessage from "../components/chat/ChatMessage";
 import LearnPanel from "../components/LearnPanel";
 import { GuidedDistributivePractice } from "../mve/GuidedDistributivePractice";
+import { integerPracticeEligible, integerSeedFromString } from "../mve/integerPractice";
 import LevelCrest from "../components/LevelCrest";
 import MathKeypad from "../components/MathKeypad";
 import ScratchPad from "../components/ScratchPad";
@@ -757,7 +758,24 @@ export default function Workspace() {
                       </button>
                       {learnOpen && (
                         <div className="border-t border-accent/30 px-4 py-3">
-                          <LearnPanel learn={learn} />
+                          <LearnPanel
+                            learn={learn}
+                            integerPracticeSeed={
+                              integerPracticeEligible(
+                                workspace.state,
+                                workspace.focus.skill_name,
+                              )
+                                ? integerSeedFromString(
+                                    workspace.problem?.id ??
+                                      workspace.focus.active_skill_id,
+                                  )
+                                : undefined
+                            }
+                            independentAssessment={
+                              workspace.state !== "GUIDED_PRACTICE" &&
+                              workspace.state !== "REMEDIATION"
+                            }
+                          />
                         </div>
                       )}
                     </div>

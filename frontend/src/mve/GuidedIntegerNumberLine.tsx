@@ -9,22 +9,46 @@ export function GuidedIntegerNumberLine({seed = 17, independentAssessment = fals
   return <IntegerActivity key={seed} seed={seed} />;
 }
 
+const control = "rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
+
 function IntegerActivity({seed}: {seed: number}) {
-  const task = useMemo(() => buildIntegerTask(seed), [seed]);
+  const [offset, setOffset] = useState(0);
+  const task = useMemo(() => buildIntegerTask((seed + offset) % 2147483648), [seed, offset]);
   const prompts = useMemo(() => socraticIntegerPrompts(task), [task]);
   const [position, setPosition] = useState(task.a);
   const [hint, setHint] = useState(0);
   const [response, setResponse] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [taskKey, setTaskKey] = useState(task.prompt);
+  if (taskKey !== task.prompt) {
+    setTaskKey(task.prompt);
+    setPosition(task.a);
+    setHint(0);
+    setResponse("");
+    setFeedback("");
+  }
   const min = -20;
   const max = 20;
   const points = Array.from({length: max - min + 1}, (_, i) => i + min);
   const move = (delta:number) => setPosition(p => Math.max(min, Math.min(max, p + delta)));
 
+  const travelled = position - task.a;
+  const travelledText = travelled === 0
+    ? `You are still at the start, ${task.a}.`
+    : `You are at ${position}, ${Math.abs(travelled)} units ${travelled > 0 ? "right" : "left"} of your start at ${task.a}.`;
+
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const check = checkIntegerAnswer(task, response);
-    setFeedback(check.correct ? "Your sum is correct. Explain your number-line strategy." : check.guidance);
+    if (!check.correct) {
+      setFeedback(position === task.answer
+        ? `Your marker already shows the answer. Compare it with what you typed. ${check.guidance}`
+        : check.guidance);
+      return;
+    }
+    setFeedback(position === task.answer
+      ? "Your sum is correct, and your marker walk confirms it. Explain your number-line strategy."
+      : "Your sum is correct. Walk the move on the line to see why it is true.");
   };
 
   return <section aria-label="Guided integer number line" data-mve-family="integer-addition"
@@ -46,22 +70,27 @@ function IntegerActivity({seed}: {seed: number}) {
       })}
     </svg>
     <div className="flex gap-2">
-      <button type="button" className="rounded border px-3 py-2" onClick={() => move(-1)} disabled={position <= min}>Move left 1</button>
-      <button type="button" className="rounded border px-3 py-2" onClick={() => move(1)} disabled={position >= max}>Move right 1</button>
-      <button type="button" className="rounded border px-3 py-2" onClick={() => setPosition(task.a)}>Reset</button>
+      <button type="button" className={control} onClick={() => move(-1)} disabled={position <= min}>Move left 1</button>
+      <button type="button" className={control} onClick={() => move(1)} disabled={position >= max}>Move right 1</button>
+      <button type="button" className={control} onClick={() => setPosition(task.a)}>Reset</button>
     </div>
-    <p role="status" aria-live="polite">Current position: {position}. Starting position: {task.a}.</p>
-    <button type="button" className="rounded border px-3 py-2"
-      onClick={() => setHint(i => Math.min(i + 1, prompts.length))} disabled={hint >= prompts.length}>
-      Ask a guiding question
-    </button>
+    <p role="status" aria-live="polite">{travelledText} Starting position: {task.a}.</p>
+    <div className="flex gap-2">
+      <button type="button" className={control}
+        onClick={() => setHint(i => Math.min(i + 1, prompts.length))} disabled={hint >= prompts.length}>
+        Ask a guiding question
+      </button>
+      <button type="button" className={control} onClick={() => setOffset(o => o + 1)}>
+        Try another task
+      </button>
+    </div>
     {hint > 0 && <p aria-live="polite">{prompts[hint - 1]}</p>}
     <form onSubmit={submit} className="space-y-2">
       <label className="block">What is the sum?
         <input type="text" inputMode="numeric" className="ml-2 rounded border p-2"
           value={response} onChange={e => setResponse(e.target.value)} />
       </label>
-      <button type="submit" className="rounded border px-3 py-2">Check my reasoning</button>
+      <button type="submit" className={control}>Check my reasoning</button>
     </form>
     <p aria-live="polite" role="status">{feedback}</p>
   </section>;
