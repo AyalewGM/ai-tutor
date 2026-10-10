@@ -54,7 +54,14 @@ jobs:
           # Isolated CI PostgreSQL is migrated and seeded in the prior steps.
           # Run opt-in taxonomy persistence regression against real DB rows.
           TEST_DATABASE_URL: postgresql+psycopg://postgres@localhost:5432/ai_tutor
+          MIHUR_GATE4_ISOLATED_DB: '1'
         run: pytest -q
+
+      - name: Gate 4 committed revision regression (must execute, no skips)
+        env:
+          TEST_DATABASE_URL: postgresql+psycopg://postgres@localhost:5432/ai_tutor
+          MIHUR_GATE4_ISOLATED_DB: '1'
+        run: pytest -q -rs tests/test_taxonomy_gate4_committed_revision.py -o fail_on_skipped=true
 
   containers:
     runs-on: ubuntu-latest
