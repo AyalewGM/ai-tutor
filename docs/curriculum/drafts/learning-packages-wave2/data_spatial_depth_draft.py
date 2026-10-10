@@ -111,8 +111,8 @@ def _histogram(rng: Random, variant: int):
         other = observations(rng)
     a = sum(x >= 15 for x in data)
     b = sum(x >= 15 for x in other)
-    return (f"Class A data: {data}. Class B data: {other}. Which class has more scores "
-            "from 15 through 24 inclusive (A or B)?", "A" if a > b else "B",
+    return ((f"Class A data: {data}. Class B data: {other}. Which class has more scores "
+             "from 15 through 24 inclusive (A or B)?"), "A" if a > b else "B",
             {"data_a": data, "data_b": other}, "compare_upper_bins",
             "Combine frequencies of the last two bins for each class.")
 
@@ -121,8 +121,8 @@ def _spatial(rng: Random, variant: int):
     if variant == 2:
         numerator, denominator = rng.randint(1, 9), rng.randint(2, 6)
         edge = Fraction(numerator, denominator)
-        return (f"A foldable six-square cube net has edge {edge} cm. "
-                "Find total surface area in cm² (exact fraction or integer).",
+        return ((f"A foldable six-square cube net has edge {edge} cm. "
+                 "Find total surface area in cm² (exact fraction or integer)."),
                 str(6 * edge * edge), {"numerator": numerator, "denominator": denominator},
                 "net_surface_area", "Count six square faces and square the edge length.")
     valid = rng.choice(VALID)
@@ -132,8 +132,8 @@ def _spatial(rng: Random, variant: int):
             first, second, answer = valid, invalid, "A"
         else:
             first, second, answer = invalid, valid, "B"
-        return (f"Net A: {list(first)}. Net B: {list(second)}. "
-                "Which six-square shape folds into a cube without face overlap (A or B)?",
+        return ((f"Net A: {list(first)}. Net B: {list(second)}. "
+                 "Which six-square shape folds into a cube without face overlap (A or B)?"),
                 answer, {"a": first, "b": second}, "net_pair",
                 "Track six distinct outward face directions as hinges fold.")
     chosen = valid if rng.choice((True, False)) else invalid
