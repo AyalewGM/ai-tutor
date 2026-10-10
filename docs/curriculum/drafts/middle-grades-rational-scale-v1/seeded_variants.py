@@ -42,8 +42,10 @@ def _nonzero_fraction(rng: random.Random) -> Fraction:
 def generate(seed: int, mode: str) -> Variant:
     """Generate a reproducible review variant in a mode-separated namespace."""
 
-    if mode not in MODES:
+    if not isinstance(mode, str) or mode not in MODES:
         raise ValueError(f"Unsupported mode: {mode}")
+    if isinstance(seed, bool) or not isinstance(seed, int):
+        raise TypeError("seed must be an integer")
     if seed < 0:
         raise ValueError("seed must be nonnegative")
 

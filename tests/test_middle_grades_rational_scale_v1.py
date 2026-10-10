@@ -3,6 +3,8 @@ import json
 from fractions import Fraction
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).parents[1]
 DRAFT = ROOT / "docs" / "curriculum" / "drafts" / "middle-grades-rational-scale-v1"
 PHASES = [
@@ -34,7 +36,7 @@ def test_provenance_is_complete_and_fail_closed() -> None:
     provenance = load("provenance.v1.json")
 
     assert provenance["package_id"] == "MG-G7-RATIONAL-SCALE-INVERSE"
-    assert provenance["revision"] == "middle-grades-rational-scale-v1-r1"
+    assert provenance["revision"] == "middle-grades-rational-scale-v1-r2"
     assert provenance["status"] == "DRAFT_UNVERIFIED"
     assert provenance["runtime_activation"] is False
     assert provenance["mastery_writes"] is False
@@ -42,6 +44,12 @@ def test_provenance_is_complete_and_fail_closed() -> None:
     assert provenance["standards"]["mapping_status"] == "PROVISIONAL_NOT_ACCEPTED"
     assert provenance["standards"]["mapping_approval"] == "NONE"
     assert provenance["canonical"]["canonical_identity_change"] is False
+    assert provenance["source_heads"] == {
+        "main": "13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
+        "standards_pr_325": "c1fa26a560ebea022202bace38d51e91ca5d08fa",
+        "learning_packages_pr_327": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
+        "learning_packages_pr_328": "2445f197259ff27b5c99dd2b45c4bcbc2e5292f8",
+    }
     assert provenance["approvals"] == {
         "standards": "PENDING",
         "mathematics": "PENDING",
@@ -113,6 +121,22 @@ def test_seeded_variants_are_deterministic_and_use_exact_oracles() -> None:
                 assert first.answer == first.left * first.right
             else:
                 assert first.answer * first.right == first.left
+
+
+@pytest.mark.parametrize("seed", [-1, True, False, 1.5, "7", None])
+def test_seeded_variants_reject_invalid_seed_values(seed: object) -> None:
+    variants = load_variants_module()
+
+    with pytest.raises((TypeError, ValueError)):
+        variants.generate(seed, "guided")
+
+
+@pytest.mark.parametrize("mode", ["", "assessment", "GUIDED", None, []])
+def test_seeded_variants_reject_invalid_modes(mode: object) -> None:
+    variants = load_variants_module()
+
+    with pytest.raises(ValueError, match="Unsupported mode"):
+        variants.generate(7, mode)
 
 
 def test_independent_namespace_and_payload_do_not_leak_answers_or_hints() -> None:

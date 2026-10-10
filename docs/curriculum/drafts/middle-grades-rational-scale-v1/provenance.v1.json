@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "package_id": "MG-G7-RATIONAL-SCALE-INVERSE",
-  "revision": "middle-grades-rational-scale-v1-r1",
+  "revision": "middle-grades-rational-scale-v1-r2",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "mastery_writes": false,
@@ -9,9 +9,9 @@
   "reviewed_at_utc": "2026-10-10",
   "source_heads": {
     "main": "13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
-    "standards_pr_325": "9343c2a25baaaacb5b127d1d6c9c4537a5671224",
+    "standards_pr_325": "c1fa26a560ebea022202bace38d51e91ca5d08fa",
     "learning_packages_pr_327": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
-    "learning_packages_pr_328": "64f673bfcfd75dfd104e88549681ff29f583b548"
+    "learning_packages_pr_328": "2445f197259ff27b5c99dd2b45c4bcbc2e5292f8"
   },
   "reuse_first_audit": {
     "existing_work": [
