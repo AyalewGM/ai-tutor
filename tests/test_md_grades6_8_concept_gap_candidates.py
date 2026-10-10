@@ -68,6 +68,17 @@ def test_review_evidence_does_not_promote_mapping_or_activation() -> None:
 
     angles = candidates["MD7_CROSS_GRADE_ANGLES"]["canonical_candidate_evidence"]
     assert angles["architecture_disposition"] == "REPORTING_ONLY_ALL_OF_NOT_CANONICAL"
+    assert angles["verdict"] == "APPROVE_MATHEMATICAL_SCOPE_ONLY"
+    assert angles["identity_state"] == "DRAFT_NOT_ACTIVATED"
+    assert angles["pinned_head"] == "6e30bd5522ba299a73b39c1e8d493577a033a5b6"
+    assert angles["artifact_blob"] == "9f4773c7e5964d8336b59d9ee2f76950bac7d280"
+    assert angles["review_comment"] == 6095975833
+    assert set(angles["reviewed_codes"]) == {
+        "MATH.GEO.ANGLE.COMPLEMENT",
+        "MATH.GEO.ANGLE.SUPPLEMENT",
+        "MATH.GEO.ANGLE.VERTICAL_EQUALITY",
+        "MATH.GEO.ANGLE.ADJACENT_ADDITION",
+    }
     assert angles["standards_mapping"] == "PROVISIONAL_NOT_ACCEPTED"
 
     for id_ in ("MD7_CROSS_GRADE_PROBABILITY", "MD8_COMPOUND_PROBABILITY"):

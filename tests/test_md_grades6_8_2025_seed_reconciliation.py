@@ -162,3 +162,32 @@ def test_architecture_decision_preserves_legacy_composites_and_fails_closed() ->
         for row in data["rows"]
     )
     assert all("canonical_skill_id" not in row for row in data["rows"])
+
+def test_latest_math_review_updates_scope_evidence_without_accepting_mapping() -> None:
+    data = _load()
+    by_code = {row["local_seed_code"]: row for row in data["rows"]}
+    geo = by_code["M7.G.GEO"]["canonical_candidate_evidence"]
+    probability = by_code["M7.SP.PROB"]["canonical_candidate_evidence"]
+
+    assert {
+        "MATH.GEO.ANGLE.COMPLEMENT",
+        "MATH.GEO.ANGLE.SUPPLEMENT",
+        "MATH.GEO.ANGLE.VERTICAL_EQUALITY",
+        "MATH.GEO.ANGLE.ADJACENT_ADDITION",
+    } <= set(geo["mathematically_approved_draft_scopes"])
+    assert {
+        "MATH.PROB.EVENT.LIKELIHOOD_0_TO_1",
+        "MATH.PROB.EXPERIMENTAL.FREQUENCY",
+    } <= set(probability["mathematically_approved_draft_scopes"])
+    assert probability["request_changes_draft_scopes"] == []
+
+    for evidence in (geo, probability):
+        assert evidence["latest_review"] == {
+            "pinned_head": "6e30bd5522ba299a73b39c1e8d493577a033a5b6",
+            "artifact_blob": "9f4773c7e5964d8336b59d9ee2f76950bac7d280",
+            "comment": 6095975833,
+            "verdict": "APPROVE_MATHEMATICAL_SCOPE_ONLY",
+        }
+        assert evidence["standards_mapping"] == "PROVISIONAL_NOT_ACCEPTED"
+        assert evidence["activation"] == "NOT_AUTHORIZED"
+

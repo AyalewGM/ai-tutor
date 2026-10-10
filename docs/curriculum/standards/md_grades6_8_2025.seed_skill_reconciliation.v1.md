@@ -81,20 +81,20 @@ This narrows the authoring handoff but does not create canonical IDs, approve de
 
 ## Independent review and refined identity consequences
 
-At PR #326 head `c5afa4517effca24411cefa11c8cb1d0c2150b60`, Independent Mathematical Review approved five draft scopes and requested changes to three. Architecture then recorded the identity consequences in Issue #282 comment 6094147290. These are governance inputs, not accepted Maryland mappings.
+At PR #326 r3 head `6e30bd5522ba299a73b39c1e8d493577a033a5b6`, Independent Mathematical Review approved the three corrected cards; together with the eight earlier approvals, all eleven cross-grade scope cards now have mathematical-scope approval. The reviewed r3 artifact blob is `9f4773c7e5964d8336b59d9ee2f76950bac7d280`, recorded on Issue #293 comment 6095975833. These are governance inputs, not accepted Maryland mappings.
 
-- Circle circumference, circle area, and triangle interior/exterior-angle reasoning have mathematically approved DRAFT scope cards. They remain unactivated and unmapped.
-- The broad `MATH.GEO.ANGLE.RELATIONSHIPS` proposal is not a canonical atom. Current **8.GR.A.1** must ultimately map to independently reviewed complementary, supplementary, vertical-angle, and supplied-total adjacent-angle components, or to a fail-closed reporting-only `ALL_OF` of those accepted atoms.
-- `MATH.PROB.COMPOUND.SAMPLE_SPACE` has mathematical-scope approval as a DRAFT candidate relevant to **8.DS.C.6**. This does not accept the standards relation or establish assessment readiness.
-- Likelihood-scale and experimental-frequency cards require correction and re-review. Expected count `n×p` is a distinct competency and cannot be credited from successes/trials evidence.
-- The official Grade 8 crosswalk independently establishes **8.DS.C.5**. Its appearance as a gap candidate does not mean `M8.SP.STAT` maps to it; that local row expressly does not establish two-way-table evidence.
-
+- Circle circumference, circle area, triangle interior/exterior-angle reasoning, complementary angles, supplementary angles, vertical-angle equality, and adjacent-angle addition now have mathematically approved DRAFT scope cards. They remain unactivated and unmapped.
+- The broad `MATH.GEO.ANGLE.RELATIONSHIPS` proposal remains rejected as a canonical atom. Current **8.GR.A.1** may ultimately map only to independently accepted component atoms or to the fail-closed reporting-only `ALL_OF`; that profile carries no UUID or mastery credit.
+- Likelihood-scale and experimental-frequency cards now have mathematical-scope approval. The former is bounded to finite discrete models with positive-probability elementary outcomes for the probability-0/1 converses; the latter requires independent repeated trials under unchanged conditions with constant event probability.
+- Expected count `n×p` remains a distinct competency and cannot be credited from successes/trials evidence.
+- `MATH.PROB.COMPOUND.SAMPLE_SPACE` remains a mathematically approved DRAFT candidate relevant to **8.DS.C.6**. This does not accept the standards relation or establish assessment readiness.
+- The official Grade 8 crosswalk independently establishes **8.DS.C.5** and **8.DS.C.6**. Their appearance as gap candidates does not mean `M8.SP.STAT` maps to them; that local row expressly does not establish the required two-way-table or compound-event evidence.
 ## Owner handoff
 
-1. **Architecture (#282):** decide cross-grade identity/granularity for `M7.G.GEO`, `M7.SP.PROB`, `M8.G.TRANS`, and `M8.G.SIM`; preserve historical identifiers and prohibit double credit.
-2. **Curriculum Content:** after Architecture decisions, draft bounded scope cards for the affected current expectations and close the explicit evidence gaps.
-3. **Independent Mathematical Review (#293):** review mathematical boundaries/decomposition only after new scope-card revisions exist.
-4. **Standards Mapping:** convert provisional relations to accepted mappings only after independent standards review.
+1. **Architecture (#282):** preserve the recorded cross-grade identity, reporting-only `ALL_OF`, historical-identifier, and no-double-credit decisions; resolve only genuinely new identity tradeoffs.
+2. **Curriculum Content:** keep the mathematically approved cards DRAFT and close remaining source-grounded content gaps without claiming jurisdiction coverage.
+3. **Independent Mathematical Review (#293):** re-review only if a mathematically material card revision is introduced.
+4. **Standards Mapping:** obtain independent standards-mapping acceptance before converting any provisional relation.
 5. **Muse QA / Assessment:** independently validate practice and assessment evidence; seeder or generator presence is not proof.
 
 ## Non-actions

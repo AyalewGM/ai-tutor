@@ -103,21 +103,30 @@
       "priority": "HIGH",
       "gap_type": "PLACEMENT_CONFLICT",
       "repo_wide_absence_proven": false,
-      "mathematical_review": "REQUEST_CHANGES_DECOMPOSITION_REQUIRED",
+      "mathematical_review": "DRAFT_SCOPE_APPROVED_NOT_MAPPING_ACCEPTED",
       "content_production": "NOT_AUTHORIZED_AS_APPROVED",
-      "verification_next": "Await corrected bounded component cards and independent mathematical review; map 8.GR.A.1 only to accepted atoms or a fail-closed ALL_OF, never the rejected broad candidate.",
+      "verification_next": "Obtain independent standards-mapping acceptance and Muse assessment evidence; mathematical scope approval alone does not establish coverage, readiness, or mastery.",
       "traceability_basis": "LOCAL_RECONCILIATION_TARGET",
       "canonical_candidate_evidence": {
-        "reviewed_code": "MATH.GEO.ANGLE.RELATIONSHIPS",
-        "verdict": "REQUEST_CHANGES",
+        "reviewed_codes": [
+          "MATH.GEO.ANGLE.COMPLEMENT",
+          "MATH.GEO.ANGLE.SUPPLEMENT",
+          "MATH.GEO.ANGLE.VERTICAL_EQUALITY",
+          "MATH.GEO.ANGLE.ADJACENT_ADDITION"
+        ],
+        "verdict": "APPROVE_MATHEMATICAL_SCOPE_ONLY",
+        "pinned_head": "6e30bd5522ba299a73b39c1e8d493577a033a5b6",
+        "artifact_blob": "9f4773c7e5964d8336b59d9ee2f76950bac7d280",
+        "review_comment": 6095975833,
+        "identity_state": "DRAFT_NOT_ACTIVATED",
         "architecture_disposition": "REPORTING_ONLY_ALL_OF_NOT_CANONICAL",
         "required_components": [
           "complementary angles",
           "supplementary angles with linear pair as an evidence context",
           "vertical angles",
-          "adjacent-angle addition with a supplied whole or total"
+          "adjacent-angle addition with supplied-whole/missing-part or supplied-parts/missing-whole evidence"
         ],
-        "component_status": "PENDING_CORRECTED_DRAFTS_AND_INDEPENDENT_REVIEW",
+        "component_status": "MATHEMATICAL_SCOPE_APPROVED_DRAFT_NOT_ACTIVATED",
         "standards_mapping": "PROVISIONAL_NOT_ACCEPTED"
       }
     },
@@ -296,8 +305,9 @@
     "architecture_issue": 282,
     "architecture_comment": 6094147290,
     "mathematical_review_issue": 293,
-    "mathematical_review_comment": 6094115335,
-    "pinned_content_head": "c5afa4517effca24411cefa11c8cb1d0c2150b60",
-    "note": "Identity and mathematical-scope evidence only; no standards mapping is accepted."
+    "mathematical_review_comment": 6095975833,
+    "pinned_content_head": "6e30bd5522ba299a73b39c1e8d493577a033a5b6",
+    "note": "Identity and mathematical-scope evidence only; no standards mapping is accepted.",
+    "reviewed_artifact_blob": "9f4773c7e5964d8336b59d9ee2f76950bac7d280"
   }
 }

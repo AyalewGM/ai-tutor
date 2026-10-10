@@ -493,7 +493,7 @@
           "complementary-angle evidence for 8.GR.A.1",
           "supplementary-angle evidence for 8.GR.A.1, with linear pair as a context rather than a separate identity",
           "vertical-angle evidence for 8.GR.A.1",
-          "adjacent-angle addition with a supplied whole or total for 8.GR.A.1",
+          "adjacent-angle addition with supplied-whole/missing-part or supplied-parts/missing-whole evidence for 8.GR.A.1",
           "triangle angle-sum/exterior-angle evidence for 8.GR.A.3"
         ],
         "reporting_policy": "A complete historical local-seed view may use fail-closed ALL_OF only after every member atom is independently accepted; the view carries no separate evidence or credit."
@@ -502,18 +502,22 @@
         "mathematically_approved_draft_scopes": [
           "MATH.GEO.CIRCLE.CIRCUMFERENCE",
           "MATH.GEO.CIRCLE.AREA",
-          "MATH.GEO.TRIANGLE.ANGLE_RELATIONSHIPS"
+          "MATH.GEO.TRIANGLE.ANGLE_RELATIONSHIPS",
+          "MATH.GEO.ANGLE.COMPLEMENT",
+          "MATH.GEO.ANGLE.SUPPLEMENT",
+          "MATH.GEO.ANGLE.VERTICAL_EQUALITY",
+          "MATH.GEO.ANGLE.ADJACENT_ADDITION"
         ],
         "rejected_broad_atom": "MATH.GEO.ANGLE.RELATIONSHIPS",
         "rejected_broad_atom_verdict": "REQUEST_CHANGES_AND_ARCHITECTURE_REPORTING_ONLY_ALL_OF",
-        "pending_component_review": [
-          "complementary angles",
-          "supplementary angles",
-          "vertical angles",
-          "adjacent-angle addition"
-        ],
         "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
-        "activation": "NOT_AUTHORIZED"
+        "activation": "NOT_AUTHORIZED",
+        "latest_review": {
+          "pinned_head": "6e30bd5522ba299a73b39c1e8d493577a033a5b6",
+          "artifact_blob": "9f4773c7e5964d8336b59d9ee2f76950bac7d280",
+          "comment": 6095975833,
+          "verdict": "APPROVE_MATHEMATICAL_SCOPE_ONLY"
+        }
       }
     },
     {
@@ -549,8 +553,8 @@
         "disposition": "PRESERVED_CROSS_GRADE_LEGACY_COMPOSITE_NOT_CANONICAL",
         "mapping_consequence": "NO_SINGLE_GRADE_7_EQUIVALENCE",
         "required_scope_boundaries": [
-          "probability likelihood scale for 7.DS.C.4, pending corrected draft and re-review",
-          "experimental relative frequency for 7.DS.C.5, excluding expected-count mastery and pending corrected draft and re-review",
+          "probability likelihood scale for 7.DS.C.4, mathematically approved DRAFT; mapping remains pending",
+          "experimental relative frequency for 7.DS.C.5 under independent unchanged-condition constant-probability trials, excluding expected-count mastery; mapping remains pending",
           "theory-versus-experiment comparison for 7.DS.C.6",
           "compound-event and organized-sample-space evidence for 8.DS.C.6"
         ],
@@ -559,15 +563,20 @@
       },
       "canonical_candidate_evidence": {
         "mathematically_approved_draft_scopes": [
+          "MATH.PROB.EVENT.LIKELIHOOD_0_TO_1",
+          "MATH.PROB.EXPERIMENTAL.FREQUENCY",
           "MATH.PROB.MODEL.COMPARE_THEORY_EXPERIMENT",
           "MATH.PROB.COMPOUND.SAMPLE_SPACE"
         ],
-        "request_changes_draft_scopes": [
-          "MATH.PROB.EVENT.LIKELIHOOD_0_TO_1",
-          "MATH.PROB.EXPERIMENTAL.FREQUENCY"
-        ],
+        "request_changes_draft_scopes": [],
         "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
-        "activation": "NOT_AUTHORIZED"
+        "activation": "NOT_AUTHORIZED",
+        "latest_review": {
+          "pinned_head": "6e30bd5522ba299a73b39c1e8d493577a033a5b6",
+          "artifact_blob": "9f4773c7e5964d8336b59d9ee2f76950bac7d280",
+          "comment": 6095975833,
+          "verdict": "APPROVE_MATHEMATICAL_SCOPE_ONLY"
+        }
       }
     },
     {
@@ -823,7 +832,9 @@
     "architecture_issue": 282,
     "latest_architecture_comment": 6094147290,
     "independent_math_review_issue": 293,
-    "latest_math_review_comment": 6094115335,
-    "note": "These decisions constrain candidate identity and evidence boundaries; every standards relation remains PROVISIONAL_NOT_ACCEPTED."
+    "latest_math_review_comment": 6095975833,
+    "note": "These decisions constrain candidate identity and evidence boundaries; every standards relation remains PROVISIONAL_NOT_ACCEPTED.",
+    "latest_math_review_head": "6e30bd5522ba299a73b39c1e8d493577a033a5b6",
+    "latest_math_review_artifact_blob": "9f4773c7e5964d8336b59d9ee2f76950bac7d280"
   }
 }
