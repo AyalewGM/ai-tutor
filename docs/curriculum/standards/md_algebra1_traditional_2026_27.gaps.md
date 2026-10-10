@@ -76,7 +76,7 @@ A new versioned [read-only reconciliation manifest](md_algebra1_2026_27.seed_ski
 | Quadratic and polynomial functions | `F.IF.C.7`, `F.IF.C.8`, `A.APR.B.3` | Multi-family graphing, equivalent forms, and zeros need separate evidence |
 | Systems, exponential functions, inequalities, sequences | `A.REI.C.6`, `F.LE.A.1`, `A.REI.B.3`, `F.IF.A.3` | Composite requirements and modeling constraints remain untested |
 
-**Additional architecture risk found in existing seed infrastructure:** the historical state-authority seeder derives `MATH.ALGEBRA1.*` canonical-looking codes from local `A1.*` codes and creates `EQUIVALENT` relations (see `scripts/seed_maryland_algebra1.py` from the F-019 implementation). This predates independent atomic identity review. The new manifest records those codes as legacy-looking references, **not approved canonical identities**. This PR deliberately does not change the seeder, existing database relations, student UUIDs, or historical mastery.
+**Additional architecture risk found in existing seed infrastructure:** the historical state-authority seeder derives `MATH.ALGEBRA1.*` canonical-looking codes from local `A1.*` codes and creates `EQUIVALENT` relations (see `scripts/seed_md_algebra1.py` from the F-019 implementation). This predates independent atomic identity review. The new manifest records those codes as legacy-looking references, **not approved canonical identities**. This PR deliberately does not change the seeder, existing database relations, student UUIDs, or historical mastery.
 
 ### Next handoff
 
