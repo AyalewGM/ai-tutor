@@ -3,6 +3,8 @@ import MathText from "./MathText";
 import type { LearnContent } from "../types";
 
 export default function LearnPanel({ learn, integerPracticeSeed, independentAssessment = false }: { learn: LearnContent; integerPracticeSeed?: number; independentAssessment?: boolean }) {
+  // Never expose worked answers or hints during independent assessment.
+  if (independentAssessment) return null;
   return (
     <div className="space-y-3">
       {integerPracticeSeed !== undefined && !independentAssessment && (
