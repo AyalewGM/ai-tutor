@@ -67,3 +67,37 @@ def test_priority_ids_are_source_grounded_and_draft_only() -> None:
         "change_canonical_registry": False,
         "mutate_student_records": False,
     }
+
+
+def test_grade1_gate5_dispositions_remain_fail_closed() -> None:
+    data = _load()
+    gate = data["grade1_alias_gate"]
+    aliases = gate["aliases"]
+
+    assert data["inventory_summary"]["grade1_aliases_independently_accepted"] == 0
+    assert data["inventory_summary"]["grade1_alias_gate"] == "GATE_5_OPEN"
+    assert gate["status"] == "GATE_5_OPEN_ZERO_OF_SEVEN_ALIASES_ACCEPTED"
+    assert gate["independent_review"]["result"] == "0_OF_7_ACCEPTED"
+    assert gate["architecture"]["gate"] == "GATE_5_OPEN_NOT_PASSED"
+    assert len(aliases) == 7
+    assert len({row["alias"] for row in aliases}) == 7
+    assert all(row["mapping_status"] == "PROVISIONAL_NOT_ACCEPTED" for row in aliases)
+    assert all(row["candidate_components"] for row in aliases)
+
+    assert gate["evidence_dimensions"] == {
+        "standards_mapped": "PROVISIONAL_NOT_ACCEPTED",
+        "mathematically_reviewed_skill_exists": (
+            "MIXED_EXISTING_DRAFT_AND_NEW_DRAFT_REQUIRED"
+        ),
+        "generator_available": "NOT_AUDITED_BY_THIS_DECISION",
+        "validated_practice": "NOT_AUDITED",
+        "assessment_ready": "NOT_AUDITED",
+        "verified_mastery_evidence": "NOT_INFERRED",
+    }
+    assert gate["preservation"] == {
+        "rewrite_historical_uuid": False,
+        "rewrite_student_mastery": False,
+        "copy_evidence_between_atoms": False,
+        "reporting_profiles_create_credit": False,
+        "activate_drafts": False,
+    }
