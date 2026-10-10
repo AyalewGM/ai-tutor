@@ -1,0 +1,689 @@
+{
+  "schema_version": "0.4.0",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "notes": "Wave 4 adds math examples and draft instructional specs, not production generators or independent signoff. Test coverage samples only.",
+  "packages": [
+    {
+      "id": "W4-G3-MEASURE-UNIT",
+      "grade_band": "Grades 2–4",
+      "title": "Length and unit conversion",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "canonical_identity": "REUSE_OR_REQUEST_INDEPENDENT_APPROVAL",
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "math_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Explain the underlying quantity and units before computing.",
+        "Predict whether an intuitive shortcut is reliable, then justify."
+      ],
+      "lesson_sequence": [
+        "Concrete launch with physical quantities.",
+        "Visualize with an editable model.",
+        "Translate to symbolic reasoning and exact units.",
+        "Compare correct and mistaken interpretations.",
+        "Independently assess an unseen situation."
+      ],
+      "worked_examples": [
+        {
+          "question": "A ribbon measures 125 cm; express in metres and centimetres.",
+          "answer": "1 m 25 cm",
+          "worked_reasoning": "100 cm per metre",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "A pencil is 17 cm; compare with 170 mm.",
+          "answer": "equal lengths",
+          "worked_reasoning": "10 mm per cm",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Three 40-cm ropes end-to-end.",
+          "answer": "120 cm",
+          "worked_reasoning": "3×40",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "1.5 m in cm.",
+          "answer": "150 cm",
+          "worked_reasoning": "1 m = 100 cm",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "2 m minus 75 cm.",
+          "answer": "125 cm",
+          "worked_reasoning": "200−75",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "error": "Confusing the units, reference quantity, or comparison base",
+          "probe": "Name what is measured and its unit before computing.",
+          "hints": [
+            "Which quantity defines the entire object or reference?",
+            "Which dimensions or categories must stay consistent?"
+          ],
+          "remediation": "Return to a labeled concrete or graphical model."
+        },
+        {
+          "error": "Applying an operation without examining representation",
+          "probe": "Can the same computation answer both an additive and a multiplicative question?",
+          "hints": [
+            "Is change additive or multiplicative?",
+            "What must stay invariant?"
+          ],
+          "remediation": "Contrast two scenarios side by side and justify the operator."
+        },
+        {
+          "error": "Relying on the visual without proving the claim",
+          "probe": "How could a second representation confirm the result?",
+          "hints": [
+            "What exact count or equality does the model imply?",
+            "Can you supply a counterexample to the mistaken claim?"
+          ],
+          "remediation": "Require calculation alongside annotated model."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "A ribbon measures 125 cm; express in metres and centimetres.",
+          "answer": "1 m 25 cm",
+          "oracle": "100 cm per metre",
+          "scaffolds": true
+        },
+        {
+          "question": "A pencil is 17 cm; compare with 170 mm.",
+          "answer": "equal lengths",
+          "oracle": "10 mm per cm",
+          "scaffolds": true
+        },
+        {
+          "question": "Three 40-cm ropes end-to-end.",
+          "answer": "120 cm",
+          "oracle": "3×40",
+          "scaffolds": true
+        },
+        {
+          "question": "1.5 m in cm.",
+          "answer": "150 cm",
+          "oracle": "1 m = 100 cm",
+          "scaffolds": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "275 cm in m and cm.",
+          "answer": "2 m 75 cm",
+          "oracle": "200+75",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true
+        },
+        {
+          "question": "A 3-m ribbon is cut into 4 equal pieces. Each piece length?",
+          "answer": "75 cm",
+          "oracle": "300÷4",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true
+        }
+      ],
+      "interactive_spec": {
+        "scene": "centimetre ruler with millimetre subdivisions and meter stick",
+        "keyboard_equivalent": true,
+        "textual_state_required": true,
+        "reduced_motion": true,
+        "assessments_unscaffolded": true
+      },
+      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE"
+    },
+    {
+      "id": "W4-G4-AREA-PERIMETER",
+      "grade_band": "Grades 3–5",
+      "title": "Area, perimeter and composite rectangles",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "canonical_identity": "REUSE_OR_REQUEST_INDEPENDENT_APPROVAL",
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "math_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Explain the underlying quantity and units before computing.",
+        "Predict whether an intuitive shortcut is reliable, then justify."
+      ],
+      "lesson_sequence": [
+        "Concrete launch with physical quantities.",
+        "Visualize with an editable model.",
+        "Translate to symbolic reasoning and exact units.",
+        "Compare correct and mistaken interpretations.",
+        "Independently assess an unseen situation."
+      ],
+      "worked_examples": [
+        {
+          "question": "Rectangle 8 cm by 3 cm: area.",
+          "answer": "24 cm²",
+          "worked_reasoning": "8×3",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Same rectangle: perimeter.",
+          "answer": "22 cm",
+          "worked_reasoning": "2×(8+3)",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Square of side 5 m: area.",
+          "answer": "25 m²",
+          "worked_reasoning": "5×5",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "L-shaped region: 4×3 rectangle plus nonoverlapping 2×2 rectangle.",
+          "answer": "16 unit²",
+          "worked_reasoning": "12+4",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Rectangle area 36 cm² and length 9 cm: width.",
+          "answer": "4 cm",
+          "worked_reasoning": "36÷9",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "error": "Confusing the units, reference quantity, or comparison base",
+          "probe": "Name what is measured and its unit before computing.",
+          "hints": [
+            "Which quantity defines the entire object or reference?",
+            "Which dimensions or categories must stay consistent?"
+          ],
+          "remediation": "Return to a labeled concrete or graphical model."
+        },
+        {
+          "error": "Applying an operation without examining representation",
+          "probe": "Can the same computation answer both an additive and a multiplicative question?",
+          "hints": [
+            "Is change additive or multiplicative?",
+            "What must stay invariant?"
+          ],
+          "remediation": "Contrast two scenarios side by side and justify the operator."
+        },
+        {
+          "error": "Relying on the visual without proving the claim",
+          "probe": "How could a second representation confirm the result?",
+          "hints": [
+            "What exact count or equality does the model imply?",
+            "Can you supply a counterexample to the mistaken claim?"
+          ],
+          "remediation": "Require calculation alongside annotated model."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "Rectangle 8 cm by 3 cm: area.",
+          "answer": "24 cm²",
+          "oracle": "8×3",
+          "scaffolds": true
+        },
+        {
+          "question": "Same rectangle: perimeter.",
+          "answer": "22 cm",
+          "oracle": "2×(8+3)",
+          "scaffolds": true
+        },
+        {
+          "question": "Square of side 5 m: area.",
+          "answer": "25 m²",
+          "oracle": "5×5",
+          "scaffolds": true
+        },
+        {
+          "question": "L-shaped region: 4×3 rectangle plus nonoverlapping 2×2 rectangle.",
+          "answer": "16 unit²",
+          "oracle": "12+4",
+          "scaffolds": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "A garden 12 m by 7 m: fencing needed.",
+          "answer": "38 m",
+          "oracle": "2×(12+7)",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true
+        },
+        {
+          "question": "A rectangle 10 cm by 4 cm has a 2 cm by 2 cm corner removed. New area?",
+          "answer": "36 cm²",
+          "oracle": "40−4",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true
+        }
+      ],
+      "interactive_spec": {
+        "scene": "tile grid with separate border-length and interior-area counters",
+        "keyboard_equivalent": true,
+        "textual_state_required": true,
+        "reduced_motion": true,
+        "assessments_unscaffolded": true
+      },
+      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE"
+    },
+    {
+      "id": "W4-G6-HISTOGRAM-CONTEXT",
+      "grade_band": "Grades 6–8",
+      "title": "Histogram bins, shapes and interpretation",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "canonical_identity": "REUSE_OR_REQUEST_INDEPENDENT_APPROVAL",
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "math_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Explain the underlying quantity and units before computing.",
+        "Predict whether an intuitive shortcut is reliable, then justify."
+      ],
+      "lesson_sequence": [
+        "Concrete launch with physical quantities.",
+        "Visualize with an editable model.",
+        "Translate to symbolic reasoning and exact units.",
+        "Compare correct and mistaken interpretations.",
+        "Independently assess an unseen situation."
+      ],
+      "worked_examples": [
+        {
+          "question": "Data 1,2,2,3,4,5; count values in [2,4).",
+          "answer": "3",
+          "worked_reasoning": "2,2,3",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Data 3,4,5,8,9,10; bins [0,5),[5,10),[10,15): counts.",
+          "answer": "2,3,1",
+          "worked_reasoning": "3,4 | 5,8,9 | 10",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Histogram bins [0,10), [10,20); observations 10 and 20: where is 10?",
+          "answer": "[10,20)",
+          "worked_reasoning": "left-inclusive",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Groups A counts 2,3,8,3,2; describe middle peak.",
+          "answer": "unimodal with center bin highest",
+          "worked_reasoning": "8 is maximum",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Data 1,1,2,2,2,9: are data concentrated near low end?",
+          "answer": "yes",
+          "worked_reasoning": "5 of 6 are 1 or 2",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "error": "Confusing the units, reference quantity, or comparison base",
+          "probe": "Name what is measured and its unit before computing.",
+          "hints": [
+            "Which quantity defines the entire object or reference?",
+            "Which dimensions or categories must stay consistent?"
+          ],
+          "remediation": "Return to a labeled concrete or graphical model."
+        },
+        {
+          "error": "Applying an operation without examining representation",
+          "probe": "Can the same computation answer both an additive and a multiplicative question?",
+          "hints": [
+            "Is change additive or multiplicative?",
+            "What must stay invariant?"
+          ],
+          "remediation": "Contrast two scenarios side by side and justify the operator."
+        },
+        {
+          "error": "Relying on the visual without proving the claim",
+          "probe": "How could a second representation confirm the result?",
+          "hints": [
+            "What exact count or equality does the model imply?",
+            "Can you supply a counterexample to the mistaken claim?"
+          ],
+          "remediation": "Require calculation alongside annotated model."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "Data 1,2,2,3,4,5; count values in [2,4).",
+          "answer": "3",
+          "oracle": "2,2,3",
+          "scaffolds": true
+        },
+        {
+          "question": "Data 3,4,5,8,9,10; bins [0,5),[5,10),[10,15): counts.",
+          "answer": "2,3,1",
+          "oracle": "3,4 | 5,8,9 | 10",
+          "scaffolds": true
+        },
+        {
+          "question": "Histogram bins [0,10), [10,20); observations 10 and 20: where is 10?",
+          "answer": "[10,20)",
+          "oracle": "left-inclusive",
+          "scaffolds": true
+        },
+        {
+          "question": "Groups A counts 2,3,8,3,2; describe middle peak.",
+          "answer": "unimodal with center bin highest",
+          "oracle": "8 is maximum",
+          "scaffolds": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "For [0,5) count observations 0,4,5,9.",
+          "answer": "2",
+          "oracle": "0 and 4",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true
+        },
+        {
+          "question": "Data 1,2,3,10,11,12: does a histogram automatically establish causation?",
+          "answer": "no",
+          "oracle": "distribution alone cannot establish cause",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true
+        }
+      ],
+      "interactive_spec": {
+        "scene": "linked dot plot and histogram, adjustable bin widths and explicit interval boundary marks",
+        "keyboard_equivalent": true,
+        "textual_state_required": true,
+        "reduced_motion": true,
+        "assessments_unscaffolded": true
+      },
+      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE"
+    },
+    {
+      "id": "W4-G7-PRISM-NETS",
+      "grade_band": "Grades 6–8",
+      "title": "Rectangular-prism nets and surface area",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "canonical_identity": "REUSE_OR_REQUEST_INDEPENDENT_APPROVAL",
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "math_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Explain the underlying quantity and units before computing.",
+        "Predict whether an intuitive shortcut is reliable, then justify."
+      ],
+      "lesson_sequence": [
+        "Concrete launch with physical quantities.",
+        "Visualize with an editable model.",
+        "Translate to symbolic reasoning and exact units.",
+        "Compare correct and mistaken interpretations.",
+        "Independently assess an unseen situation."
+      ],
+      "worked_examples": [
+        {
+          "question": "Prism 2×3×4 cm: surface area.",
+          "answer": "52 cm²",
+          "worked_reasoning": "2(6+12+8)",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Prism 2×3×4 cm: volume.",
+          "answer": "24 cm³",
+          "worked_reasoning": "2×3×4",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Prism 1×2×3 m: total face area.",
+          "answer": "22 m²",
+          "worked_reasoning": "2(2+6+3)",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Prism 2×2×5 cm: surface area.",
+          "answer": "48 cm²",
+          "worked_reasoning": "2(4+10+10)",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Prism 3×3×3 cm: surface area.",
+          "answer": "54 cm²",
+          "worked_reasoning": "6×9",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "error": "Confusing the units, reference quantity, or comparison base",
+          "probe": "Name what is measured and its unit before computing.",
+          "hints": [
+            "Which quantity defines the entire object or reference?",
+            "Which dimensions or categories must stay consistent?"
+          ],
+          "remediation": "Return to a labeled concrete or graphical model."
+        },
+        {
+          "error": "Applying an operation without examining representation",
+          "probe": "Can the same computation answer both an additive and a multiplicative question?",
+          "hints": [
+            "Is change additive or multiplicative?",
+            "What must stay invariant?"
+          ],
+          "remediation": "Contrast two scenarios side by side and justify the operator."
+        },
+        {
+          "error": "Relying on the visual without proving the claim",
+          "probe": "How could a second representation confirm the result?",
+          "hints": [
+            "What exact count or equality does the model imply?",
+            "Can you supply a counterexample to the mistaken claim?"
+          ],
+          "remediation": "Require calculation alongside annotated model."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "Prism 2×3×4 cm: surface area.",
+          "answer": "52 cm²",
+          "oracle": "2(6+12+8)",
+          "scaffolds": true
+        },
+        {
+          "question": "Prism 2×3×4 cm: volume.",
+          "answer": "24 cm³",
+          "oracle": "2×3×4",
+          "scaffolds": true
+        },
+        {
+          "question": "Prism 1×2×3 m: total face area.",
+          "answer": "22 m²",
+          "oracle": "2(2+6+3)",
+          "scaffolds": true
+        },
+        {
+          "question": "Prism 2×2×5 cm: surface area.",
+          "answer": "48 cm²",
+          "oracle": "2(4+10+10)",
+          "scaffolds": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "Box without lid 3×4 base and height 2: exposed surface area.",
+          "answer": "40 unit²",
+          "oracle": "12+2(6)+2(8)",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true
+        },
+        {
+          "question": "A prism 2×3×4 cm has top and bottom each 6 cm². Find combined area of remaining four faces.",
+          "answer": "40 cm²",
+          "oracle": "52−12",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true
+        }
+      ],
+      "interactive_spec": {
+        "scene": "rectangular prism unfold/fold model with paired face rectangles and collision-free previews",
+        "keyboard_equivalent": true,
+        "textual_state_required": true,
+        "reduced_motion": true,
+        "assessments_unscaffolded": true
+      },
+      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE"
+    },
+    {
+      "id": "W4-G9-EXPO-MODELING",
+      "grade_band": "Grade 9 / Algebra I",
+      "title": "Linear versus exponential models",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "canonical_identity": "REUSE_OR_REQUEST_INDEPENDENT_APPROVAL",
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "math_review": "PENDING",
+      "qa": "PENDING",
+      "diagnostic": [
+        "Explain the underlying quantity and units before computing.",
+        "Predict whether an intuitive shortcut is reliable, then justify."
+      ],
+      "lesson_sequence": [
+        "Concrete launch with physical quantities.",
+        "Visualize with an editable model.",
+        "Translate to symbolic reasoning and exact units.",
+        "Compare correct and mistaken interpretations.",
+        "Independently assess an unseen situation."
+      ],
+      "worked_examples": [
+        {
+          "question": "Bacteria doubles from 50 every hour. After 3 h?",
+          "answer": "400",
+          "worked_reasoning": "50×2³",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Balance grows $100 by 10% yearly. After 2 years?",
+          "answer": "$121",
+          "worked_reasoning": "100×1.1²",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Linear table x=0,1,2; y=4,7,10. Rule?",
+          "answer": "y=3x+4",
+          "worked_reasoning": "constant differences 3",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "Exponential table x=0,1,2; y=3,6,12. Rule?",
+          "answer": "y=3×2^x",
+          "worked_reasoning": "constant ratio 2",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        },
+        {
+          "question": "A population declines by 20% per period from 500. After 2 periods?",
+          "answer": "320",
+          "worked_reasoning": "500×0.8²",
+          "teacher_instruction": "Demand a visual justification before presenting the numerical oracle."
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "error": "Confusing the units, reference quantity, or comparison base",
+          "probe": "Name what is measured and its unit before computing.",
+          "hints": [
+            "Which quantity defines the entire object or reference?",
+            "Which dimensions or categories must stay consistent?"
+          ],
+          "remediation": "Return to a labeled concrete or graphical model."
+        },
+        {
+          "error": "Applying an operation without examining representation",
+          "probe": "Can the same computation answer both an additive and a multiplicative question?",
+          "hints": [
+            "Is change additive or multiplicative?",
+            "What must stay invariant?"
+          ],
+          "remediation": "Contrast two scenarios side by side and justify the operator."
+        },
+        {
+          "error": "Relying on the visual without proving the claim",
+          "probe": "How could a second representation confirm the result?",
+          "hints": [
+            "What exact count or equality does the model imply?",
+            "Can you supply a counterexample to the mistaken claim?"
+          ],
+          "remediation": "Require calculation alongside annotated model."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "Bacteria doubles from 50 every hour. After 3 h?",
+          "answer": "400",
+          "oracle": "50×2³",
+          "scaffolds": true
+        },
+        {
+          "question": "Balance grows $100 by 10% yearly. After 2 years?",
+          "answer": "$121",
+          "oracle": "100×1.1²",
+          "scaffolds": true
+        },
+        {
+          "question": "Linear table x=0,1,2; y=4,7,10. Rule?",
+          "answer": "y=3x+4",
+          "oracle": "constant differences 3",
+          "scaffolds": true
+        },
+        {
+          "question": "Exponential table x=0,1,2; y=3,6,12. Rule?",
+          "answer": "y=3×2^x",
+          "oracle": "constant ratio 2",
+          "scaffolds": true
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "Exponential model N(t)=80×(1/2)^t: N(3)?",
+          "answer": "10",
+          "oracle": "80÷8",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true
+        },
+        {
+          "question": "A quantity 200 increases by 5% each year. Expression after n years?",
+          "answer": "200×1.05^n",
+          "oracle": "constant percentage multiplier",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true
+        }
+      ],
+      "interactive_spec": {
+        "scene": "linked multiplicative growth table and graph versus additive constant-rate line",
+        "keyboard_equivalent": true,
+        "textual_state_required": true,
+        "reduced_motion": true,
+        "assessments_unscaffolded": true
+      },
+      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE"
+    }
+  ]
+}
