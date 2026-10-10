@@ -99,7 +99,13 @@ export interface BalanceOperationAppliedEvent extends MathInteractionBase {
   left_x: number; left_units: number; right_x: number; right_units: number;
 }
 
+export interface ExplorerDatasetChangedEvent extends MathInteractionBase {
+  type: "EXPLORER_DATASET_CHANGED";
+  values: readonly number[];
+}
+
 export type MathInteractionEvent =
+  | ExplorerDatasetChangedEvent
   | BalanceOperationAppliedEvent
   | LinearParametersChangedEvent
   | IntegerDisplacementChangedEvent
@@ -126,6 +132,10 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "EXPLORER_DATASET_CHANGED":
+      return Object.keys(event).every(key => ["schema_version", "type", "values"].includes(key)) &&
+        Array.isArray(event.values) && event.values.length >= 1 && event.values.length <= 6 &&
+        Array.from(event.values).every(value => Number.isSafeInteger(value) && value >= 0 && value <= 12);
     case "BALANCE_OPERATION_APPLIED": {
       if (!Object.keys(event).every(key => ["schema_version", "type", "operation", "left_x", "left_units", "right_x", "right_units"].includes(key))) return false;
       const values = [event.left_x, event.left_units, event.right_x, event.right_units];

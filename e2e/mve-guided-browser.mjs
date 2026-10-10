@@ -17,6 +17,7 @@ import { createRoot } from 'react-dom/client';
 import { InteractiveLinearExplorer } from '/src/mve/InteractiveLinearExplorer';
 import { InteractiveIntegerNumberLine } from '/src/mve/InteractiveIntegerNumberLine';
 import { InteractiveEquationBalance } from '/src/mve/InteractiveEquationBalance';
+import { InteractiveDotPlotExplorer } from '/src/mve/InteractiveDotPlotExplorer';
 import '/src/styles.css';
 function Harness() {
  const [assessment, setAssessment] = useState(false);
@@ -25,6 +26,7 @@ function Harness() {
  <InteractiveLinearExplorer independentAssessment={assessment} onMathEvent={e => setEvent(JSON.stringify(e))} />
  <InteractiveIntegerNumberLine independentAssessment={assessment} />
  <InteractiveEquationBalance independentAssessment={assessment} />
+ <InteractiveDotPlotExplorer independentAssessment={assessment} />
  <output aria-label="Last semantic event">{event}</output></>;
 }
 createRoot(document.getElementById('root')!).render(<Harness />);`);
@@ -52,6 +54,12 @@ createRoot(document.getElementById('root')!).render(<Harness />);`);
   await page.getByLabel('Slope as an integer or fraction').fill('2/4');
   await page.getByRole('button', { name: 'Check slope' }).click();
   assert.ok((await slope.getByRole('status').last().textContent()).startsWith('Correct'));
+  const data = page.getByRole('region', { name: 'Guided dot plot exploration' });
+  await data.getByLabel('Observation value:').focus();
+  await page.keyboard.press('End');
+  assert.ok((await data.getByRole('status').first().textContent()).includes('mean 24/5; median 3; range 10'));
+  await data.getByRole('button', { name: 'Add another observation at this value' }).click();
+  assert.equal(await data.getByRole('button', { name: 'Add another observation at this value' }).isDisabled(), true);
   const balance = page.getByRole('region', { name: 'Guided equation balance exploration' });
   for (let i = 0; i < 4; i++) await balance.getByRole('button', { name: 'Subtract 1 from both sides' }).click();
   await balance.getByRole('button', { name: 'Divide both sides by 2' }).focus();
@@ -63,16 +71,18 @@ createRoot(document.getElementById('root')!).render(<Harness />);`);
   assert.equal(await page.getByRole('slider').count(), 0);
   assert.equal(await slope.count(), 0);
   assert.equal(await balance.count(), 0);
+  assert.equal(await data.count(), 0);
   assert.equal(await page.getByRole('region', { name: 'Guided integer number line exploration' }).count(), 0);
   await page.getByRole('button', { name: 'Toggle assessment' }).click();
   assert.equal(await rise.inputValue(), '2');
+  assert.equal(await data.getByLabel('Observation value:').inputValue(), '5');
   assert.ok((await balance.getByRole('status').first().textContent()).startsWith('2x + 4 = 10.'));
   assert.equal(await page.getByLabel('Slope as an integer or fraction').inputValue(), '');
   const integer = page.getByLabel('Starting integer:');
   await integer.focus(); await page.keyboard.press('ArrowRight');
   assert.equal(await integer.inputValue(), '-1');
   assert.deepEqual(errors, []);
-  console.log('PASS: keyboard arrows/Home, run boundary, semantic events, equivalent-fraction practice, reduced-motion mode, assessment unmount and fresh remount for all three activities, plus equal-side operations and undo.');
+  console.log('PASS: keyboard arrows/Home, run boundary, semantic events, equivalent-fraction practice, reduced-motion mode, assessment unmount and fresh remount for all four activities, plus equal-side operations and undo.');
 } finally {
   await browser?.close();
   await server?.close();

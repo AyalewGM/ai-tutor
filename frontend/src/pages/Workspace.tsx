@@ -1,3 +1,5 @@
+import { InteractiveDotPlotExplorer } from "../mve/InteractiveDotPlotExplorer";
+import { showDotPlotExploration } from "../mve/dotPlotExplorer";
 import { InteractiveEquationBalance } from "../mve/InteractiveEquationBalance";
 import { showBalanceExploration } from "../mve/equationBalance";
 import { InteractiveLinearExplorer } from "../mve/InteractiveLinearExplorer";
@@ -781,6 +783,12 @@ export default function Workspace() {
                   )}
                   {showBalanceExploration(workspace.state, workspace.focus.skill_name) && (
                     <InteractiveEquationBalance
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
+                  {showDotPlotExploration(workspace.state, workspace.focus.skill_name) && (
+                    <InteractiveDotPlotExplorer
                       key={workspace.focus.active_skill_id}
                       independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
                     />
