@@ -87,11 +87,9 @@ function GuidedFractionBars({
               setShowComparison(true);
               onMathEvent?.({ schema_version: 1, type: "FRACTION_COMPARED", left, right: target, relation });
             }}>Explain comparison</button>
-          {showComparison && (
-            <p id={comparisonStatusId} role="status" aria-live="polite" aria-atomic="true">
-              {describeFractionComparison({ numerator: current, denominator: d }, target)}
-            </p>
-          )}
+          <p id={comparisonStatusId} role="status" aria-live="polite" aria-atomic="true">
+            {showComparison ? describeFractionComparison({ numerator: current, denominator: d }, target) : "Select Explain comparison to explore the relationship."}
+          </p>
         </div>
       )}
       <p className="text-sm">Each part is one-{d === 2 ? "half" : d === 3 ? "third" : d === 4 ? "fourth" : `${d}th`} of the whole.</p>
