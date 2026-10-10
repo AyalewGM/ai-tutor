@@ -126,3 +126,39 @@ def test_cross_grade_risks_are_machine_readable() -> None:
     }
     assert by_code["M8.G.TRANS"]["relation"] == "OUT_OF_GRADE_CURRENT_2025"
     assert by_code["M8.G.SIM"]["relation"] == "OUT_OF_GRADE_CURRENT_2025"
+
+def test_architecture_decision_preserves_legacy_composites_and_fails_closed() -> None:
+    data = _load()
+    decision = data["architecture_decision"]
+    assert decision["issue"] == 282
+    assert decision["comment_id"] == 6093222041
+    assert decision["status"] == (
+        "IDENTITY_BOUNDARIES_DECIDED_MAPPINGS_NOT_ACCEPTED"
+    )
+
+    by_code = {row["local_seed_code"]: row for row in data["rows"]}
+    for code in {"M7.G.GEO", "M7.SP.PROB"}:
+        disposition = by_code[code]["architecture_disposition"]
+        assert disposition["disposition"] == (
+            "PRESERVED_CROSS_GRADE_LEGACY_COMPOSITE_NOT_CANONICAL"
+        )
+        assert disposition["mapping_consequence"] == (
+            "NO_SINGLE_GRADE_7_EQUIVALENCE"
+        )
+        assert disposition["required_scope_boundaries"]
+        assert "ALL_OF" in disposition["reporting_policy"]
+
+    for code in {"M8.G.TRANS", "M8.G.SIM"}:
+        disposition = by_code[code]["architecture_disposition"]
+        assert disposition["disposition"] == (
+            "PRESERVED_LEGACY_PLACEMENT_IDENTIFIER"
+        )
+        assert disposition["mapping_consequence"] == (
+            "NO_CURRENT_MARYLAND_GRADE_8_EQUIVALENCE"
+        )
+
+    assert all(
+        row["mapping_status"] == "PROVISIONAL_NOT_ACCEPTED"
+        for row in data["rows"]
+    )
+    assert all("canonical_skill_id" not in row for row in data["rows"])
