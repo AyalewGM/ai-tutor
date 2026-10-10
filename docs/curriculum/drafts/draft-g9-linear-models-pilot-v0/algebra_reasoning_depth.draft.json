@@ -1,0 +1,452 @@
+{
+  "package_id": "draft-g9-algebra-depth-wave-v1",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "grade_band": "9 / Algebra I",
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "runtime_activation": false,
+  "mastery_updater": false,
+  "items": [
+    {
+      "item_id": "g9-depth-01",
+      "provisional_topic": "linear-equations",
+      "question": "Solve 3(2x−5)=4x+9.",
+      "expected": "12",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "6x−15=4x+9; 2x=24; x=12.",
+      "misconception": {
+        "plausible_wrong_answer": "−3",
+        "feedback": "Distribute to both terms and preserve the negative sign."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Solve 4(3x−2)=7x+17.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-02",
+      "provisional_topic": "linear-equations",
+      "question": "Solve (x−3)/4=5.",
+      "expected": "23",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "Multiply both sides by 4 to get x−3=20, then add 3.",
+      "misconception": {
+        "plausible_wrong_answer": "17",
+        "feedback": "The entire x−3 expression is divided by four."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Solve (x+5)/3=7.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-03",
+      "provisional_topic": "linear-equations",
+      "question": "How many solutions does 2(x+3)=2x+9 have?",
+      "expected": "0",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "Expanding gives 2x+6=2x+9, which implies 6=9, impossible.",
+      "misconception": {
+        "plausible_wrong_answer": "1",
+        "feedback": "When variable terms cancel, compare constants before claiming a solution."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "How many solutions does 3(x−1)=3x+2 have?",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-04",
+      "provisional_topic": "linear-equations",
+      "question": "How many solutions does 5(x−2)=5x−10 have? Answer 'infinitely many'.",
+      "expected": "infinitely many",
+      "answer_contract": "choice",
+      "worked_reasoning": "Both sides simplify to 5x−10, true for every real x.",
+      "misconception": {
+        "plausible_wrong_answer": "0",
+        "feedback": "An identity is true for every x, not inconsistent."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Classify 4(x+2)=4x+8.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-05",
+      "provisional_topic": "inequalities",
+      "question": "Solve −3x+4>16. Give the boundary value x must be less than.",
+      "expected": "−4",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "−3x>12; dividing by −3 reverses the inequality, so x<−4.",
+      "misconception": {
+        "plausible_wrong_answer": "4",
+        "feedback": "Reverse the inequality sign when dividing by a negative."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Solve −2x+7≥15 and explain the boundary.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-06",
+      "provisional_topic": "inequalities",
+      "question": "For 2≤3x−1<11, give the upper boundary of x.",
+      "expected": "4",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "Add one to all three parts: 3≤3x<12; divide by three: 1≤x<4.",
+      "misconception": {
+        "plausible_wrong_answer": "10/3",
+        "feedback": "Apply each operation to all three parts of the compound inequality."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Solve −1≤2x+3<9.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-07",
+      "provisional_topic": "linear-relationships",
+      "question": "Find the slope through (−2,3) and (4,15).",
+      "expected": "2",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "Slope=(15−3)/(4−(−2))=12/6=2.",
+      "misconception": {
+        "plausible_wrong_answer": "1/2",
+        "feedback": "Slope is change in y divided by change in x."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Find the slope through (1,−2) and (5,10).",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-08",
+      "provisional_topic": "linear-relationships",
+      "question": "Find the slope through (−1,7) and (3,−5).",
+      "expected": "−3",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "Slope=(−5−7)/(3−(−1))=−12/4=−3.",
+      "misconception": {
+        "plausible_wrong_answer": "3",
+        "feedback": "The line falls as x increases, so its slope is negative."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Find the slope through (2,8) and (6,0).",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-09",
+      "provisional_topic": "linear-relationships",
+      "question": "A line has slope 3 and passes through (2,5). Find its y-intercept.",
+      "expected": "−1",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "5=3(2)+b gives b=−1.",
+      "misconception": {
+        "plausible_wrong_answer": "5",
+        "feedback": "The given point's y-value is not necessarily the intercept."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Find the y-intercept of a line with slope −2 through (3,1).",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-10",
+      "provisional_topic": "linear-models",
+      "question": "A service costs $12 plus $7 per hour. What is the cost for 5 hours?",
+      "expected": "47",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "C(h)=12+7h, so C(5)=47.",
+      "misconception": {
+        "plausible_wrong_answer": "35",
+        "feedback": "The fixed fee is paid once in addition to hourly charges."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "A $9 booking fee plus $4 per hour costs how much for 8 hours?",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-11",
+      "provisional_topic": "linear-models",
+      "question": "Is y=3x²+1 a linear function? Answer yes or no.",
+      "expected": "no",
+      "answer_contract": "choice",
+      "worked_reasoning": "The x² term makes the rate of change depend on x.",
+      "misconception": {
+        "plausible_wrong_answer": "yes",
+        "feedback": "A linear function has a constant rate of change."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Is y=−4x+8 linear? Justify.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-12",
+      "provisional_topic": "linear-models",
+      "question": "Is y=5x+8 a proportional relationship? Answer yes or no.",
+      "expected": "no",
+      "answer_contract": "choice",
+      "worked_reasoning": "The intercept is 8, so the graph does not pass through the origin.",
+      "misconception": {
+        "plausible_wrong_answer": "yes",
+        "feedback": "Linear does not always mean proportional; proportional means b=0."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Explain whether y=−2x is proportional.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-13",
+      "provisional_topic": "systems",
+      "question": "Solve x+y=11 and x−y=3. What is x?",
+      "expected": "7",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "Add equations to get 2x=14, so x=7 and y=4.",
+      "misconception": {
+        "plausible_wrong_answer": "4",
+        "feedback": "The question asks for x, not y; verify in both equations."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Solve x+y=15 and x−y=5; find x.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-14",
+      "provisional_topic": "systems",
+      "question": "How many solutions do y=2x+1 and y=2x−4 have?",
+      "expected": "0",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "Both lines have slope 2 but different intercepts, so never intersect.",
+      "misconception": {
+        "plausible_wrong_answer": "1",
+        "feedback": "Equal slopes with different intercepts give parallel lines."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Classify y=−3x+5 and y=−3x+2.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-15",
+      "provisional_topic": "functions",
+      "question": "For f(x)=2x−7, find f(−3).",
+      "expected": "−13",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "Substitute x=−3: 2(−3)−7=−13.",
+      "misconception": {
+        "plausible_wrong_answer": "−1",
+        "feedback": "Use parentheses when substituting a negative input."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "For g(x)=−4x+5, find g(−2).",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-16",
+      "provisional_topic": "functions",
+      "question": "A taxi fare is C(d)=5+2d dollars. For a $23 fare, how many kilometres were traveled?",
+      "expected": "9",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "23=5+2d; subtract 5 and divide by 2.",
+      "misconception": {
+        "plausible_wrong_answer": "14",
+        "feedback": "The $5 fixed fee is not part of the per-kilometre charge."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "For C(d)=7+3d, find d when C=34.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-17",
+      "provisional_topic": "sequences",
+      "question": "An arithmetic sequence starts 7, 11, 15, 19, ... What is its 20th term?",
+      "expected": "83",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "a_n=7+4(n−1), so a_20=7+76=83.",
+      "misconception": {
+        "plausible_wrong_answer": "87",
+        "feedback": "There are 19 increments between term 1 and term 20."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Find the 15th term of 3,8,13,...",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-18",
+      "provisional_topic": "sequences",
+      "question": "Does 2,6,12,20,30 form an arithmetic sequence? Answer yes or no.",
+      "expected": "no",
+      "answer_contract": "choice",
+      "worked_reasoning": "Successive differences 4,6,8,10 are not constant.",
+      "misconception": {
+        "plausible_wrong_answer": "yes",
+        "feedback": "An arithmetic sequence requires equal successive differences."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Decide whether 5,9,13,17 is arithmetic.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-19",
+      "provisional_topic": "linear-models",
+      "question": "A club charges a $25 joining fee plus $8 per visit. A member pays $89 total. How many visits?",
+      "expected": "8",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "25+8v=89; 8v=64; v=8.",
+      "misconception": {
+        "plausible_wrong_answer": "11",
+        "feedback": "Subtract the fixed fee before dividing by the per-visit price."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "A $12 fixed fee plus $6 per session totals $72. Find sessions.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g9-depth-20",
+      "provisional_topic": "error-analysis",
+      "question": "A learner finds slope between (1,4) and (5,12) as (5−1)/(12−4). What is the correct slope?",
+      "expected": "2",
+      "answer_contract": "exact_number",
+      "worked_reasoning": "Correct slope is (12−4)/(5−1)=8/4=2.",
+      "misconception": {
+        "plausible_wrong_answer": "1/2",
+        "feedback": "Slope is vertical change over horizontal change, not its reciprocal."
+      },
+      "socratic_hints": [
+        "What are the quantities, variables, or relationships in this problem?",
+        "Which operation or representation preserves mathematical equivalence?",
+        "Can you substitute, graph, or test a second case to verify?"
+      ],
+      "transfer_prompt": "Explain slope for (−2,1) and (2,9).",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    }
+  ]
+}
