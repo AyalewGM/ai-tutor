@@ -1,7 +1,5 @@
 """Contract tests for the Maryland Grades 6-8 2025 seed reconciliation."""
 
-from __future__ import annotations
-
 import json
 from pathlib import Path
 
