@@ -1,0 +1,331 @@
+{
+  "package_id": "draft-g45-fractions-depth-wave-v1",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "runtime_activation": false,
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "scope": "Content production only: original draft worked examples, misconception pathways, diagnostics, transfer prompts; not UI",
+  "items": [
+    {
+      "id": "g45-depth-01",
+      "provisional_topic": "fraction-unit-whole",
+      "grade_band": "4-5",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "worked_example": {
+        "concrete": "Use equal-size fraction strips, counters or a number line as appropriate.",
+        "model": "A strip is split into 6 equal pieces. Each piece is 1/6 of the strip.",
+        "symbolic_explanation": "A strip is split into 6 equal pieces. Each piece is 1/6 of the strip."
+      },
+      "diagnostic": {
+        "question": "A strip is split into 6 equal pieces. Three are shaded. What fraction is shaded?",
+        "expected": "3/6",
+        "answer_contract": "fraction_value",
+        "explanation": "Three of six equal pieces are shaded."
+      },
+      "misconception": {
+        "plausible_wrong_answer": "6/3",
+        "feedback": "The denominator counts equal parts in one whole, not the number shaded."
+      },
+      "socratic_hints": [
+        "What is the whole and how is it divided?",
+        "Which equal-sized units represent the given fraction?",
+        "Can you verify your answer with a second representation?"
+      ],
+      "remediation": {
+        "trigger": "Learner selects misconception answer or cannot justify",
+        "response": "Return to a concrete representation and ask learner to count equal units before revealing symbols.",
+        "follow_up": "Regenerate with different numbers and ask learner to explain the unit."
+      },
+      "independent_practice": {
+        "instruction": "Create a new numerical instance of the same structure without showing the worked example; require a model or explanation."
+      },
+      "transfer_assessment": {
+        "prompt": "A different-sized strip is divided into 6 equal pieces; explain why one piece is still 1/6 of that strip.",
+        "review_mode": "human_mathematical_reasoning_review"
+      },
+      "mastery_write_allowed": false
+    },
+    {
+      "id": "g45-depth-02",
+      "provisional_topic": "fraction-number-line",
+      "grade_band": "4-5",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "worked_example": {
+        "concrete": "Use equal-size fraction strips, counters or a number line as appropriate.",
+        "model": "Divide the interval from 0 to 1 into 8 equal jumps; the third jump reaches 3/8.",
+        "symbolic_explanation": "Divide the interval from 0 to 1 into 8 equal jumps; the third jump reaches 3/8."
+      },
+      "diagnostic": {
+        "question": "From 0 to 1, divide a number line into 8 equal intervals. What fraction is at the fifth tick after 0?",
+        "expected": "5/8",
+        "answer_contract": "fraction_value",
+        "explanation": "Count five intervals of size 1/8, not the number of tick marks."
+      },
+      "misconception": {
+        "plausible_wrong_answer": "5/9",
+        "feedback": "Eight intervals require nine endpoints; denominator is the number of equal intervals."
+      },
+      "socratic_hints": [
+        "What is the whole and how is it divided?",
+        "Which equal-sized units represent the given fraction?",
+        "Can you verify your answer with a second representation?"
+      ],
+      "remediation": {
+        "trigger": "Learner selects misconception answer or cannot justify",
+        "response": "Return to a concrete representation and ask learner to count equal units before revealing symbols.",
+        "follow_up": "Regenerate with different numbers and ask learner to explain the unit."
+      },
+      "independent_practice": {
+        "instruction": "Create a new numerical instance of the same structure without showing the worked example; require a model or explanation."
+      },
+      "transfer_assessment": {
+        "prompt": "Place 7/8 on a new line from 0 to 1 with no shaded bars.",
+        "review_mode": "human_mathematical_reasoning_review"
+      },
+      "mastery_write_allowed": false
+    },
+    {
+      "id": "g45-depth-03",
+      "provisional_topic": "fraction-equivalence",
+      "grade_band": "4-5",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "worked_example": {
+        "concrete": "Use equal-size fraction strips, counters or a number line as appropriate.",
+        "model": "Shade 2/3 of a strip, then divide each third in two to show 4/6.",
+        "symbolic_explanation": "Shade 2/3 of a strip, then divide each third in two to show 4/6."
+      },
+      "diagnostic": {
+        "question": "A strip shows 3/4. Split each fourth into 3 equal pieces. What fraction is shaded now?",
+        "expected": "9/12",
+        "answer_contract": "fraction_value",
+        "explanation": "Both numerator and denominator are multiplied by three."
+      },
+      "misconception": {
+        "plausible_wrong_answer": "6/7",
+        "feedback": "Splitting each fourth into three multiplies the number of pieces, not adds three."
+      },
+      "socratic_hints": [
+        "What is the whole and how is it divided?",
+        "Which equal-sized units represent the given fraction?",
+        "Can you verify your answer with a second representation?"
+      ],
+      "remediation": {
+        "trigger": "Learner selects misconception answer or cannot justify",
+        "response": "Return to a concrete representation and ask learner to count equal units before revealing symbols.",
+        "follow_up": "Regenerate with different numbers and ask learner to explain the unit."
+      },
+      "independent_practice": {
+        "instruction": "Create a new numerical instance of the same structure without showing the worked example; require a model or explanation."
+      },
+      "transfer_assessment": {
+        "prompt": "Show with a different model why 2/5 equals 6/15.",
+        "review_mode": "human_mathematical_reasoning_review"
+      },
+      "mastery_write_allowed": false
+    },
+    {
+      "id": "g45-depth-04",
+      "provisional_topic": "fraction-same-denominator-add",
+      "grade_band": "4-5",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "worked_example": {
+        "concrete": "Use equal-size fraction strips, counters or a number line as appropriate.",
+        "model": "Join 2/7 and 3/7 on equal-length fraction strips.",
+        "symbolic_explanation": "Join 2/7 and 3/7 on equal-length fraction strips."
+      },
+      "diagnostic": {
+        "question": "Two ribbons measure 3/8 m and 4/8 m. What is their combined length?",
+        "expected": "7/8",
+        "answer_contract": "fraction_value",
+        "explanation": "Seven eighth-sized pieces make 7/8 of a metre."
+      },
+      "misconception": {
+        "plausible_wrong_answer": "7/16",
+        "feedback": "Do not add denominators: both quantities are measured in eighths."
+      },
+      "socratic_hints": [
+        "What is the whole and how is it divided?",
+        "Which equal-sized units represent the given fraction?",
+        "Can you verify your answer with a second representation?"
+      ],
+      "remediation": {
+        "trigger": "Learner selects misconception answer or cannot justify",
+        "response": "Return to a concrete representation and ask learner to count equal units before revealing symbols.",
+        "follow_up": "Regenerate with different numbers and ask learner to explain the unit."
+      },
+      "independent_practice": {
+        "instruction": "Create a new numerical instance of the same structure without showing the worked example; require a model or explanation."
+      },
+      "transfer_assessment": {
+        "prompt": "Combine 5/9 and 2/9 using a number line.",
+        "review_mode": "human_mathematical_reasoning_review"
+      },
+      "mastery_write_allowed": false
+    },
+    {
+      "id": "g45-depth-05",
+      "provisional_topic": "fraction-same-denominator-subtract",
+      "grade_band": "4-5",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "worked_example": {
+        "concrete": "Use equal-size fraction strips, counters or a number line as appropriate.",
+        "model": "Shade 7/10 of a strip; cross out 3/10 to show 4/10.",
+        "symbolic_explanation": "Shade 7/10 of a strip; cross out 3/10 to show 4/10."
+      },
+      "diagnostic": {
+        "question": "A tank contains 8/9 of its capacity and 5/9 is used. What fraction of capacity remains?",
+        "expected": "1/3",
+        "answer_contract": "fraction_value",
+        "explanation": "Three ninths remain; 3/9 simplifies to 1/3."
+      },
+      "misconception": {
+        "plausible_wrong_answer": "3/18",
+        "feedback": "Both amounts use ninths; subtract the numerators and keep ninths."
+      },
+      "socratic_hints": [
+        "What is the whole and how is it divided?",
+        "Which equal-sized units represent the given fraction?",
+        "Can you verify your answer with a second representation?"
+      ],
+      "remediation": {
+        "trigger": "Learner selects misconception answer or cannot justify",
+        "response": "Return to a concrete representation and ask learner to count equal units before revealing symbols.",
+        "follow_up": "Regenerate with different numbers and ask learner to explain the unit."
+      },
+      "independent_practice": {
+        "instruction": "Create a new numerical instance of the same structure without showing the worked example; require a model or explanation."
+      },
+      "transfer_assessment": {
+        "prompt": "Use a bar model to calculate 7/12 minus 5/12.",
+        "review_mode": "human_mathematical_reasoning_review"
+      },
+      "mastery_write_allowed": false
+    },
+    {
+      "id": "g45-depth-06",
+      "provisional_topic": "fraction-compare-unlike",
+      "grade_band": "4-5",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "worked_example": {
+        "concrete": "Use equal-size fraction strips, counters or a number line as appropriate.",
+        "model": "Overlay 2/3 and 3/4 fraction strips of the same whole, partitioned into twelfths.",
+        "symbolic_explanation": "Overlay 2/3 and 3/4 fraction strips of the same whole, partitioned into twelfths."
+      },
+      "diagnostic": {
+        "question": "Which is greater: 3/5 or 2/3? Answer with the greater fraction.",
+        "expected": "2/3",
+        "answer_contract": "fraction_value",
+        "explanation": "Compare 9/15 and 10/15; ten fifteenths is greater."
+      },
+      "misconception": {
+        "plausible_wrong_answer": "3/5",
+        "feedback": "Compare fraction sizes using a common whole and equal-sized pieces."
+      },
+      "socratic_hints": [
+        "What is the whole and how is it divided?",
+        "Which equal-sized units represent the given fraction?",
+        "Can you verify your answer with a second representation?"
+      ],
+      "remediation": {
+        "trigger": "Learner selects misconception answer or cannot justify",
+        "response": "Return to a concrete representation and ask learner to count equal units before revealing symbols.",
+        "follow_up": "Regenerate with different numbers and ask learner to explain the unit."
+      },
+      "independent_practice": {
+        "instruction": "Create a new numerical instance of the same structure without showing the worked example; require a model or explanation."
+      },
+      "transfer_assessment": {
+        "prompt": "Order 1/2, 3/5 and 2/3 from least to greatest and explain.",
+        "review_mode": "human_mathematical_reasoning_review"
+      },
+      "mastery_write_allowed": false
+    },
+    {
+      "id": "g45-depth-07",
+      "provisional_topic": "fraction-of-set",
+      "grade_band": "4-5",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "worked_example": {
+        "concrete": "Use equal-size fraction strips, counters or a number line as appropriate.",
+        "model": "Split 24 counters into 6 equal groups and select 5 groups.",
+        "symbolic_explanation": "Split 24 counters into 6 equal groups and select 5 groups."
+      },
+      "diagnostic": {
+        "question": "A class has 28 stickers. They use 3/7 of them. How many stickers are used?",
+        "expected": "12",
+        "answer_contract": "integer_value",
+        "explanation": "One seventh is four stickers; three sevenths are twelve."
+      },
+      "misconception": {
+        "plausible_wrong_answer": "3/28",
+        "feedback": "The numerator is the number of groups selected, not the sticker count."
+      },
+      "socratic_hints": [
+        "What is the whole and how is it divided?",
+        "Which equal-sized units represent the given fraction?",
+        "Can you verify your answer with a second representation?"
+      ],
+      "remediation": {
+        "trigger": "Learner selects misconception answer or cannot justify",
+        "response": "Return to a concrete representation and ask learner to count equal units before revealing symbols.",
+        "follow_up": "Regenerate with different numbers and ask learner to explain the unit."
+      },
+      "independent_practice": {
+        "instruction": "Create a new numerical instance of the same structure without showing the worked example; require a model or explanation."
+      },
+      "transfer_assessment": {
+        "prompt": "Find 5/8 of 32 marbles and explain the equal groups.",
+        "review_mode": "human_mathematical_reasoning_review"
+      },
+      "mastery_write_allowed": false
+    },
+    {
+      "id": "g45-depth-08",
+      "provisional_topic": "fraction-unknown-whole",
+      "grade_band": "4-5",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "worked_example": {
+        "concrete": "Use equal-size fraction strips, counters or a number line as appropriate.",
+        "model": "If 2/5 is 8 counters, each fifth is 4 counters, so the whole is 20.",
+        "symbolic_explanation": "If 2/5 is 8 counters, each fifth is 4 counters, so the whole is 20."
+      },
+      "diagnostic": {
+        "question": "Three quarters of a collection is 18 beads. How many beads are in the whole collection?",
+        "expected": "24",
+        "answer_contract": "integer_value",
+        "explanation": "One quarter is six beads; four quarters make 24."
+      },
+      "misconception": {
+        "plausible_wrong_answer": "13.5",
+        "feedback": "Find one unit fraction first, then reconstruct all four parts."
+      },
+      "socratic_hints": [
+        "What is the whole and how is it divided?",
+        "Which equal-sized units represent the given fraction?",
+        "Can you verify your answer with a second representation?"
+      ],
+      "remediation": {
+        "trigger": "Learner selects misconception answer or cannot justify",
+        "response": "Return to a concrete representation and ask learner to count equal units before revealing symbols.",
+        "follow_up": "Regenerate with different numbers and ask learner to explain the unit."
+      },
+      "independent_practice": {
+        "instruction": "Create a new numerical instance of the same structure without showing the worked example; require a model or explanation."
+      },
+      "transfer_assessment": {
+        "prompt": "If 2/3 of a distance is 14 km, determine the full distance.",
+        "review_mode": "human_mathematical_reasoning_review"
+      },
+      "mastery_write_allowed": false
+    }
+  ]
+}
