@@ -8,6 +8,7 @@ mathematics, API and QA gates remain independent.
 from __future__ import annotations
 
 import inspect
+import math
 from fractions import Fraction
 
 import pytest
@@ -31,7 +32,14 @@ def _correct_wire_response(variant: contract.HiddenExactVariant) -> dict[str, ob
         return {
             "classification": oracle["classification"],
             "solutions": [_wire_fraction(value) for value in oracle["solutions"]],
-            "substitution_check": oracle["substitution_check"],
+            "substitution_checks": [
+                {
+                    "solution": _wire_fraction(solution),
+                    "left_value": _wire_fraction(left_value),
+                    "right_value": _wire_fraction(right_value),
+                }
+                for solution, left_value, right_value in oracle["substitution_checks"]
+            ],
         }
     if variant.kind == contract.ExactAlgebraKind.MONOMIAL_QUOTIENT:
         return {
@@ -132,7 +140,21 @@ def test_linear_equation_oracle_is_independently_verified_by_substitution() -> N
         left = parameters["left_coefficient"] * solution + parameters["left_constant"]
         right = parameters["right_coefficient"] * solution + parameters["right_constant"]
         assert left == right
+        assert variant.oracle["substitution_checks"] == ((solution, left, right),)
         assert parameters["left_coefficient"] != parameters["right_coefficient"]
+
+
+def test_equation_substitution_is_exact_evidence_not_a_client_truth_flag() -> None:
+    variant = contract.generate_hidden_variant(contract.ExactAlgebraKind.LINEAR_EQUATION, 11)
+    response = _correct_wire_response(variant)
+    assert "substitution_check" not in response
+    response["substitution_checks"][0]["left_value"] = "999"
+    assert contract.score_exact_response(variant, response).is_correct is False
+
+    boolean_claim = _correct_wire_response(variant)
+    boolean_claim["substitution_checks"] = True
+    with pytest.raises(ValueError, match="substitution_checks"):
+        contract.score_exact_response(variant, boolean_claim)
 
 
 def test_root_oracle_is_complete_or_correctly_reports_no_real_solutions() -> None:
@@ -154,7 +176,27 @@ def test_root_oracle_is_complete_or_correctly_reports_no_real_solutions() -> Non
                 == parameters["radicand"]
                 for value in solutions
             )
+            assert variant.oracle["substitution_checks"] == tuple(
+                (value, Fraction(parameters["radicand"]), Fraction(parameters["radicand"]))
+                for value in solutions
+            )
     assert observed == {"NO_REAL_SOLUTIONS", "TWO_REAL_SOLUTIONS"}
+
+
+def test_principal_root_diagnostic_uses_positive_root_branch_for_negative_coefficients() -> None:
+    checked = 0
+    for seed in range(1, 200):
+        variant = contract.generate_hidden_variant(contract.ExactAlgebraKind.ROOT_EQUATION, seed)
+        parameters = variant.parameters
+        if parameters["radicand"] < 0 or parameters["coefficient"] > 0:
+            continue
+        positive_root = Fraction(math.isqrt(parameters["radicand"]))
+        expected = (positive_root - parameters["shift"]) / parameters["coefficient"]
+        alternative = variant.misconception_responses["ROOT.PRINCIPAL_ONLY"]
+        assert alternative["solutions"] == (expected,)
+        assert alternative["solutions"] != (variant.oracle["solutions"][-1],)
+        checked += 1
+    assert checked > 10
 
 
 @pytest.mark.parametrize(
@@ -193,8 +235,21 @@ def test_quotient_oracle_round_trips_every_term_and_retains_domain(
         assert variant.oracle["domain_restrictions"] == ("x", "y")
 
 
-def test_exponent_oracle_covers_negative_results_with_exact_reciprocals() -> None:
-    negative_count = 0
+def test_polynomial_scoring_accepts_commuted_unlike_terms_and_rejects_duplicate_powers() -> None:
+    variant = contract.generate_hidden_variant(contract.ExactAlgebraKind.POLYNOMIAL_QUOTIENT, 23)
+    response = _correct_wire_response(variant)
+    response["terms"].reverse()
+    assert contract.score_exact_response(variant, response).is_correct is True
+
+    duplicate = _correct_wire_response(variant)
+    duplicate["terms"][1]["x_exponent"] = duplicate["terms"][0]["x_exponent"]
+    duplicate["terms"][1]["y_exponent"] = duplicate["terms"][0]["y_exponent"]
+    with pytest.raises(ValueError, match="unique exponent pairs"):
+        contract.score_exact_response(variant, duplicate)
+
+
+def test_exponent_oracle_covers_positive_zero_and_negative_results_exactly() -> None:
+    outcomes: set[str] = set()
     for seed in range(300):
         variant = contract.generate_hidden_variant(contract.ExactAlgebraKind.EXPONENT_LAWS, seed)
         parameters = variant.parameters
@@ -206,8 +261,14 @@ def test_exponent_oracle_covers_negative_results_with_exact_reciprocals() -> Non
         )
         assert variant.oracle["result_exponent"] == exponent
         assert variant.oracle["exact_value"] == expected
-        negative_count += exponent < 0
-    assert negative_count > 25
+        assert parameters["base_nonzero"] is True
+        outcomes.add(parameters["outcome"])
+        if exponent == 0:
+            assert expected == 1
+            assert "EXP.ZERO_WRITTEN_AS_ZERO" in variant.misconception_responses
+        elif exponent < 0:
+            assert "EXP.NEGATIVE_IS_NEGATIVE_VALUE" in variant.misconception_responses
+    assert outcomes == {"POSITIVE", "ZERO", "NEGATIVE"}
 
 
 def test_scientific_oracle_is_normalized_and_value_preserving() -> None:
@@ -247,6 +308,15 @@ def test_geometry_transfer_oracle_applies_dimensional_power_and_units() -> None:
         )
         expected_units = "square units" if parameters["shape"] == "SQUARE" else "cubic units"
         assert oracle["units"] == expected_units
+        misconception = variant.misconception_responses["EXP.GEOMETRY.POWER_NOT_DISTRIBUTED"]
+        assert misconception["result_coefficient"] == (
+            parameters["coefficient"] ** parameters["dimensional_power"]
+        )
+        assert misconception["result_exponent"] == parameters["exponent"]
+        assert misconception["exact_value"] == (
+            misconception["result_coefficient"]
+            * parameters["base"] ** misconception["result_exponent"]
+        )
     assert observed == {"SQUARE", "CUBE"}
 
 
@@ -310,7 +380,14 @@ def test_known_misconceptions_are_classified_without_returning_hints() -> None:
                     wire = {
                         "classification": response["classification"],
                         "solutions": [_wire_fraction(value) for value in response["solutions"]],
-                        "substitution_check": response["substitution_check"],
+                        "substitution_checks": [
+                            {
+                                "solution": _wire_fraction(solution),
+                                "left_value": _wire_fraction(left_value),
+                                "right_value": _wire_fraction(right_value),
+                            }
+                            for solution, left_value, right_value in response["substitution_checks"]
+                        ],
                     }
                 elif kind == contract.ExactAlgebraKind.EXPONENT_LAWS:
                     wire = {
@@ -332,5 +409,6 @@ def test_known_misconceptions_are_classified_without_returning_hints() -> None:
         "EQ.SIGN.MOVE_WITHOUT_BALANCE",
         "ROOT.PRINCIPAL_ONLY",
         "EXP.NEGATIVE_IS_NEGATIVE_VALUE",
+        "EXP.ZERO_WRITTEN_AS_ZERO",
         "EXP.GEOMETRY.POWER_NOT_DISTRIBUTED",
     }

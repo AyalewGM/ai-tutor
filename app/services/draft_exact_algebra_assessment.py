@@ -20,7 +20,7 @@ from enum import StrEnum
 from fractions import Fraction
 
 DRAFT_RUNTIME_ACTIVATION = False
-CONTRACT_VERSION = "issue-337-exact-r1"
+CONTRACT_VERSION = "issue-337-exact-r2"
 MAX_RESPONSE_TEXT = 120
 
 
@@ -113,6 +113,14 @@ def _seeded(kind: ExactAlgebraKind, seed: int) -> tuple[random.Random, str]:
     return random.Random(int(digest[:16], 16)), digest[:20]
 
 
+def _substitution_record(
+    solution: Fraction,
+    left_value: Fraction,
+    right_value: Fraction,
+) -> tuple[Fraction, Fraction, Fraction]:
+    return solution, left_value, right_value
+
+
 def _linear(seed: int) -> HiddenExactVariant:
     rng, variant_id = _seeded(ExactAlgebraKind.LINEAR_EQUATION, seed)
     solution = Fraction(rng.choice((-9, -7, -5, -3, 3, 5, 7, 9)), rng.choice((2, 3, 4)))
@@ -128,11 +136,15 @@ def _linear(seed: int) -> HiddenExactVariant:
         "Return the complete exact solution set and verify it by substitution."
     )
     wrong_sign = -solution
+    correct_left = left_coefficient * solution + left_constant
+    correct_right = right_coefficient * solution + right_constant
+    wrong_left = left_coefficient * wrong_sign + left_constant
+    wrong_right = right_coefficient * wrong_sign + right_constant
     return HiddenExactVariant(
         variant_id,
         ExactAlgebraKind.LINEAR_EQUATION,
         prompt,
-        ("classification", "solutions", "substitution_check"),
+        ("classification", "solutions", "substitution_checks"),
         {
             "left_coefficient": left_coefficient,
             "left_constant": left_constant,
@@ -142,13 +154,13 @@ def _linear(seed: int) -> HiddenExactVariant:
         {
             "classification": "ONE_REAL_SOLUTION",
             "solutions": (solution,),
-            "substitution_check": True,
+            "substitution_checks": (_substitution_record(solution, correct_left, correct_right),),
         },
         {
             "EQ.SIGN.MOVE_WITHOUT_BALANCE": {
                 "classification": "ONE_REAL_SOLUTION",
                 "solutions": (wrong_sign,),
-                "substitution_check": False,
+                "substitution_checks": (_substitution_record(wrong_sign, wrong_left, wrong_right),),
             }
         },
     )
@@ -163,17 +175,33 @@ def _root(seed: int) -> HiddenExactVariant:
     if radicand < 0:
         classification = "NO_REAL_SOLUTIONS"
         solutions: tuple[Fraction, ...] = ()
+        substitution_checks: tuple[tuple[Fraction, Fraction, Fraction], ...] = ()
         alternatives: dict[str, Mapping[str, object]] = {}
     else:
         solutions = tuple(
             sorted({Fraction(root - shift, coefficient), Fraction(-root - shift, coefficient)})
         )
         classification = "TWO_REAL_SOLUTIONS"
+        substitution_checks = tuple(
+            _substitution_record(
+                solution,
+                Fraction((coefficient * solution + shift) ** 2),
+                Fraction(radicand),
+            )
+            for solution in solutions
+        )
+        principal_solution = Fraction(root - shift, coefficient)
         alternatives = {
             "ROOT.PRINCIPAL_ONLY": {
                 "classification": "ONE_REAL_SOLUTION",
-                "solutions": (solutions[-1],),
-                "substitution_check": True,
+                "solutions": (principal_solution,),
+                "substitution_checks": (
+                    _substitution_record(
+                        principal_solution,
+                        Fraction((coefficient * principal_solution + shift) ** 2),
+                        Fraction(radicand),
+                    ),
+                ),
             }
         }
     return HiddenExactVariant(
@@ -183,9 +211,13 @@ def _root(seed: int) -> HiddenExactVariant:
             f"Solve ({coefficient}x + ({shift}))^2 = {radicand} over the real numbers. "
             "Return the complete exact solution set and verify every candidate."
         ),
-        ("classification", "solutions", "substitution_check"),
+        ("classification", "solutions", "substitution_checks"),
         {"coefficient": coefficient, "shift": shift, "radicand": radicand},
-        {"classification": classification, "solutions": solutions, "substitution_check": True},
+        {
+            "classification": classification,
+            "solutions": solutions,
+            "substitution_checks": substitution_checks,
+        },
         alternatives,
     )
 
@@ -210,6 +242,13 @@ def _monomial(seed: int, *, polynomial: bool) -> HiddenExactVariant:
         dividend_terms.append(
             (coefficient * divisor_coefficient, x_exp + divisor_x, y_exp + divisor_y)
         )
+    if polynomial:
+        ordered_pairs = sorted(
+            zip(quotient_terms, dividend_terms, strict=True),
+            key=lambda pair: (-pair[0][1], -pair[0][2], pair[0][0]),
+        )
+        quotient_terms = [pair[0] for pair in ordered_pairs]
+        dividend_terms = [pair[1] for pair in ordered_pairs]
     prompt = (
         "Divide every numerator term by the monomial denominator. Give exact coefficient and exponent "
         "fields, and retain all restrictions from the original denominator."
@@ -247,28 +286,51 @@ def _monomial(seed: int, *, polynomial: bool) -> HiddenExactVariant:
 def _exponents(seed: int) -> HiddenExactVariant:
     rng, variant_id = _seeded(ExactAlgebraKind.EXPONENT_LAWS, seed)
     base = rng.randint(2, 7)
-    while True:
-        m, n = rng.randint(2, 7), rng.randint(2, 6)
-        p, q = rng.randint(2, 5), rng.randint(2, 4)
-        exponent = m + n - p * q
-        if exponent != 0 and abs(exponent) <= 9:
-            break
+    p, q = rng.randint(2, 5), rng.randint(2, 4)
+    product_exponent = p * q
+    outcome = ("ZERO", "POSITIVE", "NEGATIVE")[seed % 3]
+    if outcome == "ZERO":
+        m = rng.randint(1, product_exponent - 1)
+        n = product_exponent - m
+    elif outcome == "POSITIVE":
+        m = rng.randint(1, product_exponent - 1)
+        n = product_exponent - m + rng.randint(1, 4)
+    else:
+        deficit = rng.randint(1, min(4, product_exponent - 2))
+        m = rng.randint(1, product_exponent - deficit - 1)
+        n = product_exponent - deficit - m
+    exponent = m + n - product_exponent
     value = Fraction(base**exponent) if exponent >= 0 else Fraction(1, base ** (-exponent))
+    misconception_responses: dict[str, Mapping[str, object]] = {}
+    if exponent < 0:
+        misconception_responses["EXP.NEGATIVE_IS_NEGATIVE_VALUE"] = {
+            "result_exponent": exponent,
+            "exact_value": Fraction(-(base ** abs(exponent))),
+        }
+    elif exponent == 0:
+        misconception_responses["EXP.ZERO_WRITTEN_AS_ZERO"] = {
+            "result_exponent": exponent,
+            "exact_value": Fraction(0),
+        }
     return HiddenExactVariant(
         variant_id,
         ExactAlgebraKind.EXPONENT_LAWS,
-        f"Simplify ({base}^{m} x {base}^{n}) / (({base}^{p})^{q}) as one power and evaluate exactly.",
+        (
+            f"Simplify ({base}^{m} x {base}^{n}) / (({base}^{p})^{q}) as one power and "
+            f"evaluate exactly. The numeric base {base} is nonzero."
+        ),
         ("result_exponent", "exact_value"),
-        {"base": base, "m": m, "n": n, "p": p, "q": q},
-        {"result_exponent": exponent, "exact_value": value},
         {
-            "EXP.NEGATIVE_IS_NEGATIVE_VALUE": {
-                "result_exponent": exponent,
-                "exact_value": Fraction(-(base ** abs(exponent))),
-            }
-        }
-        if exponent < 0
-        else {},
+            "base": base,
+            "base_nonzero": True,
+            "outcome": outcome,
+            "m": m,
+            "n": n,
+            "p": p,
+            "q": q,
+        },
+        {"result_exponent": exponent, "exact_value": value},
+        misconception_responses,
     )
 
 
@@ -352,9 +414,9 @@ def _geometry(seed: int) -> HiddenExactVariant:
         },
         {
             "EXP.GEOMETRY.POWER_NOT_DISTRIBUTED": {
-                "result_coefficient": coefficient,
-                "result_exponent": exponent * dimensional_power,
-                "exact_value": coefficient * base ** (exponent * dimensional_power),
+                "result_coefficient": coefficient**dimensional_power,
+                "result_exponent": exponent,
+                "exact_value": coefficient**dimensional_power * base**exponent,
                 "units": units,
             }
         },
@@ -387,6 +449,30 @@ def _solutions(value: object) -> tuple[Fraction, ...]:
     return parsed
 
 
+def _substitution_checks(
+    value: object,
+) -> tuple[tuple[Fraction, Fraction, Fraction], ...]:
+    if not isinstance(value, list) or len(value) > 2:
+        raise ValueError("substitution_checks must be a list of at most two records")
+    required = {"solution", "left_value", "right_value"}
+    parsed: list[tuple[Fraction, Fraction, Fraction]] = []
+    for record in value:
+        if not isinstance(record, dict) or set(record) != required:
+            raise ValueError(
+                "each substitution check requires solution, left_value and right_value"
+            )
+        parsed.append(
+            _substitution_record(
+                _parse_fraction(record["solution"]),
+                _parse_fraction(record["left_value"]),
+                _parse_fraction(record["right_value"]),
+            )
+        )
+    if len({record[0] for record in parsed}) != len(parsed):
+        raise ValueError("substitution checks must not repeat a solution")
+    return tuple(sorted(parsed, key=lambda record: record[0]))
+
+
 def _terms(value: object) -> tuple[tuple[Fraction, int, int], ...]:
     if not isinstance(value, list) or len(value) != 2:
         raise ValueError("polynomial quotient requires exactly two term records")
@@ -401,7 +487,9 @@ def _terms(value: object) -> tuple[tuple[Fraction, int, int], ...]:
                 _integer(term["y_exponent"]),
             )
         )
-    return tuple(parsed)
+    if len({(term[1], term[2]) for term in parsed}) != len(parsed):
+        raise ValueError("polynomial term records must have unique exponent pairs")
+    return tuple(sorted(parsed, key=lambda term: (-term[1], -term[2], term[0])))
 
 
 def _normalize_response(
@@ -410,17 +498,15 @@ def _normalize_response(
     if not isinstance(response, dict):
         raise TypeError("response must be an object")
     if kind in {ExactAlgebraKind.LINEAR_EQUATION, ExactAlgebraKind.ROOT_EQUATION}:
-        if set(response) != {"classification", "solutions", "substitution_check"}:
+        if set(response) != {"classification", "solutions", "substitution_checks"}:
             raise ValueError("equation response fields do not match the contract")
         classification = response["classification"]
         if classification not in {"ONE_REAL_SOLUTION", "TWO_REAL_SOLUTIONS", "NO_REAL_SOLUTIONS"}:
             raise ValueError("unsupported solution classification")
-        if type(response["substitution_check"]) is not bool:
-            raise ValueError("substitution_check must be boolean")
         return {
             "classification": classification,
             "solutions": _solutions(response["solutions"]),
-            "substitution_check": response["substitution_check"],
+            "substitution_checks": _substitution_checks(response["substitution_checks"]),
         }
     if kind == ExactAlgebraKind.MONOMIAL_QUOTIENT:
         expected = {"coefficient", "x_exponent", "y_exponent", "domain_restrictions"}
