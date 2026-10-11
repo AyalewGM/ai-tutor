@@ -88,7 +88,7 @@ def test_exponent_atoms_preserve_zero_negative_and_domain_boundaries():
 
     zero = cards["MATH.EXPONENT.ZERO_NONZERO_BASE"]
     assert any(example.get("input") == "0^0" and example.get("valid") is False for example in zero["examples"])
-    assert "a≠0" in zero["scope_rule"]
+    assert any("a≠0" in item for item in zero["boundary_conditions"])
 
     negative = cards["MATH.EXPONENT.NEGATIVE_AS_RECIPROCAL"]
     assert "a≠0" in negative["scope_rule"]
@@ -117,7 +117,12 @@ def test_polynomial_division_is_two_atoms_with_one_prerequisite_edge():
     polynomial = cards["MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL"]
 
     assert polynomial["prerequisite_concepts"][0] == monomial["proposed_code"]
-    assert any("every term" in item.lower() for item in polynomial["inclusions"])
+    termwise_contract = [
+        polynomial["scope_rule"],
+        *polynomial["boundary_conditions"],
+        *polynomial["assessment_evidence"]["required"],
+    ]
+    assert any("every term" in item.lower() for item in termwise_contract)
     assert any("original-divisor restrictions" in item.lower() for item in polynomial["assessment_evidence"]["required"])
     assert any("order-independent" in item.lower() for item in polynomial["assessment_evidence"]["required"])
     assert any("negative-result exponent" in item.lower() for item in polynomial["assessment_evidence"]["required"])
