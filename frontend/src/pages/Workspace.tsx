@@ -4,6 +4,7 @@ import { InteractivePolynomialDivision } from "../mve/InteractivePolynomialDivis
 import { showPolynomialDivisionExploration } from "../mve/polynomialDivision";
 import { InteractiveEquationBalance } from "../mve/InteractiveEquationBalance";
 import { showBalanceExploration } from "../mve/equationBalance";
+import { InteractiveEquationEquivalence } from "../mve/InteractiveEquationEquivalence";
 import { InteractiveLinearExplorer } from "../mve/InteractiveLinearExplorer";
 import { showLinearExploration } from "../mve/linearExplorer";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
@@ -17,7 +18,11 @@ import VoiceChatControls from "../components/chat/VoiceChatControls";
 import MathText from "../components/MathText";
 import ChatMessage from "../components/chat/ChatMessage";
 import LearnPanel from "../components/LearnPanel";
-import { integerAdditionEligible } from "../learningFlowInteractions";
+import {
+  equationEquivalenceEligible,
+  equationEquivalenceExampleIndex,
+  integerAdditionEligible,
+} from "../learningFlowInteractions";
 import { GuidedDistributivePractice } from "../mve/GuidedDistributivePractice";
 import { integerSeedFromString } from "../mve/integerPractice";
 import { InteractiveFractionBars, fractionComparisonTarget } from "../mve/InteractiveFractionBars";
@@ -192,6 +197,15 @@ export default function Workspace() {
 
   const activeSkillId = workspace?.focus.active_skill_id;
   const learn = workspace?.focus.learn ?? null;
+  const equationEquivalenceEnabled = equationEquivalenceEligible(
+    workspace?.state ?? "",
+    workspace ? {
+      curriculumName: workspace.curriculum.name,
+      jurisdiction: workspace.curriculum.jurisdiction,
+      skillName: workspace.focus.skill_name,
+    } : null,
+    import.meta.env.VITE_ENABLE_DRAFT_MTH1W_EQUATION_FLOW === "true",
+  );
   useEffect(() => {
     setLearnOpen(Boolean(workspace?.focus.in_remediation && learn));
   }, [activeSkillId]);
@@ -797,6 +811,16 @@ export default function Workspace() {
                     <InteractiveEquationBalance
                       key={workspace.focus.active_skill_id}
                       independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
+                  {equationEquivalenceEnabled && (
+                    <InteractiveEquationEquivalence
+                      key={`equation-equivalence-${workspace.problem?.id ?? workspace.focus.active_skill_id}`}
+                      exampleIndex={equationEquivalenceExampleIndex(
+                        workspace.problem?.id ?? workspace.focus.active_skill_id,
+                        workspace.focus.skill_name,
+                      )}
+                      independentAssessment={false}
                     />
                   )}
                   {showDotPlotExploration(workspace.state, workspace.focus.skill_name) && (
