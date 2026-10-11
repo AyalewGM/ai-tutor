@@ -8,8 +8,11 @@ mathematics, API and QA gates remain independent.
 from __future__ import annotations
 
 import inspect
+import json
 import math
+from dataclasses import replace
 from fractions import Fraction
+from pathlib import Path
 
 import pytest
 
@@ -161,6 +164,101 @@ def test_seeded_variants_replay_and_public_payload_never_discloses_oracle(
     assert "parameters" not in payload
     assert "seed" not in payload
     assert "hints" not in payload
+    assert "primary_target" not in payload
+    assert "supporting_targets" not in payload
+
+
+def test_every_variant_has_one_structurally_valid_server_only_primary_atom() -> None:
+    for kind in contract.ExactAlgebraKind:
+        for seed in range(40):
+            variant = contract.generate_hidden_variant(kind, seed)
+            assert isinstance(variant.primary_target, contract.ExactAssessmentTarget)
+            assert variant.primary_target not in variant.supporting_targets
+            assert len(variant.supporting_targets) == len(set(variant.supporting_targets))
+            contract.score_exact_response(variant, _correct_wire_response(variant))
+
+
+def test_atomic_target_labels_are_reused_from_existing_registry_or_draft_scope() -> None:
+    scope = json.loads(
+        Path("docs/curriculum/taxonomy_candidate_scope.algebra_boundaries.v1.json").read_text()
+    )
+    declared = {card["proposed_code"] for card in scope["cards"]}
+    declared.add("MATH.EQ.TWO.DIRECT")
+    assert {target.value for target in contract.ExactAssessmentTarget} <= declared
+
+
+def test_scientific_tasks_bind_only_the_atom_for_the_hidden_operation() -> None:
+    expected = {
+        "TO_SCIENTIFIC": contract.ExactAssessmentTarget.SCIENTIFIC_CONVERT_NORMALIZE,
+        "TO_ORDINARY": contract.ExactAssessmentTarget.SCIENTIFIC_CONVERT_NORMALIZE,
+        "MULTIPLY": contract.ExactAssessmentTarget.SCIENTIFIC_MULTIPLY_NORMALIZE,
+        "DIVIDE": contract.ExactAssessmentTarget.SCIENTIFIC_DIVIDE_NORMALIZE,
+    }
+    for seed in range(40):
+        variant = contract.generate_hidden_variant(
+            contract.ExactAlgebraKind.SCIENTIFIC_NOTATION,
+            seed,
+        )
+        assert variant.primary_target == expected[variant.parameters["operation"]]
+        assert variant.supporting_targets == ()
+
+
+def test_combined_exponent_and_geometry_tasks_do_not_back_credit_sibling_atoms() -> None:
+    expected_outcome = {
+        "POSITIVE": contract.ExactAssessmentTarget.EXPONENT_POWER_OF_POWER,
+        "ZERO": contract.ExactAssessmentTarget.EXPONENT_ZERO,
+        "NEGATIVE": contract.ExactAssessmentTarget.EXPONENT_NEGATIVE_RECIPROCAL,
+    }
+    for seed in range(60):
+        exponent = contract.generate_hidden_variant(
+            contract.ExactAlgebraKind.EXPONENT_LAWS,
+            seed,
+        )
+        assert exponent.primary_target == expected_outcome[exponent.parameters["outcome"]]
+        assert exponent.primary_target not in exponent.supporting_targets
+
+        geometry = contract.generate_hidden_variant(
+            contract.ExactAlgebraKind.GEOMETRY_TRANSFER,
+            seed,
+        )
+        assert geometry.primary_target == (
+            contract.ExactAssessmentTarget.EXPONENT_POWER_OF_POWER
+        )
+        assert geometry.supporting_targets == (
+            contract.ExactAssessmentTarget.EXPONENT_PRODUCT,
+        )
+
+
+def test_tampered_or_broad_atomic_bindings_fail_closed_before_scoring() -> None:
+    variant = contract.generate_hidden_variant(
+        contract.ExactAlgebraKind.SCIENTIFIC_NOTATION,
+        2,
+    )
+    response = _correct_wire_response(variant)
+    mismatched = replace(
+        variant,
+        primary_target=contract.ExactAssessmentTarget.EXPONENT_POWER_OF_POWER,
+    )
+    with pytest.raises(ValueError, match="does not match"):
+        contract.score_exact_response(mismatched, response)
+
+    broad = replace(variant, primary_target="MATH.NS.SCIENTIFIC_NOTATION")
+    with pytest.raises(TypeError, match="accepted exact assessment atom"):
+        contract.score_exact_response(broad, response)
+
+    duplicated = replace(
+        variant,
+        supporting_targets=(variant.primary_target,),
+    )
+    with pytest.raises(ValueError, match="duplicated"):
+        contract.score_exact_response(duplicated, response)
+
+    unsupported = replace(
+        variant,
+        supporting_targets=(contract.ExactAssessmentTarget.EXPONENT_PRODUCT,),
+    )
+    with pytest.raises(ValueError, match="supporting targets do not match"):
+        contract.score_exact_response(unsupported, response)
 
 
 @pytest.mark.parametrize("kind", list(contract.ExactAlgebraKind))
