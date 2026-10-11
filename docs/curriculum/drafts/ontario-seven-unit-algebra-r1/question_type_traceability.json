@@ -1,7 +1,7 @@
 {
   "schema_version": "1.2.0",
   "milestone": "GitHub Issue #337",
-  "revision": "issue-337-traceability-r4",
+  "revision": "issue-337-traceability-r5",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "source_policy": {
@@ -29,16 +29,17 @@
     "units": [
       {
         "unit": "Build Your Skills",
-        "content_status": "PARTIAL_AUTHORED_EXISTING_ONE_STEP_FAMILIES",
+        "content_status": "AUTHORED_DRAFT_COMPLETE_SIGNED_ONE_STEP_CONTENT_CONTRACT",
         "exact_artifacts": [
           "PR_343@9902ad8cee10120b27a0b60a45a2a6c0c75861c6",
-          "PR_349@79f272a6f8d21de348eb458e62a086363d724585"
+          "PR_349@79f272a6f8d21de348eb458e62a086363d724585",
+          "docs/curriculum/drafts/build-your-skills-signed-one-step-r1@build-your-skills-signed-one-step-r1"
         ],
-        "mathematical_review": "PARTIAL_NOT_SEPARATELY_ACCEPTED_AS_COMPLETE_SIGNED_ONE_STEP_SEQUENCE",
-        "pedagogical_review": "NOT_REVIEWED_AS_COMPLETE_BUILD_YOUR_SKILLS_SEQUENCE",
-        "interaction": "PARTIAL_EQUATION_GUIDED_COMPONENTS_ONLY",
+        "mathematical_review": "PENDING_COMPLETE_SIGNED_ONE_STEP_R1_REVIEW",
+        "pedagogical_review": "PENDING_COMPLETE_BUILD_YOUR_SKILLS_R1_REVIEW",
+        "interaction": "CONTENT_CONTRACT_REUSES_BALANCE_AND_EQUIVALENCE_MVE_NOT_WIRED",
         "trusted_assessment": "NOT_WIRED",
-        "actual_gap": "One connected signed add/subtract/multiply/divide diagnostic and unseen-transfer sequence is not independently accepted."
+        "actual_gap": "All four signed inverse-operation structures, operation-specific diagnostics, deterministic fresh exits and hidden exact substitution evidence are authored; independent reviews, accessible wiring, backend-trusted unseen scoring, standards mapping and Muse remain absent."
       },
       {
         "unit": "2.6C",
@@ -154,7 +155,7 @@
         "actual_gap": "Normalization explorer, multiplication/division learner journey, accepted exact/rounded response policy, trusted scoring and Muse verification remain absent."
       }
     ],
-    "checkpoint_reason": "RECONCILE_ACCEPTED_GUIDED_PR_350_AND_MATH_APPROVED_ROOT_PR_346_WITHOUT_MASTERY_OR_RELEASE_CLAIMS"
+    "checkpoint_reason": "AUTHOR_REMAINING_BUILD_YOUR_SKILLS_CONTENT_GAP_WITHOUT_MASTERY_OR_RELEASE_CLAIMS"
   },
   "rows": [
     {
@@ -164,13 +165,14 @@
       "canonical_family": "MATH.EE.EQUATION.ONE",
       "implementation_evidence": [
         "app/canonical_problem_families.py:MATH.EQ.ONE.ADD_DIRECT",
-        "app/domains/algebra_functions.py:MATH.ALG.EQ.ONE.MULT"
+        "app/domains/algebra_functions.py:MATH.ALG.EQ.ONE.MULT",
+        "docs/curriculum/drafts/build-your-skills-signed-one-step-r1/seeded_one_step.py"
       ],
-      "generator_status": "PARTIAL",
+      "generator_status": "PARTIAL_DRAFT_COMPLETE_FOUR_OPERATION_CONTENT_NOT_ACCEPTED",
       "guided_mve_status": "PARTIAL_BALANCE_POSITIVE_ONLY",
-      "assessment_status": "PARTIAL_EXISTING_RUNTIME_NOT_ISSUE_337_ACCEPTED",
+      "assessment_status": "DRAFT_HIDDEN_EXACT_ORACLE_BACKEND_NOT_IMPLEMENTED",
       "decision": "EXTEND_EXISTING",
-      "gap": "Signed add/subtract/multiply/divide set and operation-specific diagnosis are not demonstrated as one accepted sequence."
+      "gap": "Connected signed add/subtract/multiply/divide content and operation-specific diagnosis are authored in R1; independent Math/Pedagogy review, accessible interaction, server-trusted unseen assessment, standards and Muse acceptance remain required."
     },
     {
       "unit": "2.6C",
