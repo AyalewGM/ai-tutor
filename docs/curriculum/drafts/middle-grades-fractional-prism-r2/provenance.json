@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "record_type": "MIHUR_CONTENT_PROVENANCE",
   "package_id": "W1-G6-FRACTIONAL-PRISM-VOLUME",
-  "revision": "middle-grades-fractional-prism-r3",
+  "revision": "middle-grades-fractional-prism-r4",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "learner_data_writes": false,
@@ -66,9 +66,9 @@
   },
   "existing_work_gap_improvement_verification": {
     "existing_work": "Integer-only prism generator and static visual on main; pedagogy-accepted fractional-prism authored design in PR #327; source-grounded provisional mapping in merged PR #325.",
-    "actual_gap": "No seeded fractional/mixed-edge variants, executable response-evidence diagnosis, independent exact inverse oracle, distinct operation-selection transfer, or interactive fractional-cell MVE was evidenced.",
-    "improvement": "Five mode-separated exact structures, seven-field reasoning contract, exact unit-family plus dimensional-power evidence, like-quantity reference-volume prediction, repeated fractional cells across multiple unit cubes, six misconception routes with fresh exits/fade conditions, mold-plan transfer, and explicit keyboard/screen-reader interaction requirements.",
-    "verification": "Draft tests cover deterministic replay, all structures, independent Fraction products/quotients, dimensional reference comparison, repeated multi-cube packing language, exact unit-family/power diagnosis, decomposition equivalence, invalid values, public-payload non-disclosure, provenance, and assessment isolation. Runtime/MVE/backend/Muse evidence remains pending."
+    "actual_gap": "R3 approved the arithmetic, units and corrected packing model, but its evaluator checked only operation, numeric result and units; predicted comparison, base/layer model, decomposition, equation and reconstruction evidence were declared but not evaluated.",
+    "improvement": "Preserve the approved R3 mathematics and add a guided-only seven-field structured evidence evaluator with teacher-only exact model evidence, evidence-specific failure codes, and explicit refusal to score independent assessment.",
+    "verification": "Draft tests cover deterministic replay, all structures, independent Fraction products/quotients, complete guided seven-field evidence, adversarial correct-answer/wrong-model cases, teacher-oracle non-disclosure, invalid values, provenance, and assessment isolation. Runtime/MVE/backend/Muse evidence remains pending."
   },
   "pedagogical_evidence": {
     "references": [
@@ -119,16 +119,17 @@
     "seeded_generator": "seeded_variants.py",
     "guided_namespace": "middle-grades-fractional-prism-r2:guided",
     "independent_namespace": "middle-grades-fractional-prism-r2:independent",
-    "independent_oracle": "R2_NUMERIC_PRODUCT_AND_QUOTIENT_APPROVED_AT_62197CC; R3_DIMENSIONAL_AND_PACKING_CORRECTIONS_PENDING_REVIEW",
+    "independent_oracle": "R3_PRODUCT_QUOTIENT_DIMENSIONAL_AND_PACKING_SCOPE_APPROVED_AT_0A24EEA; R4_GUIDED_STRUCTURED_EVIDENCE_PENDING_REVIEW",
     "unseen_assessment": "DRAFT_MOLD_PLAN_OPERATION_SELECTION_SEVEN_FIELD_CONTRACT",
+    "guided_structured_evidence": "diagnose_reasoning_evidence checks all seven declared fields in guided mode only",
     "backend_trusted_scoring": "NOT_IMPLEMENTED",
     "guided_practice_credit": false,
     "historical_mastery_affected": false
   },
   "independent_verdicts": {
     "standards_mapping": "PENDING",
-    "mathematics": "REQUEST_CHANGES_AT_62197CC_BOUNDED_R3_CORRECTION_PENDING_REVIEW",
-    "pedagogy": "PENDING_R3_SOURCE_REVISION_ACCEPTED_ONLY",
+    "mathematics": "R3_APPROVED_AT_0A24EEA_R4_GUIDED_EVIDENCE_DELTA_PENDING_REVIEW",
+    "pedagogy": "PENDING_R4_STRUCTURED_EVIDENCE_REVIEW",
     "muse_accessibility_and_assessment": "PENDING",
     "assessment_backend": "NOT_IMPLEMENTED",
     "engineering_release": "NOT_APPROVED",

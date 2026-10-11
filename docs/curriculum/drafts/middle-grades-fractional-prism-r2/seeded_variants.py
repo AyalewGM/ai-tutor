@@ -8,6 +8,7 @@ writing learner, attempt, diagnostic, or mastery evidence.
 from __future__ import annotations
 
 import random
+from collections.abc import Mapping
 from dataclasses import dataclass
 from fractions import Fraction
 
@@ -77,6 +78,83 @@ class PrismVariant:
                 "equation",
                 "check_or_explanation",
             ],
+        }
+
+    def teacher_evidence(self) -> dict[str, object]:
+        """Return structured author evidence that must never enter public payloads."""
+
+        if self.target == "volume":
+            equation: dict[str, object] = {
+                "relation": "V=L×W×H",
+                "length": self.length,
+                "width": self.width,
+                "height": self.height,
+                "result": self.volume,
+            }
+        else:
+            equation = {
+                "relation": "H=V÷B",
+                "volume": self.volume,
+                "base_area": self.base_area,
+                "result": self.height,
+            }
+
+        if self.structure == "PACK_FRACTIONAL_CELLS":
+            reasoning_code = "REPEAT_PARTITIONS_ACROSS_ROW_AND_LAYERS"
+            check: dict[str, object] = {
+                "relation": "B×H=V",
+                "base_area": self.base_area,
+                "height": self.height,
+                "volume": self.volume,
+            }
+        elif self.structure == "MIXED_EDGE_VOLUME":
+            reasoning_code = "SAME_BASE_HEIGHT_COMPARISON"
+            check = {
+                "relation": "INSERT_VOLUME_GT_REFERENCE_VOLUME",
+                "insert_volume": self.volume,
+                "reference_volume": self.base_area,
+                "comparison": ">",
+            }
+        elif self.structure == "DECOMPOSE_MIXED_EDGE":
+            reasoning_code = "DISTRIBUTE_MIXED_EDGE"
+            assert self.decomposition is not None
+            whole, fractional = self.decomposition
+            check = {
+                "relation": "PARTIAL_VOLUMES_SUM_TO_VOLUME",
+                "partial_volumes": (
+                    whole * self.width * self.height,
+                    fractional * self.width * self.height,
+                ),
+                "volume": self.volume,
+            }
+        elif self.target == "height":
+            reasoning_code = "INVERSE_BASE_AREA"
+            check = {
+                "relation": "B×H=V",
+                "base_area": self.base_area,
+                "height": self.height,
+                "volume": self.volume,
+            }
+        else:
+            reasoning_code = "DIRECT_LAYER_PRODUCT"
+            check = {
+                "relation": "B×H=V",
+                "base_area": self.base_area,
+                "height": self.height,
+                "volume": self.volume,
+            }
+
+        return {
+            "operation_choice": self.expected_operation,
+            "base_area_or_layer_size": self.base_area,
+            "layer_reasoning": reasoning_code,
+            "exact_answer": self.exact_answer,
+            "unit_and_power": {
+                "family": self.expected_unit_family,
+                "power": self.expected_unit_power,
+            },
+            "equation": equation,
+            "check_or_explanation": check,
         }
 
 
@@ -269,6 +347,12 @@ def diagnose_response(
         unit_family != item.expected_unit_family or unit_power != item.expected_unit_power
     ):
         return "UNIT_DIMENSION_ERROR"
+    if (
+        answer == item.exact_answer
+        and unit_family == item.expected_unit_family
+        and unit_power == item.expected_unit_power
+    ):
+        return "CORRECT_PRACTICE_ONLY"
     if item.target == "volume":
         if answer == item.base_area:
             return "AREA_AS_VOLUME"
@@ -278,14 +362,62 @@ def diagnose_response(
         if answer == truncated and truncated != item.volume:
             return "IGNORED_FRACTIONAL_EDGE"
     else:
-        if answer == item.volume - item.base_area:
+        if answer != item.exact_answer and answer == item.volume - item.base_area:
             return "SUBTRACTED_BASE_FROM_VOLUME"
-        if answer == item.volume * item.base_area:
+        if answer != item.exact_answer and answer == item.volume * item.base_area:
             return "MULTIPLIED_INSTEAD_OF_DIVIDED"
-    if (
-        answer == item.exact_answer
-        and unit_family == item.expected_unit_family
-        and unit_power == item.expected_unit_power
-    ):
-        return "CORRECT_PRACTICE_ONLY"
     return "VOLUME_RELATION_NOT_ESTABLISHED"
+
+
+def diagnose_reasoning_evidence(
+    item: PrismVariant,
+    response: Mapping[str, object],
+) -> str:
+    """Check complete guided model evidence without scoring independent mastery.
+
+    The function evaluates structured mathematical claims, not free-form prose.
+    It is draft content semantics only: it writes nothing and is not a backend
+    assessment scorer.
+    """
+
+    if item.mode != "guided":
+        return "INDEPENDENT_ASSESSMENT_NOT_SCORED_HERE"
+    if not isinstance(response, Mapping):
+        return "INCOMPLETE_REASONING_EVIDENCE"
+    teacher = item.teacher_evidence()
+    if set(response) != set(teacher):
+        return "INCOMPLETE_REASONING_EVIDENCE"
+
+    units = response["unit_and_power"]
+    if not isinstance(units, Mapping) or set(units) != {"family", "power"}:
+        return "UNIT_DIMENSION_ERROR"
+    result = diagnose_response(
+        item,
+        response["operation_choice"],
+        response["exact_answer"],
+        units["family"],
+        units["power"],
+    )
+    if result != "CORRECT_PRACTICE_ONLY":
+        return result
+
+    base_or_layer = response["base_area_or_layer_size"]
+    if isinstance(base_or_layer, bool) or not isinstance(base_or_layer, (Fraction, int)):
+        return "BASE_LAYER_MODEL_ERROR"
+    if Fraction(base_or_layer) != item.base_area:
+        return "BASE_LAYER_MODEL_ERROR"
+
+    if response["layer_reasoning"] != teacher["layer_reasoning"]:
+        if item.structure == "PACK_FRACTIONAL_CELLS":
+            return "FRACTIONAL_CELL_REPETITION_NOT_ESTABLISHED"
+        if item.structure == "MIXED_EDGE_VOLUME":
+            return "REFERENCE_VOLUME_COMPARISON_NOT_ESTABLISHED"
+        if item.structure == "DECOMPOSE_MIXED_EDGE":
+            return "DECOMPOSITION_MODEL_NOT_ESTABLISHED"
+        return "LAYER_RELATION_NOT_ESTABLISHED"
+
+    if response["equation"] != teacher["equation"]:
+        return "EQUATION_RECONSTRUCTION_ERROR"
+    if response["check_or_explanation"] != teacher["check_or_explanation"]:
+        return "CHECK_OR_EXPLANATION_NOT_ESTABLISHED"
+    return "CORRECT_STRUCTURED_PRACTICE_ONLY_MODEL_EVIDENCE_CAPTURED"

@@ -41,7 +41,7 @@ def test_provenance_is_complete_and_fail_closed() -> None:
 
     assert provenance["record_type"] == "MIHUR_CONTENT_PROVENANCE"
     assert provenance["package_id"] == "W1-G6-FRACTIONAL-PRISM-VOLUME"
-    assert provenance["revision"] == "middle-grades-fractional-prism-r3"
+    assert provenance["revision"] == "middle-grades-fractional-prism-r4"
     assert provenance["status"] == "DRAFT_UNVERIFIED"
     assert provenance["runtime_activation"] is False
     assert provenance["learner_data_writes"] is False
@@ -53,7 +53,7 @@ def test_provenance_is_complete_and_fail_closed() -> None:
     assert provenance["official_standards"]["mapping_status"] == "PROVISIONAL_NOT_ACCEPTED"
     assert provenance["official_standards"]["coverage_credit"] == "NONE"
     assert provenance["canonical"]["new_canonical_identity"] is False
-    assert provenance["independent_verdicts"]["mathematics"].startswith("REQUEST_CHANGES_AT_62197CC")
+    assert provenance["independent_verdicts"]["mathematics"].startswith("R3_APPROVED_AT_0A24EEA")
     assert provenance["independent_verdicts"]["muse_accessibility_and_assessment"] == "PENDING"
     assert provenance["independent_verdicts"]["deployment"] == "NOT_DEPLOYED"
 
@@ -335,6 +335,98 @@ def test_invalid_diagnostic_values_fail_closed() -> None:
         variants.diagnose_response(item, item.expected_operation, item.exact_answer, "unit", False)
     with pytest.raises(ValueError, match="1, 2, or 3"):
         variants.diagnose_response(item, item.expected_operation, item.exact_answer, "unit", 0)
+
+
+def test_complete_seven_field_guided_evidence_is_practice_only() -> None:
+    variants = _variants()
+
+    for seed in range(250):
+        guided = variants.generate(seed, "guided")
+        evidence = guided.teacher_evidence()
+        assert set(evidence) == set(guided.public_payload()["response_fields"])
+        assert variants.diagnose_reasoning_evidence(guided, evidence) == (
+            "CORRECT_STRUCTURED_PRACTICE_ONLY_MODEL_EVIDENCE_CAPTURED"
+        )
+        independent = variants.generate(seed, "independent")
+        assert variants.diagnose_reasoning_evidence(
+            independent, independent.teacher_evidence()
+        ) == "INDEPENDENT_ASSESSMENT_NOT_SCORED_HERE"
+
+
+def test_correct_answer_cannot_hide_wrong_model_reasoning_or_reconstruction() -> None:
+    variants = _variants()
+    by_structure = {
+        item.structure: item
+        for seed in range(50)
+        if (item := variants.generate(seed, "guided"))
+    }
+
+    for item in by_structure.values():
+        evidence = item.teacher_evidence()
+
+        wrong_base = dict(evidence)
+        wrong_base["base_area_or_layer_size"] = item.base_area + 1
+        assert variants.diagnose_reasoning_evidence(item, wrong_base) == (
+            "BASE_LAYER_MODEL_ERROR"
+        )
+
+        wrong_equation = dict(evidence)
+        wrong_equation["equation"] = {"relation": "L+W+H=V"}
+        assert variants.diagnose_reasoning_evidence(item, wrong_equation) == (
+            "EQUATION_RECONSTRUCTION_ERROR"
+        )
+
+        wrong_check = dict(evidence)
+        wrong_check["check_or_explanation"] = {"relation": "UNVERIFIED"}
+        assert variants.diagnose_reasoning_evidence(item, wrong_check) == (
+            "CHECK_OR_EXPLANATION_NOT_ESTABLISHED"
+        )
+
+    expected_reasoning_errors = {
+        "PACK_FRACTIONAL_CELLS": "FRACTIONAL_CELL_REPETITION_NOT_ESTABLISHED",
+        "MIXED_EDGE_VOLUME": "REFERENCE_VOLUME_COMPARISON_NOT_ESTABLISHED",
+        "MISSING_HEIGHT": "LAYER_RELATION_NOT_ESTABLISHED",
+        "DECOMPOSE_MIXED_EDGE": "DECOMPOSITION_MODEL_NOT_ESTABLISHED",
+        "TRANSFER_MOLD_PLAN": "LAYER_RELATION_NOT_ESTABLISHED",
+    }
+    for structure, item in by_structure.items():
+        wrong_reasoning = dict(item.teacher_evidence())
+        wrong_reasoning["layer_reasoning"] = "GENERIC_VOLUME_RULE"
+        assert variants.diagnose_reasoning_evidence(item, wrong_reasoning) == (
+            expected_reasoning_errors[structure]
+        )
+
+
+def test_teacher_model_evidence_is_not_in_public_payload() -> None:
+    variants = _variants()
+
+    for seed in range(100):
+        item = variants.generate(seed, "independent")
+        public = item.public_payload()
+        assert "teacher_evidence" not in public
+        assert "base_area" not in public
+        assert "volume" not in public
+        assert "expected_operation" not in public
+        assert "exact_answer" not in public
+
+
+def test_invalid_structured_reasoning_evidence_fails_closed() -> None:
+    variants = _variants()
+    item = variants.generate(5, "guided")
+
+    assert variants.diagnose_reasoning_evidence(item, {}) == (
+        "INCOMPLETE_REASONING_EVIDENCE"
+    )
+    invalid = dict(item.teacher_evidence())
+    invalid["unit_and_power"] = {"family": item.expected_unit_family}
+    assert variants.diagnose_reasoning_evidence(item, invalid) == (
+        "UNIT_DIMENSION_ERROR"
+    )
+    invalid = dict(item.teacher_evidence())
+    invalid["base_area_or_layer_size"] = True
+    assert variants.diagnose_reasoning_evidence(item, invalid) == (
+        "BASE_LAYER_MODEL_ERROR"
+    )
 
 
 def test_draft_module_is_not_in_runtime_family_registry() -> None:

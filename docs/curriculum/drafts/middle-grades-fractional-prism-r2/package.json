@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "package_id": "W1-G6-FRACTIONAL-PRISM-VOLUME",
-  "revision": "middle-grades-fractional-prism-r3",
+  "revision": "middle-grades-fractional-prism-r4",
   "title": "Fractional rectangular-prism volume as layers and exact measure",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
@@ -52,7 +52,7 @@
     {
       "phase": "DIAGNOSE",
       "representations": ["CONCRETE", "VISUAL", "SYMBOLIC"],
-      "student_action": "Route the captured operation, exact answer, exact unit family, and unit power to one evidence-specific repair; complete a fresh contrast item before the corresponding scaffold fades."
+      "student_action": "Route all seven structured fields—operation, base/layer size, layer reasoning, exact answer, exact unit family/power, equation, and reconstruction check—to one evidence-specific repair; complete a fresh contrast item before the corresponding scaffold fades. Free-form prose is not automatically scored."
     },
     {
       "phase": "TRANSFER",
@@ -165,7 +165,9 @@
     "guided_practice_credit": false,
     "historical_mastery_mutation": false,
     "backend_status": "NOT_IMPLEMENTED",
+    "guided_structured_evaluator": "diagnose_reasoning_evidence checks all seven fields in guided mode only and never awards mastery",
+    "independent_reasoning_scorer": "NOT_IMPLEMENTED_BACKEND",
     "unseen_transfer": "TRANSFER_MOLD_PLAN requires operation selection before arithmetic and alternates direct volume with inverse height."
   },
-  "review_status": "MATH_REQUEST_CHANGES_AT_62197CC_BOUNDED_R3_CORRECTION_PENDING_REVIEW"
+  "review_status": "R3_MATH_APPROVED_AT_0A24EEA_R4_STRUCTURED_GUIDED_EVIDENCE_PENDING_INDEPENDENT_REVIEW"
 }
