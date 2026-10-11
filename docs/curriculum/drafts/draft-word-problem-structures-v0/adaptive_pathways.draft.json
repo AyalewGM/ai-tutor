@@ -3722,7 +3722,7 @@
       },
       "mastery_exit": {
         "prompt": "An event sold 40 tickets. Adult admission is $15, youth admission $9, and revenue $456. How many adult tickets were sold? Write your own mathematical representation, determine the unknown with tickets where appropriate, and justify by checking the original conditions.",
-        "expected_answer": "107/2",
+        "expected_answer": "16",
         "required_evidence": [
           "Identify the unknown and choose a mathematically justified model independently.",
           "Give the exact solution with tickets when applicable.",
@@ -3738,7 +3738,7 @@
         ],
         "teacher_oracle_server_only": {
           "operation": "ticket_system",
-          "exact_answer": "107/2",
+          "exact_answer": "16",
           "independently_recomputed": true
         },
         "learner_payload_contract": {
