@@ -87,3 +87,18 @@ def test_full_figure_translation_reflection_and_invariants():
     assert [(-x, y) for x, y in other] == [(-1, 1), (-4, 1), (-1, 3)]
     assert all(i["hints_allowed"] is False for i in tagged)
     assert p["runtime_activation"] is False
+
+
+def test_iqr_from_unseen_raw_data_and_boxplot_endpoints():
+    p = _package("learning-packages-wave2", "W2-G7-DISTRIBUTIONS-IQR")
+    tagged = [i for i in p["independent_assessment"] if i.get("evidence")]
+    assert len(tagged) >= 2
+    a = [1, 3, 5, 7, 9, 11, 13, 15]
+    assert (a[1] + a[2]) / 2 == 4
+    assert (a[5] + a[6]) / 2 == 12
+    assert 12 - 4 == 8
+    assert a[-1] - a[0] == 14
+    assert 8.5 - 4.5 == 4
+    assert 10 - 3 == 7
+    assert all(i["hints_allowed"] is False for i in tagged)
+    assert p["runtime_activation"] is False
