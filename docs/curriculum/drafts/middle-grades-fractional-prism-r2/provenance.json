@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "MIHUR_CONTENT_PROVENANCE",
+  "package_id": "W1-G6-FRACTIONAL-PRISM-VOLUME",
+  "revision": "middle-grades-fractional-prism-r4",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "reconciled_repository_state": {
+    "main_head_sha": "313c13c9df4d530777cf89fb34f21dcedd91f454",
+    "mapping_pr_325_merge_sha": "c1fa26a560ebea022202bace38d51e91ca5d08fa",
+    "source_pr_327_head_sha": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
+    "integration_pr_328_head_sha": "0036253470c3f47ce0b35b0bba8264cd2cc4817f",
+    "rational_scale_pr_333_head_sha": "57264b7046bbf3c083c38bf6248750da568d3923",
+    "iqr_pr_342_head_sha": "009251836a89e7cb4772fb3ec39ed4a3c8824384"
+  },
+  "official_standards": {
+    "jurisdiction": "Maryland",
+    "issuing_authority": "Maryland State Department of Education",
+    "publication": "Maryland Comprehensive Curricular Framework for Mathematics",
+    "adoption_date": "2025-07-29",
+    "implementation_version": "2026-2027 school year",
+    "official_crosswalk_url": "https://msde.maryland.gov/media/17816",
+    "official_companion_url": "https://msde.maryland.gov/media/17817",
+    "exact_expectation_ids": [
+      "6.GR.A.2"
+    ],
+    "source_expectation_status": "SOURCE_VERIFIED_IN_MERGED_PR_325",
+    "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+    "coverage_credit": "NONE",
+    "scope_note": "PR #325 identifies fractional-edge prism volume as a candidate relation only; independent Standards Mapping acceptance is pending."
+  },
+  "canonical": {
+    "canonical_family": "MATH.GEO.MEASURE.VOLUME",
+    "generator_family": "MATH.GEO.VOLUME.PRISM",
+    "new_canonical_identity": false,
+    "approval_status": "EXISTING_FAMILY_REUSED_SCOPE_EXTENSION_NOT_APPROVED",
+    "identity_note": "No grade-specific canonical ID is introduced."
+  },
+  "reuse_audit": {
+    "source_package": {
+      "pull_request": 327,
+      "path": "docs/curriculum/drafts/learning-packages-wave1/content.draft.json",
+      "package_id": "W1-G6-FRACTIONAL-PRISM-VOLUME",
+      "pinned_head_sha": "5d4e613b4aa241384809e048c60ee082e6f14fe4"
+    },
+    "generator": {
+      "path": "app/domains/geometry_measurement.py",
+      "family": "MATH.GEO.VOLUME.PRISM",
+      "actual_scope": "Deterministic integer dimensions 2..9 with dimension-omission distractor"
+    },
+    "visualization": {
+      "backend_path": "app/services/visualization.py",
+      "frontend_path": "frontend/src/components/ProblemVisual.tsx",
+      "contract_path": "frontend/src/mve/contracts.ts",
+      "actual_scope": "Static accessible SVG rectangular-prism orientation using numeric dimensions",
+      "fractional_interaction_status": "NOT_IMPLEMENTED_OR_WIRED"
+    },
+    "existing_tests": [
+      "tests/unit/test_geometry6.py",
+      "tests/unit/test_solid_volume.py",
+      "tests/test_canonical_mve_bridge.py"
+    ],
+    "non_overlap": "Signed integers remain in PR #328; rational scale/inverse remains in PR #333; IQR/box plots remain in PR #342; ratio/double-number-line remains with its existing owner."
+  },
+  "existing_work_gap_improvement_verification": {
+    "existing_work": "Integer-only prism generator and static visual on main; pedagogy-accepted fractional-prism authored design in PR #327; source-grounded provisional mapping in merged PR #325.",
+    "actual_gap": "R3 approved the arithmetic, units and corrected packing model, but its evaluator checked only operation, numeric result and units; predicted comparison, base/layer model, decomposition, equation and reconstruction evidence were declared but not evaluated.",
+    "improvement": "Preserve the approved R3 mathematics and add a guided-only seven-field structured evidence evaluator with teacher-only exact model evidence, evidence-specific failure codes, and explicit refusal to score independent assessment.",
+    "verification": "Draft tests cover deterministic replay, all structures, independent Fraction products/quotients, complete guided seven-field evidence, adversarial correct-answer/wrong-model cases, teacher-oracle non-disclosure, invalid values, provenance, and assessment isolation. Runtime/MVE/backend/Muse evidence remains pending."
+  },
+  "pedagogical_evidence": {
+    "references": [
+      {
+        "type": "SOURCE_PACKAGE",
+        "url": "https://github.com/AyalewGM/ai-tutor/blob/5d4e613b4aa241384809e048c60ee082e6f14fe4/docs/curriculum/drafts/learning-packages-wave1/content.draft.json",
+        "use": "Original Mihur fractional-prism sequence and misconception design; no proprietary worksheet content."
+      },
+      {
+        "type": "INDEPENDENT_PEDAGOGY_REVIEW",
+        "url": "https://github.com/AyalewGM/ai-tutor/pull/327#issuecomment-6102771217",
+        "use": "Pedagogy-only ACCEPT for the source revision's unit-cube-to-symbolic progression, inverse reasoning, targeted probes, transfer, and accessibility specification."
+      }
+    ],
+    "current_revision_status": "PENDING_R2_REVIEW_SOURCE_ACCEPT_DOES_NOT_SELF_TRANSFER"
+  },
+  "coverage_contract": {
+    "mihur_phases": [
+      "OBSERVE",
+      "PREDICT",
+      "MANIPULATE",
+      "EXPLAIN",
+      "PRACTICE",
+      "DIAGNOSE",
+      "TRANSFER",
+      "VERIFY"
+    ],
+    "representations": [
+      "CONCRETE",
+      "VISUAL",
+      "SYMBOLIC"
+    ],
+    "status": "DRAFT_EXECUTABLE_EVIDENCE_CONTRACT"
+  },
+  "misconception_pathways": {
+    "status": "DRAFT_EXECUTABLE_RESPONSE_ROUTER",
+    "codes": [
+      "AREA_AS_VOLUME",
+      "ADDED_EDGE_LENGTHS",
+      "IGNORED_FRACTIONAL_EDGE",
+      "UNIT_DIMENSION_ERROR",
+      "OPERATION_SELECTION_ERROR",
+      "MULTIPLIED_INSTEAD_OF_DIVIDED",
+      "SUBTRACTED_BASE_FROM_VOLUME"
+    ]
+  },
+  "practice_and_assessment": {
+    "seeded_generator": "seeded_variants.py",
+    "guided_namespace": "middle-grades-fractional-prism-r2:guided",
+    "independent_namespace": "middle-grades-fractional-prism-r2:independent",
+    "independent_oracle": "R3_PRODUCT_QUOTIENT_DIMENSIONAL_AND_PACKING_SCOPE_APPROVED_AT_0A24EEA; R4_GUIDED_STRUCTURED_EVIDENCE_PENDING_REVIEW",
+    "unseen_assessment": "DRAFT_MOLD_PLAN_OPERATION_SELECTION_SEVEN_FIELD_CONTRACT",
+    "guided_structured_evidence": "diagnose_reasoning_evidence checks all seven declared fields in guided mode only",
+    "backend_trusted_scoring": "NOT_IMPLEMENTED",
+    "guided_practice_credit": false,
+    "historical_mastery_affected": false
+  },
+  "independent_verdicts": {
+    "standards_mapping": "PENDING",
+    "mathematics": "R3_APPROVED_AT_0A24EEA_R4_GUIDED_EVIDENCE_DELTA_PENDING_REVIEW",
+    "pedagogy": "PENDING_R4_STRUCTURED_EVIDENCE_REVIEW",
+    "muse_accessibility_and_assessment": "PENDING",
+    "assessment_backend": "NOT_IMPLEMENTED",
+    "engineering_release": "NOT_APPROVED",
+    "deployment": "NOT_DEPLOYED"
+  }
+}
