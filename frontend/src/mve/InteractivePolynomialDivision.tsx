@@ -3,11 +3,14 @@ import type { MathInteractionEvent } from "./interactions";
 import {
   CORRECT_COEFFICIENT_REASON,
   CORRECT_EXPONENT_REASON,
+  evaluateSocraticRepair,
   evaluateLearnerPolynomialAttempt,
   formatPolynomial,
   formatTerm,
   POLYNOMIAL_DIVISION_EXAMPLE,
   POLYNOMIAL_DIVISION_FRESH_EXIT,
+  POLYNOMIAL_DIVISION_REPAIR_EXIT,
+  socraticRepairFor,
   type LearnerReconstructionRecord,
   type LearnerTermRecord,
   type PolynomialDivisionReason,
@@ -48,6 +51,12 @@ function GuidedPolynomialDivision({ onMathEvent }: InteractivePolynomialDivision
   const [transferTerms, setTransferTerms] = useState<LearnerTermRecord[]>(() =>
     POLYNOMIAL_DIVISION_FRESH_EXIT.dividend.map(() => ({ ...BLANK_TERM })),
   );
+  const [repairResponse, setRepairResponse] = useState("");
+  const [repairTerms, setRepairTerms] = useState<LearnerTermRecord[]>(() =>
+    POLYNOMIAL_DIVISION_REPAIR_EXIT.dividend.map(() => ({ ...BLANK_TERM })),
+  );
+  const [activeDiagnosis, setActiveDiagnosis] = useState("");
+  const [scaffold, setScaffold] = useState<"MODEL" | "RESTORE" | "FADE">("MODEL");
   const [feedback, setFeedback] = useState("Enter a prediction, then produce the quotient and reconstruction before checking.");
   const attempt = {
     divided_term_indexes: divided,
@@ -81,8 +90,8 @@ function GuidedPolynomialDivision({ onMathEvent }: InteractivePolynomialDivision
     emit(next);
   }
 
-  function updateTerm(index: number, field: keyof LearnerTermRecord, value: string, target: "quotient" | "transfer") {
-    const setter = target === "quotient" ? setQuotientTerms : setTransferTerms;
+  function updateTerm(index: number, field: keyof LearnerTermRecord, value: string, target: "quotient" | "transfer" | "repair") {
+    const setter = target === "quotient" ? setQuotientTerms : target === "transfer" ? setTransferTerms : setRepairTerms;
     setter((records) => records.map((record, cursor) => cursor === index ? { ...record, [field]: value } : record));
     setFeedback("");
   }
@@ -113,6 +122,14 @@ function GuidedPolynomialDivision({ onMathEvent }: InteractivePolynomialDivision
 
   function check() {
     const result = evaluateLearnerPolynomialAttempt(attempt);
+    setActiveDiagnosis(result.correct ? "" : String(result.diagnosis));
+    setScaffold(result.correct ? "FADE" : "RESTORE");
+    setFeedback(result.feedback);
+  }
+
+  function checkRepair() {
+    const result = evaluateSocraticRepair(activeDiagnosis || String(diagnosis), repairResponse, repairTerms);
+    setScaffold(result.scaffold);
     setFeedback(result.feedback);
   }
 
@@ -126,8 +143,14 @@ function GuidedPolynomialDivision({ onMathEvent }: InteractivePolynomialDivision
     setReconstruction(POLYNOMIAL_DIVISION_EXAMPLE.dividend.map(() => ({ ...BLANK_RECONSTRUCTION })));
     setExplanation("");
     setTransferTerms(POLYNOMIAL_DIVISION_FRESH_EXIT.dividend.map(() => ({ ...BLANK_TERM })));
+    setRepairResponse("");
+    setRepairTerms(POLYNOMIAL_DIVISION_REPAIR_EXIT.dividend.map(() => ({ ...BLANK_TERM })));
+    setActiveDiagnosis("");
+    setScaffold("MODEL");
     setFeedback("Enter a prediction, then produce the quotient and reconstruction before checking.");
   }
+
+  const repair = activeDiagnosis ? socraticRepairFor(activeDiagnosis) : null;
 
   return <section aria-label="Guided polynomial division exploration" className="space-y-4 rounded-lg border p-4">
     <h3 className="font-semibold">Observe: divide every grouped term by the same nonzero monomial</h3>
@@ -174,6 +197,7 @@ function GuidedPolynomialDivision({ onMathEvent }: InteractivePolynomialDivision
 
     <h3 className="font-semibold">Explain: reconstruct without an answer list</h3>
     <p role="status" aria-live="polite" aria-atomic="true">Current diagnosis: {String(diagnosis).replaceAll("_", " ")}.</p>
+    <p aria-live="polite">Scaffold state: {scaffold === "FADE" ? "faded after verified repair" : scaffold === "RESTORE" ? "restored for targeted repair" : "modeled guidance"}.</p>
     <div className="grid gap-3 md:grid-cols-2" aria-label="Multiplication reconstruction">
       {POLYNOMIAL_DIVISION_EXAMPLE.dividend.map((_term, index) => (
         <fieldset key={index} className="rounded border p-3">
@@ -199,6 +223,26 @@ function GuidedPolynomialDivision({ onMathEvent }: InteractivePolynomialDivision
           onChange={(field, value) => updateTerm(index, field, value, "transfer")} />
       ))}
     </div>
+
+    {repair && <section aria-label="Socratic polynomial division repair" className="space-y-3 rounded border p-3">
+      <h3 className="font-semibold">Diagnose and Repair</h3>
+      <p>{repair.question}</p>
+      <p className="text-sm">Your repair answer must include: {repair.expected_evidence.join(", ")}.</p>
+      <label className="block">
+        Repair response
+        <textarea className="mt-1 block w-full rounded border p-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          value={repairResponse} onChange={(event) => setRepairResponse(event.target.value)}
+          aria-label="Socratic repair response" rows={2} />
+      </label>
+      <p>Different repair exit: ({formatPolynomial(POLYNOMIAL_DIVISION_REPAIR_EXIT.dividend)}) / {formatTerm(POLYNOMIAL_DIVISION_REPAIR_EXIT.divisor)}</p>
+      <div className="grid gap-3 md:grid-cols-2">
+        {POLYNOMIAL_DIVISION_REPAIR_EXIT.dividend.map((_term, index) => (
+          <TermInputs key={index} id={`${id}-r-${index}`} label={`Repair quotient term ${index + 1}`} value={repairTerms[index]}
+            onChange={(field, value) => updateTerm(index, field, value, "repair")} />
+        ))}
+      </div>
+      <button type="button" className={CONTROL} onClick={checkRepair}>Check repair exit</button>
+    </section>}
 
     <h3 className="font-semibold">Practice</h3>
     <div className="flex flex-wrap gap-2">

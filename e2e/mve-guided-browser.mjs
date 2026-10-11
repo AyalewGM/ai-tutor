@@ -86,12 +86,12 @@ createRoot(document.getElementById('root')!).render(<Harness />);`);
     ['Fresh quotient term 2 coefficient', '5'],
     ['Fresh quotient term 2 x exponent', '-2'],
     ['Fresh quotient term 2 y exponent', '1'],
-  ]) await polynomial.getByLabel(label, { exact: true }).fill(value);
+  ]) await polynomial.getByLabel(label).fill(value);
   await polynomial.getByLabel('Dividend coefficient divided by divisor coefficient').check();
   await polynomial.getByLabel('Dividend exponent minus divisor exponent').check();
   await polynomial.getByLabel('x not equal to 0').check();
   await polynomial.getByLabel('y not equal to 0').check();
-  await polynomial.getByLabel('Explanation of polynomial division reasoning').fill('Dividing like bases subtracts divisor exponents and keeps original divisor restrictions.');
+  await polynomial.getByLabel('Explanation of polynomial division reasoning').fill('Multiply to reconstruct the dividend, subtract exponents, and keep original nonzero restrictions.');
   await polynomial.getByRole('button', { name: 'Check polynomial division' }).click();
   assert.ok((await polynomial.getByRole('status').last().textContent()).startsWith('Correct'));
   const balance = page.getByRole('region', { name: 'Guided equation balance exploration' });

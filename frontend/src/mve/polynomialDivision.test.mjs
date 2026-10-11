@@ -71,21 +71,38 @@ test('full learner attempt requires produced quotient, reconstruction, explanati
       { product_coefficient: '6', product_x_exponent: '3', product_y_exponent: '2' },
       { product_coefficient: '-4', product_x_exponent: '2', product_y_exponent: '1' },
     ],
-    explanation: 'Dividing like bases subtracts the divisor exponent from each dividend exponent, and cancelled divisor variables cannot be zero.',
+    explanation: 'Multiply to reconstruct the dividend, subtract exponents, and keep original nonzero restrictions.',
     transfer_terms: [
       { coefficient: '3', x_exponent: '-1', y_exponent: '0' },
       { coefficient: '5', x_exponent: '-2', y_exponent: '1' },
     ],
   };
   assert.equal(math.evaluateLearnerPolynomialAttempt(attempt).correct, true);
-  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, prediction: '' }).diagnosis, 'POLY.DIV.PREDICTION_MISSING');
+  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, prediction: 'I think this is easy.' }).diagnosis, 'POLY.DIV.PREDICTION_REASONING');
   assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, quotient_terms: [{ coefficient: '3', x_exponent: '2', y_exponent: '1' }] }).diagnosis, 'POLY.DIV.QUOTIENT_RECORD');
   assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, reconstruction: [{ product_coefficient: '6', product_x_exponent: '3', product_y_exponent: '2' }] }).diagnosis, 'POLY.DIV.RECONSTRUCTION_RECORD');
-  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, explanation: '' }).diagnosis, 'POLY.DIV.EXPLANATION_MISSING');
+  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, explanation: 'Looks correct to me.' }).diagnosis, 'POLY.DIV.EXPLANATION_REASONING');
   assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, transfer_terms: [
     { coefficient: '3', x_exponent: '1', y_exponent: '0' },
     { coefficient: '5', x_exponent: '2', y_exponent: '1' },
   ] }).diagnosis, 'POLY.DIV.FRESH_EXIT_UNVERIFIED');
+});
+
+test('socratic repair requires misconception evidence and a different repair exit', () => {
+  const repairTerms = [
+    { coefficient: '-3', x_exponent: '2', y_exponent: '0' },
+    { coefficient: '5', x_exponent: '0', y_exponent: '2' },
+  ];
+  const weak = math.evaluateSocraticRepair('POLY.DIV.ADD_EXPONENTS', 'I fixed it.', repairTerms);
+  assert.equal(weak.correct, false);
+  assert.equal(weak.scaffold, 'RESTORE');
+  const repaired = math.evaluateSocraticRepair(
+    'POLY.DIV.ADD_EXPONENTS',
+    'Cancel matching factors, then subtract the divisor exponent.',
+    repairTerms,
+  );
+  assert.equal(repaired.correct, true);
+  assert.equal(repaired.scaffold, 'FADE');
 });
 
 test('semantic event validation rejects PII, extra fields and impossible states', () => {
@@ -116,6 +133,7 @@ test('guided component renders full sequence and fails closed in assessment', ()
     'Multiplication reconstruction',
     'Prediction before quotient reveal',
     'Fresh quotient term 1',
+    'Scaffold state',
     'x not equal to 0',
     'aria-live="polite"',
     'focus-visible:outline',
@@ -148,7 +166,7 @@ test('handlers emit bounded events, diagnose repairs and reset', () => {
   buttons().filter(n => typeof n.props['aria-pressed'] === 'boolean')[1].props.onClick();
   assert.equal(emitted.at(-1).divided_terms, 2);
   assert.equal(events.isMathInteractionEvent(emitted.at(-1)), true);
-  nodes(render()).find(n => n.props['aria-label'] === 'Prediction before quotient reveal').props.onChange({ target: { value: 'Coefficients divide and exponents subtract.' } });
+  nodes(render()).find(n => n.props['aria-label'] === 'Prediction before quotient reveal').props.onChange({ target: { value: 'Coefficients divide, exponents subtract, and restrictions keep variables nonzero.' } });
   for (const [label, value] of [
     ['Quotient term 1 coefficient', '3'],
     ['Quotient term 1 x exponent', '2'],
@@ -179,7 +197,7 @@ test('handlers emit bounded events, diagnose repairs and reset', () => {
     ['Reconstruction product 2 x exponent', '2'],
     ['Reconstruction product 2 y exponent', '1'],
   ]) nodes(render()).find(n => n.props['aria-label'] === label).props.onChange({ target: { value } });
-  nodes(render()).find(n => n.props['aria-label'] === 'Explanation of polynomial division reasoning').props.onChange({ target: { value: 'Dividing like bases subtracts divisor exponents and keeps original divisor restrictions.' } });
+  nodes(render()).find(n => n.props['aria-label'] === 'Explanation of polynomial division reasoning').props.onChange({ target: { value: 'Multiply to reconstruct the dividend, subtract exponents, and keep original nonzero restrictions.' } });
   buttons().find(n => n.props.children === 'Check polynomial division').props.onClick();
   assert.match(nodes(render()).find(n => n.props.id === 'poly-feedback').props.children, /^Correct/);
   buttons().find(n => n.props.children === 'Reset guided attempt').props.onClick();
