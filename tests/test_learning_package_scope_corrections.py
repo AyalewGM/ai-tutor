@@ -43,3 +43,22 @@ def test_system_cardinality_and_equation_equivalence_evidence():
     for role in ("ZERO", "ONE", "INFINITE"):
         assert items[role]["hints_allowed"] is False
         assert items[role]["teacher_oracle_visibility"] == "SERVER_ONLY"
+
+
+def test_signed_integer_scope_matches_addition_only_runtime():
+    p = _package("learning-packages-wave3", "W3-G7-SIGNED-NUMBERS")
+    assert p["canonical_identity"] == "REUSE_EXISTING_MATH.INT.ADD"
+    assert p["runtime_activation"] is False
+    assert p["mastery_writes"] is False
+    assert p["assessment_scope_evidence"]["exclusions"] == [
+        "integer subtraction", "integer multiplication", "integer division"
+    ]
+    assert len(p["independent_assessment"]) >= 3
+    assert all(
+        item["operation_family"] == "MATH.INT.ADD"
+        and item["hints_allowed"] is False
+        for item in p["independent_assessment"]
+    )
+    assert -8 + 3 == -5
+    assert -6 + (-4) == -10
+    assert -15 + 38 == 23
