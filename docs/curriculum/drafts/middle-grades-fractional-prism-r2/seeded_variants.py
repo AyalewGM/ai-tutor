@@ -55,6 +55,7 @@ class PrismVariant:
     target: str
     expected_operation: str
     exact_answer: Fraction
+    expected_unit_family: str
     expected_unit_power: int
     decomposition: tuple[Fraction, Fraction] | None = None
 
@@ -99,6 +100,7 @@ def _item(
     width: Fraction,
     height: Fraction,
     target: str = "volume",
+    unit_family: str = "unit",
     decomposition: tuple[Fraction, Fraction] | None = None,
 ) -> PrismVariant:
     base_area = length * width
@@ -119,6 +121,7 @@ def _item(
         target=target,
         expected_operation=operation,
         exact_answer=answer,
+        expected_unit_family=unit_family,
         expected_unit_power=3 if target == "volume" else 1,
         decomposition=decomposition,
     )
@@ -133,7 +136,9 @@ def generate(seed: int, mode: str) -> PrismVariant:
         length, width, height = _proper(rng), Fraction(rng.randint(2, 5)), _proper(rng)
         prompt = (
             f"A prism measures {_fmt(length)} by {_fmt(width)} by {_fmt(height)} unit. "
-            "Partition a unit cube to match the edge fractions, describe one layer, and find the exact volume."
+            f"Arrange {_fmt(width)} unit cubes in a row along the whole-number edge. In every cube, "
+            "repeat the same partitions for the two fractional edges, describe the fractional cells across "
+            "the full row and layers, and find the exact volume."
         )
         return _item(
             seed=seed,
@@ -150,8 +155,8 @@ def generate(seed: int, mode: str) -> PrismVariant:
         length, width, height = _mixed(rng), _proper(rng), _mixed(rng)
         prompt = (
             f"A rectangular storage insert is {_fmt(length)} cm by {_fmt(width)} cm by "
-            f"{_fmt(height)} cm. Predict whether its volume is greater or less than the base area, "
-            "then calculate the exact volume with units."
+            f"{_fmt(height)} cm. Compare its volume with the volume of a reference prism having the same "
+            "base and height 1 cm; predict which volume is greater, then calculate the exact insert volume."
         )
         return _item(
             seed=seed,
@@ -162,6 +167,7 @@ def generate(seed: int, mode: str) -> PrismVariant:
             length=length,
             width=width,
             height=height,
+            unit_family="cm",
         )
 
     if structure == "MISSING_HEIGHT":
@@ -181,6 +187,7 @@ def generate(seed: int, mode: str) -> PrismVariant:
             width=width,
             height=height,
             target="height",
+            unit_family="m",
         )
 
     if structure == "DECOMPOSE_MIXED_EDGE":
@@ -202,6 +209,7 @@ def generate(seed: int, mode: str) -> PrismVariant:
             length=length,
             width=width,
             height=height,
+            unit_family="unit",
             decomposition=(whole, fractional),
         )
 
@@ -229,6 +237,7 @@ def generate(seed: int, mode: str) -> PrismVariant:
         width=width,
         height=height,
         target=target,
+        unit_family="dm",
     )
 
 
@@ -236,6 +245,7 @@ def diagnose_response(
     item: PrismVariant,
     operation: str,
     exact_answer: Fraction | int,
+    unit_family: str,
     unit_power: int,
 ) -> str:
     """Route captured response evidence without awarding mastery."""
@@ -246,6 +256,8 @@ def diagnose_response(
         raise TypeError("operation must be a non-empty string")
     if isinstance(exact_answer, bool) or not isinstance(exact_answer, (Fraction, int)):
         raise TypeError("exact_answer must be an integer or Fraction")
+    if not isinstance(unit_family, str) or not unit_family:
+        raise TypeError("unit_family must be a non-empty string")
     if isinstance(unit_power, bool) or not isinstance(unit_power, int):
         raise TypeError("unit_power must be an integer")
     if unit_power not in {1, 2, 3}:
@@ -253,7 +265,9 @@ def diagnose_response(
     answer = Fraction(exact_answer)
     if operation != item.expected_operation:
         return "OPERATION_SELECTION_ERROR"
-    if answer == item.exact_answer and unit_power != item.expected_unit_power:
+    if answer == item.exact_answer and (
+        unit_family != item.expected_unit_family or unit_power != item.expected_unit_power
+    ):
         return "UNIT_DIMENSION_ERROR"
     if item.target == "volume":
         if answer == item.base_area:
@@ -268,6 +282,10 @@ def diagnose_response(
             return "SUBTRACTED_BASE_FROM_VOLUME"
         if answer == item.volume * item.base_area:
             return "MULTIPLIED_INSTEAD_OF_DIVIDED"
-    if answer == item.exact_answer and unit_power == item.expected_unit_power:
+    if (
+        answer == item.exact_answer
+        and unit_family == item.expected_unit_family
+        and unit_power == item.expected_unit_power
+    ):
         return "CORRECT_PRACTICE_ONLY"
     return "VOLUME_RELATION_NOT_ESTABLISHED"
