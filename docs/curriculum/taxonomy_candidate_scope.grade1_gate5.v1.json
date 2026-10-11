@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "review_status": "DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
-  "revision": "2026-10-11-grade1-gate5-r2",
+  "revision": "2026-10-11-grade1-gate5-r3",
   "authority": "NONE_NOT_FOR_RUNTIME",
   "source_review": {
     "merged_foundation": "main@13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
@@ -9,13 +9,15 @@
     "architecture_decomposition": "Issue #282 comment 6103218496",
     "architecture_gate5": "Issue #282 comment 6103246330",
     "independent_geometry_review": "Issue #293 comment 6104081399",
-    "architecture_geometry_split": "Issue #282 comment 6104119915"
+    "architecture_geometry_split": "Issue #282 comment 6104119915",
+    "independent_geometry_review_r2": "PR #335 comment 6104939419",
+    "architecture_hierarchy_response_modes": "Issue #282 comment 6104942514"
   },
   "notes": [
-    "Curriculum Content preserved the seven independently approved non-geometry DRAFT cards unchanged and revised only the geometry group after Independent Mathematical Review and Architecture required a 2-D/3-D split.",
+    "Curriculum Content preserved all seven independently approved non-geometry cards and the three r2-approved geometry cards unchanged; r3 revises only the three geometry cards that received REQUEST CHANGES.",
     "The three r1 combined geometry proposals are superseded DRAFT proposals, not aliases or authority; their Git history remains in r1.",
     "Six replacement geometry labels were collision-audited against the two authoritative candidate sources on main at their pinned blob SHAs; no exact code was found.",
-    "Rectangle, square and inclusive trapezoid conventions are explicit; 3-D construction requires observable production; 2-D composition uses an unambiguous diagonal-half rectangle arrangement.",
+    "Inclusive hierarchies are explicit: square ⊂ rectangle ⊂ trapezoid and cube ⊂ rectangular prism. Classification and construction prompts declare MOST_SPECIFIC, ALL_VALID_LISTED or MEMBERSHIP scoring.",
     "Prerequisite concepts are descriptive, not approved canonical dependency edges.",
     "No card changes canonical UUIDs, aliases, generators, assessments, learner evidence, mastery or standards coverage."
   ],
@@ -536,7 +538,10 @@
           "square": "rectangle with four equal sides",
           "trapezoid": "quadrilateral with at least one pair of parallel sides"
         },
-        "note": "This is a bounded mathematical review universe, not a standards-coverage claim."
+        "note": "This is a bounded mathematical review universe, not a standards-coverage claim.",
+        "classification_hierarchy": [
+          "square ⊂ rectangle ⊂ trapezoid"
+        ]
       },
       "inclusions": [
         "Identify a listed 2-D shape from defining attributes rather than color, size or orientation",
@@ -571,15 +576,29 @@
           "input": "A tilted quadrilateral has four right angles and four equal sides. Give every valid listed classification.",
           "answer": [
             "square",
-            "rectangle"
+            "rectangle",
+            "trapezoid"
           ],
-          "dimension": "quadrilateral_hierarchy"
+          "dimension": "quadrilateral_hierarchy",
+          "response_mode": "ALL_VALID_LISTED"
         },
         {
           "input": "Under Mihur's inclusive convention, does a square also satisfy the trapezoid definition?",
           "answer": "yes",
           "rationale": "A square has at least one pair of parallel sides.",
-          "dimension": "trapezoid_convention"
+          "dimension": "trapezoid_convention",
+          "response_mode": "MEMBERSHIP"
+        },
+        {
+          "input": "Name the most specific listed classification for a tilted quadrilateral with four right angles and four equal sides.",
+          "answer": "square",
+          "valid_supertypes": [
+            "rectangle",
+            "trapezoid"
+          ],
+          "scoring": "The supertypes are mathematically true, but either one alone is insufficient for this MOST_SPECIFIC prompt.",
+          "response_mode": "MOST_SPECIFIC",
+          "dimension": "most_specific_classification"
         },
         {
           "input": "A blue rectangle is rotated. Which facts are non-defining?",
@@ -614,19 +633,36 @@
           },
           {
             "dimension": "classification_hierarchy",
-            "must_accept_all_valid_labels": true
+            "must_accept_all_valid_labels": true,
+            "hierarchy": "square ⊂ rectangle ⊂ trapezoid",
+            "true_supertype_cannot_be_scored_false": true
           },
           {
             "dimension": "defining_vs_nondefining",
             "include_orientation": true
+          },
+          {
+            "dimension": "response_mode_coverage",
+            "required_modes": [
+              "MOST_SPECIFIC",
+              "ALL_VALID_LISTED",
+              "MEMBERSHIP"
+            ]
           }
         ],
         "prohibitions": [
           "No 3-D mastery inference",
           "No construction mastery inference",
           "No composition mastery inference",
-          "No invalid distractor formed from a mathematically valid label"
+          "No invalid distractor formed from a mathematically valid label",
+          "No supertype-only response as evidence of a requested subtype",
+          "No false mark for a mathematically true listed supertype"
         ]
+      },
+      "response_modes": {
+        "MOST_SPECIFIC": "Require the most specific valid listed classification requested by the prompt. A true supertype is not false, but a supertype-only response does not evidence the requested subtype.",
+        "ALL_VALID_LISTED": "Require the exact set of every valid label in the bounded listed universe under the declared inclusive hierarchy.",
+        "MEMBERSHIP": "Judge whether a supplied classification applies. Every true subtype and supertype membership is scored true."
       }
     },
     {
@@ -663,13 +699,22 @@
           "face": "flat 2-D boundary of a solid",
           "curved_surface": "non-flat boundary of a solid"
         },
-        "note": "This is a bounded mathematical review universe, not a standards-coverage claim."
+        "note": "This is a bounded mathematical review universe, not a standards-coverage claim.",
+        "classification_conventions": {
+          "rectangular_prism": "solid with six rectangular flat faces, treating a square as a rectangle",
+          "cube": "rectangular prism with six congruent square flat faces"
+        },
+        "classification_hierarchy": [
+          "cube ⊂ rectangular prism"
+        ]
       },
       "inclusions": [
         "Identify a listed solid from defining attributes rather than color, size or orientation",
         "Use face only for a flat 2-D boundary and use curved surface separately",
         "Classify varied valid representations when defining faces, curved surfaces and vertices are unchanged",
-        "Distinguish a solid from the 2-D shapes visible on its flat faces"
+        "Distinguish a solid from the 2-D shapes visible on its flat faces",
+        "Use the inclusive solid convention: every cube is a rectangular prism because each square face is a rectangle",
+        "Apply MOST_SPECIFIC, ALL_VALID_LISTED or MEMBERSHIP scoring exactly as the prompt declares"
       ],
       "exclusions": [
         "2-D figure classification",
@@ -702,6 +747,32 @@
           "dimension": "orientation_invariance"
         },
         {
+          "input": "A solid has six congruent square flat faces. Give every valid listed classification.",
+          "answer": [
+            "cube",
+            "rectangular prism"
+          ],
+          "response_mode": "ALL_VALID_LISTED",
+          "dimension": "solid_classification_hierarchy"
+        },
+        {
+          "input": "Is every cube also a rectangular prism under Mihur's inclusive convention?",
+          "answer": "yes",
+          "rationale": "Every square face is a rectangle, so a cube satisfies the rectangular-prism definition.",
+          "response_mode": "MEMBERSHIP",
+          "dimension": "solid_hierarchy_membership"
+        },
+        {
+          "input": "Name the most specific listed classification for a solid with six congruent square flat faces.",
+          "answer": "cube",
+          "valid_supertypes": [
+            "rectangular prism"
+          ],
+          "scoring": "Rectangular prism is true but insufficient for this MOST_SPECIFIC prompt.",
+          "response_mode": "MOST_SPECIFIC",
+          "dimension": "solid_most_specific_classification"
+        },
+        {
           "input": "A displayed square is one face of a cube. Is the square itself a cube?",
           "answer": "no",
           "dimension": "face_versus_solid"
@@ -711,10 +782,12 @@
         "Calls every boundary a face",
         "Counts a curved surface as a flat face",
         "Treats rotation as changing the solid",
-        "Names the 2-D face as the whole solid"
+        "Names the 2-D face as the whole solid",
+        "Rejects rectangular prism as a valid supertype of cube",
+        "Uses rectangular prism alone when a MOST_SPECIFIC prompt requires cube"
       ],
       "assessment_evidence_matrix": {
-        "rule": "3-D attribute evidence is independent of 2-D evidence and of construction/composition; flat faces and curved surfaces are scored with distinct vocabulary.",
+        "rule": "3-D attribute evidence is independent of 2-D evidence and of construction/composition; flat faces and curved surfaces are distinct, and classification uses cube ⊂ rectangular prism with an explicit response mode.",
         "required": [
           {
             "dimension": "flat_faced_solids",
@@ -735,13 +808,33 @@
           {
             "dimension": "solid_versus_face",
             "must_distinguish": true
+          },
+          {
+            "dimension": "classification_hierarchy",
+            "hierarchy": "cube ⊂ rectangular prism",
+            "true_supertype_cannot_be_scored_false": true
+          },
+          {
+            "dimension": "response_mode_coverage",
+            "required_modes": [
+              "MOST_SPECIFIC",
+              "ALL_VALID_LISTED",
+              "MEMBERSHIP"
+            ]
           }
         ],
         "prohibitions": [
           "No 2-D mastery inference",
           "No construction mastery inference",
-          "No composition mastery inference"
+          "No composition mastery inference",
+          "No supertype-only response as evidence of a requested cube subtype",
+          "No false mark for rectangular prism when the classified solid is a cube"
         ]
+      },
+      "response_modes": {
+        "MOST_SPECIFIC": "Require the most specific valid listed classification requested by the prompt. A true supertype is not false, but a supertype-only response does not evidence the requested subtype.",
+        "ALL_VALID_LISTED": "Require the exact set of every valid label in the bounded listed universe under the declared inclusive hierarchy.",
+        "MEMBERSHIP": "Judge whether a supplied classification applies. Every true subtype and supertype membership is scored true."
       }
     },
     {
@@ -778,7 +871,10 @@
           "rectangle": "quadrilateral with four right angles",
           "square": "rectangle with four equal sides",
           "trapezoid": "quadrilateral with at least one pair of parallel sides"
-        }
+        },
+        "classification_hierarchy": [
+          "square ⊂ rectangle ⊂ trapezoid"
+        ]
       },
       "inclusions": [
         "Draw or assemble a listed 2-D figure satisfying every supplied defining attribute",
@@ -813,10 +909,27 @@
             "construction": "any valid square",
             "valid_names": [
               "square",
-              "rectangle"
+              "rectangle",
+              "trapezoid"
             ]
           },
-          "dimension": "quadrilateral_construction"
+          "dimension": "quadrilateral_construction",
+          "response_mode": "ALL_VALID_LISTED",
+          "scoring": "Construction evidence must satisfy the square attributes; naming evidence must supply the exact listed hierarchy for this ALL_VALID_LISTED prompt."
+        },
+        {
+          "input": "Construct a quadrilateral with four right angles and four equal sides, then give the most specific listed name.",
+          "answer": {
+            "construction": "any valid square",
+            "most_specific_name": "square",
+            "valid_supertypes": [
+              "rectangle",
+              "trapezoid"
+            ]
+          },
+          "scoring": "A valid construction plus square is required; a true supertype alone does not evidence the requested subtype name.",
+          "response_mode": "MOST_SPECIFIC",
+          "dimension": "construction_most_specific_name"
         },
         {
           "input": "Draw a trapezoid under the inclusive convention and mark a pair of parallel sides.",
@@ -838,7 +951,7 @@
         "Rejects a valid square because the prompt says rectangle"
       ],
       "assessment_evidence_matrix": {
-        "rule": "Observable 2-D production and verification are required; recognition does not count. Evidence cannot credit the 3-D construction atom.",
+        "rule": "Observable 2-D production and verification are required; recognition does not count. Naming uses square ⊂ rectangle ⊂ trapezoid and the declared response mode. Evidence cannot credit the 3-D construction atom.",
         "required": [
           {
             "dimension": "drawing_or_assembly",
@@ -855,14 +968,35 @@
           {
             "dimension": "self_verification",
             "must_reference_all_supplied_attributes": true
+          },
+          {
+            "dimension": "classification_hierarchy",
+            "hierarchy": "square ⊂ rectangle ⊂ trapezoid",
+            "true_supertype_cannot_be_scored_false": true,
+            "supertype_only_cannot_evidence_requested_subtype": true
+          },
+          {
+            "dimension": "response_mode_coverage",
+            "required_modes": [
+              "MOST_SPECIFIC",
+              "ALL_VALID_LISTED",
+              "MEMBERSHIP"
+            ]
           }
         ],
         "prohibitions": [
           "No recognition-only evidence",
           "No 3-D construction inference",
           "No attribute-classification mastery inference",
-          "No composition mastery inference"
+          "No composition mastery inference",
+          "No false mark for a mathematically true listed supertype",
+          "No supertype-only naming response as evidence of a requested square subtype"
         ]
+      },
+      "response_modes": {
+        "MOST_SPECIFIC": "Require the most specific valid listed classification requested by the prompt. A true supertype is not false, but a supertype-only response does not evidence the requested subtype.",
+        "ALL_VALID_LISTED": "Require the exact set of every valid label in the bounded listed universe under the declared inclusive hierarchy.",
+        "MEMBERSHIP": "Judge whether a supplied classification applies. Every true subtype and supertype membership is scored true."
       }
     },
     {
@@ -1451,7 +1585,7 @@
     },
     {
       "revision": "2026-10-11-grade1-gate5-r2",
-      "disposition": "CURRENT_DRAFT_PENDING_LIMITED_INDEPENDENT_GEOMETRY_REVIEW",
+      "disposition": "SUPERSEDED_BY_NARROW_R3_SCORING_HIERARCHY_CORRECTION",
       "replacement_geometry_codes": [
         "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_2D",
         "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_3D",
@@ -1460,6 +1594,33 @@
         "MATH.GEOMETRY.SHAPE.COMPOSE_2D",
         "MATH.GEOMETRY.SHAPE.COMPOSE_3D"
       ]
+    },
+    {
+      "revision": "2026-10-11-grade1-gate5-r3",
+      "disposition": "CURRENT_DRAFT_PENDING_LIMITED_REVIEW_OF_THREE_CORRECTED_CARDS",
+      "unchanged_independently_approved_cards": 10,
+      "corrected_codes": [
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_2D",
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_3D",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_2D"
+      ],
+      "architecture_contract": {
+        "inclusive_hierarchies": [
+          "square ⊂ rectangle ⊂ trapezoid",
+          "cube ⊂ rectangular prism"
+        ],
+        "response_modes": [
+          "MOST_SPECIFIC",
+          "ALL_VALID_LISTED",
+          "MEMBERSHIP"
+        ],
+        "no_false_supertype": true,
+        "no_supertype_substitution_for_requested_subtype": true
+      },
+      "review_evidence": {
+        "independent_request_changes": "PR #335 comment 6104939419",
+        "architecture_decision": "Issue #282 comment 6104942514"
+      }
     }
   ]
 }
