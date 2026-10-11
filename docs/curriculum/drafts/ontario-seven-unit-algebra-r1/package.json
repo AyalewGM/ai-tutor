@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "ALG-EQUATION-REASONING-R1",
+  "revision": "issue-337-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "objective": "Solve, justify, compare and verify exact linear equations using equality-preserving operations, including negative coefficients, rational solutions, distribution and variables on both sides.",
+  "learning_sequence": [
+    {
+      "phase": "OBSERVE",
+      "representations": ["CONCRETE", "VISUAL"],
+      "learner_action": "Inspect a balanced model and identify which quantities and variable groups appear on each side without solving."
+    },
+    {
+      "phase": "PREDICT",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "learner_action": "Predict whether the solution is positive, negative, integral or fractional and name an equality-preserving first move."
+    },
+    {
+      "phase": "MANIPULATE",
+      "representations": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+      "learner_action": "Apply the same operation to both sides, expand every term in a bracket, and compare the updated balance and equation."
+    },
+    {
+      "phase": "EXPLAIN",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "learner_action": "Explain why each transformation preserves the solution set instead of describing a term as moving across the equals sign."
+    },
+    {
+      "phase": "PRACTICE",
+      "representations": ["SYMBOLIC"],
+      "learner_action": "Solve fresh two-step, negative-distribution and variables-both-sides variants while keeping rational answers exact."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "learner_action": "Enter one response-evidence branch, repair the specific transformation, and pass a different exit equation before scaffolds fade."
+    },
+    {
+      "phase": "TRANSFER",
+      "representations": ["CONCRETE", "SYMBOLIC"],
+      "learner_action": "Construct and solve an original perimeter or rate equation, attach units, and validate every derived quantity in context."
+    },
+    {
+      "phase": "VERIFY",
+      "representations": ["SYMBOLIC"],
+      "learner_action": "Complete a hidden fresh variant without guided models or hints, then verify the complete exact solution by substitution."
+    }
+  ],
+  "diagnostic_router": [
+    {
+      "misconception_id": "EQ.OP.ONE_SIDE",
+      "observed_evidence": "Learner changes only one side of an equation after naming an inverse operation.",
+      "probe": "Ask the learner to predict whether unequal pan changes can preserve balance.",
+      "socratic_path": ["What operation was applied on the left?", "Where is the matching operation on the right?", "What equality results after applying it to both sides?"],
+      "repair": "Replay one operation on a two-pan balance and write both transformed sides.",
+      "exit_check": "Transform 4x-7=13 by adding 7 to both sides and justify the preserved equality."
+    },
+    {
+      "misconception_id": "DIST.PARTIAL",
+      "observed_evidence": "Learner multiplies the outside factor by the variable term but not the constant term.",
+      "probe": "Compare a rectangle partition with the incomplete symbolic expansion.",
+      "socratic_path": ["Which terms lie inside the bracket?", "Which regions does the outside factor scale?", "What is the product for each term?"],
+      "repair": "Pair every inner term with the outside factor before combining anything.",
+      "exit_check": "Expand -3(p-5) and explain the sign of both products."
+    },
+    {
+      "misconception_id": "DIST.NEGATIVE_DROPPED",
+      "observed_evidence": "Learner distributes a negative factor but makes the constant product keep its original sign.",
+      "probe": "Evaluate both the original and expanded expressions at one safe value.",
+      "socratic_path": ["What is the sign of the outside factor?", "What is the sign of each inner term?", "Do both products match the substitution check?"],
+      "repair": "Use signed factor pairs for each product before rewriting the expression.",
+      "exit_check": "Expand -2(x+6), then verify at x=1."
+    },
+    {
+      "misconception_id": "EQ.DENOMINATOR_IGNORED",
+      "observed_evidence": "Learner treats x/5 as x or multiplies only one term when clearing a denominator.",
+      "probe": "Compare one whole x-group with five equal x/5 groups.",
+      "socratic_path": ["What operation undoes division by 5?", "Which side must receive that operation too?", "Does substitution reproduce the original fraction?"],
+      "repair": "Recompose five equal fifth-groups, then apply multiplication to both sides.",
+      "exit_check": "Solve p/4+3=-2 and check the exact result."
+    },
+    {
+      "misconception_id": "EQ.FALSE_EQUIVALENCE",
+      "observed_evidence": "Learner selects an equation where a scale factor was applied to only some terms or one side.",
+      "probe": "Substitute the original exact solution into the proposed equation.",
+      "socratic_path": ["Which single operation generated the new left side?", "Was it applied to every term?", "Was it applied to the entire right side?"],
+      "repair": "Annotate each term with the common nonzero scale factor and reject unmatched transformations.",
+      "exit_check": "Create one equation equivalent to 3x-4=8 and one near-miss, then explain the difference."
+    }
+  ],
+  "independent_assessment_contract": {
+    "variant_namespace": "algebra-equation-reasoning-r1:independent",
+    "server_controlled_required": true,
+    "hints_allowed": false,
+    "worked_steps_visible_before_submission": false,
+    "guided_mve_visible": false,
+    "answer_in_public_payload": false,
+    "evidence_required": ["exact_solution", "substitution_left", "substitution_right", "transformation_justification"],
+    "guided_practice_credit": false,
+    "historical_mastery_mutation": false,
+    "status": "CONTENT_CONTRACT_ONLY_BACKEND_NOT_IMPLEMENTED"
+  },
+  "accessibility_contract": {
+    "keyboard_only": "Select an operation, apply it to both sides, expand terms, enter an exact fraction, compare equations and submit using native controls without dragging.",
+    "screen_reader_state": "Announce both equation sides before and after each transformation, the operation applied, whether equality is preserved, and exact substitution values.",
+    "nonvisual_equivalent": "A transformation table lists prior left/right sides, operation, resulting left/right sides and preservation status.",
+    "focus_recovery": "Rejected transformations preserve work and return focus to the first invalid operation or expression with a concise reason.",
+    "reduced_motion": "Use discrete before/after balance states; no motion is required to understand the transformation.",
+    "color_independence": true,
+    "independent_scaffolds": false
+  }
+}

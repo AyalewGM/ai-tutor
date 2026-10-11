@@ -1,0 +1,153 @@
+{
+  "schema_version": "1.0.0",
+  "milestone": "GitHub Issue #337",
+  "revision": "issue-337-traceability-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "source_policy": {
+    "access": "ABSTRACT_TOPIC_HANDOFF_ONLY",
+    "page_locator": "UNKNOWN_NOT_AVAILABLE_TO_AUTONOMOUS_AGENT",
+    "original_content_only": true,
+    "learner_links_to_sources": false
+  },
+  "standards_mapping": {
+    "official_source_url": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "publication_version": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "exact_expectation_ids": [],
+    "approval": "NONE"
+  },
+  "rows": [
+    {
+      "unit": "Build Your Skills",
+      "source_locator": "question type: signed one-step inverse operations; page UNKNOWN",
+      "task_structure": "solve and justify inverse operation",
+      "canonical_family": "MATH.EE.EQUATION.ONE",
+      "implementation_evidence": ["app/canonical_problem_families.py:MATH.EQ.ONE.ADD_DIRECT", "app/domains/algebra_functions.py:MATH.ALG.EQ.ONE.MULT"],
+      "generator_status": "PARTIAL",
+      "guided_mve_status": "PARTIAL_BALANCE_POSITIVE_ONLY",
+      "assessment_status": "PARTIAL_EXISTING_RUNTIME_NOT_ISSUE_337_ACCEPTED",
+      "decision": "EXTEND_EXISTING",
+      "gap": "Signed add/subtract/multiply/divide set and operation-specific diagnosis are not demonstrated as one accepted sequence."
+    },
+    {
+      "unit": "2.6C",
+      "source_locator": "question type: negative/fractional two-step equations; page UNKNOWN",
+      "task_structure": "predict, solve exactly, substitute-check",
+      "canonical_family": "MATH.EE.EQUATION.TWO",
+      "implementation_evidence": ["app/canonical_problem_families.py:MATH.EQ.TWO.DIRECT", "docs/curriculum/drafts/ontario-seven-unit-algebra-r1/seeded_equations.py:TWO_STEP_RATIONAL"],
+      "generator_status": "PARTIAL_DRAFT_R1",
+      "guided_mve_status": "PARTIAL_BALANCE_CANNOT_RENDER_NEGATIVE_OR_FRACTIONAL_PANS",
+      "assessment_status": "CONTENT_CONTRACT_ONLY",
+      "decision": "EXTEND_EXISTING",
+      "gap": "Runtime family skews to integer solutions; R1 adds draft exact rational variants but is not wired or independently accepted."
+    },
+    {
+      "unit": "2.7C",
+      "source_locator": "question type: distribution and variables both sides; page UNKNOWN",
+      "task_structure": "simplify each side, solve, justify, substitute-check",
+      "canonical_family": "MATH.EE.EQUATION.MULTISTEP",
+      "implementation_evidence": ["app/domains/algebra_functions.py:MATH.ALG.EQ.MULTISTEP.DISTRIBUTE", "app/domains/algebra_functions.py:MATH.ALG.EQ.MULTISTEP.BOTH_SIDES", "docs/curriculum/drafts/ontario-seven-unit-algebra-r1/seeded_equations.py"],
+      "generator_status": "PARTIAL_DRAFT_R1",
+      "guided_mve_status": "PARTIAL_DISTRIBUTIVE_COMPONENT_NOT_FULL_EQUATION_FLOW",
+      "assessment_status": "CONTENT_CONTRACT_ONLY",
+      "decision": "EXTEND_EXISTING",
+      "gap": "R1 adds negative distribution, exact rational solutions and equivalence comparison; contextual learner routing and trusted scoring remain absent."
+    },
+    {
+      "unit": "2.7C",
+      "source_locator": "question type: roots and equations in powers; page UNKNOWN",
+      "task_structure": "classify principal root versus complete solution set",
+      "canonical_family": "MATH.NS.ROOTS plus equation family; exact boundary pending Architecture",
+      "implementation_evidence": ["app/domains/advanced_number.py:MATH.ROOT.SQUARE", "app/domains/advanced_number.py:MATH.ROOT.CUBE", "app/services/stepwork.py"],
+      "generator_status": "PARTIAL",
+      "guided_mve_status": "ABSENT",
+      "assessment_status": "ABSENT_FOR_PLUS_MINUS_AND_NO_REAL_BRANCHES",
+      "decision": "EXTEND_EXISTING_PENDING_BOUNDARY_REVIEW",
+      "gap": "Existing root tasks do not establish equation solution multiplicity, surd solutions, radical-domain checks or no-real cases."
+    },
+    {
+      "unit": "2.7C",
+      "source_locator": "question type: perimeter/word-model transfer; page UNKNOWN",
+      "task_structure": "construct equation, solve, validate labels and units",
+      "canonical_family": "MATH.EE.EQUATION.MULTISTEP",
+      "implementation_evidence": ["app/domains/algebra_functions.py:MATH.ALG.EQ.WORD.TARGET", "tests/test_mth1w_curriculum.py"],
+      "generator_status": "PARTIAL",
+      "guided_mve_status": "ABSENT_FOR_LABEL_TO_PERIMETER_EQUATION",
+      "assessment_status": "PARTIAL",
+      "decision": "EXTEND_EXISTING",
+      "gap": "Existing word generator does not require constructing and validating every geometric label and the perimeter."
+    },
+    {
+      "unit": "2.9C",
+      "source_locator": "question type: monomial quotient and same-base exponent laws; page UNKNOWN",
+      "task_structure": "simplify, state restrictions, justify exponent subtraction",
+      "canonical_family": "MATH.EE.POLYNOMIAL_OPERATIONS (reuse candidate)",
+      "implementation_evidence": ["app/domains/advanced_algebra_highschool.py"],
+      "generator_status": "ABSENT_FOR_DIVISION",
+      "guided_mve_status": "ABSENT",
+      "assessment_status": "ABSENT",
+      "decision": "PROPOSED_GAP_PENDING_ARCHITECTURE",
+      "gap": "Add/subtract/multiply families exist; monomial division, zero-divisor guards, negative exponents and domain restrictions do not."
+    },
+    {
+      "unit": "2.9 Homework",
+      "source_locator": "question type: polynomial divided term-by-term by monomial and error analysis; page UNKNOWN",
+      "task_structure": "model distribution of division, simplify, diagnose near-miss",
+      "canonical_family": "MATH.EE.POLYNOMIAL_OPERATIONS (reuse candidate)",
+      "implementation_evidence": ["app/domains/advanced_algebra_highschool.py:MATH.POLY.ERROR.DISTRIBUTE"],
+      "generator_status": "ABSENT_FOR_DIVISION",
+      "guided_mve_status": "ABSENT_FOR_DIVISION_TILES",
+      "assessment_status": "ABSENT",
+      "decision": "PROPOSED_GAP_PENDING_ARCHITECTURE",
+      "gap": "Multiplication error analysis cannot be counted as polynomial-by-monomial division coverage."
+    },
+    {
+      "unit": "2.10 Homework",
+      "source_locator": "question type: power-of-power/product/quotient and requested-base equivalence; page UNKNOWN",
+      "task_structure": "construct, compare and justify equivalent powers",
+      "canonical_family": "MATH.NS.EXPONENTS (candidate existing family)",
+      "implementation_evidence": ["app/domains/advanced_number.py"],
+      "generator_status": "PARTIAL",
+      "guided_mve_status": "ABSENT",
+      "assessment_status": "PARTIAL_NOT_ISSUE_337_ACCEPTED",
+      "decision": "EXTEND_EXISTING",
+      "gap": "Current generators do not establish requested-base rewriting, explanation evidence or combined-law equivalence."
+    },
+    {
+      "unit": "2.10 Homework",
+      "source_locator": "question type: exponent geometry application; page UNKNOWN",
+      "task_structure": "model dimensions, compare areas/volumes, validate units",
+      "canonical_family": "MATH.GEO.PYTHAGOREAN and exponent families (reporting combination only)",
+      "implementation_evidence": ["app/domains/geometry_measurement.py"],
+      "generator_status": "PARTIAL",
+      "guided_mve_status": "PARTIAL_RIGHT_TRIANGLE_STATIC_VISUAL",
+      "assessment_status": "ABSENT_FOR_COMBINED_DIMENSIONAL_REASONING",
+      "decision": "EXTEND_EXISTING_WITHOUT_COMPOSITE_MASTERY",
+      "gap": "Separate Pythagorean and exponent calculations exist; dimensional cube and area reasoning are not an accepted integrated transfer."
+    },
+    {
+      "unit": "2.11 Homework",
+      "source_locator": "question type: ordinary to/from normalized scientific notation; page UNKNOWN",
+      "task_structure": "convert, normalize, explain exponent direction",
+      "canonical_family": "MATH.NS.SCIENTIFIC_NOTATION",
+      "implementation_evidence": ["app/domains/advanced_number.py:MATH.SCI.CONVERT"],
+      "generator_status": "PARTIAL",
+      "guided_mve_status": "ABSENT",
+      "assessment_status": "PARTIAL_NOT_ISSUE_337_ACCEPTED",
+      "decision": "EXTEND_EXISTING",
+      "gap": "Current conversion generator covers positive whole values only; small values, negative exponents, reverse conversion and non-normalized repair are absent."
+    },
+    {
+      "unit": "2.11 Homework",
+      "source_locator": "question type: scientific-notation multiplication/division and accepted rounding; page UNKNOWN",
+      "task_structure": "operate, normalize, document accepted form",
+      "canonical_family": "MATH.NS.SCIENTIFIC_NOTATION",
+      "implementation_evidence": ["app/domains/advanced_number.py:MATH.SCI.MULTIPLY"],
+      "generator_status": "PARTIAL",
+      "guided_mve_status": "ABSENT",
+      "assessment_status": "ABSENT_FOR_DIVISION_AND_ROUNDING_CONTRACT",
+      "decision": "EXTEND_EXISTING",
+      "gap": "Multiplication exists; division, exact/rounded acceptance policy and explicit normalization repair are absent."
+    }
+  ]
+}

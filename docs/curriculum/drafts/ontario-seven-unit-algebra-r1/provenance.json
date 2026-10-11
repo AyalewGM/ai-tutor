@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "MIHUR_CONTENT_PROVENANCE",
+  "package_id": "ALG-EQUATION-REASONING-R1",
+  "revision": "issue-337-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "source_heads": {
+    "main": "13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
+    "learning_packages_pr_327": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
+    "learning_packages_pr_328": "2445f197259ff27b5c99dd2b45c4bcbc2e5292f8",
+    "algebra_sidecars_pr_334": "a14dc5d31c50ff17cfe6982ef1b9817de86deea9"
+  },
+  "classroom_evidence": {
+    "milestone": "GitHub Issue #337",
+    "source_documents": [
+      "Build Your Skills",
+      "2.6C two-step equations",
+      "2.7C multi-step equations",
+      "2.9C polynomial divided by monomial",
+      "2.9 homework",
+      "2.10 powers and geometry",
+      "2.11 scientific notation"
+    ],
+    "source_access": "ABSTRACT_TOPIC_HANDOFF_ONLY",
+    "worksheet_content_copied": false,
+    "student_or_school_identifiers_stored": false
+  },
+  "standards": {
+    "jurisdiction": "Ontario",
+    "official_source_url": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "publication": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "publication_version": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "exact_expectation_ids": [],
+    "mapping_status": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "mapping_approval": "NONE",
+    "coverage_credit": false
+  },
+  "canonical": {
+    "reused_families": [
+      "MATH.EE.EQUATION.ONE",
+      "MATH.EE.EQUATION.TWO",
+      "MATH.EE.EQUATION.MULTISTEP"
+    ],
+    "new_canonical_identity": false,
+    "build_once_map_many": true,
+    "approval_for_revision": "PENDING_INDEPENDENT_REVIEW"
+  },
+  "reused_artifacts": [
+    "app/canonical_problem_families.py:MATH.EQ.TWO.DIRECT",
+    "app/domains/algebra_functions.py:MATH.ALG.EQ.MULTISTEP.DISTRIBUTE",
+    "app/domains/algebra_functions.py:MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+    "app/services/problem_generation.py:_generate_solve_equation",
+    "app/services/stepwork.py",
+    "app/services/visualization.py:_balance_scale",
+    "frontend/src/mve/GuidedDistributivePractice.tsx"
+  ],
+  "learning_design": {
+    "mihur_phases": {
+      "OBSERVE": "AUTHORED_DRAFT",
+      "PREDICT": "AUTHORED_DRAFT",
+      "MANIPULATE": "AUTHORED_DRAFT",
+      "EXPLAIN": "AUTHORED_DRAFT",
+      "PRACTICE": "AUTHORED_DRAFT",
+      "DIAGNOSE": "AUTHORED_DRAFT",
+      "TRANSFER": "AUTHORED_DRAFT",
+      "VERIFY": "AUTHORED_DRAFT"
+    },
+    "representation_progression": {
+      "CONCRETE": "BALANCE_MODEL_REUSE_SPECIFIED_NOT_WIRED",
+      "VISUAL": "BALANCE_AND_DISTRIBUTIVE_REUSE_SPECIFIED_NOT_WIRED",
+      "SYMBOLIC": "AUTHORED_DRAFT"
+    },
+    "misconception_routing": "AUTHORED_DRAFT_NOT_IMPLEMENTED",
+    "unseen_transfer": "CONTENT_CONTRACT_ONLY"
+  },
+  "practice_and_assessment": {
+    "seeded_practice": "LOCAL_DRAFT_GENERATOR",
+    "independent_namespace": "algebra-equation-reasoning-r1:independent",
+    "independent_oracle": "EXACT_FRACTION_TESTED_NOT_INDEPENDENTLY_REVIEWED",
+    "substitution_check": "EXACT_FRACTION_TESTED",
+    "server_trusted_scoring": "REQUIRED_NOT_IMPLEMENTED",
+    "guided_practice_credit": false,
+    "answer_non_disclosure": "LOCAL_CONTRACT_TESTED",
+    "historical_mastery_affected": false
+  },
+  "independent_reviews": {
+    "mathematics": "PENDING",
+    "pedagogy": "PENDING",
+    "standards": "PENDING",
+    "muse_qa": "PENDING_EXTERNAL_VERIFICATION",
+    "engineering_integration": "NOT_REQUESTED",
+    "release": "NOT_APPROVED"
+  }
+}
