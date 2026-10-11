@@ -16,9 +16,12 @@ EXPECTED_CODES = {
     "MATH.EARLY_ALGEBRA.EQUALITY_RELATION",
     "MATH.EARLY_ALGEBRA.ADDITION_EQUATION_UNKNOWN_WITHIN_20",
     "MATH.EARLY_ALGEBRA.SUBTRACTION_EQUATION_UNKNOWN_WITHIN_20",
-    "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES",
-    "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES",
-    "MATH.GEOMETRY.SHAPE.COMPOSE",
+    "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_2D",
+    "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_3D",
+    "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_2D",
+    "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_3D",
+    "MATH.GEOMETRY.SHAPE.COMPOSE_2D",
+    "MATH.GEOMETRY.SHAPE.COMPOSE_3D",
     "MATH.MEASUREMENT.TIME.READ_HOUR_HALF_HOUR",
     "MATH.MEASUREMENT.TIME.REPRESENT_HOUR_HALF_HOUR",
 }
@@ -32,17 +35,18 @@ def test_grade1_gate5_cards_are_draft_and_complete() -> None:
     data = _load()
     assert data["review_status"] == "DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW"
     assert data["authority"] == "NONE_NOT_FOR_RUNTIME"
-    assert data["revision"] == "2026-10-10-grade1-gate5-r1"
+    assert data["revision"] == "2026-10-11-grade1-gate5-r2"
 
     cards = data["skills"]
-    assert len(cards) == 10
+    assert len(cards) == 13
     assert {card["code"] for card in cards} == EXPECTED_CODES
     assert len({card["code"] for card in cards}) == len(cards)
 
     for card in cards:
-        assert card["identity_decision"] == (
-            "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW"
-        )
+        assert card["identity_decision"] in {
+            "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+            "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
+        }
         assert card["components"]
         assert card["inclusions"]
         assert card["exclusions"]
@@ -76,12 +80,22 @@ def test_reporting_profiles_are_noncanonical_and_fail_closed() -> None:
         }
     )
     assert all(profile["role"] == "REPORTING_ONLY_ALL_OF" for profile in profiles)
+    shape_profile = next(
+        profile for profile in profiles if profile["label"] == "identify_compose_shapes"
+    )
+    assert len(shape_profile["members"]) == 6
+    assert shape_profile["evaluation"] == "FAIL_CLOSED_ALL_OF"
+    assert shape_profile["one_primary_atom_per_attempt"] is True
+    assert shape_profile["creates_additional_credit"] is False
+    assert shape_profile["back_credits_missing_members"] is False
+    assert shape_profile["direct_alias_target"] is False
     assert data["profile_prohibitions"] == [
         "No canonical row or UUID",
-        "No mastery event, attempt or variant namespace",
-        "No inferred member mastery",
-        "No duplicate credit",
-        "No runtime alias activation",
+        "No mastery event, attempt, diagnostic attempt or variant namespace",
+        "One primary atom per attempt",
+        "No inferred member mastery or cross-dimension credit",
+        "No duplicate, seventh or back-credit",
+        "No direct alias target or runtime alias activation",
     ]
 
 
@@ -122,12 +136,56 @@ def test_grade1_boundaries_and_separate_evidence_dimensions_are_explicit() -> No
         for row in subtraction["assessment_evidence_matrix"]["required"]
     } == {"minuend", "subtrahend", "difference"}
 
-    for code in (
+    defining_2d = cards["MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_2D"]
+    conventions = defining_2d["shape_universe"]["classification_conventions"]
+    assert conventions["rectangle"] == "quadrilateral with four right angles"
+    assert conventions["square"] == "rectangle with four equal sides"
+    assert conventions["trapezoid"] == (
+        "quadrilateral with at least one pair of parallel sides"
+    )
+    assert any(
+        row.get("must_accept_all_valid_labels")
+        for row in defining_2d["assessment_evidence_matrix"]["required"]
+    )
+
+    defining_3d = cards["MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_3D"]
+    vocabulary = defining_3d["shape_universe"]["vocabulary"]
+    assert vocabulary["face"] == "flat 2-D boundary of a solid"
+    assert vocabulary["curved_surface"] == "non-flat boundary of a solid"
+
+    construct_3d = cards["MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_3D"]
+    modes = construct_3d["assessment_evidence_matrix"]["required"][0][
+        "accepted_modes"
+    ]
+    assert set(modes) == {
+        "physical_model",
+        "virtual_model",
+        "valid_drawn_representation",
+    }
+    assert any(
+        example.get("valid_as_construction_evidence") is False
+        for example in construct_3d["examples"]
+    )
+
+    compose_2d = cards["MATH.GEOMETRY.SHAPE.COMPOSE_2D"]
+    triangle_example = next(
+        example
+        for example in compose_2d["examples"]
+        if example["dimension"] == "diagonal_halves_rectangle"
+    )
+    assert "half-turn" in triangle_example["input"]
+    assert "hypotenuses" in triangle_example["input"]
+    assert "disjoint" in compose_2d["shape_universe"]["composition_contract"]
+
+    compose_3d = cards["MATH.GEOMETRY.SHAPE.COMPOSE_3D"]
+    assert "disjoint" in compose_3d["shape_universe"]["composition_contract"]
+
+    history = _load()["revision_history"]
+    assert history[0]["superseded_draft_codes"] == [
         "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES",
         "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES",
         "MATH.GEOMETRY.SHAPE.COMPOSE",
-    ):
-        assert "review_question" in cards[code]["assessment_evidence_matrix"]
+    ]
 
     read_time = cards["MATH.MEASUREMENT.TIME.READ_HOUR_HALF_HOUR"]
     represent_time = cards["MATH.MEASUREMENT.TIME.REPRESENT_HOUR_HALF_HOUR"]
