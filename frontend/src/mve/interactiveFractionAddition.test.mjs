@@ -4,9 +4,9 @@ import test from "node:test";
 
 const source = await readFile(new URL("./InteractiveFractionAddition.tsx", import.meta.url), "utf8");
 
-test("guided addition fails closed in independent assessment", () => {
-  assert.match(source, /if \(props\.independentAssessment\) return null/);
-  assert.match(source, /return <GuidedFractionAddition/);
+test("guided addition fails closed unless assessment mode is explicitly false", () => {
+  assert.match(source, /if \(props\.independentAssessment !== false\) return null/);
+  assert.match(source, /return <GuidedFractionAddition key=\{lifecycleKey\}/);
 });
 
 test("addition reuses the fraction bar renderer and bounded math plan", () => {
@@ -19,10 +19,16 @@ test("addition reuses the fraction bar renderer and bounded math plan", () => {
 test("staged controls are native buttons with a live status region", () => {
   assert.match(source, /<button type="button"/);
   assert.match(source, /disabled=\{showCommon\}/);
-  assert.match(source, /disabled=\{current !== "common"\}/);
+  assert.match(source, /disabled=\{stage !== "common"\}/);
   assert.match(source, /aria-live="polite"/);
   assert.match(source, /aria-atomic="true"/);
   assert.doesNotMatch(source, /setInterval|setTimeout|autoPlay|requestAnimationFrame/);
+});
+
+test("fraction identity remounts staged state instead of setting state during render", () => {
+  assert.match(source, /const lifecycleKey = plan/);
+  assert.match(source, /<GuidedFractionAddition key=\{lifecycleKey\}/);
+  assert.doesNotMatch(source, /previousKey|setPreviousKey/);
 });
 
 test("combine emits the validated semantic event and never scores mastery", () => {

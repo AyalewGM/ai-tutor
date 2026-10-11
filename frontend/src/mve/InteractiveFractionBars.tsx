@@ -6,7 +6,7 @@ import { normalizeFractionParts, changeShadedParts, describeFraction, compareFra
 
 /** Guided exploration only; never mount in independent assessment. */
 export interface InteractiveFractionBarsProps {
-  independentAssessment: boolean;
+  independentAssessment?: boolean;
   denominator?: number;
   initialNumerator?: number;
   /** Optional guided comparison target. Invalid targets are not rendered. */
@@ -16,8 +16,12 @@ export interface InteractiveFractionBarsProps {
 }
 
 export function InteractiveFractionBars(props: InteractiveFractionBarsProps) {
-  if (props.independentAssessment) return null;
-  return <GuidedFractionBars {...props} />;
+  // Fail closed for absent or malformed runtime assessment state.
+  if (props.independentAssessment !== false) return null;
+  const initial = normalizeFractionParts(props.initialNumerator ?? 1, props.denominator ?? 4);
+  const target = isValidFractionParts(props.compareWith) ? props.compareWith : null;
+  const lifecycleKey = `${initial.numerator}/${initial.denominator}|${target ? `${target.numerator}/${target.denominator}` : "none"}`;
+  return <GuidedFractionBars key={lifecycleKey} {...props} />;
 }
 
 /**
@@ -51,25 +55,11 @@ function GuidedFractionBars({
   const equivalenceStatusId = useId();
   const initial = normalizeFractionParts(initialNumerator, denominator);
   const [numerator, setNumerator] = useState(initial.numerator);
-  const [previousDenominator, setPreviousDenominator] = useState(initial.denominator);
   const d = initial.denominator;
   const target = isValidFractionParts(compareWith) ? compareWith : null;
   const [showComparison, setShowComparison] = useState(false);
   const [equivalence, setEquivalence] = useState<{ parts: FractionParts; explanation: string } | null>(null);
-  const [lastTargetKey, setLastTargetKey] = useState<string | null>(null);
-  const targetKey = target ? `${target.numerator}/${target.denominator}` : null;
-  if (lastTargetKey !== targetKey) {
-    setLastTargetKey(targetKey);
-    setShowComparison(false);
-  }
-  // Reset local exploration when the example's denominator changes.
-  if (previousDenominator !== d) {
-    setPreviousDenominator(d);
-    setNumerator(initial.numerator);
-    setShowComparison(false);
-    setEquivalence(null);
-  }
-  const current = previousDenominator === d ? numerator : initial.numerator;
+  const current = numerator;
   const update = (next: number) => {
     const value = normalizeFractionParts(next, d);
     if (value.numerator === current) return;

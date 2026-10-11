@@ -4,9 +4,9 @@ import test from "node:test";
 
 const source = await readFile(new URL("./InteractiveFractionBars.tsx", import.meta.url), "utf8");
 
-test("guided fraction exploration fails closed in independent assessment", () => {
-  assert.match(source, /if \(props\.independentAssessment\) return null/);
-  assert.match(source, /return <GuidedFractionBars/);
+test("guided fraction exploration fails closed unless assessment mode is explicitly false", () => {
+  assert.match(source, /if \(props\.independentAssessment !== false\) return null/);
+  assert.match(source, /return <GuidedFractionBars key=\{lifecycleKey\}/);
 });
 
 test("fraction exploration reuses the registered fraction bar renderer", () => {
@@ -30,7 +30,6 @@ test("deterministic bounded fraction state and no answer scoring", () => {
   assert.doesNotMatch(source, /mastery|correct_index|gradeAnswer/);
 });
 
-
 test("keyboard focus visibility and no duplicate events at bounds", () => {
   assert.match(source, /focus-visible:outline/);
   assert.match(source, /if \(value\.numerator === current\) return/);
@@ -42,7 +41,7 @@ test("keyboard focus visibility and no duplicate events at bounds", () => {
 test("semantic equivalent-fraction explanation remains guided and screen-reader readable", () => {
   assert.match(source, /describeFraction\(\{ numerator: current, denominator: d \}\)/);
   assert.match(source, /aria-atomic="true"/);
-  assert.match(source, /if \(props\.independentAssessment\) return null/);
+  assert.match(source, /if \(props\.independentAssessment !== false\) return null/);
 });
 
 test("all fraction buttons share a labeled control group and status description", () => {
@@ -59,14 +58,15 @@ test("guided comparison uses validated target and exact semantic relation", () =
   assert.match(source, /compareFractions\(left, target\)/);
   assert.match(source, /type: "FRACTION_COMPARED"/);
   assert.match(source, /describeFractionComparison\(/);
-  assert.match(source, /if \(props\.independentAssessment\) return null/);
+  assert.match(source, /if \(props\.independentAssessment !== false\) return null/);
 });
 
-test("comparison feedback resets when reference changes and description remains mounted", () => {
-  assert.match(source, /lastTargetKey !== targetKey/);
-  assert.match(source, /setShowComparison\(false\)/);
+test("example and comparison identity reset all local exploration state", () => {
+  assert.match(source, /const lifecycleKey = `\$\{initial\.numerator\}\/\$\{initial\.denominator\}\|/);
+  assert.match(source, /target \? `\$\{target\.numerator\}\/\$\{target\.denominator\}` : "none"/);
+  assert.match(source, /<GuidedFractionBars key=\{lifecycleKey\}/);
+  assert.doesNotMatch(source, /previousDenominator|lastTargetKey|setPreviousDenominator|setLastTargetKey/);
   assert.match(source, /id=\{comparisonStatusId\} role="status"/);
-  assert.match(source, /showComparison \? describeFractionComparison/);
 });
 
 test("equivalence construction uses validated scaling and resets with state", () => {
@@ -75,7 +75,7 @@ test("equivalence construction uses validated scaling and resets with state", ()
   assert.match(source, /type: "FRACTION_EQUIVALENCE_EXPLORED"/);
   assert.match(source, /setEquivalence\(null\)/);
   assert.match(source, /id=\{equivalenceStatusId\} role="status"/);
-  assert.match(source, /if \(props\.independentAssessment\) return null/);
+  assert.match(source, /if \(props\.independentAssessment !== false\) return null/);
 });
 
 test("simplification control is fail-closed and emits a semantic event", () => {

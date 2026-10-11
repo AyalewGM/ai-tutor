@@ -10,39 +10,41 @@ import {
 
 /** Guided exploration only; never mount in independent assessment. */
 export interface InteractiveFractionAdditionProps {
-  independentAssessment: boolean;
+  independentAssessment?: boolean;
   first?: FractionParts;
   second?: FractionParts;
   onMathEvent?: (event: MathInteractionEvent) => void;
 }
 
 export function InteractiveFractionAddition(props: InteractiveFractionAdditionProps) {
-  if (props.independentAssessment) return null;
-  return <GuidedFractionAddition {...props} />;
+  // Fail closed for absent or malformed runtime assessment state.
+  if (props.independentAssessment !== false) return null;
+  const first = props.first ?? { numerator: 1, denominator: 4 };
+  const second = props.second ?? { numerator: 1, denominator: 2 };
+  const plan = planFractionAddition(first, second);
+  const lifecycleKey = plan
+    ? `${first.numerator}/${first.denominator}+${second.numerator}/${second.denominator}`
+    : "invalid";
+  return <GuidedFractionAddition key={lifecycleKey} {...props} first={first} second={second} />;
 }
 
 type Stage = "native" | "common" | "combined";
+type GuidedFractionAdditionProps = InteractiveFractionAdditionProps & {
+  first: FractionParts;
+  second: FractionParts;
+};
 
 function GuidedFractionAddition({
-  first = { numerator: 1, denominator: 4 },
-  second = { numerator: 1, denominator: 2 },
+  first,
+  second,
   onMathEvent,
-}: InteractiveFractionAdditionProps) {
+}: GuidedFractionAdditionProps) {
   const statusId = useId();
   const plan =
     isValidFractionParts(first) && isValidFractionParts(second)
       ? planFractionAddition(first, second)
       : null;
-  const planKey = plan
-    ? `${first.numerator}/${first.denominator}+${second.numerator}/${second.denominator}`
-    : "invalid";
   const [stage, setStage] = useState<Stage>("native");
-  const [previousKey, setPreviousKey] = useState(planKey);
-  if (previousKey !== planKey) {
-    setPreviousKey(planKey);
-    setStage("native");
-  }
-  const current = previousKey === planKey ? stage : "native";
   if (plan === null) {
     return (
       <section aria-label="Guided fraction addition" data-mve-family="fractions"
@@ -55,7 +57,7 @@ function GuidedFractionAddition({
       </section>
     );
   }
-  const showCommon = current !== "native";
+  const showCommon = stage !== "native";
   const left = showCommon ? plan.first_scaled : first;
   const right = showCommon ? plan.second_scaled : second;
   return (
@@ -78,7 +80,7 @@ function GuidedFractionAddition({
         <button type="button" disabled={showCommon} aria-describedby={statusId}
           className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
           onClick={() => setStage("common")}>Make equal parts</button>
-        <button type="button" disabled={current !== "common"} aria-describedby={statusId}
+        <button type="button" disabled={stage !== "common"} aria-describedby={statusId}
           className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
           onClick={() => {
             setStage("combined");
@@ -91,16 +93,16 @@ function GuidedFractionAddition({
             });
           }}>Combine the parts</button>
       </div>
-      {current === "combined" && plan.sum_numerator <= plan.sum_denominator && (
+      {stage === "combined" && plan.sum_numerator <= plan.sum_denominator && (
         <ProblemVisual spec={{
           type: "fraction_bar", numerator: plan.sum_numerator, denominator: plan.sum_denominator,
           aria_label: `Sum: ${plan.sum_numerator} of ${plan.sum_denominator} equal parts shaded`,
         }} />
       )}
       <p id={statusId} role="status" aria-live="polite" aria-atomic="true">
-        {current === "combined"
+        {stage === "combined"
           ? describeFractionAddition(plan)
-          : current === "common"
+          : stage === "common"
             ? `Both bars now show ${plan.common_denominator} equal parts. Combine them to see the sum.`
             : "Make equal parts first, then combine the shaded parts to see the sum."}
       </p>
