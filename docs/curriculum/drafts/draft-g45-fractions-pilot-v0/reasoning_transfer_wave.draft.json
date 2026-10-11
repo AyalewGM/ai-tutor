@@ -1,0 +1,282 @@
+{
+  "package_id": "draft-g45-fractions-reasoning-wave-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "runtime_activation": false,
+  "items": [
+    {
+      "item_id": "g45-reasoning-01",
+      "provisional_topic": "comparison",
+      "question": "Which is greater, 5/8 or 3/7?",
+      "expected": "5/8",
+      "explanation": "5/8 is above 1/2, while 3/7 is below 1/2.",
+      "misconception": {
+        "plausible_wrong_answer": "3/7",
+        "feedback": "A larger denominator alone does not mean a larger fraction."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Explain without common denominators why 4/9 is below 1/2 and 5/9 is above 1/2.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-02",
+      "provisional_topic": "equivalence",
+      "question": "Complete 4/6 = ?/18.",
+      "expected": "12",
+      "explanation": "Multiply the denominator by 3 and the numerator by 3.",
+      "misconception": {
+        "plausible_wrong_answer": "16",
+        "feedback": "Multiply both parts by the same factor; do not add the difference in denominators."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Find the missing numerator in 3/5 = ?/20.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-03",
+      "provisional_topic": "equivalence",
+      "question": "Complete 3/4 = 15/?.",
+      "expected": "20",
+      "explanation": "The numerator is multiplied by 5, so the denominator is also multiplied by 5.",
+      "misconception": {
+        "plausible_wrong_answer": "9",
+        "feedback": "The numerator and denominator are scaled, not increased by the same amount."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Complete 2/7 = 10/?.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-04",
+      "provisional_topic": "fraction-of-set",
+      "question": "A class has 36 crayons. They use 1/3 for posters, then 1/4 of the original 36 for labels. How many remain?",
+      "expected": "15",
+      "explanation": "12 and 9 crayons are used, so 36 − 12 − 9 = 15.",
+      "misconception": {
+        "plausible_wrong_answer": "18",
+        "feedback": "Both fractions refer to the original 36, not the amount remaining."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Of 48 cards, 1/4 are blue and 1/6 are green. How many are neither color?",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-05",
+      "provisional_topic": "fraction-of-set",
+      "question": "A class has 36 crayons. They use 1/3, then 1/4 of the remaining crayons. How many remain?",
+      "expected": "18",
+      "explanation": "After using 12, 24 remain; one quarter of 24 is 6; 18 remain.",
+      "misconception": {
+        "plausible_wrong_answer": "15",
+        "feedback": "The second fraction refers to the remaining quantity, not the original whole."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Of 48 beads, remove 1/4, then remove 1/3 of the remainder. How many remain?",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-06",
+      "provisional_topic": "comparison",
+      "question": "Which is closer to 1: 7/8 or 5/6? Give the fraction.",
+      "expected": "7/8",
+      "explanation": "7/8 is 1/8 away; 5/6 is 1/6 away; 1/8 is smaller.",
+      "misconception": {
+        "plausible_wrong_answer": "5/6",
+        "feedback": "Compare the gaps to one whole, not the numerators alone."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Which is closer to 1: 9/10 or 7/8?",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-07",
+      "provisional_topic": "addition",
+      "question": "A baker uses 5/6 cup of oats and 4/6 cup of flour. How many cups in all? Answer as an improper fraction.",
+      "expected": "3/2",
+      "explanation": "9/6 = 3/2; the total exceeds one whole.",
+      "misconception": {
+        "plausible_wrong_answer": "9/12",
+        "feedback": "The units are sixths; keep the denominator and add the numerators."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Add 7/8 and 5/8, then explain why two whole bars may be needed.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-08",
+      "provisional_topic": "subtraction",
+      "question": "A rope is 11/8 m long. A piece of 5/8 m is cut off. How much rope remains?",
+      "expected": "3/4",
+      "explanation": "11/8 − 5/8 = 6/8 = 3/4.",
+      "misconception": {
+        "plausible_wrong_answer": "6/16",
+        "feedback": "Keep the eighth-sized unit; subtract the counts and simplify."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Calculate 13/10 − 7/10 and show the answer on a number line.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-09",
+      "provisional_topic": "error-analysis",
+      "question": "A learner says 2/5 + 1/5 = 3/10. What is the correct sum?",
+      "expected": "3/5",
+      "explanation": "Both parts use fifths; three fifths is the combined amount.",
+      "misconception": {
+        "plausible_wrong_answer": "3/10",
+        "feedback": "The denominator names the unit and stays 5."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Explain why 3/8 + 2/8 is not 5/16.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-10",
+      "provisional_topic": "error-analysis",
+      "question": "A learner says 2/3 = 4/5 because they added 2 to the numerator and denominator. What is the equivalent fraction with denominator 6?",
+      "expected": "4/6",
+      "explanation": "Multiply numerator and denominator by 2.",
+      "misconception": {
+        "plausible_wrong_answer": "4/5",
+        "feedback": "Adding the same amount does not preserve the ratio."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Correct the claim 3/4 = 5/6 using a fraction strip.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-11",
+      "provisional_topic": "error-analysis",
+      "question": "A learner says 1/4 of 20 counters is 4 counters. What is the correct count?",
+      "expected": "5",
+      "explanation": "Divide 20 into 4 equal groups: each group has 5.",
+      "misconception": {
+        "plausible_wrong_answer": "4",
+        "feedback": "The denominator tells how many equal groups, not how many counters are selected."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Find 1/5 of 30 and describe the equal groups.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-12",
+      "provisional_topic": "error-analysis",
+      "question": "A learner marks 2/5 at the second of five tick marks including 0 and 1. Where should 2/5 be placed? Give the fraction.",
+      "expected": "2/5",
+      "explanation": "Divide the interval 0 to 1 into five equal intervals, giving six endpoints, and count two jumps.",
+      "misconception": {
+        "plausible_wrong_answer": "1/4",
+        "feedback": "Count intervals rather than endpoints; five intervals need six ticks."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Show where 3/4 lies on a line from 0 to 1.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-13",
+      "provisional_topic": "transfer",
+      "question": "A recipe needs 3/4 cup of milk per batch. How much milk is needed for two batches?",
+      "expected": "3/2",
+      "explanation": "Two equal batches need 6/4 = 3/2 cups.",
+      "misconception": {
+        "plausible_wrong_answer": "3/8",
+        "feedback": "Doubling the number of batches doubles the quantity, not the denominator."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Three batches use 2/3 cup each. Find the total.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-14",
+      "provisional_topic": "transfer",
+      "question": "A 2 m ribbon is cut into pieces each 1/4 m long. How many full pieces can be cut?",
+      "expected": "8",
+      "explanation": "Each metre has four quarters, so two metres have eight quarters.",
+      "misconception": {
+        "plausible_wrong_answer": "2",
+        "feedback": "Count how many quarter-metre units fit into the whole length."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "How many 1/5 m pieces fit into 3 m?",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-15",
+      "provisional_topic": "transfer",
+      "question": "A rectangular garden has 24 square metres. One eighth is planted with herbs. What area is planted with herbs?",
+      "expected": "3",
+      "explanation": "One eighth of 24 is 24 ÷ 8 = 3.",
+      "misconception": {
+        "plausible_wrong_answer": "8",
+        "feedback": "The denominator is the number of equal portions, not the planted area."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "A 40-square-metre garden has 3/10 planted with flowers. Find the area.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g45-reasoning-16",
+      "provisional_topic": "transfer",
+      "question": "In a survey, 18 of 30 students chose apples. What fraction chose apples, in simplest form?",
+      "expected": "3/5",
+      "explanation": "18/30 simplifies by dividing numerator and denominator by 6.",
+      "misconception": {
+        "plausible_wrong_answer": "18/30",
+        "feedback": "The fraction has the correct value but is not in simplest form as requested."
+      },
+      "reasoning_prompt": "Explain which quantity is the whole, what each fractional unit means, and why your method works.",
+      "transfer_prompt": "Simplify 24/36 and explain the meaning of numerator and denominator.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    }
+  ]
+}
