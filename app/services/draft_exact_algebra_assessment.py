@@ -317,8 +317,8 @@ def _monomial(seed: int, *, polynomial: bool) -> HiddenExactVariant:
     dividend_terms: list[tuple[Fraction, int, int]] = []
     for index in range(terms):
         coefficient = Fraction(rng.choice((-7, -5, -3, 2, 4, 6, 8)))
-        x_exp = rng.randint(-2, 3)
-        y_exp = rng.randint(-1, 3)
+        x_exp = rng.randint(max(-2, -divisor_x), 3)
+        y_exp = rng.randint(max(-1, -divisor_y), 3)
         if index and (x_exp, y_exp) == (quotient_terms[0][1], quotient_terms[0][2]):
             y_exp += 1
         quotient_terms.append((coefficient, x_exp, y_exp))
