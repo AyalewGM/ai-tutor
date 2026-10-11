@@ -23,6 +23,7 @@
         "canonical_identity": "UNKNOWN",
         "mathematical": "PENDING",
         "pedagogical": "CHANGES_REQUIRED",
+        "production_response": "R4_BOUNDED_ARC_AUTHORED_REREVIEW_PENDING",
         "muse_qa": "PENDING",
         "engineering_release": "NOT_AUTHORIZED",
         "pedagogy_evidence": "PR #327 comment 6102771217"
@@ -40,7 +41,7 @@
         }
       ],
       "independent_assessment": {
-        "transfer": "SPEC_ONLY_NOT_IMPLEMENTED",
+        "transfer": "R4_TABLE_GRAPH_EQUATION_DOMAIN_SPEC_LOCAL_ORACLE_NOT_IMPLEMENTED",
         "variant_freshness": "LOCAL_MODE_NAMESPACE_SEPARATION_TESTED_BACKEND_NOT_IMPLEMENTED",
         "backend_trusted_scoring": "UNKNOWN_NOT_IMPLEMENTED",
         "worked_answers_hidden": "LOCAL_PUBLIC_PAYLOAD_TEST_ONLY",
@@ -62,7 +63,7 @@
         "browser_verified": false
       },
       "package_id": "W1-G9-LINEAR-MODELING",
-      "revision": "G9_DEPTH_R3_2026-10-10",
+      "revision": "G9_DEPTH_R4_2026-10-10",
       "source_package": {
         "pr": 327,
         "path": "docs/curriculum/drafts/learning-packages-wave1/content.draft.json",
@@ -115,42 +116,42 @@
         ]
       },
       "concrete_visual_symbolic": {
-        "concrete": "initial-fee tile and repeated rate tiles",
-        "visual": "linked labelled table and domain-limited graph",
-        "symbolic": "C(n)=b+rn and algebraic comparison of two plans",
+        "concrete": "fixed-time card and one equal time block per crate",
+        "visual": "linked labelled context table and domain-limited graph description",
+        "symbolic": "T(n)=b+rn with rate/intercept units and a discrete capacity-bounded domain",
         "status": "SPEC_ONLY"
       },
       "teaching_sequence": {
         "Observe": {
-          "description": "Present two service-plan fee cards with units.",
+          "description": "Present one fixed loading-time card, equal per-crate blocks, and a table beginning at zero crates.",
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         },
         "Predict": {
-          "description": "Commit which costs less at 2 and 6 uses, with justification.",
+          "description": "Commit which table quantity is fixed, which change repeats, and where the graph begins.",
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         },
         "Manipulate": {
-          "description": "Vary fixed fee and per-use rate separately; table equivalent is required.",
+          "description": "Vary fixed time and per-crate rate separately; update a labelled table with keyboard-equivalent controls.",
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         },
         "Explain": {
-          "description": "Connect C(0), successive differences, slope and intersection; explain units.",
+          "description": "Connect T(0), equal first differences, graph intercept/rise, and equation terms with units.",
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         },
         "Practice": {
-          "description": "Use deterministic fresh plan parameters; client checks never award mastery.",
+          "description": "Translate deterministic fresh table/context records across equation and graph descriptions; client checks never award mastery.",
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         },
         "Diagnose": {
-          "description": "If C(0) equals rate, probe zero uses; if crossing is graph-guessed, request exact equality.",
+          "description": "Route from captured zero-input, adjacent-difference, graph-start/rise, and domain evidence.",
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         },
         "Transfer": {
-          "description": "Compare unfamiliar tariffs with a domain constraint and justify a decision.",
+          "description": "Model an unfamiliar delivery-cart log and reconcile table, graph, equation, units, and capacity domain.",
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         },
         "Verify": {
-          "description": "Check both formulas exactly at candidate crossing with a separate oracle.",
+          "description": "Collect rate/intercept units, equation, graph translation, physical domain, and justification with a separate oracle.",
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         }
       },
@@ -162,10 +163,10 @@
           "feedback": "Ask learner to assemble base fee and one incremental rate before symbolizing."
         },
         {
-          "observed_reasoning": "reports graph approximate crossing but cannot verify both costs",
-          "diagnosis": "UNVERIFIED_INTERSECTION",
-          "probe": "Substitute proposed n in both equations; what must be equal?",
-          "feedback": "Guide algebraic comparison, do not reveal crossover."
+          "observed_reasoning": "writes the correct equation but places the graph at the origin or uses unequal one-step rises",
+          "diagnosis": "TABLE_GRAPH_DISCONNECT",
+          "probe": "Which table row fixes the starting point, and which repeated change fixes a one-unit rise?",
+          "feedback": "Match two labelled table rows to graph points; do not reveal the translation."
         },
         {
           "observed_reasoning": "chooses negative time or fractional customers despite discrete context",
@@ -175,13 +176,14 @@
         }
       ],
       "scope_limits": [
-        "Ontario C3.3 uses algebraic method of comparison of two linear relations; do not substitute full elimination/substitution curriculum coverage."
+        "R4 is bounded to one linear relation across context, table, graph description, and equation with a physical domain.",
+        "Standalone equation solving, systems, and comparison of two linear relations require separate mapped and reviewed packages."
       ],
       "verification": {
         "existing_work": "Wave 1 authored draft",
-        "actual_gap": "MVE not verified in student flow; responsive branching and trusted unseen assessment absent",
-        "planned_improvement": "reuse rate/intercept generator and approved visual when available",
-        "observed": "SOURCE_AUDIT_ONLY"
+        "actual_gap": "Independent review found scope drift and missing table-to-graph evidence, rate/intercept explanation, and physical-domain verification.",
+        "planned_improvement": "R4 narrows the arc and adds a deterministic six-field table/graph/equation/domain transfer oracle.",
+        "observed": "R4_LOCAL_ORACLE_TESTED_REREVIEW_PENDING"
       }
     },
     {
@@ -193,6 +195,7 @@
         "canonical_identity": "UNKNOWN",
         "mathematical": "PENDING",
         "pedagogical": "CHANGES_REQUIRED",
+        "production_response": "R4_PATTERN_GROWTH_ARC_AUTHORED_REREVIEW_PENDING",
         "muse_qa": "PENDING",
         "engineering_release": "NOT_AUTHORIZED",
         "pedagogy_evidence": "PR #328 comment 6102771431"
@@ -210,7 +213,7 @@
         }
       ],
       "independent_assessment": {
-        "transfer": "SPEC_ONLY_NOT_IMPLEMENTED",
+        "transfer": "R4_SECOND_DIFFERENCE_PREDICTION_SPEC_LOCAL_ORACLE_NOT_IMPLEMENTED",
         "variant_freshness": "LOCAL_MODE_NAMESPACE_SEPARATION_TESTED_BACKEND_NOT_IMPLEMENTED",
         "backend_trusted_scoring": "UNKNOWN_NOT_IMPLEMENTED",
         "worked_answers_hidden": "LOCAL_PUBLIC_PAYLOAD_TEST_ONLY",
@@ -232,7 +235,7 @@
         "browser_verified": false
       },
       "package_id": "W2-G9-QUADRATIC-PATTERNS",
-      "revision": "G9_DEPTH_R3_2026-10-10",
+      "revision": "G9_DEPTH_R4_2026-10-10",
       "source_package": {
         "pr": 328,
         "path": "docs/curriculum/drafts/learning-packages-wave2/content.draft.json",
@@ -306,19 +309,19 @@
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         },
         "Practice": {
-          "description": "Use seed-varied positive rectangle dimensions; no rote quadratic root drill.",
+          "description": "Use seed-varied tile tables; reconstruct both difference rows before writing a rule; no factoring or root drill.",
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         },
         "Diagnose": {
-          "description": "If learner asserts linear, probe consecutive differences; if forgets ab, compare n=0.",
+          "description": "Route from submitted first/second differences, stage prediction, and table-rule checks.",
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         },
         "Transfer": {
-          "description": "Transfer to distinct rectangle dimensions with same perimeter, different areas.",
+          "description": "Infer stage 4 and a symbolic rule from an unfamiliar tile-count log containing only stages 0–3.",
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         },
         "Verify": {
-          "description": "Independently check via counting, expansion and evaluating one unseen n.",
+          "description": "Collect both difference rows, stage-4 prediction, rule, and quadratic-growth explanation with a separate oracle.",
           "implementation_status": "SPEC_ONLY_NOT_WIRED"
         }
       },
@@ -330,16 +333,16 @@
           "feedback": "Return to row of tiles added, not a generic retry prompt."
         },
         {
-          "observed_reasoning": "expands (n+a)(n+b) as n²+(a+b)n",
-          "diagnosis": "MISSING_CORNER_PRODUCT",
-          "probe": "How many a-by-b corner tiles remain when n=0?",
-          "feedback": "Ask learner to identify the uncovered a-by-b rectangle."
+          "observed_reasoning": "repeats the last first difference when predicting the next stage",
+          "diagnosis": "CONSTANT_DIFFERENCE_EXTENDED",
+          "probe": "How much do consecutive first differences themselves change?",
+          "feedback": "Extend the second-difference row before the tile-count row."
         },
         {
-          "observed_reasoning": "uses negative root as a physical side length",
-          "diagnosis": "SYMBOLIC_VS_PHYSICAL_DOMAIN",
-          "probe": "Does solving the equation imply a valid measured length?",
-          "feedback": "Distinguish algebraic solutions from feasible context."
+          "observed_reasoning": "proposes a rule that matches one stage but not the supplied table",
+          "diagnosis": "RULE_WITHOUT_TABLE_CHECK",
+          "probe": "What does the rule produce at stages 0, 1, and 2?",
+          "feedback": "Reconcile every supplied stage before using the rule to predict."
         }
       ],
       "scope_limits": [
@@ -348,9 +351,9 @@
       ],
       "verification": {
         "existing_work": "Wave 2 authored draft",
-        "actual_gap": "tile interaction and keyed a11y not wired; conceptual area-to-rate transfer not tested",
-        "planned_improvement": "reuse existing quadratic generator only after reviewed mapping; prioritize pattern reasoning",
-        "observed": "SOURCE_AUDIT_ONLY"
+        "actual_gap": "Independent review found a shift from pattern growth to factoring/roots and no unseen prediction or quadratic-growth explanation.",
+        "planned_improvement": "R4 limits the arc to pattern reasoning and adds a deterministic five-field second-difference transfer oracle.",
+        "observed": "R4_LOCAL_ORACLE_TESTED_REREVIEW_PENDING"
       }
     },
     {

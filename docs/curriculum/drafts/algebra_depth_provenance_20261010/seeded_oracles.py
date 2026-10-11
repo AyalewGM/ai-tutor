@@ -5,8 +5,9 @@ This module is not imported by runtime code and performs no persistence.
 
 import random
 from fractions import Fraction
+from itertools import pairwise
 
-NAMESPACE = "g9-algebra-depth-r3"
+NAMESPACE = "g9-algebra-depth-r4"
 MODES = frozenset({"guided", "independent"})
 
 
@@ -22,7 +23,14 @@ def _rng(seed: int, mode: str, family_salt: int) -> random.Random:
 
 
 def _record(
-    *, seed: int, mode: str, family: str, prompt: str, parameters: dict, answer: str
+    *,
+    seed: int,
+    mode: str,
+    family: str,
+    prompt: str,
+    parameters: dict,
+    answer: object,
+    response_fields: tuple[str, ...] = ("exact_result",),
 ) -> dict:
     return {
         "variant_id": f"{NAMESPACE}:{mode}:{family}:{seed}",
@@ -30,6 +38,7 @@ def _record(
         "family": family,
         "prompt": prompt,
         "parameters": parameters,
+        "response_fields": list(response_fields),
         "answer_teacher_only": answer,
     }
 
@@ -72,6 +81,56 @@ def generate_linear_plan(seed: int, mode: str) -> dict:
     )
 
 
+def generate_linear_translation(seed: int, mode: str) -> dict:
+    """Generate a bounded table-to-graph-to-equation modeling task."""
+
+    rng = _rng(seed, mode, 17)
+    intercept = rng.randint(4, 20)
+    rate = rng.randint(2, 8)
+    maximum_input = rng.randint(6, 12)
+    inputs = [0, 1, 2, maximum_input]
+    outputs = [intercept + rate * value for value in inputs]
+    return _record(
+        seed=seed,
+        mode=mode,
+        family="LINEAR_TABLE_GRAPH_EQUATION_DOMAIN",
+        prompt=(
+            "A delivery cart starts with a fixed loading time and then adds the same "
+            f"time per crate. The observed (crates, minutes) pairs are {list(zip(inputs, outputs))}. "
+            f"The cart holds at most {maximum_input} whole crates. Identify the rate and "
+            "initial value with units, write the equation, describe the matching graph, "
+            "and justify the physical domain."
+        ),
+        parameters={
+            "input_label": "whole crates",
+            "output_label": "minutes",
+            "table_inputs": inputs,
+            "table_outputs": outputs,
+            "maximum_input": maximum_input,
+        },
+        response_fields=(
+            "rate_with_units",
+            "initial_value_with_units",
+            "equation",
+            "graph_translation",
+            "physical_domain",
+            "domain_justification",
+        ),
+        answer={
+            "rate": rate,
+            "rate_units": "minutes per crate",
+            "initial_value": intercept,
+            "initial_units": "minutes",
+            "equation": f"T(n)={intercept}+{rate}n",
+            "graph_translation": (
+                f"starts at (0,{intercept}); rises {rate} minutes for each 1-crate run"
+            ),
+            "physical_domain": f"n is a whole number and 0<=n<={maximum_input}",
+            "domain_justification": "crate count is discrete and cannot exceed cart capacity",
+        },
+    )
+
+
 def generate_quadratic_area(seed: int, mode: str) -> dict:
     """Generate a rectangle whose tiled and expanded areas must agree."""
 
@@ -90,6 +149,53 @@ def generate_quadratic_area(seed: int, mode: str) -> dict:
         ),
         parameters={"n": n, "a": a, "b": b},
         answer=str(answer),
+    )
+
+
+def generate_quadratic_pattern(seed: int, mode: str) -> dict:
+    """Generate a table whose next value requires constant second differences."""
+
+    rng = _rng(seed, mode, 29)
+    leading = rng.randint(1, 3)
+    linear = rng.randint(0, 5)
+    constant = rng.randint(0, 6)
+    inputs = [0, 1, 2, 3]
+    outputs = [leading * n**2 + linear * n + constant for n in inputs]
+    first_differences = [right - left for left, right in pairwise(outputs)]
+    second_differences = [
+        right - left for left, right in pairwise(first_differences)
+    ]
+    next_first_difference = first_differences[-1] + 2 * leading
+    next_value = outputs[-1] + next_first_difference
+    return _record(
+        seed=seed,
+        mode=mode,
+        family="QUADRATIC_TABLE_SECOND_DIFFERENCE_TRANSFER",
+        prompt=(
+            f"A growing tile design has counts {list(zip(inputs, outputs))}. Predict the "
+            "count at stage 4, show both difference rows, write a rule, and explain why "
+            "the growth is quadratic rather than linear."
+        ),
+        parameters={"stage_inputs": inputs, "tile_counts": outputs},
+        response_fields=(
+            "first_differences",
+            "second_differences",
+            "stage_4_prediction",
+            "symbolic_rule",
+            "quadratic_growth_explanation",
+        ),
+        answer={
+            "first_differences": first_differences,
+            "second_differences": second_differences,
+            "stage_4_prediction": next_value,
+            "symbolic_rule": f"A(n)={leading}n^2+{linear}n+{constant}",
+            "leading_coefficient": leading,
+            "linear_coefficient": linear,
+            "constant": constant,
+            "quadratic_growth_explanation": (
+                f"first differences change by the constant second difference {2 * leading}"
+            ),
+        },
     )
 
 

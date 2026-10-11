@@ -1,5 +1,6 @@
 import importlib.util
 from fractions import Fraction
+from itertools import pairwise
 from pathlib import Path
 
 import pytest
@@ -37,6 +38,32 @@ def test_linear_plan_variants_have_exact_unique_crossover(seed: int) -> None:
 
 
 @pytest.mark.parametrize("seed", range(100))
+def test_linear_translation_reconstructs_all_representations(seed: int) -> None:
+    oracles = load_oracles_module()
+    record = oracles.generate_linear_translation(seed, "independent")
+    parameters = record["parameters"]
+    answer = record["answer_teacher_only"]
+    inputs = parameters["table_inputs"]
+    outputs = parameters["table_outputs"]
+    differences = [right - left for left, right in pairwise(outputs)]
+
+    assert inputs[:3] == [0, 1, 2]
+    assert outputs[0] == answer["initial_value"]
+    assert differences[0] == differences[1] == answer["rate"]
+    assert outputs[-1] == answer["initial_value"] + answer["rate"] * inputs[-1]
+    assert str(parameters["maximum_input"]) in answer["physical_domain"]
+    assert "whole number" in answer["physical_domain"]
+    assert set(record["response_fields"]) == {
+        "rate_with_units",
+        "initial_value_with_units",
+        "equation",
+        "graph_translation",
+        "physical_domain",
+        "domain_justification",
+    }
+
+
+@pytest.mark.parametrize("seed", range(100))
 def test_quadratic_area_variants_match_factored_and_expanded_oracles(seed: int) -> None:
     oracles = load_oracles_module()
     record = oracles.generate_quadratic_area(seed, "independent")
@@ -46,6 +73,33 @@ def test_quadratic_area_variants_match_factored_and_expanded_oracles(seed: int) 
     expanded = n**2 + (a + b) * n + a * b
 
     assert factored == expanded == int(record["answer_teacher_only"])
+
+
+@pytest.mark.parametrize("seed", range(100))
+def test_quadratic_pattern_uses_constant_second_differences(seed: int) -> None:
+    oracles = load_oracles_module()
+    record = oracles.generate_quadratic_pattern(seed, "independent")
+    parameters = record["parameters"]
+    answer = record["answer_teacher_only"]
+    values = parameters["tile_counts"]
+    first = [right - left for left, right in pairwise(values)]
+    second = [right - left for left, right in pairwise(first)]
+    reconstructed_next = values[-1] + first[-1] + second[-1]
+
+    assert first == answer["first_differences"]
+    assert second == answer["second_differences"]
+    assert len(set(second)) == 1
+    assert second[0] == 2 * answer["leading_coefficient"]
+    assert reconstructed_next == answer["stage_4_prediction"]
+    assert set(parameters) == {"stage_inputs", "tile_counts"}
+    assert "leading_coefficient" not in parameters
+    assert set(record["response_fields"]) == {
+        "first_differences",
+        "second_differences",
+        "stage_4_prediction",
+        "symbolic_rule",
+        "quadratic_growth_explanation",
+    }
 
 
 @pytest.mark.parametrize("seed", range(100))
@@ -65,7 +119,13 @@ def test_exponential_variants_match_repeated_fraction_oracle(seed: int) -> None:
 
 @pytest.mark.parametrize(
     "generator_name",
-    ["generate_linear_plan", "generate_quadratic_area", "generate_exponential_change"],
+    [
+        "generate_linear_plan",
+        "generate_linear_translation",
+        "generate_quadratic_area",
+        "generate_quadratic_pattern",
+        "generate_exponential_change",
+    ],
 )
 def test_independent_namespace_is_distinct_and_public_payload_hides_answer(
     generator_name: str,
@@ -84,6 +144,12 @@ def test_independent_namespace_is_distinct_and_public_payload_hides_answer(
     assert public["mode"] == "independent"
     if generator_name == "generate_linear_plan":
         assert "crossover" not in public["parameters"]
+    if generator_name == "generate_linear_translation":
+        assert "rate" not in public["parameters"]
+        assert "intercept" not in public["parameters"]
+    if generator_name == "generate_quadratic_pattern":
+        assert "leading_coefficient" not in public["parameters"]
+        assert "symbolic_rule" not in public["parameters"]
 
 
 @pytest.mark.parametrize("seed", [-1, True, False, 1.5, "7", None])
