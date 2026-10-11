@@ -2,16 +2,17 @@
   "schema_version": "1.0.0",
   "record_type": "MIHUR_CONTENT_PROVENANCE",
   "package_id": "ALG-EQUATION-REASONING-R1",
-  "revision": "issue-337-r1",
+  "revision": "issue-337-r2",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "learner_data_writes": false,
   "mastery_writes": false,
   "source_heads": {
-    "main": "13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
+    "main": "313c13c9df4d530777cf89fb34f21dcedd91f454",
     "learning_packages_pr_327": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
     "learning_packages_pr_328": "2445f197259ff27b5c99dd2b45c4bcbc2e5292f8",
-    "algebra_sidecars_pr_334": "a14dc5d31c50ff17cfe6982ef1b9817de86deea9"
+    "algebra_sidecars_pr_334": "a14dc5d31c50ff17cfe6982ef1b9817de86deea9",
+    "equation_mve_pr_340": "b5e97702fd84ffb918cd3f6655b32e073cd99db8"
   },
   "classroom_evidence": {
     "milestone": "GitHub Issue #337",
@@ -55,7 +56,8 @@
     "app/services/problem_generation.py:_generate_solve_equation",
     "app/services/stepwork.py",
     "app/services/visualization.py:_balance_scale",
-    "frontend/src/mve/GuidedDistributivePractice.tsx"
+    "frontend/src/mve/GuidedDistributivePractice.tsx",
+    "frontend/src/mve/InteractiveEquationEquivalence.tsx@b5e97702fd84ffb918cd3f6655b32e073cd99db8"
   ],
   "learning_design": {
     "mihur_phases": {
@@ -73,8 +75,10 @@
       "VISUAL": "BALANCE_AND_DISTRIBUTIVE_REUSE_SPECIFIED_NOT_WIRED",
       "SYMBOLIC": "AUTHORED_DRAFT"
     },
-    "misconception_routing": "AUTHORED_DRAFT_NOT_IMPLEMENTED",
-    "unseen_transfer": "CONTENT_CONTRACT_ONLY"
+    "misconception_routing": "STRUCTURED_EVIDENCE_CLASSIFIER_AND_SEEDED_EXITS_TESTED_NOT_WIRED",
+    "scaffold_fading": "THREE_STAGE_CONTENT_CONTRACT_TESTED_NOT_WIRED",
+    "unseen_transfer": "LOCAL_SEEDED_MULTI_FIELD_GENERATOR_TESTED_NOT_WIRED",
+    "equation_mve": "PR_340_IMPLEMENTED_UNROUTED_NOT_PACKAGE_INTEGRATED"
   },
   "practice_and_assessment": {
     "seeded_practice": "LOCAL_DRAFT_GENERATOR",
@@ -88,7 +92,7 @@
   },
   "independent_reviews": {
     "mathematics": "PENDING",
-    "pedagogy": "PENDING",
+    "pedagogy": "CHANGES_REQUIRED_AT_3c8e2e6_R2_REVIEW_REQUIRED",
     "standards": "PENDING",
     "muse_qa": "PENDING_EXTERNAL_VERIFICATION",
     "engineering_integration": "NOT_REQUESTED",

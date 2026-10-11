@@ -7,7 +7,7 @@ content/oracle evidence without activating a lesson, assessment, or mastery path
 from __future__ import annotations
 
 import random
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from fractions import Fraction
 from typing import Any
 
@@ -18,6 +18,16 @@ STRUCTURES = (
     "NEGATIVE_DISTRIBUTION",
     "VARIABLES_BOTH_SIDES",
     "EQUIVALENT_EQUATIONS",
+)
+TRANSFER_STRUCTURES = ("PERIMETER_MODEL", "SERVICE_RATE_MODEL")
+MISCONCEPTIONS = frozenset(
+    {
+        "EQ.OP.ONE_SIDE",
+        "DIST.PARTIAL",
+        "DIST.NEGATIVE_DROPPED",
+        "EQ.DENOMINATOR_IGNORED",
+        "EQ.FALSE_EQUIVALENCE",
+    }
 )
 
 
@@ -55,13 +65,14 @@ class EquationVariant:
     structure: str
     prompt: str
     variable: str
-    left_coefficient: int
+    left_coefficient: Fraction | int
     left_constant: Fraction
-    right_coefficient: int
+    right_coefficient: Fraction | int
     right_constant: Fraction
     distribution_factor: int | None
     distribution_shift: int | None
     options: tuple[str, ...]
+    response_schema: tuple[str, ...]
     teacher_answer: dict[str, Any]
 
     def public_payload(self) -> dict[str, Any]:
@@ -70,6 +81,7 @@ class EquationVariant:
             "mode": self.mode,
             "structure": self.structure,
             "prompt": self.prompt,
+            "response_schema": list(self.response_schema),
         }
         if self.options:
             payload["options"] = list(self.options)
@@ -171,5 +183,237 @@ def generate(seed: int, mode: str) -> EquationVariant:
         distribution_factor=factor,
         distribution_shift=shift,
         options=options,
+        response_schema=(
+            "exact_solution",
+            "substitution_left",
+            "substitution_right",
+            "transformation_justification",
+        ),
         teacher_answer=teacher_answer,
+    )
+
+
+@dataclass(frozen=True)
+class TransferVariant:
+    variant_id: str
+    mode: str
+    structure: str
+    prompt: str
+    response_schema: tuple[str, ...]
+    model_parameters: dict[str, Fraction | int]
+    teacher_answer: dict[str, str]
+
+    def public_payload(self) -> dict[str, Any]:
+        return {
+            "variant_id": self.variant_id,
+            "mode": self.mode,
+            "structure": self.structure,
+            "prompt": self.prompt,
+            "response_schema": list(self.response_schema),
+        }
+
+
+def generate_transfer(seed: int, mode: str) -> TransferVariant:
+    """Create an unfamiliar, multi-field context without exposing its oracle."""
+
+    if isinstance(seed, bool) or not isinstance(seed, int):
+        raise TypeError("seed must be a non-boolean integer")
+    if seed < 0:
+        raise ValueError("seed must be non-negative")
+    if not isinstance(mode, str) or mode not in MODES:
+        raise ValueError(f"Unsupported mode: {mode!r}")
+
+    rng = random.Random(f"{NAMESPACE}:transfer:{mode}:{seed}")
+    structure = TRANSFER_STRUCTURES[seed % len(TRANSFER_STRUCTURES)]
+    response_schema = (
+        "relationship_equation",
+        "unknown_value",
+        "derived_quantity",
+        "unit",
+        "verification_left",
+        "verification_right",
+        "model_explanation",
+    )
+
+    if structure == "PERIMETER_MODEL":
+        width = rng.randint(3, 12)
+        multiplier = rng.choice((2, 3, 4))
+        offset = rng.randint(1, 8)
+        length = multiplier * width + offset
+        perimeter = 2 * width + 2 * length
+        rectangle_context = "community garden" if mode == "guided" else "solar-panel frame"
+        prompt = (
+            f"A rectangular {rectangle_context} has a length that is "
+            f"{multiplier} times its width plus {offset} metres. Its perimeter is "
+            f"{perimeter} metres. Define the unknown, construct one equation, find both "
+            "dimensions, and verify the perimeter with units."
+        )
+        teacher_answer = {
+            "relationship_equation": f"2w + 2({multiplier}w + {offset}) = {perimeter}",
+            "unknown_value": str(width),
+            "derived_quantity": str(length),
+            "unit": "metres",
+            "verification_left": str(perimeter),
+            "verification_right": str(perimeter),
+            "model_explanation": "Two widths plus two related lengths equal the perimeter.",
+        }
+        model_parameters: dict[str, Fraction | int] = {
+            "width": width,
+            "length": length,
+            "multiplier": multiplier,
+            "offset": offset,
+            "perimeter": perimeter,
+        }
+    else:
+        sessions = rng.randint(3, 12)
+        denominator = rng.choice((2, 4))
+        rate = Fraction(rng.choice((3, 5, 7, 9, 11)), denominator)
+        fixed_fee = Fraction(rng.randint(2, 9))
+        total = fixed_fee + rate * sessions
+        service_context = "tool-lending club" if mode == "guided" else "bike-repair membership"
+        prompt = (
+            f"A {service_context} charges a fixed {_text(fixed_fee)}-dollar fee plus "
+            f"{_text(rate)} dollars per borrowing session. A member paid {_text(total)} "
+            "dollars. Define the unknown, construct and solve an equation for the number "
+            "of sessions, and verify the total with units."
+        )
+        teacher_answer = {
+            "relationship_equation": f"{_text(fixed_fee)} + {_text(rate)}s = {_text(total)}",
+            "unknown_value": str(sessions),
+            "derived_quantity": _text(rate * sessions),
+            "unit": "sessions",
+            "verification_left": _text(total),
+            "verification_right": _text(total),
+            "model_explanation": "The total is the fixed fee plus rate times session count.",
+        }
+        model_parameters = {
+            "sessions": sessions,
+            "rate": rate,
+            "fixed_fee": fixed_fee,
+            "total": total,
+        }
+
+    return TransferVariant(
+        variant_id=f"{NAMESPACE}:transfer:{mode}:{seed}",
+        mode=mode,
+        structure=structure,
+        prompt=prompt,
+        response_schema=response_schema,
+        model_parameters=model_parameters,
+        teacher_answer=teacher_answer,
+    )
+
+
+def diagnose_response(evidence: dict[str, object]) -> str | None:
+    """Route structured step evidence; correct work never enters remediation."""
+
+    if not isinstance(evidence, dict):
+        raise TypeError("evidence must be a dictionary")
+    boolean_fields = {
+        "changed_left",
+        "changed_right",
+        "outside_factor_applied_to_variable",
+        "outside_factor_applied_to_constant",
+        "negative_factor_present",
+        "constant_product_sign_correct",
+        "denominator_present",
+        "denominator_operation_both_sides",
+        "equivalence_task",
+        "global_nonzero_operation",
+        "response_correct",
+    }
+    unknown = set(evidence) - boolean_fields
+    if unknown:
+        raise ValueError(f"Unsupported evidence fields: {sorted(unknown)!r}")
+    if any(type(value) is not bool for value in evidence.values()):
+        raise TypeError("all evidence values must be booleans")
+    if evidence.get("response_correct") is True:
+        return None
+
+    changed_left = evidence.get("changed_left")
+    changed_right = evidence.get("changed_right")
+    if changed_left is not None and changed_right is not None and changed_left != changed_right:
+        return "EQ.OP.ONE_SIDE"
+    if (
+        evidence.get("outside_factor_applied_to_variable") is True
+        and evidence.get("outside_factor_applied_to_constant") is False
+    ):
+        return "DIST.PARTIAL"
+    if (
+        evidence.get("negative_factor_present") is True
+        and evidence.get("outside_factor_applied_to_constant") is True
+        and evidence.get("constant_product_sign_correct") is False
+    ):
+        return "DIST.NEGATIVE_DROPPED"
+    if (
+        evidence.get("denominator_present") is True
+        and evidence.get("denominator_operation_both_sides") is False
+    ):
+        return "EQ.DENOMINATOR_IGNORED"
+    if evidence.get("equivalence_task") is True and evidence.get("global_nonzero_operation") is False:
+        return "EQ.FALSE_EQUIVALENCE"
+    return None
+
+
+def generate_repair_exit(seed: int, misconception_id: str) -> EquationVariant:
+    """Return a fresh guided exit item targeted to one diagnosed misconception."""
+
+    if isinstance(seed, bool) or not isinstance(seed, int):
+        raise TypeError("seed must be a non-boolean integer")
+    if seed < 0:
+        raise ValueError("seed must be non-negative")
+    if misconception_id not in MISCONCEPTIONS:
+        raise ValueError(f"Unsupported misconception: {misconception_id!r}")
+    if misconception_id == "EQ.DENOMINATOR_IGNORED":
+        rng = random.Random(f"{NAMESPACE}:repair-exit:{misconception_id}:{seed}")
+        variable = rng.choice(("x", "n", "p"))
+        denominator = rng.choice((3, 4, 5, 6))
+        solution = _solution(rng)
+        addend = Fraction(rng.choice(tuple(n for n in range(-8, 9) if n)))
+        left_coefficient = Fraction(1, denominator)
+        right_constant = left_coefficient * solution + addend
+        prompt = (
+            f"Solve {variable}/{denominator} {'+' if addend > 0 else '-'} "
+            f"{_text(abs(addend))} = {_text(right_constant)}. Name the operation that "
+            "undoes the denominator, apply it to the entire left and right sides, and "
+            "verify the original fractional equation by substitution."
+        )
+        return EquationVariant(
+            variant_id=f"{NAMESPACE}:repair-exit:{misconception_id}:{seed}",
+            mode="guided",
+            structure="TWO_STEP_RATIONAL",
+            prompt=prompt,
+            variable=variable,
+            left_coefficient=left_coefficient,
+            left_constant=addend,
+            right_coefficient=0,
+            right_constant=right_constant,
+            distribution_factor=None,
+            distribution_shift=None,
+            options=(),
+            response_schema=(
+                "exact_solution",
+                "substitution_left",
+                "substitution_right",
+                "transformation_justification",
+            ),
+            teacher_answer={
+                "solution": _text(solution),
+                "left_at_solution": _text(right_constant),
+                "right_at_solution": _text(right_constant),
+                "substitution_verified": True,
+            },
+        )
+    target_structure = {
+        "EQ.OP.ONE_SIDE": "VARIABLES_BOTH_SIDES",
+        "DIST.PARTIAL": "NEGATIVE_DISTRIBUTION",
+        "DIST.NEGATIVE_DROPPED": "NEGATIVE_DISTRIBUTION",
+        "EQ.FALSE_EQUIVALENCE": "EQUIVALENT_EQUATIONS",
+    }[misconception_id]
+    target_index = STRUCTURES.index(target_structure)
+    fresh_seed = 10_000 + seed * len(STRUCTURES) + target_index
+    item = generate(fresh_seed, "guided")
+    return replace(
+        item,
+        variant_id=f"{NAMESPACE}:repair-exit:{misconception_id}:{seed}",
     )
