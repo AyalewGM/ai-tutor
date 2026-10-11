@@ -99,6 +99,14 @@ export interface BalanceOperationAppliedEvent extends MathInteractionBase {
   left_x: number; left_units: number; right_x: number; right_units: number;
 }
 
+export interface EquationTransformationAppliedEvent extends MathInteractionBase {
+  type: "EQUATION_TRANSFORMATION_APPLIED";
+  operation: "ADD_CONSTANT_BOTH" | "ADD_VARIABLE_BOTH" | "SCALE_BOTH";
+  amount_numerator: number;
+  amount_denominator: number;
+  preserved: true;
+}
+
 export interface ExplorerDatasetChangedEvent extends MathInteractionBase {
   type: "EXPLORER_DATASET_CHANGED";
   values: readonly number[];
@@ -107,6 +115,7 @@ export interface ExplorerDatasetChangedEvent extends MathInteractionBase {
 export type MathInteractionEvent =
   | ExplorerDatasetChangedEvent
   | BalanceOperationAppliedEvent
+  | EquationTransformationAppliedEvent
   | LinearParametersChangedEvent
   | IntegerDisplacementChangedEvent
   | PointPlacedEvent
@@ -132,6 +141,12 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "EQUATION_TRANSFORMATION_APPLIED":
+      return Object.keys(event).every(key => ["schema_version", "type", "operation", "amount_numerator", "amount_denominator", "preserved"].includes(key)) &&
+        ["ADD_CONSTANT_BOTH", "ADD_VARIABLE_BOTH", "SCALE_BOTH"].includes(String(event.operation)) &&
+        Number.isSafeInteger(event.amount_numerator) && Math.abs(event.amount_numerator as number) <= 10000 &&
+        Number.isSafeInteger(event.amount_denominator) && (event.amount_denominator as number) >= 1 && (event.amount_denominator as number) <= 10000 &&
+        event.preserved === true && !(event.operation === "SCALE_BOTH" && event.amount_numerator === 0);
     case "EXPLORER_DATASET_CHANGED":
       return Object.keys(event).every(key => ["schema_version", "type", "values"].includes(key)) &&
         Array.isArray(event.values) && event.values.length >= 1 && event.values.length <= 6 &&
