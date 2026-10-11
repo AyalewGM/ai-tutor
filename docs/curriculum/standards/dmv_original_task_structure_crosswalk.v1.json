@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
-  "artifact_id": "DMV_ORIGINAL_TASK_STRUCTURE_CROSSWALK_V1_R5",
+  "artifact_id": "DMV_ORIGINAL_TASK_STRUCTURE_CROSSWALK_V1_R6",
   "status": "DRAFT_UNVERIFIED_RESEARCH_ONLY_RUNTIME_DISABLED",
   "created_date": "2026-10-11",
-  "inspected_main": "b03f01860bbad618e84b7a5d02689307474a96e5",
+  "inspected_main": "a740e51d691b8fcd990e1faf31baf7e53f3f230c",
   "purpose": "A jurisdiction-neutral, reuse-first inventory of mathematical task structures for Maryland, Virginia, and Washington, DC. It records official standards evidence, current district curriculum listings, vendor topic-sequence research, and implementation gaps as separate evidence layers without creating jurisdiction-specific skill engines or claiming accepted coverage.",
   "governance": {
     "principle": "BUILD_ONCE_MAP_MANY_DEPTH_BEFORE_BREADTH",
@@ -877,12 +877,12 @@
       "canonical_disposition": "PROPOSE_IDENTITY_REVIEW",
       "canonical_skill_codes": [],
       "implementation": {
-        "generator": "DRAFT_PR_344_QUOTIENT_GENERATOR_MATH_APPROVED__PR_349_TWO_SCOPE_CARDS_MATH_APPROVED",
-        "tests": "PR_349_CI_1398_AND_APPSEC_768_PASS__PR_350_CI_1425_AND_APPSEC_795_PASS",
-        "mve_or_student_route": "DRAFT_PR_350_GUIDED_MVE_PEDAGOGY_ACCEPTED_AND_BOUNDED_MUSE_QA_PASS__REAL_ROUTE_AND_TRUSTED_ASSESSMENT_OPEN",
-        "socratic_remediation": "PR_350_GUIDED_DIAGNOSIS_AND_FADE_PEDAGOGY_ACCEPTED__PACKAGE_TRANSFER_NOT_ACCEPTED",
-        "backend_independent_assessment": "PR_346_DRAFT_SCORER_MATH_APPROVED__BACKEND_RECONCILIATION_AND_EXACT_HEAD_APPSEC_OPEN",
-        "qa": "NOT_REVIEWED"
+        "generator": "PR_344_MERGED_MAIN__PR_346_POLYNOMIAL_GENERATOR_DOMAIN_CORRECTED_AT_2BFC1110__LIMITED_MATH_REVIEW_PENDING",
+        "tests": "PR_346_CI_1452_PASS_APPSEC_ABSENT__PR_351_CI_1449_APPSEC_818_PASS__PR_352_CI_1450_APPSEC_819_PASS",
+        "mve_or_student_route": "PR_350_GUIDED_MVE_MERGED_MAIN__LIVE_ROUTE_AUTHORITY_NOT_ACCEPTED__PR_351_DEFAULT_OFF_PENDING_APPROVED_SERVER_CAPABILITY",
+        "socratic_remediation": "PR_350_GUIDED_DIAGNOSIS_BOUNDED_ACCEPTANCE_RETAINED__REAL_ROUTED_PACKAGE_AND_TRANSFER_NOT_ACCEPTED",
+        "backend_independent_assessment": "PR_346_2BFC1110_GENERATOR_DOMAIN_CORRECTION_PENDING_LIMITED_MATH_REVIEW__CI_PASS__APPSEC_ABSENT__RUNTIME_OFF",
+        "qa": "NOT_REVIEWED_FOR_CURRENT_MAIN_ROUTE_OR_COMPLETE_PACKAGE"
       },
       "gap": "Both draft polynomial-division scope cards and PR #348's mathematical evidence specification are approved. PR #350 supplies a bounded guided MVE with pedagogical acceptance and Muse QA, but real routed-package evidence, trusted backend assessment, standards acceptance, and package-level QA remain open.",
       "owners": [
@@ -917,6 +917,14 @@
         "source": "PR_349@79f272a6f8d21de348eb458e62a086363d724585",
         "implementation_source": "PR_348@ecb83965e366b78fb04b89ae07331cf67b012169",
         "correction": "TWO_PLUS_TERM_BOUNDARY_APPLIES_TO_ORIGINAL_WRITTEN_DIVIDEND__CANONICALIZATION_MAY_REMOVE_ZERO_TERMS"
+      },
+      "implementation_review": {
+        "latest_math_finding": "PR_346_CEC599A2_REQUEST_CHANGES__POLYNOMIAL_DIVIDEND_COULD_HAVE_NEGATIVE_EXPONENTS",
+        "author_correction": "PR_346_2BFC1110__WRITTEN_DIVIDEND_EXPONENTS_NONNEGATIVE__NEGATIVE_QUOTIENT_EXPONENTS_RETAINED",
+        "limited_independent_math_re_review": "PENDING",
+        "route_correction": "PR_351_859F98CA__DEFAULT_OFF__ARCHITECTURE_ACCEPTED",
+        "package_preservation": "PR_352_ECB83965__DRAFT_ONLY__ARCHITECTURE_ACCEPTED",
+        "standards_effect": "NONE__RELATIONS_REMAIN_PROVISIONAL"
       }
     },
     {
@@ -1231,9 +1239,11 @@
     "architecture_accepted_draft_labels": 11,
     "mathematically_approved_draft_cards": 11,
     "mathematically_changes_requested_draft_cards": 0,
-    "standards_accepted_rows": 0
+    "standards_accepted_rows": 0,
+    "post_merge_stabilization_prs_recorded": 2,
+    "pending_limited_math_re_reviews": 1
   },
-  "revision": "2026-10-11-independent-review-closure-reconciliation-r5",
+  "revision": "2026-10-11-post-merge-stabilization-r6",
   "historical_research_tracks": [
     {
       "track_id": "MCPS_IM_ALGEBRA1_SUPPORT_2019",
@@ -1564,7 +1574,7 @@
       "status": "ELEVEN_DRAFT_LABELS_AND_GRANULARITY_ACCEPTED_R2__NO_COLLISION_FOUND__NOT_CANONICAL_OR_RUNTIME_AUTHORITY"
     },
     "independent_mathematical_review": {
-      "source": "https://github.com/AyalewGM/ai-tutor/issues/337#issuecomment-6109037688",
+      "source": "https://github.com/AyalewGM/ai-tutor/issues/337#issuecomment-6110141576",
       "taxonomy_pr_349": {
         "head": "79f272a6f8d21de348eb458e62a086363d724585",
         "approved_cards": 11,
@@ -1574,16 +1584,20 @@
       "implementation_prs": {
         "343": "MATH_SCOPE_APPROVED__SERVICE_RATE_UNITS_AND_RECONSTRUCTION",
         "344": "CORRECTED_GENERATOR_MATH_APPROVED__ZERO_EXPONENT_NONZERO_BASE",
-        "346": "DRAFT_ROOT_SCORER_MATH_APPROVED__TRUSTED_BACKEND_INTEGRATION_AND_EXACT_HEAD_APPSEC_STILL_OPEN",
+        "346": "DRAFT_ROOT_SCORER_MATH_APPROVED__NEW_POLYNOMIAL_GENERATOR_DOMAIN_CORRECTED_AT_2BFC1110__LIMITED_MATH_REVIEW_PENDING__TRUSTED_BACKEND_INTEGRATION_NOT_ACCEPTED",
         "348": "MATH_AND_EVIDENCE_SPEC_APPROVED__MVE_FRONTEND_PEDAGOGY_AND_QA_STILL_OPEN",
-        "350": "GUIDED_MVE_PEDAGOGY_ACCEPTED_AND_BOUNDED_MUSE_QA_PASS__REAL_ROUTE_AND_TRUSTED_ASSESSMENT_STILL_OPEN"
+        "350": "GUIDED_MVE_PEDAGOGY_ACCEPTED_AND_BOUNDED_MUSE_QA_PASS__MERGED_MAIN_AT_928EF884__DISPLAY_NAME_ROUTING_AUTHORITY_NOT_ACCEPTED__FOLLOWUP_PR_351_DEFAULT_OFF",
+        "351": "DEFAULT_OFF_ROUTING_CORRECTION_ARCHITECTURE_ACCEPTED__CI_1449_APPSEC_818_PASS__NO_SERVER_CAPABILITY_OR_RUNTIME_AUTHORITY",
+        "352": "PR_348_DRAFT_PACKAGE_PRESERVATION_ONLY__ARCHITECTURE_ACCEPTED__CI_1450_APPSEC_819_PASS__NO_STANDARDS_OR_RUNTIME_AUTHORITY"
       }
     },
     "standards_effect": "NO_MAPPING_ACCEPTED__SOURCE_RELATIONS_REMAIN_PROVISIONAL",
     "technical_evidence": {
       "taxonomy_pr_349": "CI_1398_PASS__APPSEC_768_PASS",
-      "root_scorer_pr_346": "CI_1378_PASS__EXACT_HEAD_APPSEC_ABSENT_STACKED_BASE",
-      "guided_polynomial_mve_pr_350": "CI_1425_PASS__APPSEC_795_PASS__BOUNDED_EXTERNAL_MUSE_QA_PASS"
-    }
+      "root_scorer_pr_346": "CI_1452_PASS_AT_2BFC1110__EXACT_HEAD_APPSEC_ABSENT_STACKED_BASE__LIMITED_GENERATOR_DOMAIN_MATH_REVIEW_PENDING",
+      "guided_polynomial_mve_pr_350": "MERGED_MAIN_928EF884__FOLLOWUP_PR_351_CI_1449_APPSEC_818_PASS__ROUTE_DEFAULT_OFF_PENDING_SERVER_CAPABILITY",
+      "polynomial_package_preservation_pr_352": "CI_1450_PASS__APPSEC_819_PASS__DRAFT_PRESERVATION_ONLY"
+    },
+    "post_merge_consequence": "IMPLEMENTATION_STATUS_RECONCILIATION_ONLY__NO_SOURCE_OR_STANDARDS_RELATION_CHANGED"
   }
 }
