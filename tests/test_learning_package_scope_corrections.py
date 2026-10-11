@@ -62,3 +62,28 @@ def test_signed_integer_scope_matches_addition_only_runtime():
     assert -8 + 3 == -5
     assert -6 + (-4) == -10
     assert -15 + 38 == 23
+
+
+def test_histogram_unseen_bin_modality_and_interval_evidence():
+    p = _package("learning-packages-wave4", "W4-G6-HISTOGRAM-CONTEXT")
+    tagged = [i for i in p["independent_assessment"] if i.get("evidence")]
+    assert len(tagged) >= 2
+    assert sum([3, 1]) == 4
+    assert max([2, 6, 3, 1]) == 6
+    assert 10 <= 10 < 15
+    assert 2 < 5 < 8 and 8 > 5 > 2
+    assert all(i["hints_allowed"] is False for i in tagged)
+    assert p["runtime_activation"] is False
+
+
+def test_full_figure_translation_reflection_and_invariants():
+    p = _package("learning-packages-wave3", "W3-G8-COORDINATE-TRANSFORM")
+    tagged = [i for i in p["independent_assessment"] if i.get("evidence")]
+    assert len(tagged) >= 2
+    triangle = [(-2, 1), (1, 1), (-2, 4)]
+    translated = [(x + 4, y - 3) for x, y in triangle]
+    assert translated == [(2, -2), (5, -2), (2, 1)]
+    other = [(1, 1), (4, 1), (1, 3)]
+    assert [(-x, y) for x, y in other] == [(-1, 1), (-4, 1), (-1, 3)]
+    assert all(i["hints_allowed"] is False for i in tagged)
+    assert p["runtime_activation"] is False
