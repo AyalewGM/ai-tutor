@@ -58,13 +58,19 @@ def test_reproducible_unique_exact_and_draft_only(seed: int) -> None:
         assert item["mathematical_reasoning"]
 
 
-@pytest.mark.parametrize("invalid", [0, -1, 31, 1.5, True])
-def test_invalid_counts_fail_closed(invalid: object) -> None:
+@pytest.mark.parametrize("invalid", [0, -1, 31])
+def test_invalid_count_range_fails_closed(invalid: int) -> None:
     with pytest.raises(ValueError):
+        generate(variants_per_phase=invalid)
+
+
+@pytest.mark.parametrize("invalid", [1.5, True])
+def test_invalid_count_type_fails_closed(invalid: object) -> None:
+    with pytest.raises(TypeError):
         generate(variants_per_phase=invalid)  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize("invalid", [True, 1.5, "3"])
-def test_invalid_seed_fail_closed(invalid: object) -> None:
-    with pytest.raises(ValueError):
+def test_invalid_seed_type_fails_closed(invalid: object) -> None:
+    with pytest.raises(TypeError):
         generate(seed=invalid)  # type: ignore[arg-type]
