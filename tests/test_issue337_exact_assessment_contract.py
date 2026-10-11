@@ -23,12 +23,17 @@ def _wire_fraction(value: Fraction | int) -> str:
     )
 
 
+def _wire_exact_real(value: contract.ExactReal) -> dict[str, object]:
+    return {
+        "rational": _wire_fraction(value.rational),
+        "radical_coefficient": _wire_fraction(value.radical_coefficient),
+        "radicand": value.radicand,
+    }
+
+
 def _correct_wire_response(variant: contract.HiddenExactVariant) -> dict[str, object]:
     oracle = variant.oracle
-    if variant.kind in {
-        contract.ExactAlgebraKind.LINEAR_EQUATION,
-        contract.ExactAlgebraKind.ROOT_EQUATION,
-    }:
+    if variant.kind == contract.ExactAlgebraKind.LINEAR_EQUATION:
         return {
             "classification": oracle["classification"],
             "solutions": [_wire_fraction(value) for value in oracle["solutions"]],
@@ -37,6 +42,19 @@ def _correct_wire_response(variant: contract.HiddenExactVariant) -> dict[str, ob
                     "solution": _wire_fraction(solution),
                     "left_value": _wire_fraction(left_value),
                     "right_value": _wire_fraction(right_value),
+                }
+                for solution, left_value, right_value in oracle["substitution_checks"]
+            ],
+        }
+    if variant.kind == contract.ExactAlgebraKind.ROOT_EQUATION:
+        return {
+            "classification": oracle["classification"],
+            "solutions": [_wire_exact_real(value) for value in oracle["solutions"]],
+            "substitution_checks": [
+                {
+                    "solution": _wire_exact_real(solution),
+                    "left_value": _wire_exact_real(left_value),
+                    "right_value": _wire_exact_real(right_value),
                 }
                 for solution, left_value, right_value in oracle["substitution_checks"]
             ],
@@ -159,28 +177,49 @@ def test_equation_substitution_is_exact_evidence_not_a_client_truth_flag() -> No
 
 def test_root_oracle_is_complete_or_correctly_reports_no_real_solutions() -> None:
     observed: set[str] = set()
-    for seed in range(100):
+    root_outcomes: set[str] = set()
+    for seed in range(200):
         variant = contract.generate_hidden_variant(contract.ExactAlgebraKind.ROOT_EQUATION, seed)
         parameters = variant.parameters
         classification = variant.oracle["classification"]
         observed.add(classification)
+        root_outcomes.add(parameters["root_outcome"])
         solutions = variant.oracle["solutions"]
         if parameters["radicand"] < 0:
             assert classification == "NO_REAL_SOLUTIONS"
             assert solutions == ()
+        elif parameters["radicand"] == 0:
+            assert classification == "ONE_REAL_SOLUTION"
+            assert solutions == (
+                contract.ExactReal(Fraction(-parameters["shift"], parameters["coefficient"])),
+            )
         else:
             assert classification == "TWO_REAL_SOLUTIONS"
             assert len(solutions) == 2
-            assert all(
-                (parameters["coefficient"] * value + parameters["shift"]) ** 2
-                == parameters["radicand"]
-                for value in solutions
+        for solution, left_value, right_value in variant.oracle["substitution_checks"]:
+            affine_rational = (
+                parameters["coefficient"] * solution.rational + parameters["shift"]
             )
-            assert variant.oracle["substitution_checks"] == tuple(
-                (value, Fraction(parameters["radicand"]), Fraction(parameters["radicand"]))
-                for value in solutions
+            affine_radical = parameters["coefficient"] * solution.radical_coefficient
+            independently_squared = contract.ExactReal(
+                affine_rational**2 + affine_radical**2 * solution.radicand,
+                2 * affine_rational * affine_radical,
+                solution.radicand if affine_rational and affine_radical else 0,
             )
-    assert observed == {"NO_REAL_SOLUTIONS", "TWO_REAL_SOLUTIONS"}
+            assert left_value == independently_squared
+            assert right_value == contract.ExactReal(Fraction(parameters["radicand"]))
+            assert left_value == right_value
+    assert observed == {
+        "NO_REAL_SOLUTIONS",
+        "ONE_REAL_SOLUTION",
+        "TWO_REAL_SOLUTIONS",
+    }
+    assert root_outcomes == {
+        "NEGATIVE",
+        "ZERO",
+        "POSITIVE_SQUARE",
+        "POSITIVE_NONSQUARE",
+    }
 
 
 def test_principal_root_diagnostic_uses_positive_root_branch_for_negative_coefficients() -> None:
@@ -188,15 +227,42 @@ def test_principal_root_diagnostic_uses_positive_root_branch_for_negative_coeffi
     for seed in range(1, 200):
         variant = contract.generate_hidden_variant(contract.ExactAlgebraKind.ROOT_EQUATION, seed)
         parameters = variant.parameters
-        if parameters["radicand"] < 0 or parameters["coefficient"] > 0:
+        if parameters["radicand"] <= 0 or parameters["coefficient"] > 0:
             continue
-        positive_root = Fraction(math.isqrt(parameters["radicand"]))
-        expected = (positive_root - parameters["shift"]) / parameters["coefficient"]
+        radicand = parameters["radicand"]
+        square_root = math.isqrt(radicand)
+        if square_root * square_root == radicand:
+            expected = contract.ExactReal(
+                Fraction(square_root - parameters["shift"], parameters["coefficient"])
+            )
+        else:
+            expected = contract.ExactReal(
+                Fraction(-parameters["shift"], parameters["coefficient"]),
+                Fraction(1, parameters["coefficient"]),
+                radicand,
+            )
         alternative = variant.misconception_responses["ROOT.PRINCIPAL_ONLY"]
         assert alternative["solutions"] == (expected,)
-        assert alternative["solutions"] != (variant.oracle["solutions"][-1],)
         checked += 1
     assert checked > 10
+
+
+def test_root_scoring_requires_canonical_exact_radicals() -> None:
+    irrational = next(
+        contract.generate_hidden_variant(contract.ExactAlgebraKind.ROOT_EQUATION, seed)
+        for seed in range(100)
+        if seed % 4 == 3
+    )
+    response = _correct_wire_response(irrational)
+    response["solutions"][0]["radicand"] = 12
+    with pytest.raises(ValueError, match="square-free"):
+        contract.score_exact_response(irrational, response)
+
+    zero = contract.generate_hidden_variant(contract.ExactAlgebraKind.ROOT_EQUATION, 1)
+    zero_response = _correct_wire_response(zero)
+    zero_response["solutions"][0]["radicand"] = 5
+    with pytest.raises(ValueError, match="radicand zero"):
+        contract.score_exact_response(zero, zero_response)
 
 
 @pytest.mark.parametrize(
@@ -373,10 +439,7 @@ def test_known_misconceptions_are_classified_without_returning_hints() -> None:
             variant = contract.generate_hidden_variant(kind, seed)
             for code, response in variant.misconception_responses.items():
                 wire = _correct_wire_response(variant)
-                if kind in {
-                    contract.ExactAlgebraKind.LINEAR_EQUATION,
-                    contract.ExactAlgebraKind.ROOT_EQUATION,
-                }:
+                if kind == contract.ExactAlgebraKind.LINEAR_EQUATION:
                     wire = {
                         "classification": response["classification"],
                         "solutions": [_wire_fraction(value) for value in response["solutions"]],
@@ -387,6 +450,23 @@ def test_known_misconceptions_are_classified_without_returning_hints() -> None:
                                 "right_value": _wire_fraction(right_value),
                             }
                             for solution, left_value, right_value in response["substitution_checks"]
+                        ],
+                    }
+                elif kind == contract.ExactAlgebraKind.ROOT_EQUATION:
+                    wire = {
+                        "classification": response["classification"],
+                        "solutions": [
+                            _wire_exact_real(value) for value in response["solutions"]
+                        ],
+                        "substitution_checks": [
+                            {
+                                "solution": _wire_exact_real(solution),
+                                "left_value": _wire_exact_real(left_value),
+                                "right_value": _wire_exact_real(right_value),
+                            }
+                            for solution, left_value, right_value in response[
+                                "substitution_checks"
+                            ]
                         ],
                     }
                 elif kind == contract.ExactAlgebraKind.EXPONENT_LAWS:
