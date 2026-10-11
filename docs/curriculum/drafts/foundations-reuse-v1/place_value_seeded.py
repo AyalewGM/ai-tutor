@@ -36,6 +36,7 @@ class PlaceValueVariant:
     verification: str
     comparison_values: tuple[int, int] | None = None
     first_differing_place: str | None = None
+    post_exchange_inventory: tuple[int, int, int] | None = None
 
     def public_payload(self) -> dict[str, object]:
         """Return learner-visible fields with no answer, hint, or worked step."""
@@ -117,9 +118,10 @@ def generate(seed: int, mode: str) -> PlaceValueVariant:
             tens,
             ones,
             total,
-            after,
+            _canonical(total),
             f"{after[0]} hundreds, {after[1]} tens, {after[2]} ones; total {total}",
             f"{hundreds}×100 + {tens}×10 + {ones} = {after[0]}×100 + {after[1]}×10 + {after[2]} = {total}",
+            post_exchange_inventory=after,
         )
 
     if structure == "ZERO_PLACEHOLDER":
@@ -228,3 +230,24 @@ def diagnose_comparison_response(
     if first_differing_place != item.first_differing_place:
         return "PLACE_SEQUENCE_CONFUSION"
     return "COMPARISON_NOT_ESTABLISHED"
+
+
+def diagnose_exchange_response(
+    item: PlaceValueVariant,
+    new_inventory: tuple[int, int, int],
+    total_before: int,
+    total_after: int,
+) -> str:
+    """Check the full observed exchange, never infer understanding from a total alone."""
+    if item.structure != "EXCHANGE_INVARIANT" or item.post_exchange_inventory is None:
+        return "WRONG_RESPONSE_TYPE"
+    if (not isinstance(new_inventory, tuple) or len(new_inventory) != 3 or
+        any(isinstance(v, bool) or not isinstance(v, int) or v < 0 for v in new_inventory) or
+        any(isinstance(v, bool) or not isinstance(v, int) for v in (total_before, total_after))):
+        return "INVALID_RESPONSE"
+    if new_inventory != item.post_exchange_inventory:
+        return "EXCHANGE_INVENTORY_NOT_ESTABLISHED"
+    reconstructed = 100 * new_inventory[0] + 10 * new_inventory[1] + new_inventory[2]
+    if total_before != item.total or total_after != item.total or reconstructed != item.total:
+        return "EXCHANGE_VALUE_NOT_PRESERVED"
+    return "CORRECT_PRACTICE_ONLY"
