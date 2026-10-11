@@ -111,7 +111,10 @@ jobs:
         run: docker compose exec -T tutor-api alembic upgrade head
 
       - name: Seed browser E2E content
-        run: docker compose exec -T tutor-api python scripts/seed_sprint1.py
+        run: |
+          docker compose exec -T tutor-api python scripts/seed_sprint1.py
+          docker compose exec -T tutor-api python scripts/seed_grade7.py
+          docker compose exec -T tutor-api python scripts/seed_learn_content.py
 
       - name: Set up Node
         uses: actions/setup-node@v4

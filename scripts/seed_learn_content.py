@@ -22,6 +22,7 @@ def _content(
     *examples: dict,
     key_terms: list[tuple[str, str]] | None = None,
     watch_out: list[str] | None = None,
+    guided_interactions: list[str] | None = None,
 ) -> dict:
     return {
         "summary": summary,
@@ -31,6 +32,7 @@ def _content(
             for term, definition in (key_terms or [])
         ],
         "watch_out": list(watch_out or []),
+        "guided_interactions": list(guided_interactions or []),
     }
 
 
@@ -384,6 +386,7 @@ INTEGER_OPS = _content(
         "Sign slips on subtraction: −4 − (−9) becomes −4 + 9.",
         "Forgetting that negative × negative is positive — different signs are negative.",
     ],
+    guided_interactions=["MATH.INT.ADD"],
 )
 
 SLOPE_INTERCEPT = _content(
@@ -718,6 +721,7 @@ LEARN_CONTENT: dict[str, dict] = {
     "M7.RP.PERCENT.OF": PERCENT,
     "M7.RP.PROP": PROPORTIONAL,
     "M7.RP.PROP.RATE": UNIT_RATE,
+    "M7.NS.RAT": INTEGER_OPS,
     # MCPS Math 8
     "M8.ALG.DIST": DISTRIBUTE,
     "M8.ALG.DIST.NEG": DISTRIBUTE_NEG,
