@@ -105,6 +105,27 @@ def test_quadratic_pattern_uses_constant_second_differences(seed: int) -> None:
     }
 
 
+@pytest.mark.parametrize("seed", [0, 3, 17, 91])
+def test_four_quadratic_observations_need_declared_continuation(seed: int) -> None:
+    """Four samples alone never establish a unique stage-4 extrapolation."""
+    oracles = load_oracles_module()
+    record = oracles.generate_quadratic_pattern(seed, "independent")
+    values = record["parameters"]["tile_counts"]
+    answer = record["answer_teacher_only"]
+    a = answer["leading_coefficient"]
+    b = answer["linear_coefficient"]
+    c = answer["constant"]
+
+    def alternative(n: int) -> int:
+        return a * n**2 + b * n + c + n * (n - 1) * (n - 2) * (n - 3)
+
+    assert [alternative(n) for n in range(4)] == values
+    assert alternative(4) == answer["stage_4_prediction"] + 24
+    assert "constant second differences" in record["prompt"]
+    assert "at every later stage" in record["prompt"]
+    assert "answer_teacher_only" not in oracles.public_payload(record)
+
+
 @pytest.mark.parametrize("seed", range(100))
 def test_exponential_variants_match_repeated_fraction_oracle(seed: int) -> None:
     oracles = load_oracles_module()
