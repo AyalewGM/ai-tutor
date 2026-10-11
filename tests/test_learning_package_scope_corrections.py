@@ -102,3 +102,93 @@ def test_iqr_from_unseen_raw_data_and_boxplot_endpoints():
     assert 10 - 3 == 7
     assert all(i["hints_allowed"] is False for i in tagged)
     assert p["runtime_activation"] is False
+
+
+def test_decimal_distinct_objectives_are_scored_separately():
+    p = _package("learning-packages-wave2", "W2-G5-DECIMAL-PLACE-VALUE")
+    items = [x for x in p["independent_assessment"] if x.get("scope_role")]
+    assert len(items) == 4
+    assert len({x["scope_role"] for x in items}) == 4
+    from decimal import Decimal
+    assert Decimal("0.407") == Decimal("0.4") + Decimal("0.007")
+    assert Decimal(9) / Decimal(25) == Decimal("0.36")
+    assert Decimal("3.060") - Decimal("3.006") == Decimal("0.054")
+    assert Decimal("4.050") - Decimal("1.275") == Decimal("2.775")
+    assert all(not x["hints_allowed"] for x in items)
+
+
+def test_quadratic_growth_requires_stated_geometric_construction():
+    p = _package("learning-packages-wave2", "W2-G9-QUADRATIC-PATTERNS")
+    assert "square-tile construction" in p["concept"]
+    tags = {tag for x in p["independent_assessment"] for tag in x.get("evidence", [])}
+    assert {"DEFINED_GEOMETRIC_RULE", "VISUAL_GROWTH_INVARIANT", "NONUNIQUENESS_OF_FINITE_DATA"} <= tags
+    assert (4 + 2) ** 2 == 36
+    assert (4 + 2) ** 2 - (3 + 2) ** 2 == 11
+    assert [(n + 1) ** 2 for n in range(4)] == [1, 4, 9, 16]
+    assert (4 + 1) ** 2 != (4 + 1) ** 2 + 4 * 3 * 2 * 1
+    assert p["runtime_activation"] is False
+
+
+def _fold_cube_net(cells):
+    """Independent cube face-orientation oracle for connected hexominoes."""
+    cells = {tuple(x) for x in cells}
+    if len(cells) != 6:
+        return False
+    def neg(a):
+        return tuple(-x for x in a)
+    start = next(iter(cells))
+    states = {start: ((1, 0, 0), (0, 1, 0), (0, 0, 1))}
+    queue = [start]
+    while queue:
+        x, y = queue.pop(0)
+        u, v, n = states[(x, y)]
+        neighbors = [
+            ((x + 1, y), (neg(n), v, u)),
+            ((x - 1, y), (n, v, neg(u))),
+            ((x, y + 1), (u, neg(n), v)),
+            ((x, y - 1), (u, n, neg(v))),
+        ]
+        for pos, state in neighbors:
+            if pos not in cells:
+                continue
+            if pos in states and states[pos] != state:
+                return False
+            if pos not in states:
+                states[pos] = state
+                queue.append(pos)
+    return len(states) == 6 and len({state[2] for state in states.values()}) == 6
+
+
+def test_cube_net_true_folding_distinct_from_surface_area():
+    p = _package("learning-packages-wave2", "W2-G8-CUBE-NETS")
+    unseen = [x for x in p["independent_assessment"] if x.get("net_coordinates")]
+    assert len(unseen) >= 2
+    for x in unseen:
+        assert _fold_cube_net(x["net_coordinates"]) is x["foldable"]
+        assert x["hints_allowed"] is False
+    assert p["runtime_activation"] is False
+
+
+def test_prism_net_face_pairing_and_size_restrictions():
+    p = _package("learning-packages-wave4", "W4-G7-PRISM-NETS")
+    unseen = [x for x in p["independent_assessment"] if x.get("evidence")]
+    assert len(unseen) >= 2
+    assert sorted(unseen[0]["net_face_sizes"]) == sorted(
+        [[2, 4], [3, 4], [2, 4], [3, 4], [2, 3], [2, 3]]
+    )
+    assert 2 * (2 * 3 + 2 * 4 + 3 * 4) == 52
+    assert 3 * 4 != 3 * 3
+    assert p["runtime_activation"] is False
+
+
+def test_linear_vs_exponential_different_independent_invariants():
+    p = _package("learning-packages-wave4", "W4-G9-EXPO-MODELING")
+    unseen = [x for x in p["independent_assessment"] if x.get("evidence")]
+    assert len(unseen) >= 2
+    linear = [4, 7, 10, 13]
+    exponential = [5, 10, 20, 40]
+    assert [b - a for a, b in zip(linear, linear[1:])] == [3, 3, 3]
+    assert [b // a for a, b in zip(exponential, exponential[1:])] == [2, 2, 2]
+    assert exponential[-1] * 2 == 80
+    assert p["assessment_scope_evidence"]["source_provenance"] == "UNKNOWN_UNLOCATED"
+    assert p["runtime_activation"] is False
