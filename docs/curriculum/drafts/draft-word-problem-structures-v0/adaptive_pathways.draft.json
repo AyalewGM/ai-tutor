@@ -47,14 +47,45 @@
         "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"148 + 76\" is the correct setup. Show a second check.",
-        "expected_answer": "224",
+        "prompt": "A community pantry stored 163 seed packets, then received 57 more. What is its new inventory? Write your own mathematical representation, determine the unknown with packets where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "220",
         "required_evidence": [
-          "Identify the unknown before choosing an operation; solve and check with the inverse.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with packets when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-additive_word_problems-01",
+        "task_invariant": "result/change/total",
+        "variant_operands_server_only": [
+          163,
+          57
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "add",
+          "exact_answer": "220",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -97,14 +128,45 @@
         "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"143 − 95\" is the correct setup. Show a second check.",
-        "expected_answer": "48",
+        "prompt": "A crafts club started with 92 paintbrushes and finished with 137 after a delivery. How many were delivered? Write your own mathematical representation, determine the unknown with brushes where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "45",
         "required_evidence": [
-          "Identify the unknown before choosing an operation; solve and check with the inverse.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with brushes when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-additive_word_problems-02",
+        "task_invariant": "initial/final/change",
+        "variant_operands_server_only": [
+          137,
+          92
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "subtract",
+          "exact_answer": "45",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -147,14 +209,45 @@
         "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"82 − 37\" is the correct setup. Show a second check.",
-        "expected_answer": "45",
+        "prompt": "After 29 water bottles were delivered, a sports station had 103 bottles. How many were there beforehand? Write your own mathematical representation, determine the unknown with bottles where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "74",
         "required_evidence": [
-          "Identify the unknown before choosing an operation; solve and check with the inverse.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with bottles when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-additive_word_problems-03",
+        "task_invariant": "unknown beginning",
+        "variant_operands_server_only": [
+          103,
+          29
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "subtract",
+          "exact_answer": "74",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -197,14 +290,45 @@
         "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"213 − 168\" is the correct setup. Show a second check.",
-        "expected_answer": "45",
+        "prompt": "A nature centre welcomed 281 people on Saturday and 197 on Sunday. What is the attendance difference? Write your own mathematical representation, determine the unknown with people where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "84",
         "required_evidence": [
-          "Identify the unknown before choosing an operation; solve and check with the inverse.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with people when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-additive_word_problems-04",
+        "task_invariant": "two compared totals",
+        "variant_operands_server_only": [
+          281,
+          197
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "subtract",
+          "exact_answer": "84",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -247,14 +371,45 @@
         "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"125 − 38\" is the correct setup. Show a second check.",
-        "expected_answer": "87",
+        "prompt": "An upper shelf has 176 notebooks, 49 more than the lower shelf. How many notebooks are on the lower shelf? Write your own mathematical representation, determine the unknown with notebooks where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "127",
         "required_evidence": [
-          "Identify the unknown before choosing an operation; solve and check with the inverse.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with notebooks when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-additive_word_problems-05",
+        "task_invariant": "smaller compared amount",
+        "variant_operands_server_only": [
+          176,
+          49
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "subtract",
+          "exact_answer": "127",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -297,14 +452,45 @@
         "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"79 + 26\" is the correct setup. Show a second check.",
+        "prompt": "A tray holds 68 blue gems, 37 fewer than the green gems. How many green gems are there? Write your own mathematical representation, determine the unknown with gems where appropriate, and justify by checking the original conditions.",
         "expected_answer": "105",
         "required_evidence": [
-          "Identify the unknown before choosing an operation; solve and check with the inverse.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with gems when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-additive_word_problems-06",
+        "task_invariant": "larger compared amount",
+        "variant_operands_server_only": [
+          68,
+          37
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "add",
+          "exact_answer": "105",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -347,14 +533,46 @@
         "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"240 + 85 − 47\" is the correct setup. Show a second check.",
-        "expected_answer": "278",
+        "prompt": "An exhibition starts with 315 guests, admits 72 more, and then 58 leave. How many remain? Write your own mathematical representation, determine the unknown with guests where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "329",
         "required_evidence": [
-          "Identify the unknown before choosing an operation; solve and check with the inverse.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with guests when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-additive_word_problems-07",
+        "task_invariant": "two signed changes",
+        "variant_operands_server_only": [
+          315,
+          72,
+          58
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "add_subtract",
+          "exact_answer": "329",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -397,14 +615,46 @@
         "alternative_method": "Use inverse operations to check whether the computed unknown reconstructs the given total."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"326 − 148 − 93\" is the correct setup. Show a second check.",
-        "expected_answer": "85",
+        "prompt": "A festival received 420 registrations. Of these, 166 are for music and 129 for art; the rest are for science. How many are for science? Write your own mathematical representation, determine the unknown with registrations where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "125",
         "required_evidence": [
-          "Identify the unknown before choosing an operation; solve and check with the inverse.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with registrations when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-additive_word_problems-08",
+        "task_invariant": "total-minus-two-parts",
+        "variant_operands_server_only": [
+          420,
+          166,
+          129
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "subtract_three",
+          "exact_answer": "125",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -447,14 +697,45 @@
         "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"9 × 14\" is the correct setup. Show a second check.",
-        "expected_answer": "126",
+        "prompt": "Eleven tool racks each hold 13 helmets. How many helmets can they hold altogether? Write your own mathematical representation, determine the unknown with helmets where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "143",
         "required_evidence": [
-          "Explain the unit attached to each factor and interpret any remainder in context.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with helmets when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-multiplicative_word_problems-01",
+        "task_invariant": "equal groups",
+        "variant_operands_server_only": [
+          11,
+          13
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "multiply",
+          "exact_answer": "143",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -497,14 +778,45 @@
         "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"156 ÷ 12\" is the correct setup. Show a second check.",
-        "expected_answer": "13",
+        "prompt": "A community centre shares 144 origami sheets equally among nine groups. How many sheets per group? Write your own mathematical representation, determine the unknown with sheets where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "16",
         "required_evidence": [
-          "Explain the unit attached to each factor and interpret any remainder in context.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with sheets when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-multiplicative_word_problems-02",
+        "task_invariant": "partitive division",
+        "variant_operands_server_only": [
+          144,
+          9
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "divide",
+          "exact_answer": "16",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -547,14 +859,45 @@
         "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"168 ÷ 14\" is the correct setup. Show a second check.",
-        "expected_answer": "12",
+        "prompt": "An organizer packs 221 bead packets into bags of 13 packets each. How many completely filled bags? Write your own mathematical representation, determine the unknown with bags where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "17",
         "required_evidence": [
-          "Explain the unit attached to each factor and interpret any remainder in context.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with bags when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-multiplicative_word_problems-03",
+        "task_invariant": "measurement division",
+        "variant_operands_server_only": [
+          221,
+          13
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "divide",
+          "exact_answer": "17",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -597,14 +940,45 @@
         "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"8 × 75\" is the correct setup. Show a second check.",
-        "expected_answer": "600",
+        "prompt": "A sculpture weighs seven times the mass of an 84 kg stone. What is the mass of the sculpture? Write your own mathematical representation, determine the unknown with kg where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "588",
         "required_evidence": [
-          "Explain the unit attached to each factor and interpret any remainder in context.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with kg when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-multiplicative_word_problems-04",
+        "task_invariant": "multiplicative larger amount",
+        "variant_operands_server_only": [
+          7,
+          84
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "multiply",
+          "exact_answer": "588",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -647,14 +1021,45 @@
         "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"936 ÷ 6\" is the correct setup. Show a second check.",
-        "expected_answer": "156",
+        "prompt": "A collection has 810 cards, nine times the number in a smaller collection. How many cards are in the smaller collection? Write your own mathematical representation, determine the unknown with cards where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "90",
         "required_evidence": [
-          "Explain the unit attached to each factor and interpret any remainder in context.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with cards when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-multiplicative_word_problems-05",
+        "task_invariant": "multiplicative smaller amount",
+        "variant_operands_server_only": [
+          810,
+          9
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "divide",
+          "exact_answer": "90",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -697,14 +1102,45 @@
         "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"17 × 24\" is the correct setup. Show a second check.",
-        "expected_answer": "408",
+        "prompt": "A theatre arranges 19 rows with 22 lights in each row. How many lights are installed? Write your own mathematical representation, determine the unknown with lights where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "418",
         "required_evidence": [
-          "Explain the unit attached to each factor and interpret any remainder in context.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with lights when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-multiplicative_word_problems-06",
+        "task_invariant": "rectangular array",
+        "variant_operands_server_only": [
+          19,
+          22
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "multiply",
+          "exact_answer": "418",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -747,14 +1183,45 @@
         "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"round up (74 ÷ 8)\" is the correct setup. Show a second check.",
-        "expected_answer": "10",
+        "prompt": "A shuttle can carry six visitors per trip, and 83 visitors need transport. What is the fewest whole trips possible? Write your own mathematical representation, determine the unknown with trips where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "14",
         "required_evidence": [
-          "Explain the unit attached to each factor and interpret any remainder in context.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with trips when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-multiplicative_word_problems-07",
+        "task_invariant": "capacity and remainder",
+        "variant_operands_server_only": [
+          83,
+          6
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "ceil_divide",
+          "exact_answer": "14",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -797,14 +1264,46 @@
         "alternative_method": "Verify multiplication with repeated addition or division with the inverse multiplication fact."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"6 × 8 × 5\" is the correct setup. Show a second check.",
-        "expected_answer": "240",
+        "prompt": "Four clubs send nine squads each, and each squad has seven members. How many members attend? Write your own mathematical representation, determine the unknown with members where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "252",
         "required_evidence": [
-          "Explain the unit attached to each factor and interpret any remainder in context.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with members when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-multiplicative_word_problems-08",
+        "task_invariant": "two-stage equal groups",
+        "variant_operands_server_only": [
+          4,
+          9,
+          7
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "multiply_three",
+          "exact_answer": "252",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -847,14 +1346,46 @@
         "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"3/5 × 45\" is the correct setup. Show a second check.",
-        "expected_answer": "27",
+        "prompt": "Four sevenths of 63 donated badges are green. How many badges are green? Write your own mathematical representation, determine the unknown with badges where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "36",
         "required_evidence": [
-          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with badges when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-fraction_word_problems-01",
+        "task_invariant": "fraction of a set",
+        "variant_operands_server_only": [
+          4,
+          7,
+          63
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "fraction_of",
+          "exact_answer": "36",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -897,14 +1428,46 @@
         "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"(1 − 2/3) × 36\" is the correct setup. Show a second check.",
-        "expected_answer": "12",
+        "prompt": "A crafts group uses five eighths of its 64 beads. How many beads remain unused? Write your own mathematical representation, determine the unknown with beads where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "24",
         "required_evidence": [
-          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with beads when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-fraction_word_problems-02",
+        "task_invariant": "fraction remaining",
+        "variant_operands_server_only": [
+          5,
+          8,
+          64
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "fraction_remaining",
+          "exact_answer": "24",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -947,14 +1510,46 @@
         "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"3/4 × 8\" is the correct setup. Show a second check.",
+        "prompt": "Each smoothie uses two thirds of a cup of yogurt. How many cups are needed for nine smoothies? Write your own mathematical representation, determine the unknown with cups where appropriate, and justify by checking the original conditions.",
         "expected_answer": "6",
         "required_evidence": [
-          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with cups when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-fraction_word_problems-03",
+        "task_invariant": "fraction as scaling operator",
+        "variant_operands_server_only": [
+          2,
+          3,
+          9
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "fraction_times",
+          "exact_answer": "6",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -997,14 +1592,46 @@
         "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"12 ÷ 3 × 7\" is the correct setup. Show a second check.",
-        "expected_answer": "28",
+        "prompt": "Fifteen seedlings are five ninths of a planting batch. How many seedlings are in the entire batch? Write your own mathematical representation, determine the unknown with seedlings where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "27",
         "required_evidence": [
-          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with seedlings when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-fraction_word_problems-04",
+        "task_invariant": "recover whole from fractional part",
+        "variant_operands_server_only": [
+          15,
+          5,
+          9
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "whole_from_part",
+          "exact_answer": "27",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1047,14 +1674,45 @@
         "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"12/30\" is the correct setup. Show a second check.",
+        "prompt": "A crate contains 14 yellow balls and 21 red balls. What fraction of all the balls are yellow? Simplify. Write your own mathematical representation, determine the unknown with fraction where appropriate, and justify by checking the original conditions.",
         "expected_answer": "2/5",
         "required_evidence": [
-          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with fraction when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-fraction_word_problems-05",
+        "task_invariant": "part-to-whole",
+        "variant_operands_server_only": [
+          14,
+          35
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "fraction_part_total",
+          "exact_answer": "2/5",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1097,14 +1755,47 @@
         "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"3/4 − 5/8\" is the correct setup. Show a second check.",
-        "expected_answer": "1/8",
+        "prompt": "Two hikers completed seven tenths and two fifths of the same route. What fraction of the route separates their progress? Simplify. Write your own mathematical representation, determine the unknown with fraction of route where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "3/10",
         "required_evidence": [
-          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with fraction of route when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-fraction_word_problems-06",
+        "task_invariant": "fraction comparison difference",
+        "variant_operands_server_only": [
+          7,
+          10,
+          2,
+          5
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "fraction_difference",
+          "exact_answer": "3/10",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1147,14 +1838,47 @@
         "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"7/8 − 3/8\" is the correct setup. Show a second check.",
+        "prompt": "A tank was filled to eleven twelfths of its capacity after five twelfths was poured in. What fraction was in it beforehand? Write your own mathematical representation, determine the unknown with fraction of capacity where appropriate, and justify by checking the original conditions.",
         "expected_answer": "1/2",
         "required_evidence": [
-          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with fraction of capacity when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-fraction_word_problems-07",
+        "task_invariant": "fraction unknown starting amount",
+        "variant_operands_server_only": [
+          11,
+          12,
+          5,
+          12
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "fraction_difference",
+          "exact_answer": "1/2",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1197,14 +1921,49 @@
         "alternative_method": "Use equivalent fractions or a fraction-of-quantity equation, then simplify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"5/6 − 1/3 + 1/4\" is the correct setup. Show a second check.",
-        "expected_answer": "3/4",
+        "prompt": "A researcher has seven eighths of a kilogram of sample, uses one quarter kilogram, and receives another one sixth kilogram. How much is there now? Simplify. Write your own mathematical representation, determine the unknown with kg where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "19/24",
         "required_evidence": [
-          "State the whole and the unit, justify denominator choice, and verify with an estimate.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with kg when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-fraction_word_problems-08",
+        "task_invariant": "fraction multi-change",
+        "variant_operands_server_only": [
+          7,
+          8,
+          1,
+          4,
+          1,
+          6
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "fraction_add_subtract",
+          "exact_answer": "19/24",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1247,14 +2006,45 @@
         "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"(1750 cents ÷ 5) converted to dollars\" is the correct setup. Show a second check.",
+        "prompt": "Seven art kits cost $24.50 in total. What is the cost of one kit, in dollars to two decimal places? Write your own mathematical representation, determine the unknown with dollars where appropriate, and justify by checking the original conditions.",
         "expected_answer": "3.50",
         "required_evidence": [
-          "Justify whether the relationship is proportional before scaling or applying percent.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with dollars when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-ratio_rate_word_problems-01",
+        "task_invariant": "unit price from total in cents",
+        "variant_operands_server_only": [
+          2450,
+          7
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "cents_unit",
+          "exact_answer": "3.50",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1297,14 +2087,46 @@
         "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"15 ÷ 2 × 8\" is the correct setup. Show a second check.",
-        "expected_answer": "60",
+        "prompt": "On a trail map, 3 cm represents 14 km. What distance does 12 cm represent? Write your own mathematical representation, determine the unknown with km where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "56",
         "required_evidence": [
-          "Justify whether the relationship is proportional before scaling or applying percent.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with km when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-ratio_rate_word_problems-02",
+        "task_invariant": "scale factor",
+        "variant_operands_server_only": [
+          14,
+          3,
+          12
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "scale",
+          "exact_answer": "56",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1347,14 +2169,46 @@
         "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"64 × 5/(3+5)\" is the correct setup. Show a second check.",
-        "expected_answer": "40",
+        "prompt": "An 81-point prize is divided between two teams in the ratio 2:7. How many points go to the larger share? Write your own mathematical representation, determine the unknown with points where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "63",
         "required_evidence": [
-          "Justify whether the relationship is proportional before scaling or applying percent.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with points when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-ratio_rate_word_problems-03",
+        "task_invariant": "ratio partition",
+        "variant_operands_server_only": [
+          81,
+          2,
+          7
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "ratio_share",
+          "exact_answer": "63",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1397,14 +2251,45 @@
         "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"160 × (1 − 15/100)\" is the correct setup. Show a second check.",
-        "expected_answer": "136",
+        "prompt": "A $240 bike has a 25% discount. What is its sale price? Write your own mathematical representation, determine the unknown with dollars where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "180",
         "required_evidence": [
-          "Justify whether the relationship is proportional before scaling or applying percent.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with dollars when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-ratio_rate_word_problems-04",
+        "task_invariant": "percentage discount base",
+        "variant_operands_server_only": [
+          240,
+          25
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "discount",
+          "exact_answer": "180",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1447,14 +2332,45 @@
         "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"200 × (1 + 12/100)\" is the correct setup. Show a second check.",
-        "expected_answer": "224",
+        "prompt": "A $180 annual permit increases by 15%. What is its new price? Write your own mathematical representation, determine the unknown with dollars where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "207",
         "required_evidence": [
-          "Justify whether the relationship is proportional before scaling or applying percent.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with dollars when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-ratio_rate_word_problems-05",
+        "task_invariant": "percentage increase base",
+        "variant_operands_server_only": [
+          180,
+          15
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "increase",
+          "exact_answer": "207",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1497,14 +2413,46 @@
         "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"72 × (5/2)\" is the correct setup. Show a second check.",
-        "expected_answer": "180",
+        "prompt": "A cyclist travels at 64 km/h for seven quarters of an hour. What distance is traveled? Write your own mathematical representation, determine the unknown with km where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "112",
         "required_evidence": [
-          "Justify whether the relationship is proportional before scaling or applying percent.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with km when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-ratio_rate_word_problems-06",
+        "task_invariant": "distance from rate and time",
+        "variant_operands_server_only": [
+          64,
+          7,
+          4
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "rate_time",
+          "exact_answer": "112",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1547,14 +2495,46 @@
         "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"9 + 4 × 7\" is the correct setup. Show a second check.",
-        "expected_answer": "37",
+        "prompt": "A workshop charges an $11 booking fee plus $6 per hour. How much does an eight-hour session cost? Write your own mathematical representation, determine the unknown with dollars where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "59",
         "required_evidence": [
-          "Justify whether the relationship is proportional before scaling or applying percent.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with dollars when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-ratio_rate_word_problems-07",
+        "task_invariant": "fixed fee and variable rate",
+        "variant_operands_server_only": [
+          11,
+          6,
+          8
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "fixed_rate",
+          "exact_answer": "59",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1597,14 +2577,46 @@
         "alternative_method": "Solve using a unit rate or proportional equation, and distinguish fixed fees from variable rates."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"150 ÷ (90 ÷ 6)\" is the correct setup. Show a second check.",
-        "expected_answer": "10",
+        "prompt": "A fountain circulates 72 litres every nine minutes at a constant rate. How many minutes to circulate 200 litres? Write your own mathematical representation, determine the unknown with minutes where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "25",
         "required_evidence": [
-          "Justify whether the relationship is proportional before scaling or applying percent.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with minutes when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-ratio_rate_word_problems-08",
+        "task_invariant": "reverse rate and time",
+        "variant_operands_server_only": [
+          72,
+          9,
+          200
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "inverse_rate",
+          "exact_answer": "25",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1647,14 +2659,45 @@
         "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"96 ÷ 8\" is the correct setup. Show a second check.",
-        "expected_answer": "12",
+        "prompt": "A wall display has area 135 m² and width 9 m. How long is the display? Write your own mathematical representation, determine the unknown with m where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "15",
         "required_evidence": [
-          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with m when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-geometry_measurement_word_problems-01",
+        "task_invariant": "missing rectangle side",
+        "variant_operands_server_only": [
+          135,
+          9
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "divide",
+          "exact_answer": "15",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1697,14 +2740,45 @@
         "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"54 ÷ 2 − 11\" is the correct setup. Show a second check.",
-        "expected_answer": "16",
+        "prompt": "A rectangular plot has perimeter 70 m and width 14 m. Find its length. Write your own mathematical representation, determine the unknown with m where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "21",
         "required_evidence": [
-          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with m when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-geometry_measurement_word_problems-02",
+        "task_invariant": "inverse perimeter",
+        "variant_operands_server_only": [
+          70,
+          14
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "perimeter_missing",
+          "exact_answer": "21",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1747,14 +2821,47 @@
         "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"12×8 + 5×4\" is the correct setup. Show a second check.",
-        "expected_answer": "116",
+        "prompt": "A festival stage combines two nonoverlapping rectangular areas, 13 m × 6 m and 7 m × 3 m. Find total area. Write your own mathematical representation, determine the unknown with m² where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "99",
         "required_evidence": [
-          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with m² when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-geometry_measurement_word_problems-03",
+        "task_invariant": "sum of composite area",
+        "variant_operands_server_only": [
+          13,
+          6,
+          7,
+          3
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "composite_area",
+          "exact_answer": "99",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1797,14 +2904,47 @@
         "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"15×10 − 4×6\" is the correct setup. Show a second check.",
-        "expected_answer": "126",
+        "prompt": "An 18 m × 11 m courtyard includes a 3 m × 7 m pond. What ground area lies outside the pond? Write your own mathematical representation, determine the unknown with m² where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "177",
         "required_evidence": [
-          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with m² when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-geometry_measurement_word_problems-04",
+        "task_invariant": "area removed from whole",
+        "variant_operands_server_only": [
+          18,
+          11,
+          3,
+          7
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "area_difference",
+          "exact_answer": "177",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1847,14 +2987,45 @@
         "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"3×100 + 45\" is the correct setup. Show a second check.",
-        "expected_answer": "345",
+        "prompt": "A cable is 4 m 28 cm long. What is its total length in centimetres? Write your own mathematical representation, determine the unknown with cm where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "428",
         "required_evidence": [
-          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with cm when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-geometry_measurement_word_problems-05",
+        "task_invariant": "measurement conversion",
+        "variant_operands_server_only": [
+          4,
+          28
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "metres_cm",
+          "exact_answer": "428",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1897,14 +3068,45 @@
         "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"35 + 105 − 60 minutes\" is the correct setup. Show a second check.",
-        "expected_answer": "80",
+        "prompt": "A rehearsal begins at 2:15 PM and lasts 95 minutes. At what minute after 3:00 PM does it finish? Write your own mathematical representation, determine the unknown with minutes after 3:00 PM where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "50",
         "required_evidence": [
-          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with minutes after 3:00 PM when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-geometry_measurement_word_problems-06",
+        "task_invariant": "elapsed time across hour",
+        "variant_operands_server_only": [
+          15,
+          95
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "elapsed_after_three",
+          "exact_answer": "50",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1947,14 +3149,46 @@
         "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"5 × 7 × 8\" is the correct setup. Show a second check.",
-        "expected_answer": "280",
+        "prompt": "A storage crate is 4 cm by 9 cm by 6 cm. Find its volume. Write your own mathematical representation, determine the unknown with cm³ where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "216",
         "required_evidence": [
-          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with cm³ when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-geometry_measurement_word_problems-07",
+        "task_invariant": "rectangular-prism volume",
+        "variant_operands_server_only": [
+          4,
+          9,
+          6
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "volume",
+          "exact_answer": "216",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -1997,14 +3231,45 @@
         "alternative_method": "Decompose composite shapes or use inverse area/perimeter formulas to verify."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"12² − 6²\" is the correct setup. Show a second check.",
-        "expected_answer": "108",
+        "prompt": "A square sign's side length increases from 5 cm to 15 cm. By how many square centimetres does its area increase? Write your own mathematical representation, determine the unknown with cm² where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "200",
         "required_evidence": [
-          "Explain why the answer's unit is linear, square or cubic and check reasonableness.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with cm² when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-geometry_measurement_word_problems-08",
+        "task_invariant": "area growth from length change",
+        "variant_operands_server_only": [
+          5,
+          15
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "square_area_increase",
+          "exact_answer": "200",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -2047,14 +3312,46 @@
         "alternative_method": "Check the solution by substitution into the original context."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"(52 − 7) ÷ 3\" is the correct setup. Show a second check.",
-        "expected_answer": "15",
+        "prompt": "Four times an unknown number plus eleven equals seventy-nine. What is the number? Write your own mathematical representation, determine the unknown with number where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "17",
         "required_evidence": [
-          "Define variables, justify the equation, solve, and substitute to verify constraints.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with number when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-algebra_reasoning_word_problems-01",
+        "task_invariant": "one-variable inverse linear reasoning",
+        "variant_operands_server_only": [
+          4,
+          11,
+          79
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "linear_one",
+          "exact_answer": "17",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -2097,14 +3394,47 @@
         "alternative_method": "Check the solution by substitution into the original context."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"solve 12+4x = 24+2x\" is the correct setup. Show a second check.",
+        "prompt": "Two subscription plans cost 18+5 times the number of uses and 36+2 times the number of uses. After how many uses are their costs equal? Write your own mathematical representation, determine the unknown with uses where appropriate, and justify by checking the original conditions.",
         "expected_answer": "6",
         "required_evidence": [
-          "Define variables, justify the equation, solve, and substitute to verify constraints.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with uses when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-algebra_reasoning_word_problems-02",
+        "task_invariant": "two variable-bearing cost models",
+        "variant_operands_server_only": [
+          18,
+          5,
+          36,
+          2
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "two_plans",
+          "exact_answer": "6",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -2147,14 +3477,44 @@
         "alternative_method": "Check the solution by substitution into the original context."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"solve x+(x+1)+(x+2)=72; report x+2\" is the correct setup. Show a second check.",
-        "expected_answer": "25",
+        "prompt": "Three consecutive whole numbers have a sum of 129. What is the largest one? Write your own mathematical representation, determine the unknown with integer where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "44",
         "required_evidence": [
-          "Define variables, justify the equation, solve, and substitute to verify constraints.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with integer when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-algebra_reasoning_word_problems-03",
+        "task_invariant": "consecutive integer structure",
+        "variant_operands_server_only": [
+          129
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "consecutive_three",
+          "exact_answer": "44",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -2197,14 +3557,46 @@
         "alternative_method": "Check the solution by substitution into the original context."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"7 + 4×(9−1)\" is the correct setup. Show a second check.",
-        "expected_answer": "39",
+        "prompt": "A growing tile design has 11 tiles at Stage 1 and gains six tiles at each subsequent stage. How many tiles at Stage 8? Write your own mathematical representation, determine the unknown with tiles where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "53",
         "required_evidence": [
-          "Define variables, justify the equation, solve, and substitute to verify constraints.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with tiles when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-algebra_reasoning_word_problems-04",
+        "task_invariant": "constant additive sequence",
+        "variant_operands_server_only": [
+          11,
+          6,
+          8
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "arithmetic_pattern",
+          "exact_answer": "53",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -2247,14 +3639,46 @@
         "alternative_method": "Check the solution by substitution into the original context."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"(140 − 44) ÷ 8\" is the correct setup. Show a second check.",
-        "expected_answer": "12",
+        "prompt": "A reservoir starts with 180 litres and drains seven litres every minute. How many minutes until 47 litres remain? Write your own mathematical representation, determine the unknown with minutes where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "19",
         "required_evidence": [
-          "Define variables, justify the equation, solve, and substitute to verify constraints.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with minutes when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-algebra_reasoning_word_problems-05",
+        "task_invariant": "linear decrease reverse",
+        "variant_operands_server_only": [
+          180,
+          7,
+          47
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "linear_decrease",
+          "exact_answer": "19",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -2297,14 +3721,47 @@
         "alternative_method": "Check the solution by substitution into the original context."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"solve 12x+8(30−x)=320\" is the correct setup. Show a second check.",
-        "expected_answer": "20",
+        "prompt": "An event sold 40 tickets. Adult admission is $15, youth admission $9, and revenue $456. How many adult tickets were sold? Write your own mathematical representation, determine the unknown with tickets where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "107/2",
         "required_evidence": [
-          "Define variables, justify the equation, solve, and substitute to verify constraints.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with tickets when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-algebra_reasoning_word_problems-06",
+        "task_invariant": "two-unknowns linear system",
+        "variant_operands_server_only": [
+          40,
+          15,
+          9,
+          456
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "ticket_system",
+          "exact_answer": "107/2",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -2347,14 +3804,46 @@
         "alternative_method": "Check the solution by substitution into the original context."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"round up ((100−35) ÷ 9)\" is the correct setup. Show a second check.",
-        "expected_answer": "8",
+        "prompt": "A community fund begins with $28 and adds $8 each week. What is the minimum number of whole weeks needed to reach at least $101? Write your own mathematical representation, determine the unknown with weeks where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "10",
         "required_evidence": [
-          "Define variables, justify the equation, solve, and substitute to verify constraints.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with weeks when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-algebra_reasoning_word_problems-07",
+        "task_invariant": "threshold inequality",
+        "variant_operands_server_only": [
+          28,
+          8,
+          101
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "ceil_threshold",
+          "exact_answer": "10",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     },
@@ -2397,16 +3886,70 @@
         "alternative_method": "Check the solution by substitution into the original context."
       },
       "mastery_exit": {
-        "prompt": "Without looking at the hints, solve the original situation and explain why \"(42−18) ÷ (6−2)\" is the correct setup. Show a second check.",
-        "expected_answer": "6",
+        "prompt": "A train covers 21 km by hour 3 and 65 km by hour 7 with constant speed. What is the speed in kilometres per hour? Write your own mathematical representation, determine the unknown with km/h where appropriate, and justify by checking the original conditions.",
+        "expected_answer": "11",
         "required_evidence": [
-          "Define variables, justify the equation, solve, and substitute to verify constraints.",
-          "Correct numeric answer and appropriate units",
-          "Explanation rejects the two diagnostic distractors"
+          "Identify the unknown and choose a mathematically justified model independently.",
+          "Give the exact solution with km/h when applicable.",
+          "Check your answer against all contextual constraints, including appropriate boundaries."
         ],
-        "independent_review_required": true
+        "linked_item_id": "draft-structures-algebra_reasoning_word_problems-08",
+        "task_invariant": "slope from two points",
+        "variant_operands_server_only": [
+          21,
+          3,
+          65,
+          7
+        ],
+        "teacher_oracle_server_only": {
+          "operation": "slope",
+          "exact_answer": "11",
+          "independently_recomputed": true
+        },
+        "learner_payload_contract": {
+          "fields": [
+            "assessment_item_id",
+            "question",
+            "response_contract"
+          ],
+          "omit": [
+            "expected_answer",
+            "variant_operands_server_only",
+            "teacher_oracle_server_only",
+            "worked_solution",
+            "hints",
+            "diagnostic",
+            "correct_setup",
+            "teacher_explanation"
+          ]
+        },
+        "independent_review_required": true,
+        "review_status": "PENDING",
+        "status": "DRAFT_UNVERIFIED",
+        "runtime_activation": false
       },
       "review_status": "PENDING"
     }
-  ]
+  ],
+  "assessment_exit_correction": {
+    "status": "DRAFT_UNVERIFIED",
+    "version": 2,
+    "distinct_original_contexts": 48,
+    "scope": "Original unseen transfer for each of the 48 linked structures; not a claim of independently accepted mastery",
+    "learner_allowlist": [
+      "assessment_item_id",
+      "question",
+      "response_contract"
+    ],
+    "teacher_fields_must_never_reach_student": [
+      "expected_answer",
+      "variant_operands_server_only",
+      "teacher_oracle_server_only",
+      "diagnostic",
+      "worked_solution",
+      "correct_setup"
+    ],
+    "backend_trusted_scoring": "PENDING_ASSESSMENT_BACKEND_IMPLEMENTATION",
+    "review": "PENDING_MATHEMATICAL_PEDAGOGICAL_MUSE"
+  }
 }
