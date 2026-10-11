@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "package_id": "MG-G7-RATIONAL-SCALE-INVERSE",
-  "revision": "middle-grades-rational-scale-v1-r3",
+  "revision": "middle-grades-rational-scale-v1-r4",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "mastery_writes": false,
@@ -56,7 +56,7 @@
         "VISUAL",
         "SYMBOLIC"
       ],
-      "prompt": "Complete an entry diagnostic by selecting the needed operation and inverse strategy, predicting direction and magnitude change, calculating exactly, and choosing a recomposition check. The captured response pattern routes to one of four distinct repairs; a new-number follow-up determines whether the scaffold fades."
+      "prompt": "Complete an entry diagnostic by selecting the needed operation and inverse strategy, predicting output direction and magnitude change, calculating exactly, and choosing a recomposition check. The captured response pattern routes to one of four distinct repairs; a new-number follow-up determines whether the scaffold fades."
     },
     {
       "phase": "TRANSFER",
@@ -72,13 +72,13 @@
       "representations": [
         "SYMBOLIC"
       ],
-      "prompt": "Server-controlled unseen calibration records collect operation and inverse-strategy choices, direction prediction, magnitude comparison, exact result, and a recomposition check. Contrast cases distinguish reciprocal inversion from componentwise division and negative direction from smaller magnitude. No diagrams, hints, worked steps, answer reveal, or guided-practice mastery credit are available."
+      "prompt": "Server-controlled unseen calibration records collect operation and inverse-strategy choices, output direction prediction, magnitude comparison, exact result, and a recomposition check. Contrast cases distinguish reciprocal inversion from componentwise division and negative direction from smaller magnitude. No diagrams, hints, worked steps, answer reveal, or guided-practice mastery credit are available."
     }
   ],
   "entry_diagnostic": {
     "response_fields": [
       "operation_choice",
-      "direction_prediction",
+      "output_direction_prediction",
       "magnitude_relation",
       "inverse_strategy",
       "exact_result",
@@ -90,7 +90,7 @@
       "ONE_NEGATIVE_MEANS_ALWAYS_NEGATIVE",
       "NEGATIVE_MEANS_SMALLER_MAGNITUDE"
     ],
-    "route_selection": "Use only the learner's submitted fields and exact response. Never infer a diagnosis from a correct/incorrect total alone. If no signature matches, record UNCLASSIFIED_FOR_HUMAN_REVIEW and do not serve a generic hint.",
+    "route_selection": "Use only the learner's submitted fields and exact response. Never infer a diagnosis from a correct/incorrect total alone. First check every response field against exact teacher evidence; return CORRECT_NO_REMEDIATION only for complete correct reasoning. Otherwise, if no error signature matches, record UNCLASSIFIED_FOR_HUMAN_REVIEW and do not serve a generic hint.",
     "routes": [
       {
         "misconception_id": "ONE_NEGATIVE_MEANS_ALWAYS_NEGATIVE",
@@ -202,7 +202,7 @@
     "direct_record": {
       "given": "input=-4/5; scale=-3/2; output hidden",
       "operation": "MULTIPLY",
-      "direction": "POSITIVE",
+      "output_direction": "POSITIVE",
       "magnitude_relation": "GROWS",
       "answer": "6/5",
       "recomposition": "(-3/2) * (-4/5) = 6/5"
@@ -210,7 +210,7 @@
     "missing_scale_record": {
       "given": "input=3/4; output=-3/2; scale hidden",
       "operation": "DIVIDE_AS_MISSING_SCALE",
-      "direction": "NEGATIVE",
+      "output_direction": "NEGATIVE",
       "magnitude_relation": "GROWS",
       "answer": "-2",
       "recomposition": "(-2) * (3/4) = -3/2"
@@ -227,7 +227,7 @@
     "historical_mastery_mutation": false,
     "required_response_fields": [
       "operation_choice",
-      "direction_prediction",
+      "output_direction_prediction",
       "magnitude_relation",
       "inverse_strategy",
       "exact_result",
@@ -256,7 +256,7 @@
   "review_status": {
     "mathematics": "PENDING",
     "standards": "PENDING",
-    "pedagogy": "R2_CHANGES_REQUIRED_R3_REREVIEW_PENDING",
+    "pedagogy": "R3_CHANGES_REQUIRED_R4_REVIEW_DEFERRED",
     "muse_qa": "PENDING",
     "release": "NOT_APPROVED"
   }
