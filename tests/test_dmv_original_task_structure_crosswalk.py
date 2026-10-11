@@ -156,7 +156,7 @@ def test_publisher_topic_evidence_never_becomes_mapping_or_implementation_proof(
 
 def test_architecture_reconciliation_keeps_algebra_candidates_fail_closed():
     data = _load()
-    assert data["revision"] == "2026-10-11-independent-review-closure-reconciliation-r5"
+    assert data["revision"] == "2026-10-11-post-merge-stabilization-r6"
     assert data["governance"]["draft_candidates_are_canonical"] is False
     assert data["governance"]["integrated_tasks_award_component_mastery"] is False
     assert data["governance"]["one_response_one_primary_atom"] is True
@@ -210,6 +210,26 @@ def test_review_reconciliation_keeps_new_approvals_bounded():
     )
     assert "TRUSTED_BACKEND" in review["independent_mathematical_review"]["implementation_prs"]["346"]
     assert "BOUNDED_MUSE_QA_PASS" in review["independent_mathematical_review"]["implementation_prs"]["350"]
+    assert data["summary"]["accepted_standards_mappings"] == 0
+    assert data["summary"]["qa_approved_packages"] == 0
+    assert data["governance"]["runtime_activation"] == "NOT_AUTHORIZED"
+
+
+def test_r6_post_merge_statuses_remain_fail_closed():
+    data = _load()
+    review = data["review_reconciliation"]
+    impl = review["independent_mathematical_review"]["implementation_prs"]
+    assert "LIMITED_MATH_REVIEW_PENDING" in impl["346"]
+    assert "FOLLOWUP_PR_351_DEFAULT_OFF" in impl["350"]
+    assert "NO_SERVER_CAPABILITY_OR_RUNTIME_AUTHORITY" in impl["351"]
+    assert "NO_STANDARDS_OR_RUNTIME_AUTHORITY" in impl["352"]
+
+    rows = {row["task_type_id"]: row for row in data["task_structures"]}
+    polynomial = rows["DMV.TASK.POLYNOMIAL.MONOMIAL_DIVIDE_RESTRICT"]
+    assert "PENDING_LIMITED_MATH_REVIEW" in polynomial["implementation"]["backend_independent_assessment"]
+    assert "DEFAULT_OFF_PENDING_APPROVED_SERVER_CAPABILITY" in polynomial["implementation"]["mve_or_student_route"]
+    assert polynomial["implementation_review"]["limited_independent_math_re_review"] == "PENDING"
+    assert polynomial["implementation_review"]["standards_effect"].startswith("NONE")
     assert data["summary"]["accepted_standards_mappings"] == 0
     assert data["summary"]["qa_approved_packages"] == 0
     assert data["governance"]["runtime_activation"] == "NOT_AUTHORIZED"
