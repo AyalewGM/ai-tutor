@@ -81,8 +81,8 @@ function GuidedPolynomialDivision({ seed = 0, initialVariant, onMathEvent }: Int
     const reconstructed = processed.length === variant.dividend.length &&
       reconstructsDividend(variant, quotients) && quotients.every((quotient, index) =>
         samePolynomialTerm(multiplyPolynomialTerms(quotient, variant.divisor), variant.dividend[index]));
-    setReconstructionConfirmed(reconstructed);
-    setTransferVerified(reconstructed);
+    setReconstructionConfirmed(false);
+    setTransferVerified(false);
     setFeedback(reconstructed
       ? "Every quotient term multiplied by the shared divisor reconstructs its original area term."
       : "Divide every grouped term before checking the reconstruction.");
@@ -94,14 +94,14 @@ function GuidedPolynomialDivision({ seed = 0, initialVariant, onMathEvent }: Int
       coefficientReason,
       exponentReason,
       restrictions,
-      reconstructionConfirmed,
+      reconstructionConfirmed: false,
     });
     if (result === null) {
       setDiagnosis(null);
-      setSupportStage(freshRepair ? "INDEPENDENT_READINESS" : "COACHED");
+      setSupportStage("COACHED");
       setFeedback(freshRepair
-        ? "Fresh repair complete. Your factor rules and multiplication reconstruction are consistent."
-        : "The termwise division, restrictions, and reconstruction are consistent. Try the transfer and fresh verification next.");
+        ? "Guided repair complete. The demonstrated reconstruction is not independent learner evidence."
+        : "Guided rule choices are consistent with the revealed worked example; independent reconstruction has not been assessed.");
       return;
     }
     if (result === "UNCLASSIFIED_FOR_HUMAN_REVIEW") {
@@ -203,14 +203,14 @@ function GuidedPolynomialDivision({ seed = 0, initialVariant, onMathEvent }: Int
       </label>)}
     </fieldset>
 
-    <h3 className="font-semibold">Transfer and verify by multiplication</h3>
+    <h3 className="font-semibold">Guided multiplication demonstration (not assessed transfer)</h3>
     <p>Interpret the shared divisor as a rectangle height and the grouped dividend terms as areas. Recover each width, then multiply each width by the height.</p>
     <div className="flex flex-wrap gap-2">
-      <button type="button" className={control} onClick={verifyReconstruction}>Verify reconstructed areas</button>
+      <button type="button" className={control} onClick={verifyReconstruction}>Check guided model reconstruction</button>
       <button type="button" className={control} onClick={checkReasoning}>Check my reasoning</button>
       {diagnosis && <button type="button" className={control} onClick={beginFreshRepair}>Try a fresh related example</button>}
     </div>
-    <p><strong>Reconstruction state:</strong> {transferVerified ? "Every quotient term reconstructs its original dividend term." : "Not yet verified."}</p>
+    <p><strong>Learner reconstruction state:</strong> Not independently assessed. The displayed quotient is automatically calculated.</p>
     <p id={`${id}-feedback`} role="status" aria-live="polite" aria-atomic="true">{feedback}</p>
   </section>;
 }
