@@ -348,12 +348,12 @@
     {
       "id": "W3-G7-SIGNED-NUMBERS",
       "grade_band": "Grades 6–8",
-      "title": "Integer operations and contextual signed quantities",
+      "title": "Signed integer ADDITION with directed number-line movement",
       "status": "DRAFT_UNVERIFIED",
       "runtime_activation": false,
       "mastery_writes": false,
       "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
-      "canonical_identity": "REUSE_EXISTING_OR_REQUEST_REVIEW",
+      "canonical_identity": "REUSE_EXISTING_MATH.INT.ADD",
       "independent_math_review": "PENDING",
       "qa": "PENDING",
       "diagnostic": [
@@ -386,95 +386,97 @@
         {
           "question": "−3+8",
           "steps": [
-            "Begin at −3 on number line.",
-            "Move eight units right."
+            "Place marker at −3.",
+            "Positive 8 instructs eight steps right.",
+            "Read endpoint 5."
           ],
           "answer": "5"
         },
         {
-          "question": "−4−6",
+          "question": "−4+(−6)",
           "steps": [
-            "Start −4 and move six left."
+            "Start at −4.",
+            "Negative 6 instructs six steps left."
           ],
           "answer": "−10"
         },
         {
-          "question": "−3×4",
+          "question": "7+(−9)",
           "steps": [
-            "Interpret as four groups of −3.",
-            "Sum four negative threes."
+            "Start at positive 7.",
+            "Travel nine spaces left across zero."
           ],
-          "answer": "−12"
+          "answer": "−2"
         },
         {
-          "question": "−4×−3",
+          "question": "−5+5",
           "steps": [
-            "Multiply magnitudes: 4×3=12.",
-            "Opposite of −4×3 is 12 by distributivity."
+            "Start five spaces left of zero.",
+            "Move five spaces right."
           ],
-          "answer": "12"
+          "answer": "0"
         },
         {
-          "question": "Temperature −2°C increases 7°C then drops 4°C",
+          "question": "Temperature −2°C rises 7°C",
           "steps": [
-            "−2+7=5.",
-            "5−4=1."
+            "Use −2 as start on temperature number line.",
+            "Move +7 to reach 5."
           ],
-          "answer": "1°C"
+          "answer": "5°C"
         }
       ],
       "misconception_pathways": [
         {
-          "claim": "Two negatives always make a positive",
-          "diagnostic": "Does −4−6 equal 10?",
+          "claim": "Treat negative addend as movement right",
+          "diagnostic": "Is −4+(−6) positive 2 because 6 is larger?",
           "socratic_hints": [
-            "Are you adding numbers or multiplying signs?",
-            "Which way does subtraction move?"
+            "At −4, which way does a negative movement go?",
+            "Can a six-step left move cross zero to the right?"
           ],
-          "repair": "Separate signed addition from signed multiplication on number line."
+          "repair": "Move an accessible marker six spaces left from −4."
         },
         {
-          "claim": "Ignore direction",
-          "diagnostic": "Does −3+8 end at −11?",
+          "claim": "Add absolute magnitudes without signs",
+          "diagnostic": "Is 7+(−9)=16?",
           "socratic_hints": [
-            "What does positive eight mean?",
-            "From −3, which direction moves?"
+            "Does −9 mean add nine to your location or change direction?",
+            "From seven, where does nine spaces left finish?"
           ],
-          "repair": "Walk right eight spaces from −3."
+          "repair": "Compare counter-pair cancellation with the number-line endpoint."
         },
         {
-          "claim": "Misapply multiplication sign",
-          "diagnostic": "Does (−4)(−3)=−12?",
+          "claim": "Zero-crossing or opposite-pair misunderstanding",
+          "diagnostic": "Is −5+5=10?",
           "socratic_hints": [
-            "What is (−4)×3?",
-            "What result preserves distributive law across 3+(−3)=0?"
+            "What happens after moving 5 right from −5?",
+            "What is the sum of opposites?"
           ],
-          "repair": "Use distributive equation to justify positive product."
+          "repair": "Pair five negative and five positive counters to make zero."
         }
       ],
       "guided_practice": [
         {
           "question": "−7+12",
           "answer": "5",
-          "verification": "signed sum",
+          "verification": "five right of zero",
           "scaffold_allowed": true
         },
         {
-          "question": "−6−5",
+          "question": "−6+(−5)",
           "answer": "−11",
-          "verification": "six below zero minus five",
+          "verification": "11 left of zero",
           "scaffold_allowed": true
         },
         {
-          "question": "(−3)×(−5)",
-          "answer": "15",
-          "verification": "negative × negative",
-          "scaffold_allowed": true
-        },
-        {
-          "question": "−20÷4",
+          "question": "8+(−13)",
           "answer": "−5",
-          "verification": "negative quotient",
+          "verification": "5 left of zero",
+          "scaffold_allowed": true
+        },
+        {
+          "question": "−9+9",
+          "answer": "0",
+          "verification": "opposite addends cancel",
           "scaffold_allowed": true
         }
       ],
@@ -482,26 +484,29 @@
         {
           "question": "−8+3",
           "answer": "−5",
-          "oracle": "five below zero",
+          "oracle": "−8+3=−5",
           "hints_allowed": false,
           "feedback_after_submission": true,
-          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES",
+          "operation_family": "MATH.INT.ADD"
         },
         {
-          "question": "(−6)(4)",
-          "answer": "−24",
-          "oracle": "four groups of −6",
+          "question": "−6+(−4)",
+          "answer": "−10",
+          "oracle": "−6−4=−10",
           "hints_allowed": false,
           "feedback_after_submission": true,
-          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES",
+          "operation_family": "MATH.INT.ADD"
         },
         {
-          "question": "Transfer: balance −$15 plus deposit $38 then withdrawal $9",
-          "answer": "$14",
-          "oracle": "−15+38−9=14",
+          "question": "Transfer: a balance begins at −$15; a deposit of $38 occurs. What is the new balance?",
+          "answer": "$23",
+          "oracle": "−15+38=23",
           "hints_allowed": false,
           "feedback_after_submission": true,
-          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES",
+          "operation_family": "MATH.INT.ADD"
         }
       ],
       "interactive_spec": {
@@ -511,7 +516,18 @@
         "reduced_motion": true,
         "scaffold_disable_on_assessment": true
       },
-      "implementation_note": "DRAFT content contract only, not a tested generator or deployed UI"
+      "implementation_note": "DRAFT content contract only, not a tested generator or deployed UI",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "canonical_family": "MATH.INT.ADD",
+        "exclusions": [
+          "integer subtraction",
+          "integer multiplication",
+          "integer division"
+        ],
+        "rubric": "Addition-only movement, zero crossing and opposites; no mastery credit for sibling signed operations.",
+        "independent_review": "REQUESTED_NOT_APPROVED"
+      }
     },
     {
       "id": "W3-G8-COORDINATE-TRANSFORM",
