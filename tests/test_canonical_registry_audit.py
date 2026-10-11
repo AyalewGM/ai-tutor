@@ -58,6 +58,20 @@ def test_no_new_orphan_math_literals():
         "MATH.ARITHMETIC.ADD_WITHIN_20",
         "MATH.ARITHMETIC.SUBTRACT_WITHIN_20",
         "MATH.ARITHMETIC.WORD_PROBLEM_WITHIN_20",
+        # PR #349 assessment atoms remain audited DRAFT candidates only.
+        # Listing them here prevents silent source-literal growth without
+        # registering production families, aliases, routes, or mastery targets.
+        "MATH.ALGEBRA.SQUARE_EQUATION_REAL_SOLUTIONS",
+        "MATH.EXPONENT.LAW.POWER_OF_POWER",
+        "MATH.EXPONENT.LAW.PRODUCT",
+        "MATH.EXPONENT.LAW.QUOTIENT",
+        "MATH.EXPONENT.NEGATIVE_AS_RECIPROCAL",
+        "MATH.EXPONENT.ZERO_NONZERO_BASE",
+        "MATH.POLY.DIVIDE_MONOMIALS",
+        "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL",
+        "MATH.SCIENTIFIC_NOTATION.CONVERT_NORMALIZE",
+        "MATH.SCIENTIFIC_NOTATION.DIVIDE_NORMALIZE",
+        "MATH.SCIENTIFIC_NOTATION.MULTIPLY_NORMALIZE",
         "MATH.NUMBER_SENSE.COUNT_FORWARD_BY_ONE_TO_120",
         "MATH.NUMBER_SENSE.COMPARE_WHOLE_NUMBERS_TO_120",
         "MATH.PLACE_VALUE.TENS_ONES",
