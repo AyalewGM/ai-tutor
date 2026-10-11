@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "package_id": "ALG-EQUATION-REASONING-R1",
-  "revision": "issue-337-r2",
+  "revision": "issue-337-r3",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "objective": "Solve, justify, compare and verify exact linear equations using equality-preserving operations, including negative coefficients, rational solutions, distribution and variables on both sides.",
@@ -134,7 +134,7 @@
   "unseen_transfer_contract": {
     "variant_namespace": "algebra-equation-reasoning-r1:transfer:independent",
     "structures": ["PERIMETER_MODEL", "SERVICE_RATE_MODEL"],
-    "response_fields": ["relationship_equation", "unknown_value", "derived_quantity", "unit", "verification_left", "verification_right", "model_explanation"],
+    "response_fields": ["relationship_equation", "unknown_value", "unknown_unit", "derived_quantity", "derived_quantity_unit", "verification_left", "verification_left_unit", "verification_right", "verification_right_unit", "model_explanation"],
     "guided_context_reuse": false,
     "status": "LOCAL_SEEDED_CONTENT_NOT_BACKEND_WIRED"
   },
