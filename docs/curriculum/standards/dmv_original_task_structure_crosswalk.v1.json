@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
-  "artifact_id": "DMV_ORIGINAL_TASK_STRUCTURE_CROSSWALK_V1_R4",
+  "artifact_id": "DMV_ORIGINAL_TASK_STRUCTURE_CROSSWALK_V1_R5",
   "status": "DRAFT_UNVERIFIED_RESEARCH_ONLY_RUNTIME_DISABLED",
   "created_date": "2026-10-11",
-  "inspected_main": "317612d2668eba6b172dec2b02543eb65c51a656",
+  "inspected_main": "b03f01860bbad618e84b7a5d02689307474a96e5",
   "purpose": "A jurisdiction-neutral, reuse-first inventory of mathematical task structures for Maryland, Virginia, and Washington, DC. It records official standards evidence, current district curriculum listings, vendor topic-sequence research, and implementation gaps as separate evidence layers without creating jurisdiction-specific skill engines or claiming accepted coverage.",
   "governance": {
     "principle": "BUILD_ONCE_MAP_MANY_DEPTH_BEFORE_BREADTH",
@@ -32,7 +32,7 @@
     "draft_candidates_are_canonical": false,
     "integrated_tasks_award_component_mastery": false,
     "one_response_one_primary_atom": true,
-    "architecture_collision_confirmation_source": "https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6108417628"
+    "architecture_collision_confirmation_source": "https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6109385883"
   },
   "source_registry": [
     {
@@ -740,7 +740,7 @@
         "tests": "PR_344_EXACT_HEAD_CI_AND_APPSEC_PASS__FULL_PACKAGE_AUDIT_REQUIRED",
         "mve_or_student_route": "NOT_RECONCILED",
         "socratic_remediation": "NOT_RECONCILED",
-        "backend_independent_assessment": "PR_346_FIVE_SCORER_DEFECTS_CORRECTED__COMPLETE_ASSESSMENT_NOT_ACCEPTED",
+        "backend_independent_assessment": "PR_346_DRAFT_SCORER_MATH_APPROVED__TRUSTED_BACKEND_INTEGRATION_AND_EXACT_HEAD_APPSEC_NOT_ACCEPTED",
         "qa": "NOT_REVIEWED"
       },
       "gap": "Five draft atomic definitions are mathematically approved, but canonical publication, routed MVE/Socratic evidence, complete independent assessment, standards acceptance, and external no-double-credit QA remain open.",
@@ -775,7 +775,7 @@
       "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing.",
       "mathematical_review": {
         "status": "FIVE_OF_FIVE_DRAFT_SCOPE_CARDS_APPROVED",
-        "source": "PR_349@b1826731c398b0a6a6ad87c6197093c9a8844970",
+        "source": "PR_349@79f272a6f8d21de348eb458e62a086363d724585",
         "implementation_source": "PR_344@bb2c2e1293c556bc3ca365b945ec72caee83bac9"
       }
     },
@@ -801,7 +801,7 @@
       "canonical_disposition": "PROPOSE_IDENTITY_REVIEW",
       "canonical_skill_codes": [],
       "architecture_boundary": {
-        "status": "THREE_DRAFT_LABELS_ARCHITECTURE_ACCEPTED__TWO_CARDS_MATH_APPROVED__MULTIPLY_REQUEST_CHANGES",
+        "status": "THREE_DRAFT_LABELS_ARCHITECTURE_ACCEPTED__THREE_CARDS_MATH_APPROVED",
         "candidate_scopes": [
           "ORDINARY_TO_AND_FROM_NORMALIZED_SCIENTIFIC_NOTATION",
           "SCIENTIFIC_NOTATION_MULTIPLICATION_WITH_NORMALIZATION",
@@ -811,14 +811,14 @@
         "integrated_task_semantics": "REPORTING_ONLY_ALL_OF__ONE_PRIMARY_ATOM__NO_BACK_OR_DUPLICATE_CREDIT"
       },
       "implementation": {
-        "generator": "DRAFT_PR_344_CORRECTED_GENERATOR_MATH_APPROVED__PR_349_MULTIPLY_SCOPE_CHANGE_REQUIRED",
-        "tests": "PR_344_EXACT_HEAD_CI_AND_APPSEC_PASS__CORRECTED_SCOPE_REVIEW_REQUIRED",
+        "generator": "DRAFT_PR_344_CORRECTED_GENERATOR_MATH_APPROVED__PR_349_THREE_SCOPE_CARDS_MATH_APPROVED",
+        "tests": "PR_344_EXACT_HEAD_CI_AND_APPSEC_PASS__PR_349_CI_1398_AND_APPSEC_768_PASS",
         "mve_or_student_route": "NOT_RECONCILED",
         "socratic_remediation": "NOT_RECONCILED",
-        "backend_independent_assessment": "PR_346_FIVE_SCORER_DEFECTS_CORRECTED__COMPLETE_ASSESSMENT_NOT_ACCEPTED",
+        "backend_independent_assessment": "PR_346_DRAFT_SCORER_MATH_APPROVED__TRUSTED_BACKEND_INTEGRATION_AND_EXACT_HEAD_APPSEC_NOT_ACCEPTED",
         "qa": "NOT_REVIEWED"
       },
-      "gap": "Conversion and division draft cards are mathematically approved. Multiplication must remove or redefine the impossible below-one raw-coefficient requirement for two normalized nonzero inputs; routed interaction, exact independent assessment, standards acceptance, and QA remain open.",
+      "gap": "All three draft scientific-notation scope cards are mathematically approved. Canonical publication, routed interaction, trusted independent assessment, standards acceptance, and external package QA remain open.",
       "owners": [
         "Algebra Content",
         "Architecture",
@@ -850,9 +850,9 @@
       ],
       "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing.",
       "mathematical_review": {
-        "status": "TWO_APPROVE__ONE_REQUEST_CHANGES",
-        "source": "PR_349@b1826731c398b0a6a6ad87c6197093c9a8844970",
-        "unresolved": "MATH.SCIENTIFIC_NOTATION.MULTIPLY_NORMALIZE__RAW_COEFFICIENT_BOUNDARY"
+        "status": "THREE_OF_THREE_DRAFT_SCOPE_CARDS_APPROVED",
+        "source": "PR_349@79f272a6f8d21de348eb458e62a086363d724585",
+        "correction": "MULTIPLICATION_BOUNDARY_NOW_LIMITS_NORMALIZED_NONZERO_INPUTS_TO_ALREADY_NORMALIZED_OR_ONE_UPPER_SHIFT"
       }
     },
     {
@@ -877,14 +877,14 @@
       "canonical_disposition": "PROPOSE_IDENTITY_REVIEW",
       "canonical_skill_codes": [],
       "implementation": {
-        "generator": "DRAFT_PR_344_QUOTIENT_GENERATOR_MATH_APPROVED__PR_349_SECOND_CARD_CHANGE_REQUIRED",
-        "tests": "PR_348_EXACT_HEAD_CI_PASS__APPSEC_AND_IMPLEMENTED_ROUTE_OPEN",
-        "mve_or_student_route": "DRAFT_PR_348_MATH_EVIDENCE_SPEC_APPROVED__IMPLEMENTED_MVE_AND_ROUTE_ABSENT",
-        "socratic_remediation": "PR_348_SPEC_MATH_APPROVED__PEDAGOGY_CHANGES_REQUIRED_PENDING_REAL_INTERACTION",
-        "backend_independent_assessment": "PR_346_FIVE_SCORER_DEFECTS_CORRECTED__COMPLETE_ASSESSMENT_NOT_ACCEPTED",
+        "generator": "DRAFT_PR_344_QUOTIENT_GENERATOR_MATH_APPROVED__PR_349_TWO_SCOPE_CARDS_MATH_APPROVED",
+        "tests": "PR_349_CI_1398_AND_APPSEC_768_PASS__PR_350_CI_1425_AND_APPSEC_795_PASS",
+        "mve_or_student_route": "DRAFT_PR_350_GUIDED_MVE_PEDAGOGY_ACCEPTED_AND_BOUNDED_MUSE_QA_PASS__REAL_ROUTE_AND_TRUSTED_ASSESSMENT_OPEN",
+        "socratic_remediation": "PR_350_GUIDED_DIAGNOSIS_AND_FADE_PEDAGOGY_ACCEPTED__PACKAGE_TRANSFER_NOT_ACCEPTED",
+        "backend_independent_assessment": "PR_346_DRAFT_SCORER_MATH_APPROVED__BACKEND_RECONCILIATION_AND_EXACT_HEAD_APPSEC_OPEN",
         "qa": "NOT_REVIEWED"
       },
-      "gap": "Monomial-division draft scope and PR #348's mathematical evidence specification are approved. The polynomial-by-monomial card must resolve whether zero-coefficient terms exist before or after canonicalization; accessible MVE/route, pedagogy, backend acceptance, standards acceptance, AppSec, and Muse QA remain open.",
+      "gap": "Both draft polynomial-division scope cards and PR #348's mathematical evidence specification are approved. PR #350 supplies a bounded guided MVE with pedagogical acceptance and Muse QA, but real routed-package evidence, trusted backend assessment, standards acceptance, and package-level QA remain open.",
       "owners": [
         "Algebra Content",
         "Architecture",
@@ -898,7 +898,7 @@
       "publisher_sequence_evidence": [],
       "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing.",
       "architecture_boundary": {
-        "status": "TWO_DRAFT_LABELS_ARCHITECTURE_ACCEPTED__ONE_CARD_MATH_APPROVED__POLYNOMIAL_BY_MONOMIAL_REQUEST_CHANGES",
+        "status": "TWO_DRAFT_LABELS_ARCHITECTURE_ACCEPTED__TWO_CARDS_MATH_APPROVED",
         "candidate_codes": [
           "MATH.POLY.DIVIDE_MONOMIALS",
           "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL"
@@ -913,10 +913,10 @@
         "integrated_task_semantics": "REPORTING_ONLY_ALL_OF__ONE_PRIMARY_ATOM__NO_BACK_OR_DUPLICATE_CREDIT"
       },
       "mathematical_review": {
-        "status": "ONE_APPROVE__ONE_REQUEST_CHANGES__PR_348_EVIDENCE_SPEC_APPROVED",
-        "source": "PR_349@b1826731c398b0a6a6ad87c6197093c9a8844970",
+        "status": "TWO_OF_TWO_DRAFT_SCOPE_CARDS_APPROVED__PR_348_EVIDENCE_SPEC_APPROVED",
+        "source": "PR_349@79f272a6f8d21de348eb458e62a086363d724585",
         "implementation_source": "PR_348@ecb83965e366b78fb04b89ae07331cf67b012169",
-        "unresolved": "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL__ZERO_COEFFICIENT_CANONICALIZATION"
+        "correction": "TWO_PLUS_TERM_BOUNDARY_APPLIES_TO_ORIGINAL_WRITTEN_DIVIDEND__CANONICALIZATION_MAY_REMOVE_ZERO_TERMS"
       }
     },
     {
@@ -1229,11 +1229,11 @@
     "vendor_derived_standard_ids": 0,
     "architecture_reconciled_task_types": 3,
     "architecture_accepted_draft_labels": 11,
-    "mathematically_approved_draft_cards": 9,
-    "mathematically_changes_requested_draft_cards": 2,
+    "mathematically_approved_draft_cards": 11,
+    "mathematically_changes_requested_draft_cards": 0,
     "standards_accepted_rows": 0
   },
-  "revision": "2026-10-11-independent-math-status-reconciliation-r4",
+  "revision": "2026-10-11-independent-review-closure-reconciliation-r5",
   "historical_research_tracks": [
     {
       "track_id": "MCPS_IM_ALGEBRA1_SUPPORT_2019",
@@ -1559,28 +1559,31 @@
   "review_reconciliation": {
     "reconciliation_date": "2026-10-11",
     "architecture": {
-      "source": "https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6108417628",
-      "pr_head": "b1826731c398b0a6a6ad87c6197093c9a8844970",
-      "status": "ELEVEN_DRAFT_LABELS_AND_GRANULARITY_ACCEPTED__NOT_CANONICAL_OR_RUNTIME_AUTHORITY"
+      "source": "https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6109385883",
+      "pr_head": "79f272a6f8d21de348eb458e62a086363d724585",
+      "status": "ELEVEN_DRAFT_LABELS_AND_GRANULARITY_ACCEPTED_R2__NO_COLLISION_FOUND__NOT_CANONICAL_OR_RUNTIME_AUTHORITY"
     },
     "independent_mathematical_review": {
-      "source": "https://github.com/AyalewGM/ai-tutor/issues/337#issuecomment-6108483907",
+      "source": "https://github.com/AyalewGM/ai-tutor/issues/337#issuecomment-6109037688",
       "taxonomy_pr_349": {
-        "head": "b1826731c398b0a6a6ad87c6197093c9a8844970",
-        "approved_cards": 9,
-        "changes_requested_cards": 2,
-        "unresolved": [
-          "MATH.SCIENTIFIC_NOTATION.MULTIPLY_NORMALIZE__RAW_COEFFICIENT_BOUNDARY",
-          "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL__ZERO_COEFFICIENT_CANONICALIZATION"
-        ]
+        "head": "79f272a6f8d21de348eb458e62a086363d724585",
+        "approved_cards": 11,
+        "changes_requested_cards": 0,
+        "unresolved": []
       },
       "implementation_prs": {
         "343": "MATH_SCOPE_APPROVED__SERVICE_RATE_UNITS_AND_RECONSTRUCTION",
         "344": "CORRECTED_GENERATOR_MATH_APPROVED__ZERO_EXPONENT_NONZERO_BASE",
-        "346": "REQUEST_CHANGES__SQUARE_EQUATION_HIDDEN_GENERATOR_MISSING_R_ZERO_AND_IRRATIONAL_POSITIVE_R",
-        "348": "MATH_AND_EVIDENCE_SPEC_APPROVED__MVE_FRONTEND_PEDAGOGY_AND_QA_STILL_OPEN"
+        "346": "DRAFT_ROOT_SCORER_MATH_APPROVED__TRUSTED_BACKEND_INTEGRATION_AND_EXACT_HEAD_APPSEC_STILL_OPEN",
+        "348": "MATH_AND_EVIDENCE_SPEC_APPROVED__MVE_FRONTEND_PEDAGOGY_AND_QA_STILL_OPEN",
+        "350": "GUIDED_MVE_PEDAGOGY_ACCEPTED_AND_BOUNDED_MUSE_QA_PASS__REAL_ROUTE_AND_TRUSTED_ASSESSMENT_STILL_OPEN"
       }
     },
-    "standards_effect": "NO_MAPPING_ACCEPTED__SOURCE_RELATIONS_REMAIN_PROVISIONAL"
+    "standards_effect": "NO_MAPPING_ACCEPTED__SOURCE_RELATIONS_REMAIN_PROVISIONAL",
+    "technical_evidence": {
+      "taxonomy_pr_349": "CI_1398_PASS__APPSEC_768_PASS",
+      "root_scorer_pr_346": "CI_1378_PASS__EXACT_HEAD_APPSEC_ABSENT_STACKED_BASE",
+      "guided_polynomial_mve_pr_350": "CI_1425_PASS__APPSEC_795_PASS__BOUNDED_EXTERNAL_MUSE_QA_PASS"
+    }
   }
 }
