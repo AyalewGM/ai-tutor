@@ -113,6 +113,27 @@ export interface EquationAttemptDiagnosedEvent extends MathInteractionBase {
   phase: "MANIPULATE" | "FRESH_EXIT";
 }
 
+export interface ExactPolynomialTermEvidence {
+  coefficient: { numerator: number; denominator: number };
+  xExponent: number;
+  yExponent: number;
+}
+
+export interface PolynomialTermDividedEvent extends MathInteractionBase {
+  type: "POLYNOMIAL_TERM_DIVIDED";
+  term_index: number;
+  dividend: ExactPolynomialTermEvidence;
+  divisor: ExactPolynomialTermEvidence;
+  quotient: ExactPolynomialTermEvidence;
+}
+
+export interface PolynomialDivisionDiagnosedEvent extends MathInteractionBase {
+  type: "POLYNOMIAL_DIVISION_DIAGNOSED";
+  diagnosis: "POLY.DIV.COEFFICIENT_RECIPROCAL" | "POLY.DIV.ADD_EXPONENTS" |
+    "POLY.DIV.ONE_TERM_ONLY" | "POLY.DIV.DOMAIN_OMITTED";
+  phase: "DIAGNOSE" | "FRESH_EXIT";
+}
+
 export interface ExplorerDatasetChangedEvent extends MathInteractionBase {
   type: "EXPLORER_DATASET_CHANGED";
   values: readonly number[];
@@ -123,6 +144,8 @@ export type MathInteractionEvent =
   | BalanceOperationAppliedEvent
   | EquationTransformationAppliedEvent
   | EquationAttemptDiagnosedEvent
+  | PolynomialTermDividedEvent
+  | PolynomialDivisionDiagnosedEvent
   | LinearParametersChangedEvent
   | IntegerDisplacementChangedEvent
   | PointPlacedEvent
@@ -148,6 +171,42 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "POLYNOMIAL_DIVISION_DIAGNOSED":
+      return Object.keys(event).every(key => ["schema_version", "type", "diagnosis", "phase"].includes(key)) &&
+        ["POLY.DIV.COEFFICIENT_RECIPROCAL", "POLY.DIV.ADD_EXPONENTS", "POLY.DIV.ONE_TERM_ONLY", "POLY.DIV.DOMAIN_OMITTED"].includes(String(event.diagnosis)) &&
+        ["DIAGNOSE", "FRESH_EXIT"].includes(String(event.phase));
+    case "POLYNOMIAL_TERM_DIVIDED": {
+      if (!Object.keys(event).every(key => ["schema_version", "type", "term_index", "dividend", "divisor", "quotient"].includes(key)) ||
+          !Number.isSafeInteger(event.term_index) || (event.term_index as number) < 0 || (event.term_index as number) > 3) return false;
+      const parseTerm = (value: unknown) => {
+        if (!value || typeof value !== "object") return null;
+        const candidate = value as Record<string, unknown>;
+        if (!Object.keys(candidate).every(key => ["coefficient", "xExponent", "yExponent"].includes(key)) ||
+            Object.keys(candidate).length !== 3 || !candidate.coefficient || typeof candidate.coefficient !== "object") return null;
+        const coefficient = candidate.coefficient as Record<string, unknown>;
+        if (!Object.keys(coefficient).every(key => ["numerator", "denominator"].includes(key)) || Object.keys(coefficient).length !== 2 ||
+            !Number.isSafeInteger(coefficient.numerator) || !Number.isSafeInteger(coefficient.denominator) ||
+            Math.abs(coefficient.numerator as number) > 10000 ||
+            (coefficient.denominator as number) < 1 || (coefficient.denominator as number) > 10000 || coefficient.numerator === 0 ||
+            !Number.isSafeInteger(candidate.xExponent) || Math.abs(candidate.xExponent as number) > 12 ||
+            !Number.isSafeInteger(candidate.yExponent) || Math.abs(candidate.yExponent as number) > 12) return null;
+        let a = Math.abs(coefficient.numerator as number), b = coefficient.denominator as number;
+        while (b) { const remainder = a % b; a = b; b = remainder; }
+        if (a !== 1) return null;
+        return candidate as unknown as ExactPolynomialTermEvidence;
+      };
+      const dividend = parseTerm(event.dividend), divisor = parseTerm(event.divisor), quotient = parseTerm(event.quotient);
+      if (!dividend || !divisor || !quotient) return false;
+      const crossEqual = (leftNumerator: number, leftDenominator: number, rightNumerator: number, rightDenominator: number) =>
+        leftNumerator * rightDenominator === rightNumerator * leftDenominator;
+      return crossEqual(
+        dividend.coefficient.numerator * divisor.coefficient.denominator,
+        dividend.coefficient.denominator * divisor.coefficient.numerator,
+        quotient.coefficient.numerator,
+        quotient.coefficient.denominator,
+      ) && quotient.xExponent === dividend.xExponent - divisor.xExponent &&
+        quotient.yExponent === dividend.yExponent - divisor.yExponent;
+    }
     case "EQUATION_ATTEMPT_DIAGNOSED":
       return Object.keys(event).every(key => ["schema_version", "type", "diagnosis", "phase"].includes(key)) &&
         ["EQ.OP.ONE_SIDE", "EQ.DENOMINATOR_IGNORED", "EQ.FALSE_EQUIVALENCE"].includes(String(event.diagnosis)) &&
