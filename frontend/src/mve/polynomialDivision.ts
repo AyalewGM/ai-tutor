@@ -24,6 +24,47 @@ export type PolynomialExponentReason =
   | "DIVIDEND_EXPONENT_MINUS_DIVISOR_EXPONENT"
   | "DIVIDEND_EXPONENT_PLUS_DIVISOR_EXPONENT";
 
+export type PredictionCoefficientEvidence =
+  | "PREDICT_DIVIDE_EACH_DIVIDEND_COEFFICIENT"
+  | "PREDICT_USE_DIVISOR_AS_NUMERATOR"
+  | "";
+
+export type PredictionExponentEvidence =
+  | "PREDICT_SUBTRACT_LIKE_BASE_EXPONENTS"
+  | "PREDICT_ADD_LIKE_BASE_EXPONENTS"
+  | "";
+
+export type PredictionDomainEvidence =
+  | "PREDICT_KEEP_ORIGINAL_DIVISOR_NONZERO"
+  | "PREDICT_CANCELLED_VARIABLES_CAN_BE_ZERO"
+  | "";
+
+export type ExplanationReconstructionEvidence =
+  | "EXPLAIN_QUOTIENT_TIMES_DIVISOR_REBUILDS_DIVIDEND"
+  | "EXPLAIN_QUOTIENT_PLUS_DIVISOR_REBUILDS_DIVIDEND"
+  | "";
+
+export type RepairEvidenceChoice =
+  | "REPAIR_PREDICT_ALL_THREE_FEATURES"
+  | "REPAIR_PREDICT_ONLY_COEFFICIENTS"
+  | "REPAIR_DIVIDEND_THEN_DIVISOR"
+  | "REPAIR_DIVISOR_THEN_DIVIDEND"
+  | "REPAIR_CANCEL_THEN_SUBTRACT"
+  | "REPAIR_MULTIPLY_THEN_ADD"
+  | "REPAIR_EVERY_TERM"
+  | "REPAIR_FIRST_TERM_ONLY"
+  | "REPAIR_KEEP_ORIGINAL_NONZERO"
+  | "REPAIR_RESTRICTIONS_CANCEL_AWAY"
+  | "REPAIR_COMPUTE_TERM_AND_VERIFY"
+  | "REPAIR_ESTIMATE_TERM"
+  | "REPAIR_PRODUCT_MATCHES_DIVIDEND"
+  | "REPAIR_PRODUCT_MATCHES_DIVISOR"
+  | "REPAIR_RECONSTRUCT_SUBTRACT_RESTRICT"
+  | "REPAIR_RESTATE_RULE_WORDS"
+  | "REPAIR_NEGATIVE_FROM_SUBTRACTION"
+  | "REPAIR_NEGATIVE_MEANS_ERROR"
+  | "";
+
 export type PolynomialDivisionMisconception =
   | "NO_REMEDIATION"
   | "POLY.DIV.COEFFICIENT_RECIPROCAL"
@@ -56,9 +97,23 @@ export interface LearnerReconstructionRecord {
   product_y_exponent: string;
 }
 
+export interface PredictionEvidenceRecord {
+  coefficient: PredictionCoefficientEvidence;
+  exponent: PredictionExponentEvidence;
+  domain: PredictionDomainEvidence;
+}
+
+export interface ExplanationEvidenceRecord {
+  reconstruction: ExplanationReconstructionEvidence;
+  exponent: PredictionExponentEvidence;
+  domain: PredictionDomainEvidence;
+}
+
 export interface LearnerPolynomialAttempt extends StructuredPolynomialResponse {
   prediction: string;
+  prediction_evidence: PredictionEvidenceRecord;
   explanation: string;
+  explanation_evidence: ExplanationEvidenceRecord;
   quotient_terms: readonly LearnerTermRecord[];
   reconstruction: readonly LearnerReconstructionRecord[];
   transfer_terms: readonly LearnerTermRecord[];
@@ -67,7 +122,8 @@ export interface LearnerPolynomialAttempt extends StructuredPolynomialResponse {
 export interface SocraticRepairPrompt {
   diagnosis: string;
   question: string;
-  expected_evidence: readonly string[];
+  choices: readonly { value: RepairEvidenceChoice; label: string }[];
+  correct_choice: RepairEvidenceChoice;
   scaffold: "RESTORE" | "FADE";
 }
 
@@ -194,11 +250,11 @@ export function evaluateLearnerPolynomialAttempt(
   transferExample: DivisionExample = POLYNOMIAL_DIVISION_FRESH_EXIT,
 ) {
   const diagnosis = diagnosePolynomialDivision(attempt, example);
-  if (!hasPredictionEvidence(attempt.prediction)) {
+  if (!hasPredictionEvidence(attempt.prediction_evidence)) {
     return {
       correct: false,
       diagnosis: "POLY.DIV.PREDICTION_REASONING",
-      feedback: "Predict with math evidence: coefficients divide, like-base exponents subtract, and original divisor variables stay nonzero.",
+      feedback: "Predict with mathematical structure before calculating: choose what happens to coefficients, exponents, and divisor restrictions.",
     };
   }
   if (diagnosis !== "NO_REMEDIATION") return polynomialPracticeFeedback(attempt);
@@ -216,11 +272,11 @@ export function evaluateLearnerPolynomialAttempt(
       feedback: "Use your quotient term times the original divisor to reconstruct each original dividend term.",
     };
   }
-  if (!hasExplanationEvidence(attempt.explanation)) {
+  if (!hasExplanationEvidence(attempt.explanation_evidence)) {
     return {
       correct: false,
       diagnosis: "POLY.DIV.EXPLANATION_REASONING",
-      feedback: "Explain with math evidence: name quotient times divisor reconstruction, exponent subtraction, and original nonzero restrictions.",
+      feedback: "Complete the explanation evidence: connect quotient times divisor to the dividend, exponent subtraction, and original nonzero restrictions.",
     };
   }
   if (!sameTermLists(attempt.transfer_terms, quotientFor(transferExample))) {
@@ -242,76 +298,116 @@ export function socraticRepairFor(diagnosis: string): SocraticRepairPrompt {
     "POLY.DIV.PREDICTION_REASONING": {
       diagnosis,
       question: "Before calculating, what should happen to coefficients, like-base exponents, and original divisor restrictions?",
-      expected_evidence: ["coefficient division", "exponent subtraction", "nonzero restriction"],
+      choices: [
+        { value: "REPAIR_PREDICT_ALL_THREE_FEATURES", label: "Decide coefficient division, exponent subtraction, and original nonzero restrictions before computing." },
+        { value: "REPAIR_PREDICT_ONLY_COEFFICIENTS", label: "Predict only the coefficient changes first, then decide the other parts after seeing the quotient." },
+      ],
+      correct_choice: "REPAIR_PREDICT_ALL_THREE_FEATURES",
       scaffold: "RESTORE",
     },
     "POLY.DIV.COEFFICIENT_RECIPROCAL": {
       diagnosis,
       question: "For one term, which coefficient is the dividend and which is the divisor? Write the division in that order.",
-      expected_evidence: ["dividend coefficient first", "divisor coefficient second"],
+      choices: [
+        { value: "REPAIR_DIVIDEND_THEN_DIVISOR", label: "Use the dividend coefficient first, then divide by the divisor coefficient." },
+        { value: "REPAIR_DIVISOR_THEN_DIVIDEND", label: "Use the divisor coefficient first, then divide by the dividend coefficient." },
+      ],
+      correct_choice: "REPAIR_DIVIDEND_THEN_DIVISOR",
       scaffold: "RESTORE",
     },
     "POLY.DIV.ADD_EXPONENTS": {
       diagnosis,
       question: "When factors cancel in division, why do we subtract the divisor exponent instead of adding it?",
-      expected_evidence: ["cancel matching factors", "subtract divisor exponent"],
+      choices: [
+        { value: "REPAIR_CANCEL_THEN_SUBTRACT", label: "Cancel matching factors from numerator and denominator; the remaining count is a subtraction." },
+        { value: "REPAIR_MULTIPLY_THEN_ADD", label: "Treat division like multiplication and add all matching exponents." },
+      ],
+      correct_choice: "REPAIR_CANCEL_THEN_SUBTRACT",
       scaffold: "RESTORE",
     },
     "POLY.DIV.ONE_TERM_ONLY": {
       diagnosis,
       question: "The divisor sits outside the grouped polynomial. Which terms must it divide, and why?",
-      expected_evidence: ["every term", "same divisor"],
+      choices: [
+        { value: "REPAIR_EVERY_TERM", label: "Divide every term in the grouped dividend by the same outside divisor." },
+        { value: "REPAIR_FIRST_TERM_ONLY", label: "Divide only the first term because the divisor is written once." },
+      ],
+      correct_choice: "REPAIR_EVERY_TERM",
       scaffold: "RESTORE",
     },
     "POLY.DIV.DOMAIN_OMITTED": {
       diagnosis,
       question: "Which original divisor variables would make division by zero, and why do those restrictions remain?",
-      expected_evidence: ["x nonzero", "y nonzero", "original divisor"],
+      choices: [
+        { value: "REPAIR_KEEP_ORIGINAL_NONZERO", label: "Keep restrictions from the original divisor because those input values would make division undefined." },
+        { value: "REPAIR_RESTRICTIONS_CANCEL_AWAY", label: "Remove restrictions whenever variables no longer appear in the simplified quotient." },
+      ],
+      correct_choice: "REPAIR_KEEP_ORIGINAL_NONZERO",
       scaffold: "RESTORE",
     },
     "POLY.DIV.QUOTIENT_RECORD": {
       diagnosis,
       question: "Choose one incorrect quotient term. What coefficient and exponent changes produce the exact quotient?",
-      expected_evidence: ["divide coefficient", "subtract exponents"],
+      choices: [
+        { value: "REPAIR_COMPUTE_TERM_AND_VERIFY", label: "Compute the coefficient division and exponent differences, then verify the term by multiplying back." },
+        { value: "REPAIR_ESTIMATE_TERM", label: "Estimate the term from the visible sizes and signs, then move on." },
+      ],
+      correct_choice: "REPAIR_COMPUTE_TERM_AND_VERIFY",
       scaffold: "RESTORE",
     },
     "POLY.DIV.RECONSTRUCTION_RECORD": {
       diagnosis,
       question: "Multiply your quotient by the divisor. Which product must match the original dividend term?",
-      expected_evidence: ["quotient times divisor", "original dividend"],
+      choices: [
+        { value: "REPAIR_PRODUCT_MATCHES_DIVIDEND", label: "The product of quotient and divisor must match the corresponding original dividend term." },
+        { value: "REPAIR_PRODUCT_MATCHES_DIVISOR", label: "The product of quotient and divisor must match the divisor term." },
+      ],
+      correct_choice: "REPAIR_PRODUCT_MATCHES_DIVIDEND",
       scaffold: "RESTORE",
     },
     "POLY.DIV.EXPLANATION_REASONING": {
       diagnosis,
       question: "Explain how your quotient reconstructs the dividend and why restrictions are preserved.",
-      expected_evidence: ["reconstruction", "exponent subtraction", "nonzero restriction"],
+      choices: [
+        { value: "REPAIR_RECONSTRUCT_SUBTRACT_RESTRICT", label: "Show that quotient times divisor returns the dividend, exponents came from subtraction, and original divisor zero values stay excluded." },
+        { value: "REPAIR_RESTATE_RULE_WORDS", label: "Restate the rule words without connecting them to this dividend, divisor, and domain." },
+      ],
+      correct_choice: "REPAIR_RECONSTRUCT_SUBTRACT_RESTRICT",
       scaffold: "RESTORE",
     },
     "POLY.DIV.FRESH_EXIT_UNVERIFIED": {
       diagnosis,
       question: "In the fresh problem, where does a negative exponent come from, and how can multiplication verify it?",
-      expected_evidence: ["negative exponent", "multiply to verify"],
+      choices: [
+        { value: "REPAIR_NEGATIVE_FROM_SUBTRACTION", label: "A negative exponent appears when the divisor exponent is larger; multiplying by the divisor verifies the original term." },
+        { value: "REPAIR_NEGATIVE_MEANS_ERROR", label: "A negative exponent means the quotient cannot be checked by multiplication." },
+      ],
+      correct_choice: "REPAIR_NEGATIVE_FROM_SUBTRACTION",
       scaffold: "RESTORE",
     },
   };
   return prompts[diagnosis] ?? {
     diagnosis,
     question: "What exact step connects the divisor, quotient, and original dividend?",
-    expected_evidence: ["quotient", "divisor", "dividend"],
+    choices: [
+      { value: "REPAIR_PRODUCT_MATCHES_DIVIDEND", label: "Quotient times divisor must reconstruct the original dividend." },
+      { value: "REPAIR_PRODUCT_MATCHES_DIVISOR", label: "Quotient times divisor must reconstruct the divisor." },
+    ],
+    correct_choice: "REPAIR_PRODUCT_MATCHES_DIVIDEND",
     scaffold: "RESTORE",
   };
 }
 
-export function evaluateSocraticRepair(diagnosis: string, response: string, repairTerms: readonly LearnerTermRecord[]) {
+export function evaluateSocraticRepair(diagnosis: string, choice: RepairEvidenceChoice, repairTerms: readonly LearnerTermRecord[]) {
   const repair = socraticRepairFor(diagnosis);
-  const textOk = repair.expected_evidence.every((evidence) => phraseMatches(response, evidence));
+  const reasoningOk = choice === repair.correct_choice;
   const exitOk = sameTermLists(repairTerms, quotientFor(POLYNOMIAL_DIVISION_REPAIR_EXIT));
   return {
-    correct: textOk && exitOk,
-    feedback: textOk && exitOk
-      ? "Repair complete. Your scaffold can fade: you explained the misconception and solved a different repair exit."
-      : `Repair needs more evidence: answer the question using ${repair.expected_evidence.join(", ")} and complete the different repair exit.`,
-    scaffold: textOk && exitOk ? "FADE" : repair.scaffold,
+    correct: reasoningOk && exitOk,
+    feedback: reasoningOk && exitOk
+      ? "Repair complete. Your scaffold can fade: you selected reasoning tied to the misconception and solved a different repair exit."
+      : "Repair needs stronger evidence: choose the reasoning that fixes this misconception and complete the different repair exit.",
+    scaffold: reasoningOk && exitOk ? "FADE" : repair.scaffold,
   };
 }
 
@@ -382,70 +478,16 @@ function sameStrings(left: readonly string[], right: readonly string[]) {
   return left.length === right.length && left.every((value, index) => value === right[index]);
 }
 
-function hasPredictionEvidence(value: string) {
-  return phraseMatches(value, "coefficient division") &&
-    phraseMatches(value, "exponent subtraction") &&
-    phraseMatches(value, "nonzero restriction");
+function hasPredictionEvidence(value: PredictionEvidenceRecord) {
+  return value.coefficient === "PREDICT_DIVIDE_EACH_DIVIDEND_COEFFICIENT" &&
+    value.exponent === "PREDICT_SUBTRACT_LIKE_BASE_EXPONENTS" &&
+    value.domain === "PREDICT_KEEP_ORIGINAL_DIVISOR_NONZERO";
 }
 
-function hasExplanationEvidence(value: string) {
-  return phraseMatches(value, "reconstruction") &&
-    phraseMatches(value, "exponent subtraction") &&
-    phraseMatches(value, "nonzero restriction");
-}
-
-function phraseMatches(value: string, evidence: string) {
-  const text = value.toLowerCase();
-  switch (evidence) {
-    case "coefficient division":
-      return includesAll(text, ["coefficient"]) && includesAny(text, ["divide", "divides", "division"]);
-    case "exponent subtraction":
-      return includesAll(text, ["exponent"]) && includesAny(text, ["subtract", "subtracts", "subtraction"]);
-    case "nonzero restriction":
-      return includesAny(text, ["nonzero", "not zero", "cannot be zero", "restriction"]);
-    case "dividend coefficient first":
-      return includesAll(text, ["dividend", "coefficient", "first"]);
-    case "divisor coefficient second":
-      return includesAll(text, ["divisor", "coefficient", "second"]);
-    case "cancel matching factors":
-      return includesAll(text, ["cancel", "factor"]);
-    case "subtract divisor exponent":
-      return includesAll(text, ["subtract", "divisor", "exponent"]);
-    case "every term":
-      return includesAll(text, ["every", "term"]);
-    case "same divisor":
-      return includesAll(text, ["same", "divisor"]);
-    case "x nonzero":
-      return text.includes("x") && includesAny(text, ["nonzero", "not zero", "cannot be zero"]);
-    case "y nonzero":
-      return text.includes("y") && includesAny(text, ["nonzero", "not zero", "cannot be zero"]);
-    case "original divisor":
-      return includesAll(text, ["original", "divisor"]);
-    case "divide coefficient":
-      return includesAll(text, ["coefficient"]) && includesAny(text, ["divide", "divides", "division"]);
-    case "subtract exponents":
-      return includesAll(text, ["exponent"]) && includesAny(text, ["subtract", "subtracts", "subtraction"]);
-    case "quotient times divisor":
-      return includesAll(text, ["quotient", "divisor"]);
-    case "original dividend":
-      return includesAll(text, ["original", "dividend"]);
-    case "reconstruction":
-      return includesAny(text, ["reconstruct", "multiply", "product"]);
-    case "negative exponent":
-      return includesAll(text, ["negative", "exponent"]);
-    case "multiply to verify":
-      return includesAll(text, ["multiply", "verify"]);
-    default:
-      return text.includes(evidence);
-  }
-}
-
-function includesAll(text: string, words: readonly string[]) {
-  return words.every((word) => text.includes(word));
-}
-
-function includesAny(text: string, words: readonly string[]) {
-  return words.some((word) => text.includes(word));
+function hasExplanationEvidence(value: ExplanationEvidenceRecord) {
+  return value.reconstruction === "EXPLAIN_QUOTIENT_TIMES_DIVISOR_REBUILDS_DIVIDEND" &&
+    value.exponent === "PREDICT_SUBTRACT_LIKE_BASE_EXPONENTS" &&
+    value.domain === "PREDICT_KEEP_ORIGINAL_DIVISOR_NONZERO";
 }
 
 function sameTermLists(observed: readonly LearnerTermRecord[], expected: readonly AlgebraTerm[]) {

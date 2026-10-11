@@ -60,6 +60,11 @@ test('full learner attempt requires produced quotient, reconstruction, explanati
   const attempt = {
     divided_term_indexes: [0, 1],
     prediction: 'Coefficients divide, exponents subtract, and x and y stay nonzero.',
+    prediction_evidence: {
+      coefficient: 'PREDICT_DIVIDE_EACH_DIVIDEND_COEFFICIENT',
+      exponent: 'PREDICT_SUBTRACT_LIKE_BASE_EXPONENTS',
+      domain: 'PREDICT_KEEP_ORIGINAL_DIVISOR_NONZERO',
+    },
     quotient_terms: [
       { coefficient: '3', x_exponent: '2', y_exponent: '1' },
       { coefficient: '-2', x_exponent: '1', y_exponent: '0' },
@@ -72,16 +77,29 @@ test('full learner attempt requires produced quotient, reconstruction, explanati
       { product_coefficient: '-4', product_x_exponent: '2', product_y_exponent: '1' },
     ],
     explanation: 'Multiply to reconstruct the dividend, subtract exponents, and keep original nonzero restrictions.',
+    explanation_evidence: {
+      reconstruction: 'EXPLAIN_QUOTIENT_TIMES_DIVISOR_REBUILDS_DIVIDEND',
+      exponent: 'PREDICT_SUBTRACT_LIKE_BASE_EXPONENTS',
+      domain: 'PREDICT_KEEP_ORIGINAL_DIVISOR_NONZERO',
+    },
     transfer_terms: [
       { coefficient: '3', x_exponent: '-1', y_exponent: '0' },
       { coefficient: '5', x_exponent: '-2', y_exponent: '1' },
     ],
   };
   assert.equal(math.evaluateLearnerPolynomialAttempt(attempt).correct, true);
-  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, prediction: 'I think this is easy.' }).diagnosis, 'POLY.DIV.PREDICTION_REASONING');
+  assert.equal(math.evaluateLearnerPolynomialAttempt({
+    ...attempt,
+    prediction: 'Coefficients divide, exponents subtract, and x and y stay nonzero.',
+    prediction_evidence: { ...attempt.prediction_evidence, exponent: 'PREDICT_ADD_LIKE_BASE_EXPONENTS' },
+  }).diagnosis, 'POLY.DIV.PREDICTION_REASONING');
   assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, quotient_terms: [{ coefficient: '3', x_exponent: '2', y_exponent: '1' }] }).diagnosis, 'POLY.DIV.QUOTIENT_RECORD');
   assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, reconstruction: [{ product_coefficient: '6', product_x_exponent: '3', product_y_exponent: '2' }] }).diagnosis, 'POLY.DIV.RECONSTRUCTION_RECORD');
-  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, explanation: 'Looks correct to me.' }).diagnosis, 'POLY.DIV.EXPLANATION_REASONING');
+  assert.equal(math.evaluateLearnerPolynomialAttempt({
+    ...attempt,
+    explanation: 'Multiply to reconstruct the dividend, subtract exponents, and keep original nonzero restrictions.',
+    explanation_evidence: { ...attempt.explanation_evidence, reconstruction: 'EXPLAIN_QUOTIENT_PLUS_DIVISOR_REBUILDS_DIVIDEND' },
+  }).diagnosis, 'POLY.DIV.EXPLANATION_REASONING');
   assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, transfer_terms: [
     { coefficient: '3', x_exponent: '1', y_exponent: '0' },
     { coefficient: '5', x_exponent: '2', y_exponent: '1' },
@@ -93,12 +111,12 @@ test('socratic repair requires misconception evidence and a different repair exi
     { coefficient: '-3', x_exponent: '2', y_exponent: '0' },
     { coefficient: '5', x_exponent: '0', y_exponent: '2' },
   ];
-  const weak = math.evaluateSocraticRepair('POLY.DIV.ADD_EXPONENTS', 'I fixed it.', repairTerms);
+  const weak = math.evaluateSocraticRepair('POLY.DIV.ADD_EXPONENTS', 'REPAIR_MULTIPLY_THEN_ADD', repairTerms);
   assert.equal(weak.correct, false);
   assert.equal(weak.scaffold, 'RESTORE');
   const repaired = math.evaluateSocraticRepair(
     'POLY.DIV.ADD_EXPONENTS',
-    'Cancel matching factors, then subtract the divisor exponent.',
+    'REPAIR_CANCEL_THEN_SUBTRACT',
     repairTerms,
   );
   assert.equal(repaired.correct, true);
@@ -132,6 +150,8 @@ test('guided component renders full sequence and fails closed in assessment', ()
     'Transfer',
     'Multiplication reconstruction',
     'Prediction before quotient reveal',
+    'Prediction evidence',
+    'Explanation evidence',
     'Fresh quotient term 1',
     'Scaffold state',
     'x not equal to 0',
@@ -140,6 +160,7 @@ test('guided component renders full sequence and fails closed in assessment', ()
   ]) assert.ok(html.includes(term), term);
   assert.equal(html.includes('Quotient card'), false);
   assert.equal(html.includes('3x^2y times 2xy reconstructs 6x^3y^2'), false);
+  assert.equal(html.includes('Your repair answer must include'), false);
   for (const mode of [true, undefined, null]) {
     assert.equal(renderToStaticMarkup(React.createElement(Component, { independentAssessment: mode })), '');
   }
@@ -167,6 +188,9 @@ test('handlers emit bounded events, diagnose repairs and reset', () => {
   assert.equal(emitted.at(-1).divided_terms, 2);
   assert.equal(events.isMathInteractionEvent(emitted.at(-1)), true);
   nodes(render()).find(n => n.props['aria-label'] === 'Prediction before quotient reveal').props.onChange({ target: { value: 'Coefficients divide, exponents subtract, and restrictions keep variables nonzero.' } });
+  nodes(render()).find(n => n.props['aria-label'] === 'Prediction coefficient evidence').props.onChange({ target: { value: 'PREDICT_DIVIDE_EACH_DIVIDEND_COEFFICIENT' } });
+  nodes(render()).find(n => n.props['aria-label'] === 'Prediction exponent evidence').props.onChange({ target: { value: 'PREDICT_SUBTRACT_LIKE_BASE_EXPONENTS' } });
+  nodes(render()).find(n => n.props['aria-label'] === 'Prediction domain evidence').props.onChange({ target: { value: 'PREDICT_KEEP_ORIGINAL_DIVISOR_NONZERO' } });
   for (const [label, value] of [
     ['Quotient term 1 coefficient', '3'],
     ['Quotient term 1 x exponent', '2'],
@@ -198,8 +222,43 @@ test('handlers emit bounded events, diagnose repairs and reset', () => {
     ['Reconstruction product 2 y exponent', '1'],
   ]) nodes(render()).find(n => n.props['aria-label'] === label).props.onChange({ target: { value } });
   nodes(render()).find(n => n.props['aria-label'] === 'Explanation of polynomial division reasoning').props.onChange({ target: { value: 'Multiply to reconstruct the dividend, subtract exponents, and keep original nonzero restrictions.' } });
+  nodes(render()).find(n => n.props['aria-label'] === 'Explanation reconstruction evidence').props.onChange({ target: { value: 'EXPLAIN_QUOTIENT_TIMES_DIVISOR_REBUILDS_DIVIDEND' } });
+  nodes(render()).find(n => n.props['aria-label'] === 'Explanation exponent evidence').props.onChange({ target: { value: 'PREDICT_SUBTRACT_LIKE_BASE_EXPONENTS' } });
+  nodes(render()).find(n => n.props['aria-label'] === 'Explanation domain evidence').props.onChange({ target: { value: 'PREDICT_KEEP_ORIGINAL_DIVISOR_NONZERO' } });
   buttons().find(n => n.props.children === 'Check polynomial division').props.onClick();
   assert.match(nodes(render()).find(n => n.props.id === 'poly-feedback').props.children, /^Correct/);
   buttons().find(n => n.props.children === 'Reset guided attempt').props.onClick();
   assert.match(nodes(render()).find(n => n.props.id === 'poly-feedback').props.children, /^Enter a prediction/);
+});
+
+test('repair success removes active support rather than only changing status text', () => {
+  let state = [], cursor = 0;
+  const hooked = load('./InteractivePolynomialDivision.tsx', { ...imports, react: {
+    useId: () => 'poly',
+    useMemo: value => value(),
+    useState: initial => { const i = cursor++; if (!(i in state)) state[i] = typeof initial === 'function' ? initial() : initial; return [state[i], value => { state[i] = typeof value === 'function' ? value(state[i]) : value; }]; },
+  }});
+  function render() { cursor = 0; const wrapper = hooked.InteractivePolynomialDivision({ independentAssessment: false }); return wrapper.type(wrapper.props); }
+  function nodes(node) {
+    if (!node || typeof node !== 'object') return [];
+    const expanded = typeof node.type === 'function' ? node.type(node.props) : null;
+    return [node, ...nodes(expanded), ...React.Children.toArray(node.props?.children).flatMap(nodes)];
+  }
+  const buttons = () => nodes(render()).filter(n => n.type === 'button');
+  buttons().find(n => n.props.children === 'Check polynomial division').props.onClick();
+  assert.ok(nodes(render()).some(n => n.props['aria-label'] === 'Socratic polynomial division repair'));
+  nodes(render()).find(n => n.props.name === 'poly-repair' && n.props.checked === false).props.onChange();
+  for (const [label, value] of [
+    ['Repair quotient term 1 coefficient', '-3'],
+    ['Repair quotient term 1 x exponent', '2'],
+    ['Repair quotient term 1 y exponent', '0'],
+    ['Repair quotient term 2 coefficient', '5'],
+    ['Repair quotient term 2 x exponent', '0'],
+    ['Repair quotient term 2 y exponent', '2'],
+  ]) nodes(render()).find(n => n.props['aria-label'] === label).props.onChange({ target: { value } });
+  buttons().find(n => n.props.children === 'Check repair exit').props.onClick();
+  const rendered = nodes(render());
+  assert.equal(rendered.some(n => n.props['aria-label'] === 'Socratic polynomial division repair'), false);
+  assert.ok(rendered.some(n => React.Children.toArray(n.props?.children).join('').includes('Support faded')));
+  assert.equal(rendered.some(n => React.Children.toArray(n.props?.children).join('').includes('Use exact integers or reduced rational coefficients.')), false);
 });

@@ -67,6 +67,9 @@ createRoot(document.getElementById('root')!).render(<Harness />);`);
   await polynomial.getByRole('button', { name: /Term 2/ }).click();
   assert.equal(JSON.parse(await page.getByLabel('Last semantic event').textContent()).divided_terms, 2);
   await polynomial.getByLabel('Prediction before quotient reveal').fill('Coefficients divide, exponents subtract, and original restrictions stay visible.');
+  await polynomial.getByLabel('Prediction coefficient evidence').selectOption('PREDICT_DIVIDE_EACH_DIVIDEND_COEFFICIENT');
+  await polynomial.getByLabel('Prediction exponent evidence').selectOption('PREDICT_SUBTRACT_LIKE_BASE_EXPONENTS');
+  await polynomial.getByLabel('Prediction domain evidence').selectOption('PREDICT_KEEP_ORIGINAL_DIVISOR_NONZERO');
   for (const [label, value] of [
     ['Quotient term 1 coefficient', '3'],
     ['Quotient term 1 x exponent', '2'],
@@ -92,6 +95,9 @@ createRoot(document.getElementById('root')!).render(<Harness />);`);
   await polynomial.getByLabel('x not equal to 0').check();
   await polynomial.getByLabel('y not equal to 0').check();
   await polynomial.getByLabel('Explanation of polynomial division reasoning').fill('Multiply to reconstruct the dividend, subtract exponents, and keep original nonzero restrictions.');
+  await polynomial.getByLabel('Explanation reconstruction evidence').selectOption('EXPLAIN_QUOTIENT_TIMES_DIVISOR_REBUILDS_DIVIDEND');
+  await polynomial.getByLabel('Explanation exponent evidence').selectOption('PREDICT_SUBTRACT_LIKE_BASE_EXPONENTS');
+  await polynomial.getByLabel('Explanation domain evidence').selectOption('PREDICT_KEEP_ORIGINAL_DIVISOR_NONZERO');
   await polynomial.getByRole('button', { name: 'Check polynomial division' }).click();
   assert.ok((await polynomial.getByRole('status').last().textContent()).startsWith('Correct'));
   const balance = page.getByRole('region', { name: 'Guided equation balance exploration' });
