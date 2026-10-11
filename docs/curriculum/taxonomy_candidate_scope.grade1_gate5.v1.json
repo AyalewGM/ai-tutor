@@ -1,0 +1,1037 @@
+{
+  "schema_version": 1,
+  "review_status": "DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+  "revision": "2026-10-10-grade1-gate5-r1",
+  "authority": "NONE_NOT_FOR_RUNTIME",
+  "source_review": {
+    "merged_foundation": "main@13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
+    "independent_alias_review": "Issue #293 comment 6097860935",
+    "architecture_decomposition": "Issue #282 comment 6103218496",
+    "architecture_gate5": "Issue #282 comment 6103246330"
+  },
+  "notes": [
+    "Curriculum Content authored these ten bounded DRAFT cards after Architecture fixed the identity boundaries.",
+    "Suggested codes were collision-audited against main, the six merged r5 scope cards, the generator-derived registry audit and relevant broad generator skill codes.",
+    "No exact proposed code was found on main; broad overlaps are recorded per card and are not treated as equivalence.",
+    "The shape cards keep 2-D and 3-D evidence explicit so Independent Math Review can require a later split if partial mastery remains possible.",
+    "Prerequisite concepts are descriptive, not approved canonical dependency edges.",
+    "No card changes canonical UUIDs, aliases, generators, assessments, learner evidence, mastery or standards coverage."
+  ],
+  "skills": [
+    {
+      "code": "MATH.NUMBER_SENSE.REPRESENT_NUMERALS_TO_120",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.NS.COUNTING",
+          "MATH.NS.WORD_FORM",
+          "MATH.NS.PLACE_VALUE"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "quantity_to_written_numeral",
+        "number_name_to_written_numeral",
+        "written_numeral_to_quantity",
+        "written_numeral_to_number_name"
+      ],
+      "inclusions": [
+        "Whole numbers 0..120 inclusive",
+        "Bidirectional translation between a represented quantity and its written base-ten numeral",
+        "Bidirectional translation between an oral or written English number name and its written base-ten numeral",
+        "Explicit lower and upper boundaries 0 and 120, plus the 99-to-100 transition",
+        "Quantities may be shown with countable objects, ten-groups and ones, or other unambiguous finite representations"
+      ],
+      "exclusions": [
+        "Forward, backward or skip-count sequence production",
+        "Comparing or ordering numbers",
+        "Place-value explanation as a required inference from a correct translation",
+        "Quantities or numerals outside 0..120",
+        "Roman numerals, decimals, fractions and signed numbers"
+      ],
+      "prerequisite_concepts": [
+        "cardinality",
+        "one-to-one correspondence",
+        "stable number names through 120",
+        "recognition that a written numeral denotes a quantity"
+      ],
+      "examples": [
+        {
+          "input": "Write the numeral for one hundred twenty.",
+          "answer": "120",
+          "direction": "number_name_to_numeral"
+        },
+        {
+          "input": "Name the numeral 100.",
+          "answer": "one hundred",
+          "direction": "numeral_to_number_name"
+        },
+        {
+          "input": "A card shows 10 tens and 7 ones. Write the numeral.",
+          "answer": "107",
+          "direction": "quantity_to_numeral"
+        },
+        {
+          "input": "Show a quantity matching 0.",
+          "answer": "an empty set or another valid zero-quantity representation",
+          "direction": "numeral_to_quantity"
+        },
+        {
+          "input": "Write the numeral for one hundred twenty-one.",
+          "valid": false,
+          "rationale": "121 is outside the inclusive range"
+        }
+      ],
+      "misconception_probes": [
+        "Writes 1007 for one hundred seven",
+        "Omits zero as a valid numeral and quantity",
+        "Treats 120 as 12 or as 102",
+        "Reads a numeral by naming digits independently rather than the number"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Independent unassisted evidence is required in both directions; sequence recitation alone never satisfies representation.",
+        "required": [
+          {
+            "direction": "to_written_numeral",
+            "sources": [
+              "quantity",
+              "number_name"
+            ],
+            "boundaries": [
+              "0",
+              "99/100",
+              "120"
+            ]
+          },
+          {
+            "direction": "from_written_numeral",
+            "targets": [
+              "quantity",
+              "number_name"
+            ],
+            "boundaries": [
+              "0",
+              "99/100",
+              "120"
+            ]
+          }
+        ],
+        "prohibitions": [
+          "No mastery transfer from counting",
+          "No mastery transfer from broad word-form or place-value generators",
+          "Hinted copying does not count"
+        ]
+      }
+    },
+    {
+      "code": "MATH.NUMBER_SENSE.ORDER_WHOLE_NUMBERS_TO_120",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.NS.COMPARE_ORDER",
+          "MATH.NUMBER_SENSE.COMPARE_WHOLE_NUMBERS_TO_120"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "ascending_list_order",
+        "descending_list_order",
+        "duplicate_value_retention"
+      ],
+      "inclusions": [
+        "Order lists of 3..5 whole numbers in 0..120 inclusive",
+        "Ascending and descending order require separate evidence",
+        "Lists may contain repeated equal values, all of which must be retained",
+        "Include 0, 99, 100 and 120 boundary cases across the assessment set"
+      ],
+      "exclusions": [
+        "Pairwise comparison as sufficient evidence",
+        "Sequence continuation",
+        "Sorting numbers outside 0..120",
+        "Fractions, decimals and signed integers",
+        "Inferring a place-value explanation from a correctly ordered list"
+      ],
+      "prerequisite_concepts": [
+        "pairwise whole-number magnitude comparison",
+        "meaning of ascending and descending",
+        "written numeral recognition through 120"
+      ],
+      "examples": [
+        {
+          "input": "Order least to greatest: 100, 99, 120, 0",
+          "answer": "0, 99, 100, 120",
+          "direction": "ascending"
+        },
+        {
+          "input": "Order greatest to least: 45, 45, 9, 105",
+          "answer": "105, 45, 45, 9",
+          "direction": "descending"
+        },
+        {
+          "input": "Order least to greatest: 98, 101",
+          "valid": false,
+          "rationale": "A two-number comparison is outside this list-ordering evidence contract"
+        },
+        {
+          "input": "Order greatest to least: 120, 121, 0",
+          "valid": false,
+          "rationale": "121 is outside scope"
+        }
+      ],
+      "misconception_probes": [
+        "Drops duplicate values",
+        "Orders lexicographically by first digit",
+        "Reverses ascending and descending",
+        "Treats 100 as less than every two-digit number"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Ascending and descending list ordering are independently observed; correct pairwise comparisons do not automatically satisfy either list task.",
+        "required": [
+          {
+            "direction": "ascending",
+            "minimum_list_length": 3,
+            "include_duplicates": true
+          },
+          {
+            "direction": "descending",
+            "minimum_list_length": 3,
+            "include_duplicates": true
+          },
+          {
+            "boundary_cluster": [
+              "0",
+              "99",
+              "100",
+              "120"
+            ]
+          }
+        ],
+        "prohibitions": [
+          "No profile credit from pairwise comparison alone",
+          "No duplicate removal",
+          "No sequence-production substitution"
+        ]
+      }
+    },
+    {
+      "code": "MATH.EARLY_ALGEBRA.EQUALITY_RELATION",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.EE.EQUATION.ONE",
+          "MATH.NS.ADDITION",
+          "MATH.NS.SUBTRACTION"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "equal_sign_meaning",
+        "equation_truth",
+        "symmetry",
+        "equivalent_expressions"
+      ],
+      "inclusions": [
+        "Interpret = as the two sides having the same value",
+        "Judge true and false equations with whole-number values in 0..20",
+        "Recognize symmetry: if a=b then b=a",
+        "Compare a numeral with an expression or two addition/subtraction expressions whose values lie in 0..20",
+        "Subtraction expressions must have nonnegative intermediate and final values"
+      ],
+      "exclusions": [
+        "Solving for an unknown value",
+        "Using = as an instruction meaning 'the answer comes next'",
+        "Variables, inequalities and equations with values outside 0..20",
+        "Automatic addition or subtraction mastery",
+        "Older-grade one-step equation mastery"
+      ],
+      "prerequisite_concepts": [
+        "whole-number quantity equivalence",
+        "addition and subtraction meanings within 20",
+        "evaluation of a displayed expression"
+      ],
+      "examples": [
+        {
+          "input": "Is 8 = 8 true?",
+          "answer": "true",
+          "component": "reflexive_truth"
+        },
+        {
+          "input": "Is 9 = 4 + 5 true?",
+          "answer": "true",
+          "component": "expression_right"
+        },
+        {
+          "input": "Is 6 + 3 = 5 + 4 true?",
+          "answer": "true",
+          "component": "equivalent_expressions"
+        },
+        {
+          "input": "Is 7 = 7 + 1 true?",
+          "answer": "false",
+          "component": "equation_truth"
+        },
+        {
+          "input": "Find the box: 7 + □ = 12",
+          "valid": false,
+          "rationale": "Unknown solving is a separate atom"
+        }
+      ],
+      "misconception_probes": [
+        "Treats = as 'write the answer'",
+        "Rejects an expression on the left of =",
+        "Assumes every displayed equation is true",
+        "Compares surface form instead of both side values"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Evidence must show relational meaning independently from solving unknowns.",
+        "required": [
+          {
+            "dimension": "truth_judgment",
+            "cases": [
+              "true",
+              "false"
+            ]
+          },
+          {
+            "dimension": "side_forms",
+            "cases": [
+              "numeral=numeral",
+              "numeral=expression",
+              "expression=numeral",
+              "expression=expression"
+            ]
+          },
+          {
+            "dimension": "symmetry",
+            "required": true
+          }
+        ],
+        "prohibitions": [
+          "No unknown-solving credit",
+          "No arithmetic mastery inference from equation-truth evidence"
+        ]
+      }
+    },
+    {
+      "code": "MATH.EARLY_ALGEBRA.ADDITION_EQUATION_UNKNOWN_WITHIN_20",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.NS.ADDITION",
+          "MATH.EE.EQUATION.ONE",
+          "MATH.ARITHMETIC.ADD_WITHIN_20"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "unknown_first_addend",
+        "unknown_second_addend",
+        "unknown_sum"
+      ],
+      "inclusions": [
+        "One missing whole number in a+b=c with a,b,c in 0..20 and a+b=c",
+        "Unknown may occupy either addend position or the sum position",
+        "Zero and upper-boundary values are included",
+        "Equivalent strategies may use objects, drawings, counting, decomposition or inverse subtraction"
+      ],
+      "exclusions": [
+        "Subtraction equations",
+        "Contextual story interpretation",
+        "More than one unknown",
+        "Three or more addends",
+        "Values or sums outside 0..20",
+        "Variables requiring symbolic manipulation beyond one missing whole number"
+      ],
+      "prerequisite_concepts": [
+        "equality relation",
+        "addition as joining or composing",
+        "whole-number representation through 20"
+      ],
+      "examples": [
+        {
+          "input": "□ + 5 = 12",
+          "answer": "7",
+          "unknown_position": "first_addend"
+        },
+        {
+          "input": "8 + □ = 20",
+          "answer": "12",
+          "unknown_position": "second_addend"
+        },
+        {
+          "input": "9 + 0 = □",
+          "answer": "9",
+          "unknown_position": "sum"
+        },
+        {
+          "input": "15 + □ = 22",
+          "valid": false,
+          "rationale": "The equation includes a value outside the 0..20 contract"
+        }
+      ],
+      "misconception_probes": [
+        "Always adds the two visible numerals",
+        "Treats the equal sign as a signal to compute left-to-right",
+        "Assumes the box must contain the larger number",
+        "Fails zero-addend cases"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Each unknown position requires independent unassisted evidence.",
+        "required": [
+          {
+            "unknown_position": "first_addend",
+            "include_zero_boundary": true
+          },
+          {
+            "unknown_position": "second_addend",
+            "include_crossing_ten": true
+          },
+          {
+            "unknown_position": "sum",
+            "include_upper_boundary": true
+          }
+        ],
+        "prohibitions": [
+          "No subtraction-equation mastery inference",
+          "No contextual-modeling credit",
+          "Direct addition facts alone are insufficient"
+        ]
+      }
+    },
+    {
+      "code": "MATH.EARLY_ALGEBRA.SUBTRACTION_EQUATION_UNKNOWN_WITHIN_20",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.NS.SUBTRACTION",
+          "MATH.EE.EQUATION.ONE",
+          "MATH.ARITHMETIC.SUBTRACT_WITHIN_20"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "unknown_minuend",
+        "unknown_subtrahend",
+        "unknown_difference"
+      ],
+      "inclusions": [
+        "One missing whole number in a-b=c with 0<=b<=a<=20 and c=a-b",
+        "Unknown may occupy minuend, subtrahend or difference position",
+        "Zero differences, zero subtrahends and upper-boundary minuends are included",
+        "Equivalent strategies may use objects, drawings, counting, decomposition or inverse addition"
+      ],
+      "exclusions": [
+        "Addition equations",
+        "Negative values or differences",
+        "Contextual story interpretation",
+        "More than one unknown",
+        "Values outside 0..20",
+        "Older-grade symbolic equation solving"
+      ],
+      "prerequisite_concepts": [
+        "equality relation",
+        "subtraction as removal or difference",
+        "whole-number representation through 20"
+      ],
+      "examples": [
+        {
+          "input": "□ - 5 = 7",
+          "answer": "12",
+          "unknown_position": "minuend"
+        },
+        {
+          "input": "14 - □ = 9",
+          "answer": "5",
+          "unknown_position": "subtrahend"
+        },
+        {
+          "input": "20 - 20 = □",
+          "answer": "0",
+          "unknown_position": "difference"
+        },
+        {
+          "input": "4 - □ = 9",
+          "valid": false,
+          "rationale": "No nonnegative whole-number solution satisfies the bounded equation"
+        }
+      ],
+      "misconception_probes": [
+        "Subtracts the smaller visible numeral from the larger regardless of position",
+        "Treats subtraction as commutative",
+        "Adds visible numerals for every missing value",
+        "Rejects zero as a valid difference or subtrahend"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Minuend, subtrahend and difference positions require independent unassisted evidence.",
+        "required": [
+          {
+            "unknown_position": "minuend",
+            "include_upper_boundary": true
+          },
+          {
+            "unknown_position": "subtrahend",
+            "include_zero_case": true
+          },
+          {
+            "unknown_position": "difference",
+            "include_zero_difference": true
+          }
+        ],
+        "prohibitions": [
+          "No addition-equation mastery inference",
+          "No contextual-modeling credit",
+          "Direct subtraction facts alone are insufficient"
+        ]
+      }
+    },
+    {
+      "code": "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.GEO.SHAPES",
+          "MATH.GEO.SHAPE.CLASSIFY"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "defining_vs_nondefining",
+        "identify_2d_by_attributes",
+        "identify_3d_by_attributes"
+      ],
+      "shape_universe": {
+        "two_dimensional": [
+          "triangle",
+          "circle",
+          "rectangle",
+          "square",
+          "trapezoid"
+        ],
+        "three_dimensional": [
+          "cube",
+          "rectangular_prism",
+          "cone",
+          "cylinder",
+          "sphere"
+        ],
+        "note": "Names are bounded review objects, not an assertion of a complete jurisdiction standard or later-grade classification hierarchy."
+      },
+      "inclusions": [
+        "Identify a listed shape from defining attributes rather than color, size or orientation",
+        "Distinguish defining attributes from non-defining attributes",
+        "Treat rotated, reflected, stretched or differently sized valid examples as the same named shape when defining attributes remain",
+        "Keep 2-D and 3-D evidence separately visible"
+      ],
+      "exclusions": [
+        "Naming a shape without attribute reasoning as sufficient mastery",
+        "Counting sides alone as the whole evidence contract",
+        "Later-grade quadrilateral hierarchy proofs",
+        "Unlisted polygons, polyhedra or curved surfaces",
+        "Construction and composition evidence"
+      ],
+      "prerequisite_concepts": [
+        "same/different",
+        "straight and curved boundary recognition",
+        "side, vertex, face and surface vocabulary"
+      ],
+      "examples": [
+        {
+          "input": "Which attribute makes every triangle a triangle?",
+          "answer": "It is a closed 2-D shape with three straight sides and three vertices.",
+          "dimension": "2d"
+        },
+        {
+          "input": "A rectangle is blue and tilted. Which facts are non-defining?",
+          "answer": "Its color and orientation.",
+          "dimension": "defining_vs_nondefining"
+        },
+        {
+          "input": "Identify a solid with two circular faces and one curved surface.",
+          "answer": "cylinder",
+          "dimension": "3d"
+        },
+        {
+          "input": "A red shape must be a rectangle.",
+          "answer": "false",
+          "dimension": "nondefining"
+        }
+      ],
+      "misconception_probes": [
+        "Uses orientation as a defining attribute",
+        "Classifies by color or size",
+        "Calls every four-sided figure a square",
+        "Confuses 2-D faces with 3-D solids"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "The single DRAFT card retains separate 2-D, 3-D and defining/non-defining evidence dimensions; partial evidence cannot satisfy the combined claim.",
+        "required": [
+          {
+            "dimension": "2d_attributes",
+            "minimum_distinct_shapes": 3
+          },
+          {
+            "dimension": "3d_attributes",
+            "minimum_distinct_shapes": 3
+          },
+          {
+            "dimension": "defining_vs_nondefining",
+            "include_orientation": true
+          }
+        ],
+        "review_question": "Independent Math Review must decide whether 2-D and 3-D should remain one atom or split before approval."
+      }
+    },
+    {
+      "code": "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.GEO.SHAPES",
+          "MATH.GEO.SHAPE.CLASSIFY"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "construct_2d_from_attributes",
+        "construct_3d_model_from_attributes",
+        "verify_construction"
+      ],
+      "shape_universe": {
+        "two_dimensional": [
+          "triangle",
+          "circle",
+          "rectangle",
+          "square",
+          "trapezoid"
+        ],
+        "three_dimensional": [
+          "cube",
+          "rectangular_prism",
+          "cone",
+          "cylinder",
+          "sphere"
+        ]
+      },
+      "inclusions": [
+        "Draw or build a listed shape that satisfies supplied defining attributes",
+        "Accept varied size and orientation when defining attributes are met",
+        "For 3-D evidence, construct or select a physical/pictorial model and identify the requested faces or surfaces",
+        "Verify the finished construction against every supplied defining attribute"
+      ],
+      "exclusions": [
+        "Recognition-only evidence",
+        "Freehand visual perfection as a mathematical requirement",
+        "Later-grade compass-and-straightedge construction",
+        "Unlisted shapes",
+        "Composing multiple component shapes into a new shape"
+      ],
+      "prerequisite_concepts": [
+        "defining attributes",
+        "basic drawing or manipulative use",
+        "2-D versus 3-D distinction"
+      ],
+      "examples": [
+        {
+          "input": "Draw a closed shape with three straight sides.",
+          "answer": "any valid triangle",
+          "dimension": "2d"
+        },
+        {
+          "input": "Build or choose a solid with six square faces.",
+          "answer": "cube",
+          "dimension": "3d"
+        },
+        {
+          "input": "Draw a rectangle that is not resting on a horizontal side.",
+          "answer": "any rotated valid rectangle",
+          "dimension": "orientation_invariance"
+        },
+        {
+          "input": "Draw a circle with four vertices.",
+          "valid": false,
+          "rationale": "The supplied attributes are inconsistent"
+        }
+      ],
+      "misconception_probes": [
+        "Copies a familiar prototype despite conflicting attributes",
+        "Treats rotation as changing the shape",
+        "Draws an open figure when closure is required",
+        "Confuses a square face with a cube"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Production evidence is distinct from recognition; 2-D and 3-D constructions remain separately scored.",
+        "required": [
+          {
+            "dimension": "2d_construction",
+            "minimum_distinct_attribute_sets": 3
+          },
+          {
+            "dimension": "3d_model",
+            "minimum_distinct_attribute_sets": 2
+          },
+          {
+            "dimension": "self_verification",
+            "must_reference_all_supplied_attributes": true
+          }
+        ],
+        "review_question": "Independent Math Review must confirm whether 3-D model production is sufficiently observable for the same atom."
+      }
+    },
+    {
+      "code": "MATH.GEOMETRY.SHAPE.COMPOSE",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.GEO.SHAPES",
+          "MATH.NS.COMPOSE_DECOMPOSE"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "compose_2d",
+        "compose_3d",
+        "identify_component_parts"
+      ],
+      "shape_universe": {
+        "two_dimensional_components": [
+          "triangle",
+          "rectangle",
+          "square",
+          "trapezoid"
+        ],
+        "three_dimensional_components": [
+          "cube",
+          "rectangular_prism"
+        ],
+        "note": "Composition uses non-overlapping parts joined along boundaries; classification hierarchy is separate."
+      },
+      "inclusions": [
+        "Combine two or more bounded component shapes to make a specified composite or new shape",
+        "Explain which component shapes form the result",
+        "Use rotations or reflections of components without treating orientation as a new shape",
+        "Keep 2-D and 3-D composition evidence separately visible"
+      ],
+      "exclusions": [
+        "Merely identifying component shapes without composing them",
+        "Overlapping pieces when the task requires a partition into non-overlapping parts",
+        "Area, volume or surface-area calculation",
+        "Later-grade quadrilateral hierarchy",
+        "Numeric composition/decomposition under MATH.NS.COMPOSE_DECOMPOSE"
+      ],
+      "prerequisite_concepts": [
+        "recognize bounded component shapes",
+        "part-whole spatial relation",
+        "orientation invariance"
+      ],
+      "examples": [
+        {
+          "input": "Join two congruent right triangles along equal sides to make a rectangle; name the parts.",
+          "answer": "a rectangle composed of two triangles",
+          "dimension": "2d"
+        },
+        {
+          "input": "Join two equal squares edge-to-edge; name one possible result.",
+          "answer": "a rectangle composed of two squares",
+          "dimension": "2d"
+        },
+        {
+          "input": "Join unit cubes without overlap to build a rectangular prism and state the number of cubes.",
+          "answer": "a valid rectangular-prism arrangement with its component count",
+          "dimension": "3d"
+        },
+        {
+          "input": "Place one square completely on top of another and claim a two-part rectangle.",
+          "valid": false,
+          "rationale": "Complete overlap does not form the required non-overlapping composition"
+        }
+      ],
+      "misconception_probes": [
+        "Counts overlapping pieces as separate visible parts",
+        "Changes component names after rotation",
+        "Names only the result and omits its parts",
+        "Confuses composing shapes with adding side counts"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "A combined claim requires separately retained 2-D and 3-D composition evidence plus identification of component parts.",
+        "required": [
+          {
+            "dimension": "2d_composition",
+            "minimum_distinct_tasks": 2
+          },
+          {
+            "dimension": "3d_composition",
+            "minimum_distinct_tasks": 1
+          },
+          {
+            "dimension": "part_explanation",
+            "required_for_every_task": true
+          }
+        ],
+        "review_question": "Independent Math Review must decide whether one atom can retain 2-D/3-D evidence without partial mastery; split if not."
+      }
+    },
+    {
+      "code": "MATH.MEASUREMENT.TIME.READ_HOUR_HALF_HOUR",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.MEAS.TIME",
+          "MATH.MEAS.TIME.CONVERT",
+          "MATH.MEAS.TIME.ELAPSED"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "read_analog_hour",
+        "read_analog_half_hour",
+        "interpret_digital_hour_half_hour",
+        "match_representations"
+      ],
+      "inclusions": [
+        "Read analog times at exact hours and half-hours",
+        "Interpret digital notation H:00 and H:30 for H in 1..12",
+        "At half-hour, recognize the minute hand at 6 and the hour hand halfway toward the next hour",
+        "Include 12:00 and 12:30",
+        "Match equivalent analog and digital representations"
+      ],
+      "exclusions": [
+        "Elapsed time",
+        "Hour/minute unit conversion",
+        "Five-minute or one-minute precision",
+        "24-hour notation",
+        "AM/PM inference without contextual evidence",
+        "Producing or setting a clock representation"
+      ],
+      "prerequisite_concepts": [
+        "numbers 1..12",
+        "clockwise order",
+        "whole and half concepts",
+        "analog clock parts"
+      ],
+      "examples": [
+        {
+          "input": "Analog clock: minute hand at 12, hour hand at 7.",
+          "answer": "7:00",
+          "representation": "analog"
+        },
+        {
+          "input": "Analog clock: minute hand at 6, hour hand halfway between 12 and 1.",
+          "answer": "12:30",
+          "representation": "analog"
+        },
+        {
+          "input": "Read 9:30.",
+          "answer": "half past nine",
+          "representation": "digital"
+        },
+        {
+          "input": "Analog clock: minute hand at 3.",
+          "valid": false,
+          "rationale": "Quarter-hour precision is outside this contract"
+        }
+      ],
+      "misconception_probes": [
+        "Reads the minute hand as the hour hand",
+        "Calls 8:30 half past seven",
+        "Places the hour hand exactly on 8 at 8:30",
+        "Treats :30 as 30 hours"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Reading evidence must include analog and digital forms at both hour and half-hour precision.",
+        "required": [
+          {
+            "representation": "analog",
+            "precisions": [
+              "hour",
+              "half_hour"
+            ],
+            "include_12_boundary": true
+          },
+          {
+            "representation": "digital",
+            "precisions": [
+              "hour",
+              "half_hour"
+            ]
+          },
+          {
+            "dimension": "analog_digital_match",
+            "required": true
+          }
+        ],
+        "prohibitions": [
+          "No production mastery inference",
+          "No elapsed-time or conversion credit"
+        ]
+      }
+    },
+    {
+      "code": "MATH.MEASUREMENT.TIME.REPRESENT_HOUR_HALF_HOUR",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.MEAS.TIME",
+          "MATH.MEAS.TIME.CONVERT",
+          "MATH.MEAS.TIME.ELAPSED"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "write_digital_hour",
+        "write_digital_half_hour",
+        "construct_analog_hour",
+        "construct_analog_half_hour"
+      ],
+      "inclusions": [
+        "Write digital notation H:00 or H:30 for a supplied hour/half-hour time",
+        "Draw, set or construct an analog clock representation for a supplied hour/half-hour time",
+        "At half-hour, place the hour hand between consecutive hour marks",
+        "Include 12:00 and 12:30",
+        "Retain digital-writing and analog-production evidence separately"
+      ],
+      "exclusions": [
+        "Reading-only evidence",
+        "Elapsed time",
+        "Hour/minute conversion",
+        "Five-minute or one-minute precision",
+        "24-hour notation and time zones",
+        "AM/PM selection without context"
+      ],
+      "prerequisite_concepts": [
+        "meaning of hour and half-hour",
+        "analog clock parts",
+        "digital time notation",
+        "numbers 1..12"
+      ],
+      "examples": [
+        {
+          "input": "Write half past four in digital form.",
+          "answer": "4:30",
+          "representation": "digital"
+        },
+        {
+          "input": "Set an analog clock to 12:30.",
+          "answer": "minute hand at 6; hour hand halfway between 12 and 1",
+          "representation": "analog"
+        },
+        {
+          "input": "Draw 7:00 on an analog clock.",
+          "answer": "minute hand at 12; hour hand at 7",
+          "representation": "analog"
+        },
+        {
+          "input": "Write quarter past four.",
+          "valid": false,
+          "rationale": "Quarter-hour precision is outside this contract"
+        }
+      ],
+      "misconception_probes": [
+        "Writes 4.30 or 430 without the required digital notation",
+        "Places the minute hand at 30 instead of at 6",
+        "Leaves the hour hand exactly on the earlier hour at half-hour",
+        "Swaps hour and minute hands"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Digital writing and analog production each require independent unassisted evidence at hour and half-hour precision.",
+        "required": [
+          {
+            "representation": "digital",
+            "precisions": [
+              "hour",
+              "half_hour"
+            ],
+            "include_12_boundary": true
+          },
+          {
+            "representation": "analog",
+            "precisions": [
+              "hour",
+              "half_hour"
+            ],
+            "include_12_boundary": true
+          }
+        ],
+        "prohibitions": [
+          "No reading mastery inference",
+          "No elapsed-time or conversion credit",
+          "A single representation cannot satisfy both dimensions"
+        ]
+      }
+    }
+  ],
+  "noncanonical_profiles": [
+    {
+      "label": "count_compare_to_120",
+      "role": "REPORTING_ONLY_ALL_OF",
+      "members": [
+        "MATH.NUMBER_SENSE.COUNT_FORWARD_BY_ONE_TO_120",
+        "MATH.NUMBER_SENSE.COMPARE_WHOLE_NUMBERS_TO_120",
+        "MATH.NUMBER_SENSE.REPRESENT_NUMERALS_TO_120",
+        "MATH.NUMBER_SENSE.ORDER_WHOLE_NUMBERS_TO_120"
+      ]
+    },
+    {
+      "label": "equation_balance",
+      "role": "REPORTING_ONLY_ALL_OF",
+      "members": [
+        "MATH.EARLY_ALGEBRA.EQUALITY_RELATION",
+        "MATH.EARLY_ALGEBRA.ADDITION_EQUATION_UNKNOWN_WITHIN_20",
+        "MATH.EARLY_ALGEBRA.SUBTRACTION_EQUATION_UNKNOWN_WITHIN_20"
+      ]
+    },
+    {
+      "label": "identify_compose_shapes",
+      "role": "REPORTING_ONLY_ALL_OF",
+      "members": [
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES",
+        "MATH.GEOMETRY.SHAPE.COMPOSE"
+      ]
+    },
+    {
+      "label": "tell_time_hour_half_hour",
+      "role": "REPORTING_ONLY_ALL_OF",
+      "members": [
+        "MATH.MEASUREMENT.TIME.READ_HOUR_HALF_HOUR",
+        "MATH.MEASUREMENT.TIME.REPRESENT_HOUR_HALF_HOUR"
+      ]
+    }
+  ],
+  "profile_prohibitions": [
+    "No canonical row or UUID",
+    "No mastery event, attempt or variant namespace",
+    "No inferred member mastery",
+    "No duplicate credit",
+    "No runtime alias activation"
+  ]
+}
