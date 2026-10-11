@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "package_id": "MG-G7-RATIONAL-SCALE-INVERSE",
-  "revision": "middle-grades-rational-scale-v1-r2",
+  "revision": "middle-grades-rational-scale-v1-r3",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "mastery_writes": false,
@@ -23,9 +23,9 @@
       "PR #315 ratio pilot",
       "PR #328 ratio/double-number-line, signed-integer, and data/spatial packages"
     ],
-    "actual_gap": "No complete reviewed package connects signed rational multiplication to direction-and-scale transformations, division to a missing scale factor, misconception-specific diagnosis, and structurally different unseen transfer.",
-    "planned_improvement": "A draft-only eight-phase package using oriented fraction strips, reflection/scale transformations, inverse equations, targeted repairs, and reserved independent variant namespaces.",
-    "verification": "Local deterministic exact-Fraction tests plus independent standards, mathematics, pedagogy, backend, and Muse reviews before integration."
+    "actual_gap": "The R2 package connected direction, scale, and inverse equations, but independent pedagogy review found that only one misconception was operationally diagnosed, coordinate substitution was not authentic transfer, and independent items collected a number rather than concept evidence.",
+    "planned_improvement": "R3 adds a six-field entry diagnostic with explicit routes to all four repairs, follow-up and scaffold-fade criteria; unfamiliar calibration-log transfer requiring operation selection; and unseen multi-part variants that collect operation, inverse strategy, direction, magnitude, exact result, and recomposition evidence.",
+    "verification": "Local deterministic exact-Fraction, route-classification, multi-part oracle, answer non-disclosure, and contrast-case tests; independent pedagogy re-review plus standards, mathematics, backend, and Muse reviews still required before integration."
   },
   "standards": {
     "jurisdiction": "Maryland",
@@ -62,10 +62,11 @@
     "references": [
       "https://github.com/AyalewGM/ai-tutor/pull/328#issuecomment-6102771431",
       "https://github.com/AyalewGM/ai-tutor/issues/278#issuecomment-6102774171",
+      "https://github.com/AyalewGM/ai-tutor/pull/333#issuecomment-6103672245",
       "docs/curriculum/drafts/learning-packages-wave2/SEEDABLE_VARIANTS_REVIEW.md"
     ],
-    "rationale": "Independent review requires authentic phase progression, diagnosis tied to observed reasoning, domain-specific accessibility, and genuinely unseen verification; references are evidence constraints, not copied instructional material.",
-    "status": "NEW_PACKAGE_AWAITING_INDEPENDENT_REVIEW"
+    "rationale": "Independent review requires authentic phase progression, diagnosis tied to observed response fields, domain-specific accessibility, genuinely unseen operation selection, and concept-level verification; references are evidence constraints, not copied instructional material.",
+    "status": "R2_CHANGES_REQUIRED_R3_AWAITING_PEDAGOGY_REREVIEW"
   },
   "coverage": {
     "mihur_phases": [
@@ -83,7 +84,7 @@
       "VISUAL",
       "SYMBOLIC"
     ],
-    "misconception_pathways": "DRAFT_CONTRACT",
+    "misconception_pathways": "R3_OPERATIONAL_CONTENT_CONTRACT_LOCAL_TESTED",
     "scope_boundary": {
       "included": [
         "signed rational multiplication as direction and scale",
@@ -100,8 +101,12 @@
   },
   "practice_and_assessment": {
     "seeded_practice": "DRAFT_GENERATOR_LOCAL_ONLY",
-    "independent_exact_oracle": "LOCAL_TESTED_NOT_INDEPENDENTLY_VERIFIED",
-    "unseen_assessment": "RESERVED_NAMESPACE_DRAFT_CONTRACT",
+    "independent_exact_oracle": "MULTI_PART_LOCAL_TESTED_NOT_INDEPENDENTLY_VERIFIED",
+    "unseen_assessment": "RESERVED_NAMESPACE_WITH_OPERATION_INVERSE_STRATEGY_DIRECTION_MAGNITUDE_RESULT_RECOMPOSITION",
+    "assessment_contrast_cases": [
+      "MISSING_SCALE_INVERT_DIVISOR_NOT_COMPONENTWISE",
+      "NEGATIVE_DIRECTION_WITH_GROWING_MAGNITUDE"
+    ],
     "server_trusted_scoring": "REQUIRED_NOT_IMPLEMENTED",
     "hints_in_independent_mode": false,
     "guided_practice_credit": false,
@@ -110,7 +115,7 @@
   "approvals": {
     "standards": "PENDING",
     "mathematics": "PENDING",
-    "pedagogy": "PENDING",
+    "pedagogy": "R2_CHANGES_REQUIRED_R3_REREVIEW_PENDING",
     "muse_accessibility_and_assessment": "PENDING",
     "engineering_integration": "NOT_REQUESTED",
     "release": "NOT_APPROVED"

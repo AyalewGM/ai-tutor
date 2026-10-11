@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "package_id": "MG-G7-RATIONAL-SCALE-INVERSE",
-  "revision": "middle-grades-rational-scale-v1-r2",
+  "revision": "middle-grades-rational-scale-v1-r3",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "mastery_writes": false,
@@ -56,23 +56,72 @@
         "VISUAL",
         "SYMBOLIC"
       ],
-      "prompt": "Analyze a peer's claim that any product containing a negative is negative. Use the number of direction reversals to locate the exact reasoning error and select the matching repair."
+      "prompt": "Complete an entry diagnostic by selecting the needed operation and inverse strategy, predicting direction and magnitude change, calculating exactly, and choosing a recomposition check. The captured response pattern routes to one of four distinct repairs; a new-number follow-up determines whether the scaffold fades."
     },
     {
       "phase": "TRANSFER",
       "representations": [
+        "CONCRETE",
+        "VISUAL",
         "SYMBOLIC"
       ],
-      "prompt": "A coordinate transformation follows y=(-3/2)x. For x=-4/5, determine y and explain how direction and magnitude predict the sign before calculation."
+      "prompt": "Use an unfamiliar calibration log. Some records give an input and a scale but hide the output; others give input and output but hide the scale. Decide which quantity is missing and whether multiplication or missing-scale division is required. Predict direction and magnitude change, calculate exactly, and verify by recomposition."
     },
     {
       "phase": "VERIFY",
       "representations": [
         "SYMBOLIC"
       ],
-      "prompt": "Server-controlled unseen variants sample multiplication and division-as-missing-scale without diagrams, hints, worked steps, answer reveal, or guided-practice mastery credit."
+      "prompt": "Server-controlled unseen calibration records collect operation and inverse-strategy choices, direction prediction, magnitude comparison, exact result, and a recomposition check. Contrast cases distinguish reciprocal inversion from componentwise division and negative direction from smaller magnitude. No diagrams, hints, worked steps, answer reveal, or guided-practice mastery credit are available."
     }
   ],
+  "entry_diagnostic": {
+    "response_fields": [
+      "operation_choice",
+      "direction_prediction",
+      "magnitude_relation",
+      "inverse_strategy",
+      "exact_result",
+      "recomposition_check"
+    ],
+    "routing_precedence": [
+      "RECIPROCAL_WRONG_OPERAND",
+      "DIVIDE_STRAIGHT_ACROSS",
+      "ONE_NEGATIVE_MEANS_ALWAYS_NEGATIVE",
+      "NEGATIVE_MEANS_SMALLER_MAGNITUDE"
+    ],
+    "route_selection": "Use only the learner's submitted fields and exact response. Never infer a diagnosis from a correct/incorrect total alone. If no signature matches, record UNCLASSIFIED_FOR_HUMAN_REVIEW and do not serve a generic hint.",
+    "routes": [
+      {
+        "misconception_id": "ONE_NEGATIVE_MEANS_ALWAYS_NEGATIVE",
+        "observable_response_pattern": "On a double-negative direct-scale item, operation and magnitude are correct but direction is NEGATIVE or the exact result is the negative of the oracle.",
+        "selected_repair": "repair-two-reflections",
+        "follow_up_check": "A new double-negative item with different fractions requires a direction prediction before calculation.",
+        "scaffold_fade_condition": "Fade the reflection counter only after direction and exact result are both correct on two consecutive new-number checks."
+      },
+      {
+        "misconception_id": "NEGATIVE_MEANS_SMALLER_MAGNITUDE",
+        "observable_response_pattern": "Direction is correct on a negative-scale item whose scale magnitude exceeds one, but magnitude_relation is SHRINKS.",
+        "selected_repair": "repair-separate-direction-distance",
+        "follow_up_check": "Compare a negative scale with magnitude 3/2 and a positive scale with magnitude 1/2 without calculating endpoints.",
+        "scaffold_fade_condition": "Fade the two-column direction/distance organizer after two consecutive correct magnitude comparisons with opposite scale signs."
+      },
+      {
+        "misconception_id": "DIVIDE_STRAIGHT_ACROSS",
+        "observable_response_pattern": "A missing-scale item is identified as division and inverse_strategy is DIVIDE_COMPONENTS_INDEPENDENTLY; the response does not use output times the reciprocal of input.",
+        "selected_repair": "repair-missing-factor-recomposition",
+        "follow_up_check": "Solve a new q times input equals output record and multiply the proposed q by the original input.",
+        "scaffold_fade_condition": "Fade the missing-factor frame after two consecutive exact quotients each accompanied by a valid recomposition equality."
+      },
+      {
+        "misconception_id": "RECIPROCAL_WRONG_OPERAND",
+        "observable_response_pattern": "On a missing-scale item, inverse_strategy is MULTIPLY_INPUT_BY_RECIPROCAL_OF_OUTPUT or the submitted exact result equals input divided by output rather than output divided by input.",
+        "selected_repair": "repair-label-input-output-scale",
+        "follow_up_check": "Label input, output, and hidden scale on a new calibration record before forming the equation.",
+        "scaffold_fade_condition": "Fade operand labels after two consecutive records use output divided by input and pass recomposition."
+      }
+    ]
+  },
   "misconception_pathways": [
     {
       "id": "ONE_NEGATIVE_MEANS_ALWAYS_NEGATIVE",
@@ -83,7 +132,10 @@
         "What happens after the first reflection?",
         "What happens after the second reflection?"
       ],
-      "repair": "Separate sign as direction reversal from magnitude multiplication, then recheck a different double-negative product."
+      "repair": "Separate sign as direction reversal from magnitude multiplication, then recheck a different double-negative product.",
+      "repair_task_id": "repair-two-reflections",
+      "follow_up_check": "New-number double-negative direction prediction followed by exact calculation.",
+      "scaffold_fade_condition": "Two consecutive correct direction-and-result checks."
     },
     {
       "id": "NEGATIVE_MEANS_SMALLER_MAGNITUDE",
@@ -94,7 +146,10 @@
         "Does reflection change arrow length?",
         "Restore direction after comparing magnitudes."
       ],
-      "repair": "Track magnitude with strip length and sign with orientation in separate fields."
+      "repair": "Track magnitude with strip length and sign with orientation in separate fields.",
+      "repair_task_id": "repair-separate-direction-distance",
+      "follow_up_check": "Contrast a negative growth factor with a positive shrink factor before calculating.",
+      "scaffold_fade_condition": "Two consecutive correct magnitude comparisons across opposite signs."
     },
     {
       "id": "DIVIDE_STRAIGHT_ACROSS",
@@ -105,7 +160,10 @@
         "Which multiplication undoes multiplying by 3/4?",
         "Check the proposed quotient by multiplication."
       ],
-      "repair": "Use the reciprocal as an inverse transformation and require a multiplication check."
+      "repair": "Use the reciprocal as an inverse transformation and require a multiplication check.",
+      "repair_task_id": "repair-missing-factor-recomposition",
+      "follow_up_check": "Solve a new missing-scale record and recompose output from scale times input.",
+      "scaffold_fade_condition": "Two consecutive exact quotients with valid recomposition equalities."
     },
     {
       "id": "RECIPROCAL_WRONG_OPERAND",
@@ -116,7 +174,10 @@
         "What operation undoes multiplication by that divisor?",
         "Multiply your quotient by the original divisor."
       ],
-      "repair": "Label dividend, divisor and quotient before applying the reciprocal, then perform the inverse check."
+      "repair": "Label dividend, divisor and quotient before applying the reciprocal, then perform the inverse check.",
+      "repair_task_id": "repair-label-input-output-scale",
+      "follow_up_check": "Label a new record's input, output, and hidden scale before writing output divided by input.",
+      "scaffold_fade_condition": "Two consecutive correctly ordered quotients that pass recomposition."
     }
   ],
   "guided_examples": [
@@ -137,8 +198,23 @@
     }
   ],
   "transfer_oracle_teacher_only": {
-    "equation": "y=(-3/2)(-4/5)",
-    "answer": "6/5"
+    "context": "A calibration log displays signed input/output changes but alternates which value is hidden.",
+    "direct_record": {
+      "given": "input=-4/5; scale=-3/2; output hidden",
+      "operation": "MULTIPLY",
+      "direction": "POSITIVE",
+      "magnitude_relation": "GROWS",
+      "answer": "6/5",
+      "recomposition": "(-3/2) * (-4/5) = 6/5"
+    },
+    "missing_scale_record": {
+      "given": "input=3/4; output=-3/2; scale hidden",
+      "operation": "DIVIDE_AS_MISSING_SCALE",
+      "direction": "NEGATIVE",
+      "magnitude_relation": "GROWS",
+      "answer": "-2",
+      "recomposition": "(-2) * (3/4) = -3/2"
+    }
   },
   "independent_assessment_contract": {
     "variant_namespace": "middle-grades-rational-scale-v1:independent",
@@ -149,6 +225,18 @@
     "feedback_after_submission": true,
     "guided_practice_credit": false,
     "historical_mastery_mutation": false,
+    "required_response_fields": [
+      "operation_choice",
+      "direction_prediction",
+      "magnitude_relation",
+      "inverse_strategy",
+      "exact_result",
+      "recomposition_check"
+    ],
+    "contrast_cases": [
+      "MISSING_SCALE_INVERT_DIVISOR_NOT_COMPONENTWISE",
+      "NEGATIVE_DIRECTION_WITH_GROWING_MAGNITUDE"
+    ],
     "reserved_seeds": [
       701,
       702,
@@ -168,7 +256,7 @@
   "review_status": {
     "mathematics": "PENDING",
     "standards": "PENDING",
-    "pedagogy": "PENDING",
+    "pedagogy": "R2_CHANGES_REQUIRED_R3_REREVIEW_PENDING",
     "muse_qa": "PENDING",
     "release": "NOT_APPROVED"
   }

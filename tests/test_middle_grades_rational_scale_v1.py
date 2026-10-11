@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import sys
 from fractions import Fraction
 from pathlib import Path
 
@@ -28,6 +29,7 @@ def load_variants_module():
     spec = importlib.util.spec_from_file_location("middle_grades_rational_variants", path)
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     return module
 
@@ -36,7 +38,7 @@ def test_provenance_is_complete_and_fail_closed() -> None:
     provenance = load("provenance.v1.json")
 
     assert provenance["package_id"] == "MG-G7-RATIONAL-SCALE-INVERSE"
-    assert provenance["revision"] == "middle-grades-rational-scale-v1-r2"
+    assert provenance["revision"] == "middle-grades-rational-scale-v1-r3"
     assert provenance["status"] == "DRAFT_UNVERIFIED"
     assert provenance["runtime_activation"] is False
     assert provenance["mastery_writes"] is False
@@ -53,7 +55,7 @@ def test_provenance_is_complete_and_fail_closed() -> None:
     assert provenance["approvals"] == {
         "standards": "PENDING",
         "mathematics": "PENDING",
-        "pedagogy": "PENDING",
+        "pedagogy": "R2_CHANGES_REQUIRED_R3_REREVIEW_PENDING",
         "muse_accessibility_and_assessment": "PENDING",
         "engineering_integration": "NOT_REQUESTED",
         "release": "NOT_APPROVED",
@@ -89,13 +91,26 @@ def test_scope_does_not_claim_signed_integer_addition_or_other_owned_packages() 
 
 
 def test_misconception_paths_are_reasoning_specific() -> None:
-    pathways = load("package.v1.json")["misconception_pathways"]
+    package = load("package.v1.json")
+    pathways = package["misconception_pathways"]
+    diagnostic = package["entry_diagnostic"]
 
     assert len(pathways) == 4
     assert len({path["id"] for path in pathways}) == 4
     assert len({path["diagnostic_probe"] for path in pathways}) == 4
     assert all(len(path["socratic_prompts"]) == 3 for path in pathways)
     assert all(path["observed_reasoning"] != path["repair"] for path in pathways)
+    assert all(path["repair_task_id"] for path in pathways)
+    assert all(path["follow_up_check"] for path in pathways)
+    assert all(path["scaffold_fade_condition"] for path in pathways)
+    assert set(diagnostic["routing_precedence"]) == {path["id"] for path in pathways}
+    assert {route["misconception_id"] for route in diagnostic["routes"]} == {
+        path["id"] for path in pathways
+    }
+    assert all(route["observable_response_pattern"] for route in diagnostic["routes"])
+    assert all(route["selected_repair"] for route in diagnostic["routes"])
+    assert all(route["follow_up_check"] for route in diagnostic["routes"])
+    assert all(route["scaffold_fade_condition"] for route in diagnostic["routes"])
 
 
 def test_authored_oracles_are_exact() -> None:
@@ -106,21 +121,47 @@ def test_authored_oracles_are_exact() -> None:
     assert Fraction(examples["guided-double-negative"]) == Fraction(-3, 4) * Fraction(-2, 3)
     assert Fraction(examples["guided-missing-scale"]) * Fraction(3, 4) == Fraction(-3, 2)
     transfer = package["transfer_oracle_teacher_only"]
-    assert Fraction(transfer["answer"]) == Fraction(-3, 2) * Fraction(-4, 5)
+    direct = transfer["direct_record"]
+    missing = transfer["missing_scale_record"]
+    assert Fraction(direct["answer"]) == Fraction(-3, 2) * Fraction(-4, 5)
+    assert Fraction(missing["answer"]) * Fraction(3, 4) == Fraction(-3, 2)
+    assert direct["operation"] == "MULTIPLY"
+    assert missing["operation"] == "DIVIDE_AS_MISSING_SCALE"
 
 
 def test_seeded_variants_are_deterministic_and_use_exact_oracles() -> None:
     variants = load_variants_module()
+    observed_structures = set()
 
     for mode in ("guided", "independent"):
         for seed in range(40):
             first = variants.generate(seed, mode)
             second = variants.generate(seed, mode)
             assert first == second
-            if first.structure == "MULTIPLY_DIRECTION_SCALE":
-                assert first.answer == first.left * first.right
+            observed_structures.add(first.structure)
+            if first.hidden_quantity == "output":
+                assert first.answer == first.input_value * first.given_value
+                output = first.answer
             else:
-                assert first.answer * first.right == first.left
+                assert first.answer * first.input_value == first.given_value
+                output = first.given_value
+            assert first.direction == ("POSITIVE" if output > 0 else "NEGATIVE")
+            expected_relation = (
+                "GROWS"
+                if abs(output) > abs(first.input_value)
+                else "SHRINKS"
+                if abs(output) < abs(first.input_value)
+                else "SAME"
+            )
+            assert first.magnitude_relation == expected_relation
+            assert set(first.teacher_oracle()) == set(variants.RESPONSE_FIELDS)
+
+    assert observed_structures == {
+        "DIRECT_NEGATIVE_GROW",
+        "DIRECT_DOUBLE_NEGATIVE_SHRINK",
+        "MISSING_SCALE_INVERT_DIVISOR",
+        "MISSING_SCALE_POSITIVE_SHRINK",
+    }
 
 
 @pytest.mark.parametrize("seed", [-1, True, False, 1.5, "7", None])
@@ -152,10 +193,82 @@ def test_independent_namespace_and_payload_do_not_leak_answers_or_hints() -> Non
         guided = variants.generate(seed, "guided")
         independent = variants.generate(seed, "independent")
         assert guided.variant_id != independent.variant_id
-        assert (guided.left, guided.right) != (independent.left, independent.right)
+        assert (guided.input_value, guided.given_value) != (
+            independent.input_value,
+            independent.given_value,
+        )
         payload = independent.public_payload()
-        assert "answer" not in payload
-        assert "hint" not in " ".join(payload).lower()
+        serialized = json.dumps(payload).lower()
+        assert "answer" not in serialized
+        assert "teacher_oracle" not in serialized
+        assert "hint" not in serialized
+        assert payload["response_fields"] == list(variants.RESPONSE_FIELDS)
+
+
+def test_entry_diagnostic_routes_all_four_observed_error_patterns() -> None:
+    variants = load_variants_module()
+    double_negative = variants.generate(1, "guided")
+    negative_grow = variants.generate(0, "guided")
+    missing_scale = variants.generate(2, "guided")
+
+    assert variants.diagnose_response(
+        double_negative,
+        {
+            "direction_prediction": "NEGATIVE",
+            "exact_result": str(-double_negative.answer),
+        },
+    ) == "ONE_NEGATIVE_MEANS_ALWAYS_NEGATIVE"
+    assert variants.diagnose_response(
+        negative_grow,
+        {
+            "direction_prediction": negative_grow.direction,
+            "magnitude_relation": "SHRINKS",
+            "exact_result": str(negative_grow.answer),
+        },
+    ) == "NEGATIVE_MEANS_SMALLER_MAGNITUDE"
+    assert variants.diagnose_response(
+        missing_scale,
+        {
+            "operation_choice": missing_scale.operation,
+            "inverse_strategy": "DIVIDE_COMPONENTS_INDEPENDENTLY",
+            "exact_result": str(missing_scale.answer + 1),
+            "recomposition_check": "invalid",
+        },
+    ) == "DIVIDE_STRAIGHT_ACROSS"
+    assert variants.diagnose_response(
+        missing_scale,
+        {
+            "operation_choice": missing_scale.operation,
+            "inverse_strategy": "MULTIPLY_INPUT_BY_RECIPROCAL_OF_OUTPUT",
+            "exact_result": str(missing_scale.input_value / missing_scale.given_value),
+            "recomposition_check": "invalid",
+        },
+    ) == "RECIPROCAL_WRONG_OPERAND"
+
+
+def test_correct_or_unknown_diagnostic_response_fails_unclassified() -> None:
+    variants = load_variants_module()
+    variant = variants.generate(2, "guided")
+
+    assert variants.diagnose_response(
+        variant,
+        variant.teacher_oracle(),
+    ) == "UNCLASSIFIED_FOR_HUMAN_REVIEW"
+
+
+def test_independent_contract_requires_reasoning_and_contrast_evidence() -> None:
+    package = load("package.v1.json")
+    contract = package["independent_assessment_contract"]
+
+    assert contract["required_response_fields"] == package["entry_diagnostic"][
+        "response_fields"
+    ]
+    assert contract["contrast_cases"] == [
+        "MISSING_SCALE_INVERT_DIVISOR_NOT_COMPONENTWISE",
+        "NEGATIVE_DIRECTION_WITH_GROWING_MAGNITUDE",
+    ]
+    assert contract["hints_allowed"] is False
+    assert contract["guided_practice_credit"] is False
 
 
 def test_accessibility_contract_has_nonvisual_state_and_recovery() -> None:
