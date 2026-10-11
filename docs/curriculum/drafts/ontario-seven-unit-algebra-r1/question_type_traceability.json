@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "milestone": "GitHub Issue #337",
-  "revision": "issue-337-traceability-r1",
+  "revision": "issue-337-traceability-r2",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "source_policy": {
@@ -15,6 +15,114 @@
     "publication_version": "UNKNOWN_PENDING_STANDARDS_MAPPING",
     "exact_expectation_ids": [],
     "approval": "NONE"
+  },
+  "current_evidence_checkpoint": {
+    "checkpoint_date": "2026-10-11",
+    "authority_boundary": "CONTENT_TRACEABILITY_ONLY_NO_RELEASE_OR_MASTERY_AUTHORITY",
+    "shared_status": {
+      "standards_mapping": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+      "muse_qa": "PENDING_EXTERNAL_VERIFICATION",
+      "runtime_activation": false,
+      "learner_or_mastery_writes": false,
+      "deployed": false
+    },
+    "units": [
+      {
+        "unit": "Build Your Skills",
+        "content_status": "PARTIAL_AUTHORED_EXISTING_ONE_STEP_FAMILIES",
+        "exact_artifacts": [
+          "PR_343@9902ad8cee10120b27a0b60a45a2a6c0c75861c6",
+          "PR_349@79f272a6f8d21de348eb458e62a086363d724585"
+        ],
+        "mathematical_review": "PARTIAL_NOT_SEPARATELY_ACCEPTED_AS_COMPLETE_SIGNED_ONE_STEP_SEQUENCE",
+        "pedagogical_review": "NOT_REVIEWED_AS_COMPLETE_BUILD_YOUR_SKILLS_SEQUENCE",
+        "interaction": "PARTIAL_EQUATION_GUIDED_COMPONENTS_ONLY",
+        "trusted_assessment": "NOT_WIRED",
+        "actual_gap": "One connected signed add/subtract/multiply/divide diagnostic and unseen-transfer sequence is not independently accepted."
+      },
+      {
+        "unit": "2.6C",
+        "content_status": "AUTHORED_DRAFT",
+        "exact_artifacts": [
+          "PR_343@9902ad8cee10120b27a0b60a45a2a6c0c75861c6",
+          "PR_347@9c1e2a8bd79bc270de2c6433977c15d725eebefa"
+        ],
+        "mathematical_review": "APPROVE_BOUNDED_EQUATION_PACKAGE",
+        "pedagogical_review": "ACCEPT_BOUNDED_ROUTED_EQUATION_JOURNEY",
+        "interaction": "DRAFT_REVIEW_ROUTE_RUNTIME_OFF",
+        "trusted_assessment": "NOT_WIRED",
+        "actual_gap": "Server-trusted unseen scoring, official standards mapping and external Muse acceptance remain absent."
+      },
+      {
+        "unit": "2.7C",
+        "content_status": "AUTHORED_DRAFT",
+        "exact_artifacts": [
+          "PR_343@9902ad8cee10120b27a0b60a45a2a6c0c75861c6",
+          "PR_346@58bc5f379ec720ff69d8a350ae24b672441fbe41",
+          "PR_349@79f272a6f8d21de348eb458e62a086363d724585"
+        ],
+        "mathematical_review": "APPROVE_BOUNDED_MULTI_STEP_AND_EXACT_ROOT_SCOPES",
+        "pedagogical_review": "ACCEPT_EQUATION_JOURNEY_ONLY_ROOT_EXTENSION_NOT_SEPARATELY_ACCEPTED",
+        "interaction": "EQUATION_ROUTE_DRAFT_ROOT_SOLUTION_SET_INTERACTION_ABSENT",
+        "trusted_assessment": "EXACT_SCORER_MATH_APPROVED_UNROUTED_APPSEC_PENDING",
+        "actual_gap": "Root-solution-set teaching interaction, accepted-base integration, standards mapping and Muse verification remain absent."
+      },
+      {
+        "unit": "2.9C",
+        "content_status": "AUTHORED_DRAFT",
+        "exact_artifacts": [
+          "PR_344@bb2c2e1293c556bc3ca365b945ec72caee83bac9",
+          "PR_348@ecb83965e366b78fb04b89ae07331cf67b012169",
+          "PR_349@79f272a6f8d21de348eb458e62a086363d724585",
+          "PR_340@3d90e709309be4e3f0f7ba8320137549689a17b2"
+        ],
+        "mathematical_review": "APPROVE_CONTENT_EVIDENCE_SCOPE_AND_GUIDED_ONLY_MVE_NARROWING",
+        "pedagogical_review": "CHANGES_REQUIRED_PENDING_REVIEW_OF_CORRECTED_GUIDED_JOURNEY",
+        "interaction": "GUIDED_MODEL_ONLY_NO_LEARNER_PRODUCED_QUOTIENT_OR_RECONSTRUCTION",
+        "trusted_assessment": "NOT_WIRED",
+        "actual_gap": "Learner-produced exact quotient/reconstruction, routed reconciliation with PR 350, trusted scoring and Muse verification remain absent."
+      },
+      {
+        "unit": "2.9 Homework",
+        "content_status": "AUTHORED_DRAFT",
+        "exact_artifacts": [
+          "PR_348@ecb83965e366b78fb04b89ae07331cf67b012169",
+          "PR_349@79f272a6f8d21de348eb458e62a086363d724585",
+          "PR_350@dd5a89050eefce7b011dc9112671c410daf6e88c"
+        ],
+        "mathematical_review": "APPROVE_CONTENT_SPEC_PR_350_ROUTE_NOT_INDEPENDENTLY_REVIEWED",
+        "pedagogical_review": "CHANGES_REQUIRED_UNTIL_REAL_CORRECTED_ROUTE_IS_REVIEWED",
+        "interaction": "PR_350_DRAFT_ROUTE_REQUIRES_RECONCILIATION_WITH_PR_340_GUIDED_ONLY_CORRECTION",
+        "trusted_assessment": "NOT_WIRED",
+        "actual_gap": "Route must consume the corrected guided-only MVE contract and prove no assessment mounting or automatic readiness."
+      },
+      {
+        "unit": "2.10 Homework",
+        "content_status": "AUTHORED_DRAFT",
+        "exact_artifacts": [
+          "PR_344@bb2c2e1293c556bc3ca365b945ec72caee83bac9",
+          "PR_349@79f272a6f8d21de348eb458e62a086363d724585"
+        ],
+        "mathematical_review": "APPROVE_BOUNDED_GENERATORS_AND_SCOPE_CARDS",
+        "pedagogical_review": "ACCEPT_ZERO_EXPONENT_REMEDIATION_ONLY_OTHER_POWER_GEOMETRY_JOURNEYS_NOT_REVIEWED",
+        "interaction": "ABSENT_FOR_COMPLETE_POWER_GEOMETRY_PROGRESSION",
+        "trusted_assessment": "DRAFT_SCORER_CONTRACT_UNROUTED",
+        "actual_gap": "Accessible factor/power and geometry manipulation, routed full journey, trusted assessment and Muse verification remain absent."
+      },
+      {
+        "unit": "2.11 Homework",
+        "content_status": "AUTHORED_DRAFT",
+        "exact_artifacts": [
+          "PR_344@bb2c2e1293c556bc3ca365b945ec72caee83bac9",
+          "PR_349@79f272a6f8d21de348eb458e62a086363d724585"
+        ],
+        "mathematical_review": "APPROVE_BOUNDED_GENERATORS_AND_SCOPE_CARDS",
+        "pedagogical_review": "NOT_REVIEWED_AS_COMPLETE_SCIENTIFIC_NOTATION_JOURNEY",
+        "interaction": "ABSENT",
+        "trusted_assessment": "DRAFT_SCORER_CONTRACT_UNROUTED",
+        "actual_gap": "Normalization explorer, multiplication/division learner journey, accepted exact/rounded response policy, trusted scoring and Muse verification remain absent."
+      }
+    ]
   },
   "rows": [
     {
