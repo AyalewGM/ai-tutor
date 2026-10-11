@@ -6,8 +6,6 @@ import { InteractiveEquationBalance } from "../mve/InteractiveEquationBalance";
 import { showBalanceExploration } from "../mve/equationBalance";
 import { InteractiveLinearExplorer } from "../mve/InteractiveLinearExplorer";
 import { showLinearExploration } from "../mve/linearExplorer";
-import { InteractiveIntegerNumberLine } from "../mve/InteractiveIntegerNumberLine";
-import { showIntegerExploration } from "../mve/integerNumberLine";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BookOpen, CheckCircle2, ChevronDown, Flag, Lightbulb, Map as MapIcon, HelpCircle, RefreshCcw, Target, Undo2 } from "lucide-react";
@@ -19,7 +17,9 @@ import VoiceChatControls from "../components/chat/VoiceChatControls";
 import MathText from "../components/MathText";
 import ChatMessage from "../components/chat/ChatMessage";
 import LearnPanel from "../components/LearnPanel";
+import { integerAdditionEligible } from "../learningFlowInteractions";
 import { GuidedDistributivePractice } from "../mve/GuidedDistributivePractice";
+import { integerSeedFromString } from "../mve/integerPractice";
 import { InteractiveFractionBars, fractionComparisonTarget } from "../mve/InteractiveFractionBars";
 import { InteractiveFractionAddition } from "../mve/InteractiveFractionAddition";
 import LevelCrest from "../components/LevelCrest";
@@ -742,7 +742,7 @@ export default function Workspace() {
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {learn && (
+                  {learn && (workspace.state === "GUIDED_PRACTICE" || workspace.state === "REMEDIATION") && (
                     <div className="rounded-lg border border-accent/50 bg-accent/5">
                       <button
                         type="button"
@@ -761,7 +761,21 @@ export default function Workspace() {
                       </button>
                       {learnOpen && (
                         <div className="border-t border-accent/30 px-4 py-3">
-                          <LearnPanel learn={learn} />
+                          <LearnPanel
+                            learn={learn}
+                            integerPracticeSeed={
+                              integerAdditionEligible(workspace.state, learn)
+                                ? integerSeedFromString(
+                                    workspace.problem?.id ??
+                                      workspace.focus.active_skill_id,
+                                  )
+                                : undefined
+                            }
+                            independentAssessment={
+                              workspace.state !== "GUIDED_PRACTICE" &&
+                              workspace.state !== "REMEDIATION"
+                            }
+                          />
                         </div>
                       )}
                     </div>
@@ -773,12 +787,6 @@ export default function Workspace() {
                         independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
                       />
                     )}
-                  {showIntegerExploration(workspace.state, workspace.focus.skill_name) && (
-                    <InteractiveIntegerNumberLine
-                      key={workspace.focus.active_skill_id}
-                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
-                    />
-                  )}
                   {showLinearExploration(workspace.state, workspace.focus.skill_name) && (
                     <InteractiveLinearExplorer
                       key={workspace.focus.active_skill_id}
