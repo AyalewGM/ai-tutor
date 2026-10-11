@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "MIHUR_CONTENT_PROVENANCE",
+  "package_id": "ONT-ALG-FAMILY-GENERATORS-R1",
+  "revision": "issue-337-generator-gap-r2",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "source_scope": {
+    "milestone": "GitHub Issue #337",
+    "teacher_units": ["2.7C", "2.9C", "2.9 Homework", "2.10 Homework", "2.11 Homework"],
+    "source_access": "ABSTRACT_QUESTION_TYPE_HANDOFF_ONLY",
+    "copyrighted_wording_reused": false,
+    "student_or_school_identifiers_stored": false
+  },
+  "standards": {
+    "official_source_url": "UNKNOWN_PENDING_CURRICULUM_MAPPING",
+    "publication_version": "UNKNOWN_PENDING_CURRICULUM_MAPPING",
+    "exact_expectation_ids": [],
+    "mapping_approval": "NONE",
+    "coverage_credit": false
+  },
+  "canonical_reuse": [
+    {
+      "canonical_family": "MATH.EE.POLYNOMIAL_OPERATIONS",
+      "status": "HISTORICAL_IMPLEMENTATION_REUSE_ONLY_NO_NEW_MASTERY",
+      "new_canonical_identity": false
+    },
+    {
+      "canonical_family": "MATH.NS.EXPONENTS",
+      "status": "HISTORICAL_IMPLEMENTATION_REUSE_ONLY_NO_NEW_MASTERY",
+      "new_canonical_identity": false
+    },
+    {
+      "canonical_family": "MATH.NS.ROOTS",
+      "status": "HISTORICAL_IMPLEMENTATION_REUSE_ONLY_NO_NEW_MASTERY",
+      "new_canonical_identity": false
+    },
+    {
+      "canonical_family": "MATH.NS.SCIENTIFIC_NOTATION",
+      "status": "HISTORICAL_IMPLEMENTATION_REUSE_ONLY_NO_NEW_MASTERY",
+      "new_canonical_identity": false
+    }
+  ],
+  "architecture_boundary": {
+    "decision": "https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6107538656",
+    "status": "SETTLED_BOUNDARIES_DRAFT_IDENTITIES_NOT_AUTHORITY",
+    "scope_card_owner": "CANONICAL_CURRICULUM_CONTENT",
+    "generator_binding": "UNBOUND_PENDING_COLLISION_AUDITED_SCOPE_CARDS_AND_INDEPENDENT_APPROVAL",
+    "no_duplicate_credit": true,
+    "historical_mastery_reinterpretation": false
+  },
+  "reuse_evidence": [
+    "app/domains/advanced_algebra_highschool.py",
+    "app/domains/advanced_number.py",
+    "docs/curriculum/drafts/ontario-seven-unit-algebra-r1/question_type_traceability.json"
+  ],
+  "independent_reviews": {
+    "mathematical": "REQUEST_CHANGES_AT_9D4CC137_ZERO_EXPONENT_GAP_R2_FIX_PENDING_REVIEW",
+    "pedagogical": "UNKNOWN_NOT_REVIEWED",
+    "architecture": "BOUNDARIES_DECIDED_6107538656_NO_RUNTIME_AUTHORITY",
+    "muse_qa": "UNKNOWN_NOT_RUN"
+  },
+  "delivery_status": {
+    "authored": true,
+    "implemented": "DRAFT_GENERATOR_ONLY",
+    "wired": false,
+    "ci_passing": "R1_PASS_R2_PENDING",
+    "independently_accepted": false,
+    "deployed": false
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "package_id": "draft-g45-fractions-pilot-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "worked_examples": [
+    {
+      "example_id": "we-01",
+      "provisional_topic": "FRACTION_REPRESENTATION",
+      "problem": "A circle is divided into 8 equal sectors; 5 are shaded. What fraction is shaded?",
+      "final_answer": "5/8",
+      "steps": [
+        "Count eight equal sectors as the denominator and five shaded sectors as the numerator.",
+        "Write 5/8."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-02",
+      "provisional_topic": "FRACTION_EQUIVALENCE",
+      "problem": "Find a fraction equivalent to 3/5 with denominator 20.",
+      "final_answer": "12/20",
+      "steps": [
+        "The denominator scale factor is 20/5=4.",
+        "Multiply both numerator and denominator by 4 to get 12/20."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-03",
+      "provisional_topic": "FRACTION_COMPARE",
+      "problem": "Compare 3/4 and 5/6.",
+      "final_answer": "3/4 < 5/6",
+      "steps": [
+        "Common denominator 12 gives 9/12 < 10/12.",
+        "Alternatively the gaps from 1 are 1/4 and 1/6, and 1/6 is smaller."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-04",
+      "provisional_topic": "FRACTION_ADD_SUBTRACT_LIKE",
+      "problem": "Compute 4/9 + 2/9 in simplest form.",
+      "final_answer": "2/3",
+      "steps": [
+        "Add the numerators to get 6/9.",
+        "Reduce 6/9 to 2/3."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-05",
+      "provisional_topic": "FRACTION_ADD_SUBTRACT_LIKE",
+      "problem": "A ribbon is 9/10 m long and 4/10 m is used. How much remains?",
+      "final_answer": "1/2",
+      "steps": [
+        "Subtract 9/10−4/10=5/10.",
+        "Reduce to 1/2 m."
+      ],
+      "review_status": "PENDING"
+    }
+  ],
+  "misconceptions": [
+    {
+      "misconception_id": "misc-01",
+      "topic": "FRACTION_ADD_SUBTRACT_LIKE",
+      "incorrect": "1/5 + 2/5 = 3/10",
+      "diagnostic": "What is 2/6 + 3/6?",
+      "correct": "5/6; pieces remain sixths, so the denominator stays 6.",
+      "remediation": "Join equal-sized fraction bars; count fifths/sixths without repartitioning.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-02",
+      "topic": "FRACTION_EQUIVALENCE",
+      "incorrect": "2/3 = 4/3 after doubling only the numerator",
+      "diagnostic": "Is 3/4 equal to 6/4? Explain.",
+      "correct": "No. 3/4 is not 6/4. Multiplying both numerator and denominator by the same nonzero number preserves value.",
+      "remediation": "Compare equal-area models of 2/3 and 4/6.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-03",
+      "topic": "FRACTION_COMPARE",
+      "incorrect": "1/8 > 1/3 because 8 > 3",
+      "diagnostic": "Which is larger, 1/4 or 1/6?",
+      "correct": "1/4 is larger; with one part selected, more equal partitions make each part smaller.",
+      "remediation": "Compare same-length strips partitioned into fourths and sixths.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-04",
+      "topic": "FRACTION_REPRESENTATION",
+      "incorrect": "On a 0-to-1 line with four equal intervals, a learner counts five tick marks and calls the first tick 1/5 instead of 1/4.",
+      "diagnostic": "On a 0-to-1 line divided into five equal intervals, what fraction is the third tick after zero?",
+      "correct": "3/5; count intervals from zero, not the number of tick marks.",
+      "remediation": "Mark 0 and 1, label each interval, then label endpoint positions.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-05",
+      "topic": "FRACTION_COMPARE",
+      "incorrect": "A learner says 4/5 > 5/6 because both are one away from their denominator and 4 < 5, so 4/5 must be larger.",
+      "diagnostic": "Which is closer to 1: 5/6 or 7/8? Explain using gap sizes.",
+      "correct": "5/6 is 1/6 below one and 7/8 is 1/8 below one; since 1/8 < 1/6, 7/8 is closer.",
+      "remediation": "Calculate exact unit-fraction gaps; compare with common-denominator fractions.",
+      "review_status": "PENDING"
+    }
+  ],
+  "visualization_specs": [
+    {
+      "spec_id": "viz-fraction-bar-01",
+      "title": "Interactive Fraction Bar – Like-Denominator Addition",
+      "provisional_topic": "FRACTION_ADD_SUBTRACT_LIKE",
+      "content_status": "DRAFT_UNVERIFIED",
+      "implementation_status": "DESIGN_ONLY",
+      "denominators": [
+        4,
+        5,
+        6,
+        8,
+        10,
+        12
+      ],
+      "state": {
+        "denominator": "n",
+        "numerator_a": "0..n",
+        "numerator_b": "0..n",
+        "sum_numerator": "a+b"
+      },
+      "transitions": [
+        "Changing n resets a,b and combined result",
+        "Shading updates the displayed value",
+        "Combine freezes input and displays (a+b)/n with additional whole bar if a+b>n",
+        "Reset clears state"
+      ],
+      "interaction": [
+        "Select denominator",
+        "Adjust both numerator values via pointer or keyboard",
+        "Combine",
+        "Optionally simplify via gcd"
+      ],
+      "correctness": [
+        "Numerator shading equals selected segment count",
+        "Sum is Fraction(a+b,n)",
+        "If a+b>n render additional unit bar; never squeeze more than n segments into a unit bar",
+        "Simplification uses gcd"
+      ],
+      "accessibility": [
+        "Keyboard Tab navigation",
+        "Arrow keys change numerator",
+        "Accessible bar labels",
+        "High contrast",
+        "Reduced motion replaces animation with instant state"
+      ],
+      "notes": "No MVE implementation in this PR. Existing MVE Agent owns visual rendering. No fraction-by-fraction multiplication."
+    }
+  ]
+}

@@ -1,0 +1,382 @@
+{
+  "package_id": "draft-g45-fractions-pilot-v0",
+  "content_status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "source": "Owner-provided Grok package transcript; normalized editorial intake, not byte-for-byte source archival",
+  "grade_band": "4-5",
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "runtime_activation": false,
+  "policies": {
+    "positive_fractions_only": true,
+    "operational_denominators": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12
+    ],
+    "equivalence_source_denominators": [
+      3,
+      4,
+      5,
+      6,
+      12
+    ],
+    "equivalence_derived_denominators": [
+      6,
+      8,
+      9,
+      10,
+      12,
+      15,
+      20,
+      25
+    ],
+    "equivalence_multipliers": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "mixed_number_answers": false,
+    "unlike_denominator_add_sub": false,
+    "fraction_multiplication_division": false,
+    "fraction_value_answers": "mathematical equivalence via fractions.Fraction, with strictly parsed fraction input",
+    "simplest_fraction_answers": "canonical gcd-reduced numerator/denominator only",
+    "fixed_denominator_fraction_answers": "preserve requested denominator even when reducible",
+    "human_rubric": "manual review; no automated mastery or coverage"
+  },
+  "practice_items": [
+    {
+      "item_id": "q-rep-01",
+      "provisional_topic": "FRACTION_REPRESENTATION",
+      "question": "A rectangle is divided into 6 equal parts. Four are shaded. What fraction is shaded?",
+      "expected": "2/3",
+      "answer_contract": "fraction_value",
+      "intermediate_form": "4/6",
+      "explanation": "The denominator counts equal parts; four of six are shaded; 4/6 reduces to 2/3.",
+      "misconception_tags": [
+        "part-whole-confusion"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-rep-02",
+      "provisional_topic": "FRACTION_REPRESENTATION",
+      "question": "On a number line from 0 to 1, a point is three equal jumps of 1/5 from 0. What fraction names that point?",
+      "expected": "3/5",
+      "answer_contract": "fraction_value",
+      "intermediate_form": null,
+      "explanation": "Three intervals of length 1/5 from zero locate 3/5.",
+      "misconception_tags": [
+        "number-line-counting-marks-instead-of-intervals"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-rep-03",
+      "provisional_topic": "FRACTION_REPRESENTATION",
+      "question": "A set of 10 counters has 7 red counters and the rest blue. What fraction of the set is blue?",
+      "expected": "3/10",
+      "answer_contract": "fraction_value",
+      "intermediate_form": null,
+      "explanation": "Ten total minus seven red leaves three blue; 3/10 are blue.",
+      "misconception_tags": [
+        "using-red-count-as-numerator-for-blue"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-rep-04",
+      "provisional_topic": "FRACTION_REPRESENTATION",
+      "question": "A whole is divided into 8 equal pieces and 5 are taken. What fraction was taken?",
+      "expected": "5/8",
+      "answer_contract": "fraction_value",
+      "intermediate_form": null,
+      "explanation": "Five selected equal pieces out of eight gives 5/8.",
+      "misconception_tags": [
+        "swapping-numerator-denominator"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-rep-05",
+      "provisional_topic": "FRACTION_REPRESENTATION",
+      "question": "A pizza is cut into 4 equal slices. One slice is eaten. What fraction remains?",
+      "expected": "3/4",
+      "answer_contract": "fraction_value",
+      "intermediate_form": null,
+      "explanation": "Four minus one leaves three of four equal slices.",
+      "misconception_tags": [
+        "reporting-eaten-fraction-instead-of-remaining"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-rep-06",
+      "provisional_topic": "FRACTION_REPRESENTATION",
+      "question": "Explain what 2/3 means using numerator and denominator.",
+      "expected": "2/3",
+      "answer_contract": "human_rubric",
+      "intermediate_form": null,
+      "explanation": "The denominator 3 identifies thirds of one whole; numerator 2 counts two such equal parts.",
+      "misconception_tags": [
+        "numerator-denominator-role-reversal"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-01",
+      "provisional_topic": "FRACTION_EQUIVALENCE",
+      "question": "Write a fraction equivalent to 1/3 with denominator 9.",
+      "expected": "3/9",
+      "answer_contract": "fixed_denominator_fraction",
+      "intermediate_form": null,
+      "explanation": "Multiply numerator and denominator by 3 to obtain 3/9.",
+      "misconception_tags": [
+        "multiplying-only-denominator"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-02",
+      "provisional_topic": "FRACTION_EQUIVALENCE",
+      "question": "Are 2/4 and 3/6 equivalent? Explain.",
+      "expected": "true",
+      "answer_contract": "boolean_with_human_justification",
+      "intermediate_form": null,
+      "explanation": "Both simplify to 1/2, so yes; justification must identify equal value.",
+      "misconception_tags": [
+        "comparing-numerators-or-denominators-alone"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-03",
+      "provisional_topic": "FRACTION_EQUIVALENCE",
+      "question": "Give two distinct fractions equivalent to 2/5, each obtained using a different multiplier from 2, 3, 4, or 5.",
+      "expected": "4/10;6/15",
+      "answer_contract": "two_distinct_equivalent_fractions",
+      "intermediate_form": null,
+      "explanation": "For example multiply by 2 and 3 to obtain 4/10 and 6/15.",
+      "misconception_tags": [
+        "changing-only-one-term"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-04",
+      "provisional_topic": "FRACTION_EQUIVALENCE",
+      "question": "Simplify 8/12 to lowest terms.",
+      "expected": "2/3",
+      "answer_contract": "simplest_fraction",
+      "intermediate_form": null,
+      "explanation": "Divide numerator and denominator by gcd(8,12)=4.",
+      "misconception_tags": [
+        "incomplete-simplification"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-05",
+      "provisional_topic": "FRACTION_EQUIVALENCE",
+      "question": "Which fraction is equivalent to 3/4: 6/8 or 6/12? Explain.",
+      "expected": "6/8",
+      "answer_contract": "choice_with_human_justification",
+      "intermediate_form": null,
+      "explanation": "6/8=3/4 while 6/12=1/2.",
+      "misconception_tags": [
+        "accepting-any-fraction-with-numerator-6"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-06",
+      "provisional_topic": "FRACTION_EQUIVALENCE",
+      "question": "True or false: 4/6 is equivalent to 10/15? Justify.",
+      "expected": "true",
+      "answer_contract": "boolean_with_human_justification",
+      "intermediate_form": null,
+      "explanation": "Both fractions reduce to 2/3.",
+      "misconception_tags": [
+        "cross-product-arithmetic-error"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-eq-07",
+      "provisional_topic": "FRACTION_EQUIVALENCE",
+      "question": "Complete 5/6 = 10/□.",
+      "expected": "12",
+      "answer_contract": "positive_integer",
+      "intermediate_form": null,
+      "explanation": "Multiply numerator and denominator by 2.",
+      "misconception_tags": [
+        "adding-instead-of-multiplying"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-cmp-01",
+      "provisional_topic": "FRACTION_COMPARE",
+      "question": "Compare 3/8 and 5/8 using <, >, or =.",
+      "expected": "<",
+      "answer_contract": "comparison_symbol",
+      "intermediate_form": null,
+      "explanation": "The denominators match and 3 is less than 5.",
+      "misconception_tags": [
+        "ignoring-common-denominator"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-cmp-02",
+      "provisional_topic": "FRACTION_COMPARE",
+      "question": "Which is greater: 2/3 or 3/5?",
+      "expected": "2/3",
+      "answer_contract": "fraction_choice",
+      "intermediate_form": null,
+      "explanation": "2/3=10/15 and 3/5=9/15.",
+      "misconception_tags": [
+        "comparing-denominators-only"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-cmp-03",
+      "provisional_topic": "FRACTION_COMPARE",
+      "question": "Order 1/2, 1/4, 3/4 from least to greatest.",
+      "expected": "1/4;1/2;3/4",
+      "answer_contract": "ordered_fraction_sequence",
+      "intermediate_form": null,
+      "explanation": "Rewrite 1/2 as 2/4, then order 1/4,2/4,3/4.",
+      "misconception_tags": [
+        "ordering-by-denominator-size-alone"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-cmp-04",
+      "provisional_topic": "FRACTION_COMPARE",
+      "question": "Compare 5/6 and 5/8 using <, >, or =.",
+      "expected": ">",
+      "answer_contract": "comparison_symbol",
+      "intermediate_form": null,
+      "explanation": "With equal positive numerators, sixths are larger than eighths.",
+      "misconception_tags": [
+        "thinking-larger-denominator-means-larger-fraction"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-cmp-05",
+      "provisional_topic": "FRACTION_COMPARE",
+      "question": "Place the correct symbol: 7/10 □ 2/3.",
+      "expected": ">",
+      "answer_contract": "comparison_symbol",
+      "intermediate_form": null,
+      "explanation": "7/10=21/30 and 2/3=20/30.",
+      "misconception_tags": [
+        "benchmark-to-1-error"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-cmp-06",
+      "provisional_topic": "FRACTION_COMPARE",
+      "question": "Which fraction is closer to 1: 5/6 or 7/8?",
+      "expected": "7/8",
+      "answer_contract": "fraction_choice",
+      "intermediate_form": null,
+      "explanation": "Distance from 1 is 1/6 versus 1/8; 1/8 is smaller.",
+      "misconception_tags": [
+        "comparing-gaps-to-one-incorrectly"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-add-01",
+      "provisional_topic": "FRACTION_ADD_SUBTRACT_LIKE",
+      "question": "What is 2/7 + 3/7?",
+      "expected": "5/7",
+      "answer_contract": "fraction_value",
+      "intermediate_form": null,
+      "explanation": "Add numerators and keep denominator 7.",
+      "misconception_tags": [
+        "adding-denominators"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-add-02",
+      "provisional_topic": "FRACTION_ADD_SUBTRACT_LIKE",
+      "question": "Compute 5/9 − 2/9. Give the simplest form.",
+      "expected": "1/3",
+      "answer_contract": "simplest_fraction",
+      "intermediate_form": "3/9",
+      "explanation": "Subtract numerators to get 3/9; reduce to 1/3.",
+      "misconception_tags": [
+        "subtracting-denominators"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-add-03",
+      "provisional_topic": "FRACTION_ADD_SUBTRACT_LIKE",
+      "question": "A recipe uses 3/8 cup of oil and then another 2/8 cup. How many cups in total?",
+      "expected": "5/8",
+      "answer_contract": "fraction_value",
+      "intermediate_form": null,
+      "explanation": "3/8+2/8=5/8 cup.",
+      "misconception_tags": [
+        "adding-denominators-in-context"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-add-04",
+      "provisional_topic": "FRACTION_ADD_SUBTRACT_LIKE",
+      "question": "What is 4/5 + 3/5? Give an improper fraction.",
+      "expected": "7/5",
+      "answer_contract": "simplest_fraction",
+      "intermediate_form": null,
+      "explanation": "Add numerators to obtain 7/5; this exceeds one whole. Mixed numbers are out of scope.",
+      "misconception_tags": [
+        "adding-denominators"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-add-05",
+      "provisional_topic": "FRACTION_ADD_SUBTRACT_LIKE",
+      "question": "Subtract 11/12 − 5/12. Give the simplest form.",
+      "expected": "1/2",
+      "answer_contract": "simplest_fraction",
+      "intermediate_form": "6/12",
+      "explanation": "11/12−5/12=6/12=1/2.",
+      "misconception_tags": [
+        "incorrect-simplification"
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "q-add-06",
+      "provisional_topic": "FRACTION_ADD_SUBTRACT_LIKE",
+      "question": "A board is 7/10 meter long; 3/10 meter is cut off. What length remains in simplest form?",
+      "expected": "2/5",
+      "answer_contract": "simplest_fraction",
+      "intermediate_form": "4/10",
+      "explanation": "7/10−3/10=4/10=2/5 meter.",
+      "misconception_tags": [
+        "adding-instead-of-subtracting-in-context"
+      ],
+      "review_status": "PENDING"
+    }
+  ]
+}

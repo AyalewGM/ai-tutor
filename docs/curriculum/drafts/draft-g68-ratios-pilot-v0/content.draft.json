@@ -1,0 +1,493 @@
+{
+  "package_id": "draft-g68-ratios-pilot-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "grade_band": "6-8",
+  "source_notes": [
+    "Original Mihur-authored draft questions; no copied vendor questions",
+    "Official curriculum alignment is PROPOSED only; mapping agent must validate",
+    "Ontario 2020 mathematics: https://www.ontario.ca/page/math-curriculum-grades-1-8",
+    "Maryland 2025 revised mathematics: https://msde.maryland.gov/academics-0/curriculum-academic-standards/mathematics",
+    "Pedagogy research: https://illustrativemathematics.org/math-curriculum/ and https://classroom.amplify.com/discover"
+  ],
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "runtime_activation": false,
+  "mastery_updater": false,
+  "practice_items": [
+    {
+      "item_id": "draft-g68-ratio_interpretation-01",
+      "provisional_skill": "RATIO_INTERPRETATION",
+      "question": "A class has 12 students wearing glasses and 18 not wearing glasses. Write the ratio wearing to not wearing in simplest a:b form.",
+      "expected": "2:3",
+      "answer_contract": "ratio_pair",
+      "hints": [
+        "Compare 12 to 18, in that order.",
+        "Both quantities can be divided by 6.",
+        "Keep the order wearing:not wearing."
+      ],
+      "misconception_tag": "ratio-order",
+      "solution_summary": "Keep the order wearing:not wearing.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-ratio_interpretation-02",
+      "provisional_skill": "RATIO_INTERPRETATION",
+      "question": "A garden has 15 red and 10 yellow flowers. What fraction of all flowers are red?",
+      "expected": "3/5",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Count red flowers.",
+        "Count the total flowers.",
+        "Reduce 15/25 by 5."
+      ],
+      "misconception_tag": "part-to-part-vs-part-to-whole",
+      "solution_summary": "Reduce 15/25 by 5.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-ratio_interpretation-03",
+      "provisional_skill": "RATIO_INTERPRETATION",
+      "question": "A recipe uses 4 cups of oats for every 6 cups of milk. Give the oats-to-milk ratio in simplest a:b form.",
+      "expected": "2:3",
+      "answer_contract": "ratio_pair",
+      "hints": [
+        "Identify the order oats then milk.",
+        "Write 4:6.",
+        "Divide both terms by 2."
+      ],
+      "misconception_tag": "ratio-simplification",
+      "solution_summary": "Divide both terms by 2.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-ratio_interpretation-04",
+      "provisional_skill": "RATIO_INTERPRETATION",
+      "question": "In a box, blue to green beads is 3:5. If there are 25 green beads, how many blue beads are there?",
+      "expected": "15",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find the factor from 5 to 25.",
+        "Multiply 3 by the same factor.",
+        "3 × 5 = 15."
+      ],
+      "misconception_tag": "ratio-scale",
+      "solution_summary": "3 × 5 = 15.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-ratio_interpretation-05",
+      "provisional_skill": "RATIO_INTERPRETATION",
+      "question": "A club has 9 beginners and 6 advanced members. What is the ratio advanced to total in simplest a:b form?",
+      "expected": "2:5",
+      "answer_contract": "ratio_pair",
+      "hints": [
+        "Start with advanced members.",
+        "Total is 9+6.",
+        "Simplify 6:15."
+      ],
+      "misconception_tag": "part-whole-ratio",
+      "solution_summary": "Simplify 6:15.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-unit_rate-01",
+      "provisional_skill": "UNIT_RATE",
+      "question": "Five notebooks cost $20. What is the cost of one notebook in dollars?",
+      "expected": "4",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Divide total cost by number of notebooks.",
+        "Compute 20 ÷ 5.",
+        "State the unit price."
+      ],
+      "misconception_tag": "unit-rate-direction",
+      "solution_summary": "State the unit price.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-unit_rate-02",
+      "provisional_skill": "UNIT_RATE",
+      "question": "A cyclist travels 42 km in 3 hours at a constant speed. What is the speed in km/h?",
+      "expected": "14",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Speed is distance per hour.",
+        "Compute 42 ÷ 3.",
+        "Label km/h."
+      ],
+      "misconception_tag": "rate-units",
+      "solution_summary": "Label km/h.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-unit_rate-03",
+      "provisional_skill": "UNIT_RATE",
+      "question": "A printer produces 84 pages in 7 minutes at a constant rate. How many pages per minute?",
+      "expected": "12",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Divide pages by minutes.",
+        "Compute 84 ÷ 7.",
+        "Check by multiplying by 7."
+      ],
+      "misconception_tag": "rate-units",
+      "solution_summary": "Check by multiplying by 7.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-unit_rate-04",
+      "provisional_skill": "UNIT_RATE",
+      "question": "Six identical tickets cost $45. What is the cost of one ticket in dollars?",
+      "expected": "15/2",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Divide total cost by six.",
+        "45/6 is the exact rate.",
+        "Simplify the fraction."
+      ],
+      "misconception_tag": "fractional-unit-rate",
+      "solution_summary": "Simplify the fraction.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-unit_rate-05",
+      "provisional_skill": "UNIT_RATE",
+      "question": "A tank fills 35 litres in 5 minutes at a constant rate. How many litres in 9 minutes?",
+      "expected": "63",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find litres per minute.",
+        "35 ÷ 5 = 7.",
+        "Multiply by 9 minutes."
+      ],
+      "misconception_tag": "rate-to-total",
+      "solution_summary": "Multiply by 9 minutes.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-equivalent_ratios-01",
+      "provisional_skill": "EQUIVALENT_RATIOS",
+      "question": "Complete 4:7 = 20:□. Give the missing positive integer.",
+      "expected": "35",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find the factor 4 to 20.",
+        "Multiply 7 by that factor.",
+        "4×5=20, so 7×5=35."
+      ],
+      "misconception_tag": "one-sided-scaling",
+      "solution_summary": "4×5=20, so 7×5=35.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-equivalent_ratios-02",
+      "provisional_skill": "EQUIVALENT_RATIOS",
+      "question": "Complete 3/8 = □/40. Give the missing positive integer.",
+      "expected": "15",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find the scale factor 8 to 40.",
+        "Multiply 3 by that factor.",
+        "3×5=15."
+      ],
+      "misconception_tag": "one-sided-scaling",
+      "solution_summary": "3×5=15.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-equivalent_ratios-03",
+      "provisional_skill": "EQUIVALENT_RATIOS",
+      "question": "A map uses 2 cm for 15 km. How many km does 8 cm represent?",
+      "expected": "60",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Compare 8 cm to 2 cm.",
+        "The scale factor is 4.",
+        "Multiply 15 by 4."
+      ],
+      "misconception_tag": "scale-direction",
+      "solution_summary": "Multiply 15 by 4.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-equivalent_ratios-04",
+      "provisional_skill": "EQUIVALENT_RATIOS",
+      "question": "Three servings need 9 tablespoons of rice. How many tablespoons for 8 servings at the same rate?",
+      "expected": "24",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find rice per serving.",
+        "9 ÷ 3 = 3.",
+        "Multiply by 8."
+      ],
+      "misconception_tag": "proportional-scaling",
+      "solution_summary": "Multiply by 8.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-equivalent_ratios-05",
+      "provisional_skill": "EQUIVALENT_RATIOS",
+      "question": "If 5 pens cost $12, how much do 15 identical pens cost in dollars?",
+      "expected": "36",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Compare 15 pens with 5.",
+        "The factor is 3.",
+        "Multiply the cost by 3."
+      ],
+      "misconception_tag": "proportional-scaling",
+      "solution_summary": "Multiply the cost by 3.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-percent_as_ratio-01",
+      "provisional_skill": "PERCENT_AS_RATIO",
+      "question": "What is 25% of 80?",
+      "expected": "20",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "25% means 25/100.",
+        "25/100 = 1/4.",
+        "Compute one quarter of 80."
+      ],
+      "misconception_tag": "percent-of-whole",
+      "solution_summary": "Compute one quarter of 80.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-percent_as_ratio-02",
+      "provisional_skill": "PERCENT_AS_RATIO",
+      "question": "A survey finds 18 out of 60 respondents prefer tea. What percent prefer tea? Give the integer percent without the % sign.",
+      "expected": "30",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Make the fraction 18/60.",
+        "Reduce to 3/10.",
+        "Convert tenths to percent."
+      ],
+      "misconception_tag": "percent-denominator",
+      "solution_summary": "Convert tenths to percent.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-percent_as_ratio-03",
+      "provisional_skill": "PERCENT_AS_RATIO",
+      "question": "A jacket costs $50 before a 20% discount. What is the discount amount in dollars?",
+      "expected": "10",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find 20% of the original price.",
+        "20/100 = 1/5.",
+        "50 ÷ 5 = 10."
+      ],
+      "misconception_tag": "discount-vs-sale-price",
+      "solution_summary": "50 ÷ 5 = 10.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-percent_as_ratio-04",
+      "provisional_skill": "PERCENT_AS_RATIO",
+      "question": "A score rises from 40 to 50. What is the percent increase relative to the original score? Give the integer percent.",
+      "expected": "25",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Increase is 10.",
+        "Divide increase by original 40.",
+        "10/40 = 25/100."
+      ],
+      "misconception_tag": "percent-base",
+      "solution_summary": "10/40 = 25/100.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-percent_as_ratio-05",
+      "provisional_skill": "PERCENT_AS_RATIO",
+      "question": "What fraction in simplest form is 12.5%?",
+      "expected": "1/8",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "Convert 12.5% to 12.5/100.",
+        "125/1000 is equivalent.",
+        "Reduce to 1/8."
+      ],
+      "misconception_tag": "percent-decimal",
+      "solution_summary": "Reduce to 1/8.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-proportional_reasoning-01",
+      "provisional_skill": "PROPORTIONAL_REASONING",
+      "question": "A proportional relationship has y = 6x. What is y when x = 7?",
+      "expected": "42",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Identify constant of proportionality 6.",
+        "Substitute x = 7.",
+        "Multiply 6 × 7."
+      ],
+      "misconception_tag": "additive-vs-multiplicative",
+      "solution_summary": "Multiply 6 × 7.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-proportional_reasoning-02",
+      "provisional_skill": "PROPORTIONAL_REASONING",
+      "question": "A proportional table has (x,y) = (2,9). What is y when x=6?",
+      "expected": "27",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Compute y/x = 9/2.",
+        "Compare 6 to 2.",
+        "Multiply 9 by 3."
+      ],
+      "misconception_tag": "constant-ratio",
+      "solution_summary": "Multiply 9 by 3.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-proportional_reasoning-03",
+      "provisional_skill": "PROPORTIONAL_REASONING",
+      "question": "A car uses 8 litres of fuel per 100 km. At the same rate, how many litres for 250 km?",
+      "expected": "20",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Scale 100 km to 250 km.",
+        "Factor is 5/2.",
+        "8 × 5/2 = 20."
+      ],
+      "misconception_tag": "rate-base",
+      "solution_summary": "8 × 5/2 = 20.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-proportional_reasoning-04",
+      "provisional_skill": "PROPORTIONAL_REASONING",
+      "question": "A machine makes 18 parts in 6 minutes at a constant rate. How long for 45 parts, in minutes?",
+      "expected": "15",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find parts per minute.",
+        "18 ÷ 6 = 3.",
+        "45 ÷ 3 = 15."
+      ],
+      "misconception_tag": "inverse-rate",
+      "solution_summary": "45 ÷ 3 = 15.",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-proportional_reasoning-05",
+      "provisional_skill": "PROPORTIONAL_REASONING",
+      "question": "A proportional graph passes through the origin and (4,10). What is its constant of proportionality y/x? Answer as a simplest fraction.",
+      "expected": "5/2",
+      "answer_contract": "simplest_fraction",
+      "hints": [
+        "In y=kx, k=y/x.",
+        "Use the point (4,10).",
+        "Reduce 10/4 to 5/2."
+      ],
+      "misconception_tag": "slope-as-rate",
+      "solution_summary": "Reduce 10/4 to 5/2.",
+      "review_status": "PENDING"
+    }
+  ],
+  "worked_examples": [
+    {
+      "example_id": "we-1",
+      "provisional_skill": "RATIO_INTERPRETATION",
+      "problem": "A class has 12 students wearing glasses and 18 not wearing glasses. Write the ratio wearing to not wearing in simplest a:b form.",
+      "answer": "2:3",
+      "steps": [
+        "Compare 12 to 18, in that order.",
+        "Both quantities can be divided by 6.",
+        "Keep the order wearing:not wearing."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-2",
+      "provisional_skill": "UNIT_RATE",
+      "problem": "Five notebooks cost $20. What is the cost of one notebook in dollars?",
+      "answer": "4",
+      "steps": [
+        "Divide total cost by number of notebooks.",
+        "Compute 20 ÷ 5.",
+        "State the unit price."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-3",
+      "provisional_skill": "EQUIVALENT_RATIOS",
+      "problem": "Complete 4:7 = 20:□. Give the missing positive integer.",
+      "answer": "35",
+      "steps": [
+        "Find the factor 4 to 20.",
+        "Multiply 7 by that factor.",
+        "4×5=20, so 7×5=35."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-4",
+      "provisional_skill": "PERCENT_AS_RATIO",
+      "problem": "What is 25% of 80?",
+      "answer": "20",
+      "steps": [
+        "25% means 25/100.",
+        "25/100 = 1/4.",
+        "Compute one quarter of 80."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-5",
+      "provisional_skill": "PROPORTIONAL_REASONING",
+      "problem": "A proportional relationship has y = 6x. What is y when x = 7?",
+      "answer": "42",
+      "steps": [
+        "Identify constant of proportionality 6.",
+        "Substitute x = 7.",
+        "Multiply 6 × 7."
+      ],
+      "review_status": "PENDING"
+    }
+  ],
+  "misconceptions": [
+    {
+      "misconception_id": "misc-1",
+      "provisional_skill": "RATIO_INTERPRETATION",
+      "incorrect_pattern": "Treating part-to-part 12:18 as part-to-whole 12:30",
+      "remediation": "Ask what the second quantity represents before simplifying",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-2",
+      "provisional_skill": "UNIT_RATE",
+      "incorrect_pattern": "Multiplying cost by item count when asked for cost per one",
+      "remediation": "Use units to decide total ÷ count",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-3",
+      "provisional_skill": "EQUIVALENT_RATIOS",
+      "incorrect_pattern": "Multiplying one ratio term but not the other",
+      "remediation": "Check both components scale by the same factor",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-4",
+      "provisional_skill": "PERCENT_AS_RATIO",
+      "incorrect_pattern": "Computing percent change using new rather than original value",
+      "remediation": "Identify baseline explicitly",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-5",
+      "provisional_skill": "PROPORTIONAL_REASONING",
+      "incorrect_pattern": "Assuming a fixed additive change instead of a constant multiplicative ratio",
+      "remediation": "Compare y/x across two nonzero x values",
+      "review_status": "PENDING"
+    }
+  ]
+}

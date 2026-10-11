@@ -72,11 +72,15 @@ class LearnTermOut(BaseModel):
     definition: str
 
 
+GUIDED_INTERACTION_ALLOWLIST = frozenset({"MATH.INT.ADD"})
+
+
 class LearnContentOut(BaseModel):
     summary: str
     examples: list[LearnExampleOut] = Field(default_factory=list)
     key_terms: list[LearnTermOut] = Field(default_factory=list)
     watch_out: list[str] = Field(default_factory=list)
+    guided_interactions: list[str] = Field(default_factory=list)
 
 
 def build_learn_content(content: dict | None) -> LearnContentOut | None:
@@ -99,11 +103,21 @@ def build_learn_content(content: dict | None) -> LearnContentOut | None:
         if item.get("term") and item.get("definition")
     ]
     watch_out = [str(item) for item in content.get("watch_out", []) if item]
+    raw_guided_interactions = content.get("guided_interactions", [])
+    if isinstance(raw_guided_interactions, list):
+        guided_interactions = [
+            item
+            for item in raw_guided_interactions
+            if isinstance(item, str) and item in GUIDED_INTERACTION_ALLOWLIST
+        ]
+    else:
+        guided_interactions = []
     return LearnContentOut(
         summary=str(content["summary"]),
         examples=examples,
         key_terms=key_terms,
         watch_out=watch_out,
+        guided_interactions=guided_interactions,
     )
 
 

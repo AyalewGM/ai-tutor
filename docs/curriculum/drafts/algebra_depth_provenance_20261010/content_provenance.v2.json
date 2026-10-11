@@ -1,0 +1,543 @@
+{
+  "schema_version": "2.0.0-draft",
+  "generated_for": "Mihur Grade 9 source-reconciled provenance",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "main_taxonomy_context": "PR #308 merged; this does NOT approve these Grade 9 candidate identities",
+  "mapping_pr_325_status": "DRAFT_PROVISIONAL_NOT_ACCEPTED",
+  "sources": [
+    "main exact-head 13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
+    "PR #327 exact-head 5d4e613b4aa241384809e048c60ee082e6f14fe4",
+    "PR #328 current exact-head 2445f197259ff27b5c99dd2b45c4bcbc2e5292f8",
+    "PR #325 exact-head c1fa26a560ebea022202bace38d51e91ca5d08fa",
+    "Pedagogical review pinned #327 5d4e613b4aa241384809e048c60ee082e6f14fe4 and #328 09fea6d0dc5c8d70d96d8c4e2812b6e1b7a98da4"
+  ],
+  "packages": [
+    {
+      "content_status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "independent_reviews": {
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "canonical_identity": "UNKNOWN",
+        "mathematical": "PENDING",
+        "pedagogical": "CHANGES_REQUIRED",
+        "production_response": "R4_BOUNDED_ARC_AUTHORED_REREVIEW_PENDING",
+        "muse_qa": "PENDING",
+        "engineering_release": "NOT_AUTHORIZED",
+        "pedagogy_evidence": "PR #327 comment 6102771217"
+      },
+      "pedagogical_evidence": [
+        {
+          "type": "official_teacher_support",
+          "url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+          "use": "sequence concrete patterns, compare representations, elicit explanations; source evidence is not package acceptance"
+        },
+        {
+          "type": "internal_draft",
+          "url": "https://github.com/AyalewGM/ai-tutor/tree/content/g9-algebra-provenance-depth-20261010/docs/curriculum/drafts/algebra_depth_provenance_20261010",
+          "use": "authored supplement; no independent review"
+        }
+      ],
+      "independent_assessment": {
+        "transfer": "R4_TABLE_GRAPH_EQUATION_DOMAIN_SPEC_LOCAL_ORACLE_NOT_IMPLEMENTED",
+        "variant_freshness": "LOCAL_MODE_NAMESPACE_SEPARATION_TESTED_BACKEND_NOT_IMPLEMENTED",
+        "backend_trusted_scoring": "UNKNOWN_NOT_IMPLEMENTED",
+        "worked_answers_hidden": "LOCAL_PUBLIC_PAYLOAD_TEST_ONLY",
+        "guided_hints_forbidden": true,
+        "mastery_credit": "NEVER_FROM_GUIDED_PRACTICE"
+      },
+      "seedable_practice": {
+        "generator_status": "DRAFT_OFFLINE_GENERATOR_NOT_WIRED",
+        "deterministic_replay": "LOCAL_TESTED_100_SEEDS_PER_FAMILY",
+        "invalid_value_rejection": "NEGATIVE_NONINTEGER_BOOLEAN_SEED_AND_INVALID_MODE_REJECTED_LOCALLY",
+        "independent_oracle": "LOCAL_EXACT_ORACLE_TESTED_NOT_INDEPENDENTLY_VERIFIED",
+        "unseen_assessment": "RESERVED_MODE_SEPARATED_NAMESPACE_DRAFT_CONTRACT",
+        "oracle_module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py"
+      },
+      "accessibility": {
+        "keyboard": "SPEC_ONLY",
+        "screen_reader_equivalent": "SPEC_ONLY",
+        "reduced_motion": "SPEC_ONLY",
+        "browser_verified": false
+      },
+      "package_id": "W1-G9-LINEAR-MODELING",
+      "revision": "G9_DEPTH_R4_2026-10-10",
+      "source_package": {
+        "pr": 327,
+        "path": "docs/curriculum/drafts/learning-packages-wave1/content.draft.json",
+        "id_verified_in_pr": true
+      },
+      "canonical": {
+        "candidate": "MATH.F.LINEAR.SLOPE_INTERCEPT",
+        "approval": "UNKNOWN_NOT_AUTHORITATIVE"
+      },
+      "curriculum": [
+        {
+          "jurisdiction": "Ontario",
+          "course": "MTH1W 2021",
+          "official_url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+          "publication_or_version": "2021",
+          "expectation_ids": [
+            "C3.2",
+            "C3.3"
+          ],
+          "mapping_approval": "PROVISIONAL_NOT_ACCEPTED",
+          "expectation_readback": "OFFICIAL_PAGE_READ; MAPPING_NOT_APPROVED"
+        },
+        {
+          "jurisdiction": "Maryland",
+          "course": "Traditional Algebra I 2026-27",
+          "official_url": "https://msde.maryland.gov/media/17798",
+          "publication_or_version": "August 2022",
+          "expectation_ids": [
+            "F.IF.B.6",
+            "F.LE.A.2"
+          ],
+          "mapping_approval": "PROVISIONAL_NOT_ACCEPTED",
+          "expectation_readback": "PROVISIONAL_CANDIDATE; NOT_VALIDATED_FOR_THIS_PACKAGE"
+        }
+      ],
+      "reuse": {
+        "packages": [
+          "W1-G9-LINEAR-MODELING (#327)",
+          "draft Grade 9 equations PR #317 (separate owner)"
+        ],
+        "generators": [
+          "app/domains/algebra_functions.py:MATH.FUNC.LINEAR.MODEL",
+          "app/domains/algebra_functions.py:MATH.FUNC.LINEAR.ERROR.INTERCEPT"
+        ],
+        "mve": [
+          {
+            "component": "InteractiveLinearExplorer",
+            "status": "CANDIDATE_NOT_WIRED_OR_VERIFIED"
+          }
+        ]
+      },
+      "concrete_visual_symbolic": {
+        "concrete": "fixed-time card and one equal time block per crate",
+        "visual": "linked labelled context table and domain-limited graph description",
+        "symbolic": "T(n)=b+rn with rate/intercept units and a discrete capacity-bounded domain",
+        "status": "SPEC_ONLY"
+      },
+      "teaching_sequence": {
+        "Observe": {
+          "description": "Present one fixed loading-time card, equal per-crate blocks, and a table beginning at zero crates.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Predict": {
+          "description": "Commit which table quantity is fixed, which change repeats, and where the graph begins.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Manipulate": {
+          "description": "Vary fixed time and per-crate rate separately; update a labelled table with keyboard-equivalent controls.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Explain": {
+          "description": "Connect T(0), equal first differences, graph intercept/rise, and equation terms with units.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Practice": {
+          "description": "Translate deterministic fresh table/context records across equation and graph descriptions; client checks never award mastery.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Diagnose": {
+          "description": "Route from captured zero-input, adjacent-difference, graph-start/rise, and domain evidence.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Transfer": {
+          "description": "Model an unfamiliar delivery-cart log and reconcile table, graph, equation, units, and capacity domain.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Verify": {
+          "description": "Collect rate/intercept units, equation, graph translation, physical domain, and justification with a separate oracle.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        }
+      },
+      "misconception_pathways": [
+        {
+          "observed_reasoning": "proposes rate + fee*n",
+          "diagnosis": "SLOPE_INTERCEPT_SWAP",
+          "probe": "What is owed for zero uses? How much does one extra use add?",
+          "feedback": "Ask learner to assemble base fee and one incremental rate before symbolizing."
+        },
+        {
+          "observed_reasoning": "writes the correct equation but places the graph at the origin or uses unequal one-step rises",
+          "diagnosis": "TABLE_GRAPH_DISCONNECT",
+          "probe": "Which table row fixes the starting point, and which repeated change fixes a one-unit rise?",
+          "feedback": "Match two labelled table rows to graph points; do not reveal the translation."
+        },
+        {
+          "observed_reasoning": "chooses negative time or fractional customers despite discrete context",
+          "diagnosis": "CONTEXT_DOMAIN",
+          "probe": "Which inputs correspond to feasible actions?",
+          "feedback": "Rebuild a constrained value table before comparing."
+        }
+      ],
+      "scope_limits": [
+        "R4 is bounded to one linear relation across context, table, graph description, and equation with a physical domain.",
+        "Standalone equation solving, systems, and comparison of two linear relations require separate mapped and reviewed packages."
+      ],
+      "verification": {
+        "existing_work": "Wave 1 authored draft",
+        "actual_gap": "Independent review found scope drift and missing table-to-graph evidence, rate/intercept explanation, and physical-domain verification.",
+        "planned_improvement": "R4 narrows the arc and adds a deterministic six-field table/graph/equation/domain transfer oracle.",
+        "observed": "R4_LOCAL_ORACLE_TESTED_REREVIEW_PENDING"
+      }
+    },
+    {
+      "content_status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "independent_reviews": {
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "canonical_identity": "UNKNOWN",
+        "mathematical": "PENDING",
+        "pedagogical": "CHANGES_REQUIRED",
+        "production_response": "R4_PATTERN_GROWTH_ARC_AUTHORED_REREVIEW_PENDING",
+        "muse_qa": "PENDING",
+        "engineering_release": "NOT_AUTHORIZED",
+        "pedagogy_evidence": "PR #328 comment 6102771431"
+      },
+      "pedagogical_evidence": [
+        {
+          "type": "official_teacher_support",
+          "url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+          "use": "sequence concrete patterns, compare representations, elicit explanations; source evidence is not package acceptance"
+        },
+        {
+          "type": "internal_draft",
+          "url": "https://github.com/AyalewGM/ai-tutor/tree/content/g9-algebra-provenance-depth-20261010/docs/curriculum/drafts/algebra_depth_provenance_20261010",
+          "use": "authored supplement; no independent review"
+        }
+      ],
+      "independent_assessment": {
+        "transfer": "R4_SECOND_DIFFERENCE_PREDICTION_SPEC_LOCAL_ORACLE_NOT_IMPLEMENTED",
+        "variant_freshness": "LOCAL_MODE_NAMESPACE_SEPARATION_TESTED_BACKEND_NOT_IMPLEMENTED",
+        "backend_trusted_scoring": "UNKNOWN_NOT_IMPLEMENTED",
+        "worked_answers_hidden": "LOCAL_PUBLIC_PAYLOAD_TEST_ONLY",
+        "guided_hints_forbidden": true,
+        "mastery_credit": "NEVER_FROM_GUIDED_PRACTICE"
+      },
+      "seedable_practice": {
+        "generator_status": "DRAFT_OFFLINE_GENERATOR_NOT_WIRED",
+        "deterministic_replay": "LOCAL_TESTED_100_SEEDS_PER_FAMILY",
+        "invalid_value_rejection": "NEGATIVE_NONINTEGER_BOOLEAN_SEED_AND_INVALID_MODE_REJECTED_LOCALLY",
+        "independent_oracle": "LOCAL_EXACT_ORACLE_TESTED_NOT_INDEPENDENTLY_VERIFIED",
+        "unseen_assessment": "RESERVED_MODE_SEPARATED_NAMESPACE_DRAFT_CONTRACT",
+        "oracle_module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py"
+      },
+      "accessibility": {
+        "keyboard": "SPEC_ONLY",
+        "screen_reader_equivalent": "SPEC_ONLY",
+        "reduced_motion": "SPEC_ONLY",
+        "browser_verified": false
+      },
+      "package_id": "W2-G9-QUADRATIC-PATTERNS",
+      "revision": "G9_DEPTH_R4_2026-10-10",
+      "source_package": {
+        "pr": 328,
+        "path": "docs/curriculum/drafts/learning-packages-wave2/content.draft.json",
+        "id_verified_in_pr": true
+      },
+      "canonical": {
+        "candidate": "MATH.F.QUADRATIC.INTERPRET",
+        "approval": "UNKNOWN_NOT_AUTHORITATIVE"
+      },
+      "curriculum": [
+        {
+          "jurisdiction": "Ontario",
+          "course": "MTH1W 2021",
+          "official_url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+          "publication_or_version": "2021",
+          "expectation_ids": [
+            "C3.1"
+          ],
+          "mapping_approval": "PROVISIONAL_NOT_ACCEPTED",
+          "expectation_readback": "OFFICIAL_PAGE_READ; SHAPE/RATE COMPARISON ONLY"
+        },
+        {
+          "jurisdiction": "Maryland",
+          "course": "Traditional Algebra I 2026-27",
+          "official_url": "https://msde.maryland.gov/media/17798",
+          "publication_or_version": "August 2022",
+          "expectation_ids": [
+            "A.SSE.B.3",
+            "A.REI.B.4"
+          ],
+          "mapping_approval": "PROVISIONAL_NOT_ACCEPTED",
+          "expectation_readback": "PROVISIONAL_CANDIDATE; NOT_VALIDATED_FOR_THIS_PACKAGE"
+        }
+      ],
+      "reuse": {
+        "packages": [
+          "W2-G9-QUADRATIC-PATTERNS (#328)"
+        ],
+        "generators": [
+          "app/domains/advanced_algebra_highschool.py:MATH.QUAD.COMPARE.LINEAR",
+          "app/domains/advanced_algebra_highschool.py:MATH.QUAD.ERROR.ROOT_SIGN"
+        ],
+        "mve": [
+          {
+            "component": "algebra tiles / rectangle partition",
+            "status": "SPEC_ONLY_NOT_VERIFIED_IMPLEMENTED"
+          }
+        ]
+      },
+      "concrete_visual_symbolic": {
+        "concrete": "build n-by-(n+2) tiled rectangles",
+        "visual": "partition into n² and two n-strips; list first and second differences",
+        "symbolic": "A(n)=n(n+2)=n²+2n; n restricted to feasible lengths",
+        "status": "SPEC_ONLY"
+      },
+      "teaching_sequence": {
+        "Observe": {
+          "description": "Build and count tiled rectangles for n=1,2,3.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Predict": {
+          "description": "Predict n=4 area and differences before expanding tiles.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Manipulate": {
+          "description": "Partition a rectangle, keyboard/text alternative required.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Explain": {
+          "description": "Explain why first differences change and second differences are constant.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Practice": {
+          "description": "Use seed-varied tile tables; reconstruct both difference rows before writing a rule; no factoring or root drill.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Diagnose": {
+          "description": "Route from submitted first/second differences, stage prediction, and table-rule checks.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Transfer": {
+          "description": "Infer stage 4 and a symbolic rule from an unfamiliar tile-count log containing only stages 0–3.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Verify": {
+          "description": "Collect both difference rows, stage-4 prediction, rule, and quadratic-growth explanation with a separate oracle.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        }
+      },
+      "misconception_pathways": [
+        {
+          "observed_reasoning": "calls the 0,3,8,15 pattern linear",
+          "diagnosis": "FIRST_VS_SECOND_DIFFERENCES",
+          "probe": "Find every consecutive change. Are the changes themselves constant?",
+          "feedback": "Return to row of tiles added, not a generic retry prompt."
+        },
+        {
+          "observed_reasoning": "repeats the last first difference when predicting the next stage",
+          "diagnosis": "CONSTANT_DIFFERENCE_EXTENDED",
+          "probe": "How much do consecutive first differences themselves change?",
+          "feedback": "Extend the second-difference row before the tile-count row."
+        },
+        {
+          "observed_reasoning": "proposes a rule that matches one stage but not the supplied table",
+          "diagnosis": "RULE_WITHOUT_TABLE_CHECK",
+          "probe": "What does the rule produce at stages 0, 1, and 2?",
+          "feedback": "Reconcile every supplied stage before using the rule to predict."
+        }
+      ],
+      "scope_limits": [
+        "Ontario C3.1 supports comparing linear and non-linear shapes/rates; polynomial factoring or quadratic-formula mastery is NOT established by C3.1.",
+        "Root-sign feedback belongs to a separate independently mapped and reviewed objective."
+      ],
+      "verification": {
+        "existing_work": "Wave 2 authored draft",
+        "actual_gap": "Independent review found a shift from pattern growth to factoring/roots and no unseen prediction or quadratic-growth explanation.",
+        "planned_improvement": "R4 limits the arc to pattern reasoning and adds a deterministic five-field second-difference transfer oracle.",
+        "observed": "R4_LOCAL_ORACLE_TESTED_REREVIEW_PENDING"
+      }
+    },
+    {
+      "content_status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "independent_reviews": {
+        "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+        "canonical_identity": "UNKNOWN",
+        "mathematical": "PENDING",
+        "pedagogical": "UNKNOWN_NOT_REVIEWED_SOURCE_UNLOCATED",
+        "muse_qa": "PENDING",
+        "engineering_release": "NOT_AUTHORIZED",
+        "pedagogy_evidence": "NONE"
+      },
+      "pedagogical_evidence": [
+        {
+          "type": "official_teacher_support",
+          "url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+          "use": "sequence concrete patterns, compare representations, elicit explanations; source evidence is not package acceptance"
+        },
+        {
+          "type": "internal_draft",
+          "url": "https://github.com/AyalewGM/ai-tutor/tree/content/g9-algebra-provenance-depth-20261010/docs/curriculum/drafts/algebra_depth_provenance_20261010",
+          "use": "authored supplement; no independent review"
+        }
+      ],
+      "independent_assessment": {
+        "transfer": "SPEC_ONLY_NOT_IMPLEMENTED",
+        "variant_freshness": "LOCAL_MODE_NAMESPACE_SEPARATION_TESTED_BACKEND_NOT_IMPLEMENTED",
+        "backend_trusted_scoring": "UNKNOWN_NOT_IMPLEMENTED",
+        "worked_answers_hidden": "LOCAL_PUBLIC_PAYLOAD_TEST_ONLY",
+        "guided_hints_forbidden": true,
+        "mastery_credit": "NEVER_FROM_GUIDED_PRACTICE"
+      },
+      "seedable_practice": {
+        "generator_status": "DRAFT_OFFLINE_GENERATOR_NOT_WIRED",
+        "deterministic_replay": "LOCAL_TESTED_100_SEEDS_PER_FAMILY",
+        "invalid_value_rejection": "NEGATIVE_NONINTEGER_BOOLEAN_SEED_AND_INVALID_MODE_REJECTED_LOCALLY",
+        "independent_oracle": "LOCAL_EXACT_ORACLE_TESTED_NOT_INDEPENDENTLY_VERIFIED",
+        "unseen_assessment": "RESERVED_MODE_SEPARATED_NAMESPACE_DRAFT_CONTRACT",
+        "oracle_module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py"
+      },
+      "accessibility": {
+        "keyboard": "SPEC_ONLY",
+        "screen_reader_equivalent": "SPEC_ONLY",
+        "reduced_motion": "SPEC_ONLY",
+        "browser_verified": false
+      },
+      "package_id": "W4-G9-EXPO-MODELING",
+      "revision": "G9_DEPTH_R3_2026-10-10",
+      "source_package": {
+        "pr": 328,
+        "path": "docs/curriculum/drafts/learning-packages-wave2/content.draft.json",
+        "id_verified_in_pr": false,
+        "source_status": "UNKNOWN_UNLOCATED; W4 PACKAGE NOT IN PR #328 INVENTORY",
+        "prior_unverified_pr_claim": 328
+      },
+      "canonical": {
+        "candidate": "MATH.F.EXPONENTIAL",
+        "approval": "UNKNOWN_NOT_AUTHORITATIVE"
+      },
+      "curriculum": [
+        {
+          "jurisdiction": "Ontario",
+          "course": "MTH1W 2021",
+          "official_url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+          "publication_or_version": "2021",
+          "expectation_ids": [
+            "C3.1"
+          ],
+          "mapping_approval": "PROVISIONAL_NOT_ACCEPTED",
+          "expectation_readback": "OFFICIAL_PAGE_READ; LINEAR VS NONLINEAR ONLY"
+        },
+        {
+          "jurisdiction": "Maryland",
+          "course": "Traditional Algebra I 2026-27",
+          "official_url": "https://msde.maryland.gov/media/17798",
+          "publication_or_version": "August 2022",
+          "expectation_ids": [
+            "F.LE.A.1",
+            "F.LE.A.2"
+          ],
+          "mapping_approval": "PROVISIONAL_NOT_ACCEPTED",
+          "expectation_readback": "PROVISIONAL_CANDIDATE; NOT_VALIDATED_FOR_THIS_PACKAGE"
+        },
+        {
+          "jurisdiction": "Maryland",
+          "course": "Integrated Algebra I 2027-28",
+          "official_url": "https://msde.maryland.gov/media/17822",
+          "publication_or_version": "July 2025",
+          "expectation_ids": [
+            "IA1.AT.D.15"
+          ],
+          "mapping_approval": "PROVISIONAL_NOT_ACCEPTED",
+          "expectation_readback": "PROVISIONAL_CANDIDATE; NOT_VALIDATED_FOR_THIS_PACKAGE"
+        }
+      ],
+      "reuse": {
+        "packages": [
+          "W4-G9-EXPO-MODELING (unlocated draft reference; do not count as authored/verified package)"
+        ],
+        "generators": [
+          "app/domains/advanced_algebra_highschool.py:MATH.EXPFUNC.COMPARE.LINEAR",
+          "app/domains/advanced_algebra_highschool.py:MATH.EXPFUNC.MODEL"
+        ],
+        "mve": [
+          {
+            "component": "growth/decay repeated-step table",
+            "status": "SPEC_ONLY_NOT_VERIFIED_IMPLEMENTED"
+          }
+        ]
+      },
+      "concrete_visual_symbolic": {
+        "concrete": "equal starting-value counters, repeated additive vs multiplicative updates",
+        "visual": "accessible year-by-year amount table with differences and ratios",
+        "symbolic": "L(t)=P+dt; E(t)=P(1+r)^t with context domain",
+        "status": "SPEC_ONLY"
+      },
+      "teaching_sequence": {
+        "Observe": {
+          "description": "Contrast a fixed add-on and percent-of-current plan.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Predict": {
+          "description": "Predict period-2 amounts before revealing the table.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Manipulate": {
+          "description": "Choose add or multiply step-by-step with accessible table controls.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Explain": {
+          "description": "Explain why compounding changes the base every period.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Practice": {
+          "description": "Use seed-varied rational multipliers with exact fractional arithmetic.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Diagnose": {
+          "description": "If learner subtracts same percentage twice, probe amount used as percentage base.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Transfer": {
+          "description": "Transfer to a reserve that loses a fraction of its remaining amount.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        },
+        "Verify": {
+          "description": "Use repeated Fraction multiplication and independent closed form only in offline tests.",
+          "implementation_status": "SPEC_ONLY_NOT_WIRED"
+        }
+      },
+      "misconception_pathways": [
+        {
+          "observed_reasoning": "takes same percentage of original each period",
+          "diagnosis": "ORIGINAL_BASE_CONFUSION",
+          "probe": "What remains after period one, and what quantity is percent applied to now?",
+          "feedback": "Rebuild the second step on the new base before a formula."
+        },
+        {
+          "observed_reasoning": "declares equal differences for geometric progression",
+          "diagnosis": "ADDITIVE_MULTIPLICATIVE_CONFUSION",
+          "probe": "Compare 3,6,12,24 by successive differences AND ratios.",
+          "feedback": "Ask learner which invariant predicts the next term."
+        }
+      ],
+      "scope_limits": [
+        "Do not present this as a source-verified existing PR #328 package until actual owner/source is reconciled.",
+        "Do not infer full exponential equation competency from MTH1W C3.1."
+      ],
+      "verification": {
+        "existing_work": "Unverified W4 source reference plus existing generator in main",
+        "actual_gap": "exact source package missing from PR #328; interaction and mapping unverified",
+        "planned_improvement": "locate owner/source before authoring or merging; then request map/math review",
+        "observed": "REUSE_AUDIT_FOUND_SOURCE_CLAIM_ERROR"
+      }
+    }
+  ],
+  "oracle_evidence": {
+    "module": "docs/curriculum/drafts/algebra_depth_provenance_20261010/seeded_oracles.py",
+    "test": "tests/test_algebra_depth_seeded_oracles.py",
+    "local_result": "314 passed",
+    "scope": "100 exact deterministic seeds for each of linear-plan crossover, quadratic rectangle area, and exponential repeated change, plus namespace/non-disclosure checks",
+    "limitation": "LOCAL_CONTENT_ORACLE_EVIDENCE_NOT_INDEPENDENT_BACKEND_OR_MASTERY_VERIFICATION"
+  }
+}
