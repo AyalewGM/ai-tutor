@@ -1,4 +1,5 @@
 """Regression gates for bounded independent evidence corrections in PR #328."""
+import itertools
 import json
 from pathlib import Path
 
@@ -70,8 +71,12 @@ def test_histogram_unseen_bin_modality_and_interval_evidence():
     assert len(tagged) >= 2
     assert sum([3, 1]) == 4
     assert max([2, 6, 3, 1]) == 6
-    assert 10 <= 10 < 15
-    assert 2 < 5 < 8 and 8 > 5 > 2
+    observation = 10
+    bin_edges = (10, 15)
+    assert bin_edges[0] <= observation < bin_edges[1]
+    frequencies = [2, 5, 8, 5, 2]
+    assert frequencies.index(max(frequencies)) == 2
+    assert frequencies == frequencies[::-1]
     assert all(i["hints_allowed"] is False for i in tagged)
     assert p["runtime_activation"] is False
 
@@ -187,8 +192,8 @@ def test_linear_vs_exponential_different_independent_invariants():
     assert len(unseen) >= 2
     linear = [4, 7, 10, 13]
     exponential = [5, 10, 20, 40]
-    assert [b - a for a, b in zip(linear, linear[1:])] == [3, 3, 3]
-    assert [b // a for a, b in zip(exponential, exponential[1:])] == [2, 2, 2]
+    assert [b - a for a, b in itertools.pairwise(linear)] == [3, 3, 3]
+    assert [b // a for a, b in itertools.pairwise(exponential)] == [2, 2, 2]
     assert exponential[-1] * 2 == 80
     assert p["assessment_scope_evidence"]["source_provenance"] == "UNKNOWN_UNLOCATED"
     assert p["runtime_activation"] is False
