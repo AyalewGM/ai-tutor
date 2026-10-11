@@ -205,6 +205,81 @@ def test_guided_evaluator_routes_operation_specific_exponent_errors() -> None:
     }
 
 
+def test_seed_9_wrong_exponent_with_internally_consistent_ordinary_value() -> None:
+    flow = _flow()
+    generators = _generator()
+    item = generators.generate(9, "guided")
+    oracle = item.teacher_oracle
+
+    assert item.parameters["operation"] == "TO_ORDINARY"
+    assert oracle == {
+        "coefficient": Fraction(47, 5),
+        "exponent": 6,
+        "ordinary_value": Fraction(9_400_000),
+    }
+
+    wrong_exponent = 5
+    response = _correct_response(flow, item)
+    response["power_of_ten"] = wrong_exponent
+    response["exact_ordinary_value"] = _exact(
+        oracle["coefficient"] * flow._power_of_ten(wrong_exponent)
+    )
+
+    result = flow.evaluate_guided_response(item, response)
+    assert result["misconception_id"] == "SCI.EXPONENT.DIRECTION"
+
+
+def test_correct_coefficient_wrong_power_routes_to_exponent_for_every_operation() -> None:
+    flow = _flow()
+    generators = _generator()
+    observed = set()
+
+    for index in range(200):
+        item = generators.generate(flow.scientific_seed(index), "guided")
+        operation = item.parameters["operation"]
+        if operation in observed:
+            continue
+
+        oracle = item.teacher_oracle
+        wrong_exponent = oracle["exponent"] + 1
+        operation_specific_errors = {
+            "MULTIPLY": item.parameters["e1"] * item.parameters["e2"],
+            "DIVIDE": item.parameters["e1"] + item.parameters["e2"],
+        }
+        if wrong_exponent == operation_specific_errors.get(operation):
+            wrong_exponent += 1
+
+        response = _correct_response(flow, item)
+        response["power_of_ten"] = wrong_exponent
+        response["exact_ordinary_value"] = _exact(
+            oracle["coefficient"] * flow._power_of_ten(wrong_exponent)
+        )
+
+        result = flow.evaluate_guided_response(item, response)
+        assert result["misconception_id"] == "SCI.EXPONENT.DIRECTION"
+        observed.add(operation)
+        if len(observed) == 4:
+            break
+
+    assert observed == {"TO_SCIENTIFIC", "TO_ORDINARY", "MULTIPLY", "DIVIDE"}
+
+
+def test_coefficient_arithmetic_requires_an_actual_coefficient_error() -> None:
+    flow = _flow()
+    generators = _generator()
+    item = generators.generate(flow.scientific_seed(4), "guided")
+    oracle = item.teacher_oracle
+    wrong_coefficient = oracle["coefficient"] + 1
+    response = _correct_response(flow, item)
+    response["normalized_coefficient"] = _exact(wrong_coefficient)
+    response["exact_ordinary_value"] = _exact(
+        wrong_coefficient * flow._power_of_ten(oracle["exponent"])
+    )
+
+    result = flow.evaluate_guided_response(item, response)
+    assert result["misconception_id"] == "SCI.COEFFICIENT.ARITHMETIC"
+
+
 def test_guided_feedback_is_unavailable_for_independent_variants() -> None:
     flow = _flow()
     generators = _generator()
