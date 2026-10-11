@@ -9,6 +9,16 @@ def _load():
     return json.loads(ARTIFACT.read_text(encoding="utf-8"))
 
 
+def _assert_unapproved_qa(row):
+    # A bounded component QA verdict never establishes complete-package readiness.
+    expected = (
+        "NOT_REVIEWED_FOR_CURRENT_MAIN_ROUTE_OR_COMPLETE_PACKAGE"
+        if row["task_type_id"] == "DMV.TASK.POLYNOMIAL.MONOMIAL_DIVIDE_RESTRICT"
+        else "NOT_REVIEWED"
+    )
+    assert row["implementation"]["qa"] == expected
+
+
 def test_dmv_crosswalk_is_fail_closed_and_ranked():
     data = _load()
     assert data["status"] == "DRAFT_UNVERIFIED_RESEARCH_ONLY_RUNTIME_DISABLED"
@@ -33,7 +43,7 @@ def test_dmv_crosswalk_has_traceability_without_claiming_acceptance():
         assert row["variability"]
         assert row["gap"]
         assert row["implementation"]["backend_independent_assessment"] != "APPROVED"
-        assert row["implementation"]["qa"] == "NOT_REVIEWED"
+        _assert_unapproved_qa(row)
 
 
 def test_sources_are_official_and_research_only():
@@ -148,7 +158,7 @@ def test_publisher_topic_evidence_never_becomes_mapping_or_implementation_proof(
             assert evidence["evidence_type"] == "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY"
             assert evidence["standards_authority"] is False
         assert row["implementation"]["backend_independent_assessment"] != "APPROVED"
-        assert row["implementation"]["qa"] == "NOT_REVIEWED"
+        _assert_unapproved_qa(row)
 
     assert data["summary"]["accepted_standards_mappings"] == 0
     assert data["summary"]["qa_approved_packages"] == 0
@@ -171,7 +181,7 @@ def test_architecture_reconciliation_keeps_algebra_candidates_fail_closed():
         assert row["canonical_skill_codes"] == []
         assert "NO_BACK_OR_DUPLICATE_CREDIT" in row["architecture_boundary"]["integrated_task_semantics"]
         assert row["implementation"]["backend_independent_assessment"] != "APPROVED"
-        assert row["implementation"]["qa"] == "NOT_REVIEWED"
+        _assert_unapproved_qa(row)
 
     assert exponent["architecture_boundary"]["historical_family_not_expanded"] == "MATH.NS.EXPONENTS"
     assert scientific["architecture_boundary"]["historical_family_not_expanded"] == "MATH.NS.SCIENTIFIC_NOTATION"
