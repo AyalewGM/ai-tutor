@@ -122,11 +122,11 @@ def test_grade1_boundaries_and_separate_evidence_dimensions_are_explicit() -> No
         for row in subtraction["assessment_evidence_matrix"]["required"]
     } == {"minuend", "subtrahend", "difference"}
 
-    for code in {
+    for code in (
         "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES",
         "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES",
         "MATH.GEOMETRY.SHAPE.COMPOSE",
-    }:
+    ):
         assert "review_question" in cards[code]["assessment_evidence_matrix"]
 
     read_time = cards["MATH.MEASUREMENT.TIME.READ_HOUR_HALF_HOUR"]
