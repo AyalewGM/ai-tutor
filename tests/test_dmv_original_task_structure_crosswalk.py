@@ -152,3 +152,35 @@ def test_publisher_topic_evidence_never_becomes_mapping_or_implementation_proof(
 
     assert data["summary"]["accepted_standards_mappings"] == 0
     assert data["summary"]["qa_approved_packages"] == 0
+
+def test_architecture_reconciliation_keeps_algebra_candidates_fail_closed():
+    data = _load()
+    assert data["revision"] == "2026-10-11-architecture-boundary-reconciliation-r3"
+    assert data["governance"]["draft_candidates_are_canonical"] is False
+    assert data["governance"]["integrated_tasks_award_component_mastery"] is False
+    assert data["governance"]["one_response_one_primary_atom"] is True
+
+    rows = {row["task_type_id"]: row for row in data["task_structures"]}
+    exponent = rows["DMV.TASK.EXPONENTS.LAWS_EQUIVALENCE"]
+    scientific = rows["DMV.TASK.SCIENTIFIC_NOTATION.CONVERT_OPERATE_REASONABLE"]
+    polynomial = rows["DMV.TASK.POLYNOMIAL.MONOMIAL_DIVIDE_RESTRICT"]
+
+    for row in (exponent, scientific, polynomial):
+        assert row["canonical_disposition"] == "PROPOSE_IDENTITY_REVIEW"
+        assert row["canonical_skill_codes"] == []
+        assert "NO_BACK_OR_DUPLICATE_CREDIT" in row["architecture_boundary"]["integrated_task_semantics"]
+        assert row["implementation"]["backend_independent_assessment"] != "APPROVED"
+        assert row["implementation"]["qa"] == "NOT_REVIEWED"
+
+    assert exponent["architecture_boundary"]["historical_family_not_expanded"] == "MATH.NS.EXPONENTS"
+    assert scientific["architecture_boundary"]["historical_family_not_expanded"] == "MATH.NS.SCIENTIFIC_NOTATION"
+    assert polynomial["architecture_boundary"]["historical_family_not_expanded"] == "MATH.EE.POLYNOMIAL_OPERATIONS"
+    assert polynomial["architecture_boundary"]["candidate_codes"] == [
+        "MATH.POLY.DIVIDE_MONOMIALS",
+        "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL",
+    ]
+    assert data["summary"]["ranked_task_types"] == 13
+    assert data["summary"]["reuse"] == 3
+    assert data["summary"]["extend"] == 7
+    assert data["summary"]["propose_identity_review"] == 3
+
