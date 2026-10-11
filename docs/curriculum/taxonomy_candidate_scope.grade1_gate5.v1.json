@@ -1,19 +1,21 @@
 {
   "schema_version": 1,
   "review_status": "DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
-  "revision": "2026-10-10-grade1-gate5-r1",
+  "revision": "2026-10-11-grade1-gate5-r2",
   "authority": "NONE_NOT_FOR_RUNTIME",
   "source_review": {
     "merged_foundation": "main@13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
     "independent_alias_review": "Issue #293 comment 6097860935",
     "architecture_decomposition": "Issue #282 comment 6103218496",
-    "architecture_gate5": "Issue #282 comment 6103246330"
+    "architecture_gate5": "Issue #282 comment 6103246330",
+    "independent_geometry_review": "Issue #293 comment 6104081399",
+    "architecture_geometry_split": "Issue #282 comment 6104119915"
   },
   "notes": [
-    "Curriculum Content authored these ten bounded DRAFT cards after Architecture fixed the identity boundaries.",
-    "Suggested codes were collision-audited against main, the six merged r5 scope cards, the generator-derived registry audit and relevant broad generator skill codes.",
-    "No exact proposed code was found on main; broad overlaps are recorded per card and are not treated as equivalence.",
-    "The shape cards keep 2-D and 3-D evidence explicit so Independent Math Review can require a later split if partial mastery remains possible.",
+    "Curriculum Content preserved the seven independently approved non-geometry DRAFT cards unchanged and revised only the geometry group after Independent Mathematical Review and Architecture required a 2-D/3-D split.",
+    "The three r1 combined geometry proposals are superseded DRAFT proposals, not aliases or authority; their Git history remains in r1.",
+    "Six replacement geometry labels were collision-audited against the two authoritative candidate sources on main at their pinned blob SHAs; no exact code was found.",
+    "Rectangle, square and inclusive trapezoid conventions are explicit; 3-D construction requires observable production; 2-D composition uses an unambiguous diagonal-half rectangle arrangement.",
     "Prerequisite concepts are descriptive, not approved canonical dependency edges.",
     "No card changes canonical UUIDs, aliases, generators, assessments, learner evidence, mastery or standards coverage."
   ],
@@ -500,22 +502,26 @@
       }
     },
     {
-      "code": "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES",
-      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "code": "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_2D",
+      "identity_decision": "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
       "collision_audit": {
         "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
-        "exact_code_search_date": "2026-10-10",
+        "exact_code_search_date": "2026-10-11",
+        "authoritative_sources_checked": [
+          "app/canonical_taxonomy_candidates.py@786922e673355be50c6b9405de12f16aa754389f",
+          "docs/curriculum/taxonomy_candidate_scope.v1.json@700e5d5aaa61eb5f05db92612177dba20aa19d99"
+        ],
         "possible_overlaps": [
           "MATH.GEO.SHAPES",
           "MATH.GEO.SHAPE.CLASSIFY"
         ],
-        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
-        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+        "disposition": "DISTINCT_DIMENSIONAL_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+        "authority_caveat": "Architecture authorized this label for DRAFT authoring only. Generator families, broad codes and collision results do not authorize runtime publication, aliases or mastery migration."
       },
       "components": [
-        "defining_vs_nondefining",
-        "identify_2d_by_attributes",
-        "identify_3d_by_attributes"
+        "defining_vs_nondefining_2d",
+        "classify_2d_by_attributes",
+        "accept_all_valid_labels"
       ],
       "shape_universe": {
         "two_dimensional": [
@@ -525,97 +531,240 @@
           "square",
           "trapezoid"
         ],
-        "three_dimensional": [
-          "cube",
-          "rectangular_prism",
-          "cone",
-          "cylinder",
-          "sphere"
-        ],
-        "note": "Names are bounded review objects, not an assertion of a complete jurisdiction standard or later-grade classification hierarchy."
+        "classification_conventions": {
+          "rectangle": "quadrilateral with four right angles",
+          "square": "rectangle with four equal sides",
+          "trapezoid": "quadrilateral with at least one pair of parallel sides"
+        },
+        "note": "This is a bounded mathematical review universe, not a standards-coverage claim."
       },
       "inclusions": [
-        "Identify a listed shape from defining attributes rather than color, size or orientation",
-        "Distinguish defining attributes from non-defining attributes",
-        "Treat rotated, reflected, stretched or differently sized valid examples as the same named shape when defining attributes remain",
-        "Keep 2-D and 3-D evidence separately visible"
+        "Identify a listed 2-D shape from defining attributes rather than color, size or orientation",
+        "Distinguish defining from non-defining attributes for 2-D figures",
+        "Classify rotated, reflected, stretched or differently sized valid examples by unchanged defining attributes",
+        "Use the inclusive quadrilateral convention: a rectangle has four right angles; a square is a rectangle and additionally has four equal sides",
+        "Use the inclusive trapezoid convention: a quadrilateral with at least one pair of parallel sides",
+        "Accept every mathematically valid name under the declared hierarchy and never score a valid subtype or supertype label as an incorrect distractor"
       ],
       "exclusions": [
-        "Naming a shape without attribute reasoning as sufficient mastery",
-        "Counting sides alone as the whole evidence contract",
-        "Later-grade quadrilateral hierarchy proofs",
-        "Unlisted polygons, polyhedra or curved surfaces",
-        "Construction and composition evidence"
+        "Naming without attribute reasoning as sufficient mastery",
+        "3-D faces, curved surfaces or solid classification",
+        "Construction or composition evidence",
+        "Later-grade proof of the complete quadrilateral hierarchy",
+        "Jurisdiction-specific exclusive trapezoid wording changing canonical scoring"
       ],
       "prerequisite_concepts": [
         "same/different",
+        "closed 2-D figure",
         "straight and curved boundary recognition",
-        "side, vertex, face and surface vocabulary"
+        "side and vertex vocabulary",
+        "parallel sides",
+        "right angles"
       ],
       "examples": [
         {
-          "input": "Which attribute makes every triangle a triangle?",
-          "answer": "It is a closed 2-D shape with three straight sides and three vertices.",
-          "dimension": "2d"
+          "input": "Which attribute makes every triangle in this bounded universe a triangle?",
+          "answer": "It is a closed 2-D figure with three straight sides and three vertices.",
+          "dimension": "triangle_attributes"
         },
         {
-          "input": "A rectangle is blue and tilted. Which facts are non-defining?",
-          "answer": "Its color and orientation.",
-          "dimension": "defining_vs_nondefining"
+          "input": "A tilted quadrilateral has four right angles and four equal sides. Give every valid listed classification.",
+          "answer": [
+            "square",
+            "rectangle"
+          ],
+          "dimension": "quadrilateral_hierarchy"
         },
         {
-          "input": "Identify a solid with two circular faces and one curved surface.",
-          "answer": "cylinder",
-          "dimension": "3d"
+          "input": "Under Mihur's inclusive convention, does a square also satisfy the trapezoid definition?",
+          "answer": "yes",
+          "rationale": "A square has at least one pair of parallel sides.",
+          "dimension": "trapezoid_convention"
         },
         {
-          "input": "A red shape must be a rectangle.",
-          "answer": "false",
+          "input": "A blue rectangle is rotated. Which facts are non-defining?",
+          "answer": [
+            "blue color",
+            "orientation"
+          ],
           "dimension": "nondefining"
         }
       ],
       "misconception_probes": [
-        "Uses orientation as a defining attribute",
-        "Classifies by color or size",
-        "Calls every four-sided figure a square",
-        "Confuses 2-D faces with 3-D solids"
+        "Uses orientation, color or size as defining",
+        "Calls every quadrilateral a square",
+        "Rejects rectangle as a valid label for a square",
+        "Uses an exclusive trapezoid rule despite the declared inclusive convention",
+        "Confuses a 2-D face with a 3-D solid"
       ],
       "assessment_evidence_matrix": {
-        "rule": "The single DRAFT card retains separate 2-D, 3-D and defining/non-defining evidence dimensions; partial evidence cannot satisfy the combined claim.",
+        "rule": "2-D attribute evidence is independent of 3-D evidence and of construction/composition. Every accepted label follows the declared inclusive hierarchy.",
         "required": [
           {
-            "dimension": "2d_attributes",
-            "minimum_distinct_shapes": 3
+            "dimension": "triangle_circle_attributes",
+            "minimum_distinct_shapes": 2
           },
           {
-            "dimension": "3d_attributes",
-            "minimum_distinct_shapes": 3
+            "dimension": "quadrilateral_attributes",
+            "must_include": [
+              "rectangle",
+              "square",
+              "trapezoid"
+            ]
+          },
+          {
+            "dimension": "classification_hierarchy",
+            "must_accept_all_valid_labels": true
           },
           {
             "dimension": "defining_vs_nondefining",
             "include_orientation": true
           }
         ],
-        "review_question": "Independent Math Review must decide whether 2-D and 3-D should remain one atom or split before approval."
+        "prohibitions": [
+          "No 3-D mastery inference",
+          "No construction mastery inference",
+          "No composition mastery inference",
+          "No invalid distractor formed from a mathematically valid label"
+        ]
       }
     },
     {
-      "code": "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES",
-      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "code": "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_3D",
+      "identity_decision": "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
       "collision_audit": {
         "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
-        "exact_code_search_date": "2026-10-10",
+        "exact_code_search_date": "2026-10-11",
+        "authoritative_sources_checked": [
+          "app/canonical_taxonomy_candidates.py@786922e673355be50c6b9405de12f16aa754389f",
+          "docs/curriculum/taxonomy_candidate_scope.v1.json@700e5d5aaa61eb5f05db92612177dba20aa19d99"
+        ],
         "possible_overlaps": [
           "MATH.GEO.SHAPES",
           "MATH.GEO.SHAPE.CLASSIFY"
         ],
-        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
-        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+        "disposition": "DISTINCT_DIMENSIONAL_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+        "authority_caveat": "Architecture authorized this label for DRAFT authoring only. Generator families, broad codes and collision results do not authorize runtime publication, aliases or mastery migration."
       },
       "components": [
-        "construct_2d_from_attributes",
-        "construct_3d_model_from_attributes",
-        "verify_construction"
+        "classify_3d_by_attributes",
+        "distinguish_flat_faces_and_curved_surfaces",
+        "defining_vs_nondefining_3d"
+      ],
+      "shape_universe": {
+        "three_dimensional": [
+          "cube",
+          "rectangular_prism",
+          "cone",
+          "cylinder",
+          "sphere"
+        ],
+        "vocabulary": {
+          "face": "flat 2-D boundary of a solid",
+          "curved_surface": "non-flat boundary of a solid"
+        },
+        "note": "This is a bounded mathematical review universe, not a standards-coverage claim."
+      },
+      "inclusions": [
+        "Identify a listed solid from defining attributes rather than color, size or orientation",
+        "Use face only for a flat 2-D boundary and use curved surface separately",
+        "Classify varied valid representations when defining faces, curved surfaces and vertices are unchanged",
+        "Distinguish a solid from the 2-D shapes visible on its flat faces"
+      ],
+      "exclusions": [
+        "2-D figure classification",
+        "Recognition by name alone without attribute evidence",
+        "Construction or composition evidence",
+        "Unlisted polyhedra",
+        "Surface area, volume or nets"
+      ],
+      "prerequisite_concepts": [
+        "2-D shape recognition",
+        "solid versus flat figure",
+        "face, curved surface and vertex vocabulary",
+        "same/different"
+      ],
+      "examples": [
+        {
+          "input": "Identify a solid with two circular flat faces and one curved surface.",
+          "answer": "cylinder",
+          "dimension": "faces_and_curved_surfaces"
+        },
+        {
+          "input": "Does a sphere have a flat face?",
+          "answer": "no",
+          "rationale": "Its boundary is one curved surface.",
+          "dimension": "surface_vocabulary"
+        },
+        {
+          "input": "A cube is rotated. Which defining attributes change?",
+          "answer": "none",
+          "dimension": "orientation_invariance"
+        },
+        {
+          "input": "A displayed square is one face of a cube. Is the square itself a cube?",
+          "answer": "no",
+          "dimension": "face_versus_solid"
+        }
+      ],
+      "misconception_probes": [
+        "Calls every boundary a face",
+        "Counts a curved surface as a flat face",
+        "Treats rotation as changing the solid",
+        "Names the 2-D face as the whole solid"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "3-D attribute evidence is independent of 2-D evidence and of construction/composition; flat faces and curved surfaces are scored with distinct vocabulary.",
+        "required": [
+          {
+            "dimension": "flat_faced_solids",
+            "minimum_distinct_shapes": 2
+          },
+          {
+            "dimension": "curved_surface_solids",
+            "must_include": [
+              "cone",
+              "cylinder",
+              "sphere"
+            ]
+          },
+          {
+            "dimension": "face_versus_curved_surface",
+            "must_distinguish": true
+          },
+          {
+            "dimension": "solid_versus_face",
+            "must_distinguish": true
+          }
+        ],
+        "prohibitions": [
+          "No 2-D mastery inference",
+          "No construction mastery inference",
+          "No composition mastery inference"
+        ]
+      }
+    },
+    {
+      "code": "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_2D",
+      "identity_decision": "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-11",
+        "authoritative_sources_checked": [
+          "app/canonical_taxonomy_candidates.py@786922e673355be50c6b9405de12f16aa754389f",
+          "docs/curriculum/taxonomy_candidate_scope.v1.json@700e5d5aaa61eb5f05db92612177dba20aa19d99"
+        ],
+        "possible_overlaps": [
+          "MATH.GEO.SHAPES",
+          "MATH.GEO.SHAPE.CLASSIFY"
+        ],
+        "disposition": "DISTINCT_DIMENSIONAL_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+        "authority_caveat": "Architecture authorized this label for DRAFT authoring only. Generator families, broad codes and collision results do not authorize runtime publication, aliases or mastery migration."
+      },
+      "components": [
+        "draw_2d_from_attributes",
+        "construct_2d_with_manipulatives",
+        "verify_2d_construction"
       ],
       "shape_universe": {
         "two_dimensional": [
@@ -625,96 +774,233 @@
           "square",
           "trapezoid"
         ],
-        "three_dimensional": [
-          "cube",
-          "rectangular_prism",
-          "cone",
-          "cylinder",
-          "sphere"
-        ]
+        "classification_conventions": {
+          "rectangle": "quadrilateral with four right angles",
+          "square": "rectangle with four equal sides",
+          "trapezoid": "quadrilateral with at least one pair of parallel sides"
+        }
       },
       "inclusions": [
-        "Draw or build a listed shape that satisfies supplied defining attributes",
+        "Draw or assemble a listed 2-D figure satisfying every supplied defining attribute",
         "Accept varied size and orientation when defining attributes are met",
-        "For 3-D evidence, construct or select a physical/pictorial model and identify the requested faces or surfaces",
-        "Verify the finished construction against every supplied defining attribute"
+        "Apply the declared inclusive rectangle, square and trapezoid conventions",
+        "Verify closure, sides, vertices, right angles, equal sides or parallelism whenever supplied"
       ],
       "exclusions": [
-        "Recognition-only evidence",
-        "Freehand visual perfection as a mathematical requirement",
-        "Later-grade compass-and-straightedge construction",
-        "Unlisted shapes",
-        "Composing multiple component shapes into a new shape"
+        "Recognition or selection of a displayed figure as construction evidence",
+        "3-D model construction",
+        "Freehand visual perfection",
+        "Compass-and-straightedge proof construction",
+        "Composition of multiple figures into a requested new figure"
       ],
       "prerequisite_concepts": [
-        "defining attributes",
-        "basic drawing or manipulative use",
-        "2-D versus 3-D distinction"
+        "defining attributes of bounded 2-D figures",
+        "closure",
+        "side and vertex vocabulary",
+        "parallel sides",
+        "right angles",
+        "basic drawing or manipulative use"
       ],
       "examples": [
         {
-          "input": "Draw a closed shape with three straight sides.",
+          "input": "Draw a closed figure with three straight sides.",
           "answer": "any valid triangle",
-          "dimension": "2d"
+          "dimension": "triangle_construction"
         },
         {
-          "input": "Build or choose a solid with six square faces.",
-          "answer": "cube",
-          "dimension": "3d"
+          "input": "Construct a quadrilateral with four right angles and four equal sides, then give every valid listed name.",
+          "answer": {
+            "construction": "any valid square",
+            "valid_names": [
+              "square",
+              "rectangle"
+            ]
+          },
+          "dimension": "quadrilateral_construction"
         },
         {
-          "input": "Draw a rectangle that is not resting on a horizontal side.",
-          "answer": "any rotated valid rectangle",
-          "dimension": "orientation_invariance"
+          "input": "Draw a trapezoid under the inclusive convention and mark a pair of parallel sides.",
+          "answer": "any valid quadrilateral with at least one marked parallel pair",
+          "dimension": "parallelism"
         },
         {
           "input": "Draw a circle with four vertices.",
           "valid": false,
-          "rationale": "The supplied attributes are inconsistent"
+          "rationale": "The supplied attributes are inconsistent.",
+          "dimension": "inconsistent_attributes"
         }
       ],
       "misconception_probes": [
-        "Copies a familiar prototype despite conflicting attributes",
-        "Treats rotation as changing the shape",
+        "Copies a prototype despite conflicting attributes",
+        "Treats rotation as changing validity",
         "Draws an open figure when closure is required",
-        "Confuses a square face with a cube"
+        "Constructs a generic quadrilateral without verifying right angles or parallelism",
+        "Rejects a valid square because the prompt says rectangle"
       ],
       "assessment_evidence_matrix": {
-        "rule": "Production evidence is distinct from recognition; 2-D and 3-D constructions remain separately scored.",
+        "rule": "Observable 2-D production and verification are required; recognition does not count. Evidence cannot credit the 3-D construction atom.",
         "required": [
           {
-            "dimension": "2d_construction",
+            "dimension": "drawing_or_assembly",
             "minimum_distinct_attribute_sets": 3
           },
           {
-            "dimension": "3d_model",
-            "minimum_distinct_attribute_sets": 2
+            "dimension": "quadrilateral_conventions",
+            "must_include": [
+              "rectangle",
+              "square",
+              "trapezoid"
+            ]
           },
           {
             "dimension": "self_verification",
             "must_reference_all_supplied_attributes": true
           }
         ],
-        "review_question": "Independent Math Review must confirm whether 3-D model production is sufficiently observable for the same atom."
+        "prohibitions": [
+          "No recognition-only evidence",
+          "No 3-D construction inference",
+          "No attribute-classification mastery inference",
+          "No composition mastery inference"
+        ]
       }
     },
     {
-      "code": "MATH.GEOMETRY.SHAPE.COMPOSE",
-      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "code": "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_3D",
+      "identity_decision": "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
       "collision_audit": {
         "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
-        "exact_code_search_date": "2026-10-10",
+        "exact_code_search_date": "2026-10-11",
+        "authoritative_sources_checked": [
+          "app/canonical_taxonomy_candidates.py@786922e673355be50c6b9405de12f16aa754389f",
+          "docs/curriculum/taxonomy_candidate_scope.v1.json@700e5d5aaa61eb5f05db92612177dba20aa19d99"
+        ],
+        "possible_overlaps": [
+          "MATH.GEO.SHAPES",
+          "MATH.GEO.SHAPE.CLASSIFY"
+        ],
+        "disposition": "DISTINCT_DIMENSIONAL_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+        "authority_caveat": "Architecture authorized this label for DRAFT authoring only. Generator families, broad codes and collision results do not authorize runtime publication, aliases or mastery migration."
+      },
+      "components": [
+        "assemble_3d_model_from_attributes",
+        "draw_valid_3d_representation",
+        "manipulate_virtual_3d_model",
+        "verify_3d_construction"
+      ],
+      "shape_universe": {
+        "three_dimensional": [
+          "cube",
+          "rectangular_prism",
+          "cone",
+          "cylinder",
+          "sphere"
+        ],
+        "vocabulary": {
+          "face": "flat 2-D boundary of a solid",
+          "curved_surface": "non-flat boundary of a solid"
+        }
+      },
+      "inclusions": [
+        "Assemble a physical model, manipulate a virtual model, or draw a valid representation of a listed solid from supplied attributes",
+        "Verify every supplied attribute using flat-face, curved-surface and vertex vocabulary",
+        "Accept varied size and orientation when the required structure remains",
+        "Use a drawing only when it visibly represents the required 3-D structure rather than merely naming a pictured solid"
+      ],
+      "exclusions": [
+        "Selecting or naming a displayed solid as construction evidence",
+        "2-D figure construction",
+        "Unverified model choice",
+        "Surface area or volume calculation",
+        "Unlisted polyhedra or formal net proofs"
+      ],
+      "prerequisite_concepts": [
+        "defining attributes of bounded 3-D solids",
+        "2-D faces versus 3-D solids",
+        "face, curved surface and vertex vocabulary",
+        "basic drawing, virtual-model or manipulative use"
+      ],
+      "examples": [
+        {
+          "input": "Build a solid with six square flat faces and verify each supplied attribute.",
+          "answer": "a cube model with six verified square faces",
+          "dimension": "physical_or_virtual_model"
+        },
+        {
+          "input": "Draw a representation of a cylinder and label its two circular flat faces and one curved surface.",
+          "answer": "a valid labeled cylinder representation",
+          "dimension": "drawn_representation"
+        },
+        {
+          "input": "Choose the cube from four pictures.",
+          "valid_as_construction_evidence": false,
+          "rationale": "Selection is recognition, not construction.",
+          "dimension": "recognition_exclusion"
+        },
+        {
+          "input": "Build a sphere with one flat face.",
+          "valid": false,
+          "rationale": "A sphere has no flat faces.",
+          "dimension": "inconsistent_attributes"
+        }
+      ],
+      "misconception_probes": [
+        "Selects a picture instead of producing a model",
+        "Calls a curved surface a face",
+        "Labels a square face as the whole cube",
+        "Builds a model but does not verify all supplied attributes",
+        "Treats orientation as changing the solid"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "The learner must produce and verify an observable 3-D model or valid representation; recognition/selection never satisfies this atom.",
+        "required": [
+          {
+            "dimension": "observable_production",
+            "accepted_modes": [
+              "physical_model",
+              "virtual_model",
+              "valid_drawn_representation"
+            ]
+          },
+          {
+            "dimension": "structure_verification",
+            "must_reference_all_supplied_attributes": true
+          },
+          {
+            "dimension": "face_surface_vocabulary",
+            "must_distinguish": true
+          }
+        ],
+        "prohibitions": [
+          "No selection-only evidence",
+          "No recognition-only evidence",
+          "No 2-D construction inference",
+          "No classification mastery inference",
+          "No composition mastery inference"
+        ]
+      }
+    },
+    {
+      "code": "MATH.GEOMETRY.SHAPE.COMPOSE_2D",
+      "identity_decision": "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-11",
+        "authoritative_sources_checked": [
+          "app/canonical_taxonomy_candidates.py@786922e673355be50c6b9405de12f16aa754389f",
+          "docs/curriculum/taxonomy_candidate_scope.v1.json@700e5d5aaa61eb5f05db92612177dba20aa19d99"
+        ],
         "possible_overlaps": [
           "MATH.GEO.SHAPES",
           "MATH.NS.COMPOSE_DECOMPOSE"
         ],
-        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
-        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+        "disposition": "DISTINCT_DIMENSIONAL_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+        "authority_caveat": "Architecture authorized this label for DRAFT authoring only. Generator families, broad codes and collision results do not authorize runtime publication, aliases or mastery migration."
       },
       "components": [
-        "compose_2d",
-        "compose_3d",
-        "identify_component_parts"
+        "compose_nonoverlapping_2d_parts",
+        "verify_requested_2d_result",
+        "identify_2d_component_parts"
       ],
       "shape_universe": {
         "two_dimensional_components": [
@@ -723,75 +1009,183 @@
           "square",
           "trapezoid"
         ],
-        "three_dimensional_components": [
-          "cube",
-          "rectangular_prism"
-        ],
-        "note": "Composition uses non-overlapping parts joined along boundaries; classification hierarchy is separate."
+        "composition_contract": "Component interiors are disjoint; joining along all or part of a boundary is permitted when it produces the requested result."
       },
       "inclusions": [
-        "Combine two or more bounded component shapes to make a specified composite or new shape",
-        "Explain which component shapes form the result",
-        "Use rotations or reflections of components without treating orientation as a new shape",
-        "Keep 2-D and 3-D composition evidence separately visible"
+        "Combine two or more bounded 2-D component figures to make a specified result",
+        "Join parts without interior overlap; shared boundary contact is allowed and must be explicit",
+        "Use rotations or reflections without changing component identity",
+        "Name component parts as explanation evidence without creating additional mastery credit"
       ],
       "exclusions": [
-        "Merely identifying component shapes without composing them",
-        "Overlapping pieces when the task requires a partition into non-overlapping parts",
-        "Area, volume or surface-area calculation",
-        "Later-grade quadrilateral hierarchy",
-        "Numeric composition/decomposition under MATH.NS.COMPOSE_DECOMPOSE"
+        "3-D composition",
+        "Merely identifying parts without composing them",
+        "Interior overlap when a partition is required",
+        "Area or perimeter calculation",
+        "Numeric composition/decomposition"
       ],
       "prerequisite_concepts": [
-        "recognize bounded component shapes",
+        "recognize bounded 2-D component figures",
         "part-whole spatial relation",
-        "orientation invariance"
+        "orientation invariance",
+        "boundary and interior"
       ],
       "examples": [
         {
-          "input": "Join two congruent right triangles along equal sides to make a rectangle; name the parts.",
-          "answer": "a rectangle composed of two triangles",
-          "dimension": "2d"
+          "input": "Take two congruent right triangles that are exact diagonal halves of one rectangle. Join their congruent hypotenuses using a half-turn so corresponding legs are parallel; name the result and parts.",
+          "answer": "a rectangle composed of two congruent right triangles",
+          "dimension": "diagonal_halves_rectangle"
         },
         {
-          "input": "Join two equal squares edge-to-edge; name one possible result.",
+          "input": "Join two congruent squares along one complete side with disjoint interiors.",
           "answer": "a rectangle composed of two squares",
-          "dimension": "2d"
-        },
-        {
-          "input": "Join unit cubes without overlap to build a rectangular prism and state the number of cubes.",
-          "answer": "a valid rectangular-prism arrangement with its component count",
-          "dimension": "3d"
+          "dimension": "edge_to_edge_squares"
         },
         {
           "input": "Place one square completely on top of another and claim a two-part rectangle.",
           "valid": false,
-          "rationale": "Complete overlap does not form the required non-overlapping composition"
+          "rationale": "The interiors overlap, so the required non-overlapping composition was not formed.",
+          "dimension": "overlap_rejection"
+        },
+        {
+          "input": "Name two triangles in a completed diagram without arranging them.",
+          "valid_as_composition_evidence": false,
+          "rationale": "Part identification without composition is insufficient.",
+          "dimension": "identification_exclusion"
         }
       ],
       "misconception_probes": [
-        "Counts overlapping pieces as separate visible parts",
-        "Changes component names after rotation",
-        "Names only the result and omits its parts",
-        "Confuses composing shapes with adding side counts"
+        "Counts overlapping pieces as separate parts",
+        "Changes a component name after rotation",
+        "Names only the result and omits the parts",
+        "Identifies parts without composing them",
+        "Assumes any two congruent right triangles joined along equal-length sides form a rectangle"
       ],
       "assessment_evidence_matrix": {
-        "rule": "A combined claim requires separately retained 2-D and 3-D composition evidence plus identification of component parts.",
+        "rule": "The learner must create the requested 2-D result from non-overlapping parts and explain the parts. Explanation accompanies the same attempt and creates no second credit.",
         "required": [
           {
-            "dimension": "2d_composition",
+            "dimension": "nonoverlapping_composition",
             "minimum_distinct_tasks": 2
           },
           {
-            "dimension": "3d_composition",
-            "minimum_distinct_tasks": 1
+            "dimension": "boundary_contract",
+            "must_distinguish_shared_boundary_from_interior_overlap": true
           },
           {
             "dimension": "part_explanation",
             "required_for_every_task": true
           }
         ],
-        "review_question": "Independent Math Review must decide whether one atom can retain 2-D/3-D evidence without partial mastery; split if not."
+        "prohibitions": [
+          "No 3-D composition inference",
+          "No identification-only evidence",
+          "No separate credit for naming parts",
+          "No numeric composition inference"
+        ]
+      }
+    },
+    {
+      "code": "MATH.GEOMETRY.SHAPE.COMPOSE_3D",
+      "identity_decision": "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-11",
+        "authoritative_sources_checked": [
+          "app/canonical_taxonomy_candidates.py@786922e673355be50c6b9405de12f16aa754389f",
+          "docs/curriculum/taxonomy_candidate_scope.v1.json@700e5d5aaa61eb5f05db92612177dba20aa19d99"
+        ],
+        "possible_overlaps": [
+          "MATH.GEO.SHAPES",
+          "MATH.NS.COMPOSE_DECOMPOSE"
+        ],
+        "disposition": "DISTINCT_DIMENSIONAL_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+        "authority_caveat": "Architecture authorized this label for DRAFT authoring only. Generator families, broad codes and collision results do not authorize runtime publication, aliases or mastery migration."
+      },
+      "components": [
+        "compose_nonoverlapping_3d_parts",
+        "verify_requested_3d_result",
+        "identify_3d_component_parts"
+      ],
+      "shape_universe": {
+        "three_dimensional_components": [
+          "cube",
+          "rectangular_prism"
+        ],
+        "composition_contract": "Component interiors are disjoint; face-to-face joining is required when the task specifies a rectangular-prism result."
+      },
+      "inclusions": [
+        "Combine two or more bounded 3-D components to make a specified solid or composite solid",
+        "Join components without interior overlap; shared face contact is allowed and must be explicit",
+        "Use rotations without changing component identity",
+        "State the component count and arrangement as explanation evidence without creating additional mastery credit"
+      ],
+      "exclusions": [
+        "2-D composition",
+        "Merely identifying components without composing them",
+        "Interior overlap",
+        "Volume or surface-area calculation",
+        "Numeric composition/decomposition"
+      ],
+      "prerequisite_concepts": [
+        "recognize cube and rectangular-prism components",
+        "part-whole spatial relation",
+        "orientation invariance",
+        "face-to-face joining"
+      ],
+      "examples": [
+        {
+          "input": "Join six unit cubes face-to-face in a 3 by 2 by 1 array with disjoint interiors.",
+          "answer": "a rectangular prism composed of six unit cubes",
+          "dimension": "unit_cube_prism"
+        },
+        {
+          "input": "Join two congruent rectangular prisms along one complete congruent face and describe the result.",
+          "answer": "a valid composite rectangular prism when the aligned dimensions form one rectangular prism",
+          "dimension": "face_to_face_prisms"
+        },
+        {
+          "input": "Place one cube completely inside another and count two visible building blocks.",
+          "valid": false,
+          "rationale": "The interiors overlap and the required face-to-face composition is absent.",
+          "dimension": "overlap_rejection"
+        },
+        {
+          "input": "Point to three cubes already shown without arranging them.",
+          "valid_as_composition_evidence": false,
+          "rationale": "Identification without composition is insufficient.",
+          "dimension": "identification_exclusion"
+        }
+      ],
+      "misconception_probes": [
+        "Counts overlapping solids as separate visible components",
+        "Joins pieces only at a point when face-to-face contact is required",
+        "Changes a component name after rotation",
+        "Names only the result and omits component count",
+        "Identifies components without composing them"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "The learner must create and verify the requested 3-D arrangement from non-overlapping components. Component explanation creates no additional mastery credit.",
+        "required": [
+          {
+            "dimension": "nonoverlapping_composition",
+            "minimum_distinct_tasks": 2
+          },
+          {
+            "dimension": "face_contact_contract",
+            "must_verify_when_required": true
+          },
+          {
+            "dimension": "component_explanation",
+            "required_for_every_task": true
+          }
+        ],
+        "prohibitions": [
+          "No 2-D composition inference",
+          "No identification-only evidence",
+          "No separate credit for naming/counting components",
+          "No numeric composition inference"
+        ]
       }
     },
     {
@@ -1013,10 +1407,18 @@
       "label": "identify_compose_shapes",
       "role": "REPORTING_ONLY_ALL_OF",
       "members": [
-        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES",
-        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES",
-        "MATH.GEOMETRY.SHAPE.COMPOSE"
-      ]
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_2D",
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_3D",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_2D",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_3D",
+        "MATH.GEOMETRY.SHAPE.COMPOSE_2D",
+        "MATH.GEOMETRY.SHAPE.COMPOSE_3D"
+      ],
+      "evaluation": "FAIL_CLOSED_ALL_OF",
+      "one_primary_atom_per_attempt": true,
+      "creates_additional_credit": false,
+      "back_credits_missing_members": false,
+      "direct_alias_target": false
     },
     {
       "label": "tell_time_hour_half_hour",
@@ -1029,9 +1431,35 @@
   ],
   "profile_prohibitions": [
     "No canonical row or UUID",
-    "No mastery event, attempt or variant namespace",
-    "No inferred member mastery",
-    "No duplicate credit",
-    "No runtime alias activation"
+    "No mastery event, attempt, diagnostic attempt or variant namespace",
+    "One primary atom per attempt",
+    "No inferred member mastery or cross-dimension credit",
+    "No duplicate, seventh or back-credit",
+    "No direct alias target or runtime alias activation"
+  ],
+  "revision_history": [
+    {
+      "revision": "2026-10-10-grade1-gate5-r1",
+      "disposition": "SUPERSEDED_GEOMETRY_PROPOSALS_RETAINED_IN_GIT_HISTORY",
+      "unchanged_approved_cards": 7,
+      "superseded_draft_codes": [
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES",
+        "MATH.GEOMETRY.SHAPE.COMPOSE"
+      ],
+      "reason": "Independent Mathematical Review requested separate 2-D and 3-D atoms; Architecture authorized six replacement DRAFT labels."
+    },
+    {
+      "revision": "2026-10-11-grade1-gate5-r2",
+      "disposition": "CURRENT_DRAFT_PENDING_LIMITED_INDEPENDENT_GEOMETRY_REVIEW",
+      "replacement_geometry_codes": [
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_2D",
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_3D",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_2D",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_3D",
+        "MATH.GEOMETRY.SHAPE.COMPOSE_2D",
+        "MATH.GEOMETRY.SHAPE.COMPOSE_3D"
+      ]
+    }
   ]
 }
