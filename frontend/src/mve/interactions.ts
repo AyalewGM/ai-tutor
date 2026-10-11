@@ -68,7 +68,7 @@ export interface DistributiveCoefficientsCheckedEvent extends MathInteractionBas
   variable_coefficient: number;
   constant_term: number;
   correct: boolean;
-  misconception: "MISSED_SECOND_TERM" | "COEFFICIENT_ERROR" | "CONSTANT_ERROR" | null;
+  misconception: "MISSED_SECOND_TERM" | "DROPPED_NEGATIVE" | "COEFFICIENT_ERROR" | "CONSTANT_ERROR" | null;
 }
 
 export interface FractionShadingChangedEvent extends MathInteractionBase {
@@ -99,6 +99,20 @@ export interface BalanceOperationAppliedEvent extends MathInteractionBase {
   left_x: number; left_units: number; right_x: number; right_units: number;
 }
 
+export interface EquationTransformationAppliedEvent extends MathInteractionBase {
+  type: "EQUATION_TRANSFORMATION_APPLIED";
+  operation: "ADD_CONSTANT_BOTH" | "ADD_VARIABLE_BOTH" | "SCALE_BOTH";
+  amount_numerator: number;
+  amount_denominator: number;
+  preserved: true;
+}
+
+export interface EquationAttemptDiagnosedEvent extends MathInteractionBase {
+  type: "EQUATION_ATTEMPT_DIAGNOSED";
+  diagnosis: "EQ.OP.ONE_SIDE" | "EQ.DENOMINATOR_IGNORED" | "EQ.FALSE_EQUIVALENCE";
+  phase: "MANIPULATE" | "FRESH_EXIT";
+}
+
 export interface ExplorerDatasetChangedEvent extends MathInteractionBase {
   type: "EXPLORER_DATASET_CHANGED";
   values: readonly number[];
@@ -107,6 +121,8 @@ export interface ExplorerDatasetChangedEvent extends MathInteractionBase {
 export type MathInteractionEvent =
   | ExplorerDatasetChangedEvent
   | BalanceOperationAppliedEvent
+  | EquationTransformationAppliedEvent
+  | EquationAttemptDiagnosedEvent
   | LinearParametersChangedEvent
   | IntegerDisplacementChangedEvent
   | PointPlacedEvent
@@ -132,6 +148,16 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "EQUATION_ATTEMPT_DIAGNOSED":
+      return Object.keys(event).every(key => ["schema_version", "type", "diagnosis", "phase"].includes(key)) &&
+        ["EQ.OP.ONE_SIDE", "EQ.DENOMINATOR_IGNORED", "EQ.FALSE_EQUIVALENCE"].includes(String(event.diagnosis)) &&
+        ["MANIPULATE", "FRESH_EXIT"].includes(String(event.phase));
+    case "EQUATION_TRANSFORMATION_APPLIED":
+      return Object.keys(event).every(key => ["schema_version", "type", "operation", "amount_numerator", "amount_denominator", "preserved"].includes(key)) &&
+        ["ADD_CONSTANT_BOTH", "ADD_VARIABLE_BOTH", "SCALE_BOTH"].includes(String(event.operation)) &&
+        Number.isSafeInteger(event.amount_numerator) && Math.abs(event.amount_numerator as number) <= 10000 &&
+        Number.isSafeInteger(event.amount_denominator) && (event.amount_denominator as number) >= 1 && (event.amount_denominator as number) <= 10000 &&
+        event.preserved === true && !(event.operation === "SCALE_BOTH" && event.amount_numerator === 0);
     case "EXPLORER_DATASET_CHANGED":
       return Object.keys(event).every(key => ["schema_version", "type", "values"].includes(key)) &&
         Array.isArray(event.values) && event.values.length >= 1 && event.values.length <= 6 &&
@@ -196,7 +222,7 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
         Math.abs(event.constant_term as number) <= 10000 &&
         typeof event.correct === "boolean" &&
         (event.misconception === null ||
-          ["MISSED_SECOND_TERM", "COEFFICIENT_ERROR", "CONSTANT_ERROR"].includes(String(event.misconception))) &&
+          ["MISSED_SECOND_TERM", "DROPPED_NEGATIVE", "COEFFICIENT_ERROR", "CONSTANT_ERROR"].includes(String(event.misconception))) &&
         event.correct === (event.misconception === null);
     default:
       return false;
