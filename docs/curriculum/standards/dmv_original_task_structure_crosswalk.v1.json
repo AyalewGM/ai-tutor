@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
-  "artifact_id": "DMV_ORIGINAL_TASK_STRUCTURE_CROSSWALK_V1_R6",
+  "artifact_id": "DMV_ORIGINAL_TASK_STRUCTURE_CROSSWALK_V1_R7",
   "status": "DRAFT_UNVERIFIED_RESEARCH_ONLY_RUNTIME_DISABLED",
   "created_date": "2026-10-11",
-  "inspected_main": "a740e51d691b8fcd990e1faf31baf7e53f3f230c",
+  "inspected_main": "cfda3f7301502c712c29f22ae5e4948cfa1ebc75",
   "purpose": "A jurisdiction-neutral, reuse-first inventory of mathematical task structures for Maryland, Virginia, and Washington, DC. It records official standards evidence, current district curriculum listings, vendor topic-sequence research, and implementation gaps as separate evidence layers without creating jurisdiction-specific skill engines or claiming accepted coverage.",
   "governance": {
     "principle": "BUILD_ONCE_MAP_MANY_DEPTH_BEFORE_BREADTH",
@@ -36,14 +36,43 @@
   },
   "source_registry": [
     {
-      "source_id": "MD_MCCRS_2025",
+      "source_id": "MD_REVISED_MCCRS_2025",
       "jurisdiction": "Maryland",
-      "title": "Maryland Mathematics Standards and Frameworks",
-      "publication_or_version": "2025 revised MCCRS; Algebra I implementation school year 2026-27",
+      "title": "Revised Maryland College and Career Ready Standards for Mathematics",
+      "publication_or_version": "Adopted 2025-07-29; revised PreK-8 crosswalks and future Integrated Algebra crosswalks are published on the official MSDE mathematics page",
       "url": "https://msde.maryland.gov/academics-0/curriculum-academic-standards/mathematics",
       "authority": "Maryland State Department of Education",
       "license": "NOT_STATED_ON_SOURCE_PAGE__PUBLIC_GOVERNMENT_PUBLICATION__REFERENCE_ONLY",
-      "use_constraint": "Record expectation identifiers and scope only; do not copy assessment or instructional items."
+      "use_constraint": "Record exact expectation identifiers and scope only after direct grade/course-document verification; do not copy assessment or instructional items.",
+      "high_school_boundary": "The official page separately places the August 2022 Algebra I standards under For Implementation in SY 2026-2027. Do not represent that document as the future revised Integrated Algebra 1 crosswalk."
+    },
+    {
+      "source_id": "MD_ALGEBRA1_SY2026_27",
+      "jurisdiction": "Maryland",
+      "title": "Algebra I — Maryland College and Career Ready Standards for Mathematics",
+      "publication_or_version": "Algebra I document dated August 2022; official MSDE page places it under For Implementation in SY 2026-2027",
+      "url": "https://msde.maryland.gov/media/17798",
+      "authority": "Maryland State Department of Education",
+      "license": "NOT_STATED_ON_SOURCE_PAGE__PUBLIC_GOVERNMENT_PUBLICATION__REFERENCE_ONLY",
+      "use_constraint": "Use as the official Algebra I standards source for the MSDE page's SY 2026-2027 section. Keep relations provisional until independently accepted; do not conflate it with the future Integrated Algebra 1 revision.",
+      "revised_2025_document": false,
+      "current_for_school_year": "2026-2027"
+    },
+    {
+      "source_id": "MD_ALGEBRA1_EVIDENCE_2024",
+      "jurisdiction": "Maryland",
+      "title": "Algebra I Mathematics Evidence Statements",
+      "publication_or_version": "August 2024; linked by MSDE under Algebra I for Implementation in SY 2026-2027",
+      "url": "https://msde.maryland.gov/media/17801",
+      "authority": "Maryland State Department of Education",
+      "license": "NOT_STATED_ON_SOURCE_PAGE__PUBLIC_GOVERNMENT_PUBLICATION__RESEARCH_REFERENCE_ONLY",
+      "use_constraint": "Use public evidence statements and task-type design only. Do not copy or rehost assessment items, diagrams, prompts, rubrics, answer choices, or scoring materials.",
+      "verified_public_task_design": {
+        "type_i": "Machine-scored content/reasoning/modeling; 32 operational items per form",
+        "type_ii": "Human-scored mathematical reasoning, including argument, justification, critique, and precision; 2 operational items per form",
+        "type_iii": "Human-scored real-world modeling; 2 operational items per form"
+      },
+      "standards_mapping_authority": false
     },
     {
       "source_id": "MD_MCAP_PUBLIC",
