@@ -1,20 +1,33 @@
 {
   "schema_version": "1.0.0",
-  "artifact_id": "DMV_ORIGINAL_TASK_STRUCTURE_CROSSWALK_V1",
+  "artifact_id": "DMV_ORIGINAL_TASK_STRUCTURE_CROSSWALK_V1_R2",
   "status": "DRAFT_UNVERIFIED_RESEARCH_ONLY_RUNTIME_DISABLED",
   "created_date": "2026-10-11",
   "inspected_main": "313c13c9df4d530777cf89fb34f21dcedd91f454",
-  "purpose": "A jurisdiction-neutral, reuse-first inventory of mathematical task structures for Maryland, Virginia, and Washington, DC. It records standards evidence and implementation gaps without creating jurisdiction-specific skill engines or claiming accepted coverage.",
+  "purpose": "A jurisdiction-neutral, reuse-first inventory of mathematical task structures for Maryland, Virginia, and Washington, DC. It records official standards evidence, current district curriculum listings, vendor topic-sequence research, and implementation gaps as separate evidence layers without creating jurisdiction-specific skill engines or claiming accepted coverage.",
   "governance": {
     "principle": "BUILD_ONCE_MAP_MANY_DEPTH_BEFORE_BREADTH",
-    "allowed_dispositions": ["REUSE", "EXTEND", "PROPOSE_IDENTITY_REVIEW"],
+    "allowed_dispositions": [
+      "REUSE",
+      "EXTEND",
+      "PROPOSE_IDENTITY_REVIEW"
+    ],
     "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
     "runtime_activation": "NOT_AUTHORIZED",
     "student_facing_external_research_links": false,
     "copied_teacher_items_or_diagrams": false,
     "historical_learner_evidence_changed": false,
     "canonical_identifiers_changed": false,
-    "self_approval": false
+    "self_approval": false,
+    "source_authority_precedence": [
+      "OFFICIAL_STATE_STANDARD",
+      "CURRENT_DISTRICT_CURRICULUM_LISTING",
+      "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+      "HISTORICAL_RESEARCH_ONLY_NOT_CURRENT_ADOPTION_PROOF"
+    ],
+    "vendor_units_are_standards_authority": false,
+    "historical_sources_prove_current_adoption": false,
+    "external_sources_in_student_flow": false
   },
   "source_registry": [
     {
@@ -38,14 +51,73 @@
       "use_constraint": "Abstract cognitive demand and response structure only; no copying or rehosting of items, diagrams, answer choices, or scoring materials."
     },
     {
+      "source_id": "MCPS_CURRENT_CURRICULUM_2026",
+      "jurisdiction": "Maryland / Montgomery County",
+      "title": "MCPS Mathematics Middle School — current curriculum listing",
+      "publication_or_version": "Current district page inspected 2026-10-11; page does not state a school-year effective date",
+      "url": "https://www.montgomeryschoolsmd.org/curriculum/math/ms/",
+      "authority": "MCPS_CURRENT_DISTRICT_CURRICULUM_LISTING",
+      "license": "NOT_STATED_ON_SOURCE_PAGE__PUBLIC_DISTRICT_REFERENCE_ONLY",
+      "access_date": "2026-10-11",
+      "exact_listed_courses": [
+        {
+          "mcps_course": "Math 6",
+          "curriculum": "Amplify Desmos Math Grade 6"
+        },
+        {
+          "mcps_course": "Accelerated Math 6",
+          "curriculum": "Amplify Desmos Math Accelerated Grade 6"
+        },
+        {
+          "mcps_course": "Math 7",
+          "curriculum": "Amplify Desmos Math Grade 7"
+        },
+        {
+          "mcps_course": "Accelerated Math 7",
+          "curriculum": "Amplify Desmos Math Accelerated Grade 7"
+        },
+        {
+          "mcps_course": "Math 8",
+          "curriculum": "Amplify Desmos Math Grade 8"
+        },
+        {
+          "mcps_course": "Algebra 1",
+          "curriculum": "Amplify Desmos Math Algebra 1"
+        },
+        {
+          "mcps_course": "Honors Geometry",
+          "curriculum": "Illustrative Mathematics Geometry"
+        }
+      ],
+      "use_constraint": "Proves only the district's current listed core curriculum at access time. It does not supply Maryland expectation IDs, statewide adoption, or accepted standards mappings.",
+      "standards_authority": false,
+      "statewide_adoption_evidence": false
+    },
+    {
+      "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+      "jurisdiction": "Vendor / used by current MCPS listing for six courses",
+      "title": "Amplify Desmos Math Grade 6–Algebra 2 Caregiver Hub",
+      "publication_or_version": "Published 2025-01-16; page metadata modified 2026-09-23; inspected 2026-10-11",
+      "url": "https://amplify.com/caregiver-hub/amplify-desmos-math-6-12/",
+      "authority": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+      "license": "LICENSE_NOT_STATED_FOR_REUSE__COPYRIGHTED_VENDOR_MATERIAL__RESEARCH_REFERENCE_ONLY",
+      "access_date": "2026-10-11",
+      "use_constraint": "Record course/unit topic sequence and abstract mathematical demand only. Never copy, paraphrase closely, download, rehost, embed, or surface lesson text, sample problems, answer keys, graphics, videos, glossaries, or interactive code in student-facing Mihur.",
+      "standards_authority": false,
+      "current_mcps_adoption_proof": false,
+      "student_facing_link_allowed": false
+    },
+    {
       "source_id": "MCPS_ALGEBRA1_SUPPORT",
       "jurisdiction": "Maryland / Montgomery County",
-      "title": "MCPS Algebra 1 curriculum and support pages",
-      "publication_or_version": "public pages inspected 2026-10-11",
+      "title": "MCPS / 2019 Illustrative Mathematics Algebra 1 family-support pages",
+      "publication_or_version": "2019 IM lesson-summary support track; public pages inspected 2026-10-11",
       "url": "https://www.montgomeryschoolsmd.org/curriculum/math/high/algebra1/",
-      "authority": "Montgomery County Public Schools",
-      "license": "NOT_STATED_ON_SOURCE_PAGE__RESEARCH_REFERENCE_ONLY",
-      "use_constraint": "Internal task-structure research only. Do not link or embed support videos in learner experiences."
+      "authority": "HISTORICAL_RESEARCH_ONLY_NOT_CURRENT_ADOPTION_PROOF",
+      "license": "IM_2019_CC_BY_4_0_ATTRIBUTION_REQUIRED__INTERNAL_RESEARCH_ONLY",
+      "use_constraint": "Historical concept/progression research only. Not current MCPS adoption proof, not Maryland standards authority, and never a learner-facing link/embed. Do not copy video narration, lesson text, graphics, tasks, or code.",
+      "current_adoption_evidence": false,
+      "standards_authority": false
     },
     {
       "source_id": "VA_SOL_2023",
@@ -127,13 +199,83 @@
       "grade_band": "7-9 / Algebra I",
       "mathematical_demand": "Solve and justify multi-step linear equations, including signed and rational coefficients; distinguish one, no, and infinitely many solutions; verify by substitution and critique a plausible error.",
       "original_structure": "Predict solution class, manipulate an equation one equivalence-preserving step at a time, explain one transformation, verify all surviving cases, then diagnose an independently generated erroneous solution path.",
-      "variability": ["negative coefficients", "fractional coefficients", "variables on both sides", "zero coefficient boundary", "one/no/infinitely-many solution classes", "context-to-equation transfer"],
-      "jurisdiction_evidence": {"Maryland": ["A.REI.B.3"], "Virginia": [], "Washington_DC": []},
+      "variability": [
+        "negative coefficients",
+        "fractional coefficients",
+        "variables on both sides",
+        "zero coefficient boundary",
+        "one/no/infinitely-many solution classes",
+        "context-to-equation transfer"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [
+          "A.REI.B.3"
+        ],
+        "Virginia": [],
+        "Washington_DC": []
+      },
       "canonical_disposition": "REUSE",
-      "canonical_skill_codes": ["MATH.EE.EQUATION.TWO", "MATH.EE.EQUATION.MULTISTEP"],
-      "implementation": {"generator": "PARTIAL_EXISTING", "tests": "EXACT_HEAD_AUDIT_REQUIRED", "mve_or_student_route": "PARTIAL_DRAFT_PR_340_FOR_SIGNED_DISTRIBUTION", "socratic_remediation": "WEAK", "backend_independent_assessment": "NOT_VERIFIED", "qa": "NOT_REVIEWED"},
+      "canonical_skill_codes": [
+        "MATH.EE.EQUATION.TWO",
+        "MATH.EE.EQUATION.MULTISTEP"
+      ],
+      "implementation": {
+        "generator": "PARTIAL_EXISTING",
+        "tests": "EXACT_HEAD_AUDIT_REQUIRED",
+        "mve_or_student_route": "PARTIAL_DRAFT_PR_340_FOR_SIGNED_DISTRIBUTION",
+        "socratic_remediation": "WEAK",
+        "backend_independent_assessment": "NOT_VERIFIED",
+        "qa": "NOT_REVIEWED"
+      },
       "gap": "No consolidated evidence yet for all solution classes, independent oracle, targeted misconception routing, and unseen transfer in one routed flow.",
-      "owners": ["Algebra Content", "MVE", "Frontend Integration", "Assessment Backend", "Independent Mathematical Review", "Pedagogical Review", "Muse QA"]
+      "owners": [
+        "Algebra Content",
+        "MVE",
+        "Frontend Integration",
+        "Assessment Backend",
+        "Independent Mathematical Review",
+        "Pedagogical Review",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 7",
+          "vendor_course": "Amplify Desmos Math Grade 7",
+          "unit_number": 6,
+          "unit_title": "Expressions, Equations, and Inequalities",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 7",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 7",
+          "unit_number": 3,
+          "unit_title": "Equations and Inequalities",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 8",
+          "vendor_course": "Amplify Desmos Math Grade 8",
+          "unit_number": 4,
+          "unit_title": "Linear Equations and Linear Systems",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Algebra 1",
+          "vendor_course": "Amplify Desmos Math Algebra 1",
+          "unit_number": 2,
+          "unit_title": "Linear Equations and Inequalities",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        }
+      ],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
       "rank": 2,
@@ -141,13 +283,106 @@
       "grade_band": "6-8",
       "mathematical_demand": "Represent proportional relationships across table, graph, equation, verbal context, and double number line; identify constant of proportionality and critique non-proportional evidence.",
       "original_structure": "Construct two representations from a context, compare their invariants, select evidence for proportionality, and repair a representation with a nonzero intercept or inconsistent scale.",
-      "variability": ["integer and rational rates", "decimal rates", "negative change where mathematically appropriate", "non-proportional counterexamples", "unit conversions"],
-      "jurisdiction_evidence": {"Maryland": ["7.AT.A.2", "7.AT.A.3"], "Virginia": [], "Washington_DC": []},
+      "variability": [
+        "integer and rational rates",
+        "decimal rates",
+        "negative change where mathematically appropriate",
+        "non-proportional counterexamples",
+        "unit conversions"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [
+          "7.AT.A.2",
+          "7.AT.A.3"
+        ],
+        "Virginia": [],
+        "Washington_DC": []
+      },
       "canonical_disposition": "EXTEND",
       "canonical_skill_codes": [],
-      "implementation": {"generator": "DRAFT_PR_328_RECONCILIATION_REQUIRED", "tests": "NOT_VERIFIED", "mve_or_student_route": "DRAFT_PR_328_RECONCILIATION_REQUIRED", "socratic_remediation": "NOT_VERIFIED", "backend_independent_assessment": "NOT_VERIFIED", "qa": "NOT_REVIEWED"},
+      "implementation": {
+        "generator": "DRAFT_PR_328_RECONCILIATION_REQUIRED",
+        "tests": "NOT_VERIFIED",
+        "mve_or_student_route": "DRAFT_PR_328_RECONCILIATION_REQUIRED",
+        "socratic_remediation": "NOT_VERIFIED",
+        "backend_independent_assessment": "NOT_VERIFIED",
+        "qa": "NOT_REVIEWED"
+      },
       "gap": "Architecture must pin the existing jurisdiction-neutral proportional-reasoning atoms before additional implementation; do not mint state-specific IDs.",
-      "owners": ["Architecture", "Standards Mapping", "Content", "MVE", "Independent Mathematical Review", "Muse QA"]
+      "owners": [
+        "Architecture",
+        "Standards Mapping",
+        "Content",
+        "MVE",
+        "Independent Mathematical Review",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 6",
+          "vendor_course": "Amplify Desmos Math Grade 6",
+          "unit_number": 2,
+          "unit_title": "Introducing Ratios",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 6",
+          "vendor_course": "Amplify Desmos Math Grade 6",
+          "unit_number": 3,
+          "unit_title": "Rates and Percentages",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 6",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 6",
+          "unit_number": 2,
+          "unit_title": "Introducing Ratios and Rates",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 6",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 6",
+          "unit_number": 5,
+          "unit_title": "Proportional Relationships",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 7",
+          "vendor_course": "Amplify Desmos Math Grade 7",
+          "unit_number": 2,
+          "unit_title": "Introducing Proportional Relationships",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 7",
+          "vendor_course": "Amplify Desmos Math Grade 7",
+          "unit_number": 4,
+          "unit_title": "Proportional Relationships and Percentages",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 8",
+          "vendor_course": "Amplify Desmos Math Grade 8",
+          "unit_number": 3,
+          "unit_title": "Proportional and Linear Relationships",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        }
+      ],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
       "rank": 3,
@@ -155,13 +390,40 @@
       "grade_band": "K-3",
       "mathematical_demand": "Construct, decompose, compare, and regroup whole numbers using quantities, numerals, expanded notation, and base-ten representations.",
       "original_structure": "Build a number in two representations, predict the effect of regrouping, manipulate tens/ones or hundreds/tens/ones, explain invariant value, and transfer to an unfamiliar numeral.",
-      "variability": ["zero in an interior place", "boundary regrouping", "comparison with equal leading digits", "multiple valid decompositions"],
-      "jurisdiction_evidence": {"Maryland": [], "Virginia": [], "Washington_DC": []},
+      "variability": [
+        "zero in an interior place",
+        "boundary regrouping",
+        "comparison with equal leading digits",
+        "multiple valid decompositions"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [],
+        "Virginia": [],
+        "Washington_DC": []
+      },
       "canonical_disposition": "REUSE",
-      "canonical_skill_codes": ["MATH.PLACE_VALUE.TENS_ONES"],
-      "implementation": {"generator": "DRAFT_PR_327", "tests": "DRAFT_PR_327", "mve_or_student_route": "DRAFT_PR_327", "socratic_remediation": "DRAFT_UNREVIEWED", "backend_independent_assessment": "NOT_VERIFIED", "qa": "NOT_REVIEWED"},
+      "canonical_skill_codes": [
+        "MATH.PLACE_VALUE.TENS_ONES"
+      ],
+      "implementation": {
+        "generator": "DRAFT_PR_327",
+        "tests": "DRAFT_PR_327",
+        "mve_or_student_route": "DRAFT_PR_327",
+        "socratic_remediation": "DRAFT_UNREVIEWED",
+        "backend_independent_assessment": "NOT_VERIFIED",
+        "qa": "NOT_REVIEWED"
+      },
       "gap": "Candidate remains draft; exact K-3 source IDs and the boundary with MATH.NS.PLACE_VALUE require standards and architecture confirmation.",
-      "owners": ["Standards Mapping", "Architecture", "Elementary Content", "Independent Mathematical Review", "Pedagogical Review", "Muse QA"]
+      "owners": [
+        "Standards Mapping",
+        "Architecture",
+        "Elementary Content",
+        "Independent Mathematical Review",
+        "Pedagogical Review",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
       "rank": 4,
@@ -169,14 +431,69 @@
       "grade_band": "3-5",
       "mathematical_demand": "Generate, recognize, and justify equivalent fractions using visual, number-line, numerical, and contextual representations.",
       "original_structure": "Predict equivalence, manipulate a partition or number-line point, explain multiplicative identity, compare a tempting non-equivalent pair, and transfer to an unseen denominator.",
-      "variability": ["improper fractions", "unit fractions", "same numerator trap", "additive-thinking misconception", "non-unit scaling factors"],
-      "jurisdiction_evidence": {"Maryland": [], "Virginia": [], "Washington_DC": []},
+      "variability": [
+        "improper fractions",
+        "unit fractions",
+        "same numerator trap",
+        "additive-thinking misconception",
+        "non-unit scaling factors"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [],
+        "Virginia": [],
+        "Washington_DC": []
+      },
       "canonical_disposition": "EXTEND",
       "canonical_skill_codes": [],
-      "legacy_or_alias_refs": ["MATH.ELEMENTARY.FRACTIONS.EQUIVALENCE_OPERATIONS"],
-      "implementation": {"generator": "DRAFT_PR_327", "tests": "DRAFT_PR_327", "mve_or_student_route": "DRAFT_PR_327", "socratic_remediation": "DRAFT_UNREVIEWED", "backend_independent_assessment": "NOT_VERIFIED", "qa": "NOT_REVIEWED"},
+      "legacy_or_alias_refs": [
+        "MATH.ELEMENTARY.FRACTIONS.EQUIVALENCE_OPERATIONS"
+      ],
+      "implementation": {
+        "generator": "DRAFT_PR_327",
+        "tests": "DRAFT_PR_327",
+        "mve_or_student_route": "DRAFT_PR_327",
+        "socratic_remediation": "DRAFT_UNREVIEWED",
+        "backend_independent_assessment": "NOT_VERIFIED",
+        "qa": "NOT_REVIEWED"
+      },
       "gap": "Alias is not authority; Architecture must bind the approved atomic identity before mapping acceptance or activation.",
-      "owners": ["Architecture", "Standards Mapping", "Elementary Content", "Independent Mathematical Review", "Muse QA"]
+      "owners": [
+        "Architecture",
+        "Standards Mapping",
+        "Elementary Content",
+        "Independent Mathematical Review",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 6",
+          "vendor_course": "Amplify Desmos Math Grade 6",
+          "unit_number": 4,
+          "unit_title": "Dividing Fractions",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 6",
+          "vendor_course": "Amplify Desmos Math Grade 6",
+          "unit_number": 5,
+          "unit_title": "Decimal Arithmetic",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 6",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 6",
+          "unit_number": 3,
+          "unit_title": "Fractions and Decimals",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        }
+      ],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
       "rank": 5,
@@ -184,13 +501,87 @@
       "grade_band": "6-9",
       "mathematical_demand": "Model percent increase/decrease, tax, tip, discount, markup, commission, fees, and percent error while selecting and defending the reference quantity.",
       "original_structure": "Identify the reference base, construct an equation, compare two superficially similar contexts, critique a wrong-base solution, and verify money or measurement reasonableness.",
-      "variability": ["commission", "fees", "measured versus accepted value", "successive percent changes", "decimal and rational rates", "currency rounding"],
-      "jurisdiction_evidence": {"Maryland": ["7.AT.A.4"], "Virginia": [], "Washington_DC": []},
+      "variability": [
+        "commission",
+        "fees",
+        "measured versus accepted value",
+        "successive percent changes",
+        "decimal and rational rates",
+        "currency rounding"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [
+          "7.AT.A.4"
+        ],
+        "Virginia": [],
+        "Washington_DC": []
+      },
       "canonical_disposition": "EXTEND",
-      "canonical_skill_codes": ["MATH.PCT.DISCOUNT", "MATH.PCT.MARKUP", "MATH.PCT.TAX", "MATH.PCT.TIP", "MATH.PCT.INCREASE", "MATH.PCT.DECREASE", "MATH.PCT.ERROR.BASE"],
-      "implementation": {"generator": "PARTIAL_EXISTING_PLUS_DRAFT_PR_327", "tests": "PARTIAL", "mve_or_student_route": "DRAFT_PR_327", "socratic_remediation": "PARTIAL", "backend_independent_assessment": "NOT_VERIFIED", "qa": "NOT_REVIEWED"},
+      "canonical_skill_codes": [
+        "MATH.PCT.DISCOUNT",
+        "MATH.PCT.MARKUP",
+        "MATH.PCT.TAX",
+        "MATH.PCT.TIP",
+        "MATH.PCT.INCREASE",
+        "MATH.PCT.DECREASE",
+        "MATH.PCT.ERROR.BASE"
+      ],
+      "implementation": {
+        "generator": "PARTIAL_EXISTING_PLUS_DRAFT_PR_327",
+        "tests": "PARTIAL",
+        "mve_or_student_route": "DRAFT_PR_327",
+        "socratic_remediation": "PARTIAL",
+        "backend_independent_assessment": "NOT_VERIFIED",
+        "qa": "NOT_REVIEWED"
+      },
       "gap": "Commission, fees, and measured/reference percent error are not yet shown as independently assessed depth-complete variants.",
-      "owners": ["Content", "MVE", "Assessment Backend", "Independent Mathematical Review", "Pedagogical Review", "Muse QA"]
+      "owners": [
+        "Content",
+        "MVE",
+        "Assessment Backend",
+        "Independent Mathematical Review",
+        "Pedagogical Review",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 6",
+          "vendor_course": "Amplify Desmos Math Grade 6",
+          "unit_number": 3,
+          "unit_title": "Rates and Percentages",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 6",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 6",
+          "unit_number": 6,
+          "unit_title": "Percentages",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 7",
+          "vendor_course": "Amplify Desmos Math Grade 7",
+          "unit_number": 4,
+          "unit_title": "Proportional Relationships and Percentages",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Algebra 1",
+          "vendor_course": "Amplify Desmos Math Algebra 1",
+          "unit_number": 6,
+          "unit_title": "Exponential Functions",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        }
+      ],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
       "rank": 6,
@@ -198,13 +589,108 @@
       "grade_band": "7-9 / Algebra I",
       "mathematical_demand": "Construct, compare, and interpret linear models across context, table, graph, and equation; justify slope/intercept meaning and critique misleading scales or non-linear fits.",
       "original_structure": "Observe a contextual pattern, predict its graph, construct two representations, compare models, explain parameter meaning, diagnose a scale/model error, then transfer to unseen data.",
-      "variability": ["positive/negative/zero slope", "fractional slope", "nonzero intercept", "discrete versus continuous domain", "noisy contextual data", "misleading graph scale"],
-      "jurisdiction_evidence": {"Maryland": ["F.IF.B.6", "F.LE.A.2"], "Virginia": [], "Washington_DC": []},
+      "variability": [
+        "positive/negative/zero slope",
+        "fractional slope",
+        "nonzero intercept",
+        "discrete versus continuous domain",
+        "noisy contextual data",
+        "misleading graph scale"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [
+          "F.IF.B.6",
+          "F.LE.A.2"
+        ],
+        "Virginia": [],
+        "Washington_DC": []
+      },
       "canonical_disposition": "EXTEND",
       "canonical_skill_codes": [],
-      "implementation": {"generator": "PARTIAL_EXISTING_PLUS_DRAFT_PR_327", "tests": "PARTIAL", "mve_or_student_route": "DRAFT_PR_327", "socratic_remediation": "WEAK", "backend_independent_assessment": "NOT_VERIFIED", "qa": "NOT_REVIEWED"},
+      "implementation": {
+        "generator": "PARTIAL_EXISTING_PLUS_DRAFT_PR_327",
+        "tests": "PARTIAL",
+        "mve_or_student_route": "DRAFT_PR_327",
+        "socratic_remediation": "WEAK",
+        "backend_independent_assessment": "NOT_VERIFIED",
+        "qa": "NOT_REVIEWED"
+      },
       "gap": "The jurisdiction-neutral linear-function identity and full routed transfer experience require exact-head reconciliation before new work.",
-      "owners": ["Architecture", "Algebra Content", "MVE", "Frontend Integration", "Assessment Backend", "Reviewers", "Muse QA"]
+      "owners": [
+        "Architecture",
+        "Algebra Content",
+        "MVE",
+        "Frontend Integration",
+        "Assessment Backend",
+        "Reviewers",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 7",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 7",
+          "unit_number": 4,
+          "unit_title": "Linear Relationships and Systems of Linear Equations",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 7",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 7",
+          "unit_number": 5,
+          "unit_title": "Functions",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 8",
+          "vendor_course": "Amplify Desmos Math Grade 8",
+          "unit_number": 3,
+          "unit_title": "Proportional and Linear Relationships",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 8",
+          "vendor_course": "Amplify Desmos Math Grade 8",
+          "unit_number": 4,
+          "unit_title": "Linear Equations and Linear Systems",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 8",
+          "vendor_course": "Amplify Desmos Math Grade 8",
+          "unit_number": 5,
+          "unit_title": "Functions and Volume",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Algebra 1",
+          "vendor_course": "Amplify Desmos Math Algebra 1",
+          "unit_number": 1,
+          "unit_title": "Patterns and Sequences",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Algebra 1",
+          "vendor_course": "Amplify Desmos Math Algebra 1",
+          "unit_number": 4,
+          "unit_title": "Describing Functions",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        }
+      ],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
       "rank": 7,
@@ -212,13 +698,75 @@
       "grade_band": "8-9 / Algebra I",
       "mathematical_demand": "Explain zero and negative exponents, compare equivalent power forms, normalize scientific notation, and multiply/divide scientific-notation quantities with reasonableness checks.",
       "original_structure": "Detect a multiplicative pattern, predict an exponent extension, manipulate equivalent forms, explain the zero/negative case, normalize a coefficient, diagnose a power-of-ten error, and estimate before exact verification.",
-      "variability": ["zero exponent", "negative exponent", "negative base versus negative value", "coefficient outside [1,10)", "multiplication and division", "magnitude and unit contexts"],
-      "jurisdiction_evidence": {"Maryland": [], "Virginia": [], "Washington_DC": []},
+      "variability": [
+        "zero exponent",
+        "negative exponent",
+        "negative base versus negative value",
+        "coefficient outside [1,10)",
+        "multiplication and division",
+        "magnitude and unit contexts"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [],
+        "Virginia": [],
+        "Washington_DC": []
+      },
       "canonical_disposition": "PROPOSE_IDENTITY_REVIEW",
       "canonical_skill_codes": [],
-      "implementation": {"generator": "NOT_RECONCILED", "tests": "NOT_RECONCILED", "mve_or_student_route": "NOT_RECONCILED", "socratic_remediation": "NOT_RECONCILED", "backend_independent_assessment": "NOT_VERIFIED", "qa": "NOT_REVIEWED"},
+      "implementation": {
+        "generator": "NOT_RECONCILED",
+        "tests": "NOT_RECONCILED",
+        "mve_or_student_route": "NOT_RECONCILED",
+        "socratic_remediation": "NOT_RECONCILED",
+        "backend_independent_assessment": "NOT_VERIFIED",
+        "qa": "NOT_REVIEWED"
+      },
       "gap": "Audit existing exponent/scientific-notation families first; propose a new atom only if no bounded reusable identity exists.",
-      "owners": ["Architecture", "Standards Mapping", "Algebra Content", "Independent Mathematical Review"]
+      "owners": [
+        "Architecture",
+        "Standards Mapping",
+        "Algebra Content",
+        "Independent Mathematical Review"
+      ],
+      "publisher_sequence_evidence": [
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 6",
+          "vendor_course": "Amplify Desmos Math Grade 6",
+          "unit_number": 6,
+          "unit_title": "Expressions and Equations",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 7",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 7",
+          "unit_number": 8,
+          "unit_title": "Exponents and Scientific Notation",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 8",
+          "vendor_course": "Amplify Desmos Math Grade 8",
+          "unit_number": 7,
+          "unit_title": "Exponents and Scientific Notation",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Algebra 1",
+          "vendor_course": "Amplify Desmos Math Algebra 1",
+          "unit_number": 6,
+          "unit_title": "Exponential Functions",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        }
+      ],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
       "rank": 8,
@@ -226,13 +774,42 @@
       "grade_band": "8-9 / Algebra I",
       "mathematical_demand": "Divide polynomial terms by a monomial, state denominator restrictions, verify by multiplication, and critique cancellation or exponent errors.",
       "original_structure": "Predict termwise quotient structure, distribute division, record nonzero restrictions, simplify coefficients and exponents, verify by multiplication, then diagnose an invalid cancellation.",
-      "variability": ["signed coefficients", "fractional coefficients", "missing powers", "zero coefficient terms", "symbolic divisor restrictions", "equivalent reordered forms"],
-      "jurisdiction_evidence": {"Maryland": [], "Virginia": [], "Washington_DC": []},
+      "variability": [
+        "signed coefficients",
+        "fractional coefficients",
+        "missing powers",
+        "zero coefficient terms",
+        "symbolic divisor restrictions",
+        "equivalent reordered forms"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [],
+        "Virginia": [],
+        "Washington_DC": []
+      },
       "canonical_disposition": "EXTEND",
-      "canonical_skill_codes": ["MATH.EE.POLYNOMIAL_OPERATIONS"],
-      "implementation": {"generator": "NOT_RECONCILED", "tests": "NOT_RECONCILED", "mve_or_student_route": "ONTARIO_PACKAGE_RESEARCH_ONLY_NOT_ACCEPTED", "socratic_remediation": "NOT_VERIFIED", "backend_independent_assessment": "NOT_VERIFIED", "qa": "NOT_REVIEWED"},
+      "canonical_skill_codes": [
+        "MATH.EE.POLYNOMIAL_OPERATIONS"
+      ],
+      "implementation": {
+        "generator": "NOT_RECONCILED",
+        "tests": "NOT_RECONCILED",
+        "mve_or_student_route": "ONTARIO_PACKAGE_RESEARCH_ONLY_NOT_ACCEPTED",
+        "socratic_remediation": "NOT_VERIFIED",
+        "backend_independent_assessment": "NOT_VERIFIED",
+        "qa": "NOT_REVIEWED"
+      },
       "gap": "Existing broad polynomial identity needs bounded scope/variant review; denominator restrictions and independent verification are not established.",
-      "owners": ["Algebra Content", "Architecture", "MVE", "Assessment Backend", "Independent Mathematical Review", "Muse QA"]
+      "owners": [
+        "Algebra Content",
+        "Architecture",
+        "MVE",
+        "Assessment Backend",
+        "Independent Mathematical Review",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
       "rank": 9,
@@ -240,13 +817,93 @@
       "grade_band": "6-9",
       "mathematical_demand": "Construct and compare distributions using histograms, five-number summaries, box plots, center, spread, shape, and contextual outliers.",
       "original_structure": "Construct a representation from data, predict a transformation's effect, compare two distributions, explain center/spread in context, and critique a bin-boundary or quartile error.",
-      "variability": ["even and odd sample sizes", "repeated values", "outliers", "unequal-looking but equal-spread sets", "histogram bin boundaries", "contextual comparison"],
-      "jurisdiction_evidence": {"Maryland": ["6.DS.B.5", "8.DS.C.5"], "Virginia": [], "Washington_DC": []},
+      "variability": [
+        "even and odd sample sizes",
+        "repeated values",
+        "outliers",
+        "unequal-looking but equal-spread sets",
+        "histogram bin boundaries",
+        "contextual comparison"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [
+          "6.DS.B.5",
+          "8.DS.C.5"
+        ],
+        "Virginia": [],
+        "Washington_DC": []
+      },
       "canonical_disposition": "EXTEND",
-      "canonical_skill_codes": ["MATH.DATA.HISTOGRAM.BIN", "MATH.DATA.IQR", "MATH.DATA.FIVE_NUMBER"],
-      "implementation": {"generator": "PARTIAL_EXISTING_PLUS_DRAFT_PR_328", "tests": "PARTIAL", "mve_or_student_route": "DRAFT_PR_328_RECONCILIATION_REQUIRED", "socratic_remediation": "PARTIAL", "backend_independent_assessment": "NOT_VERIFIED", "qa": "NOT_REVIEWED"},
+      "canonical_skill_codes": [
+        "MATH.DATA.HISTOGRAM.BIN",
+        "MATH.DATA.IQR",
+        "MATH.DATA.FIVE_NUMBER"
+      ],
+      "implementation": {
+        "generator": "PARTIAL_EXISTING_PLUS_DRAFT_PR_328",
+        "tests": "PARTIAL",
+        "mve_or_student_route": "DRAFT_PR_328_RECONCILIATION_REQUIRED",
+        "socratic_remediation": "PARTIAL",
+        "backend_independent_assessment": "NOT_VERIFIED",
+        "qa": "NOT_REVIEWED"
+      },
       "gap": "Full box-plot construction, cross-distribution reasoning, and an independent contextual assessment remain weak.",
-      "owners": ["Data Content", "MVE", "Assessment Backend", "Independent Mathematical Review", "Pedagogical Review", "Muse QA"]
+      "owners": [
+        "Data Content",
+        "MVE",
+        "Assessment Backend",
+        "Independent Mathematical Review",
+        "Pedagogical Review",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 6",
+          "vendor_course": "Amplify Desmos Math Grade 6",
+          "unit_number": 8,
+          "unit_title": "Describing Data",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 6",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 6",
+          "unit_number": 8,
+          "unit_title": "Data Sets and Distributions",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 7",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 7",
+          "unit_number": 6,
+          "unit_title": "Associations in Data",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 8",
+          "vendor_course": "Amplify Desmos Math Grade 8",
+          "unit_number": 6,
+          "unit_title": "Associations in Data",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Algebra 1",
+          "vendor_course": "Amplify Desmos Math Algebra 1",
+          "unit_number": 3,
+          "unit_title": "Describing Data",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        }
+      ],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
       "rank": 10,
@@ -254,13 +911,81 @@
       "grade_band": "5-8",
       "mathematical_demand": "Connect nets, surface area, and prism volume through spatial construction and dimensional reasoning, including rational edge lengths and unit analysis.",
       "original_structure": "Manipulate or mentally fold a net, predict corresponding faces, construct an area/volume model, explain units, diagnose an edge/face or area/volume confusion, and transfer to rational dimensions.",
-      "variability": ["valid and invalid nets", "rectangular prisms and pyramids", "fractional edge lengths", "missing dimension", "unit conversions", "surface-area versus volume contrast"],
-      "jurisdiction_evidence": {"Maryland": [], "Virginia": [], "Washington_DC": []},
+      "variability": [
+        "valid and invalid nets",
+        "rectangular prisms and pyramids",
+        "fractional edge lengths",
+        "missing dimension",
+        "unit conversions",
+        "surface-area versus volume contrast"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [],
+        "Virginia": [],
+        "Washington_DC": []
+      },
       "canonical_disposition": "EXTEND",
-      "canonical_skill_codes": ["MATH.GEO.NET.CUBE.SURFACE", "MATH.GEO.SURFACE.PRISM", "MATH.GEO.VOLUME.PRISM"],
-      "implementation": {"generator": "PARTIAL_EXISTING_PLUS_DRAFT_PRS_327_328", "tests": "PARTIAL", "mve_or_student_route": "DRAFT_RECONCILIATION_REQUIRED", "socratic_remediation": "PARTIAL", "backend_independent_assessment": "NOT_VERIFIED", "qa": "NOT_REVIEWED"},
+      "canonical_skill_codes": [
+        "MATH.GEO.NET.CUBE.SURFACE",
+        "MATH.GEO.SURFACE.PRISM",
+        "MATH.GEO.VOLUME.PRISM"
+      ],
+      "implementation": {
+        "generator": "PARTIAL_EXISTING_PLUS_DRAFT_PRS_327_328",
+        "tests": "PARTIAL",
+        "mve_or_student_route": "DRAFT_RECONCILIATION_REQUIRED",
+        "socratic_remediation": "PARTIAL",
+        "backend_independent_assessment": "NOT_VERIFIED",
+        "qa": "NOT_REVIEWED"
+      },
       "gap": "Spatial foldability, rational-edge modeling, and server-trusted independent assessment are not jointly evidenced.",
-      "owners": ["Geometry Content", "MVE", "Frontend Integration", "Assessment Backend", "Reviewers", "Muse QA"]
+      "owners": [
+        "Geometry Content",
+        "MVE",
+        "Frontend Integration",
+        "Assessment Backend",
+        "Reviewers",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 6",
+          "vendor_course": "Amplify Desmos Math Grade 6",
+          "unit_number": 1,
+          "unit_title": "Area and Surface Area",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 6",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 6",
+          "unit_number": 1,
+          "unit_title": "Area and Surface Area",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 7",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 7",
+          "unit_number": 7,
+          "unit_title": "Volume and Surface Area",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 8",
+          "vendor_course": "Amplify Desmos Math Grade 8",
+          "unit_number": 5,
+          "unit_title": "Functions and Volume",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        }
+      ],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
       "rank": 11,
@@ -268,13 +993,61 @@
       "grade_band": "8-9",
       "mathematical_demand": "Reason about the Pythagorean theorem and converse, classify triangles with inequalities, model distance/dimensions, retain units, and verify feasibility.",
       "original_structure": "Observe a geometric relationship, predict an unknown or classification, construct an equation, explain why the theorem applies, solve exactly or approximately, verify dimensions, and critique an impossible model.",
-      "variability": ["integer and irrational lengths", "acute/right/obtuse classification", "coordinate distance", "dimensional constraints", "units", "no-real or infeasible cases where applicable"],
-      "jurisdiction_evidence": {"Maryland": ["8.GR.B.4", "8.GR.B.5"], "Virginia": [], "Washington_DC": []},
+      "variability": [
+        "integer and irrational lengths",
+        "acute/right/obtuse classification",
+        "coordinate distance",
+        "dimensional constraints",
+        "units",
+        "no-real or infeasible cases where applicable"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [
+          "8.GR.B.4",
+          "8.GR.B.5"
+        ],
+        "Virginia": [],
+        "Washington_DC": []
+      },
       "canonical_disposition": "EXTEND",
       "canonical_skill_codes": [],
-      "implementation": {"generator": "PARTIAL_EXISTING", "tests": "NOT_RECONCILED", "mve_or_student_route": "NOT_RECONCILED", "socratic_remediation": "NOT_VERIFIED", "backend_independent_assessment": "NOT_VERIFIED", "qa": "NOT_REVIEWED"},
+      "implementation": {
+        "generator": "PARTIAL_EXISTING",
+        "tests": "NOT_RECONCILED",
+        "mve_or_student_route": "NOT_RECONCILED",
+        "socratic_remediation": "NOT_VERIFIED",
+        "backend_independent_assessment": "NOT_VERIFIED",
+        "qa": "NOT_REVIEWED"
+      },
       "gap": "Current Maryland evidence explicitly lacks proof/reasoning and acute/obtuse classification depth; canonical identity reconciliation is required.",
-      "owners": ["Architecture", "Geometry Content", "Independent Mathematical Review", "Pedagogical Review", "Muse QA"]
+      "owners": [
+        "Architecture",
+        "Geometry Content",
+        "Independent Mathematical Review",
+        "Pedagogical Review",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 7",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 7",
+          "unit_number": 9,
+          "unit_title": "Pythagorean Theorem and Irrational Numbers",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        },
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 8",
+          "vendor_course": "Amplify Desmos Math Grade 8",
+          "unit_number": 8,
+          "unit_title": "The Pythagorean Theorem and Irrational Numbers",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        }
+      ],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
       "rank": 12,
@@ -282,13 +1055,56 @@
       "grade_band": "6-8",
       "mathematical_demand": "Construct sample spaces, compute theoretical probability, run or interpret deterministic simulations, compare experimental frequency with theory, and explain convergence and variation.",
       "original_structure": "Predict a probability, construct the sample space, simulate with a seeded model, compare experimental and theoretical results, diagnose an omitted or duplicated outcome, then transfer to a compound event.",
-      "variability": ["equally and unequally likely outcomes", "compound events", "small versus large trial counts", "probability 0 and 1 boundaries", "replacement versus no replacement"],
-      "jurisdiction_evidence": {"Maryland": ["8.DS.C.6"], "Virginia": [], "Washington_DC": []},
+      "variability": [
+        "equally and unequally likely outcomes",
+        "compound events",
+        "small versus large trial counts",
+        "probability 0 and 1 boundaries",
+        "replacement versus no replacement"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [
+          "8.DS.C.6"
+        ],
+        "Virginia": [],
+        "Washington_DC": []
+      },
       "canonical_disposition": "REUSE",
-      "canonical_skill_codes": ["MATH.PROB.THEORETICAL.RANGE_0_TO_1", "MATH.PROB.EXPERIMENTAL.FREQUENCY", "MATH.PROB.MODEL.COMPARE_THEORY_EXPERIMENT", "MATH.PROB.COMPOUND.SAMPLE_SPACE"],
-      "implementation": {"generator": "DRAFT_SCOPE_MERGED_PR_326_IMPLEMENTATION_NOT_AUDITED", "tests": "NOT_AUDITED", "mve_or_student_route": "NOT_AUDITED", "socratic_remediation": "NOT_AUDITED", "backend_independent_assessment": "NOT_VERIFIED", "qa": "NOT_REVIEWED"},
+      "canonical_skill_codes": [
+        "MATH.PROB.THEORETICAL.RANGE_0_TO_1",
+        "MATH.PROB.EXPERIMENTAL.FREQUENCY",
+        "MATH.PROB.MODEL.COMPARE_THEORY_EXPERIMENT",
+        "MATH.PROB.COMPOUND.SAMPLE_SPACE"
+      ],
+      "implementation": {
+        "generator": "DRAFT_SCOPE_MERGED_PR_326_IMPLEMENTATION_NOT_AUDITED",
+        "tests": "NOT_AUDITED",
+        "mve_or_student_route": "NOT_AUDITED",
+        "socratic_remediation": "NOT_AUDITED",
+        "backend_independent_assessment": "NOT_VERIFIED",
+        "qa": "NOT_REVIEWED"
+      },
       "gap": "Mathematical scope approval does not establish generator, routed practice, assessment, jurisdiction mapping, or QA readiness.",
-      "owners": ["Probability Content", "MVE", "Assessment Backend", "Standards Mapping", "Pedagogical Review", "Muse QA"]
+      "owners": [
+        "Probability Content",
+        "MVE",
+        "Assessment Backend",
+        "Standards Mapping",
+        "Pedagogical Review",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Math 7",
+          "vendor_course": "Amplify Desmos Math Grade 7",
+          "unit_number": 8,
+          "unit_title": "Probability and Sampling",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
+        }
+      ],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     }
   ],
   "summary": {
@@ -298,6 +1114,316 @@
     "propose_identity_review": 1,
     "accepted_standards_mappings": 0,
     "qa_approved_packages": 0,
-    "production_ready_packages": 0
-  }
+    "production_ready_packages": 0,
+    "current_mcps_course_listings": 7,
+    "amplify_course_sequences_recorded": 6,
+    "historical_research_tracks": 2,
+    "vendor_derived_standard_ids": 0
+  },
+  "revision": "2026-10-11-mcps-current-amplify-source-correction-r2",
+  "historical_research_tracks": [
+    {
+      "track_id": "MCPS_IM_ALGEBRA1_SUPPORT_2019",
+      "source_id": "MCPS_ALGEBRA1_SUPPORT",
+      "status": "HISTORICAL_RESEARCH_ONLY_NOT_CURRENT_ADOPTION_PROOF",
+      "use": "Concept, prerequisite, misconception, and instructional-progression research only",
+      "current_course_claim": false,
+      "standards_mapping_authority": false,
+      "student_facing_link_allowed": false
+    },
+    {
+      "track_id": "MCPS_ROSA_PARKS_SUMMER_READINESS_2020",
+      "title": "Rosa Parks Middle School Algebra 1 summer readiness packet",
+      "publication_or_version": "2020 summer packet; owner-provided research copy",
+      "source_locator_status": "ORIGINAL_PUBLIC_URL_NOT_INDEPENDENTLY_VERIFIED",
+      "status": "HISTORICAL_RESEARCH_ONLY_NOT_CURRENT_ADOPTION_PROOF",
+      "use": "Historical prerequisite/task-structure research only; never present its topics as current MCPS units",
+      "current_course_claim": false,
+      "standards_mapping_authority": false,
+      "copied_or_rehosted": false,
+      "student_facing_link_allowed": false
+    }
+  ],
+  "mcps_current_course_sequences": [
+    {
+      "mcps_course": "Math 6",
+      "current_district_listing_source": "MCPS_CURRENT_CURRICULUM_2026",
+      "vendor_sequence_source": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+      "vendor_course": "Amplify Desmos Math Grade 6",
+      "vendor_page_label": "Grade 6",
+      "effective_year": "CURRENT_PAGE_AS_INSPECTED_2026-10-11__SCHOOL_YEAR_NOT_STATED",
+      "units": [
+        {
+          "unit_number": 1,
+          "title": "Area and Surface Area"
+        },
+        {
+          "unit_number": 2,
+          "title": "Introducing Ratios"
+        },
+        {
+          "unit_number": 3,
+          "title": "Rates and Percentages"
+        },
+        {
+          "unit_number": 4,
+          "title": "Dividing Fractions"
+        },
+        {
+          "unit_number": 5,
+          "title": "Decimal Arithmetic"
+        },
+        {
+          "unit_number": 6,
+          "title": "Expressions and Equations"
+        },
+        {
+          "unit_number": 7,
+          "title": "Positive and Negative Numbers"
+        },
+        {
+          "unit_number": 8,
+          "title": "Describing Data"
+        }
+      ],
+      "evidence_authority": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+      "maryland_standard_ids": [],
+      "standards_mapping_status": "PROVISIONAL_NOT_ACCEPTED__NO_IDS_INFERRED_FROM_VENDOR_SEQUENCE",
+      "student_facing_external_links": false
+    },
+    {
+      "mcps_course": "Accelerated Math 6",
+      "current_district_listing_source": "MCPS_CURRENT_CURRICULUM_2026",
+      "vendor_sequence_source": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+      "vendor_course": "Amplify Desmos Math Accelerated Grade 6",
+      "vendor_page_label": "Accelerated 6",
+      "effective_year": "CURRENT_PAGE_AS_INSPECTED_2026-10-11__SCHOOL_YEAR_NOT_STATED",
+      "units": [
+        {
+          "unit_number": 1,
+          "title": "Area and Surface Area"
+        },
+        {
+          "unit_number": 2,
+          "title": "Introducing Ratios and Rates"
+        },
+        {
+          "unit_number": 3,
+          "title": "Fractions and Decimals"
+        },
+        {
+          "unit_number": 4,
+          "title": "Expressions and Equations"
+        },
+        {
+          "unit_number": 5,
+          "title": "Proportional Relationships"
+        },
+        {
+          "unit_number": 6,
+          "title": "Percentages"
+        },
+        {
+          "unit_number": 7,
+          "title": "Positive and Negative Numbers"
+        },
+        {
+          "unit_number": 8,
+          "title": "Data Sets and Distributions"
+        }
+      ],
+      "evidence_authority": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+      "maryland_standard_ids": [],
+      "standards_mapping_status": "PROVISIONAL_NOT_ACCEPTED__NO_IDS_INFERRED_FROM_VENDOR_SEQUENCE",
+      "student_facing_external_links": false
+    },
+    {
+      "mcps_course": "Math 7",
+      "current_district_listing_source": "MCPS_CURRENT_CURRICULUM_2026",
+      "vendor_sequence_source": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+      "vendor_course": "Amplify Desmos Math Grade 7",
+      "vendor_page_label": "Grade 7",
+      "effective_year": "CURRENT_PAGE_AS_INSPECTED_2026-10-11__SCHOOL_YEAR_NOT_STATED",
+      "units": [
+        {
+          "unit_number": 1,
+          "title": "Scale Drawings"
+        },
+        {
+          "unit_number": 2,
+          "title": "Introducing Proportional Relationships"
+        },
+        {
+          "unit_number": 3,
+          "title": "Measuring Circles"
+        },
+        {
+          "unit_number": 4,
+          "title": "Proportional Relationships and Percentages"
+        },
+        {
+          "unit_number": 5,
+          "title": "Operations With Positive and Negative Numbers"
+        },
+        {
+          "unit_number": 6,
+          "title": "Expressions, Equations, and Inequalities"
+        },
+        {
+          "unit_number": 7,
+          "title": "Angles, Triangles, and Prisms"
+        },
+        {
+          "unit_number": 8,
+          "title": "Probability and Sampling"
+        }
+      ],
+      "evidence_authority": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+      "maryland_standard_ids": [],
+      "standards_mapping_status": "PROVISIONAL_NOT_ACCEPTED__NO_IDS_INFERRED_FROM_VENDOR_SEQUENCE",
+      "student_facing_external_links": false
+    },
+    {
+      "mcps_course": "Accelerated Math 7",
+      "current_district_listing_source": "MCPS_CURRENT_CURRICULUM_2026",
+      "vendor_sequence_source": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+      "vendor_course": "Amplify Desmos Math Accelerated Grade 7",
+      "vendor_page_label": "Accelerated 7",
+      "effective_year": "CURRENT_PAGE_AS_INSPECTED_2026-10-11__SCHOOL_YEAR_NOT_STATED",
+      "units": [
+        {
+          "unit_number": 1,
+          "title": "Rigid Transformations and Congruence"
+        },
+        {
+          "unit_number": 2,
+          "title": "Scale Drawings, Dilations, and Similarity"
+        },
+        {
+          "unit_number": 3,
+          "title": "Equations and Inequalities"
+        },
+        {
+          "unit_number": 4,
+          "title": "Linear Relationships and Systems of Linear Equations"
+        },
+        {
+          "unit_number": 5,
+          "title": "Functions"
+        },
+        {
+          "unit_number": 6,
+          "title": "Associations in Data"
+        },
+        {
+          "unit_number": 7,
+          "title": "Volume and Surface Area"
+        },
+        {
+          "unit_number": 8,
+          "title": "Exponents and Scientific Notation"
+        },
+        {
+          "unit_number": 9,
+          "title": "Pythagorean Theorem and Irrational Numbers"
+        }
+      ],
+      "evidence_authority": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+      "maryland_standard_ids": [],
+      "standards_mapping_status": "PROVISIONAL_NOT_ACCEPTED__NO_IDS_INFERRED_FROM_VENDOR_SEQUENCE",
+      "student_facing_external_links": false
+    },
+    {
+      "mcps_course": "Math 8",
+      "current_district_listing_source": "MCPS_CURRENT_CURRICULUM_2026",
+      "vendor_sequence_source": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+      "vendor_course": "Amplify Desmos Math Grade 8",
+      "vendor_page_label": "Grade 8",
+      "effective_year": "CURRENT_PAGE_AS_INSPECTED_2026-10-11__SCHOOL_YEAR_NOT_STATED",
+      "units": [
+        {
+          "unit_number": 1,
+          "title": "Rigid Transformations and Congruence"
+        },
+        {
+          "unit_number": 2,
+          "title": "Dilations, Similarity, and Slope"
+        },
+        {
+          "unit_number": 3,
+          "title": "Proportional and Linear Relationships"
+        },
+        {
+          "unit_number": 4,
+          "title": "Linear Equations and Linear Systems"
+        },
+        {
+          "unit_number": 5,
+          "title": "Functions and Volume"
+        },
+        {
+          "unit_number": 6,
+          "title": "Associations in Data"
+        },
+        {
+          "unit_number": 7,
+          "title": "Exponents and Scientific Notation"
+        },
+        {
+          "unit_number": 8,
+          "title": "The Pythagorean Theorem and Irrational Numbers"
+        }
+      ],
+      "evidence_authority": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+      "maryland_standard_ids": [],
+      "standards_mapping_status": "PROVISIONAL_NOT_ACCEPTED__NO_IDS_INFERRED_FROM_VENDOR_SEQUENCE",
+      "student_facing_external_links": false
+    },
+    {
+      "mcps_course": "Algebra 1",
+      "current_district_listing_source": "MCPS_CURRENT_CURRICULUM_2026",
+      "vendor_sequence_source": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+      "vendor_course": "Amplify Desmos Math Algebra 1",
+      "vendor_page_label": "Algebra 1",
+      "effective_year": "CURRENT_PAGE_AS_INSPECTED_2026-10-11__SCHOOL_YEAR_NOT_STATED",
+      "units": [
+        {
+          "unit_number": 1,
+          "title": "Patterns and Sequences"
+        },
+        {
+          "unit_number": 2,
+          "title": "Linear Equations and Inequalities"
+        },
+        {
+          "unit_number": 3,
+          "title": "Describing Data"
+        },
+        {
+          "unit_number": 4,
+          "title": "Describing Functions"
+        },
+        {
+          "unit_number": 5,
+          "title": "Systems of Linear Equations and Inequalities"
+        },
+        {
+          "unit_number": 6,
+          "title": "Exponential Functions"
+        },
+        {
+          "unit_number": 7,
+          "title": "Quadratic Functions"
+        },
+        {
+          "unit_number": 8,
+          "title": "Quadratic Equations"
+        }
+      ],
+      "evidence_authority": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+      "maryland_standard_ids": [],
+      "standards_mapping_status": "PROVISIONAL_NOT_ACCEPTED__NO_IDS_INFERRED_FROM_VENDOR_SEQUENCE",
+      "student_facing_external_links": false
+    }
+  ]
 }
