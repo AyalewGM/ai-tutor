@@ -44,12 +44,12 @@ function GuidedPolynomialDivision({ seed = 0, initialVariant, onMathEvent }: Int
   const [coefficientReason, setCoefficientReason] = useState<"DIVIDEND_BY_DIVISOR" | "DIVISOR_BY_DIVIDEND" | null>(null);
   const [exponentReason, setExponentReason] = useState<"SUBTRACT" | "ADD" | null>(null);
   const [restrictions, setRestrictions] = useState<Array<"x" | "y">>([]);
-  const [reconstructionConfirmed, setReconstructionConfirmed] = useState(false);
+  const [, setReconstructionConfirmed] = useState(false);
   const [diagnosis, setDiagnosis] = useState<PolynomialDivisionMisconception | null>(null);
   const [freshRepair, setFreshRepair] = useState(false);
   const [supportStage, setSupportStage] = useState<"MODELED" | "COACHED" | "INDEPENDENT_READINESS">("MODELED");
   const [feedback, setFeedback] = useState("Select each grouped term and apply the shared divisor.");
-  const [transferVerified, setTransferVerified] = useState(false);
+  const [, setTransferVerified] = useState(false);
   const quotients = quotientTerms(variant);
   const control = "rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 motion-reduce:transition-none disabled:opacity-50";
 
