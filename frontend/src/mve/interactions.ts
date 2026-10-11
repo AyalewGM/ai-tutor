@@ -146,7 +146,16 @@ export interface PolynomialDivisionManipulatedEvent extends MathInteractionBase 
   domain_y: boolean;
 }
 
+export interface ScientificNotationScaleChangedEvent extends MathInteractionBase {
+  type: "SCIENTIFIC_NOTATION_SCALE_CHANGED";
+  significant_digits: number;
+  coefficient_power: number;
+  exponent: number;
+  invariant_power: number;
+}
+
 export type MathInteractionEvent =
+  | ScientificNotationScaleChangedEvent
   | PolynomialDivisionManipulatedEvent
   | ExplorerDatasetChangedEvent
   | BalanceOperationAppliedEvent
@@ -196,6 +205,17 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "SCIENTIFIC_NOTATION_SCALE_CHANGED":
+      return Object.keys(event).every(key => [
+        "schema_version", "type", "significant_digits", "coefficient_power", "exponent", "invariant_power",
+      ].includes(key)) &&
+        Number.isSafeInteger(event.significant_digits) &&
+        (event.significant_digits as number) >= 1 && (event.significant_digits as number) <= 999 &&
+        (event.significant_digits as number) % 10 !== 0 &&
+        Number.isSafeInteger(event.coefficient_power) && Math.abs(event.coefficient_power as number) <= 8 &&
+        Number.isSafeInteger(event.exponent) && Math.abs(event.exponent as number) <= 8 &&
+        Number.isSafeInteger(event.invariant_power) && Math.abs(event.invariant_power as number) <= 8 &&
+        event.invariant_power === (event.coefficient_power as number) + (event.exponent as number);
     case "POLYNOMIAL_DIVISION_MANIPULATED":
       return Object.keys(event).every(key => [
         "schema_version", "type", "divided_terms", "coefficient_reason", "exponent_reason", "domain_x", "domain_y",
