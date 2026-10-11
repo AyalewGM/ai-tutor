@@ -38,7 +38,14 @@ def test_dmv_crosswalk_has_traceability_without_claiming_acceptance():
 
 def test_sources_are_official_and_research_only():
     data = _load()
-    allowed_hosts = (\n        "msde.maryland.gov",\n        "mcap.msde.maryland.gov",\n        "montgomeryschoolsmd.org",\n        "amplify.com",\n        "doe.virginia.gov",\n        "osse.dc.gov",\n    )
+    allowed_hosts = (
+        "msde.maryland.gov",
+        "mcap.msde.maryland.gov",
+        "montgomeryschoolsmd.org",
+        "amplify.com",
+        "doe.virginia.gov",
+        "osse.dc.gov",
+    )
     for source in data["source_registry"]:
         assert source["url"].startswith("https://")
         assert any(host in source["url"] for host in allowed_hosts)
