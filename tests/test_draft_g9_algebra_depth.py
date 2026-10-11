@@ -26,8 +26,10 @@ def test_grade9_algebra_depth_oracles_and_review_gates() -> None:
     ]
     for item, oracle in zip(items, oracles, strict=True):
         if isinstance(oracle, Fraction):
-            assert Fraction(item["expected"]) == oracle, item["item_id"]
-            assert Fraction(item["misconception"]["plausible_wrong_answer"]) != oracle
+            expected = item["expected"].replace("−", "-")
+            plausible_wrong = item["misconception"]["plausible_wrong_answer"].replace("−", "-")
+            assert Fraction(expected) == oracle, item["item_id"]
+            assert Fraction(plausible_wrong) != oracle
         else:
             assert item["expected"] == oracle
             assert item["misconception"]["plausible_wrong_answer"] != oracle
