@@ -12,6 +12,30 @@
   "canonical_skill_ids": [],
   "curriculum_mappings": [],
   "runtime_activation": false,
+  "assessment_delivery": {
+    "status": "DRAFT_CONTRACT_NOT_RUNTIME_WIRED",
+    "projection": "SERVER_ALLOWLIST_ONLY",
+    "learner_payload_fields": [
+      "item_id",
+      "question",
+      "answer_contract"
+    ],
+    "forbidden_independent_fields": [
+      "operands",
+      "expected",
+      "hints",
+      "worked_solution",
+      "misconception_tag",
+      "review_status"
+    ],
+    "guided_only_fields": [
+      "hints",
+      "worked_solution",
+      "misconception_tag"
+    ],
+    "fail_closed": true,
+    "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY"
+  },
   "practice_items": [
     {
       "item_id": "draft-depth-addition_regroup-01",
@@ -28,8 +52,7 @@
       "answer_contract": "integer",
       "hints": [
         "Align place values and regroup when a column totals ten or more",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "28 + 17 = 45. Check by subtracting 17 from 45."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "28 + 17 = 45. Check by subtracting 17 from 45.",
       "misconception_tag": "Forgetting to regroup a set of ten",
@@ -50,8 +73,7 @@
       "answer_contract": "integer",
       "hints": [
         "Align place values and regroup when a column totals ten or more",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "46 + 35 = 81. Check by subtracting 35 from 81."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "46 + 35 = 81. Check by subtracting 35 from 81.",
       "misconception_tag": "Forgetting to regroup a set of ten",
@@ -72,8 +94,7 @@
       "answer_contract": "integer",
       "hints": [
         "Align place values and regroup when a column totals ten or more",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "158 + 67 = 225. Check by subtracting 67 from 225."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "158 + 67 = 225. Check by subtracting 67 from 225.",
       "misconception_tag": "Forgetting to regroup a set of ten",
@@ -84,7 +105,7 @@
       "provisional_skill": "ADDITION_REGROUP",
       "grade_suggestion": "2-4",
       "level": "guided-representation",
-      "question": "A library received 276 books, then 148 more. How many books were added?",
+      "question": "A library had 276 new books, then received 148 more. How many new books does it have altogether?",
       "operands": {
         "a": 276,
         "b": 148
@@ -94,8 +115,7 @@
       "answer_contract": "integer",
       "hints": [
         "Align place values and regroup when a column totals ten or more",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "276 + 148 = 424. Check by subtracting 148 from 424."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "276 + 148 = 424. Check by subtracting 148 from 424.",
       "misconception_tag": "Forgetting to regroup a set of ten",
@@ -116,8 +136,7 @@
       "answer_contract": "integer",
       "hints": [
         "Align place values and regroup when a column totals ten or more",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "329 + 186 = 515. Check by subtracting 186 from 515."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "329 + 186 = 515. Check by subtracting 186 from 515.",
       "misconception_tag": "Forgetting to regroup a set of ten",
@@ -138,8 +157,7 @@
       "answer_contract": "integer",
       "hints": [
         "Align place values and regroup when a column totals ten or more",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "478 + 257 = 735. Check by subtracting 257 from 735."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "478 + 257 = 735. Check by subtracting 257 from 735.",
       "misconception_tag": "Forgetting to regroup a set of ten",
@@ -160,8 +178,7 @@
       "answer_contract": "integer",
       "hints": [
         "Align place values and regroup when a column totals ten or more",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "605 + 198 = 803. Check by subtracting 198 from 803."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "605 + 198 = 803. Check by subtracting 198 from 803.",
       "misconception_tag": "Forgetting to regroup a set of ten",
@@ -182,8 +199,7 @@
       "answer_contract": "integer",
       "hints": [
         "Align place values and regroup when a column totals ten or more",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "749 + 386 = 1135. Check by subtracting 386 from 1135."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "749 + 386 = 1135. Check by subtracting 386 from 1135.",
       "misconception_tag": "Forgetting to regroup a set of ten",
@@ -204,8 +220,7 @@
       "answer_contract": "integer",
       "hints": [
         "Regroup one higher place into ten of the next lower place",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "52 − 18 = 34. Check 34 + 18 = 52."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "52 − 18 = 34. Check 34 + 18 = 52.",
       "misconception_tag": "Subtracting smaller digit from larger regardless of position",
@@ -226,8 +241,7 @@
       "answer_contract": "integer",
       "hints": [
         "Regroup one higher place into ten of the next lower place",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "73 − 29 = 44. Check 44 + 29 = 73."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "73 − 29 = 44. Check 44 + 29 = 73.",
       "misconception_tag": "Subtracting smaller digit from larger regardless of position",
@@ -248,8 +262,7 @@
       "answer_contract": "integer",
       "hints": [
         "Regroup one higher place into ten of the next lower place",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "204 − 76 = 128. Check 128 + 76 = 204."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "204 − 76 = 128. Check 128 + 76 = 204.",
       "misconception_tag": "Subtracting smaller digit from larger regardless of position",
@@ -270,8 +283,7 @@
       "answer_contract": "integer",
       "hints": [
         "Regroup one higher place into ten of the next lower place",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "315 − 187 = 128. Check 128 + 187 = 315."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "315 − 187 = 128. Check 128 + 187 = 315.",
       "misconception_tag": "Subtracting smaller digit from larger regardless of position",
@@ -292,8 +304,7 @@
       "answer_contract": "integer",
       "hints": [
         "Regroup one higher place into ten of the next lower place",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "602 − 258 = 344. Check 344 + 258 = 602."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "602 − 258 = 344. Check 344 + 258 = 602.",
       "misconception_tag": "Subtracting smaller digit from larger regardless of position",
@@ -314,8 +325,7 @@
       "answer_contract": "integer",
       "hints": [
         "Regroup one higher place into ten of the next lower place",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "840 − 375 = 465. Check 465 + 375 = 840."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "840 − 375 = 465. Check 465 + 375 = 840.",
       "misconception_tag": "Subtracting smaller digit from larger regardless of position",
@@ -336,8 +346,7 @@
       "answer_contract": "integer",
       "hints": [
         "Regroup one higher place into ten of the next lower place",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "1003 − 468 = 535. Check 535 + 468 = 1003."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "1003 − 468 = 535. Check 535 + 468 = 1003.",
       "misconception_tag": "Subtracting smaller digit from larger regardless of position",
@@ -358,8 +367,7 @@
       "answer_contract": "integer",
       "hints": [
         "Regroup one higher place into ten of the next lower place",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "1200 − 587 = 613. Check 613 + 587 = 1200."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "1200 − 587 = 613. Check 613 + 587 = 1200.",
       "misconception_tag": "Subtracting smaller digit from larger regardless of position",
@@ -380,8 +388,7 @@
       "answer_contract": "integer",
       "hints": [
         "Model equal groups or an array; use partial products",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "6 groups of 7 make 42; verify by equal groups or partial products."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "6 groups of 7 make 42; verify by equal groups or partial products.",
       "misconception_tag": "Using addition of factors rather than equal-group multiplication",
@@ -402,8 +409,7 @@
       "answer_contract": "integer",
       "hints": [
         "Model equal groups or an array; use partial products",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "8 groups of 9 make 72; verify by equal groups or partial products."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "8 groups of 9 make 72; verify by equal groups or partial products.",
       "misconception_tag": "Using addition of factors rather than equal-group multiplication",
@@ -424,8 +430,7 @@
       "answer_contract": "integer",
       "hints": [
         "Model equal groups or an array; use partial products",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "12 groups of 6 make 72; verify by equal groups or partial products."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "12 groups of 6 make 72; verify by equal groups or partial products.",
       "misconception_tag": "Using addition of factors rather than equal-group multiplication",
@@ -446,8 +451,7 @@
       "answer_contract": "integer",
       "hints": [
         "Model equal groups or an array; use partial products",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "14 groups of 8 make 112; verify by equal groups or partial products."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "14 groups of 8 make 112; verify by equal groups or partial products.",
       "misconception_tag": "Using addition of factors rather than equal-group multiplication",
@@ -468,8 +472,7 @@
       "answer_contract": "integer",
       "hints": [
         "Model equal groups or an array; use partial products",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "16 groups of 7 make 112; verify by equal groups or partial products."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "16 groups of 7 make 112; verify by equal groups or partial products.",
       "misconception_tag": "Using addition of factors rather than equal-group multiplication",
@@ -490,8 +493,7 @@
       "answer_contract": "integer",
       "hints": [
         "Model equal groups or an array; use partial products",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "24 groups of 9 make 216; verify by equal groups or partial products."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "24 groups of 9 make 216; verify by equal groups or partial products.",
       "misconception_tag": "Using addition of factors rather than equal-group multiplication",
@@ -512,8 +514,7 @@
       "answer_contract": "integer",
       "hints": [
         "Model equal groups or an array; use partial products",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "35 groups of 12 make 420; verify by equal groups or partial products."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "35 groups of 12 make 420; verify by equal groups or partial products.",
       "misconception_tag": "Using addition of factors rather than equal-group multiplication",
@@ -534,8 +535,7 @@
       "answer_contract": "integer",
       "hints": [
         "Model equal groups or an array; use partial products",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "42 groups of 15 make 630; verify by equal groups or partial products."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "42 groups of 15 make 630; verify by equal groups or partial products.",
       "misconception_tag": "Using addition of factors rather than equal-group multiplication",
@@ -556,8 +556,7 @@
       "answer_contract": "integer",
       "hints": [
         "Use the inverse multiplication fact to verify the quotient",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "42 ÷ 6 = 7; check 7 × 6 = 42."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "42 ÷ 6 = 7; check 7 × 6 = 42.",
       "misconception_tag": "Confusing number of groups with items per group",
@@ -578,8 +577,7 @@
       "answer_contract": "integer",
       "hints": [
         "Use the inverse multiplication fact to verify the quotient",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "72 ÷ 8 = 9; check 9 × 8 = 72."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "72 ÷ 8 = 9; check 9 × 8 = 72.",
       "misconception_tag": "Confusing number of groups with items per group",
@@ -600,8 +598,7 @@
       "answer_contract": "integer",
       "hints": [
         "Use the inverse multiplication fact to verify the quotient",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "96 ÷ 12 = 8; check 8 × 12 = 96."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "96 ÷ 12 = 8; check 8 × 12 = 96.",
       "misconception_tag": "Confusing number of groups with items per group",
@@ -622,8 +619,7 @@
       "answer_contract": "integer",
       "hints": [
         "Use the inverse multiplication fact to verify the quotient",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "144 ÷ 9 = 16; check 16 × 9 = 144."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "144 ÷ 9 = 16; check 16 × 9 = 144.",
       "misconception_tag": "Confusing number of groups with items per group",
@@ -644,8 +640,7 @@
       "answer_contract": "integer",
       "hints": [
         "Use the inverse multiplication fact to verify the quotient",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "168 ÷ 7 = 24; check 24 × 7 = 168."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "168 ÷ 7 = 24; check 24 × 7 = 168.",
       "misconception_tag": "Confusing number of groups with items per group",
@@ -666,8 +661,7 @@
       "answer_contract": "integer",
       "hints": [
         "Use the inverse multiplication fact to verify the quotient",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "216 ÷ 12 = 18; check 18 × 12 = 216."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "216 ÷ 12 = 18; check 18 × 12 = 216.",
       "misconception_tag": "Confusing number of groups with items per group",
@@ -688,8 +682,7 @@
       "answer_contract": "integer",
       "hints": [
         "Use the inverse multiplication fact to verify the quotient",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "360 ÷ 15 = 24; check 24 × 15 = 360."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "360 ÷ 15 = 24; check 24 × 15 = 360.",
       "misconception_tag": "Confusing number of groups with items per group",
@@ -710,8 +703,7 @@
       "answer_contract": "integer",
       "hints": [
         "Use the inverse multiplication fact to verify the quotient",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "504 ÷ 18 = 28; check 28 × 18 = 504."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "504 ÷ 18 = 28; check 28 × 18 = 504.",
       "misconception_tag": "Confusing number of groups with items per group",
@@ -733,8 +725,7 @@
       "answer_contract": "simplest_fraction",
       "hints": [
         "Keep the shared denominator, add numerators, then simplify",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "1/5 + 3/5 = 4/5 = 4/5."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "1/5 + 3/5 = 4/5 = 4/5.",
       "misconception_tag": "Adding denominators when denominators already match",
@@ -756,8 +747,7 @@
       "answer_contract": "simplest_fraction",
       "hints": [
         "Keep the shared denominator, add numerators, then simplify",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "2/8 + 3/8 = 5/8 = 5/8."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "2/8 + 3/8 = 5/8 = 5/8.",
       "misconception_tag": "Adding denominators when denominators already match",
@@ -779,8 +769,7 @@
       "answer_contract": "simplest_fraction",
       "hints": [
         "Keep the shared denominator, add numerators, then simplify",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "3/7 + 2/7 = 5/7 = 5/7."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "3/7 + 2/7 = 5/7 = 5/7.",
       "misconception_tag": "Adding denominators when denominators already match",
@@ -798,14 +787,13 @@
         "d": 9
       },
       "operation": "fraction_add",
-      "expected": "1/1",
+      "expected": "1",
       "answer_contract": "simplest_fraction",
       "hints": [
         "Keep the shared denominator, add numerators, then simplify",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "4/9 + 5/9 = 9/9 = 1/1."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
-      "worked_solution": "4/9 + 5/9 = 9/9 = 1/1.",
+      "worked_solution": "4/9 + 5/9 = 9/9 = 1.",
       "misconception_tag": "Adding denominators when denominators already match",
       "review_status": "PENDING"
     },
@@ -825,8 +813,7 @@
       "answer_contract": "simplest_fraction",
       "hints": [
         "Keep the shared denominator, add numerators, then simplify",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "5/11 + 4/11 = 9/11 = 9/11."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "5/11 + 4/11 = 9/11 = 9/11.",
       "misconception_tag": "Adding denominators when denominators already match",
@@ -844,14 +831,13 @@
         "d": 12
       },
       "operation": "fraction_add",
-      "expected": "1/1",
+      "expected": "1",
       "answer_contract": "simplest_fraction",
       "hints": [
         "Keep the shared denominator, add numerators, then simplify",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "7/12 + 5/12 = 12/12 = 1/1."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
-      "worked_solution": "7/12 + 5/12 = 12/12 = 1/1.",
+      "worked_solution": "7/12 + 5/12 = 12/12 = 1.",
       "misconception_tag": "Adding denominators when denominators already match",
       "review_status": "PENDING"
     },
@@ -867,14 +853,13 @@
         "d": 13
       },
       "operation": "fraction_add",
-      "expected": "1/1",
+      "expected": "1",
       "answer_contract": "simplest_fraction",
       "hints": [
         "Keep the shared denominator, add numerators, then simplify",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "7/13 + 6/13 = 13/13 = 1/1."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
-      "worked_solution": "7/13 + 6/13 = 13/13 = 1/1.",
+      "worked_solution": "7/13 + 6/13 = 13/13 = 1.",
       "misconception_tag": "Adding denominators when denominators already match",
       "review_status": "PENDING"
     },
@@ -894,8 +879,7 @@
       "answer_contract": "simplest_fraction",
       "hints": [
         "Keep the shared denominator, add numerators, then simplify",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "9/15 + 8/15 = 17/15 = 17/15."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "9/15 + 8/15 = 17/15 = 17/15.",
       "misconception_tag": "Adding denominators when denominators already match",
@@ -916,8 +900,7 @@
       "answer_contract": "decimal_2_places",
       "hints": [
         "Write both numbers in hundredths and align decimal points",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "1.25 + 2.35 = 3.60, with hundredths aligned."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "1.25 + 2.35 = 3.60, with hundredths aligned.",
       "misconception_tag": "Misaligning decimal place values",
@@ -938,8 +921,7 @@
       "answer_contract": "decimal_2_places",
       "hints": [
         "Write both numbers in hundredths and align decimal points",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "2.40 + 1.75 = 4.15, with hundredths aligned."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "2.40 + 1.75 = 4.15, with hundredths aligned.",
       "misconception_tag": "Misaligning decimal place values",
@@ -960,8 +942,7 @@
       "answer_contract": "decimal_2_places",
       "hints": [
         "Write both numbers in hundredths and align decimal points",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "3.75 + 4.60 = 8.35, with hundredths aligned."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "3.75 + 4.60 = 8.35, with hundredths aligned.",
       "misconception_tag": "Misaligning decimal place values",
@@ -982,8 +963,7 @@
       "answer_contract": "decimal_2_places",
       "hints": [
         "Write both numbers in hundredths and align decimal points",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "10.99 + 2.85 = 13.84, with hundredths aligned."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "10.99 + 2.85 = 13.84, with hundredths aligned.",
       "misconception_tag": "Misaligning decimal place values",
@@ -1004,8 +984,7 @@
       "answer_contract": "decimal_2_places",
       "hints": [
         "Write both numbers in hundredths and align decimal points",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "6.40 + 8.75 = 15.15, with hundredths aligned."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "6.40 + 8.75 = 15.15, with hundredths aligned.",
       "misconception_tag": "Misaligning decimal place values",
@@ -1026,8 +1005,7 @@
       "answer_contract": "decimal_2_places",
       "hints": [
         "Write both numbers in hundredths and align decimal points",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "7.25 + 13.95 = 21.20, with hundredths aligned."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "7.25 + 13.95 = 21.20, with hundredths aligned.",
       "misconception_tag": "Misaligning decimal place values",
@@ -1048,8 +1026,7 @@
       "answer_contract": "decimal_2_places",
       "hints": [
         "Write both numbers in hundredths and align decimal points",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "15.55 + 16.85 = 32.40, with hundredths aligned."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "15.55 + 16.85 = 32.40, with hundredths aligned.",
       "misconception_tag": "Misaligning decimal place values",
@@ -1070,8 +1047,7 @@
       "answer_contract": "decimal_2_places",
       "hints": [
         "Write both numbers in hundredths and align decimal points",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "26.75 + 9.40 = 36.15, with hundredths aligned."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "26.75 + 9.40 = 36.15, with hundredths aligned.",
       "misconception_tag": "Misaligning decimal place values",
@@ -1092,8 +1068,7 @@
       "answer_contract": "integer",
       "hints": [
         "A rectangle has two lengths and two widths: 2×(length+width)",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "2×(4+7) = 22 units of boundary length."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "2×(4+7) = 22 units of boundary length.",
       "misconception_tag": "Confusing perimeter with area or adding only two sides",
@@ -1114,8 +1089,7 @@
       "answer_contract": "integer",
       "hints": [
         "A rectangle has two lengths and two widths: 2×(length+width)",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "2×(5+9) = 28 units of boundary length."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "2×(5+9) = 28 units of boundary length.",
       "misconception_tag": "Confusing perimeter with area or adding only two sides",
@@ -1136,8 +1110,7 @@
       "answer_contract": "integer",
       "hints": [
         "A rectangle has two lengths and two widths: 2×(length+width)",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "2×(8+12) = 40 units of boundary length."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "2×(8+12) = 40 units of boundary length.",
       "misconception_tag": "Confusing perimeter with area or adding only two sides",
@@ -1158,8 +1131,7 @@
       "answer_contract": "integer",
       "hints": [
         "A rectangle has two lengths and two widths: 2×(length+width)",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "2×(11+14) = 50 units of boundary length."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "2×(11+14) = 50 units of boundary length.",
       "misconception_tag": "Confusing perimeter with area or adding only two sides",
@@ -1180,8 +1152,7 @@
       "answer_contract": "integer",
       "hints": [
         "A rectangle has two lengths and two widths: 2×(length+width)",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "2×(13+17) = 60 units of boundary length."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "2×(13+17) = 60 units of boundary length.",
       "misconception_tag": "Confusing perimeter with area or adding only two sides",
@@ -1202,8 +1173,7 @@
       "answer_contract": "integer",
       "hints": [
         "A rectangle has two lengths and two widths: 2×(length+width)",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "2×(18+25) = 86 units of boundary length."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "2×(18+25) = 86 units of boundary length.",
       "misconception_tag": "Confusing perimeter with area or adding only two sides",
@@ -1224,8 +1194,7 @@
       "answer_contract": "integer",
       "hints": [
         "A rectangle has two lengths and two widths: 2×(length+width)",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "2×(23+31) = 108 units of boundary length."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "2×(23+31) = 108 units of boundary length.",
       "misconception_tag": "Confusing perimeter with area or adding only two sides",
@@ -1246,8 +1215,7 @@
       "answer_contract": "integer",
       "hints": [
         "A rectangle has two lengths and two widths: 2×(length+width)",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "2×(36+44) = 160 units of boundary length."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "2×(36+44) = 160 units of boundary length.",
       "misconception_tag": "Confusing perimeter with area or adding only two sides",
@@ -1268,8 +1236,7 @@
       "answer_contract": "integer",
       "hints": [
         "Area counts unit squares: multiply length by width",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "3 × 6 = 18 square units."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "3 × 6 = 18 square units.",
       "misconception_tag": "Adding side lengths instead of counting square units",
@@ -1290,8 +1257,7 @@
       "answer_contract": "integer",
       "hints": [
         "Area counts unit squares: multiply length by width",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "4 × 9 = 36 square units."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "4 × 9 = 36 square units.",
       "misconception_tag": "Adding side lengths instead of counting square units",
@@ -1312,8 +1278,7 @@
       "answer_contract": "integer",
       "hints": [
         "Area counts unit squares: multiply length by width",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "7 × 11 = 77 square units."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "7 × 11 = 77 square units.",
       "misconception_tag": "Adding side lengths instead of counting square units",
@@ -1334,8 +1299,7 @@
       "answer_contract": "integer",
       "hints": [
         "Area counts unit squares: multiply length by width",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "8 × 13 = 104 square units."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "8 × 13 = 104 square units.",
       "misconception_tag": "Adding side lengths instead of counting square units",
@@ -1356,8 +1320,7 @@
       "answer_contract": "integer",
       "hints": [
         "Area counts unit squares: multiply length by width",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "12 × 14 = 168 square units."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "12 × 14 = 168 square units.",
       "misconception_tag": "Adding side lengths instead of counting square units",
@@ -1378,8 +1341,7 @@
       "answer_contract": "integer",
       "hints": [
         "Area counts unit squares: multiply length by width",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "16 × 19 = 304 square units."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "16 × 19 = 304 square units.",
       "misconception_tag": "Adding side lengths instead of counting square units",
@@ -1400,8 +1362,7 @@
       "answer_contract": "integer",
       "hints": [
         "Area counts unit squares: multiply length by width",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "21 × 24 = 504 square units."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "21 × 24 = 504 square units.",
       "misconception_tag": "Adding side lengths instead of counting square units",
@@ -1422,8 +1383,7 @@
       "answer_contract": "integer",
       "hints": [
         "Area counts unit squares: multiply length by width",
-        "Translate the story or representation into an exact arithmetic expression using the given values.",
-        "32 × 35 = 1120 square units."
+        "Translate the story or representation into an exact arithmetic expression using the given values."
       ],
       "worked_solution": "32 × 35 = 1120 square units.",
       "misconception_tag": "Adding side lengths instead of counting square units",
