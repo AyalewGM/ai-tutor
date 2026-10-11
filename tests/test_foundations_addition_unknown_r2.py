@@ -53,13 +53,13 @@ def test_provenance_is_current_fail_closed_and_hands_fraction_work_to_pr_336() -
     assert 336 in provenance["inspected_prs"]
     assert addition["proposed_revision"] == "foundations-reuse-r2"
     assert addition["upstream_draft"]["pinned_head_sha"] == (
-        "2445f197259ff27b5c99dd2b45c4bcbc2e5292f8"
+        "0036253470c3f47ce0b35b0bba8264cd2cc4817f"
     )
     assert addition["standards"]["mapping_status"] == "UNKNOWN"
     assert addition["approvals"]["release"] == "NOT_APPROVED"
     assert all(
         package["upstream_draft"]["pinned_head_sha"]
-        == "2445f197259ff27b5c99dd2b45c4bcbc2e5292f8"
+        == "0036253470c3f47ce0b35b0bba8264cd2cc4817f"
         for package in provenance["packages"]
         if package["upstream_draft"]["pull_request"] == 328
     )
