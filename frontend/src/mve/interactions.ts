@@ -133,7 +133,21 @@ export interface ExplorerDatasetChangedEvent extends MathInteractionBase {
   values: readonly number[];
 }
 
+export interface PolynomialDivisionManipulatedEvent extends MathInteractionBase {
+  type: "POLYNOMIAL_DIVISION_MANIPULATED";
+  divided_terms: number;
+  coefficient_reason:
+    | "DIVIDEND_COEFFICIENT_DIVIDED_BY_DIVISOR_COEFFICIENT"
+    | "DIVISOR_COEFFICIENT_DIVIDED_BY_DIVIDEND_COEFFICIENT";
+  exponent_reason:
+    | "DIVIDEND_EXPONENT_MINUS_DIVISOR_EXPONENT"
+    | "DIVIDEND_EXPONENT_PLUS_DIVISOR_EXPONENT";
+  domain_x: boolean;
+  domain_y: boolean;
+}
+
 export type MathInteractionEvent =
+  | PolynomialDivisionManipulatedEvent
   | ExplorerDatasetChangedEvent
   | BalanceOperationAppliedEvent
   | LinearParametersChangedEvent
@@ -182,6 +196,22 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "POLYNOMIAL_DIVISION_MANIPULATED":
+      return Object.keys(event).every(key => [
+        "schema_version", "type", "divided_terms", "coefficient_reason", "exponent_reason", "domain_x", "domain_y",
+      ].includes(key)) &&
+        Number.isSafeInteger(event.divided_terms) &&
+        (event.divided_terms as number) >= 0 && (event.divided_terms as number) <= 4 &&
+        [
+          "DIVIDEND_COEFFICIENT_DIVIDED_BY_DIVISOR_COEFFICIENT",
+          "DIVISOR_COEFFICIENT_DIVIDED_BY_DIVIDEND_COEFFICIENT",
+        ].includes(String(event.coefficient_reason)) &&
+        [
+          "DIVIDEND_EXPONENT_MINUS_DIVISOR_EXPONENT",
+          "DIVIDEND_EXPONENT_PLUS_DIVISOR_EXPONENT",
+        ].includes(String(event.exponent_reason)) &&
+        typeof event.domain_x === "boolean" &&
+        typeof event.domain_y === "boolean";
     case "EXPLORER_DATASET_CHANGED":
       return Object.keys(event).every(key => ["schema_version", "type", "values"].includes(key)) &&
         Array.isArray(event.values) && event.values.length >= 1 && event.values.length <= 6 &&

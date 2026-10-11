@@ -1,5 +1,7 @@
 import { InteractiveDotPlotExplorer } from "../mve/InteractiveDotPlotExplorer";
 import { showDotPlotExploration } from "../mve/dotPlotExplorer";
+import { InteractivePolynomialDivision } from "../mve/InteractivePolynomialDivision";
+import { showPolynomialDivisionExploration } from "../mve/polynomialDivision";
 import { InteractiveEquationBalance } from "../mve/InteractiveEquationBalance";
 import { showBalanceExploration } from "../mve/equationBalance";
 import { InteractiveLinearExplorer } from "../mve/InteractiveLinearExplorer";
@@ -791,6 +793,12 @@ export default function Workspace() {
                   )}
                   {showDotPlotExploration(workspace.state, workspace.focus.skill_name) && (
                     <InteractiveDotPlotExplorer
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
+                  {showPolynomialDivisionExploration(workspace.state, workspace.focus.skill_name) && (
+                    <InteractivePolynomialDivision
                       key={workspace.focus.active_skill_id}
                       independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
                     />
