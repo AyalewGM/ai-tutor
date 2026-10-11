@@ -1,7 +1,7 @@
 {
   "schema_version": "1.2.0",
   "milestone": "GitHub Issue #337",
-  "revision": "issue-337-traceability-r3",
+  "revision": "issue-337-traceability-r4",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "source_policy": {
@@ -61,10 +61,10 @@
           "PR_346@58bc5f379ec720ff69d8a350ae24b672441fbe41",
           "PR_349@79f272a6f8d21de348eb458e62a086363d724585"
         ],
-        "mathematical_review": "APPROVE_BOUNDED_MULTI_STEP_AND_EXACT_ROOT_SCOPES",
+        "mathematical_review": "APPROVE_BOUNDED_MULTI_STEP_AND_EXACT_ROOT_SCOPES_PR_346_AT_58BC5F379",
         "pedagogical_review": "ACCEPT_EQUATION_JOURNEY_ONLY_ROOT_EXTENSION_NOT_SEPARATELY_ACCEPTED",
         "interaction": "EQUATION_ROUTE_DRAFT_ROOT_SOLUTION_SET_INTERACTION_ABSENT",
-        "trusted_assessment": "EXACT_SCORER_MATH_APPROVED_UNROUTED_APPSEC_PENDING",
+        "trusted_assessment": "EXACT_ROOT_SCORER_MATH_APPROVED_UNROUTED_ACCEPTED_BASE_AND_APPSEC_PENDING",
         "actual_gap": "Root-solution-set teaching interaction, accepted-base integration, standards mapping and Muse verification remain absent."
       },
       {
@@ -74,14 +74,15 @@
           "PR_344@bb2c2e1293c556bc3ca365b945ec72caee83bac9",
           "PR_348@ecb83965e366b78fb04b89ae07331cf67b012169",
           "PR_349@79f272a6f8d21de348eb458e62a086363d724585",
-          "PR_340@3d90e709309be4e3f0f7ba8320137549689a17b2"
+          "PR_340@3d90e709309be4e3f0f7ba8320137549689a17b2",
+          "PR_350@a1e2f88dac73c699df0c7022e9094dfc84a2b704"
         ],
         "mathematical_review": "APPROVE_CONTENT_EVIDENCE_SCOPE_AND_GUIDED_ONLY_MVE_NARROWING",
-        "pedagogical_review": "CHANGES_REQUIRED_PR_350_EXACT_HEAD_DD5A89050EEFCE7B011DC9112671C410DAF6E88C",
-        "interaction": "PR_340_GUIDED_ONLY_NARROWING_MATH_APPROVED_NO_LEARNER_PRODUCED_EVIDENCE; PR_350_ROUTE_NOT_PEDAGOGICALLY_ACCEPTED",
-        "trusted_assessment": "NOT_WIRED",
-        "actual_gap": "If the routed journey claims learner reasoning, require learner-entered exact quotient terms and multiplication reconstruction matching PR 348 response_contract.json. Otherwise mount only PR 340's corrected guided model and remove all readiness/verified-transfer claims.",
-        "pedagogical_evidence": "https://github.com/AyalewGM/ai-tutor/pull/350#issuecomment-6109134411"
+        "pedagogical_review": "ACCEPT_BOUNDED_GUIDED_POLYNOMIAL_JOURNEY_PR_350_AT_A1E2F88_ONLY",
+        "interaction": "PR_350_GUIDED_ROUTE_PEDAGOGICALLY_ACCEPTED_WITHOUT_LEARNER_PRODUCED_RECONSTRUCTION; INDEPENDENT_READINESS_NOT_ESTABLISHED",
+        "trusted_assessment": "NOT_WIRED_UNSEEN_SCORING_AND_MUSE_PENDING",
+        "actual_gap": "Guided MVE pedagogy accepted at PR #350 a1e2f88; learner-produced quotient/reconstruction, backend-trusted unseen assessment, and external Muse live browser/AT/no-leak QA remain absent. No mastery claim.",
+        "pedagogical_evidence": "https://github.com/AyalewGM/ai-tutor/pull/350"
       },
       {
         "unit": "2.9 Homework",
@@ -90,18 +91,19 @@
           "PR_348@ecb83965e366b78fb04b89ae07331cf67b012169",
           "PR_349@79f272a6f8d21de348eb458e62a086363d724585",
           "PR_350@dd5a89050eefce7b011dc9112671c410daf6e88c",
-          "PR_340@3d90e709309be4e3f0f7ba8320137549689a17b2"
+          "PR_340@3d90e709309be4e3f0f7ba8320137549689a17b2",
+          "PR_350@a1e2f88dac73c699df0c7022e9094dfc84a2b704"
         ],
         "mathematical_review": "APPROVE_PR_348_CONTENT_SPEC_AND_PR_340_GUIDED_ONLY_NARROWING; PR_350_ROUTE_NOT_INDEPENDENTLY_MATH_REVIEWED",
-        "pedagogical_review": "CHANGES_REQUIRED_PR_350_EXACT_HEAD_DD5A89050EEFCE7B011DC9112671C410DAF6E88C",
-        "interaction": "CONFLICT: PR_350_PREFILLED_QUOTIENT_AND_RECONSTRUCTION_OVERCLAIM_LEARNER_EVIDENCE; PR_340_CORRECTLY_LABELS_AUTO_COMPUTATION_GUIDED_ONLY",
-        "trusted_assessment": "NOT_WIRED",
-        "actual_gap": "Frontend/MVE must either collect learner-authored exact quotient and reconstruction evidence or narrow the routed experience to guided-only with no prediction/readiness/transfer-verification claims. Backend must independently score unseen responses before any mastery inference.",
-        "pedagogical_evidence": "https://github.com/AyalewGM/ai-tutor/pull/350#issuecomment-6109134411",
+        "pedagogical_review": "ACCEPT_BOUNDED_GUIDED_POLYNOMIAL_JOURNEY_PR_350_AT_A1E2F88_ONLY",
+        "interaction": "PR_350_GUIDED_ROUTE_PEDAGOGICALLY_ACCEPTED_WITHOUT_LEARNER_PRODUCED_RECONSTRUCTION; INDEPENDENT_READINESS_NOT_ESTABLISHED",
+        "trusted_assessment": "NOT_WIRED_UNSEEN_SCORING_AND_MUSE_PENDING",
+        "actual_gap": "Guided MVE pedagogy accepted at PR #350 a1e2f88; learner-produced quotient/reconstruction, backend-trusted unseen assessment, and external Muse live browser/AT/no-leak QA remain absent. No mastery claim.",
+        "pedagogical_evidence": "https://github.com/AyalewGM/ai-tutor/pull/350",
         "production_handoff": {
           "package_contract": "PR_348@ecb83965e366b78fb04b89ae07331cf67b012169:response_contract.json",
           "accepted_guided_model": "PR_340@3d90e709309be4e3f0f7ba8320137549689a17b2",
-          "rejected_route_head": "PR_350@dd5a89050eefce7b011dc9112671c410daf6e88c",
+          "rejected_route_head": "SUPERSEDED_BY_PR_350@a1e2f88dac73c699df0c7022e9094dfc84a2b704_GUIDED_ONLY_ACCEPT",
           "frontend_mve_owner_actions": [
             "ADD_OBSERVABLE_LEARNER_QUOTIENT_TERMS_OR_LABEL_GENERATED_TERMS_AS_GUIDED_MODEL_ONLY",
             "ADD_LEARNER_PRODUCED_MULTIPLICATION_RECONSTRUCTION_OR_REMOVE_VERIFIED_TRANSFER_CLAIM",
@@ -121,7 +123,8 @@
             "UNSEEN_TRANSFER_WITHOUT_PREFILLED_ANSWER",
             "KEYBOARD_SCREEN_READER_REDUCED_MOTION_BROWSER_EVIDENCE",
             "INDEPENDENT_ASSESSMENT_UNMOUNT_AND_NO_DOUBLE_CREDIT"
-          ]
+          ],
+          "accepted_guided_route": "PR_350@a1e2f88dac73c699df0c7022e9094dfc84a2b704"
         }
       },
       {
@@ -151,7 +154,7 @@
         "actual_gap": "Normalization explorer, multiplication/division learner journey, accepted exact/rounded response policy, trusted scoring and Muse verification remain absent."
       }
     ],
-    "checkpoint_reason": "RECONCILE_INDEPENDENT_PEDAGOGY_VERDICT_FOR_PR_350_WITH_ACCEPTED_GUIDED_ONLY_PR_340_AND_PR_348_LEARNER_RESPONSE_CONTRACT"
+    "checkpoint_reason": "RECONCILE_ACCEPTED_GUIDED_PR_350_AND_MATH_APPROVED_ROOT_PR_346_WITHOUT_MASTERY_OR_RELEASE_CLAIMS"
   },
   "rows": [
     {
