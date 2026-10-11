@@ -54,6 +54,10 @@ test('diagnosis follows accepted evidence contract dimensions', () => {
   assert.equal(math.diagnosePolynomialDivision({ ...response, coefficient_reason: 'DIVISOR_COEFFICIENT_DIVIDED_BY_DIVIDEND_COEFFICIENT' }), 'POLY.DIV.COEFFICIENT_RECIPROCAL');
   assert.equal(math.diagnosePolynomialDivision({ ...response, exponent_reason: 'DIVIDEND_EXPONENT_PLUS_DIVISOR_EXPONENT' }), 'POLY.DIV.ADD_EXPONENTS');
   assert.equal(math.diagnosePolynomialDivision({ ...response, domain_restrictions: ['x'] }), 'POLY.DIV.DOMAIN_OMITTED');
+  assert.equal(math.diagnosePolynomialDivision({ ...response, divided_term_indexes: [-1, 99] }), 'POLY.DIV.ONE_TERM_ONLY');
+  assert.equal(math.diagnosePolynomialDivision({ ...response, divided_term_indexes: [0, 0] }), 'POLY.DIV.ONE_TERM_ONLY');
+  assert.equal(math.diagnosePolynomialDivision({ ...response, domain_restrictions: ['y', 'x'] }), 'NO_REMEDIATION');
+  assert.equal(math.diagnosePolynomialDivision({ ...response, domain_restrictions: ['x', 'x'] }), 'POLY.DIV.DOMAIN_OMITTED');
 });
 
 test('full learner attempt requires produced quotient, reconstruction, explanation and fresh transfer', () => {
@@ -90,6 +94,13 @@ test('full learner attempt requires produced quotient, reconstruction, explanati
   assert.equal(math.evaluateLearnerPolynomialAttempt(attempt).correct, true);
   assert.equal(math.evaluateLearnerPolynomialAttempt({
     ...attempt,
+    quotient_terms: [...attempt.quotient_terms].reverse(),
+    reconstruction: [...attempt.reconstruction].reverse(),
+    transfer_terms: [...attempt.transfer_terms].reverse(),
+    domain_restrictions: ['y', 'x'],
+  }).correct, true);
+  assert.equal(math.evaluateLearnerPolynomialAttempt({
+    ...attempt,
     prediction: 'Coefficients divide, exponents subtract, and x and y stay nonzero.',
     prediction_evidence: { ...attempt.prediction_evidence, exponent: 'PREDICT_ADD_LIKE_BASE_EXPONENTS' },
   }).diagnosis, 'POLY.DIV.PREDICTION_REASONING');
@@ -104,6 +115,18 @@ test('full learner attempt requires produced quotient, reconstruction, explanati
     { coefficient: '3', x_exponent: '1', y_exponent: '0' },
     { coefficient: '5', x_exponent: '2', y_exponent: '1' },
   ] }).diagnosis, 'POLY.DIV.FRESH_EXIT_UNVERIFIED');
+  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, quotient_terms: [
+    attempt.quotient_terms[0],
+    attempt.quotient_terms[0],
+  ] }).diagnosis, 'POLY.DIV.QUOTIENT_RECORD');
+  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, reconstruction: [
+    attempt.reconstruction[0],
+    attempt.reconstruction[0],
+  ] }).diagnosis, 'POLY.DIV.RECONSTRUCTION_RECORD');
+  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, quotient_terms: [
+    { coefficient: '3', x_exponent: '9007199254740992', y_exponent: '1' },
+    attempt.quotient_terms[1],
+  ] }).diagnosis, 'POLY.DIV.QUOTIENT_RECORD');
 });
 
 test('socratic repair requires misconception evidence and a different repair exit', () => {

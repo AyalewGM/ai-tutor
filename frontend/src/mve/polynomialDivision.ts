@@ -227,8 +227,8 @@ export function diagnosePolynomialDivision(
   assertExample(example);
   if (response.coefficient_reason !== CORRECT_COEFFICIENT_REASON) return "POLY.DIV.COEFFICIENT_RECIPROCAL";
   if (response.exponent_reason !== CORRECT_EXPONENT_REASON) return "POLY.DIV.ADD_EXPONENTS";
-  if (uniqueSorted(response.divided_term_indexes).length !== example.dividend.length) return "POLY.DIV.ONE_TERM_ONLY";
-  if (!sameStrings(response.domain_restrictions, example.domain_restrictions)) return "POLY.DIV.DOMAIN_OMITTED";
+  if (!hasExactTermIndexSet(response.divided_term_indexes, example.dividend.length)) return "POLY.DIV.ONE_TERM_ONLY";
+  if (!sameUniqueStrings(response.domain_restrictions, example.domain_restrictions)) return "POLY.DIV.DOMAIN_OMITTED";
   return "NO_REMEDIATION";
 }
 
@@ -470,12 +470,17 @@ function greatestCommonDivisor(a: number, b: number): number {
   return a || 1;
 }
 
-function uniqueSorted(values: readonly number[]) {
-  return [...new Set(values)].sort((a, b) => a - b);
+function hasExactTermIndexSet(values: readonly number[], termCount: number) {
+  if (values.length !== termCount || new Set(values).size !== termCount) return false;
+  return values.every((value) => Number.isSafeInteger(value) && value >= 0 && value < termCount);
 }
 
-function sameStrings(left: readonly string[], right: readonly string[]) {
-  return left.length === right.length && left.every((value, index) => value === right[index]);
+function sameUniqueStrings(left: readonly string[], right: readonly string[]) {
+  if (left.length !== right.length) return false;
+  const leftSet = new Set(left);
+  const rightSet = new Set(right);
+  return leftSet.size === left.length && rightSet.size === right.length &&
+    [...leftSet].every((value) => rightSet.has(value));
 }
 
 function hasPredictionEvidence(value: PredictionEvidenceRecord) {
@@ -491,33 +496,62 @@ function hasExplanationEvidence(value: ExplanationEvidenceRecord) {
 }
 
 function sameTermLists(observed: readonly LearnerTermRecord[], expected: readonly AlgebraTerm[]) {
-  return observed.length === expected.length &&
-    observed.every((term, index) => termMatches(term, expected[index]));
-}
-
-function sameReconstruction(observed: readonly LearnerReconstructionRecord[], expected: readonly ReconstructionRecord[]) {
-  return observed.length === expected.length &&
-    observed.every((record, index) => termMatches({
-      coefficient: record.product_coefficient,
-      x_exponent: record.product_x_exponent,
-      y_exponent: record.product_y_exponent,
-    }, expected[index].product_term));
-}
-
-function termMatches(observed: LearnerTermRecord, expected: AlgebraTerm) {
+  if (observed.length !== expected.length) return false;
   try {
-    return sameRational(parseRational(observed.coefficient), expected.coefficient) &&
-      parseInteger(observed.x_exponent) === expected.x_exponent &&
-      parseInteger(observed.y_exponent) === expected.y_exponent;
+    return sameCanonicalTerms(observed.map(parseLearnerTerm), expected);
   } catch {
     return false;
   }
 }
 
+function sameReconstruction(observed: readonly LearnerReconstructionRecord[], expected: readonly ReconstructionRecord[]) {
+  if (observed.length !== expected.length) return false;
+  try {
+    return sameCanonicalTerms(observed.map((record) => parseLearnerTerm({
+      coefficient: record.product_coefficient,
+      x_exponent: record.product_x_exponent,
+      y_exponent: record.product_y_exponent,
+    })), expected.map((record) => record.product_term));
+  } catch {
+    return false;
+  }
+}
+
+function parseLearnerTerm(observed: LearnerTermRecord): AlgebraTerm {
+  return {
+    coefficient: parseRational(observed.coefficient),
+    x_exponent: parseInteger(observed.x_exponent),
+    y_exponent: parseInteger(observed.y_exponent),
+  };
+}
+
+function sameCanonicalTerms(observed: readonly AlgebraTerm[], expected: readonly AlgebraTerm[]) {
+  const observedByPowers = termsByPowers(observed);
+  const expectedByPowers = termsByPowers(expected);
+  if (!observedByPowers || !expectedByPowers || observedByPowers.size !== expectedByPowers.size) return false;
+  return [...observedByPowers].every(([powers, coefficient]) => {
+    const expectedCoefficient = expectedByPowers.get(powers);
+    return expectedCoefficient !== undefined && sameRational(coefficient, expectedCoefficient);
+  });
+}
+
+function termsByPowers(terms: readonly AlgebraTerm[]) {
+  const byPowers = new Map<string, ExactRational>();
+  for (const term of terms) {
+    assertTerm(term);
+    const powers = `${term.x_exponent},${term.y_exponent}`;
+    if (byPowers.has(powers)) return null;
+    byPowers.set(powers, term.coefficient);
+  }
+  return byPowers;
+}
+
 function parseInteger(value: string) {
   const trimmed = value.trim();
   if (!/^-?(0|[1-9]\d*)$/.test(trimmed)) throw new RangeError("Expected an integer string");
-  return Number(trimmed);
+  const parsed = Number(trimmed);
+  if (!Number.isSafeInteger(parsed)) throw new RangeError("Expected a safe integer string");
+  return parsed;
 }
 
 function parseRational(value: string) {
