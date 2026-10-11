@@ -1,4 +1,4 @@
-# Issue #337 — seven-unit algebra R2
+# Issue #337 — seven-unit algebra R3
 
 This draft is the first cohesive, jurisdiction-neutral content slice for the
 owner-approved seven-unit classroom milestone. The private worksheets are not
@@ -13,12 +13,12 @@ diagnostics, and transfer tasks are original Mihur material.
 | Multistep distribute/both-sides families and exact step checker | Existing family builders generate positive integral solutions and do not compare equivalent equations | Negative-distribution, rational both-sides and equation-equivalence structures | Exact linear oracle, scale-equivalence and invalid-input tests |
 | Balance visual and guided distributive MVE | R1 described manipulation but did not point to an implemented negative/fractional both-side interaction | Reuse PR #340 exact-head equation-equivalence MVE contract while keeping routing explicitly unclaimed | Component head and remaining Frontend/Muse ownership are pinned |
 | R1 static diagnostic descriptions | No executable response-evidence selection, fresh exits or fading rule | Structured evidence classifier, misconception-specific seeded exits and three-stage scaffold fading | Correct/no-route, misconception, invalid-evidence and fresh-exit tests |
-| R1 prose transfer | No generated unfamiliar context or multi-field oracle | Seeded perimeter/rate transfer with model, quantities, units, exact verification and explanation fields | Deterministic replay, non-disclosure and independent reconstruction tests |
+| R1 prose transfer | No generated unfamiliar context or multi-field oracle; R2 mislabeled session counts and monetary quantities through one generic unit field | Seeded perimeter/rate transfer with typed units for each quantity and each verification total | Deterministic replay, non-disclosure, exact equation reconstruction and independent left/right total recomputation |
 | Advanced-number, polynomial and geometry families | Seven-unit depth is partial or absent for roots, polynomial division, power laws/geometry, and scientific notation division | Machine-readable row-per-question-type audit ranks real extensions and proposed gaps | Fail-closed status assertions; no inferred coverage |
 
 ## Scope and gates
 
-R2 deepens content evidence only for the first connected equation slice:
+R3 deepens content evidence only for the first connected equation slice:
 
 - exact rational two-step equations;
 - negative distribution;
