@@ -41,7 +41,7 @@ def test_provenance_is_complete_and_fail_closed() -> None:
 
     assert provenance["record_type"] == "MIHUR_CONTENT_PROVENANCE"
     assert provenance["package_id"] == "W1-G6-FRACTIONAL-PRISM-VOLUME"
-    assert provenance["revision"] == "middle-grades-fractional-prism-r2"
+    assert provenance["revision"] == "middle-grades-fractional-prism-r3"
     assert provenance["status"] == "DRAFT_UNVERIFIED"
     assert provenance["runtime_activation"] is False
     assert provenance["learner_data_writes"] is False
@@ -53,7 +53,7 @@ def test_provenance_is_complete_and_fail_closed() -> None:
     assert provenance["official_standards"]["mapping_status"] == "PROVISIONAL_NOT_ACCEPTED"
     assert provenance["official_standards"]["coverage_credit"] == "NONE"
     assert provenance["canonical"]["new_canonical_identity"] is False
-    assert provenance["independent_verdicts"]["mathematics"] == "PENDING"
+    assert provenance["independent_verdicts"]["mathematics"].startswith("REQUEST_CHANGES_AT_62197CC")
     assert provenance["independent_verdicts"]["muse_accessibility_and_assessment"] == "PENDING"
     assert provenance["independent_verdicts"]["deployment"] == "NOT_DEPLOYED"
 
@@ -168,6 +168,35 @@ def test_volume_and_inverse_oracles_are_independently_exact() -> None:
             assert item.exact_answer == expected_volume / expected_base == item.height
             assert item.expected_operation == "DIVIDE_VOLUME_BY_BASE_AREA"
             assert item.expected_unit_power == 1
+        assert item.expected_unit_family in {"unit", "cm", "m", "dm"}
+
+
+def test_mixed_edge_prediction_compares_like_volumes_at_fixed_reference_height() -> None:
+    variants = _variants()
+
+    for seed in range(250):
+        item = variants.generate(seed, "independent")
+        if item.structure != "MIXED_EDGE_VOLUME":
+            continue
+        reference_volume = item.base_area * 1
+        assert item.height > 1
+        assert item.volume > reference_volume
+        assert "reference prism" in item.prompt
+        assert "height 1 cm" in item.prompt
+        assert "greater or less than the base area" not in item.prompt
+
+
+def test_fractional_cell_model_repeats_partitions_across_whole_unit_cubes() -> None:
+    variants = _variants()
+
+    for seed in range(250):
+        item = variants.generate(seed, "guided")
+        if item.structure != "PACK_FRACTIONAL_CELLS":
+            continue
+        assert item.width.denominator == 1 and item.width >= 2
+        assert f"Arrange {item.width.numerator} unit cubes in a row" in item.prompt
+        assert "In every cube" in item.prompt
+        assert "full row and layers" in item.prompt
 
 
 def test_decomposition_matches_direct_product() -> None:
@@ -233,40 +262,47 @@ def test_all_seven_misconception_routes_are_response_specific() -> None:
         for seed in range(30)
         if (item := variants.generate(seed, "guided")).target == "height"
     )
-    assert variants.diagnose_response(volume, "DIVIDE_VOLUME_BY_BASE_AREA", volume.volume, 3) == (
+    assert variants.diagnose_response(volume, "DIVIDE_VOLUME_BY_BASE_AREA", volume.volume, volume.expected_unit_family, 3) == (
         "OPERATION_SELECTION_ERROR"
     )
-    assert variants.diagnose_response(volume, volume.expected_operation, volume.volume, 2) == (
+    assert variants.diagnose_response(volume, volume.expected_operation, volume.volume, volume.expected_unit_family, 2) == (
         "UNIT_DIMENSION_ERROR"
     )
-    assert variants.diagnose_response(volume, volume.expected_operation, volume.base_area, 3) == "AREA_AS_VOLUME"
+    assert variants.diagnose_response(volume, volume.expected_operation, volume.volume, "wrong-unit", 3) == (
+        "UNIT_DIMENSION_ERROR"
+    )
+    assert variants.diagnose_response(volume, volume.expected_operation, volume.base_area, volume.expected_unit_family, 3) == "AREA_AS_VOLUME"
     assert variants.diagnose_response(
         volume,
         volume.expected_operation,
         volume.length + volume.width + volume.height,
+        volume.expected_unit_family,
         3,
     ) == "ADDED_EDGE_LENGTHS"
     truncated = Fraction(int(volume.length) * int(volume.width) * int(volume.height))
     if truncated != volume.volume:
-        assert variants.diagnose_response(volume, volume.expected_operation, truncated, 3) == (
+        assert variants.diagnose_response(volume, volume.expected_operation, truncated, volume.expected_unit_family, 3) == (
             "IGNORED_FRACTIONAL_EDGE"
         )
     assert variants.diagnose_response(
         inverse,
         inverse.expected_operation,
         inverse.volume * inverse.base_area,
+        inverse.expected_unit_family,
         1,
     ) == "MULTIPLIED_INSTEAD_OF_DIVIDED"
     assert variants.diagnose_response(
         inverse,
         inverse.expected_operation,
         inverse.volume - inverse.base_area,
+        inverse.expected_unit_family,
         1,
     ) == "SUBTRACTED_BASE_FROM_VOLUME"
     assert variants.diagnose_response(
         inverse,
         inverse.expected_operation,
         inverse.exact_answer,
+        inverse.expected_unit_family,
         inverse.expected_unit_power,
     ) == "CORRECT_PRACTICE_ONLY"
 
@@ -288,15 +324,17 @@ def test_invalid_diagnostic_values_fail_closed() -> None:
     item = variants.generate(4, "guided")
 
     with pytest.raises(TypeError, match="PrismVariant"):
-        variants.diagnose_response({}, item.expected_operation, item.exact_answer, 3)
+        variants.diagnose_response({}, item.expected_operation, item.exact_answer, "unit", 3)
     with pytest.raises(TypeError, match="operation"):
-        variants.diagnose_response(item, None, item.exact_answer, 3)
+        variants.diagnose_response(item, None, item.exact_answer, "unit", 3)
     with pytest.raises(TypeError, match="exact_answer"):
-        variants.diagnose_response(item, item.expected_operation, True, 3)
+        variants.diagnose_response(item, item.expected_operation, True, "unit", 3)
+    with pytest.raises(TypeError, match="unit_family"):
+        variants.diagnose_response(item, item.expected_operation, item.exact_answer, None, 3)
     with pytest.raises(TypeError, match="unit_power"):
-        variants.diagnose_response(item, item.expected_operation, item.exact_answer, False)
+        variants.diagnose_response(item, item.expected_operation, item.exact_answer, "unit", False)
     with pytest.raises(ValueError, match="1, 2, or 3"):
-        variants.diagnose_response(item, item.expected_operation, item.exact_answer, 0)
+        variants.diagnose_response(item, item.expected_operation, item.exact_answer, "unit", 0)
 
 
 def test_draft_module_is_not_in_runtime_family_registry() -> None:
