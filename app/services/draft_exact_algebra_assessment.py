@@ -21,7 +21,7 @@ from enum import StrEnum
 from fractions import Fraction
 
 DRAFT_RUNTIME_ACTIVATION = False
-CONTRACT_VERSION = "issue-337-exact-r2"
+CONTRACT_VERSION = "issue-337-exact-r3"
 MAX_RESPONSE_TEXT = 120
 
 
@@ -30,6 +30,7 @@ class ExactAlgebraKind(StrEnum):
     ROOT_EQUATION = "ROOT_EQUATION"
     MONOMIAL_QUOTIENT = "MONOMIAL_QUOTIENT"
     POLYNOMIAL_QUOTIENT = "POLYNOMIAL_QUOTIENT"
+    POLYNOMIAL_AREA_TRANSFER = "POLYNOMIAL_AREA_TRANSFER"
     EXPONENT_LAWS = "EXPONENT_LAWS"
     SCIENTIFIC_NOTATION = "SCIENTIFIC_NOTATION"
     GEOMETRY_TRANSFER = "GEOMETRY_TRANSFER"
@@ -86,7 +87,7 @@ def _parse_fraction(value: object) -> Fraction:
     if not _FRACTION.fullmatch(text):
         raise ValueError("exact number must be an integer or reduced/ unreduced fraction")
     result = Fraction(text)
-    if abs(result.numerator) > 10**12 or result.denominator > 10**12:
+    if abs(result.numerator) > 10**18 or result.denominator > 10**18:
         raise ValueError("exact number is outside the accepted assessment range")
     return result
 
@@ -112,6 +113,20 @@ def _fraction_text(value: Fraction | int) -> str:
     return (
         str(value.numerator) if value.denominator == 1 else f"{value.numerator}/{value.denominator}"
     )
+
+
+def _parse_canonical_fraction(value: object) -> Fraction:
+    result = _parse_fraction(value)
+    if value.strip() != _fraction_text(result):
+        raise ValueError("polynomial coefficients must be reduced canonical fractions")
+    return result
+
+
+def _term_multiply(
+    left: tuple[Fraction, int, int],
+    right: tuple[Fraction, int, int],
+) -> tuple[Fraction, int, int]:
+    return left[0] * right[0], left[1] + right[1], left[2] + right[2]
 
 
 def _seeded(kind: ExactAlgebraKind, seed: int) -> tuple[random.Random, str]:
@@ -322,13 +337,73 @@ def _monomial(seed: int, *, polynomial: bool) -> HiddenExactVariant:
         "fields, and retain all restrictions from the original denominator."
     )
     response_fields = (
-        ("terms", "domain_restrictions")
+        (
+            "terms",
+            "domain_restrictions",
+            "coefficient_reason",
+            "exponent_reason",
+            "reconstruction",
+        )
         if polynomial
         else ("coefficient", "x_exponent", "y_exponent", "domain_restrictions")
     )
     oracle: Mapping[str, object]
     if polynomial:
-        oracle = {"terms": tuple(quotient_terms), "domain_restrictions": ("x", "y")}
+        divisor = (Fraction(divisor_coefficient), divisor_x, divisor_y)
+        reconstruction = tuple(
+            (quotient, divisor, dividend)
+            for quotient, dividend in zip(quotient_terms, dividend_terms, strict=True)
+        )
+        oracle = {
+            "terms": tuple(quotient_terms),
+            "domain_restrictions": ("x", "y"),
+            "coefficient_reason": "DIVIDEND_COEFFICIENT_DIVIDED_BY_DIVISOR_COEFFICIENT",
+            "exponent_reason": "DIVIDEND_EXPONENT_MINUS_DIVISOR_EXPONENT",
+            "reconstruction": reconstruction,
+        }
+        reciprocal_terms = tuple(
+            (
+                divisor[0] / dividend[0],
+                quotient[1],
+                quotient[2],
+            )
+            for quotient, dividend in zip(quotient_terms, dividend_terms, strict=True)
+        )
+        added_exponent_terms = tuple(
+            (
+                quotient[0],
+                dividend[1] + divisor_x,
+                dividend[2] + divisor_y,
+            )
+            for quotient, dividend in zip(quotient_terms, dividend_terms, strict=True)
+        )
+        alternatives = {
+            "POLY.DIV.COEFFICIENT_RECIPROCAL": {
+                **oracle,
+                "terms": reciprocal_terms,
+                "coefficient_reason": "DIVISOR_COEFFICIENT_DIVIDED_BY_DIVIDEND_COEFFICIENT",
+                "reconstruction": tuple(
+                    (term, divisor, _term_multiply(term, divisor)) for term in reciprocal_terms
+                ),
+            },
+            "POLY.DIV.ADD_EXPONENTS": {
+                **oracle,
+                "terms": added_exponent_terms,
+                "exponent_reason": "DIVIDEND_EXPONENT_PLUS_DIVISOR_EXPONENT",
+                "reconstruction": tuple(
+                    (term, divisor, _term_multiply(term, divisor)) for term in added_exponent_terms
+                ),
+            },
+            "POLY.DIV.ONE_TERM_ONLY": {
+                **oracle,
+                "terms": (quotient_terms[0],),
+                "reconstruction": (reconstruction[0],),
+            },
+            "POLY.DIV.DOMAIN_OMITTED": {
+                **oracle,
+                "domain_restrictions": (),
+            },
+        }
     else:
         coefficient, x_exp, y_exp = quotient_terms[0]
         oracle = {
@@ -347,6 +422,52 @@ def _monomial(seed: int, *, polynomial: bool) -> HiddenExactVariant:
             "dividend_terms": tuple(dividend_terms),
         },
         oracle,
+        alternatives if polynomial else {},
+    )
+
+
+def _polynomial_area_transfer(seed: int) -> HiddenExactVariant:
+    rng, variant_id = _seeded(ExactAlgebraKind.POLYNOMIAL_AREA_TRANSFER, seed)
+    height = (Fraction(rng.choice((2, 3, 4))), rng.randint(1, 2), rng.randint(0, 1))
+    width_terms = tuple(
+        sorted(
+            (
+                (Fraction(rng.choice((2, 3, 5))), rng.randint(0, 2), 1),
+                (Fraction(rng.choice((3, 4, 6))), rng.randint(0, 1), 2),
+            ),
+            key=lambda term: (-term[1], -term[2], term[0]),
+        )
+    )
+    area_terms = tuple(_term_multiply(width, height) for width in width_terms)
+    restrictions = tuple(
+        variable for variable, exponent in zip(("x", "y"), height[1:], strict=True) if exponent > 0
+    )
+    reconstruction = tuple(
+        (width, height, area) for width, area in zip(width_terms, area_terms, strict=True)
+    )
+    return HiddenExactVariant(
+        variant_id,
+        ExactAlgebraKind.POLYNOMIAL_AREA_TRANSFER,
+        (
+            "A composite rectangle has two algebraic area terms and one shared monomial "
+            "height. Recover both width terms, give the total width, retain every original "
+            "nonzero restriction, and reconstruct both square-unit areas."
+        ),
+        (
+            "width_terms",
+            "total_width_terms",
+            "domain_restrictions",
+            "multiplication_checks",
+            "units",
+        ),
+        {"common_height": height, "area_terms": area_terms},
+        {
+            "width_terms": width_terms,
+            "total_width_terms": width_terms,
+            "domain_restrictions": restrictions,
+            "multiplication_checks": reconstruction,
+            "units": ("units", "square units"),
+        },
         {},
     )
 
@@ -501,6 +622,7 @@ def generate_hidden_variant(kind: ExactAlgebraKind, seed: int) -> HiddenExactVar
         ExactAlgebraKind.ROOT_EQUATION: _root,
         ExactAlgebraKind.MONOMIAL_QUOTIENT: lambda value: _monomial(value, polynomial=False),
         ExactAlgebraKind.POLYNOMIAL_QUOTIENT: lambda value: _monomial(value, polynomial=True),
+        ExactAlgebraKind.POLYNOMIAL_AREA_TRANSFER: _polynomial_area_transfer,
         ExactAlgebraKind.EXPONENT_LAWS: _exponents,
         ExactAlgebraKind.SCIENTIFIC_NOTATION: _scientific,
         ExactAlgebraKind.GEOMETRY_TRANSFER: _geometry,
@@ -598,16 +720,21 @@ def _root_substitution_checks(
     return tuple(sorted(parsed, key=lambda record: record[0]))
 
 
-def _terms(value: object) -> tuple[tuple[Fraction, int, int], ...]:
-    if not isinstance(value, list) or len(value) != 2:
-        raise ValueError("polynomial quotient requires exactly two term records")
+def _terms(
+    value: object,
+    *,
+    minimum: int = 1,
+    maximum: int = 4,
+) -> tuple[tuple[Fraction, int, int], ...]:
+    if not isinstance(value, list) or not minimum <= len(value) <= maximum:
+        raise ValueError(f"polynomial response requires {minimum} to {maximum} term records")
     parsed: list[tuple[Fraction, int, int]] = []
     for term in value:
         if not isinstance(term, dict) or set(term) != {"coefficient", "x_exponent", "y_exponent"}:
             raise ValueError("each term requires coefficient, x_exponent and y_exponent")
         parsed.append(
             (
-                _parse_fraction(term["coefficient"]),
+                _parse_canonical_fraction(term["coefficient"]),
                 _integer(term["x_exponent"]),
                 _integer(term["y_exponent"]),
             )
@@ -615,6 +742,41 @@ def _terms(value: object) -> tuple[tuple[Fraction, int, int], ...]:
     if len({(term[1], term[2]) for term in parsed}) != len(parsed):
         raise ValueError("polynomial term records must have unique exponent pairs")
     return tuple(sorted(parsed, key=lambda term: (-term[1], -term[2], term[0])))
+
+
+def _reconstruction(
+    value: object,
+    *,
+    minimum: int = 1,
+    maximum: int = 4,
+) -> tuple[tuple[tuple[Fraction, int, int], ...], ...]:
+    if not isinstance(value, list) or not minimum <= len(value) <= maximum:
+        raise ValueError(f"reconstruction requires {minimum} to {maximum} records")
+    required = {"quotient_term", "divisor_term", "product_term"}
+    parsed: list[tuple[tuple[Fraction, int, int], ...]] = []
+    for record in value:
+        if not isinstance(record, dict) or set(record) != required:
+            raise ValueError(
+                "each reconstruction requires quotient_term, divisor_term and product_term"
+            )
+        quotient = _terms([record["quotient_term"]], maximum=1)[0]
+        divisor = _terms([record["divisor_term"]], maximum=1)[0]
+        product = _terms([record["product_term"]], maximum=1)[0]
+        if _term_multiply(quotient, divisor) != product:
+            raise ValueError("reconstruction product must be recomputed exactly")
+        parsed.append((quotient, divisor, product))
+    quotient_powers = [(record[0][1], record[0][2]) for record in parsed]
+    if len(set(quotient_powers)) != len(quotient_powers):
+        raise ValueError("reconstruction must not repeat quotient exponent pairs")
+    return tuple(sorted(parsed, key=lambda record: (-record[0][1], -record[0][2], record[0][0])))
+
+
+def _polynomial_units(value: object) -> tuple[str, str]:
+    if not isinstance(value, dict) or set(value) != {"width", "area"}:
+        raise ValueError("transfer units require width and area fields")
+    if value["width"] != "units" or value["area"] != "square units":
+        raise ValueError("transfer units must preserve width and area dimensions")
+    return value["width"], value["area"]
 
 
 def _normalize_response(
@@ -655,11 +817,52 @@ def _normalize_response(
             "domain_restrictions": _restrictions(response["domain_restrictions"]),
         }
     if kind == ExactAlgebraKind.POLYNOMIAL_QUOTIENT:
-        if set(response) != {"terms", "domain_restrictions"}:
+        required = {
+            "terms",
+            "domain_restrictions",
+            "coefficient_reason",
+            "exponent_reason",
+            "reconstruction",
+        }
+        if set(response) != required:
             raise ValueError("polynomial response fields do not match the contract")
+        coefficient_reason = response["coefficient_reason"]
+        if coefficient_reason not in {
+            "DIVIDEND_COEFFICIENT_DIVIDED_BY_DIVISOR_COEFFICIENT",
+            "DIVISOR_COEFFICIENT_DIVIDED_BY_DIVIDEND_COEFFICIENT",
+        }:
+            raise ValueError("unsupported coefficient_reason")
+        exponent_reason = response["exponent_reason"]
+        if exponent_reason not in {
+            "DIVIDEND_EXPONENT_MINUS_DIVISOR_EXPONENT",
+            "DIVIDEND_EXPONENT_PLUS_DIVISOR_EXPONENT",
+        }:
+            raise ValueError("unsupported exponent_reason")
         return {
             "terms": _terms(response["terms"]),
             "domain_restrictions": _restrictions(response["domain_restrictions"]),
+            "coefficient_reason": coefficient_reason,
+            "exponent_reason": exponent_reason,
+            "reconstruction": _reconstruction(response["reconstruction"]),
+        }
+    if kind == ExactAlgebraKind.POLYNOMIAL_AREA_TRANSFER:
+        required = {
+            "width_terms",
+            "total_width_terms",
+            "domain_restrictions",
+            "multiplication_checks",
+            "units",
+        }
+        if set(response) != required:
+            raise ValueError("polynomial transfer fields do not match the contract")
+        return {
+            "width_terms": _terms(response["width_terms"], minimum=2, maximum=2),
+            "total_width_terms": _terms(response["total_width_terms"], minimum=2, maximum=2),
+            "domain_restrictions": _restrictions(response["domain_restrictions"]),
+            "multiplication_checks": _reconstruction(
+                response["multiplication_checks"], minimum=2, maximum=2
+            ),
+            "units": _polynomial_units(response["units"]),
         }
     if kind == ExactAlgebraKind.EXPONENT_LAWS:
         if set(response) != {"result_exponent", "exact_value"}:

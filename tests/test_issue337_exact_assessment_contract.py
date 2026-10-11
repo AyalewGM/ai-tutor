@@ -31,6 +31,30 @@ def _wire_exact_real(value: contract.ExactReal) -> dict[str, object]:
     }
 
 
+def _wire_term(value: tuple[Fraction, int, int]) -> dict[str, object]:
+    coefficient, x_exponent, y_exponent = value
+    return {
+        "coefficient": _wire_fraction(coefficient),
+        "x_exponent": x_exponent,
+        "y_exponent": y_exponent,
+    }
+
+
+def _wire_reconstruction(
+    value: tuple[
+        tuple[Fraction, int, int],
+        tuple[Fraction, int, int],
+        tuple[Fraction, int, int],
+    ],
+) -> dict[str, object]:
+    quotient, divisor, product = value
+    return {
+        "quotient_term": _wire_term(quotient),
+        "divisor_term": _wire_term(divisor),
+        "product_term": _wire_term(product),
+    }
+
+
 def _correct_wire_response(variant: contract.HiddenExactVariant) -> dict[str, object]:
     oracle = variant.oracle
     if variant.kind == contract.ExactAlgebraKind.LINEAR_EQUATION:
@@ -68,15 +92,21 @@ def _correct_wire_response(variant: contract.HiddenExactVariant) -> dict[str, ob
         }
     if variant.kind == contract.ExactAlgebraKind.POLYNOMIAL_QUOTIENT:
         return {
-            "terms": [
-                {
-                    "coefficient": _wire_fraction(coefficient),
-                    "x_exponent": x_exponent,
-                    "y_exponent": y_exponent,
-                }
-                for coefficient, x_exponent, y_exponent in oracle["terms"]
-            ],
+            "terms": [_wire_term(term) for term in oracle["terms"]],
             "domain_restrictions": list(oracle["domain_restrictions"]),
+            "coefficient_reason": oracle["coefficient_reason"],
+            "exponent_reason": oracle["exponent_reason"],
+            "reconstruction": [_wire_reconstruction(record) for record in oracle["reconstruction"]],
+        }
+    if variant.kind == contract.ExactAlgebraKind.POLYNOMIAL_AREA_TRANSFER:
+        return {
+            "width_terms": [_wire_term(term) for term in oracle["width_terms"]],
+            "total_width_terms": [_wire_term(term) for term in oracle["total_width_terms"]],
+            "domain_restrictions": list(oracle["domain_restrictions"]),
+            "multiplication_checks": [
+                _wire_reconstruction(record) for record in oracle["multiplication_checks"]
+            ],
+            "units": {"width": oracle["units"][0], "area": oracle["units"][1]},
         }
     if variant.kind == contract.ExactAlgebraKind.EXPONENT_LAWS:
         return {
@@ -305,6 +335,8 @@ def test_polynomial_scoring_accepts_commuted_unlike_terms_and_rejects_duplicate_
     variant = contract.generate_hidden_variant(contract.ExactAlgebraKind.POLYNOMIAL_QUOTIENT, 23)
     response = _correct_wire_response(variant)
     response["terms"].reverse()
+    response["reconstruction"].reverse()
+    response["domain_restrictions"].reverse()
     assert contract.score_exact_response(variant, response).is_correct is True
 
     duplicate = _correct_wire_response(variant)
@@ -312,6 +344,73 @@ def test_polynomial_scoring_accepts_commuted_unlike_terms_and_rejects_duplicate_
     duplicate["terms"][1]["y_exponent"] = duplicate["terms"][0]["y_exponent"]
     with pytest.raises(ValueError, match="unique exponent pairs"):
         contract.score_exact_response(variant, duplicate)
+
+
+def test_polynomial_scoring_requires_typed_reasons_and_exact_reconstruction() -> None:
+    variant = contract.generate_hidden_variant(contract.ExactAlgebraKind.POLYNOMIAL_QUOTIENT, 41)
+
+    for code in (
+        "POLY.DIV.COEFFICIENT_RECIPROCAL",
+        "POLY.DIV.ADD_EXPONENTS",
+        "POLY.DIV.ONE_TERM_ONLY",
+        "POLY.DIV.DOMAIN_OMITTED",
+    ):
+        response = dict(variant.misconception_responses[code])
+        wire = {
+            "terms": [_wire_term(term) for term in response["terms"]],
+            "domain_restrictions": list(response["domain_restrictions"]),
+            "coefficient_reason": response["coefficient_reason"],
+            "exponent_reason": response["exponent_reason"],
+            "reconstruction": [
+                _wire_reconstruction(record) for record in response["reconstruction"]
+            ],
+        }
+        score = contract.score_exact_response(variant, wire)
+        assert score == contract.ExactScore(False, code, assistance_level=0)
+
+    malformed = _correct_wire_response(variant)
+    malformed["reconstruction"][0]["product_term"]["x_exponent"] += 1
+    with pytest.raises(ValueError, match="recomputed exactly"):
+        contract.score_exact_response(variant, malformed)
+
+    noncanonical = _correct_wire_response(variant)
+    noncanonical["terms"][0]["coefficient"] += "/1"
+    with pytest.raises(ValueError, match="canonical fractions"):
+        contract.score_exact_response(variant, noncanonical)
+
+
+def test_polynomial_area_transfer_is_exact_order_independent_and_dimension_typed() -> None:
+    for seed in range(100):
+        variant = contract.generate_hidden_variant(
+            contract.ExactAlgebraKind.POLYNOMIAL_AREA_TRANSFER,
+            seed,
+        )
+        height = variant.parameters["common_height"]
+        for width, reconstruction in zip(
+            variant.oracle["width_terms"],
+            variant.oracle["multiplication_checks"],
+            strict=True,
+        ):
+            assert reconstruction == (
+                width,
+                height,
+                (
+                    width[0] * height[0],
+                    width[1] + height[1],
+                    width[2] + height[2],
+                ),
+            )
+        response = _correct_wire_response(variant)
+        response["width_terms"].reverse()
+        response["total_width_terms"].reverse()
+        response["multiplication_checks"].reverse()
+        response["domain_restrictions"].reverse()
+        assert contract.score_exact_response(variant, response).is_correct is True
+
+        wrong_units = _correct_wire_response(variant)
+        wrong_units["units"]["area"] = "units"
+        with pytest.raises(ValueError, match="width and area dimensions"):
+            contract.score_exact_response(variant, wrong_units)
 
 
 def test_exponent_oracle_covers_positive_zero_and_negative_results_exactly() -> None:
