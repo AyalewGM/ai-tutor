@@ -251,7 +251,7 @@ def _generate_one(structure: str, variant: int, seed: int) -> dict:
             "base-area-only", str(length * width),
             "Base area counts one layer; volume requires all layers.",
             "Layered unit-cube prism showing length, width, and height.",
-            f"{volume} / {height} = {length * width} square centimetres per layer.")
+            f"{volume} / {height} = {length * width} square centimetres of base area (cm²); dividing cubic-centimetre volume by centimetre height gives area, not a per-layer rate.")
     if structure == "algebra-unknown-start":
         multiplier, start, fee = n(2, 8), n(4, 22), n(3, 30)
         total = multiplier * start + fee
