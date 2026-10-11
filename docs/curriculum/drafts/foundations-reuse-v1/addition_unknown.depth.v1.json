@@ -35,7 +35,7 @@
     },
     {
       "phase": "EXPLAIN",
-      "prompt": "Write an equation with the box in the story's unknown position; explain equality as two names for the same quantity and give an inverse check."
+      "prompt": "Write a box equation matching the story's unknown position, show a true inverse check, choose the relationship reason and explain in your own words how the groups preserve equality. Explanatory prose requires independent human/pedagogical assessment."
     },
     {
       "phase": "PRACTICE",
@@ -43,7 +43,7 @@
     },
     {
       "phase": "DIAGNOSE",
-      "prompt": "Route the learner from claimed role plus numeric response to one evidence-specific repair; require a different-structure exit item before fading counters."
+      "prompt": "Route from the complete captured unknown role, model equation, exact answer, inverse check and structured explanation claim. A correct number with a false equation or inverse check is not complete reasoning; the guided evaluator never awards mastery."
     },
     {
       "phase": "TRANSFER",
@@ -78,6 +78,24 @@
       "observed_evidence": "The response exactly copies a visible known quantity instead of satisfying the relationship.",
       "probe": "If the missing region had that many counters, would both sides show the same total?",
       "repair": "Test the copied value physically, compare totals, and adjust only the unknown region."
+    },
+    {
+      "error": "MODEL_EQUATION_INCORRECT",
+      "observed_evidence": "Correct numeric answer but the submitted box equation has the wrong position, known quantities or false equality.",
+      "probe": "Which group is missing in the story? Does replacing the box with your answer make both sides equal?",
+      "repair": "Rebuild the counters in story order, label the unknown region, and test a different box-position equation before an unseen check."
+    },
+    {
+      "error": "INVERSE_CHECK_INCORRECT",
+      "observed_evidence": "Correct numeric answer and story equation but a substituted subtraction check does not reconstruct the given whole and part.",
+      "probe": "Which subtraction undoes the addition in your model? Do both sides equal the same number after substitution?",
+      "repair": "Build the whole and known part separately, remove the known part, then check a new story using the inverse relation."
+    },
+    {
+      "error": "EXPLANATION_EVIDENCE_INCOMPLETE",
+      "observed_evidence": "The learner omits the reason claim, copies the story, or supplies an invalid structured relationship code despite a plausible numeric result.",
+      "probe": "What do the two sides represent? Why does your inverse check recover the missing group?",
+      "repair": "Ask for a new learner-authored explanation and different-number example; no automatic semantic mastery is inferred from length or a reason code."
     }
   ],
   "accessibility": {
@@ -106,7 +124,16 @@
     "hints_allowed": false,
     "guided_mve_visible": false,
     "guided_practice_credit": false,
-    "backend_status": "NOT_IMPLEMENTED"
+    "backend_status": "NOT_IMPLEMENTED",
+    "guided_relation_evaluator": "diagnose_relation_evidence (guided only, no mastery writes)",
+    "explanation_evidence": {
+      "reason_code": "STRUCTURE_SPECIFIC_ENUM",
+      "reasoning": "LEARNER_TEXT_CAPTURED_NOT_SEMANTICALLY_SCORED",
+      "semantic_verification": "NOT_IMPLEMENTED_BACKEND_OR_INDEPENDENT_REVIEW"
+    },
+    "complete_guided_status": "CORRECT_STRUCTURED_PRACTICE_ONLY_EXPLANATION_UNVERIFIED",
+    "independent_evaluation": "NOT_IMPLEMENTED_BACKEND"
   },
-  "review_status": "PENDING_INDEPENDENT_R2_REVIEW"
+  "review_status": "PENDING_INDEPENDENT_R2_REVIEW",
+  "correction_revision": "foundations-reuse-r2-relation-evidence-20261011"
 }
