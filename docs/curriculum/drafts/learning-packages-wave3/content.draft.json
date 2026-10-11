@@ -837,6 +837,36 @@
           "hints_allowed": false,
           "feedback_after_submission": true,
           "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        },
+        {
+          "question": "Classify y=4x+1 and y=4x−3: zero, one, or infinitely many real solution pairs? Justify using the coefficients.",
+          "answer": "no solution",
+          "oracle": "Subtract the equations to obtain 1=−3 (contradiction); equal slopes with unequal intercepts",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES",
+          "solution_count": "ZERO",
+          "teacher_oracle_visibility": "SERVER_ONLY"
+        },
+        {
+          "question": "Classify 3x+2y=12 and 6x+4y=24. Provide two distinct ordered pairs satisfying both and justify the number of solutions.",
+          "answer": "infinitely many solutions; example pairs (0,6) and (2,3)",
+          "oracle": "Second equation equals twice the first; (0,6) and (2,3) each satisfy both, proving the same line and multiple solutions",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES",
+          "solution_count": "INFINITE",
+          "teacher_oracle_visibility": "SERVER_ONLY"
+        },
+        {
+          "question": "Classify x+y=7 and x−y=3, then find and verify the intersection in both equations.",
+          "answer": "one solution: (5,2)",
+          "oracle": "Adding equations gives 2x=10; x=5, y=2; 5+2=7 and 5−2=3",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES",
+          "solution_count": "ONE",
+          "teacher_oracle_visibility": "SERVER_ONLY"
         }
       ],
       "interactive_spec": {
@@ -846,7 +876,18 @@
         "reduced_motion": true,
         "scaffold_disable_on_assessment": true
       },
-      "implementation_note": "DRAFT content contract only, not a tested generator or deployed UI"
+      "implementation_note": "DRAFT content contract only, not a tested generator or deployed UI",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "cases": [
+          "ZERO",
+          "ONE",
+          "INFINITE"
+        ],
+        "rubric": "Score solution-set cardinality and reasoning independently from coordinate verification. A correct pair alone is not proof for no/infinite solutions; equivalent-equation reasoning needed.",
+        "canonical_reuse": "MATH.SYS.CLASSIFY + MATH.SYS.CHECK.SOLUTION, not a new identity",
+        "independent_review": "REQUESTED_NOT_APPROVED"
+      }
     }
   ]
 }
