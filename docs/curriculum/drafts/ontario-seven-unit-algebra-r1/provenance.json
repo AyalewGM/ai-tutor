@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "record_type": "MIHUR_CONTENT_PROVENANCE",
   "package_id": "ALG-EQUATION-REASONING-R1",
-  "revision": "issue-337-r2",
+  "revision": "issue-337-r3",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "learner_data_writes": false,
@@ -77,7 +77,7 @@
     },
     "misconception_routing": "STRUCTURED_EVIDENCE_CLASSIFIER_AND_SEEDED_EXITS_TESTED_NOT_WIRED",
     "scaffold_fading": "THREE_STAGE_CONTENT_CONTRACT_TESTED_NOT_WIRED",
-    "unseen_transfer": "LOCAL_SEEDED_MULTI_FIELD_GENERATOR_TESTED_NOT_WIRED",
+    "unseen_transfer": "LOCAL_SEEDED_TYPED_UNIT_MULTI_FIELD_GENERATOR_TESTED_NOT_WIRED",
     "equation_mve": "PR_340_IMPLEMENTED_UNROUTED_NOT_PACKAGE_INTEGRATED"
   },
   "practice_and_assessment": {
@@ -91,8 +91,8 @@
     "historical_mastery_affected": false
   },
   "independent_reviews": {
-    "mathematics": "PENDING",
-    "pedagogy": "CHANGES_REQUIRED_AT_3c8e2e6_R2_REVIEW_REQUIRED",
+    "mathematics": "REQUEST_CHANGES_AT_d29bd42e_SERVICE_RATE_UNITS; R3_TARGETED_REVIEW_REQUIRED",
+    "pedagogy": "ACCEPT_AT_d29bd42e_WITH_PR_347_9c1e2a8; R3_UNIT_CONTRACT_DOES_NOT_REOPEN_ROUTED_JOURNEY",
     "standards": "PENDING",
     "muse_qa": "PENDING_EXTERNAL_VERIFICATION",
     "engineering_integration": "NOT_REQUESTED",
