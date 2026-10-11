@@ -231,9 +231,17 @@ def evaluate_guided_response(item: Any, response: Mapping[str, Any]) -> dict[str
         Fraction(1) <= abs(coefficient) < 10
     ):
         misconception = "SCI.NOT_NORMALIZED"
-    elif operation == "MULTIPLY" and exponent == parameters["e1"] * parameters["e2"]:
+    elif (
+        operation == "MULTIPLY"
+        and exponent != expected_exponent
+        and exponent == parameters["e1"] * parameters["e2"]
+    ):
         misconception = "SCI.PRODUCT.EXPONENTS_MULTIPLIED"
-    elif operation == "DIVIDE" and exponent == parameters["e1"] + parameters["e2"]:
+    elif (
+        operation == "DIVIDE"
+        and exponent != expected_exponent
+        and exponent == parameters["e1"] + parameters["e2"]
+    ):
         misconception = "SCI.QUOTIENT.EXPONENTS_ADDED"
     elif coefficient == expected_coefficient and exponent != expected_exponent:
         misconception = "SCI.EXPONENT.DIRECTION"
