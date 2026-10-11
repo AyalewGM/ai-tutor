@@ -93,6 +93,9 @@ def test_quadratic_pattern_uses_constant_second_differences(seed: int) -> None:
     assert reconstructed_next == answer["stage_4_prediction"]
     assert set(parameters) == {"stage_inputs", "tile_counts"}
     assert "leading_coefficient" not in parameters
+    assert "constant second differences" in record["prompt"]
+    assert "at every later stage" in record["prompt"]
+    assert str(answer["stage_4_prediction"]) not in record["prompt"]
     assert set(record["response_fields"]) == {
         "first_differences",
         "second_differences",
