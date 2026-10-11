@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "package_id": "MG-G7-RATIONAL-SCALE-INVERSE",
-  "revision": "middle-grades-rational-scale-v1-r3",
+  "revision": "middle-grades-rational-scale-v1-r4",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "mastery_writes": false,
@@ -25,7 +25,8 @@
     ],
     "actual_gap": "The R2 package connected direction, scale, and inverse equations, but independent pedagogy review found that only one misconception was operationally diagnosed, coordinate substitution was not authentic transfer, and independent items collected a number rather than concept evidence.",
     "planned_improvement": "R3 adds a six-field entry diagnostic with explicit routes to all four repairs, follow-up and scaffold-fade criteria; unfamiliar calibration-log transfer requiring operation selection; and unseen multi-part variants that collect operation, inverse strategy, direction, magnitude, exact result, and recomposition evidence.",
-    "verification": "Local deterministic exact-Fraction, route-classification, multi-part oracle, answer non-disclosure, and contrast-case tests; independent pedagogy re-review plus standards, mathematics, backend, and Muse reviews still required before integration."
+    "verification": "Local deterministic exact-Fraction, route-classification, multi-part oracle, answer non-disclosure, and contrast-case tests; independent pedagogy re-review plus standards, mathematics, backend, and Muse reviews still required before integration.",
+    "r4_corrective_scope": "R3 independent pedagogy identified missing correct-response state and ambiguous missing-scale direction. R4 checks all six guided evidence fields for CORRECT_NO_REMEDIATION and explicitly asks for output direction, not hidden-scale sign. New code/tests remain author evidence only; independent R4 acceptance is deferred."
   },
   "standards": {
     "jurisdiction": "Maryland",
@@ -66,7 +67,7 @@
       "docs/curriculum/drafts/learning-packages-wave2/SEEDABLE_VARIANTS_REVIEW.md"
     ],
     "rationale": "Independent review requires authentic phase progression, diagnosis tied to observed response fields, domain-specific accessibility, genuinely unseen operation selection, and concept-level verification; references are evidence constraints, not copied instructional material.",
-    "status": "R2_CHANGES_REQUIRED_R3_AWAITING_PEDAGOGY_REREVIEW"
+    "status": "R3_CHANGES_REQUIRED_R4_REVIEW_DEFERRED"
   },
   "coverage": {
     "mihur_phases": [
@@ -84,7 +85,7 @@
       "VISUAL",
       "SYMBOLIC"
     ],
-    "misconception_pathways": "R3_OPERATIONAL_CONTENT_CONTRACT_LOCAL_TESTED",
+    "misconception_pathways": "R4_CORRECT_EVIDENCE_AND_OUTPUT_DIRECTION_CONTENT_CONTRACT",
     "scope_boundary": {
       "included": [
         "signed rational multiplication as direction and scale",
@@ -102,7 +103,7 @@
   "practice_and_assessment": {
     "seeded_practice": "DRAFT_GENERATOR_LOCAL_ONLY",
     "independent_exact_oracle": "MULTI_PART_LOCAL_TESTED_NOT_INDEPENDENTLY_VERIFIED",
-    "unseen_assessment": "RESERVED_NAMESPACE_WITH_OPERATION_INVERSE_STRATEGY_DIRECTION_MAGNITUDE_RESULT_RECOMPOSITION",
+    "unseen_assessment": "RESERVED_NAMESPACE_WITH_OPERATION_INVERSE_STRATEGY_OUTPUT_DIRECTION_MAGNITUDE_RESULT_RECOMPOSITION",
     "assessment_contrast_cases": [
       "MISSING_SCALE_INVERT_DIVISOR_NOT_COMPONENTWISE",
       "NEGATIVE_DIRECTION_WITH_GROWING_MAGNITUDE"
@@ -110,12 +111,13 @@
     "server_trusted_scoring": "REQUIRED_NOT_IMPLEMENTED",
     "hints_in_independent_mode": false,
     "guided_practice_credit": false,
-    "historical_mastery_affected": false
+    "historical_mastery_affected": false,
+    "guided_success": "CORRECT_NO_REMEDIATION_FULL_FIELD_ONLY_NO_MASTERY_CREDIT"
   },
   "approvals": {
     "standards": "PENDING",
     "mathematics": "PENDING",
-    "pedagogy": "R2_CHANGES_REQUIRED_R3_REREVIEW_PENDING",
+    "pedagogy": "R3_CHANGES_REQUIRED_R4_REVIEW_DEFERRED",
     "muse_accessibility_and_assessment": "PENDING",
     "engineering_integration": "NOT_REQUESTED",
     "release": "NOT_APPROVED"
