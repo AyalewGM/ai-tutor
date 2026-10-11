@@ -1,0 +1,1238 @@
+{
+  "schema_version": 1,
+  "artifact_id": "algebra-canonical-scope-cards-r1",
+  "revision": "2026-10-11-r1",
+  "review_state": "DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
+  "authority": "NONE_NOT_FOR_RUNTIME",
+  "source_review": {
+    "architecture_decision": "Issue #282 comment 6107538656",
+    "mathematical_findings": "Issue #337 comment 6107454411",
+    "engineering_handoff": "Issue #278 comment 6107540805",
+    "collision_snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454"
+  },
+  "constraints": [
+    "Curriculum Content authored these definitions from Architecture-decided mathematical boundaries; this is not self-approval.",
+    "Production TAXONOMY remains empty and unchanged.",
+    "Historical MATH.NS.EXPONENTS, MATH.NS.SCIENTIFIC_NOTATION, MATH.NS.ROOTS and MATH.EE.POLYNOMIAL_OPERATIONS meanings, UUIDs, mappings and learner evidence are not expanded, aliased, rekeyed or reinterpreted.",
+    "Generator-family literals and passing tests are implementation evidence only, never identity or mathematical authority.",
+    "No jurisdiction-specific identity is introduced and no standards coverage is claimed.",
+    "One response has one primary atom; reporting profiles create no attempt, diagnostic, mastery, UUID, variant namespace, back-credit or duplicate credit."
+  ],
+  "cards": [
+    {
+      "proposed_code": "MATH.EXPONENT.LAW.PRODUCT",
+      "title": "Product of powers with the same base",
+      "identity_status": "ARCHITECTURE_BOUNDARY_DECIDED__PROPOSED_LABEL_PENDING_COLLISION_CONFIRMATION",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PRODUCTION_TAXONOMY_OR_MERGED_CANDIDATE_SCOPE_REGISTRIES",
+        "snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454",
+        "search_date": "2026-10-11",
+        "possible_overlaps": [
+          "MATH.NS.EXPONENTS",
+          "MATH.EXP.PRODUCT"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
+        "authority_caveat": "This proposed label and collision audit do not confer canonical, alias, runtime, standards-mapping, assessment, or mastery authority."
+      },
+      "scope_rule": "For a common base a and integer exponents m,n, multiply defined powers by adding exponents: a^m·a^n=a^(m+n). If any exponent is negative, require a≠0; exclude 0^0.",
+      "inclusions": [
+        "same explicit base",
+        "integer exponents including positive, zero and negative",
+        "numeric and symbolic bases with declared domain",
+        "equivalent reciprocal form for negative resultant exponents"
+      ],
+      "exclusions": [
+        "unlike bases",
+        "adding or multiplying bases",
+        "rational exponents and roots",
+        "undefined 0^0 or zero base with a negative exponent",
+        "automatic evidence for quotient, power-of-power, zero-exponent or negative-exponent atoms"
+      ],
+      "prerequisite_concepts": [
+        "integer addition",
+        "meaning of a power",
+        "multiplication of equal factors",
+        "nonzero denominator restriction"
+      ],
+      "boundary_conditions": [
+        "zero resultant exponent is evaluated through the separate zero-exponent rule",
+        "negative resultant exponent is expressed through the separate reciprocal rule",
+        "zero base is allowed only when both input powers and the result are defined"
+      ],
+      "examples": [
+        {
+          "input": "x^3 · x^5",
+          "assumptions": [
+            "x is real"
+          ],
+          "answer": "x^8"
+        },
+        {
+          "input": "x^3 · x^-5",
+          "assumptions": [
+            "x≠0"
+          ],
+          "answer": "x^-2 = 1/x^2"
+        },
+        {
+          "input": "0^2 · 0^3",
+          "answer": "0^5 = 0"
+        },
+        {
+          "input": "0^0 · 0^2",
+          "valid": false,
+          "rationale": "0^0 is undefined in this contract"
+        }
+      ],
+      "misconceptions": [
+        {
+          "code": "EXP.PRODUCT.MULTIPLY_EXPONENTS",
+          "response_pattern": "a^m·a^n → a^(mn)",
+          "mathematical_reason": "multiplication concatenates equal factors, so counts add",
+          "remediation_target": "expand a small example and count factors"
+        },
+        {
+          "code": "EXP.PRODUCT.ADD_BASES",
+          "response_pattern": "a^m·a^n → (2a)^(m+n)",
+          "mathematical_reason": "the common base is not added",
+          "remediation_target": "separate base value from factor count"
+        },
+        {
+          "code": "EXP.PRODUCT.DROP_DOMAIN",
+          "response_pattern": "uses negative exponents with a=0",
+          "mathematical_reason": "a negative power contains division by a",
+          "remediation_target": "rewrite as a reciprocal and inspect the denominator"
+        }
+      ],
+      "assessment_evidence": {
+        "rule": "Mastery requires independent, unassisted evidence for this atom; an integrated response has one primary atom and cannot back-credit other atoms.",
+        "required": [
+          "one positive-result case",
+          "one zero-result case with nonzero base",
+          "one negative-result case with explicit a≠0",
+          "one misconception diagnosis"
+        ],
+        "exact_oracle": "canonicalize the integer exponent sum and, when negative, the mathematically equivalent reciprocal under the submitted domain restriction",
+        "independence": [
+          "assessment variant and oracle are server-owned",
+          "guided steps, hints and worked answers are absent",
+          "equivalent mathematical forms are canonicalized before comparison"
+        ],
+        "non_inference": [
+          "does not prove quotient or power-of-power laws",
+          "does not independently prove zero or negative exponent meaning"
+        ]
+      }
+    },
+    {
+      "proposed_code": "MATH.EXPONENT.LAW.QUOTIENT",
+      "title": "Quotient of powers with the same nonzero base",
+      "identity_status": "ARCHITECTURE_BOUNDARY_DECIDED__PROPOSED_LABEL_PENDING_COLLISION_CONFIRMATION",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PRODUCTION_TAXONOMY_OR_MERGED_CANDIDATE_SCOPE_REGISTRIES",
+        "snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454",
+        "search_date": "2026-10-11",
+        "possible_overlaps": [
+          "MATH.NS.EXPONENTS",
+          "MATH.EXP.QUOTIENT"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
+        "authority_caveat": "This proposed label and collision audit do not confer canonical, alias, runtime, standards-mapping, assessment, or mastery authority."
+      },
+      "scope_rule": "For a≠0 and integer exponents m,n, divide powers with the same base by subtracting exponents: a^m/a^n=a^(m-n).",
+      "inclusions": [
+        "same nonzero base",
+        "integer exponents including zero and negative",
+        "positive, zero and negative resultant exponents",
+        "equivalent reciprocal forms"
+      ],
+      "exclusions": [
+        "zero base",
+        "unlike bases",
+        "division of exponents",
+        "rational exponents and roots",
+        "automatic evidence for product or other exponent-law atoms"
+      ],
+      "prerequisite_concepts": [
+        "integer subtraction",
+        "fraction meaning",
+        "nonzero denominator",
+        "meaning of a power"
+      ],
+      "boundary_conditions": [
+        "a≠0 is mandatory even when algebraic cancellation would hide the original denominator",
+        "zero resultant exponent uses a^0=1 only for nonzero a"
+      ],
+      "examples": [
+        {
+          "input": "y^7 / y^3",
+          "assumptions": [
+            "y≠0"
+          ],
+          "answer": "y^4"
+        },
+        {
+          "input": "y^3 / y^3",
+          "assumptions": [
+            "y≠0"
+          ],
+          "answer": "1"
+        },
+        {
+          "input": "y^2 / y^5",
+          "assumptions": [
+            "y≠0"
+          ],
+          "answer": "y^-3 = 1/y^3"
+        },
+        {
+          "input": "0^5 / 0^2",
+          "valid": false,
+          "rationale": "the original denominator is zero"
+        }
+      ],
+      "misconceptions": [
+        {
+          "code": "EXP.QUOTIENT.DIVIDE_EXPONENTS",
+          "response_pattern": "a^m/a^n → a^(m/n)",
+          "mathematical_reason": "canceling equal factors subtracts their counts",
+          "remediation_target": "write numerator and denominator factors and cancel"
+        },
+        {
+          "code": "EXP.QUOTIENT.REVERSE_SUBTRACTION",
+          "response_pattern": "a^m/a^n → a^(n-m)",
+          "mathematical_reason": "denominator factors are removed from numerator factors",
+          "remediation_target": "preserve numerator-minus-denominator order"
+        },
+        {
+          "code": "EXP.QUOTIENT.DROP_DOMAIN",
+          "response_pattern": "omits a≠0",
+          "mathematical_reason": "the original expression divides by a power of a",
+          "remediation_target": "record restrictions before simplification"
+        }
+      ],
+      "assessment_evidence": {
+        "rule": "Mastery requires independent, unassisted evidence for this atom; an integrated response has one primary atom and cannot back-credit other atoms.",
+        "required": [
+          "positive, zero and negative m-n cases",
+          "explicit original-domain restriction",
+          "reciprocal equivalence for a negative result",
+          "one error critique"
+        ],
+        "exact_oracle": "recompute m-n exactly, retain a≠0 from the original denominator, and compare canonical exponent or reciprocal forms",
+        "independence": [
+          "assessment variant and oracle are server-owned",
+          "guided steps, hints and worked answers are absent",
+          "equivalent mathematical forms are canonicalized before comparison"
+        ],
+        "non_inference": [
+          "does not prove the product law",
+          "does not transfer mastery from a canceled form that omitted its original restriction"
+        ]
+      }
+    },
+    {
+      "proposed_code": "MATH.EXPONENT.LAW.POWER_OF_POWER",
+      "title": "Power of a power",
+      "identity_status": "ARCHITECTURE_BOUNDARY_DECIDED__PROPOSED_LABEL_PENDING_COLLISION_CONFIRMATION",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PRODUCTION_TAXONOMY_OR_MERGED_CANDIDATE_SCOPE_REGISTRIES",
+        "snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454",
+        "search_date": "2026-10-11",
+        "possible_overlaps": [
+          "MATH.NS.EXPONENTS",
+          "MATH.EXP.POWER"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
+        "authority_caveat": "This proposed label and collision audit do not confer canonical, alias, runtime, standards-mapping, assessment, or mastery authority."
+      },
+      "scope_rule": "For integer m,n and every defined expression, raise a power to a power by multiplying exponents: (a^m)^n=a^(mn). If n<0 or m<0, require a≠0; exclude 0^0.",
+      "inclusions": [
+        "integer inner and outer exponents",
+        "signed bases shown with unambiguous parentheses",
+        "positive, zero and negative products mn",
+        "numeric and symbolic bases with declared domain"
+      ],
+      "exclusions": [
+        "power of a product or quotient unless separately assessed",
+        "adding exponents",
+        "rational exponents and radicals",
+        "ambiguous unparenthesized negative bases",
+        "undefined zero-base cases"
+      ],
+      "prerequisite_concepts": [
+        "integer multiplication",
+        "meaning of repeated powers",
+        "parentheses and order of operations",
+        "nonzero denominator restriction"
+      ],
+      "boundary_conditions": [
+        "outer exponent zero requires the inner power to be nonzero",
+        "negative outer exponent reciprocates the entire inner power",
+        "a leading minus outside parentheses is not part of the base"
+      ],
+      "examples": [
+        {
+          "input": "(x^3)^4",
+          "answer": "x^12"
+        },
+        {
+          "input": "(x^-2)^3",
+          "assumptions": [
+            "x≠0"
+          ],
+          "answer": "x^-6 = 1/x^6"
+        },
+        {
+          "input": "((-2)^3)^2",
+          "answer": "64"
+        },
+        {
+          "input": "(0^2)^0",
+          "valid": false,
+          "rationale": "the inner value is zero, so the outer zero exponent is undefined"
+        }
+      ],
+      "misconceptions": [
+        {
+          "code": "EXP.POWER.ADD_EXPONENTS",
+          "response_pattern": "(a^m)^n → a^(m+n)",
+          "mathematical_reason": "n repeats the entire m-factor block, so counts multiply",
+          "remediation_target": "expand two small exponent blocks"
+        },
+        {
+          "code": "EXP.POWER.DROP_PARENTHESES_SIGN",
+          "response_pattern": "confuses (-a)^n with -a^n",
+          "mathematical_reason": "parentheses determine whether the sign belongs to the base",
+          "remediation_target": "evaluate signed bases before exponent simplification"
+        },
+        {
+          "code": "EXP.POWER.DROP_DOMAIN",
+          "response_pattern": "uses zero base with a negative outer power",
+          "mathematical_reason": "negative powers create a reciprocal denominator",
+          "remediation_target": "rewrite the outer negative power as a reciprocal"
+        }
+      ],
+      "assessment_evidence": {
+        "rule": "Mastery requires independent, unassisted evidence for this atom; an integrated response has one primary atom and cannot back-credit other atoms.",
+        "required": [
+          "positive, zero and negative mn cases",
+          "one parenthesized negative-base case",
+          "domain restriction when a reciprocal is created",
+          "one expansion-based explanation"
+        ],
+        "exact_oracle": "multiply integer exponents exactly, evaluate sign from the declared base, and reject undefined zero-base cases",
+        "independence": [
+          "assessment variant and oracle are server-owned",
+          "guided steps, hints and worked answers are absent",
+          "equivalent mathematical forms are canonicalized before comparison"
+        ],
+        "non_inference": [
+          "does not prove product or quotient laws",
+          "does not infer power-of-product mastery"
+        ]
+      }
+    },
+    {
+      "proposed_code": "MATH.EXPONENT.ZERO_NONZERO_BASE",
+      "title": "Zero exponent for a nonzero base",
+      "identity_status": "ARCHITECTURE_BOUNDARY_DECIDED__PROPOSED_LABEL_PENDING_COLLISION_CONFIRMATION",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PRODUCTION_TAXONOMY_OR_MERGED_CANDIDATE_SCOPE_REGISTRIES",
+        "snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454",
+        "search_date": "2026-10-11",
+        "possible_overlaps": [
+          "MATH.NS.EXPONENTS",
+          "MATH.EXP.ZERO"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
+        "authority_caveat": "This proposed label and collision audit do not confer canonical, alias, runtime, standards-mapping, assessment, or mastery authority."
+      },
+      "scope_rule": "For every nonzero real base a, a^0=1. The expression 0^0 is excluded as undefined/indeterminate in this Grades 1–9 contract.",
+      "inclusions": [
+        "positive and negative nonzero numeric bases",
+        "nonzero fractions and decimals",
+        "symbolic bases with an explicit nonzero restriction",
+        "derivation from equal nonzero powers"
+      ],
+      "exclusions": [
+        "0^0",
+        "assuming the result is 0",
+        "silently omitting a≠0 for a symbolic base",
+        "negative-exponent reciprocal evidence"
+      ],
+      "prerequisite_concepts": [
+        "quotient of equal nonzero quantities",
+        "meaning of exponent notation",
+        "multiplicative identity 1"
+      ],
+      "boundary_conditions": [
+        "a≠0 is part of the mathematical statement, not optional metadata",
+        "(-a)^0 and -a^0 must be distinguished by parentheses"
+      ],
+      "examples": [
+        {
+          "input": "7^0",
+          "answer": "1"
+        },
+        {
+          "input": "(-3/5)^0",
+          "answer": "1"
+        },
+        {
+          "input": "x^0",
+          "assumptions": [
+            "x≠0"
+          ],
+          "answer": "1"
+        },
+        {
+          "input": "0^0",
+          "valid": false,
+          "rationale": "excluded from this contract"
+        }
+      ],
+      "misconceptions": [
+        {
+          "code": "EXP.ZERO.WRITTEN_AS_ZERO",
+          "response_pattern": "a^0 → 0",
+          "mathematical_reason": "a^0 is the empty product/multiplicative identity for a≠0",
+          "remediation_target": "compare a^k/a^k"
+        },
+        {
+          "code": "EXP.ZERO.KEEP_BASE",
+          "response_pattern": "a^0 → a",
+          "mathematical_reason": "the exponent counts factors; zero factors do not leave one copy",
+          "remediation_target": "contrast exponents 2, 1 and 0"
+        },
+        {
+          "code": "EXP.ZERO.APPLY_TO_ZERO_BASE",
+          "response_pattern": "0^0 → 1 without qualification",
+          "mathematical_reason": "the nonzero-base derivation divides by a power of a",
+          "remediation_target": "inspect the failed denominator condition"
+        }
+      ],
+      "assessment_evidence": {
+        "rule": "Mastery requires independent, unassisted evidence for this atom; an integrated response has one primary atom and cannot back-credit other atoms.",
+        "required": [
+          "positive, negative and fractional nonzero bases",
+          "symbolic a≠0 case",
+          "explicit rejection of 0^0",
+          "one derivation or explanation"
+        ],
+        "exact_oracle": "verify the base is nonzero and the exact result is 1; reject any answer that assigns this atom's rule to 0^0",
+        "independence": [
+          "assessment variant and oracle are server-owned",
+          "guided steps, hints and worked answers are absent",
+          "equivalent mathematical forms are canonicalized before comparison"
+        ],
+        "non_inference": [
+          "does not prove other exponent laws",
+          "does not infer negative-exponent mastery"
+        ]
+      }
+    },
+    {
+      "proposed_code": "MATH.EXPONENT.NEGATIVE_AS_RECIPROCAL",
+      "title": "Negative exponent as reciprocal",
+      "identity_status": "ARCHITECTURE_BOUNDARY_DECIDED__PROPOSED_LABEL_PENDING_COLLISION_CONFIRMATION",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PRODUCTION_TAXONOMY_OR_MERGED_CANDIDATE_SCOPE_REGISTRIES",
+        "snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454",
+        "search_date": "2026-10-11",
+        "possible_overlaps": [
+          "MATH.NS.EXPONENTS",
+          "MATH.EXP.NEGATIVE"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
+        "authority_caveat": "This proposed label and collision audit do not confer canonical, alias, runtime, standards-mapping, assessment, or mastery authority."
+      },
+      "scope_rule": "For a≠0 and positive integer n, a^(-n)=1/a^n. A negative exponent reciprocates the entire base; it does not make the value automatically negative.",
+      "inclusions": [
+        "integer n≥1",
+        "positive, negative and fractional nonzero bases",
+        "symbolic bases with explicit a≠0",
+        "conversion in both directions between negative-power and reciprocal forms"
+      ],
+      "exclusions": [
+        "zero base",
+        "rational noninteger exponents",
+        "negating the base or result instead of reciprocating",
+        "automatic product/quotient-law evidence"
+      ],
+      "prerequisite_concepts": [
+        "reciprocal",
+        "positive integer powers",
+        "nonzero denominator",
+        "signed-number parity"
+      ],
+      "boundary_conditions": [
+        "a≠0 is mandatory",
+        "for a negative base, result sign depends on exponent parity",
+        "for a fraction base, reciprocal applies to the entire fraction"
+      ],
+      "examples": [
+        {
+          "input": "2^-3",
+          "answer": "1/8"
+        },
+        {
+          "input": "(-2)^-3",
+          "answer": "-1/8"
+        },
+        {
+          "input": "(3/4)^-2",
+          "answer": "16/9"
+        },
+        {
+          "input": "0^-2",
+          "valid": false,
+          "rationale": "would require division by zero"
+        }
+      ],
+      "misconceptions": [
+        {
+          "code": "EXP.NEGATIVE.NEGATE_VALUE",
+          "response_pattern": "a^-n → -a^n",
+          "mathematical_reason": "the exponent sign indicates reciprocal, not arithmetic negation",
+          "remediation_target": "use a^n·a^-n=1"
+        },
+        {
+          "code": "EXP.NEGATIVE.RECIPROCAL_EXPONENT_ONLY",
+          "response_pattern": "(p/q)^-n → p/q^n",
+          "mathematical_reason": "the entire base is reciprocated before applying n",
+          "remediation_target": "parenthesize and invert the full fraction"
+        },
+        {
+          "code": "EXP.NEGATIVE.DROP_DOMAIN",
+          "response_pattern": "allows a=0",
+          "mathematical_reason": "the reciprocal denominator would be zero",
+          "remediation_target": "state the nonzero restriction before rewriting"
+        }
+      ],
+      "assessment_evidence": {
+        "rule": "Mastery requires independent, unassisted evidence for this atom; an integrated response has one primary atom and cannot back-credit other atoms.",
+        "required": [
+          "positive, negative and fractional bases",
+          "odd/even signed-base contrast",
+          "both conversion directions",
+          "explicit a≠0 boundary"
+        ],
+        "exact_oracle": "canonicalize exact rational values and reciprocal forms under a nonzero-base restriction",
+        "independence": [
+          "assessment variant and oracle are server-owned",
+          "guided steps, hints and worked answers are absent",
+          "equivalent mathematical forms are canonicalized before comparison"
+        ],
+        "non_inference": [
+          "does not prove quotient law merely because a reciprocal appears",
+          "does not transfer mastery to rational exponents"
+        ]
+      }
+    },
+    {
+      "proposed_code": "MATH.SCIENTIFIC_NOTATION.CONVERT_NORMALIZE",
+      "title": "Convert and normalize scientific notation",
+      "identity_status": "ARCHITECTURE_BOUNDARY_DECIDED__PROPOSED_LABEL_PENDING_COLLISION_CONFIRMATION",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PRODUCTION_TAXONOMY_OR_MERGED_CANDIDATE_SCOPE_REGISTRIES",
+        "snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454",
+        "search_date": "2026-10-11",
+        "possible_overlaps": [
+          "MATH.NS.SCIENTIFIC_NOTATION",
+          "MATH.SCI.CONVERT"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
+        "authority_caveat": "This proposed label and collision audit do not confer canonical, alias, runtime, standards-mapping, assessment, or mastery authority."
+      },
+      "scope_rule": "Convert a nonzero terminating decimal or integer to and from normalized scientific notation a×10^n, where n is an integer and 1≤|a|<10, preserving exact value and sign.",
+      "inclusions": [
+        "positive and negative nonzero values",
+        "positive, zero and negative powers of ten",
+        "coefficients requiring left or right renormalization",
+        "both ordinary-to-scientific and scientific-to-ordinary directions"
+      ],
+      "exclusions": [
+        "treating vendor unit placement as standards authority",
+        "non-normalized coefficient as a final answer",
+        "approximating an exact terminating value",
+        "zero as a normalized nonzero-coefficient form",
+        "multiplication or division mastery"
+      ],
+      "prerequisite_concepts": [
+        "place value in powers of ten",
+        "integer exponents of 10",
+        "decimal movement as multiplication/division by 10",
+        "absolute value for the coefficient bound"
+      ],
+      "boundary_conditions": [
+        "zero is identified as a special value outside the nonzero normalization rule",
+        "the coefficient sign is preserved",
+        "the normalized exponent changes oppositely to coefficient decimal movement"
+      ],
+      "examples": [
+        {
+          "input": "0.00052",
+          "answer": "5.2×10^-4"
+        },
+        {
+          "input": "-7300000",
+          "answer": "-7.3×10^6"
+        },
+        {
+          "input": "4.08×10^-3",
+          "answer": "0.00408"
+        },
+        {
+          "input": "52×10^3",
+          "answer": "5.2×10^4",
+          "rationale": "renormalize the coefficient"
+        },
+        {
+          "input": "0",
+          "valid": false,
+          "rationale": "zero has no representation with 1≤|a|<10; handle it as the declared special case"
+        }
+      ],
+      "misconceptions": [
+        {
+          "code": "SCI.NORMALIZATION.COEFFICIENT_RANGE",
+          "response_pattern": "final |a|<1 or |a|≥10",
+          "mathematical_reason": "normalized scientific notation requires 1≤|a|<10",
+          "remediation_target": "shift the decimal and compensate in the exponent"
+        },
+        {
+          "code": "SCI.CONVERSION.EXPONENT_DIRECTION",
+          "response_pattern": "moves decimal and exponent in the same value-changing direction",
+          "mathematical_reason": "coefficient and power-of-ten adjustments must compensate",
+          "remediation_target": "verify by expanding 10^n"
+        },
+        {
+          "code": "SCI.CONVERSION.DROP_SIGN",
+          "response_pattern": "changes a negative quantity to positive",
+          "mathematical_reason": "normalization changes magnitude representation, not sign",
+          "remediation_target": "separate sign from coefficient magnitude"
+        }
+      ],
+      "assessment_evidence": {
+        "rule": "Mastery requires independent, unassisted evidence for this atom; an integrated response has one primary atom and cannot back-credit other atoms.",
+        "required": [
+          "both conversion directions",
+          "positive and negative values",
+          "positive and negative exponents",
+          "non-normalized input requiring correction",
+          "explicit zero special-case recognition"
+        ],
+        "exact_oracle": "parse exact decimal/rational value, enforce 1≤|a|<10 for nonzero results, and compare value equality exactly",
+        "independence": [
+          "assessment variant and oracle are server-owned",
+          "guided steps, hints and worked answers are absent",
+          "equivalent mathematical forms are canonicalized before comparison"
+        ],
+        "non_inference": [
+          "does not prove multiplication or division",
+          "does not treat approximate magnitude alone as exact conversion"
+        ]
+      }
+    },
+    {
+      "proposed_code": "MATH.SCIENTIFIC_NOTATION.MULTIPLY_NORMALIZE",
+      "title": "Multiply scientific-notation quantities and normalize",
+      "identity_status": "ARCHITECTURE_BOUNDARY_DECIDED__PROPOSED_LABEL_PENDING_COLLISION_CONFIRMATION",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PRODUCTION_TAXONOMY_OR_MERGED_CANDIDATE_SCOPE_REGISTRIES",
+        "snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454",
+        "search_date": "2026-10-11",
+        "possible_overlaps": [
+          "MATH.NS.SCIENTIFIC_NOTATION",
+          "MATH.SCI.MULTIPLY"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
+        "authority_caveat": "This proposed label and collision audit do not confer canonical, alias, runtime, standards-mapping, assessment, or mastery authority."
+      },
+      "scope_rule": "Multiply two nonzero normalized scientific-notation quantities exactly, multiply signed coefficients, add integer powers of ten, and renormalize the result to 1≤|a|<10.",
+      "inclusions": [
+        "positive and negative coefficients",
+        "products initially below 1 or at least 10 in absolute coefficient",
+        "positive, zero and negative result exponents",
+        "exact rational/terminating coefficients",
+        "order-of-magnitude reasonableness check"
+      ],
+      "exclusions": [
+        "zero operands in this nonzero normalized atom",
+        "addition/subtraction of scientific notation",
+        "rounding unless a separate precision contract is stated",
+        "division mastery"
+      ],
+      "prerequisite_concepts": [
+        "normalized scientific notation conversion",
+        "signed-number multiplication",
+        "product of powers of ten",
+        "exact decimal/rational multiplication"
+      ],
+      "boundary_conditions": [
+        "sign follows coefficient multiplication",
+        "renormalization must preserve exact value",
+        "unit multiplication is retained when units are supplied"
+      ],
+      "examples": [
+        {
+          "input": "(3×10^4)(2×10^-7)",
+          "answer": "6×10^-3"
+        },
+        {
+          "input": "(-8×10^3)(4×10^2)",
+          "answer": "-3.2×10^6"
+        },
+        {
+          "input": "(2.5×10^-2)(2×10^-3)",
+          "answer": "5×10^-5"
+        },
+        {
+          "input": "(0×10^3)(2×10^4)",
+          "valid": false,
+          "rationale": "zero is outside this nonzero normalized-input atom"
+        }
+      ],
+      "misconceptions": [
+        {
+          "code": "SCI.MULTIPLY.EXPONENT_NOT_ADDED",
+          "response_pattern": "multiplies or preserves powers instead of adding exponents",
+          "mathematical_reason": "10^m·10^n=10^(m+n)",
+          "remediation_target": "separate coefficient and power factors"
+        },
+        {
+          "code": "SCI.MULTIPLY.COEFFICIENT_NOT_NORMALIZED",
+          "response_pattern": "leaves |coefficient|≥10 or <1",
+          "mathematical_reason": "the exact product must be renormalized",
+          "remediation_target": "shift decimal and compensate exponent"
+        },
+        {
+          "code": "SCI.MULTIPLY.SIGN_ERROR",
+          "response_pattern": "incorrect product sign",
+          "mathematical_reason": "coefficient signs follow signed multiplication",
+          "remediation_target": "predict sign before magnitude work"
+        }
+      ],
+      "assessment_evidence": {
+        "rule": "Mastery requires independent, unassisted evidence for this atom; an integrated response has one primary atom and cannot back-credit other atoms.",
+        "required": [
+          "mixed exponent signs",
+          "positive and negative coefficient products",
+          "both renormalization directions",
+          "magnitude estimate before exact verification"
+        ],
+        "exact_oracle": "multiply coefficients and add exponents with exact rational arithmetic, then normalize without rounding",
+        "independence": [
+          "assessment variant and oracle are server-owned",
+          "guided steps, hints and worked answers are absent",
+          "equivalent mathematical forms are canonicalized before comparison"
+        ],
+        "non_inference": [
+          "does not prove conversion in both directions",
+          "does not prove division"
+        ]
+      }
+    },
+    {
+      "proposed_code": "MATH.SCIENTIFIC_NOTATION.DIVIDE_NORMALIZE",
+      "title": "Divide scientific-notation quantities and normalize",
+      "identity_status": "ARCHITECTURE_BOUNDARY_DECIDED__PROPOSED_LABEL_PENDING_COLLISION_CONFIRMATION",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PRODUCTION_TAXONOMY_OR_MERGED_CANDIDATE_SCOPE_REGISTRIES",
+        "snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454",
+        "search_date": "2026-10-11",
+        "possible_overlaps": [
+          "MATH.NS.SCIENTIFIC_NOTATION",
+          "MATH.SCI.DIVIDE"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
+        "authority_caveat": "This proposed label and collision audit do not confer canonical, alias, runtime, standards-mapping, assessment, or mastery authority."
+      },
+      "scope_rule": "Divide two nonzero normalized scientific-notation quantities exactly, divide signed coefficients, subtract denominator power from numerator power, and renormalize the result to 1≤|a|<10.",
+      "inclusions": [
+        "positive and negative coefficients",
+        "quotients initially below 1 or at least 10 in absolute coefficient",
+        "positive, zero and negative result exponents",
+        "exact rational coefficients",
+        "order-of-magnitude reasonableness check"
+      ],
+      "exclusions": [
+        "zero denominator",
+        "zero numerator in this nonzero normalized-input atom",
+        "rounding without a separate precision contract",
+        "multiplication mastery"
+      ],
+      "prerequisite_concepts": [
+        "normalized scientific notation conversion",
+        "signed-number division",
+        "quotient of powers of ten",
+        "nonzero denominator"
+      ],
+      "boundary_conditions": [
+        "the entire denominator quantity must be nonzero",
+        "exponent arithmetic is numerator minus denominator",
+        "unit division is retained when units are supplied"
+      ],
+      "examples": [
+        {
+          "input": "(6×10^5)/(3×10^2)",
+          "answer": "2×10^3"
+        },
+        {
+          "input": "(-9×10^-4)/(3×10^2)",
+          "answer": "-3×10^-6"
+        },
+        {
+          "input": "(3×10^2)/(6×10^5)",
+          "answer": "5×10^-4"
+        },
+        {
+          "input": "(4×10^3)/(0×10^2)",
+          "valid": false,
+          "rationale": "division by zero"
+        }
+      ],
+      "misconceptions": [
+        {
+          "code": "SCI.DIVIDE.EXPONENT_NOT_SUBTRACTED",
+          "response_pattern": "adds or reverses exponent subtraction",
+          "mathematical_reason": "10^m/10^n=10^(m-n)",
+          "remediation_target": "preserve numerator-minus-denominator order"
+        },
+        {
+          "code": "SCI.DIVIDE.COEFFICIENT_NOT_NORMALIZED",
+          "response_pattern": "leaves coefficient outside normalized range",
+          "mathematical_reason": "the quotient representation must be normalized",
+          "remediation_target": "renormalize while preserving value"
+        },
+        {
+          "code": "SCI.DIVIDE.ZERO_DENOMINATOR",
+          "response_pattern": "attempts a result with zero divisor",
+          "mathematical_reason": "division by zero is undefined",
+          "remediation_target": "check denominator before operating"
+        }
+      ],
+      "assessment_evidence": {
+        "rule": "Mastery requires independent, unassisted evidence for this atom; an integrated response has one primary atom and cannot back-credit other atoms.",
+        "required": [
+          "mixed exponent signs",
+          "positive and negative quotient signs",
+          "both renormalization directions",
+          "explicit zero-denominator rejection",
+          "magnitude estimate"
+        ],
+        "exact_oracle": "divide coefficients and subtract exponents with exact rational arithmetic, reject a zero divisor, and normalize without rounding",
+        "independence": [
+          "assessment variant and oracle are server-owned",
+          "guided steps, hints and worked answers are absent",
+          "equivalent mathematical forms are canonicalized before comparison"
+        ],
+        "non_inference": [
+          "does not prove multiplication",
+          "does not infer correctness from an approximate order of magnitude"
+        ]
+      }
+    },
+    {
+      "proposed_code": "MATH.POLY.DIVIDE_MONOMIALS",
+      "title": "Divide monomials with original-domain restrictions",
+      "identity_status": "ARCHITECTURE_CODE_AUTHORIZED_FOR_DRAFT__PENDING_COLLISION_CONFIRMATION_AND_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PRODUCTION_TAXONOMY_OR_MERGED_CANDIDATE_SCOPE_REGISTRIES",
+        "snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454",
+        "search_date": "2026-10-11",
+        "possible_overlaps": [
+          "MATH.EE.POLYNOMIAL_OPERATIONS",
+          "POLYNOMIAL_QUOTIENT generator family"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
+        "authority_caveat": "This proposed label and collision audit do not confer canonical, alias, runtime, standards-mapping, assessment, or mastery authority."
+      },
+      "scope_rule": "Divide one monomial by a nonzero monomial using exact rational coefficient division and same-variable exponent subtraction; retain every nonzero restriction from the original divisor and rewrite negative exponents as reciprocals when requested.",
+      "inclusions": [
+        "integer coefficients with a nonzero divisor coefficient",
+        "input variable exponents that are nonnegative integers",
+        "multivariable monomials",
+        "zero numerator",
+        "positive, zero or negative quotient exponents",
+        "equivalent reordered factor forms"
+      ],
+      "exclusions": [
+        "zero divisor coefficient",
+        "division by a polynomial sum",
+        "canceling terms across addition",
+        "dropping original denominator restrictions after cancellation",
+        "automatic polynomial-by-monomial mastery"
+      ],
+      "prerequisite_concepts": [
+        "exact rational-number division",
+        "quotient law for powers",
+        "monomial structure",
+        "nonzero denominator restrictions"
+      ],
+      "boundary_conditions": [
+        "variables with positive exponent in the original divisor are nonzero even if they cancel",
+        "zero numerator divided by a defined nonzero monomial is zero with original restrictions retained",
+        "negative result exponents denote reciprocal factors"
+      ],
+      "examples": [
+        {
+          "input": "12x^5y^2 / 3x^2y",
+          "assumptions": [
+            "x≠0",
+            "y≠0"
+          ],
+          "answer": "4x^3y"
+        },
+        {
+          "input": "6x^2 / 9x^5",
+          "assumptions": [
+            "x≠0"
+          ],
+          "answer": "2/(3x^3)"
+        },
+        {
+          "input": "0 / (5x^2)",
+          "assumptions": [
+            "x≠0"
+          ],
+          "answer": "0"
+        },
+        {
+          "input": "4x / 0x^2",
+          "valid": false,
+          "rationale": "the divisor coefficient is zero"
+        }
+      ],
+      "misconceptions": [
+        {
+          "code": "POLY.MONOMIAL_DIVIDE.ADD_EXPONENTS",
+          "response_pattern": "adds variable exponents",
+          "mathematical_reason": "division cancels denominator factors, so exponents subtract",
+          "remediation_target": "expand and cancel one variable at a time"
+        },
+        {
+          "code": "POLY.MONOMIAL_DIVIDE.DIVIDE_EXPONENTS",
+          "response_pattern": "divides exponent values",
+          "mathematical_reason": "exponents count factors rather than numerical coefficients",
+          "remediation_target": "separate coefficient and variable operations"
+        },
+        {
+          "code": "POLY.MONOMIAL_DIVIDE.DROP_RESTRICTION",
+          "response_pattern": "omits an original divisor restriction",
+          "mathematical_reason": "simplification cannot restore points excluded by the original expression",
+          "remediation_target": "record the domain before cancellation"
+        }
+      ],
+      "assessment_evidence": {
+        "rule": "Mastery requires independent, unassisted evidence for this atom; an integrated response has one primary atom and cannot back-credit other atoms.",
+        "required": [
+          "exact coefficient quotient",
+          "each variable exponent difference",
+          "all original-divisor restrictions",
+          "one negative-result exponent case",
+          "multiplication reconstruction under the original domain"
+        ],
+        "exact_oracle": "canonicalize coefficient as a reduced rational, sort variables, subtract exponents exactly, preserve original restrictions, and reconstruct the dividend",
+        "independence": [
+          "assessment variant and oracle are server-owned",
+          "guided steps, hints and worked answers are absent",
+          "equivalent mathematical forms are canonicalized before comparison"
+        ],
+        "non_inference": [
+          "does not prove polynomial-by-monomial distribution",
+          "does not create separate mastery for reconstruction or domain explanation"
+        ]
+      }
+    },
+    {
+      "proposed_code": "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL",
+      "title": "Divide a polynomial expression by a monomial",
+      "identity_status": "ARCHITECTURE_CODE_AUTHORIZED_FOR_DRAFT__PENDING_COLLISION_CONFIRMATION_AND_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PRODUCTION_TAXONOMY_OR_MERGED_CANDIDATE_SCOPE_REGISTRIES",
+        "snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454",
+        "search_date": "2026-10-11",
+        "possible_overlaps": [
+          "MATH.EE.POLYNOMIAL_OPERATIONS",
+          "POLYNOMIAL_QUOTIENT generator family"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
+        "authority_caveat": "This proposed label and collision audit do not confer canonical, alias, runtime, standards-mapping, assessment, or mastery authority."
+      },
+      "scope_rule": "Divide every term of a finite polynomial expression by one nonzero monomial, using exact monomial division term by term; retain original-divisor restrictions and accept algebraically equivalent quotient term order.",
+      "inclusions": [
+        "two or more polynomial terms",
+        "signed and rational quotient coefficients",
+        "multivariable terms",
+        "zero coefficient terms after canonicalization",
+        "positive, zero or negative result exponents",
+        "multiplication reconstruction of the full dividend"
+      ],
+      "exclusions": [
+        "divisor containing two or more terms",
+        "dividing only the leading term",
+        "canceling a monomial across only part of a sum",
+        "discarding original restrictions",
+        "synthetic or long division by a polynomial"
+      ],
+      "prerequisite_concepts": [
+        "MATH.POLY.DIVIDE_MONOMIALS",
+        "distributive property over addition and subtraction",
+        "canonical polynomial term representation",
+        "original-domain restrictions"
+      ],
+      "boundary_conditions": [
+        "the divisor coefficient is nonzero",
+        "every term is divided independently",
+        "unlike quotient terms may appear in any mathematically equivalent order",
+        "like terms are combined before canonical comparison when present"
+      ],
+      "examples": [
+        {
+          "input": "(12x^5 - 6x^3)/(3x^2)",
+          "assumptions": [
+            "x≠0"
+          ],
+          "answer": "4x^3 - 2x"
+        },
+        {
+          "input": "(6x^2y + 9xy^2)/(3xy)",
+          "assumptions": [
+            "x≠0",
+            "y≠0"
+          ],
+          "answer": "2x + 3y"
+        },
+        {
+          "input": "(x + 1)/x",
+          "assumptions": [
+            "x≠0"
+          ],
+          "answer": "1 + 1/x"
+        },
+        {
+          "input": "(x^2 + 1)/(x+1)",
+          "valid": false,
+          "rationale": "the divisor is not a monomial"
+        }
+      ],
+      "misconceptions": [
+        {
+          "code": "POLY.DIVIDE_ONE_TERM_ONLY",
+          "response_pattern": "divides only one term of the dividend",
+          "mathematical_reason": "division by a common monomial distributes to every term",
+          "remediation_target": "group each term over the same divisor"
+        },
+        {
+          "code": "POLY.CANCEL_ACROSS_SUM",
+          "response_pattern": "cancels a variable through an additive term that lacks the factor",
+          "mathematical_reason": "cancellation applies to factors, not selected pieces of a sum",
+          "remediation_target": "factor or split the quotient explicitly"
+        },
+        {
+          "code": "POLY.QUOTIENT.ORDER_DEPENDENT",
+          "response_pattern": "rejects a commuted correct quotient",
+          "mathematical_reason": "addition of unlike terms is commutative",
+          "remediation_target": "canonicalize terms before comparison"
+        },
+        {
+          "code": "POLY.DROP_ORIGINAL_DOMAIN",
+          "response_pattern": "omits divisor restrictions after cancellation",
+          "mathematical_reason": "equivalent simplified form retains the original domain",
+          "remediation_target": "record restrictions before termwise work"
+        }
+      ],
+      "assessment_evidence": {
+        "rule": "Mastery requires independent, unassisted evidence for this atom; an integrated response has one primary atom and cannot back-credit other atoms.",
+        "required": [
+          "correct quotient for every term",
+          "all original-divisor restrictions",
+          "order-independent exact term set",
+          "structured coefficient and exponent reasoning",
+          "full multiplication reconstruction",
+          "one negative-result exponent case"
+        ],
+        "exact_oracle": "divide each term with the monomial oracle, combine like terms, sort canonical term keys, preserve restrictions, and multiply the quotient by the divisor to reconstruct the dividend",
+        "independence": [
+          "assessment variant and oracle are server-owned",
+          "guided steps, hints and worked answers are absent",
+          "equivalent mathematical forms are canonicalized before comparison"
+        ],
+        "non_inference": [
+          "does not infer monomial-division mastery unless that prerequisite has independent evidence",
+          "explanation and reconstruction remain evidence dimensions, not extra identities"
+        ]
+      }
+    },
+    {
+      "proposed_code": "MATH.ALGEBRA.SQUARE_EQUATION_REAL_SOLUTIONS",
+      "title": "Solve squared linear-expression equations over the reals",
+      "identity_status": "ARCHITECTURE_SUGGESTED_CODE__PENDING_COLLISION_CONFIRMATION_AND_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PRODUCTION_TAXONOMY_OR_MERGED_CANDIDATE_SCOPE_REGISTRIES",
+        "snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454",
+        "search_date": "2026-10-11",
+        "possible_overlaps": [
+          "MATH.NS.ROOTS",
+          "principal square-root evaluation",
+          "general quadratic equation solving"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
+        "authority_caveat": "This proposed label and collision audit do not confer canonical, alias, runtime, standards-mapping, assessment, or mastery authority."
+      },
+      "scope_rule": "For real equations (ax+b)^2=r with a≠0, determine the complete real solution set: two solutions when r>0, one repeated solution when r=0, and no real solutions when r<0.",
+      "inclusions": [
+        "rational a,b,r with a≠0",
+        "positive r with rational or irrational √r",
+        "zero and negative r",
+        "complete ± solution sets",
+        "exact substitution verification of every reported solution"
+      ],
+      "exclusions": [
+        "principal-root evaluation as sufficient evidence",
+        "complex solutions when r<0",
+        "general quadratic equations not presented/reducible to this squared form",
+        "returning only one branch for r>0",
+        "client-supplied truth flags instead of exact substitution"
+      ],
+      "prerequisite_concepts": [
+        "square and principal square root",
+        "equation equivalence",
+        "linear equation solving",
+        "real-number order",
+        "substitution"
+      ],
+      "boundary_conditions": [
+        "the ± branch applies to solving u^2=r, not to evaluating √r",
+        "negative a does not determine which branch is numerically larger",
+        "r=0 yields one distinct real solution, not two credits",
+        "r<0 yields the empty real solution set"
+      ],
+      "examples": [
+        {
+          "input": "(2x-1)^2=9",
+          "answer_set": [
+            "-1",
+            "2"
+          ]
+        },
+        {
+          "input": "(-2x+1)^2=9",
+          "answer_set": [
+            "-1",
+            "2"
+          ],
+          "rationale": "branch identity is not sorted-position identity"
+        },
+        {
+          "input": "(3x+6)^2=0",
+          "answer_set": [
+            "-2"
+          ]
+        },
+        {
+          "input": "(x-4)^2=-5",
+          "answer_set": [],
+          "classification": "NO_REAL_SOLUTIONS"
+        },
+        {
+          "input": "(x+1)^2=2",
+          "answer_set": [
+            "-1-√2",
+            "-1+√2"
+          ]
+        }
+      ],
+      "misconceptions": [
+        {
+          "code": "ROOT.PRINCIPAL_ONLY",
+          "response_pattern": "reports only the solution from ax+b=+√r",
+          "mathematical_reason": "the equation u^2=r with r>0 has u=±√r",
+          "remediation_target": "test both signed square roots before solving each linear branch"
+        },
+        {
+          "code": "ROOT.SORTED_POSITION_AS_BRANCH",
+          "response_pattern": "identifies the principal branch as the larger sorted x-value",
+          "mathematical_reason": "division by a negative coefficient can reverse numeric ordering",
+          "remediation_target": "track the equation branch symbolically rather than by list position"
+        },
+        {
+          "code": "ROOT.NEGATIVE_R_ABSOLUTE_VALUE",
+          "response_pattern": "uses ±√|r| when r<0",
+          "mathematical_reason": "a real square cannot be negative",
+          "remediation_target": "classify the right side before taking roots"
+        },
+        {
+          "code": "ROOT.ZERO_DUPLICATE_CREDIT",
+          "response_pattern": "records the repeated r=0 solution twice",
+          "mathematical_reason": "a solution set contains distinct values",
+          "remediation_target": "deduplicate exact roots before scoring"
+        }
+      ],
+      "assessment_evidence": {
+        "rule": "Mastery requires independent, unassisted evidence for this atom; an integrated response has one primary atom and cannot back-credit other atoms.",
+        "required": [
+          "one r>0 rational-root case",
+          "one r>0 irrational-root case",
+          "one r=0 case",
+          "one r<0 classification",
+          "exact left/right substitution for every proposed solution",
+          "complete-set comparison independent of order"
+        ],
+        "exact_oracle": "derive exact branches ax+b=±√r when r>0, solve each linear equation, canonicalize/deduplicate algebraic roots, verify substitutions, and compare the complete set",
+        "independence": [
+          "assessment variant and oracle are server-owned",
+          "guided steps, hints and worked answers are absent",
+          "equivalent mathematical forms are canonicalized before comparison"
+        ],
+        "non_inference": [
+          "does not transfer to or from principal-root evaluation",
+          "does not prove general quadratic-formula mastery"
+        ]
+      }
+    }
+  ],
+  "noncanonical_reporting_profiles": [
+    {
+      "profile_id": "EXPONENT_LAWS_COMBINED",
+      "semantics": "REPORTING_ONLY_ALL_OF",
+      "members": [
+        "MATH.EXPONENT.LAW.PRODUCT",
+        "MATH.EXPONENT.LAW.QUOTIENT",
+        "MATH.EXPONENT.LAW.POWER_OF_POWER",
+        "MATH.EXPONENT.ZERO_NONZERO_BASE",
+        "MATH.EXPONENT.NEGATIVE_AS_RECIPROCAL"
+      ],
+      "credit_rule": "NO_DIRECT_OR_COMPONENT_MASTERY_FROM_PROFILE_RESPONSE"
+    },
+    {
+      "profile_id": "SCIENTIFIC_NOTATION_OPERATIONS",
+      "semantics": "REPORTING_ONLY_ALL_OF",
+      "members": [
+        "MATH.SCIENTIFIC_NOTATION.CONVERT_NORMALIZE",
+        "MATH.SCIENTIFIC_NOTATION.MULTIPLY_NORMALIZE",
+        "MATH.SCIENTIFIC_NOTATION.DIVIDE_NORMALIZE"
+      ],
+      "credit_rule": "NO_DIRECT_OR_COMPONENT_MASTERY_FROM_PROFILE_RESPONSE"
+    },
+    {
+      "profile_id": "POLYNOMIAL_DIVISION",
+      "semantics": "REPORTING_ONLY_ALL_OF",
+      "members": [
+        "MATH.POLY.DIVIDE_MONOMIALS",
+        "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL"
+      ],
+      "credit_rule": "NO_DIRECT_OR_COMPONENT_MASTERY_FROM_PROFILE_RESPONSE"
+    }
+  ],
+  "preservation": {
+    "production_taxonomy_changed": false,
+    "aliases_changed": false,
+    "standards_mappings_changed": false,
+    "learner_records_changed": false,
+    "historical_mastery_changed": false,
+    "runtime_activation": false
+  }
+}
