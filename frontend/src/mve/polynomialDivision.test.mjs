@@ -56,6 +56,38 @@ test('diagnosis follows accepted evidence contract dimensions', () => {
   assert.equal(math.diagnosePolynomialDivision({ ...response, domain_restrictions: ['x'] }), 'POLY.DIV.DOMAIN_OMITTED');
 });
 
+test('full learner attempt requires produced quotient, reconstruction, explanation and fresh transfer', () => {
+  const attempt = {
+    divided_term_indexes: [0, 1],
+    prediction: 'Coefficients divide, exponents subtract, and x and y stay nonzero.',
+    quotient_terms: [
+      { coefficient: '3', x_exponent: '2', y_exponent: '1' },
+      { coefficient: '-2', x_exponent: '1', y_exponent: '0' },
+    ],
+    coefficient_reason: math.CORRECT_COEFFICIENT_REASON,
+    exponent_reason: math.CORRECT_EXPONENT_REASON,
+    domain_restrictions: ['x', 'y'],
+    reconstruction: [
+      { product_coefficient: '6', product_x_exponent: '3', product_y_exponent: '2' },
+      { product_coefficient: '-4', product_x_exponent: '2', product_y_exponent: '1' },
+    ],
+    explanation: 'Dividing like bases subtracts the divisor exponent from each dividend exponent, and cancelled divisor variables cannot be zero.',
+    transfer_terms: [
+      { coefficient: '3', x_exponent: '-1', y_exponent: '0' },
+      { coefficient: '5', x_exponent: '-2', y_exponent: '1' },
+    ],
+  };
+  assert.equal(math.evaluateLearnerPolynomialAttempt(attempt).correct, true);
+  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, prediction: '' }).diagnosis, 'POLY.DIV.PREDICTION_MISSING');
+  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, quotient_terms: [{ coefficient: '3', x_exponent: '2', y_exponent: '1' }] }).diagnosis, 'POLY.DIV.QUOTIENT_RECORD');
+  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, reconstruction: [{ product_coefficient: '6', product_x_exponent: '3', product_y_exponent: '2' }] }).diagnosis, 'POLY.DIV.RECONSTRUCTION_RECORD');
+  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, explanation: '' }).diagnosis, 'POLY.DIV.EXPLANATION_MISSING');
+  assert.equal(math.evaluateLearnerPolynomialAttempt({ ...attempt, transfer_terms: [
+    { coefficient: '3', x_exponent: '1', y_exponent: '0' },
+    { coefficient: '5', x_exponent: '2', y_exponent: '1' },
+  ] }).diagnosis, 'POLY.DIV.FRESH_EXIT_UNVERIFIED');
+});
+
 test('semantic event validation rejects PII, extra fields and impossible states', () => {
   const event = {
     schema_version: 1,
@@ -82,10 +114,14 @@ test('guided component renders full sequence and fails closed in assessment', ()
     'Practice',
     'Transfer',
     'Multiplication reconstruction',
+    'Prediction before quotient reveal',
+    'Fresh quotient term 1',
     'x not equal to 0',
     'aria-live="polite"',
     'focus-visible:outline',
   ]) assert.ok(html.includes(term), term);
+  assert.equal(html.includes('Quotient card'), false);
+  assert.equal(html.includes('3x^2y times 2xy reconstructs 6x^3y^2'), false);
   for (const mode of [true, undefined, null]) {
     assert.equal(renderToStaticMarkup(React.createElement(Component, { independentAssessment: mode })), '');
   }
@@ -99,21 +135,53 @@ test('handlers emit bounded events, diagnose repairs and reset', () => {
   const hooked = load('./InteractivePolynomialDivision.tsx', { ...imports, react: {
     useId: () => 'poly',
     useMemo: value => value(),
-    useState: initial => { const i = cursor++; if (!(i in state)) state[i] = initial; return [state[i], value => { state[i] = value; }]; },
+    useState: initial => { const i = cursor++; if (!(i in state)) state[i] = typeof initial === 'function' ? initial() : initial; return [state[i], value => { state[i] = typeof value === 'function' ? value(state[i]) : value; }]; },
   }});
   function render() { cursor = 0; const wrapper = hooked.InteractivePolynomialDivision({ independentAssessment: false, onMathEvent: e => emitted.push(e) }); return wrapper.type(wrapper.props); }
-  function nodes(node) { return !node || typeof node !== 'object' ? [] : [node, ...React.Children.toArray(node.props?.children).flatMap(nodes)]; }
+  function nodes(node) {
+    if (!node || typeof node !== 'object') return [];
+    const expanded = typeof node.type === 'function' ? node.type(node.props) : null;
+    return [node, ...nodes(expanded), ...React.Children.toArray(node.props?.children).flatMap(nodes)];
+  }
   const buttons = () => nodes(render()).filter(n => n.type === 'button');
   buttons().filter(n => typeof n.props['aria-pressed'] === 'boolean')[0].props.onClick();
   buttons().filter(n => typeof n.props['aria-pressed'] === 'boolean')[1].props.onClick();
   assert.equal(emitted.at(-1).divided_terms, 2);
   assert.equal(events.isMathInteractionEvent(emitted.at(-1)), true);
+  nodes(render()).find(n => n.props['aria-label'] === 'Prediction before quotient reveal').props.onChange({ target: { value: 'Coefficients divide and exponents subtract.' } });
+  for (const [label, value] of [
+    ['Quotient term 1 coefficient', '3'],
+    ['Quotient term 1 x exponent', '2'],
+    ['Quotient term 1 y exponent', '1'],
+    ['Quotient term 2 coefficient', '-2'],
+    ['Quotient term 2 x exponent', '1'],
+    ['Quotient term 2 y exponent', '0'],
+    ['Fresh quotient term 1 coefficient', '3'],
+    ['Fresh quotient term 1 x exponent', '-1'],
+    ['Fresh quotient term 1 y exponent', '0'],
+    ['Fresh quotient term 2 coefficient', '5'],
+    ['Fresh quotient term 2 x exponent', '-2'],
+    ['Fresh quotient term 2 y exponent', '1'],
+  ]) {
+    const input = nodes(render()).find(n => n.props['aria-label'] === label);
+    assert.ok(input, label);
+    input.props.onChange({ target: { value } });
+  }
   nodes(render()).find(n => n.props.name === 'poly-coeff' && n.props.checked === false).props.onChange();
   nodes(render()).find(n => n.props.name === 'poly-exp' && n.props.checked === false).props.onChange();
   nodes(render()).filter(n => n.type === 'input' && n.props.type === 'checkbox')[0].props.onChange();
   nodes(render()).filter(n => n.type === 'input' && n.props.type === 'checkbox')[1].props.onChange();
+  for (const [label, value] of [
+    ['Reconstruction product 1 coefficient', '6'],
+    ['Reconstruction product 1 x exponent', '3'],
+    ['Reconstruction product 1 y exponent', '2'],
+    ['Reconstruction product 2 coefficient', '-4'],
+    ['Reconstruction product 2 x exponent', '2'],
+    ['Reconstruction product 2 y exponent', '1'],
+  ]) nodes(render()).find(n => n.props['aria-label'] === label).props.onChange({ target: { value } });
+  nodes(render()).find(n => n.props['aria-label'] === 'Explanation of polynomial division reasoning').props.onChange({ target: { value: 'Dividing like bases subtracts divisor exponents and keeps original divisor restrictions.' } });
   buttons().find(n => n.props.children === 'Check polynomial division').props.onClick();
   assert.match(nodes(render()).find(n => n.props.id === 'poly-feedback').props.children, /^Correct/);
   buttons().find(n => n.props.children === 'Reset guided attempt').props.onClick();
-  assert.equal(nodes(render()).find(n => n.props.id === 'poly-feedback').props.children, '');
+  assert.match(nodes(render()).find(n => n.props.id === 'poly-feedback').props.children, /^Enter a prediction/);
 });

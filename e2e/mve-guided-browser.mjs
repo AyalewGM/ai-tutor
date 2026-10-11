@@ -66,10 +66,32 @@ createRoot(document.getElementById('root')!).render(<Harness />);`);
   await polynomial.getByRole('button', { name: /Term 1/ }).click();
   await polynomial.getByRole('button', { name: /Term 2/ }).click();
   assert.equal(JSON.parse(await page.getByLabel('Last semantic event').textContent()).divided_terms, 2);
+  await polynomial.getByLabel('Prediction before quotient reveal').fill('Coefficients divide, exponents subtract, and original restrictions stay visible.');
+  for (const [label, value] of [
+    ['Quotient term 1 coefficient', '3'],
+    ['Quotient term 1 x exponent', '2'],
+    ['Quotient term 1 y exponent', '1'],
+    ['Quotient term 2 coefficient', '-2'],
+    ['Quotient term 2 x exponent', '1'],
+    ['Quotient term 2 y exponent', '0'],
+    ['Reconstruction product 1 coefficient', '6'],
+    ['Reconstruction product 1 x exponent', '3'],
+    ['Reconstruction product 1 y exponent', '2'],
+    ['Reconstruction product 2 coefficient', '-4'],
+    ['Reconstruction product 2 x exponent', '2'],
+    ['Reconstruction product 2 y exponent', '1'],
+    ['Fresh quotient term 1 coefficient', '3'],
+    ['Fresh quotient term 1 x exponent', '-1'],
+    ['Fresh quotient term 1 y exponent', '0'],
+    ['Fresh quotient term 2 coefficient', '5'],
+    ['Fresh quotient term 2 x exponent', '-2'],
+    ['Fresh quotient term 2 y exponent', '1'],
+  ]) await polynomial.getByLabel(label).fill(value);
   await polynomial.getByLabel('Dividend coefficient divided by divisor coefficient').check();
   await polynomial.getByLabel('Dividend exponent minus divisor exponent').check();
   await polynomial.getByLabel('x not equal to 0').check();
   await polynomial.getByLabel('y not equal to 0').check();
+  await polynomial.getByLabel('Explanation of polynomial division reasoning').fill('Dividing like bases subtracts divisor exponents and keeps original divisor restrictions.');
   await polynomial.getByRole('button', { name: 'Check polynomial division' }).click();
   assert.ok((await polynomial.getByRole('status').last().textContent()).startsWith('Correct'));
   const balance = page.getByRole('region', { name: 'Guided equation balance exploration' });

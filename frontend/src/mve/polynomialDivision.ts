@@ -44,6 +44,26 @@ export interface StructuredPolynomialResponse {
   domain_restrictions: readonly ("x" | "y")[];
 }
 
+export interface LearnerTermRecord {
+  coefficient: string;
+  x_exponent: string;
+  y_exponent: string;
+}
+
+export interface LearnerReconstructionRecord {
+  product_coefficient: string;
+  product_x_exponent: string;
+  product_y_exponent: string;
+}
+
+export interface LearnerPolynomialAttempt extends StructuredPolynomialResponse {
+  prediction: string;
+  explanation: string;
+  quotient_terms: readonly LearnerTermRecord[];
+  reconstruction: readonly LearnerReconstructionRecord[];
+  transfer_terms: readonly LearnerTermRecord[];
+}
+
 export const CORRECT_COEFFICIENT_REASON: PolynomialDivisionReason =
   "DIVIDEND_COEFFICIENT_DIVIDED_BY_DIVISOR_COEFFICIENT";
 export const CORRECT_EXPONENT_REASON: PolynomialExponentReason =
@@ -148,6 +168,55 @@ export function polynomialPracticeFeedback(response: StructuredPolynomialRespons
   return { diagnosis, feedback: feedback[diagnosis], correct: diagnosis === "NO_REMEDIATION" };
 }
 
+export function evaluateLearnerPolynomialAttempt(
+  attempt: LearnerPolynomialAttempt,
+  example: DivisionExample = POLYNOMIAL_DIVISION_EXAMPLE,
+  transferExample: DivisionExample = POLYNOMIAL_DIVISION_FRESH_EXIT,
+) {
+  const diagnosis = diagnosePolynomialDivision(attempt, example);
+  if (attempt.prediction.trim().length < 8) {
+    return {
+      correct: false,
+      diagnosis: "POLY.DIV.PREDICTION_MISSING",
+      feedback: "Predict first: say what should happen to coefficients, exponents, and original restrictions before any answer is checked.",
+    };
+  }
+  if (diagnosis !== "NO_REMEDIATION") return polynomialPracticeFeedback(attempt);
+  if (!sameTermLists(attempt.quotient_terms, quotientFor(example))) {
+    return {
+      correct: false,
+      diagnosis: "POLY.DIV.QUOTIENT_RECORD",
+      feedback: "One quotient term is not independently produced yet. Divide each coefficient and subtract each matching exponent.",
+    };
+  }
+  if (!sameReconstruction(attempt.reconstruction, reconstructionFor(example))) {
+    return {
+      correct: false,
+      diagnosis: "POLY.DIV.RECONSTRUCTION_RECORD",
+      feedback: "Use your quotient term times the original divisor to reconstruct each original dividend term.",
+    };
+  }
+  if (attempt.explanation.trim().length < 18) {
+    return {
+      correct: false,
+      diagnosis: "POLY.DIV.EXPLANATION_MISSING",
+      feedback: "Explain why division subtracts exponent counts and why original divisor restrictions remain after cancellation.",
+    };
+  }
+  if (!sameTermLists(attempt.transfer_terms, quotientFor(transferExample))) {
+    return {
+      correct: false,
+      diagnosis: "POLY.DIV.FRESH_EXIT_UNVERIFIED",
+      feedback: "Try the fresh exit without answer cards: at least one exponent becomes negative, so subtract divisor exponents carefully.",
+    };
+  }
+  return {
+    correct: true,
+    diagnosis: "NO_REMEDIATION",
+    feedback: "Correct. You predicted, produced quotient terms, reconstructed the dividend, explained the rule, and solved a fresh transfer case.",
+  };
+}
+
 export function formatRational(value: ExactRational): string {
   return value.denominator === 1 ? `${value.numerator}` : `${value.numerator}/${value.denominator}`;
 }
@@ -213,4 +282,45 @@ function uniqueSorted(values: readonly number[]) {
 
 function sameStrings(left: readonly string[], right: readonly string[]) {
   return left.length === right.length && left.every((value, index) => value === right[index]);
+}
+
+function sameTermLists(observed: readonly LearnerTermRecord[], expected: readonly AlgebraTerm[]) {
+  return observed.length === expected.length &&
+    observed.every((term, index) => termMatches(term, expected[index]));
+}
+
+function sameReconstruction(observed: readonly LearnerReconstructionRecord[], expected: readonly ReconstructionRecord[]) {
+  return observed.length === expected.length &&
+    observed.every((record, index) => termMatches({
+      coefficient: record.product_coefficient,
+      x_exponent: record.product_x_exponent,
+      y_exponent: record.product_y_exponent,
+    }, expected[index].product_term));
+}
+
+function termMatches(observed: LearnerTermRecord, expected: AlgebraTerm) {
+  try {
+    return sameRational(parseRational(observed.coefficient), expected.coefficient) &&
+      parseInteger(observed.x_exponent) === expected.x_exponent &&
+      parseInteger(observed.y_exponent) === expected.y_exponent;
+  } catch {
+    return false;
+  }
+}
+
+function parseInteger(value: string) {
+  const trimmed = value.trim();
+  if (!/^-?(0|[1-9]\d*)$/.test(trimmed)) throw new RangeError("Expected an integer string");
+  return Number(trimmed);
+}
+
+function parseRational(value: string) {
+  const trimmed = value.trim();
+  if (!/^-?(0|[1-9]\d*)(\/[1-9]\d*)?$/.test(trimmed)) throw new RangeError("Expected a rational string");
+  const [numerator, denominator = "1"] = trimmed.split("/");
+  return rational(Number(numerator), Number(denominator));
+}
+
+function sameRational(left: ExactRational, right: ExactRational) {
+  return left.numerator === right.numerator && left.denominator === right.denominator;
 }
