@@ -1,6 +1,7 @@
 """Independent exact answers and safety gates for fractions reasoning wave."""
 import json
 from fractions import Fraction
+from math import gcd
 from pathlib import Path
 
 PATH = Path("docs/curriculum/drafts/draft-g45-fractions-pilot-v0/reasoning_transfer_wave.draft.json")
@@ -30,7 +31,6 @@ def test_reasoning_wave_exact_answers_and_review_boundaries() -> None:
             assert item["question"].lower().endswith("in simplest form?")
             assert Fraction(wrong_text) == answer
             numerator, denominator = (int(value) for value in wrong_text.split("/"))
-            from math import gcd
             assert gcd(numerator, denominator) > 1
             assert wrong_text != item["expected"]
         else:
