@@ -1,7 +1,7 @@
-# DMV Original Task-Structure Crosswalk v1 — R4 review-evidence reconciliation
+# DMV Original Task-Structure Crosswalk v1 — R7 Maryland source-version correction
 
 Status: **DRAFT_UNVERIFIED — runtime disabled**  
-Evidence snapshot: `main@317612d2668eba6b172dec2b02543eb65c51a656`
+Evidence snapshot: `main@cfda3f7301502c712c29f22ae5e4948cfa1ebc75`
 
 This is a reuse-first research crosswalk, not a curriculum-coverage claim. Maryland, Virginia, and Washington, DC remain versioned many-to-many mappings onto one jurisdiction-neutral mathematical core. The matrix contains no copied teacher questions, diagrams, videos, or protected source material.
 
@@ -9,7 +9,9 @@ This is a reuse-first research crosswalk, not a curriculum-coverage claim. Maryl
 
 | Jurisdiction | Current authority used | Version boundary | Use in this artifact |
 |---|---|---|---|
-| Maryland | [MSDE Mathematics Standards](https://msde.maryland.gov/academics-0/curriculum-academic-standards/mathematics) | 2025 revised MCCRS; Algebra I implementation in 2026–27 | Exact IDs listed only where already source-linked in merged repository evidence; all mappings remain provisional |
+| Maryland revised MCCRS | [MSDE Mathematics Standards](https://msde.maryland.gov/academics-0/curriculum-academic-standards/mathematics) | Revised standards adopted 2025-07-29; current revised PreK–8 and future Integrated Algebra crosswalks | Exact IDs require direct grade/course-document verification; all mappings remain provisional |
+| Maryland Algebra I | [Algebra I standards PDF](https://msde.maryland.gov/media/17798) | Document dated **August 2022**; MSDE places it under **For Implementation in SY 2026–2027** | Current Algebra I course-source boundary only; do not conflate with future revised Integrated Algebra 1 |
+| Maryland Algebra I assessment | [Algebra I Evidence Statements](https://msde.maryland.gov/media/17801) | August 2024; linked by MSDE under SY 2026–2027 Algebra I | Task/evidence structure only; no copied items, prompts, diagrams, rubrics, choices, or scoring material |
 | Maryland assessment | [MCAP public release portal](https://mcap.msde.maryland.gov/public/) | Public collection inspected 2026-10-11 | Response structures and cognitive demand only; no copied items |
 | MCPS current listing | [Mathematics Middle School](https://www.montgomeryschoolsmd.org/curriculum/math/ms/) | Current page inspected 2026-10-11; school-year effective date not stated | District adoption evidence only: Amplify Desmos Math for Math 6–8, accelerated 6/7, Algebra 1; IM Geometry for Honors Geometry. Not Maryland standards authority |
 | Amplify vendor sequence | [Grade 6–Algebra 2 Caregiver Hub](https://amplify.com/caregiver-hub/amplify-desmos-math-6-12/) | Published 2025-01-16; metadata modified 2026-09-23; inspected 2026-10-11 | Unit/topic sequence and abstract task-structure research only; no copied/rehosted content or learner-facing links |
@@ -19,6 +21,15 @@ This is a reuse-first research crosswalk, not a curriculum-coverage claim. Maryl
 | Virginia tasks | [Rich Mathematical Tasks](https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/instructional-resources/rich-mathematical-task) | **Aligned to 2016 SOL** | Structure-only research; 2016 codes are not current mappings |
 | Washington, DC | [OSSE assessments](https://osse.dc.gov/assessments) | DC CCSS mathematics | Source family verified; exact IDs pending official-document check |
 | Washington, DC assessment | [DC CAPE Next 2026–27 design](https://osse.dc.gov/page/dc-cape-next-content-and-test-design-changes-2026-27-school-year-and-beyond) | Computer-adaptive component plus performance task | Public design evidence only; no invented specifications |
+
+### Maryland source-version correction
+
+The official MSDE mathematics page makes two distinct claims that must not be collapsed:
+
+- Revised MCCRS were adopted by the Maryland State Board of Education on **2025-07-29**.
+- The Algebra I standards linked under **For Implementation in SY 2026–2027** are an **August 2022** document. Future Integrated Algebra 1 appears in a separate future-school-years section.
+
+The linked **August 2024 Algebra I Evidence Statements** independently document three public assessment structures: Type I machine-scored content/reasoning/modeling, Type II human-scored reasoning with argument/justification/critique/precision, and Type III human-scored real-world modeling. Mihur may use those demand categories to design original tasks; it may not copy assessment content. This correction changes source provenance only. Accepted standards mappings remain **0** pending separate acceptance.
 
 No inspected page stated a reusable content license. All sources are therefore recorded as research references; nothing is copied or rehosted.
 
