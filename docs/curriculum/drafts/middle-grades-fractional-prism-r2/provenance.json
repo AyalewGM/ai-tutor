@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "record_type": "MIHUR_CONTENT_PROVENANCE",
   "package_id": "W1-G6-FRACTIONAL-PRISM-VOLUME",
-  "revision": "middle-grades-fractional-prism-r2",
+  "revision": "middle-grades-fractional-prism-r3",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "learner_data_writes": false,
@@ -67,8 +67,8 @@
   "existing_work_gap_improvement_verification": {
     "existing_work": "Integer-only prism generator and static visual on main; pedagogy-accepted fractional-prism authored design in PR #327; source-grounded provisional mapping in merged PR #325.",
     "actual_gap": "No seeded fractional/mixed-edge variants, executable response-evidence diagnosis, independent exact inverse oracle, distinct operation-selection transfer, or interactive fractional-cell MVE was evidenced.",
-    "improvement": "Five mode-separated exact structures, seven-field reasoning contract, six misconception routes with fresh exits/fade conditions, mold-plan transfer, and explicit keyboard/screen-reader interaction requirements.",
-    "verification": "Draft tests cover deterministic replay, all structures, independent Fraction products/quotients, decomposition equivalence, diagnosis cases, invalid values, public-payload non-disclosure, provenance, and assessment isolation. Runtime/MVE/backend/Muse evidence remains pending."
+    "improvement": "Five mode-separated exact structures, seven-field reasoning contract, exact unit-family plus dimensional-power evidence, like-quantity reference-volume prediction, repeated fractional cells across multiple unit cubes, six misconception routes with fresh exits/fade conditions, mold-plan transfer, and explicit keyboard/screen-reader interaction requirements.",
+    "verification": "Draft tests cover deterministic replay, all structures, independent Fraction products/quotients, dimensional reference comparison, repeated multi-cube packing language, exact unit-family/power diagnosis, decomposition equivalence, invalid values, public-payload non-disclosure, provenance, and assessment isolation. Runtime/MVE/backend/Muse evidence remains pending."
   },
   "pedagogical_evidence": {
     "references": [
@@ -119,7 +119,7 @@
     "seeded_generator": "seeded_variants.py",
     "guided_namespace": "middle-grades-fractional-prism-r2:guided",
     "independent_namespace": "middle-grades-fractional-prism-r2:independent",
-    "independent_oracle": "DRAFT_TESTED_FRACTION_PRODUCT_AND_QUOTIENT_NOT_INDEPENDENTLY_REVIEWED",
+    "independent_oracle": "R2_NUMERIC_PRODUCT_AND_QUOTIENT_APPROVED_AT_62197CC; R3_DIMENSIONAL_AND_PACKING_CORRECTIONS_PENDING_REVIEW",
     "unseen_assessment": "DRAFT_MOLD_PLAN_OPERATION_SELECTION_SEVEN_FIELD_CONTRACT",
     "backend_trusted_scoring": "NOT_IMPLEMENTED",
     "guided_practice_credit": false,
@@ -127,8 +127,8 @@
   },
   "independent_verdicts": {
     "standards_mapping": "PENDING",
-    "mathematics": "PENDING",
-    "pedagogy": "PENDING_R2_SOURCE_REVISION_ACCEPTED_ONLY",
+    "mathematics": "REQUEST_CHANGES_AT_62197CC_BOUNDED_R3_CORRECTION_PENDING_REVIEW",
+    "pedagogy": "PENDING_R3_SOURCE_REVISION_ACCEPTED_ONLY",
     "muse_accessibility_and_assessment": "PENDING",
     "assessment_backend": "NOT_IMPLEMENTED",
     "engineering_release": "NOT_APPROVED",
