@@ -264,6 +264,71 @@ def test_correct_coefficient_wrong_power_routes_to_exponent_for_every_operation(
     assert observed == {"TO_SCIENTIFIC", "TO_ORDINARY", "MULTIPLY", "DIVIDE"}
 
 
+@pytest.mark.parametrize(
+    ("operation", "parameters", "oracle", "wrong_ordinary"),
+    [
+        (
+            "DIVIDE",
+            {"operation": "DIVIDE", "c1": Fraction(3), "e1": 2, "c2": Fraction(2), "e2": 0},
+            {"coefficient": Fraction(3, 2), "exponent": 2, "ordinary_value": Fraction(150)},
+            Fraction(100),
+        ),
+        (
+            "MULTIPLY",
+            {"operation": "MULTIPLY", "c1": Fraction(2), "e1": 2, "c2": Fraction(2), "e2": 2},
+            {"coefficient": Fraction(4), "exponent": 4, "ordinary_value": Fraction(40000)},
+            Fraction(4000),
+        ),
+    ],
+)
+def test_correct_exponent_with_wrong_value_does_not_invent_operation_error(
+    operation, parameters, oracle, wrong_ordinary
+) -> None:
+    flow = _flow()
+    generators = _generator()
+    item = generators.DraftVariant(
+        variant_id=f"review-collision:{operation.lower()}",
+        mode="guided",
+        structure="SCIENTIFIC_NOTATION",
+        canonical_family="MATH.NS.SCIENTIFIC_NOTATION",
+        prompt="Independent mathematical review collision regression.",
+        response_schema=(
+            "normalized_coefficient",
+            "power_of_ten",
+            "exact_ordinary_value",
+            "normalization_explanation",
+        ),
+        parameters=parameters,
+        teacher_oracle=oracle,
+    )
+    response = _correct_response(flow, item)
+    response["exact_ordinary_value"] = _exact(wrong_ordinary)
+
+    result = flow.evaluate_guided_response(item, response)
+    assert result["misconception_id"] == "SCI.INEXACT.WHEN_EXACT_REQUIRED"
+
+
+@pytest.mark.parametrize(("index", "operation"), [(35, "DIVIDE"), (58, "MULTIPLY")])
+def test_generated_collision_boundaries_require_an_actually_wrong_exponent(index, operation) -> None:
+    flow = _flow()
+    generators = _generator()
+    item = generators.generate(flow.scientific_seed(index), "guided")
+    oracle = item.teacher_oracle
+    parameters = item.parameters
+
+    assert parameters["operation"] == operation
+    if operation == "DIVIDE":
+        coincident_exponent = parameters["e1"] + parameters["e2"]
+    else:
+        coincident_exponent = parameters["e1"] * parameters["e2"]
+    assert coincident_exponent == oracle["exponent"]
+
+    response = _correct_response(flow, item)
+    response["exact_ordinary_value"] = _exact(oracle["ordinary_value"] + 1)
+    result = flow.evaluate_guided_response(item, response)
+    assert result["misconception_id"] == "SCI.INEXACT.WHEN_EXACT_REQUIRED"
+
+
 def test_coefficient_arithmetic_requires_an_actual_coefficient_error() -> None:
     flow = _flow()
     generators = _generator()
