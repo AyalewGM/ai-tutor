@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "milestone": "GitHub Issue #337",
-  "revision": "issue-337-traceability-r2",
+  "revision": "issue-337-traceability-r3",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "source_policy": {
@@ -77,10 +77,11 @@
           "PR_340@3d90e709309be4e3f0f7ba8320137549689a17b2"
         ],
         "mathematical_review": "APPROVE_CONTENT_EVIDENCE_SCOPE_AND_GUIDED_ONLY_MVE_NARROWING",
-        "pedagogical_review": "CHANGES_REQUIRED_PENDING_REVIEW_OF_CORRECTED_GUIDED_JOURNEY",
-        "interaction": "GUIDED_MODEL_ONLY_NO_LEARNER_PRODUCED_QUOTIENT_OR_RECONSTRUCTION",
+        "pedagogical_review": "CHANGES_REQUIRED_PR_350_EXACT_HEAD_DD5A89050EEFCE7B011DC9112671C410DAF6E88C",
+        "interaction": "PR_340_GUIDED_ONLY_NARROWING_MATH_APPROVED_NO_LEARNER_PRODUCED_EVIDENCE; PR_350_ROUTE_NOT_PEDAGOGICALLY_ACCEPTED",
         "trusted_assessment": "NOT_WIRED",
-        "actual_gap": "Learner-produced exact quotient/reconstruction, routed reconciliation with PR 350, trusted scoring and Muse verification remain absent."
+        "actual_gap": "If the routed journey claims learner reasoning, require learner-entered exact quotient terms and multiplication reconstruction matching PR 348 response_contract.json. Otherwise mount only PR 340's corrected guided model and remove all readiness/verified-transfer claims.",
+        "pedagogical_evidence": "https://github.com/AyalewGM/ai-tutor/pull/350#issuecomment-6109134411"
       },
       {
         "unit": "2.9 Homework",
@@ -88,13 +89,40 @@
         "exact_artifacts": [
           "PR_348@ecb83965e366b78fb04b89ae07331cf67b012169",
           "PR_349@79f272a6f8d21de348eb458e62a086363d724585",
-          "PR_350@dd5a89050eefce7b011dc9112671c410daf6e88c"
+          "PR_350@dd5a89050eefce7b011dc9112671c410daf6e88c",
+          "PR_340@3d90e709309be4e3f0f7ba8320137549689a17b2"
         ],
-        "mathematical_review": "APPROVE_CONTENT_SPEC_PR_350_ROUTE_NOT_INDEPENDENTLY_REVIEWED",
-        "pedagogical_review": "CHANGES_REQUIRED_UNTIL_REAL_CORRECTED_ROUTE_IS_REVIEWED",
-        "interaction": "PR_350_DRAFT_ROUTE_REQUIRES_RECONCILIATION_WITH_PR_340_GUIDED_ONLY_CORRECTION",
+        "mathematical_review": "APPROVE_PR_348_CONTENT_SPEC_AND_PR_340_GUIDED_ONLY_NARROWING; PR_350_ROUTE_NOT_INDEPENDENTLY_MATH_REVIEWED",
+        "pedagogical_review": "CHANGES_REQUIRED_PR_350_EXACT_HEAD_DD5A89050EEFCE7B011DC9112671C410DAF6E88C",
+        "interaction": "CONFLICT: PR_350_PREFILLED_QUOTIENT_AND_RECONSTRUCTION_OVERCLAIM_LEARNER_EVIDENCE; PR_340_CORRECTLY_LABELS_AUTO_COMPUTATION_GUIDED_ONLY",
         "trusted_assessment": "NOT_WIRED",
-        "actual_gap": "Route must consume the corrected guided-only MVE contract and prove no assessment mounting or automatic readiness."
+        "actual_gap": "Frontend/MVE must either collect learner-authored exact quotient and reconstruction evidence or narrow the routed experience to guided-only with no prediction/readiness/transfer-verification claims. Backend must independently score unseen responses before any mastery inference.",
+        "pedagogical_evidence": "https://github.com/AyalewGM/ai-tutor/pull/350#issuecomment-6109134411",
+        "production_handoff": {
+          "package_contract": "PR_348@ecb83965e366b78fb04b89ae07331cf67b012169:response_contract.json",
+          "accepted_guided_model": "PR_340@3d90e709309be4e3f0f7ba8320137549689a17b2",
+          "rejected_route_head": "PR_350@dd5a89050eefce7b011dc9112671c410daf6e88c",
+          "frontend_mve_owner_actions": [
+            "ADD_OBSERVABLE_LEARNER_QUOTIENT_TERMS_OR_LABEL_GENERATED_TERMS_AS_GUIDED_MODEL_ONLY",
+            "ADD_LEARNER_PRODUCED_MULTIPLICATION_RECONSTRUCTION_OR_REMOVE_VERIFIED_TRANSFER_CLAIM",
+            "ADD_RESPONSE_VERIFIED_PREDICTION_AND_MISCONCEPTION_REPAIR_WITH_FRESH_EXIT_BEFORE_ANY_READINESS_STATE",
+            "KEEP_COMPONENT_UNMOUNTED_IN_INDEPENDENT_ASSESSMENT"
+          ],
+          "assessment_backend_owner_actions": [
+            "RECOMPUTE_EXACT_QUOTIENT_AND_RECONSTRUCTION_SERVER_SIDE",
+            "COMPARE_EQUIVALENT_POLYNOMIAL_TERMS_ORDER_INDEPENDENTLY",
+            "AWARD_NO_MASTERY_FROM_GUIDED_MVE"
+          ],
+          "acceptance_evidence_required": [
+            "WRONG_COEFFICIENT_ROUTE_THEN_FRESH_EXIT",
+            "EXPONENT_ADDITION_ROUTE_THEN_NEGATIVE_EXPONENT_FRESH_EXIT",
+            "ONE_TERM_ONLY_ROUTE_THEN_ALL_TERMS_RECONSTRUCTED",
+            "ORIGINAL_DIVISOR_DOMAIN_RESTRICTION_PRESERVED",
+            "UNSEEN_TRANSFER_WITHOUT_PREFILLED_ANSWER",
+            "KEYBOARD_SCREEN_READER_REDUCED_MOTION_BROWSER_EVIDENCE",
+            "INDEPENDENT_ASSESSMENT_UNMOUNT_AND_NO_DOUBLE_CREDIT"
+          ]
+        }
       },
       {
         "unit": "2.10 Homework",
@@ -122,7 +150,8 @@
         "trusted_assessment": "DRAFT_SCORER_CONTRACT_UNROUTED",
         "actual_gap": "Normalization explorer, multiplication/division learner journey, accepted exact/rounded response policy, trusted scoring and Muse verification remain absent."
       }
-    ]
+    ],
+    "checkpoint_reason": "RECONCILE_INDEPENDENT_PEDAGOGY_VERDICT_FOR_PR_350_WITH_ACCEPTED_GUIDED_ONLY_PR_340_AND_PR_348_LEARNER_RESPONSE_CONTRACT"
   },
   "rows": [
     {
@@ -130,7 +159,10 @@
       "source_locator": "question type: signed one-step inverse operations; page UNKNOWN",
       "task_structure": "solve and justify inverse operation",
       "canonical_family": "MATH.EE.EQUATION.ONE",
-      "implementation_evidence": ["app/canonical_problem_families.py:MATH.EQ.ONE.ADD_DIRECT", "app/domains/algebra_functions.py:MATH.ALG.EQ.ONE.MULT"],
+      "implementation_evidence": [
+        "app/canonical_problem_families.py:MATH.EQ.ONE.ADD_DIRECT",
+        "app/domains/algebra_functions.py:MATH.ALG.EQ.ONE.MULT"
+      ],
       "generator_status": "PARTIAL",
       "guided_mve_status": "PARTIAL_BALANCE_POSITIVE_ONLY",
       "assessment_status": "PARTIAL_EXISTING_RUNTIME_NOT_ISSUE_337_ACCEPTED",
@@ -142,7 +174,10 @@
       "source_locator": "question type: negative/fractional two-step equations; page UNKNOWN",
       "task_structure": "predict, solve exactly, substitute-check",
       "canonical_family": "MATH.EE.EQUATION.TWO",
-      "implementation_evidence": ["app/canonical_problem_families.py:MATH.EQ.TWO.DIRECT", "docs/curriculum/drafts/ontario-seven-unit-algebra-r1/seeded_equations.py:TWO_STEP_RATIONAL"],
+      "implementation_evidence": [
+        "app/canonical_problem_families.py:MATH.EQ.TWO.DIRECT",
+        "docs/curriculum/drafts/ontario-seven-unit-algebra-r1/seeded_equations.py:TWO_STEP_RATIONAL"
+      ],
       "generator_status": "PARTIAL_DRAFT_R1",
       "guided_mve_status": "PARTIAL_BALANCE_CANNOT_RENDER_NEGATIVE_OR_FRACTIONAL_PANS",
       "assessment_status": "CONTENT_CONTRACT_ONLY",
@@ -154,7 +189,11 @@
       "source_locator": "question type: distribution and variables both sides; page UNKNOWN",
       "task_structure": "simplify each side, solve, justify, substitute-check",
       "canonical_family": "MATH.EE.EQUATION.MULTISTEP",
-      "implementation_evidence": ["app/domains/algebra_functions.py:MATH.ALG.EQ.MULTISTEP.DISTRIBUTE", "app/domains/algebra_functions.py:MATH.ALG.EQ.MULTISTEP.BOTH_SIDES", "docs/curriculum/drafts/ontario-seven-unit-algebra-r1/seeded_equations.py"],
+      "implementation_evidence": [
+        "app/domains/algebra_functions.py:MATH.ALG.EQ.MULTISTEP.DISTRIBUTE",
+        "app/domains/algebra_functions.py:MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "docs/curriculum/drafts/ontario-seven-unit-algebra-r1/seeded_equations.py"
+      ],
       "generator_status": "PARTIAL_DRAFT_R1",
       "guided_mve_status": "PARTIAL_DISTRIBUTIVE_COMPONENT_NOT_FULL_EQUATION_FLOW",
       "assessment_status": "CONTENT_CONTRACT_ONLY",
@@ -166,7 +205,11 @@
       "source_locator": "question type: roots and equations in powers; page UNKNOWN",
       "task_structure": "classify principal root versus complete solution set",
       "canonical_family": "MATH.NS.ROOTS plus equation family; exact boundary pending Architecture",
-      "implementation_evidence": ["app/domains/advanced_number.py:MATH.ROOT.SQUARE", "app/domains/advanced_number.py:MATH.ROOT.CUBE", "app/services/stepwork.py"],
+      "implementation_evidence": [
+        "app/domains/advanced_number.py:MATH.ROOT.SQUARE",
+        "app/domains/advanced_number.py:MATH.ROOT.CUBE",
+        "app/services/stepwork.py"
+      ],
       "generator_status": "PARTIAL",
       "guided_mve_status": "ABSENT",
       "assessment_status": "ABSENT_FOR_PLUS_MINUS_AND_NO_REAL_BRANCHES",
@@ -178,7 +221,10 @@
       "source_locator": "question type: perimeter/word-model transfer; page UNKNOWN",
       "task_structure": "construct equation, solve, validate labels and units",
       "canonical_family": "MATH.EE.EQUATION.MULTISTEP",
-      "implementation_evidence": ["app/domains/algebra_functions.py:MATH.ALG.EQ.WORD.TARGET", "tests/test_mth1w_curriculum.py"],
+      "implementation_evidence": [
+        "app/domains/algebra_functions.py:MATH.ALG.EQ.WORD.TARGET",
+        "tests/test_mth1w_curriculum.py"
+      ],
       "generator_status": "PARTIAL",
       "guided_mve_status": "ABSENT_FOR_LABEL_TO_PERIMETER_EQUATION",
       "assessment_status": "PARTIAL",
@@ -190,7 +236,9 @@
       "source_locator": "question type: monomial quotient and same-base exponent laws; page UNKNOWN",
       "task_structure": "simplify, state restrictions, justify exponent subtraction",
       "canonical_family": "MATH.EE.POLYNOMIAL_OPERATIONS (reuse candidate)",
-      "implementation_evidence": ["app/domains/advanced_algebra_highschool.py"],
+      "implementation_evidence": [
+        "app/domains/advanced_algebra_highschool.py"
+      ],
       "generator_status": "ABSENT_FOR_DIVISION",
       "guided_mve_status": "ABSENT",
       "assessment_status": "ABSENT",
@@ -202,7 +250,9 @@
       "source_locator": "question type: polynomial divided term-by-term by monomial and error analysis; page UNKNOWN",
       "task_structure": "model distribution of division, simplify, diagnose near-miss",
       "canonical_family": "MATH.EE.POLYNOMIAL_OPERATIONS (reuse candidate)",
-      "implementation_evidence": ["app/domains/advanced_algebra_highschool.py:MATH.POLY.ERROR.DISTRIBUTE"],
+      "implementation_evidence": [
+        "app/domains/advanced_algebra_highschool.py:MATH.POLY.ERROR.DISTRIBUTE"
+      ],
       "generator_status": "ABSENT_FOR_DIVISION",
       "guided_mve_status": "ABSENT_FOR_DIVISION_TILES",
       "assessment_status": "ABSENT",
@@ -214,7 +264,9 @@
       "source_locator": "question type: power-of-power/product/quotient and requested-base equivalence; page UNKNOWN",
       "task_structure": "construct, compare and justify equivalent powers",
       "canonical_family": "MATH.NS.EXPONENTS (candidate existing family)",
-      "implementation_evidence": ["app/domains/advanced_number.py"],
+      "implementation_evidence": [
+        "app/domains/advanced_number.py"
+      ],
       "generator_status": "PARTIAL",
       "guided_mve_status": "ABSENT",
       "assessment_status": "PARTIAL_NOT_ISSUE_337_ACCEPTED",
@@ -226,7 +278,9 @@
       "source_locator": "question type: exponent geometry application; page UNKNOWN",
       "task_structure": "model dimensions, compare areas/volumes, validate units",
       "canonical_family": "MATH.GEO.PYTHAGOREAN and exponent families (reporting combination only)",
-      "implementation_evidence": ["app/domains/geometry_measurement.py"],
+      "implementation_evidence": [
+        "app/domains/geometry_measurement.py"
+      ],
       "generator_status": "PARTIAL",
       "guided_mve_status": "PARTIAL_RIGHT_TRIANGLE_STATIC_VISUAL",
       "assessment_status": "ABSENT_FOR_COMBINED_DIMENSIONAL_REASONING",
@@ -238,7 +292,9 @@
       "source_locator": "question type: ordinary to/from normalized scientific notation; page UNKNOWN",
       "task_structure": "convert, normalize, explain exponent direction",
       "canonical_family": "MATH.NS.SCIENTIFIC_NOTATION",
-      "implementation_evidence": ["app/domains/advanced_number.py:MATH.SCI.CONVERT"],
+      "implementation_evidence": [
+        "app/domains/advanced_number.py:MATH.SCI.CONVERT"
+      ],
       "generator_status": "PARTIAL",
       "guided_mve_status": "ABSENT",
       "assessment_status": "PARTIAL_NOT_ISSUE_337_ACCEPTED",
@@ -250,7 +306,9 @@
       "source_locator": "question type: scientific-notation multiplication/division and accepted rounding; page UNKNOWN",
       "task_structure": "operate, normalize, document accepted form",
       "canonical_family": "MATH.NS.SCIENTIFIC_NOTATION",
-      "implementation_evidence": ["app/domains/advanced_number.py:MATH.SCI.MULTIPLY"],
+      "implementation_evidence": [
+        "app/domains/advanced_number.py:MATH.SCI.MULTIPLY"
+      ],
       "generator_status": "PARTIAL",
       "guided_mve_status": "ABSENT",
       "assessment_status": "ABSENT_FOR_DIVISION_AND_ROUNDING_CONTRACT",
