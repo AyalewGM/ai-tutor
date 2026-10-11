@@ -205,6 +205,59 @@ def test_guided_evaluator_routes_operation_specific_exponent_errors() -> None:
     }
 
 
+@pytest.mark.parametrize(
+    ("operation", "parameters", "oracle", "wrong_ordinary"),
+    (
+        (
+            "DIVIDE",
+            {"operation": "DIVIDE", "c1": Fraction(3), "e1": 2, "c2": Fraction(2), "e2": 0},
+            {"coefficient": Fraction(3, 2), "exponent": 2, "ordinary_value": Fraction(150)},
+            Fraction(100),
+        ),
+        (
+            "MULTIPLY",
+            {"operation": "MULTIPLY", "c1": Fraction(2), "e1": 2, "c2": Fraction(2), "e2": 2},
+            {"coefficient": Fraction(4), "exponent": 4, "ordinary_value": Fraction(40_000)},
+            Fraction(4_000),
+        ),
+    ),
+)
+def test_correct_exponent_with_wrong_ordinary_is_value_inconsistency(
+    operation: str,
+    parameters: dict[str, object],
+    oracle: dict[str, object],
+    wrong_ordinary: Fraction,
+) -> None:
+    flow = _flow()
+    generators = _generator()
+    item = generators.DraftVariant(
+        variant_id=f"diagnosis-collision:{operation}",
+        mode="guided",
+        structure="SCIENTIFIC_NOTATION",
+        canonical_family=flow.CANONICAL_FAMILY,
+        prompt="Reviewer-provided exact diagnosis counterexample.",
+        response_schema=(
+            "normalized_coefficient",
+            "power_of_ten",
+            "exact_ordinary_value",
+            "normalization_explanation",
+        ),
+        parameters=parameters,
+        teacher_oracle=oracle,
+    )
+    assert flow.verify_teacher_oracle(item)
+
+    response = _correct_response(flow, item)
+    response["exact_ordinary_value"] = _exact(wrong_ordinary)
+
+    result = flow.evaluate_guided_response(item, response)
+    assert result["misconception_id"] == "SCI.INEXACT.WHEN_EXACT_REQUIRED"
+    assert result["misconception_id"] not in {
+        "SCI.PRODUCT.EXPONENTS_MULTIPLIED",
+        "SCI.QUOTIENT.EXPONENTS_ADDED",
+    }
+
+
 def test_seed_9_wrong_exponent_with_internally_consistent_ordinary_value() -> None:
     flow = _flow()
     generators = _generator()
