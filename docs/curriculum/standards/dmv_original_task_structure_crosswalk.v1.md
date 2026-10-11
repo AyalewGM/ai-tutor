@@ -1,4 +1,4 @@
-# DMV Original Task-Structure Crosswalk v1 — R2 MCPS source correction
+# DMV Original Task-Structure Crosswalk v1 — R3 architecture boundary reconciliation
 
 Status: **DRAFT_UNVERIFIED — runtime disabled**  
 Evidence snapshot: `main@313c13c9df4d530777cf89fb34f21dcedd91f454`
@@ -45,6 +45,17 @@ The machine-readable artifact preserves exact vendor unit titles and unit number
 - The owner-provided 2020 Rosa Parks summer Algebra 1 readiness packet remains historical prerequisite/task-structure research. Its original public URL is not independently verified, so it contributes no current course, standards, or mapping claim.
 - Neither track may be copied, rehosted, embedded, or linked from student-facing Mihur learning.
 
+## Architecture boundary reconciliation
+
+Issue #282 decision [6107538656](https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6107538656) now controls three algebra rows that were broader in R2. This records Architecture's decision; it does not publish a canonical identity or accept a standards relation.
+
+- Exponent product, quotient, power-of-power, zero-exponent (nonzero base), and negative-exponent/reciprocal evidence remain separate collision-audited DRAFT scopes. The historical `MATH.NS.EXPONENTS` meaning is not expanded.
+- Scientific-notation conversion/normalization, multiplication, and division remain separate collision-audited DRAFT scopes. The historical `MATH.NS.SCIENTIFIC_NOTATION` meaning is not expanded.
+- Polynomial division requires proposed DRAFT `MATH.POLY.DIVIDE_MONOMIALS` and `MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL`; the latter requires the former. Historical `MATH.EE.POLYNOMIAL_OPERATIONS` receives no new division mastery.
+- Combined tasks are reporting-only `ALL_OF`: one response has one primary atom, with no back-credit or duplicate mastery. Domain restrictions, multiplication reconstruction, substitution, and structured explanations are evidence dimensions, not extra identities.
+
+All candidate labels/scopes still require collision-audited Content cards, independent Mathematical Review, Architecture confirmation, exact backend contracts, and external Muse preservation/no-double-credit QA.
+
 ## Ranked weak or missing task structures
 
 | Rank | Reusable task structure | Grades | Decision | Existing identity/evidence | Material gap |
@@ -55,12 +66,13 @@ The machine-readable artifact preserves exact vendor unit titles and unit number
 | 4 | Fraction equivalence with visual/number-line justification | 3–5 | EXTEND | Draft PR #327; legacy alias is not authority | Approved atomic identity and independent assessment are missing |
 | 5 | Percent contexts with explicit reference base | 6–9 | EXTEND | Existing `MATH.PCT.*`; draft PR #327 | Commission, fees, and measured/reference percent error depth remain weak |
 | 6 | Linear model construction, comparison, and transfer | 7–9 / Alg I | EXTEND | Existing partial generators plus draft PR #327 | Jurisdiction-neutral identity, misleading-scale critique, and routed unseen transfer need reconciliation |
-| 7 | Exponent laws and scientific-notation equivalence | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | No exact existing core identity confirmed in this audit | Audit first; only Architecture/Math Review may approve a genuinely new atom |
-| 8 | Polynomial divided by monomial with restrictions | 8–9 / Alg I | EXTEND | `MATH.EE.POLYNOMIAL_OPERATIONS` | Denominator restrictions, equivalent forms, independent verification, and targeted cancellation errors are unproven |
-| 9 | Construct and compare distributions | 6–9 | EXTEND | `MATH.DATA.HISTOGRAM.BIN`, `MATH.DATA.IQR`, `MATH.DATA.FIVE_NUMBER`; draft PR #328 | Full box-plot construction and contextual independent assessment remain weak |
-| 10 | Nets, surface area, and rational-edge volume | 5–8 | EXTEND | `MATH.GEO.NET.CUBE.SURFACE`, `MATH.GEO.SURFACE.PRISM`, `MATH.GEO.VOLUME.PRISM`; draft PRs #327/#328 | Spatial foldability plus dimensional reasoning and trusted assessment are not jointly evidenced |
-| 11 | Pythagorean proof, classification, and dimensional model | 8–9 | EXTEND | Partial existing implementation | Maryland evidence specifically exposes missing proof and acute/obtuse inequality depth |
-| 12 | Theoretical probability versus seeded simulation | 6–8 | REUSE | Four draft scope-card atoms merged via PR #326 | Scope review is not implementation, mapping, assessment, or QA evidence |
+| 7 | Exponent laws and equivalent forms | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Five bounded DRAFT scopes authorized after collision audit; historical `MATH.NS.EXPONENTS` is not expanded | Zero/negative/domain-boundary generators, atomic exact assessment, scope-card review, and no-double-credit QA remain open |
+| 8 | Scientific-notation conversion, multiplication, and division | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Three bounded DRAFT operation scopes authorized after collision audit; historical `MATH.NS.SCIENTIFIC_NOTATION` is not expanded | Sign/zero boundaries, routed interaction, exact assessment, standards acceptance, and QA remain open |
+| 9 | Polynomial divided by monomial with restrictions | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Proposed DRAFT `MATH.POLY.DIVIDE_MONOMIALS` → `MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL`; broad legacy family is not authority | Cards, canonicalized scoring, reconstruction/domain evidence, implemented MVE/route, independent review, and QA remain open |
+| 10 | Construct and compare distributions | 6–9 | EXTEND | `MATH.DATA.HISTOGRAM.BIN`, `MATH.DATA.IQR`, `MATH.DATA.FIVE_NUMBER`; draft PR #328 | Full box-plot construction and contextual independent assessment remain weak |
+| 11 | Nets, surface area, and rational-edge volume | 5–8 | EXTEND | `MATH.GEO.NET.CUBE.SURFACE`, `MATH.GEO.SURFACE.PRISM`, `MATH.GEO.VOLUME.PRISM`; draft PRs #327/#328 | Spatial foldability plus dimensional reasoning and trusted assessment are not jointly evidenced |
+| 12 | Pythagorean proof, classification, and dimensional model | 8–9 | EXTEND | Partial existing implementation | Maryland evidence specifically exposes missing proof and acute/obtuse inequality depth |
+| 13 | Theoretical probability versus seeded simulation | 6–8 | REUSE | Four draft scope-card atoms merged via PR #326 | Scope review is not implementation, mapping, assessment, or QA evidence |
 
 ## Reconciliation rules
 
@@ -70,13 +82,13 @@ The machine-readable artifact preserves exact vendor unit titles and unit number
 - A blank Virginia or DC standard-ID list means **not yet independently verified**, not “not covered.”
 - A vendor-unit citation is topic/progression research only. It can never populate a Maryland standard ID, prove statewide adoption, or promote a mapping.
 - Current MCPS adoption evidence and historical IM/readiness research are stored separately and cannot substitute for each other.
-- `PROPOSE_IDENTITY_REVIEW` is a request to audit and decide, never authority to mint or activate a skill.
+- `PROPOSE_IDENTITY_REVIEW` records an Architecture-approved collision-audit/drafting lane only; it is never authority to publish, map as accepted, activate, or transfer historical mastery.
 - Every downstream package still needs independent mathematical review, pedagogical review, standards acceptance, external Muse QA, exact-head CI/AppSec, and a real routed student-flow demonstration.
 
 ## Required next handoffs
 
 1. **Independent Standards reviewer:** verify this MCPS/Amplify evidence hierarchy and exact course/unit transcription; separately verify Maryland expectation IDs only from official MSDE sources.
 2. **Standards Mapping:** verify exact 2023 Virginia SOL and DC CCSS identifiers against official documents and append only source-proven many-to-many relations.
-3. **Architecture:** resolve the proportional, fraction-equivalence, linear-function, exponent/scientific-notation, and Pythagorean identity references without jurisdiction-specific forks.
-4. **Content/MVE/Frontend/Backend:** reconcile PRs #327, #328, and #340 before starting duplicate work; deepen the highest-ranked gaps through Observe → Predict → Manipulate → Explain → Practice → Diagnose → Transfer → Verify.
+3. **Architecture:** resolve the remaining proportional, fraction-equivalence, linear-function, and Pythagorean identity references without jurisdiction-specific forks; confirm collisions for the newly bounded algebra drafts.
+4. **Content/MVE/Frontend/Backend:** author and review the bounded exponent, scientific-notation, and polynomial-division contracts from decision 6107538656; reconcile existing PRs #327, #328, #344, #346, and #348 before starting duplicate work; deepen the highest-ranked gaps through Observe → Predict → Manipulate → Explain → Practice → Diagnose → Transfer → Verify.
 5. **Independent reviewers/Muse:** issue exact-head verdicts; until then all rows stay `DRAFT_UNVERIFIED` and runtime disabled.
