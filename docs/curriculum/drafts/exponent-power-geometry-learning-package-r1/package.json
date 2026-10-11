@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "EXPONENT-POWER-GEOMETRY-LEARNING-PACKAGE-R1",
+  "revision": "issue-337-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "canonical_family": "MATH.NS.EXPONENTS",
+  "objective": "Explain exponent laws from repeated factors, preserve nonzero-domain conditions, simplify exact power expressions, and transfer the laws to surface area, volume, square-on-hypotenuse area and exact substitution.",
+  "learning_sequence": [
+    {
+      "phase": "OBSERVE",
+      "representations": ["CONCRETE_FACTOR_CARDS", "VISUAL_FACTOR_GROUPS"],
+      "learner_action": "Compare repeated-factor cards for a product, quotient and power of a power; identify which factors belong to each group."
+    },
+    {
+      "phase": "PREDICT",
+      "representations": ["VISUAL_FACTOR_GROUPS", "SYMBOLIC"],
+      "learner_action": "Predict the resulting sign and whether the exponent will be positive, zero or negative before simplifying."
+    },
+    {
+      "phase": "MANIPULATE",
+      "representations": ["CONCRETE_FACTOR_CARDS", "VISUAL_FACTOR_GROUPS", "SYMBOLIC"],
+      "learner_action": "Expand a bounded example, regroup common-base factors, cancel only valid nonzero factors, and keep units and restrictions visible."
+    },
+    {
+      "phase": "EXPLAIN",
+      "representations": ["VISUAL_FACTOR_GROUPS", "SYMBOLIC"],
+      "learner_action": "Name each law and connect its exponent operation to a count of repeated or cancelled factors rather than a memorized rule."
+    },
+    {
+      "phase": "PRACTICE",
+      "representations": ["SYMBOLIC"],
+      "learner_action": "Complete seeded product, quotient, power-of-power, zero-exponent, negative-exponent, requested-base and equivalence-comparison tasks."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "representations": ["CONCRETE_FACTOR_CARDS", "VISUAL_FACTOR_GROUPS", "SYMBOLIC"],
+      "learner_action": "Use one evidence-specific Socratic branch, repair the reasoning, then complete a deterministic structurally targeted fresh exit."
+    },
+    {
+      "phase": "TRANSFER",
+      "representations": ["CONCRETE_GEOMETRIC_MODEL", "VISUAL_AREA_VOLUME_MODEL", "SYMBOLIC"],
+      "learner_action": "Apply exponent laws to cube surface area and volume, squares on a right triangle, and simplify-then-substitute exact values with dimensional units."
+    },
+    {
+      "phase": "VERIFY",
+      "representations": ["SYMBOLIC"],
+      "learner_action": "Complete an unseen mode-separated task, justify every law, preserve domain restrictions and verify exact algebraic or geometric invariants without guided supports."
+    }
+  ],
+  "response_policy": {
+    "required_evidence": ["canonical_result", "exact_value", "domain_and_units", "law_explanation"],
+    "zero_exponent": "nonzero base required; exact value is 1",
+    "negative_exponent": "exact reciprocal with original nonzero-base restriction",
+    "equivalent_powers": "compare common-base exponents without requiring large-value computation",
+    "power_of_quotient": "outer power applies to numerator and denominator; original denominator restrictions remain",
+    "geometry": "coefficient and base power both receive the dimensional power; square and cubic units are distinct",
+    "guided_partial_work_mastery_credit": false
+  },
+  "seeded_practice": {
+    "reused_generator": "docs/curriculum/drafts/ontario-algebra-family-generators-r1/seeded_family_extensions.py",
+    "reused_structures": ["COMBINED_EXPONENT_LAWS", "EXPONENT_GEOMETRY_TRANSFER"],
+    "package_level_original_structures": ["POWER_OF_PRODUCT", "POWER_OF_QUOTIENT", "REWRITE_TO_REQUESTED_BASE", "COMPARE_EQUIVALENT_POWERS", "CUBE_SURFACE_AREA_AND_VOLUME", "PYTHAGOREAN_SQUARE_AREAS", "SIMPLIFY_THEN_SUBSTITUTE"],
+    "guided_and_independent_namespaces_separate": true,
+    "teacher_oracle_excluded_from_public_payload": true,
+    "independent_oracle_reconstruction_tested": true
+  },
+  "diagnostic_router": [
+    {
+      "misconception_id": "EXP.POWER_OF_POWER_ADDS",
+      "observed_evidence": "The learner adds the inner and outer exponents instead of counting equal groups.",
+      "socratic_questions": ["How many copies of the inner power does the outer exponent create?", "How many base factors are in each copy?", "Which operation combines equal groups of repeated factors?"],
+      "fresh_exit": "Different power structure requiring multiplication of exponents."
+    },
+    {
+      "misconception_id": "EXP.POWER_OF_PRODUCT_BASE_ONLY",
+      "observed_evidence": "The outer power is applied to only one factor in a product.",
+      "socratic_questions": ["Which factors are inside the parentheses?", "How many times is the entire product repeated?", "What exponent must each factor receive when the repetitions are regrouped?"],
+      "fresh_exit": "Different coefficient-monomial product with all factors powered."
+    },
+    {
+      "misconception_id": "EXP.POWER_OF_QUOTIENT_DENOMINATOR_UNPOWERED",
+      "observed_evidence": "The numerator is powered but the denominator is unchanged.",
+      "socratic_questions": ["Which numerator and denominator factors belong to the quotient?", "How many copies of the whole quotient are multiplied?", "Why must the outer power apply to both parts?"],
+      "fresh_exit": "Different quotient requiring powered numerator, denominator and preserved restrictions."
+    },
+    {
+      "misconception_id": "EXP.REWRITE_BASE_EXPONENT_UNCHANGED",
+      "observed_evidence": "The displayed base is rewritten but its exponent is not adjusted.",
+      "socratic_questions": ["How many requested-base factors make one copy of the displayed base?", "How many copies of the displayed base does its exponent request?", "What product counts all requested-base factors without evaluating them?"],
+      "fresh_exit": "Different requested-base rewrite without large-value calculation."
+    },
+    {
+      "misconception_id": "EXP.EQUIVALENCE_BY_VALUE_ONLY",
+      "observed_evidence": "The learner attempts large arithmetic without comparing the common-base exponent structures.",
+      "socratic_questions": ["What single exponent represents each expression?", "Can the exponent structures be compared before calculating a large value?", "Which equality or inequality between exponents decides the comparison?"],
+      "fresh_exit": "Different equal or unequal common-base comparison."
+    },
+    {
+      "misconception_id": "EXP.ZERO_WRITTEN_AS_ZERO",
+      "observed_evidence": "A nonzero base raised to zero is reported as zero.",
+      "socratic_questions": ["What quotient is formed by equal nonzero powers?", "What exponent remains after equal exponents are subtracted?", "Which multiplicative identity must that quotient equal?"],
+      "fresh_exit": "Different nonzero-base expression whose simplified exponent is zero."
+    },
+    {
+      "misconception_id": "EXP.NEGATIVE_IS_NEGATIVE_VALUE",
+      "observed_evidence": "A negative exponent is treated as a negative numerical answer.",
+      "socratic_questions": ["What factor would make this power product equal the zero-exponent identity?", "Where must the positive power move to become a reciprocal?", "Does your exact substituted value have the expected sign and magnitude?"],
+      "fresh_exit": "Different exact reciprocal with a negative final exponent."
+    },
+    {
+      "misconception_id": "EXP.GEOMETRY.POWER_NOT_DISTRIBUTED",
+      "observed_evidence": "Only the coefficient or only the base exponent receives the area or volume power.",
+      "socratic_questions": ["How many equal side-length factors define this measure?", "Which coefficient and base-power factors repeat each time?", "What exponent counts every repeated base factor?"],
+      "fresh_exit": "Different cube requiring both factor powers and dimensional units."
+    },
+    {
+      "misconception_id": "EXP.GEOMETRY.SURFACE_VOLUME_CONFUSED",
+      "observed_evidence": "Surface-area and volume formulas, exponents or units are interchanged.",
+      "socratic_questions": ["Does surface area use square faces or three-dimensional filling?", "How many square faces does a cube have?", "Which dimensional power and unit belong to surface area and which to volume?"],
+      "fresh_exit": "Different cube requiring simultaneous surface-area and volume evidence."
+    },
+    {
+      "misconception_id": "EXP.PYTHAGOREAN.AREAS_NOT_ADDED",
+      "observed_evidence": "Side lengths or square areas are combined without the square-on-hypotenuse identity.",
+      "socratic_questions": ["Which square is built on each side of the right triangle?", "What are the two leg-square areas in the same symbolic form?", "Does their sum reconstruct the square on the hypotenuse?"],
+      "fresh_exit": "Different scaled right triangle with exact square-area reconstruction."
+    },
+    {
+      "misconception_id": "EXP.SUBSTITUTION_BEFORE_SIMPLIFY",
+      "observed_evidence": "The learner performs large substitution arithmetic before reducing the exponent structure.",
+      "socratic_questions": ["Which exponent laws can reduce the expression before any number is substituted?", "What single exponent remains after multiplication and division?", "How does the simplified exact value verify against the original expression?"],
+      "fresh_exit": "Different symbolic expression requiring simplification before exact substitution."
+    }
+  ],
+  "unseen_transfer_contract": {
+    "contexts": ["CUBE_SURFACE_AREA_AND_VOLUME", "PYTHAGOREAN_SQUARE_AREAS", "SIMPLIFY_THEN_SUBSTITUTE"],
+    "original_synthetic_content": true,
+    "guided_context_reuse": false,
+    "response_requires_reasoning_and_exact_invariant": true,
+    "status": "CONTENT_CONTRACT_ONLY_NOT_ROUTED_OR_SCORED"
+  },
+  "independent_assessment_contract": {
+    "server_controlled_required": true,
+    "hints_allowed": false,
+    "worked_steps_visible_before_submission": false,
+    "guided_mve_visible": false,
+    "seed_parameters_or_oracle_in_public_payload": false,
+    "guided_feedback_callable": false,
+    "guided_practice_credit": false,
+    "mastery_credit": false,
+    "historical_mastery_mutation": false,
+    "status": "CONTENT_CONTRACT_ONLY_BACKEND_OWNED"
+  },
+  "accessible_mve_requirements": {
+    "owner": "MVE_FRONTEND_NOT_IMPLEMENTED_HERE",
+    "keyboard_only": "All factor grouping, law selection, exact response and transfer actions must use native keyboard-reachable controls without dragging.",
+    "screen_reader_state": "Announce the current factor groups, coefficient, exponent, domain restriction, geometric dimension and unit after every operation.",
+    "nonvisual_equivalent": "Provide an ordered before-expand-regroup-simplify table plus a geometry table of side, face area, total surface area and volume.",
+    "focus_recovery": "Retain the response and move focus to the first unsupported law, restriction or unit with its mathematical reason.",
+    "reduced_motion": "Use discrete factor-group and dimension states; motion is never required for meaning.",
+    "color_independence": true,
+    "independent_mode_scaffolds": false
+  }
+}
