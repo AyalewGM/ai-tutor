@@ -95,7 +95,7 @@ def test_exponent_atoms_preserve_zero_negative_and_domain_boundaries():
     assert any(example.get("input") == "0^-2" and example.get("valid") is False for example in negative["examples"])
 
     quotient = cards["MATH.EXPONENT.LAW.QUOTIENT"]
-    assert any("original-domain restriction" in item for item in quotient["boundary_conditions"])
+    assert any("original denominator" in item for item in quotient["boundary_conditions"])
 
 
 def test_scientific_notation_operations_are_independent_atoms():
