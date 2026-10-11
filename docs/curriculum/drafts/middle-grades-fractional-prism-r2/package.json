@@ -1,0 +1,173 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "W1-G6-FRACTIONAL-PRISM-VOLUME",
+  "revision": "middle-grades-fractional-prism-r4",
+  "title": "Fractional rectangular-prism volume as layers and exact measure",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "existing_family": "MATH.GEO.VOLUME.PRISM",
+  "canonical_family": "MATH.GEO.MEASURE.VOLUME",
+  "implementation": "DRAFT_EXECUTABLE_CONTENT_NOT_WIRED",
+  "mathematical_invariants": [
+    "V = length × width × height",
+    "base area has square units and volume has cubic units",
+    "height = volume ÷ base area when base area is nonzero",
+    "decomposing an edge decomposes volume additively without changing the total"
+  ],
+  "generated_structures": [
+    "PACK_FRACTIONAL_CELLS",
+    "MIXED_EDGE_VOLUME",
+    "MISSING_HEIGHT",
+    "DECOMPOSE_MIXED_EDGE",
+    "TRANSFER_MOLD_PLAN"
+  ],
+  "learning_sequence": [
+    {
+      "phase": "OBSERVE",
+      "representations": ["CONCRETE", "VISUAL"],
+      "student_action": "Inspect a unit cube partitioned to match fractional edge units; use the text-equivalent layer table to identify cells across, deep, and high without calculating the final volume."
+    },
+    {
+      "phase": "PREDICT",
+      "representations": ["CONCRETE", "SYMBOLIC"],
+      "student_action": "Compare two volumes for prisms with the same base—one at height 1 unit and one at the stated height—then predict how changing height or halving one edge changes filled space."
+    },
+    {
+      "phase": "MANIPULATE",
+      "representations": ["CONCRETE", "VISUAL"],
+      "student_action": "Partition edges, build one fractional-cell layer, change the number of layers, and compare the announced base-area and total-volume states after each keyboard action."
+    },
+    {
+      "phase": "EXPLAIN",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "student_action": "Connect cells per layer × number of layers to length × width × height; name why the result uses cubic units and verify an inverse dimension by recomposition."
+    },
+    {
+      "phase": "PRACTICE",
+      "representations": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+      "student_action": "Solve fresh packing, mixed-edge, inverse-height, and decomposition variants while recording operation, base area, layer reasoning, exact result, unit, equation, and check."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "representations": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+      "student_action": "Route all seven structured fields—operation, base/layer size, layer reasoning, exact answer, exact unit family/power, equation, and reconstruction check—to one evidence-specific repair; complete a fresh contrast item before the corresponding scaffold fades. Free-form prose is not automatically scored."
+    },
+    {
+      "phase": "TRANSFER",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "student_action": "In an unfamiliar mold context, decide whether volume or height is unknown before selecting direct multiplication or inverse division, then justify the exact unit."
+    },
+    {
+      "phase": "VERIFY",
+      "representations": ["SYMBOLIC"],
+      "student_action": "Submit a hidden fresh seven-field variant with no partitions, cell count, hints, worked steps, or answer; backend trusted scoring remains unimplemented."
+    }
+  ],
+  "misconception_pathways": [
+    {
+      "code": "AREA_AS_VOLUME",
+      "observed_signature": "Submitted exact value equals length × width while height was not incorporated.",
+      "socratic_probe": "How many copies of this base layer fill the stated height?",
+      "repair": "Build one layer, label its square-unit area, then stack the required fractional number of layers and record the changed unit power.",
+      "exit_check": "Solve a new prism with the same base and a different fractional height.",
+      "fade_when": "The learner distinguishes base area from volume and includes height on two consecutive fresh items."
+    },
+    {
+      "code": "ADDED_EDGE_LENGTHS",
+      "observed_signature": "Submitted value equals length + width + height.",
+      "socratic_probe": "Does adding three distances count cells in a layer and layers in the solid?",
+      "repair": "Construct an array for one layer, then treat height as the layer multiplier; compare the sum and product by unit type.",
+      "exit_check": "Choose between edge sum and edge product for a different prism and explain the dimensional unit.",
+      "fade_when": "The learner selects multiplicative layer structure and rejects an additive distractor with a unit reason."
+    },
+    {
+      "code": "IGNORED_FRACTIONAL_EDGE",
+      "observed_signature": "Submitted value matches the product after fractional parts of mixed edges are discarded.",
+      "socratic_probe": "Which portion of the prism disappears when the fractional edge part is ignored?",
+      "repair": "Decompose the mixed edge, find both partial-prism volumes, and recombine them exactly.",
+      "exit_check": "Solve a fresh mixed-edge prism by direct product and decomposition and compare results.",
+      "fade_when": "Both exact methods agree on a fresh item and no edge part is omitted."
+    },
+    {
+      "code": "UNIT_DIMENSION_ERROR",
+      "observed_signature": "Exact numeric value is correct but the response uses the wrong base unit family, the wrong dimensional power, or cubic units for a recovered length.",
+      "socratic_probe": "How many independent length directions were multiplied or remain after division?",
+      "repair": "Label edge, layer, and stack measures as length, square units, and cubic units; cancel units in the inverse equation.",
+      "exit_check": "Attach and explain the unit power on one direct-volume and one missing-height item.",
+      "fade_when": "The learner supplies the exact unit family, correct power, and cancellation explanation on both structures."
+    },
+    {
+      "code": "OPERATION_SELECTION_ERROR",
+      "observed_signature": "The selected operation does not match whether volume or one dimension is unknown.",
+      "socratic_probe": "Are you combining three known lengths, or undoing a known base area from a known volume?",
+      "repair": "Mark the unknown in V = Bh, name the known base area, and choose multiplication for V or division for h before calculating.",
+      "exit_check": "Classify two new contexts—one direct and one inverse—without arithmetic first.",
+      "fade_when": "Both operation classifications and explanations are correct before numbers are shown."
+    },
+    {
+      "code": "MULTIPLIED_INSTEAD_OF_DIVIDED",
+      "observed_signature": "For a missing height, submitted value equals volume × base area.",
+      "socratic_probe": "If base area times height makes volume, which operation isolates height?",
+      "repair": "Use a balance-style equation V = B × h, divide both sides by nonzero B, then recompose B × h to check V.",
+      "exit_check": "Recover a new fractional height and verify it by multiplication.",
+      "fade_when": "The inverse operation and recomposition check both succeed on a fresh variant."
+    },
+    {
+      "code": "SUBTRACTED_BASE_FROM_VOLUME",
+      "observed_signature": "For a missing height, submitted value equals volume minus base area.",
+      "socratic_probe": "Which multiplication relationship connects base area, height, and volume?",
+      "repair": "Write V = B × h, compare subtraction with division using units, then divide both sides by nonzero B.",
+      "exit_check": "Recover a new fractional height and show that base area times height reconstructs volume.",
+      "fade_when": "The learner selects division and completes the exact multiplication check on a fresh variant."
+    }
+  ],
+  "accessibility_and_mve": {
+    "existing_static_visual": "frontend/src/components/ProblemVisual.tsx SolidModel",
+    "existing_static_visual_status": "REUSED_FOR_ORIENTATION_ONLY_INTEGER_DIMENSION_RENDERER",
+    "interactive_fractional_prism_status": "REQUIREMENT_ONLY_NOT_IMPLEMENTED_OR_WIRED",
+    "keyboard_requirements": [
+      "adjust edge partition denominator and numerator",
+      "move among base cells and layers without drag",
+      "toggle orthographic layer slices",
+      "reset without losing the current prompt"
+    ],
+    "screen_reader_equivalence": "Announce exact edge lengths, partition counts, current base-cell count, current layer count, and volume state in a nonvisual table; never require rotation to obtain evidence.",
+    "reduced_motion": "Use discrete layer states with animation disabled under reduced-motion preference.",
+    "focus_recovery": "Preserve all seven response fields and return focus to the first inconsistent field with its misconception code.",
+    "no_visual_answer_leakage": true
+  },
+  "seeded_practice": {
+    "module": "seeded_variants.py",
+    "guided_namespace": "middle-grades-fractional-prism-r2:guided",
+    "independent_namespace": "middle-grades-fractional-prism-r2:independent",
+    "exact_number_type": "fractions.Fraction",
+    "oracle": "Independent edge product or volume/base-area quotient reconstruction in tests",
+    "invalid_seed_and_mode_rejection": true
+  },
+  "independent_assessment_contract": {
+    "fresh_seed_required": true,
+    "required_evidence": [
+      "operation_choice",
+      "base_area_or_layer_size",
+      "layer_reasoning",
+      "exact_answer",
+      "unit_and_power",
+      "equation",
+      "check_or_explanation"
+    ],
+    "hints_allowed": false,
+    "guided_mve_visible": false,
+    "partition_cell_counts_visible": false,
+    "worked_steps_visible": false,
+    "answer_in_public_payload": false,
+    "guided_practice_credit": false,
+    "historical_mastery_mutation": false,
+    "backend_status": "NOT_IMPLEMENTED",
+    "guided_structured_evaluator": "diagnose_reasoning_evidence checks all seven fields in guided mode only and never awards mastery",
+    "independent_reasoning_scorer": "NOT_IMPLEMENTED_BACKEND",
+    "unseen_transfer": "TRANSFER_MOLD_PLAN requires operation selection before arithmetic and alternates direct volume with inverse height."
+  },
+  "review_status": "R3_MATH_APPROVED_AT_0A24EEA_R4_STRUCTURED_GUIDED_EVIDENCE_PENDING_INDEPENDENT_REVIEW"
+}
