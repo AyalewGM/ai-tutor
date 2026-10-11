@@ -172,9 +172,13 @@ def generate_quadratic_pattern(seed: int, mode: str) -> dict:
         mode=mode,
         family="QUADRATIC_TABLE_SECOND_DIFFERENCE_TRANSFER",
         prompt=(
-            f"A growing tile design has counts {list(zip(inputs, outputs))}. Predict the "
-            "count at stage 4, show both difference rows, write a rule, and explain why "
-            "the growth is quadratic rather than linear."
+            f"A growing tile design has counts {list(zip(inputs, outputs))}. "
+            "The construction rule guarantees that the increase in tile count between "
+            "successive stages keeps growing by the same fixed amount (constant second "
+            "differences) at every later stage too. Under that stated continuing rule, "
+            "predict the count at stage 4, show both difference rows, write a quadratic "
+            "rule consistent with the construction, and explain why its growth is "
+            "quadratic rather than linear."
         ),
         parameters={"stage_inputs": inputs, "tile_counts": outputs},
         response_fields=(
