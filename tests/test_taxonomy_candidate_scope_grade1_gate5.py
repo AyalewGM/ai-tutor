@@ -35,7 +35,7 @@ def test_grade1_gate5_cards_are_draft_and_complete() -> None:
     data = _load()
     assert data["review_status"] == "DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW"
     assert data["authority"] == "NONE_NOT_FOR_RUNTIME"
-    assert data["revision"] == "2026-10-11-grade1-gate5-r2"
+    assert data["revision"] == "2026-10-11-grade1-gate5-r3"
 
     cards = data["skills"]
     assert len(cards) == 13
@@ -153,6 +153,47 @@ def test_grade1_boundaries_and_separate_evidence_dimensions_are_explicit() -> No
     assert vocabulary["face"] == "flat 2-D boundary of a solid"
     assert vocabulary["curved_surface"] == "non-flat boundary of a solid"
 
+    assert defining_2d["shape_universe"]["classification_hierarchy"] == [
+        "square ⊂ rectangle ⊂ trapezoid"
+    ]
+    assert set(defining_2d["response_modes"]) == {
+        "MOST_SPECIFIC",
+        "ALL_VALID_LISTED",
+        "MEMBERSHIP",
+    }
+    square_all_valid = next(
+        example
+        for example in defining_2d["examples"]
+        if example.get("response_mode") == "ALL_VALID_LISTED"
+    )
+    assert square_all_valid["answer"] == ["square", "rectangle", "trapezoid"]
+
+    assert defining_3d["shape_universe"]["classification_hierarchy"] == [
+        "cube ⊂ rectangular prism"
+    ]
+    assert defining_3d["shape_universe"]["classification_conventions"]["cube"] == (
+        "rectangular prism with six congruent square flat faces"
+    )
+    cube_all_valid = next(
+        example
+        for example in defining_3d["examples"]
+        if example.get("response_mode") == "ALL_VALID_LISTED"
+    )
+    assert cube_all_valid["answer"] == ["cube", "rectangular prism"]
+
+    construct_2d = cards["MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_2D"]
+    square_construction = next(
+        example
+        for example in construct_2d["examples"]
+        if example["dimension"] == "quadrilateral_construction"
+    )
+    assert square_construction["response_mode"] == "ALL_VALID_LISTED"
+    assert square_construction["answer"]["valid_names"] == [
+        "square",
+        "rectangle",
+        "trapezoid",
+    ]
+
     construct_3d = cards["MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_3D"]
     modes = construct_3d["assessment_evidence_matrix"]["required"][0][
         "accepted_modes"
@@ -181,6 +222,14 @@ def test_grade1_boundaries_and_separate_evidence_dimensions_are_explicit() -> No
     assert "disjoint" in compose_3d["shape_universe"]["composition_contract"]
 
     history = _load()["revision_history"]
+    assert history[-1]["revision"] == "2026-10-11-grade1-gate5-r3"
+    assert history[-1]["unchanged_independently_approved_cards"] == 10
+    assert set(history[-1]["corrected_codes"]) == {
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_2D",
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_3D",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_2D",
+    }
+
     assert history[0]["superseded_draft_codes"] == [
         "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES",
         "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES",
