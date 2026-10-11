@@ -99,6 +99,33 @@ interactive animations or proof of student mastery.
 
 No row should be marked verified solely because a generator exists or tests pass.
 
+## Foundations unseen-assessment correction
+
+Independent review of the fixed mastery exits identified a precise remaining
+boundary: one authored unseen exit per structure is not a production-grade
+multi-seed assessment generator. The isolated
+`scripts/draft_foundations_additive_unseen.py` correction addresses that gap for
+the eight existing Grades 2–5 additive relationship structures without adding
+new skill identities or changing their previously reviewed practice content.
+
+Each seed yields fresh contexts and operands, a learner-only question and
+response contract, a teacher/server-only exact oracle, equality/substitution
+evidence, and three misconception-specific Socratic routes. The routes are
+post-response diagnostic specifications, not learner-facing hints during an
+independent assessment. The generator is not imported into runtime and cannot
+write attempts or mastery.
+
+```bash
+python -m scripts.draft_foundations_additive_unseen --seed 20261011 --variants 6
+pytest -q tests/test_draft_foundations_additive_unseen.py
+```
+
+`provenance.v1.json` records the reuse audit, UNKNOWN standards mapping,
+provisional canonical status, prior bounded reviews and all outstanding gates.
+Passing local tests proves deterministic arithmetic and payload separation only;
+independent mathematics, pedagogy, Assessment Backend integration, Muse QA and
+release approval remain required.
+
 ## Conceptual expansion wave: 12 more structures
 
 The isolated `scripts/draft_conceptual_depth_generators.py` adds
