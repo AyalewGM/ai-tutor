@@ -228,10 +228,13 @@ def generate_transfer(seed: int, mode: str) -> TransferVariant:
     response_schema = (
         "relationship_equation",
         "unknown_value",
+        "unknown_unit",
         "derived_quantity",
-        "unit",
+        "derived_quantity_unit",
         "verification_left",
+        "verification_left_unit",
         "verification_right",
+        "verification_right_unit",
         "model_explanation",
     )
 
@@ -251,10 +254,13 @@ def generate_transfer(seed: int, mode: str) -> TransferVariant:
         teacher_answer = {
             "relationship_equation": f"2w + 2({multiplier}w + {offset}) = {perimeter}",
             "unknown_value": str(width),
+            "unknown_unit": "metres",
             "derived_quantity": str(length),
-            "unit": "metres",
+            "derived_quantity_unit": "metres",
             "verification_left": str(perimeter),
+            "verification_left_unit": "metres",
             "verification_right": str(perimeter),
+            "verification_right_unit": "metres",
             "model_explanation": "Two widths plus two related lengths equal the perimeter.",
         }
         model_parameters: dict[str, Fraction | int] = {
@@ -280,10 +286,13 @@ def generate_transfer(seed: int, mode: str) -> TransferVariant:
         teacher_answer = {
             "relationship_equation": f"{_text(fixed_fee)} + {_text(rate)}s = {_text(total)}",
             "unknown_value": str(sessions),
+            "unknown_unit": "sessions",
             "derived_quantity": _text(rate * sessions),
-            "unit": "sessions",
+            "derived_quantity_unit": "dollars",
             "verification_left": _text(total),
+            "verification_left_unit": "dollars",
             "verification_right": _text(total),
+            "verification_right_unit": "dollars",
             "model_explanation": "The total is the fixed fee plus rate times session count.",
         }
         model_parameters = {
