@@ -1,0 +1,120 @@
+# Standalone staging stack: NEVER merge with the base or pilot Compose files.
+name: mihur-staging
+x-common: &common
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options: {max-size: "5m", max-file: "2"}
+  networks: [staging]
+  security_opt: [no-new-privileges:true]
+x-api-env: &api-env
+  DATABASE_URL: postgresql+psycopg://mihur_staging:${STAGING_DB_PASSWORD:?required}@db:5432/mihur_staging
+  AI_PROVIDER: gateway
+  LLM_GATEWAY_URL: http://llm-gateway:8001
+  REDIS_URL: redis://redis:6379/0
+  PUBLIC_BASE_URL: https://localhost:8443
+  SESSION_COOKIE_SECURE: "true"
+  EMAIL_BACKEND: console
+  PHOTO_OCR_PROVIDER: stub
+  CLOUDFLARE_TRUSTED: "false"
+  GEO_ENFORCEMENT_ENABLED: "false"
+  AUTH_THROTTLES_ENABLED: "true"
+services:
+  db:
+    <<: *common
+    image: ${STAGING_DB_IMAGE:?digest required}
+    mem_limit: 320m
+    cpus: 0.50
+    environment:
+      POSTGRES_DB: mihur_staging
+      POSTGRES_USER: mihur_staging
+      POSTGRES_PASSWORD: ${STAGING_DB_PASSWORD:?required}
+    command: [postgres, -c, shared_buffers=64MB, -c, max_connections=30, -c, work_mem=2MB]
+    volumes: [database:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U mihur_staging -d mihur_staging"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+  redis:
+    <<: *common
+    image: ${STAGING_REDIS_IMAGE:?digest required}
+    mem_limit: 64m
+    cpus: 0.15
+    command: [redis-server, --save, "", --appendonly, "no", --maxmemory, 32mb, --maxmemory-policy, noeviction]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+  llm-gateway:
+    <<: *common
+    image: ${STAGING_GATEWAY_IMAGE:?digest required}
+    mem_limit: 192m
+    cpus: 0.35
+    environment: {LLM_GATEWAY_PROVIDER: fallback}
+    command: [uvicorn, services.llm_gateway.main:app, --host, 0.0.0.0, --port, "8001", --workers, "1"]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8001/ready', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+  migrate:
+    <<: *common
+    image: ${STAGING_API_IMAGE:?digest required}
+    restart: "no"
+    profiles: [tools]
+    mem_limit: 448m
+    cpus: 0.75
+    environment: *api-env
+    command: [alembic, upgrade, head]
+    depends_on:
+      db: {condition: service_healthy}
+  tutor-api:
+    <<: *common
+    image: ${STAGING_API_IMAGE:?digest required}
+    mem_limit: 448m
+    cpus: 0.75
+    environment: *api-env
+    command: [uvicorn, app.main:app, --host, 0.0.0.0, --port, "8000", --workers, "1"]
+    depends_on:
+      db: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      llm-gateway: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8000/ready', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+  frontend:
+    <<: *common
+    image: ${STAGING_FRONTEND_IMAGE:?digest required}
+    mem_limit: 64m
+    cpus: 0.20
+    depends_on:
+      tutor-api: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, 'http://127.0.0.1:8080/healthz']
+      interval: 15s
+      timeout: 3s
+      retries: 5
+  proxy:
+    <<: *common
+    image: ${STAGING_PROXY_IMAGE:?digest required}
+    mem_limit: 64m
+    cpus: 0.20
+    ports: ["127.0.0.1:8443:8443"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - proxy_data:/data
+      - proxy_config:/config
+    depends_on:
+      frontend: {condition: service_healthy}
+networks:
+  staging:
+    internal: true
+volumes:
+  database:
+  proxy_data:
+  proxy_config:

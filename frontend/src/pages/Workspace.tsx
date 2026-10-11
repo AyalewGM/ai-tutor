@@ -1,5 +1,7 @@
 import { InteractiveDotPlotExplorer } from "../mve/InteractiveDotPlotExplorer";
 import { showDotPlotExploration } from "../mve/dotPlotExplorer";
+import { InteractivePolynomialDivision } from "../mve/InteractivePolynomialDivision";
+import { showPolynomialDivisionExploration } from "../mve/polynomialDivision";
 import { InteractiveEquationBalance } from "../mve/InteractiveEquationBalance";
 import { showBalanceExploration } from "../mve/equationBalance";
 import { InteractiveLinearExplorer } from "../mve/InteractiveLinearExplorer";
@@ -18,6 +20,8 @@ import LearnPanel from "../components/LearnPanel";
 import { integerAdditionEligible } from "../learningFlowInteractions";
 import { GuidedDistributivePractice } from "../mve/GuidedDistributivePractice";
 import { integerSeedFromString } from "../mve/integerPractice";
+import { InteractiveFractionBars, fractionComparisonTarget } from "../mve/InteractiveFractionBars";
+import { InteractiveFractionAddition } from "../mve/InteractiveFractionAddition";
 import LevelCrest from "../components/LevelCrest";
 import MathKeypad from "../components/MathKeypad";
 import ScratchPad from "../components/ScratchPad";
@@ -801,6 +805,13 @@ export default function Workspace() {
                       independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
                     />
                   )}
+                  {/* Default off until LearnerWorkspace exposes an approved server-owned capability. */}
+                  {showPolynomialDivisionExploration(workspace.state, undefined) && (
+                    <InteractivePolynomialDivision
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
                   <div className="problem-wrap">
                     <div className={`problem ${feedback}`} aria-live="polite">
                       <MathText
@@ -811,6 +822,37 @@ export default function Workspace() {
                       />
                     </div>
                     <ProblemVisual spec={workspace.problem?.visual ?? null} />
+                    {(workspace.state === "GUIDED_PRACTICE" ||
+                      workspace.state === "REMEDIATION") &&
+                      workspace.problem?.visual?.type === "fraction_bar" && (
+                        <InteractiveFractionBars
+                          key={workspace.problem.id}
+                          independentAssessment={
+                            workspace.state !== "GUIDED_PRACTICE" &&
+                            workspace.state !== "REMEDIATION"
+                          }
+                          denominator={workspace.problem.visual.denominator}
+                          initialNumerator={workspace.problem.visual.numerator}
+                          compareWith={
+                            fractionComparisonTarget(workspace.problem.visual) ??
+                            undefined
+                          }
+                        />
+                      )}
+                    {(workspace.state === "GUIDED_PRACTICE" ||
+                      workspace.state === "REMEDIATION") &&
+                      workspace.problem?.visual?.type === "fraction_operation" &&
+                      workspace.problem.visual.operation === "+" && (
+                        <InteractiveFractionAddition
+                          key={workspace.problem.id}
+                          independentAssessment={
+                            workspace.state !== "GUIDED_PRACTICE" &&
+                            workspace.state !== "REMEDIATION"
+                          }
+                          first={workspace.problem.visual.first}
+                          second={workspace.problem.visual.second}
+                        />
+                      )}
                     <ScratchPad />
                     {feedback === "correct" && <ConfettiBurst trigger={celebrate} />}
                   </div>

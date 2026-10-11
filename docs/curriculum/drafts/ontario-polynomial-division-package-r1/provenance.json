@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.1.0",
+  "record_type": "MIHUR_CONTENT_PROVENANCE",
+  "package_id": "ONT-ALG-POLY-DIVISION-R1",
+  "revision": "issue-337-polynomial-division-package-r2",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "source_scope": {
+    "milestone": "GitHub Issue #337",
+    "teacher_units": ["2.9C", "2.9 Homework"],
+    "source_access": "ABSTRACT_QUESTION_TYPE_HANDOFF_ONLY",
+    "copyrighted_wording_reused": false,
+    "student_or_school_identifiers_stored": false
+  },
+  "standards": {
+    "official_source_url": "UNKNOWN_PENDING_CURRICULUM_MAPPING",
+    "publication_version": "UNKNOWN_PENDING_CURRICULUM_MAPPING",
+    "exact_expectation_ids": [],
+    "mapping_approval": "NONE",
+    "coverage_credit": false
+  },
+  "canonical_identity": {
+    "canonical_family": "MATH.EE.POLYNOMIAL_OPERATIONS",
+    "status": "ARCHITECTURE_BOUNDARY_ACCEPTED_DRAFT_NO_RUNTIME_AUTHORITY",
+    "architecture_decision": "Issue #282 comment 6107538656",
+    "draft_atoms": [
+      "MATH.POLY.DIVIDE_MONOMIALS",
+      "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL"
+    ],
+    "scope_card_owner": "CANONICAL_CURRICULUM_CONTENT",
+    "uuid_authority": "NONE",
+    "new_canonical_identity": false
+  },
+  "reused_work": {
+    "generator": "docs/curriculum/drafts/ontario-algebra-family-generators-r1/seeded_family_extensions.py",
+    "generator_commit": "bb2c2e1293c556bc3ca365b945ec72caee83bac9",
+    "assessment_contract": "PR #346 reference only; terms/domain base fields exist, R2 structured-evidence extension not accepted or wired",
+    "mve": "GROUPED_TERM_DIVISION_REQUIREMENT_NOT_IMPLEMENTED",
+    "frontend": "NOT_WIRED"
+  },
+  "pedagogical_evidence": [
+    "Issue #337 question-type specification",
+    "Issue #337 independent pedagogy verdict comment 6106208347",
+    "Mihur Observe-Predict-Manipulate-Explain-Practice-Diagnose-Transfer-Verify contract"
+  ],
+  "learning_sequence": {
+    "observe_predict_manipulate_explain_practice_diagnose_transfer_verify": "AUTHORED_AND_EXECUTABLE_CONTENT_CONTRACT",
+    "concrete_visual_symbolic": "AUTHORED_GROUPED_TERMS_TO_FACTOR_COUNTS_TO_SYMBOLIC_QUOTIENT",
+    "response_to_diagnosis": "IMPLEMENTED_FROM_TYPED_RESPONSE_VALUES_NOT_CALLER_TRUTH_FLAGS",
+    "fresh_exit": "IMPLEMENTED_DETERMINISTIC_LOCAL_VARIANTS_WITH_ENFORCED_NEGATIVE_EXPONENT_EXIT",
+    "scaffold_fading": "IMPLEMENTED_LOCAL_STATE_MACHINE",
+    "unseen_transfer": "IMPLEMENTED_COMPOSITE_AREA_CONTEXT_WITH_COMPLETE_TYPED_ORACLE"
+  },
+  "assessment": {
+    "seeded_guided_practice": "IMPLEMENTED_DRAFT_ONLY",
+    "independent_oracle": "IMPLEMENTED_VERSIONED_EXACT_RESPONSE_AND_RECONSTRUCTION_CONTRACT_LOCALLY_NOT_INDEPENDENTLY_ACCEPTED",
+    "unseen_assessment": "IMPLEMENTED_DRAFT_ONLY_NOT_BACKEND_WIRED",
+    "guided_credit": false,
+    "hints_in_independent_mode": false
+  },
+  "accessibility": {
+    "keyboard_contract": "AUTHORED_NOT_IMPLEMENTED",
+    "screen_reader_equivalent": "AUTHORED_NOT_IMPLEMENTED",
+    "reduced_motion": "AUTHORED_NOT_IMPLEMENTED",
+    "color_independent": "AUTHORED_NOT_IMPLEMENTED"
+  },
+  "independent_reviews": {
+    "mathematical": "REQUEST_CHANGES_AT_D7DDDDF7012117509B3CE6D25CB3192F5C7ECCF6; R2_PENDING_REVIEW",
+    "pedagogical": "CHANGES_REQUIRED_AT_D7DDDDF7012117509B3CE6D25CB3192F5C7ECCF6; R2_NOT_REVIEWED",
+    "standards": "UNKNOWN_NOT_REVIEWED",
+    "architecture": "DRAFT_BOUNDARY_ACCEPTED_ISSUE_282_COMMENT_6107538656_NO_RUNTIME_AUTHORITY",
+    "muse_qa": "UNKNOWN_NOT_RUN"
+  },
+  "delivery_status": {
+    "authored": true,
+    "implemented": "DRAFT_CONTENT_CONTRACT_TYPED_EVIDENCE_AND_LOCAL_TEST_MODEL",
+    "wired": false,
+    "ci_passing": "PR_348_OLD_HEAD_D7DDDDF_PASS; R2_EXACT_HEAD_PENDING",
+    "independently_accepted": false,
+    "deployed": false
+  }
+}
+

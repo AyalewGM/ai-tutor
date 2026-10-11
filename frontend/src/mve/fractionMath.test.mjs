@@ -1,0 +1,138 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import test from "node:test";
+import ts from "typescript";
+
+const source = await readFile(new URL("./fractionMath.ts", import.meta.url), "utf8");
+const compiled = ts.transpileModule(source, {
+  compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+}).outputText;
+const { normalizeFractionParts, changeShadedParts, simplifyFraction, describeFraction, compareFractions, describeFractionComparison, isValidFractionParts, scaleFraction, validScaleFactors, describeEquivalence, describeSimplification, planFractionAddition, describeFractionAddition } = await import(
+  `data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`
+);
+
+test("normalization bounds numerator and denominator", () => {
+  assert.deepEqual(normalizeFractionParts(20, 20), { numerator: 12, denominator: 12 });
+  assert.deepEqual(normalizeFractionParts(-3, -2), { numerator: 0, denominator: 1 });
+  assert.deepEqual(normalizeFractionParts(3, 4), { numerator: 3, denominator: 4 });
+});
+
+test("invalid and non-finite inputs fail to safe deterministic defaults", () => {
+  assert.deepEqual(normalizeFractionParts(NaN, Infinity), { numerator: 0, denominator: 4 });
+  assert.deepEqual(normalizeFractionParts(1.5, 3.5), { numerator: 0, denominator: 4 });
+  assert.deepEqual(normalizeFractionParts(Number.MAX_SAFE_INTEGER + 1, 4), { numerator: 0, denominator: 4 });
+});
+
+test("shading changes saturate at both boundaries", () => {
+  assert.deepEqual(changeShadedParts({ numerator: 0, denominator: 4 }, -1), { numerator: 0, denominator: 4 });
+  assert.deepEqual(changeShadedParts({ numerator: 4, denominator: 4 }, 1), { numerator: 4, denominator: 4 });
+  assert.deepEqual(changeShadedParts({ numerator: 2, denominator: 4 }, 1), { numerator: 3, denominator: 4 });
+  assert.deepEqual(changeShadedParts({ numerator: 2, denominator: 4 }, -1), { numerator: 1, denominator: 4 });
+});
+
+test("input objects remain unchanged and no floating point drift occurs", () => {
+  const current = Object.freeze({ numerator: 2, denominator: 3 });
+  assert.deepEqual(changeShadedParts(current, 1), { numerator: 3, denominator: 3 });
+  assert.deepEqual(current, { numerator: 2, denominator: 3 });
+});
+
+test("equivalent fractions simplify exactly and preserve original shading", () => {
+  assert.deepEqual(simplifyFraction({ numerator: 2, denominator: 4 }), { numerator: 1, denominator: 2 });
+  assert.deepEqual(simplifyFraction({ numerator: 0, denominator: 12 }), { numerator: 0, denominator: 1 });
+  assert.deepEqual(simplifyFraction({ numerator: 12, denominator: 12 }), { numerator: 1, denominator: 1 });
+  assert.deepEqual(simplifyFraction({ numerator: 3, denominator: 4 }), { numerator: 3, denominator: 4 });
+});
+
+test("accessible explanations are deterministic and do not grade mastery", () => {
+  assert.equal(describeFraction({ numerator: 2, denominator: 4 }),
+    "2 out of 4 equal parts are shaded. This is equivalent to 1/2.");
+  assert.equal(describeFraction({ numerator: 3, denominator: 4 }),
+    "3 out of 4 equal parts are shaded.");
+});
+
+test("cross multiplication compares unlike denominators exactly", () => {
+  assert.equal(compareFractions({ numerator: 1, denominator: 2 }, { numerator: 2, denominator: 4 }), "EQUAL_TO");
+  assert.equal(compareFractions({ numerator: 2, denominator: 3 }, { numerator: 3, denominator: 4 }), "LESS_THAN");
+  assert.equal(compareFractions({ numerator: 5, denominator: 6 }, { numerator: 3, denominator: 4 }), "GREATER_THAN");
+  assert.equal(compareFractions({ numerator: 0, denominator: 2 }, { numerator: 0, denominator: 12 }), "EQUAL_TO");
+});
+test("comparison rejects malformed inputs rather than normalizing them", () => {
+  for (const invalid of [null, {}, { numerator: -1, denominator: 4 }, { numerator: 2, denominator: 0 }, { numerator: 2, denominator: 13 }, { numerator: 1.5, denominator: 4 }]) {
+    assert.equal(isValidFractionParts(invalid), false);
+    assert.equal(compareFractions(invalid, { numerator: 1, denominator: 2 }), null);
+  }
+});
+test("comparison feedback is explanatory, not mastery grading", () => {
+  assert.equal(describeFractionComparison({ numerator: 1, denominator: 2 }, { numerator: 2, denominator: 4 }),
+    "1/2 is equal to 2/4.");
+  assert.equal(describeFractionComparison({ numerator: 1, denominator: 0 }, { numerator: 1, denominator: 2 }), null);
+});
+
+test("equivalence construction scales exactly and stays inside bounds", () => {
+  assert.deepEqual(scaleFraction({ numerator: 1, denominator: 2 }, 2), { numerator: 2, denominator: 4 });
+  assert.deepEqual(scaleFraction({ numerator: 3, denominator: 4 }, 3), { numerator: 9, denominator: 12 });
+  assert.equal(scaleFraction({ numerator: 3, denominator: 4 }, 4), null);
+  assert.equal(scaleFraction({ numerator: 1, denominator: 2 }, 1), null);
+  assert.equal(scaleFraction({ numerator: 1, denominator: 2 }, 1.5), null);
+  assert.equal(scaleFraction({ numerator: 2, denominator: 0 }, 2), null);
+});
+
+test("offered multipliers keep scaled denominators within the visual range", () => {
+  assert.deepEqual(validScaleFactors({ numerator: 1, denominator: 2 }), [2, 3, 4]);
+  assert.deepEqual(validScaleFactors({ numerator: 1, denominator: 4 }), [2, 3]);
+  assert.deepEqual(validScaleFactors({ numerator: 1, denominator: 6 }), [2]);
+  assert.deepEqual(validScaleFactors({ numerator: 1, denominator: 7 }), []);
+});
+
+test("equivalence explanation is deterministic text, not a grade", () => {
+  assert.equal(describeEquivalence({ numerator: 1, denominator: 2 }, 2),
+    "Multiplying numerator and denominator by 2 keeps the same amount shaded: 1/2 = 2/4.");
+  assert.equal(describeEquivalence({ numerator: 1, denominator: 7 }, 2), null);
+});
+
+test("simplification explanation divides by the exact common factor", () => {
+  assert.equal(describeSimplification({ numerator: 2, denominator: 4 }),
+    "Dividing numerator and denominator by 2 keeps the same amount shaded: 2/4 = 1/2.");
+  assert.equal(describeSimplification({ numerator: 6, denominator: 12 }),
+    "Dividing numerator and denominator by 6 keeps the same amount shaded: 6/12 = 1/2.");
+  assert.equal(describeSimplification({ numerator: 0, denominator: 4 }),
+    "Dividing numerator and denominator by 4 keeps the same amount shaded: 0/4 = 0/1.");
+  assert.equal(describeSimplification({ numerator: 3, denominator: 4 }), null);
+  assert.equal(describeSimplification({ numerator: 1, denominator: 7 }), null);
+});
+
+test("addition plans use the exact LCM and recompute scaled operands", () => {
+  assert.deepEqual(planFractionAddition({ numerator: 1, denominator: 4 }, { numerator: 1, denominator: 2 }), {
+    common_denominator: 4,
+    first_scaled: { numerator: 1, denominator: 4 },
+    second_scaled: { numerator: 2, denominator: 4 },
+    sum_numerator: 3, sum_denominator: 4,
+  });
+  assert.deepEqual(planFractionAddition({ numerator: 1, denominator: 3 }, { numerator: 1, denominator: 4 }),
+    {
+      common_denominator: 12,
+      first_scaled: { numerator: 4, denominator: 12 },
+      second_scaled: { numerator: 3, denominator: 12 },
+      sum_numerator: 7, sum_denominator: 12,
+    });
+});
+
+test("addition plans fail closed on invalid operands and out-of-model sums", () => {
+  assert.equal(planFractionAddition({ numerator: 1, denominator: 0 }, { numerator: 1, denominator: 2 }), null);
+  assert.equal(planFractionAddition(null, { numerator: 1, denominator: 2 }), null);
+  assert.equal(planFractionAddition({ numerator: 1, denominator: 7 }, { numerator: 1, denominator: 5 }), null);
+});
+
+test("addition plans allow bounded improper sums up to two wholes", () => {
+  const plan = planFractionAddition({ numerator: 12, denominator: 12 }, { numerator: 11, denominator: 12 });
+  assert.equal(plan.sum_numerator, 23);
+  assert.equal(plan.sum_denominator, 12);
+});
+
+test("addition explanation reports whole-number overflow honestly", () => {
+  const plan = planFractionAddition({ numerator: 3, denominator: 4 }, { numerator: 1, denominator: 2 });
+  assert.equal(describeFractionAddition(plan),
+    "With equal parts, 3/4 + 2/4 = 5/4, which is more than one whole: 1 and 1/4.");
+  const exact = planFractionAddition({ numerator: 1, denominator: 2 }, { numerator: 1, denominator: 4 });
+  assert.equal(describeFractionAddition(exact), "With equal parts, 2/4 + 1/4 = 3/4.");
+});

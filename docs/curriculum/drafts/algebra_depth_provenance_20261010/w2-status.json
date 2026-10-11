@@ -1,0 +1,23 @@
+{
+  "package_id": "W2-G9-QUADRATIC-PATTERNS",
+  "revision": "G9_DEPTH_R4_2026-10-10",
+  "source_pr": 328,
+  "source_head": "2445f197259ff27b5c99dd2b45c4bcbc2e5292f8",
+  "canonical": "MATH.F.QUADRATIC.INTERPRET",
+  "canonical_review": "UNKNOWN",
+  "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+  "curriculum_reference_files": [
+    "w2-ontario-source.json",
+    "w2-maryland-source.json"
+  ],
+  "math_review": "PENDING",
+  "pedagogy_review": "CHANGES_REQUIRED",
+  "pedagogical_response": "R4_PATTERN_GROWTH_ARC_AUTHORED_REREVIEW_PENDING",
+  "pedagogy_evidence": "https://github.com/AyalewGM/ai-tutor/pull/328#issuecomment-6102771431",
+  "muse_qa": "PENDING",
+  "practice": "DRAFT_OFFLINE_GENERATOR_NOT_WIRED",
+  "assessment": "SECOND_DIFFERENCE_PREDICTION_RESERVED_NAMESPACE_BACKEND_NOT_IMPLEMENTED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "learner_data_writes": false
+}

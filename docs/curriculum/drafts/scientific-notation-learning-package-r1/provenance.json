@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "MIHUR_CONTENT_PROVENANCE",
+  "package_id": "SCIENTIFIC-NOTATION-LEARNING-PACKAGE-R1",
+  "revision": "issue-337-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "attempt_writes": false,
+  "mastery_writes": false,
+  "source_scope": {
+    "milestone": "GitHub Issue #337",
+    "teacher_unit": "2.11 scientific notation",
+    "source_access": "ABSTRACT_QUESTION_TYPE_HANDOFF_ONLY",
+    "original_equivalent_content": true,
+    "copyrighted_wording_reused": false,
+    "child_or_school_identifiers": false
+  },
+  "standards": {
+    "official_source_url": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "publication_version": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "exact_expectation_ids": [],
+    "mapping_status": "NONE_NOT_CLAIMED",
+    "coverage_credit": false
+  },
+  "canonical": {
+    "family": "MATH.NS.SCIENTIFIC_NOTATION",
+    "status": "HISTORICAL_CANONICAL_FAMILY_REUSED_NO_IDENTITY_CHANGE",
+    "new_identity": false,
+    "draft_scope_cards_are_authority": false
+  },
+  "reused_artifacts": [
+    {
+      "artifact": "docs/curriculum/drafts/ontario-algebra-family-generators-r1/seeded_family_extensions.py",
+      "source_pr": 344,
+      "accepted_head": "bb2c2e1293c556bc3ca365b945ec72caee83bac9",
+      "reuse": "deterministic exact conversion, reverse conversion, multiplication, division and normalization variants"
+    },
+    {
+      "artifact": "docs/curriculum/drafts/ontario-algebra-family-generators-r1/misconception_paths.json",
+      "source_pr": 344,
+      "accepted_head": "bb2c2e1293c556bc3ca365b945ec72caee83bac9",
+      "reuse": "accepted exponent-direction and normalization-repair starting paths"
+    },
+    {
+      "artifact": "app/domains/advanced_number.py",
+      "source_pr": 255,
+      "reuse": "historical canonical scientific-notation implementation reference only"
+    }
+  ],
+  "pedagogical_evidence": [
+    {
+      "reference": "NCTM, Principles to Actions, 2014",
+      "use": "connect representations and elicit evidence of student reasoning",
+      "copied_material": false
+    },
+    {
+      "reference": "CAST Universal Design for Learning Guidelines 3.0, 2024",
+      "use": "multiple representations, keyboard/nonvisual equivalence and scaffold removal",
+      "copied_material": false
+    }
+  ],
+  "progression_coverage": {
+    "observe_predict_manipulate_explain_practice_diagnose_transfer_verify": "AUTHORED_DRAFT_ALL_PHASES",
+    "concrete_visual_symbolic": "AUTHORED_AS_MVE_REQUIREMENTS_NOT_IMPLEMENTED",
+    "misconception_specific_paths": ["SCI.EXPONENT.DIRECTION", "SCI.NOT_NORMALIZED", "SCI.PRODUCT.EXPONENTS_MULTIPLIED", "SCI.QUOTIENT.EXPONENTS_ADDED", "SCI.COEFFICIENT.ARITHMETIC", "SCI.INEXACT.WHEN_EXACT_REQUIRED"],
+    "seeded_guided_practice": "REUSES_PR_344_DETERMINISTIC_GENERATOR",
+    "independent_oracle": "IMPLEMENTED_AS_CONTENT_TEST_RECONSTRUCTION",
+    "unseen_assessment": "CONTRACT_AUTHORED_BACKEND_NOT_WIRED"
+  },
+  "explicit_noncoverage": [
+    "zero-value notation convention",
+    "negative leading coefficients",
+    "prompt-specified significant-digit rounding",
+    "addition and subtraction in scientific notation"
+  ],
+  "independent_reviews": {
+    "mathematical": "PENDING_FOR_NEW_PACKAGE_ONLY_GENERATOR_MATH_PREVIOUSLY_ACCEPTED",
+    "pedagogical": "PENDING",
+    "standards": "PENDING",
+    "muse_qa": "PENDING",
+    "security": "PENDING_CI_APPSEC"
+  },
+  "delivery_status": {
+    "authored": true,
+    "implemented": "CONTENT_FLOW_AND_GUIDED_CHECK_ONLY",
+    "wired": false,
+    "independently_accepted": false,
+    "deployed": false
+  }
+}
