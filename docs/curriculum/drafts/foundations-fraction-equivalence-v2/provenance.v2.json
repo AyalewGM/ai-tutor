@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "MIHUR_CONTENT_PROVENANCE",
+  "package_id": "W1-G4-FRACTION-EQUIVALENCE",
+  "revision": "foundations-fraction-equivalence-v2-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "source_heads": {
+    "main": "13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
+    "standards_pr_325": "c1fa26a560ebea022202bace38d51e91ca5d08fa",
+    "learning_packages_pr_327": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
+    "learning_packages_pr_328": "2445f197259ff27b5c99dd2b45c4bcbc2e5292f8",
+    "grade1_scope_cards_pr_335": "ce96b234124742709d3c8632f687a806c02c3c52"
+  },
+  "standards": {
+    "jurisdiction": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "official_source_url": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "publication": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "publication_version": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "exact_expectation_ids": [],
+    "mapping_status": "UNKNOWN_NOT_PROPOSED",
+    "mapping_approval": "NONE",
+    "coverage_credit": false
+  },
+  "canonical": {
+    "existing_skill_code": "MATH.NF.EQUIVALENT_FRACTIONS",
+    "existing_problem_family": "MATH.FRAC.EQUIV.FIND",
+    "identity_change": false,
+    "approval_for_this_revision": "UNKNOWN_NOT_INDEPENDENTLY_REVIEWED",
+    "competing_grade_specific_identity_added": false
+  },
+  "reused_artifacts": [
+    "PR #327:W1-G4-FRACTION-EQUIVALENCE",
+    "app/domains/fractions.py:MATH.FRAC.EQUIV.FIND",
+    "app/services/problem_generation.py:FRACTION_EQUIVALENCE",
+    "frontend/src/components/ProblemVisual.tsx:fraction_bar",
+    "frontend/src/mve/InteractiveFractionBars.tsx",
+    "frontend/src/mve/interactiveFractionBars.test.mjs"
+  ],
+  "pedagogical_evidence": {
+    "references": [
+      "https://github.com/AyalewGM/ai-tutor/pull/327#issuecomment-6102771217",
+      "https://github.com/AyalewGM/ai-tutor/issues/278",
+      "docs/curriculum/drafts/learning-packages-wave1/content.draft.json"
+    ],
+    "prior_revision_verdict": "ACCEPT_PEDAGOGY_ONLY",
+    "current_revision_status": "PENDING_INDEPENDENT_REVIEW",
+    "proprietary_material_copied": false
+  },
+  "learning_design": {
+    "mihur_phases": {
+      "OBSERVE": "AUTHORED_DRAFT",
+      "PREDICT": "AUTHORED_DRAFT",
+      "MANIPULATE": "AUTHORED_DRAFT",
+      "EXPLAIN": "AUTHORED_DRAFT",
+      "PRACTICE": "AUTHORED_DRAFT",
+      "DIAGNOSE": "AUTHORED_DRAFT",
+      "TRANSFER": "AUTHORED_DRAFT",
+      "VERIFY": "AUTHORED_DRAFT"
+    },
+    "representation_progression": {
+      "CONCRETE": "AUTHORED_DRAFT",
+      "VISUAL": "AUTHORED_DRAFT",
+      "SYMBOLIC": "AUTHORED_DRAFT"
+    },
+    "misconception_routing": "AUTHORED_DRAFT_NOT_IMPLEMENTED",
+    "accessible_transfer": "AUTHORED_DRAFT_NOT_MUSE_VERIFIED"
+  },
+  "practice_and_assessment": {
+    "seeded_practice": "LOCAL_DRAFT_GENERATOR",
+    "independent_oracle": "LOCAL_EXACT_FRACTION_TESTED_NOT_INDEPENDENTLY_VERIFIED",
+    "unseen_assessment": "RESERVED_NAMESPACE_CONTENT_CONTRACT",
+    "answer_non_disclosure": "LOCAL_CONTRACT_TESTED",
+    "server_trusted_scoring": "REQUIRED_NOT_IMPLEMENTED",
+    "guided_practice_credit": false,
+    "historical_mastery_affected": false
+  },
+  "mve": {
+    "reuse_status": "PARTIAL_REUSE_NOT_WIRED",
+    "runtime_integration": false,
+    "muse_qa_status": "PENDING"
+  },
+  "independent_reviews": {
+    "mathematics": "PENDING",
+    "pedagogy": "PENDING_CURRENT_REVISION",
+    "standards": "PENDING",
+    "muse_accessibility_and_e2e": "PENDING",
+    "engineering_activation": "NOT_REQUESTED",
+    "release": "NOT_APPROVED"
+  }
+}

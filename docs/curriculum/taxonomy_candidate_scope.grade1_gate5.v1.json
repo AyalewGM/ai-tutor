@@ -1,0 +1,1626 @@
+{
+  "schema_version": 1,
+  "review_status": "DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+  "revision": "2026-10-11-grade1-gate5-r3",
+  "authority": "NONE_NOT_FOR_RUNTIME",
+  "source_review": {
+    "merged_foundation": "main@13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
+    "independent_alias_review": "Issue #293 comment 6097860935",
+    "architecture_decomposition": "Issue #282 comment 6103218496",
+    "architecture_gate5": "Issue #282 comment 6103246330",
+    "independent_geometry_review": "Issue #293 comment 6104081399",
+    "architecture_geometry_split": "Issue #282 comment 6104119915",
+    "independent_geometry_review_r2": "PR #335 comment 6104939419",
+    "architecture_hierarchy_response_modes": "Issue #282 comment 6104942514"
+  },
+  "notes": [
+    "Curriculum Content preserved all seven independently approved non-geometry cards and the three r2-approved geometry cards unchanged; r3 revises only the three geometry cards that received REQUEST CHANGES.",
+    "The three r1 combined geometry proposals are superseded DRAFT proposals, not aliases or authority; their Git history remains in r1.",
+    "Six replacement geometry labels were collision-audited against the two authoritative candidate sources on main at their pinned blob SHAs; no exact code was found.",
+    "Inclusive hierarchies are explicit: square ⊂ rectangle ⊂ trapezoid and cube ⊂ rectangular prism. Classification and construction prompts declare MOST_SPECIFIC, ALL_VALID_LISTED or MEMBERSHIP scoring.",
+    "Prerequisite concepts are descriptive, not approved canonical dependency edges.",
+    "No card changes canonical UUIDs, aliases, generators, assessments, learner evidence, mastery or standards coverage."
+  ],
+  "skills": [
+    {
+      "code": "MATH.NUMBER_SENSE.REPRESENT_NUMERALS_TO_120",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.NS.COUNTING",
+          "MATH.NS.WORD_FORM",
+          "MATH.NS.PLACE_VALUE"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "quantity_to_written_numeral",
+        "number_name_to_written_numeral",
+        "written_numeral_to_quantity",
+        "written_numeral_to_number_name"
+      ],
+      "inclusions": [
+        "Whole numbers 0..120 inclusive",
+        "Bidirectional translation between a represented quantity and its written base-ten numeral",
+        "Bidirectional translation between an oral or written English number name and its written base-ten numeral",
+        "Explicit lower and upper boundaries 0 and 120, plus the 99-to-100 transition",
+        "Quantities may be shown with countable objects, ten-groups and ones, or other unambiguous finite representations"
+      ],
+      "exclusions": [
+        "Forward, backward or skip-count sequence production",
+        "Comparing or ordering numbers",
+        "Place-value explanation as a required inference from a correct translation",
+        "Quantities or numerals outside 0..120",
+        "Roman numerals, decimals, fractions and signed numbers"
+      ],
+      "prerequisite_concepts": [
+        "cardinality",
+        "one-to-one correspondence",
+        "stable number names through 120",
+        "recognition that a written numeral denotes a quantity"
+      ],
+      "examples": [
+        {
+          "input": "Write the numeral for one hundred twenty.",
+          "answer": "120",
+          "direction": "number_name_to_numeral"
+        },
+        {
+          "input": "Name the numeral 100.",
+          "answer": "one hundred",
+          "direction": "numeral_to_number_name"
+        },
+        {
+          "input": "A card shows 10 tens and 7 ones. Write the numeral.",
+          "answer": "107",
+          "direction": "quantity_to_numeral"
+        },
+        {
+          "input": "Show a quantity matching 0.",
+          "answer": "an empty set or another valid zero-quantity representation",
+          "direction": "numeral_to_quantity"
+        },
+        {
+          "input": "Write the numeral for one hundred twenty-one.",
+          "valid": false,
+          "rationale": "121 is outside the inclusive range"
+        }
+      ],
+      "misconception_probes": [
+        "Writes 1007 for one hundred seven",
+        "Omits zero as a valid numeral and quantity",
+        "Treats 120 as 12 or as 102",
+        "Reads a numeral by naming digits independently rather than the number"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Independent unassisted evidence is required in both directions; sequence recitation alone never satisfies representation.",
+        "required": [
+          {
+            "direction": "to_written_numeral",
+            "sources": [
+              "quantity",
+              "number_name"
+            ],
+            "boundaries": [
+              "0",
+              "99/100",
+              "120"
+            ]
+          },
+          {
+            "direction": "from_written_numeral",
+            "targets": [
+              "quantity",
+              "number_name"
+            ],
+            "boundaries": [
+              "0",
+              "99/100",
+              "120"
+            ]
+          }
+        ],
+        "prohibitions": [
+          "No mastery transfer from counting",
+          "No mastery transfer from broad word-form or place-value generators",
+          "Hinted copying does not count"
+        ]
+      }
+    },
+    {
+      "code": "MATH.NUMBER_SENSE.ORDER_WHOLE_NUMBERS_TO_120",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.NS.COMPARE_ORDER",
+          "MATH.NUMBER_SENSE.COMPARE_WHOLE_NUMBERS_TO_120"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "ascending_list_order",
+        "descending_list_order",
+        "duplicate_value_retention"
+      ],
+      "inclusions": [
+        "Order lists of 3..5 whole numbers in 0..120 inclusive",
+        "Ascending and descending order require separate evidence",
+        "Lists may contain repeated equal values, all of which must be retained",
+        "Include 0, 99, 100 and 120 boundary cases across the assessment set"
+      ],
+      "exclusions": [
+        "Pairwise comparison as sufficient evidence",
+        "Sequence continuation",
+        "Sorting numbers outside 0..120",
+        "Fractions, decimals and signed integers",
+        "Inferring a place-value explanation from a correctly ordered list"
+      ],
+      "prerequisite_concepts": [
+        "pairwise whole-number magnitude comparison",
+        "meaning of ascending and descending",
+        "written numeral recognition through 120"
+      ],
+      "examples": [
+        {
+          "input": "Order least to greatest: 100, 99, 120, 0",
+          "answer": "0, 99, 100, 120",
+          "direction": "ascending"
+        },
+        {
+          "input": "Order greatest to least: 45, 45, 9, 105",
+          "answer": "105, 45, 45, 9",
+          "direction": "descending"
+        },
+        {
+          "input": "Order least to greatest: 98, 101",
+          "valid": false,
+          "rationale": "A two-number comparison is outside this list-ordering evidence contract"
+        },
+        {
+          "input": "Order greatest to least: 120, 121, 0",
+          "valid": false,
+          "rationale": "121 is outside scope"
+        }
+      ],
+      "misconception_probes": [
+        "Drops duplicate values",
+        "Orders lexicographically by first digit",
+        "Reverses ascending and descending",
+        "Treats 100 as less than every two-digit number"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Ascending and descending list ordering are independently observed; correct pairwise comparisons do not automatically satisfy either list task.",
+        "required": [
+          {
+            "direction": "ascending",
+            "minimum_list_length": 3,
+            "include_duplicates": true
+          },
+          {
+            "direction": "descending",
+            "minimum_list_length": 3,
+            "include_duplicates": true
+          },
+          {
+            "boundary_cluster": [
+              "0",
+              "99",
+              "100",
+              "120"
+            ]
+          }
+        ],
+        "prohibitions": [
+          "No profile credit from pairwise comparison alone",
+          "No duplicate removal",
+          "No sequence-production substitution"
+        ]
+      }
+    },
+    {
+      "code": "MATH.EARLY_ALGEBRA.EQUALITY_RELATION",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.EE.EQUATION.ONE",
+          "MATH.NS.ADDITION",
+          "MATH.NS.SUBTRACTION"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "equal_sign_meaning",
+        "equation_truth",
+        "symmetry",
+        "equivalent_expressions"
+      ],
+      "inclusions": [
+        "Interpret = as the two sides having the same value",
+        "Judge true and false equations with whole-number values in 0..20",
+        "Recognize symmetry: if a=b then b=a",
+        "Compare a numeral with an expression or two addition/subtraction expressions whose values lie in 0..20",
+        "Subtraction expressions must have nonnegative intermediate and final values"
+      ],
+      "exclusions": [
+        "Solving for an unknown value",
+        "Using = as an instruction meaning 'the answer comes next'",
+        "Variables, inequalities and equations with values outside 0..20",
+        "Automatic addition or subtraction mastery",
+        "Older-grade one-step equation mastery"
+      ],
+      "prerequisite_concepts": [
+        "whole-number quantity equivalence",
+        "addition and subtraction meanings within 20",
+        "evaluation of a displayed expression"
+      ],
+      "examples": [
+        {
+          "input": "Is 8 = 8 true?",
+          "answer": "true",
+          "component": "reflexive_truth"
+        },
+        {
+          "input": "Is 9 = 4 + 5 true?",
+          "answer": "true",
+          "component": "expression_right"
+        },
+        {
+          "input": "Is 6 + 3 = 5 + 4 true?",
+          "answer": "true",
+          "component": "equivalent_expressions"
+        },
+        {
+          "input": "Is 7 = 7 + 1 true?",
+          "answer": "false",
+          "component": "equation_truth"
+        },
+        {
+          "input": "Find the box: 7 + □ = 12",
+          "valid": false,
+          "rationale": "Unknown solving is a separate atom"
+        }
+      ],
+      "misconception_probes": [
+        "Treats = as 'write the answer'",
+        "Rejects an expression on the left of =",
+        "Assumes every displayed equation is true",
+        "Compares surface form instead of both side values"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Evidence must show relational meaning independently from solving unknowns.",
+        "required": [
+          {
+            "dimension": "truth_judgment",
+            "cases": [
+              "true",
+              "false"
+            ]
+          },
+          {
+            "dimension": "side_forms",
+            "cases": [
+              "numeral=numeral",
+              "numeral=expression",
+              "expression=numeral",
+              "expression=expression"
+            ]
+          },
+          {
+            "dimension": "symmetry",
+            "required": true
+          }
+        ],
+        "prohibitions": [
+          "No unknown-solving credit",
+          "No arithmetic mastery inference from equation-truth evidence"
+        ]
+      }
+    },
+    {
+      "code": "MATH.EARLY_ALGEBRA.ADDITION_EQUATION_UNKNOWN_WITHIN_20",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.NS.ADDITION",
+          "MATH.EE.EQUATION.ONE",
+          "MATH.ARITHMETIC.ADD_WITHIN_20"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "unknown_first_addend",
+        "unknown_second_addend",
+        "unknown_sum"
+      ],
+      "inclusions": [
+        "One missing whole number in a+b=c with a,b,c in 0..20 and a+b=c",
+        "Unknown may occupy either addend position or the sum position",
+        "Zero and upper-boundary values are included",
+        "Equivalent strategies may use objects, drawings, counting, decomposition or inverse subtraction"
+      ],
+      "exclusions": [
+        "Subtraction equations",
+        "Contextual story interpretation",
+        "More than one unknown",
+        "Three or more addends",
+        "Values or sums outside 0..20",
+        "Variables requiring symbolic manipulation beyond one missing whole number"
+      ],
+      "prerequisite_concepts": [
+        "equality relation",
+        "addition as joining or composing",
+        "whole-number representation through 20"
+      ],
+      "examples": [
+        {
+          "input": "□ + 5 = 12",
+          "answer": "7",
+          "unknown_position": "first_addend"
+        },
+        {
+          "input": "8 + □ = 20",
+          "answer": "12",
+          "unknown_position": "second_addend"
+        },
+        {
+          "input": "9 + 0 = □",
+          "answer": "9",
+          "unknown_position": "sum"
+        },
+        {
+          "input": "15 + □ = 22",
+          "valid": false,
+          "rationale": "The equation includes a value outside the 0..20 contract"
+        }
+      ],
+      "misconception_probes": [
+        "Always adds the two visible numerals",
+        "Treats the equal sign as a signal to compute left-to-right",
+        "Assumes the box must contain the larger number",
+        "Fails zero-addend cases"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Each unknown position requires independent unassisted evidence.",
+        "required": [
+          {
+            "unknown_position": "first_addend",
+            "include_zero_boundary": true
+          },
+          {
+            "unknown_position": "second_addend",
+            "include_crossing_ten": true
+          },
+          {
+            "unknown_position": "sum",
+            "include_upper_boundary": true
+          }
+        ],
+        "prohibitions": [
+          "No subtraction-equation mastery inference",
+          "No contextual-modeling credit",
+          "Direct addition facts alone are insufficient"
+        ]
+      }
+    },
+    {
+      "code": "MATH.EARLY_ALGEBRA.SUBTRACTION_EQUATION_UNKNOWN_WITHIN_20",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.NS.SUBTRACTION",
+          "MATH.EE.EQUATION.ONE",
+          "MATH.ARITHMETIC.SUBTRACT_WITHIN_20"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "unknown_minuend",
+        "unknown_subtrahend",
+        "unknown_difference"
+      ],
+      "inclusions": [
+        "One missing whole number in a-b=c with 0<=b<=a<=20 and c=a-b",
+        "Unknown may occupy minuend, subtrahend or difference position",
+        "Zero differences, zero subtrahends and upper-boundary minuends are included",
+        "Equivalent strategies may use objects, drawings, counting, decomposition or inverse addition"
+      ],
+      "exclusions": [
+        "Addition equations",
+        "Negative values or differences",
+        "Contextual story interpretation",
+        "More than one unknown",
+        "Values outside 0..20",
+        "Older-grade symbolic equation solving"
+      ],
+      "prerequisite_concepts": [
+        "equality relation",
+        "subtraction as removal or difference",
+        "whole-number representation through 20"
+      ],
+      "examples": [
+        {
+          "input": "□ - 5 = 7",
+          "answer": "12",
+          "unknown_position": "minuend"
+        },
+        {
+          "input": "14 - □ = 9",
+          "answer": "5",
+          "unknown_position": "subtrahend"
+        },
+        {
+          "input": "20 - 20 = □",
+          "answer": "0",
+          "unknown_position": "difference"
+        },
+        {
+          "input": "4 - □ = 9",
+          "valid": false,
+          "rationale": "No nonnegative whole-number solution satisfies the bounded equation"
+        }
+      ],
+      "misconception_probes": [
+        "Subtracts the smaller visible numeral from the larger regardless of position",
+        "Treats subtraction as commutative",
+        "Adds visible numerals for every missing value",
+        "Rejects zero as a valid difference or subtrahend"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Minuend, subtrahend and difference positions require independent unassisted evidence.",
+        "required": [
+          {
+            "unknown_position": "minuend",
+            "include_upper_boundary": true
+          },
+          {
+            "unknown_position": "subtrahend",
+            "include_zero_case": true
+          },
+          {
+            "unknown_position": "difference",
+            "include_zero_difference": true
+          }
+        ],
+        "prohibitions": [
+          "No addition-equation mastery inference",
+          "No contextual-modeling credit",
+          "Direct subtraction facts alone are insufficient"
+        ]
+      }
+    },
+    {
+      "code": "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_2D",
+      "identity_decision": "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-11",
+        "authoritative_sources_checked": [
+          "app/canonical_taxonomy_candidates.py@786922e673355be50c6b9405de12f16aa754389f",
+          "docs/curriculum/taxonomy_candidate_scope.v1.json@700e5d5aaa61eb5f05db92612177dba20aa19d99"
+        ],
+        "possible_overlaps": [
+          "MATH.GEO.SHAPES",
+          "MATH.GEO.SHAPE.CLASSIFY"
+        ],
+        "disposition": "DISTINCT_DIMENSIONAL_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+        "authority_caveat": "Architecture authorized this label for DRAFT authoring only. Generator families, broad codes and collision results do not authorize runtime publication, aliases or mastery migration."
+      },
+      "components": [
+        "defining_vs_nondefining_2d",
+        "classify_2d_by_attributes",
+        "accept_all_valid_labels"
+      ],
+      "shape_universe": {
+        "two_dimensional": [
+          "triangle",
+          "circle",
+          "rectangle",
+          "square",
+          "trapezoid"
+        ],
+        "classification_conventions": {
+          "rectangle": "quadrilateral with four right angles",
+          "square": "rectangle with four equal sides",
+          "trapezoid": "quadrilateral with at least one pair of parallel sides"
+        },
+        "note": "This is a bounded mathematical review universe, not a standards-coverage claim.",
+        "classification_hierarchy": [
+          "square ⊂ rectangle ⊂ trapezoid"
+        ]
+      },
+      "inclusions": [
+        "Identify a listed 2-D shape from defining attributes rather than color, size or orientation",
+        "Distinguish defining from non-defining attributes for 2-D figures",
+        "Classify rotated, reflected, stretched or differently sized valid examples by unchanged defining attributes",
+        "Use the inclusive quadrilateral convention: a rectangle has four right angles; a square is a rectangle and additionally has four equal sides",
+        "Use the inclusive trapezoid convention: a quadrilateral with at least one pair of parallel sides",
+        "Accept every mathematically valid name under the declared hierarchy and never score a valid subtype or supertype label as an incorrect distractor"
+      ],
+      "exclusions": [
+        "Naming without attribute reasoning as sufficient mastery",
+        "3-D faces, curved surfaces or solid classification",
+        "Construction or composition evidence",
+        "Later-grade proof of the complete quadrilateral hierarchy",
+        "Jurisdiction-specific exclusive trapezoid wording changing canonical scoring"
+      ],
+      "prerequisite_concepts": [
+        "same/different",
+        "closed 2-D figure",
+        "straight and curved boundary recognition",
+        "side and vertex vocabulary",
+        "parallel sides",
+        "right angles"
+      ],
+      "examples": [
+        {
+          "input": "Which attribute makes every triangle in this bounded universe a triangle?",
+          "answer": "It is a closed 2-D figure with three straight sides and three vertices.",
+          "dimension": "triangle_attributes"
+        },
+        {
+          "input": "A tilted quadrilateral has four right angles and four equal sides. Give every valid listed classification.",
+          "answer": [
+            "square",
+            "rectangle",
+            "trapezoid"
+          ],
+          "dimension": "quadrilateral_hierarchy",
+          "response_mode": "ALL_VALID_LISTED"
+        },
+        {
+          "input": "Under Mihur's inclusive convention, does a square also satisfy the trapezoid definition?",
+          "answer": "yes",
+          "rationale": "A square has at least one pair of parallel sides.",
+          "dimension": "trapezoid_convention",
+          "response_mode": "MEMBERSHIP"
+        },
+        {
+          "input": "Name the most specific listed classification for a tilted quadrilateral with four right angles and four equal sides.",
+          "answer": "square",
+          "valid_supertypes": [
+            "rectangle",
+            "trapezoid"
+          ],
+          "scoring": "The supertypes are mathematically true, but either one alone is insufficient for this MOST_SPECIFIC prompt.",
+          "response_mode": "MOST_SPECIFIC",
+          "dimension": "most_specific_classification"
+        },
+        {
+          "input": "A blue rectangle is rotated. Which facts are non-defining?",
+          "answer": [
+            "blue color",
+            "orientation"
+          ],
+          "dimension": "nondefining"
+        }
+      ],
+      "misconception_probes": [
+        "Uses orientation, color or size as defining",
+        "Calls every quadrilateral a square",
+        "Rejects rectangle as a valid label for a square",
+        "Uses an exclusive trapezoid rule despite the declared inclusive convention",
+        "Confuses a 2-D face with a 3-D solid"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "2-D attribute evidence is independent of 3-D evidence and of construction/composition. Every accepted label follows the declared inclusive hierarchy.",
+        "required": [
+          {
+            "dimension": "triangle_circle_attributes",
+            "minimum_distinct_shapes": 2
+          },
+          {
+            "dimension": "quadrilateral_attributes",
+            "must_include": [
+              "rectangle",
+              "square",
+              "trapezoid"
+            ]
+          },
+          {
+            "dimension": "classification_hierarchy",
+            "must_accept_all_valid_labels": true,
+            "hierarchy": "square ⊂ rectangle ⊂ trapezoid",
+            "true_supertype_cannot_be_scored_false": true
+          },
+          {
+            "dimension": "defining_vs_nondefining",
+            "include_orientation": true
+          },
+          {
+            "dimension": "response_mode_coverage",
+            "required_modes": [
+              "MOST_SPECIFIC",
+              "ALL_VALID_LISTED",
+              "MEMBERSHIP"
+            ]
+          }
+        ],
+        "prohibitions": [
+          "No 3-D mastery inference",
+          "No construction mastery inference",
+          "No composition mastery inference",
+          "No invalid distractor formed from a mathematically valid label",
+          "No supertype-only response as evidence of a requested subtype",
+          "No false mark for a mathematically true listed supertype"
+        ]
+      },
+      "response_modes": {
+        "MOST_SPECIFIC": "Require the most specific valid listed classification requested by the prompt. A true supertype is not false, but a supertype-only response does not evidence the requested subtype.",
+        "ALL_VALID_LISTED": "Require the exact set of every valid label in the bounded listed universe under the declared inclusive hierarchy.",
+        "MEMBERSHIP": "Judge whether a supplied classification applies. Every true subtype and supertype membership is scored true."
+      }
+    },
+    {
+      "code": "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_3D",
+      "identity_decision": "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-11",
+        "authoritative_sources_checked": [
+          "app/canonical_taxonomy_candidates.py@786922e673355be50c6b9405de12f16aa754389f",
+          "docs/curriculum/taxonomy_candidate_scope.v1.json@700e5d5aaa61eb5f05db92612177dba20aa19d99"
+        ],
+        "possible_overlaps": [
+          "MATH.GEO.SHAPES",
+          "MATH.GEO.SHAPE.CLASSIFY"
+        ],
+        "disposition": "DISTINCT_DIMENSIONAL_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+        "authority_caveat": "Architecture authorized this label for DRAFT authoring only. Generator families, broad codes and collision results do not authorize runtime publication, aliases or mastery migration."
+      },
+      "components": [
+        "classify_3d_by_attributes",
+        "distinguish_flat_faces_and_curved_surfaces",
+        "defining_vs_nondefining_3d"
+      ],
+      "shape_universe": {
+        "three_dimensional": [
+          "cube",
+          "rectangular_prism",
+          "cone",
+          "cylinder",
+          "sphere"
+        ],
+        "vocabulary": {
+          "face": "flat 2-D boundary of a solid",
+          "curved_surface": "non-flat boundary of a solid"
+        },
+        "note": "This is a bounded mathematical review universe, not a standards-coverage claim.",
+        "classification_conventions": {
+          "rectangular_prism": "solid with six rectangular flat faces, treating a square as a rectangle",
+          "cube": "rectangular prism with six congruent square flat faces"
+        },
+        "classification_hierarchy": [
+          "cube ⊂ rectangular prism"
+        ]
+      },
+      "inclusions": [
+        "Identify a listed solid from defining attributes rather than color, size or orientation",
+        "Use face only for a flat 2-D boundary and use curved surface separately",
+        "Classify varied valid representations when defining faces, curved surfaces and vertices are unchanged",
+        "Distinguish a solid from the 2-D shapes visible on its flat faces",
+        "Use the inclusive solid convention: every cube is a rectangular prism because each square face is a rectangle",
+        "Apply MOST_SPECIFIC, ALL_VALID_LISTED or MEMBERSHIP scoring exactly as the prompt declares"
+      ],
+      "exclusions": [
+        "2-D figure classification",
+        "Recognition by name alone without attribute evidence",
+        "Construction or composition evidence",
+        "Unlisted polyhedra",
+        "Surface area, volume or nets"
+      ],
+      "prerequisite_concepts": [
+        "2-D shape recognition",
+        "solid versus flat figure",
+        "face, curved surface and vertex vocabulary",
+        "same/different"
+      ],
+      "examples": [
+        {
+          "input": "Identify a solid with two circular flat faces and one curved surface.",
+          "answer": "cylinder",
+          "dimension": "faces_and_curved_surfaces"
+        },
+        {
+          "input": "Does a sphere have a flat face?",
+          "answer": "no",
+          "rationale": "Its boundary is one curved surface.",
+          "dimension": "surface_vocabulary"
+        },
+        {
+          "input": "A cube is rotated. Which defining attributes change?",
+          "answer": "none",
+          "dimension": "orientation_invariance"
+        },
+        {
+          "input": "A solid has six congruent square flat faces. Give every valid listed classification.",
+          "answer": [
+            "cube",
+            "rectangular prism"
+          ],
+          "response_mode": "ALL_VALID_LISTED",
+          "dimension": "solid_classification_hierarchy"
+        },
+        {
+          "input": "Is every cube also a rectangular prism under Mihur's inclusive convention?",
+          "answer": "yes",
+          "rationale": "Every square face is a rectangle, so a cube satisfies the rectangular-prism definition.",
+          "response_mode": "MEMBERSHIP",
+          "dimension": "solid_hierarchy_membership"
+        },
+        {
+          "input": "Name the most specific listed classification for a solid with six congruent square flat faces.",
+          "answer": "cube",
+          "valid_supertypes": [
+            "rectangular prism"
+          ],
+          "scoring": "Rectangular prism is true but insufficient for this MOST_SPECIFIC prompt.",
+          "response_mode": "MOST_SPECIFIC",
+          "dimension": "solid_most_specific_classification"
+        },
+        {
+          "input": "A displayed square is one face of a cube. Is the square itself a cube?",
+          "answer": "no",
+          "dimension": "face_versus_solid"
+        }
+      ],
+      "misconception_probes": [
+        "Calls every boundary a face",
+        "Counts a curved surface as a flat face",
+        "Treats rotation as changing the solid",
+        "Names the 2-D face as the whole solid",
+        "Rejects rectangular prism as a valid supertype of cube",
+        "Uses rectangular prism alone when a MOST_SPECIFIC prompt requires cube"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "3-D attribute evidence is independent of 2-D evidence and of construction/composition; flat faces and curved surfaces are distinct, and classification uses cube ⊂ rectangular prism with an explicit response mode.",
+        "required": [
+          {
+            "dimension": "flat_faced_solids",
+            "minimum_distinct_shapes": 2
+          },
+          {
+            "dimension": "curved_surface_solids",
+            "must_include": [
+              "cone",
+              "cylinder",
+              "sphere"
+            ]
+          },
+          {
+            "dimension": "face_versus_curved_surface",
+            "must_distinguish": true
+          },
+          {
+            "dimension": "solid_versus_face",
+            "must_distinguish": true
+          },
+          {
+            "dimension": "classification_hierarchy",
+            "hierarchy": "cube ⊂ rectangular prism",
+            "true_supertype_cannot_be_scored_false": true
+          },
+          {
+            "dimension": "response_mode_coverage",
+            "required_modes": [
+              "MOST_SPECIFIC",
+              "ALL_VALID_LISTED",
+              "MEMBERSHIP"
+            ]
+          }
+        ],
+        "prohibitions": [
+          "No 2-D mastery inference",
+          "No construction mastery inference",
+          "No composition mastery inference",
+          "No supertype-only response as evidence of a requested cube subtype",
+          "No false mark for rectangular prism when the classified solid is a cube"
+        ]
+      },
+      "response_modes": {
+        "MOST_SPECIFIC": "Require the most specific valid listed classification requested by the prompt. A true supertype is not false, but a supertype-only response does not evidence the requested subtype.",
+        "ALL_VALID_LISTED": "Require the exact set of every valid label in the bounded listed universe under the declared inclusive hierarchy.",
+        "MEMBERSHIP": "Judge whether a supplied classification applies. Every true subtype and supertype membership is scored true."
+      }
+    },
+    {
+      "code": "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_2D",
+      "identity_decision": "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-11",
+        "authoritative_sources_checked": [
+          "app/canonical_taxonomy_candidates.py@786922e673355be50c6b9405de12f16aa754389f",
+          "docs/curriculum/taxonomy_candidate_scope.v1.json@700e5d5aaa61eb5f05db92612177dba20aa19d99"
+        ],
+        "possible_overlaps": [
+          "MATH.GEO.SHAPES",
+          "MATH.GEO.SHAPE.CLASSIFY"
+        ],
+        "disposition": "DISTINCT_DIMENSIONAL_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+        "authority_caveat": "Architecture authorized this label for DRAFT authoring only. Generator families, broad codes and collision results do not authorize runtime publication, aliases or mastery migration."
+      },
+      "components": [
+        "draw_2d_from_attributes",
+        "construct_2d_with_manipulatives",
+        "verify_2d_construction"
+      ],
+      "shape_universe": {
+        "two_dimensional": [
+          "triangle",
+          "circle",
+          "rectangle",
+          "square",
+          "trapezoid"
+        ],
+        "classification_conventions": {
+          "rectangle": "quadrilateral with four right angles",
+          "square": "rectangle with four equal sides",
+          "trapezoid": "quadrilateral with at least one pair of parallel sides"
+        },
+        "classification_hierarchy": [
+          "square ⊂ rectangle ⊂ trapezoid"
+        ]
+      },
+      "inclusions": [
+        "Draw or assemble a listed 2-D figure satisfying every supplied defining attribute",
+        "Accept varied size and orientation when defining attributes are met",
+        "Apply the declared inclusive rectangle, square and trapezoid conventions",
+        "Verify closure, sides, vertices, right angles, equal sides or parallelism whenever supplied"
+      ],
+      "exclusions": [
+        "Recognition or selection of a displayed figure as construction evidence",
+        "3-D model construction",
+        "Freehand visual perfection",
+        "Compass-and-straightedge proof construction",
+        "Composition of multiple figures into a requested new figure"
+      ],
+      "prerequisite_concepts": [
+        "defining attributes of bounded 2-D figures",
+        "closure",
+        "side and vertex vocabulary",
+        "parallel sides",
+        "right angles",
+        "basic drawing or manipulative use"
+      ],
+      "examples": [
+        {
+          "input": "Draw a closed figure with three straight sides.",
+          "answer": "any valid triangle",
+          "dimension": "triangle_construction"
+        },
+        {
+          "input": "Construct a quadrilateral with four right angles and four equal sides, then give every valid listed name.",
+          "answer": {
+            "construction": "any valid square",
+            "valid_names": [
+              "square",
+              "rectangle",
+              "trapezoid"
+            ]
+          },
+          "dimension": "quadrilateral_construction",
+          "response_mode": "ALL_VALID_LISTED",
+          "scoring": "Construction evidence must satisfy the square attributes; naming evidence must supply the exact listed hierarchy for this ALL_VALID_LISTED prompt."
+        },
+        {
+          "input": "Construct a quadrilateral with four right angles and four equal sides, then give the most specific listed name.",
+          "answer": {
+            "construction": "any valid square",
+            "most_specific_name": "square",
+            "valid_supertypes": [
+              "rectangle",
+              "trapezoid"
+            ]
+          },
+          "scoring": "A valid construction plus square is required; a true supertype alone does not evidence the requested subtype name.",
+          "response_mode": "MOST_SPECIFIC",
+          "dimension": "construction_most_specific_name"
+        },
+        {
+          "input": "Draw a trapezoid under the inclusive convention and mark a pair of parallel sides.",
+          "answer": "any valid quadrilateral with at least one marked parallel pair",
+          "dimension": "parallelism"
+        },
+        {
+          "input": "Draw a circle with four vertices.",
+          "valid": false,
+          "rationale": "The supplied attributes are inconsistent.",
+          "dimension": "inconsistent_attributes"
+        }
+      ],
+      "misconception_probes": [
+        "Copies a prototype despite conflicting attributes",
+        "Treats rotation as changing validity",
+        "Draws an open figure when closure is required",
+        "Constructs a generic quadrilateral without verifying right angles or parallelism",
+        "Rejects a valid square because the prompt says rectangle"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Observable 2-D production and verification are required; recognition does not count. Naming uses square ⊂ rectangle ⊂ trapezoid and the declared response mode. Evidence cannot credit the 3-D construction atom.",
+        "required": [
+          {
+            "dimension": "drawing_or_assembly",
+            "minimum_distinct_attribute_sets": 3
+          },
+          {
+            "dimension": "quadrilateral_conventions",
+            "must_include": [
+              "rectangle",
+              "square",
+              "trapezoid"
+            ]
+          },
+          {
+            "dimension": "self_verification",
+            "must_reference_all_supplied_attributes": true
+          },
+          {
+            "dimension": "classification_hierarchy",
+            "hierarchy": "square ⊂ rectangle ⊂ trapezoid",
+            "true_supertype_cannot_be_scored_false": true,
+            "supertype_only_cannot_evidence_requested_subtype": true
+          },
+          {
+            "dimension": "response_mode_coverage",
+            "required_modes": [
+              "MOST_SPECIFIC",
+              "ALL_VALID_LISTED",
+              "MEMBERSHIP"
+            ]
+          }
+        ],
+        "prohibitions": [
+          "No recognition-only evidence",
+          "No 3-D construction inference",
+          "No attribute-classification mastery inference",
+          "No composition mastery inference",
+          "No false mark for a mathematically true listed supertype",
+          "No supertype-only naming response as evidence of a requested square subtype"
+        ]
+      },
+      "response_modes": {
+        "MOST_SPECIFIC": "Require the most specific valid listed classification requested by the prompt. A true supertype is not false, but a supertype-only response does not evidence the requested subtype.",
+        "ALL_VALID_LISTED": "Require the exact set of every valid label in the bounded listed universe under the declared inclusive hierarchy.",
+        "MEMBERSHIP": "Judge whether a supplied classification applies. Every true subtype and supertype membership is scored true."
+      }
+    },
+    {
+      "code": "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_3D",
+      "identity_decision": "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-11",
+        "authoritative_sources_checked": [
+          "app/canonical_taxonomy_candidates.py@786922e673355be50c6b9405de12f16aa754389f",
+          "docs/curriculum/taxonomy_candidate_scope.v1.json@700e5d5aaa61eb5f05db92612177dba20aa19d99"
+        ],
+        "possible_overlaps": [
+          "MATH.GEO.SHAPES",
+          "MATH.GEO.SHAPE.CLASSIFY"
+        ],
+        "disposition": "DISTINCT_DIMENSIONAL_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+        "authority_caveat": "Architecture authorized this label for DRAFT authoring only. Generator families, broad codes and collision results do not authorize runtime publication, aliases or mastery migration."
+      },
+      "components": [
+        "assemble_3d_model_from_attributes",
+        "draw_valid_3d_representation",
+        "manipulate_virtual_3d_model",
+        "verify_3d_construction"
+      ],
+      "shape_universe": {
+        "three_dimensional": [
+          "cube",
+          "rectangular_prism",
+          "cone",
+          "cylinder",
+          "sphere"
+        ],
+        "vocabulary": {
+          "face": "flat 2-D boundary of a solid",
+          "curved_surface": "non-flat boundary of a solid"
+        }
+      },
+      "inclusions": [
+        "Assemble a physical model, manipulate a virtual model, or draw a valid representation of a listed solid from supplied attributes",
+        "Verify every supplied attribute using flat-face, curved-surface and vertex vocabulary",
+        "Accept varied size and orientation when the required structure remains",
+        "Use a drawing only when it visibly represents the required 3-D structure rather than merely naming a pictured solid"
+      ],
+      "exclusions": [
+        "Selecting or naming a displayed solid as construction evidence",
+        "2-D figure construction",
+        "Unverified model choice",
+        "Surface area or volume calculation",
+        "Unlisted polyhedra or formal net proofs"
+      ],
+      "prerequisite_concepts": [
+        "defining attributes of bounded 3-D solids",
+        "2-D faces versus 3-D solids",
+        "face, curved surface and vertex vocabulary",
+        "basic drawing, virtual-model or manipulative use"
+      ],
+      "examples": [
+        {
+          "input": "Build a solid with six square flat faces and verify each supplied attribute.",
+          "answer": "a cube model with six verified square faces",
+          "dimension": "physical_or_virtual_model"
+        },
+        {
+          "input": "Draw a representation of a cylinder and label its two circular flat faces and one curved surface.",
+          "answer": "a valid labeled cylinder representation",
+          "dimension": "drawn_representation"
+        },
+        {
+          "input": "Choose the cube from four pictures.",
+          "valid_as_construction_evidence": false,
+          "rationale": "Selection is recognition, not construction.",
+          "dimension": "recognition_exclusion"
+        },
+        {
+          "input": "Build a sphere with one flat face.",
+          "valid": false,
+          "rationale": "A sphere has no flat faces.",
+          "dimension": "inconsistent_attributes"
+        }
+      ],
+      "misconception_probes": [
+        "Selects a picture instead of producing a model",
+        "Calls a curved surface a face",
+        "Labels a square face as the whole cube",
+        "Builds a model but does not verify all supplied attributes",
+        "Treats orientation as changing the solid"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "The learner must produce and verify an observable 3-D model or valid representation; recognition/selection never satisfies this atom.",
+        "required": [
+          {
+            "dimension": "observable_production",
+            "accepted_modes": [
+              "physical_model",
+              "virtual_model",
+              "valid_drawn_representation"
+            ]
+          },
+          {
+            "dimension": "structure_verification",
+            "must_reference_all_supplied_attributes": true
+          },
+          {
+            "dimension": "face_surface_vocabulary",
+            "must_distinguish": true
+          }
+        ],
+        "prohibitions": [
+          "No selection-only evidence",
+          "No recognition-only evidence",
+          "No 2-D construction inference",
+          "No classification mastery inference",
+          "No composition mastery inference"
+        ]
+      }
+    },
+    {
+      "code": "MATH.GEOMETRY.SHAPE.COMPOSE_2D",
+      "identity_decision": "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-11",
+        "authoritative_sources_checked": [
+          "app/canonical_taxonomy_candidates.py@786922e673355be50c6b9405de12f16aa754389f",
+          "docs/curriculum/taxonomy_candidate_scope.v1.json@700e5d5aaa61eb5f05db92612177dba20aa19d99"
+        ],
+        "possible_overlaps": [
+          "MATH.GEO.SHAPES",
+          "MATH.NS.COMPOSE_DECOMPOSE"
+        ],
+        "disposition": "DISTINCT_DIMENSIONAL_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+        "authority_caveat": "Architecture authorized this label for DRAFT authoring only. Generator families, broad codes and collision results do not authorize runtime publication, aliases or mastery migration."
+      },
+      "components": [
+        "compose_nonoverlapping_2d_parts",
+        "verify_requested_2d_result",
+        "identify_2d_component_parts"
+      ],
+      "shape_universe": {
+        "two_dimensional_components": [
+          "triangle",
+          "rectangle",
+          "square",
+          "trapezoid"
+        ],
+        "composition_contract": "Component interiors are disjoint; joining along all or part of a boundary is permitted when it produces the requested result."
+      },
+      "inclusions": [
+        "Combine two or more bounded 2-D component figures to make a specified result",
+        "Join parts without interior overlap; shared boundary contact is allowed and must be explicit",
+        "Use rotations or reflections without changing component identity",
+        "Name component parts as explanation evidence without creating additional mastery credit"
+      ],
+      "exclusions": [
+        "3-D composition",
+        "Merely identifying parts without composing them",
+        "Interior overlap when a partition is required",
+        "Area or perimeter calculation",
+        "Numeric composition/decomposition"
+      ],
+      "prerequisite_concepts": [
+        "recognize bounded 2-D component figures",
+        "part-whole spatial relation",
+        "orientation invariance",
+        "boundary and interior"
+      ],
+      "examples": [
+        {
+          "input": "Take two congruent right triangles that are exact diagonal halves of one rectangle. Join their congruent hypotenuses using a half-turn so corresponding legs are parallel; name the result and parts.",
+          "answer": "a rectangle composed of two congruent right triangles",
+          "dimension": "diagonal_halves_rectangle"
+        },
+        {
+          "input": "Join two congruent squares along one complete side with disjoint interiors.",
+          "answer": "a rectangle composed of two squares",
+          "dimension": "edge_to_edge_squares"
+        },
+        {
+          "input": "Place one square completely on top of another and claim a two-part rectangle.",
+          "valid": false,
+          "rationale": "The interiors overlap, so the required non-overlapping composition was not formed.",
+          "dimension": "overlap_rejection"
+        },
+        {
+          "input": "Name two triangles in a completed diagram without arranging them.",
+          "valid_as_composition_evidence": false,
+          "rationale": "Part identification without composition is insufficient.",
+          "dimension": "identification_exclusion"
+        }
+      ],
+      "misconception_probes": [
+        "Counts overlapping pieces as separate parts",
+        "Changes a component name after rotation",
+        "Names only the result and omits the parts",
+        "Identifies parts without composing them",
+        "Assumes any two congruent right triangles joined along equal-length sides form a rectangle"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "The learner must create the requested 2-D result from non-overlapping parts and explain the parts. Explanation accompanies the same attempt and creates no second credit.",
+        "required": [
+          {
+            "dimension": "nonoverlapping_composition",
+            "minimum_distinct_tasks": 2
+          },
+          {
+            "dimension": "boundary_contract",
+            "must_distinguish_shared_boundary_from_interior_overlap": true
+          },
+          {
+            "dimension": "part_explanation",
+            "required_for_every_task": true
+          }
+        ],
+        "prohibitions": [
+          "No 3-D composition inference",
+          "No identification-only evidence",
+          "No separate credit for naming parts",
+          "No numeric composition inference"
+        ]
+      }
+    },
+    {
+      "code": "MATH.GEOMETRY.SHAPE.COMPOSE_3D",
+      "identity_decision": "ARCHITECTURE_SPLIT_AUTHORIZED_SCOPE_PENDING_INDEPENDENT_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-11",
+        "authoritative_sources_checked": [
+          "app/canonical_taxonomy_candidates.py@786922e673355be50c6b9405de12f16aa754389f",
+          "docs/curriculum/taxonomy_candidate_scope.v1.json@700e5d5aaa61eb5f05db92612177dba20aa19d99"
+        ],
+        "possible_overlaps": [
+          "MATH.GEO.SHAPES",
+          "MATH.NS.COMPOSE_DECOMPOSE"
+        ],
+        "disposition": "DISTINCT_DIMENSIONAL_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW",
+        "authority_caveat": "Architecture authorized this label for DRAFT authoring only. Generator families, broad codes and collision results do not authorize runtime publication, aliases or mastery migration."
+      },
+      "components": [
+        "compose_nonoverlapping_3d_parts",
+        "verify_requested_3d_result",
+        "identify_3d_component_parts"
+      ],
+      "shape_universe": {
+        "three_dimensional_components": [
+          "cube",
+          "rectangular_prism"
+        ],
+        "composition_contract": "Component interiors are disjoint; face-to-face joining is required when the task specifies a rectangular-prism result."
+      },
+      "inclusions": [
+        "Combine two or more bounded 3-D components to make a specified solid or composite solid",
+        "Join components without interior overlap; shared face contact is allowed and must be explicit",
+        "Use rotations without changing component identity",
+        "State the component count and arrangement as explanation evidence without creating additional mastery credit"
+      ],
+      "exclusions": [
+        "2-D composition",
+        "Merely identifying components without composing them",
+        "Interior overlap",
+        "Volume or surface-area calculation",
+        "Numeric composition/decomposition"
+      ],
+      "prerequisite_concepts": [
+        "recognize cube and rectangular-prism components",
+        "part-whole spatial relation",
+        "orientation invariance",
+        "face-to-face joining"
+      ],
+      "examples": [
+        {
+          "input": "Join six unit cubes face-to-face in a 3 by 2 by 1 array with disjoint interiors.",
+          "answer": "a rectangular prism composed of six unit cubes",
+          "dimension": "unit_cube_prism"
+        },
+        {
+          "input": "Join two congruent rectangular prisms along one complete congruent face and describe the result.",
+          "answer": "a valid composite rectangular prism when the aligned dimensions form one rectangular prism",
+          "dimension": "face_to_face_prisms"
+        },
+        {
+          "input": "Place one cube completely inside another and count two visible building blocks.",
+          "valid": false,
+          "rationale": "The interiors overlap and the required face-to-face composition is absent.",
+          "dimension": "overlap_rejection"
+        },
+        {
+          "input": "Point to three cubes already shown without arranging them.",
+          "valid_as_composition_evidence": false,
+          "rationale": "Identification without composition is insufficient.",
+          "dimension": "identification_exclusion"
+        }
+      ],
+      "misconception_probes": [
+        "Counts overlapping solids as separate visible components",
+        "Joins pieces only at a point when face-to-face contact is required",
+        "Changes a component name after rotation",
+        "Names only the result and omits component count",
+        "Identifies components without composing them"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "The learner must create and verify the requested 3-D arrangement from non-overlapping components. Component explanation creates no additional mastery credit.",
+        "required": [
+          {
+            "dimension": "nonoverlapping_composition",
+            "minimum_distinct_tasks": 2
+          },
+          {
+            "dimension": "face_contact_contract",
+            "must_verify_when_required": true
+          },
+          {
+            "dimension": "component_explanation",
+            "required_for_every_task": true
+          }
+        ],
+        "prohibitions": [
+          "No 2-D composition inference",
+          "No identification-only evidence",
+          "No separate credit for naming/counting components",
+          "No numeric composition inference"
+        ]
+      }
+    },
+    {
+      "code": "MATH.MEASUREMENT.TIME.READ_HOUR_HALF_HOUR",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.MEAS.TIME",
+          "MATH.MEAS.TIME.CONVERT",
+          "MATH.MEAS.TIME.ELAPSED"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "read_analog_hour",
+        "read_analog_half_hour",
+        "interpret_digital_hour_half_hour",
+        "match_representations"
+      ],
+      "inclusions": [
+        "Read analog times at exact hours and half-hours",
+        "Interpret digital notation H:00 and H:30 for H in 1..12",
+        "At half-hour, recognize the minute hand at 6 and the hour hand halfway toward the next hour",
+        "Include 12:00 and 12:30",
+        "Match equivalent analog and digital representations"
+      ],
+      "exclusions": [
+        "Elapsed time",
+        "Hour/minute unit conversion",
+        "Five-minute or one-minute precision",
+        "24-hour notation",
+        "AM/PM inference without contextual evidence",
+        "Producing or setting a clock representation"
+      ],
+      "prerequisite_concepts": [
+        "numbers 1..12",
+        "clockwise order",
+        "whole and half concepts",
+        "analog clock parts"
+      ],
+      "examples": [
+        {
+          "input": "Analog clock: minute hand at 12, hour hand at 7.",
+          "answer": "7:00",
+          "representation": "analog"
+        },
+        {
+          "input": "Analog clock: minute hand at 6, hour hand halfway between 12 and 1.",
+          "answer": "12:30",
+          "representation": "analog"
+        },
+        {
+          "input": "Read 9:30.",
+          "answer": "half past nine",
+          "representation": "digital"
+        },
+        {
+          "input": "Analog clock: minute hand at 3.",
+          "valid": false,
+          "rationale": "Quarter-hour precision is outside this contract"
+        }
+      ],
+      "misconception_probes": [
+        "Reads the minute hand as the hour hand",
+        "Calls 8:30 half past seven",
+        "Places the hour hand exactly on 8 at 8:30",
+        "Treats :30 as 30 hours"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Reading evidence must include analog and digital forms at both hour and half-hour precision.",
+        "required": [
+          {
+            "representation": "analog",
+            "precisions": [
+              "hour",
+              "half_hour"
+            ],
+            "include_12_boundary": true
+          },
+          {
+            "representation": "digital",
+            "precisions": [
+              "hour",
+              "half_hour"
+            ]
+          },
+          {
+            "dimension": "analog_digital_match",
+            "required": true
+          }
+        ],
+        "prohibitions": [
+          "No production mastery inference",
+          "No elapsed-time or conversion credit"
+        ]
+      }
+    },
+    {
+      "code": "MATH.MEASUREMENT.TIME.REPRESENT_HOUR_HALF_HOUR",
+      "identity_decision": "ARCHITECTURE_BOUNDARY_DECIDED_SCOPE_PENDING_REVIEW",
+      "collision_audit": {
+        "exact_code_on_main": "NOT_FOUND_IN_PERSISTED_SCOPE_CARDS_OR_GENERATOR_DERIVED_REGISTRY",
+        "exact_code_search_date": "2026-10-10",
+        "possible_overlaps": [
+          "MATH.MEAS.TIME",
+          "MATH.MEAS.TIME.CONVERT",
+          "MATH.MEAS.TIME.ELAPSED"
+        ],
+        "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_AND_ARCHITECTURE_CONFIRMATION",
+        "authority_caveat": "Generator families, family IDs, broad canonical codes and this collision audit do not authorize identity or runtime publication."
+      },
+      "components": [
+        "write_digital_hour",
+        "write_digital_half_hour",
+        "construct_analog_hour",
+        "construct_analog_half_hour"
+      ],
+      "inclusions": [
+        "Write digital notation H:00 or H:30 for a supplied hour/half-hour time",
+        "Draw, set or construct an analog clock representation for a supplied hour/half-hour time",
+        "At half-hour, place the hour hand between consecutive hour marks",
+        "Include 12:00 and 12:30",
+        "Retain digital-writing and analog-production evidence separately"
+      ],
+      "exclusions": [
+        "Reading-only evidence",
+        "Elapsed time",
+        "Hour/minute conversion",
+        "Five-minute or one-minute precision",
+        "24-hour notation and time zones",
+        "AM/PM selection without context"
+      ],
+      "prerequisite_concepts": [
+        "meaning of hour and half-hour",
+        "analog clock parts",
+        "digital time notation",
+        "numbers 1..12"
+      ],
+      "examples": [
+        {
+          "input": "Write half past four in digital form.",
+          "answer": "4:30",
+          "representation": "digital"
+        },
+        {
+          "input": "Set an analog clock to 12:30.",
+          "answer": "minute hand at 6; hour hand halfway between 12 and 1",
+          "representation": "analog"
+        },
+        {
+          "input": "Draw 7:00 on an analog clock.",
+          "answer": "minute hand at 12; hour hand at 7",
+          "representation": "analog"
+        },
+        {
+          "input": "Write quarter past four.",
+          "valid": false,
+          "rationale": "Quarter-hour precision is outside this contract"
+        }
+      ],
+      "misconception_probes": [
+        "Writes 4.30 or 430 without the required digital notation",
+        "Places the minute hand at 30 instead of at 6",
+        "Leaves the hour hand exactly on the earlier hour at half-hour",
+        "Swaps hour and minute hands"
+      ],
+      "assessment_evidence_matrix": {
+        "rule": "Digital writing and analog production each require independent unassisted evidence at hour and half-hour precision.",
+        "required": [
+          {
+            "representation": "digital",
+            "precisions": [
+              "hour",
+              "half_hour"
+            ],
+            "include_12_boundary": true
+          },
+          {
+            "representation": "analog",
+            "precisions": [
+              "hour",
+              "half_hour"
+            ],
+            "include_12_boundary": true
+          }
+        ],
+        "prohibitions": [
+          "No reading mastery inference",
+          "No elapsed-time or conversion credit",
+          "A single representation cannot satisfy both dimensions"
+        ]
+      }
+    }
+  ],
+  "noncanonical_profiles": [
+    {
+      "label": "count_compare_to_120",
+      "role": "REPORTING_ONLY_ALL_OF",
+      "members": [
+        "MATH.NUMBER_SENSE.COUNT_FORWARD_BY_ONE_TO_120",
+        "MATH.NUMBER_SENSE.COMPARE_WHOLE_NUMBERS_TO_120",
+        "MATH.NUMBER_SENSE.REPRESENT_NUMERALS_TO_120",
+        "MATH.NUMBER_SENSE.ORDER_WHOLE_NUMBERS_TO_120"
+      ]
+    },
+    {
+      "label": "equation_balance",
+      "role": "REPORTING_ONLY_ALL_OF",
+      "members": [
+        "MATH.EARLY_ALGEBRA.EQUALITY_RELATION",
+        "MATH.EARLY_ALGEBRA.ADDITION_EQUATION_UNKNOWN_WITHIN_20",
+        "MATH.EARLY_ALGEBRA.SUBTRACTION_EQUATION_UNKNOWN_WITHIN_20"
+      ]
+    },
+    {
+      "label": "identify_compose_shapes",
+      "role": "REPORTING_ONLY_ALL_OF",
+      "members": [
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_2D",
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_3D",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_2D",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_3D",
+        "MATH.GEOMETRY.SHAPE.COMPOSE_2D",
+        "MATH.GEOMETRY.SHAPE.COMPOSE_3D"
+      ],
+      "evaluation": "FAIL_CLOSED_ALL_OF",
+      "one_primary_atom_per_attempt": true,
+      "creates_additional_credit": false,
+      "back_credits_missing_members": false,
+      "direct_alias_target": false
+    },
+    {
+      "label": "tell_time_hour_half_hour",
+      "role": "REPORTING_ONLY_ALL_OF",
+      "members": [
+        "MATH.MEASUREMENT.TIME.READ_HOUR_HALF_HOUR",
+        "MATH.MEASUREMENT.TIME.REPRESENT_HOUR_HALF_HOUR"
+      ]
+    }
+  ],
+  "profile_prohibitions": [
+    "No canonical row or UUID",
+    "No mastery event, attempt, diagnostic attempt or variant namespace",
+    "One primary atom per attempt",
+    "No inferred member mastery or cross-dimension credit",
+    "No duplicate, seventh or back-credit",
+    "No direct alias target or runtime alias activation"
+  ],
+  "revision_history": [
+    {
+      "revision": "2026-10-10-grade1-gate5-r1",
+      "disposition": "SUPERSEDED_GEOMETRY_PROPOSALS_RETAINED_IN_GIT_HISTORY",
+      "unchanged_approved_cards": 7,
+      "superseded_draft_codes": [
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES",
+        "MATH.GEOMETRY.SHAPE.COMPOSE"
+      ],
+      "reason": "Independent Mathematical Review requested separate 2-D and 3-D atoms; Architecture authorized six replacement DRAFT labels."
+    },
+    {
+      "revision": "2026-10-11-grade1-gate5-r2",
+      "disposition": "SUPERSEDED_BY_NARROW_R3_SCORING_HIERARCHY_CORRECTION",
+      "replacement_geometry_codes": [
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_2D",
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_3D",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_2D",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_3D",
+        "MATH.GEOMETRY.SHAPE.COMPOSE_2D",
+        "MATH.GEOMETRY.SHAPE.COMPOSE_3D"
+      ]
+    },
+    {
+      "revision": "2026-10-11-grade1-gate5-r3",
+      "disposition": "CURRENT_DRAFT_PENDING_LIMITED_REVIEW_OF_THREE_CORRECTED_CARDS",
+      "unchanged_independently_approved_cards": 10,
+      "corrected_codes": [
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_2D",
+        "MATH.GEOMETRY.SHAPE.DEFINING_ATTRIBUTES_3D",
+        "MATH.GEOMETRY.SHAPE.CONSTRUCT_FROM_ATTRIBUTES_2D"
+      ],
+      "architecture_contract": {
+        "inclusive_hierarchies": [
+          "square ⊂ rectangle ⊂ trapezoid",
+          "cube ⊂ rectangular prism"
+        ],
+        "response_modes": [
+          "MOST_SPECIFIC",
+          "ALL_VALID_LISTED",
+          "MEMBERSHIP"
+        ],
+        "no_false_supertype": true,
+        "no_supertype_substitution_for_requested_subtype": true
+      },
+      "review_evidence": {
+        "independent_request_changes": "PR #335 comment 6104939419",
+        "architecture_decision": "Issue #282 comment 6104942514"
+      }
+    }
+  ]
+}

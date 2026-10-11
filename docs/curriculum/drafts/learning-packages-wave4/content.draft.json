@@ -402,6 +402,34 @@
           "hints_allowed": false,
           "feedback_after_submission": true,
           "unseen_context": true
+        },
+        {
+          "question": "A histogram has half-open bins [0,5):2, [5,10):6, [10,15):3, [15,20):1. Which interval is modal, how many observations are at least 10, and which interval contains a value of exactly 10?",
+          "answer": "modal [5,10); at least 10: 4; exactly 10 belongs to [10,15)",
+          "oracle": "6 is largest bin frequency; 3+1=4; left-inclusive/right-exclusive boundaries",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "MODAL_INTERVAL",
+            "FREQUENCY_FROM_BINS",
+            "HALF_OPEN_BOUNDARY"
+          ]
+        },
+        {
+          "question": "Consider counts [2,5,8,5,2] over five equal-width successive bins. Classify modality and justify whether the distribution has a single peak. Contrast with counts [5,1,5,1,5].",
+          "answer": "first is unimodal, single central peak 8; second has three equal separated local peaks, not unimodal",
+          "oracle": "first increases 2<5<8 and decreases 8>5>2; second alternates 5 and 1 with three separated peaks",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "DISTRIBUTION_SHAPE",
+            "MODALITY",
+            "EXPLICIT_FREQUENCY_EVIDENCE"
+          ]
         }
       ],
       "interactive_spec": {
@@ -411,7 +439,12 @@
         "reduced_motion": true,
         "assessments_unscaffolded": true
       },
-      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE"
+      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "rubric": "Need unseen bin boundaries, count from interval totals, modal interval and justified distribution shape; not just causation claim.",
+        "independent_review": "REQUESTED_NOT_APPROVED"
+      }
     },
     {
       "id": "W4-G7-PRISM-NETS",
@@ -538,6 +571,60 @@
           "hints_allowed": false,
           "feedback_after_submission": true,
           "unseen_context": true
+        },
+        {
+          "question": "A rectangular prism is 2 cm by 3 cm by 4 cm. A proposed net has four side-face rectangles joined into a strip, each height 4: widths 2,3,2,3 in that order. A 2-by-3 rectangle is attached above the first width-2 face and another 2-by-3 rectangle is attached below it. Is this a valid six-face net? Justify dimensions, adjacency and pairing, not just area.",
+          "answer": "yes; side strip alternates widths 2,3,2,3 at height 4, with opposing 2×3 faces closing top and bottom",
+          "oracle": "face pairs: 2×4 twice, 3×4 twice, 2×3 twice; strip folds around a 2×3 base; lid/base tabs close opposite open ends without overlap",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "SIX_FACE_PAIRING",
+            "RECTANGULAR_NET_FOLDABILITY",
+            "SHARED_EDGE_LENGTHS"
+          ],
+          "net_face_sizes": [
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        },
+        {
+          "question": "A proposed 3-by-4-by-5-cm prism net has side-strip widths 3,4,3,4 with height 5, plus two end rectangles 3-by-3. Explain why it cannot fold into the specified prism, and state the correct end-face dimensions.",
+          "answer": "invalid: both end faces must be 3 cm by 4 cm, not 3 cm by 3 cm",
+          "oracle": "opposite end faces each area 3×4=12; the offered squares have area 9 and fail to match 4-cm edges",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "INVALID_FACE_DIMENSIONS",
+            "SHARED_EDGE_LENGTHS",
+            "FACE_PAIRING"
+          ]
         }
       ],
       "interactive_spec": {
@@ -547,7 +634,13 @@
         "reduced_motion": true,
         "assessments_unscaffolded": true
       },
-      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE"
+      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "rubric": "Unseen nets must show six appropriate faces, paired dimensions, edge adjacency and fold/no-fold reasoning; surface area alone is insufficient.",
+        "existing_reuse": "Rectangular-prism family/MVE; do not conflate cube-net foldability with rectangular-prism net identity.",
+        "independent_review": "REQUESTED_NOT_APPROVED"
+      }
     },
     {
       "id": "W4-G9-EXPO-MODELING",
@@ -674,6 +767,35 @@
           "hints_allowed": false,
           "feedback_after_submission": true,
           "unseen_context": true
+        },
+        {
+          "question": "A table tracks a distance in kilometres every hour: t=0,1,2,3; d=4,7,10,13. Decide linear or exponential, state the unit-bearing rate or factor and write the rule. Is it appropriate for negative time if the scenario starts at t=0?",
+          "answer": "linear: d(t)=4+3t km, 3 km/h; scenario domain t≥0",
+          "oracle": "successive differences 3,3,3 km per hour; no constant multiplicative ratio; initial distance 4 km",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "DIFFERENCE_VS_RATIO",
+            "RATE_WITH_UNITS",
+            "PHYSICAL_DOMAIN"
+          ]
+        },
+        {
+          "question": "A lab sample starts at 5 mg and doubles each hour. Measurements at 0,1,2,3 hours are 5,10,20,40 mg. Classify the relation, identify the multiplier, give the exact formula, and predict 4 hours. Contrast with a constant +5 mg per hour model.",
+          "answer": "exponential: m(t)=5×2^t mg, factor 2 per hour; m(4)=80 mg; unlike linear 5+5t which gives 25 mg at t=4",
+          "oracle": "successive ratios 2,2,2 versus differences 5,10,20; t≥0 hours and mass in mg",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "MULTIPLICATIVE_GROWTH",
+            "COMPARE_LINEAR_BASELINE",
+            "EXACT_FORECAST",
+            "UNITS_AND_DOMAIN"
+          ]
         }
       ],
       "interactive_spec": {
@@ -683,7 +805,14 @@
         "reduced_motion": true,
         "assessments_unscaffolded": true
       },
-      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE"
+      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "source_provenance": "UNKNOWN_UNLOCATED",
+        "rubric": "Independent comparison must classify actual tables by additive difference versus multiplicative ratio, justify rate/factor with units, domain and unseen extrapolation; numeric exponential evaluation alone does not prove modeling understanding.",
+        "review_note": "Synthetic original examples may be mathematically checked; full authored package provenance MUST remain UNKNOWN until located/reconciled with #334. No coverage/activation claim.",
+        "independent_review": "REQUESTED_NOT_APPROVED"
+      }
     }
   ]
 }

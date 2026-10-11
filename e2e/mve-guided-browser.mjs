@@ -18,6 +18,7 @@ import { InteractiveLinearExplorer } from '/src/mve/InteractiveLinearExplorer';
 import { InteractiveIntegerNumberLine } from '/src/mve/InteractiveIntegerNumberLine';
 import { InteractiveEquationBalance } from '/src/mve/InteractiveEquationBalance';
 import { InteractiveDotPlotExplorer } from '/src/mve/InteractiveDotPlotExplorer';
+import { InteractivePolynomialDivision } from '/src/mve/InteractivePolynomialDivision';
 import '/src/styles.css';
 function Harness() {
  const [assessment, setAssessment] = useState(false);
@@ -27,6 +28,7 @@ function Harness() {
  <InteractiveIntegerNumberLine independentAssessment={assessment} />
  <InteractiveEquationBalance independentAssessment={assessment} />
  <InteractiveDotPlotExplorer independentAssessment={assessment} />
+ <InteractivePolynomialDivision independentAssessment={assessment} onMathEvent={e => setEvent(JSON.stringify(e))} />
  <output aria-label="Last semantic event">{event}</output></>;
 }
 createRoot(document.getElementById('root')!).render(<Harness />);`);
@@ -60,6 +62,44 @@ createRoot(document.getElementById('root')!).render(<Harness />);`);
   assert.ok((await data.getByRole('status').first().textContent()).includes('mean 24/5; median 3; range 10'));
   await data.getByRole('button', { name: 'Add another observation at this value' }).click();
   assert.equal(await data.getByRole('button', { name: 'Add another observation at this value' }).isDisabled(), true);
+  const polynomial = page.getByRole('region', { name: 'Guided polynomial division exploration' });
+  await polynomial.getByRole('button', { name: /Term 1/ }).click();
+  await polynomial.getByRole('button', { name: /Term 2/ }).click();
+  assert.equal(JSON.parse(await page.getByLabel('Last semantic event').textContent()).divided_terms, 2);
+  await polynomial.getByLabel('Prediction before quotient reveal').fill('Coefficients divide, exponents subtract, and original restrictions stay visible.');
+  await polynomial.getByLabel('Prediction coefficient evidence').selectOption('PREDICT_DIVIDE_EACH_DIVIDEND_COEFFICIENT');
+  await polynomial.getByLabel('Prediction exponent evidence').selectOption('PREDICT_SUBTRACT_LIKE_BASE_EXPONENTS');
+  await polynomial.getByLabel('Prediction domain evidence').selectOption('PREDICT_KEEP_ORIGINAL_DIVISOR_NONZERO');
+  for (const [label, value] of [
+    ['Quotient term 1 coefficient', '3'],
+    ['Quotient term 1 x exponent', '2'],
+    ['Quotient term 1 y exponent', '1'],
+    ['Quotient term 2 coefficient', '-2'],
+    ['Quotient term 2 x exponent', '1'],
+    ['Quotient term 2 y exponent', '0'],
+    ['Reconstruction product 1 coefficient', '6'],
+    ['Reconstruction product 1 x exponent', '3'],
+    ['Reconstruction product 1 y exponent', '2'],
+    ['Reconstruction product 2 coefficient', '-4'],
+    ['Reconstruction product 2 x exponent', '2'],
+    ['Reconstruction product 2 y exponent', '1'],
+    ['Fresh quotient term 1 coefficient', '3'],
+    ['Fresh quotient term 1 x exponent', '-1'],
+    ['Fresh quotient term 1 y exponent', '0'],
+    ['Fresh quotient term 2 coefficient', '5'],
+    ['Fresh quotient term 2 x exponent', '-2'],
+    ['Fresh quotient term 2 y exponent', '1'],
+  ]) await polynomial.getByLabel(label, { exact: true }).fill(value);
+  await polynomial.getByLabel('Dividend coefficient divided by divisor coefficient').check();
+  await polynomial.getByLabel('Dividend exponent minus divisor exponent').check();
+  await polynomial.getByLabel('x not equal to 0').check();
+  await polynomial.getByLabel('y not equal to 0').check();
+  await polynomial.getByLabel('Explanation of polynomial division reasoning').fill('Multiply to reconstruct the dividend, subtract exponents, and keep original nonzero restrictions.');
+  await polynomial.getByLabel('Explanation reconstruction evidence').selectOption('EXPLAIN_QUOTIENT_TIMES_DIVISOR_REBUILDS_DIVIDEND');
+  await polynomial.getByLabel('Explanation exponent evidence').selectOption('PREDICT_SUBTRACT_LIKE_BASE_EXPONENTS');
+  await polynomial.getByLabel('Explanation domain evidence').selectOption('PREDICT_KEEP_ORIGINAL_DIVISOR_NONZERO');
+  await polynomial.getByRole('button', { name: 'Check polynomial division' }).click();
+  assert.ok((await polynomial.getByRole('status').last().textContent()).startsWith('Correct'));
   const balance = page.getByRole('region', { name: 'Guided equation balance exploration' });
   for (let i = 0; i < 4; i++) await balance.getByRole('button', { name: 'Subtract 1 from both sides' }).click();
   await balance.getByRole('button', { name: 'Divide both sides by 2' }).focus();
@@ -72,6 +112,7 @@ createRoot(document.getElementById('root')!).render(<Harness />);`);
   assert.equal(await slope.count(), 0);
   assert.equal(await balance.count(), 0);
   assert.equal(await data.count(), 0);
+  assert.equal(await polynomial.count(), 0);
   assert.equal(await page.getByRole('region', { name: 'Guided integer number line exploration' }).count(), 0);
   await page.getByRole('button', { name: 'Toggle assessment' }).click();
   assert.equal(await rise.inputValue(), '2');
@@ -82,7 +123,7 @@ createRoot(document.getElementById('root')!).render(<Harness />);`);
   await integer.focus(); await page.keyboard.press('ArrowRight');
   assert.equal(await integer.inputValue(), '-1');
   assert.deepEqual(errors, []);
-  console.log('PASS: keyboard arrows/Home, run boundary, semantic events, equivalent-fraction practice, reduced-motion mode, assessment unmount and fresh remount for all four activities, plus equal-side operations and undo.');
+  console.log('PASS: keyboard arrows/Home, run boundary, semantic events, equivalent-fraction practice, grouped-term polynomial division, reduced-motion mode, assessment unmount and fresh remount for all five activities, plus equal-side operations and undo.');
 } finally {
   await browser?.close();
   await server?.close();

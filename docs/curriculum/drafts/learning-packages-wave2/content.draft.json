@@ -157,6 +157,26 @@
           "oracle_reason": "15−6",
           "hints_allowed": false,
           "feedback_after_submission": true
+        },
+        {
+          "prompt": "A class has some books. Seven are returned to the library, leaving nine. How many were present before the returns?",
+          "answer": "16 books",
+          "oracle_reason": "starting amount minus 7 is 9; starting amount 16; substitute:16−7=9",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unknown_role": "START_UNKNOWN",
+          "independent_evidence": "Reconstruct unknown whole and justify inverse operation",
+          "teacher_oracle_visibility": "SERVER_ONLY"
+        },
+        {
+          "prompt": "Without moving a number to the other side, fill the blank so the two expressions have equal value: 8 + 4 = 7 + □. Explain how you checked equality.",
+          "answer": "5",
+          "oracle_reason": "left value 12; right 7+5=12",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unknown_role": "EQUALITY_UNKNOWN",
+          "independent_evidence": "Verify the two sides evaluate to identical counts",
+          "teacher_oracle_visibility": "SERVER_ONLY"
         }
       ],
       "interactive_spec": {
@@ -175,7 +195,20 @@
         "accessibility": "keyboard add/remove, spoken count and equation, no reliance on color",
         "assessment": "disable manipulatives and hints"
       },
-      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW"
+      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "evaluated_roles": [
+          "ADDEND_UNKNOWN",
+          "SUBTRAHEND_UNKNOWN",
+          "CHANGE_UNKNOWN",
+          "START_UNKNOWN",
+          "EQUALITY_UNKNOWN"
+        ],
+        "rubric": "Distinct unseen roles must be checked separately; no back-credit between operations or equality evidence. Explanations and teacher oracles hidden from student-facing assessment responses.",
+        "existing_reuse": "#331 unknown-position mathematics; no new canonical identifier",
+        "independent_review": "REQUESTED_NOT_APPROVED"
+      }
     },
     {
       "id": "W2-G5-DECIMAL-PLACE-VALUE",
@@ -317,6 +350,43 @@
           "oracle_reason": "2.50−0.85",
           "hints_allowed": false,
           "feedback_after_submission": true
+        },
+        {
+          "prompt": "A student claims 0.407 equals 4 tenths and 7 hundredths. Is that correct? Write its expanded place-value form and show how the digits determine the value.",
+          "answer": "No. 0.407 = 4 tenths + 0 hundredths + 7 thousandths = 0.4 + 0.007",
+          "oracle_reason": "4/10+0/100+7/1000=407/1000, unlike 4/10+7/100=470/1000",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "scope_role": "PLACE_VALUE_EXPLANATION",
+          "misconception_probe": "HUNDREDTH_VS_THOUSANDTH"
+        },
+        {
+          "prompt": "A survey maps 9/25 to a decimal using one hundred equal parts. Find the decimal and justify the hundredths conversion.",
+          "answer": "0.36; 9/25=36/100",
+          "oracle_reason": "numerator and denominator both multiplied by 4",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "scope_role": "FRACTION_DECIMAL_CONVERSION"
+        },
+        {
+          "prompt": "One sample measures 3.006 m and another 3.06 m. Explain which is greater using thousandths and give their difference.",
+          "answer": "3.06 m is greater by 0.054 m",
+          "oracle_reason": "3.060−3.006=0.054, 3060 thousandths > 3006 thousandths",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "scope_role": "DECIMAL_COMPARISON"
+        },
+        {
+          "prompt": "A wire is 4.05 m long. A technician removes 1.275 m. Determine the length left, show the alignment of thousandths, and name the unit.",
+          "answer": "2.775 m",
+          "oracle_reason": "4.050−1.275=2.775 metres",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "scope_role": "DECIMAL_SUBTRACTION_TRANSFER"
         }
       ],
       "interactive_spec": {
@@ -335,7 +405,19 @@
         "accessibility": "keyboard grid cell selection, fraction and decimal text equivalents",
         "assessment": "hide hundred-grid scaffold"
       },
-      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW"
+      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "roles": [
+          "PLACE_VALUE_EXPLANATION",
+          "FRACTION_DECIMAL_CONVERSION",
+          "DECIMAL_COMPARISON",
+          "DECIMAL_SUBTRACTION_TRANSFER"
+        ],
+        "rubric": "Evidence must be demonstrated separately; converting fractions does not confer place-value/exact-operation mastery. Each role demands its own explanation, exact decimal oracle and unseen transfer.",
+        "canonical_reuse": "Use existing decimal decomposition, fractions and operations families; no new composite mastery identity.",
+        "independent_review": "REQUESTED_NOT_APPROVED"
+      }
     },
     {
       "id": "W2-G6-RATIO-DOUBLE-LINE",
@@ -640,6 +722,34 @@
           "oracle_reason": "7>3",
           "hints_allowed": false,
           "feedback_after_submission": true
+        },
+        {
+          "prompt": "Use the median-of-halves convention on sorted data 1,3,5,7,9,11,13,15. State five-number summary, IQR and range. What does the IQR measure?",
+          "answer": "min 1, Q1 4, median 8, Q3 12, max 15; IQR 8; range 14; the middle half spans 8 units",
+          "oracle_reason": "median=(7+9)/2=8; Q1=(3+5)/2=4; Q3=(11+13)/2=12; IQR=12−4; range=15−1",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "quartile_convention": "MEDIAN_OF_HALVES",
+          "evidence": [
+            "FIVE_NUMBER_DERIVATION",
+            "IQR_VS_RANGE",
+            "CONTEXTUAL_SPREAD"
+          ]
+        },
+        {
+          "prompt": "Two box plots encode A: min 1,Q1 4,median 8,Q3 12,max 15 and B: min 3,Q1 4.5,median 6.5,Q3 8.5,max 10. Compare the spreads of their middle 50% and total ranges; justify from box and whisker endpoints.",
+          "answer": "A has wider middle 50% (IQR 8 versus 4); A also has larger total range (14 versus 7)",
+          "oracle_reason": "A IQR=12−4=8, range=15−1=14; B IQR=8.5−4.5=4, range=10−3=7",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "quartile_convention": "BOX_ENDPOINTS_PROVIDED",
+          "evidence": [
+            "BOX_PLOT_ENDPOINTS",
+            "IQR_COMPARISON",
+            "RANGE_COMPARISON"
+          ]
         }
       ],
       "interactive_spec": {
@@ -658,7 +768,14 @@
         "accessibility": "full ordered data table and five-number readout; keyboard quartile markers",
         "assessment": "no auto-calculated quartile display"
       },
-      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW"
+      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "quartile_convention": "MEDIAN_OF_HALVES_FOR_UNGROUPED_EVEN_DATA; endpoints directly provided for box plots",
+        "existing_reuse": "#342 quartile/boxplot evidence; do not promote pending review to approval",
+        "independent_review": "REQUESTED_NOT_APPROVED",
+        "rubric": "Compute actual quartiles, use provided whisker/box endpoints, compare both IQR and range with a justified interpretation."
+      }
     },
     {
       "id": "W2-G8-CUBE-NETS",
@@ -799,6 +916,85 @@
           "oracle_reason": "area scales with square of length ratio",
           "hints_allowed": false,
           "feedback_after_submission": true
+        },
+        {
+          "prompt": "Six congruent squares occupy grid coordinates (0,0),(1,0),(2,0),(3,0),(1,1),(2,-1). Decide if they form a cube net. State which four squares form the side band and why the other two close different faces without overlapping.",
+          "answer": "valid cube net; the four y=0 squares form the side band, and (1,1) and (2,-1) close opposite remaining faces",
+          "oracle_reason": "folding the four consecutive squares gives four distinct lateral normals; the opposite-side tabs become opposing face normals and neither overlaps",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "net_coordinates": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              -1
+            ]
+          ],
+          "foldable": true,
+          "evidence": [
+            "UNSEEN_HEXOMINO",
+            "FOLDED_FACE_UNIQUENESS",
+            "ADJACENT_FACE_JUSTIFICATION"
+          ]
+        },
+        {
+          "prompt": "A net consists of a 3-by-2 filled rectangle of six equal squares. Can it form a cube without overlapping faces? Explain how its central 2-by-2 cycle prevents a valid cube folding.",
+          "answer": "invalid cube net",
+          "oracle_reason": "A planar 2-by-2 block introduces a cycle of four face-to-face hinges; orienting faces around the cycle gives incompatible cube face normals/overlap",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "net_coordinates": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "foldable": false,
+          "evidence": [
+            "INVALID_HEXOMINO",
+            "FOLD_OVERLAP_EXPLANATION"
+          ]
         }
       ],
       "interactive_spec": {
@@ -817,12 +1013,18 @@
         "accessibility": "keyboard hinge folding, 2D face adjacency description, static sequence alternative",
         "assessment": "no foldability indicator"
       },
-      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW"
+      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "rubric": "Classify a previously unseen six-square arrangement and justify six distinct cube-face orientations; surface-area arithmetic is separately scored, never treated as proof of foldability.",
+        "canonical_reuse": "Reuse existing cube-net visual/manipulation and seeded foldability tests; independent review required.",
+        "independent_review": "REQUESTED_NOT_APPROVED"
+      }
     },
     {
       "id": "W2-G9-QUADRATIC-PATTERNS",
       "grades": "Grade 9 / Algebra I",
-      "concept": "Quadratic tables, area models and factorization",
+      "concept": "Quadratic growth from a specified square-tile construction (pattern reasoning only)",
       "existing_reuse": "Existing algebra/functions families and Grade 9 draft PR #317; deepen non-linear structure",
       "status": "DRAFT_UNVERIFIED",
       "runtime_activation": false,
@@ -831,8 +1033,8 @@
       "mathematical_review": "PENDING",
       "qa": "PENDING",
       "diagnostic": [
-        "Sequence 1,4,9,16: ask how differences change.",
-        "Compare y=x+2 with y=x²+2 for x=0,1,2."
+        "Observe Stage 0 with one square tile and Stage 1 with a 2×2 square. Predict how a third stage is built.",
+        "Explain why a few table entries alone cannot prove a unique continuing rule without a specified construction."
       ],
       "lesson_sequence": [
         "Elicit a prediction from a contextual concrete model.",
@@ -843,45 +1045,49 @@
       ],
       "worked_examples": [
         {
-          "prompt": "Area of square side x+3",
+          "prompt": "Stage n has a full (n+1)-by-(n+1) square of unit tiles. Count Stage 2.",
           "steps": [
-            "Partition into x², 3x, 3x, 9.",
-            "Combine terms."
+            "The specified side length is n+1.",
+            "For n=2, the square side is 3.",
+            "Its 3×3 unit cells total 9."
           ],
-          "answer": "x²+6x+9"
+          "answer": "9 tiles"
         },
         {
-          "prompt": "Factor x²+5x+6",
+          "prompt": "Build Stage 3 from Stage 2 of the same square-tile pattern.",
           "steps": [
-            "Find numbers multiplying to 6 and summing to 5.",
-            "Use 2 and 3."
+            "Stage 2 is a 3×3 square of nine tiles.",
+            "Extend the right edge by three and finish the new top row by four more.",
+            "The total is 9+3+4=16."
           ],
-          "answer": "(x+2)(x+3)"
+          "answer": "16 tiles"
         },
         {
-          "prompt": "Solve x²=49",
+          "prompt": "Express the number of new tiles from Stage n to Stage n+1.",
           "steps": [
-            "Square roots give two real candidates.",
-            "Both 7 and −7 square to 49."
+            "Stage n has side n+1; Stage n+1 has side n+2.",
+            "One new column and one new row contribute (n+1)+(n+2) tiles.",
+            "Combine as 2n+3."
           ],
-          "answer": "x=±7"
+          "answer": "2n+3 new tiles"
         },
         {
-          "prompt": "Evaluate y=x²−4x+3 at x=2",
+          "prompt": "Explain why this geometric construction gives a quadratic rule.",
           "steps": [
-            "Compute 2²−4×2+3.",
-            "4−8+3=−1."
+            "Total tiles at Stage n equal area of its square of side n+1.",
+            "(n+1)²=n²+2n+1.",
+            "The added tile counts grow by 2 each time."
           ],
-          "answer": "−1"
+          "answer": "T(n)=(n+1)²"
         },
         {
-          "prompt": "Table x=0,1,2,3 and y=1,4,9,16",
+          "prompt": "Stage 0 to Stage 3 tiles are 1,4,9,16. Predict Stage 4 using the explicitly defined square growth construction.",
           "steps": [
-            "First differences 3,5,7.",
-            "Second differences constant 2.",
-            "Model (x+1)² for given inputs."
+            "Stage 3 has 4×4=16 tiles.",
+            "Stage 4 appends 2×3+3=9 tiles.",
+            "16+9=25."
           ],
-          "answer": "y=(x+1)²"
+          "answer": "25 tiles"
         }
       ],
       "misconception_pathways": [
@@ -915,51 +1121,66 @@
       ],
       "guided_practice": [
         {
-          "prompt": "Factor x²+7x+12",
-          "answer": "(x+3)(x+4)",
-          "reason": "3+4=7, 3×4=12",
+          "prompt": "With Stage n a square of side n+1, how many tiles at Stage 1?",
+          "answer": "4",
+          "reason": "(1+1)²",
           "scaffold_allowed": true
         },
         {
-          "prompt": "Evaluate x²−3 at x=−2",
-          "answer": "1",
-          "reason": "4−3",
+          "prompt": "How many new tiles from Stage 2 to 3?",
+          "answer": "7",
+          "reason": "2×2+3",
           "scaffold_allowed": true
         },
         {
-          "prompt": "Solve x²=16",
-          "answer": "x=−4 or 4",
-          "reason": "both roots",
+          "prompt": "What is Stage 5 total?",
+          "answer": "36",
+          "reason": "(5+1)²",
           "scaffold_allowed": true
         },
         {
-          "prompt": "Expand (x+2)(x+4)",
-          "answer": "x²+6x+8",
-          "reason": "distributive law",
+          "prompt": "Why isn't the first-difference pattern by itself a proof for every later stage?",
+          "answer": "Infinitely many different rules can match a finite number of terms; the tile construction must be specified.",
+          "reason": "A construction/invariant justifies continuation.",
           "scaffold_allowed": true
         }
       ],
       "independent_assessment": [
         {
-          "prompt": "Factor x²+9x+20",
-          "answer": "(x+4)(x+5)",
-          "oracle_reason": "sum9 product20",
+          "prompt": "A NEW tile construction defines Stage n (n≥0) as a complete square of side n+2. Find Stage 4's total, and justify from the defined construction rather than extrapolating four values.",
+          "answer": "36 tiles",
+          "oracle_reason": "(4+2)²=36 by the defined side-length rule",
           "hints_allowed": false,
-          "feedback_after_submission": true
+          "feedback_after_submission": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "DEFINED_GEOMETRIC_RULE",
+            "UNSEEN_STAGE_TRANSFER"
+          ]
         },
         {
-          "prompt": "Solve x²−25=0",
-          "answer": "x=−5 or 5",
-          "oracle_reason": "difference of squares",
+          "prompt": "A square-tile design has Stage n of side n+2. Determine the added tiles from Stage 3 to Stage 4 and justify by counting the extra row and column.",
+          "answer": "11 tiles",
+          "oracle_reason": "Stage 3 side 5 and Stage 4 side 6; added 5+6=11; 36−25=11",
           "hints_allowed": false,
-          "feedback_after_submission": true
+          "feedback_after_submission": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "VISUAL_GROWTH_INVARIANT",
+            "FIRST_DIFFERENCE"
+          ]
         },
         {
-          "prompt": "Transfer: A rectangular garden has sides x+2 and x+5. Express its area.",
-          "answer": "x²+7x+10",
-          "oracle_reason": "distribute products",
+          "prompt": "A pattern shows 1,4,9,16 but NO continuing construction or algebraic rule. Is 25 the only mathematically possible next value? Explain.",
+          "answer": "No. Finite observations do not determine a unique continuing rule.",
+          "oracle_reason": "For example, (n+1)²+c·n(n−1)(n−2)(n−3) agrees at n=0..3 but changes Stage 4 when c≠0.",
           "hints_allowed": false,
-          "feedback_after_submission": true
+          "feedback_after_submission": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "NONUNIQUENESS_OF_FINITE_DATA",
+            "COUNTEREXAMPLE_REASONING"
+          ]
         }
       ],
       "interactive_spec": {
@@ -978,7 +1199,13 @@
         "accessibility": "text expression for tile arrangement, keyboard controls, table alternatives",
         "assessment": "hide tiles and linked tables"
       },
-      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW"
+      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "rubric": "Score only construction-grounded quadratic stage growth, tile-count invariant and nonuniqueness of unsupported extrapolation; do not credit algebraic factoring, quadratic roots or multiplication of binomials.",
+        "canonical_reuse": "#334 quadratic growth R4 correction must be independently reconciled; no separate canonical identity.",
+        "independent_review": "REQUESTED_NOT_APPROVED"
+      }
     }
   ]
 }

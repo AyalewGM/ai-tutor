@@ -1,0 +1,425 @@
+{
+  "package_id": "draft-g68-ratios-enrichment-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "source_basis": [
+    {
+      "provider": "Kumon",
+      "insight": "small-step increase in complexity; original examples only",
+      "url": "https://www.kumongroup.com/eng/about-kumon/method/small-steps/explanation/"
+    },
+    {
+      "provider": "Zearn",
+      "insight": "fluency, guided practice, independent practice, mastery checks",
+      "url": "https://help.zearn.org/hc/en-us/articles/236238988-Independent-Digital-Lesson-components"
+    },
+    {
+      "provider": "IXL",
+      "insight": "research target for skill-specific breadth; not a copied source",
+      "url": "https://www.ixl.com/math/"
+    }
+  ],
+  "copyright_policy": "All questions and explanations are original Mihur draft text; no copied vendor exercises.",
+  "curriculum_mappings": [],
+  "canonical_skill_ids": [],
+  "runtime_activation": false,
+  "practice_items": [
+    {
+      "item_id": "draft-g68-enrichment-01",
+      "provisional_skill": "RATIO_INTERPRETATION",
+      "level": "Fluency",
+      "question": "A drawer contains 16 black socks and 24 white socks. Give the ratio black:white in simplest a:b form.",
+      "expected": "2:3",
+      "answer_contract": "ratio_pair",
+      "worked_solution": "16:24 reduces by 8 to 2:3.",
+      "diagnostic_misconception": "Dividing only one part",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "16:24 reduces by 8 to 2:3."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-02",
+      "provisional_skill": "RATIO_INTERPRETATION",
+      "level": "Conceptual",
+      "question": "A bowl has 6 apples and 4 oranges. What fraction of the entire bowl is oranges?",
+      "expected": "2/5",
+      "answer_contract": "simplest_fraction",
+      "worked_solution": "4 out of 10 pieces of fruit gives 4/10=2/5.",
+      "diagnostic_misconception": "Using oranges:apples instead of oranges:total",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "4 out of 10 pieces of fruit gives 4/10=2/5."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-03",
+      "provisional_skill": "RATIO_INTERPRETATION",
+      "level": "Transfer",
+      "question": "In a library, fiction:nonfiction books is 5:3 and there are 40 fiction books. How many books in total?",
+      "expected": "64",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "Eight groups of 5 fiction books imply 8 groups of 3 nonfiction books; total 40+24=64.",
+      "diagnostic_misconception": "Returning 24 nonfiction books instead of total",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "Eight groups of 5 fiction books imply 8 groups of 3 nonfiction books; total 40+24=64."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-04",
+      "provisional_skill": "RATIO_INTERPRETATION",
+      "level": "Error analysis",
+      "question": "A student claims that with 8 red and 12 blue tiles, the fraction red is 8/12. What is the correct fraction of all tiles that are red?",
+      "expected": "2/5",
+      "answer_contract": "simplest_fraction",
+      "worked_solution": "The whole has 20 tiles, so 8/20=2/5.",
+      "diagnostic_misconception": "Part-to-part mistaken for part-to-whole",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "The whole has 20 tiles, so 8/20=2/5."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-05",
+      "provisional_skill": "UNIT_RATE",
+      "level": "Fluency",
+      "question": "Seven equal-price markers cost $21. What is the cost per marker in dollars?",
+      "expected": "3",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "21 dollars divided by 7 markers is 3 dollars per marker.",
+      "diagnostic_misconception": "Multiplying rather than dividing",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "21 dollars divided by 7 markers is 3 dollars per marker."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-06",
+      "provisional_skill": "UNIT_RATE",
+      "level": "Conceptual",
+      "question": "A runner covers 9 km in 3/2 hours at a constant pace. How many kilometres per hour?",
+      "expected": "6",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "9 ÷ (3/2) = 9×2/3 = 6 km/h.",
+      "diagnostic_misconception": "Dividing time by distance",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "9 ÷ (3/2) = 9×2/3 = 6 km/h."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-07",
+      "provisional_skill": "UNIT_RATE",
+      "level": "Transfer",
+      "question": "A faucet delivers 5/2 litres per minute. How many litres does it deliver in 6 minutes?",
+      "expected": "15",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "Multiply the unit rate 5/2 by 6 to get 15 litres.",
+      "diagnostic_misconception": "Dividing by minutes",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "Multiply the unit rate 5/2 by 6 to get 15 litres."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-08",
+      "provisional_skill": "UNIT_RATE",
+      "level": "Error analysis",
+      "question": "A student says 12 cookies shared equally among 8 children gives 2 cookies each. How many cookies does each child actually get?",
+      "expected": "3/2",
+      "answer_contract": "simplest_fraction",
+      "worked_solution": "12/8 simplifies to 3/2 cookies per child.",
+      "diagnostic_misconception": "Rounding away a fractional share",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "12/8 simplifies to 3/2 cookies per child."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-09",
+      "provisional_skill": "EQUIVALENT_RATIOS",
+      "level": "Fluency",
+      "question": "Complete 7:9 = 21:□. Give the missing integer.",
+      "expected": "27",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "Multiply both ratio parts by 3; 9×3=27.",
+      "diagnostic_misconception": "Scaling only first part",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "Multiply both ratio parts by 3; 9×3=27."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-10",
+      "provisional_skill": "EQUIVALENT_RATIOS",
+      "level": "Conceptual",
+      "question": "Two equivalent ratios are 2:3 and 8:□. Give the missing integer.",
+      "expected": "12",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "2×4=8, so 3×4=12.",
+      "diagnostic_misconception": "Adding 6 to both terms",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "2×4=8, so 3×4=12."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-11",
+      "provisional_skill": "EQUIVALENT_RATIOS",
+      "level": "Transfer",
+      "question": "A trail map shows 3 cm representing 12 km. At this scale, how many km does 11 cm represent?",
+      "expected": "44",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "12/3=4 km per cm, so 11 cm represents 44 km.",
+      "diagnostic_misconception": "Reversing map scale",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "12/3=4 km per cm, so 11 cm represents 44 km."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-12",
+      "provisional_skill": "EQUIVALENT_RATIOS",
+      "level": "Error analysis",
+      "question": "A student claims 4:6 is equivalent to 8:10. If the first part is 8, what should the second part be?",
+      "expected": "12",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "Both parts double: 4:6 = 8:12.",
+      "diagnostic_misconception": "Adding 4 to each part",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "Both parts double: 4:6 = 8:12."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-13",
+      "provisional_skill": "PERCENT_AS_RATIO",
+      "level": "Fluency",
+      "question": "What is 15% of 200?",
+      "expected": "30",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "15/100 × 200 = 30.",
+      "diagnostic_misconception": "Treating percent as a whole number multiplier",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "15/100 × 200 = 30."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-14",
+      "provisional_skill": "PERCENT_AS_RATIO",
+      "level": "Conceptual",
+      "question": "Out of 80 students, 20 take the bus. What percent take the bus? Enter the integer without a percent sign.",
+      "expected": "25",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "20/80 = 1/4 = 25/100.",
+      "diagnostic_misconception": "Using total divided by part",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "20/80 = 1/4 = 25/100."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-15",
+      "provisional_skill": "PERCENT_AS_RATIO",
+      "level": "Transfer",
+      "question": "A $120 item is discounted by 25%. What is the sale price in dollars?",
+      "expected": "90",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "Discount is 120/4=30; sale price 120−30=90.",
+      "diagnostic_misconception": "Returning the discount instead of sale price",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "Discount is 120/4=30; sale price 120−30=90."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-16",
+      "provisional_skill": "PERCENT_AS_RATIO",
+      "level": "Error analysis",
+      "question": "A price goes from $80 to $100. A student says the increase is 20%. What is the correct percentage increase? Enter the integer.",
+      "expected": "25",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "Increase is 20 on an original base of 80, so 20/80×100=25%.",
+      "diagnostic_misconception": "Using final rather than initial price as base",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "Increase is 20 on an original base of 80, so 20/80×100=25%."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-17",
+      "provisional_skill": "PROPORTIONAL_REASONING",
+      "level": "Fluency",
+      "question": "For y=9x, find y when x=4.",
+      "expected": "36",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "9×4=36.",
+      "diagnostic_misconception": "Adding 9 and 4",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "9×4=36."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-18",
+      "provisional_skill": "PROPORTIONAL_REASONING",
+      "level": "Conceptual",
+      "question": "A proportional relationship contains (x,y)=(3,15). Find y when x=7.",
+      "expected": "35",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "Constant y/x=5, so y=5×7=35.",
+      "diagnostic_misconception": "Using additive increase of 4",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "Constant y/x=5, so y=5×7=35."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-19",
+      "provisional_skill": "PROPORTIONAL_REASONING",
+      "level": "Transfer",
+      "question": "A pump empties 3/4 of a tank in 6 minutes at a constant rate. How many minutes to empty the full tank?",
+      "expected": "8",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "6 ÷ (3/4) = 8 minutes.",
+      "diagnostic_misconception": "Treating 3/4 as 3/4 minute",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "6 ÷ (3/4) = 8 minutes."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g68-enrichment-20",
+      "provisional_skill": "PROPORTIONAL_REASONING",
+      "level": "Error analysis",
+      "question": "A student says (2,6) and (5,9) belong to the same proportional relationship because y−x=4 in both. If the first point is (2,6), what y would make x=5 proportional?",
+      "expected": "15",
+      "answer_contract": "nonnegative_integer",
+      "worked_solution": "Constant ratio is 6/2=3, so y=3×5=15.",
+      "diagnostic_misconception": "Using constant difference instead of ratio",
+      "hints": [
+        "Identify what quantity the question asks for and what is given.",
+        "Write a ratio, unit rate, or percent equation with the correct units.",
+        "Constant ratio is 6/2=3, so y=3×5=15."
+      ],
+      "review_status": "PENDING"
+    }
+  ],
+  "difficulty_ladders": [
+    {
+      "provisional_skill": "RATIO_INTERPRETATION",
+      "progression": [
+        "Fluency",
+        "Conceptual",
+        "Transfer",
+        "Error analysis"
+      ],
+      "items": [
+        "draft-g68-enrichment-01",
+        "draft-g68-enrichment-02",
+        "draft-g68-enrichment-03",
+        "draft-g68-enrichment-04"
+      ]
+    },
+    {
+      "provisional_skill": "UNIT_RATE",
+      "progression": [
+        "Fluency",
+        "Conceptual",
+        "Transfer",
+        "Error analysis"
+      ],
+      "items": [
+        "draft-g68-enrichment-05",
+        "draft-g68-enrichment-06",
+        "draft-g68-enrichment-07",
+        "draft-g68-enrichment-08"
+      ]
+    },
+    {
+      "provisional_skill": "EQUIVALENT_RATIOS",
+      "progression": [
+        "Fluency",
+        "Conceptual",
+        "Transfer",
+        "Error analysis"
+      ],
+      "items": [
+        "draft-g68-enrichment-09",
+        "draft-g68-enrichment-10",
+        "draft-g68-enrichment-11",
+        "draft-g68-enrichment-12"
+      ]
+    },
+    {
+      "provisional_skill": "PERCENT_AS_RATIO",
+      "progression": [
+        "Fluency",
+        "Conceptual",
+        "Transfer",
+        "Error analysis"
+      ],
+      "items": [
+        "draft-g68-enrichment-13",
+        "draft-g68-enrichment-14",
+        "draft-g68-enrichment-15",
+        "draft-g68-enrichment-16"
+      ]
+    },
+    {
+      "provisional_skill": "PROPORTIONAL_REASONING",
+      "progression": [
+        "Fluency",
+        "Conceptual",
+        "Transfer",
+        "Error analysis"
+      ],
+      "items": [
+        "draft-g68-enrichment-17",
+        "draft-g68-enrichment-18",
+        "draft-g68-enrichment-19",
+        "draft-g68-enrichment-20"
+      ]
+    }
+  ]
+}
