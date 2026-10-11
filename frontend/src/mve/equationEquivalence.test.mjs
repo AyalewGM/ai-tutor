@@ -72,6 +72,23 @@ test("bounded rational transformations fail closed and scale equivalence rejects
   assert.equal(math.areScaleEquivalent(equation, { ...doubled, right: equation.right }), false);
 });
 
+test("exact response evidence selects remediation only for an observed misconception", () => {
+  const equation = math.EQUATION_EQUIVALENCE_EXAMPLES[0];
+  const scaled = math.applyEquationOperation(equation, { kind: "scale", amount: r(2, 1) });
+  assert.equal(math.diagnoseEquationAttempt(equation, scaled), null);
+
+  const oneSided = math.makeOneSidedCounterexample(equation, { kind: "add_constant", amount: r(1, 1) });
+  assert.equal(math.diagnoseEquationAttempt(equation, oneSided), "EQ.OP.ONE_SIDE");
+  assert.equal(math.diagnoseEquationAttempt(equation, scaled, { denominatorIgnored: true }), "EQ.DENOMINATOR_IGNORED");
+
+  const falseEquation = {
+    left: { x: r(-2, 1), constant: r(-2, 1) },
+    right: { x: r(0, 1), constant: r(16, 1) },
+  };
+  assert.equal(math.diagnoseEquationAttempt(equation, falseEquation), "EQ.FALSE_EQUIVALENCE");
+  assert.equal(math.diagnoseEquationAttempt({}, scaled), "EQ.FALSE_EQUIVALENCE");
+});
+
 test("semantic events accept exact bounded both-side operations only", () => {
   const event = { schema_version: 1, type: "EQUATION_TRANSFORMATION_APPLIED", operation: "SCALE_BOTH",
     amount_numerator: -1, amount_denominator: 2, preserved: true };
@@ -80,6 +97,10 @@ test("semantic events accept exact bounded both-side operations only", () => {
     { operation: "SCALE_LEFT" }, { amount_numerator: 0 }, { amount_denominator: 0 },
     { amount_denominator: 1.5 }, { preserved: false }, { email: "student@example.test" },
   ]) assert.equal(events.isMathInteractionEvent({ ...event, ...change }), false);
+  const diagnosis = { schema_version: 1, type: "EQUATION_ATTEMPT_DIAGNOSED", diagnosis: "EQ.OP.ONE_SIDE", phase: "MANIPULATE" };
+  assert.equal(events.isMathInteractionEvent(diagnosis), true);
+  for (const change of [{ diagnosis: "EQ.UNKNOWN" }, { phase: "ASSESSMENT" }, { student_id: "child-1" }])
+    assert.equal(events.isMathInteractionEvent({ ...diagnosis, ...change }), false);
 });
 
 test("guided component is accessible, nonvisual-equivalent, reduced-motion safe, and assessment fail-closed", () => {
@@ -87,6 +108,7 @@ test("guided component is accessible, nonvisual-equivalent, reduced-motion safe,
   for (const term of [
     "Observe", "Predict", "Manipulate", "Explain", "aria-live=\"polite\"", "aria-pressed=\"false\"",
     "Equivalent-equation transformation table", "Left before", "Right after", "Try changing only one side",
+    "Construct and compare equivalent equations", "Support stage:", "MODELED",
     "motion-reduce:transition-none", "−7x + 2", "does not count toward mastery",
   ]) assert.ok(html.includes(term), term);
   for (const mode of [true, undefined, null]) assert.equal(renderToStaticMarkup(React.createElement(Component, { independentAssessment: mode })), "");
@@ -112,14 +134,27 @@ test("actual handlers preserve state on rejection, emit validated success, isola
   const initial = equationText();
   click("Try changing only one side");
   assert.equal(equationText(), initial);
-  assert.equal(emitted.length, 0);
+  assert.equal(emitted.length, 1);
+  assert.deepEqual(emitted[0], { schema_version: 1, type: "EQUATION_ATTEMPT_DIAGNOSED",
+    diagnosis: "EQ.OP.ONE_SIDE", phase: "MANIPULATE" });
   assert.match(nodes(render()).find(node => node.props?.role === "status").props.children, /No change made/);
   click("Add x to both sides");
-  assert.equal(events.isMathInteractionEvent(emitted[0]), true);
+  assert.equal(events.isMathInteractionEvent(emitted[1]), true);
   click("Subtract 2 from both sides");
   click("Multiply both sides by -1/6");
   assert.match(equationText(), /Left side x\. Right side −3/);
-  assert.equal(emitted.length, 3);
+  assert.equal(emitted.length, 4);
+  click("The same valid operation was applied to both complete sides");
+  assert.ok(nodes(render()).some(node => node.type === "button" && node.props.children === "Multiply both sides by 3/2"));
+  click("Multiply both sides by 2/3");
+  assert.deepEqual(emitted.at(-1), { schema_version: 1, type: "EQUATION_ATTEMPT_DIAGNOSED",
+    diagnosis: "EQ.DENOMINATOR_IGNORED", phase: "FRESH_EXIT" });
+  assert.doesNotMatch(nodes(render()).find(node => node.props?.role === "status" && /coefficient is a fraction/i.test(String(node.props.children))).props.children, /−6|answer/i);
   click("Reset equation");
   assert.equal(equationText(), initial);
+  nodes(render()).find(node => node.props?.["aria-label"] === "Choose scale 3").props.onClick();
+  click("Construct equivalent equation");
+  assert.ok(nodes(render()).some(node => /Constructed equation:/.test(String(node.props?.children))));
+  assert.deepEqual(emitted.at(-1), { schema_version: 1, type: "EQUATION_TRANSFORMATION_APPLIED",
+    operation: "SCALE_BOTH", amount_numerator: 3, amount_denominator: 1, preserved: true });
 });

@@ -15,6 +15,11 @@ export type EquationOperation =
   | { kind: "add_variable"; amount: Rational }
   | { kind: "scale"; amount: Rational };
 
+export type EquationMisconception =
+  | "EQ.OP.ONE_SIDE"
+  | "EQ.DENOMINATOR_IGNORED"
+  | "EQ.FALSE_EQUIVALENCE";
+
 const ZERO = rational(0, 1);
 const ONE = rational(1, 1);
 
@@ -69,6 +74,10 @@ function transformSide(side: AffineSide, operation: EquationOperation): AffineSi
   return { x: multiply(side.x, operation.amount), constant: multiply(side.constant, operation.amount) };
 }
 
+function sameSide(left: AffineSide, right: AffineSide) {
+  return sameRational(left.x, right.x) && sameRational(left.constant, right.constant);
+}
+
 /** Returns null for malformed, out-of-bounds, or equality-destroying operations. */
 export function applyEquationOperation(equation: AffineEquation, operation: EquationOperation): AffineEquation | null {
   if (!isAffineEquation(equation) || !operation || !isBoundedRational(operation.amount) ||
@@ -77,6 +86,26 @@ export function applyEquationOperation(equation: AffineEquation, operation: Equa
   try {
     const next = { left: transformSide(equation.left, operation), right: transformSide(equation.right, operation) };
     return isAffineEquation(next) ? next : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Builds a visible counterexample for instruction; callers must never apply it as valid work. */
+export function makeOneSidedCounterexample(
+  equation: AffineEquation,
+  operation: EquationOperation,
+  side: "left" | "right" = "left",
+): AffineEquation | null {
+  if (!isAffineEquation(equation) || !operation || !isBoundedRational(operation.amount) ||
+      !["add_constant", "add_variable", "scale"].includes(operation.kind) ||
+      (operation.kind === "scale" && operation.amount.numerator === 0)) return null;
+  try {
+    const candidate = {
+      left: side === "left" ? transformSide(equation.left, operation) : equation.left,
+      right: side === "right" ? transformSide(equation.right, operation) : equation.right,
+    };
+    return isAffineEquation(candidate) ? candidate : null;
   } catch {
     return null;
   }
@@ -97,6 +126,24 @@ export function equationHolds(equation: AffineEquation, value: Rational) {
     return sameRational(evaluate(equation.left), evaluate(equation.right));
   } catch {
     return false;
+  }
+}
+
+/** Converts exact learner-step evidence into a bounded remediation route. */
+export function diagnoseEquationAttempt(
+  before: AffineEquation,
+  candidate: AffineEquation,
+  options: { denominatorIgnored?: boolean } = {},
+): EquationMisconception | null {
+  if (!isAffineEquation(before) || !isAffineEquation(candidate)) return "EQ.FALSE_EQUIVALENCE";
+  const leftChanged = !sameSide(before.left, candidate.left);
+  const rightChanged = !sameSide(before.right, candidate.right);
+  if (leftChanged !== rightChanged) return "EQ.OP.ONE_SIDE";
+  if (options.denominatorIgnored === true) return "EQ.DENOMINATOR_IGNORED";
+  try {
+    return sameRational(equationSolution(before), equationSolution(candidate)) ? null : "EQ.FALSE_EQUIVALENCE";
+  } catch {
+    return "EQ.FALSE_EQUIVALENCE";
   }
 }
 
@@ -164,3 +211,9 @@ export const EQUATION_EQUIVALENCE_EXAMPLES: readonly AffineEquation[] = [
   { left: { x: rational(1, 5), constant: rational(8, 1) }, right: { x: ZERO, constant: rational(7, 1) } },
   { left: { x: rational(-7, 1), constant: rational(2, 1) }, right: { x: rational(-1, 1), constant: rational(20, 1) } },
 ];
+
+/** Fresh structurally related check; its exact solution is intentionally not exposed by the component. */
+export const EQUATION_EQUIVALENCE_EXIT: AffineEquation = {
+  left: { x: rational(2, 3), constant: ZERO },
+  right: { x: ZERO, constant: rational(-4, 1) },
+};

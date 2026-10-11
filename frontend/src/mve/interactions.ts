@@ -107,6 +107,12 @@ export interface EquationTransformationAppliedEvent extends MathInteractionBase 
   preserved: true;
 }
 
+export interface EquationAttemptDiagnosedEvent extends MathInteractionBase {
+  type: "EQUATION_ATTEMPT_DIAGNOSED";
+  diagnosis: "EQ.OP.ONE_SIDE" | "EQ.DENOMINATOR_IGNORED" | "EQ.FALSE_EQUIVALENCE";
+  phase: "MANIPULATE" | "FRESH_EXIT";
+}
+
 export interface ExplorerDatasetChangedEvent extends MathInteractionBase {
   type: "EXPLORER_DATASET_CHANGED";
   values: readonly number[];
@@ -116,6 +122,7 @@ export type MathInteractionEvent =
   | ExplorerDatasetChangedEvent
   | BalanceOperationAppliedEvent
   | EquationTransformationAppliedEvent
+  | EquationAttemptDiagnosedEvent
   | LinearParametersChangedEvent
   | IntegerDisplacementChangedEvent
   | PointPlacedEvent
@@ -141,6 +148,10 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "EQUATION_ATTEMPT_DIAGNOSED":
+      return Object.keys(event).every(key => ["schema_version", "type", "diagnosis", "phase"].includes(key)) &&
+        ["EQ.OP.ONE_SIDE", "EQ.DENOMINATOR_IGNORED", "EQ.FALSE_EQUIVALENCE"].includes(String(event.diagnosis)) &&
+        ["MANIPULATE", "FRESH_EXIT"].includes(String(event.phase));
     case "EQUATION_TRANSFORMATION_APPLIED":
       return Object.keys(event).every(key => ["schema_version", "type", "operation", "amount_numerator", "amount_denominator", "preserved"].includes(key)) &&
         ["ADD_CONSTANT_BOTH", "ADD_VARIABLE_BOTH", "SCALE_BOTH"].includes(String(event.operation)) &&
