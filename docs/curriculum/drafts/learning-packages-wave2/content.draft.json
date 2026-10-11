@@ -157,6 +157,26 @@
           "oracle_reason": "15−6",
           "hints_allowed": false,
           "feedback_after_submission": true
+        },
+        {
+          "prompt": "A class has some books. Seven are returned to the library, leaving nine. How many were present before the returns?",
+          "answer": "16 books",
+          "oracle_reason": "starting amount minus 7 is 9; starting amount 16; substitute:16−7=9",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unknown_role": "START_UNKNOWN",
+          "independent_evidence": "Reconstruct unknown whole and justify inverse operation",
+          "teacher_oracle_visibility": "SERVER_ONLY"
+        },
+        {
+          "prompt": "Without moving a number to the other side, fill the blank so the two expressions have equal value: 8 + 4 = 7 + □. Explain how you checked equality.",
+          "answer": "5",
+          "oracle_reason": "left value 12; right 7+5=12",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unknown_role": "EQUALITY_UNKNOWN",
+          "independent_evidence": "Verify the two sides evaluate to identical counts",
+          "teacher_oracle_visibility": "SERVER_ONLY"
         }
       ],
       "interactive_spec": {
@@ -175,7 +195,20 @@
         "accessibility": "keyboard add/remove, spoken count and equation, no reliance on color",
         "assessment": "disable manipulatives and hints"
       },
-      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW"
+      "mastery_gate": "NOT_CONFIGURED_PENDING_REVIEW",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "evaluated_roles": [
+          "ADDEND_UNKNOWN",
+          "SUBTRAHEND_UNKNOWN",
+          "CHANGE_UNKNOWN",
+          "START_UNKNOWN",
+          "EQUALITY_UNKNOWN"
+        ],
+        "rubric": "Distinct unseen roles must be checked separately; no back-credit between operations or equality evidence. Explanations and teacher oracles hidden from student-facing assessment responses.",
+        "existing_reuse": "#331 unknown-position mathematics; no new canonical identifier",
+        "independent_review": "REQUESTED_NOT_APPROVED"
+      }
     },
     {
       "id": "W2-G5-DECIMAL-PLACE-VALUE",
