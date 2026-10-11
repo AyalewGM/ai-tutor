@@ -1,14 +1,20 @@
 {
   "schema_version": 1,
   "artifact_id": "algebra-canonical-scope-cards-r1",
-  "revision": "2026-10-11-r1",
+  "revision": "2026-10-11-r2",
   "review_state": "DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
   "authority": "NONE_NOT_FOR_RUNTIME",
   "source_review": {
     "architecture_decision": "Issue #282 comment 6107538656",
     "mathematical_findings": "Issue #337 comment 6107454411",
     "engineering_handoff": "Issue #278 comment 6107540805",
-    "collision_snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454"
+    "collision_snapshot": "main@313c13c9df4d530777cf89fb34f21dcedd91f454",
+    "architecture_confirmation": "Issue #282 comment 6108417628",
+    "mathematical_review_r1": "PR #349 comment 6108480757: 9 APPROVE / 2 REQUEST CHANGES",
+    "correction_scope": [
+      "MATH.SCIENTIFIC_NOTATION.MULTIPLY_NORMALIZE attainable renormalization evidence",
+      "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL canonical zero-term and cancellation semantics"
+    ]
   },
   "constraints": [
     "Curriculum Content authored these definitions from Architecture-decided mathematical boundaries; this is not self-approval.",
@@ -653,7 +659,7 @@
       "scope_rule": "Multiply two nonzero normalized scientific-notation quantities exactly, multiply signed coefficients, add integer powers of ten, and renormalize the result to 1≤|a|<10.",
       "inclusions": [
         "positive and negative coefficients",
-        "products initially below 1 or at least 10 in absolute coefficient",
+        "products whose raw coefficient is already normalized or at least 10 in absolute value",
         "positive, zero and negative result exponents",
         "exact rational/terminating coefficients",
         "order-of-magnitude reasonableness check"
@@ -673,7 +679,8 @@
       "boundary_conditions": [
         "sign follows coefficient multiplication",
         "renormalization must preserve exact value",
-        "unit multiplication is retained when units are supplied"
+        "unit multiplication is retained when units are supplied",
+        "for normalized nonzero input coefficients, the raw product satisfies |ab|≥1, so only upper renormalization can be required"
       ],
       "examples": [
         {
@@ -703,9 +710,9 @@
         },
         {
           "code": "SCI.MULTIPLY.COEFFICIENT_NOT_NORMALIZED",
-          "response_pattern": "leaves |coefficient|≥10 or <1",
-          "mathematical_reason": "the exact product must be renormalized",
-          "remediation_target": "shift decimal and compensate exponent"
+          "response_pattern": "leaves |coefficient|≥10 unnormalized or shifts the decimal and exponent inconsistently",
+          "mathematical_reason": "a raw coefficient with |ab|≥10 must be renormalized without changing the exact value",
+          "remediation_target": "shift the decimal left and increase the exponent by the same number of places"
         },
         {
           "code": "SCI.MULTIPLY.SIGN_ERROR",
@@ -719,7 +726,7 @@
         "required": [
           "mixed exponent signs",
           "positive and negative coefficient products",
-          "both renormalization directions",
+          "one already-normalized raw product coefficient and one |ab|≥10 upper-renormalization case",
           "magnitude estimate before exact verification"
         ],
         "exact_oracle": "multiply coefficients and add exponents with exact rational arithmetic, then normalize without rounding",
@@ -961,12 +968,12 @@
         "disposition": "DISTINCT_BOUNDED_DRAFT_PENDING_INDEPENDENT_MATHEMATICAL_REVIEW_AND_ARCHITECTURE_COLLISION_CONFIRMATION",
         "authority_caveat": "This proposed label and collision audit do not confer canonical, alias, runtime, standards-mapping, assessment, or mastery authority."
       },
-      "scope_rule": "Divide every term of a finite polynomial expression by one nonzero monomial, using exact monomial division term by term; retain original-divisor restrictions and accept algebraically equivalent quotient term order.",
+      "scope_rule": "Start with a finite polynomial expression whose original written dividend has two or more terms; combine like terms and eliminate zero coefficients, then divide every remaining nonzero canonical term by one nonzero monomial using exact monomial division. If all dividend terms cancel, the quotient is zero. Retain original-divisor restrictions and accept algebraically equivalent quotient term order.",
       "inclusions": [
-        "two or more polynomial terms",
+        "an original written dividend containing two or more terms, including expressions that canonicalize to one nonzero term or zero",
         "signed and rational quotient coefficients",
         "multivariable terms",
-        "zero coefficient terms after canonicalization",
+        "like-term cancellation and full cancellation to the zero polynomial; zero-coefficient terms are eliminated during canonicalization",
         "positive, zero or negative result exponents",
         "multiplication reconstruction of the full dividend"
       ],
@@ -985,9 +992,11 @@
       ],
       "boundary_conditions": [
         "the divisor coefficient is nonzero",
-        "every term is divided independently",
-        "unlike quotient terms may appear in any mathematically equivalent order",
-        "like terms are combined before canonical comparison when present"
+        "the two-or-more-term boundary applies to the original written dividend, not the number of nonzero canonical terms",
+        "like terms are combined and zero coefficients are eliminated before termwise division and canonical comparison",
+        "every remaining nonzero canonical term is divided independently",
+        "full cancellation yields the canonical quotient zero while retaining original-divisor restrictions",
+        "unlike quotient terms may appear in any mathematically equivalent order"
       ],
       "examples": [
         {
@@ -1011,6 +1020,22 @@
             "x≠0"
           ],
           "answer": "1 + 1/x"
+        },
+        {
+          "input": "(x - x + 2x^2)/(2x)",
+          "assumptions": [
+            "x≠0"
+          ],
+          "answer": "x",
+          "rationale": "the original three-term dividend canonicalizes to one nonzero term before division"
+        },
+        {
+          "input": "(x - x)/x",
+          "assumptions": [
+            "x≠0"
+          ],
+          "answer": "0",
+          "rationale": "full cancellation yields the zero quotient while the original restriction x≠0 remains"
         },
         {
           "input": "(x^2 + 1)/(x+1)",
@@ -1052,9 +1077,10 @@
           "order-independent exact term set",
           "structured coefficient and exponent reasoning",
           "full multiplication reconstruction",
-          "one negative-result exponent case"
+          "one negative-result exponent case",
+          "one original multi-term dividend that canonicalizes to one nonzero quotient term or zero"
         ],
-        "exact_oracle": "divide each term with the monomial oracle, combine like terms, sort canonical term keys, preserve restrictions, and multiply the quotient by the divisor to reconstruct the dividend",
+        "exact_oracle": "combine like dividend terms and eliminate zero coefficients; if all terms cancel, return canonical quotient zero while preserving original-divisor restrictions; otherwise divide every remaining nonzero canonical term with the monomial oracle, combine like quotient terms, sort canonical term keys, preserve restrictions, and multiply the quotient by the divisor to reconstruct the canonicalized dividend",
         "independence": [
           "assessment variant and oracle are server-owned",
           "guided steps, hints and worked answers are absent",
