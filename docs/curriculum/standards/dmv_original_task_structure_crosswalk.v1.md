@@ -61,7 +61,7 @@ Architecture has now confirmed all eleven PR #349 labels for DRAFT identity/gran
 - [Architecture r2 confirmation 6109385883](https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6109385883) carries forward all eleven PR #349 labels and their granularity for DRAFT review at `79f272a6`; no canonical publication, mapping acceptance, or runtime authority follows.
 - [Independent Mathematical Review 6109037688](https://github.com/AyalewGM/ai-tutor/issues/337#issuecomment-6109037688) records **11 APPROVE / 0 REQUEST CHANGES** on PR #349. The corrected scientific-notation multiplication card now reflects the attainable normalized-input product boundary, and polynomial-by-monomial canonicalization now applies its 2+-term boundary to the original written dividend.
 - PR #346's exact root scorer mathematics is approved at `58bc5f37` for negative, zero, positive-square, and positive-nonsquare radicands, but trusted backend reconciliation and exact-head AppSec remain open.
-- PR #350 at `a1e2f88d` has bounded guided-MVE Pedagogy acceptance, external Muse QA, CI #1425 and AppSec #795 PASS. Real routed-package and trusted-assessment acceptance remain open.
+- PR #350's guided MVE was merged, but live route authority is not accepted. Follow-up PR #351 keeps the component default-off pending an approved server-owned capability; current-main routed-package and trusted-assessment acceptance remain open.
 - These verdicts refine content-depth and implementation evidence only. Accepted standards mappings remain **0**, QA-approved packages remain **0**, and runtime remains disabled.
 
 ## Ranked weak or missing task structures
@@ -76,7 +76,7 @@ Architecture has now confirmed all eleven PR #349 labels for DRAFT identity/gran
 | 6 | Linear model construction, comparison, and transfer | 7–9 / Alg I | EXTEND | Existing partial generators plus draft PR #327 | Jurisdiction-neutral identity, misleading-scale critique, and routed unseen transfer need reconciliation |
 | 7 | Exponent laws and equivalent forms | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Five DRAFT labels architecture-accepted and 5/5 scope cards mathematically approved; historical `MATH.NS.EXPONENTS` is not expanded | Publication, routed interaction, complete independent assessment, standards acceptance, and no-double-credit QA remain open |
 | 8 | Scientific-notation conversion, multiplication, and division | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Three DRAFT labels architecture-accepted and 3/3 scope cards mathematically approved | Publication, routed interaction, trusted assessment, standards acceptance, and QA remain open |
-| 9 | Polynomial divided by monomial with restrictions | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Both DRAFT labels and scope cards approved; PR #348 evidence contract approved; PR #350 bounded guided MVE Pedagogy/Muse accepted | Real routed-package evidence, trusted backend assessment, standards acceptance, and package-level QA remain open |
+| 9 | Polynomial divided by monomial with restrictions | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Both DRAFT labels and scope cards approved; PR #352 preserves the PR #348 draft contract; PR #351 keeps routing default-off | PR #346 generator correction awaits limited Math re-review/AppSec; real route, trusted assessment, standards acceptance, and package QA remain open |
 | 10 | Construct and compare distributions | 6–9 | EXTEND | `MATH.DATA.HISTOGRAM.BIN`, `MATH.DATA.IQR`, `MATH.DATA.FIVE_NUMBER`; draft PR #328 | Full box-plot construction and contextual independent assessment remain weak |
 | 11 | Nets, surface area, and rational-edge volume | 5–8 | EXTEND | `MATH.GEO.NET.CUBE.SURFACE`, `MATH.GEO.SURFACE.PRISM`, `MATH.GEO.VOLUME.PRISM`; draft PRs #327/#328 | Spatial foldability plus dimensional reasoning and trusted assessment are not jointly evidenced |
 | 12 | Pythagorean proof, classification, and dimensional model | 8–9 | EXTEND | Partial existing implementation | Maryland evidence specifically exposes missing proof and acute/obtuse inequality depth |
@@ -92,6 +92,16 @@ Architecture has now confirmed all eleven PR #349 labels for DRAFT identity/gran
 - Current MCPS adoption evidence and historical IM/readiness research are stored separately and cannot substitute for each other.
 - `PROPOSE_IDENTITY_REVIEW` records an Architecture-approved collision-audit/drafting lane only; it is never authority to publish, map as accepted, activate, or transfer historical mastery.
 - Every downstream package still needs independent mathematical review, pedagogical review, standards acceptance, external Muse QA, exact-head CI/AppSec, and a real routed student-flow demonstration.
+
+## Post-merge stabilization reconciliation (R6)
+
+This revision updates implementation evidence only; the MCPS/Amplify source hierarchy, vendor-unit transcription, official-MSDE-only expectation authority, Virginia/DC source boundaries, ranked dispositions, and all provisional standards relations are unchanged.
+
+- Current `main@a740e51d` contains PR #344's draft generators and PR #350's guided polynomial MVE, but merge presence is not standards acceptance or a trusted learner route.
+- Independent Mathematical Review found PR #346 `cec599a2` could generate written “polynomial” dividends with negative exponents. Assessment Backend corrected that boundary at `2bfc1110`: dividend exponents are nonnegative while valid negative quotient exponents and original divisor restrictions remain. CI #1452 passes; exact-head AppSec is absent and limited mathematical re-review is pending.
+- PR #351 `859f98ca` removes display-name/regex/provisional-code routing authority and keeps the guided polynomial MVE default-off pending an approved server-owned capability. CI #1449 and AppSec #818 pass; Architecture accepted the fail-closed boundary.
+- PR #352 `ecb83965` preserves the reviewed PR #348 package files on current main as a draft-only artifact. CI #1450 and AppSec #819 pass; Architecture confirms the legacy `MATH.EE.POLYNOMIAL_OPERATIONS` family field is provenance only, not alias/mastery authority.
+- These facts do not accept a Maryland, Virginia, DC, or Ontario mapping; accepted mappings remain **0**, QA-approved complete packages remain **0**, and runtime remains disabled.
 
 ## Required next handoffs
 
