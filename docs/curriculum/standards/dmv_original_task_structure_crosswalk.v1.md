@@ -1,7 +1,7 @@
-# DMV Original Task-Structure Crosswalk v1 — R3 architecture boundary reconciliation
+# DMV Original Task-Structure Crosswalk v1 — R4 review-evidence reconciliation
 
 Status: **DRAFT_UNVERIFIED — runtime disabled**  
-Evidence snapshot: `main@313c13c9df4d530777cf89fb34f21dcedd91f454`
+Evidence snapshot: `main@317612d2668eba6b172dec2b02543eb65c51a656`
 
 This is a reuse-first research crosswalk, not a curriculum-coverage claim. Maryland, Virginia, and Washington, DC remain versioned many-to-many mappings onto one jurisdiction-neutral mathematical core. The matrix contains no copied teacher questions, diagrams, videos, or protected source material.
 
@@ -54,21 +54,28 @@ Issue #282 decision [6107538656](https://github.com/AyalewGM/ai-tutor/issues/282
 - Polynomial division requires proposed DRAFT `MATH.POLY.DIVIDE_MONOMIALS` and `MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL`; the latter requires the former. Historical `MATH.EE.POLYNOMIAL_OPERATIONS` receives no new division mastery.
 - Combined tasks are reporting-only `ALL_OF`: one response has one primary atom, with no back-credit or duplicate mastery. Domain restrictions, multiplication reconstruction, substitution, and structured explanations are evidence dimensions, not extra identities.
 
-All candidate labels/scopes still require collision-audited Content cards, independent Mathematical Review, Architecture confirmation, exact backend contracts, and external Muse preservation/no-double-credit QA.
+Architecture has now accepted all eleven PR #349 labels for DRAFT identity/granularity at `b1826731`; this does not publish canonical rows or accept standards mappings. Independent Mathematical Review approved nine cards and requested changes to two. Exact backend contracts and external Muse preservation/no-double-credit QA remain open.
+
+## Review-evidence reconciliation
+
+- [Architecture decision 6108417628](https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6108417628) accepts all eleven PR #349 labels and their granularity for DRAFT review only; no canonical publication, mapping acceptance, or runtime authority follows.
+- [Independent Mathematical Review 6108483907](https://github.com/AyalewGM/ai-tutor/issues/337#issuecomment-6108483907) records **9 APPROVE / 2 REQUEST CHANGES** on PR #349. The unresolved cards are scientific-notation multiplication (impossible below-one raw-coefficient requirement for two normalized nonzero inputs) and polynomial-by-monomial division (zero-coefficient terms conflict with post-canonicalization representation).
+- PR #343's service-rate correction, PR #344's corrected exponent/scientific generator mathematics, and PR #348's mathematical/evidence specification are approved within their recorded bounds. PR #346 still requests changes because its hidden square-equation generator omits `r=0` and irrational-root positive-`r` cases.
+- These verdicts refine implementation evidence only. Accepted standards mappings remain **0**, QA-approved packages remain **0**, and runtime remains disabled.
 
 ## Ranked weak or missing task structures
 
 | Rank | Reusable task structure | Grades | Decision | Existing identity/evidence | Material gap |
 |---:|---|---|---|---|---|
-| 1 | Multi-step equations: verify solution class and critique error | 7–9 / Alg I | REUSE | `MATH.EE.EQUATION.TWO`, `MATH.EE.EQUATION.MULTISTEP`; signed distribution is only draft PR #340 evidence | One/no/infinitely-many cases, independent oracle, misconception routing, and unseen transfer are not jointly evidenced |
+| 1 | Multi-step equations: verify solution class and critique error | 7–9 / Alg I | REUSE | Existing equation atoms; PR #343 service-rate units/reconstruction mathematically approved | One/no/infinitely-many cases, independent oracle, misconception routing, and unseen transfer are not jointly evidenced |
 | 2 | Proportional relationships across representations | 6–8 | EXTEND | PR #328 may overlap; exact canonical atoms are not reconciled | Architecture must pin reusable atoms before more implementation |
 | 3 | Place value: construct, regroup, and explain invariance | K–3 | REUSE | `MATH.PLACE_VALUE.TENS_ONES`; draft PR #327 | K–3 source IDs and boundary with `MATH.NS.PLACE_VALUE` remain open |
 | 4 | Fraction equivalence with visual/number-line justification | 3–5 | EXTEND | Draft PR #327; legacy alias is not authority | Approved atomic identity and independent assessment are missing |
 | 5 | Percent contexts with explicit reference base | 6–9 | EXTEND | Existing `MATH.PCT.*`; draft PR #327 | Commission, fees, and measured/reference percent error depth remain weak |
 | 6 | Linear model construction, comparison, and transfer | 7–9 / Alg I | EXTEND | Existing partial generators plus draft PR #327 | Jurisdiction-neutral identity, misleading-scale critique, and routed unseen transfer need reconciliation |
-| 7 | Exponent laws and equivalent forms | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Five bounded DRAFT scopes authorized after collision audit; historical `MATH.NS.EXPONENTS` is not expanded | Zero/negative/domain-boundary generators, atomic exact assessment, scope-card review, and no-double-credit QA remain open |
-| 8 | Scientific-notation conversion, multiplication, and division | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Three bounded DRAFT operation scopes authorized after collision audit; historical `MATH.NS.SCIENTIFIC_NOTATION` is not expanded | Sign/zero boundaries, routed interaction, exact assessment, standards acceptance, and QA remain open |
-| 9 | Polynomial divided by monomial with restrictions | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Proposed DRAFT `MATH.POLY.DIVIDE_MONOMIALS` → `MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL`; broad legacy family is not authority | Cards, canonicalized scoring, reconstruction/domain evidence, implemented MVE/route, independent review, and QA remain open |
+| 7 | Exponent laws and equivalent forms | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Five DRAFT labels architecture-accepted and 5/5 scope cards mathematically approved; historical `MATH.NS.EXPONENTS` is not expanded | Publication, routed interaction, complete independent assessment, standards acceptance, and no-double-credit QA remain open |
+| 8 | Scientific-notation conversion, multiplication, and division | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Three DRAFT labels architecture-accepted; conversion and division cards mathematically approved | Multiplication scope must correct its impossible below-one raw-coefficient case; routing, exact assessment, standards acceptance, and QA remain open |
+| 9 | Polynomial divided by monomial with restrictions | 8–9 / Alg I | PROPOSE IDENTITY REVIEW | Both DRAFT labels architecture-accepted; monomial card and PR #348 evidence specification mathematically approved | Polynomial-by-monomial zero-term canonicalization, implemented MVE/route, pedagogy, backend acceptance, standards acceptance, AppSec, and QA remain open |
 | 10 | Construct and compare distributions | 6–9 | EXTEND | `MATH.DATA.HISTOGRAM.BIN`, `MATH.DATA.IQR`, `MATH.DATA.FIVE_NUMBER`; draft PR #328 | Full box-plot construction and contextual independent assessment remain weak |
 | 11 | Nets, surface area, and rational-edge volume | 5–8 | EXTEND | `MATH.GEO.NET.CUBE.SURFACE`, `MATH.GEO.SURFACE.PRISM`, `MATH.GEO.VOLUME.PRISM`; draft PRs #327/#328 | Spatial foldability plus dimensional reasoning and trusted assessment are not jointly evidenced |
 | 12 | Pythagorean proof, classification, and dimensional model | 8–9 | EXTEND | Partial existing implementation | Maryland evidence specifically exposes missing proof and acute/obtuse inequality depth |
@@ -89,6 +96,6 @@ All candidate labels/scopes still require collision-audited Content cards, indep
 
 1. **Independent Standards reviewer:** verify this MCPS/Amplify evidence hierarchy and exact course/unit transcription; separately verify Maryland expectation IDs only from official MSDE sources.
 2. **Standards Mapping:** verify exact 2023 Virginia SOL and DC CCSS identifiers against official documents and append only source-proven many-to-many relations.
-3. **Architecture:** resolve the remaining proportional, fraction-equivalence, linear-function, and Pythagorean identity references without jurisdiction-specific forks; confirm collisions for the newly bounded algebra drafts.
-4. **Content/MVE/Frontend/Backend:** author and review the bounded exponent, scientific-notation, and polynomial-division contracts from decision 6107538656; reconcile existing PRs #327, #328, #344, #346, and #348 before starting duplicate work; deepen the highest-ranked gaps through Observe → Predict → Manipulate → Explain → Practice → Diagnose → Transfer → Verify.
+3. **Architecture:** resolve the remaining proportional, fraction-equivalence, linear-function, and Pythagorean identity references without jurisdiction-specific forks; the eleven PR #349 algebra labels are already accepted for DRAFT review.
+4. **Content/MVE/Frontend/Backend:** correct only PR #349's two unresolved cards, add PR #346's missing square-equation assessment boundaries, and implement PR #348's accessible grouped-term route without duplicating existing work; deepen the highest-ranked gaps through Observe → Predict → Manipulate → Explain → Practice → Diagnose → Transfer → Verify.
 5. **Independent reviewers/Muse:** issue exact-head verdicts; until then all rows stay `DRAFT_UNVERIFIED` and runtime disabled.
