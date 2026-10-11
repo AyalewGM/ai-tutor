@@ -89,9 +89,11 @@ def _make(family: str, phase: str, rng: random.Random) -> dict[str, str]:
 
 def generate(seed: int = 20261009, variants_per_phase: int = 4) -> dict[str, object]:
     if not isinstance(seed, int) or isinstance(seed, bool):
-        raise ValueError("seed must be an integer")
-    if not isinstance(variants_per_phase, int) or isinstance(variants_per_phase, bool) or not 1 <= variants_per_phase <= 30:
-        raise ValueError("variants_per_phase must be an integer from 1 to 30")
+        raise TypeError("seed must be an integer")
+    if not isinstance(variants_per_phase, int) or isinstance(variants_per_phase, bool):
+        raise TypeError("variants_per_phase must be an integer")
+    if not 1 <= variants_per_phase <= 30:
+        raise ValueError("variants_per_phase must be from 1 to 30")
     rng = random.Random(seed)
     items: list[dict[str, str]] = []
     seen: set[str] = set()
