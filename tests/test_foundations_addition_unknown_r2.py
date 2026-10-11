@@ -167,3 +167,90 @@ def test_invalid_seeds_fail_closed(seed: object) -> None:
 def test_invalid_modes_fail_closed(mode: object) -> None:
     with pytest.raises(ValueError, match="Unsupported mode"):
         _module().generate(4, mode)
+
+
+
+def _complete_relation_response(item, variants) -> dict[str, object]:
+    return {
+        "unknown_role": item.unknown_role,
+        "model_equation": item.balanced_equation,
+        "answer": item.answer,
+        "check_equation": item.check_equation,
+        "explanation": {
+            "reason_code": variants.REASON_CODES[item.structure],
+            "reasoning": "The missing group preserves the story's whole and inverse check.",
+        },
+    }
+
+
+def test_complete_relation_evidence_is_practice_only_not_mastery() -> None:
+    variants = _module()
+    for seed in range(100):
+        guided = variants.generate(seed, "guided")
+        evidence = _complete_relation_response(guided, variants)
+        assert variants.diagnose_relation_evidence(guided, evidence) == (
+            "CORRECT_STRUCTURED_PRACTICE_ONLY_EXPLANATION_UNVERIFIED"
+        )
+        # Equivalent whitespace does not change the mathematical relation.
+        spaced = dict(evidence)
+        spaced["model_equation"] = guided.balanced_equation.replace(" + ", "  +  ")
+        assert variants.diagnose_relation_evidence(guided, spaced) == (
+            "CORRECT_STRUCTURED_PRACTICE_ONLY_EXPLANATION_UNVERIFIED"
+        )
+        independent = variants.generate(seed, "independent")
+        assert variants.diagnose_relation_evidence(
+            independent, _complete_relation_response(independent, variants)
+        ) == "INDEPENDENT_ASSESSMENT_NOT_SCORED_HERE"
+
+
+def test_correct_number_cannot_hide_false_equation_inverse_or_role() -> None:
+    variants = _module()
+    for seed in range(25):
+        item = variants.generate(seed, "guided")
+        evidence = _complete_relation_response(item, variants)
+        false_model = dict(evidence)
+        false_model["model_equation"] = "1 + 1 = □"
+        assert variants.diagnose_relation_evidence(item, false_model) == (
+            "MODEL_EQUATION_INCORRECT"
+        )
+        false_check = dict(evidence)
+        false_check["check_equation"] = "1 - 1 = 0"
+        assert variants.diagnose_relation_evidence(item, false_check) == (
+            "INVERSE_CHECK_INCORRECT"
+        )
+        wrong_role = dict(evidence)
+        wrong_role["unknown_role"] = "result" if item.unknown_role != "result" else "start"
+        assert variants.diagnose_relation_evidence(item, wrong_role) == (
+            "UNKNOWN_ROLE_CONFUSION"
+        )
+        wrong_answer = dict(evidence)
+        wrong_answer["answer"] = item.answer + 1
+        assert variants.diagnose_relation_evidence(item, wrong_answer) != (
+            "CORRECT_STRUCTURED_PRACTICE_ONLY_EXPLANATION_UNVERIFIED"
+        )
+
+
+def test_explanation_requires_structured_claim_but_not_claimed_semantic_mastery() -> None:
+    variants = _module()
+    item = variants.generate(2, "guided")
+    evidence = _complete_relation_response(item, variants)
+    for explanation in (
+        "because",
+        {"reason_code": "WRONG", "reasoning": "The groups are inverse checked."},
+        {"reason_code": variants.REASON_CODES[item.structure], "reasoning": "copied"},
+        {"reason_code": variants.REASON_CODES[item.structure], "reasoning": item.story},
+        {"reason_code": variants.REASON_CODES[item.structure], "reasoning": True},
+    ):
+        invalid = dict(evidence)
+        invalid["explanation"] = explanation
+        assert variants.diagnose_relation_evidence(item, invalid) == (
+            "EXPLANATION_EVIDENCE_INCOMPLETE"
+        )
+    missing = dict(evidence)
+    del missing["check_equation"]
+    assert variants.diagnose_relation_evidence(item, missing) == (
+        "INCOMPLETE_RELATION_EVIDENCE"
+    )
+    invalid = dict(evidence)
+    invalid["answer"] = True
+    assert variants.diagnose_relation_evidence(item, invalid) == "INVALID_RESPONSE"
