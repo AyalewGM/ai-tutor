@@ -77,7 +77,7 @@
     {
       "item_id": "g9-depth-04",
       "provisional_topic": "linear-equations",
-      "question": "How many solutions does 5(x−2)=5x−10 have? Answer 'infinitely many'.",
+      "question": "How many real-number solutions does 5(x−2)=5x−10 have? Explain how simplifying both sides supports your classification.",
       "expected": "infinitely many",
       "answer_contract": "choice",
       "worked_reasoning": "Both sides simplify to 5x−10, true for every real x.",
