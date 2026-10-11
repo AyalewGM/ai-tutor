@@ -247,7 +247,7 @@ def test_unseen_transfer_replay_multifield_oracle_and_non_disclosure() -> None:
         assert independent == variants.generate_transfer(seed, "independent")
         assert guided.variant_id != independent.variant_id
         assert guided.prompt != independent.prompt
-        assert len(independent.response_schema) == 7
+        assert len(independent.response_schema) == 10
         payload = independent.public_payload()
         assert "teacher_answer" not in payload
         assert set(independent.teacher_answer) == set(independent.response_schema)
@@ -262,17 +262,35 @@ def test_unseen_transfer_replay_multifield_oracle_and_non_disclosure() -> None:
             perimeter = independent.model_parameters["perimeter"]
             assert length == multiplier * width + offset
             assert 2 * width + 2 * length == perimeter
+            assert independent.teacher_answer["relationship_equation"] == (
+                f"2w + 2({multiplier}w + {offset}) = {perimeter}"
+            )
             assert str(width) == independent.teacher_answer["unknown_value"]
+            assert independent.teacher_answer["unknown_unit"] == "metres"
             assert str(length) == independent.teacher_answer["derived_quantity"]
-            assert independent.teacher_answer["unit"] == "metres"
+            assert independent.teacher_answer["derived_quantity_unit"] == "metres"
+            assert Fraction(independent.teacher_answer["verification_left"]) == 2 * width + 2 * length
+            assert independent.teacher_answer["verification_left_unit"] == "metres"
+            assert Fraction(independent.teacher_answer["verification_right"]) == perimeter
+            assert independent.teacher_answer["verification_right_unit"] == "metres"
         else:
             sessions = independent.model_parameters["sessions"]
             rate = independent.model_parameters["rate"]
             fixed_fee = independent.model_parameters["fixed_fee"]
             total = independent.model_parameters["total"]
             assert fixed_fee + rate * sessions == total
+            assert independent.teacher_answer["relationship_equation"] == (
+                f"{variants._text(fixed_fee)} + {variants._text(rate)}s = {variants._text(total)}"
+            )
             assert str(sessions) == independent.teacher_answer["unknown_value"]
-            assert independent.teacher_answer["unit"] == "sessions"
+            assert independent.teacher_answer["unknown_unit"] == "sessions"
+            assert Fraction(independent.teacher_answer["derived_quantity"]) == rate * sessions
+            assert independent.teacher_answer["derived_quantity_unit"] == "dollars"
+            assert Fraction(independent.teacher_answer["verification_left"]) == fixed_fee + rate * sessions
+            assert independent.teacher_answer["verification_left_unit"] == "dollars"
+            assert Fraction(independent.teacher_answer["verification_right"]) == total
+            assert independent.teacher_answer["verification_right_unit"] == "dollars"
+        assert "unit" not in independent.teacher_answer
 
 
 @pytest.mark.parametrize("seed", [-1, True, False, 1.5, "4", None])
