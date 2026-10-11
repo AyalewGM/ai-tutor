@@ -38,11 +38,11 @@ def test_dmv_crosswalk_has_traceability_without_claiming_acceptance():
 
 def test_sources_are_official_and_research_only():
     data = _load()
-    allowed_hosts = ("msde.maryland.gov", "mcap.msde.maryland.gov", "montgomeryschoolsmd.org", "doe.virginia.gov", "osse.dc.gov")
+    allowed_hosts = (\n        "msde.maryland.gov",\n        "mcap.msde.maryland.gov",\n        "montgomeryschoolsmd.org",\n        "amplify.com",\n        "doe.virginia.gov",\n        "osse.dc.gov",\n    )
     for source in data["source_registry"]:
         assert source["url"].startswith("https://")
         assert any(host in source["url"] for host in allowed_hosts)
-        assert "REFERENCE_ONLY" in source["license"]
+        assert "REFERENCE_ONLY" in source["license"] or "RESEARCH_ONLY" in source["license"]
         assert source["use_constraint"]
 
 
@@ -51,3 +51,97 @@ def test_legacy_virginia_task_codes_are_not_current_mappings():
     source = next(s for s in data["source_registry"] if s["source_id"] == "VA_RICH_TASKS_2016")
     assert "2016" in source["publication_or_version"]
     assert "MUST NOT" in source["use_constraint"]
+
+
+def test_current_mcps_listing_is_separate_from_vendor_and_standards_authority():
+    data = _load()
+    current = next(
+        source
+        for source in data["source_registry"]
+        if source["source_id"] == "MCPS_CURRENT_CURRICULUM_2026"
+    )
+    amplify = next(
+        source
+        for source in data["source_registry"]
+        if source["source_id"] == "AMPLIFY_DESMOS_6_12_CAREGIVER_2026"
+    )
+
+    expected = {
+        "Math 6": "Amplify Desmos Math Grade 6",
+        "Accelerated Math 6": "Amplify Desmos Math Accelerated Grade 6",
+        "Math 7": "Amplify Desmos Math Grade 7",
+        "Accelerated Math 7": "Amplify Desmos Math Accelerated Grade 7",
+        "Math 8": "Amplify Desmos Math Grade 8",
+        "Algebra 1": "Amplify Desmos Math Algebra 1",
+        "Honors Geometry": "Illustrative Mathematics Geometry",
+    }
+    assert {
+        row["mcps_course"]: row["curriculum"]
+        for row in current["exact_listed_courses"]
+    } == expected
+    assert current["authority"] == "MCPS_CURRENT_DISTRICT_CURRICULUM_LISTING"
+    assert current["standards_authority"] is False
+    assert current["statewide_adoption_evidence"] is False
+
+    assert amplify["authority"] == "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY"
+    assert amplify["standards_authority"] is False
+    assert amplify["current_mcps_adoption_proof"] is False
+    assert amplify["student_facing_link_allowed"] is False
+    assert data["governance"]["vendor_units_are_standards_authority"] is False
+
+
+def test_amplify_course_sequences_are_course_scoped_and_infer_no_standard_ids():
+    data = _load()
+    rows = data["mcps_current_course_sequences"]
+    assert {row["mcps_course"] for row in rows} == {
+        "Math 6",
+        "Accelerated Math 6",
+        "Math 7",
+        "Accelerated Math 7",
+        "Math 8",
+        "Algebra 1",
+    }
+    assert all(row["units"] for row in rows)
+    assert all(
+        [unit["unit_number"] for unit in row["units"]]
+        == list(range(1, len(row["units"]) + 1))
+        for row in rows
+    )
+    assert all(row["evidence_authority"] == "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY" for row in rows)
+    assert all(row["maryland_standard_ids"] == [] for row in rows)
+    assert all(row["student_facing_external_links"] is False for row in rows)
+    assert data["summary"]["vendor_derived_standard_ids"] == 0
+
+
+def test_historical_mcps_sources_cannot_prove_current_adoption():
+    data = _load()
+    legacy = next(
+        source
+        for source in data["source_registry"]
+        if source["source_id"] == "MCPS_ALGEBRA1_SUPPORT"
+    )
+    assert legacy["authority"] == "HISTORICAL_RESEARCH_ONLY_NOT_CURRENT_ADOPTION_PROOF"
+    assert legacy["current_adoption_evidence"] is False
+    assert legacy["standards_authority"] is False
+
+    assert len(data["historical_research_tracks"]) == 2
+    for track in data["historical_research_tracks"]:
+        assert track["status"] == "HISTORICAL_RESEARCH_ONLY_NOT_CURRENT_ADOPTION_PROOF"
+        assert track["current_course_claim"] is False
+        assert track["standards_mapping_authority"] is False
+        assert track["student_facing_link_allowed"] is False
+
+
+def test_publisher_topic_evidence_never_becomes_mapping_or_implementation_proof():
+    data = _load()
+    for row in data["task_structures"]:
+        assert "publisher_sequence_evidence" in row
+        for evidence in row["publisher_sequence_evidence"]:
+            assert evidence["source_id"] == "AMPLIFY_DESMOS_6_12_CAREGIVER_2026"
+            assert evidence["evidence_type"] == "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY"
+            assert evidence["standards_authority"] is False
+        assert row["implementation"]["backend_independent_assessment"] != "APPROVED"
+        assert row["implementation"]["qa"] == "NOT_REVIEWED"
+
+    assert data["summary"]["accepted_standards_mappings"] == 0
+    assert data["summary"]["qa_approved_packages"] == 0
