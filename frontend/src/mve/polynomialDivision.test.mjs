@@ -88,7 +88,7 @@ test("semantic term events prove exact division and reject inconsistent or ident
 
 test("component exposes keyboard and screen-reader equivalent discrete states and fails closed in assessment", () => {
   const html = renderToStaticMarkup(React.createElement(Component, { independentAssessment: false, seed: 1 }));
-  for (const term of ["Observe", "Predict", "Manipulate", "Explain", "Transfer and verify", "Grouped-term polynomial division state",
+  for (const term of ["Observe", "Predict", "Manipulate", "Explain", "Guided multiplication demonstration", "Grouped-term polynomial division state",
     "aria-live=\"polite\"", "aria-current=\"true\"", "motion-reduce:transition-none", "cannot award mastery",
     "x ≠ 0", "y ≠ 0", "Not divided yet"]) assert.ok(html.includes(term), term);
   for (const mode of [true, undefined, null]) assert.equal(renderToStaticMarkup(React.createElement(Component, { independentAssessment: mode })), "");
@@ -123,9 +123,10 @@ test("actual handlers diagnose one-term work, load a fresh repair, reconstruct, 
   tree.filter(node => node.type === "input" && node.props.name === "poly-exponent")[0].props.onChange();
   tree = nodes(render());
   tree.filter(node => node.type === "input" && node.props.type === "checkbox")[0].props.onChange();
-  click("Verify reconstructed areas");
+  click("Check guided model reconstruction");
   click("Check my reasoning");
   tree = nodes(render());
-  assert.ok(tree.some(node => String(node.props?.children).includes("INDEPENDENT READINESS")));
-  assert.match(String(tree.find(node => node.props?.role === "status").props.children), /Fresh repair complete/);
+  assert.equal(tree.some(node => String(node.props?.children).includes("INDEPENDENT READINESS")), false);
+  assert.ok(tree.some(node => String(node.props?.children).includes("Not independently assessed.")));
+  assert.match(String(tree.find(node => node.props?.role === "status").props.children), /guided|Guided|Complete both rule choices/);
 });
