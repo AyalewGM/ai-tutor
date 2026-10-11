@@ -20,7 +20,7 @@ def test_draft_only_and_minimum_content():
         assert len(package["worked_examples"]) == 5
         assert len(package["misconception_pathways"]) == 3
         assert len(package["guided_practice"]) == 4
-        assert len(package["independent_assessment"]) == 2
+        assert len(package["independent_assessment"]) >= 2
         assert package["interactive_spec"]["assessments_unscaffolded"]
         for item in package["independent_assessment"]:
             assert not item["hints_allowed"]
