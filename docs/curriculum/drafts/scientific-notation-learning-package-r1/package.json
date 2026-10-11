@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "SCIENTIFIC-NOTATION-LEARNING-PACKAGE-R1",
+  "revision": "issue-337-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "canonical_family": "MATH.NS.SCIENTIFIC_NOTATION",
+  "objective": "Represent the same exact value in ordinary and normalized scientific notation, explain inverse coefficient/exponent scaling, and multiply or divide scientific-notation quantities before normalizing.",
+  "learning_sequence": [
+    {
+      "phase": "OBSERVE",
+      "representations": ["CONCRETE_PLACE_VALUE", "VISUAL_EXPONENT_SCALE"],
+      "learner_action": "Compare equal place-value cards and notice that making the coefficient ten times larger requires making the power of ten ten times smaller."
+    },
+    {
+      "phase": "PREDICT",
+      "representations": ["VISUAL_EXPONENT_SCALE", "SYMBOLIC"],
+      "learner_action": "Predict the direction and size of the inverse coefficient/exponent changes before calculating."
+    },
+    {
+      "phase": "MANIPULATE",
+      "representations": ["CONCRETE_PLACE_VALUE", "VISUAL_EXPONENT_SCALE", "SYMBOLIC"],
+      "learner_action": "Move one factor of ten at a time between the coefficient and exponent while an exact before/after value equation remains visible."
+    },
+    {
+      "phase": "EXPLAIN",
+      "representations": ["VISUAL_EXPONENT_SCALE", "SYMBOLIC"],
+      "learner_action": "Explain value preservation, then distinguish adding exponents for products from subtracting exponents for quotients."
+    },
+    {
+      "phase": "PRACTICE",
+      "representations": ["SYMBOLIC"],
+      "learner_action": "Complete deterministic mixed conversion, reverse-conversion, multiplication and division items with positive and negative exponents."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "representations": ["VISUAL_EXPONENT_SCALE", "SYMBOLIC"],
+      "learner_action": "Follow one evidence-specific Socratic branch, repair the exact error, and pass a fresh structure before supports fade."
+    },
+    {
+      "phase": "TRANSFER",
+      "representations": ["CONCRETE_MEASUREMENT_CONTEXT", "SYMBOLIC"],
+      "learner_action": "Interpret a synthetic sensor reading or model scale, operate on exact quantities, normalize, and verify the ordinary value and unit relationship."
+    },
+    {
+      "phase": "VERIFY",
+      "representations": ["SYMBOLIC"],
+      "learner_action": "Submit every exact response field for an unseen independent variant with no hints, worked steps or guided interaction."
+    }
+  ],
+  "response_policy": {
+    "nonzero_normalized_form": "a times 10^n with integer n and 1 <= |a| < 10",
+    "coefficient_representation": "exact numerator and nonzero denominator",
+    "ordinary_value_representation": "exact numerator and nonzero denominator",
+    "required_fields": ["normalized_coefficient", "power_of_ten", "exact_ordinary_value", "normalization_explanation"],
+    "rounding": "PROVISIONAL_NOT_IMPLEMENTED_EXACT_ONLY_R1",
+    "zero_value": "OUT_OF_SCOPE_R1_GENERATOR_PRODUCES_NONZERO_VALUES",
+    "negative_coefficient": "OUT_OF_SCOPE_R1_GENERATOR_PRODUCES_POSITIVE_VALUES",
+    "equivalent_but_not_normalized_final_form": "REJECT_WITH_SCI.NOT_NORMALIZED_GUIDED_ROUTE",
+    "guided_partial_work_mastery_credit": false
+  },
+  "diagnostic_router": [
+    {
+      "misconception_id": "SCI.EXPONENT.DIRECTION",
+      "observed_evidence": "Coefficient and power-of-ten changes move in the same direction instead of inversely.",
+      "socratic_questions": ["Did the coefficient become ten times larger or ten times smaller?", "What inverse power-of-ten change keeps the total value fixed?", "Does the revised form reproduce the exact ordinary value?"],
+      "fresh_exit": "Convert a different small exact value in both directions."
+    },
+    {
+      "misconception_id": "SCI.NOT_NORMALIZED",
+      "observed_evidence": "The response is value-equivalent but |coefficient| is below 1 or at least 10.",
+      "socratic_questions": ["Is the coefficient magnitude at least 1 and less than 10?", "How many factors of ten must move between coefficient and exponent?", "Does that inverse pair of changes preserve the exact value?"],
+      "fresh_exit": "Repair a different non-normalized product or quotient without rounding."
+    },
+    {
+      "misconception_id": "SCI.PRODUCT.EXPONENTS_MULTIPLIED",
+      "observed_evidence": "The learner multiplies exponents when multiplying like-base powers.",
+      "socratic_questions": ["When powers with base 10 are multiplied, how are their exponents combined?", "What repeated-factor count comes from placing the two powers side by side?", "After combining exponents, does the coefficient still need normalization?"],
+      "fresh_exit": "Multiply a different pair whose raw coefficient must be renormalized."
+    },
+    {
+      "misconception_id": "SCI.QUOTIENT.EXPONENTS_ADDED",
+      "observed_evidence": "The learner adds rather than subtracts exponents in a quotient.",
+      "socratic_questions": ["Which power-of-ten factors cancel between numerator and denominator?", "What exponent difference counts the factors that remain?", "After subtracting exponents, does the coefficient still need normalization?"],
+      "fresh_exit": "Divide a different pair with an exact rational coefficient and renormalize."
+    },
+    {
+      "misconception_id": "SCI.COEFFICIENT.ARITHMETIC",
+      "observed_evidence": "The coefficient operation or exact ordinary value is inconsistent with the original quantities.",
+      "socratic_questions": ["Which operation applies to the two leading coefficients?", "Can that coefficient calculation be kept as an exact fraction?", "Does the exact coefficient and power reproduce the ordinary value?"],
+      "fresh_exit": "Recalculate a different exact coefficient before applying exponent rules."
+    },
+    {
+      "misconception_id": "SCI.INEXACT.WHEN_EXACT_REQUIRED",
+      "observed_evidence": "The learner rounds or truncates even though the task requires exact form.",
+      "socratic_questions": ["Did the prompt request an exact value or a rounded measurement?", "What fraction records the coefficient without discarding digits?", "Can you verify the exact result before any optional rounding step?"],
+      "fresh_exit": "Complete a different quotient and retain all digits as an exact fraction."
+    }
+  ],
+  "seeded_practice": {
+    "generator": "docs/curriculum/drafts/ontario-algebra-family-generators-r1/seeded_family_extensions.py",
+    "guided_seed_rule": "5 * index + 4",
+    "unseen_transfer_seed_rule": "5 * (10000 + index) + 4",
+    "operations": ["TO_SCIENTIFIC", "TO_ORDINARY", "MULTIPLY", "DIVIDE"],
+    "guided_and_independent_namespaces_separate": true,
+    "independent_oracle_reconstruction_tested": true
+  },
+  "unseen_transfer_contract": {
+    "contexts": ["SYNTHETIC_SENSOR_READING", "SYNTHETIC_MODEL_SCALE"],
+    "copyrighted_or_real_learner_data": false,
+    "response_fields": ["normalized_coefficient", "power_of_ten", "exact_ordinary_value", "normalization_explanation", "unit_relationship"],
+    "guided_context_reuse": false,
+    "status": "CONTENT_CONTRACT_ONLY_NOT_ROUTED_OR_SCORED"
+  },
+  "independent_assessment_contract": {
+    "server_controlled_required": true,
+    "hints_allowed": false,
+    "worked_steps_visible_before_submission": false,
+    "guided_mve_visible": false,
+    "answer_or_seed_in_public_payload": false,
+    "guided_feedback_callable": false,
+    "guided_practice_credit": false,
+    "mastery_credit": false,
+    "historical_mastery_mutation": false,
+    "status": "CONTENT_CONTRACT_ONLY_BACKEND_OWNED"
+  },
+  "accessible_mve_requirements": {
+    "owner": "MVE_FRONTEND_NOT_IMPLEMENTED_HERE",
+    "keyboard_only": "Every factor-of-ten move, operation choice, exact fraction field and submit action must use native keyboard-reachable controls without dragging.",
+    "screen_reader_state": "Announce coefficient, exponent, exact total value, operation and whether the form is normalized after every change.",
+    "nonvisual_equivalent": "Provide a table with before coefficient/exponent/value, the inverse scale action, and after coefficient/exponent/value.",
+    "focus_recovery": "Preserve the response and return focus to the first invalid exact field with the mathematical reason.",
+    "reduced_motion": "Use discrete exponent-scale states; animation is never required to infer direction or value.",
+    "color_independence": true,
+    "independent_mode_scaffolds": false
+  }
+}
