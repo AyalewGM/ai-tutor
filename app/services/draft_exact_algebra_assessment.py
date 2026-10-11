@@ -12,6 +12,7 @@ parameters, exact answers and misconception alternatives remain server-side.
 from __future__ import annotations
 
 import hashlib
+import math
 import random
 import re
 from collections.abc import Mapping
@@ -64,6 +65,15 @@ class ExactScore:
     is_correct: bool
     misconception_code: str | None
     assistance_level: int = 0
+
+
+@dataclass(frozen=True, order=True)
+class ExactReal:
+    """Canonical exact real number ``rational + coefficient * sqrt(radicand)``."""
+
+    rational: Fraction
+    radical_coefficient: Fraction = Fraction(0)
+    radicand: int = 0
 
 
 _FRACTION = re.compile(r"-?(?:0|[1-9]\d*)(?:/-?[1-9]\d*)?")
@@ -121,6 +131,45 @@ def _substitution_record(
     return solution, left_value, right_value
 
 
+def _exact_real(
+    rational: Fraction | int,
+    radical_coefficient: Fraction | int = 0,
+    radicand: int = 0,
+) -> ExactReal:
+    rational = Fraction(rational)
+    radical_coefficient = Fraction(radical_coefficient)
+    if radicand < 0:
+        raise ValueError("an exact real cannot contain a negative radicand")
+    if radical_coefficient == 0 or radicand == 0:
+        return ExactReal(rational)
+    return ExactReal(rational, radical_coefficient, radicand)
+
+
+def _affine_exact(value: ExactReal, coefficient: int, shift: int) -> ExactReal:
+    return _exact_real(
+        coefficient * value.rational + shift,
+        coefficient * value.radical_coefficient,
+        value.radicand,
+    )
+
+
+def _square_exact(value: ExactReal) -> ExactReal:
+    return _exact_real(
+        value.rational**2 + value.radical_coefficient**2 * value.radicand,
+        2 * value.rational * value.radical_coefficient,
+        value.radicand,
+    )
+
+
+def _root_substitution_record(
+    solution: ExactReal,
+    coefficient: int,
+    shift: int,
+    radicand: int,
+) -> tuple[ExactReal, ExactReal, ExactReal]:
+    return solution, _square_exact(_affine_exact(solution, coefficient, shift)), _exact_real(radicand)
+
+
 def _linear(seed: int) -> HiddenExactVariant:
     rng, variant_id = _seeded(ExactAlgebraKind.LINEAR_EQUATION, seed)
     solution = Fraction(rng.choice((-9, -7, -5, -3, 3, 5, 7, 9)), rng.choice((2, 3, 4)))
@@ -171,35 +220,49 @@ def _root(seed: int) -> HiddenExactVariant:
     coefficient = rng.choice((-5, -3, -2, 2, 3, 5))
     shift = rng.randint(-8, 8)
     root = rng.randint(2, 9)
-    radicand = -(root * root) if seed % 3 == 0 else root * root
+    outcome = ("NEGATIVE", "ZERO", "POSITIVE_SQUARE", "POSITIVE_NONSQUARE")[seed % 4]
+    if outcome == "NEGATIVE":
+        radicand = -(root * root)
+    elif outcome == "ZERO":
+        radicand = 0
+    elif outcome == "POSITIVE_SQUARE":
+        radicand = root * root
+    else:
+        radicand = rng.choice((2, 3, 5, 6, 7, 10, 11, 13))
     if radicand < 0:
         classification = "NO_REAL_SOLUTIONS"
-        solutions: tuple[Fraction, ...] = ()
-        substitution_checks: tuple[tuple[Fraction, Fraction, Fraction], ...] = ()
+        solutions: tuple[ExactReal, ...] = ()
+        substitution_checks: tuple[tuple[ExactReal, ExactReal, ExactReal], ...] = ()
         alternatives: dict[str, Mapping[str, object]] = {}
-    else:
-        solutions = tuple(
-            sorted({Fraction(root - shift, coefficient), Fraction(-root - shift, coefficient)})
+    elif radicand == 0:
+        solutions = (_exact_real(Fraction(-shift, coefficient)),)
+        classification = "ONE_REAL_SOLUTION"
+        substitution_checks = (
+            _root_substitution_record(solutions[0], coefficient, shift, radicand),
         )
+        alternatives = {}
+    else:
+        square_root = math.isqrt(radicand)
+        if square_root * square_root == radicand:
+            positive_solution = _exact_real(Fraction(square_root - shift, coefficient))
+            negative_solution = _exact_real(Fraction(-square_root - shift, coefficient))
+        else:
+            center = Fraction(-shift, coefficient)
+            positive_solution = _exact_real(center, Fraction(1, coefficient), radicand)
+            negative_solution = _exact_real(center, Fraction(-1, coefficient), radicand)
+        solutions = tuple(sorted({positive_solution, negative_solution}))
         classification = "TWO_REAL_SOLUTIONS"
         substitution_checks = tuple(
-            _substitution_record(
-                solution,
-                Fraction((coefficient * solution + shift) ** 2),
-                Fraction(radicand),
-            )
+            _root_substitution_record(solution, coefficient, shift, radicand)
             for solution in solutions
         )
-        principal_solution = Fraction(root - shift, coefficient)
         alternatives = {
             "ROOT.PRINCIPAL_ONLY": {
                 "classification": "ONE_REAL_SOLUTION",
-                "solutions": (principal_solution,),
+                "solutions": (positive_solution,),
                 "substitution_checks": (
-                    _substitution_record(
-                        principal_solution,
-                        Fraction((coefficient * principal_solution + shift) ** 2),
-                        Fraction(radicand),
+                    _root_substitution_record(
+                        positive_solution, coefficient, shift, radicand
                     ),
                 ),
             }
@@ -212,7 +275,12 @@ def _root(seed: int) -> HiddenExactVariant:
             "Return the complete exact solution set and verify every candidate."
         ),
         ("classification", "solutions", "substitution_checks"),
-        {"coefficient": coefficient, "shift": shift, "radicand": radicand},
+        {
+            "coefficient": coefficient,
+            "shift": shift,
+            "radicand": radicand,
+            "root_outcome": outcome,
+        },
         {
             "classification": classification,
             "solutions": solutions,
@@ -449,6 +517,39 @@ def _solutions(value: object) -> tuple[Fraction, ...]:
     return parsed
 
 
+def _parse_exact_real(value: object) -> ExactReal:
+    required = {"rational", "radical_coefficient", "radicand"}
+    if not isinstance(value, dict) or set(value) != required:
+        raise ValueError(
+            "each exact real requires rational, radical_coefficient and radicand"
+        )
+    rational = _parse_fraction(value["rational"])
+    radical_coefficient = _parse_fraction(value["radical_coefficient"])
+    radicand = _integer(value["radicand"])
+    if radicand < 0:
+        raise ValueError("exact-real radicand must be non-negative")
+    if radical_coefficient == 0:
+        if radicand != 0:
+            raise ValueError("a rational exact real must use radicand zero")
+        return ExactReal(rational)
+    if radicand <= 1:
+        raise ValueError("a radical exact real requires radicand greater than one")
+    if math.isqrt(radicand) ** 2 == radicand:
+        raise ValueError("perfect-square radicals must be simplified")
+    if any(radicand % (factor * factor) == 0 for factor in range(2, math.isqrt(radicand) + 1)):
+        raise ValueError("radicand must be square-free")
+    return ExactReal(rational, radical_coefficient, radicand)
+
+
+def _root_solutions(value: object) -> tuple[ExactReal, ...]:
+    if not isinstance(value, list) or len(value) > 2:
+        raise ValueError("solutions must be a list of at most two exact reals")
+    parsed = tuple(sorted({_parse_exact_real(item) for item in value}))
+    if len(parsed) != len(value):
+        raise ValueError("solution set must not contain duplicates")
+    return parsed
+
+
 def _substitution_checks(
     value: object,
 ) -> tuple[tuple[Fraction, Fraction, Fraction], ...]:
@@ -466,6 +567,30 @@ def _substitution_checks(
                 _parse_fraction(record["solution"]),
                 _parse_fraction(record["left_value"]),
                 _parse_fraction(record["right_value"]),
+            )
+        )
+    if len({record[0] for record in parsed}) != len(parsed):
+        raise ValueError("substitution checks must not repeat a solution")
+    return tuple(sorted(parsed, key=lambda record: record[0]))
+
+
+def _root_substitution_checks(
+    value: object,
+) -> tuple[tuple[ExactReal, ExactReal, ExactReal], ...]:
+    if not isinstance(value, list) or len(value) > 2:
+        raise ValueError("substitution_checks must be a list of at most two records")
+    required = {"solution", "left_value", "right_value"}
+    parsed: list[tuple[ExactReal, ExactReal, ExactReal]] = []
+    for record in value:
+        if not isinstance(record, dict) or set(record) != required:
+            raise ValueError(
+                "each substitution check requires solution, left_value and right_value"
+            )
+        parsed.append(
+            (
+                _parse_exact_real(record["solution"]),
+                _parse_exact_real(record["left_value"]),
+                _parse_exact_real(record["right_value"]),
             )
         )
     if len({record[0] for record in parsed}) != len(parsed):
@@ -497,7 +622,7 @@ def _normalize_response(
 ) -> dict[str, object]:
     if not isinstance(response, dict):
         raise TypeError("response must be an object")
-    if kind in {ExactAlgebraKind.LINEAR_EQUATION, ExactAlgebraKind.ROOT_EQUATION}:
+    if kind == ExactAlgebraKind.LINEAR_EQUATION:
         if set(response) != {"classification", "solutions", "substitution_checks"}:
             raise ValueError("equation response fields do not match the contract")
         classification = response["classification"]
@@ -507,6 +632,17 @@ def _normalize_response(
             "classification": classification,
             "solutions": _solutions(response["solutions"]),
             "substitution_checks": _substitution_checks(response["substitution_checks"]),
+        }
+    if kind == ExactAlgebraKind.ROOT_EQUATION:
+        if set(response) != {"classification", "solutions", "substitution_checks"}:
+            raise ValueError("equation response fields do not match the contract")
+        classification = response["classification"]
+        if classification not in {"ONE_REAL_SOLUTION", "TWO_REAL_SOLUTIONS", "NO_REAL_SOLUTIONS"}:
+            raise ValueError("unsupported solution classification")
+        return {
+            "classification": classification,
+            "solutions": _root_solutions(response["solutions"]),
+            "substitution_checks": _root_substitution_checks(response["substitution_checks"]),
         }
     if kind == ExactAlgebraKind.MONOMIAL_QUOTIENT:
         expected = {"coefficient", "x_exponent", "y_exponent", "domain_restrictions"}
