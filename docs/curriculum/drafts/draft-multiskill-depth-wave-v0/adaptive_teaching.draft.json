@@ -1,0 +1,3198 @@
+{
+  "package_id": "draft-multiskill-depth-adaptive-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "runtime_activation": false,
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "purpose": "Original skill-linked diagnostic and adaptive teaching specifications, not implemented student runtime",
+  "pathways": [
+    {
+      "pathway_id": "depth-path-001",
+      "linked_item_id": "draft-depth-addition_regroup-01",
+      "provisional_skill": "ADDITION_REGROUP",
+      "level": "fluency",
+      "misconception_trigger": "Forgetting to regroup a set of ten",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Exchange ten ones for one ten using base-ten blocks."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw aligned tens and ones columns, with an arrow for each trade."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "67+58=125; 7+8=15 ones, 6+5+1=12 tens."
+        },
+        {
+          "id": "verify",
+          "instruction": "125−58=67."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "67+60−2=125."
+      },
+      "mastery_evidence": {
+        "correct_answer": "45",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-002",
+      "linked_item_id": "draft-depth-addition_regroup-02",
+      "provisional_skill": "ADDITION_REGROUP",
+      "level": "fluency",
+      "misconception_trigger": "Forgetting to regroup a set of ten",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Exchange ten ones for one ten using base-ten blocks."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw aligned tens and ones columns, with an arrow for each trade."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "67+58=125; 7+8=15 ones, 6+5+1=12 tens."
+        },
+        {
+          "id": "verify",
+          "instruction": "125−58=67."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "67+60−2=125."
+      },
+      "mastery_evidence": {
+        "correct_answer": "81",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-003",
+      "linked_item_id": "draft-depth-addition_regroup-03",
+      "provisional_skill": "ADDITION_REGROUP",
+      "level": "guided-representation",
+      "misconception_trigger": "Forgetting to regroup a set of ten",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Exchange ten ones for one ten using base-ten blocks."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw aligned tens and ones columns, with an arrow for each trade."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "67+58=125; 7+8=15 ones, 6+5+1=12 tens."
+        },
+        {
+          "id": "verify",
+          "instruction": "125−58=67."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "67+60−2=125."
+      },
+      "mastery_evidence": {
+        "correct_answer": "225",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-004",
+      "linked_item_id": "draft-depth-addition_regroup-04",
+      "provisional_skill": "ADDITION_REGROUP",
+      "level": "guided-representation",
+      "misconception_trigger": "Forgetting to regroup a set of ten",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Exchange ten ones for one ten using base-ten blocks."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw aligned tens and ones columns, with an arrow for each trade."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "67+58=125; 7+8=15 ones, 6+5+1=12 tens."
+        },
+        {
+          "id": "verify",
+          "instruction": "125−58=67."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "67+60−2=125."
+      },
+      "mastery_evidence": {
+        "correct_answer": "424",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-005",
+      "linked_item_id": "draft-depth-addition_regroup-05",
+      "provisional_skill": "ADDITION_REGROUP",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Forgetting to regroup a set of ten",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Exchange ten ones for one ten using base-ten blocks."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw aligned tens and ones columns, with an arrow for each trade."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "67+58=125; 7+8=15 ones, 6+5+1=12 tens."
+        },
+        {
+          "id": "verify",
+          "instruction": "125−58=67."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "67+60−2=125."
+      },
+      "mastery_evidence": {
+        "correct_answer": "515",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-006",
+      "linked_item_id": "draft-depth-addition_regroup-06",
+      "provisional_skill": "ADDITION_REGROUP",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Forgetting to regroup a set of ten",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Exchange ten ones for one ten using base-ten blocks."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw aligned tens and ones columns, with an arrow for each trade."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "67+58=125; 7+8=15 ones, 6+5+1=12 tens."
+        },
+        {
+          "id": "verify",
+          "instruction": "125−58=67."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "67+60−2=125."
+      },
+      "mastery_evidence": {
+        "correct_answer": "735",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-007",
+      "linked_item_id": "draft-depth-addition_regroup-07",
+      "provisional_skill": "ADDITION_REGROUP",
+      "level": "error-analysis",
+      "misconception_trigger": "Forgetting to regroup a set of ten",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Exchange ten ones for one ten using base-ten blocks."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw aligned tens and ones columns, with an arrow for each trade."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "67+58=125; 7+8=15 ones, 6+5+1=12 tens."
+        },
+        {
+          "id": "verify",
+          "instruction": "125−58=67."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "67+60−2=125."
+      },
+      "mastery_evidence": {
+        "correct_answer": "803",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-008",
+      "linked_item_id": "draft-depth-addition_regroup-08",
+      "provisional_skill": "ADDITION_REGROUP",
+      "level": "error-analysis",
+      "misconception_trigger": "Forgetting to regroup a set of ten",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Exchange ten ones for one ten using base-ten blocks."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw aligned tens and ones columns, with an arrow for each trade."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "67+58=125; 7+8=15 ones, 6+5+1=12 tens."
+        },
+        {
+          "id": "verify",
+          "instruction": "125−58=67."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "67+60−2=125."
+      },
+      "mastery_evidence": {
+        "correct_answer": "1135",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-009",
+      "linked_item_id": "draft-depth-subtraction_regroup-01",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "level": "fluency",
+      "misconception_trigger": "Subtracting smaller digit from larger regardless of position",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trade one hundred for ten tens and one ten for ten ones."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw 3 hundreds, 0 tens and 2 ones, then cross out regrouped units."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "302−157=145."
+        },
+        {
+          "id": "verify",
+          "instruction": "145+157=302."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "302−150−7=152−7=145."
+      },
+      "mastery_evidence": {
+        "correct_answer": "34",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-010",
+      "linked_item_id": "draft-depth-subtraction_regroup-02",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "level": "fluency",
+      "misconception_trigger": "Subtracting smaller digit from larger regardless of position",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trade one hundred for ten tens and one ten for ten ones."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw 3 hundreds, 0 tens and 2 ones, then cross out regrouped units."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "302−157=145."
+        },
+        {
+          "id": "verify",
+          "instruction": "145+157=302."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "302−150−7=152−7=145."
+      },
+      "mastery_evidence": {
+        "correct_answer": "44",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-011",
+      "linked_item_id": "draft-depth-subtraction_regroup-03",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "level": "guided-representation",
+      "misconception_trigger": "Subtracting smaller digit from larger regardless of position",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trade one hundred for ten tens and one ten for ten ones."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw 3 hundreds, 0 tens and 2 ones, then cross out regrouped units."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "302−157=145."
+        },
+        {
+          "id": "verify",
+          "instruction": "145+157=302."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "302−150−7=152−7=145."
+      },
+      "mastery_evidence": {
+        "correct_answer": "128",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-012",
+      "linked_item_id": "draft-depth-subtraction_regroup-04",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "level": "guided-representation",
+      "misconception_trigger": "Subtracting smaller digit from larger regardless of position",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trade one hundred for ten tens and one ten for ten ones."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw 3 hundreds, 0 tens and 2 ones, then cross out regrouped units."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "302−157=145."
+        },
+        {
+          "id": "verify",
+          "instruction": "145+157=302."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "302−150−7=152−7=145."
+      },
+      "mastery_evidence": {
+        "correct_answer": "128",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-013",
+      "linked_item_id": "draft-depth-subtraction_regroup-05",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Subtracting smaller digit from larger regardless of position",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trade one hundred for ten tens and one ten for ten ones."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw 3 hundreds, 0 tens and 2 ones, then cross out regrouped units."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "302−157=145."
+        },
+        {
+          "id": "verify",
+          "instruction": "145+157=302."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "302−150−7=152−7=145."
+      },
+      "mastery_evidence": {
+        "correct_answer": "344",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-014",
+      "linked_item_id": "draft-depth-subtraction_regroup-06",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Subtracting smaller digit from larger regardless of position",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trade one hundred for ten tens and one ten for ten ones."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw 3 hundreds, 0 tens and 2 ones, then cross out regrouped units."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "302−157=145."
+        },
+        {
+          "id": "verify",
+          "instruction": "145+157=302."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "302−150−7=152−7=145."
+      },
+      "mastery_evidence": {
+        "correct_answer": "465",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-015",
+      "linked_item_id": "draft-depth-subtraction_regroup-07",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "level": "error-analysis",
+      "misconception_trigger": "Subtracting smaller digit from larger regardless of position",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trade one hundred for ten tens and one ten for ten ones."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw 3 hundreds, 0 tens and 2 ones, then cross out regrouped units."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "302−157=145."
+        },
+        {
+          "id": "verify",
+          "instruction": "145+157=302."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "302−150−7=152−7=145."
+      },
+      "mastery_evidence": {
+        "correct_answer": "535",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-016",
+      "linked_item_id": "draft-depth-subtraction_regroup-08",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "level": "error-analysis",
+      "misconception_trigger": "Subtracting smaller digit from larger regardless of position",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trade one hundred for ten tens and one ten for ten ones."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Draw 3 hundreds, 0 tens and 2 ones, then cross out regrouped units."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "302−157=145."
+        },
+        {
+          "id": "verify",
+          "instruction": "145+157=302."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "302−150−7=152−7=145."
+      },
+      "mastery_evidence": {
+        "correct_answer": "613",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-017",
+      "linked_item_id": "draft-depth-multiplication_groups-01",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "level": "fluency",
+      "misconception_trigger": "Using addition of factors rather than equal-group multiplication",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Build eight groups of thirteen counters."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use an 8-by-13 array split into 8-by-10 and 8-by-3."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "8×13=8×(10+3)=80+24=104."
+        },
+        {
+          "id": "verify",
+          "instruction": "104÷8=13."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "13×(4+4)=52+52=104."
+      },
+      "mastery_evidence": {
+        "correct_answer": "42",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-018",
+      "linked_item_id": "draft-depth-multiplication_groups-02",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "level": "fluency",
+      "misconception_trigger": "Using addition of factors rather than equal-group multiplication",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Build eight groups of thirteen counters."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use an 8-by-13 array split into 8-by-10 and 8-by-3."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "8×13=8×(10+3)=80+24=104."
+        },
+        {
+          "id": "verify",
+          "instruction": "104÷8=13."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "13×(4+4)=52+52=104."
+      },
+      "mastery_evidence": {
+        "correct_answer": "72",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-019",
+      "linked_item_id": "draft-depth-multiplication_groups-03",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "level": "guided-representation",
+      "misconception_trigger": "Using addition of factors rather than equal-group multiplication",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Build eight groups of thirteen counters."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use an 8-by-13 array split into 8-by-10 and 8-by-3."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "8×13=8×(10+3)=80+24=104."
+        },
+        {
+          "id": "verify",
+          "instruction": "104÷8=13."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "13×(4+4)=52+52=104."
+      },
+      "mastery_evidence": {
+        "correct_answer": "72",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-020",
+      "linked_item_id": "draft-depth-multiplication_groups-04",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "level": "guided-representation",
+      "misconception_trigger": "Using addition of factors rather than equal-group multiplication",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Build eight groups of thirteen counters."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use an 8-by-13 array split into 8-by-10 and 8-by-3."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "8×13=8×(10+3)=80+24=104."
+        },
+        {
+          "id": "verify",
+          "instruction": "104÷8=13."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "13×(4+4)=52+52=104."
+      },
+      "mastery_evidence": {
+        "correct_answer": "112",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-021",
+      "linked_item_id": "draft-depth-multiplication_groups-05",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Using addition of factors rather than equal-group multiplication",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Build eight groups of thirteen counters."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use an 8-by-13 array split into 8-by-10 and 8-by-3."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "8×13=8×(10+3)=80+24=104."
+        },
+        {
+          "id": "verify",
+          "instruction": "104÷8=13."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "13×(4+4)=52+52=104."
+      },
+      "mastery_evidence": {
+        "correct_answer": "112",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-022",
+      "linked_item_id": "draft-depth-multiplication_groups-06",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Using addition of factors rather than equal-group multiplication",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Build eight groups of thirteen counters."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use an 8-by-13 array split into 8-by-10 and 8-by-3."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "8×13=8×(10+3)=80+24=104."
+        },
+        {
+          "id": "verify",
+          "instruction": "104÷8=13."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "13×(4+4)=52+52=104."
+      },
+      "mastery_evidence": {
+        "correct_answer": "216",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-023",
+      "linked_item_id": "draft-depth-multiplication_groups-07",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "level": "error-analysis",
+      "misconception_trigger": "Using addition of factors rather than equal-group multiplication",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Build eight groups of thirteen counters."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use an 8-by-13 array split into 8-by-10 and 8-by-3."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "8×13=8×(10+3)=80+24=104."
+        },
+        {
+          "id": "verify",
+          "instruction": "104÷8=13."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "13×(4+4)=52+52=104."
+      },
+      "mastery_evidence": {
+        "correct_answer": "420",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-024",
+      "linked_item_id": "draft-depth-multiplication_groups-08",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "level": "error-analysis",
+      "misconception_trigger": "Using addition of factors rather than equal-group multiplication",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Build eight groups of thirteen counters."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use an 8-by-13 array split into 8-by-10 and 8-by-3."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "8×13=8×(10+3)=80+24=104."
+        },
+        {
+          "id": "verify",
+          "instruction": "104÷8=13."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "13×(4+4)=52+52=104."
+      },
+      "mastery_evidence": {
+        "correct_answer": "630",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-025",
+      "linked_item_id": "draft-depth-division_groups-01",
+      "provisional_skill": "DIVISION_GROUPS",
+      "level": "fluency",
+      "misconception_trigger": "Confusing number of groups with items per group",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Distribute 144 counters into 12 equal trays."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Partition a 12-by-12 array into twelve equal rows."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "144÷12=12."
+        },
+        {
+          "id": "verify",
+          "instruction": "12 students ×12 cards=144 cards."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "12×10=120, 12×2=24, so 12×12=144."
+      },
+      "mastery_evidence": {
+        "correct_answer": "7",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-026",
+      "linked_item_id": "draft-depth-division_groups-02",
+      "provisional_skill": "DIVISION_GROUPS",
+      "level": "fluency",
+      "misconception_trigger": "Confusing number of groups with items per group",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Distribute 144 counters into 12 equal trays."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Partition a 12-by-12 array into twelve equal rows."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "144÷12=12."
+        },
+        {
+          "id": "verify",
+          "instruction": "12 students ×12 cards=144 cards."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "12×10=120, 12×2=24, so 12×12=144."
+      },
+      "mastery_evidence": {
+        "correct_answer": "9",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-027",
+      "linked_item_id": "draft-depth-division_groups-03",
+      "provisional_skill": "DIVISION_GROUPS",
+      "level": "guided-representation",
+      "misconception_trigger": "Confusing number of groups with items per group",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Distribute 144 counters into 12 equal trays."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Partition a 12-by-12 array into twelve equal rows."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "144÷12=12."
+        },
+        {
+          "id": "verify",
+          "instruction": "12 students ×12 cards=144 cards."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "12×10=120, 12×2=24, so 12×12=144."
+      },
+      "mastery_evidence": {
+        "correct_answer": "8",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-028",
+      "linked_item_id": "draft-depth-division_groups-04",
+      "provisional_skill": "DIVISION_GROUPS",
+      "level": "guided-representation",
+      "misconception_trigger": "Confusing number of groups with items per group",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Distribute 144 counters into 12 equal trays."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Partition a 12-by-12 array into twelve equal rows."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "144÷12=12."
+        },
+        {
+          "id": "verify",
+          "instruction": "12 students ×12 cards=144 cards."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "12×10=120, 12×2=24, so 12×12=144."
+      },
+      "mastery_evidence": {
+        "correct_answer": "16",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-029",
+      "linked_item_id": "draft-depth-division_groups-05",
+      "provisional_skill": "DIVISION_GROUPS",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Confusing number of groups with items per group",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Distribute 144 counters into 12 equal trays."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Partition a 12-by-12 array into twelve equal rows."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "144÷12=12."
+        },
+        {
+          "id": "verify",
+          "instruction": "12 students ×12 cards=144 cards."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "12×10=120, 12×2=24, so 12×12=144."
+      },
+      "mastery_evidence": {
+        "correct_answer": "24",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-030",
+      "linked_item_id": "draft-depth-division_groups-06",
+      "provisional_skill": "DIVISION_GROUPS",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Confusing number of groups with items per group",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Distribute 144 counters into 12 equal trays."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Partition a 12-by-12 array into twelve equal rows."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "144÷12=12."
+        },
+        {
+          "id": "verify",
+          "instruction": "12 students ×12 cards=144 cards."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "12×10=120, 12×2=24, so 12×12=144."
+      },
+      "mastery_evidence": {
+        "correct_answer": "18",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-031",
+      "linked_item_id": "draft-depth-division_groups-07",
+      "provisional_skill": "DIVISION_GROUPS",
+      "level": "error-analysis",
+      "misconception_trigger": "Confusing number of groups with items per group",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Distribute 144 counters into 12 equal trays."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Partition a 12-by-12 array into twelve equal rows."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "144÷12=12."
+        },
+        {
+          "id": "verify",
+          "instruction": "12 students ×12 cards=144 cards."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "12×10=120, 12×2=24, so 12×12=144."
+      },
+      "mastery_evidence": {
+        "correct_answer": "24",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-032",
+      "linked_item_id": "draft-depth-division_groups-08",
+      "provisional_skill": "DIVISION_GROUPS",
+      "level": "error-analysis",
+      "misconception_trigger": "Confusing number of groups with items per group",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Distribute 144 counters into 12 equal trays."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Partition a 12-by-12 array into twelve equal rows."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "144÷12=12."
+        },
+        {
+          "id": "verify",
+          "instruction": "12 students ×12 cards=144 cards."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "12×10=120, 12×2=24, so 12×12=144."
+      },
+      "mastery_evidence": {
+        "correct_answer": "28",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-033",
+      "linked_item_id": "draft-depth-like_fraction_addition-01",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "level": "fluency",
+      "misconception_trigger": "Adding denominators when denominators already match",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Join three eighth-sized pieces and five eighth-sized pieces into one whole."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Shade 3 and 5 segments of the same eight-part bar."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "3/8+5/8=8/8=1."
+        },
+        {
+          "id": "verify",
+          "instruction": "One whole has eight eighths."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "5/8 is the complement of 3/8 to one whole."
+      },
+      "mastery_evidence": {
+        "correct_answer": "4/5",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-034",
+      "linked_item_id": "draft-depth-like_fraction_addition-02",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "level": "fluency",
+      "misconception_trigger": "Adding denominators when denominators already match",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Join three eighth-sized pieces and five eighth-sized pieces into one whole."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Shade 3 and 5 segments of the same eight-part bar."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "3/8+5/8=8/8=1."
+        },
+        {
+          "id": "verify",
+          "instruction": "One whole has eight eighths."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "5/8 is the complement of 3/8 to one whole."
+      },
+      "mastery_evidence": {
+        "correct_answer": "5/8",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-035",
+      "linked_item_id": "draft-depth-like_fraction_addition-03",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "level": "guided-representation",
+      "misconception_trigger": "Adding denominators when denominators already match",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Join three eighth-sized pieces and five eighth-sized pieces into one whole."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Shade 3 and 5 segments of the same eight-part bar."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "3/8+5/8=8/8=1."
+        },
+        {
+          "id": "verify",
+          "instruction": "One whole has eight eighths."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "5/8 is the complement of 3/8 to one whole."
+      },
+      "mastery_evidence": {
+        "correct_answer": "5/7",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-036",
+      "linked_item_id": "draft-depth-like_fraction_addition-04",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "level": "guided-representation",
+      "misconception_trigger": "Adding denominators when denominators already match",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Join three eighth-sized pieces and five eighth-sized pieces into one whole."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Shade 3 and 5 segments of the same eight-part bar."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "3/8+5/8=8/8=1."
+        },
+        {
+          "id": "verify",
+          "instruction": "One whole has eight eighths."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "5/8 is the complement of 3/8 to one whole."
+      },
+      "mastery_evidence": {
+        "correct_answer": "1/1",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-037",
+      "linked_item_id": "draft-depth-like_fraction_addition-05",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Adding denominators when denominators already match",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Join three eighth-sized pieces and five eighth-sized pieces into one whole."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Shade 3 and 5 segments of the same eight-part bar."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "3/8+5/8=8/8=1."
+        },
+        {
+          "id": "verify",
+          "instruction": "One whole has eight eighths."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "5/8 is the complement of 3/8 to one whole."
+      },
+      "mastery_evidence": {
+        "correct_answer": "9/11",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-038",
+      "linked_item_id": "draft-depth-like_fraction_addition-06",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Adding denominators when denominators already match",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Join three eighth-sized pieces and five eighth-sized pieces into one whole."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Shade 3 and 5 segments of the same eight-part bar."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "3/8+5/8=8/8=1."
+        },
+        {
+          "id": "verify",
+          "instruction": "One whole has eight eighths."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "5/8 is the complement of 3/8 to one whole."
+      },
+      "mastery_evidence": {
+        "correct_answer": "1/1",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-039",
+      "linked_item_id": "draft-depth-like_fraction_addition-07",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "level": "error-analysis",
+      "misconception_trigger": "Adding denominators when denominators already match",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Join three eighth-sized pieces and five eighth-sized pieces into one whole."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Shade 3 and 5 segments of the same eight-part bar."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "3/8+5/8=8/8=1."
+        },
+        {
+          "id": "verify",
+          "instruction": "One whole has eight eighths."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "5/8 is the complement of 3/8 to one whole."
+      },
+      "mastery_evidence": {
+        "correct_answer": "1/1",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-040",
+      "linked_item_id": "draft-depth-like_fraction_addition-08",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "level": "error-analysis",
+      "misconception_trigger": "Adding denominators when denominators already match",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Join three eighth-sized pieces and five eighth-sized pieces into one whole."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Shade 3 and 5 segments of the same eight-part bar."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "3/8+5/8=8/8=1."
+        },
+        {
+          "id": "verify",
+          "instruction": "One whole has eight eighths."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "5/8 is the complement of 3/8 to one whole."
+      },
+      "mastery_evidence": {
+        "correct_answer": "17/15",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-041",
+      "linked_item_id": "draft-depth-decimal_addition-01",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "level": "fluency",
+      "misconception_trigger": "Misaligning decimal place values",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Use hundredths grids and trade ten hundredths for one tenth."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Align the decimal points in place-value columns."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "4.75+3.68=8.43."
+        },
+        {
+          "id": "verify",
+          "instruction": "8.43−3.68=4.75."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "4.75+3.25+0.43=8.43."
+      },
+      "mastery_evidence": {
+        "correct_answer": "3.60",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-042",
+      "linked_item_id": "draft-depth-decimal_addition-02",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "level": "fluency",
+      "misconception_trigger": "Misaligning decimal place values",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Use hundredths grids and trade ten hundredths for one tenth."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Align the decimal points in place-value columns."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "4.75+3.68=8.43."
+        },
+        {
+          "id": "verify",
+          "instruction": "8.43−3.68=4.75."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "4.75+3.25+0.43=8.43."
+      },
+      "mastery_evidence": {
+        "correct_answer": "4.15",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-043",
+      "linked_item_id": "draft-depth-decimal_addition-03",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "level": "guided-representation",
+      "misconception_trigger": "Misaligning decimal place values",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Use hundredths grids and trade ten hundredths for one tenth."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Align the decimal points in place-value columns."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "4.75+3.68=8.43."
+        },
+        {
+          "id": "verify",
+          "instruction": "8.43−3.68=4.75."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "4.75+3.25+0.43=8.43."
+      },
+      "mastery_evidence": {
+        "correct_answer": "8.35",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-044",
+      "linked_item_id": "draft-depth-decimal_addition-04",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "level": "guided-representation",
+      "misconception_trigger": "Misaligning decimal place values",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Use hundredths grids and trade ten hundredths for one tenth."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Align the decimal points in place-value columns."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "4.75+3.68=8.43."
+        },
+        {
+          "id": "verify",
+          "instruction": "8.43−3.68=4.75."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "4.75+3.25+0.43=8.43."
+      },
+      "mastery_evidence": {
+        "correct_answer": "13.84",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-045",
+      "linked_item_id": "draft-depth-decimal_addition-05",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Misaligning decimal place values",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Use hundredths grids and trade ten hundredths for one tenth."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Align the decimal points in place-value columns."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "4.75+3.68=8.43."
+        },
+        {
+          "id": "verify",
+          "instruction": "8.43−3.68=4.75."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "4.75+3.25+0.43=8.43."
+      },
+      "mastery_evidence": {
+        "correct_answer": "15.15",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-046",
+      "linked_item_id": "draft-depth-decimal_addition-06",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Misaligning decimal place values",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Use hundredths grids and trade ten hundredths for one tenth."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Align the decimal points in place-value columns."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "4.75+3.68=8.43."
+        },
+        {
+          "id": "verify",
+          "instruction": "8.43−3.68=4.75."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "4.75+3.25+0.43=8.43."
+      },
+      "mastery_evidence": {
+        "correct_answer": "21.20",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-047",
+      "linked_item_id": "draft-depth-decimal_addition-07",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "level": "error-analysis",
+      "misconception_trigger": "Misaligning decimal place values",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Use hundredths grids and trade ten hundredths for one tenth."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Align the decimal points in place-value columns."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "4.75+3.68=8.43."
+        },
+        {
+          "id": "verify",
+          "instruction": "8.43−3.68=4.75."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "4.75+3.25+0.43=8.43."
+      },
+      "mastery_evidence": {
+        "correct_answer": "32.40",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-048",
+      "linked_item_id": "draft-depth-decimal_addition-08",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "level": "error-analysis",
+      "misconception_trigger": "Misaligning decimal place values",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Use hundredths grids and trade ten hundredths for one tenth."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Align the decimal points in place-value columns."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "4.75+3.68=8.43."
+        },
+        {
+          "id": "verify",
+          "instruction": "8.43−3.68=4.75."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "4.75+3.25+0.43=8.43."
+      },
+      "mastery_evidence": {
+        "correct_answer": "36.15",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-049",
+      "linked_item_id": "draft-depth-rectangle_perimeter-01",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "level": "fluency",
+      "misconception_trigger": "Confusing perimeter with area or adding only two sides",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trace all four edges with a string, then measure the string."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Label 9,14,9,14 on the rectangle boundary."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "2×(9+14)=46 cm."
+        },
+        {
+          "id": "verify",
+          "instruction": "Both 9 cm sides and both 14 cm sides are counted."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "9+14+9+14=46."
+      },
+      "mastery_evidence": {
+        "correct_answer": "22",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-050",
+      "linked_item_id": "draft-depth-rectangle_perimeter-02",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "level": "fluency",
+      "misconception_trigger": "Confusing perimeter with area or adding only two sides",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trace all four edges with a string, then measure the string."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Label 9,14,9,14 on the rectangle boundary."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "2×(9+14)=46 cm."
+        },
+        {
+          "id": "verify",
+          "instruction": "Both 9 cm sides and both 14 cm sides are counted."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "9+14+9+14=46."
+      },
+      "mastery_evidence": {
+        "correct_answer": "28",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-051",
+      "linked_item_id": "draft-depth-rectangle_perimeter-03",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "level": "guided-representation",
+      "misconception_trigger": "Confusing perimeter with area or adding only two sides",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trace all four edges with a string, then measure the string."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Label 9,14,9,14 on the rectangle boundary."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "2×(9+14)=46 cm."
+        },
+        {
+          "id": "verify",
+          "instruction": "Both 9 cm sides and both 14 cm sides are counted."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "9+14+9+14=46."
+      },
+      "mastery_evidence": {
+        "correct_answer": "40",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-052",
+      "linked_item_id": "draft-depth-rectangle_perimeter-04",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "level": "guided-representation",
+      "misconception_trigger": "Confusing perimeter with area or adding only two sides",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trace all four edges with a string, then measure the string."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Label 9,14,9,14 on the rectangle boundary."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "2×(9+14)=46 cm."
+        },
+        {
+          "id": "verify",
+          "instruction": "Both 9 cm sides and both 14 cm sides are counted."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "9+14+9+14=46."
+      },
+      "mastery_evidence": {
+        "correct_answer": "50",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-053",
+      "linked_item_id": "draft-depth-rectangle_perimeter-05",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Confusing perimeter with area or adding only two sides",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trace all four edges with a string, then measure the string."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Label 9,14,9,14 on the rectangle boundary."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "2×(9+14)=46 cm."
+        },
+        {
+          "id": "verify",
+          "instruction": "Both 9 cm sides and both 14 cm sides are counted."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "9+14+9+14=46."
+      },
+      "mastery_evidence": {
+        "correct_answer": "60",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-054",
+      "linked_item_id": "draft-depth-rectangle_perimeter-06",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Confusing perimeter with area or adding only two sides",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trace all four edges with a string, then measure the string."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Label 9,14,9,14 on the rectangle boundary."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "2×(9+14)=46 cm."
+        },
+        {
+          "id": "verify",
+          "instruction": "Both 9 cm sides and both 14 cm sides are counted."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "9+14+9+14=46."
+      },
+      "mastery_evidence": {
+        "correct_answer": "86",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-055",
+      "linked_item_id": "draft-depth-rectangle_perimeter-07",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "level": "error-analysis",
+      "misconception_trigger": "Confusing perimeter with area or adding only two sides",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trace all four edges with a string, then measure the string."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Label 9,14,9,14 on the rectangle boundary."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "2×(9+14)=46 cm."
+        },
+        {
+          "id": "verify",
+          "instruction": "Both 9 cm sides and both 14 cm sides are counted."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "9+14+9+14=46."
+      },
+      "mastery_evidence": {
+        "correct_answer": "108",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-056",
+      "linked_item_id": "draft-depth-rectangle_perimeter-08",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "level": "error-analysis",
+      "misconception_trigger": "Confusing perimeter with area or adding only two sides",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Trace all four edges with a string, then measure the string."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Label 9,14,9,14 on the rectangle boundary."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "2×(9+14)=46 cm."
+        },
+        {
+          "id": "verify",
+          "instruction": "Both 9 cm sides and both 14 cm sides are counted."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "9+14+9+14=46."
+      },
+      "mastery_evidence": {
+        "correct_answer": "160",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-057",
+      "linked_item_id": "draft-depth-rectangle_area-01",
+      "provisional_skill": "RECTANGLE_AREA",
+      "level": "fluency",
+      "misconception_trigger": "Adding side lengths instead of counting square units",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Cover the rectangle with 9 rows of 14 unit tiles."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use a 9-by-14 square grid, split into 9×10 and 9×4."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "9×14=126 cm²."
+        },
+        {
+          "id": "verify",
+          "instruction": "Area is 126 square centimetres, not centimetres."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "(10−1)×14=140−14=126."
+      },
+      "mastery_evidence": {
+        "correct_answer": "18",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-058",
+      "linked_item_id": "draft-depth-rectangle_area-02",
+      "provisional_skill": "RECTANGLE_AREA",
+      "level": "fluency",
+      "misconception_trigger": "Adding side lengths instead of counting square units",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Cover the rectangle with 9 rows of 14 unit tiles."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use a 9-by-14 square grid, split into 9×10 and 9×4."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "9×14=126 cm²."
+        },
+        {
+          "id": "verify",
+          "instruction": "Area is 126 square centimetres, not centimetres."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "(10−1)×14=140−14=126."
+      },
+      "mastery_evidence": {
+        "correct_answer": "36",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-059",
+      "linked_item_id": "draft-depth-rectangle_area-03",
+      "provisional_skill": "RECTANGLE_AREA",
+      "level": "guided-representation",
+      "misconception_trigger": "Adding side lengths instead of counting square units",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Cover the rectangle with 9 rows of 14 unit tiles."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use a 9-by-14 square grid, split into 9×10 and 9×4."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "9×14=126 cm²."
+        },
+        {
+          "id": "verify",
+          "instruction": "Area is 126 square centimetres, not centimetres."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "(10−1)×14=140−14=126."
+      },
+      "mastery_evidence": {
+        "correct_answer": "77",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-060",
+      "linked_item_id": "draft-depth-rectangle_area-04",
+      "provisional_skill": "RECTANGLE_AREA",
+      "level": "guided-representation",
+      "misconception_trigger": "Adding side lengths instead of counting square units",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Cover the rectangle with 9 rows of 14 unit tiles."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use a 9-by-14 square grid, split into 9×10 and 9×4."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "9×14=126 cm²."
+        },
+        {
+          "id": "verify",
+          "instruction": "Area is 126 square centimetres, not centimetres."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "(10−1)×14=140−14=126."
+      },
+      "mastery_evidence": {
+        "correct_answer": "104",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-061",
+      "linked_item_id": "draft-depth-rectangle_area-05",
+      "provisional_skill": "RECTANGLE_AREA",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Adding side lengths instead of counting square units",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Cover the rectangle with 9 rows of 14 unit tiles."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use a 9-by-14 square grid, split into 9×10 and 9×4."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "9×14=126 cm²."
+        },
+        {
+          "id": "verify",
+          "instruction": "Area is 126 square centimetres, not centimetres."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "(10−1)×14=140−14=126."
+      },
+      "mastery_evidence": {
+        "correct_answer": "168",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-062",
+      "linked_item_id": "draft-depth-rectangle_area-06",
+      "provisional_skill": "RECTANGLE_AREA",
+      "level": "contextual-transfer",
+      "misconception_trigger": "Adding side lengths instead of counting square units",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Cover the rectangle with 9 rows of 14 unit tiles."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use a 9-by-14 square grid, split into 9×10 and 9×4."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "9×14=126 cm²."
+        },
+        {
+          "id": "verify",
+          "instruction": "Area is 126 square centimetres, not centimetres."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "(10−1)×14=140−14=126."
+      },
+      "mastery_evidence": {
+        "correct_answer": "304",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-063",
+      "linked_item_id": "draft-depth-rectangle_area-07",
+      "provisional_skill": "RECTANGLE_AREA",
+      "level": "error-analysis",
+      "misconception_trigger": "Adding side lengths instead of counting square units",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Cover the rectangle with 9 rows of 14 unit tiles."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use a 9-by-14 square grid, split into 9×10 and 9×4."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "9×14=126 cm²."
+        },
+        {
+          "id": "verify",
+          "instruction": "Area is 126 square centimetres, not centimetres."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "(10−1)×14=140−14=126."
+      },
+      "mastery_evidence": {
+        "correct_answer": "504",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "pathway_id": "depth-path-064",
+      "linked_item_id": "draft-depth-rectangle_area-08",
+      "provisional_skill": "RECTANGLE_AREA",
+      "level": "error-analysis",
+      "misconception_trigger": "Adding side lengths instead of counting square units",
+      "adaptive_stages": [
+        {
+          "id": "diagnose",
+          "instruction": "Ask the learner to identify the operation and justify its use before calculating."
+        },
+        {
+          "id": "represent",
+          "instruction": "Cover the rectangle with 9 rows of 14 unit tiles."
+        },
+        {
+          "id": "visualize",
+          "instruction": "Use a 9-by-14 square grid, split into 9×10 and 9×4."
+        },
+        {
+          "id": "symbolize",
+          "instruction": "9×14=126 cm²."
+        },
+        {
+          "id": "verify",
+          "instruction": "Area is 126 square centimetres, not centimetres."
+        }
+      ],
+      "branch_on_incorrect": {
+        "first_attempt": "Offer the concrete representation and one guiding question without revealing the answer.",
+        "second_attempt": "Reveal the visual model and highlight the mathematical invariant.",
+        "third_attempt": "Show the symbolic worked solution and require a new transfer problem."
+      },
+      "branch_on_correct": {
+        "prompt": "Explain a different method and verify the result.",
+        "alternative_method": "(10−1)×14=140−14=126."
+      },
+      "mastery_evidence": {
+        "correct_answer": "1120",
+        "require_explanation": true,
+        "require_independent_check": true,
+        "require_unseen_transfer": true
+      },
+      "review_status": "PENDING"
+    }
+  ],
+  "diagnostics": [
+    {
+      "diagnostic_id": "depth-diag-01",
+      "provisional_skill": "ADDITION_REGROUP",
+      "question": "Compute 67 + 58.",
+      "operation": "add",
+      "operands": {
+        "a": 67,
+        "b": 58
+      },
+      "expected": "125",
+      "choices": [
+        "125",
+        "115",
+        "1115"
+      ],
+      "correct_index": 0,
+      "incorrect_feedback": [
+        {
+          "choice_index": 1,
+          "feedback": "The ones are 7+8=15, so trade 10 ones for one ten; do not discard the carried ten."
+        },
+        {
+          "choice_index": 2,
+          "feedback": "Writing 15 ones as 11 tens and 5 ones changes the value. Check place-value columns."
+        }
+      ],
+      "concrete": "Exchange ten ones for one ten using base-ten blocks.",
+      "visual": "Draw aligned tens and ones columns, with an arrow for each trade.",
+      "symbolic": "67+58=125; 7+8=15 ones, 6+5+1=12 tens.",
+      "alternative_method": "67+60−2=125.",
+      "independent_check": "125−58=67.",
+      "misconception_tag": "missing-regroup",
+      "transfer": {
+        "question": "A charity has 78 packages and receives 46 more. How many packages?",
+        "expected": "124"
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "diagnostic_id": "depth-diag-02",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "question": "Compute 302 − 157.",
+      "operation": "subtract",
+      "operands": {
+        "a": 302,
+        "b": 157
+      },
+      "expected": "145",
+      "choices": [
+        "255",
+        "155",
+        "145"
+      ],
+      "correct_index": 2,
+      "incorrect_feedback": [
+        {
+          "choice_index": 0,
+          "feedback": "Subtracting the smaller digit from the larger in each column ignores place value and regrouping."
+        },
+        {
+          "choice_index": 1,
+          "feedback": "Check the ones: regroup hundreds and tens before subtracting 7 ones from 2 ones."
+        }
+      ],
+      "concrete": "Trade one hundred for ten tens and one ten for ten ones.",
+      "visual": "Draw 3 hundreds, 0 tens and 2 ones, then cross out regrouped units.",
+      "symbolic": "302−157=145.",
+      "alternative_method": "302−150−7=152−7=145.",
+      "independent_check": "145+157=302.",
+      "misconception_tag": "subtract-without-regroup",
+      "transfer": {
+        "question": "A warehouse has 504 boxes and ships 268. How many remain?",
+        "expected": "236"
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "diagnostic_id": "depth-diag-03",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "question": "Eight trays hold 13 muffins each. How many muffins?",
+      "operation": "multiply",
+      "operands": {
+        "a": 8,
+        "b": 13
+      },
+      "expected": "104",
+      "choices": [
+        "96",
+        "104",
+        "21"
+      ],
+      "correct_index": 1,
+      "incorrect_feedback": [
+        {
+          "choice_index": 2,
+          "feedback": "Adding 8 and 13 counts factors, not all eight groups."
+        },
+        {
+          "choice_index": 0,
+          "feedback": "Eight groups of 12 is only 96; include the extra muffin on each tray."
+        }
+      ],
+      "concrete": "Build eight groups of thirteen counters.",
+      "visual": "Use an 8-by-13 array split into 8-by-10 and 8-by-3.",
+      "symbolic": "8×13=8×(10+3)=80+24=104.",
+      "alternative_method": "13×(4+4)=52+52=104.",
+      "independent_check": "104÷8=13.",
+      "misconception_tag": "equal-groups-vs-addition",
+      "transfer": {
+        "question": "Seven boxes contain 16 crayons each. How many crayons?",
+        "expected": "112"
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "diagnostic_id": "depth-diag-04",
+      "provisional_skill": "DIVISION_GROUPS",
+      "question": "Share 144 cards equally among 12 students. How many cards each?",
+      "operation": "divide",
+      "operands": {
+        "a": 144,
+        "b": 12
+      },
+      "expected": "12",
+      "choices": [
+        "12",
+        "1728",
+        "132"
+      ],
+      "correct_index": 0,
+      "incorrect_feedback": [
+        {
+          "choice_index": 1,
+          "feedback": "Multiplication increases the total instead of distributing the given cards."
+        },
+        {
+          "choice_index": 2,
+          "feedback": "Subtracting the number of students once is not equal sharing; use equal groups."
+        }
+      ],
+      "concrete": "Distribute 144 counters into 12 equal trays.",
+      "visual": "Partition a 12-by-12 array into twelve equal rows.",
+      "symbolic": "144÷12=12.",
+      "alternative_method": "12×10=120, 12×2=24, so 12×12=144.",
+      "independent_check": "12 students ×12 cards=144 cards.",
+      "misconception_tag": "quotient-vs-total",
+      "transfer": {
+        "question": "Distribute 168 stickers equally to 14 students. How many per student?",
+        "expected": "12"
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "diagnostic_id": "depth-diag-05",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "question": "Add 3/8 + 5/8. Give the simplest fraction or whole number.",
+      "operation": "fraction_add",
+      "operands": {
+        "a": 3,
+        "b": 5,
+        "d": 8
+      },
+      "expected": "1",
+      "choices": [
+        "8/16",
+        "8/64",
+        "1"
+      ],
+      "correct_index": 2,
+      "incorrect_feedback": [
+        {
+          "choice_index": 0,
+          "feedback": "Adding denominators gives 8/16=1/2, which changes the size of the eighths."
+        },
+        {
+          "choice_index": 1,
+          "feedback": "Multiplying denominators is not needed when both parts already use eighths."
+        }
+      ],
+      "concrete": "Join three eighth-sized pieces and five eighth-sized pieces into one whole.",
+      "visual": "Shade 3 and 5 segments of the same eight-part bar.",
+      "symbolic": "3/8+5/8=8/8=1.",
+      "alternative_method": "5/8 is the complement of 3/8 to one whole.",
+      "independent_check": "One whole has eight eighths.",
+      "misconception_tag": "add-denominators",
+      "transfer": {
+        "question": "Add 7/12 + 5/12. Give the simplest fraction or whole number.",
+        "expected": "1"
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "diagnostic_id": "depth-diag-06",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "question": "Compute 4.75 + 3.68. Give two decimal places.",
+      "operation": "decimal_cents_add",
+      "operands": {
+        "a_cents": 475,
+        "b_cents": 368
+      },
+      "expected": "8.43",
+      "choices": [
+        "8.33",
+        "8.43",
+        "7.133"
+      ],
+      "correct_index": 1,
+      "incorrect_feedback": [
+        {
+          "choice_index": 2,
+          "feedback": "A hundredths column cannot contain 13 hundredths without regrouping."
+        },
+        {
+          "choice_index": 0,
+          "feedback": "Remember 5 hundredths +8 hundredths creates one tenth and three hundredths."
+        }
+      ],
+      "concrete": "Use hundredths grids and trade ten hundredths for one tenth.",
+      "visual": "Align the decimal points in place-value columns.",
+      "symbolic": "4.75+3.68=8.43.",
+      "alternative_method": "4.75+3.25+0.43=8.43.",
+      "independent_check": "8.43−3.68=4.75.",
+      "misconception_tag": "decimal-place-regroup",
+      "transfer": {
+        "question": "Add $6.85 and $2.76. Give the total in dollars to two decimal places.",
+        "expected": "9.61"
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "diagnostic_id": "depth-diag-07",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "question": "Find the perimeter of a 9 cm by 14 cm rectangle. Give the number of centimetres.",
+      "operation": "perimeter",
+      "operands": {
+        "length": 9,
+        "width": 14
+      },
+      "expected": "46",
+      "choices": [
+        "46",
+        "126",
+        "23"
+      ],
+      "correct_index": 0,
+      "incorrect_feedback": [
+        {
+          "choice_index": 1,
+          "feedback": "9×14=126 is area, not the length of the boundary."
+        },
+        {
+          "choice_index": 2,
+          "feedback": "9+14=23 counts only two sides; include both pairs of opposite sides."
+        }
+      ],
+      "concrete": "Trace all four edges with a string, then measure the string.",
+      "visual": "Label 9,14,9,14 on the rectangle boundary.",
+      "symbolic": "2×(9+14)=46 cm.",
+      "alternative_method": "9+14+9+14=46.",
+      "independent_check": "Both 9 cm sides and both 14 cm sides are counted.",
+      "misconception_tag": "area-vs-perimeter",
+      "transfer": {
+        "question": "A garden measures 11 m by 16 m. How many metres of fencing surround it?",
+        "expected": "54"
+      },
+      "review_status": "PENDING"
+    },
+    {
+      "diagnostic_id": "depth-diag-08",
+      "provisional_skill": "RECTANGLE_AREA",
+      "question": "Find the area of a 9 cm by 14 cm rectangle. Give the number of square centimetres.",
+      "operation": "area",
+      "operands": {
+        "length": 9,
+        "width": 14
+      },
+      "expected": "126",
+      "choices": [
+        "46",
+        "23",
+        "126"
+      ],
+      "correct_index": 2,
+      "incorrect_feedback": [
+        {
+          "choice_index": 0,
+          "feedback": "46 cm is the perimeter; area counts the squares inside."
+        },
+        {
+          "choice_index": 1,
+          "feedback": "Adding side lengths does not count the number of unit squares."
+        }
+      ],
+      "concrete": "Cover the rectangle with 9 rows of 14 unit tiles.",
+      "visual": "Use a 9-by-14 square grid, split into 9×10 and 9×4.",
+      "symbolic": "9×14=126 cm².",
+      "alternative_method": "(10−1)×14=140−14=126.",
+      "independent_check": "Area is 126 square centimetres, not centimetres.",
+      "misconception_tag": "perimeter-vs-area",
+      "transfer": {
+        "question": "A rug is 12 m by 15 m. How many square metres does it cover?",
+        "expected": "180"
+      },
+      "review_status": "PENDING"
+    }
+  ]
+}
