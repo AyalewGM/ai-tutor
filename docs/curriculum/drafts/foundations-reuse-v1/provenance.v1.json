@@ -1,0 +1,524 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "Mihur Foundations reuse-first provenance sidecar",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "reviewed_at_utc": "2026-10-11",
+  "overview": "Draft generator/MVE references and local arithmetic examples do not establish independently verified scoring, accepted standards, mathematics approval, mastery or runtime readiness. Preserve all review gates and test against exact upstream heads before promotion.",
+  "reconciliation_required_before_merge": true,
+  "reconciled_repository_state": {
+    "main_head_sha": "313c13c9df4d530777cf89fb34f21dcedd91f454",
+    "mapping_pr_325_merge_sha": "c1fa26a560ebea022202bace38d51e91ca5d08fa",
+    "package_pr_327_head_sha": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
+    "package_pr_328_head_sha": "0036253470c3f47ce0b35b0bba8264cd2cc4817f",
+    "foundations_pr_331_base_sha": "e34aa17bf38d14ef925c8bed2b42f5dfb442e8e4",
+    "fraction_pr_336_head_sha": "44da300d3b89bc610f98df18d697186fa232351c"
+  },
+  "inspected_repository_sources": [
+    "app/domains/place_value.py",
+    "docs/curriculum/drafts/foundations-reuse-v1/place_value_seeded.py",
+    "app/domains/fractions.py",
+    "app/domains/addition.py",
+    "app/domains/decimals.py",
+    "app/domains/multiplication.py",
+    "app/domains/geometry_measurement.py",
+    "frontend/src/mve/InteractiveFractionBars.tsx",
+    "frontend/src/mve/interactiveFractionBars.test.mjs"
+  ],
+  "inspected_prs": [
+    309,
+    316,
+    319,
+    325,
+    327,
+    328,
+    331,
+    336
+  ],
+  "inspected_issues": [
+    278,
+    293
+  ],
+  "existing_work_gap_improvement_verification": [
+    {
+      "existing_work": "W1-G2-PLACE-VALUE-REGROUP draft PR #327, place-value generators on main, draft place-value progression PR #316",
+      "actual_gap": "The pedagogy-accepted PR #327 design had fixed examples only: no deterministic replay, executable response-evidence diagnosis, independently reconstructed oracle, or distinct hidden-variant contract.",
+      "planned_improvement": "R2 seeded compose/exchange/zero/comparison/transfer structures, coefficient oracle, public-payload non-disclosure, and six response-specific Socratic routes; retain the MVE as an unwired accessibility requirement.",
+      "verification": "Draft-only tests cover replay, mode separation, all structures, exchange invariance, comparison, invalid values, diagnosis and assessment isolation; full UI/backend/Muse evidence PENDING."
+    },
+    {
+      "existing_work": "W1-G4-FRACTION-EQUIVALENCE draft PR #327; dedicated R2 package PR #336; fraction intake PR #309; `MATH.FRAC.EQUIV.FIND` generator; guided-only fraction bars in main and PR #303",
+      "actual_gap": "PR #336 now owns deterministic reasoning variants and provenance; paired-bar integration, accepted mapping and independent review remain open outside this PR's ownership.",
+      "planned_improvement": "No further fraction change in this revision; defer to PR #336 and its independent owner gates.",
+      "verification": "PR #336 exact-head CI/AppSec are reported green; no approval or integration credit is inherited here."
+    },
+    {
+      "existing_work": "W2-G1-ADDITION-UNKNOWN draft PR #328 and word problem structures PR #319; existing missing-addend and change-unknown generator families on main",
+      "actual_gap": "The source package's transfer repeats a result-unknown join, does not collect evidence across unknown positions and has no executable diagnosis router.",
+      "planned_improvement": "Seeded result/change/start/part/comparison structures with role-equation-answer-check evidence and response-specific repairs.",
+      "verification": "Deterministic replay, mode separation, independent integer relation oracles, invalid-input rejection and diagnosed-error tests; backend/Muse evidence PENDING."
+    }
+  ],
+  "packages": [
+    {
+      "package_id": "W1-G2-PLACE-VALUE-REGROUP",
+      "proposed_revision": "foundations-reuse-r2",
+      "upstream_draft": {
+        "pull_request": 327,
+        "pinned_head_sha": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
+        "path": "docs/curriculum/drafts/learning-packages-wave1/content.draft.json",
+        "status": "DRAFT_UNVERIFIED"
+      },
+      "existing_work": {
+        "generator_family": "MATH.PV.COMPOSE_NONSTANDARD",
+        "canonical_candidate_or_existing_family": "MATH.NS.COMPOSE_DECOMPOSE",
+        "canonical_approval": "UNKNOWN",
+        "main_generator_source": "app/domains/place_value.py",
+        "mve_existing_paths": [],
+        "mve_integration_to_package": "REQUIREMENT_ONLY_NOT_IMPLEMENTED_OR_WIRED",
+        "related_draft_prs": [
+          316
+        ]
+      },
+      "standards": {
+        "publisher": "Common Core State Standards Initiative",
+        "publication_version": "2010 Common Core State Standards for Mathematics",
+        "official_url": "https://www.thecorestandards.org/Math/Content/NBT/",
+        "expectation_ids": [
+          "CCSS.Math.Content.2.NBT.A.1"
+        ],
+        "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+        "jurisdiction_scope": "CCSS candidate only; Maryland/Ontario adoption and alignment UNKNOWN"
+      },
+      "pedagogy": {
+        "research_references": [
+          "https://ies.ed.gov/ncee/wwc/"
+        ],
+        "research_status": "SOURCE_REFERENCE_ONLY_NOT_LESSON_APPROVAL",
+        "concrete_visual_symbolic": "DRAFT_R2_EVIDENCE_CONTRACT",
+        "mihur_eight_phases": "DRAFT_R2_EVIDENCE_CONTRACT",
+        "misconception_specific_pathways": "DRAFT_EXECUTABLE_RESPONSE_ROUTER",
+        "source_design_review": "PR_327_ACCEPT_PEDAGOGY_ONLY_AT_5d4e613b_CURRENT_R2_REVIEW_PENDING"
+      },
+      "practice": {
+        "seeded_generator_contract": "DRAFT_LOCAL_MODE_SEPARATED_EXECUTED_IN_TESTS",
+        "independent_exact_oracle": "DRAFT_TESTED_COEFFICIENT_RECONSTRUCTION_NOT_REVIEWED",
+        "unseen_transfer_assessment": "DRAFT_BUNDLE_CONTEXT_MULTI_FIELD_CONTRACT",
+        "authoritative_backend_verification": "NOT_EVIDENCED",
+        "historical_mastery_affected": false
+      },
+      "approvals": {
+        "standards": "PENDING",
+        "mathematics": "PENDING",
+        "pedagogy": "PENDING_R2_REVIEW_SOURCE_DESIGN_ACCEPTED_PR327_ONLY",
+        "muse_accessibility_and_assessment": "PENDING",
+        "release": "NOT_APPROVED"
+      },
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "status": "DRAFT_UNVERIFIED",
+      "overlay_status": "DRAFT_SIDE_CAR"
+    },
+    {
+      "package_id": "W1-G4-FRACTION-EQUIVALENCE",
+      "proposed_revision": "foundations-reuse-v1",
+      "upstream_draft": {
+        "pull_request": 327,
+        "pinned_head_sha": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
+        "path": "docs/curriculum/drafts/learning-packages-wave1/content.draft.json",
+        "status": "DRAFT_UNVERIFIED"
+      },
+      "existing_work": {
+        "generator_family": "MATH.FRAC.EQUIV.FIND",
+        "canonical_candidate_or_existing_family": "MATH.NF.EQUIVALENT_FRACTIONS",
+        "canonical_approval": "UNKNOWN",
+        "main_generator_source": "app/domains/fractions.py",
+        "mve_existing_paths": [
+          "frontend/src/mve/InteractiveFractionBars.tsx"
+        ],
+        "mve_integration_to_package": "NOT_EVIDENCED",
+        "related_draft_prs": [
+          309,
+          303
+        ]
+      },
+      "standards": {
+        "publisher": "Common Core State Standards Initiative",
+        "publication_version": "2010 Common Core State Standards for Mathematics",
+        "official_url": "https://www.thecorestandards.org/Math/Content/4/NF/A/1/",
+        "expectation_ids": [
+          "CCSS.Math.Content.4.NF.A.1"
+        ],
+        "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+        "jurisdiction_scope": "CCSS candidate only; Maryland/Ontario adoption and alignment UNKNOWN"
+      },
+      "pedagogy": {
+        "research_references": [
+          "https://ies.ed.gov/ncee/wwc/practiceguide/15"
+        ],
+        "research_status": "SOURCE_REFERENCE_ONLY_NOT_LESSON_APPROVAL",
+        "concrete_visual_symbolic": "DRAFT_CONTRACT",
+        "mihur_eight_phases": "DRAFT_CONTRACT",
+        "misconception_specific_pathways": "DRAFT_CONTRACT"
+      },
+      "practice": {
+        "seeded_generator_contract": "EXISTING_GENERATOR_REFERENCE_NOT_EXECUTED",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
+        "unseen_transfer_assessment": "DRAFT_CONTRACT",
+        "authoritative_backend_verification": "NOT_EVIDENCED",
+        "historical_mastery_affected": false
+      },
+      "approvals": {
+        "standards": "PENDING",
+        "mathematics": "PENDING",
+        "pedagogy": "PENDING",
+        "muse_accessibility_and_assessment": "PENDING",
+        "release": "NOT_APPROVED"
+      },
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "status": "DRAFT_UNVERIFIED",
+      "overlay_status": "DRAFT_SIDE_CAR"
+    },
+    {
+      "package_id": "W2-G1-ADDITION-UNKNOWN",
+      "proposed_revision": "foundations-reuse-r2",
+      "upstream_draft": {
+        "pull_request": 328,
+        "pinned_head_sha": "0036253470c3f47ce0b35b0bba8264cd2cc4817f",
+        "path": "docs/curriculum/drafts/learning-packages-wave2/content.draft.json",
+        "status": "DRAFT_UNVERIFIED"
+      },
+      "existing_work": {
+        "generator_family": "MATH.ADD.WORD.CHANGE_UNKNOWN",
+        "canonical_candidate_or_existing_family": "MATH.NS.ADDITION",
+        "canonical_approval": "UNKNOWN",
+        "main_generator_source": "app/domains/addition.py",
+        "mve_existing_paths": [],
+        "mve_integration_to_package": "NOT_EVIDENCED",
+        "related_draft_prs": [
+          319
+        ]
+      },
+      "standards": {
+        "publisher": "UNKNOWN",
+        "publication_version": "UNKNOWN",
+        "official_url": "UNKNOWN",
+        "expectation_ids": [],
+        "mapping_status": "UNKNOWN",
+        "jurisdiction_scope": "Exact state/provincial expectation mapping requires Standards Mapping review"
+      },
+      "pedagogy": {
+        "research_references": [
+          "https://ies.ed.gov/ncee/wwc/"
+        ],
+        "research_status": "SOURCE_REFERENCE_ONLY_NOT_LESSON_APPROVAL",
+        "concrete_visual_symbolic": "DRAFT_CONTRACT",
+        "mihur_eight_phases": "DRAFT_CONTRACT",
+        "misconception_specific_pathways": "DRAFT_STRUCTURED_GUIDED_RELATION_ROUTER_EXPLANATION_SEMANTICS_UNVERIFIED",
+        "latest_review": "R2_CHANGES_REQUIRED_STRUCTURED_RELATION_R2_AMENDMENT_REVIEW_DEFERRED"
+      },
+      "practice": {
+        "seeded_generator_contract": "DRAFT_LOCAL_MODE_SEPARATED_EXECUTED_IN_TESTS",
+        "independent_exact_oracle": "DRAFT_TESTED_INTEGER_RELATION_RECONSTRUCTION_NOT_REVIEWED",
+        "unseen_transfer_assessment": "DRAFT_COMPARISON_STRUCTURE_MULTI_FIELD_CONTRACT",
+        "authoritative_backend_verification": "NOT_EVIDENCED",
+        "historical_mastery_affected": false,
+        "guided_relation_evidence": "ROLE_MODEL_EQUATION_EXACT_ANSWER_INVERSE_CHECK_AND_STRUCTURED_EXPLANATION_DRAFT_ONLY",
+        "explanation_semantic_scoring": "NOT_IMPLEMENTED",
+        "guided_practice_credit": false
+      },
+      "approvals": {
+        "standards": "PENDING",
+        "mathematics": "PENDING",
+        "pedagogy": "PENDING",
+        "muse_accessibility_and_assessment": "PENDING",
+        "release": "NOT_APPROVED"
+      },
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "status": "DRAFT_UNVERIFIED",
+      "overlay_status": "DRAFT_SIDE_CAR",
+      "author_correction": "2026-10-11: added full relation evaluator and adversarial tests, no independent acceptance"
+    },
+    {
+      "package_id": "W2-G5-DECIMAL-PLACE-VALUE",
+      "proposed_revision": "foundations-reuse-v1",
+      "upstream_draft": {
+        "pull_request": 328,
+        "pinned_head_sha": "0036253470c3f47ce0b35b0bba8264cd2cc4817f",
+        "path": "docs/curriculum/drafts/learning-packages-wave2/content.draft.json",
+        "status": "DRAFT_UNVERIFIED"
+      },
+      "existing_work": {
+        "generator_family": "MATH.DEC.PLACE_VALUE",
+        "canonical_candidate_or_existing_family": "MATH.NS.DECIMAL.PLACE_VALUE",
+        "canonical_approval": "UNKNOWN",
+        "main_generator_source": "app/domains/decimals.py",
+        "mve_existing_paths": [],
+        "mve_integration_to_package": "NOT_EVIDENCED",
+        "related_draft_prs": [
+          309
+        ]
+      },
+      "standards": {
+        "publisher": "UNKNOWN",
+        "publication_version": "UNKNOWN",
+        "official_url": "UNKNOWN",
+        "expectation_ids": [],
+        "mapping_status": "UNKNOWN",
+        "jurisdiction_scope": "Exact state/provincial expectation mapping requires Standards Mapping review"
+      },
+      "pedagogy": {
+        "research_references": [
+          "https://ies.ed.gov/ncee/wwc/"
+        ],
+        "research_status": "SOURCE_REFERENCE_ONLY_NOT_LESSON_APPROVAL",
+        "concrete_visual_symbolic": "UNKNOWN",
+        "mihur_eight_phases": "UNKNOWN",
+        "misconception_specific_pathways": "UNKNOWN"
+      },
+      "practice": {
+        "seeded_generator_contract": "EXISTING_GENERATOR_REFERENCE_NOT_EXECUTED",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
+        "unseen_transfer_assessment": "UNKNOWN",
+        "authoritative_backend_verification": "NOT_EVIDENCED",
+        "historical_mastery_affected": false
+      },
+      "approvals": {
+        "standards": "PENDING",
+        "mathematics": "PENDING",
+        "pedagogy": "PENDING",
+        "muse_accessibility_and_assessment": "PENDING",
+        "release": "NOT_APPROVED"
+      },
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "status": "DRAFT_UNVERIFIED",
+      "overlay_status": "NONE"
+    },
+    {
+      "package_id": "W3-G3-MULTIPLICATIVE-ARRAYS",
+      "proposed_revision": "foundations-reuse-v1",
+      "upstream_draft": {
+        "pull_request": 328,
+        "pinned_head_sha": "0036253470c3f47ce0b35b0bba8264cd2cc4817f",
+        "path": "docs/curriculum/drafts/learning-packages-wave3/content.draft.json",
+        "status": "DRAFT_UNVERIFIED"
+      },
+      "existing_work": {
+        "generator_family": "MATH.MUL.WORD.ARRAY",
+        "canonical_candidate_or_existing_family": "MATH.NS.MULTIPLICATION",
+        "canonical_approval": "UNKNOWN",
+        "main_generator_source": "app/domains/multiplication.py",
+        "mve_existing_paths": [],
+        "mve_integration_to_package": "NOT_EVIDENCED",
+        "related_draft_prs": [
+          319
+        ]
+      },
+      "standards": {
+        "publisher": "UNKNOWN",
+        "publication_version": "UNKNOWN",
+        "official_url": "UNKNOWN",
+        "expectation_ids": [],
+        "mapping_status": "UNKNOWN",
+        "jurisdiction_scope": "Exact state/provincial expectation mapping requires Standards Mapping review"
+      },
+      "pedagogy": {
+        "research_references": [
+          "https://ies.ed.gov/ncee/wwc/"
+        ],
+        "research_status": "SOURCE_REFERENCE_ONLY_NOT_LESSON_APPROVAL",
+        "concrete_visual_symbolic": "UNKNOWN",
+        "mihur_eight_phases": "UNKNOWN",
+        "misconception_specific_pathways": "UNKNOWN"
+      },
+      "practice": {
+        "seeded_generator_contract": "EXISTING_GENERATOR_REFERENCE_NOT_EXECUTED",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
+        "unseen_transfer_assessment": "UNKNOWN",
+        "authoritative_backend_verification": "NOT_EVIDENCED",
+        "historical_mastery_affected": false
+      },
+      "approvals": {
+        "standards": "PENDING",
+        "mathematics": "PENDING",
+        "pedagogy": "PENDING",
+        "muse_accessibility_and_assessment": "PENDING",
+        "release": "NOT_APPROVED"
+      },
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "status": "DRAFT_UNVERIFIED",
+      "overlay_status": "NONE"
+    },
+    {
+      "package_id": "W3-G5-FRACTION-ADDITION",
+      "proposed_revision": "foundations-reuse-v1",
+      "upstream_draft": {
+        "pull_request": 328,
+        "pinned_head_sha": "0036253470c3f47ce0b35b0bba8264cd2cc4817f",
+        "path": "docs/curriculum/drafts/learning-packages-wave3/content.draft.json",
+        "status": "DRAFT_UNVERIFIED"
+      },
+      "existing_work": {
+        "generator_family": "UNKNOWN",
+        "canonical_candidate_or_existing_family": "UNKNOWN",
+        "canonical_approval": "UNKNOWN",
+        "main_generator_source": "UNKNOWN",
+        "mve_existing_paths": [
+          "frontend/src/mve/InteractiveFractionBars.tsx"
+        ],
+        "mve_integration_to_package": "NOT_EVIDENCED",
+        "related_draft_prs": [
+          309
+        ]
+      },
+      "standards": {
+        "publisher": "UNKNOWN",
+        "publication_version": "UNKNOWN",
+        "official_url": "UNKNOWN",
+        "expectation_ids": [],
+        "mapping_status": "UNKNOWN",
+        "jurisdiction_scope": "Exact state/provincial expectation mapping requires Standards Mapping review"
+      },
+      "pedagogy": {
+        "research_references": [
+          "https://ies.ed.gov/ncee/wwc/practiceguide/15"
+        ],
+        "research_status": "SOURCE_REFERENCE_ONLY_NOT_LESSON_APPROVAL",
+        "concrete_visual_symbolic": "UNKNOWN",
+        "mihur_eight_phases": "UNKNOWN",
+        "misconception_specific_pathways": "UNKNOWN"
+      },
+      "practice": {
+        "seeded_generator_contract": "UNKNOWN",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
+        "unseen_transfer_assessment": "UNKNOWN",
+        "authoritative_backend_verification": "NOT_EVIDENCED",
+        "historical_mastery_affected": false
+      },
+      "approvals": {
+        "standards": "PENDING",
+        "mathematics": "PENDING",
+        "pedagogy": "PENDING",
+        "muse_accessibility_and_assessment": "PENDING",
+        "release": "NOT_APPROVED"
+      },
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "status": "DRAFT_UNVERIFIED",
+      "overlay_status": "NONE"
+    },
+    {
+      "package_id": "W4-G3-MEASURE-UNIT",
+      "proposed_revision": "foundations-reuse-v1",
+      "upstream_draft": {
+        "pull_request": 328,
+        "pinned_head_sha": "0036253470c3f47ce0b35b0bba8264cd2cc4817f",
+        "path": "docs/curriculum/drafts/learning-packages-wave4/content.draft.json",
+        "status": "DRAFT_UNVERIFIED"
+      },
+      "existing_work": {
+        "generator_family": "UNKNOWN",
+        "canonical_candidate_or_existing_family": "UNKNOWN",
+        "canonical_approval": "UNKNOWN",
+        "main_generator_source": "UNKNOWN",
+        "mve_existing_paths": [],
+        "mve_integration_to_package": "NOT_EVIDENCED",
+        "related_draft_prs": []
+      },
+      "standards": {
+        "publisher": "UNKNOWN",
+        "publication_version": "UNKNOWN",
+        "official_url": "UNKNOWN",
+        "expectation_ids": [],
+        "mapping_status": "UNKNOWN",
+        "jurisdiction_scope": "Exact state/provincial expectation mapping requires Standards Mapping review"
+      },
+      "pedagogy": {
+        "research_references": [
+          "https://ies.ed.gov/ncee/wwc/"
+        ],
+        "research_status": "SOURCE_REFERENCE_ONLY_NOT_LESSON_APPROVAL",
+        "concrete_visual_symbolic": "UNKNOWN",
+        "mihur_eight_phases": "UNKNOWN",
+        "misconception_specific_pathways": "UNKNOWN"
+      },
+      "practice": {
+        "seeded_generator_contract": "UNKNOWN",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
+        "unseen_transfer_assessment": "UNKNOWN",
+        "authoritative_backend_verification": "NOT_EVIDENCED",
+        "historical_mastery_affected": false
+      },
+      "approvals": {
+        "standards": "PENDING",
+        "mathematics": "PENDING",
+        "pedagogy": "PENDING",
+        "muse_accessibility_and_assessment": "PENDING",
+        "release": "NOT_APPROVED"
+      },
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "status": "DRAFT_UNVERIFIED",
+      "overlay_status": "NONE"
+    },
+    {
+      "package_id": "W4-G4-AREA-PERIMETER",
+      "proposed_revision": "foundations-reuse-v1",
+      "upstream_draft": {
+        "pull_request": 328,
+        "pinned_head_sha": "0036253470c3f47ce0b35b0bba8264cd2cc4817f",
+        "path": "docs/curriculum/drafts/learning-packages-wave4/content.draft.json",
+        "status": "DRAFT_UNVERIFIED"
+      },
+      "existing_work": {
+        "generator_family": "MATH.GEO.AREA.RECT",
+        "canonical_candidate_or_existing_family": "MATH.GEO.MEASURE.AREA",
+        "canonical_approval": "UNKNOWN",
+        "main_generator_source": "app/domains/geometry_measurement.py",
+        "mve_existing_paths": [],
+        "mve_integration_to_package": "NOT_EVIDENCED",
+        "related_draft_prs": []
+      },
+      "standards": {
+        "publisher": "UNKNOWN",
+        "publication_version": "UNKNOWN",
+        "official_url": "UNKNOWN",
+        "expectation_ids": [],
+        "mapping_status": "UNKNOWN",
+        "jurisdiction_scope": "Exact state/provincial expectation mapping requires Standards Mapping review"
+      },
+      "pedagogy": {
+        "research_references": [
+          "https://ies.ed.gov/ncee/wwc/"
+        ],
+        "research_status": "SOURCE_REFERENCE_ONLY_NOT_LESSON_APPROVAL",
+        "concrete_visual_symbolic": "UNKNOWN",
+        "mihur_eight_phases": "UNKNOWN",
+        "misconception_specific_pathways": "UNKNOWN"
+      },
+      "practice": {
+        "seeded_generator_contract": "EXISTING_GENERATOR_REFERENCE_NOT_EXECUTED",
+        "independent_exact_oracle": "NOT_INDEPENDENTLY_VERIFIED",
+        "unseen_transfer_assessment": "UNKNOWN",
+        "authoritative_backend_verification": "NOT_EVIDENCED",
+        "historical_mastery_affected": false
+      },
+      "approvals": {
+        "standards": "PENDING",
+        "mathematics": "PENDING",
+        "pedagogy": "PENDING",
+        "muse_accessibility_and_assessment": "PENDING",
+        "release": "NOT_APPROVED"
+      },
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "status": "DRAFT_UNVERIFIED",
+      "overlay_status": "NONE"
+    }
+  ]
+}
