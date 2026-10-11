@@ -840,65 +840,7 @@
       "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
-      "rank": 10,
-      "task_type_id": "DMV.TASK.POLYNOMIAL.MONOMIAL_DIVIDE_RESTRICT",
-      "grade_band": "8-9 / Algebra I",
-      "mathematical_demand": "Divide polynomial terms by a monomial, state denominator restrictions, verify by multiplication, and critique cancellation or exponent errors.",
-      "original_structure": "Predict termwise quotient structure, distribute division, record nonzero restrictions, simplify coefficients and exponents, verify by multiplication, then diagnose an invalid cancellation.",
-      "variability": [
-        "signed coefficients",
-        "fractional coefficients",
-        "missing powers",
-        "zero coefficient terms",
-        "symbolic divisor restrictions",
-        "equivalent reordered forms"
-      ],
-      "jurisdiction_evidence": {
-        "Maryland": [],
-        "Virginia": [],
-        "Washington_DC": []
-      },
-      "canonical_disposition": "PROPOSE_IDENTITY_REVIEW",
-      "canonical_skill_codes": [],
-      "implementation": {
-        "generator": "DRAFT_PR_344_QUOTIENT_FAMILY_MATHEMATICALLY_ACCEPTED__IDENTITY_PENDING",
-        "tests": "EXACT_HEAD_AUDIT_REQUIRED",
-        "mve_or_student_route": "DRAFT_PR_348_PACKAGE_ONLY__IMPLEMENTED_MVE_AND_ROUTE_ABSENT",
-        "socratic_remediation": "DRAFT_PR_348_REQUEST_CHANGES",
-        "backend_independent_assessment": "DRAFT_PR_346_REQUEST_CHANGES",
-        "qa": "NOT_REVIEWED"
-      },
-      "gap": "The broad historical polynomial-operations identity cannot absorb division mastery. Two collision-audited DRAFT cards, canonicalized equivalent-term scoring, exact reconstruction/domain evidence, implemented accessible MVE/route, independent review, and Muse QA remain open.",
-      "owners": [
-        "Algebra Content",
-        "Architecture",
-        "MVE",
-        "Frontend Integration",
-        "Assessment Backend",
-        "Independent Mathematical Review",
-        "Pedagogical Review",
-        "Muse QA"
-      ],
-      "publisher_sequence_evidence": [],
-      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing.",
-      "architecture_boundary": {
-        "status": "TWO_BOUNDED_DRAFT_ATOMS_AUTHORIZED_AFTER_COLLISION_AUDIT",
-        "candidate_codes": [
-          "MATH.POLY.DIVIDE_MONOMIALS",
-          "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL"
-        ],
-        "prerequisite": "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL_REQUIRES_MATH.POLY.DIVIDE_MONOMIALS",
-        "historical_family_not_expanded": "MATH.EE.POLYNOMIAL_OPERATIONS",
-        "evidence_dimensions_not_identities": [
-          "DENOMINATOR_DOMAIN_RESTRICTIONS",
-          "MULTIPLICATION_RECONSTRUCTION",
-          "STRUCTURED_EXPLANATION"
-        ],
-        "integrated_task_semantics": "REPORTING_ONLY_ALL_OF__ONE_PRIMARY_ATOM__NO_BACK_OR_DUPLICATE_CREDIT"
-      }
-    },
-    {
-      "rank": 10,
+      "rank": 9,
       "task_type_id": "DMV.TASK.POLYNOMIAL.MONOMIAL_DIVIDE_RESTRICT",
       "grade_band": "8-9 / Algebra I",
       "mathematical_demand": "Divide polynomial terms by a monomial, state denominator restrictions, verify by multiplication, and critique cancellation or exponent errors.",
