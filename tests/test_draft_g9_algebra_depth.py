@@ -39,3 +39,13 @@ def test_grade9_algebra_depth_oracles_and_review_gates() -> None:
         assert len(item["socratic_hints"]) == 3
         assert item["transfer_prompt"]
         assert item["worked_reasoning"]
+
+
+def test_identity_item_does_not_disclose_classification() -> None:
+    data = json.loads(PATH.read_text(encoding="utf-8"))
+    item = next(item for item in data["items"] if item["item_id"] == "g9-depth-04")
+    assert item["expected"] == "infinitely many"  # Teacher-only draft oracle.
+    assert "infinitely many" not in item["question"].lower()
+    assert "answer '" not in item["question"].lower()
+    assert "explain" in item["question"].lower()
+    assert item["runtime_activation"] is False
