@@ -164,6 +164,8 @@ def diagnose_relation_evidence(
     semantic quality by this deterministic author-only checker. Never award
     mastery or persist learner evidence from this function.
     """
+    if item.mode != "guided":
+        return "INDEPENDENT_ASSESSMENT_NOT_SCORED_HERE"
     if not isinstance(response, Mapping) or set(response) != RELATION_FIELDS:
         return "INCOMPLETE_RELATION_EVIDENCE"
     if response["unknown_role"] != item.unknown_role:
