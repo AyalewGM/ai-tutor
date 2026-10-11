@@ -797,7 +797,8 @@ export default function Workspace() {
                       independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
                     />
                   )}
-                  {showPolynomialDivisionExploration(workspace.state, workspace.focus.skill_name) && (
+                  {/* Default off until LearnerWorkspace exposes an approved server-owned capability. */}
+                  {showPolynomialDivisionExploration(workspace.state, undefined) && (
                     <InteractivePolynomialDivision
                       key={workspace.focus.active_skill_id}
                       independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}

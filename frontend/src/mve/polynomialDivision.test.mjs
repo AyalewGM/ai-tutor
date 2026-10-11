@@ -187,9 +187,45 @@ test('guided component renders full sequence and fails closed in assessment', ()
   for (const mode of [true, undefined, null]) {
     assert.equal(renderToStaticMarkup(React.createElement(Component, { independentAssessment: mode })), '');
   }
-  assert.equal(math.showPolynomialDivisionExploration('GUIDED_PRACTICE', 'Dividing a Polynomial by a Monomial'), true);
-  assert.equal(math.showPolynomialDivisionExploration('REMEDIATION', 'Polynomial division'), true);
-  assert.equal(math.showPolynomialDivisionExploration('MASTERY_CHECK', 'Polynomial division'), false);
+  assert.equal(
+    math.POLYNOMIAL_DIVISION_ROUTE_STATUS,
+    'DEFAULT_OFF_PENDING_APPROVED_SERVER_CAPABILITY',
+  );
+  for (const state of [
+    'GUIDED_PRACTICE',
+    'REMEDIATION',
+    'INDEPENDENT_PRACTICE',
+    'MASTERY_CHECK',
+    'COMPLETE',
+  ]) {
+    for (const identity of [
+      undefined,
+      null,
+      '',
+      'Dividing a Polynomial by a Monomial',
+      'Polynomial division',
+      'Divide a Polynomial by a Polynomial',
+      'MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL',
+      { capability: 'POLYNOMIAL_DIVISION' },
+    ]) {
+      assert.equal(math.showPolynomialDivisionExploration(state, identity), false);
+    }
+  }
+  const workspaceSource = readFileSync(
+    new URL('../pages/Workspace.tsx', import.meta.url),
+    'utf8',
+  );
+  assert.ok(workspaceSource.includes(
+    'showPolynomialDivisionExploration(workspace.state, undefined)',
+  ));
+  assert.equal(
+    workspaceSource.includes(
+      'showPolynomialDivisionExploration(workspace.state, workspace.focus.skill_name)',
+    ),
+    false,
+  );
+  assert.ok(workspaceSource.includes('InteractiveFractionBars'));
+  assert.ok(workspaceSource.includes('fractionComparisonTarget'));
 });
 
 test('handlers emit bounded events, diagnose repairs and reset', () => {

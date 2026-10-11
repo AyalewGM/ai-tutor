@@ -436,9 +436,22 @@ export function formatPolynomial(terms: readonly AlgebraTerm[]): string {
   }).join(" ");
 }
 
-export function showPolynomialDivisionExploration(state: string, skillName: string): boolean {
-  return ["GUIDED_PRACTICE", "REMEDIATION"].includes(state) &&
-    /polynomial.*monomial|monomial.*polynomial|polynomial division|divide.*polynomial/i.test(skillName);
+export const POLYNOMIAL_DIVISION_ROUTE_STATUS =
+  "DEFAULT_OFF_PENDING_APPROVED_SERVER_CAPABILITY" as const;
+
+/**
+ * Route the guided polynomial-by-monomial MVE only from a future approved,
+ * server-owned capability. No such capability exists in LearnerWorkspace yet,
+ * so every value fails closed. Mutable display names and provisional taxonomy
+ * codes must never authorize this interaction.
+ */
+export function showPolynomialDivisionExploration(
+  state: string,
+  serverOwnedCapability: unknown,
+): boolean {
+  if (!["GUIDED_PRACTICE", "REMEDIATION"].includes(state)) return false;
+  if (typeof serverOwnedCapability !== "string" || serverOwnedCapability.length === 0) return false;
+  return false;
 }
 
 function assertExample(example: DivisionExample) {
