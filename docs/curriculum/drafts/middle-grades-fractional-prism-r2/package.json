@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "package_id": "W1-G6-FRACTIONAL-PRISM-VOLUME",
-  "revision": "middle-grades-fractional-prism-r2",
+  "revision": "middle-grades-fractional-prism-r3",
   "title": "Fractional rectangular-prism volume as layers and exact measure",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
@@ -32,7 +32,7 @@
     {
       "phase": "PREDICT",
       "representations": ["CONCRETE", "SYMBOLIC"],
-      "student_action": "Predict whether the volume is greater or less than the base area from the height, and predict how halving one edge changes the filled space."
+      "student_action": "Compare two volumes for prisms with the same base—one at height 1 unit and one at the stated height—then predict how changing height or halving one edge changes filled space."
     },
     {
       "phase": "MANIPULATE",
@@ -52,7 +52,7 @@
     {
       "phase": "DIAGNOSE",
       "representations": ["CONCRETE", "VISUAL", "SYMBOLIC"],
-      "student_action": "Route the captured operation, exact answer, and unit power to one evidence-specific repair; complete a fresh contrast item before the corresponding scaffold fades."
+      "student_action": "Route the captured operation, exact answer, exact unit family, and unit power to one evidence-specific repair; complete a fresh contrast item before the corresponding scaffold fades."
     },
     {
       "phase": "TRANSFER",
@@ -92,11 +92,11 @@
     },
     {
       "code": "UNIT_DIMENSION_ERROR",
-      "observed_signature": "Exact numeric value is correct but the response uses linear or square rather than cubic units, or cubic units for a recovered length.",
+      "observed_signature": "Exact numeric value is correct but the response uses the wrong base unit family, the wrong dimensional power, or cubic units for a recovered length.",
       "socratic_probe": "How many independent length directions were multiplied or remain after division?",
       "repair": "Label edge, layer, and stack measures as length, square units, and cubic units; cancel units in the inverse equation.",
       "exit_check": "Attach and explain the unit power on one direct-volume and one missing-height item.",
-      "fade_when": "The learner supplies the correct unit power and cancellation explanation on both structures."
+      "fade_when": "The learner supplies the exact unit family, correct power, and cancellation explanation on both structures."
     },
     {
       "code": "OPERATION_SELECTION_ERROR",
@@ -167,5 +167,5 @@
     "backend_status": "NOT_IMPLEMENTED",
     "unseen_transfer": "TRANSFER_MOLD_PLAN requires operation selection before arithmetic and alternates direct volume with inverse height."
   },
-  "review_status": "PENDING_INDEPENDENT_R2_REVIEWS"
+  "review_status": "MATH_REQUEST_CHANGES_AT_62197CC_BOUNDED_R3_CORRECTION_PENDING_REVIEW"
 }
