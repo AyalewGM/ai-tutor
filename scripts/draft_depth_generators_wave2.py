@@ -160,7 +160,7 @@ def _one(structure: str, variant: int, seed: int) -> dict:
         return _make(structure, variant,
             f"A craft group has {whole} beads and uses {numerator}/{denominator} of them. How many beads remain?",
             {"whole": whole, "numerator": numerator, "denominator": denominator}, remain,
-            ("Find the number used, not the remainder.", "Shade the used portion of the whole collection.", "Subtract the used portion from the whole."),
+            ("The problem asks for the remainder. You may calculate the number used as an intermediate step, then subtract it from the starting amount.", "Shade the used portion of the whole collection.", "Subtract the used portion from the whole."),
             ("Divide beads into equal groups.", "Shade the used groups and count unshaded groups.", f"{whole} − ({numerator}/{denominator} × {whole}) = {remain}."),
             "used-instead-of-remaining", used,
             "The question asks what remains after using the fractional part.",
