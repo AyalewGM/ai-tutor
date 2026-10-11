@@ -683,6 +683,34 @@
           "hints_allowed": false,
           "feedback_after_submission": true,
           "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES"
+        },
+        {
+          "question": "Triangle A(−2,1), B(1,1), C(−2,4) is translated by (+4,−3). Give all three new vertices; compare horizontal and vertical side lengths before and after.",
+          "answer": "A′(2,−2), B′(5,−2), C′(2,1); side lengths 3 and 3 remain 3 and 3",
+          "oracle": "apply x′=x+4, y′=y−3 to EACH vertex; differences AB=(3,0) and AC=(0,3) remain unchanged",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES",
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "MULTIVERTEX_TRANSLATION",
+            "LENGTH_PRESERVATION",
+            "TRANSFORMATION_EXPLANATION"
+          ]
+        },
+        {
+          "question": "Triangle P(1,1), Q(4,1), R(1,3) is reflected over the y-axis. Report image coordinates, lengths of legs and right angle, and explain which coordinate changes.",
+          "answer": "P′(−1,1), Q′(−4,1), R′(−1,3); legs 3 and 2, included angle 90° unchanged; x sign flips",
+          "oracle": "reflection (x,y)→(−x,y); PQ length 3, PR length 2, vectors perpendicular both before and after",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "isolation": "SEPARATE_ITEM_FROM_WORKED_EXAMPLES",
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "MULTIVERTEX_REFLECTION",
+            "ANGLE_PRESERVATION",
+            "LENGTH_PRESERVATION"
+          ]
         }
       ],
       "interactive_spec": {
@@ -692,7 +720,12 @@
         "reduced_motion": true,
         "scaffold_disable_on_assessment": true
       },
-      "implementation_note": "DRAFT content contract only, not a tested generator or deployed UI"
+      "implementation_note": "DRAFT content contract only, not a tested generator or deployed UI",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "rubric": "Require mapping all vertices and invariant length/angle reasoning, not point movement alone.",
+        "independent_review": "REQUESTED_NOT_APPROVED"
+      }
     },
     {
       "id": "W3-G9-SYSTEMS-LINEAR",
