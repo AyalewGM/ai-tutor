@@ -127,7 +127,9 @@ def test_independent_coefficient_oracle_and_canonical_inventory() -> None:
         assert item.total == independently_reconstructed
         canonical = (item.total // 100, (item.total // 10) % 10, item.total % 10)
         if item.structure == "EXCHANGE_INVARIANT":
-            after_hundreds, after_tens, after_ones = item.canonical_inventory
+            assert item.canonical_inventory == canonical
+            assert item.post_exchange_inventory is not None
+            after_hundreds, after_tens, after_ones = item.post_exchange_inventory
             assert 100 * after_hundreds + 10 * after_tens + after_ones == item.total
             assert after_hundreds == item.hundreds - 1
             assert after_tens == item.tens + 10
@@ -192,3 +194,18 @@ def test_invalid_seeds_fail_closed(seed: object) -> None:
 def test_invalid_modes_fail_closed(mode: object) -> None:
     with pytest.raises(ValueError, match="Unsupported mode"):
         _module().generate(4, mode)
+
+
+def test_exchange_requires_observed_inventory_and_both_totals() -> None:
+    module = _module()
+    for seed in range(100):
+        item = module.generate(seed, "independent")
+        if item.structure != "EXCHANGE_INVARIANT":
+            continue
+        assert item.post_exchange_inventory is not None
+        assert module.diagnose_exchange_response(item, item.post_exchange_inventory, item.total, item.total) == "CORRECT_PRACTICE_ONLY"
+        assert module.diagnose_exchange_response(item, item.canonical_inventory, item.total, item.total) == "EXCHANGE_INVENTORY_NOT_ESTABLISHED"
+        assert module.diagnose_exchange_response(item, item.post_exchange_inventory, item.total, item.total + 100) == "EXCHANGE_VALUE_NOT_PRESERVED"
+        assert module.diagnose_exchange_response(item, item.post_exchange_inventory, item.total + 100, item.total) == "EXCHANGE_VALUE_NOT_PRESERVED"
+        assert module.diagnose_exchange_response(item, (True, 1, 0), item.total, item.total) == "INVALID_RESPONSE"
+        assert module.diagnose_numeric_response(item, item.total) == "CORRECT_PRACTICE_ONLY"  # Scalar practice only, not exchange verification.
