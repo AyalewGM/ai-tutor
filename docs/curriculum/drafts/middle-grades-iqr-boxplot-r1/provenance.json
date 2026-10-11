@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "MIHUR_CONTENT_PROVENANCE",
+  "package_id": "W2-G7-DISTRIBUTIONS-IQR",
+  "revision": "middle-grades-iqr-boxplot-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "official_standards": {
+    "source_url": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "publication_version": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "exact_expectation_ids": [],
+    "mapping_status": "NONE_NOT_APPROVED",
+    "coverage_credit": false
+  },
+  "canonical": {
+    "reused_families": ["MATH.DATA.FIVE_NUMBER", "MATH.DATA.IQR"],
+    "approval_status": "EXISTING_RUNTIME_FAMILIES_PACKAGE_SCOPE_NOT_INDEPENDENTLY_APPROVED",
+    "new_canonical_identity": false,
+    "build_once_map_many": true
+  },
+  "reused_work": {
+    "source_package": "PR #328 W2-G7-DISTRIBUTIONS-IQR at 2445f197259ff27b5c99dd2b45c4bcbc2e5292f8",
+    "generator": "app/domains/advanced_algebra_geometry_data.py",
+    "oracle_test": "tests/test_canonical_depth_wave2.py::test_iqr_matches_independent_quartile_oracle",
+    "mve": "UNKNOWN_NOT_LOCATED",
+    "frontend_integration": "NOT_EVIDENCED",
+    "backend_assessment": "NOT_IMPLEMENTED"
+  },
+  "existing_work_gap_improvement_verification": {
+    "existing_work": "PR #328 supplies five-number/IQR examples and current runtime families compute exact eight-value quartiles.",
+    "actual_gap": "Independent transfer compares two stated IQR numbers rather than interpreting box plots or distributions; histogram replacements do not verify box-plot reasoning.",
+    "improvement": "Paired raw-data variants with equal medians, deliberately conflicting range/IQR order, seven-field reasoning evidence and response-specific diagnosis.",
+    "verification": "Deterministic replay, independent Fraction quartile oracle, public non-disclosure, misconception classification and invalid-input tests."
+  },
+  "pedagogical_evidence": {
+    "references": ["https://ies.ed.gov/ncee/wwc/"],
+    "status": "SOURCE_REFERENCE_ONLY_NOT_PEDAGOGICAL_APPROVAL",
+    "mihur_flow": "DRAFT_COMPLETE_CONTRACT",
+    "concrete_visual_symbolic": "DRAFT_COMPLETE_CONTRACT",
+    "misconception_pathways": "DRAFT_RESPONSE_EVIDENCE_ROUTER"
+  },
+  "assessment": {
+    "guided_namespace": "middle-grades-iqr-boxplot-r1:guided",
+    "independent_namespace": "middle-grades-iqr-boxplot-r1:independent",
+    "seeded_replay": "IMPLEMENTED_IN_DRAFT_TEST_FIXTURE",
+    "independent_oracle": "TESTED_LOCALLY_NOT_INDEPENDENTLY_REVIEWED",
+    "unseen_transfer": "DRAFT_SENSOR_CONSISTENCY_RANGE_IQR_CONTRAST",
+    "answer_leakage": false,
+    "authoritative_scoring": "NOT_IMPLEMENTED"
+  },
+  "independent_verdicts": {
+    "mathematics": "PENDING",
+    "pedagogy": "PENDING_R1_REVIEW; PR_328_PREDECESSOR_CHANGES_REQUIRED",
+    "standards": "PENDING",
+    "muse_accessibility_and_assessment": "PENDING",
+    "engineering_release": "NOT_APPROVED"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "W2-G7-DISTRIBUTIONS-IQR",
+  "revision": "middle-grades-iqr-boxplot-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "objective": "Construct paired box plots from ordered data and interpret IQR as middle-half spread, including cases where range and IQR lead to different comparisons.",
+  "learning_sequence": [
+    {
+      "phase": "OBSERVE",
+      "representations": ["CONCRETE", "VISUAL"],
+      "learner_action": "Arrange two sets of eight measurement cards and notice shared center, extreme values and the densest middle region without calculating."
+    },
+    {
+      "phase": "PREDICT",
+      "representations": ["VISUAL"],
+      "learner_action": "Predict which middle half is more spread and separately predict which complete set has the larger range."
+    },
+    {
+      "phase": "MANIPULATE",
+      "representations": ["CONCRETE", "VISUAL"],
+      "learner_action": "Partition each ordered set into equal lower and upper halves, place min/Q1/median/Q3/max markers and construct the box and whiskers."
+    },
+    {
+      "phase": "EXPLAIN",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "learner_action": "Explain why box width is Q3 minus Q1 and why moving only an extreme can change range without changing IQR."
+    },
+    {
+      "phase": "PRACTICE",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "learner_action": "Complete fresh five-number summaries, box-plot coordinates and paired spread comparisons using the declared eight-value quartile convention."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "learner_action": "Route submitted quartiles, IQRs and comparison choice to a response-evidence repair, then pass a new-data exit check before scaffolds fade."
+    },
+    {
+      "phase": "TRANSFER",
+      "representations": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+      "learner_action": "Compare two unfamiliar sensor runs having equal medians but conflicting range and IQR order; recommend the more consistent middle half and defend the statistic selected."
+    },
+    {
+      "phase": "VERIFY",
+      "representations": ["SYMBOLIC"],
+      "learner_action": "Submit both five-number summaries, both IQRs, two comparison decisions and a range-versus-IQR explanation on a hidden fresh variant without hints or plot readouts."
+    }
+  ],
+  "quartile_convention": "For exactly eight sorted observations, median is the mean of positions 4 and 5; Q1 and Q3 are the medians of the four-value lower and upper halves.",
+  "diagnostic_router": [
+    {
+      "misconception_id": "RANGE_USED_AS_IQR",
+      "observed_evidence": "Both submitted IQRs equal maximum minus minimum.",
+      "socratic_questions": ["Which marks bound the box?", "Which observations lie outside that box?", "What subtraction measures only the box width?"],
+      "repair": "Cover the whiskers, calculate Q3 minus Q1, then reveal the extremes and contrast the two measures.",
+      "exit_check": "Change one extreme only and explain which measure changes."
+    },
+    {
+      "misconception_id": "WHOLE_RANGE_CHOSEN_FOR_MIDDLE_SPREAD",
+      "observed_evidence": "The learner chooses the set with larger range even though its IQR is smaller.",
+      "socratic_questions": ["Does the question ask about every reading or the middle half?", "Which visual length represents the middle half?", "Can long whiskers coexist with a short box?"],
+      "repair": "Compare box widths before whiskers and state the population portion represented by each.",
+      "exit_check": "Choose the more consistent middle half in a new conflicting range/IQR pair."
+    },
+    {
+      "misconception_id": "QUARTILE_ORDER_REVERSED",
+      "observed_evidence": "A submitted IQR is negative or Q1 is placed to the right of Q3.",
+      "socratic_questions": ["Where is the lower half on the ordered line?", "Which quartile must be smaller?", "What direction should a distance subtraction use?"],
+      "repair": "Reorder values and label lower/upper halves before calculating either quartile.",
+      "exit_check": "Place Q1 and Q3 for a different eight-value set and compute a nonnegative width."
+    },
+    {
+      "misconception_id": "IQR_CALCULATION_ERROR",
+      "observed_evidence": "The comparison choice is correct but one or both exact IQR values are not.",
+      "socratic_questions": ["Which four values form each half?", "What are the two middle positions in that half?", "Does your box endpoint match your quartile value?"],
+      "repair": "Link each quartile marker to its two source observations, then recompute the box width.",
+      "exit_check": "Reconstruct a five-number summary from new raw data."
+    }
+  ],
+  "independent_assessment_contract": {
+    "variant_namespace": "middle-grades-iqr-boxplot-r1:independent",
+    "server_controlled_required": true,
+    "hints_allowed": false,
+    "worked_steps_visible_before_submission": false,
+    "guided_mve_visible": false,
+    "answer_in_public_payload": false,
+    "guided_practice_credit": false,
+    "historical_mastery_mutation": false,
+    "required_evidence": ["five_number_a", "five_number_b", "iqr_a", "iqr_b", "more_middle_spread", "more_consistent_middle", "range_contrast_explanation"],
+    "backend_status": "NOT_IMPLEMENTED"
+  },
+  "accessibility_contract": {
+    "keyboard_only": "Move through the ordered data table, assign quartile markers and compare plots with native controls; dragging is optional.",
+    "screen_reader_state": "Announce ordered values, marker label and value, completed five-number summary, box interval and whisker intervals without announcing calculated answers in assessment.",
+    "nonvisual_equivalent": "Two tables expose ordered observations and learner-entered min/Q1/median/Q3/max; a comparison table records IQR and range claims.",
+    "focus_recovery": "Preserve all entries and return focus to the first inconsistent quartile or comparison field with a concise reason.",
+    "reduced_motion": "Use discrete before/after plot states; no animation is required to interpret spread.",
+    "color_independence": true,
+    "assessment_scaffolds": false
+  }
+}
