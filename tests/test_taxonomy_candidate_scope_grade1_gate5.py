@@ -90,16 +90,21 @@ def test_grade1_boundaries_and_separate_evidence_dimensions_are_explicit() -> No
 
     representation = cards["MATH.NUMBER_SENSE.REPRESENT_NUMERALS_TO_120"]
     assert any("0..120" in item for item in representation["inclusions"])
-    assert {row["direction"] for row in representation["assessment_evidence_matrix"]["required"]} == {
+    representation_directions = {
+        row["direction"]
+        for row in representation["assessment_evidence_matrix"]["required"]
+    }
+    assert representation_directions == {
         "to_written_numeral",
         "from_written_numeral",
     }
 
     ordering = cards["MATH.NUMBER_SENSE.ORDER_WHOLE_NUMBERS_TO_120"]
-    assert {row.get("direction") for row in ordering["assessment_evidence_matrix"]["required"]} >= {
-        "ascending",
-        "descending",
+    ordering_directions = {
+        row.get("direction")
+        for row in ordering["assessment_evidence_matrix"]["required"]
     }
+    assert ordering_directions >= {"ascending", "descending"}
 
     addition = cards[
         "MATH.EARLY_ALGEBRA.ADDITION_EQUATION_UNKNOWN_WITHIN_20"
@@ -127,5 +132,11 @@ def test_grade1_boundaries_and_separate_evidence_dimensions_are_explicit() -> No
     read_time = cards["MATH.MEASUREMENT.TIME.READ_HOUR_HALF_HOUR"]
     represent_time = cards["MATH.MEASUREMENT.TIME.REPRESENT_HOUR_HALF_HOUR"]
     assert read_time["components"] != represent_time["components"]
-    assert any("No production mastery inference" in item for item in read_time["assessment_evidence_matrix"]["prohibitions"])
-    assert any("No reading mastery inference" in item for item in represent_time["assessment_evidence_matrix"]["prohibitions"])
+    assert any(
+        "No production mastery inference" in item
+        for item in read_time["assessment_evidence_matrix"]["prohibitions"]
+    )
+    assert any(
+        "No reading mastery inference" in item
+        for item in represent_time["assessment_evidence_matrix"]["prohibitions"]
+    )
