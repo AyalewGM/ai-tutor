@@ -14,7 +14,7 @@ NAMESPACE = "middle-grades-rational-scale-v1"
 MODES = frozenset({"guided", "independent"})
 RESPONSE_FIELDS = (
     "operation_choice",
-    "direction_prediction",
+    "output_direction_prediction",
     "magnitude_relation",
     "inverse_strategy",
     "exact_result",
@@ -53,7 +53,7 @@ class Variant:
 
         return {
             "operation_choice": self.operation,
-            "direction_prediction": self.direction,
+            "output_direction_prediction": self.direction,
             "magnitude_relation": self.magnitude_relation,
             "inverse_strategy": (
                 "MULTIPLY_OUTPUT_BY_RECIPROCAL_OF_INPUT"
@@ -136,7 +136,7 @@ def generate(seed: int, mode: str) -> Variant:
         prompt = (
             f"A calibration log shows input {input_value} and output {given_value}, "
             "with the scale hidden. Decide which operation recovers the hidden value; "
-            "then predict its direction and magnitude effect, calculate, and recompose."
+            "then predict the output's direction and magnitude relative to the input (not the hidden scale's sign), calculate, and recompose."
         )
     else:
         structure = "MISSING_SCALE_POSITIVE_SHRINK"
@@ -148,7 +148,7 @@ def generate(seed: int, mode: str) -> Variant:
         prompt = (
             f"A calibration log shows input {input_value} and output {given_value}, "
             "with the scale hidden. Decide which operation recovers the hidden value; "
-            "then predict its direction and magnitude effect, calculate, and recompose."
+            "then predict the output's direction and magnitude relative to the input (not the hidden scale's sign), calculate, and recompose."
         )
 
     answer = scale if hidden_quantity == "scale" else input_value * scale
@@ -175,6 +175,26 @@ def generate(seed: int, mode: str) -> Variant:
 def diagnose_response(variant: Variant, response: Mapping[str, object]) -> str:
     """Classify a captured guided diagnostic response, or fail unclassified."""
 
+    # Guided diagnostic only: a fully correct response is not a misconception.
+    # Require every reasoning field, not merely the final numeric answer.
+    if not isinstance(response, Mapping):
+        return "UNCLASSIFIED_FOR_HUMAN_REVIEW"
+    oracle = variant.teacher_oracle()
+    if (
+        set(response) == set(RESPONSE_FIELDS)
+        and not isinstance(response.get("exact_result"), (bool, float))
+        and all(
+            response.get(field) == expected
+            for field, expected in oracle.items()
+            if field != "exact_result"
+        )
+    ):
+        try:
+            if Fraction(str(response["exact_result"])) == variant.answer:
+                return "CORRECT_NO_REMEDIATION"
+        except (ValueError, ZeroDivisionError, TypeError):
+            pass
+
     raw_result = response.get("exact_result")
     try:
         submitted_result = Fraction(str(raw_result))
@@ -192,14 +212,14 @@ def diagnose_response(variant: Variant, response: Mapping[str, object]) -> str:
             return "DIVIDE_STRAIGHT_ACROSS"
 
     if variant.structure == "DIRECT_DOUBLE_NEGATIVE_SHRINK" and (
-        response.get("direction_prediction") == "NEGATIVE"
+        response.get("output_direction_prediction") == "NEGATIVE"
         or submitted_result == -variant.answer
     ):
         return "ONE_NEGATIVE_MEANS_ALWAYS_NEGATIVE"
 
     if (
         variant.structure == "DIRECT_NEGATIVE_GROW"
-        and response.get("direction_prediction") == variant.direction
+        and response.get("output_direction_prediction") == variant.direction
         and response.get("magnitude_relation") == "SHRINKS"
     ):
         return "NEGATIVE_MEANS_SMALLER_MAGNITUDE"
