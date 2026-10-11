@@ -216,14 +216,18 @@
         "research_status": "SOURCE_REFERENCE_ONLY_NOT_LESSON_APPROVAL",
         "concrete_visual_symbolic": "DRAFT_CONTRACT",
         "mihur_eight_phases": "DRAFT_CONTRACT",
-        "misconception_specific_pathways": "DRAFT_EXECUTABLE_RESPONSE_ROUTER"
+        "misconception_specific_pathways": "DRAFT_STRUCTURED_GUIDED_RELATION_ROUTER_EXPLANATION_SEMANTICS_UNVERIFIED",
+        "latest_review": "R2_CHANGES_REQUIRED_STRUCTURED_RELATION_R2_AMENDMENT_REVIEW_DEFERRED"
       },
       "practice": {
         "seeded_generator_contract": "DRAFT_LOCAL_MODE_SEPARATED_EXECUTED_IN_TESTS",
         "independent_exact_oracle": "DRAFT_TESTED_INTEGER_RELATION_RECONSTRUCTION_NOT_REVIEWED",
         "unseen_transfer_assessment": "DRAFT_COMPARISON_STRUCTURE_MULTI_FIELD_CONTRACT",
         "authoritative_backend_verification": "NOT_EVIDENCED",
-        "historical_mastery_affected": false
+        "historical_mastery_affected": false,
+        "guided_relation_evidence": "ROLE_MODEL_EQUATION_EXACT_ANSWER_INVERSE_CHECK_AND_STRUCTURED_EXPLANATION_DRAFT_ONLY",
+        "explanation_semantic_scoring": "NOT_IMPLEMENTED",
+        "guided_practice_credit": false
       },
       "approvals": {
         "standards": "PENDING",
@@ -235,7 +239,8 @@
       "runtime_activation": false,
       "mastery_writes": false,
       "status": "DRAFT_UNVERIFIED",
-      "overlay_status": "DRAFT_SIDE_CAR"
+      "overlay_status": "DRAFT_SIDE_CAR",
+      "author_correction": "2026-10-11: added full relation evaluator and adversarial tests, no independent acceptance"
     },
     {
       "package_id": "W2-G5-DECIMAL-PLACE-VALUE",
