@@ -111,6 +111,22 @@ def test_scientific_notation_operations_are_independent_atoms():
     assert multiplication["proposed_code"] != division["proposed_code"]
 
 
+def test_scientific_multiplication_uses_only_attainable_raw_coefficient_cases():
+    card = _cards(_load())[
+        "MATH.SCIENTIFIC_NOTATION.MULTIPLY_NORMALIZE"
+    ]
+    inclusions = " ".join(card["inclusions"]).lower()
+    required = " ".join(card["assessment_evidence"]["required"]).lower()
+    boundaries = " ".join(card["boundary_conditions"]).lower()
+
+    assert "below 1" not in inclusions
+    assert "both renormalization directions" not in required
+    assert "already-normalized raw product coefficient" in required
+    assert "|ab|≥10" in required
+    assert "raw product satisfies |ab|≥1" in boundaries
+    assert "only upper renormalization" in boundaries
+
+
 def test_polynomial_division_is_two_atoms_with_one_prerequisite_edge():
     cards = _cards(_load())
     monomial = cards["MATH.POLY.DIVIDE_MONOMIALS"]
@@ -126,6 +142,32 @@ def test_polynomial_division_is_two_atoms_with_one_prerequisite_edge():
     assert any("original-divisor restrictions" in item.lower() for item in polynomial["assessment_evidence"]["required"])
     assert any("order-independent" in item.lower() for item in polynomial["assessment_evidence"]["required"])
     assert any("negative-result exponent" in item.lower() for item in polynomial["assessment_evidence"]["required"])
+
+
+def test_polynomial_division_canonicalizes_zero_terms_without_losing_domain():
+    card = _cards(_load())[
+        "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL"
+    ]
+    inclusions = " ".join(card["inclusions"]).lower()
+    boundaries = " ".join(card["boundary_conditions"]).lower()
+    oracle = card["assessment_evidence"]["exact_oracle"].lower()
+
+    assert "original written dividend" in card["scope_rule"].lower()
+    assert "original written dividend" in inclusions
+    assert "zero-coefficient terms are eliminated" in inclusions
+    assert "two-or-more-term boundary applies to the original" in boundaries
+    assert "full cancellation yields the canonical quotient zero" in boundaries
+    assert "original-divisor restrictions" in boundaries
+    assert "eliminate zero coefficients" in oracle
+    assert "canonical quotient zero" in oracle
+
+    cancellation = next(
+        example
+        for example in card["examples"]
+        if example.get("input") == "(x - x)/x"
+    )
+    assert cancellation["answer"] == "0"
+    assert cancellation["assumptions"] == ["x≠0"]
 
 
 def test_square_equation_card_requires_complete_real_solution_sets():
