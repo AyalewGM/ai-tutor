@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "paths": [
+    {
+      "misconception_id": "POLY.DIV.COEFFICIENT_RECIPROCAL",
+      "observed_evidence": "The learner divides the divisor coefficient by the dividend coefficient.",
+      "socratic_questions": ["Which expression is the dividend?", "What number multiplied by the divisor coefficient restores the dividend coefficient?", "Does multiplying your quotient by the original divisor reconstruct the dividend?"],
+      "fresh_exit": "A different signed-coefficient monomial quotient with multiplication round trip."
+    },
+    {
+      "misconception_id": "POLY.DIV.ADD_EXPONENTS",
+      "observed_evidence": "The learner adds like-base exponents during division.",
+      "socratic_questions": ["How many matching factors cancel from numerator and denominator?", "Which exponent counts the factors left after cancellation?", "How does that count compare with subtraction?"],
+      "fresh_exit": "A different two-variable quotient including one negative result exponent."
+    },
+    {
+      "misconception_id": "POLY.DIV.ONE_TERM_ONLY",
+      "observed_evidence": "Only the first polynomial term is divided by the monomial.",
+      "socratic_questions": ["Which terms are inside the dividend grouping?", "Which terms share the common divisor?", "What product reconstructs every original term?"],
+      "fresh_exit": "A different two-term dividend requiring two reconstruction checks."
+    },
+    {
+      "misconception_id": "EXP.NEGATIVE_IS_NEGATIVE_VALUE",
+      "observed_evidence": "The learner interprets a negative exponent as a negative numerical value.",
+      "socratic_questions": ["What product makes a^n and a^-n cancel to a^0?", "What number multiplied by a^n gives 1?", "Where does the reciprocal appear in your exact value?"],
+      "fresh_exit": "A different combined-law expression whose final exponent is negative."
+    },
+    {
+      "misconception_id": "EXP.GEOMETRY.POWER_NOT_DISTRIBUTED",
+      "observed_evidence": "The learner powers the numerical coefficient for area or volume but leaves the base exponent unchanged.",
+      "socratic_questions": ["How many equal side-length factors define this measure?", "Which parts of the side-length expression repeat in every factor?", "What exponent counts all repeated base factors together?"],
+      "fresh_exit": "A different square or cube requiring symbolic and exact measure with dimensional units."
+    },
+    {
+      "misconception_id": "ROOT.PRINCIPAL_ONLY",
+      "observed_evidence": "The learner reports only the principal square root for an equation.",
+      "socratic_questions": ["Which real numbers have the same positive square?", "Does the original question ask for a root symbol value or every solution of an equation?", "Which candidates survive substitution?"],
+      "fresh_exit": "A different shifted square equation requiring both substitutions."
+    },
+    {
+      "misconception_id": "SCI.EXPONENT.DIRECTION",
+      "observed_evidence": "The coefficient shift and exponent change move in the same direction.",
+      "socratic_questions": ["Did the coefficient become ten times larger or ten times smaller?", "What inverse change keeps the total value fixed?", "Does your normalized form reproduce the exact ordinary value?"],
+      "fresh_exit": "A small ordinary value converted to and from normalized notation."
+    },
+    {
+      "misconception_id": "SCI.NOT_NORMALIZED",
+      "observed_evidence": "The leading coefficient is not at least 1 and less than 10.",
+      "socratic_questions": ["Is the magnitude of the leading coefficient in the normalization interval?", "How many powers of ten must move between coefficient and exponent?", "Does the adjusted pair preserve the exact value?"],
+      "fresh_exit": "A non-normalized product or quotient repaired without rounding."
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "rows": [
+    {
+      "question_type": "monomial divided by monomial",
+      "units": ["2.9C"],
+      "existing_work": "Polynomial add/subtract/multiply/factor families and separate positive-exponent quotient rule.",
+      "actual_gap": "No polynomial quotient generator, original-divisor domain restriction, zero-divisor guard, or negative-exponent exact result.",
+      "planned_improvement": "Deterministic structured monomial division reusing MATH.EE.POLYNOMIAL_OPERATIONS provisionally.",
+      "verification": ["exact coefficient division", "exponent subtraction", "multiplication round trip", "zero-divisor rejection", "nonzero-domain restriction"],
+      "canonical_status": "PROVISIONAL_REUSE_PENDING_ARCHITECTURE"
+    },
+    {
+      "question_type": "polynomial divided term-by-term by monomial",
+      "units": ["2.9 Homework"],
+      "existing_work": "Polynomial multiplication distribution and incomplete-distribution error analysis.",
+      "actual_gap": "No division-distribution variant or check that every dividend term is divided.",
+      "planned_improvement": "Two-term exact quotient with independent reconstruction and a one-term-only diagnostic route.",
+      "verification": ["every term divided", "termwise multiplication round trip", "original-domain restriction"],
+      "canonical_status": "PROVISIONAL_REUSE_PENDING_ARCHITECTURE"
+    },
+    {
+      "question_type": "combined product, quotient and power-of-power laws",
+      "units": ["2.10 Homework"],
+      "existing_work": "Three isolated positive-exponent generators.",
+      "actual_gap": "No combined-law expression, negative result exponent, exact reciprocal, or explanation evidence.",
+      "planned_improvement": "One expression requiring multiplication and subtraction of exponents with an exact Fraction oracle, plus separate square/cube transfer variants with unit labels.",
+      "verification": ["independent integer-exponent arithmetic", "exact reciprocal for negative exponent", "square/cube coefficient and exponent powers", "area/volume unit dimension", "misconception collision rejection"],
+      "canonical_status": "EXISTING_FAMILY_EXTENSION_UNREVIEWED"
+    },
+    {
+      "question_type": "equation in a squared expression",
+      "units": ["2.7C"],
+      "existing_work": "Principal perfect-square root evaluation and factored quadratic roots.",
+      "actual_gap": "No explicit distinction between principal root and a complete equation solution set; no-real branch absent.",
+      "planned_improvement": "Exact two-solution or no-real classification with substitution checks, pending canonical-boundary ruling.",
+      "verification": ["both exact substitutions", "negative-radicand no-real classification", "principal-root-only diagnostic"],
+      "canonical_status": "PROVISIONAL_BOUNDARY_PENDING_ARCHITECTURE"
+    },
+    {
+      "question_type": "scientific notation conversion, multiplication and division",
+      "units": ["2.11 Homework"],
+      "existing_work": "Positive whole-number conversion and multiplication.",
+      "actual_gap": "Small values, reverse conversion, division, exact normalization and non-normalized repair absent.",
+      "planned_improvement": "Four deterministic operation classes with Fraction-based normalization and exact ordinary-value oracle.",
+      "verification": ["coefficient magnitude invariant", "exact value preservation", "multiply/divide exponent law", "direction and normalization diagnostics"],
+      "canonical_status": "EXISTING_FAMILY_EXTENSION_UNREVIEWED"
+    }
+  ]
+}

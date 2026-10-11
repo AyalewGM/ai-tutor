@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "MIHUR_CONTENT_PROVENANCE",
+  "package_id": "ONT-ALG-FAMILY-GENERATORS-R1",
+  "revision": "issue-337-generator-gap-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "source_scope": {
+    "milestone": "GitHub Issue #337",
+    "teacher_units": ["2.7C", "2.9C", "2.9 Homework", "2.10 Homework", "2.11 Homework"],
+    "source_access": "ABSTRACT_QUESTION_TYPE_HANDOFF_ONLY",
+    "copyrighted_wording_reused": false,
+    "student_or_school_identifiers_stored": false
+  },
+  "standards": {
+    "official_source_url": "UNKNOWN_PENDING_CURRICULUM_MAPPING",
+    "publication_version": "UNKNOWN_PENDING_CURRICULUM_MAPPING",
+    "exact_expectation_ids": [],
+    "mapping_approval": "NONE",
+    "coverage_credit": false
+  },
+  "canonical_reuse": [
+    {
+      "canonical_family": "MATH.EE.POLYNOMIAL_OPERATIONS",
+      "status": "PROVISIONAL_REUSE_PENDING_ARCHITECTURE",
+      "new_canonical_identity": false
+    },
+    {
+      "canonical_family": "MATH.NS.EXPONENTS",
+      "status": "EXISTING_FAMILY_EXTENSION_UNREVIEWED",
+      "new_canonical_identity": false
+    },
+    {
+      "canonical_family": "MATH.NS.ROOTS",
+      "status": "PROVISIONAL_BOUNDARY_PENDING_ARCHITECTURE",
+      "new_canonical_identity": false
+    },
+    {
+      "canonical_family": "MATH.NS.SCIENTIFIC_NOTATION",
+      "status": "EXISTING_FAMILY_EXTENSION_UNREVIEWED",
+      "new_canonical_identity": false
+    }
+  ],
+  "reuse_evidence": [
+    "app/domains/advanced_algebra_highschool.py",
+    "app/domains/advanced_number.py",
+    "docs/curriculum/drafts/ontario-seven-unit-algebra-r1/question_type_traceability.json"
+  ],
+  "independent_reviews": {
+    "mathematical": "UNKNOWN_NOT_REVIEWED",
+    "pedagogical": "UNKNOWN_NOT_REVIEWED",
+    "architecture": "UNKNOWN_NOT_REVIEWED",
+    "muse_qa": "UNKNOWN_NOT_RUN"
+  },
+  "delivery_status": {
+    "authored": true,
+    "implemented": "DRAFT_GENERATOR_ONLY",
+    "wired": false,
+    "ci_passing": "UNKNOWN_UNTIL_REMOTE_CI",
+    "independently_accepted": false,
+    "deployed": false
+  }
+}
