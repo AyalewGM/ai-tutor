@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "W2-G8-CUBE-NETS",
+  "revision": "middle-grades-cube-nets-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "conceptual_invariants": [
+    "Six connected congruent squares are necessary but not sufficient for a cube net.",
+    "A foldable cube net assigns exactly six distinct outward face directions with no inconsistent hinge cycle.",
+    "Translation, quarter-turn rotation, and reflection on paper preserve square adjacency and foldability.",
+    "Cube surface area is six times the area of one square face and uses square units."
+  ],
+  "scope_contract": {
+    "one_primary_role_per_variant": true,
+    "cross_objective_back_credit": false,
+    "roles": {
+      "CLASSIFY_SINGLE": "CUBE_NET_FOLDABILITY",
+      "CONTRAST_PAIR": "CUBE_NET_FOLDABILITY",
+      "INVARIANCE_TRANSFER": "CUBE_NET_FOLDABILITY",
+      "SURFACE_AREA": "CUBE_SURFACE_AREA",
+      "PACKAGING_TRANSFER": "CUBE_NET_FOLDABILITY_TRANSFER"
+    },
+    "boundary": "Correct surface-area evidence cannot award foldability credit, and correct foldability evidence cannot award surface-area credit."
+  },
+  "learning_sequence": [
+    {
+      "phase": "OBSERVE",
+      "representations": ["CONCRETE", "VISUAL"],
+      "prompt": "Inspect six hinged square cards and a coordinate-grid copy. Notice face count, shared edges, and what can collide when folded."
+    },
+    {
+      "phase": "PREDICT",
+      "representations": ["VISUAL"],
+      "prompt": "Predict foldable or not foldable before moving a hinge; name the first face direction or cycle you will check."
+    },
+    {
+      "phase": "MANIPULATE",
+      "representations": ["CONCRETE", "VISUAL"],
+      "prompt": "Fold one shared edge at a time, label the outward direction reached by each square, and pause on any repeated direction or inconsistent cycle."
+    },
+    {
+      "phase": "EXPLAIN",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "prompt": "Explain why six distinct outward face directions establish a valid net, or identify the exact hinge conflict that rejects it."
+    },
+    {
+      "phase": "PRACTICE",
+      "representations": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+      "prompt": "Classify a single net, contrast a valid and invalid pair, test rotation/reflection invariance, and separately calculate exact face and total area."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "prompt": "Route submitted decision, face-direction count, hinge reason, face area, total area, and unit evidence to a structure-specific repair."
+    },
+    {
+      "phase": "TRANSFER",
+      "representations": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+      "prompt": "Choose a packaging cut pattern that closes without overlap and justify the rejected template's hinge cycle; solve a separate exact material-area task without mixing the two objectives."
+    },
+    {
+      "phase": "VERIFY",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "prompt": "A server-controlled fresh coordinate pattern collects a decision and folding evidence without collision hints, normal indicators, worked steps, or guided-practice credit. Trusted scoring is not implemented in this draft."
+    }
+  ],
+  "diagnostic_contract": {
+    "source": "diagnose_cube_net_guided in the reused data_spatial_depth_draft.py module",
+    "complete_evidence_required": true,
+    "independent_mode_refused": true,
+    "correct_result": "CORRECT_STRUCTURED_PRACTICE_ONLY",
+    "misconception_routes": [
+      {
+        "codes": ["SIX_SQUARE_FACE_COUNT_MISSING", "ANY_SIX_CONNECTED_IS_NET", "VALID_NET_REJECTED"],
+        "socratic_probe": "Which six squares become the cube's six distinct faces after the hinges turn?",
+        "repair": "Use six labelled card faces and stop when a face direction repeats or remains missing.",
+        "fresh_exit": "Classify a new coordinate shape before folding it."
+      },
+      {
+        "codes": ["FACE_DIRECTION_EVIDENCE_INCORRECT", "FOLDING_JUSTIFICATION_MISSING", "PAIR_CLASSIFICATION_REVERSED"],
+        "socratic_probe": "Where does each square face point after its path of quarter-turn hinges?",
+        "repair": "Record the outward direction after every hinge and compare competing paths around any cycle.",
+        "fresh_exit": "Contrast a different valid/invalid pair and reject one with exact hinge evidence."
+      },
+      {
+        "codes": ["PAPER_ORIENTATION_CHANGES_FOLDABILITY", "INVARIANCE_JUSTIFICATION_MISSING"],
+        "socratic_probe": "Which adjacencies changed when the entire paper pattern was turned or mirrored?",
+        "repair": "Overlay the original and transformed adjacency graphs without folding either one.",
+        "fresh_exit": "Judge a differently transformed net and state the preserved invariant."
+      },
+      {
+        "codes": ["FACE_COUNT_NOT_APPLIED", "EDGE_NOT_SQUARED", "FACE_AREA_INCORRECT", "ONE_FACE_ONLY", "TOTAL_SURFACE_AREA_INCORRECT", "SQUARE_UNIT_MISSING", "SURFACE_AREA_JUSTIFICATION_MISSING"],
+        "socratic_probe": "What is the area of one square face, and how many congruent faces cover the cube?",
+        "repair": "Tile one face with square units, then duplicate that exact face area six times.",
+        "fresh_exit": "Find one-face and total area for a new fractional edge and label square units."
+      },
+      {
+        "codes": ["PACKAGING_TEMPLATE_SELECTION_ERROR", "PACKAGING_FOLDING_EVIDENCE_MISSING"],
+        "socratic_probe": "Which template gives six different outward directions, and what cycle blocks the rejected design?",
+        "repair": "Mark the four side faces first, then test whether the remaining two close different openings.",
+        "fresh_exit": "Select a new unfamiliar packaging pattern with no fold preview."
+      }
+    ],
+    "scaffold_fade": "Fade face-direction labels only after two consecutive same-structure fresh exits include the correct decision and justification; restore the last relevant representation after any recurrence."
+  },
+  "seeded_practice": {
+    "module": "docs/curriculum/drafts/learning-packages-wave2/data_spatial_depth_draft.py",
+    "generator": "generate_cube_net_evidence",
+    "guided_namespace": "mihur-w2-cube-net-evidence-r1:guided",
+    "independent_namespace": "mihur-w2-cube-net-evidence-r1:independent",
+    "fresh_exit": "fresh_cube_net_exit",
+    "answer_oracle": "Existing exhaustive fold propagation plus independently reconstructed orientation and exact Fraction tests",
+    "public_answer_disclosure": false
+  },
+  "independent_assessment": {
+    "status": "CONTRACT_ONLY_NOT_BACKEND_WIRED",
+    "server_controlled_required": true,
+    "hints_allowed": false,
+    "fold_preview_allowed": false,
+    "collision_indicators_allowed": false,
+    "teacher_oracle_in_payload": false,
+    "guided_practice_credit": false,
+    "required_foldability_evidence": ["decision", "connected_square_count", "distinct_face_directions", "reason_code"],
+    "surface_area_is_separate_primary_role": true
+  },
+  "accessibility_requirements": {
+    "implementation_status": "REQUIREMENT_ONLY_NOT_WIRED",
+    "keyboard_hinge_sequence": true,
+    "coordinate_and_adjacency_table": true,
+    "spoken_face_direction_transcript": true,
+    "reduced_motion_step_mode": true,
+    "color_independent_collision_state": true,
+    "focus_recovery": "Preserve the response and return focus to the first inconsistent evidence field with a concise reason."
+  },
+  "review_status": {
+    "upstream_static_mathematics": "APPROVED_PR328_AT_f4aaa3c_ONLY",
+    "this_revision_mathematics": "PENDING_INDEPENDENT_REVIEW",
+    "pedagogy": "PENDING_INDEPENDENT_REVIEW",
+    "standards": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "muse": "PENDING_NOT_WIRED",
+    "release": "NOT_APPROVED"
+  }
+}

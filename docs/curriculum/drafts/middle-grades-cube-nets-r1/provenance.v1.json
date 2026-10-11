@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "CONTENT_PROVENANCE",
+  "package_id": "W2-G8-CUBE-NETS",
+  "revision": "middle-grades-cube-nets-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "learner_data_writes": false,
+  "audited_at_utc": "2026-10-11",
+  "source_heads": {
+    "main": "f0b81f6a646c21c03367d55dc4fe8868c8c3996d",
+    "standards_pr_325": "c1fa26a560ebea022202bace38d51e91ca5d08fa",
+    "learning_packages_pr_327": "8c2c69eae3c09e89aaf38d46ea46e4ab1a5ec38b",
+    "learning_packages_pr_328": "5fba2ec16c4df276ed2b3898afbe1f0b317a6165",
+    "fractional_prism_delivery_pr_358": "9898ecd0777848268b1b3549466acb07e21c0131"
+  },
+  "reuse_first_audit": {
+    "existing_work": [
+      "PR #328 W2-G8-CUBE-NETS static package",
+      "docs/curriculum/drafts/learning-packages-wave2/data_spatial_depth.draft.json",
+      "docs/curriculum/drafts/learning-packages-wave2/data_spatial_depth_draft.py",
+      "tests/test_learning_packages_wave2_data_spatial.py",
+      "app/domains/geometry_reasoning_depth.py:MATH.GEO.NET.CUBE.SURFACE",
+      "PR #358 fractional-prism R4, separately owned and unchanged"
+    ],
+    "actual_gap": "The corrected static package and 35-hexomino oracle establish bounded mathematics, but the learner evidence remained answer-oriented: no complete executable decision/face-direction/hinge diagnosis, deterministic fresh exit, scaffold fade rule, or orientation-invariance transfer contract.",
+    "planned_improvement": "Extend the existing draft module without replacing its generator or oracle. Add mode-separated evidence-rich foldability, pair contrast, rigid-paper-transform invariance, separate surface-area, and packaging-transfer structures; route submitted fields to misconception-specific Socratic repairs and fresh same-structure exits.",
+    "verification": "Deterministic replay, guided/independent separation, all 35 shape classifications, independent face-orientation reconstruction, exact Fraction area oracle, diagnosis route coverage, fresh-exit novelty, public non-disclosure, one-primary-role/no-back-credit assertions, Ruff and JSON checks. Backend, live MVE and Muse evidence remain pending.",
+    "ownership": "This revision owns cube-net content/evidence only. It does not modify signed integers, ratio/double-number-line, rational scale, IQR, histogram, fractional-prism, rectangular-prism, MVE, frontend, backend or taxonomy files."
+  },
+  "standards": {
+    "jurisdiction": "UNKNOWN",
+    "publisher": "UNKNOWN",
+    "publication": "UNKNOWN",
+    "publication_version": "UNKNOWN",
+    "official_url": "UNKNOWN",
+    "expectation_ids": [],
+    "mapping_status": "UNKNOWN_PENDING_INDEPENDENT_STANDARDS_MAPPING",
+    "mapping_approval": "NONE",
+    "coverage_credit": false
+  },
+  "canonical": {
+    "existing_family": "MATH.GEO.NET.CUBE.SURFACE",
+    "existing_skill": "MATH.GEO.SURFACE_AREA",
+    "reuse_scope": "Existing surface-area generator and provenance identity only; foldability is a package evidence role, not a new activated canonical identity.",
+    "canonical_identity_change": false,
+    "canonical_approval": "UNKNOWN_NOT_INDEPENDENTLY_APPROVED_FOR_THIS_REVISION"
+  },
+  "reused_generators_and_mve": {
+    "generators": [
+      "data_spatial_depth_draft.py:free_hexominoes",
+      "data_spatial_depth_draft.py:foldable",
+      "data_spatial_depth_draft.py:generate_item(cube_nets)",
+      "geometry_reasoning_depth.py:MATH.GEO.NET.CUBE.SURFACE"
+    ],
+    "mve_paths": [],
+    "mve_status": "UNKNOWN_NOT_LOCATED; ACCESSIBLE INTERACTION IS REQUIREMENT_ONLY"
+  },
+  "pedagogical_evidence": {
+    "references": [
+      "https://github.com/AyalewGM/ai-tutor/pull/328#issuecomment-6108679368",
+      "https://github.com/AyalewGM/ai-tutor/pull/328#issuecomment-6109033776",
+      "https://github.com/AyalewGM/ai-tutor/pull/328#issuecomment-6110187903",
+      "docs/curriculum/drafts/learning-packages-wave2/SEEDABLE_VARIANTS_REVIEW.md"
+    ],
+    "rationale": "The review record requires foldability evidence separate from surface-area success, learner-visible reasoning rather than answer-only prompts, misconception-specific repair, authentic fresh transfer, and no guided-to-mastery inference. References constrain this original implementation; no proprietary worksheet wording is copied.",
+    "mihur_phases": ["OBSERVE", "PREDICT", "MANIPULATE", "EXPLAIN", "PRACTICE", "DIAGNOSE", "TRANSFER", "VERIFY"],
+    "representation_progression": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+    "status": "PENDING_INDEPENDENT_REVIEW"
+  },
+  "practice_and_assessment": {
+    "seeded_practice": "DRAFT_LOCAL_MODE_SEPARATED_EXECUTED_IN_TESTS",
+    "independent_oracle": "DRAFT_INDEPENDENT_ORIENTATION_AND_EXACT_FRACTION_RECOMPUTATION_NOT_REVIEWED",
+    "unseen_assessment": "RESERVED_NAMESPACE_WITH_DECISION_FACE_DIRECTION_HINGE_EVIDENCE_NO_HINTS",
+    "guided_diagnosis": "EXECUTABLE_PRACTICE_ONLY",
+    "fresh_exit": "DETERMINISTIC_SAME_STRUCTURE_NEW_PATTERN",
+    "server_trusted_scoring": "REQUIRED_NOT_IMPLEMENTED",
+    "guided_practice_credit": false,
+    "historical_mastery_affected": false,
+    "one_primary_role": true,
+    "cross_objective_back_credit": false
+  },
+  "approvals": {
+    "standards": "PENDING",
+    "mathematics": "PENDING_R1_REVIEW_UPSTREAM_STATIC_SCOPE_APPROVED_PR328_ONLY",
+    "pedagogy": "PENDING_R1_REVIEW",
+    "muse_accessibility_and_assessment": "PENDING_NOT_WIRED",
+    "engineering_integration": "NOT_REQUESTED",
+    "release": "NOT_APPROVED"
+  }
+}
