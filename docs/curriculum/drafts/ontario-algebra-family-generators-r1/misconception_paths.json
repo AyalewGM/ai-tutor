@@ -22,6 +22,12 @@
       "fresh_exit": "A different two-term dividend requiring two reconstruction checks."
     },
     {
+      "misconception_id": "EXP.ZERO_WRITTEN_AS_ZERO",
+      "observed_evidence": "The learner reports that a nonzero base raised to exponent zero has value zero.",
+      "socratic_questions": ["What quotient do equal nonzero powers make?", "After subtracting equal exponents, what exponent remains?", "Which multiplicative identity must that quotient equal?"],
+      "fresh_exit": "A different combined-law expression whose final exponent is zero and whose base is explicitly nonzero."
+    },
+    {
       "misconception_id": "EXP.NEGATIVE_IS_NEGATIVE_VALUE",
       "observed_evidence": "The learner interprets a negative exponent as a negative numerical value.",
       "socratic_questions": ["What product makes a^n and a^-n cancel to a^0?", "What number multiplied by a^n gives 1?", "Where does the reciprocal appear in your exact value?"],

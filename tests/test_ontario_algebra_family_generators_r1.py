@@ -58,7 +58,15 @@ def test_no_new_canonical_identity_and_expected_reuse_only() -> None:
         "MATH.NS.ROOTS",
         "MATH.NS.SCIENTIFIC_NOTATION",
     }
-    assert all("UNREVIEWED" in record["status"] or "PENDING" in record["status"] for record in records)
+    assert {
+        record["status"] for record in records
+    } == {"HISTORICAL_IMPLEMENTATION_REUSE_ONLY_NO_NEW_MASTERY"}
+    boundary = provenance["architecture_boundary"]
+    assert boundary["status"] == "SETTLED_BOUNDARIES_DRAFT_IDENTITIES_NOT_AUTHORITY"
+    assert boundary["scope_card_owner"] == "CANONICAL_CURRICULUM_CONTENT"
+    assert boundary["generator_binding"].startswith("UNBOUND_PENDING_")
+    assert boundary["no_duplicate_credit"] is True
+    assert boundary["historical_mastery_reinterpretation"] is False
 
 
 def test_seeded_replay_mode_separation_diversity_and_oracle_non_disclosure() -> None:
@@ -137,6 +145,8 @@ def test_polynomial_quotient_divides_every_term_and_reconstructs() -> None:
 def test_combined_exponent_oracle_is_exact_including_negative_results() -> None:
     generators = _generators()
     negative_results = 0
+    zero_results = 0
+    positive_results = 0
 
     for seed in range(2, 1000, 5):
         item = generators.generate(seed, "independent")
@@ -145,9 +155,35 @@ def test_combined_exponent_oracle_is_exact_including_negative_results() -> None:
         assert item.teacher_oracle["result_exponent"] == expected_exponent
         expected_value = Fraction(p["base"] ** expected_exponent) if expected_exponent >= 0 else Fraction(1, p["base"] ** (-expected_exponent))
         assert item.teacher_oracle["exact_value"] == expected_value
+        assert p["base_nonzero"] is True
+        assert item.teacher_oracle["base_nonzero_required"] is True
+        assert p["law_case"] == ("ZERO_EXPONENT" if expected_exponent == 0 else "NONZERO_EXPONENT")
+        assert f"base {p['base']} is nonzero" in item.prompt
         negative_results += expected_exponent < 0
+        zero_results += expected_exponent == 0
+        positive_results += expected_exponent > 0
 
     assert negative_results >= 25
+    assert zero_results >= 25
+    assert positive_results >= 25
+
+
+def test_zero_exponent_variants_independently_establish_nonzero_base_and_value_one() -> None:
+    generators = _generators()
+
+    zero_variants = [
+        generators.generate(seed, "independent")
+        for seed in range(2, 1000, 5)
+        if generators.generate(seed, "independent").teacher_oracle["result_exponent"] == 0
+    ]
+
+    assert len(zero_variants) >= 25
+    for item in zero_variants:
+        parameters = item.parameters
+        assert parameters["base"] != 0
+        assert parameters["m"] + parameters["n"] == parameters["p"] * parameters["q"]
+        assert item.teacher_oracle["exact_value"] == Fraction(1)
+        assert item.public_payload()["prompt"].endswith(f"The base {parameters['base']} is nonzero.")
 
 
 def test_exponent_geometry_transfer_is_deterministic_exact_and_dimensionally_labeled() -> None:
@@ -225,6 +261,7 @@ def test_diagnostics_are_evidence_specific_and_correct_work_never_routes() -> No
         ({"coefficient_division_reversed": True}, "POLY.DIV.COEFFICIENT_RECIPROCAL"),
         ({"quotient_exponents_added": True}, "POLY.DIV.ADD_EXPONENTS"),
         ({"all_polynomial_terms_divided": False}, "POLY.DIV.ONE_TERM_ONLY"),
+        ({"zero_exponent_written_as_zero": True}, "EXP.ZERO_WRITTEN_AS_ZERO"),
         ({"negative_exponent_written_as_negative_value": True}, "EXP.NEGATIVE_IS_NEGATIVE_VALUE"),
         (
             {

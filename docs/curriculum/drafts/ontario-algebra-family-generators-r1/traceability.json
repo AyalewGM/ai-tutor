@@ -10,7 +10,7 @@
       "actual_gap": "No polynomial quotient generator, original-divisor domain restriction, zero-divisor guard, or negative-exponent exact result.",
       "planned_improvement": "Deterministic structured monomial division reusing MATH.EE.POLYNOMIAL_OPERATIONS provisionally.",
       "verification": ["exact coefficient division", "exponent subtraction", "multiplication round trip", "zero-divisor rejection", "nonzero-domain restriction"],
-      "canonical_status": "PROVISIONAL_REUSE_PENDING_ARCHITECTURE"
+      "canonical_status": "DRAFT_ATOM_AUTHORIZED_PENDING_CONTENT_SCOPE_CARD_MATH_POLY_DIVIDE_MONOMIALS"
     },
     {
       "question_type": "polynomial divided term-by-term by monomial",
@@ -19,16 +19,16 @@
       "actual_gap": "No division-distribution variant or check that every dividend term is divided.",
       "planned_improvement": "Two-term exact quotient with independent reconstruction and a one-term-only diagnostic route.",
       "verification": ["every term divided", "termwise multiplication round trip", "original-domain restriction"],
-      "canonical_status": "PROVISIONAL_REUSE_PENDING_ARCHITECTURE"
+      "canonical_status": "DRAFT_ATOM_AUTHORIZED_PENDING_CONTENT_SCOPE_CARD_MATH_POLY_DIVIDE_POLYNOMIAL_BY_MONOMIAL"
     },
     {
       "question_type": "combined product, quotient and power-of-power laws",
       "units": ["2.10 Homework"],
       "existing_work": "Three isolated positive-exponent generators.",
-      "actual_gap": "No combined-law expression, negative result exponent, exact reciprocal, or explanation evidence.",
-      "planned_improvement": "One expression requiring multiplication and subtraction of exponents with an exact Fraction oracle, plus separate square/cube transfer variants with unit labels.",
-      "verification": ["independent integer-exponent arithmetic", "exact reciprocal for negative exponent", "square/cube coefficient and exponent powers", "area/volume unit dimension", "misconception collision rejection"],
-      "canonical_status": "EXISTING_FAMILY_EXTENSION_UNREVIEWED"
+      "actual_gap": "R1 added combined laws and negative exact reciprocals but deliberately excluded every zero-result exponent; broad historical MATH.NS.EXPONENTS cannot absorb atomic mastery.",
+      "planned_improvement": "R2 deterministically includes explicit nonzero-base zero-exponent cases alongside positive and negative results, with an exact Fraction oracle and a zero-as-value misconception path.",
+      "verification": ["independent integer-exponent arithmetic", "a^0 = 1 with explicit a != 0", "exact reciprocal for negative exponent", "positive/zero/negative seeded coverage", "square/cube coefficient and exponent powers", "area/volume unit dimension", "misconception collision rejection"],
+      "canonical_status": "DRAFT_ATOMIC_BOUNDARIES_AUTHORIZED_PENDING_CONTENT_SCOPE_CARDS_NO_COMBINED_MASTERY"
     },
     {
       "question_type": "equation in a squared expression",
@@ -37,7 +37,7 @@
       "actual_gap": "No explicit distinction between principal root and a complete equation solution set; no-real branch absent.",
       "planned_improvement": "Exact two-solution or no-real classification with substitution checks, pending canonical-boundary ruling.",
       "verification": ["both exact substitutions", "negative-radicand no-real classification", "principal-root-only diagnostic"],
-      "canonical_status": "PROVISIONAL_BOUNDARY_PENDING_ARCHITECTURE"
+      "canonical_status": "DRAFT_ATOM_AUTHORIZED_PENDING_COLLISION_AUDIT_MATH_ALGEBRA_SQUARE_EQUATION_REAL_SOLUTIONS"
     },
     {
       "question_type": "scientific notation conversion, multiplication and division",
@@ -46,7 +46,7 @@
       "actual_gap": "Small values, reverse conversion, division, exact normalization and non-normalized repair absent.",
       "planned_improvement": "Four deterministic operation classes with Fraction-based normalization and exact ordinary-value oracle.",
       "verification": ["coefficient magnitude invariant", "exact value preservation", "multiply/divide exponent law", "direction and normalization diagnostics"],
-      "canonical_status": "EXISTING_FAMILY_EXTENSION_UNREVIEWED"
+      "canonical_status": "DRAFT_OPERATION_ATOMS_AUTHORIZED_PENDING_COLLISION_AUDIT_NO_LEGACY_FAMILY_EXPANSION"
     }
   ]
 }

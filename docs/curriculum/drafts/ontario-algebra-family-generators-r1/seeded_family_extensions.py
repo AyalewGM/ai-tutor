@@ -25,6 +25,7 @@ MISCONCEPTIONS = frozenset(
         "POLY.DIV.COEFFICIENT_RECIPROCAL",
         "POLY.DIV.ADD_EXPONENTS",
         "POLY.DIV.ONE_TERM_ONLY",
+        "EXP.ZERO_WRITTEN_AS_ZERO",
         "EXP.NEGATIVE_IS_NEGATIVE_VALUE",
         "EXP.GEOMETRY.POWER_NOT_DISTRIBUTED",
         "ROOT.PRINCIPAL_ONLY",
@@ -195,17 +196,27 @@ def _polynomial_quotient(rng: random.Random, variant_id: str, mode: str) -> Draf
     )
 
 
-def _combined_exponents(rng: random.Random, variant_id: str, mode: str) -> DraftVariant:
+def _combined_exponents(
+    rng: random.Random,
+    variant_id: str,
+    mode: str,
+    *,
+    include_zero_exponent: bool,
+) -> DraftVariant:
     base = rng.randint(2, 7)
-    m, n = rng.randint(2, 7), rng.randint(2, 6)
     p, q = rng.randint(2, 5), rng.randint(2, 4)
+    if include_zero_exponent:
+        product_exponent = p * q
+        m = rng.randint(2, product_exponent - 2)
+        n = product_exponent - m
+    else:
+        m, n = rng.randint(2, 7), rng.randint(2, 6)
+        if m + n == p * q:
+            n += 1
     exponent = m + n - p * q
-    if exponent == 0:
-        n += 1
-        exponent += 1
     prompt = (
         f"Simplify ({base}^{m} x {base}^{n}) / (({base}^{p})^{q}) as one power, "
-        "then give its exact value and justify each exponent law."
+        f"then give its exact value and justify each exponent law. The base {base} is nonzero."
     )
     return DraftVariant(
         variant_id,
@@ -214,8 +225,20 @@ def _combined_exponents(rng: random.Random, variant_id: str, mode: str) -> Draft
         "MATH.NS.EXPONENTS",
         prompt,
         ("single_power", "exact_value", "law_explanation"),
-        {"base": base, "m": m, "n": n, "p": p, "q": q},
-        {"result_exponent": exponent, "exact_value": _pow_fraction(base, exponent)},
+        {
+            "base": base,
+            "base_nonzero": True,
+            "law_case": "ZERO_EXPONENT" if exponent == 0 else "NONZERO_EXPONENT",
+            "m": m,
+            "n": n,
+            "p": p,
+            "q": q,
+        },
+        {
+            "result_exponent": exponent,
+            "exact_value": _pow_fraction(base, exponent),
+            "base_nonzero_required": True,
+        },
     )
 
 
@@ -353,7 +376,13 @@ def generate(seed: int, mode: str) -> DraftVariant:
     elif structure == "POLYNOMIAL_BY_MONOMIAL":
         item = _polynomial_quotient(rng, variant_id, mode)
     elif structure == "COMBINED_EXPONENT_LAWS":
-        item = _combined_exponents(rng, variant_id, mode)
+        exponent_variant_index = seed // len(STRUCTURES)
+        item = _combined_exponents(
+            rng,
+            variant_id,
+            mode,
+            include_zero_exponent=exponent_variant_index % 4 == 0,
+        )
     elif structure == "ROOT_EQUATION":
         item = _root_equation(rng, variant_id, mode)
     else:
@@ -372,6 +401,7 @@ def diagnose_response(evidence: dict[str, bool]) -> str | None:
         "coefficient_division_reversed",
         "quotient_exponents_added",
         "all_polynomial_terms_divided",
+        "zero_exponent_written_as_zero",
         "negative_exponent_written_as_negative_value",
         "geometry_power_applied_to_coefficient",
         "geometry_power_applied_to_exponent",
@@ -393,6 +423,8 @@ def diagnose_response(evidence: dict[str, bool]) -> str | None:
         return "POLY.DIV.ADD_EXPONENTS"
     if evidence.get("all_polynomial_terms_divided") is False:
         return "POLY.DIV.ONE_TERM_ONLY"
+    if evidence.get("zero_exponent_written_as_zero"):
+        return "EXP.ZERO_WRITTEN_AS_ZERO"
     if evidence.get("negative_exponent_written_as_negative_value"):
         return "EXP.NEGATIVE_IS_NEGATIVE_VALUE"
     if evidence.get("geometry_power_applied_to_coefficient") and not evidence.get(
