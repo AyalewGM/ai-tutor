@@ -35,6 +35,8 @@ def expected_from_operands(item: dict) -> str:
         return str(quotient)
     if op == "fraction_add":
         value = Fraction(v["a"] + v["b"], v["d"])
+        if value.denominator == 1:
+            return str(value.numerator)
         return f"{value.numerator}/{value.denominator}"
     if op == "decimal_cents_add":
         value = Decimal(v["a_cents"] + v["b_cents"]) / Decimal(100)
@@ -60,13 +62,47 @@ def test_draft_isolation_and_depth_inventory() -> None:
     assert len(DATA["difficulty_ladders"]) == 8
     assert len(DATA["misconceptions"]) == 8
     assert all(
-        len(x["hints"]) == 3
+        len(x["hints"]) == 2
         and all(x["hints"])
         and x["worked_solution"]
+        and x["worked_solution"] not in x["hints"]
+        and all(x["expected"] not in hint for hint in x["hints"])
         and x["misconception_tag"]
         and x["review_status"] == "PENDING"
         for x in items
     )
+
+
+def test_independent_projection_is_answer_free_and_fail_closed() -> None:
+    contract = DATA["assessment_delivery"]
+    assert contract["status"] == "DRAFT_CONTRACT_NOT_RUNTIME_WIRED"
+    assert contract["projection"] == "SERVER_ALLOWLIST_ONLY"
+    assert contract["fail_closed"] is True
+    assert contract["mastery_source"] == "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY"
+    allowed = set(contract["learner_payload_fields"])
+    forbidden = set(contract["forbidden_independent_fields"])
+    assert allowed == {"item_id", "question", "answer_contract"}
+    assert not (allowed & forbidden)
+    for item in DATA["practice_items"]:
+        learner_payload = {key: item[key] for key in allowed}
+        assert set(learner_payload) == allowed
+        assert not (set(learner_payload) & forbidden)
+        serialized = json.dumps(learner_payload)
+        assert item["worked_solution"] not in serialized
+
+
+def test_reviewed_content_corrections_are_exact() -> None:
+    items = {item["item_id"]: item for item in DATA["practice_items"]}
+    addition = items["draft-depth-addition_regroup-04"]
+    assert "altogether" in addition["question"]
+    assert addition["expected"] == "424"
+    for item_id in (
+        "draft-depth-like_fraction_addition-04",
+        "draft-depth-like_fraction_addition-06",
+        "draft-depth-like_fraction_addition-07",
+    ):
+        assert items[item_id]["expected"] == "1"
+        assert items[item_id]["worked_solution"].endswith("= 1.")
 
 
 def test_exact_oracles_for_every_draft_problem() -> None:
@@ -135,6 +171,15 @@ def test_every_skill_item_has_a_linked_adaptive_pathway() -> None:
     assert ADAPTIVE["runtime_activation"] is False
     assert ADAPTIVE["canonical_skill_ids"] == []
     assert ADAPTIVE["curriculum_mappings"] == []
+    example_contract = ADAPTIVE["worked_example_contract"]
+    assert example_contract == {
+        "applies_to": "ALL_PATHWAYS",
+        "relationship_to_linked_item": "DISTINCT_FAMILY_EXEMPLAR",
+        "uses_linked_item_operands": False,
+        "learner_label": "Different-numbers family example — not feedback on your item.",
+        "feedback_binding": "NEVER_PRESENT_AS_LINKED_ITEM_FEEDBACK",
+        "assessment_visibility": "HIDDEN",
+    }
     items = {x["item_id"]: x for x in DATA["practice_items"]}
     paths = ADAPTIVE["pathways"]
     assert len(paths) == 64
