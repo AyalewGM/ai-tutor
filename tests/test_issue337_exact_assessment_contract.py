@@ -591,3 +591,32 @@ def test_known_misconceptions_are_classified_without_returning_hints() -> None:
         "EXP.ZERO_WRITTEN_AS_ZERO",
         "EXP.GEOMETRY.POWER_NOT_DISTRIBUTED",
     }
+
+
+def test_quotient_dividends_remain_polynomials_across_seeded_variants() -> None:
+    """Negative quotient powers must never turn the given dividend into a Laurent polynomial."""
+    for kind in (
+        contract.ExactAlgebraKind.MONOMIAL_QUOTIENT,
+        contract.ExactAlgebraKind.POLYNOMIAL_QUOTIENT,
+    ):
+        negative_quotient_seen = False
+        for seed in range(1000):
+            variant = contract.generate_hidden_variant(kind, seed)
+            dividend_terms = variant.parameters["dividend_terms"]
+            assert all(x_exp >= 0 and y_exp >= 0 for _, x_exp, y_exp in dividend_terms), (
+                kind, seed, dividend_terms
+            )
+            assert len({(x_exp, y_exp) for _, x_exp, y_exp in dividend_terms}) == len(
+                dividend_terms
+            ), (kind, seed)
+            if kind == contract.ExactAlgebraKind.POLYNOMIAL_QUOTIENT:
+                quotient_terms = variant.oracle["terms"]
+            else:
+                quotient_terms = ((
+                    variant.oracle["coefficient"],
+                    variant.oracle["x_exponent"],
+                    variant.oracle["y_exponent"],
+                ),)
+            negative_quotient_seen |= any(x < 0 or y < 0 for _, x, y in quotient_terms)
+            assert contract.score_exact_response(variant, _correct_wire_response(variant)).is_correct
+        assert negative_quotient_seen, kind
