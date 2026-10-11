@@ -677,6 +677,55 @@
           "oracle_reason": "|36−40|/40×100=10",
           "feedback_visibility": "AFTER_SUBMISSION",
           "hint_access": false
+        },
+        {
+          "question": "Three records need different percent reasoning. For each record, choose the mathematical structure, name the reference/base with units, compute the requested result, and explain why that base fits: A) A maker receives 6% of $350 ticket sales; find the amount received. B) A $240 workshop registration adds an administrative charge equal to 2.5% of the pre-charge price; find the final charge. C) A sensor reads 78 °C when a certified reference reads 80 °C; report the discrepancy as a percent of the reference.",
+          "response_fields": [
+            "structure_by_case",
+            "reference_base_by_case",
+            "calculation_by_case",
+            "meaning_and_units_by_case"
+          ],
+          "answer": {
+            "A": {
+              "structure": "PART_OF_BASE",
+              "reference_base": "$350 ticket sales",
+              "calculation": "0.06×350=21",
+              "result": "$21 received"
+            },
+            "B": {
+              "structure": "BASE_PLUS_PERCENT",
+              "reference_base": "$240 pre-charge price",
+              "calculation": "240+0.025×240=246",
+              "result": "$246 final charge"
+            },
+            "C": {
+              "structure": "RELATIVE_DIFFERENCE_TO_REFERENCE",
+              "reference_base": "80 °C certified reference",
+              "calculation": "|78−80|/80×100=2.5",
+              "result": "2.5% of the reference"
+            }
+          },
+          "oracle_reason": "Each case requires a distinct structure and explicitly typed reference: sale amount, pre-charge amount, or certified reference. One correct calculation cannot back-credit the other cases.",
+          "diagnosis_by_error": {
+            "A_BASE_SELECTION": {
+              "socratic_probe": "Which dollar amount does the 6% contract act on before any commission is computed?",
+              "next_activity": "Build a two-row contract table that labels sale dollars as the base and received dollars as the derived part.",
+              "fresh_exit": "A creator receives 7% of $420 sales; identify the base and compute $29.40 received."
+            },
+            "B_FEE_VS_TOTAL": {
+              "socratic_probe": "Which amount exists before the charge, and is the requested quantity the added part or the new total?",
+              "next_activity": "Partition a receipt into pre-charge amount, added charge, and final amount, then write both equations.",
+              "fresh_exit": "A $180 registration adds 4% of the pre-charge price; identify the base, $7.20 charge, and $187.20 total."
+            },
+            "C_REFERENCE_DENOMINATOR": {
+              "socratic_probe": "Which measurement is the agreed standard that defines what one hundred percent means?",
+              "next_activity": "Place measured and reference bars on the same scale; compare the absolute gap with the reference bar, not the measured bar.",
+              "fresh_exit": "A device reads 57 when the reference is 60; identify 60 as the base and compute 5% discrepancy."
+            }
+          },
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
         }
       ],
       "interactive_spec": {
@@ -697,7 +746,7 @@
       },
       "mastery_gate": {
         "policy": "PROPOSED_ONLY",
-        "require": "correct reasoning on independent items plus an unseen transfer; thresholds require independent pedagogical review"
+        "require": "separate correct evidence for commission amount, fee-versus-total, and reference-based percent error plus the unseen classify/select/justify transfer; no combined-task back-credit or double credit; thresholds require independent pedagogical review"
       },
       "provenance": {
         "gap_register": "PR #325, DRAFT; independent jurisdictional mapping not asserted",
@@ -715,7 +764,7 @@
       "grades": "Grade 9 / Algebra I",
       "title": "Linear relationships from tables, graphs and contexts",
       "existing_family_evidence": "Existing algebra/functions families and draft Grade 9 PR #317; deepen multi-representation modeling",
-      "objective": "Identify slope, intercept and domain assumptions in a linear contextual model.",
+      "objective": "Build one contextual linear model through context → table → graph → equation, then justify its physically meaningful domain.",
       "prerequisites": [
         "integer/rational operations",
         "coordinate plane",
@@ -752,13 +801,13 @@
           "answer": "y=4x+3"
         },
         {
-          "question": "Find slope through (1,5) and (3,11).",
+          "question": "A delivery-cost graph contains (1,5) and (3,11), where x is item count and y is dollars. Interpret the model.",
           "worked_steps": [
-            "Change in y is 6.",
-            "Change in x is 2.",
-            "Slope is 6/2."
+            "The cost rises $6 across 2 additional items, so the rate is $3 per item.",
+            "Using (1,5), the starting charge is 5−3(1)=$2.",
+            "C(n)=3n+2 for whole-number item counts n≥0."
           ],
-          "answer": "3"
+          "answer": "C(n)=3n+2, n a nonnegative whole number"
         },
         {
           "question": "A tank starts at 30 L and drains 5 L/min.",
@@ -770,13 +819,13 @@
           "answer": "V(t)=30−5t"
         },
         {
-          "question": "Find intersection of y=2x+1 and y=−x+7.",
+          "question": "A bike rental table shows hours 0,1,2,3 and costs $6,$10,$14,$18. Describe its matching graph and equation.",
           "worked_steps": [
-            "Set 2x+1=−x+7.",
-            "3x=6 so x=2.",
-            "Then y=5."
+            "Successive costs rise by $4, so the graph has slope 4 dollars per hour.",
+            "At 0 hours the cost is $6, so the vertical intercept is 6 dollars.",
+            "The matching graph passes through the table points and C(h)=4h+6 for h≥0."
           ],
-          "answer": "(2,5)"
+          "answer": "C(h)=4h+6, graph through the table points, h≥0"
         }
       ],
       "misconception_pathways": [
@@ -816,9 +865,9 @@
           "assessment_mode": false
         },
         {
-          "question": "Slope through (0,2),(2,8)",
-          "answer": "3",
-          "method": "(8−2)/(2−0)",
+          "question": "A table has x=0,2,4 and y=2,8,14. Give the matching equation and describe its graph.",
+          "answer": "y=3x+2; a line through (0,2),(2,8),(4,14)",
+          "method": "constant change 6/2=3 and initial value 2",
           "assessment_mode": false
         },
         {
@@ -828,9 +877,9 @@
           "assessment_mode": false
         },
         {
-          "question": "Solve 2x+5=17",
-          "answer": "6",
-          "method": "(17−5)/2",
+          "question": "A 36 L tank drains 4 L/min. State the equation and physical time domain.",
+          "answer": "V(t)=36−4t for 0≤t≤9",
+          "method": "initial value 36, rate −4, and 36−4t reaches zero at t=9",
           "assessment_mode": false
         }
       ],
@@ -843,16 +892,23 @@
           "hint_access": false
         },
         {
-          "question": "Find slope of line through (−1,2) and (3,10).",
-          "answer": "2",
-          "oracle_reason": "(10−2)/(3−(−1))=2",
+          "question": "A machine starts with 30 L and loses 3 L each minute. Its table lists (0,30),(2,24),(4,18). Choose the matching graph, write the equation, and justify the physical domain.",
+          "response_fields": [
+            "graph_choice",
+            "equation",
+            "table_graph_consistency",
+            "physical_domain",
+            "domain_justification"
+          ],
+          "answer": "the decreasing line through the three table points; V(t)=30−3t; 0≤t≤10",
+          "oracle_reason": "each 2-minute increase changes volume by −6, so rate −3 L/min; intercept 30 L; zero volume occurs at 10 minutes",
           "feedback_visibility": "AFTER_SUBMISSION",
           "hint_access": false
         },
         {
           "question": "Transfer: a tank holds 48 L and loses 6 L/min. When is it empty?",
           "answer": "8 minutes",
-          "oracle_reason": "48−6t=0",
+          "oracle_reason": "V(t)=48−6t for 0≤t≤8; solving the contextual endpoint 48−6t=0 gives t=8",
           "feedback_visibility": "AFTER_SUBMISSION",
           "hint_access": false
         }
@@ -875,10 +931,10 @@
       },
       "mastery_gate": {
         "policy": "PROPOSED_ONLY",
-        "require": "correct reasoning on independent items plus an unseen transfer; thresholds require independent pedagogical review"
+        "require": "one coherent context→table→graph→equation→physical-domain evidence chain plus an unseen transfer; no claim for standalone equation solving or line intersection; thresholds require independent pedagogical review"
       },
       "provenance": {
-        "gap_register": "PR #325, DRAFT; independent jurisdictional mapping not asserted",
+        "gap_register": "PR #325, DRAFT; reconciled to the narrower math-approved linear-model arc in PR #334 R4 at 8887da16 without creating a new canonical identity; independent jurisdictional mapping not asserted",
         "repo_source": "AyalewGM/ai-tutor"
       }
     }
