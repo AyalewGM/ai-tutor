@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "artifact_id": "DMV_ORIGINAL_TASK_STRUCTURE_CROSSWALK_V1_R2",
+  "artifact_id": "DMV_ORIGINAL_TASK_STRUCTURE_CROSSWALK_V1_R3",
   "status": "DRAFT_UNVERIFIED_RESEARCH_ONLY_RUNTIME_DISABLED",
   "created_date": "2026-10-11",
   "inspected_main": "313c13c9df4d530777cf89fb34f21dcedd91f454",
@@ -27,7 +27,11 @@
     ],
     "vendor_units_are_standards_authority": false,
     "historical_sources_prove_current_adoption": false,
-    "external_sources_in_student_flow": false
+    "external_sources_in_student_flow": false,
+    "architecture_boundary_source": "https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6107538656",
+    "draft_candidates_are_canonical": false,
+    "integrated_tasks_award_component_mastery": false,
+    "one_response_one_primary_atom": true
   },
   "source_registry": [
     {
@@ -694,17 +698,17 @@
     },
     {
       "rank": 7,
-      "task_type_id": "DMV.TASK.EXPONENTS.SCIENTIFIC_NOTATION_EQUIVALENCE",
+      "task_type_id": "DMV.TASK.EXPONENTS.LAWS_EQUIVALENCE",
       "grade_band": "8-9 / Algebra I",
-      "mathematical_demand": "Explain zero and negative exponents, compare equivalent power forms, normalize scientific notation, and multiply/divide scientific-notation quantities with reasonableness checks.",
-      "original_structure": "Detect a multiplicative pattern, predict an exponent extension, manipulate equivalent forms, explain the zero/negative case, normalize a coefficient, diagnose a power-of-ten error, and estimate before exact verification.",
+      "mathematical_demand": "Explain and apply product, quotient, and power-of-power laws; justify the zero-exponent rule for nonzero bases and negative exponents as reciprocals; compare equivalent forms and critique sign or exponent-combination errors.",
+      "original_structure": "Observe a multiplicative pattern, predict the next exponent relationship, manipulate one law at a time, explain its domain boundary, diagnose a sign or exponent error, then transfer through a reporting-only combined-law task and verify an independently generated equivalent form.",
       "variability": [
-        "zero exponent",
-        "negative exponent",
-        "negative base versus negative value",
-        "coefficient outside [1,10)",
-        "multiplication and division",
-        "magnitude and unit contexts"
+        "positive and negative bases",
+        "zero exponent with nonzero base",
+        "negative exponents and reciprocals",
+        "product, quotient, and power-of-power laws",
+        "equivalent reordered forms",
+        "undefined zero-base negative-exponent boundary"
       ],
       "jurisdiction_evidence": {
         "Maryland": [],
@@ -713,31 +717,36 @@
       },
       "canonical_disposition": "PROPOSE_IDENTITY_REVIEW",
       "canonical_skill_codes": [],
+      "architecture_boundary": {
+        "status": "BOUNDED_DRAFT_ATOMS_AUTHORIZED_AFTER_COLLISION_AUDIT",
+        "candidate_scopes": [
+          "PRODUCT_OF_POWERS",
+          "QUOTIENT_OF_POWERS",
+          "POWER_OF_A_POWER",
+          "ZERO_EXPONENT_WITH_NONZERO_BASE",
+          "NEGATIVE_EXPONENT_AS_RECIPROCAL"
+        ],
+        "historical_family_not_expanded": "MATH.NS.EXPONENTS",
+        "integrated_task_semantics": "REPORTING_ONLY_ALL_OF__ONE_PRIMARY_ATOM__NO_BACK_OR_DUPLICATE_CREDIT"
+      },
       "implementation": {
-        "generator": "NOT_RECONCILED",
-        "tests": "NOT_RECONCILED",
+        "generator": "DRAFT_PR_344_REQUEST_CHANGES__ZERO_EXPONENT_CASES_ABSENT",
+        "tests": "EXACT_HEAD_AUDIT_REQUIRED",
         "mve_or_student_route": "NOT_RECONCILED",
         "socratic_remediation": "NOT_RECONCILED",
-        "backend_independent_assessment": "NOT_VERIFIED",
+        "backend_independent_assessment": "DRAFT_PR_346_REQUEST_CHANGES",
         "qa": "NOT_REVIEWED"
       },
-      "gap": "Audit existing exponent/scientific-notation families first; propose a new atom only if no bounded reusable identity exists.",
+      "gap": "Collision-audited scope cards, complete zero/negative/domain-boundary generators, independent atomic assessment, and no-double-credit QA remain open. Existing implementation literals are not canonical authority.",
       "owners": [
-        "Architecture",
-        "Standards Mapping",
         "Algebra Content",
-        "Independent Mathematical Review"
+        "Architecture",
+        "Assessment Backend",
+        "Independent Mathematical Review",
+        "Pedagogical Review",
+        "Muse QA"
       ],
       "publisher_sequence_evidence": [
-        {
-          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
-          "mcps_course": "Math 6",
-          "vendor_course": "Amplify Desmos Math Grade 6",
-          "unit_number": 6,
-          "unit_title": "Expressions and Equations",
-          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
-          "standards_authority": false
-        },
         {
           "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
           "mcps_course": "Accelerated Math 7",
@@ -755,13 +764,75 @@
           "unit_title": "Exponents and Scientific Notation",
           "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
           "standards_authority": false
+        }
+      ],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
+    },
+    {
+      "rank": 8,
+      "task_type_id": "DMV.TASK.SCIENTIFIC_NOTATION.CONVERT_OPERATE_REASONABLE",
+      "grade_band": "8-9 / Algebra I",
+      "mathematical_demand": "Convert between ordinary and normalized scientific notation, multiply and divide scientific-notation quantities, renormalize coefficients, preserve signs and units, and check order-of-magnitude reasonableness.",
+      "original_structure": "Estimate the result's order of magnitude, convert or operate on coefficient and power-of-ten factors separately, normalize the coefficient, explain the exponent adjustment, diagnose a normalization error, and verify with an independently generated equivalent value.",
+      "variability": [
+        "coefficients below 1 or at least 10 before normalization",
+        "positive and negative quantities",
+        "positive and negative powers of ten",
+        "multiplication and division",
+        "magnitude comparisons",
+        "unit-bearing contexts"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [],
+        "Virginia": [],
+        "Washington_DC": []
+      },
+      "canonical_disposition": "PROPOSE_IDENTITY_REVIEW",
+      "canonical_skill_codes": [],
+      "architecture_boundary": {
+        "status": "BOUNDED_DRAFT_ATOMS_AUTHORIZED_AFTER_COLLISION_AUDIT",
+        "candidate_scopes": [
+          "ORDINARY_TO_AND_FROM_NORMALIZED_SCIENTIFIC_NOTATION",
+          "SCIENTIFIC_NOTATION_MULTIPLICATION_WITH_NORMALIZATION",
+          "SCIENTIFIC_NOTATION_DIVISION_WITH_NORMALIZATION"
+        ],
+        "historical_family_not_expanded": "MATH.NS.SCIENTIFIC_NOTATION",
+        "integrated_task_semantics": "REPORTING_ONLY_ALL_OF__ONE_PRIMARY_ATOM__NO_BACK_OR_DUPLICATE_CREDIT"
+      },
+      "implementation": {
+        "generator": "DRAFT_PR_344_POSITIVE_NONZERO_CASES_MATHEMATICALLY_ACCEPTED__IDENTITY_PENDING",
+        "tests": "EXACT_HEAD_AUDIT_REQUIRED",
+        "mve_or_student_route": "NOT_RECONCILED",
+        "socratic_remediation": "NOT_RECONCILED",
+        "backend_independent_assessment": "DRAFT_PR_346_REQUEST_CHANGES",
+        "qa": "NOT_REVIEWED"
+      },
+      "gap": "Architecture fixed three separable operation scopes, but collision-audited cards, sign/zero boundary review, routed interactive evidence, exact backend scoring, standards acceptance, and external QA remain open.",
+      "owners": [
+        "Algebra Content",
+        "Architecture",
+        "Standards Mapping",
+        "Assessment Backend",
+        "Independent Mathematical Review",
+        "Pedagogical Review",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [
+        {
+          "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
+          "mcps_course": "Accelerated Math 7",
+          "vendor_course": "Amplify Desmos Math Accelerated Grade 7",
+          "unit_number": 8,
+          "unit_title": "Exponents and Scientific Notation",
+          "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
+          "standards_authority": false
         },
         {
           "source_id": "AMPLIFY_DESMOS_6_12_CAREGIVER_2026",
-          "mcps_course": "Algebra 1",
-          "vendor_course": "Amplify Desmos Math Algebra 1",
-          "unit_number": 6,
-          "unit_title": "Exponential Functions",
+          "mcps_course": "Math 8",
+          "vendor_course": "Amplify Desmos Math Grade 8",
+          "unit_number": 7,
+          "unit_title": "Exponents and Scientific Notation",
           "evidence_type": "VENDOR_UNIT_TOPIC_SEQUENCE_ONLY",
           "standards_authority": false
         }
@@ -769,7 +840,7 @@
       "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
-      "rank": 8,
+      "rank": 10,
       "task_type_id": "DMV.TASK.POLYNOMIAL.MONOMIAL_DIVIDE_RESTRICT",
       "grade_band": "8-9 / Algebra I",
       "mathematical_demand": "Divide polynomial terms by a monomial, state denominator restrictions, verify by multiplication, and critique cancellation or exponent errors.",
@@ -787,32 +858,105 @@
         "Virginia": [],
         "Washington_DC": []
       },
-      "canonical_disposition": "EXTEND",
-      "canonical_skill_codes": [
-        "MATH.EE.POLYNOMIAL_OPERATIONS"
-      ],
+      "canonical_disposition": "PROPOSE_IDENTITY_REVIEW",
+      "canonical_skill_codes": [],
       "implementation": {
-        "generator": "NOT_RECONCILED",
-        "tests": "NOT_RECONCILED",
-        "mve_or_student_route": "ONTARIO_PACKAGE_RESEARCH_ONLY_NOT_ACCEPTED",
-        "socratic_remediation": "NOT_VERIFIED",
-        "backend_independent_assessment": "NOT_VERIFIED",
+        "generator": "DRAFT_PR_344_QUOTIENT_FAMILY_MATHEMATICALLY_ACCEPTED__IDENTITY_PENDING",
+        "tests": "EXACT_HEAD_AUDIT_REQUIRED",
+        "mve_or_student_route": "DRAFT_PR_348_PACKAGE_ONLY__IMPLEMENTED_MVE_AND_ROUTE_ABSENT",
+        "socratic_remediation": "DRAFT_PR_348_REQUEST_CHANGES",
+        "backend_independent_assessment": "DRAFT_PR_346_REQUEST_CHANGES",
         "qa": "NOT_REVIEWED"
       },
-      "gap": "Existing broad polynomial identity needs bounded scope/variant review; denominator restrictions and independent verification are not established.",
+      "gap": "The broad historical polynomial-operations identity cannot absorb division mastery. Two collision-audited DRAFT cards, canonicalized equivalent-term scoring, exact reconstruction/domain evidence, implemented accessible MVE/route, independent review, and Muse QA remain open.",
       "owners": [
         "Algebra Content",
         "Architecture",
         "MVE",
+        "Frontend Integration",
         "Assessment Backend",
         "Independent Mathematical Review",
+        "Pedagogical Review",
         "Muse QA"
       ],
       "publisher_sequence_evidence": [],
-      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing.",
+      "architecture_boundary": {
+        "status": "TWO_BOUNDED_DRAFT_ATOMS_AUTHORIZED_AFTER_COLLISION_AUDIT",
+        "candidate_codes": [
+          "MATH.POLY.DIVIDE_MONOMIALS",
+          "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL"
+        ],
+        "prerequisite": "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL_REQUIRES_MATH.POLY.DIVIDE_MONOMIALS",
+        "historical_family_not_expanded": "MATH.EE.POLYNOMIAL_OPERATIONS",
+        "evidence_dimensions_not_identities": [
+          "DENOMINATOR_DOMAIN_RESTRICTIONS",
+          "MULTIPLICATION_RECONSTRUCTION",
+          "STRUCTURED_EXPLANATION"
+        ],
+        "integrated_task_semantics": "REPORTING_ONLY_ALL_OF__ONE_PRIMARY_ATOM__NO_BACK_OR_DUPLICATE_CREDIT"
+      }
     },
     {
-      "rank": 9,
+      "rank": 10,
+      "task_type_id": "DMV.TASK.POLYNOMIAL.MONOMIAL_DIVIDE_RESTRICT",
+      "grade_band": "8-9 / Algebra I",
+      "mathematical_demand": "Divide polynomial terms by a monomial, state denominator restrictions, verify by multiplication, and critique cancellation or exponent errors.",
+      "original_structure": "Predict termwise quotient structure, distribute division, record nonzero restrictions, simplify coefficients and exponents, verify by multiplication, then diagnose an invalid cancellation.",
+      "variability": [
+        "signed coefficients",
+        "fractional coefficients",
+        "missing powers",
+        "zero coefficient terms",
+        "symbolic divisor restrictions",
+        "equivalent reordered forms"
+      ],
+      "jurisdiction_evidence": {
+        "Maryland": [],
+        "Virginia": [],
+        "Washington_DC": []
+      },
+      "canonical_disposition": "PROPOSE_IDENTITY_REVIEW",
+      "canonical_skill_codes": [],
+      "implementation": {
+        "generator": "DRAFT_PR_344_QUOTIENT_FAMILY_MATHEMATICALLY_ACCEPTED__IDENTITY_PENDING",
+        "tests": "EXACT_HEAD_AUDIT_REQUIRED",
+        "mve_or_student_route": "DRAFT_PR_348_PACKAGE_ONLY__IMPLEMENTED_MVE_AND_ROUTE_ABSENT",
+        "socratic_remediation": "DRAFT_PR_348_REQUEST_CHANGES",
+        "backend_independent_assessment": "DRAFT_PR_346_REQUEST_CHANGES",
+        "qa": "NOT_REVIEWED"
+      },
+      "gap": "The broad historical polynomial-operations identity cannot absorb division mastery. Two collision-audited DRAFT cards, canonicalized equivalent-term scoring, exact reconstruction/domain evidence, implemented accessible MVE/route, independent review, and Muse QA remain open.",
+      "owners": [
+        "Algebra Content",
+        "Architecture",
+        "MVE",
+        "Frontend Integration",
+        "Assessment Backend",
+        "Independent Mathematical Review",
+        "Pedagogical Review",
+        "Muse QA"
+      ],
+      "publisher_sequence_evidence": [],
+      "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing.",
+      "architecture_boundary": {
+        "status": "TWO_BOUNDED_DRAFT_ATOMS_AUTHORIZED_AFTER_COLLISION_AUDIT",
+        "candidate_codes": [
+          "MATH.POLY.DIVIDE_MONOMIALS",
+          "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL"
+        ],
+        "prerequisite": "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL_REQUIRES_MATH.POLY.DIVIDE_MONOMIALS",
+        "historical_family_not_expanded": "MATH.EE.POLYNOMIAL_OPERATIONS",
+        "evidence_dimensions_not_identities": [
+          "DENOMINATOR_DOMAIN_RESTRICTIONS",
+          "MULTIPLICATION_RECONSTRUCTION",
+          "STRUCTURED_EXPLANATION"
+        ],
+        "integrated_task_semantics": "REPORTING_ONLY_ALL_OF__ONE_PRIMARY_ATOM__NO_BACK_OR_DUPLICATE_CREDIT"
+      }
+    },
+    {
+      "rank": 10,
       "task_type_id": "DMV.TASK.DATA.DISTRIBUTION_CONSTRUCT_COMPARE",
       "grade_band": "6-9",
       "mathematical_demand": "Construct and compare distributions using histograms, five-number summaries, box plots, center, spread, shape, and contextual outliers.",
@@ -906,7 +1050,7 @@
       "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
-      "rank": 10,
+      "rank": 11,
       "task_type_id": "DMV.TASK.GEOMETRY.NET_VOLUME_DIMENSIONAL_MODEL",
       "grade_band": "5-8",
       "mathematical_demand": "Connect nets, surface area, and prism volume through spatial construction and dimensional reasoning, including rational edge lengths and unit analysis.",
@@ -988,7 +1132,7 @@
       "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
-      "rank": 11,
+      "rank": 12,
       "task_type_id": "DMV.TASK.GEOMETRY.PYTHAGOREAN_PROOF_MODEL",
       "grade_band": "8-9",
       "mathematical_demand": "Reason about the Pythagorean theorem and converse, classify triangles with inequalities, model distance/dimensions, retain units, and verify feasibility.",
@@ -1050,7 +1194,7 @@
       "publisher_sequence_non_authority": "Vendor unit placement supplies topic/progression research only; it does not create a canonical identity, verify a Maryland expectation ID, establish student readiness, or prove district-wide implementation beyond the current MCPS listing."
     },
     {
-      "rank": 12,
+      "rank": 13,
       "task_type_id": "DMV.TASK.PROBABILITY.THEORY_SIMULATION_COMPARE",
       "grade_band": "6-8",
       "mathematical_demand": "Construct sample spaces, compute theoretical probability, run or interpret deterministic simulations, compare experimental frequency with theory, and explain convergence and variation.",
@@ -1108,19 +1252,20 @@
     }
   ],
   "summary": {
-    "ranked_task_types": 12,
+    "ranked_task_types": 13,
     "reuse": 3,
-    "extend": 8,
-    "propose_identity_review": 1,
+    "extend": 7,
+    "propose_identity_review": 3,
     "accepted_standards_mappings": 0,
     "qa_approved_packages": 0,
     "production_ready_packages": 0,
     "current_mcps_course_listings": 7,
     "amplify_course_sequences_recorded": 6,
     "historical_research_tracks": 2,
-    "vendor_derived_standard_ids": 0
+    "vendor_derived_standard_ids": 0,
+    "architecture_reconciled_task_types": 3
   },
-  "revision": "2026-10-11-mcps-current-amplify-source-correction-r2",
+  "revision": "2026-10-11-architecture-boundary-reconciliation-r3",
   "historical_research_tracks": [
     {
       "track_id": "MCPS_IM_ALGEBRA1_SUPPORT_2019",
@@ -1425,5 +1570,20 @@
       "standards_mapping_status": "PROVISIONAL_NOT_ACCEPTED__NO_IDS_INFERRED_FROM_VENDOR_SEQUENCE",
       "student_facing_external_links": false
     }
-  ]
+  ],
+  "architecture_reconciliation": {
+    "decision_source": "https://github.com/AyalewGM/ai-tutor/issues/282#issuecomment-6107538656",
+    "decision_id": 6107538656,
+    "status": "IDENTITY_GRANULARITY_DECIDED__CONTENT_AND_REVIEW_GATES_OPEN",
+    "affected_task_types": [
+      "DMV.TASK.EXPONENTS.LAWS_EQUIVALENCE",
+      "DMV.TASK.SCIENTIFIC_NOTATION.CONVERT_OPERATE_REASONABLE",
+      "DMV.TASK.POLYNOMIAL.MONOMIAL_DIVIDE_RESTRICT"
+    ],
+    "controls": [
+      "Historical broad MATH.NS.EXPONENTS, MATH.NS.SCIENTIFIC_NOTATION, and MATH.EE.POLYNOMIAL_OPERATIONS meanings, UUIDs, and mastery evidence are not expanded or reinterpreted.",
+      "Draft candidate labels/scopes are architecture-authorized for collision-audited content authoring only; they are not published canonical identities or accepted standards mappings.",
+      "Integrated tasks are reporting-only ALL_OF with one primary atom per response, no back-credit, and no duplicate mastery."
+    ]
+  }
 }
