@@ -68,7 +68,7 @@ export interface DistributiveCoefficientsCheckedEvent extends MathInteractionBas
   variable_coefficient: number;
   constant_term: number;
   correct: boolean;
-  misconception: "MISSED_SECOND_TERM" | "COEFFICIENT_ERROR" | "CONSTANT_ERROR" | null;
+  misconception: "MISSED_SECOND_TERM" | "DROPPED_NEGATIVE" | "COEFFICIENT_ERROR" | "CONSTANT_ERROR" | null;
 }
 
 export interface FractionShadingChangedEvent extends MathInteractionBase {
@@ -196,7 +196,7 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
         Math.abs(event.constant_term as number) <= 10000 &&
         typeof event.correct === "boolean" &&
         (event.misconception === null ||
-          ["MISSED_SECOND_TERM", "COEFFICIENT_ERROR", "CONSTANT_ERROR"].includes(String(event.misconception))) &&
+          ["MISSED_SECOND_TERM", "DROPPED_NEGATIVE", "COEFFICIENT_ERROR", "CONSTANT_ERROR"].includes(String(event.misconception))) &&
         event.correct === (event.misconception === null);
     default:
       return false;
