@@ -23,7 +23,18 @@ def test_reasoning_wave_exact_answers_and_review_boundaries() -> None:
     ]
     for item, answer in zip(data["items"], expected, strict=True):
         assert Fraction(item["expected"]) == answer, item["item_id"]
-        assert Fraction(item["misconception"]["plausible_wrong_answer"]) != answer
+        wrong_text = item["misconception"]["plausible_wrong_answer"]
+        if item["item_id"] == "g45-reasoning-16":
+            # Unsimplified 18/30 is numerically equal to 3/5, but fails the
+            # explicitly requested simplest-form representation contract.
+            assert item["question"].lower().endswith("in simplest form?")
+            assert Fraction(wrong_text) == answer
+            numerator, denominator = (int(value) for value in wrong_text.split("/"))
+            from math import gcd
+            assert gcd(numerator, denominator) > 1
+            assert wrong_text != item["expected"]
+        else:
+            assert Fraction(wrong_text) != answer
         assert item["reasoning_review"] == "HUMAN_REQUIRED"
         assert item["runtime_activation"] is False
         assert item["reasoning_prompt"] and item["transfer_prompt"]
