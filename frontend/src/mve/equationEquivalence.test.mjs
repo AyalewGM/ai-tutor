@@ -158,3 +158,23 @@ test("actual handlers preserve state on rejection, emit validated success, isola
   assert.deepEqual(emitted.at(-1), { schema_version: 1, type: "EQUATION_TRANSFORMATION_APPLIED",
     operation: "SCALE_BOTH", amount_numerator: 3, amount_denominator: 1, preserved: true });
 });
+
+test("one-sided illustration requires an exactly different solution", () => {
+  const eq = math.EQUATION_EQUIVALENCE_EXAMPLES[1];
+  for (const op of [
+    { kind: "add_constant", amount: r(0, 1) },
+    { kind: "add_variable", amount: r(0, 1) },
+    { kind: "scale", amount: r(1, 1) },
+  ]) assert.equal(math.makeOneSidedCounterexample(eq, op), null);
+  const zeroAtRoot = {
+    left: { x: r(1, 2), constant: r(-1, 1) },
+    right: { x: r(-2, 3), constant: r(4, 3) },
+  };
+  assert.deepEqual(math.equationSolution(zeroAtRoot), r(2, 1));
+  assert.equal(math.makeOneSidedCounterexample(zeroAtRoot, { kind: "scale", amount: r(-3, 2) }), null);
+  for (const original of math.EQUATION_EQUIVALENCE_EXAMPLES) {
+    const attempt = math.makeOneSidedCounterexample(original, { kind: "add_constant", amount: r(1, 2) }, "right");
+    assert.ok(attempt);
+    assert.notDeepEqual(math.equationSolution(attempt), math.equationSolution(original));
+  }
+});

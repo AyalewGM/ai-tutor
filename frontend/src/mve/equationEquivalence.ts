@@ -105,7 +105,8 @@ export function makeOneSidedCounterexample(
       left: side === "left" ? transformSide(equation.left, operation) : equation.left,
       right: side === "right" ? transformSide(equation.right, operation) : equation.right,
     };
-    return isAffineEquation(candidate) ? candidate : null;
+    return isAffineEquation(candidate) &&
+      !sameRational(equationSolution(equation), equationSolution(candidate)) ? candidate : null;
   } catch {
     return null;
   }
