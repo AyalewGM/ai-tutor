@@ -38,7 +38,7 @@ def test_provenance_is_complete_and_fail_closed() -> None:
     provenance = load("provenance.v1.json")
 
     assert provenance["package_id"] == "MG-G7-RATIONAL-SCALE-INVERSE"
-    assert provenance["revision"] == "middle-grades-rational-scale-v1-r3"
+    assert provenance["revision"] == "middle-grades-rational-scale-v1-r4"
     assert provenance["status"] == "DRAFT_UNVERIFIED"
     assert provenance["runtime_activation"] is False
     assert provenance["mastery_writes"] is False
@@ -55,7 +55,7 @@ def test_provenance_is_complete_and_fail_closed() -> None:
     assert provenance["approvals"] == {
         "standards": "PENDING",
         "mathematics": "PENDING",
-        "pedagogy": "R2_CHANGES_REQUIRED_R3_REREVIEW_PENDING",
+        "pedagogy": "R3_CHANGES_REQUIRED_R4_REVIEW_DEFERRED",
         "muse_accessibility_and_assessment": "PENDING",
         "engineering_integration": "NOT_REQUESTED",
         "release": "NOT_APPROVED",
@@ -214,14 +214,14 @@ def test_entry_diagnostic_routes_all_four_observed_error_patterns() -> None:
     assert variants.diagnose_response(
         double_negative,
         {
-            "direction_prediction": "NEGATIVE",
+            "output_direction_prediction": "NEGATIVE",
             "exact_result": str(-double_negative.answer),
         },
     ) == "ONE_NEGATIVE_MEANS_ALWAYS_NEGATIVE"
     assert variants.diagnose_response(
         negative_grow,
         {
-            "direction_prediction": negative_grow.direction,
+            "output_direction_prediction": negative_grow.direction,
             "magnitude_relation": "SHRINKS",
             "exact_result": str(negative_grow.answer),
         },
@@ -246,14 +246,14 @@ def test_entry_diagnostic_routes_all_four_observed_error_patterns() -> None:
     ) == "RECIPROCAL_WRONG_OPERAND"
 
 
-def test_correct_or_unknown_diagnostic_response_fails_unclassified() -> None:
+def test_correct_diagnostic_response_has_explicit_success_without_mastery() -> None:
     variants = load_variants_module()
     variant = variants.generate(2, "guided")
 
     assert variants.diagnose_response(
         variant,
         variant.teacher_oracle(),
-    ) == "UNCLASSIFIED_FOR_HUMAN_REVIEW"
+    ) == "CORRECT_NO_REMEDIATION"
 
 
 def test_independent_contract_requires_reasoning_and_contrast_evidence() -> None:
@@ -281,3 +281,46 @@ def test_accessibility_contract_has_nonvisual_state_and_recovery() -> None:
     assert accessibility["reduced_motion"]
     assert accessibility["color_independence"] is True
     assert accessibility["independent_scaffolds"] is False
+
+
+def test_incomplete_or_inconsistent_guided_evidence_never_passes() -> None:
+    variants = load_variants_module()
+    variant = variants.generate(2, "guided")
+    oracle = variant.teacher_oracle()
+    for field in variants.RESPONSE_FIELDS:
+        incomplete = dict(oracle)
+        del incomplete[field]
+        assert variants.diagnose_response(variant, incomplete) != "CORRECT_NO_REMEDIATION"
+    incorrect = dict(oracle)
+    incorrect["recomposition_check"] = "incorrect recomposition"
+    assert variants.diagnose_response(variant, incorrect) != "CORRECT_NO_REMEDIATION"
+    incorrect = dict(oracle)
+    incorrect["output_direction_prediction"] = "POSITIVE"
+    assert variants.diagnose_response(variant, incorrect) != "CORRECT_NO_REMEDIATION"
+    incorrect = dict(oracle)
+    incorrect["exact_result"] = True
+    assert variants.diagnose_response(variant, incorrect) != "CORRECT_NO_REMEDIATION"
+
+
+@pytest.mark.parametrize("seed", [2, 3, 6, 7])
+def test_missing_scale_prompts_mean_output_direction_not_scale_sign(seed: int) -> None:
+    variants = load_variants_module()
+    variant = variants.generate(seed, "guided")
+    assert variant.hidden_quantity == "scale"
+    assert "output's direction" in variant.prompt
+    assert "hidden scale's sign" in variant.prompt
+    assert "output_direction_prediction" in variant.teacher_oracle()
+    output = variant.given_value
+    assert variant.teacher_oracle()["output_direction_prediction"] == (
+        "POSITIVE" if output > 0 else "NEGATIVE"
+    )
+    if variant.structure == "MISSING_SCALE_POSITIVE_SHRINK":
+        assert variant.answer > 0 and output < 0
+        assert variant.teacher_oracle()["output_direction_prediction"] == "NEGATIVE"
+
+
+def test_full_guided_correct_response_requires_all_fields() -> None:
+    variants = load_variants_module()
+    for seed in range(24):
+        item = variants.generate(seed, "guided")
+        assert variants.diagnose_response(item, item.teacher_oracle()) == "CORRECT_NO_REMEDIATION"
