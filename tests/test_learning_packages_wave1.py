@@ -57,9 +57,64 @@ def test_independent_percent_oracles():
     assert Decimal(160) * Decimal("1.03") == Decimal("164.80")
     assert abs(Decimal(36) - Decimal(40)) / Decimal(40) * 100 == 10
     assert Decimal("0.075") * Decimal(120) == Decimal(9)
+    assert Decimal("0.06") * Decimal(350) == Decimal(21)
+    assert Decimal(240) + Decimal("0.025") * Decimal(240) == Decimal(246)
+    assert abs(Decimal(78) - Decimal(80)) / Decimal(80) * 100 == Decimal("2.5")
+
+
+def test_percent_transfer_requires_distinct_base_meaning_and_units():
+    package = next(p for p in load()["packages"] if p["id"] == "W1-G7-PERCENT-COMMISSION-ERROR")
+    transfer = package["independent_assessment"][-1]
+    assert transfer["response_fields"] == [
+        "structure_by_case",
+        "reference_base_by_case",
+        "calculation_by_case",
+        "meaning_and_units_by_case",
+    ]
+    oracle = transfer["answer"]
+    assert {oracle[case]["structure"] for case in oracle} == {
+        "PART_OF_BASE",
+        "BASE_PLUS_PERCENT",
+        "RELATIVE_DIFFERENCE_TO_REFERENCE",
+    }
+    assert oracle["A"]["result"] == "$21 received"
+    assert oracle["B"]["result"] == "$246 final charge"
+    assert oracle["C"]["result"] == "2.5% of the reference"
+    assert set(transfer["diagnosis_by_error"]) == {
+        "A_BASE_SELECTION",
+        "B_FEE_VS_TOTAL",
+        "C_REFERENCE_DENOMINATOR",
+    }
+    for route in transfer["diagnosis_by_error"].values():
+        assert set(route) == {"socratic_probe", "next_activity", "fresh_exit"}
+        assert all(route.values())
+    assert "no combined-task back-credit or double credit" in package["mastery_gate"]["require"]
 
 
 def test_independent_linear_oracles():
     assert (10 - 2) / (3 - (-1)) == 2
     assert 48 / 6 == 8
     assert 2 * 2 + 1 == -2 + 7
+
+
+def test_linear_package_is_one_context_to_domain_evidence_chain():
+    package = next(p for p in load()["packages"] if p["id"] == "W1-G9-LINEAR-MODELING")
+    assert "context → table → graph → equation" in package["objective"]
+    combined_text = json.dumps(package)
+    assert "Find intersection" not in combined_text
+    assert "Solve 2x+5=17" not in combined_text
+    evidence = package["independent_assessment"][1]
+    assert evidence["response_fields"] == [
+        "graph_choice",
+        "equation",
+        "table_graph_consistency",
+        "physical_domain",
+        "domain_justification",
+    ]
+    assert evidence["answer"] == (
+        "the decreasing line through the three table points; V(t)=30−3t; 0≤t≤10"
+    )
+    assert "no claim for standalone equation solving or line intersection" in (
+        package["mastery_gate"]["require"]
+    )
+    assert "PR #334 R4 at 8887da16" in package["provenance"]["gap_register"]
