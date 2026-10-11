@@ -156,7 +156,7 @@ def test_publisher_topic_evidence_never_becomes_mapping_or_implementation_proof(
 
 def test_architecture_reconciliation_keeps_algebra_candidates_fail_closed():
     data = _load()
-    assert data["revision"] == "2026-10-11-independent-math-status-reconciliation-r4"
+    assert data["revision"] == "2026-10-11-independent-review-closure-reconciliation-r5"
     assert data["governance"]["draft_candidates_are_canonical"] is False
     assert data["governance"]["integrated_tasks_award_component_mastery"] is False
     assert data["governance"]["one_response_one_primary_atom"] is True
@@ -185,21 +185,31 @@ def test_architecture_reconciliation_keeps_algebra_candidates_fail_closed():
     assert data["summary"]["extend"] == 7
     assert data["summary"]["propose_identity_review"] == 3
     assert data["summary"]["architecture_accepted_draft_labels"] == 11
-    assert data["summary"]["mathematically_approved_draft_cards"] == 9
-    assert data["summary"]["mathematically_changes_requested_draft_cards"] == 2
+    assert data["summary"]["mathematically_approved_draft_cards"] == 11
+    assert data["summary"]["mathematically_changes_requested_draft_cards"] == 0
     assert data["summary"]["standards_accepted_rows"] == 0
 
     review = data["review_reconciliation"]
     assert review["standards_effect"] == "NO_MAPPING_ACCEPTED__SOURCE_RELATIONS_REMAIN_PROVISIONAL"
     taxonomy_review = review["independent_mathematical_review"]["taxonomy_pr_349"]
-    assert taxonomy_review["approved_cards"] == 9
-    assert taxonomy_review["changes_requested_cards"] == 2
-    assert taxonomy_review["unresolved"] == [
-        "MATH.SCIENTIFIC_NOTATION.MULTIPLY_NORMALIZE__RAW_COEFFICIENT_BOUNDARY",
-        "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL__ZERO_COEFFICIENT_CANONICALIZATION",
-    ]
+    assert taxonomy_review["approved_cards"] == 11
+    assert taxonomy_review["changes_requested_cards"] == 0
+    assert taxonomy_review["unresolved"] == []
 
     assert "FIVE_OF_FIVE" in exponent["mathematical_review"]["status"]
-    assert scientific["mathematical_review"]["status"] == "TWO_APPROVE__ONE_REQUEST_CHANGES"
-    assert "ONE_REQUEST_CHANGES" in polynomial["mathematical_review"]["status"]
+    assert scientific["mathematical_review"]["status"] == "THREE_OF_THREE_DRAFT_SCOPE_CARDS_APPROVED"
+    assert "TWO_OF_TWO" in polynomial["mathematical_review"]["status"]
 
+
+
+def test_review_reconciliation_keeps_new_approvals_bounded():
+    data = _load()
+    review = data["review_reconciliation"]
+    assert review["independent_mathematical_review"]["implementation_prs"]["346"].startswith(
+        "DRAFT_ROOT_SCORER_MATH_APPROVED"
+    )
+    assert "TRUSTED_BACKEND" in review["independent_mathematical_review"]["implementation_prs"]["346"]
+    assert "BOUNDED_MUSE_QA_PASS" in review["independent_mathematical_review"]["implementation_prs"]["350"]
+    assert data["summary"]["accepted_standards_mappings"] == 0
+    assert data["summary"]["qa_approved_packages"] == 0
+    assert data["governance"]["runtime_activation"] == "NOT_AUTHORIZED"
