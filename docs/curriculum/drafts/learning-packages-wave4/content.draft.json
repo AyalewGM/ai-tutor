@@ -402,6 +402,34 @@
           "hints_allowed": false,
           "feedback_after_submission": true,
           "unseen_context": true
+        },
+        {
+          "question": "A histogram has half-open bins [0,5):2, [5,10):6, [10,15):3, [15,20):1. Which interval is modal, how many observations are at least 10, and which interval contains a value of exactly 10?",
+          "answer": "modal [5,10); at least 10: 4; exactly 10 belongs to [10,15)",
+          "oracle": "6 is largest bin frequency; 3+1=4; left-inclusive/right-exclusive boundaries",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "MODAL_INTERVAL",
+            "FREQUENCY_FROM_BINS",
+            "HALF_OPEN_BOUNDARY"
+          ]
+        },
+        {
+          "question": "Consider counts [2,5,8,5,2] over five equal-width successive bins. Classify modality and justify whether the distribution has a single peak. Contrast with counts [5,1,5,1,5].",
+          "answer": "first is unimodal, single central peak 8; second has three equal separated local peaks, not unimodal",
+          "oracle": "first increases 2<5<8 and decreases 8>5>2; second alternates 5 and 1 with three separated peaks",
+          "hints_allowed": false,
+          "feedback_after_submission": true,
+          "unseen_context": true,
+          "teacher_oracle_visibility": "SERVER_ONLY",
+          "evidence": [
+            "DISTRIBUTION_SHAPE",
+            "MODALITY",
+            "EXPLICIT_FREQUENCY_EVIDENCE"
+          ]
         }
       ],
       "interactive_spec": {
@@ -411,7 +439,12 @@
         "reduced_motion": true,
         "assessments_unscaffolded": true
       },
-      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE"
+      "coverage_claim": "DRAFT_CONTENT_ONLY_NO_MASTERED_COVERAGE",
+      "assessment_scope_evidence": {
+        "status": "DRAFT_UNVERIFIED",
+        "rubric": "Need unseen bin boundaries, count from interval totals, modal interval and justified distribution shape; not just causation claim.",
+        "independent_review": "REQUESTED_NOT_APPROVED"
+      }
     },
     {
       "id": "W4-G7-PRISM-NETS",
