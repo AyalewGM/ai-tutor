@@ -198,7 +198,13 @@ def test_every_word_problem_has_a_diagnostic_and_mastery_path() -> None:
         assert learning["remediation_trigger"] == item["misconception_tag"]
         assert learning["concrete_visual_model"]
         assert learning["alternative_method"]
-        assert mastery["expected_answer"] == item["expected"]
+        assert mastery["prompt"] != item["question"]
+        assert item["question"] not in mastery["prompt"]
+        assert mastery["variant_operands_server_only"] != item["operands"]
+        assert mastery["teacher_oracle_server_only"]["exact_answer"] == mastery["expected_answer"]
+        assert mastery["learner_payload_contract"]["fields"] == [
+            "assessment_item_id", "question", "response_contract"
+        ]
         assert mastery["independent_review_required"] is True
         assert len(mastery["required_evidence"]) == 3
 
