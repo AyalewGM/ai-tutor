@@ -158,8 +158,7 @@ def generate(seed: int, mode: str) -> Variant:
 
     # Guided and independent namespaces intentionally use disjoint solution bands.
     solution = Fraction(rng.randint(2, 10) if mode == "guided" else rng.randint(12, 24), 1)
-    magnitude = Fraction(rng.choice((2, 3, 4, 5, 6)), rng.choice((1, 1, 1, 2)))
-    p = magnitude if rng.choice((True, False)) else -magnitude
+    p = Fraction(rng.choice((2, 3, 4, 5, 6)), rng.choice((1, 1, 1, 2)))
     q = Fraction(rng.randint(1, 9), rng.choice((1, 1, 2)))
     relation = rng.choice(("<", "<=", ">", ">="))
     domain = "NONNEGATIVE_WHOLE_NUMBERS"
