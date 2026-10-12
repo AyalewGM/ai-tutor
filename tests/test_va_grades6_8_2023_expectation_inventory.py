@@ -40,7 +40,6 @@ REPOSITORY_EXISTING_IDS = {
     "7.MG.3",
     "7.MG.4",
     "7.PS.1",
-    "7.PS.2",
     "7.PFA.1",
     "7.PFA.3",
     "7.PFA.4",
