@@ -64,4 +64,4 @@ This completes the DMV Grade 6–8 inventory set alongside `md_grades6_8_2025.ex
 
 - Neutral inventory identifier: `DC_CCSS_MATH_GRADES_6_8` (not a 2024–25 course adoption assertion).
 - Official CCSS adoption: **July 2010**; implementation began **2011–12** and reached full implementation by **2014–15**. These milestones are distinct from the inventory's checked date.
-- Authority: [OSSE DC standards](https://osse.dc.gov/page/dc-standards). Canonical CCSS expectation identifiers remain unchanged and all Mihur mappings remain provisional.
+- Authority: [OSSE Common Core State Standards — Mathematics](https://osse.dc.gov/page/common-core-state-standards-mathematics). Canonical CCSS expectation identifiers remain unchanged and all Mihur mappings remain provisional.

@@ -169,5 +169,5 @@ def test_dc_standards_provenance_is_reproducible_and_separate_from_inventory_dat
     assert curriculum['implementation_school_year'] == '2014-2015'
     assert curriculum['implementation_milestone'] == 'FULL_IMPLEMENTATION_OF_2010_CCSS'
     assert provenance['inventory_as_of'] == provenance['checked_date'] == '2026-10-12'
-    assert provenance['adoption_history_authority_url'] == 'https://osse.dc.gov/page/dc-standards'
+    assert provenance['adoption_history_authority_url'] == 'https://osse.dc.gov/page/common-core-state-standards-mathematics'
     assert all(row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED' for row in manifest['expectations'])
