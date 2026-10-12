@@ -172,3 +172,26 @@ def test_grade_specific_official_document_versions_and_adoption_sources() -> Non
         assert row['source_document_revision'] == source['revision']
         assert source['role'] == 'AUTHORITATIVE_STANDARD_ID_AND_SCOPE'
         assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+
+
+def test_source_fidelity_ledger_covers_all_2025_parent_and_lettered_rows() -> None:
+    path = MANIFEST.parent / 'md_grades6_8_2025.source_fidelity_locators.v1.json'
+    evidence = json.loads(path.read_text(encoding='utf-8'))
+    manifest = _manifest()
+    records = evidence['records']
+    assert evidence['status'] == 'AUTHOR_SOURCE_LOCATORS_REVIEW_REQUIRED'
+    assert evidence['completeness_status'].endswith('PENDING_INDEPENDENT_ACCEPTANCE')
+    assert len(records) == len(manifest['expectations']) == 79
+    assert {r['expectation_id'] for r in records} == {r['expectation_id'] for r in manifest['expectations']}
+    for row, record in zip(manifest['expectations'], records, strict=True):
+        assert row['expectation_id'] == record['expectation_id']
+        assert row['source_page'] == record['printed_page_start']
+        assert row['source_page_end'] == record['printed_page_end']
+        assert row['official_subpart_identifiers'] == record['official_subpart_ids']
+        assert row['source_locator'] == record['source_url']
+        assert row['source_fidelity_status'] == 'AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW'
+        assert record['independent_acceptance'] == 'PENDING'
+        assert record['column'] == '2025 MD Index / 2025 Standards Statement'
+        assert record['printed_page_start'] >= 2
+        assert record['printed_page_end'] >= record['printed_page_start']
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
