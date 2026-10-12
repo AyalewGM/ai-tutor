@@ -20,6 +20,7 @@ const control = "rounded border p-2 focus-visible:outline focus-visible:outline-
 function FractionLesson() {
   const [prediction, setPrediction] = useState("");
   const [predictionLocked, setPredictionLocked] = useState(false);
+  const [predictionFeedback, setPredictionFeedback] = useState("");
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
   const [numericVerified, setNumericVerified] = useState(false);
@@ -68,7 +69,13 @@ function FractionLesson() {
       <option value="smaller">The ninths fraction is smaller</option>
     </select>
     <button type="button" className={control} disabled={!prediction || predictionLocked}
-      onClick={() => setPredictionLocked(true)}>Lock prediction</button>
+      onClick={() => {
+        setPredictionLocked(true);
+        setPredictionFeedback(prediction === "same" ?
+          "Your prediction matches the mathematical relationship: repartitioning the same whole does not change the fraction's value." :
+          "Compare your prediction with the revealed bars: the same whole is repartitioned, so an equivalent fraction should name the same value.");
+      }}>Lock prediction</button>
+    {predictionLocked && <p role="status" aria-live="polite" aria-atomic="true">{predictionFeedback}</p>}
 
     {predictionLocked && <>
       {numericVerified && !explanationVerified && <ProblemVisual spec={{ type: "fraction_bar",
@@ -153,6 +160,7 @@ function FractionLesson() {
 function RatioLesson() {
   const [prediction, setPrediction] = useState("");
   const [predictionLocked, setPredictionLocked] = useState(false);
+  const [predictionFeedback, setPredictionFeedback] = useState("");
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
   const [parts, setParts] = useState("");
@@ -195,7 +203,13 @@ function RatioLesson() {
       <option value="greater">Greater than half</option>
     </select>
     <button type="button" className={control} disabled={!prediction || predictionLocked}
-      onClick={() => setPredictionLocked(true)}>Lock prediction</button>
+      onClick={() => {
+        setPredictionLocked(true);
+        setPredictionFeedback(prediction === "less" ?
+          "Your prediction matches the ratio structure: 2 of 5 equal parts is less than one half of the whole." :
+          "Compare your prediction with the part structure: the first share is 2 of 5 equal parts, so it is less than half.");
+      }}>Lock prediction</button>
+    {predictionLocked && <p role="status" aria-live="polite" aria-atomic="true">{predictionFeedback}</p>}
 
     {predictionLocked && <>
       {!explanationVerified && <div aria-label="Five equal ratio parts" className="flex flex-wrap gap-2">
