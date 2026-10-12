@@ -1,0 +1,1040 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "Grade 4 Gap Closure Wave 1",
+  "jurisdiction_focus": "Maryland Grade 4 / reusable elementary mathematics",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "base_commit": "cfda3f7301502c712c29f22ae5e4948cfa1ebc75",
+  "purpose": "Deepen all Grade 4 Maryland strand content in one PR without duplicating existing canonical families or fraction-equivalence work.",
+  "existing_reuse": [
+    "docs/curriculum/packs/md-grade4-mccrs-2026_27.json",
+    "PR #336 deep fraction-equivalence reasoning",
+    "draft-g45-fractions-pilot-v0",
+    "shared whole-number, fraction, decimal, measurement, angle/geometry canonical families"
+  ],
+  "packages": [
+    {
+      "id": "G4-MULT-COMP",
+      "title": "Multiplicative comparison",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 4.OA",
+      "reuse_policy": "REUSE_EXISTING_MD4_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 4 reasoning for multiplicative comparison through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/symbols"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "interpret a×b as 'a times as many'",
+        "distinguish additive from multiplicative comparison",
+        "solve unknown-product and unknown-factor contexts",
+        "represent with tape/array/equation"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G4.COMP.ADDITIVE_FOR_MULTIPLICATIVE",
+          "evidence": "Observed response suggests weakness in interpret a×b as 'a times as many'.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about interpret a×b as 'a times as many'?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.COMP.FACTOR_PRODUCT_SWAP",
+          "evidence": "Observed response suggests weakness in distinguish additive from multiplicative comparison.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about distinguish additive from multiplicative comparison?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.COMP.CONTEXT_UNIT_LOST",
+          "evidence": "Observed response suggests weakness in solve unknown-product and unknown-factor contexts.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about solve unknown-product and unknown-factor contexts?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for models/diagrams",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G4-MULTISTEP-WORD",
+      "title": "Multi-step four-operation word problems",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 4.OA",
+      "reuse_policy": "REUSE_EXISTING_MD4_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 4 reasoning for multi-step four-operation word problems through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/symbols"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "choose operations from structure",
+        "preserve intermediate meaning and units",
+        "interpret remainders by context",
+        "estimate/check reasonableness"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G4.WORD.KEYWORD_ONLY",
+          "evidence": "Observed response suggests weakness in choose operations from structure.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about choose operations from structure?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.WORD.REMAINDER_IGNORED",
+          "evidence": "Observed response suggests weakness in preserve intermediate meaning and units.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about preserve intermediate meaning and units?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.WORD.INTERMEDIATE_UNIT_LOST",
+          "evidence": "Observed response suggests weakness in interpret remainders by context.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about interpret remainders by context?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for models/diagrams",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G4-FACTORS-PATTERNS",
+      "title": "Factors, multiples, and patterns",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 4.OA",
+      "reuse_policy": "REUSE_EXISTING_MD4_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 4 reasoning for factors, multiples, and patterns through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/symbols"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "find factor pairs systematically",
+        "distinguish factor vs multiple",
+        "identify prime/composite structure",
+        "generate and explain numeric/shape patterns"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G4.FACTOR.MULTIPLE_SWAP",
+          "evidence": "Observed response suggests weakness in find factor pairs systematically.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about find factor pairs systematically?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.FACTOR.MISSING_PAIR",
+          "evidence": "Observed response suggests weakness in distinguish factor vs multiple.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about distinguish factor vs multiple?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.PATTERN.ONE_STEP_ONLY",
+          "evidence": "Observed response suggests weakness in identify prime/composite structure.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about identify prime/composite structure?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for models/diagrams",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G4-PLACE-VALUE",
+      "title": "Multi-digit place value and rounding",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 4.NBT",
+      "reuse_policy": "REUSE_EXISTING_MD4_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 4 reasoning for multi-digit place value and rounding through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/symbols"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "read/write expanded forms",
+        "compare by place value",
+        "explain ten-times relationships",
+        "round using number-line magnitude"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G4.PV.DIGIT_VALUE_SWAP",
+          "evidence": "Observed response suggests weakness in read/write expanded forms.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about read/write expanded forms?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.PV.COMPARE_BY_DIGIT_COUNT",
+          "evidence": "Observed response suggests weakness in compare by place value.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about compare by place value?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.PV.ROUND_ALWAYS_UP",
+          "evidence": "Observed response suggests weakness in explain ten-times relationships.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about explain ten-times relationships?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for models/diagrams",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G4-MULTIPLICATION",
+      "title": "Multi-digit multiplication",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 4.NBT",
+      "reuse_policy": "REUSE_EXISTING_MD4_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 4 reasoning for multi-digit multiplication through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/symbols"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "use area/partial-products models",
+        "connect distributive property to algorithm",
+        "multiply up to 4-digit×1-digit and 2-digit×2-digit",
+        "estimate/check magnitude"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G4.MULT.PLACE_SHIFT",
+          "evidence": "Observed response suggests weakness in use area/partial-products models.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about use area/partial-products models?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.MULT.PARTIAL_PRODUCT_MISSING",
+          "evidence": "Observed response suggests weakness in connect distributive property to algorithm.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about connect distributive property to algorithm?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.MULT.NO_ESTIMATE_CHECK",
+          "evidence": "Observed response suggests weakness in multiply up to 4-digit×1-digit and 2-digit×2-digit.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about multiply up to 4-digit×1-digit and 2-digit×2-digit?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for models/diagrams",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G4-DIVISION",
+      "title": "Whole-number division with remainders",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 4.NBT",
+      "reuse_policy": "REUSE_EXISTING_MD4_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 4 reasoning for whole-number division with remainders through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/symbols"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "use place-value/area models",
+        "find quotient and remainder",
+        "connect repeated subtraction/partial quotients to algorithm",
+        "interpret/check with multiplication"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G4.DIV.DIVIDEND_DIVISOR_SWAP",
+          "evidence": "Observed response suggests weakness in use place-value/area models.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about use place-value/area models?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.DIV.REMAINDER_TOO_LARGE",
+          "evidence": "Observed response suggests weakness in find quotient and remainder.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about find quotient and remainder?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.DIV.QUOTIENT_DIGIT_MISPLACED",
+          "evidence": "Observed response suggests weakness in connect repeated subtraction/partial quotients to algorithm.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about connect repeated subtraction/partial quotients to algorithm?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for models/diagrams",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G4-FRACTIONS",
+      "title": "Fraction equivalence, comparison, and operations",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 4.NF",
+      "reuse_policy": "REUSE_EXISTING_MD4_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 4 reasoning for fraction equivalence, comparison, and operations through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/symbols"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "reuse equal-whole equivalence models",
+        "compare with benchmarks/common denominators",
+        "add/subtract like denominators including mixed numbers",
+        "multiply fraction by whole as repeated addition/scaling"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G4.FRAC.UNEQUAL_WHOLES",
+          "evidence": "Observed response suggests weakness in reuse equal-whole equivalence models.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about reuse equal-whole equivalence models?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.FRAC.DENOMINATOR_SIZE",
+          "evidence": "Observed response suggests weakness in compare with benchmarks/common denominators.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about compare with benchmarks/common denominators?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.FRAC.ADD_DENOMINATORS",
+          "evidence": "Observed response suggests weakness in add/subtract like denominators including mixed numbers.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about add/subtract like denominators including mixed numbers?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for models/diagrams",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G4-DECIMAL-FRACTIONS",
+      "title": "Decimal notation for fractions",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 4.NF",
+      "reuse_policy": "REUSE_EXISTING_MD4_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 4 reasoning for decimal notation for fractions through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/symbols"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "connect tenths/hundredths to fractions",
+        "place decimals on number line",
+        "compare decimals by place value",
+        "translate fraction↔decimal with denominators 10/100"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G4.DEC.WHOLE_NUMBER_COMPARE",
+          "evidence": "Observed response suggests weakness in connect tenths/hundredths to fractions.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about connect tenths/hundredths to fractions?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.DEC.TRAILING_ZERO_CONFUSION",
+          "evidence": "Observed response suggests weakness in place decimals on number line.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about place decimals on number line?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.DEC.TENTH_HUNDREDTH_SWAP",
+          "evidence": "Observed response suggests weakness in compare decimals by place value.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about compare decimals by place value?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for models/diagrams",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G4-MEASUREMENT",
+      "title": "Measurement and conversion",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 4.MD",
+      "reuse_policy": "REUSE_EXISTING_MD4_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 4 reasoning for measurement and conversion through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/symbols"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "reason about relative unit size",
+        "convert within one system multiplicatively",
+        "solve elapsed/length/mass/capacity contexts",
+        "preserve units through multi-step problems"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G4.MEAS.CONVERSION_DIRECTION",
+          "evidence": "Observed response suggests weakness in reason about relative unit size.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about reason about relative unit size?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.MEAS.ADDITIVE_CONVERSION",
+          "evidence": "Observed response suggests weakness in convert within one system multiplicatively.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about convert within one system multiplicatively?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.MEAS.UNIT_DROPPED",
+          "evidence": "Observed response suggests weakness in solve elapsed/length/mass/capacity contexts.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about solve elapsed/length/mass/capacity contexts?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for models/diagrams",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G4-ANGLES-LINES-SHAPES",
+      "title": "Angles, lines, and shape classification",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 4.MD / 4.G",
+      "reuse_policy": "REUSE_EXISTING_MD4_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 4 reasoning for angles, lines, and shape classification through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/symbols"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "measure/sketch angles with benchmark reasoning",
+        "compose/decompose angles additively",
+        "identify parallel/perpendicular/line symmetry",
+        "classify shapes from defining angle/line attributes"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G4.ANGLE.PROTRACTOR_SCALE",
+          "evidence": "Observed response suggests weakness in measure/sketch angles with benchmark reasoning.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about measure/sketch angles with benchmark reasoning?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.ANGLE.ADDITIVE_RELATION",
+          "evidence": "Observed response suggests weakness in compose/decompose angles additively.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about compose/decompose angles additively?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G4.SHAPE.APPEARANCE_OVER_ATTRIBUTE",
+          "evidence": "Observed response suggests weakness in identify parallel/perpendicular/line symmetry.",
+          "socratic_question": "What evidence from the model/context would prove or disprove your step about identify parallel/perpendicular/line symmetry?",
+          "repair_requirement": "Use a fresh task or contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for models/diagrams",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    }
+  ],
+  "gates": {
+    "authored": true,
+    "production_wired": false,
+    "standards_accepted": false,
+    "math_accepted": false,
+    "pedagogy_accepted": false,
+    "architecture_accepted": false,
+    "mve_implemented": false,
+    "assessment_backend_wired": false,
+    "muse_qa": false,
+    "deployed": false
+  }
+}
