@@ -750,7 +750,7 @@
       "proposed_mapping_status": "NO_REPOSITORY_EXPECTATION_EQUIVALENCE_EVIDENCE",
       "repository_existing_crosswalks": [],
       "classification": {
-        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "standards_mapped": "NO",
         "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
         "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
         "validated_practice": "NO_VERIFIED_EVIDENCE",
