@@ -72,7 +72,16 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 2,
+      "source_printed_page": 3,
+      "official_subpart_identifiers": [
+        "IA1.AT.A.1.a",
+        "IA1.AT.A.1.b",
+        "IA1.AT.A.1.c"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.B.2",
@@ -95,7 +104,17 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 3,
+      "source_printed_page": 4,
+      "official_subpart_identifiers": [
+        "IA1.AT.B.2.a",
+        "IA1.AT.B.2.b",
+        "IA1.AT.B.2.c",
+        "IA1.AT.B.2.d"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.B.3",
@@ -118,7 +137,17 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 4,
+      "source_printed_page": 5,
+      "official_subpart_identifiers": [
+        "IA1.AT.B.3.a",
+        "IA1.AT.B.3.b",
+        "IA1.AT.B.3.c",
+        "IA1.AT.B.3.d"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.B.4",
@@ -141,7 +170,15 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 4,
+      "source_printed_page": 5,
+      "official_subpart_identifiers": [
+        "IA1.AT.B.4.a",
+        "IA1.AT.B.4.b"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.B.5",
@@ -164,7 +201,17 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 5,
+      "source_printed_page": 6,
+      "official_subpart_identifiers": [
+        "IA1.AT.B.5.a",
+        "IA1.AT.B.5.b",
+        "IA1.AT.B.5.c",
+        "IA1.AT.B.5.d"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.B.6",
@@ -187,7 +234,12 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 5,
+      "source_printed_page": 6,
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.B.7",
@@ -210,7 +262,16 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 6,
+      "source_printed_page": 7,
+      "official_subpart_identifiers": [
+        "IA1.AT.B.7.a",
+        "IA1.AT.B.7.b",
+        "IA1.AT.B.7.c"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.B.8",
@@ -235,7 +296,16 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 6,
+      "source_printed_page": 7,
+      "official_subpart_identifiers": [
+        "IA1.AT.B.8.a",
+        "IA1.AT.B.8.b",
+        "IA1.AT.B.8.c"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.B.9",
@@ -258,7 +328,12 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 6,
+      "source_printed_page": 7,
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.C.10",
@@ -283,7 +358,17 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 7,
+      "source_printed_page": 8,
+      "official_subpart_identifiers": [
+        "IA1.AT.C.10.a",
+        "IA1.AT.C.10.b",
+        "IA1.AT.C.10.c",
+        "IA1.AT.C.10.d"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.C.11",
@@ -308,7 +393,12 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 8,
+      "source_printed_page": 9,
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.C.12",
@@ -333,7 +423,12 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 8,
+      "source_printed_page": 9,
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.D.13",
@@ -358,7 +453,16 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 8,
+      "source_printed_page": 9,
+      "official_subpart_identifiers": [
+        "IA1.AT.D.13.a",
+        "IA1.AT.D.13.b",
+        "IA1.AT.D.13.c"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.D.14",
@@ -383,7 +487,16 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 9,
+      "source_printed_page": 10,
+      "official_subpart_identifiers": [
+        "IA1.AT.D.14.a",
+        "IA1.AT.D.14.b",
+        "IA1.AT.D.14.c"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.D.15",
@@ -408,7 +521,15 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 10,
+      "source_printed_page": 11,
+      "official_subpart_identifiers": [
+        "IA1.AT.D.15.a",
+        "IA1.AT.D.15.b"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.D.16",
@@ -433,7 +554,15 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 10,
+      "source_printed_page": 11,
+      "official_subpart_identifiers": [
+        "IA1.AT.D.16.a",
+        "IA1.AT.D.16.b"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.D.17",
@@ -458,7 +587,16 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 11,
+      "source_printed_page": 12,
+      "official_subpart_identifiers": [
+        "IA1.AT.D.17.a",
+        "IA1.AT.D.17.b",
+        "IA1.AT.D.17.c"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.GR.A.1",
@@ -483,7 +621,15 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 12,
+      "source_printed_page": 13,
+      "official_subpart_identifiers": [
+        "IA1.GR.A.1.a",
+        "IA1.GR.A.1.b"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.GR.A.2",
@@ -506,7 +652,12 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 12,
+      "source_printed_page": 13,
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.GR.B.3",
@@ -529,7 +680,12 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 13,
+      "source_printed_page": 14,
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.GR.B.4",
@@ -552,7 +708,15 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 13,
+      "source_printed_page": 14,
+      "official_subpart_identifiers": [
+        "IA1.GR.B.4.a",
+        "IA1.GR.B.4.b"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.GR.B.5",
@@ -575,7 +739,15 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 13,
+      "source_printed_page": 14,
+      "official_subpart_identifiers": [
+        "IA1.GR.B.5.a",
+        "IA1.GR.B.5.b"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.DS.A.1",
@@ -600,7 +772,12 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 14,
+      "source_printed_page": 15,
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.DS.A.2",
@@ -623,7 +800,15 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 14,
+      "source_printed_page": 15,
+      "official_subpart_identifiers": [
+        "IA1.DS.A.2.a",
+        "IA1.DS.A.2.b"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.DS.A.3",
@@ -646,7 +831,16 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 14,
+      "source_printed_page": 15,
+      "official_subpart_identifiers": [
+        "IA1.DS.A.3.a",
+        "IA1.DS.A.3.b",
+        "IA1.DS.A.3.c"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.DS.A.4",
@@ -669,7 +863,15 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 15,
+      "source_printed_page": 16,
+      "official_subpart_identifiers": [
+        "IA1.DS.A.4.a",
+        "IA1.DS.A.4.b"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.DS.B.5",
@@ -692,7 +894,15 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 15,
+      "source_printed_page": 16,
+      "official_subpart_identifiers": [
+        "IA1.DS.B.5.a",
+        "IA1.DS.B.5.b"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.DS.B.6",
@@ -717,7 +927,15 @@
       "blockers": [
         "Repository row and canonical-looking code predate the current reviewed-taxonomy gate.",
         "Exact expectation-to-atomic-skill completeness and equivalence require independent review."
-      ]
+      ],
+      "source_pdf_page_index": 16,
+      "source_printed_page": 17,
+      "official_subpart_identifiers": [
+        "IA1.DS.B.6.a",
+        "IA1.DS.B.6.b"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.DS.B.7",
@@ -740,7 +958,15 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 16,
+      "source_printed_page": 17,
+      "official_subpart_identifiers": [
+        "IA1.DS.B.7.a",
+        "IA1.DS.B.7.b"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "IA1.DS.B.8",
@@ -763,7 +989,15 @@
       "blockers": [
         "No expectation-specific repository mapping was found.",
         "Do not invent a canonical ID to fill this gap."
-      ]
+      ],
+      "source_pdf_page_index": 16,
+      "source_printed_page": 17,
+      "official_subpart_identifiers": [
+        "IA1.DS.B.8.a",
+        "IA1.DS.B.8.b"
+      ],
+      "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "scope_completeness_status": "PARENT_AND_PUBLISHED_SUBPARTS_REFERENCED_PENDING_INDEPENDENT_REVIEW"
     }
   ]
 }

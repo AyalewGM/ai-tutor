@@ -111,3 +111,19 @@ def test_traditional_and_integrated_course_identities_remain_separate() -> None:
     assert reconciliation["traditional_pack_status"] == (
         "SEPARATE_COURSE_IDENTITY_NOT_CROSSWALKED_BY_THIS_MANIFEST"
     )
+
+
+def test_integrated_algebra_i_2025_source_ledger_has_printed_pages_and_subparts() -> None:
+    data = _manifest()
+    ledger = json.loads((MANIFEST.parent / 'md_ia1_2025.source_fidelity_locators.v1.json').read_text(encoding='utf-8'))
+    assert ledger['status'] == 'AUTHOR_SOURCE_LOCATORS_REVIEW_REQUIRED'
+    assert len(ledger['records']) == len(data['expectations']) == 30
+    for row, source in zip(data['expectations'], ledger['records'], strict=True):
+        assert row['expectation_id'] == source['expectation_id']
+        assert row['source_page'] == source['pdf_page_index']
+        assert row['source_printed_page'] == row['source_page'] + 1 == source['printed_page']
+        assert row['official_subpart_identifiers'] == source['lettered_subpart_ids']
+        assert source['document_url'] == data['provenance']['authoritative_crosswalk_url']
+        assert source['independent_acceptance'] == 'PENDING'
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+    assert next(r for r in ledger['records'] if r['expectation_id']=='IA1.AT.B.2')['lettered_subpart_ids'] == ['IA1.AT.B.2.a','IA1.AT.B.2.b','IA1.AT.B.2.c','IA1.AT.B.2.d']
