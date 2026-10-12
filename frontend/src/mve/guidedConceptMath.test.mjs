@@ -94,3 +94,10 @@ test("concept lessons implement real scaffold fading and transfer surfaces", asy
   assert.match(ui, /Ratio transfer/);
   assert.match(ui, /worked answer|stays unworked|without counters|without the completed bar/i);
 });
+
+test("repairs do not reveal expected ratio shares and completed fraction model waits for numeric evidence", async () => {
+  const ui = await readFile(new URL("./GuidedConceptPractice.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(ui, /Enter both shares as 6,18|Enter both shares as 12,18|Enter both shares as 12,16/);
+  assert.match(ui, /Ratio repair common unit/);
+  assert.match(ui, /numericVerified && !explanationVerified && <ProblemVisual/);
+});
