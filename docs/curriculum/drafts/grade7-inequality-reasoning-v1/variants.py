@@ -6,9 +6,9 @@ No database, router, canonical registration or mastery-event integration.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from random import Random
-from collections.abc import Mapping
 
 STATUS = "DRAFT_UNVERIFIED"
 RUNTIME_ACTIVATION = False
