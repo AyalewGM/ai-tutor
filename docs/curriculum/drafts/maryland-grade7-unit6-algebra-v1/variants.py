@@ -11,7 +11,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 from random import Random
-from typing import Mapping
+from collections.abc import Mapping
 
 STATUS = "DRAFT_UNVERIFIED"
 RUNTIME_ACTIVATION = False
