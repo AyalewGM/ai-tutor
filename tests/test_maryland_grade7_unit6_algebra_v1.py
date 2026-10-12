@@ -99,6 +99,19 @@ def test_all_six_task_kinds_are_seeded_and_exact(mode: str) -> None:
     assert kinds == set(MODULE.KINDS)
 
 
+
+def test_choose_model_seeds_reach_equation_and_inequality_exactly() -> None:
+    inequality = MODULE.generate(0, "guided")
+    equation = MODULE.generate(len(MODULE.KINDS), "guided")
+    assert inequality.kind == equation.kind == "CHOOSE_MODEL"
+    assert inequality.teacher_oracle()["model_type"] == "INEQUALITY"
+    assert inequality.relation == ">="
+    assert equation.teacher_oracle()["model_type"] == "EQUATION"
+    assert equation.relation is None
+    assert ">=" in inequality.model
+    assert "=" in equation.model
+
+
 def _truth_set_matches_boundary(variant) -> bool:
     oracle = variant.teacher_oracle()
     boundary = Fraction(oracle["boundary"])
