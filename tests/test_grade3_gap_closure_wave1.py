@@ -63,11 +63,17 @@ def test_fact_family_has_four_related_facts():
         assert o["product"]>0
 
 def test_place_value_rounding_contract():
-    for seed in range(30):
+    assert MODULE._round_half_up_positive(145,10)==150
+    assert MODULE._round_half_up_positive(150,100)==200
+    halfway_seen=False
+    for seed in range(120):
         o=MODULE.generate("G3-PLACE-VALUE",seed,"guided").teacher_oracle()
-        assert 100<=o["number"]<=999
-        assert o["rounded10"]%10==0
-        assert o["rounded100"]%100==0
+        n=o["number"]
+        assert 100<=n<=999
+        assert o["rounded10"]==((n+5)//10)*10
+        assert o["rounded100"]==((n+50)//100)*100
+        halfway_seen = halfway_seen or n%10==5 or n%100==50
+    assert halfway_seen
 
 def test_fraction_equivalence_and_half_comparison():
     for seed in range(40):
@@ -82,11 +88,16 @@ def test_time_end_time_has_clock_format():
         assert o["elapsed"]>0
 
 def test_scaled_graph_counts_are_scale_consistent():
-    for seed in range(30):
+    tie_seen=False
+    for seed in range(120):
         o=MODULE.generate("G3-DATA",seed,"independent").teacher_oracle()
         assert all(h>=1 for h in o["heights"])
-        assert o["greatest"] in {"A","B","C"}
+        max_height=max(o["heights"])
+        expected=[label for label,height in zip(("A","B","C"),o["heights"]) if height==max_height]
+        assert o["greatest"]==expected
         assert o["scale"] in {2,5,10}
+        tie_seen = tie_seen or len(expected)>1
+    assert tie_seen
 
 def test_area_perimeter_are_distinct_measures():
     for seed in range(30):
