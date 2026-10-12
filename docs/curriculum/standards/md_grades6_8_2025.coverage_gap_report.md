@@ -76,3 +76,10 @@ Each expectation now carries its grade-specific official crosswalk source ID and
 ### Source-fidelity evidence matrix (2026-10-12; author-supplied, independent review pending)
 
 A new [79-row source locator ledger](md_grades6_8_2025.source_fidelity_locators.v1.json) pins each 2025 MCCRS expectation to its official MSDE grade-specific crosswalk, **printed page or page span**, 2025 Standards Statement column, and explicitly lettered subpart IDs. It is a *review index*, not accepted standards mapping or independently certified scope. For example, Grade 6 `6.NOS.A.1` has subparts a–c on printed page 2; Grade 7 `7.NOS.A.2` has a–e on printed page 3; Grade 8 `8.DS.C.6` has a–b spanning pages 13–14. The official PDF governs complete parent/subpart mathematical scope; the short editorial summaries must be checked by the independent reviewer. No old 2010 column identifiers count as new 2025 expectations. All 79 rows remain provisional, with zero accepted coverage or mastery.
+
+
+## Grades 7–8 original-PDF printed-page audit (2026-10-12)
+
+All 49 Grade 7–8 parent expectations (22 G7, 27 G8) were located individually in the **2025 Standards Statement column** of the official MSDE Grade 7 and Grade 8 crosswalks. The original PDF cover is zero-based index 0; in these PDFs the index of each standards page coincides with its printed footer page. Both values are stored explicitly, including a 2025 statement spanning pages (not a 2010 previous-standard continuation). 46 existing page rows were corrected; three previously corrected sample rows remain correct. Grade 6 was not reaudited. The parent scope and 67 author-indexed Grade 7–8 subparts still require independent verification; no accepted mapping, generator, assessment or mastery claims follow from page-location correction.
+
+Sources: https://msde.maryland.gov/media/17818 and https://msde.maryland.gov/media/17820 .
