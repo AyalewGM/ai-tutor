@@ -192,6 +192,21 @@ def test_source_fidelity_ledger_covers_all_2025_parent_and_lettered_rows() -> No
         assert row['source_fidelity_status'] == 'AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW'
         assert record['independent_acceptance'] == 'PENDING'
         assert record['column'] == '2025 MD Index / 2025 Standards Statement'
-        assert record['printed_page_start'] >= 2
+        assert record['printed_page_start'] >= 1
         assert record['printed_page_end'] >= record['printed_page_start']
         assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+
+
+def test_official_pdf_printed_page_and_zero_based_index_are_not_conflated() -> None:
+    manifest = _manifest()
+    evidence = json.loads((MANIFEST.parent / 'md_grades6_8_2025.source_fidelity_locators.v1.json').read_text(encoding='utf-8'))
+    rows = {r['expectation_id']: r for r in manifest['expectations']}
+    locators = {r['expectation_id']: r for r in evidence['records']}
+    for expectation_id, pdf_index, printed in [
+        ('7.NOS.A.1', 1, 1), ('7.AT.A.2', 4, 4), ('8.NOS.A.1', 1, 1),
+    ]:
+        assert rows[expectation_id]['pdf_page_index_zero_based'] == pdf_index
+        assert rows[expectation_id]['source_page'] == printed
+        assert locators[expectation_id]['pdf_page_index_zero_based'] == pdf_index
+        assert locators[expectation_id]['printed_page_start'] == printed
+        assert locators[expectation_id]['page_locator_evidence'] == 'MSDE_OFFICIAL_PDF_PAGE_IMAGE_FOOTER_CONFIRMED'
