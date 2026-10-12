@@ -9,12 +9,13 @@
     "authority_code": "OSSE"
   },
   "curriculum": {
-    "course_code": "DC_CCSS_MATH_6_8_2024_25",
+    "course_code": "DC_CCSS_MATH_GRADES_6_8",
     "course_title": "District of Columbia Mathematics Standards (Common Core), Grades 6-8",
     "standards_version": "CCSS-2010 (current DC adoption)",
     "adopted_date": "2010-07 (District adoption of CCSS)",
-    "implementation_school_year": "current",
-    "note": "DC adopted the Common Core State Standards verbatim; expectation identifiers are the canonical CCSS codes (e.g., 6.NS.A.1). Unlike Maryland's 2025 MCCRS re-domained framework, DC retains the legacy domain letters RP/NS/EE/G/SP/F."
+    "implementation_school_year": "2014-2015",
+    "note": "DC adopted the Common Core State Standards verbatim; expectation identifiers are the canonical CCSS codes (e.g., 6.NS.A.1). Unlike Maryland's 2025 MCCRS re-domained framework, DC retains the legacy domain letters RP/NS/EE/G/SP/F.",
+    "implementation_milestone": "FULL_IMPLEMENTATION_OF_2010_CCSS"
   },
   "provenance": {
     "authoritative_source_url": "https://osse.dc.gov/page/dc-standards",
@@ -23,8 +24,11 @@
     "source_notes": [
       "The District of Columbia adopted the Common Core State Standards; OSSE publishes DC standards as the CCSS verbatim.",
       "Expectation identifiers follow the canonical CCSS scheme {grade}.{domain}.{cluster}.{number}; the inventory unit is the top-level standard (lettered sub-parts are not enumerated).",
-      "Scope summaries are editorial paraphrases of the CCSS statements; reviewers must compare them with official wording before accepting any mapping."
-    ]
+      "Scope summaries are editorial paraphrases of the CCSS statements; reviewers must compare them with official wording before accepting any mapping.",
+      "OSSE adoption was July 2010; implementation began SY 2011-2012 and was complete by SY 2014-2015. The inventory_as_of date is not a standards version or school-year code."
+    ],
+    "inventory_as_of": "2026-10-12",
+    "adoption_history_authority_url": "https://osse.dc.gov/page/dc-standards"
   },
   "reconciliation": {
     "official_expectation_count": 80,

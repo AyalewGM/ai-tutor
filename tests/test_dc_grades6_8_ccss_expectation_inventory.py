@@ -158,3 +158,16 @@ def test_reconciliation_counts_are_internally_consistent() -> None:
         "7": 5,
         "8": 0,
     }
+
+
+def test_dc_standards_provenance_is_reproducible_and_separate_from_inventory_date() -> None:
+    manifest = _manifest()
+    curriculum = manifest['curriculum']
+    provenance = manifest['provenance']
+    assert curriculum['course_code'] == 'DC_CCSS_MATH_GRADES_6_8'
+    assert curriculum['standards_version'] == 'CCSS-2010 (current DC adoption)'
+    assert curriculum['implementation_school_year'] == '2014-2015'
+    assert curriculum['implementation_milestone'] == 'FULL_IMPLEMENTATION_OF_2010_CCSS'
+    assert provenance['inventory_as_of'] == provenance['checked_date'] == '2026-10-12'
+    assert provenance['adoption_history_authority_url'] == 'https://osse.dc.gov/page/dc-standards'
+    assert all(row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED' for row in manifest['expectations'])
