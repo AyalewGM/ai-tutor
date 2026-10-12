@@ -28,6 +28,11 @@ def _validate(concept_id:str,seed:int,mode:str)->None:
     if seed<0: raise ValueError("seed must be nonnegative")
     if mode not in MODES: raise ValueError("mode must be guided or independent")
 
+def _round_half_up_positive(value:int,place:int)->int:
+    if value<0 or place<=0:
+        raise ValueError("positive elementary rounding only")
+    return ((value + place//2)//place)*place
+
 def generate(concept_id:str,seed:int,mode:str)->Variant:
     _validate(concept_id,seed,mode)
     rng=Random(f"{NAMESPACE}:{concept_id}:{mode}:{seed}")
@@ -53,7 +58,9 @@ def generate(concept_id:str,seed:int,mode:str)->Variant:
         oracle={"facts":[f"{a}*{b}={p}",f"{b}*{a}={p}",f"{p}/{a}={b}",f"{p}/{b}={a}"],"product":p}
         fields=("fact_family","property_explanation","decomposition","product")
     elif concept_id=="G3-PLACE-VALUE":
-        n=rng.randint(100,999); rounded10=round(n/10)*10; rounded100=round(n/100)*100
+        n=rng.randint(100,999)
+        rounded10=_round_half_up_positive(n,10)
+        rounded100=_round_half_up_positive(n,100)
         prompt=f"Represent {n} with hundreds/tens/ones, round to nearest 10 and 100 using benchmarks, then solve {n}+{rng.randint(20,90)} with regrouping."
         oracle={"number":n,"rounded10":rounded10,"rounded100":rounded100}
         fields=("base_ten_representation","rounded10","rounded100","addition_steps","reasonableness")
@@ -72,9 +79,11 @@ def generate(concept_id:str,seed:int,mode:str)->Variant:
     elif concept_id=="G3-DATA":
         scale=rng.choice((2,5,10)); cats=["A","B","C"]; counts=[rng.randint(1,5)*scale for _ in cats]
         prompt=f"A scaled bar graph uses 1 grid unit = {scale}. Categories A,B,C have counts {counts}. Give the bar heights in grid units and answer which category is greatest."
-        heights=[c//scale for c in counts]; idx=max(range(3),key=lambda i:counts[i])
-        oracle={"heights":heights,"greatest":cats[idx],"scale":scale}
-        fields=("scale","bar_heights","greatest_category","comparison_explanation")
+        heights=[c//scale for c in counts]
+        greatest_value=max(counts)
+        greatest=[cats[i] for i,count in enumerate(counts) if count==greatest_value]
+        oracle={"heights":heights,"greatest":greatest,"scale":scale}
+        fields=("scale","bar_heights","greatest_categories","comparison_explanation")
     elif concept_id=="G3-AREA-PERIMETER":
         l,w=rng.randint(2,10),rng.randint(2,8)
         prompt=f"A rectangle is {l} units by {w} units. Find area and perimeter, explain square vs linear units, and give one different rectangle with the same area if possible."
