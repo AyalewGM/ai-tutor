@@ -213,8 +213,25 @@ def generate(concept_id: str, seed: int, mode: str) -> Variant:
         fields = ("reasonably_random", "bias_explanation", "parameter_vs_statistic")
 
     elif concept_id == "G9-STAT-INVESTIGATION":
-        prompt = "Design a study to investigate whether daily study time is associated with quiz score. State population, variables, sampling plan, limitations, and what causal claim is or is not justified."
-        oracle = {"two_variables": True, "causal_claim_allowed_from_observational": False, "requires_sampling_plan": True}
+        contexts = (
+            ("daily study time", "quiz score"),
+            ("sleep duration", "morning reaction time"),
+            ("weekly practice time", "free-throw percentage"),
+            ("screen time", "reported sleep quality"),
+        )
+        x_var, y_var = rng.choice(contexts)
+        prompt = (
+            f"Design a study to investigate whether {x_var} is associated with {y_var}. "
+            "State population, variables, sampling plan, limitations, and what causal claim "
+            "is or is not justified."
+        )
+        oracle = {
+            "two_variables": True,
+            "explanatory_variable": x_var,
+            "response_variable": y_var,
+            "causal_claim_allowed_from_observational": False,
+            "requires_sampling_plan": True,
+        }
         fields = ("population", "variables", "sampling_plan", "bias_limits", "claim_limit")
 
     elif concept_id == "G9-BIVARIATE-MODELING":
