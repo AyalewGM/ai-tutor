@@ -86,7 +86,8 @@
           "version_verification": "DIRECT_MSDE_COMPANION_GUIDE_COVER_PAGE"
         }
       }
-    }
+    },
+    "page_locator_review_note": "Only three sampled Grade 7/8 printed footer locators were corrected and visually verified at PDF indexes 1,4,1 respectively. Remaining row page fields are author-provided and PENDING re-audit; do not infer printed page from PDF index or globally subtract one."
   },
   "reconciliation": {
     "official_expectation_count": 79,
@@ -1199,8 +1200,8 @@
       ],
       "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
       "source_document_revision": "July 2025",
-      "source_page": 2,
-      "source_page_end": 2,
+      "source_page": 1,
+      "source_page_end": 1,
       "official_subpart_identifiers": [
         "7.NOS.A.1.a",
         "7.NOS.A.1.b",
@@ -1208,7 +1209,9 @@
         "7.NOS.A.1.d"
       ],
       "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
-      "scope_completeness_status": "PARENT_AND_ALL_LISTED_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW"
+      "scope_completeness_status": "PARENT_AND_ALL_LISTED_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "pdf_page_index_zero_based": 1,
+      "page_locator_evidence": "MSDE_OFFICIAL_PDF_PAGE_IMAGE_FOOTER_CONFIRMED"
     },
     {
       "expectation_id": "7.NOS.A.2",
@@ -1355,14 +1358,16 @@
       ],
       "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
       "source_document_revision": "July 2025",
-      "source_page": 5,
-      "source_page_end": 5,
+      "source_page": 4,
+      "source_page_end": 4,
       "official_subpart_identifiers": [
         "7.AT.A.2.a",
         "7.AT.A.2.b"
       ],
       "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
-      "scope_completeness_status": "PARENT_AND_ALL_LISTED_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW"
+      "scope_completeness_status": "PARENT_AND_ALL_LISTED_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "pdf_page_index_zero_based": 4,
+      "page_locator_evidence": "MSDE_OFFICIAL_PDF_PAGE_IMAGE_FOOTER_CONFIRMED"
     },
     {
       "expectation_id": "7.AT.A.3",
@@ -2015,11 +2020,13 @@
       ],
       "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
       "source_document_revision": "July 2025",
-      "source_page": 2,
-      "source_page_end": 2,
+      "source_page": 1,
+      "source_page_end": 1,
       "official_subpart_identifiers": [],
       "source_fidelity_status": "AUTHOR_LOCATED_PENDING_INDEPENDENT_REVIEW",
-      "scope_completeness_status": "PARENT_AND_ALL_LISTED_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW"
+      "scope_completeness_status": "PARENT_AND_ALL_LISTED_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "pdf_page_index_zero_based": 1,
+      "page_locator_evidence": "MSDE_OFFICIAL_PDF_PAGE_IMAGE_FOOTER_CONFIRMED"
     },
     {
       "expectation_id": "8.NOS.A.2",
