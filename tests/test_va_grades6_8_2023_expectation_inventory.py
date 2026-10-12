@@ -81,7 +81,7 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
     }
 
     assert existing == REPOSITORY_EXISTING_IDS
-    assert len(existing) == 16
+    assert len(existing) == 15
     for row in rows:
         if row["expectation_id"] in existing:
             assert row["repository_existing_crosswalks"]
