@@ -163,7 +163,8 @@ def test_grade_specific_official_document_versions_and_adoption_sources() -> Non
     }
     assert sources['6']['companion']['revision'] == 'Version 2, June 2026'
     assert sources['7']['companion']['revision'] == 'Version 2, June 2026'
-    assert sources['8']['companion']['revision'] == 'UNKNOWN_PENDING_SOURCE_DOCUMENT_VERIFICATION'
+    assert sources['8']['companion']['revision'] == 'Version 1, February 2026'
+    assert sources['8']['companion']['version_verification'] == 'DIRECT_MSDE_COMPANION_GUIDE_COVER_PAGE'
     for row in manifest['expectations']:
         source = sources[str(row['grade'])]
         assert row['source_locator'] == source['url']

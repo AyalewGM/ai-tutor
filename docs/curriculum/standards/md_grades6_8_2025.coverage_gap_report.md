@@ -69,6 +69,6 @@ Seed linkage is copied verbatim from the merged reconciliation (`md_grades6_8_20
 |---|---|---|---|
 | 6 | February 2026 | Version 2, June 2026 | MSDE crosswalk = identifiers/scope; companion = guidance |
 | 7 | July 2025 | Version 2, June 2026 | Same separation |
-| 8 | July 2025 | **UNKNOWN — pending direct document verification** | Same separation; do not inherit a guessed companion version |
+| 8 | July 2025 | Version 1, February 2026 | Same separation; directly verified against the MSDE Grade 8 companion cover page |
 
 Each expectation now carries its grade-specific official crosswalk source ID and document revision. The July 29, 2025 Board adoption date is separately attributed to the [MSDE mathematics landing page](https://msde.maryland.gov/academics-0/curriculum-academic-standards/mathematics), not misattributed to a crosswalk cover. MCPS Amplify course listings are **district instructional research only**, never MSDE standards authority. All 79 proposed Mihur relations remain unaccepted.

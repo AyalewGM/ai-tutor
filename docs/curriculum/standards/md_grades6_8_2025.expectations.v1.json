@@ -81,8 +81,9 @@
         "companion": {
           "title": "Grade 8 MCCRS Mathematics Companion Guide",
           "url": "https://msde.maryland.gov/media/17821",
-          "revision": "UNKNOWN_PENDING_SOURCE_DOCUMENT_VERIFICATION",
-          "role": "MSDE_STANDARDS_IMPLEMENTATION_GUIDANCE"
+          "revision": "Version 1, February 2026",
+          "role": "MSDE_STANDARDS_IMPLEMENTATION_GUIDANCE",
+          "version_verification": "DIRECT_MSDE_COMPANION_GUIDE_COVER_PAGE"
         }
       }
     }
