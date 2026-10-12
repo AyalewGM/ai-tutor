@@ -37,7 +37,12 @@ const SKILL_NAME = 'Signed Number Operations';
 /* ------------------------------------------------------------------ */
 
 function solveSignedNumbers(text) {
-  const t = text.trim().replace(/\s+/g, ' ');
+  // Problem text may use the mathematical minus sign (U+2212) after KaTeX
+  // rendering. Normalize it before applying the deterministic ASCII parsers.
+  const t = text
+    .trim()
+    .replace(/\u2212/g, '-')
+    .replace(/\s+/g, ' ');
   let m;
   // add tier: "Evaluate -5 + 3." / "Evaluate -5 + (-3)."
   if ((m = t.match(/^Evaluate\s+\(?(-?\d+)\)?\s*\+\s*\(?(-?\d+)\)?\.$/))) {
@@ -83,6 +88,13 @@ function solveSignedNumbers(text) {
   }
   return null;
 }
+
+test('signed-integer synthetic solver accepts rendered and ASCII minus forms', () => {
+  expect(solveSignedNumbers('Evaluate 3−5.')).toBe('-2');
+  expect(solveSignedNumbers('Evaluate −4 − 9.')).toBe('-13');
+  expect(solveSignedNumbers('Evaluate 3 - (-4).')).toBe('7');
+  expect(solveSignedNumbers('Evaluate (-6) × (-4).')).toBe('24');
+});
 
 /**
  * which_point tier ("...which letter marks the value of a + (b)?"): the

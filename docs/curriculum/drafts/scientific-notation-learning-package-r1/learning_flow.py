@@ -235,9 +235,9 @@ def evaluate_guided_response(item: Any, response: Mapping[str, Any]) -> dict[str
         misconception = "SCI.PRODUCT.EXPONENTS_MULTIPLIED"
     elif operation == "DIVIDE" and exponent == parameters["e1"] + parameters["e2"]:
         misconception = "SCI.QUOTIENT.EXPONENTS_ADDED"
-    elif ordinary == expected_ordinary and exponent == -expected_exponent:
+    elif coefficient == expected_coefficient and exponent != expected_exponent:
         misconception = "SCI.EXPONENT.DIRECTION"
-    elif ordinary != expected_ordinary:
+    elif coefficient != expected_coefficient:
         misconception = "SCI.COEFFICIENT.ARITHMETIC"
     else:
         misconception = "SCI.INEXACT.WHEN_EXACT_REQUIRED"
