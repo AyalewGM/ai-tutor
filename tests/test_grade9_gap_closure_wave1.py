@@ -129,6 +129,22 @@ def test_optimization_oracle_is_maximum_over_declared_vertices() -> None:
         assert isinstance(oracle["optimal_value"], int)
 
 
+def test_optimization_records_full_tied_edge_when_objective_coefficients_match() -> None:
+    saw_tie = False
+    for seed in range(200):
+        oracle = MODULE.generate("G9-LINEAR-OPTIMIZATION", seed, "guided").teacher_oracle()
+        if oracle["unique_optimum"]:
+            assert oracle["optimal_set"]["kind"] == "POINT"
+        else:
+            saw_tie = True
+            edge = oracle["optimal_set"]
+            assert edge["kind"] == "EDGE"
+            assert edge["equation"].startswith("x+y=")
+            assert len(edge["endpoints"]) == 2
+            assert oracle["optimal_value"] > 0
+    assert saw_tie
+
+
 def test_linear_exponential_intersection_is_integer_and_verified() -> None:
     for seed in range(40):
         oracle = MODULE.generate(
@@ -223,6 +239,16 @@ def test_triangle_congruence_rejects_aaa_and_generic_ssa() -> None:
     assert observed["SSA"] is False
     for method in ("SSS", "SAS", "ASA", "AAS", "HL"):
         assert observed[method] is True
+
+    hl = None
+    for seed in range(200):
+        candidate = MODULE.generate("G9-TRIANGLE-CONGRUENCE", seed, "guided")
+        if candidate.teacher_oracle()["criterion"] == "HL":
+            hl = candidate
+            break
+    assert hl is not None
+    assert "right triangles" in hl.prompt.lower()
+    assert hl.teacher_oracle()["right_triangle_condition_required"] is True
 
 
 def test_sampling_and_statistical_investigation_do_not_infer_causation() -> None:
