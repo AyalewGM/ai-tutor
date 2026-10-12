@@ -275,7 +275,7 @@ def test_every_kind_accepts_exact_oracle_response_as_unassisted(
         )
 
 
-def test_linear_equation_oracle_is_independently_verified_by_substitution() -> None:
+def test_direct_two_step_equation_oracle_is_independently_verified_by_substitution() -> None:
     for seed in range(100):
         variant = contract.generate_hidden_variant(
             contract.ExactAlgebraKind.LINEAR_EQUATION,
@@ -287,7 +287,31 @@ def test_linear_equation_oracle_is_independently_verified_by_substitution() -> N
         right = parameters["right_coefficient"] * solution + parameters["right_constant"]
         assert left == right
         assert variant.oracle["substitution_checks"] == ((solution, left, right),)
-        assert parameters["left_coefficient"] != parameters["right_coefficient"]
+        assert parameters["left_coefficient"] != 0
+        assert parameters["left_constant"] != 0
+        assert parameters["right_coefficient"] == 0
+
+
+def test_variables_both_sides_cannot_credit_the_direct_two_step_atom() -> None:
+    direct = contract.generate_hidden_variant(
+        contract.ExactAlgebraKind.LINEAR_EQUATION,
+        11,
+    )
+    shared_coefficient = Fraction(2)
+    parameters = dict(direct.parameters)
+    parameters["left_coefficient"] += shared_coefficient
+    parameters["right_coefficient"] = shared_coefficient
+    both_sides = replace(
+        direct,
+        prompt=(
+            f"Solve {parameters['left_coefficient']}x + ({parameters['left_constant']}) = "
+            f"{parameters['right_coefficient']}x + ({parameters['right_constant']})."
+        ),
+        parameters=parameters,
+    )
+
+    with pytest.raises(ValueError, match="outside the direct two-step atom scope"):
+        contract.score_exact_response(both_sides, _correct_wire_response(both_sides))
 
 
 def test_equation_substitution_is_exact_evidence_not_a_client_truth_flag() -> None:

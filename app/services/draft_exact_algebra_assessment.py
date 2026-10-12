@@ -213,14 +213,12 @@ def _linear(seed: int) -> HiddenExactVariant:
     rng, variant_id = _seeded(ExactAlgebraKind.LINEAR_EQUATION, seed)
     solution = Fraction(rng.choice((-9, -7, -5, -3, 3, 5, 7, 9)), rng.choice((2, 3, 4)))
     left_coefficient = Fraction(rng.choice((-7, -5, -3, 3, 5, 7)), rng.choice((1, 2, 3)))
-    right_coefficient = Fraction(rng.choice((-6, -4, -2, 2, 4, 6)), rng.choice((1, 2, 3)))
-    while right_coefficient == left_coefficient:
-        right_coefficient += 1
-    right_constant = Fraction(rng.randint(-8, 8))
-    left_constant = (right_coefficient - left_coefficient) * solution + right_constant
+    left_constant = Fraction(rng.choice((*range(-8, 0), *range(1, 9))))
+    right_coefficient = Fraction(0)
+    right_constant = left_coefficient * solution + left_constant
     prompt = (
         f"Solve {_fraction_text(left_coefficient)}x + ({_fraction_text(left_constant)}) = "
-        f"{_fraction_text(right_coefficient)}x + ({_fraction_text(right_constant)}). "
+        f"{_fraction_text(right_constant)}. "
         "Return the complete exact solution set and verify it by substitution."
     )
     wrong_sign = -solution
@@ -691,8 +689,18 @@ def generate_hidden_variant(kind: ExactAlgebraKind, seed: int) -> HiddenExactVar
 def _expected_primary_target(variant: HiddenExactVariant) -> ExactAssessmentTarget:
     """Derive the only target this task may evidence from its hidden structure."""
 
+    if variant.kind == ExactAlgebraKind.LINEAR_EQUATION:
+        try:
+            left_coefficient = Fraction(variant.parameters["left_coefficient"])
+            left_constant = Fraction(variant.parameters["left_constant"])
+            right_coefficient = Fraction(variant.parameters["right_coefficient"])
+        except (KeyError, TypeError, ValueError, ZeroDivisionError) as error:
+            raise ValueError("linear task has no exact direct two-step structure") from error
+        if left_coefficient == 0 or left_constant == 0 or right_coefficient != 0:
+            raise ValueError("linear task is outside the direct two-step atom scope")
+        return ExactAssessmentTarget.LINEAR_TWO_STEP
+
     static_targets = {
-        ExactAlgebraKind.LINEAR_EQUATION: ExactAssessmentTarget.LINEAR_TWO_STEP,
         ExactAlgebraKind.ROOT_EQUATION: (
             ExactAssessmentTarget.SQUARE_EQUATION_REAL_SOLUTIONS
         ),
