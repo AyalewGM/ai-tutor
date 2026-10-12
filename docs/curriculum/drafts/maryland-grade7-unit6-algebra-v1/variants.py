@@ -218,7 +218,7 @@ def generate(seed: int, mode: str) -> Variant:
         ans = None
     else:
         # C.7: distinguish equality (exact total) from inequality (constraint).
-        is_ineq = seed % 2 == 0
+        is_ineq = (seed // len(KINDS)) % 2 == 0
         r = p * solution + q
         if is_ineq:
             model = f"{_fmt(p)}x + {_fmt(q)} >= {_fmt(r)}"
