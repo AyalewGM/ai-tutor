@@ -1,0 +1,348 @@
+{
+  "package_id": "draft-ontario-maryland-gap-probes-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "grade_placement": "PROVISIONAL; grades 1–9 candidates only",
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "runtime_activation": false,
+  "mastery_updater": false,
+  "items": [
+    {
+      "item_id": "gap-probe-01",
+      "candidate_concept": "sampling-bias",
+      "domain": "data-literacy",
+      "question": "A school surveys only students on the basketball team about their favourite sport. Is this sample likely representative of all students? Answer yes or no.",
+      "expected": "no",
+      "answer_contract": "choice",
+      "worked_reasoning": "The sample overrepresents basketball players.",
+      "misconception": {
+        "plausible_wrong_answer": "yes",
+        "feedback": "Sampling from a group connected to the question can introduce selection bias."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Describe a better sampling plan for the whole school.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-02",
+      "candidate_concept": "misleading-axis",
+      "domain": "data-literacy",
+      "question": "A bar chart shows 42 votes for A and 45 for B, but its vertical axis starts at 40. How many more votes did B receive?",
+      "expected": "3",
+      "answer_contract": "integer",
+      "worked_reasoning": "The difference is 45−42=3, regardless of axis truncation.",
+      "misconception": {
+        "plausible_wrong_answer": "45",
+        "feedback": "A truncated axis exaggerates visual differences but does not change counts."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Explain why a graph starting at zero may better communicate relative counts.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-03",
+      "candidate_concept": "mean-outlier",
+      "domain": "data-literacy",
+      "question": "Five scores are 4, 5, 6, 5, 30. What is their mean?",
+      "expected": "10",
+      "answer_contract": "integer",
+      "worked_reasoning": "The sum is 50 and there are five scores.",
+      "misconception": {
+        "plausible_wrong_answer": "5",
+        "feedback": "The median of five is 5; the mean is affected by 30."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Find the median and compare it with the mean.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-04",
+      "candidate_concept": "probability-independent",
+      "domain": "probability",
+      "question": "A fair coin is flipped twice. What is the probability of getting two heads? Give a simplified fraction.",
+      "expected": "1/4",
+      "answer_contract": "rational",
+      "worked_reasoning": "Each flip has probability 1/2; independent events multiply.",
+      "misconception": {
+        "plausible_wrong_answer": "1/2",
+        "feedback": "The second flip does not inherit the first outcome."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Compare with the probability of exactly one head in two flips.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-05",
+      "candidate_concept": "probability-without-replacement",
+      "domain": "probability",
+      "question": "A bag contains 3 red and 2 blue marbles. Two are drawn without replacement. Probability both are red?",
+      "expected": "3/10",
+      "answer_contract": "rational",
+      "worked_reasoning": "First red is 3/5; then 2/4; multiply to get 3/10.",
+      "misconception": {
+        "plausible_wrong_answer": "9/25",
+        "feedback": "Without replacement the second denominator changes."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Compare with two draws with replacement.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-06",
+      "candidate_concept": "probability-experimental",
+      "domain": "probability",
+      "question": "A spinner lands on blue 18 times in 60 trials. What is the experimental probability of blue, simplified?",
+      "expected": "3/10",
+      "answer_contract": "rational",
+      "worked_reasoning": "Experimental probability is observed blue outcomes over all trials: 18/60.",
+      "misconception": {
+        "plausible_wrong_answer": "1/2",
+        "feedback": "Experimental probability uses the observed data, not an assumed equally likely model."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Explain why another 60 trials may give a different proportion.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-07",
+      "candidate_concept": "geometry-triangle-angle",
+      "domain": "geometry",
+      "question": "Two angles in a triangle measure 47° and 68°. What is the third angle in degrees?",
+      "expected": "65",
+      "answer_contract": "integer",
+      "worked_reasoning": "Triangle interior angles sum to 180°, so 180−47−68=65.",
+      "misconception": {
+        "plausible_wrong_answer": "115",
+        "feedback": "Subtract both known angles from 180."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Explain why three 70° angles cannot form a triangle.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-08",
+      "candidate_concept": "geometry-parallel-angle",
+      "domain": "geometry",
+      "question": "Two parallel lines are cut by a transversal. An alternate interior angle is 112°. What is its alternate interior partner in degrees?",
+      "expected": "112",
+      "answer_contract": "integer",
+      "worked_reasoning": "Alternate interior angles are equal when lines are parallel.",
+      "misconception": {
+        "plausible_wrong_answer": "68",
+        "feedback": "Supplementary angles and alternate interior angles are different relationships."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Find the supplementary angle to 112°.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-09",
+      "candidate_concept": "geometry-area-vs-perimeter",
+      "domain": "geometry",
+      "question": "A rectangle is 8 cm long and 5 cm wide. What is its area in square centimetres?",
+      "expected": "40",
+      "answer_contract": "integer",
+      "worked_reasoning": "Area is length × width = 8×5.",
+      "misconception": {
+        "plausible_wrong_answer": "26",
+        "feedback": "26 is the perimeter, not the area."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Find the perimeter of the same rectangle.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-10",
+      "candidate_concept": "geometry-volume",
+      "domain": "measurement",
+      "question": "A rectangular prism measures 3 cm by 4 cm by 5 cm. What is its volume in cubic centimetres?",
+      "expected": "60",
+      "answer_contract": "integer",
+      "worked_reasoning": "Multiply the three dimensions: 3×4×5=60.",
+      "misconception": {
+        "plausible_wrong_answer": "47",
+        "feedback": "Volume counts cubic units, not the sum of face areas."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Find the volume of a 2 by 6 by 7 prism.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-11",
+      "candidate_concept": "finance-budget",
+      "domain": "financial-literacy",
+      "question": "A student has $75 and buys a $28 book and a $19 game. How many dollars remain?",
+      "expected": "28",
+      "answer_contract": "integer",
+      "worked_reasoning": "Subtract the total spending, 28+19=47, from 75.",
+      "misconception": {
+        "plausible_wrong_answer": "47",
+        "feedback": "The question asks for remaining funds, not total spending."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Explain how to check whether a planned purchase fits a fixed budget.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-12",
+      "candidate_concept": "finance-unit-value",
+      "domain": "financial-literacy",
+      "question": "Shop A sells 4 notebooks for $10 and Shop B sells 6 for $12. Which has the lower price per notebook? Answer A or B.",
+      "expected": "B",
+      "answer_contract": "choice",
+      "worked_reasoning": "Shop A costs $2.50 each; Shop B costs $2 each.",
+      "misconception": {
+        "plausible_wrong_answer": "A",
+        "feedback": "Compare unit prices, not package totals."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Compare 3 pens for $7.50 with 5 pens for $11.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-13",
+      "candidate_concept": "finance-simple-interest",
+      "domain": "financial-literacy",
+      "question": "A $200 savings deposit earns 5% simple interest for one year. How many dollars of interest are earned?",
+      "expected": "10",
+      "answer_contract": "integer",
+      "worked_reasoning": "Interest = principal × annual rate × time = 200×0.05×1.",
+      "misconception": {
+        "plausible_wrong_answer": "210",
+        "feedback": "Interest earned is distinct from the new account balance."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Find interest on $300 at 4% simple annual interest for two years.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-14",
+      "candidate_concept": "coding-loop-pattern",
+      "domain": "coding-mathematics",
+      "question": "A loop starts at 2 and adds 3 each time. After four additions, what number is displayed?",
+      "expected": "14",
+      "answer_contract": "integer",
+      "worked_reasoning": "Start 2, then 5, 8, 11, 14.",
+      "misconception": {
+        "plausible_wrong_answer": "12",
+        "feedback": "Four additions means four changes after the starting value."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Write a repeated-addition rule for a sequence beginning at 4 and increasing by 5.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-15",
+      "candidate_concept": "modelling-constraint",
+      "domain": "mathematical-modelling",
+      "question": "A hall has 8 rows of 6 seats. Three seats are blocked. How many students can be seated?",
+      "expected": "45",
+      "answer_contract": "integer",
+      "worked_reasoning": "Capacity is 8×6−3=45.",
+      "misconception": {
+        "plausible_wrong_answer": "48",
+        "feedback": "A model must account for unavailable seats."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "Explain what other constraints might reduce real-world seating capacity.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "gap-probe-16",
+      "candidate_concept": "modelling-best-value",
+      "domain": "mathematical-modelling",
+      "question": "A group needs at least 18 bottles. Packs of 5 cost $6 each. What is the minimum number of whole packs needed?",
+      "expected": "4",
+      "answer_contract": "integer",
+      "worked_reasoning": "Three packs provide 15, which is insufficient; four provide 20.",
+      "misconception": {
+        "plausible_wrong_answer": "3",
+        "feedback": "Real-world packing requires rounding up to meet demand."
+      },
+      "socratic_hints": [
+        "What is being measured, counted, or compared?",
+        "Which representation, assumption, or operation fits the situation?",
+        "How could you check your answer and explain why an alternative is misleading?"
+      ],
+      "transfer_prompt": "For 23 bottles sold in packs of 6, find the minimum number of packs.",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    }
+  ]
+}

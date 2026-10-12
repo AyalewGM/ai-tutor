@@ -1,0 +1,2102 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "Grade 9 Gap Closure Wave 1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "base_commit": "cfda3f7301502c712c29f22ae5e4948cfa1ebc75",
+  "purpose": "Close all currently identified genuine Grade 9 concept gaps without duplicating already-established equation, system, polynomial, quadratic, exponential, exponent/scientific-notation, or polynomial-division families.",
+  "reusable_design_policy": "Build once at the mathematical concept level; jurisdiction mappings are separate review artifacts.",
+  "existing_not_to_duplicate": [
+    "linear equations and multi-step equations",
+    "systems of linear equations",
+    "polynomial add/subtract/multiply and GCF factoring",
+    "quadratics/roots",
+    "exponential functions",
+    "linear vs exponential comparison",
+    "slope/linear modeling",
+    "scientific notation",
+    "exponent laws",
+    "polynomial/monomial division"
+  ],
+  "packages": [
+    {
+      "id": "G9-ABS-EQUATIONS",
+      "title": "Absolute-value equations",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.AT.B.2",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for absolute-value equations through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "isolate |ax+b| before splitting",
+        "two branches for |u|=k when k>0",
+        "one branch when k=0",
+        "no solution when k<0"
+      ],
+      "misconception_routes": [
+        {
+          "code": "ABS.SPLIT_BEFORE_ISOLATE",
+          "evidence": "Observable response pattern indicating isolate |ax+b| before splitting is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about isolate |ax+b| before splitting?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "ABS.MISSING_NEGATIVE_BRANCH",
+          "evidence": "Observable response pattern indicating two branches for |u|=k when k>0 is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about two branches for |u|=k when k>0?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "ABS.NEGATIVE_TARGET_HAS_SOLUTION",
+          "evidence": "Observable response pattern indicating one branch when k=0 is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about one branch when k=0?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-TWO-VAR-INEQUALITIES",
+      "title": "Linear inequalities in two variables",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.AT.B.6",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for linear inequalities in two variables through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "boundary line from equality",
+        "solid vs dashed boundary",
+        "test-point half-plane selection",
+        "contextual units and feasible values"
+      ],
+      "misconception_routes": [
+        {
+          "code": "INEQ2D.BOUNDARY_STRICTNESS",
+          "evidence": "Observable response pattern indicating boundary line from equality is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about boundary line from equality?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "INEQ2D.WRONG_HALF_PLANE",
+          "evidence": "Observable response pattern indicating solid vs dashed boundary is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about solid vs dashed boundary?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "INEQ2D.TEST_POINT_ON_BOUNDARY",
+          "evidence": "Observable response pattern indicating test-point half-plane selection is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about test-point half-plane selection?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-SYSTEMS-INEQUALITIES",
+      "title": "Systems of linear inequalities",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.AT.B.7",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for systems of linear inequalities through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "graph each constraint independently",
+        "intersection means satisfy all constraints",
+        "identify empty/unbounded/bounded feasible regions"
+      ],
+      "misconception_routes": [
+        {
+          "code": "SYSINEQ.UNION_FOR_INTERSECTION",
+          "evidence": "Observable response pattern indicating graph each constraint independently is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about graph each constraint independently?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "SYSINEQ.ONE_CONSTRAINT_ONLY",
+          "evidence": "Observable response pattern indicating intersection means satisfy all constraints is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about intersection means satisfy all constraints?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "SYSINEQ.BOUNDARY_MEMBERSHIP",
+          "evidence": "Observable response pattern indicating identify empty/unbounded/bounded feasible regions is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about identify empty/unbounded/bounded feasible regions?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-LINEAR-OPTIMIZATION",
+      "title": "Optimization over feasible regions",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.AT.B.8",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for optimization over feasible regions through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "build constraints",
+        "identify feasible vertices",
+        "evaluate objective at candidates",
+        "justify optimum and units"
+      ],
+      "misconception_routes": [
+        {
+          "code": "OPT.INFEASIBLE_VERTEX",
+          "evidence": "Observable response pattern indicating build constraints is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about build constraints?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "OPT.OBJECTIVE_AS_CONSTRAINT",
+          "evidence": "Observable response pattern indicating identify feasible vertices is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about identify feasible vertices?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "OPT.MAX_MIN_CONFUSION",
+          "evidence": "Observable response pattern indicating evaluate objective at candidates is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about evaluate objective at candidates?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-LINEAR-EXP-INTERSECTION",
+      "title": "Linear–exponential intersection",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.AT.B.9",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for linear–exponential intersection through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "represent both functions",
+        "estimate/solve intersection with approved technology",
+        "verify both outputs agree",
+        "interpret point in context"
+      ],
+      "misconception_routes": [
+        {
+          "code": "LINEXP.COMPARE_VALUES_NOT_INTERSECTION",
+          "evidence": "Observable response pattern indicating represent both functions is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about represent both functions?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "LINEXP.WRONG_SCALE",
+          "evidence": "Observable response pattern indicating estimate/solve intersection with approved technology is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about estimate/solve intersection with approved technology?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "LINEXP.X_ONLY_NO_CONTEXT",
+          "evidence": "Observable response pattern indicating verify both outputs agree is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about verify both outputs agree?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-DOMAIN-RANGE-NOTATION",
+      "title": "Domain, range, and function notation",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.AT.C.10 / traditional F.IF.A.1–2,F.IF.B.5",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for domain, range, and function notation through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "function as single output per input",
+        "evaluate f(x) from rule/table/graph",
+        "distinguish input domain from output range",
+        "restrict domain from context"
+      ],
+      "misconception_routes": [
+        {
+          "code": "FUNC.XY_SWAP",
+          "evidence": "Observable response pattern indicating function as single output per input is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about function as single output per input?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "FUNC.DOMAIN_RANGE_SWAP",
+          "evidence": "Observable response pattern indicating evaluate f(x) from rule/table/graph is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about evaluate f(x) from rule/table/graph?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "FUNC.CONTEXT_DOMAIN_IGNORED",
+          "evidence": "Observable response pattern indicating distinguish input domain from output range is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about distinguish input domain from output range?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-INVERSE-LINEAR",
+      "title": "Inverse of a linear function",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.AT.D.17",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for inverse of a linear function through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "reverse input/output relationship",
+        "solve y=mx+b for x then swap notation",
+        "verify compositions",
+        "interpret inverse units"
+      ],
+      "misconception_routes": [
+        {
+          "code": "INV.RECIPROCAL_SLOPE_ONLY",
+          "evidence": "Observable response pattern indicating reverse input/output relationship is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about reverse input/output relationship?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "INV.NO_VARIABLE_SWAP",
+          "evidence": "Observable response pattern indicating solve y=mx+b for x then swap notation is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about solve y=mx+b for x then swap notation?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "INV.UNITS_NOT_REVERSED",
+          "evidence": "Observable response pattern indicating verify compositions is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about verify compositions?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-PIECEWISE-ABS-FUNCTIONS",
+      "title": "Piecewise and absolute-value functions",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.AT.D.14",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for piecewise and absolute-value functions through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "evaluate correct branch",
+        "read open/closed endpoints",
+        "connect |x-h| shape to distance",
+        "interpret contextual breakpoints"
+      ],
+      "misconception_routes": [
+        {
+          "code": "PIECE.WRONG_BRANCH",
+          "evidence": "Observable response pattern indicating evaluate correct branch is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about evaluate correct branch?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "PIECE.ENDPOINT_INCLUSION",
+          "evidence": "Observable response pattern indicating read open/closed endpoints is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about read open/closed endpoints?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "ABS.VERTEX_AS_INTERCEPT",
+          "evidence": "Observable response pattern indicating connect |x-h| shape to distance is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about connect |x-h| shape to distance?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-AVERAGE-RATE-CHANGE",
+      "title": "Average rate of change",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.AT.C.11 / traditional F.IF.B.6",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for average rate of change through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "change in output over change in input",
+        "interval-specific interpretation",
+        "estimate from graph/table",
+        "compare linear and exponential intervals"
+      ],
+      "misconception_routes": [
+        {
+          "code": "ARC.Y_OVER_X_NOT_CHANGE",
+          "evidence": "Observable response pattern indicating change in output over change in input is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about change in output over change in input?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "ARC.RECIPROCAL",
+          "evidence": "Observable response pattern indicating interval-specific interpretation is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about interval-specific interpretation?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "ARC.INSTANTANEOUS_CONFUSION",
+          "evidence": "Observable response pattern indicating estimate from graph/table is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about estimate from graph/table?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-SEQUENCES",
+      "title": "Arithmetic and geometric sequences",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.AT.D.13 / traditional F.IF.A.3,F.BF.A.1",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for arithmetic and geometric sequences through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "common difference vs common ratio",
+        "recursive and explicit forms",
+        "sequence as integer-domain function",
+        "context interpretation"
+      ],
+      "misconception_routes": [
+        {
+          "code": "SEQ.DIFF_RATIO_CONFUSION",
+          "evidence": "Observable response pattern indicating common difference vs common ratio is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about common difference vs common ratio?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "SEQ.OFF_BY_ONE",
+          "evidence": "Observable response pattern indicating recursive and explicit forms is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about recursive and explicit forms?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "SEQ.RECURSIVE_EXPLICIT_MIX",
+          "evidence": "Observable response pattern indicating sequence as integer-domain function is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about sequence as integer-domain function?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-FUNCTION-TRANSFORMATIONS",
+      "title": "Function transformations",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.AT.D.16 / traditional F.BF.B.3",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for function transformations through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "output change shifts vertically",
+        "input change shifts horizontally with sign reversal",
+        "reflection/scaling effects",
+        "contextual meaning of transformed parameters"
+      ],
+      "misconception_routes": [
+        {
+          "code": "TRANSFORM.HORIZONTAL_SIGN",
+          "evidence": "Observable response pattern indicating output change shifts vertically is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about output change shifts vertically?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "TRANSFORM.INPUT_OUTPUT_SWAP",
+          "evidence": "Observable response pattern indicating input change shifts horizontally with sign reversal is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about input change shifts horizontally with sign reversal?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "TRANSFORM.SCALE_SHIFT_CONFUSION",
+          "evidence": "Observable response pattern indicating reflection/scaling effects is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about reflection/scaling effects?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-SLOPE-GEOMETRY",
+      "title": "Parallel/perpendicular slope geometry",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.GR.B.4–5",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for parallel/perpendicular slope geometry through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "parallel equal slopes",
+        "perpendicular negative reciprocal slopes",
+        "coordinate verification",
+        "parallelogram reasoning"
+      ],
+      "misconception_routes": [
+        {
+          "code": "SLOPEGEO.PERP_RECIPROCAL_ONLY",
+          "evidence": "Observable response pattern indicating parallel equal slopes is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about parallel equal slopes?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "SLOPEGEO.PARALLEL_INTERCEPT_CONFUSION",
+          "evidence": "Observable response pattern indicating perpendicular negative reciprocal slopes is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about perpendicular negative reciprocal slopes?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "SLOPEGEO.VERTICAL_HORIZONTAL",
+          "evidence": "Observable response pattern indicating coordinate verification is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about coordinate verification?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-TRIANGLE-CONGRUENCE",
+      "title": "Triangle congruence reasoning",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.GR.A.1–2, GR.B.3",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for triangle congruence reasoning through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "rigid motions preserve distance/angle",
+        "corresponding parts",
+        "SSS/SAS/ASA/AAS/HL as reviewed methods",
+        "reject AAA/SSA as general congruence evidence"
+      ],
+      "misconception_routes": [
+        {
+          "code": "CONG.AAA_AS_CONGRUENCE",
+          "evidence": "Observable response pattern indicating rigid motions preserve distance/angle is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about rigid motions preserve distance/angle?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "CONG.SSA_GENERALIZED",
+          "evidence": "Observable response pattern indicating corresponding parts is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about corresponding parts?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "CONG.CORRESPONDENCE_MISMATCH",
+          "evidence": "Observable response pattern indicating sss/sas/asa/aas/hl as reviewed methods is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about sss/sas/asa/aas/hl as reviewed methods?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-RANDOM-SAMPLING",
+      "title": "Random sampling and population inference",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.DS.A.2",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for random sampling and population inference through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "population vs sample",
+        "representativeness",
+        "random selection",
+        "sampling variability and limits"
+      ],
+      "misconception_routes": [
+        {
+          "code": "SAMPLE.CONVENIENCE_AS_RANDOM",
+          "evidence": "Observable response pattern indicating population vs sample is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about population vs sample?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "SAMPLE.PARAMETER_STATISTIC_SWAP",
+          "evidence": "Observable response pattern indicating representativeness is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about representativeness?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "SAMPLE.OVERGENERALIZE",
+          "evidence": "Observable response pattern indicating random selection is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about random selection?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-STAT-INVESTIGATION",
+      "title": "Statistical investigation design and claim evaluation",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.DS.A.3–4",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for statistical investigation design and claim evaluation through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "answerable statistical question",
+        "variables and collection method",
+        "bias/confounding limits",
+        "evaluate whether evidence supports claim"
+      ],
+      "misconception_routes": [
+        {
+          "code": "STAT.CAUSAL_FROM_OBSERVATIONAL",
+          "evidence": "Observable response pattern indicating answerable statistical question is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about answerable statistical question?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "STAT.BIASED_SAMPLE",
+          "evidence": "Observable response pattern indicating variables and collection method is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about variables and collection method?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "STAT.QUESTION_NOT_MEASURABLE",
+          "evidence": "Observable response pattern indicating bias/confounding limits is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about bias/confounding limits?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-BIVARIATE-MODELING",
+      "title": "Bivariate quantitative data modeling",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.DS.B.7–8 / traditional S.ID.B.6,C.7",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for bivariate quantitative data modeling through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "scatterplot pattern",
+        "linear vs exponential fit",
+        "interpret slope/intercept or growth factor",
+        "assess fit and residual patterns"
+      ],
+      "misconception_routes": [
+        {
+          "code": "BIVAR.CURVE_AS_LINEAR",
+          "evidence": "Observable response pattern indicating scatterplot pattern is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about scatterplot pattern?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "BIVAR.PARAMETER_NO_UNITS",
+          "evidence": "Observable response pattern indicating linear vs exponential fit is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about linear vs exponential fit?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "BIVAR.EXTRAPOLATE_UNJUSTIFIED",
+          "evidence": "Observable response pattern indicating interpret slope/intercept or growth factor is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about interpret slope/intercept or growth factor?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-CORRELATION-CAUSATION",
+      "title": "Correlation coefficient and causation",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.DS.A.1 / traditional S.ID.C.8–9",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for correlation coefficient and causation through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "direction and strength",
+        "coefficient is not slope",
+        "association does not imply causation",
+        "lurking/confounding variables"
+      ],
+      "misconception_routes": [
+        {
+          "code": "CORR.R_AS_SLOPE",
+          "evidence": "Observable response pattern indicating direction and strength is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about direction and strength?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "CORR.CAUSATION_FROM_ASSOCIATION",
+          "evidence": "Observable response pattern indicating coefficient is not slope is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about coefficient is not slope?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "CORR.SIGN_STRENGTH_CONFUSION",
+          "evidence": "Observable response pattern indicating association does not imply causation is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about association does not imply causation?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-QUANTITY-PRECISION",
+      "title": "Units, quantities, scale, and precision",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Traditional Algebra I N.Q.A.1–3",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for units, quantities, scale, and precision through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "define quantities and units",
+        "dimensional consistency",
+        "appropriate scale/origin",
+        "measurement precision and reporting"
+      ],
+      "misconception_routes": [
+        {
+          "code": "QUANT.UNITS_DROPPED",
+          "evidence": "Observable response pattern indicating define quantities and units is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about define quantities and units?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "QUANT.FALSE_PRECISION",
+          "evidence": "Observable response pattern indicating dimensional consistency is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about dimensional consistency?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "QUANT.WRONG_SCALE",
+          "evidence": "Observable response pattern indicating appropriate scale/origin is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about appropriate scale/origin?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-FORMULA-REARRANGE",
+      "title": "Rearranging formulas",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Traditional Algebra I A.CED.A.4",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for rearranging formulas through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "treat target symbol as unknown",
+        "equivalence-preserving operations",
+        "factor before division when needed",
+        "state restrictions"
+      ],
+      "misconception_routes": [
+        {
+          "code": "FORMULA.MOVE_TERM_SIGN_TRICK",
+          "evidence": "Observable response pattern indicating treat target symbol as unknown is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about treat target symbol as unknown?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "FORMULA.DIVIDE_ONE_TERM_ONLY",
+          "evidence": "Observable response pattern indicating equivalence-preserving operations is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about equivalence-preserving operations?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "FORMULA.DOMAIN_RESTRICTION_IGNORED",
+          "evidence": "Observable response pattern indicating factor before division when needed is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about factor before division when needed?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    },
+    {
+      "id": "G9-TWO-VAR-EQUATIONS",
+      "title": "Two-variable equations as solution sets",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland IA1.AT.B.4 / traditional A.CED.A.2,A.REI.D.10",
+      "canonical_identity": "REUSE_EXISTING_OR_ARCHITECTURE_REVIEW; NO NEW AUTHORITY CLAIMED",
+      "learning_objective": "Develop independent Grade 9 reasoning for two-variable equations as solution sets through representation, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify structure and quantities"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/representation and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate while preserving mathematical meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why steps and representation are valid"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "solve varied guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to misconception-specific repair on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in an unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "ordered pairs satisfy equations",
+        "graph is set of all solutions",
+        "units/scales on axes",
+        "linear and exponential equation graph interpretation"
+      ],
+      "misconception_routes": [
+        {
+          "code": "TWOVAR.POINT_SATISFIES_ONE_COORD_ONLY",
+          "evidence": "Observable response pattern indicating ordered pairs satisfy equations is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about ordered pairs satisfy equations?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "TWOVAR.GRAPH_AS_PICTURE_NOT_SOLUTIONS",
+          "evidence": "Observable response pattern indicating graph is set of all solutions is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about graph is set of all solutions?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "TWOVAR.AXIS_UNIT_SWAP",
+          "evidence": "Observable response pattern indicating units/scales on axes is not yet secure.",
+          "socratic_question": "What evidence from the original representation would prove or disprove your step about units/scales on axes?",
+          "repair_requirement": "Use a different seeded example, require explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "requires_exact_or_structured_oracle": true,
+        "scaffold_fading": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "no_hints": true,
+        "requires_explanation": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graph/visual state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied assessment items, worksheets, PDFs, or proprietary diagrams."
+      }
+    }
+  ],
+  "ontario_only_extensions": [
+    {
+      "target": "MTH1W.C2.1–C2.3",
+      "concept": "Coding and computational algebra/modeling",
+      "status": "SEPARATE_ONTARIO_EXTENSION_REQUIRED"
+    },
+    {
+      "target": "MTH1W.D1.1,D2.1–D2.5",
+      "concept": "Large-data investigation, modelling process, assumptions, fit, limits, reporting",
+      "status": "SEPARATE_ONTARIO_EXTENSION_REQUIRED"
+    },
+    {
+      "target": "MTH1W.E1.1–E1.6",
+      "concept": "Geometry/design/measurement relationships including right triangles and prism/pyramid/cylinder/cone volume relations",
+      "status": "SEPARATE_ONTARIO_EXTENSION_REQUIRED"
+    },
+    {
+      "target": "MTH1W.F1.1–F1.4",
+      "concept": "Financial literacy: appreciation/depreciation, borrowing, interest/down-payment effects, budget modification",
+      "status": "SEPARATE_ONTARIO_EXTENSION_REQUIRED"
+    },
+    {
+      "target": "MTH1W.B1.1,C1.1,E1.1",
+      "concept": "Cultural/historical number, algebra, and geometry investigations",
+      "status": "SEPARATE_ONTARIO_EXTENSION_REQUIRED"
+    }
+  ],
+  "gates": {
+    "authored": true,
+    "production_wired": false,
+    "standards_accepted": false,
+    "math_accepted": false,
+    "pedagogy_accepted": false,
+    "architecture_accepted": false,
+    "mve_implemented": false,
+    "assessment_backend_wired": false,
+    "muse_qa": false,
+    "deployed": false
+  }
+}

@@ -1,0 +1,281 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "MD-G7-UNIT6-ALGEBRA-REASONING-V1",
+  "jurisdiction": "Maryland",
+  "district_alignment": "Montgomery County Public Schools (MCPS)",
+  "grade": 7,
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "source_basis": {
+    "maryland": {
+      "framework": "2025 Revised Maryland College and Career Ready Standards for Mathematics",
+      "adopted": "2025-07",
+      "implementation": "SY 2026-2027",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "targets": [
+        {
+          "id": "7.AT.B.5",
+          "scope": "Apply properties of operations to add, subtract, factor, and expand linear expressions with rational coefficients."
+        },
+        {
+          "id": "7.AT.B.6",
+          "scope": "Rewrite expressions in different forms to illuminate context and relationships."
+        },
+        {
+          "id": "7.AT.C.7",
+          "scope": "Choose equation versus inequality for a context and justify the choice."
+        },
+        {
+          "id": "7.AT.C.8",
+          "scope": "Write and solve contextual equations of Grade 7 forms using rational numbers; explain and interpret solutions."
+        },
+        {
+          "id": "7.AT.C.9",
+          "scope": "Write and solve contextual inequalities of Grade 7 forms; graph and interpret solution sets."
+        }
+      ]
+    },
+    "mcps": {
+      "unit": "Math 7 Unit 6 — Expressions, Equations, and Inequalities",
+      "source_url": "https://www.montgomeryschoolsmd.org/curriculum/math-support/middle/math7-unit6",
+      "topics": [
+        "Represent situations of the form px+q=r and p(x+q)=r",
+        "Solve those equations in context",
+        "Inequalities",
+        "Equivalent expressions"
+      ]
+    }
+  },
+  "reuse_audit": {
+    "existing_local_seed": [
+      "M7.EE.EXPR",
+      "M7.EE.EXPR.DIST",
+      "M7.EE.EXPR.COMBINE",
+      "M7.EE.EQUATION",
+      "M7.EE.EQUATION.ONE",
+      "M7.EE.EQUATION.TWO"
+    ],
+    "repository_evidence": [
+      "scripts/seed_grade7.py",
+      "docs/curriculum/standards/md_grades6_8_2025.seed_skill_reconciliation.v1.json",
+      "docs/curriculum/standards/md_grades6_8_code_evidence_spotcheck.wave1.v1.json"
+    ],
+    "scope_boundary": "No new canonical ID, no registry activation, no changes to existing seed/mappings. Draft package deepens student usability and evidence only."
+  },
+  "learning_goal": "Model, solve, explain, graph, and interpret Maryland Grade 7 expressions, equations, and inequalities in context, using exact rational reasoning and equality/inequality-preserving transformations.",
+  "teaching_flow": [
+    {
+      "phase": "OBSERVE",
+      "representation": "CONCRETE",
+      "learner_action": "Inspect a context model (equal groups, fixed fee, target or constraint). Identify quantities, units, fixed amounts, per-unit rates, and whether the relationship describes an exact total or a range."
+    },
+    {
+      "phase": "PREDICT",
+      "representation": "CONCRETE_TO_VISUAL",
+      "learner_action": "Predict equation vs inequality, estimate the solution or boundary, and explain which words in the context justify the model choice."
+    },
+    {
+      "phase": "MANIPULATE",
+      "representation": "VISUAL_TO_SYMBOLIC",
+      "learner_action": "Apply the same inverse operation to both sides; for p(x+q)=r connect undoing multiplication first to the equal-groups model. For inequalities, preserve order under positive division and represent the resulting set on a number line."
+    },
+    {
+      "phase": "EXPLAIN",
+      "representation": "SYMBOLIC",
+      "learner_action": "Explain each step, substitute back into the original equation or inequality, and connect the numerical result to the context and units."
+    },
+    {
+      "phase": "PRACTICE",
+      "representation": "CONCRETE_VISUAL_SYMBOLIC",
+      "learner_action": "Complete seeded equation, inequality, model-choice, and equivalent-expression tasks with progressively faded scaffolds."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "representation": "VISUAL_TO_SYMBOLIC",
+      "learner_action": "Use misconception-specific prompts for model-choice, grouping, distribution, inverse-operation, endpoint, graph-direction, and context-interpretation errors; repair with a fresh task."
+    },
+    {
+      "phase": "TRANSFER",
+      "representation": "CONTEXT_TO_SYMBOLIC",
+      "learner_action": "From an unfamiliar Maryland-style situation, choose equation or inequality without a supplied template, construct the model, solve, graph if needed, and justify reasonable values."
+    },
+    {
+      "phase": "VERIFY",
+      "representation": "SYMBOLIC_AND_CONTEXT",
+      "learner_action": "Complete a disjoint unseen variant with hidden oracle. Guided work, hints, or teacher/LLM assistance cannot produce mastery evidence."
+    }
+  ],
+  "misconception_branches": [
+    {
+      "code": "MD7.EQ_VS_INEQ_CONTEXT_SIGNAL",
+      "evidence": "Learner models 'exactly' with an inequality or 'at least/no more than' with an equation.",
+      "socratic": [
+        "Does the context allow one exact total or a range of acceptable totals?",
+        "Which phrase—exactly, at least, no more than, more than—tells you the relationship type?"
+      ],
+      "repair": "Contrast two near-identical contexts: 'exactly $80' versus 'at least $80'; write one equation and one inequality and explain the difference."
+    },
+    {
+      "code": "MD7.MODEL_TRANSLATION",
+      "evidence": "Learner swaps fixed amount and per-unit coefficient, or places q outside p(x+q) incorrectly.",
+      "socratic": [
+        "Which amount repeats for every group/unit?",
+        "Which quantity is fixed once?",
+        "If there are p identical groups, what entire quantity is repeated p times?"
+      ],
+      "repair": "Build a tape/equal-groups model first, then translate it to px+q or p(x+q)."
+    },
+    {
+      "code": "MD7.DISTRIBUTIVE_STRUCTURE_ERROR",
+      "evidence": "Learner distributes p to only x or only q.",
+      "socratic": [
+        "How many copies of x are there? How many copies of q?",
+        "Can you expand p(x+q) as repeated addition before using symbols?"
+      ],
+      "repair": "Use 3(x+4)=3x+12 with tiles/repeated groups; then complete a fresh rational-coefficient example."
+    },
+    {
+      "code": "MD7.INVERSE_OPERATION_OR_ARITHMETIC",
+      "evidence": "Learner reverses the operation sequence or makes an arithmetic error isolating x.",
+      "socratic": [
+        "What operation is outermost around x?",
+        "What inverse undoes that operation while preserving equality?"
+      ],
+      "repair": "Annotate operation layers, undo them in reverse order, then verify by substitution into the original."
+    },
+    {
+      "code": "MD7.SUBSTITUTION_CHECK_MISSING",
+      "evidence": "Learner reports a solution without checking the original model.",
+      "socratic": [
+        "What do both sides equal when your x is substituted?",
+        "Does that numerical check also make sense in the story?"
+      ],
+      "repair": "Substitute into the original, not only the simplified line; state units/context."
+    },
+    {
+      "code": "MD7.STRICT_VS_INCLUSIVE_ENDPOINT",
+      "evidence": "Learner uses open dot for ≤/≥ or closed dot for </>.",
+      "socratic": [
+        "Does the boundary value itself satisfy the original statement?",
+        "Does 'at least' include equality? Does 'more than' include equality?"
+      ],
+      "repair": "Test the boundary directly, then choose OPEN/CLOSED based on whether equality is allowed."
+    },
+    {
+      "code": "MD7.GRAPH_DIRECTION_ERROR",
+      "evidence": "Correct boundary but shades toward non-solutions.",
+      "socratic": [
+        "Pick one value on each side of the boundary. Which one satisfies the original inequality?",
+        "Which direction contains that witness?"
+      ],
+      "repair": "Use a witness and counterexample before drawing the arrow."
+    },
+    {
+      "code": "MD7.CONTEXT_INTERPRETATION_MISSING",
+      "evidence": "Learner gives a symbolic solution but does not restrict or interpret values in context.",
+      "socratic": [
+        "Can the context use a negative or fractional count?",
+        "What does the boundary mean in words?",
+        "Which values are possible or reasonable?"
+      ],
+      "repair": "Translate the symbolic set into an explicit contextual statement with units/domain."
+    }
+  ],
+  "guided_practice": {
+    "generator": "variants.py::generate(seed,'guided')",
+    "task_kinds": [
+      "CHOOSE_MODEL",
+      "EQUATION_PX_PLUS_Q",
+      "EQUATION_P_TIMES_X_PLUS_Q",
+      "INEQUALITY_PX_PLUS_Q",
+      "INEQUALITY_P_TIMES_X_PLUS_Q",
+      "EXPRESSION_EQUIVALENCE"
+    ],
+    "seed_example_range": "0..119",
+    "requirements": [
+      "rational coefficients appear",
+      "equation and inequality model choice",
+      "both MCPS equation forms",
+      "graphing/interpretation for inequalities",
+      "equivalent-expression justification",
+      "fresh repair seed after diagnosis"
+    ]
+  },
+  "independent_assessment": {
+    "generator": "variants.py::generate(seed,'independent')",
+    "seed_example_range": "240..359",
+    "disjointness": "Independent solution band is 12..24; guided band is 2..10, with mode embedded in RNG namespace and item ID.",
+    "public_payload_only": [
+      "item_id",
+      "mode",
+      "kind",
+      "prompt",
+      "response_fields"
+    ],
+    "forbidden": [
+      "teacher_oracle",
+      "p",
+      "q",
+      "r",
+      "answer",
+      "hints",
+      "worked_solution",
+      "misconception_tag",
+      "canonical_skill_id",
+      "mastery"
+    ],
+    "requirements": [
+      "No supplied symbolic setup in transfer contexts where modeling is the target.",
+      "Server-owned unseen state before any mastery decision.",
+      "Exact rational scoring and graph semantics verified server-side.",
+      "Written justification requires separately reviewed rubric; no LLM-only mastery judgment.",
+      "No assisted/guided attempt may back-credit independent mastery."
+    ]
+  },
+  "mve_requirements": {
+    "ownership": "Frontend/MVE agent",
+    "interactions": [
+      "Equal-groups/tape model for p(x+q) versus px+q",
+      "Equation balance operations applied to both sides",
+      "Inequality number line with accessible OPEN/CLOSED endpoint and LEFT/RIGHT direction",
+      "Model-choice toggle equation/inequality with context phrase highlighting only in guided mode",
+      "Substitution table comparing original left/right expressions",
+      "Scaffold fading from concrete model to visual to symbolic"
+    ],
+    "accessibility": [
+      "keyboard equivalent for all drag/toggle controls",
+      "screen-reader announcement of each expression and transformation",
+      "text alternative for number-line endpoint/direction",
+      "reduced-motion support",
+      "no color-only correctness/state",
+      "focus preserved after feedback",
+      "touch targets suitable for phone/tablet"
+    ]
+  },
+  "provenance": {
+    "authorship": "Original Mihur-authored examples, contexts, diagnostics, and transfer tasks. No copied worksheet questions or child data.",
+    "external_sources": [
+      "Maryland State Department of Education Grade 7 MCCRS crosswalk, July 2025",
+      "MCPS Math 7 Unit 6 public curriculum support page"
+    ],
+    "repository_sources": [
+      "scripts/seed_grade7.py",
+      "docs/curriculum/standards/md_grades6_8_2025.seed_skill_reconciliation.v1.json"
+    ]
+  },
+  "gates": {
+    "authored": true,
+    "draft_generator_implemented": true,
+    "test_contract_authored": true,
+    "math_review": false,
+    "pedagogy_review": false,
+    "standards_mapping_review": false,
+    "architecture_review": false,
+    "mve_implemented": false,
+    "assessment_backend_wired": false,
+    "muse_qa": false,
+    "runtime_activated": false,
+    "deployed": false
+  }
+}

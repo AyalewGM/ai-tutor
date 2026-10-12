@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.1.0",
+  "package_id": "ONT-ALG-POLY-DIVISION-R1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "canonical_family": "MATH.EE.POLYNOMIAL_OPERATIONS",
+  "response_contract": {
+    "revision": "poly-division-evidence-v1",
+    "file": "response_contract.json",
+    "status": "PROPOSED_PENDING_MATHEMATICAL_AND_BACKEND_ACCEPTANCE",
+    "term_order": "CANONICALIZED_BEFORE_COMPARISON",
+    "exact_rationals": "REDUCED_STRING_WIRE_FORMAT",
+    "partial_mastery_credit": false,
+    "backend_trusted_scoring": "REQUIRED_NOT_WIRED"
+  },
+  "phases": [
+    "OBSERVE",
+    "PREDICT",
+    "MANIPULATE",
+    "EXPLAIN",
+    "PRACTICE",
+    "DIAGNOSE",
+    "TRANSFER",
+    "VERIFY"
+  ],
+  "misconception_paths": [
+    {
+      "id": "POLY.DIV.COEFFICIENT_RECIPROCAL",
+      "evidence": "Learner divides divisor coefficient by dividend coefficient.",
+      "socratic_questions": [
+        "Which expression is being divided, and which expression is the divisor?",
+        "What coefficient multiplied by the divisor restores this dividend term?",
+        "Does your quotient reconstruct the original term?"
+      ],
+      "fresh_exit": "Fresh signed monomial quotient with multiplication reconstruction."
+    },
+    {
+      "id": "POLY.DIV.ADD_EXPONENTS",
+      "evidence": "Learner adds like-base exponents during division.",
+      "socratic_questions": [
+        "How many matching factors cancel from numerator and denominator?",
+        "How many factors remain after cancellation?",
+        "Which exponent operation records that remaining count?"
+      ],
+      "fresh_exit": "Fresh quotient with at least one deterministically verified negative result exponent."
+    },
+    {
+      "id": "POLY.DIV.ONE_TERM_ONLY",
+      "evidence": "Learner divides only one term in the grouped dividend.",
+      "socratic_questions": [
+        "Which terms are inside the dividend grouping?",
+        "Which common divisor applies to every grouped term?",
+        "Can your product reconstruct every original term?"
+      ],
+      "fresh_exit": "Fresh two-term polynomial with two reconstruction checks."
+    },
+    {
+      "id": "POLY.DIV.DOMAIN_OMITTED",
+      "evidence": "Learner simplifies correctly but omits a nonzero restriction from the original divisor.",
+      "socratic_questions": [
+        "Which original values make the divisor zero?",
+        "Can cancellation make an originally undefined value valid?",
+        "Which restriction must travel with the simplified result?"
+      ],
+      "fresh_exit": "Fresh quotient requiring original-domain restrictions."
+    }
+  ],
+  "manipulation_contract": {
+    "component_requirement": "GROUPED_TERM_DIVISION_MVE",
+    "implemented": false,
+    "guided_only": true,
+    "keyboard": [
+      "Move among dividend terms with arrow keys.",
+      "Select a term and apply the shared divisor with Enter or Space.",
+      "Inspect factor cancellation and domain tokens without drag-only actions."
+    ],
+    "screen_reader": [
+      "Announce the selected dividend term, divisor, cancelled factors, quotient term, and remaining terms.",
+      "Expose an ordered nonvisual term table and the original-domain restrictions."
+    ],
+    "reduced_motion": "Use discrete before/after factor states; no required animation.",
+    "color_independent": true,
+    "independent_assessment": "MUST_NOT_MOUNT"
+  },
+  "assessment_isolation": {
+    "independent_namespace": true,
+    "fresh_variants": true,
+    "public_answer_fields": false,
+    "guided_hints": false,
+    "guided_mve": false,
+    "practice_credit": false,
+    "backend_trusted_scoring": "REQUIRED_NOT_WIRED"
+  }
+}
+

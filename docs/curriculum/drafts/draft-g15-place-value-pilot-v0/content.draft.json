@@ -1,0 +1,596 @@
+{
+  "package_id": "draft-g15-place-value-pilot-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "grade_band": "1-5",
+  "source_notes": [
+    "Original Mihur-authored draft questions; not copied from IXL, Kumon, Zearn or school board worksheets.",
+    "Content research targets: small-step progression, varied representations, deliberate fluency and explicit misconception remediation.",
+    "Suggested grades are editorial, not approved curriculum alignments."
+  ],
+  "copyright_policy": "Original text only. Do not reproduce vendor item banks.",
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "runtime_activation": false,
+  "practice_items": [
+    {
+      "item_id": "draft-g15-digit_value-01",
+      "provisional_skill": "DIGIT_VALUE",
+      "grade_suggestion": 1,
+      "question": "In 47, what is the value of the digit 4?",
+      "expected": "40",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "The 4 is in the tens place.",
+        "4 tens means 4 groups of ten.",
+        "4 × 10 = 40."
+      ],
+      "worked_solution": "4 × 10 = 40.",
+      "misconception_tag": "digit-versus-value",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-digit_value-02",
+      "provisional_skill": "DIGIT_VALUE",
+      "grade_suggestion": 1,
+      "question": "In 83, what is the value of the digit 3?",
+      "expected": "3",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find the place of the 3.",
+        "The 3 is in the ones place.",
+        "3 ones equals 3."
+      ],
+      "worked_solution": "3 ones equals 3.",
+      "misconception_tag": "digit-versus-value",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-digit_value-03",
+      "provisional_skill": "DIGIT_VALUE",
+      "grade_suggestion": 2,
+      "question": "In 562, what is the value of the digit 6?",
+      "expected": "60",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Read the place of 6.",
+        "The 6 is in the tens place.",
+        "6 × 10 = 60."
+      ],
+      "worked_solution": "6 × 10 = 60.",
+      "misconception_tag": "place-shift",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-digit_value-04",
+      "provisional_skill": "DIGIT_VALUE",
+      "grade_suggestion": 3,
+      "question": "In 7,204, what is the value of the digit 2?",
+      "expected": "200",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find the hundreds place.",
+        "The 2 represents two hundreds.",
+        "2 × 100 = 200."
+      ],
+      "worked_solution": "2 × 100 = 200.",
+      "misconception_tag": "place-shift",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-digit_value-05",
+      "provisional_skill": "DIGIT_VALUE",
+      "grade_suggestion": 4,
+      "question": "In 58,316, what is the value of the digit 8?",
+      "expected": "8000",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Count places from the right.",
+        "The 8 is in the thousands place.",
+        "8 × 1000 = 8000."
+      ],
+      "worked_solution": "8 × 1000 = 8000.",
+      "misconception_tag": "place-shift",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-digit_value-06",
+      "provisional_skill": "DIGIT_VALUE",
+      "grade_suggestion": 5,
+      "question": "In 407,092, what is the value of the digit 7?",
+      "expected": "7000",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Identify the thousands place.",
+        "The 7 is in the thousands place.",
+        "7 × 1000 = 7000."
+      ],
+      "worked_solution": "7 × 1000 = 7000.",
+      "misconception_tag": "zero-as-placeholder",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-compose_decompose-01",
+      "provisional_skill": "COMPOSE_DECOMPOSE",
+      "grade_suggestion": 1,
+      "question": "What number is 3 tens and 6 ones?",
+      "expected": "36",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Three tens means 30.",
+        "Add six ones.",
+        "30 + 6 = 36."
+      ],
+      "worked_solution": "30 + 6 = 36.",
+      "misconception_tag": "reversed-digits",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-compose_decompose-02",
+      "provisional_skill": "COMPOSE_DECOMPOSE",
+      "grade_suggestion": 1,
+      "question": "What number is 5 tens and 0 ones?",
+      "expected": "50",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Five tens means 50.",
+        "Zero ones adds nothing.",
+        "50 + 0 = 50."
+      ],
+      "worked_solution": "50 + 0 = 50.",
+      "misconception_tag": "zero-as-placeholder",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-compose_decompose-03",
+      "provisional_skill": "COMPOSE_DECOMPOSE",
+      "grade_suggestion": 2,
+      "question": "What number is 4 hundreds, 2 tens, and 7 ones?",
+      "expected": "427",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Four hundreds is 400.",
+        "Two tens is 20.",
+        "400 + 20 + 7 = 427."
+      ],
+      "worked_solution": "400 + 20 + 7 = 427.",
+      "misconception_tag": "place-order",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-compose_decompose-04",
+      "provisional_skill": "COMPOSE_DECOMPOSE",
+      "grade_suggestion": 3,
+      "question": "Write the number represented by 6000 + 300 + 40 + 2.",
+      "expected": "6342",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Combine the thousands and hundreds.",
+        "Then include tens and ones.",
+        "6000 + 300 + 40 + 2 = 6342."
+      ],
+      "worked_solution": "6000 + 300 + 40 + 2 = 6342.",
+      "misconception_tag": "expanded-form",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-compose_decompose-05",
+      "provisional_skill": "COMPOSE_DECOMPOSE",
+      "grade_suggestion": 4,
+      "question": "Write the number represented by 70,000 + 900 + 5.",
+      "expected": "70905",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "The thousands and tens places are empty.",
+        "Use zeros as placeholders.",
+        "70,000 + 900 + 5 = 70,905."
+      ],
+      "worked_solution": "70,000 + 900 + 5 = 70,905.",
+      "misconception_tag": "missing-placeholders",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-compose_decompose-06",
+      "provisional_skill": "COMPOSE_DECOMPOSE",
+      "grade_suggestion": 5,
+      "question": "Write the number represented by 300,000 + 40,000 + 600 + 8.",
+      "expected": "340608",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "List hundred-thousands through ones.",
+        "Insert zeros in missing positions.",
+        "300,000 + 40,000 + 600 + 8 = 340,608."
+      ],
+      "worked_solution": "300,000 + 40,000 + 600 + 8 = 340,608.",
+      "misconception_tag": "missing-placeholders",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-compare_order-01",
+      "provisional_skill": "COMPARE_ORDER",
+      "grade_suggestion": 1,
+      "question": "Which number is greater: 58 or 85?",
+      "expected": "85",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Compare tens first.",
+        "8 tens is more than 5 tens.",
+        "85 is greater."
+      ],
+      "worked_solution": "85 is greater.",
+      "misconception_tag": "reversed-digits",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-compare_order-02",
+      "provisional_skill": "COMPARE_ORDER",
+      "grade_suggestion": 2,
+      "question": "Which number is smaller: 307 or 370?",
+      "expected": "307",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Both have 3 hundreds.",
+        "Compare tens: 0 versus 7.",
+        "307 is smaller."
+      ],
+      "worked_solution": "307 is smaller.",
+      "misconception_tag": "zero-as-placeholder",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-compare_order-03",
+      "provisional_skill": "COMPARE_ORDER",
+      "grade_suggestion": 3,
+      "question": "Which number is greater: 4,091 or 4,109?",
+      "expected": "4109",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Thousands match.",
+        "Compare hundreds: 0 versus 1.",
+        "4,109 is greater."
+      ],
+      "worked_solution": "4,109 is greater.",
+      "misconception_tag": "leftmost-difference",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-compare_order-04",
+      "provisional_skill": "COMPARE_ORDER",
+      "grade_suggestion": 3,
+      "question": "Which number is smallest: 2,450; 2,405; 2,540?",
+      "expected": "2405",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "All have 2 thousands.",
+        "Compare hundreds and then tens.",
+        "2,405 is smallest."
+      ],
+      "worked_solution": "2,405 is smallest.",
+      "misconception_tag": "place-comparison",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-compare_order-05",
+      "provisional_skill": "COMPARE_ORDER",
+      "grade_suggestion": 4,
+      "question": "Which number is greatest: 19,999; 20,001; 19,990?",
+      "expected": "20001",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Compare ten-thousands.",
+        "20,001 has 2 ten-thousands.",
+        "20,001 is greatest."
+      ],
+      "worked_solution": "20,001 is greatest.",
+      "misconception_tag": "length-vs-value",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-compare_order-06",
+      "provisional_skill": "COMPARE_ORDER",
+      "grade_suggestion": 5,
+      "question": "Which number is smaller: 305,040 or 305,004?",
+      "expected": "305004",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "The hundred-thousands through hundreds match.",
+        "Compare tens: 4 versus 0.",
+        "305,004 is smaller."
+      ],
+      "worked_solution": "305,004 is smaller.",
+      "misconception_tag": "zero-as-placeholder",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-rounding-01",
+      "provisional_skill": "ROUNDING",
+      "grade_suggestion": 2,
+      "question": "Round 46 to the nearest ten.",
+      "expected": "50",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find the tens around 46.",
+        "46 lies between 40 and 50.",
+        "The ones digit 6 rounds up to 50."
+      ],
+      "worked_solution": "The ones digit 6 rounds up to 50.",
+      "misconception_tag": "round-direction",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-rounding-02",
+      "provisional_skill": "ROUNDING",
+      "grade_suggestion": 2,
+      "question": "Round 72 to the nearest ten.",
+      "expected": "70",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find the tens around 72.",
+        "72 lies between 70 and 80.",
+        "The ones digit 2 rounds down to 70."
+      ],
+      "worked_solution": "The ones digit 2 rounds down to 70.",
+      "misconception_tag": "round-direction",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-rounding-03",
+      "provisional_skill": "ROUNDING",
+      "grade_suggestion": 3,
+      "question": "Round 349 to the nearest hundred.",
+      "expected": "300",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find the hundreds around 349.",
+        "349 lies between 300 and 400.",
+        "49 is below the midpoint 50, so 300."
+      ],
+      "worked_solution": "49 is below the midpoint 50, so 300.",
+      "misconception_tag": "round-midpoint",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-rounding-04",
+      "provisional_skill": "ROUNDING",
+      "grade_suggestion": 3,
+      "question": "Round 650 to the nearest hundred using the usual half-up rule.",
+      "expected": "700",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "650 is exactly halfway between 600 and 700.",
+        "The half-up rule rounds to the higher hundred.",
+        "650 rounds to 700."
+      ],
+      "worked_solution": "650 rounds to 700.",
+      "misconception_tag": "tie-rule",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-rounding-05",
+      "provisional_skill": "ROUNDING",
+      "grade_suggestion": 4,
+      "question": "Round 48,760 to the nearest thousand.",
+      "expected": "49000",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Locate 48,000 and 49,000.",
+        "The hundreds digit is 7.",
+        "Round up to 49,000."
+      ],
+      "worked_solution": "Round up to 49,000.",
+      "misconception_tag": "round-place",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-rounding-06",
+      "provisional_skill": "ROUNDING",
+      "grade_suggestion": 5,
+      "question": "Round 305,499 to the nearest thousand.",
+      "expected": "305000",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Locate 305,000 and 306,000.",
+        "The remainder 499 is below 500.",
+        "Round down to 305,000."
+      ],
+      "worked_solution": "Round down to 305,000.",
+      "misconception_tag": "round-midpoint",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-error_analysis-01",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "grade_suggestion": 1,
+      "question": "A student says the 2 in 29 means 2 ones. What is its actual value?",
+      "expected": "20",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Look at the position of the 2.",
+        "It is in the tens place.",
+        "Two tens is 20."
+      ],
+      "worked_solution": "Two tens is 20.",
+      "misconception_tag": "digit-versus-value",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-error_analysis-02",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "grade_suggestion": 2,
+      "question": "A student writes 3 hundreds and 5 ones as 35. What is the correct number?",
+      "expected": "305",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "There are three hundreds.",
+        "There are zero tens.",
+        "300 + 0 + 5 = 305."
+      ],
+      "worked_solution": "300 + 0 + 5 = 305.",
+      "misconception_tag": "zero-as-placeholder",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-error_analysis-03",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "grade_suggestion": 3,
+      "question": "A student claims 5,090 is greater than 5,900. Which number is actually greater?",
+      "expected": "5900",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Thousands match.",
+        "Compare hundreds: 0 versus 9.",
+        "5,900 is greater."
+      ],
+      "worked_solution": "5,900 is greater.",
+      "misconception_tag": "place-comparison",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-error_analysis-04",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "grade_suggestion": 4,
+      "question": "A student rounds 24,499 to the nearest thousand and gets 25,000. What is the correct rounded number?",
+      "expected": "24000",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Nearest thousands are 24,000 and 25,000.",
+        "499 is below the halfway point 500.",
+        "The correct answer is 24,000."
+      ],
+      "worked_solution": "The correct answer is 24,000.",
+      "misconception_tag": "round-midpoint",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-error_analysis-05",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "grade_suggestion": 4,
+      "question": "A student says 6,030 has 3 hundreds. What is the value of the digit 3?",
+      "expected": "30",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "Find the position of 3.",
+        "The 3 is in the tens place.",
+        "Three tens is 30."
+      ],
+      "worked_solution": "Three tens is 30.",
+      "misconception_tag": "digit-versus-value",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g15-error_analysis-06",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "grade_suggestion": 5,
+      "question": "A student claims 70,005 is 70,000 + 50. What number is actually 70,000 + 50?",
+      "expected": "70050",
+      "answer_contract": "nonnegative_integer",
+      "hints": [
+        "50 means five tens, not five ones.",
+        "The tens place must contain 5.",
+        "70,000 + 50 = 70,050."
+      ],
+      "worked_solution": "70,000 + 50 = 70,050.",
+      "misconception_tag": "zero-as-placeholder",
+      "review_status": "PENDING"
+    }
+  ],
+  "worked_examples": [
+    {
+      "example_id": "we-1",
+      "provisional_skill": "DIGIT_VALUE",
+      "question": "In 562, what is the value of the digit 6?",
+      "expected": "60",
+      "steps": [
+        "Read the place of 6.",
+        "The 6 is in the tens place.",
+        "6 × 10 = 60."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-2",
+      "provisional_skill": "COMPOSE_DECOMPOSE",
+      "question": "What number is 4 hundreds, 2 tens, and 7 ones?",
+      "expected": "427",
+      "steps": [
+        "Four hundreds is 400.",
+        "Two tens is 20.",
+        "400 + 20 + 7 = 427."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-3",
+      "provisional_skill": "COMPARE_ORDER",
+      "question": "Which number is greater: 4,091 or 4,109?",
+      "expected": "4109",
+      "steps": [
+        "Thousands match.",
+        "Compare hundreds: 0 versus 1.",
+        "4,109 is greater."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-4",
+      "provisional_skill": "ROUNDING",
+      "question": "Round 349 to the nearest hundred.",
+      "expected": "300",
+      "steps": [
+        "Find the hundreds around 349.",
+        "349 lies between 300 and 400.",
+        "49 is below the midpoint 50, so 300."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-5",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "question": "A student claims 5,090 is greater than 5,900. Which number is actually greater?",
+      "expected": "5900",
+      "steps": [
+        "Thousands match.",
+        "Compare hundreds: 0 versus 9.",
+        "5,900 is greater."
+      ],
+      "review_status": "PENDING"
+    }
+  ],
+  "misconceptions": [
+    {
+      "misconception_id": "misc-1",
+      "provisional_skill": "DIGIT_VALUE",
+      "incorrect_pattern": "A digit is confused with its positional value.",
+      "remediation": "Contrast digit 6 with value 60 in 562; represent 6 tens using bundles of ten.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-2",
+      "provisional_skill": "COMPOSE_DECOMPOSE",
+      "incorrect_pattern": "Zeros in missing places are omitted.",
+      "remediation": "Build a place-value chart with explicit zero columns before writing 70,905.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-3",
+      "provisional_skill": "COMPARE_ORDER",
+      "incorrect_pattern": "Students compare only the rightmost digits.",
+      "remediation": "Use a left-to-right place-value comparison and stop at the first unequal place.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-4",
+      "provisional_skill": "ROUNDING",
+      "incorrect_pattern": "Students ignore the rounding place and midpoint.",
+      "remediation": "Place 24,499 on a number line from 24,000 to 25,000 and mark 24,500.",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-5",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "incorrect_pattern": "A plausible incorrect solution is accepted without checking.",
+      "remediation": "Require a written diagnosis, corrected value, and an independent representation.",
+      "review_status": "PENDING"
+    }
+  ]
+}

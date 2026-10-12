@@ -156,6 +156,10 @@ function LinearGraph({ spec }: { spec: VisualSpec }) {
     ] as [number, number][]
   )
     .filter(([x, y]) => x >= min - 1e-9 && x <= max + 1e-9 && y >= min - 1e-9 && y <= max + 1e-9)
+    // A corner may occur in both the x-boundary and y-boundary candidates.
+    .filter(([x, y], index, points) => !points.slice(0, index).some(
+      ([px, py]) => Math.abs(px - x) < 1e-9 && Math.abs(py - y) < 1e-9,
+    ))
     .slice(0, 2);
   const lattice = spec.mark_lattice
     ? ([
@@ -195,6 +199,15 @@ function LinearGraph({ spec }: { spec: VisualSpec }) {
           y2={yPos(endpoints[1][1])}
           className="viz-curve"
         />
+      )}
+      {spec.show_slope_triangle && mDen > 0 && mDen <= max &&
+        intercept >= min && intercept <= max && intercept + mNum >= min && intercept + mNum <= max && (
+        <g>
+          <path d={`M ${pos(0)} ${yPos(intercept)} H ${pos(mDen)} V ${yPos(intercept + mNum)}`}
+            fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="4 3" />
+          <text x={pos(mDen / 2)} y={yPos(intercept) + 16} textAnchor="middle" className="viz-label">run {mDen}</text>
+          <text x={pos(mDen) + 5} y={yPos(intercept + mNum / 2) - 5} className="viz-label">rise {mNum}</text>
+        </g>
       )}
       {lattice.map(([x, y]) => (
         <circle key={`${x},${y}`} cx={pos(x)} cy={yPos(y)} r="4.5" className="viz-point viz-point-a" />
@@ -930,6 +943,54 @@ function MarbleBag({ spec }: { spec: VisualSpec }) {
   );
 }
 
+function ProbabilityTree({ spec }: { spec: VisualSpec }) {
+  const firstLabel = String(spec.first_label ?? "A");
+  const secondLabel = String(spec.second_label ?? "B");
+  const firstTotal = Math.min(12, Math.max(2, Math.floor(spec.first_total ?? 2)));
+  const secondTotal = Math.min(12, Math.max(2, Math.floor(spec.second_total ?? 2)));
+  const firstFavorable = Math.min(firstTotal - 1, Math.max(1, Math.floor(spec.first_favorable ?? 1)));
+  const secondFavorable = Math.min(secondTotal - 1, Math.max(1, Math.floor(spec.second_favorable ?? 1)));
+  const firstMiss = firstTotal - firstFavorable;
+  const secondMiss = secondTotal - secondFavorable;
+  const root = [35, 150] as const;
+  const first = [[190, 82], [190, 218]] as const;
+  const leaves = [[390, 35], [390, 118], [390, 182], [390, 265]] as const;
+  return (
+    <svg viewBox="0 0 520 300" className="visual" role="img" aria-label={spec.aria_label ?? "Probability tree"}>
+      <circle cx={root[0]} cy={root[1]} r="5" className="viz-point" />
+      <line x1={root[0]} y1={root[1]} x2={first[0][0]} y2={first[0][1]} className="viz-segment" />
+      <line x1={root[0]} y1={root[1]} x2={first[1][0]} y2={first[1][1]} className="viz-segment" />
+      <text x={100} y={92} className="viz-label">{firstLabel}: {firstFavorable}/{firstTotal}</text>
+      <text x={74} y={226} className="viz-label">not {firstLabel}: {firstMiss}/{firstTotal}</text>
+      {first.map(([x, y], index) => (
+        <circle key={`first-${index}`} cx={x} cy={y} r="6" className={index === 0 ? "viz-point viz-point-a" : "viz-point"} />
+      ))}
+      {[
+        [first[0], leaves[0], `${secondLabel}: ${secondFavorable}/${secondTotal}`],
+        [first[0], leaves[1], `not ${secondLabel}: ${secondMiss}/${secondTotal}`],
+        [first[1], leaves[2], `${secondLabel}: ${secondFavorable}/${secondTotal}`],
+        [first[1], leaves[3], `not ${secondLabel}: ${secondMiss}/${secondTotal}`],
+      ].map(([from, to, label], index) => {
+        const start = from as readonly [number, number];
+        const end = to as readonly [number, number];
+        return (
+          <g key={`${label}-${index}`}>
+            <line x1={start[0]} y1={start[1]} x2={end[0]} y2={end[1]} className="viz-segment" />
+            <text x={(start[0] + end[0]) / 2 + 6} y={(start[1] + end[1]) / 2 - 4} className="viz-label">{label}</text>
+          </g>
+        );
+      })}
+      {leaves.map(([x, y], index) => (
+        <circle key={`leaf-${index}`} cx={x} cy={y} r="6" className={index === 0 ? "viz-point viz-point-a" : "viz-point"} />
+      ))}
+      <text x={412} y={39} className="viz-label">{firstLabel} and {secondLabel}</text>
+      <text x={412} y={122} className="viz-label">{firstLabel} and not {secondLabel}</text>
+      <text x={412} y={186} className="viz-label">not {firstLabel} and {secondLabel}</text>
+      <text x={412} y={269} className="viz-label">neither</text>
+    </svg>
+  );
+}
+
 function FrequencyTable({ spec }: { spec: VisualSpec }) {
   const cols = spec.col_labels ?? [];
   const rows = spec.row_labels ?? [];
@@ -1489,6 +1550,7 @@ export default function ProblemVisual({ spec }: { spec: VisualSpec | null }) {
   if (spec.type === "frequency_table") return <FrequencyTable spec={spec} />;
   if (spec.type === "spinner") return <Spinner spec={spec} />;
   if (spec.type === "marble_bag") return <MarbleBag spec={spec} />;
+  if (spec.type === "probability_tree") return <ProbabilityTree spec={spec} />;
   if (spec.type === "right_triangle") return <RightTriangle spec={spec} />;
   if (spec.type === "distance_segment") return <DistanceSegment spec={spec} />;
   return null;

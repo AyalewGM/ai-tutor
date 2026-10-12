@@ -1,0 +1,739 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "Grade 6 Gap Closure Wave 1",
+  "jurisdiction_focus": "Maryland Grade 6 / reusable middle grades",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "base_commit": "cfda3f7301502c712c29f22ae5e4948cfa1ebc75",
+  "purpose": "Cover all remaining Grade 6 learning-package gaps in one PR while extending, not duplicating, existing Mihur content.",
+  "existing_reuse": [
+    "scripts/seed_grade6.py",
+    "W2-G6-RATIO-DOUBLE-LINE",
+    "W1-G6-FRACTIONAL-PRISM-VOLUME and PR #345 deepening",
+    "histogram/IQR/box-plot enrichments and PR #342",
+    "cube-net reasoning / middle-grades spatial depth",
+    "existing M6.G.GEO area/volume/coordinate content"
+  ],
+  "packages": [
+    {
+      "id": "G6-FRACTION-DIVISION",
+      "title": "Fraction division reasoning",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 6.NOS.A.1",
+      "reuse_policy": "REUSE_EXISTING_M6_AND_MIDDLE_GRADES_CONTENT; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Build independent Grade 6 reasoning for fraction division reasoning through models, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why the method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to a misconception-specific repair using fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply the concept in an unfamiliar context or representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete an unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "estimate quotient size before exact calculation",
+        "use visual/measurement and sharing models",
+        "connect model to division equation and reciprocal multiplication",
+        "interpret remainder/units in context"
+      ],
+      "misconception_routes": [
+        {
+          "code": "FRACDIV.RECIPROCAL_WITHOUT_MEANING",
+          "evidence": "Observable response suggests weakness in estimate quotient size before exact calculation.",
+          "socratic_question": "What evidence from the original model or context would prove your step about estimate quotient size before exact calculation?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "FRACDIV.QUOTIENT_SIZE_IMPLAUSIBLE",
+          "evidence": "Observable response suggests weakness in use visual/measurement and sharing models.",
+          "socratic_question": "What evidence from the original model or context would prove your step about use visual/measurement and sharing models?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "FRACDIV.WHOLE_PART_SWAP",
+          "evidence": "Observable response suggests weakness in connect model to division equation and reciprocal multiplication.",
+          "socratic_question": "What evidence from the original model or context would prove your step about connect model to division equation and reciprocal multiplication?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graphs/models",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G6-EXPRESSIONS",
+      "title": "Expressions and early algebra",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 6.AT.B.5–B.7",
+      "reuse_policy": "REUSE_EXISTING_M6_AND_MIDDLE_GRADES_CONTENT; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Build independent Grade 6 reasoning for expressions and early algebra through models, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why the method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to a misconception-specific repair using fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply the concept in an unfamiliar context or representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete an unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "evaluate numerical and variable expressions",
+        "interpret exponents and coefficients",
+        "use order of operations",
+        "generate and justify equivalent expressions with properties"
+      ],
+      "misconception_routes": [
+        {
+          "code": "EXPR.EXPONENT_AS_MULTIPLIER",
+          "evidence": "Observable response suggests weakness in evaluate numerical and variable expressions.",
+          "socratic_question": "What evidence from the original model or context would prove your step about evaluate numerical and variable expressions?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "EXPR.VARIABLE_AS_LABEL",
+          "evidence": "Observable response suggests weakness in interpret exponents and coefficients.",
+          "socratic_question": "What evidence from the original model or context would prove your step about interpret exponents and coefficients?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "EXPR.DISTRIBUTE_ONE_TERM",
+          "evidence": "Observable response suggests weakness in use order of operations.",
+          "socratic_question": "What evidence from the original model or context would prove your step about use order of operations?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graphs/models",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G6-EQUATIONS",
+      "title": "Contextual one-variable equations",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 6.AT.C.8",
+      "reuse_policy": "REUSE_EXISTING_M6_AND_MIDDLE_GRADES_CONTENT; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Build independent Grade 6 reasoning for contextual one-variable equations through models, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why the method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to a misconception-specific repair using fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply the concept in an unfamiliar context or representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete an unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "translate context to one-step equation",
+        "use inverse operation preserving equality",
+        "solve nonnegative rational equations",
+        "verify by substitution and interpret on number line/context"
+      ],
+      "misconception_routes": [
+        {
+          "code": "EQ.MODEL_OPERATION_SWAP",
+          "evidence": "Observable response suggests weakness in translate context to one-step equation.",
+          "socratic_question": "What evidence from the original model or context would prove your step about translate context to one-step equation?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "EQ.INVERSE_WRONG_DIRECTION",
+          "evidence": "Observable response suggests weakness in use inverse operation preserving equality.",
+          "socratic_question": "What evidence from the original model or context would prove your step about use inverse operation preserving equality?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "EQ.NO_SUBSTITUTION_CHECK",
+          "evidence": "Observable response suggests weakness in solve nonnegative rational equations.",
+          "socratic_question": "What evidence from the original model or context would prove your step about solve nonnegative rational equations?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graphs/models",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G6-POLYGON-COORDINATE",
+      "title": "Polygon decomposition and coordinate geometry",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 6.GR.A.1,6.GR.A.3",
+      "reuse_policy": "REUSE_EXISTING_M6_AND_MIDDLE_GRADES_CONTENT; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Build independent Grade 6 reasoning for polygon decomposition and coordinate geometry through models, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why the method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to a misconception-specific repair using fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply the concept in an unfamiliar context or representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete an unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "decompose irregular polygons into familiar shapes",
+        "derive horizontal/vertical side lengths from coordinates",
+        "connect side lengths to perimeter and area",
+        "recompose/check total measure"
+      ],
+      "misconception_routes": [
+        {
+          "code": "GEO.PERIMETER_AREA_SWAP",
+          "evidence": "Observable response suggests weakness in decompose irregular polygons into familiar shapes.",
+          "socratic_question": "What evidence from the original model or context would prove your step about decompose irregular polygons into familiar shapes?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "GEO.COORDINATE_DIFFERENCE_SIGN",
+          "evidence": "Observable response suggests weakness in derive horizontal/vertical side lengths from coordinates.",
+          "socratic_question": "What evidence from the original model or context would prove your step about derive horizontal/vertical side lengths from coordinates?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "GEO.OVERLAP_OR_GAP",
+          "evidence": "Observable response suggests weakness in connect side lengths to perimeter and area.",
+          "socratic_question": "What evidence from the original model or context would prove your step about connect side lengths to perimeter and area?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graphs/models",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G6-NETS-SURFACE",
+      "title": "Prism and pyramid nets / surface area",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 6.GR.A.4",
+      "reuse_policy": "REUSE_EXISTING_M6_AND_MIDDLE_GRADES_CONTENT; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Build independent Grade 6 reasoning for prism and pyramid nets / surface area through models, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why the method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to a misconception-specific repair using fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply the concept in an unfamiliar context or representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete an unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "identify faces and adjacency in nets",
+        "distinguish valid/invalid prism and pyramid nets",
+        "compute each face area exactly",
+        "sum surface area and distinguish from volume"
+      ],
+      "misconception_routes": [
+        {
+          "code": "NET.ANY_CONNECTED_FACES",
+          "evidence": "Observable response suggests weakness in identify faces and adjacency in nets.",
+          "socratic_question": "What evidence from the original model or context would prove your step about identify faces and adjacency in nets?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "NET.MISSING_FACE",
+          "evidence": "Observable response suggests weakness in distinguish valid/invalid prism and pyramid nets.",
+          "socratic_question": "What evidence from the original model or context would prove your step about distinguish valid/invalid prism and pyramid nets?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "NET.SURFACE_VOLUME_SWAP",
+          "evidence": "Observable response suggests weakness in compute each face area exactly.",
+          "socratic_question": "What evidence from the original model or context would prove your step about compute each face area exactly?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graphs/models",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G6-STAT-DISTRIBUTIONS",
+      "title": "Distribution, summary, and interpretation",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 6.DS.A.3–A.4,6.DS.B.5–B.6",
+      "reuse_policy": "REUSE_EXISTING_M6_AND_MIDDLE_GRADES_CONTENT; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Build independent Grade 6 reasoning for distribution, summary, and interpretation through models, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why the method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to a misconception-specific repair using fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply the concept in an unfamiliar context or representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete an unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "construct/read histograms and box plots",
+        "compute five-number summary and IQR",
+        "describe shape, center, spread and outliers",
+        "select and justify useful summaries in context"
+      ],
+      "misconception_routes": [
+        {
+          "code": "STAT.BIN_BOUNDARY",
+          "evidence": "Observable response suggests weakness in construct/read histograms and box plots.",
+          "socratic_question": "What evidence from the original model or context would prove your step about construct/read histograms and box plots?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "STAT.IQR_AS_RANGE",
+          "evidence": "Observable response suggests weakness in compute five-number summary and iqr.",
+          "socratic_question": "What evidence from the original model or context would prove your step about compute five-number summary and iqr?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "STAT.MEAN_MEDIAN_CONTEXT",
+          "evidence": "Observable response suggests weakness in describe shape, center, spread and outliers.",
+          "socratic_question": "What evidence from the original model or context would prove your step about describe shape, center, spread and outliers?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graphs/models",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G6-RATIO-RATE",
+      "title": "Ratio and unit-rate strengthening",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 6.AT.A.1–A.3",
+      "reuse_policy": "REUSE_EXISTING_M6_AND_MIDDLE_GRADES_CONTENT; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Build independent Grade 6 reasoning for ratio and unit-rate strengthening through models, explanation, transfer, and verification.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict result/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why the method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded guided examples with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "respond to a misconception-specific repair using fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply the concept in an unfamiliar context or representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete an unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "represent equivalent ratios with tables and double number lines",
+        "find and interpret unit rate",
+        "move among table, diagram, equation and context",
+        "distinguish multiplicative scaling from additive change"
+      ],
+      "misconception_routes": [
+        {
+          "code": "RATIO.ADDITIVE_SCALING",
+          "evidence": "Observable response suggests weakness in represent equivalent ratios with tables and double number lines.",
+          "socratic_question": "What evidence from the original model or context would prove your step about represent equivalent ratios with tables and double number lines?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "RATIO.UNIT_RATE_INVERTED",
+          "evidence": "Observable response suggests weakness in find and interpret unit rate.",
+          "socratic_question": "What evidence from the original model or context would prove your step about find and interpret unit rate?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        },
+        {
+          "code": "RATIO.TABLE_ROW_MIX",
+          "evidence": "Observable response suggests weakness in move among table, diagram, equation and context.",
+          "socratic_question": "What evidence from the original model or context would prove your step about move among table, diagram, equation and context?",
+          "repair_requirement": "Use a fresh seeded task, require an explanation plus a check/counterexample, then fade the scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for graphs/models",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    }
+  ],
+  "gates": {
+    "authored": true,
+    "production_wired": false,
+    "standards_accepted": false,
+    "math_accepted": false,
+    "pedagogy_accepted": false,
+    "architecture_accepted": false,
+    "mve_implemented": false,
+    "assessment_backend_wired": false,
+    "muse_qa": false,
+    "deployed": false
+  }
+}

@@ -1,0 +1,939 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "Grade 5 Gap Closure Wave 1",
+  "jurisdiction_focus": "Maryland Grade 5 / reusable elementary mathematics",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "base_commit": "cfda3f7301502c712c29f22ae5e4948cfa1ebc75",
+  "purpose": "Cover all remaining Grade 5 learning-depth gaps in one PR while extending the existing Maryland pack and shared canonical families.",
+  "existing_reuse": [
+    "docs/curriculum/packs/md-grade5-mccrs-2026_27.json",
+    "W1-G4-FRACTION-EQUIVALENCE",
+    "W2-G5-DECIMAL-PLACE-VALUE",
+    "shared decimal/place-value/multiplication/division/fraction/measurement/volume/coordinate/shape canonical families"
+  ],
+  "packages": [
+    {
+      "id": "G5-EXPRESSIONS",
+      "title": "Expressions and order of operations",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 5.OA",
+      "reuse_policy": "REUSE_EXISTING_MD5_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 5 reasoning for expressions and order of operations through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate models or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded practice with fading scaffolds"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair a misconception on fresh values"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "translate words to expressions",
+        "use parentheses/brackets/braces to express intended order",
+        "evaluate without changing structure",
+        "explain equivalence versus merely equal value"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G5.EXPR.GROUPING_IGNORED",
+          "evidence": "Response pattern indicates weakness in translate words to expressions.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about translate words to expressions?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.EXPR.WORD_ORDER_REVERSED",
+          "evidence": "Response pattern indicates weakness in use parentheses/brackets/braces to express intended order.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about use parentheses/brackets/braces to express intended order?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.EXPR.EQUAL_VALUE_NOT_EQUIVALENT",
+          "evidence": "Response pattern indicates weakness in evaluate without changing structure.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about evaluate without changing structure?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for visual/model state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied worksheets, released-item text, proprietary diagrams, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G5-PATTERNS",
+      "title": "Two-rule numerical patterns",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 5.OA",
+      "reuse_policy": "REUSE_EXISTING_MD5_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 5 reasoning for two-rule numerical patterns through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate models or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded practice with fading scaffolds"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair a misconception on fresh values"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "generate two sequences from rules",
+        "compare corresponding terms",
+        "identify additive/multiplicative relationship between patterns",
+        "represent paired terms in a table/coordinate context"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G5.PATTERN.APPLY_ONE_RULE_ONLY",
+          "evidence": "Response pattern indicates weakness in generate two sequences from rules.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about generate two sequences from rules?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.PATTERN.COMPARE_WRONG_TERMS",
+          "evidence": "Response pattern indicates weakness in compare corresponding terms.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about compare corresponding terms?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.PATTERN.RELATION_FROM_SINGLE_PAIR",
+          "evidence": "Response pattern indicates weakness in identify additive/multiplicative relationship between patterns.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about identify additive/multiplicative relationship between patterns?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for visual/model state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied worksheets, released-item text, proprietary diagrams, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G5-NBT-OPERATIONS",
+      "title": "Place value, powers of ten, multi-digit whole and decimal operations",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 5.NBT",
+      "reuse_policy": "REUSE_EXISTING_MD5_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 5 reasoning for place value, powers of ten, multi-digit whole and decimal operations through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate models or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded practice with fading scaffolds"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair a misconception on fresh values"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "explain ten-times/one-tenth place-value relationships",
+        "read/write/compare/round decimals",
+        "multiply/divide multi-digit whole numbers with place-value reasoning",
+        "add/subtract/multiply/divide decimals with estimation and reasonableness checks"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G5.NBT.DECIMAL_ALIGN_DIGITS_NOT_PLACES",
+          "evidence": "Response pattern indicates weakness in explain ten-times/one-tenth place-value relationships.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about explain ten-times/one-tenth place-value relationships?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.NBT.POWER10_SHIFT_DIGITS_RULE",
+          "evidence": "Response pattern indicates weakness in read/write/compare/round decimals.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about read/write/compare/round decimals?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.NBT.ALGORITHM_NO_MAGNITUDE_CHECK",
+          "evidence": "Response pattern indicates weakness in multiply/divide multi-digit whole numbers with place-value reasoning.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about multiply/divide multi-digit whole numbers with place-value reasoning?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for visual/model state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied worksheets, released-item text, proprietary diagrams, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G5-FRAC-ADD-SUB",
+      "title": "Add and subtract fractions with unlike denominators",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 5.NF",
+      "reuse_policy": "REUSE_EXISTING_MD5_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 5 reasoning for add and subtract fractions with unlike denominators through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate models or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded practice with fading scaffolds"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair a misconception on fresh values"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "build equivalent fractions from same whole",
+        "find a meaningful common unit",
+        "add/subtract including mixed numbers",
+        "estimate and interpret answers in context"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G5.FRAC.ADD_DENOMINATORS",
+          "evidence": "Response pattern indicates weakness in build equivalent fractions from same whole.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about build equivalent fractions from same whole?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.FRAC.UNEQUAL_WHOLES",
+          "evidence": "Response pattern indicates weakness in find a meaningful common unit.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about find a meaningful common unit?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.FRAC.MIXED_RENAME_ERROR",
+          "evidence": "Response pattern indicates weakness in add/subtract including mixed numbers.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about add/subtract including mixed numbers?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for visual/model state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied worksheets, released-item text, proprietary diagrams, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G5-FRAC-MUL-DIV",
+      "title": "Fraction multiplication, division, and scaling",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 5.NF",
+      "reuse_policy": "REUSE_EXISTING_MD5_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 5 reasoning for fraction multiplication, division, and scaling through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate models or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded practice with fading scaffolds"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair a misconception on fresh values"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "interpret multiplication as scaling",
+        "multiply fractions and mixed numbers with area/number-line models",
+        "divide whole numbers by unit fractions and unit fractions by whole numbers",
+        "predict whether product/quotient is greater or less than starting quantity"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G5.FRAC.SCALING_DIRECTION",
+          "evidence": "Response pattern indicates weakness in interpret multiplication as scaling.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about interpret multiplication as scaling?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.FRAC.RECIPROCAL_WITHOUT_MODEL",
+          "evidence": "Response pattern indicates weakness in multiply fractions and mixed numbers with area/number-line models.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about multiply fractions and mixed numbers with area/number-line models?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.FRAC.WHOLE_UNIT_FRACTION_SWAP",
+          "evidence": "Response pattern indicates weakness in divide whole numbers by unit fractions and unit fractions by whole numbers.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about divide whole numbers by unit fractions and unit fractions by whole numbers?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for visual/model state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied worksheets, released-item text, proprietary diagrams, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G5-MEAS-CONVERSION",
+      "title": "Measurement conversion within a system",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 5.MD",
+      "reuse_policy": "REUSE_EXISTING_MD5_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 5 reasoning for measurement conversion within a system through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate models or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded practice with fading scaffolds"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair a misconception on fresh values"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "choose conversion direction from unit size",
+        "use multiplicative relationships not memorized arrows",
+        "represent conversion in tables/equations",
+        "solve multi-step measurement contexts with units"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G5.MEAS.CONVERSION_DIRECTION",
+          "evidence": "Response pattern indicates weakness in choose conversion direction from unit size.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about choose conversion direction from unit size?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.MEAS.UNIT_DROPPED",
+          "evidence": "Response pattern indicates weakness in use multiplicative relationships not memorized arrows.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about use multiplicative relationships not memorized arrows?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.MEAS.ADDITIVE_CONVERSION",
+          "evidence": "Response pattern indicates weakness in represent conversion in tables/equations.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about represent conversion in tables/equations?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for visual/model state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied worksheets, released-item text, proprietary diagrams, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G5-VOLUME",
+      "title": "Volume and additive volume reasoning",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 5.MD",
+      "reuse_policy": "REUSE_EXISTING_MD5_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 5 reasoning for volume and additive volume reasoning through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate models or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded practice with fading scaffolds"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair a misconception on fresh values"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "build volume from unit-cube layers",
+        "connect l×w×h to B×h",
+        "distinguish volume from surface area",
+        "decompose composite rectangular-prism volumes and preserve cubic units"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G5.VOL.AREA_ONLY",
+          "evidence": "Response pattern indicates weakness in build volume from unit-cube layers.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about build volume from unit-cube layers?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.VOL.SURFACE_VOLUME_SWAP",
+          "evidence": "Response pattern indicates weakness in connect l×w×h to b×h.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about connect l×w×h to b×h?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.VOL.COMPOSITE_OVERLAP",
+          "evidence": "Response pattern indicates weakness in distinguish volume from surface area.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about distinguish volume from surface area?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for visual/model state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied worksheets, released-item text, proprietary diagrams, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G5-COORDINATES",
+      "title": "Coordinate-plane reasoning",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 5.G",
+      "reuse_policy": "REUSE_EXISTING_MD5_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 5 reasoning for coordinate-plane reasoning through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate models or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded practice with fading scaffolds"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair a misconception on fresh values"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "interpret axes, origin, and ordered-pair order",
+        "plot/read first-quadrant points",
+        "represent contextual paired quantities",
+        "use coordinates to compare horizontal/vertical change"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G5.COORD.XY_SWAP",
+          "evidence": "Response pattern indicates weakness in interpret axes, origin, and ordered-pair order.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about interpret axes, origin, and ordered-pair order?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.COORD.ORIGIN_OFFSET",
+          "evidence": "Response pattern indicates weakness in plot/read first-quadrant points.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about plot/read first-quadrant points?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.COORD.CONTEXT_AXIS_SWAP",
+          "evidence": "Response pattern indicates weakness in represent contextual paired quantities.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about represent contextual paired quantities?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for visual/model state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied worksheets, released-item text, proprietary diagrams, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G5-SHAPE-HIERARCHY",
+      "title": "Classify two-dimensional figures in a hierarchy",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 5.G",
+      "reuse_policy": "REUSE_EXISTING_MD5_PACK_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 5 reasoning for classify two-dimensional figures in a hierarchy through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities, structure, and representation"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict size/strategy and justify"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate models or symbols while preserving meaning"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain why method works and check reasonableness"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "complete varied seeded practice with fading scaffolds"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair a misconception on fresh values"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "apply in unfamiliar context/representation"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "complete unseen task with hidden oracle and no hints"
+        }
+      ],
+      "core_reasoning": [
+        "classify from defining attributes",
+        "recognize categories can overlap",
+        "use always/sometimes/never reasoning",
+        "build hierarchy with inclusive definitions"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G5.SHAPE.SINGLE_CATEGORY_ONLY",
+          "evidence": "Response pattern indicates weakness in classify from defining attributes.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about classify from defining attributes?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.SHAPE.APPEARANCE_OVER_PROPERTY",
+          "evidence": "Response pattern indicates weakness in recognize categories can overlap.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about recognize categories can overlap?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G5.SHAPE.REVERSE_SUBSET",
+          "evidence": "Response pattern indicates weakness in use always/sometimes/never reasoning.",
+          "socratic_question": "What evidence from the original model would prove or disprove your step about use always/sometimes/never reasoning?",
+          "repair_requirement": "Use fresh numbers or a contrast case, require explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for visual/model state",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored task structures and explanations.",
+        "copyright": "No copied worksheets, released-item text, proprietary diagrams, PDFs, or learner data."
+      }
+    }
+  ],
+  "gates": {
+    "authored": true,
+    "production_wired": false,
+    "standards_accepted": false,
+    "math_accepted": false,
+    "pedagogy_accepted": false,
+    "architecture_accepted": false,
+    "mve_implemented": false,
+    "assessment_backend_wired": false,
+    "muse_qa": false,
+    "deployed": false
+  }
+}

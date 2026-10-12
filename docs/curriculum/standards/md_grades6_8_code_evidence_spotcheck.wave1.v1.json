@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PARTIAL_REPOSITORY_CODE_EVIDENCE_AUDIT_NOT_FULL_REPOSITORY_PROOF",
+  "date": "2026-10-09",
+  "method": "Direct read of three scripts on main; exact literal phrases checked in source, not an exhaustive code/pack/DB audit",
+  "reviewed_paths": [
+    "scripts/seed_grade6.py",
+    "scripts/seed_grade7.py",
+    "scripts/seed_grade8.py"
+  ],
+  "entries": [
+    {
+      "candidate_id": "MD8_TWO_WAY_TABLE",
+      "source_path": "scripts/seed_grade8.py",
+      "search_terms": [
+        "two-way table",
+        "STAT_007"
+      ],
+      "finding": "EXISTING_MISCONCEPTION_EVIDENCE",
+      "interpretation": "Two-way table misconception remediation exists in Grade 8 seed; prior wording 'lacks evidence' must be narrowed to independent assessment/standards completeness not proven."
+    },
+    {
+      "candidate_id": "MD8_FUNCTION_REPRESENTATIONS",
+      "source_path": "scripts/seed_grade8.py",
+      "search_terms": [
+        "compare functions given in different"
+      ],
+      "finding": "EXISTING_SKILL_SCOPE_EVIDENCE",
+      "interpretation": "Grade 8 function skill explicitly includes comparing functions in different forms; missing concept cannot be asserted from skill scope alone."
+    },
+    {
+      "candidate_id": "MD7_INEQUALITIES",
+      "source_path": "scripts/seed_grade7.py",
+      "search_terms": [
+        "Solve contextual equations and inequalities"
+      ],
+      "finding": "EXISTING_SKILL_SCOPE_EVIDENCE",
+      "interpretation": "Grade 7 equations skill explicitly includes inequalities; must inspect practice/assessment to determine depth."
+    },
+    {
+      "candidate_id": "MD7_CROSS_GRADE_PROBABILITY",
+      "source_path": "scripts/seed_grade7.py",
+      "search_terms": [
+        "Probability of Simple and Compound Events",
+        "sample-space"
+      ],
+      "finding": "EXISTING_SKILL_SCOPE_AND_LEGACY_PLACEMENT",
+      "interpretation": "Compound probability content appears in Grade 7 seed, but current Maryland expectation placement is Grade 8; do not delete historical records."
+    },
+    {
+      "candidate_id": "MD6_GEOM_NETS",
+      "source_path": "scripts/seed_grade6.py",
+      "search_terms": [
+        "surface area"
+      ],
+      "finding": "BROAD_GEOMETRY_SCOPE_ONLY",
+      "interpretation": "Surface-area evidence exists, but nets of prisms/pyramids are not established by this source."
+    },
+    {
+      "candidate_id": "MD8_PYTH_PROOF",
+      "source_path": "scripts/seed_grade8.py",
+      "search_terms": [
+        "Pythagorean"
+      ],
+      "finding": "EXISTING_PYTHAGOREAN_CONTENT",
+      "interpretation": "Pythagorean content is present; independent proof-focused assessment not yet verified."
+    }
+  ],
+  "summary": {
+    "inspected_candidates": 6,
+    "existing_specific_content_or_scope_evidence": 5,
+    "broad_only_evidence": 1,
+    "confirmed_missing_repo_wide": 0
+  },
+  "decision": "Do not call two-way tables, cross-representation function comparison, inequalities, or compound probability genuinely absent. Their seed evidence exists; verify deterministic exercises, misconception coverage, standards alignment and independent assessment before acceptance.",
+  "safety": {
+    "no_runtime_changes": true,
+    "no_mastery_changes": true,
+    "no_accepted_mappings": true
+  }
+}

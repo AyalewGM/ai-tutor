@@ -1,0 +1,848 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "Grade 1 Gap Closure Wave 1",
+  "jurisdiction_focus": "Maryland Grade 1 / reusable elementary mathematics",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "base_commit": "cfda3f7301502c712c29f22ae5e4948cfa1ebc75",
+  "purpose": "Provide complete Grade 1 learning-depth coverage in one PR while preserving Gate-5 identity/evidence boundaries and existing foundations.",
+  "existing_reuse": [
+    "docs/curriculum/packs/md-grade1-mccrs-2026_27.json",
+    "docs/curriculum/taxonomy_candidate_scope.grade1_gate5.v1.json",
+    "PR #335 Grade 1 Gate-5 bounded scope cards",
+    "G1–5 place-value foundation drafts",
+    "W2 Grades 1–2 unknown-position arithmetic",
+    "shared addition/subtraction/time/shape canonical families"
+  ],
+  "atomic_boundary_notes": [
+    "Numeral representation is not counting mastery.",
+    "Ordering is not pairwise comparison mastery.",
+    "Equality truth is not unknown-solving mastery.",
+    "Addition and subtraction unknown positions require separate evidence.",
+    "Reading time and producing time representations require separate evidence.",
+    "Shape identification, construction, and composition are not interchangeable."
+  ],
+  "packages": [
+    {
+      "id": "G1-COUNT-REPRESENT",
+      "title": "Counting, numeral representation, comparison, and ordering to 120",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 1.NBT",
+      "reuse_policy": "REUSE_MD1_PACK_AND_GATE5_SCOPE_CARDS; KEEP ATOMIC EVIDENCE BOUNDARIES SEPARATE",
+      "learning_objective": "Develop independent Grade 1 reasoning for counting, numeral representation, comparison, and ordering to 120 through manipulatives, visual models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate concrete or visual model"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "count forward and connect quantity↔numeral",
+        "read/write numerals through 120 including 99↔100",
+        "compare quantities using tens/ones evidence",
+        "order lists ascending/descending while retaining duplicates"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G1.COUNT.SKIP_SEQUENCE_FOR_COUNT",
+          "evidence": "Observed response suggests weakness in count forward and connect quantity↔numeral.",
+          "socratic_question": "What does the model show about count forward and connect quantity↔numeral?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.NUMERAL.QUANTITY_MISMATCH",
+          "evidence": "Observed response suggests weakness in read/write numerals through 120 including 99↔100.",
+          "socratic_question": "What does the model show about read/write numerals through 120 including 99↔100?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.ORDER.PAIRWISE_ONLY",
+          "evidence": "Observed response suggests weakness in compare quantities using tens/ones evidence.",
+          "socratic_question": "What does the model show about compare quantities using tens/ones evidence?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for counters/ten-frames/clocks/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G1-PLACE-VALUE",
+      "title": "Tens and ones place value",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 1.NBT",
+      "reuse_policy": "REUSE_MD1_PACK_AND_GATE5_SCOPE_CARDS; KEEP ATOMIC EVIDENCE BOUNDARIES SEPARATE",
+      "learning_objective": "Develop independent Grade 1 reasoning for tens and ones place value through manipulatives, visual models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate concrete or visual model"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "compose/decompose two-digit numbers",
+        "explain teen numbers as one ten plus ones",
+        "interpret multiples of ten",
+        "exchange 10 ones↔1 ten without changing value"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G1.PV.TEEN_DIGIT_REVERSAL",
+          "evidence": "Observed response suggests weakness in compose/decompose two-digit numbers.",
+          "socratic_question": "What does the model show about compose/decompose two-digit numbers?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.PV.TEN_AS_ONE",
+          "evidence": "Observed response suggests weakness in explain teen numbers as one ten plus ones.",
+          "socratic_question": "What does the model show about explain teen numbers as one ten plus ones?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.PV.EXCHANGE_CHANGES_VALUE",
+          "evidence": "Observed response suggests weakness in interpret multiples of ten.",
+          "socratic_question": "What does the model show about interpret multiples of ten?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for counters/ten-frames/clocks/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G1-ADDITION",
+      "title": "Addition within 20",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 1.OA",
+      "reuse_policy": "REUSE_MD1_PACK_AND_GATE5_SCOPE_CARDS; KEEP ATOMIC EVIDENCE BOUNDARIES SEPARATE",
+      "learning_objective": "Develop independent Grade 1 reasoning for addition within 20 through manipulatives, visual models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate concrete or visual model"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "count on from larger addend",
+        "make ten/decompose addends",
+        "connect objects/ten-frames/equations",
+        "build fluency without abandoning explanation"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G1.ADD.COUNT_ALL_ONLY",
+          "evidence": "Observed response suggests weakness in count on from larger addend.",
+          "socratic_question": "What does the model show about count on from larger addend?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.ADD.TEN_FRAME_MISGROUP",
+          "evidence": "Observed response suggests weakness in make ten/decompose addends.",
+          "socratic_question": "What does the model show about make ten/decompose addends?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.ADD.ORDER_DEPENDENCE",
+          "evidence": "Observed response suggests weakness in connect objects/ten-frames/equations.",
+          "socratic_question": "What does the model show about connect objects/ten-frames/equations?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for counters/ten-frames/clocks/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G1-SUBTRACTION",
+      "title": "Subtraction within 20",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 1.OA",
+      "reuse_policy": "REUSE_MD1_PACK_AND_GATE5_SCOPE_CARDS; KEEP ATOMIC EVIDENCE BOUNDARIES SEPARATE",
+      "learning_objective": "Develop independent Grade 1 reasoning for subtraction within 20 through manipulatives, visual models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate concrete or visual model"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "take-from and difference meanings",
+        "count back/count up strategies",
+        "decompose through ten",
+        "connect subtraction to addition inverse"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G1.SUB.BIGGER_MINUS_SMALLER_ONLY",
+          "evidence": "Observed response suggests weakness in take-from and difference meanings.",
+          "socratic_question": "What does the model show about take-from and difference meanings?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.SUB.COUNT_BACK_OFF_BY_ONE",
+          "evidence": "Observed response suggests weakness in count back/count up strategies.",
+          "socratic_question": "What does the model show about count back/count up strategies?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.SUB.UNRELATED_ADD_FACT",
+          "evidence": "Observed response suggests weakness in decompose through ten.",
+          "socratic_question": "What does the model show about decompose through ten?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for counters/ten-frames/clocks/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G1-WORD-PROBLEMS",
+      "title": "Addition/subtraction word problems within 20",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 1.OA",
+      "reuse_policy": "REUSE_MD1_PACK_AND_GATE5_SCOPE_CARDS; KEEP ATOMIC EVIDENCE BOUNDARIES SEPARATE",
+      "learning_objective": "Develop independent Grade 1 reasoning for addition/subtraction word problems within 20 through manipulatives, visual models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate concrete or visual model"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "identify story structure and unknown role",
+        "model add-to/take-from/put-together/take-apart/compare",
+        "solve result/change/start/part unknowns",
+        "choose operation from structure not keywords"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G1.WORD.RESULT_UNKNOWN_BIAS",
+          "evidence": "Observed response suggests weakness in identify story structure and unknown role.",
+          "socratic_question": "What does the model show about identify story structure and unknown role?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.WORD.KEYWORD_OPERATION",
+          "evidence": "Observed response suggests weakness in model add-to/take-from/put-together/take-apart/compare.",
+          "socratic_question": "What does the model show about model add-to/take-from/put-together/take-apart/compare?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.WORD.COMPARE_AS_TAKEAWAY",
+          "evidence": "Observed response suggests weakness in solve result/change/start/part unknowns.",
+          "socratic_question": "What does the model show about solve result/change/start/part unknowns?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for counters/ten-frames/clocks/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G1-EQUALITY-UNKNOWNS",
+      "title": "Equality meaning and unknowns",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 1.OA",
+      "reuse_policy": "REUSE_MD1_PACK_AND_GATE5_SCOPE_CARDS; KEEP ATOMIC EVIDENCE BOUNDARIES SEPARATE",
+      "learning_objective": "Develop independent Grade 1 reasoning for equality meaning and unknowns through manipulatives, visual models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate concrete or visual model"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "interpret = as same value on both sides",
+        "judge equation truth and symmetry",
+        "solve unknown addition positions within 20",
+        "solve unknown subtraction positions within 20 without merging equality mastery"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G1.EQ.ANSWER_COMES_NEXT",
+          "evidence": "Observed response suggests weakness in interpret = as same value on both sides.",
+          "socratic_question": "What does the model show about interpret = as same value on both sides?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.EQ.ONE_SIDE_ONLY",
+          "evidence": "Observed response suggests weakness in judge equation truth and symmetry.",
+          "socratic_question": "What does the model show about judge equation truth and symmetry?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.UNKNOWN.OPERATION_ROLE_CONFUSION",
+          "evidence": "Observed response suggests weakness in solve unknown addition positions within 20.",
+          "socratic_question": "What does the model show about solve unknown addition positions within 20?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for counters/ten-frames/clocks/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G1-TIME",
+      "title": "Hour and half-hour time",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 1.MD",
+      "reuse_policy": "REUSE_MD1_PACK_AND_GATE5_SCOPE_CARDS; KEEP ATOMIC EVIDENCE BOUNDARIES SEPARATE",
+      "learning_objective": "Develop independent Grade 1 reasoning for hour and half-hour time through manipulatives, visual models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate concrete or visual model"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "distinguish hour/minute hands",
+        "read hour and half-hour clocks",
+        "produce analog/digital representations",
+        "explain half-hour as 30 minutes past"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G1.TIME.HANDS_SWAP",
+          "evidence": "Observed response suggests weakness in distinguish hour/minute hands.",
+          "socratic_question": "What does the model show about distinguish hour/minute hands?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.TIME.HALF_HOUR_AS_50",
+          "evidence": "Observed response suggests weakness in read hour and half-hour clocks.",
+          "socratic_question": "What does the model show about read hour and half-hour clocks?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.TIME.READING_WITHOUT_REPRESENTING",
+          "evidence": "Observed response suggests weakness in produce analog/digital representations.",
+          "socratic_question": "What does the model show about produce analog/digital representations?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for counters/ten-frames/clocks/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G1-SHAPES",
+      "title": "Shape attributes, construction, composition, and equal shares",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 1.G",
+      "reuse_policy": "REUSE_MD1_PACK_AND_GATE5_SCOPE_CARDS; KEEP ATOMIC EVIDENCE BOUNDARIES SEPARATE",
+      "learning_objective": "Develop independent Grade 1 reasoning for shape attributes, construction, composition, and equal shares through manipulatives, visual models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer/strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate concrete or visual model"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "distinguish defining from non-defining attributes",
+        "construct/draw shapes from attributes",
+        "compose shapes into larger figures",
+        "partition circles/rectangles into halves/fourths with equal-area reasoning"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G1.SHAPE.APPEARANCE_OVER_ATTRIBUTE",
+          "evidence": "Observed response suggests weakness in distinguish defining from non-defining attributes.",
+          "socratic_question": "What does the model show about distinguish defining from non-defining attributes?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.SHAPE.COMPOSITION_AS_NAMING_ONLY",
+          "evidence": "Observed response suggests weakness in construct/draw shapes from attributes.",
+          "socratic_question": "What does the model show about construct/draw shapes from attributes?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        },
+        {
+          "code": "G1.SHARE.UNEQUAL_PARTS",
+          "evidence": "Observed response suggests weakness in compose shapes into larger figures.",
+          "socratic_question": "What does the model show about compose shapes into larger figures?",
+          "repair_requirement": "Use fresh quantities or a contrast case, require model + explanation + check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for counters/ten-frames/clocks/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    }
+  ],
+  "gates": {
+    "authored": true,
+    "production_wired": false,
+    "standards_accepted": false,
+    "math_accepted": false,
+    "pedagogy_accepted": false,
+    "architecture_accepted": false,
+    "mve_implemented": false,
+    "assessment_backend_wired": false,
+    "muse_qa": false,
+    "deployed": false
+  }
+}

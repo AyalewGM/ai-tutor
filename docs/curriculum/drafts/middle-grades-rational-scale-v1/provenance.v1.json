@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "MG-G7-RATIONAL-SCALE-INVERSE",
+  "revision": "middle-grades-rational-scale-v1-r4",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "learner_data_writes": false,
+  "reviewed_at_utc": "2026-10-10",
+  "source_heads": {
+    "main": "13f1cf7bfcdbaa73bb248319b1ece1be649e59df",
+    "standards_pr_325": "c1fa26a560ebea022202bace38d51e91ca5d08fa",
+    "learning_packages_pr_327": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
+    "learning_packages_pr_328": "2445f197259ff27b5c99dd2b45c4bcbc2e5292f8"
+  },
+  "reuse_first_audit": {
+    "existing_work": [
+      "app/domains/advanced_number.py:MATH.RAT.MUL",
+      "app/domains/advanced_number.py:MATH.RAT.DIV",
+      "app/domains/advanced_number.py:MATH.RAT.NUMBER_LINE",
+      "tests/test_canonical_depth_wave2.py",
+      "frontend/src/mve/linearExplorer.ts exact rational helper",
+      "PR #315 ratio pilot",
+      "PR #328 ratio/double-number-line, signed-integer, and data/spatial packages"
+    ],
+    "actual_gap": "The R2 package connected direction, scale, and inverse equations, but independent pedagogy review found that only one misconception was operationally diagnosed, coordinate substitution was not authentic transfer, and independent items collected a number rather than concept evidence.",
+    "planned_improvement": "R3 adds a six-field entry diagnostic with explicit routes to all four repairs, follow-up and scaffold-fade criteria; unfamiliar calibration-log transfer requiring operation selection; and unseen multi-part variants that collect operation, inverse strategy, direction, magnitude, exact result, and recomposition evidence.",
+    "verification": "Local deterministic exact-Fraction, route-classification, multi-part oracle, answer non-disclosure, and contrast-case tests; independent pedagogy re-review plus standards, mathematics, backend, and Muse reviews still required before integration.",
+    "r4_corrective_scope": "R3 independent pedagogy identified missing correct-response state and ambiguous missing-scale direction. R4 checks all six guided evidence fields for CORRECT_NO_REMEDIATION and explicitly asks for output direction, not hidden-scale sign. New code/tests remain author evidence only; independent R4 acceptance is deferred."
+  },
+  "standards": {
+    "jurisdiction": "Maryland",
+    "publisher": "Maryland State Department of Education",
+    "publication": "Maryland Comprehensive Curricular Framework for Mathematics",
+    "publication_version": "Adopted 2025-07-29 for 2026-2027 implementation",
+    "official_landing_url": "https://msde.maryland.gov/academics-0/curriculum-academic-standards/mathematics",
+    "official_grade_7_crosswalk_url": "https://msde.maryland.gov/media/17818",
+    "official_grade_7_companion_url": "https://msde.maryland.gov/media/17819",
+    "candidate_expectation_ids": [
+      "7.NOS.A.2",
+      "7.NOS.A.3"
+    ],
+    "candidate_selection_basis": "Provisional subset of PR #325 composite M7.NS.RAT trace; exact package-to-expectation fit requires independent Standards Mapping review.",
+    "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+    "mapping_approval": "NONE"
+  },
+  "canonical": {
+    "existing_family": "MATH.NS.RATIONAL.OPERATIONS",
+    "reused_generators": [
+      "MATH.RAT.MUL",
+      "MATH.RAT.DIV"
+    ],
+    "canonical_identity_change": false,
+    "canonical_approval": "UNKNOWN_NOT_INDEPENDENTLY_REVIEWED_FOR_THIS_PACKAGE"
+  },
+  "mve": {
+    "reused_helper": "frontend/src/mve/linearExplorer.ts",
+    "reuse_scope": "Exact bounded-rational normalization only; no existing learner experience is claimed.",
+    "experience_implementation": "NOT_IMPLEMENTED",
+    "accessibility_verdict": "PENDING_MUSE"
+  },
+  "pedagogical_evidence": {
+    "references": [
+      "https://github.com/AyalewGM/ai-tutor/pull/328#issuecomment-6102771431",
+      "https://github.com/AyalewGM/ai-tutor/issues/278#issuecomment-6102774171",
+      "https://github.com/AyalewGM/ai-tutor/pull/333#issuecomment-6103672245",
+      "docs/curriculum/drafts/learning-packages-wave2/SEEDABLE_VARIANTS_REVIEW.md"
+    ],
+    "rationale": "Independent review requires authentic phase progression, diagnosis tied to observed response fields, domain-specific accessibility, genuinely unseen operation selection, and concept-level verification; references are evidence constraints, not copied instructional material.",
+    "status": "R3_CHANGES_REQUIRED_R4_REVIEW_DEFERRED"
+  },
+  "coverage": {
+    "mihur_phases": [
+      "OBSERVE",
+      "PREDICT",
+      "MANIPULATE",
+      "EXPLAIN",
+      "PRACTICE",
+      "DIAGNOSE",
+      "TRANSFER",
+      "VERIFY"
+    ],
+    "representation_progression": [
+      "CONCRETE",
+      "VISUAL",
+      "SYMBOLIC"
+    ],
+    "misconception_pathways": "R4_CORRECT_EVIDENCE_AND_OUTPUT_DIRECTION_CONTENT_CONTRACT",
+    "scope_boundary": {
+      "included": [
+        "signed rational multiplication as direction and scale",
+        "signed rational division as a missing scale factor",
+        "inverse verification"
+      ],
+      "excluded": [
+        "signed-integer addition or subtraction",
+        "ratio or double-number-line instruction",
+        "statistics or geometry packages",
+        "production assessment API or scoring changes"
+      ]
+    }
+  },
+  "practice_and_assessment": {
+    "seeded_practice": "DRAFT_GENERATOR_LOCAL_ONLY",
+    "independent_exact_oracle": "MULTI_PART_LOCAL_TESTED_NOT_INDEPENDENTLY_VERIFIED",
+    "unseen_assessment": "RESERVED_NAMESPACE_WITH_OPERATION_INVERSE_STRATEGY_OUTPUT_DIRECTION_MAGNITUDE_RESULT_RECOMPOSITION",
+    "assessment_contrast_cases": [
+      "MISSING_SCALE_INVERT_DIVISOR_NOT_COMPONENTWISE",
+      "NEGATIVE_DIRECTION_WITH_GROWING_MAGNITUDE"
+    ],
+    "server_trusted_scoring": "REQUIRED_NOT_IMPLEMENTED",
+    "hints_in_independent_mode": false,
+    "guided_practice_credit": false,
+    "historical_mastery_affected": false,
+    "guided_success": "CORRECT_NO_REMEDIATION_FULL_FIELD_ONLY_NO_MASTERY_CREDIT"
+  },
+  "approvals": {
+    "standards": "PENDING",
+    "mathematics": "PENDING",
+    "pedagogy": "R3_CHANGES_REQUIRED_R4_REVIEW_DEFERRED",
+    "muse_accessibility_and_assessment": "PENDING",
+    "engineering_integration": "NOT_REQUESTED",
+    "release": "NOT_APPROVED"
+  }
+}

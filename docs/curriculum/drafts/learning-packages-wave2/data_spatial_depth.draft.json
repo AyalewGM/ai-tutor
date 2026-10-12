@@ -1,0 +1,332 @@
+{
+  "schema_version": "0.1.0",
+  "batch": "Wave 2 additive data-and-spatial instructional depth",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+  "canonical_ids": "PROVISIONAL_UNASSIGNED",
+  "assessment_readiness": "DRAFT_NOT_VALIDATED",
+  "mastery_demonstrated": false,
+  "source_evidence": {
+    "mapping_pr": "https://github.com/AyalewGM/ai-tutor/pull/325",
+    "engineering_board": "https://github.com/AyalewGM/ai-tutor/issues/278",
+    "math_review": "https://github.com/AyalewGM/ai-tutor/issues/293",
+    "architecture": "https://github.com/AyalewGM/ai-tutor/issues/282",
+    "note": "Evidence supports partial instructional depth, not missing canonical concepts or verified jurisdiction coverage."
+  },
+  "enrichments": [
+    {
+      "existing_package": "W2-G7-DISTRIBUTIONS-IQR",
+      "concept": "Construct and interpret complete five-bin histograms and compare distributions",
+      "grades": "Grades 6–8 provisional; do not assert Maryland Grade 7 placement",
+      "scope": "20 bounded whole-number observations in bins [0,5),[5,10),[10,15),[15,20),[20,25). Count each observation exactly once, compare modal bin and grouped frequencies.",
+      "prerequisites": [
+        "Read a data table",
+        "Compare whole numbers 0–24",
+        "Count frequency and distinguish observation from frequency"
+      ],
+      "diagnostic": [
+        {
+          "prompt": "Where does a score of exactly 10 belong: 5–9 or 10–14?",
+          "answer": "10–14",
+          "interpretation": "Boundary inclusion"
+        },
+        {
+          "prompt": "Five bars have counts 2,3,4,1,0. How many observations?",
+          "answer": "10",
+          "interpretation": "Frequency conservation"
+        }
+      ],
+      "worked_examples": [
+        {
+          "prompt": "Data 0,4,5,9,10,14,15,19,20,24. Count five bins.",
+          "concrete": "Sort ten score cards and place each in a labeled basket.",
+          "visual": "Build adjacent equal-width bars for 0–4,5–9,10–14,15–19,20–24.",
+          "symbolic": "Each bin has two scores; 2+2+2+2+2=10.",
+          "answer": "2, 2, 2, 2, 2"
+        },
+        {
+          "prompt": "Data 1,2,5,6,7,8,10,11,12,13,14,20. Find modal bin.",
+          "concrete": "Tally each score card once.",
+          "visual": "Five bars have heights 2,4,5,0,1.",
+          "symbolic": "max(2,4,5,0,1)=5 at 10–14.",
+          "answer": "10–14"
+        },
+        {
+          "prompt": "Scores 5,10,15,20. Which bins contain them?",
+          "concrete": "Place cards on interval boundary labels.",
+          "visual": "Each boundary starts its own new bin.",
+          "symbolic": "[5,10),[10,15),[15,20),[20,25).",
+          "answer": "0, 1, 1, 1, 1"
+        },
+        {
+          "prompt": "A scores 1,2,7,11,16,17,22,24; B scores 0,6,10,14,18,20,21,9. Which has more scores at least 15?",
+          "concrete": "Group score cards at 15 and above.",
+          "visual": "Add last two bar heights for each class.",
+          "symbolic": "A=4, B=3; 4>3.",
+          "answer": "A"
+        },
+        {
+          "prompt": "Data 1,1,2,2,3,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20. Verify bar totals.",
+          "concrete": "Tally 20 observations including repeats.",
+          "visual": "Heights 5,4,5,5,1; no missing zero-frequency interval.",
+          "symbolic": "5+4+5+5+1=20.",
+          "answer": "20 observations"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "wrong_idea": "An interval includes both its endpoints",
+          "probe": "Does score 10 go in 5–9?",
+          "hints": [
+            "Write the intervals as whole-number ranges.",
+            "Which interval starts at 10?",
+            "Count 10 exactly once."
+          ],
+          "repair": "Highlight left-closed/right-open bin boundaries and move a boundary card."
+        },
+        {
+          "wrong_idea": "Bar height represents score magnitude, not frequency",
+          "probe": "If 20–24 has one observation, should its bar reach 24?",
+          "hints": [
+            "What does the vertical axis count?",
+            "How many observations lie in that bin?",
+            "Separate bin label from bar height."
+          ],
+          "repair": "Build a tally table beside the histogram."
+        },
+        {
+          "wrong_idea": "Empty bins can be omitted and bar widths changed",
+          "probe": "Should 15–19 disappear when no score occurs there?",
+          "hints": [
+            "What does the horizontal scale represent?",
+            "Would removing a bin shift the next interval?",
+            "Show a zero-height bar position."
+          ],
+          "repair": "Retain all equal-width intervals with an explicit zero frequency."
+        }
+      ],
+      "socratic_hint_policy": "Three progressive prompts during guided practice; no hints in independent assessment.",
+      "guided_practice": [
+        {
+          "prompt": "Bin scores 0,5,10,15,20.",
+          "answer": "1, 1, 1, 1, 1",
+          "scaffold": "Move five cards to labeled bins."
+        },
+        {
+          "prompt": "Which bin is modal if counts are 2,4,7,5,2?",
+          "answer": "10–14",
+          "scaffold": "Identify tallest of five bars."
+        },
+        {
+          "prompt": "Class A has 4 scores in 15–19 and 3 in 20–24; B has 2 and 4. Who has more at least 15?",
+          "answer": "A",
+          "scaffold": "Combine two last-bin counts per class."
+        },
+        {
+          "prompt": "Counts 3,0,5,1,2. How many observations?",
+          "answer": "11",
+          "scaffold": "Add frequencies including zero."
+        }
+      ],
+      "independent_assessment": [
+        {
+          "prompt": "Count bins for scores 0,5,10,15,20.",
+          "answer": "1, 1, 1, 1, 1",
+          "oracle": "Count 0<=x<5,5<=x<10,...,20<=x<25 independently.",
+          "hints_allowed": false
+        },
+        {
+          "prompt": "Data 1,2,3,6,7,11,12,13,14,20. Identify unique modal interval.",
+          "answer": "10–14",
+          "oracle": "Frequencies 3,2,4,0,1; unique max at third interval.",
+          "hints_allowed": false
+        },
+        {
+          "prompt": "A scores 15,16,20,21,0; B scores 15,20,0,1,2. Which class has more scores 15–24?",
+          "answer": "A",
+          "oracle": "A=4, B=2.",
+          "hints_allowed": false
+        }
+      ],
+      "mve_spec": {
+        "scene": "Five adjacent fixed-width bins, raw-data table and tally table",
+        "guided_interactions": [
+          "Keyboard move each observation into one bin",
+          "Synchronize tally and bar height",
+          "Toggle count conservation without revealing target until submitted",
+          "Compare two histograms on same scale"
+        ],
+        "events": [
+          "HISTOGRAM_BIN_ASSIGNED",
+          "FREQUENCY_CONSERVED",
+          "DISTRIBUTIONS_COMPARED"
+        ],
+        "accessibility": [
+          "Announce interval inclusivity and bar count",
+          "Provide sortable data table and textual bar description",
+          "Support keyboard and reduced motion",
+          "Do not rely on color"
+        ],
+        "independent": "No auto-filled bins, bar heights, counts or hints before final submission."
+      }
+    },
+    {
+      "existing_package": "W2-G8-CUBE-NETS",
+      "concept": "Recognize valid and invalid six-square cube nets and reason about exact face area",
+      "grades": "Grades 6–8 provisional; current Maryland placement requires mapping review",
+      "scope": "Six connected congruent squares on a unit grid; 35 free hexominoes partition into 11 cube nets and 24 non-nets; exact rational edge surface area.",
+      "prerequisites": [
+        "Square area and units",
+        "Read grid coordinates",
+        "Identify shared edges and distinguish overlap"
+      ],
+      "diagnostic": [
+        {
+          "prompt": "Does a straight line of six squares form a cube net?",
+          "answer": "no",
+          "interpretation": "Six squares alone are insufficient"
+        },
+        {
+          "prompt": "How many distinct outward faces must a valid net cover?",
+          "answer": "6",
+          "interpretation": "Face identity"
+        }
+      ],
+      "worked_examples": [
+        {
+          "prompt": "Is the six-square net at (0,0),(0,1),(0,2),(1,1),(2,1),(3,1) valid?",
+          "concrete": "Cut and hinge six square cards.",
+          "visual": "Fold the central strip and close two remaining faces.",
+          "symbolic": "Six distinct face normals after 90-degree folds.",
+          "answer": "yes"
+        },
+        {
+          "prompt": "Can six squares in a straight row fold into a cube?",
+          "concrete": "Hinge six squares in a chain.",
+          "visual": "After four side faces, later faces overlap rather than cap opposite ends.",
+          "symbolic": "Repeated outward face normals; fewer than six unique faces.",
+          "answer": "no"
+        },
+        {
+          "prompt": "Can a 2-by-3 solid rectangle of six squares fold into a cube?",
+          "concrete": "Attempt all shared-edge hinges.",
+          "visual": "A folding cycle forces inconsistent orientation or overlap.",
+          "symbolic": "Cannot assign six consistent distinct outward normals.",
+          "answer": "no"
+        },
+        {
+          "prompt": "Is (0,0),(0,1),(0,2),(1,2),(1,3),(1,4) a valid net?",
+          "concrete": "Lay out the six squares as a zigzag strip.",
+          "visual": "Trace each right-angle hinge and mark distinct cube faces.",
+          "symbolic": "Six outward normals are unique and consistent.",
+          "answer": "yes"
+        },
+        {
+          "prompt": "A cube net has square edge 3/2 cm. Find its total face area.",
+          "concrete": "Cover each face with a square of side 3/2 cm.",
+          "visual": "Six faces each have area 9/4 cm².",
+          "symbolic": "6×(3/2)²=54/4=27/2 cm².",
+          "answer": "27/2 cm²"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "wrong_idea": "Any six connected squares are a valid net",
+          "probe": "Is a 2-by-3 rectangle valid?",
+          "hints": [
+            "How many cube faces must be distinct?",
+            "What happens around a cycle of four adjacent squares?",
+            "Check overlap after folding."
+          ],
+          "repair": "Track repeated face directions and collisions."
+        },
+        {
+          "wrong_idea": "Rotation or reflection changes whether a net folds",
+          "probe": "If a valid net is rotated on paper, does it stop being valid?",
+          "hints": [
+            "Does paper orientation change adjacency?",
+            "Do the same hinge relations remain?",
+            "Compare folded faces after turning the page."
+          ],
+          "repair": "Rotate/reflect a shape and preserve face identity."
+        },
+        {
+          "wrong_idea": "Surface area is six times edge length",
+          "probe": "For edge 3/2 cm, is surface area 9 cm²?",
+          "hints": [
+            "What is the area of one square face?",
+            "Square the edge length before multiplying.",
+            "Use square-centimeter units."
+          ],
+          "repair": "Overlay six face-area tiles and annotate cm²."
+        }
+      ],
+      "socratic_hint_policy": "Guided-only three progressive prompts; independent foldability checks never expose collision or orientation hints.",
+      "guided_practice": [
+        {
+          "prompt": "Are six collinear squares a cube net?",
+          "answer": "no",
+          "scaffold": "Fold with collision highlights."
+        },
+        {
+          "prompt": "How many distinct face directions does a valid cube net produce?",
+          "answer": "6",
+          "scaffold": "Label normals of folded faces."
+        },
+        {
+          "prompt": "Cube edge 1/2 m: total surface area?",
+          "answer": "3/2 m²",
+          "scaffold": "Shade six 1/4 m² faces."
+        },
+        {
+          "prompt": "Does rotating a valid cube net 90 degrees change its foldability?",
+          "answer": "no",
+          "scaffold": "Compare identical adjacency graphs."
+        }
+      ],
+      "independent_assessment": [
+        {
+          "prompt": "Is (0,0),(0,1),(0,2),(1,1),(2,1),(3,1) a valid cube net?",
+          "answer": "yes",
+          "oracle": "Six unique face normals under hinge rotations.",
+          "hints_allowed": false
+        },
+        {
+          "prompt": "Can a 2-by-3 rectangle of squares fold into a cube without overlap?",
+          "answer": "no",
+          "oracle": "Inconsistent face orientations in closed grid cycles.",
+          "hints_allowed": false
+        },
+        {
+          "prompt": "A valid cube net has edge 2/3 cm. Find total surface area.",
+          "answer": "8/3 cm²",
+          "oracle": "6×(2/3)²=24/9=8/3.",
+          "hints_allowed": false
+        }
+      ],
+      "mve_spec": {
+        "scene": "2D six-square grid with optional 3D fold preview (content specification only)",
+        "guided_interactions": [
+          "Keyboard select hinge and rotate 90 degrees",
+          "Show collisions and six face normals only in guided mode",
+          "Rotate and reflect entire net preserving connectivity",
+          "Tile faces to visualize rational square area"
+        ],
+        "events": [
+          "CUBE_NET_HINGE_FOLD",
+          "CUBE_NET_FACE_COLLISION",
+          "CUBE_NET_FACE_COUNT"
+        ],
+        "accessibility": [
+          "Describe coordinates and adjacency in text",
+          "Provide keyboard-only hinge sequence and static folding transcript",
+          "Reduced-motion step-through alternative",
+          "Do not rely on color or 3D-only cues"
+        ],
+        "independent": "No 3D fold preview, collisions, normal indicators or area tiles until after submission."
+      }
+    }
+  ]
+}

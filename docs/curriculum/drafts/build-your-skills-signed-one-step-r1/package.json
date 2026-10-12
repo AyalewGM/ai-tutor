@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "ALG-SIGNED-ONE-STEP-R1",
+  "revision": "build-your-skills-signed-one-step-r1",
+  "title": "Signed one-step equations through inverse operations and equality",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "canonical_family": "MATH.EE.EQUATION.ONE",
+  "scope": [
+    "x + a = b with signed integers",
+    "x - a = b with signed integers",
+    "ax = b with signed integers and a nonzero",
+    "x/a = b with signed integers and a nonzero"
+  ],
+  "learning_sequence": [
+    {
+      "phase": "OBSERVE",
+      "representations": ["CONCRETE", "VISUAL"],
+      "learner_action": "Read the two sides as equal quantities and identify the operation attached to the unknown."
+    },
+    {
+      "phase": "PREDICT",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "learner_action": "Predict the inverse operation and the likely sign of the unknown before calculating."
+    },
+    {
+      "phase": "MANIPULATE",
+      "representations": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+      "learner_action": "Apply the same inverse operation, with the same signed operand, to both sides."
+    },
+    {
+      "phase": "EXPLAIN",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "learner_action": "Explain why applying one operation to both equal quantities preserves equality."
+    },
+    {
+      "phase": "PRACTICE",
+      "representations": ["SYMBOLIC"],
+      "learner_action": "Solve seeded addition, subtraction, multiplication and division equations with positive and negative values."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "representations": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+      "learner_action": "Follow an operation-specific Socratic repair, then complete a structurally fresh deterministic exit."
+    },
+    {
+      "phase": "TRANSFER",
+      "representations": ["CONCRETE", "SYMBOLIC"],
+      "learner_action": "Translate a signed change or equal-group statement into a one-step equation and justify its inverse."
+    },
+    {
+      "phase": "VERIFY",
+      "representations": ["SYMBOLIC"],
+      "learner_action": "Solve a hidden independent variant and substitute the exact signed value into the original equation."
+    }
+  ],
+  "diagnostic_paths": [
+    {
+      "misconception": "ADDITION_NOT_UNDONE_BY_SUBTRACTION",
+      "probe": "Which operation returns a changed quantity to its value before addition?",
+      "socratic_questions": ["What was added to the unknown?", "What undoes that addition?", "Where must the same subtraction appear on the other side?"],
+      "fresh_exit": "Different signed addition equation"
+    },
+    {
+      "misconception": "SUBTRACTION_NOT_UNDONE_BY_ADDITION",
+      "probe": "Represent removing a signed amount, then restore it without moving a term.",
+      "socratic_questions": ["What was subtracted from the unknown?", "What restores it?", "How does adding that same signed amount to both sides preserve equality?"],
+      "fresh_exit": "Different signed subtraction equation"
+    },
+    {
+      "misconception": "MULTIPLICATION_NOT_UNDONE_BY_DIVISION",
+      "probe": "Partition both equal quantities into the same signed number of groups.",
+      "socratic_questions": ["What factor is attached to the unknown?", "What operation makes that factor one?", "Why must the right side use the same divisor?"],
+      "fresh_exit": "Different nonzero signed coefficient equation"
+    },
+    {
+      "misconception": "DIVISION_NOT_UNDONE_BY_MULTIPLICATION",
+      "probe": "Recompose equal groups from the quotient relationship.",
+      "socratic_questions": ["What nonzero divisor separates the unknown into groups?", "What rebuilds the whole?", "What signed product verifies the equation?"],
+      "fresh_exit": "Different exact signed quotient equation"
+    },
+    {
+      "misconception": "ONE_SIDE_CHANGED",
+      "probe": "Compare the equality before and after changing only one side.",
+      "socratic_questions": ["What operation was applied on the left?", "Where is its matching operation on the right?", "Are the resulting quantities still equal?"],
+      "fresh_exit": "Different operation with both transformed sides recorded"
+    },
+    {
+      "misconception": "SIGNED_INVERSE_RESULT_ERROR",
+      "probe": "Keep the signed operand visible and evaluate the inverse as a complete expression.",
+      "socratic_questions": ["What is the sign of the operand?", "Are you subtracting a negative or adding a negative?", "Does substitution reproduce the original side?"],
+      "fresh_exit": "Different equation with a negative operand"
+    },
+    {
+      "misconception": "SUBSTITUTION_CHECK_FAILED",
+      "probe": "Replace the variable in the unchanged original equation.",
+      "socratic_questions": ["Which equation is the original one?", "What does its left side equal after substitution?", "Does that exactly match its right side?"],
+      "fresh_exit": "Different equation requiring both substitution totals"
+    }
+  ],
+  "assessment_contract": {
+    "guided_evaluator": "diagnose_guided_response",
+    "guided_practice_credit": false,
+    "independent_namespace": "build-your-skills-signed-one-step-r1:independent",
+    "independent_oracle": "TEACHER_ONLY_EXACT_SUBSTITUTION_EVIDENCE",
+    "independent_backend_scorer": "NOT_IMPLEMENTED",
+    "hints_in_independent": false,
+    "worked_steps_in_independent": false,
+    "historical_mastery_mutation": false
+  },
+  "accessibility_contract": {
+    "keyboard_only": true,
+    "screen_reader": "Announce the original sides, signed inverse operation, transformed sides, solution and substitution comparison.",
+    "nonvisual_equivalent": "Before-operation-after equality table",
+    "reduced_motion": "Discrete states; movement is not required for meaning.",
+    "color_independence": true
+  }
+}
