@@ -18,8 +18,8 @@
     },
     "VA G7": {
       "total": 15,
-      "identity": 12,
-      "unknown": 3
+      "identity": 11,
+      "unknown": 4
     },
     "VA G8": {
       "total": 16,
@@ -48,9 +48,9 @@
     {
       "jurisdiction": "VA",
       "pr": 375,
-      "ref": "main",
+      "ref": "refs/pull/380/head",
       "path": "docs/curriculum/standards/va_grades6_8_2023.expectations.v1.json",
-      "blob_sha": "4ce685178793bc2241614b9a087f8336b8f63b6b"
+      "blob_sha": "155d1953fec9be996954ea6be755c8fe7a47a716"
     },
     {
       "jurisdiction": "DC",
@@ -2073,19 +2073,17 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "INDEPENDENT_SOURCE_REVIEW_PENDING",
       "source_pr": "#375",
-      "source_blob_sha": "4ce685178793bc2241614b9a087f8336b8f63b6b",
-      "local_seed_candidates": [
-        "VA7.PS.PROBABILITY"
-      ],
+      "source_blob_sha": "155d1953fec9be996954ea6be755c8fe7a47a716",
+      "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
-      "coverage_classification": "NEEDS_IDENTITY_DECISION",
-      "classification_reason": "Existing local seed or shared-core topical overlap; atomic equivalence, complete expectation scope and rich instructional depth not established",
+      "coverage_classification": "UNKNOWN",
+      "classification_reason": "PR #380 rejected VA7.PS.PROBABILITY as evidence of histogram/data-cycle equivalence. No validated local mapping; shared canonical coverage requires independent audit.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
-      "priority": "P1_IDENTITY_REVIEW",
-      "lead_owner": "Architecture / Curriculum Identity",
+      "priority": "P1_SOURCE_AND_CORE_AUDIT",
+      "lead_owner": "Standards Mapping / Architecture",
       "review_gates": [
         "Independent Standards",
         "Architecture",
@@ -2095,7 +2093,13 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Resolve source-fidelity and atom/composite equivalence, then inspect learner teaching/assessment evidence"
+      "next_action": "Verify exact VDOE 7.PS.2 subparts and audit shared histogram/data-cycle canonical content; do not reuse rejected VA7.PS.PROBABILITY relation.",
+      "rejected_local_seed_relation": {
+        "seed": "VA7.PS.PROBABILITY",
+        "reason": "Probability/sample-percent seed does not demonstrate histogram/data-cycle expectation",
+        "correction_pr": 380,
+        "correction_source_blob_sha": "155d1953fec9be996954ea6be755c8fe7a47a716"
+      }
     },
     {
       "jurisdiction": "VA",
