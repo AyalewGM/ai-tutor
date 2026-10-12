@@ -20,9 +20,9 @@ The 2023 SOL uses strand-coded expectation identifiers (`{grade}.{strand}.{numbe
 | Grade | NS | CE | MG | PS | PFA | Total | Repository-linked rows | Gaps |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | 6 | 3 | 2 | 4 | 2 | 4 | 15 | 5 | 10 |
-| 7 | 3 | 2 | 4 | 2 | 4 | 15 | 11 | 4 |
+| 7 | 3 | 2 | 4 | 2 | 4 | 15 | 10 | 5 |
 | 8 | 2 | 1 | 5 | 3 | 5 | 16 | 0 | 16 |
-| **Total** | | | | | | **46** | **16** | **30** |
+| **Total** | | | | | | **46** | **15** | **31** |
 
 ## Repository state
 
@@ -75,3 +75,8 @@ Every expectation is classified separately for repository standards mapping, ind
 | 8 | [Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8](https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000) | August 2023; Grade 8, printed page 1 | Standards authority |
 
 The VDOE [2023 instructional-resources page](https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources) remains an **implementation-support reference only**. Every expectation row links to the corresponding official standards document and a grade-specific source ID; no 2016 SOL code or instructional guide is promoted to 2023 authority. Exact item-page locators beyond the grade-section start remain **not independently recorded**. All proposed Mihur mappings remain unaccepted.
+
+
+## Post-merge #375 focused correction — Grade 7 histogram relation (2026-10-12)
+
+The merged source inventory provisionally linked 2023 SOL `7.PS.2` (data cycle with histograms) to `VA7.PS.PROBABILITY`. Direct inspection of `scripts/seed_va_grade7.py` finds a bag-draw probability question and a sample-preference percentage question, **not** a histogram construction/interpretation or complete statistical data-cycle generator. This topical probability link is unsupported as a source-to-skill relation and is removed without altering the seed or creating a new canonical ID. Grade 7 repository-linked expectation rows fall from 11 to 10; the inventory total falls from 16 to 15, while unmatched rows increase from 30 to 31. These are **unverified repository-link counts**, not canonical coverage or mastery percentages. Independently verify the exact 2023 VDOE `7.PS.2` mathematical statement, page and lettered subparts before proposing any replacement mapping. Original merged PR #375 remains unchanged.
