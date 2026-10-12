@@ -8,10 +8,10 @@ Never imported by runtime code. No database, routing, scoring, or mastery writes
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from fractions import Fraction
 from random import Random
-from collections.abc import Mapping
 
 STATUS = "DRAFT_UNVERIFIED"
 RUNTIME_ACTIVATION = False
