@@ -210,3 +210,24 @@ def test_official_pdf_printed_page_and_zero_based_index_are_not_conflated() -> N
         assert locators[expectation_id]['pdf_page_index_zero_based'] == pdf_index
         assert locators[expectation_id]['printed_page_start'] == printed
         assert locators[expectation_id]['page_locator_evidence'] == 'MSDE_OFFICIAL_PDF_PAGE_IMAGE_FOOTER_CONFIRMED'
+
+
+def test_all_grade7_8_printed_pages_match_official_crosswalk_page_locations() -> None:
+    manifest = _manifest()
+    ledger = json.loads((MANIFEST.parent / 'md_grades6_8_2025.source_fidelity_locators.v1.json').read_text(encoding='utf-8'))
+    records = {r['expectation_id']: r for r in ledger['records']}
+    pages = {
+        7: {'NOS': [(1,1),(2,2),(3,3)], 'AT': [(4,4),(4,4),(5,5),(5,5),(5,5),(6,6),(6,6),(6,6),(7,7)], 'GR': [(8,8),(8,8),(9,9),(9,9)], 'DS': [(10,10),(10,10),(11,11),(11,12),(12,12),(12,12)]},
+        8: {'NOS': [(1,1),(1,1),(1,1),(2,2),(2,2)], 'AT': [(3,3),(3,3),(4,4),(4,4),(4,5),(5,5),(5,6),(6,6),(6,6),(6,7),(7,7)], 'GR': [(8,8),(8,8),(8,8),(9,10),(10,10)], 'DS': [(11,11),(11,11),(11,11),(12,12),(12,12),(12,13)]},
+    }
+    for grade, groups in pages.items():
+        for domain, expected_pages in groups.items():
+            rows = [r for r in manifest['expectations'] if r['grade'] == grade and r['domain'] == domain]
+            assert len(rows) == len(expected_pages)
+            for row, (first, last) in zip(rows, expected_pages, strict=True):
+                record = records[row['expectation_id']]
+                assert (row['source_page'], row['source_page_end']) == (first, last)
+                assert (record['printed_page_start'], record['printed_page_end']) == (first, last)
+                assert (row['pdf_page_index_zero_based'], row['pdf_page_end_index_zero_based']) == (first, last)
+                assert record['page_locator_evidence'] == 'OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER'
+                assert record['independent_acceptance'] == 'PENDING'
