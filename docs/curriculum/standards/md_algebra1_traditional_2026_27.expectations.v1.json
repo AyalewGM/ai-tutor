@@ -64,7 +64,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Number and Quantity / N.RN.B",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=1"
     },
     {
       "expectation_id": "N.Q.A.1",
@@ -86,7 +91,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Number and Quantity / N.Q.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=1"
     },
     {
       "expectation_id": "N.Q.A.2",
@@ -108,7 +118,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Number and Quantity / N.Q.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=1"
     },
     {
       "expectation_id": "N.Q.A.3",
@@ -130,7 +145,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Number and Quantity / N.Q.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=1"
     },
     {
       "expectation_id": "A.SSE.A.1",
@@ -152,7 +172,15 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "A.SSE.A.1.a",
+        "A.SSE.A.1.b"
+      ],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.SSE.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=1"
     },
     {
       "expectation_id": "A.SSE.A.2",
@@ -174,7 +202,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.SSE.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=1"
     },
     {
       "expectation_id": "A.SSE.B.3",
@@ -196,7 +229,16 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "A.SSE.B.3.a",
+        "A.SSE.B.3.b",
+        "A.SSE.B.3.c"
+      ],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.SSE.B",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=2"
     },
     {
       "expectation_id": "A.APR.A.1",
@@ -218,7 +260,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.APR.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=2"
     },
     {
       "expectation_id": "A.APR.B.3",
@@ -240,7 +287,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.APR.B",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=2"
     },
     {
       "expectation_id": "A.CED.A.1",
@@ -262,7 +314,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.CED.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=2"
     },
     {
       "expectation_id": "A.CED.A.2",
@@ -284,7 +341,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.CED.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=2"
     },
     {
       "expectation_id": "A.CED.A.3",
@@ -306,7 +368,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.CED.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=2"
     },
     {
       "expectation_id": "A.CED.A.4",
@@ -328,7 +395,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.CED.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=2"
     },
     {
       "expectation_id": "A.REI.A.1",
@@ -350,7 +422,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.REI.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=3"
     },
     {
       "expectation_id": "A.REI.B.3",
@@ -372,7 +449,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.REI.B",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=3"
     },
     {
       "expectation_id": "A.REI.B.4",
@@ -394,7 +476,15 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "A.REI.B.4.a",
+        "A.REI.B.4.b"
+      ],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.REI.B",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=3"
     },
     {
       "expectation_id": "A.REI.C.5",
@@ -416,7 +506,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.REI.C",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=3"
     },
     {
       "expectation_id": "A.REI.C.6",
@@ -438,7 +533,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.REI.C",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=3"
     },
     {
       "expectation_id": "A.REI.D.10",
@@ -460,7 +560,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.REI.D",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=3"
     },
     {
       "expectation_id": "A.REI.D.11",
@@ -482,7 +587,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.REI.D",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=3"
     },
     {
       "expectation_id": "A.REI.D.12",
@@ -504,7 +614,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Algebra / A.REI.D",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=4"
     },
     {
       "expectation_id": "F.IF.A.1",
@@ -526,7 +641,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.IF.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=4"
     },
     {
       "expectation_id": "F.IF.A.2",
@@ -548,7 +668,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.IF.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=4"
     },
     {
       "expectation_id": "F.IF.A.3",
@@ -570,7 +695,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.IF.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=4"
     },
     {
       "expectation_id": "F.IF.B.4",
@@ -592,7 +722,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.IF.B",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=4"
     },
     {
       "expectation_id": "F.IF.B.5",
@@ -614,7 +749,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.IF.B",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=4"
     },
     {
       "expectation_id": "F.IF.B.6",
@@ -636,7 +776,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.IF.B",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=4"
     },
     {
       "expectation_id": "F.IF.C.7",
@@ -658,7 +803,15 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "F.IF.C.7.a",
+        "F.IF.C.7.b"
+      ],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.IF.C",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=5"
     },
     {
       "expectation_id": "F.IF.C.8",
@@ -680,7 +833,14 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "F.IF.C.8.a"
+      ],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.IF.C",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=5"
     },
     {
       "expectation_id": "F.IF.C.9",
@@ -702,7 +862,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.IF.C",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=5"
     },
     {
       "expectation_id": "F.BF.A.1",
@@ -724,7 +889,14 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "F.BF.A.1.a"
+      ],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.BF.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=5"
     },
     {
       "expectation_id": "F.BF.B.3",
@@ -746,7 +918,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.BF.B",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=5"
     },
     {
       "expectation_id": "F.LE.A.1",
@@ -768,7 +945,16 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "F.LE.A.1.a",
+        "F.LE.A.1.b",
+        "F.LE.A.1.c"
+      ],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.LE.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=6"
     },
     {
       "expectation_id": "F.LE.A.2",
@@ -790,7 +976,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.LE.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=6"
     },
     {
       "expectation_id": "F.LE.A.3",
@@ -812,7 +1003,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.LE.A",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=6"
     },
     {
       "expectation_id": "F.LE.B.5",
@@ -834,7 +1030,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Functions / F.LE.B",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=6"
     },
     {
       "expectation_id": "S.ID.B.6",
@@ -856,7 +1057,16 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "S.ID.B.6.a",
+        "S.ID.B.6.b",
+        "S.ID.B.6.c"
+      ],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Statistics / S.ID.B",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=6"
     },
     {
       "expectation_id": "S.ID.C.7",
@@ -878,7 +1088,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Statistics / S.ID.C",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=7"
     },
     {
       "expectation_id": "S.ID.C.8",
@@ -900,7 +1115,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Statistics / S.ID.C",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=7"
     },
     {
       "expectation_id": "S.ID.C.9",
@@ -922,7 +1142,12 @@
       "blockers": [
         "No independently accepted exact-target canonical mapping",
         "No verified generator, practice, assessment, or learner-evidence audit"
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_fidelity_status": "AUTHOR_PARENT_AND_SUBPARTS_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "parent_scope_independently_verified": false,
+      "official_source_section": "Statistics / S.ID.C",
+      "full_scope_source_locator": "https://msde.maryland.gov/media/17798#page=7"
     }
   ]
 }

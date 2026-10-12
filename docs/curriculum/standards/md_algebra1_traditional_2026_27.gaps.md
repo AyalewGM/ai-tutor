@@ -84,3 +84,7 @@ A new versioned [read-only reconciliation manifest](md_algebra1_2026_27.seed_ski
 - **Mathematical Review #293:** independently check exact local skill scopes, official standards requirements, and any proposed atomic decompositions.
 - **Standards Mapping reviewer:** verify source fidelity, 40 parent IDs, 17 lettered subparts, and the 25 candidate rationales. No `EQUIVALENT` claim has been made by this mapping agent.
 - **Muse QA (after acceptance):** inspect actual generators, curated practice, assessment contracts, and historical evidence isolation; a curated item in the seed is not proof of generator availability.
+
+### 40-parent / 17-lettered source-fidelity locator matrix (2026-10-12)
+
+The [official MSDE Algebra I standards, August 2022](https://msde.maryland.gov/media/17798) comprise seven **printed** pages. A new [40-parent source-fidelity locator ledger](md_algebra1_traditional_2026_27.source_fidelity_locators.v1.json) pins each parent expectation to its printed page, category/cluster, original 2022 document, short editorial summary and complete list of explicitly lettered subpart identifiers (17 across 8 parents). Every parent's **unlettered requirements remain independently reviewable**: passing one or all lettered subparts does not automatically establish parent coverage. The [2024 public MCAP items](https://assessments.msde.maryland.gov/public/algebra-i-2024) are assessment research metadata, not standards authority or verified Mihur assessment. No existing canonical IDs or learner evidence are modified; all mappings remain unaccepted.

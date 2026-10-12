@@ -66,3 +66,26 @@ def test_source_provenance_and_fail_closed_status() -> None:
         assert row["classification"]["verified_mastery_evidence"] == (
             "NO_AND_MUST_NOT_BE_INFERRED"
         )
+
+
+def test_traditional_algebra1_source_ledger_includes_all_parent_and_lettered_keys() -> None:
+    data = _load()
+    ledger = json.loads((MANIFEST.parent / 'md_algebra1_traditional_2026_27.source_fidelity_locators.v1.json').read_text(encoding='utf-8'))
+    subparts = json.loads((MANIFEST.parent / 'md_algebra1_2026_27.lettered_subparts.v1.json').read_text(encoding='utf-8'))
+    assert ledger['status'] == 'AUTHOR_SOURCE_LOCATORS_REVIEW_REQUIRED'
+    assert len(ledger['records']) == len(data['expectations']) == 40
+    expected_subparts = {row['normalized_subpart_id'] for row in subparts['subparts']}
+    actual_subparts = set()
+    for row, source in zip(data['expectations'], ledger['records'], strict=True):
+        assert row['expectation_id'] == source['expectation_id']
+        assert row['source_page'] == source['printed_page']
+        assert row['full_scope_source_locator'].endswith('#page=' + str(row['source_page']))
+        assert row['official_subpart_identifiers'] == source['lettered_subpart_ids']
+        assert row['parent_scope_independently_verified'] is False
+        assert source['unlettered_parent_scope_review'] == 'REQUIRED_EVEN_IF_SUBPARTS_ARE_COMPLETE'
+        assert source['independent_acceptance'] == 'PENDING'
+        assert row['proposed_canonical_skill_ids'] == []
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+        actual_subparts.update(source['lettered_subpart_ids'])
+    assert actual_subparts == expected_subparts
+    assert len(actual_subparts) == 17
