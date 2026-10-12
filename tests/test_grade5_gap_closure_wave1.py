@@ -94,6 +94,22 @@ def test_fraction_mul_div_oracles_are_exact_and_structured():
         assert Fraction(o["answer"])>=0
         assert ("scaling_relation" in o) ^ ("measurement_division" in o)
 
+def test_fraction_multiplication_scaling_distinguishes_smaller_equal_larger():
+    seen=set()
+    for seed in range(200):
+        if seed%2!=0:
+            continue
+        v=MODULE.generate("G5-FRAC-MUL-DIV",seed,"independent")
+        o=v.teacher_oracle()
+        relation=o["scaling_relation"]
+        factor=Fraction(o["scale_factor"])
+        seen.add(relation)
+        expected="SMALLER" if factor<1 else "EQUAL" if factor==1 else "LARGER"
+        assert relation==expected
+        assert "larger than, smaller than, or equal to" in v.prompt
+    assert seen=={"SMALLER","EQUAL","LARGER"}
+
+
 def test_measurement_conversion_is_multiplicative():
     for seed in range(30):
         o=MODULE.generate("G5-MEAS-CONVERSION",seed,"guided").teacher_oracle()
