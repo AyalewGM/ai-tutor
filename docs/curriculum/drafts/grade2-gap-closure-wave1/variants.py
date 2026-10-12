@@ -36,7 +36,7 @@ def generate(concept_id:str,seed:int,mode:str)->Variant:
     elif concept_id=="G2-SKIP-PATTERNS":
         start=rng.choice((0,5,10,20,100)); step=rng.choice((5,10,100)); seq=[start+i*step for i in range(6)]
         prompt=f"Start at {start} and skip-count by {step}. Give the next five numbers, explain the pattern, then state one number immediately before the last term."
-        oracle={"sequence":seq,"step":step}
+        oracle={"sequence":seq,"step":step,"previous_term":seq[-2]}
         fields=("sequence","step_explanation","previous_term")
     elif concept_id=="G2-ADDITION":
         a,b=rng.randint(20,79),rng.randint(10,39)
