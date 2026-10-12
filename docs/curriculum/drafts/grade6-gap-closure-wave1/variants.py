@@ -67,7 +67,10 @@ def generate(concept_id:str,seed:int,mode:str)->Variant:
         fields=("equation","inverse_operation","solution","substitution_check","number_line_interpretation")
     elif concept_id=="G6-POLYGON-COORDINATE":
         w=rng.randint(3,8); h=rng.randint(2,7)
-        prompt=f"A rectangle has vertices (0,0),({w},0),({w},{h}),(0,{h}). Find side lengths, perimeter, and area, then explain how coordinate differences produced the lengths."
+        # Guided practice may use the origin; independent transfer is translated
+        # so a same-seed item cannot repeat the learner-visible coordinate task.
+        x0,y0=(0,0) if mode=="guided" else (rng.randint(2,6),rng.randint(2,6))
+        prompt=f"A rectangle has vertices ({x0},{y0}),({x0+w},{y0}),({x0+w},{y0+h}),({x0},{y0+h}). Find side lengths, perimeter, and area, then explain how coordinate differences produced the lengths."
         oracle={"width":w,"height":h,"perimeter":2*(w+h),"area":w*h}
         fields=("side_lengths","perimeter","area","coordinate_reasoning")
     elif concept_id=="G6-NETS-SURFACE":
