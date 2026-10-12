@@ -78,12 +78,14 @@ def generate(concept_id:str,seed:int,mode:str)->Variant:
         if shape=="RECTANGULAR_PRISM":
             l,w,h=rng.randint(2,6),rng.randint(2,5),rng.randint(2,4)
             sa=2*(l*w+l*h+w*h)
-            prompt=f"A rectangular prism has dimensions {l} by {w} by {h}. Describe a valid net and compute exact surface area."
+            phase_label="Guided practice" if mode=="guided" else "Independent transfer"
+            prompt=f"{phase_label}: A rectangular prism has dimensions {l} by {w} by {h}. Describe a valid net and compute exact surface area."
             oracle={"shape":shape,"faces":6,"surface_area":sa}
         else:
             b=rng.randint(2,6); slant=rng.randint(2,6)
             sa=b*b+4*Fraction(b*slant,2)
-            prompt=f"A square pyramid has base side {b} and triangular face height {slant}. Describe a valid net and compute surface area."
+            phase_label="Guided practice" if mode=="guided" else "Independent transfer"
+            prompt=f"{phase_label}: A square pyramid has base side {b} and triangular face height {slant}. Describe a valid net and compute surface area."
             oracle={"shape":shape,"faces":5,"surface_area":_fmt(sa)}
         fields=("net_description","face_count","face_areas","surface_area","volume_vs_surface_explanation")
     elif concept_id=="G6-STAT-DISTRIBUTIONS":
