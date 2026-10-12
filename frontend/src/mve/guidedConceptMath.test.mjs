@@ -73,7 +73,10 @@ test("interactive lessons remain unmounted until a trusted capability and pedago
   assert.match(ui, /if \(props\.independentAssessment !== false\) return null/);
   assert.match(ui, /role="status" aria-live="polite"/);
   assert.match(ui, /type="submit"/);
-  assert.match(ui, /Lock prediction/);\n  assert.match(ui, /Check explanation/);\n  assert.match(ui, /Repair and verify/);\n  assert.match(ui, /Transfer without/);
+  assert.match(ui, /Lock prediction/);
+  assert.match(ui, /Check explanation/);
+  assert.match(ui, /Repair and verify/);
+  assert.match(ui, /Transfer without/);
   assert.match(ui, /ProblemVisual/);
   // No accepted server-owned fraction-equivalence or ratio-partition
   // capability exists. Build flags and mutable display-name regexes are
