@@ -25,15 +25,19 @@
       "The District of Columbia adopted the Common Core State Standards; OSSE publishes DC standards as the CCSS verbatim.",
       "Expectation identifiers follow the canonical CCSS scheme {grade}.{domain}.{cluster}.{number}; the inventory unit is the top-level standard (lettered sub-parts are not enumerated).",
       "Scope summaries are editorial paraphrases of the CCSS statements; reviewers must compare them with official wording before accepting any mapping.",
-      "OSSE adoption was July 2010; implementation began SY 2011-2012 and was complete by SY 2014-2015. The inventory_as_of date is not a standards version or school-year code."
+      "OSSE adoption was July 2010; implementation began SY 2011-2012 and was complete by SY 2014-2015. The inventory_as_of date is not a standards version or school-year code.",
+      "2026-10-12 completeness correction: Grade 8 Geometry includes 8.G.C.9 (volume of cylinders, cones, spheres), omitted from the earlier 80-row draft; authoritative CCSS Grade 8 Geometry domain lists nine standards."
     ],
     "inventory_as_of": "2026-10-12",
-    "adoption_history_authority_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics"
+    "adoption_history_authority_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
+    "source_text_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers (CCSS 2010)",
+    "source_text_host_classification": "THECORESTANDARDS.ORG_IS_UNOFFICIAL_REPUBLICATION; OSSE_ADOPTION_IS_JURISDICTIONAL_AUTHORITY",
+    "license_note": "CCSS text ©2010 NGA/CCSSO; link to official publication/license, do not copy text into student-facing Mihur."
   },
   "reconciliation": {
-    "official_expectation_count": 80,
+    "official_expectation_count": 81,
     "repository_existing_expectation_rows": 28,
-    "unmapped_expectations": 52,
+    "unmapped_expectations": 53,
     "existing_seed_rows_by_grade": {
       "6": 5,
       "7": 5,
@@ -82,7 +86,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/RP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.RP.A.2",
@@ -108,7 +116,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/RP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.RP.A.3",
@@ -135,7 +147,16 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "6.RP.A.3.a",
+        "6.RP.A.3.b",
+        "6.RP.A.3.c",
+        "6.RP.A.3.d"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/RP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.NS.A.1",
@@ -161,7 +182,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.NS.B.2",
@@ -185,7 +210,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.NS.B.3",
@@ -209,7 +238,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.NS.B.4",
@@ -233,7 +266,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.NS.C.5",
@@ -257,7 +294,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.NS.C.6",
@@ -281,7 +322,15 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "6.NS.C.6.a",
+        "6.NS.C.6.b",
+        "6.NS.C.6.c"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.NS.C.7",
@@ -305,7 +354,16 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "6.NS.C.7.a",
+        "6.NS.C.7.b",
+        "6.NS.C.7.c",
+        "6.NS.C.7.d"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.NS.C.8",
@@ -329,7 +387,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.EE.A.1",
@@ -355,7 +417,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.EE.A.2",
@@ -381,7 +447,15 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "6.EE.A.2.a",
+        "6.EE.A.2.b",
+        "6.EE.A.2.c"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.EE.A.3",
@@ -407,7 +481,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.EE.A.4",
@@ -433,7 +511,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.EE.B.5",
@@ -459,7 +541,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.EE.B.6",
@@ -485,7 +571,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.EE.B.7",
@@ -511,7 +601,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.EE.B.8",
@@ -537,7 +631,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.EE.C.9",
@@ -561,7 +659,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.G.A.1",
@@ -585,7 +687,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.G.A.2",
@@ -609,7 +715,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.G.A.3",
@@ -633,7 +743,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.G.A.4",
@@ -657,7 +771,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.SP.A.1",
@@ -681,7 +799,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.SP.A.2",
@@ -705,7 +827,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.SP.A.3",
@@ -729,7 +855,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.SP.B.4",
@@ -753,7 +883,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "6.SP.B.5",
@@ -777,7 +911,16 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "6.SP.B.5.a",
+        "6.SP.B.5.b",
+        "6.SP.B.5.c",
+        "6.SP.B.5.d"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.RP.A.1",
@@ -803,7 +946,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/RP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.RP.A.2",
@@ -829,7 +976,16 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "7.RP.A.2.a",
+        "7.RP.A.2.b",
+        "7.RP.A.2.c",
+        "7.RP.A.2.d"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/RP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.RP.A.3",
@@ -856,7 +1012,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/RP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.NS.A.1",
@@ -882,7 +1042,16 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "7.NS.A.1.a",
+        "7.NS.A.1.b",
+        "7.NS.A.1.c",
+        "7.NS.A.1.d"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.NS.A.2",
@@ -908,7 +1077,16 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "7.NS.A.2.a",
+        "7.NS.A.2.b",
+        "7.NS.A.2.c",
+        "7.NS.A.2.d"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.NS.A.3",
@@ -934,7 +1112,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.EE.A.1",
@@ -958,7 +1140,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.EE.A.2",
@@ -982,7 +1168,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.EE.B.3",
@@ -1008,7 +1198,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.EE.B.4",
@@ -1034,7 +1228,14 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "7.EE.B.4.a",
+        "7.EE.B.4.b"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.G.A.1",
@@ -1058,7 +1259,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.G.A.2",
@@ -1082,7 +1287,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.G.A.3",
@@ -1106,7 +1315,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.G.B.4",
@@ -1130,7 +1343,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.G.B.5",
@@ -1154,7 +1371,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.G.B.6",
@@ -1178,7 +1399,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.SP.A.1",
@@ -1204,7 +1429,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.SP.A.2",
@@ -1230,7 +1459,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.SP.B.3",
@@ -1256,7 +1489,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.SP.B.4",
@@ -1282,7 +1519,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.SP.C.5",
@@ -1308,7 +1549,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.SP.C.6",
@@ -1334,7 +1579,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.SP.C.7",
@@ -1360,7 +1609,14 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "7.SP.C.7.a",
+        "7.SP.C.7.b"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "7.SP.C.8",
@@ -1386,7 +1642,15 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "7.SP.C.8.a",
+        "7.SP.C.8.b",
+        "7.SP.C.8.c"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.NS.A.1",
@@ -1410,7 +1674,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.NS.A.2",
@@ -1434,7 +1702,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.EE.A.1",
@@ -1458,7 +1730,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.EE.A.2",
@@ -1482,7 +1758,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.EE.A.3",
@@ -1506,7 +1786,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.EE.A.4",
@@ -1530,7 +1814,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.EE.B.5",
@@ -1554,7 +1842,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.EE.B.6",
@@ -1578,7 +1870,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.EE.C.7",
@@ -1602,7 +1898,14 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "8.EE.C.7.a",
+        "8.EE.C.7.b"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.EE.C.8",
@@ -1626,7 +1929,15 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "8.EE.C.8.a",
+        "8.EE.C.8.b",
+        "8.EE.C.8.c"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.F.A.1",
@@ -1650,7 +1961,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/F/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.F.A.2",
@@ -1674,7 +1989,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/F/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.F.A.3",
@@ -1698,7 +2017,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/F/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.F.B.4",
@@ -1722,7 +2045,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/F/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.F.B.5",
@@ -1746,7 +2073,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/F/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.G.A.1",
@@ -1770,7 +2101,15 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [
+        "8.G.A.1.a",
+        "8.G.A.1.b",
+        "8.G.A.1.c"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.G.A.2",
@@ -1794,7 +2133,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.G.A.3",
@@ -1818,7 +2161,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.G.A.4",
@@ -1842,7 +2189,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.G.A.5",
@@ -1866,7 +2217,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.G.B.6",
@@ -1890,7 +2245,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.G.B.7",
@@ -1914,7 +2273,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.G.B.8",
@@ -1938,7 +2301,39 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.G.C.9",
+      "grade": 8,
+      "domain": "G",
+      "cluster": "C",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/C/9/",
+      "scope_summary": "Use formulas for the volumes of cones, cylinders, and spheres to solve real-world and mathematical problems.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards review must confirm full 8.G.C.9 scope and its source-to-canonical relation.",
+        "No repository-specific DC Grade 8 geometry seed or accepted mapping exists."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.SP.A.1",
@@ -1962,7 +2357,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.SP.A.2",
@@ -1986,7 +2385,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.SP.A.3",
@@ -2010,7 +2413,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "8.SP.A.4",
@@ -2034,7 +2441,11 @@
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
         "No repository-specific local skill candidate was located for this expectation."
-      ]
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
     }
   ]
 }

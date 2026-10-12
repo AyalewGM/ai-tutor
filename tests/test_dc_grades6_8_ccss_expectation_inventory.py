@@ -38,7 +38,7 @@ EXPECTED_IDS = {
         "NS": {"A": [1, 2]},
         "EE": {"A": [1, 2, 3, 4], "B": [5, 6], "C": [7, 8]},
         "F": {"A": [1, 2, 3], "B": [4, 5]},
-        "G": {"A": [1, 2, 3, 4, 5], "B": [6, 7, 8]},
+        "G": {"A": [1, 2, 3, 4, 5], "B": [6, 7, 8], "C": [9]},
         "SP": {"A": [1, 2, 3, 4]},
     }),
 }
@@ -54,8 +54,8 @@ def test_inventory_pins_official_top_level_identifier_set() -> None:
     identifiers = [row["expectation_id"] for row in rows]
 
     assert manifest["status"] == "DRAFT_PROPOSED_NOT_VERIFIED"
-    assert len(identifiers) == 80
-    assert len(set(identifiers)) == 80
+    assert len(identifiers) == 81
+    assert len(set(identifiers)) == 81
     assert set(identifiers) == EXPECTED_IDS
 
 
@@ -102,7 +102,7 @@ def test_grade8_has_no_repository_rows_at_all() -> None:
     rows = _manifest()["expectations"]
     grade8 = [row for row in rows if row["grade"] == 8]
 
-    assert len(grade8) == 27
+    assert len(grade8) == 28
     assert all(
         row["proposed_mapping_status"] == "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND"
         for row in grade8
@@ -150,9 +150,9 @@ def test_reconciliation_counts_are_internally_consistent() -> None:
         if row["proposed_mapping_status"] == "REPOSITORY_EXISTING_UNVERIFIED"
     )
 
-    assert reconciliation["official_expectation_count"] == len(rows) == 80
+    assert reconciliation["official_expectation_count"] == len(rows) == 81
     assert reconciliation["repository_existing_expectation_rows"] == existing == 28
-    assert reconciliation["unmapped_expectations"] == 80 - existing == 52
+    assert reconciliation["unmapped_expectations"] == 81 - existing == 52
     assert reconciliation["existing_seed_rows_by_grade"] == {
         "6": 5,
         "7": 5,
@@ -171,3 +171,28 @@ def test_dc_standards_provenance_is_reproducible_and_separate_from_inventory_dat
     assert provenance['inventory_as_of'] == provenance['checked_date'] == '2026-10-12'
     assert provenance['adoption_history_authority_url'] == 'https://osse.dc.gov/page/common-core-state-standards-mathematics'
     assert all(row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED' for row in manifest['expectations'])
+
+
+def test_dc_2023_review_detects_missing_grade8_geometry_volume_standard() -> None:
+    manifest = _manifest()
+    row = next(r for r in manifest['expectations'] if r['expectation_id'] == '8.G.C.9')
+    assert row['source_locator'] == 'https://www.thecorestandards.org/Math/Content/8/G/C/9/'
+    assert row['scope_summary'].startswith('Use formulas for the volumes of cones')
+    assert row['classification']['standards_mapped'] == 'NO'
+    assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+    assert len([r for r in manifest['expectations'] if r['grade'] == 8 and r['domain'] == 'G']) == 9
+
+
+def test_dc_source_fidelity_ledger_is_total_and_fail_closed() -> None:
+    evidence = json.loads((MANIFEST.parent / 'dc_grades6_8_ccss.source_fidelity_locators.v1.json').read_text(encoding='utf-8'))
+    manifest = _manifest()
+    assert evidence['status'] == 'AUTHOR_SOURCE_LOCATORS_REVIEW_REQUIRED'
+    assert len(evidence['records']) == len(manifest['expectations']) == 81
+    for row, source in zip(manifest['expectations'], evidence['records'], strict=True):
+        assert row['expectation_id'] == source['expectation_id']
+        assert row['source_locator'] == source['source_text_url']
+        assert row['official_subpart_identifiers'] == source['lettered_subpart_ids']
+        assert row['source_domain_section_url'] == source['source_section_url']
+        assert source['independent_acceptance'] == 'PENDING'
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+    assert next(x for x in evidence['records'] if x['expectation_id'] == '7.SP.C.8')['lettered_subpart_ids'] == ['7.SP.C.8.a','7.SP.C.8.b','7.SP.C.8.c']
