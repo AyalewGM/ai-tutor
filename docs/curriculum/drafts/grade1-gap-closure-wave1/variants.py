@@ -1,6 +1,7 @@
 """Deterministic DRAFT variants for the Grade 1 gap-closure wave."""
 
 from __future__ import annotations
+
 from dataclasses import dataclass
 from random import Random
 
