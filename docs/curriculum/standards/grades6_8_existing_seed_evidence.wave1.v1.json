@@ -1,0 +1,241 @@
+{
+  "schema_version": "1.0.0",
+  "status": "DRAFT_PARTIAL_GRADE6_8_SEED_EVIDENCE_INVENTORY",
+  "date": "2026-10-09",
+  "scope": "Existing local skill seed evidence for Grades 6–8 in selected repository scripts. This does not establish complete grade coverage.",
+  "summary": {
+    "source_scripts": 5,
+    "local_skill_rows": 38,
+    "maryland_grade6_8_local_rows": 28,
+    "dc_grade6_local_rows": 5,
+    "virginia_grade6_local_rows": 5,
+    "official_expectations_source_verified": 0,
+    "accepted_standards_mappings": 0
+  },
+  "entries": [
+    {
+      "path": "scripts/seed_grade6.py",
+      "course": "MCPS_MATH_6",
+      "jurisdiction": "Maryland",
+      "grade": 6,
+      "authority": "MSDE",
+      "authority_url": "https://marylandpublicschools.org/about/Pages/DCAA/Math/revised-standards.aspx",
+      "pattern": "M6",
+      "local_skill_codes": [
+        "M6.RP.RATIO",
+        "M6.RP.UNIT_RATE",
+        "M6.NS.FRACTION",
+        "M6.EE.EXPR",
+        "M6.EE.EQUATION",
+        "M6.SP.STAT",
+        "M6.G.GEO"
+      ],
+      "source_role": "EXISTING_LOCAL_SEED_ONLY_NOT_STANDARDS_CROSSWALK",
+      "source_version": "NOT_VERIFIED_FOR_EACH_SKILL",
+      "official_expectation_ids": [],
+      "accepted_mapping_count": 0,
+      "readiness": {
+        "reviewed_canonical_identity": "NOT_AUDITED",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED"
+      },
+      "limitations": [
+        "A seeded local skill does not establish a source-verified standards expectation or independently approved canonical identity."
+      ]
+    },
+    {
+      "path": "scripts/seed_dc_grade6.py",
+      "course": "DC_MATH_6",
+      "jurisdiction": "District of Columbia",
+      "grade": 6,
+      "authority": "OSSE",
+      "authority_url": "https://osse.dc.gov/node/1210952",
+      "pattern": "DC6",
+      "local_skill_codes": [
+        "DC6.RP.RATIO",
+        "DC6.RP.UNIT_RATE",
+        "DC6.NS.FRACTION",
+        "DC6.EE.EXPR",
+        "DC6.EE.EQUATION"
+      ],
+      "source_role": "EXISTING_LOCAL_SEED_ONLY_NOT_STANDARDS_CROSSWALK",
+      "source_version": "NOT_VERIFIED_FOR_EACH_SKILL",
+      "official_expectation_ids": [],
+      "accepted_mapping_count": 0,
+      "readiness": {
+        "reviewed_canonical_identity": "NOT_AUDITED",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED"
+      },
+      "limitations": [
+        "A seeded local skill does not establish a source-verified standards expectation or independently approved canonical identity."
+      ]
+    },
+    {
+      "path": "scripts/seed_va_grade6.py",
+      "course": "VA_MATH_6",
+      "jurisdiction": "Virginia",
+      "grade": 6,
+      "authority": "VDOE",
+      "authority_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "pattern": "VA6",
+      "local_skill_codes": [
+        "VA6.PFA.RATIO",
+        "VA6.NS.RATIONAL",
+        "VA6.CE.FRACTION",
+        "VA6.PFA.EXPR",
+        "VA6.PFA.EQUATION"
+      ],
+      "source_role": "EXISTING_LOCAL_SEED_ONLY_NOT_STANDARDS_CROSSWALK",
+      "source_version": "NOT_VERIFIED_FOR_EACH_SKILL",
+      "official_expectation_ids": [],
+      "accepted_mapping_count": 0,
+      "readiness": {
+        "reviewed_canonical_identity": "NOT_AUDITED",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED"
+      },
+      "limitations": [
+        "A seeded local skill does not establish a source-verified standards expectation or independently approved canonical identity."
+      ]
+    },
+    {
+      "path": "scripts/seed_grade7.py",
+      "course": "MCPS_MATH_7",
+      "jurisdiction": "Maryland",
+      "grade": 7,
+      "authority": "MSDE",
+      "authority_url": "https://marylandpublicschools.org/about/Pages/DCAA/Math/revised-standards.aspx",
+      "pattern": "M7",
+      "local_skill_codes": [
+        "M7.RP.PROP",
+        "M7.RP.PERCENT",
+        "M7.EE.EXPR",
+        "M7.EE.EQUATION",
+        "M7.RP.PROP.RATE",
+        "M7.RP.PERCENT.OF",
+        "M7.EE.EXPR.DIST",
+        "M7.EE.EXPR.COMBINE",
+        "M7.EE.EQUATION.ONE",
+        "M7.EE.EQUATION.TWO",
+        "M7.G.SOLID",
+        "M7.G.GEO",
+        "M7.SP.PROB",
+        "M7.RP.GRAPH",
+        "M7.NS.RAT"
+      ],
+      "source_role": "EXISTING_LOCAL_SEED_ONLY_NOT_STANDARDS_CROSSWALK",
+      "source_version": "NOT_VERIFIED_FOR_EACH_SKILL",
+      "official_expectation_ids": [],
+      "accepted_mapping_count": 0,
+      "readiness": {
+        "reviewed_canonical_identity": "NOT_AUDITED",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED"
+      },
+      "limitations": [
+        "A seeded local skill does not establish a source-verified standards expectation or independently approved canonical identity."
+      ]
+    },
+    {
+      "path": "scripts/seed_grade8.py",
+      "course": "MCPS_MATH_8",
+      "jurisdiction": "Maryland",
+      "grade": 8,
+      "authority": "MSDE",
+      "authority_url": "https://marylandpublicschools.org/about/Pages/DCAA/Math/revised-standards.aspx",
+      "pattern": "M8",
+      "local_skill_codes": [
+        "M8.G.TRANS",
+        "M8.G.SIM",
+        "M8.SP.STAT",
+        "M8.G.PYTH",
+        "M8.NS.RAD",
+        "M8.F.FN"
+      ],
+      "source_role": "EXISTING_LOCAL_SEED_ONLY_NOT_STANDARDS_CROSSWALK",
+      "source_version": "NOT_VERIFIED_FOR_EACH_SKILL",
+      "official_expectation_ids": [],
+      "accepted_mapping_count": 0,
+      "readiness": {
+        "reviewed_canonical_identity": "NOT_AUDITED",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED"
+      },
+      "limitations": [
+        "This seed extends an existing Grade 8 curriculum; other Grade 8 skills may be seeded in scripts/seed_sprint1.py or other files. Do not claim full Grade 8 inventory."
+      ]
+    }
+  ],
+  "priority_gap_categories": [
+    {
+      "priority": 1,
+      "concept": "Ratio and proportional reasoning",
+      "existing_examples": [
+        "M6.RP.RATIO",
+        "M6.RP.UNIT_RATE",
+        "M7.RP.PROP",
+        "M7.RP.PROP.RATE",
+        "DC6.RP.RATIO",
+        "VA6.PFA.RATIO"
+      ],
+      "evidence_gap": "No grade-by-grade expectation ID or independent atomic mapping in this inventory"
+    },
+    {
+      "priority": 2,
+      "concept": "Signed and rational number arithmetic",
+      "existing_examples": [
+        "M6.NS.FRACTION",
+        "M7.NS.RAT",
+        "VA6.NS.RATIONAL"
+      ],
+      "evidence_gap": "Check signed rational operations, fraction division, representation and contextual prerequisites separately"
+    },
+    {
+      "priority": 3,
+      "concept": "Expressions, equations and inequalities",
+      "existing_examples": [
+        "M6.EE.EXPR",
+        "M6.EE.EQUATION",
+        "M7.EE.EXPR.DIST",
+        "M7.EE.EQUATION.TWO"
+      ],
+      "evidence_gap": "Scope and grade-level requirement decomposition unverified; inequality inventory incomplete"
+    },
+    {
+      "priority": 4,
+      "concept": "Geometry, transformations and Pythagorean reasoning",
+      "existing_examples": [
+        "M6.G.GEO",
+        "M7.G.SOLID",
+        "M8.G.TRANS",
+        "M8.G.SIM",
+        "M8.G.PYTH"
+      ],
+      "evidence_gap": "Local seed does not demonstrate all official geometry requirements or visual/assessment readiness"
+    },
+    {
+      "priority": 5,
+      "concept": "Data, statistics, probability and functions",
+      "existing_examples": [
+        "M6.SP.STAT",
+        "M7.SP.PROB",
+        "M8.SP.STAT",
+        "M8.F.FN"
+      ],
+      "evidence_gap": "Independent modeling, statistical interpretation, and exact-target practice evidence missing"
+    }
+  ],
+  "safety": {
+    "source_identity_not_inferred": true,
+    "grade_level_completeness_not_claimed": true,
+    "accepted_mapping_count": 0,
+    "activation": "FORBIDDEN",
+    "mastery_changes": false
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0",
+  "status": "DRAFT_UNVERIFIED",
+  "package_id": "W1-G4-FRACTION-EQUIVALENCE",
+  "extends_pr": 327,
+  "canonical_family": "MATH.FRAC.EQUIV.FIND",
+  "reuses": "frontend/src/mve/InteractiveFractionBars.tsx",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "implementation_status": "DESIGN_ONLY",
+  "invariant": "same whole, same shaded length",
+  "stages": [
+    {
+      "phase": "OBSERVE",
+      "representation": "CONCRETE",
+      "prompt": "Two equal-length ribbons: one divided into 2 equal segments, the other into 4. Identify the whole before shading."
+    },
+    {
+      "phase": "PREDICT",
+      "representation": "CONCRETE",
+      "prompt": "Predict whether shading 1/2 and 2/4 covers equal length. Save the prediction before manipulating."
+    },
+    {
+      "phase": "MANIPULATE",
+      "representation": "VISUAL",
+      "prompt": "Shade 1/2 and 2/4 on equal-length fraction bars; align endpoints; inspect partition changes."
+    },
+    {
+      "phase": "EXPLAIN",
+      "representation": "SYMBOLIC",
+      "prompt": "Explain why 1/2=(2×1)/(2×2)=2/4; the whole stays fixed while the pieces change."
+    },
+    {
+      "phase": "PRACTICE",
+      "representation": "VISUAL",
+      "prompt": "Investigate 2/3 versus 4/6 with the same fixed whole, recording a reason."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "representation": "CONCRETE",
+      "prompt": "A peer claims 1/2 equals 2/3 by adding 1 to top and bottom. Test their claim."
+    },
+    {
+      "phase": "TRANSFER",
+      "representation": "SYMBOLIC",
+      "prompt": "Two identical routes have 3/6 and 4/8 marked. Explain whether marked lengths agree without a diagram."
+    },
+    {
+      "phase": "VERIFY",
+      "representation": "SYMBOLIC",
+      "prompt": "Separate, novel backend-scored variant; no bar, hint, answer reveal or guided mastery credit."
+    }
+  ],
+  "diagnosis": [
+    {
+      "error": "ADDITIVE_NUM_DEN",
+      "observed": "1/2 equals 2/3 after adding one to each term",
+      "probe": "On equal wholes, are the shaded lengths the same?",
+      "socratic": [
+        "If one half is split into two pieces, how many pieces fill the whole?",
+        "How many equally sized pieces remain shaded?"
+      ],
+      "repair": "Repartition each half, keeping whole fixed.",
+      "unseen_recheck": "Is 2/5 equal to 4/10?"
+    },
+    {
+      "error": "DENOMINATOR_AS_MAGNITUDE",
+      "observed": "1/8 > 1/4 because 8 > 4",
+      "probe": "If a whole is divided into more equal slices, does each become larger?",
+      "socratic": [
+        "Which segment is longer on an equal-length bar?",
+        "Where does one eighth land on a number line relative to one fourth?"
+      ],
+      "repair": "Compare equal reference wholes and their units.",
+      "unseen_recheck": "Is 1/6 smaller than 1/3?"
+    },
+    {
+      "error": "UNEQUAL_WHOLES",
+      "observed": "half a 12cm bar equals half a 20cm bar in physical length",
+      "probe": "Did you hold the whole constant?",
+      "socratic": [
+        "What is the whole in each diagram?",
+        "Would its length affect the shaded half?"
+      ],
+      "repair": "Normalize bar length before any equal-length claim.",
+      "unseen_recheck": "Is half of 12cm physically equal to half of 20cm?"
+    }
+  ],
+  "transfer_oracle_teacher_only": {
+    "left": [
+      3,
+      6
+    ],
+    "right": [
+      4,
+      8
+    ],
+    "equal": true
+  },
+  "accessibility": {
+    "keyboard": true,
+    "screen_reader_equivalent": "Narrate whole lengths, numerator/denominator and partition state",
+    "reduced_motion": true,
+    "assessment_scaffolds": false
+  },
+  "approval": {
+    "math": "PENDING",
+    "standards": "PENDING",
+    "pedagogy": "PENDING",
+    "qa": "PENDING"
+  },
+  "related_prs": [
+    309,
+    303,
+    325,
+    327
+  ]
+}

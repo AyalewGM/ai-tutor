@@ -1,0 +1,192 @@
+{
+  "package_id": "draft-conceptual-depth-transfer-v1",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "runtime_activation": false,
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "mastery_activation": false,
+  "purpose": "Independent transfer assessment prototypes for twelve distinct conceptual structures. No student mastery updates.",
+  "transfers": [
+    {
+      "transfer_id": "concept-transfer-01",
+      "provisional_structure": "fraction-equivalence",
+      "question": "Complete 5/9 = ?/36. What is the missing numerator?",
+      "expected": "20",
+      "required_reasoning": "A fraction's value stays unchanged only if both terms are scaled by the same factor.",
+      "independent_check": "Check 5/9 equals 20/36 after simplification.",
+      "assessment_rubric": [
+        "exact answer with appropriate units",
+        "explain the underlying invariant",
+        "independently verify without copying the training example"
+      ],
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING"
+    },
+    {
+      "transfer_id": "concept-transfer-02",
+      "provisional_structure": "fraction-compare",
+      "question": "Which fraction is larger: 7/10 or 5/8? Answer 1 for first, 2 for second.",
+      "expected": "1",
+      "required_reasoning": "Use equal wholes, not denominator size, to decide which fraction is greater.",
+      "independent_check": "7×8=56 exceeds 5×10=50.",
+      "assessment_rubric": [
+        "exact answer with appropriate units",
+        "explain the underlying invariant",
+        "independently verify without copying the training example"
+      ],
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING"
+    },
+    {
+      "transfer_id": "concept-transfer-03",
+      "provisional_structure": "fraction-unlike-add",
+      "question": "Compute 3/4 + 5/6 as a simplified exact fraction.",
+      "expected": "19/12",
+      "required_reasoning": "Use a common unit before combining fractional parts.",
+      "independent_check": "19/12 - 3/4 = 5/6.",
+      "assessment_rubric": [
+        "exact answer with appropriate units",
+        "explain the underlying invariant",
+        "independently verify without copying the training example"
+      ],
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING"
+    },
+    {
+      "transfer_id": "concept-transfer-04",
+      "provisional_structure": "integer-temperature-change",
+      "question": "The temperature is -9 C and falls by 7 C. What is the new temperature?",
+      "expected": "-16",
+      "required_reasoning": "A drop is a negative displacement from the starting point.",
+      "independent_check": "-16+7=-9.",
+      "assessment_rubric": [
+        "exact answer with appropriate units",
+        "explain the underlying invariant",
+        "independently verify without copying the training example"
+      ],
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING"
+    },
+    {
+      "transfer_id": "concept-transfer-05",
+      "provisional_structure": "integer-subtract-negative",
+      "question": "Evaluate -12 - (-7).",
+      "expected": "-5",
+      "required_reasoning": "Subtracting a negative is addition of its opposite.",
+      "independent_check": "-5+(-7)=-12.",
+      "assessment_rubric": [
+        "exact answer with appropriate units",
+        "explain the underlying invariant",
+        "independently verify without copying the training example"
+      ],
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING"
+    },
+    {
+      "transfer_id": "concept-transfer-06",
+      "provisional_structure": "integer-distance",
+      "question": "Two points lie at -13 and 9. How far apart are they?",
+      "expected": "22",
+      "required_reasoning": "Distance is the absolute difference between signed coordinates.",
+      "independent_check": "13 units to zero plus 9 more =22.",
+      "assessment_rubric": [
+        "exact answer with appropriate units",
+        "explain the underlying invariant",
+        "independently verify without copying the training example"
+      ],
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING"
+    },
+    {
+      "transfer_id": "concept-transfer-07",
+      "provisional_structure": "ratio-recipe-scale",
+      "question": "A recipe uses 7 cups for 4 batches. How many cups for 10 batches? Give an exact fraction.",
+      "expected": "35/2",
+      "required_reasoning": "Keep the cups-per-batch rate invariant.",
+      "independent_check": "(35/2)/10=7/4.",
+      "assessment_rubric": [
+        "exact answer with appropriate units",
+        "explain the underlying invariant",
+        "independently verify without copying the training example"
+      ],
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING"
+    },
+    {
+      "transfer_id": "concept-transfer-08",
+      "provisional_structure": "ratio-partition",
+      "question": "Divide $168 in the ratio 3:5. How many dollars does the first person receive?",
+      "expected": "63",
+      "required_reasoning": "Total ratio parts are 3+5, and each part is equal.",
+      "independent_check": "63+105=168 and 63:105=3:5.",
+      "assessment_rubric": [
+        "exact answer with appropriate units",
+        "explain the underlying invariant",
+        "independently verify without copying the training example"
+      ],
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING"
+    },
+    {
+      "transfer_id": "concept-transfer-09",
+      "provisional_structure": "percent-original-price",
+      "question": "After a 20% discount, a bag costs $96. What was the original price?",
+      "expected": "120",
+      "required_reasoning": "The sale price is 80% of the original, not 100%.",
+      "independent_check": "120×0.8=96.",
+      "assessment_rubric": [
+        "exact answer with appropriate units",
+        "explain the underlying invariant",
+        "independently verify without copying the training example"
+      ],
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING"
+    },
+    {
+      "transfer_id": "concept-transfer-10",
+      "provisional_structure": "algebra-two-sided",
+      "question": "Solve 9x + 5 = 3x + 47.",
+      "expected": "7",
+      "required_reasoning": "Apply inverse operations to both sides of an equation.",
+      "independent_check": "9×7+5=68 and 3×7+47=68.",
+      "assessment_rubric": [
+        "exact answer with appropriate units",
+        "explain the underlying invariant",
+        "independently verify without copying the training example"
+      ],
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING"
+    },
+    {
+      "transfer_id": "concept-transfer-11",
+      "provisional_structure": "algebra-slope",
+      "question": "Find the slope between (-3, 11) and (5, -1). Give an exact fraction.",
+      "expected": "-3/2",
+      "required_reasoning": "Slope is signed rise divided by run.",
+      "independent_check": "Rise -12, run 8, ratio -12/8=-3/2.",
+      "assessment_rubric": [
+        "exact answer with appropriate units",
+        "explain the underlying invariant",
+        "independently verify without copying the training example"
+      ],
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING"
+    },
+    {
+      "transfer_id": "concept-transfer-12",
+      "provisional_structure": "algebra-linear-evaluation",
+      "question": "Given f(x)=7x+11, compute f(9).",
+      "expected": "74",
+      "required_reasoning": "Multiply the input first, then add the constant once.",
+      "independent_check": "7×9+11=74.",
+      "assessment_rubric": [
+        "exact answer with appropriate units",
+        "explain the underlying invariant",
+        "independently verify without copying the training example"
+      ],
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING"
+    }
+  ]
+}

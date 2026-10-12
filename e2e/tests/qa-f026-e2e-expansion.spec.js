@@ -334,11 +334,13 @@ test('photo intake with stub OCR: scan review appears and checked lines flow to 
   await review.getByRole('button', { name: 'Check these steps' }).click();
   const workList = page.getByRole('list', { name: 'Your work' });
   await expect(workList).toContainText(/3x.*12.*30/, { timeout: 15000 });
-  const workText = (await workList.textContent()) || '';
-  const normalized = workText.replace(/\s+/g, '');
-  expect(normalized).toContain('3x+12=30');
-  expect(normalized).toContain('3x=18');
-  await expect(review).toBeHidden();
+  // The checker submits scanned lines sequentially. Wait for the entire batch,
+  // then retry the normalized content checks while React commits the final line.
+  await expect(review).toBeHidden({ timeout: 15000 });
+  await expect.poll(async () => ((await workList.textContent()) || '').replace(/\s+/g, ''),
+    { timeout: 15000 }).toContain('3x+12=30');
+  await expect.poll(async () => ((await workList.textContent()) || '').replace(/\s+/g, ''),
+    { timeout: 15000 }).toContain('3x=18');
 });
 
 /* ------------------------------------------------------------------ */

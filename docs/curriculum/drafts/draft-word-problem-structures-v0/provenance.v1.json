@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "MIHUR_CONTENT_PROVENANCE",
+  "package_id": "draft-word-problem-structures-v0",
+  "revision": "foundations-additive-unseen-generator-v1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "source_heads": {
+    "main": "772c24590ae2f8483fe0fca1e6b5d5fd7cf6a718",
+    "pr_319_merged_head": "dc17f1f751fd919502df5077a63c9f4c952831ad",
+    "pr_325_merged_head": "c1fa26a560ebea022202bace38d51e91ca5d08fa",
+    "pr_327_merged_head": "8c2c69eec4cbaac1d57fd6d5f927e6f519a80ff0",
+    "pr_328_open_head": "5fba2ec16c4df276ed2b3898afbe1f0b317a6165"
+  },
+  "reuse_first_audit": {
+    "existing_work": [
+      "PR #319 supplies 48 fixed structures, item-linked remediation, seeded guided practice and one fixed unseen exit per structure.",
+      "PR #327 supplies reviewed Wave-1 place-value and fraction-equivalence package specifications.",
+      "PR #331 specializes existing addition-unknown and place-value families without adding canonical identities.",
+      "PR #336 deepens the existing fraction-equivalence family with fraction-bar requirements.",
+      "PR #328 remains the active signed-integer and Wave-2 integration lane and is not modified here."
+    ],
+    "actual_gap": "PR #319 independent review explicitly bounded each structure to one authored unseen exit; no deterministic multi-seed unseen assessment generator existed for the eight Grades 2-5 additive relationship structures.",
+    "planned_improvement": "Reuse the eight existing additive structure IDs and add isolated multi-seed unseen candidates with fresh contexts and operands, learner/oracle separation, misconception-specific Socratic routes and substitution evidence.",
+    "verification": "Focused tests independently recompute every answer, compare fresh prompts and operands with both fixed practice and fixed exits, verify all eight structures, validate deterministic diversity and assert learner payload non-disclosure. Independent review remains pending."
+  },
+  "standards": {
+    "jurisdiction": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "official_source_url": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "publication": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "publication_version": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "exact_expectation_ids": [],
+    "mapping_status": "UNKNOWN_NOT_PROPOSED",
+    "mapping_approval": "NONE",
+    "coverage_credit": false
+  },
+  "canonical": {
+    "family": "ADDITIVE_WORD_PROBLEMS_PROVISIONAL_REUSED_FROM_PR_319",
+    "identity_change": false,
+    "approval_status": "UNKNOWN_NOT_CANONICALLY_APPROVED",
+    "new_grade_or_jurisdiction_identity": false
+  },
+  "reused_artifacts": {
+    "packages": [
+      "docs/curriculum/drafts/draft-word-problem-structures-v0/content.draft.json",
+      "docs/curriculum/drafts/draft-word-problem-structures-v0/adaptive_pathways.draft.json",
+      "docs/curriculum/drafts/draft-word-problem-structures-v0/seeded_teaching_depth.draft.json"
+    ],
+    "generators": [
+      "scripts/draft_word_problem_generators.py"
+    ],
+    "mve": [],
+    "mve_reuse_status": "UNKNOWN_NOT_WIRED"
+  },
+  "pedagogical_evidence": {
+    "references": [
+      "https://github.com/AyalewGM/ai-tutor/pull/319",
+      "https://github.com/AyalewGM/ai-tutor/pull/319#issuecomment-6109028102",
+      "https://github.com/AyalewGM/ai-tutor/issues/278"
+    ],
+    "proprietary_material_copied": false,
+    "current_revision_status": "PENDING_INDEPENDENT_REVIEW"
+  },
+  "learning_design": {
+    "mihur_phases": {
+      "OBSERVE": "REUSED_AUTHORED_DRAFT_PR_319",
+      "PREDICT": "REUSED_AUTHORED_DRAFT_PR_319",
+      "MANIPULATE": "REUSED_AUTHORED_DRAFT_PR_319_NOT_IMPLEMENTED_AS_MVE",
+      "EXPLAIN": "REUSED_AUTHORED_DRAFT_PR_319",
+      "PRACTICE": "REUSED_SEEDED_DRAFT_PR_319",
+      "DIAGNOSE": "AUTHORED_DRAFT_SERVER_ONLY_ROUTES",
+      "TRANSFER": "AUTHORED_MULTI_SEED_DRAFT",
+      "VERIFY": "AUTHORED_SUBSTITUTION_EVIDENCE_DRAFT"
+    },
+    "representation_progression": {
+      "CONCRETE": "REUSED_SPECIFICATION_PR_319",
+      "VISUAL": "REUSED_TAPE_DIAGRAM_SPECIFICATION_PR_319",
+      "SYMBOLIC": "REUSED_RELATION_SPECIFICATION_PR_319"
+    },
+    "misconception_pathways": "THREE_STRUCTURE_SPECIFIC_SERVER_ONLY_ROUTES_PER_STRUCTURE_AUTHORED_DRAFT",
+    "accessible_transfer": "TEXT_RESPONSE_CONTRACT_AUTHORED; MUSE_AND_ASSISTIVE_TECH_QA_PENDING"
+  },
+  "practice_and_assessment": {
+    "seeded_practice": "REUSED_LOCAL_DRAFT_GENERATOR_PR_319",
+    "seeded_unseen_assessment": "LOCAL_DRAFT_GENERATOR_ADDED_THIS_REVISION",
+    "independent_oracle": "LOCAL_TEST_ORACLE_SEPARATE_FROM_GENERATOR_NOT_INDEPENDENTLY_REVIEWED",
+    "answer_non_disclosure": "LOCAL_CONTRACT_TESTED",
+    "server_trusted_scoring": "REQUIRED_NOT_IMPLEMENTED",
+    "unseen_assessment_status": "AUTHORED_DRAFT_NOT_RUNTIME_WIRED",
+    "guided_practice_credit": false,
+    "historical_mastery_affected": false
+  },
+  "independent_reviews": {
+    "prior_fixed_practice_mathematics": "APPROVED_BOUNDED_PR_319",
+    "prior_fixed_unseen_exit_mathematics": "APPROVED_BOUNDED_PR_319",
+    "current_generator_mathematics": "PENDING",
+    "current_generator_pedagogy": "PENDING",
+    "standards": "PENDING",
+    "muse_accessibility_and_e2e": "PENDING",
+    "engineering_activation": "NOT_REQUESTED",
+    "release": "NOT_APPROVED"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0.0",
+  "status": "SCOPED_SEED_ABSENCE_VERIFIED_REPOSITORY_WIDE_UNVERIFIED",
+  "source_commit_basis": "main at inspection 2026-10-09",
+  "inspected_paths": [
+    "scripts/seed_grade6.py",
+    "scripts/seed_dc_grade6.py",
+    "scripts/seed_va_grade6.py",
+    "scripts/seed_grade7.py",
+    "scripts/seed_grade8.py"
+  ],
+  "method": "Case-insensitive literal and named-seed scope inspection; absence of strings is not proof of absent semantics or other code paths.",
+  "findings": [
+    {
+      "id": "MD6_STAT_DISTRIBUTIONS",
+      "scope_path": "scripts/seed_grade6.py",
+      "seed_code": "M6.SP.STAT",
+      "existing_scope": "mean, median, mode, range, dot plots, center with outlier",
+      "missing_from_seed_description": [
+        "histogram",
+        "box plot"
+      ],
+      "official_targets": [
+        "6.DS.A.4"
+      ],
+      "classification": "HIGH_CONFIDENCE_SEED_SCOPE_GAP",
+      "repo_wide_missing": false
+    },
+    {
+      "id": "MD6_STAT_VARIABILITY",
+      "scope_path": "scripts/seed_grade6.py",
+      "seed_code": "M6.SP.STAT",
+      "existing_scope": "range and center with outlier",
+      "missing_from_seed_description": [
+        "interquartile",
+        "IQR"
+      ],
+      "official_targets": [
+        "6.DS.B.5"
+      ],
+      "classification": "HIGH_CONFIDENCE_SEED_SCOPE_GAP",
+      "repo_wide_missing": false
+    },
+    {
+      "id": "MD6_GEOM_NETS",
+      "scope_path": "scripts/seed_grade6.py",
+      "seed_code": "M6.G.GEO",
+      "existing_scope": "area of polygons, rectangular prism volume/surface area, coordinate distances",
+      "missing_from_seed_description": [
+        "nets of",
+        "net of"
+      ],
+      "official_targets": [
+        "6.GR.A.4"
+      ],
+      "classification": "HIGH_CONFIDENCE_SEED_SCOPE_GAP",
+      "repo_wide_missing": false
+    },
+    {
+      "id": "MD6_GEOM_VOLUME",
+      "scope_path": "scripts/seed_grade6.py",
+      "seed_code": "M6.G.GEO",
+      "existing_scope": "rectangular prism volume and surface area",
+      "missing_from_seed_description": [
+        "fractional side",
+        "fractional edge"
+      ],
+      "official_targets": [
+        "6.GR.A.2"
+      ],
+      "classification": "SEED_SCOPE_SPECIFICITY_GAP",
+      "repo_wide_missing": false
+    },
+    {
+      "id": "MD7_PERCENT_CONTEXT",
+      "scope_path": "scripts/seed_grade7.py",
+      "seed_code": "M7.RP.PERCENT",
+      "existing_scope": "Use proportional reasoning to solve percent problems",
+      "missing_from_seed_description": [
+        "percent error",
+        "commission",
+        "markdown"
+      ],
+      "official_targets": [
+        "7.AT.A.4"
+      ],
+      "classification": "SEED_SCOPE_SPECIFICITY_GAP",
+      "repo_wide_missing": false
+    }
+  ],
+  "handoff": {
+    "priority_order": [
+      "MD6_STAT_DISTRIBUTIONS",
+      "MD6_STAT_VARIABILITY",
+      "MD6_GEOM_NETS",
+      "MD6_GEOM_VOLUME",
+      "MD7_PERCENT_CONTEXT"
+    ],
+    "review_requirements": [
+      "Inspect all canonical families, generator modules, lesson scripts, explanations and deterministic assessment banks",
+      "Confirm exact Maryland expectation scope and grade placement with independent reviewer",
+      "If content genuinely missing, produce complete worked-example/misconception/assessment/MVE packages in consolidated batch"
+    ],
+    "no_approved_content_authorized": true
+  },
+  "counts": {
+    "scoped_findings": 5,
+    "repo_wide_confirmed_missing": 0
+  },
+  "safety": {
+    "no_runtime_changes": true,
+    "no_mastery_changes": true,
+    "no_accepted_mappings": true
+  }
+}

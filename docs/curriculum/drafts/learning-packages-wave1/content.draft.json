@@ -1,0 +1,942 @@
+{
+  "schema_version": "0.1.0",
+  "batch": "Mihur cross-grade learning depth wave 1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+  "independent_math_review": "PENDING",
+  "qa": "PENDING",
+  "mastery_writes": false,
+  "description": "Five original, non-activated teaching-depth exemplars spanning Grades 1–9. NOT comprehensive curriculum coverage; do not count as mapped, approved or mastered.",
+  "source_context": [
+    "https://github.com/AyalewGM/ai-tutor/pull/325",
+    "https://github.com/AyalewGM/ai-tutor/issues/278",
+    "https://github.com/AyalewGM/ai-tutor/issues/293"
+  ],
+  "packages": [
+    {
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "independent_math_review": "PENDING",
+      "qa": "PENDING",
+      "mastery_writes": false,
+      "id": "W1-G2-PLACE-VALUE-REGROUP",
+      "grades": "Grades 1–3",
+      "title": "Place-value regrouping and comparison",
+      "existing_family_evidence": "Existing elementary number/place-value content; deepen visual-to-symbolic bridge",
+      "objective": "Explain a three-digit number as hundreds, tens and ones, including exchanges without changing value.",
+      "prerequisites": [
+        "count to 100",
+        "unit/tens grouping"
+      ],
+      "diagnostic": [
+        "Show 14 ones; ask for equivalent tens-and-ones representation.",
+        "Ask learner to explain whether exchanging ten ones changes total."
+      ],
+      "lesson_sequence": [
+        "Launch with a familiar concrete situation; elicit an estimate or prediction.",
+        "Represent the structure with a manipulable or visual model and ask learners to describe invariants.",
+        "Connect each part of the model to a precise equation or representation.",
+        "Compare a valid strategy with a plausible misconception and ask for a counterexample.",
+        "Fade scaffolds; require a written explanation and a new-context transfer."
+      ],
+      "worked_examples": [
+        {
+          "question": "Build 243 with base-ten blocks.",
+          "worked_steps": [
+            "Place two hundred-flats, four ten-rods, three unit-cubes.",
+            "Record 200+40+3=243."
+          ],
+          "answer": "243"
+        },
+        {
+          "question": "Exchange one hundred in 352.",
+          "worked_steps": [
+            "Represent 3 hundreds, 5 tens, 2 ones.",
+            "Trade 1 hundred for 10 tens: 2 hundreds, 15 tens, 2 ones."
+          ],
+          "answer": "352"
+        },
+        {
+          "question": "Compare 407 and 470.",
+          "worked_steps": [
+            "Compare hundreds: both 4.",
+            "Compare tens: 0 versus 7, so 407<470."
+          ],
+          "answer": "407<470"
+        },
+        {
+          "question": "What is 6 tens and 14 ones?",
+          "worked_steps": [
+            "Trade 10 ones for 1 ten.",
+            "7 tens and 4 ones = 74."
+          ],
+          "answer": "74"
+        },
+        {
+          "question": "Represent 500 using tens only.",
+          "worked_steps": [
+            "Each hundred is ten tens.",
+            "Five hundreds are fifty tens."
+          ],
+          "answer": "50 tens"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "error": "Digit versus value",
+          "probe": "In 582, does the 8 mean eight or eighty?",
+          "socratic_hints": [
+            "Which place contains the 8?",
+            "How many ones would eight tens make?"
+          ],
+          "remediation": "Build eight rods and count 80 ones."
+        },
+        {
+          "error": "Regrouping changes quantity",
+          "probe": "Is 1 hundred + 12 tens equal to 220?",
+          "socratic_hints": [
+            "Can you exchange a hundred for tens?",
+            "Does an exchange change the total?"
+          ],
+          "remediation": "Show 1 hundred +12 tens = 22 tens =220."
+        },
+        {
+          "error": "Leading-zero confusion",
+          "probe": "Which is larger, 506 or 560?",
+          "socratic_hints": [
+            "Compare hundreds first.",
+            "Then inspect the tens position."
+          ],
+          "remediation": "Model both with blocks and compare tens."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "3 hundreds + 14 tens + 2 ones",
+          "answer": "442",
+          "method": "300+140+2",
+          "assessment_mode": false
+        },
+        {
+          "question": "Which is greater: 609 or 690?",
+          "answer": "690",
+          "method": "Hundreds equal; 9 tens >0 tens",
+          "assessment_mode": false
+        },
+        {
+          "question": "How many tens in 230?",
+          "answer": "23",
+          "method": "230/10",
+          "assessment_mode": false
+        },
+        {
+          "question": "4 hundreds, 0 tens, 17 ones",
+          "answer": "417",
+          "method": "400+17",
+          "assessment_mode": false
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "2 hundreds, 13 tens and 6 ones: write the numeral.",
+          "answer": "336",
+          "oracle_reason": "200+130+6",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        },
+        {
+          "question": "Write 705 as hundreds, tens and ones.",
+          "answer": "7 hundreds, 0 tens, 5 ones",
+          "oracle_reason": "700+0+5",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        },
+        {
+          "question": "Transfer: a school packs 10 pencils per bundle; 340 pencils require how many bundles?",
+          "answer": "34",
+          "oracle_reason": "340/10",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        }
+      ],
+      "interactive_spec": {
+        "scene": "base-ten workspace",
+        "controls": [
+          "drag unit cubes into ten-frame",
+          "exchange ten units for a ten-rod",
+          "exchange ten rods for a hundred-flat"
+        ],
+        "events": [
+          "PLACE_VALUE_EXCHANGE",
+          "PLACE_VALUE_COMPARE"
+        ],
+        "a11y": "keyboard buttons for exchanges, text inventory readout; no visual-only answer",
+        "independent_assessment": "read-only numeric entry; no hint events"
+      },
+      "mastery_gate": {
+        "policy": "PROPOSED_ONLY",
+        "require": "correct reasoning on independent items plus an unseen transfer; thresholds require independent pedagogical review"
+      },
+      "provenance": {
+        "gap_register": "PR #325, DRAFT; independent jurisdictional mapping not asserted",
+        "repo_source": "AyalewGM/ai-tutor"
+      }
+    },
+    {
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "independent_math_review": "PENDING",
+      "qa": "PENDING",
+      "mastery_writes": false,
+      "id": "W1-G4-FRACTION-EQUIVALENCE",
+      "grades": "Grades 3–5",
+      "title": "Equivalent fractions through area and number-line models",
+      "existing_family_evidence": "Existing fraction comparison/equivalence families and draft PR #309; avoid duplicating generator identity",
+      "objective": "Construct and justify equivalent fractions by partitioning the same whole.",
+      "prerequisites": [
+        "equal parts",
+        "unit fractions",
+        "multiplication"
+      ],
+      "diagnostic": [
+        "Present 1/2 and 2/4 on equal-size bars and ask for an explanation.",
+        "Ask whether 2/5 equals 3/6 and why."
+      ],
+      "lesson_sequence": [
+        "Launch with a familiar concrete situation; elicit an estimate or prediction.",
+        "Represent the structure with a manipulable or visual model and ask learners to describe invariants.",
+        "Connect each part of the model to a precise equation or representation.",
+        "Compare a valid strategy with a plausible misconception and ask for a counterexample.",
+        "Fade scaffolds; require a written explanation and a new-context transfer."
+      ],
+      "worked_examples": [
+        {
+          "question": "Show 1/2 and 2/4 with fraction bars.",
+          "worked_steps": [
+            "Split one same-size whole into 2 equal pieces; shade one.",
+            "Split an identical whole into 4 equal pieces; shade two.",
+            "The shaded length is unchanged."
+          ],
+          "answer": "1/2=2/4"
+        },
+        {
+          "question": "Find a fraction equivalent to 3/5 with denominator 10.",
+          "worked_steps": [
+            "Split each fifth into two equal parts.",
+            "Three fifths becomes six tenths."
+          ],
+          "answer": "6/10"
+        },
+        {
+          "question": "Are 2/3 and 3/4 equal?",
+          "worked_steps": [
+            "Compare equal-length bars or cross-products.",
+            "2×4=8 and 3×3=9; they differ."
+          ],
+          "answer": "no"
+        },
+        {
+          "question": "Simplify 8/12.",
+          "worked_steps": [
+            "Group numerator and denominator in groups of 4.",
+            "8÷4=2; 12÷4=3."
+          ],
+          "answer": "2/3"
+        },
+        {
+          "question": "Locate 3/6 on a number line.",
+          "worked_steps": [
+            "Divide 0 to 1 into six equal intervals.",
+            "The third mark is halfway."
+          ],
+          "answer": "1/2"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "error": "Different-sized wholes",
+          "probe": "Is half of a small pizza always equal to half of a large pizza?",
+          "socratic_hints": [
+            "What must be held fixed to compare fractions?",
+            "Does the whole have the same size?"
+          ],
+          "remediation": "Overlay equal-sized wholes before judging equality."
+        },
+        {
+          "error": "Add same amount to numerator and denominator",
+          "probe": "Does 1/2 equal 2/3?",
+          "socratic_hints": [
+            "Sketch both on equal bars.",
+            "What operation preserves the ratio?"
+          ],
+          "remediation": "Use partition multiplication rather than adding one to both parts."
+        },
+        {
+          "error": "Denominator means size of fraction",
+          "probe": "Is 1/8 larger than 1/4 because 8>4?",
+          "socratic_hints": [
+            "Keep the whole fixed.",
+            "Which partition makes smaller pieces?"
+          ],
+          "remediation": "Drag eighths over quarters and compare unit size."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "Complete 2/3 = ?/12",
+          "answer": "8/12",
+          "method": "Multiply both parts by 4",
+          "assessment_mode": false
+        },
+        {
+          "question": "Simplify 9/15",
+          "answer": "3/5",
+          "method": "Divide both by 3",
+          "assessment_mode": false
+        },
+        {
+          "question": "Are 4/6 and 6/9 equivalent?",
+          "answer": "yes",
+          "method": "Both reduce to 2/3",
+          "assessment_mode": false
+        },
+        {
+          "question": "Place 5/10 on 0–1 line",
+          "answer": "1/2",
+          "method": "Five tenths is midpoint",
+          "assessment_mode": false
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "Find missing numerator: 3/4 = ?/20",
+          "answer": "15",
+          "oracle_reason": "Scale by 5",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        },
+        {
+          "question": "Is 5/8 equivalent to 10/16?",
+          "answer": "yes",
+          "oracle_reason": "Scale numerator and denominator by 2",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        },
+        {
+          "question": "Transfer: two identical-length ribbons have 3/6 and 4/8 colored. Are colored lengths equal?",
+          "answer": "yes",
+          "oracle_reason": "Both equal 1/2",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        }
+      ],
+      "interactive_spec": {
+        "scene": "fraction bar and number-line workspace",
+        "controls": [
+          "split equal-length bars",
+          "shade partitions",
+          "align bars",
+          "snap fraction marker to number line"
+        ],
+        "events": [
+          "FRACTION_PARTITION",
+          "FRACTION_COMPARE",
+          "FRACTION_EXPLAIN"
+        ],
+        "a11y": "fraction quantities announced; keyboard partition and shade controls; reduced motion",
+        "independent_assessment": "no fraction-bar scaffold or corrective comparison events"
+      },
+      "mastery_gate": {
+        "policy": "PROPOSED_ONLY",
+        "require": "correct reasoning on independent items plus an unseen transfer; thresholds require independent pedagogical review"
+      },
+      "provenance": {
+        "gap_register": "PR #325, DRAFT; independent jurisdictional mapping not asserted",
+        "repo_source": "AyalewGM/ai-tutor"
+      }
+    },
+    {
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "independent_math_review": "PENDING",
+      "qa": "PENDING",
+      "mastery_writes": false,
+      "id": "W1-G6-FRACTIONAL-PRISM-VOLUME",
+      "grades": "Grades 6–7",
+      "title": "Rectangular-prism volume with fractional dimensions",
+      "existing_family_evidence": "MATH.GEO.VOLUME.PRISM existing integer generator; PR #325 identifies fractional-depth gap",
+      "objective": "Use fractional unit-cube partitions to compute exact volume with cubic units.",
+      "prerequisites": [
+        "fraction multiplication",
+        "area",
+        "cubic units"
+      ],
+      "diagnostic": [
+        "Show a 1×1×1 cube subdivided into halves on each axis and ask how many eighth-cubes fit.",
+        "Ask which unit measures the amount of space in a box."
+      ],
+      "lesson_sequence": [
+        "Launch with a familiar concrete situation; elicit an estimate or prediction.",
+        "Represent the structure with a manipulable or visual model and ask learners to describe invariants.",
+        "Connect each part of the model to a precise equation or representation.",
+        "Compare a valid strategy with a plausible misconception and ask for a counterexample.",
+        "Fade scaffolds; require a written explanation and a new-context transfer."
+      ],
+      "worked_examples": [
+        {
+          "question": "Find volume of 1/2 m by 3 m by 2 m prism.",
+          "worked_steps": [
+            "Base area is 1/2×3=3/2 square metres.",
+            "Multiply by height 2 to obtain 3 cubic metres."
+          ],
+          "answer": "3 m³"
+        },
+        {
+          "question": "Find volume of 3/2 cm by 2/3 cm by 4 cm.",
+          "worked_steps": [
+            "Multiply 3/2×2/3=1 square centimetre.",
+            "Multiply by 4 cm."
+          ],
+          "answer": "4 cm³"
+        },
+        {
+          "question": "Find volume of 1/2 by 1/2 by 1/2 unit cube.",
+          "worked_steps": [
+            "Partition each edge into halves.",
+            "One small block occupies 1 of 8 equal cubes."
+          ],
+          "answer": "1/8 unit³"
+        },
+        {
+          "question": "Find volume of 5/4 m by 2 m by 1/2 m.",
+          "worked_steps": [
+            "Multiply 5/4×2=5/2.",
+            "Multiply by 1/2."
+          ],
+          "answer": "5/4 m³"
+        },
+        {
+          "question": "A box has volume 3/2 m³, width 1/2 m and height 3 m. Find length.",
+          "worked_steps": [
+            "Divide volume by width×height.",
+            "(3/2)÷(3/2)=1."
+          ],
+          "answer": "1 m"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "error": "Area instead of volume",
+          "probe": "Is the volume of a 2×3×4 box 6 cubic units?",
+          "socratic_hints": [
+            "How many layers are stacked?",
+            "What dimension did you omit?"
+          ],
+          "remediation": "Stack four 2×3 arrays."
+        },
+        {
+          "error": "Ignore fractional edge",
+          "probe": "Can a 1/2×2×2 prism hold 8 unit cubes?",
+          "socratic_hints": [
+            "Compare with a 1×2×2 prism.",
+            "How does halving one edge change volume?"
+          ],
+          "remediation": "Partition along fractional edge and count half-cubes."
+        },
+        {
+          "error": "Square units for volume",
+          "probe": "Is 3/2 cm³ the same unit as 3/2 cm²?",
+          "socratic_hints": [
+            "What does each unit measure?",
+            "Count how many spatial dimensions multiply."
+          ],
+          "remediation": "Label length, area and volume models explicitly."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "Volume: 1/2×4×3 cm",
+          "answer": "6 cm³",
+          "method": "(1/2)×4×3",
+          "assessment_mode": false
+        },
+        {
+          "question": "Volume: 2/3×3/4×8 m",
+          "answer": "4 m³",
+          "method": "(2/3)×(3/4)×8",
+          "assessment_mode": false
+        },
+        {
+          "question": "Volume: 3/2×5/3×2 cm",
+          "answer": "5 cm³",
+          "method": "(3/2)×(5/3)×2",
+          "assessment_mode": false
+        },
+        {
+          "question": "A 1/4×2×2 prism volume",
+          "answer": "1 unit³",
+          "method": "(1/4)×2×2",
+          "assessment_mode": false
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "Find volume of 3/4 m × 2/3 m × 6 m.",
+          "answer": "3 m³",
+          "oracle_reason": "3/4×2/3×6=3",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        },
+        {
+          "question": "Find volume of 5/2 cm × 4/5 cm × 3/2 cm.",
+          "answer": "3 cm³",
+          "oracle_reason": "5/2×4/5×3/2=3",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        },
+        {
+          "question": "Transfer: volume 9/4 m³, base 3/2 m². Find height.",
+          "answer": "3/2 m",
+          "oracle_reason": "(9/4)÷(3/2)=3/2",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        }
+      ],
+      "interactive_spec": {
+        "scene": "3D rectangular prism with fractional unit partitions",
+        "controls": [
+          "change rational edge length",
+          "toggle layer slicing",
+          "count fractional cells",
+          "rotate with keyboard alternative"
+        ],
+        "events": [
+          "PRISM_EDGE_PARTITION",
+          "PRISM_LAYER_COUNT",
+          "PRISM_VOLUME_EXPLAIN"
+        ],
+        "a11y": "text dimensions and exact rational volume; static orthographic alternatives; reduced motion",
+        "independent_assessment": "hide cell counts and guided volume labels"
+      },
+      "mastery_gate": {
+        "policy": "PROPOSED_ONLY",
+        "require": "correct reasoning on independent items plus an unseen transfer; thresholds require independent pedagogical review"
+      },
+      "provenance": {
+        "gap_register": "PR #325, DRAFT; independent jurisdictional mapping not asserted",
+        "repo_source": "AyalewGM/ai-tutor"
+      }
+    },
+    {
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "independent_math_review": "PENDING",
+      "qa": "PENDING",
+      "mastery_writes": false,
+      "id": "W1-G7-PERCENT-COMMISSION-ERROR",
+      "grades": "Grades 7–8",
+      "title": "Percent commission, fees, and reference-based percent error",
+      "existing_family_evidence": "MATH.PCT.* discount/tax/markup families exist; PR #325 identifies commission and measured/reference depth",
+      "objective": "Select the correct reference base and calculate commissions, fees and percent error accurately.",
+      "prerequisites": [
+        "percent of quantity",
+        "decimal multiplication",
+        "absolute difference"
+      ],
+      "diagnostic": [
+        "Ask whether a 10% fee on $40 is $4 or $44, and what each represents.",
+        "Ask which denominator to use when comparing measured 9 to reference 10."
+      ],
+      "lesson_sequence": [
+        "Launch with a familiar concrete situation; elicit an estimate or prediction.",
+        "Represent the structure with a manipulable or visual model and ask learners to describe invariants.",
+        "Connect each part of the model to a precise equation or representation.",
+        "Compare a valid strategy with a plausible misconception and ask for a counterexample.",
+        "Fade scaffolds; require a written explanation and a new-context transfer."
+      ],
+      "worked_examples": [
+        {
+          "question": "A salesperson earns 8% of $250 in commission.",
+          "worked_steps": [
+            "Convert 8% to 0.08.",
+            "0.08×250=20."
+          ],
+          "answer": "$20"
+        },
+        {
+          "question": "A $60 ticket has a 5% service fee.",
+          "worked_steps": [
+            "Fee is 0.05×60=3.",
+            "Total is 60+3."
+          ],
+          "answer": "$63"
+        },
+        {
+          "question": "A $120 sale earns a 7.5% commission.",
+          "worked_steps": [
+            "Convert 7.5% to 0.075.",
+            "0.075×120=9."
+          ],
+          "answer": "$9"
+        },
+        {
+          "question": "Measured length 48 cm; reference 50 cm. Find percent error.",
+          "worked_steps": [
+            "Absolute error is |48−50|=2 cm.",
+            "Divide by reference 50 cm, multiply by 100."
+          ],
+          "answer": "4%"
+        },
+        {
+          "question": "Measured mass 2.1 kg; reference 2.0 kg. Find percent error.",
+          "worked_steps": [
+            "Absolute difference is 0.1 kg.",
+            "0.1÷2.0×100=5%."
+          ],
+          "answer": "5%"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "error": "Wrong commission base",
+          "probe": "Does 8% commission on $250 mean 8% of the $20 commission?",
+          "socratic_hints": [
+            "What quantity is named as the sale price?",
+            "Which base does the contract specify?"
+          ],
+          "remediation": "Highlight sale amount and commission rate separately."
+        },
+        {
+          "error": "Percent error divided by measured value",
+          "probe": "Should 48 vs reference 50 use 48 as denominator?",
+          "socratic_hints": [
+            "Which value is the agreed reference?",
+            "What does 'percent of reference' mean?"
+          ],
+          "remediation": "Display measured and reference bars and compare error to reference."
+        },
+        {
+          "error": "Fee confused with total",
+          "probe": "Is 5% of $60 the total ticket price?",
+          "socratic_hints": [
+            "Is the question asking for the fee or total?",
+            "Which quantity must be added?"
+          ],
+          "remediation": "Use receipt with base, fee and total separate."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "Commission 6% of $400",
+          "answer": "$24",
+          "method": "0.06×400",
+          "assessment_mode": false
+        },
+        {
+          "question": "A $80 purchase with 2.5% fee: total",
+          "answer": "$82",
+          "method": "80+0.025×80",
+          "assessment_mode": false
+        },
+        {
+          "question": "Measured 95, reference 100: percent error",
+          "answer": "5%",
+          "method": "|95−100|/100×100",
+          "assessment_mode": false
+        },
+        {
+          "question": "Commission 12% of $75",
+          "answer": "$9",
+          "method": "0.12×75",
+          "assessment_mode": false
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "Find 4.5% commission on $200.",
+          "answer": "$9",
+          "oracle_reason": "0.045×200=9",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        },
+        {
+          "question": "A $160 purchase has a 3% fee; find total.",
+          "answer": "$164.80",
+          "oracle_reason": "160×1.03=164.80",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        },
+        {
+          "question": "Transfer: measured 36 m, reference 40 m; find percent error.",
+          "answer": "10%",
+          "oracle_reason": "|36−40|/40×100=10",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        },
+        {
+          "question": "Three records need different percent reasoning. For each record, choose the mathematical structure, name the reference/base with units, compute the requested result, and explain why that base fits: A) A maker receives 6% of $350 ticket sales; find the amount received. B) A $240 workshop registration adds an administrative charge equal to 2.5% of the pre-charge price; find the final charge. C) A sensor reads 78 °C when a certified reference reads 80 °C; report the discrepancy as a percent of the reference.",
+          "response_fields": [
+            "structure_by_case",
+            "reference_base_by_case",
+            "calculation_by_case",
+            "meaning_and_units_by_case"
+          ],
+          "answer": {
+            "A": {
+              "structure": "PART_OF_BASE",
+              "reference_base": "$350 ticket sales",
+              "calculation": "0.06×350=21",
+              "result": "$21 received"
+            },
+            "B": {
+              "structure": "BASE_PLUS_PERCENT",
+              "reference_base": "$240 pre-charge price",
+              "calculation": "240+0.025×240=246",
+              "result": "$246 final charge"
+            },
+            "C": {
+              "structure": "RELATIVE_DIFFERENCE_TO_REFERENCE",
+              "reference_base": "80 °C certified reference",
+              "calculation": "|78−80|/80×100=2.5",
+              "result": "2.5% of the reference"
+            }
+          },
+          "oracle_reason": "Each case requires a distinct structure and explicitly typed reference: sale amount, pre-charge amount, or certified reference. One correct calculation cannot back-credit the other cases.",
+          "diagnosis_by_error": {
+            "A_BASE_SELECTION": {
+              "socratic_probe": "Which dollar amount does the 6% contract act on before any commission is computed?",
+              "next_activity": "Build a two-row contract table that labels sale dollars as the base and received dollars as the derived part.",
+              "fresh_exit": "A creator receives 7% of $420 sales; identify the base and compute $29.40 received."
+            },
+            "B_FEE_VS_TOTAL": {
+              "socratic_probe": "Which amount exists before the charge, and is the requested quantity the added part or the new total?",
+              "next_activity": "Partition a receipt into pre-charge amount, added charge, and final amount, then write both equations.",
+              "fresh_exit": "A $180 registration adds 4% of the pre-charge price; identify the base, $7.20 charge, and $187.20 total."
+            },
+            "C_REFERENCE_DENOMINATOR": {
+              "socratic_probe": "Which measurement is the agreed standard that defines what one hundred percent means?",
+              "next_activity": "Place measured and reference bars on the same scale; compare the absolute gap with the reference bar, not the measured bar.",
+              "fresh_exit": "A device reads 57 when the reference is 60; identify 60 as the base and compute 5% discrepancy."
+            }
+          },
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        }
+      ],
+      "interactive_spec": {
+        "scene": "editable invoice and measurement reference bar",
+        "controls": [
+          "select base quantity",
+          "adjust percent slider",
+          "separate fee and total",
+          "compare reference and measured values"
+        ],
+        "events": [
+          "PERCENT_BASE_SELECTED",
+          "PERCENT_FEE_COMPUTED",
+          "PERCENT_ERROR_EXPLAIN"
+        ],
+        "a11y": "screen-reader amounts and bases, keyboard percent input, no reliance on color",
+        "independent_assessment": "numeric entry only; no revealed base selection"
+      },
+      "mastery_gate": {
+        "policy": "PROPOSED_ONLY",
+        "require": "separate correct evidence for commission amount, fee-versus-total, and reference-based percent error plus the unseen classify/select/justify transfer; no combined-task back-credit or double credit; thresholds require independent pedagogical review"
+      },
+      "provenance": {
+        "gap_register": "PR #325, DRAFT; independent jurisdictional mapping not asserted",
+        "repo_source": "AyalewGM/ai-tutor"
+      }
+    },
+    {
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "standards_mapping": "PROVISIONAL_NOT_ACCEPTED",
+      "independent_math_review": "PENDING",
+      "qa": "PENDING",
+      "mastery_writes": false,
+      "id": "W1-G9-LINEAR-MODELING",
+      "grades": "Grade 9 / Algebra I",
+      "title": "Linear relationships from tables, graphs and contexts",
+      "existing_family_evidence": "Existing algebra/functions families and draft Grade 9 PR #317; deepen multi-representation modeling",
+      "objective": "Build one contextual linear model through context → table → graph → equation, then justify its physically meaningful domain.",
+      "prerequisites": [
+        "integer/rational operations",
+        "coordinate plane",
+        "variables"
+      ],
+      "diagnostic": [
+        "Compare two tables and identify whether the rate of change is constant.",
+        "Ask which part of a taxi bill is paid even for zero distance."
+      ],
+      "lesson_sequence": [
+        "Launch with a familiar concrete situation; elicit an estimate or prediction.",
+        "Represent the structure with a manipulable or visual model and ask learners to describe invariants.",
+        "Connect each part of the model to a precise equation or representation.",
+        "Compare a valid strategy with a plausible misconception and ask for a counterexample.",
+        "Fade scaffolds; require a written explanation and a new-context transfer."
+      ],
+      "worked_examples": [
+        {
+          "question": "Taxi costs $4 plus $2 per kilometre.",
+          "worked_steps": [
+            "Fixed fee is intercept 4.",
+            "Each kilometre adds 2.",
+            "Let k≥0; C(k)=2k+4."
+          ],
+          "answer": "C(k)=2k+4"
+        },
+        {
+          "question": "Table: x=0,1,2 and y=3,7,11.",
+          "worked_steps": [
+            "Each x increase of 1 adds 4 to y.",
+            "At x=0, y=3.",
+            "Thus y=4x+3."
+          ],
+          "answer": "y=4x+3"
+        },
+        {
+          "question": "A delivery-cost graph contains (1,5) and (3,11), where x is item count and y is dollars. Interpret the model.",
+          "worked_steps": [
+            "The cost rises $6 across 2 additional items, so the rate is $3 per item.",
+            "Using (1,5), the starting charge is 5−3(1)=$2.",
+            "C(n)=3n+2 for whole-number item counts n≥0."
+          ],
+          "answer": "C(n)=3n+2, n a nonnegative whole number"
+        },
+        {
+          "question": "A tank starts at 30 L and drains 5 L/min.",
+          "worked_steps": [
+            "Initial amount is 30.",
+            "Rate is −5 L/min.",
+            "V(t)=30−5t, physically 0≤t≤6."
+          ],
+          "answer": "V(t)=30−5t"
+        },
+        {
+          "question": "A bike rental table shows hours 0,1,2,3 and costs $6,$10,$14,$18. Describe its matching graph and equation.",
+          "worked_steps": [
+            "Successive costs rise by $4, so the graph has slope 4 dollars per hour.",
+            "At 0 hours the cost is $6, so the vertical intercept is 6 dollars.",
+            "The matching graph passes through the table points and C(h)=4h+6 for h≥0."
+          ],
+          "answer": "C(h)=4h+6, graph through the table points, h≥0"
+        }
+      ],
+      "misconception_pathways": [
+        {
+          "error": "Intercept confused with slope",
+          "probe": "In y=3x+7, is 7 the per-unit change?",
+          "socratic_hints": [
+            "What happens when x increases by one?",
+            "What is y when x=0?"
+          ],
+          "remediation": "Build a two-row table to separate initial value and rate."
+        },
+        {
+          "error": "Negative slope interpreted as negative starting quantity",
+          "probe": "Does V(t)=30−5t begin below zero?",
+          "socratic_hints": [
+            "Evaluate t=0.",
+            "Which term controls direction of change?"
+          ],
+          "remediation": "Animate tank with decreasing volume from positive start."
+        },
+        {
+          "error": "Unrestricted physical domain",
+          "probe": "Can the draining tank model be used at t=100 minutes?",
+          "socratic_hints": [
+            "When does the tank reach zero?",
+            "What does negative water volume mean?"
+          ],
+          "remediation": "Graph mathematical line and highlight physically meaningful segment."
+        }
+      ],
+      "guided_practice": [
+        {
+          "question": "A $10 setup fee plus $3 per item: cost for 4 items",
+          "answer": "$22",
+          "method": "10+3×4",
+          "assessment_mode": false
+        },
+        {
+          "question": "A table has x=0,2,4 and y=2,8,14. Give the matching equation and describe its graph.",
+          "answer": "y=3x+2; a line through (0,2),(2,8),(4,14)",
+          "method": "constant change 6/2=3 and initial value 2",
+          "assessment_mode": false
+        },
+        {
+          "question": "For y=−2x+9 find y at x=3",
+          "answer": "3",
+          "method": "−6+9",
+          "assessment_mode": false
+        },
+        {
+          "question": "A 36 L tank drains 4 L/min. State the equation and physical time domain.",
+          "answer": "V(t)=36−4t for 0≤t≤9",
+          "method": "initial value 36, rate −4, and 36−4t reaches zero at t=9",
+          "assessment_mode": false
+        }
+      ],
+      "independent_assessment": [
+        {
+          "question": "A subscription costs $6 plus $4 per month. Write cost after m months.",
+          "answer": "C(m)=4m+6",
+          "oracle_reason": "initial 6 and rate 4",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        },
+        {
+          "question": "A machine starts with 30 L and loses 3 L each minute. Its table lists (0,30),(2,24),(4,18). Choose the matching graph, write the equation, and justify the physical domain.",
+          "response_fields": [
+            "graph_choice",
+            "equation",
+            "table_graph_consistency",
+            "physical_domain",
+            "domain_justification"
+          ],
+          "answer": "the decreasing line through the three table points; V(t)=30−3t; 0≤t≤10",
+          "oracle_reason": "each 2-minute increase changes volume by −6, so rate −3 L/min; intercept 30 L; zero volume occurs at 10 minutes",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        },
+        {
+          "question": "Transfer: a tank holds 48 L and loses 6 L/min. When is it empty?",
+          "answer": "8 minutes",
+          "oracle_reason": "V(t)=48−6t for 0≤t≤8; solving the contextual endpoint 48−6t=0 gives t=8",
+          "feedback_visibility": "AFTER_SUBMISSION",
+          "hint_access": false
+        }
+      ],
+      "interactive_spec": {
+        "scene": "linked table graph and equation with contextual domain",
+        "controls": [
+          "edit slope/intercept",
+          "drag graph point",
+          "observe linked table",
+          "toggle physical domain"
+        ],
+        "events": [
+          "LINEAR_RATE_IDENTIFIED",
+          "LINEAR_INTERCEPT_IDENTIFIED",
+          "LINEAR_DOMAIN_JUSTIFIED"
+        ],
+        "a11y": "tabular equivalent of graph, keyboard point controls, descriptive axis labels",
+        "independent_assessment": "no linked previews; require independent symbolic and contextual reasoning"
+      },
+      "mastery_gate": {
+        "policy": "PROPOSED_ONLY",
+        "require": "one coherent context→table→graph→equation→physical-domain evidence chain plus an unseen transfer; no claim for standalone equation solving or line intersection; thresholds require independent pedagogical review"
+      },
+      "provenance": {
+        "gap_register": "PR #325, DRAFT; reconciled to the narrower math-approved linear-model arc in PR #334 R4 at 8887da16 without creating a new canonical identity; independent jurisdictional mapping not asserted",
+        "repo_source": "AyalewGM/ai-tutor"
+      }
+    }
+  ]
+}

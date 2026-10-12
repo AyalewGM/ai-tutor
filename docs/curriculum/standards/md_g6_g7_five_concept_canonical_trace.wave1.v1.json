@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0.0",
+  "status": "EVIDENCE_BASED_CODE_PATH_TRACE_NOT_PRODUCTION_COVERAGE",
+  "inspected_ref": "main",
+  "authority": "Maryland 2025 Grades 6–8 crosswalks and companion guides",
+  "sources": [
+    "https://msde.maryland.gov/media/17816",
+    "https://msde.maryland.gov/media/17817",
+    "https://msde.maryland.gov/media/17818",
+    "https://msde.maryland.gov/media/17819"
+  ],
+  "scope": "Five suspected gaps in MD Grades 6–7; trace canonical family, generator, explanation/hints, and assessment tests",
+  "findings": [
+    {
+      "id": "MD6_STAT_DISTRIBUTIONS",
+      "verdict": "PARTIALLY_IMPLEMENTED",
+      "canonical": [
+        "MATH.DATA.HISTOGRAM.BIN"
+      ],
+      "generator": "app/domains/advanced_algebra_geometry_data.py",
+      "generator_evidence": "Counts values in one half-open histogram interval; returns two hints and misconception distractor",
+      "explanations": "Inline deterministic hints for bin inclusion; no verified complete histogram lesson",
+      "assessment": "Generator answer/distractor exists; no independently verified end-to-end mastery assessment for histogram shape/construction",
+      "missing_or_insufficient": [
+        "construct full histogram from data",
+        "read and compare multi-bin distributions",
+        "describe shape and contextual interpretation",
+        "construct/interpret box plot (no dedicated family found in inspected canonical domains)"
+      ],
+      "production_action": "EXTEND_EXISTING_STATISTICS_DOMAIN_AND_CREATE_BOX_PLOT_FAMILY_IF_REVIEW_APPROVES",
+      "confidence": "HIGH_FOR_INSPECTED_CANONICAL_PATHS"
+    },
+    {
+      "id": "MD6_STAT_VARIABILITY",
+      "verdict": "IMPLEMENTED_BUT_ALIGNMENT_UNVERIFIED",
+      "canonical": [
+        "MATH.DATA.IQR",
+        "MATH.DATA.FIVE_NUMBER"
+      ],
+      "generator": "app/domains/advanced_algebra_geometry_data.py",
+      "generator_evidence": "Generates sorted eight-value data, calculates quartiles and IQR",
+      "explanations": "Inline hints for quartile halves and IQR = Q3 - Q1",
+      "assessment": "tests/test_canonical_depth_wave2.py has independent numerical quartile oracle for 20 seeds; no independent Maryland 6.DS.B.5 coverage or student mastery validation",
+      "missing_or_insufficient": [
+        "interpret IQR in context and compare spread across distributions",
+        "connect five-number summary to actual box plot and distribution shape"
+      ],
+      "production_action": "DEEPEN_EXISTING_IQR_FAMILY_NOT_DUPLICATE",
+      "confidence": "HIGH_FOR_INSPECTED_CANONICAL_PATHS"
+    },
+    {
+      "id": "MD6_GEOM_NETS",
+      "verdict": "PARTIALLY_IMPLEMENTED",
+      "canonical": [
+        "MATH.GEO.NET.CUBE.SURFACE",
+        "MATH.GEO.SURFACE.PRISM"
+      ],
+      "generator": "app/domains/geometry_reasoning_depth.py",
+      "generator_evidence": "Cube net question asks six-face area; existing rectangular-prism surface area family in app/domains/geometry_measurement.py",
+      "explanations": "Two deterministic cube-face-area hints and an edge-total misconception distractor",
+      "assessment": "Generated numeric answer available; no independently verified net-folding/shape-identification mastery test",
+      "missing_or_insufficient": [
+        "identify valid versus invalid cube/prism nets",
+        "fold/unfold rectangular prisms and pyramids",
+        "link net face layout to surface area and spatial visualization"
+      ],
+      "production_action": "EXTEND_NET_FAMILY_WITH_SPATIAL_REASONING_AND_MVE",
+      "confidence": "HIGH_FOR_INSPECTED_CANONICAL_PATHS"
+    },
+    {
+      "id": "MD6_GEOM_VOLUME",
+      "verdict": "PARTIALLY_IMPLEMENTED",
+      "canonical": [
+        "MATH.GEO.VOLUME.PRISM"
+      ],
+      "generator": "app/domains/geometry_measurement.py",
+      "generator_evidence": "Rectangular prism generator samples three integer dimensions via rng.randint(2,9)",
+      "explanations": "Inline hints multiply length width height; dimension-omission distractor; basic volume model metadata",
+      "assessment": "Deterministic integer volume question/answer exists; fractional-edge independent assessment not verified",
+      "missing_or_insufficient": [
+        "fractional side-length prisms",
+        "unit-cube packing or fractional partition models",
+        "fractional multiplication reasoning and contextual units"
+      ],
+      "production_action": "EXTEND_PRISM_VOLUME_WITH_RATIONAL_DIMENSIONS_AND_EXPLANATIONS",
+      "confidence": "HIGH_FOR_INSPECTED_CANONICAL_PATHS"
+    },
+    {
+      "id": "MD7_PERCENT_CONTEXT",
+      "verdict": "PARTIALLY_IMPLEMENTED",
+      "canonical": [
+        "MATH.PCT.DISCOUNT",
+        "MATH.PCT.MARKUP",
+        "MATH.PCT.TAX",
+        "MATH.PCT.TIP",
+        "MATH.PCT.INCREASE",
+        "MATH.PCT.DECREASE",
+        "MATH.PCT.ERROR.BASE"
+      ],
+      "generator": "app/domains/percent.py",
+      "generator_evidence": "Dedicated deterministic percent application generators with Decimal money arithmetic; ERROR.BASE analyzes incorrect base in percent change",
+      "explanations": "Inline hints and misconception distractors; scripts/seed_learn_content.py includes worked discount and tax examples",
+      "assessment": "Deterministic canonical answers available; no independent assessment covering all 7.AT.A.4 subcontexts confirmed",
+      "missing_or_insufficient": [
+        "commission-based pay and fees (no dedicated family in inspected percent domain)",
+        "percent error versus measured/reference value (distinct from wrong-base error analysis)",
+        "multi-context coverage proof for current Maryland expectation"
+      ],
+      "production_action": "EXTEND_PERCENT_APPLICATIONS_ONLY_FOR_UNCOVERED_CONTEXTS",
+      "confidence": "HIGH_FOR_INSPECTED_CANONICAL_PATHS"
+    }
+  ],
+  "summary": {
+    "findings": 5,
+    "confirmed_absent_concepts": 0,
+    "partially_implemented": 4,
+    "implemented_alignment_unverified": 1
+  },
+  "review_gates": {
+    "math_review": "PENDING",
+    "standards_mapping": "PROVISIONAL",
+    "content_production": "CANDIDATE_REQUIREMENTS_NOT_APPROVED",
+    "qa": "PENDING",
+    "release": "NOT_AUTHORIZED"
+  },
+  "safety": {
+    "historical_mastery_unchanged": true,
+    "canonical_identifiers_unchanged": true,
+    "student_data_unchanged": true
+  }
+}

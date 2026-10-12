@@ -1,3 +1,12 @@
+import { InteractiveDotPlotExplorer } from "../mve/InteractiveDotPlotExplorer";
+import { showDotPlotExploration } from "../mve/dotPlotExplorer";
+import { InteractivePolynomialDivision } from "../mve/InteractivePolynomialDivision";
+import { showPolynomialDivisionExploration } from "../mve/polynomialDivision";
+import { InteractiveEquationBalance } from "../mve/InteractiveEquationBalance";
+import { showBalanceExploration } from "../mve/equationBalance";
+import { InteractiveEquationEquivalence } from "../mve/InteractiveEquationEquivalence";
+import { InteractiveLinearExplorer } from "../mve/InteractiveLinearExplorer";
+import { showLinearExploration } from "../mve/linearExplorer";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BookOpen, CheckCircle2, ChevronDown, Flag, Lightbulb, Map as MapIcon, HelpCircle, RefreshCcw, Target, Undo2 } from "lucide-react";
@@ -9,7 +18,15 @@ import VoiceChatControls from "../components/chat/VoiceChatControls";
 import MathText from "../components/MathText";
 import ChatMessage from "../components/chat/ChatMessage";
 import LearnPanel from "../components/LearnPanel";
+import {
+  equationEquivalenceEligible,
+  equationEquivalenceExampleIndex,
+  integerAdditionEligible,
+} from "../learningFlowInteractions";
 import { GuidedDistributivePractice } from "../mve/GuidedDistributivePractice";
+import { integerSeedFromString } from "../mve/integerPractice";
+import { InteractiveFractionBars, fractionComparisonTarget } from "../mve/InteractiveFractionBars";
+import { InteractiveFractionAddition } from "../mve/InteractiveFractionAddition";
 import LevelCrest from "../components/LevelCrest";
 import MathKeypad from "../components/MathKeypad";
 import ScratchPad from "../components/ScratchPad";
@@ -180,6 +197,15 @@ export default function Workspace() {
 
   const activeSkillId = workspace?.focus.active_skill_id;
   const learn = workspace?.focus.learn ?? null;
+  const equationEquivalenceEnabled = equationEquivalenceEligible(
+    workspace?.state ?? "",
+    workspace ? {
+      curriculumName: workspace.curriculum.name,
+      jurisdiction: workspace.curriculum.jurisdiction,
+      skillName: workspace.focus.skill_name,
+    } : null,
+    import.meta.env.VITE_ENABLE_DRAFT_MTH1W_EQUATION_FLOW === "true",
+  );
   useEffect(() => {
     setLearnOpen(Boolean(workspace?.focus.in_remediation && learn));
   }, [activeSkillId]);
@@ -730,7 +756,7 @@ export default function Workspace() {
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {learn && (
+                  {learn && (workspace.state === "GUIDED_PRACTICE" || workspace.state === "REMEDIATION") && (
                     <div className="rounded-lg border border-accent/50 bg-accent/5">
                       <button
                         type="button"
@@ -749,7 +775,21 @@ export default function Workspace() {
                       </button>
                       {learnOpen && (
                         <div className="border-t border-accent/30 px-4 py-3">
-                          <LearnPanel learn={learn} />
+                          <LearnPanel
+                            learn={learn}
+                            integerPracticeSeed={
+                              integerAdditionEligible(workspace.state, learn)
+                                ? integerSeedFromString(
+                                    workspace.problem?.id ??
+                                      workspace.focus.active_skill_id,
+                                  )
+                                : undefined
+                            }
+                            independentAssessment={
+                              workspace.state !== "GUIDED_PRACTICE" &&
+                              workspace.state !== "REMEDIATION"
+                            }
+                          />
                         </div>
                       )}
                     </div>
@@ -761,6 +801,42 @@ export default function Workspace() {
                         independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
                       />
                     )}
+                  {showLinearExploration(workspace.state, workspace.focus.skill_name) && (
+                    <InteractiveLinearExplorer
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
+                  {showBalanceExploration(workspace.state, workspace.focus.skill_name) && (
+                    <InteractiveEquationBalance
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
+                  {equationEquivalenceEnabled && (
+                    <InteractiveEquationEquivalence
+                      key={`equation-equivalence-${workspace.problem?.id ?? workspace.focus.active_skill_id}`}
+                      exampleIndex={equationEquivalenceExampleIndex(
+                        workspace.problem?.id ?? workspace.focus.active_skill_id,
+                        workspace.focus.skill_name,
+                      )}
+                      independentAssessment={false}
+                    />
+                  )}
+                  {showDotPlotExploration(workspace.state, workspace.focus.skill_name) && (
+                    <InteractiveDotPlotExplorer
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
+                  {/* Default off until LearnerWorkspace exposes an approved server-owned capability. */}
+                  {/* Probability-tree route remains disabled until an approved server-owned capability is available. */}
+                  {showPolynomialDivisionExploration(workspace.state, undefined) && (
+                    <InteractivePolynomialDivision
+                      key={workspace.focus.active_skill_id}
+                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
+                    />
+                  )}
                   <div className="problem-wrap">
                     <div className={`problem ${feedback}`} aria-live="polite">
                       <MathText
@@ -771,6 +847,37 @@ export default function Workspace() {
                       />
                     </div>
                     <ProblemVisual spec={workspace.problem?.visual ?? null} />
+                    {(workspace.state === "GUIDED_PRACTICE" ||
+                      workspace.state === "REMEDIATION") &&
+                      workspace.problem?.visual?.type === "fraction_bar" && (
+                        <InteractiveFractionBars
+                          key={workspace.problem.id}
+                          independentAssessment={
+                            workspace.state !== "GUIDED_PRACTICE" &&
+                            workspace.state !== "REMEDIATION"
+                          }
+                          denominator={workspace.problem.visual.denominator}
+                          initialNumerator={workspace.problem.visual.numerator}
+                          compareWith={
+                            fractionComparisonTarget(workspace.problem.visual) ??
+                            undefined
+                          }
+                        />
+                      )}
+                    {(workspace.state === "GUIDED_PRACTICE" ||
+                      workspace.state === "REMEDIATION") &&
+                      workspace.problem?.visual?.type === "fraction_operation" &&
+                      workspace.problem.visual.operation === "+" && (
+                        <InteractiveFractionAddition
+                          key={workspace.problem.id}
+                          independentAssessment={
+                            workspace.state !== "GUIDED_PRACTICE" &&
+                            workspace.state !== "REMEDIATION"
+                          }
+                          first={workspace.problem.visual.first}
+                          second={workspace.problem.visual.second}
+                        />
+                      )}
                     <ScratchPad />
                     {feedback === "correct" && <ConfettiBurst trigger={celebrate} />}
                   </div>

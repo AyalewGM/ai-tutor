@@ -1,0 +1,361 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "G7-INEQUALITY-REASONING-V1",
+  "grade_focus": "Ontario Grade 7 / reusable middle grades",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "claim_scope": "Deep draft learning package; no production generator registration, canonical migration, learner routing, score endpoint, independently verified or deployed lesson.",
+  "canonical_reuse": {
+    "existing_local_grade7_code": "M7.EE.EQUATION",
+    "existing_seed": "scripts/seed_grade7.py",
+    "candidate_canonical_reference": "MATH.EE.EQUATION (broad local existing grouping; NOT independently established as an atomic inequality skill)",
+    "mapping_authority": "STANDARDS_AND_ARCHITECTURE_REVIEW_REQUIRED",
+    "new_code_created": false
+  },
+  "standards_candidate": {
+    "jurisdiction": "Ontario",
+    "grade": 7,
+    "document": "Mathematics 2020 Grades 1–8, January 2021 corrected version",
+    "strand": "C2 Equations and Inequalities",
+    "specific_expectation_candidate": "C2.4",
+    "description_paraphrase": "Solve and graph multi-term inequalities with whole numbers, and verify the solutions.",
+    "status": "SOURCE_LINKED_CANDIDATE_NOT_INDEPENDENTLY_MAPPED"
+  },
+  "student_outcome": "Explain and test the complete set of feasible solutions to a two-sided whole-number inequality rather than finding just one boundary value.",
+  "prerequisites": [
+    "Compare integers on a number line",
+    "Combine same-variable terms",
+    "Operations applied to both sides preserve solution sets",
+    "Evaluate expressions by substitution",
+    "Interpret whole-number counts"
+  ],
+  "teaching_flow": [
+    {
+      "phase": "OBSERVE",
+      "representations": "CONCRETE",
+      "teaching": "Compare two original pass plans as fee tiles and repeated visit tiles. Notice that both totals depend on the SAME visit count; do not compute the crossing point yet.",
+      "learner_evidence": "Identify which fixed fee and per-visit quantities belong to Plan A and B; name the comparison phrase."
+    },
+    {
+      "phase": "PREDICT",
+      "representations": "CONCRETE_TO_VISUAL",
+      "teaching": "Predict which plan becomes more expensive when visit counts rise. State whether the valid counts should lie to the left or right of a boundary, then commit the prediction.",
+      "learner_evidence": "Give direction and evidence based on both rates, not a guessed sign."
+    },
+    {
+      "phase": "MANIPULATE",
+      "representations": "VISUAL_TO_SYMBOLIC",
+      "teaching": "On an inequality balance, subtract an equal bundle of x tiles from each side, then equal fixed tiles; keep the inequality's truth set unchanged. When dividing by a negative coefficient, reverse the comparison and explain with a counterexample.",
+      "learner_evidence": "Record the operation on EACH side, the intermediate inequality and a witness that still satisfies it."
+    },
+    {
+      "phase": "EXPLAIN",
+      "representations": "SYMBOLIC",
+      "teaching": "Explain why x=5 can satisfy x≤5 but cannot satisfy x<5; give a true and false substitution in the ORIGINAL inequality. For negative division, compare -3> -6 with 1<2 to explain reversal.",
+      "learner_evidence": "Explain the boundary, direction, endpoint inclusivity and domain, not only the result."
+    },
+    {
+      "phase": "PRACTICE",
+      "representations": "CONCRETE_VISUAL_SYMBOLIC",
+      "teaching": "Use the deterministic guided family: original two-sided forms with both signs of coefficient difference, both strictnesses, and contextual vs symbolic tasks. Fade linked model, then hints, then labels after evidence-supported successes.",
+      "learner_evidence": "Answer boundary, relation, number-line graph, valid/invalid test, both-side equivalence and written explanation."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "representations": "VISUAL_TO_SYMBOLIC",
+      "teaching": "Classify observed responses against ordered misconception signatures. Ask targeted questions and use different fresh seeds after repair; unclassified/partial responses do not count as understood.",
+      "learner_evidence": "Repair must contain a new witness/counterexample and an independently explained boundary."
+    },
+    {
+      "phase": "TRANSFER",
+      "representations": "CONCRETE_TO_SYMBOLIC",
+      "teaching": "Present an unseen activity-pass context with two cost rules and a verbal comparison. The learner must choose x as nonnegative whole-number visits, model both sides, solve, graph and justify feasible counts.",
+      "learner_evidence": "Do not give a prebuilt inequality. Ask whether the threshold itself qualifies and why."
+    },
+    {
+      "phase": "VERIFY",
+      "representations": "SYMBOLIC_AND_REPRESENTATION",
+      "teaching": "Use a disjoint independent variant namespace and hidden deterministic answer oracle. Require a new contextual model, boundary, graph, witness and counterexample, and reviewed reasoning; without an approved server assessor, this is a DRAFT specification only.",
+      "learner_evidence": "Never expose expected values, hints, parameters or classifications to independent clients. No guided work can award mastery."
+    }
+  ],
+  "worked_models": [
+    {
+      "label": "A: collect x terms; inclusive endpoint",
+      "problem": "5x+4 ≤ 2x+19, x a nonnegative whole number",
+      "steps": [
+        "Subtract 2x from BOTH sides: 3x+4≤19.",
+        "Subtract 4 from BOTH sides: 3x≤15.",
+        "Divide by positive 3: x≤5. CLOSED dot at 5, shade left in the nonnegative integer domain.",
+        "Witness x=4: 24≤27 true. Counterexample x=6: 34≤31 false."
+      ],
+      "boundary": 5,
+      "relation": "<=",
+      "witness": 4,
+      "counterexample": 6
+    },
+    {
+      "label": "B: negative coefficient difference; strict endpoint",
+      "problem": "2x+22 > 5x+7, x a nonnegative whole number",
+      "steps": [
+        "Subtract 5x from BOTH sides: -3x+22>7.",
+        "Subtract 22 from BOTH sides: -3x>-15.",
+        "Divide by -3 and REVERSE comparison: x<5. OPEN dot at 5, shade left.",
+        "Witness x=4: 30>27 true. Counterexample x=6: 34>37 false. At x=5 equality holds, which does not satisfy >."
+      ],
+      "boundary": 5,
+      "relation": "<",
+      "witness": 4,
+      "counterexample": 6
+    },
+    {
+      "label": "C: inclusion and rightward graph",
+      "problem": "4x+8 ≥ x+20",
+      "steps": [
+        "Subtract x on BOTH sides: 3x+8≥20.",
+        "Subtract 8 on BOTH sides: 3x≥12.",
+        "Divide by 3: x≥4; CLOSED dot 4 and shade right.",
+        "Witness x=5: 28≥25 true; counterexample x=2: 16≥22 false."
+      ],
+      "boundary": 4,
+      "relation": ">=",
+      "witness": 5,
+      "counterexample": 2
+    },
+    {
+      "label": "D: divide by negative and reverse",
+      "problem": "3x+28 ≤ 7x+8",
+      "steps": [
+        "Subtract 7x from BOTH sides: -4x+28≤8.",
+        "Subtract 28: -4x≤-20.",
+        "Divide by -4 and reverse comparison: x≥5; CLOSED dot at 5.",
+        "Boundary check x=5: 43≤43 true; x=4: 40≤36 false."
+      ],
+      "boundary": 5,
+      "relation": ">=",
+      "witness": 5,
+      "counterexample": 4
+    },
+    {
+      "label": "E: Grade 7 transfer/model",
+      "problem": "Plan A costs $8 plus $5 per visit; Plan B costs $23 plus $2 per visit. For what nonnegative whole-number visit counts does A cost no more than B?",
+      "steps": [
+        "Represent 5x+8≤2x+23 (dollars).",
+        "Subtract 2x from EACH side: 3x+8≤23; subtract 8: 3x≤15.",
+        "Therefore x≤5; feasible visits are 0,1,2,3,4,5.",
+        "At x=5 costs are $33 and $33, qualifying; at x=6 costs are $38 and $35, not qualifying."
+      ],
+      "boundary": 5,
+      "relation": "<=",
+      "witness": 5,
+      "counterexample": 6
+    }
+  ],
+  "entry_diagnostics": [
+    {
+      "prompt": "For x≥4, are 4 and 3 both allowed? Explain without calculating.",
+      "look_for": "Confusion between boundary and graph orientation"
+    },
+    {
+      "prompt": "Is subtracting 2x from just one side of 5x+4≤2x+19 an equivalent step? Show both resulting sides.",
+      "look_for": "Equivalence preservation"
+    },
+    {
+      "prompt": "Does dividing -3x>-15 by -3 preserve >? Give a numerical counterexample.",
+      "look_for": "Negative multiplier reverses order"
+    },
+    {
+      "prompt": "Plan visits must be nonnegative whole numbers. Is 4.5 visits a feasible solution to x<5?",
+      "look_for": "Difference between real-number solution set and count domain"
+    }
+  ],
+  "misconception_branches": [
+    {
+      "code": "G7.VARIABLE_ON_RIGHT_IGNORED",
+      "evidence": "For 5x+4≤2x+19, learner says x≤3 by subtracting fixed terms then dividing by 5, dropping 2x.",
+      "socratic": [
+        "How many x tiles remain if you remove 2x tiles from EACH side?",
+        "Can x=4 be rejected? Check 5(4)+4 and 2(4)+19."
+      ],
+      "repair": "Compare 6x+4≤2x+20. First subtract 2x from both sides; derive x≤4 and show why x=5 fails.",
+      "fade": "Hide the equal-removal animation after a fresh exact symbolic explanation."
+    },
+    {
+      "code": "G7.UNEQUAL_SIDE_CHANGE",
+      "evidence": "Learner subtracts x or a constant from one side only, or says a term 'moves and changes sign' without equality/inequality-preservation evidence.",
+      "socratic": [
+        "If Plan A charges $2 less, but Plan B does not, is their original comparison still the same question?",
+        "Write the same subtraction explicitly under both sides before simplifying."
+      ],
+      "repair": "On 4x+8≥x+20, subtract x from BOTH sides, then 8 from BOTH sides and verify x=4.",
+      "fade": "Remove the side-by-side ledger only after correct matched operations on a new item."
+    },
+    {
+      "code": "G7.NEGATIVE_DIVISION_NO_REVERSAL",
+      "evidence": "For 2x+22>5x+7, learner isolates -3x>-15 but concludes x>5.",
+      "socratic": [
+        "Is -3 greater than -6? Now divide each side by -3; are -3 and -6 still in the same left-to-right order?",
+        "Substitute x=6 and x=4 into the ORIGINAL inequality. Which works?"
+      ],
+      "repair": "Solve 3x+30≤7x+10 using both-side changes. Explain why -4x≤-20 means x≥5.",
+      "fade": "On the next negative-coefficient seed require reversal explained without a sign-arrow animation."
+    },
+    {
+      "code": "G7.STRICTNESS_ENDPOINT_CONFUSION",
+      "evidence": "Learner selects a closed dot for < or >, or open dot for ≤ or ≥.",
+      "socratic": [
+        "At x=7, are 4x+2 and 2x+16 strictly ordered or exactly equal?",
+        "Does an equality case belong in a strict inequality?"
+      ],
+      "repair": "For 4x+2<2x+16, find x<7, place an OPEN circle at 7 and test 7 and 6.",
+      "fade": "Hide endpoint legend after correct strict/non-strict contrast with new numbers."
+    },
+    {
+      "code": "G7.GRAPH_DIRECTION_CONFUSION",
+      "evidence": "Correct boundary but arrow points toward rejected values, or > is confused with <.",
+      "socratic": [
+        "If x=5 fits x≥4, which direction from 4 contains 5?",
+        "Which side includes x=3, and does that value pass the original comparison?"
+      ],
+      "repair": "On 6x+3≥2x+19, graph x≥4 with a CLOSED boundary and prove x=5 qualifies while x=3 fails.",
+      "fade": "Remove color prompts; preserve text labels for screen-reader users."
+    },
+    {
+      "code": "G7.SUBSTITUTION_NOT_A_PROOF",
+      "evidence": "Learner verifies only the transformed comparison, tests two satisfying values, or supplies guesses without evaluating BOTH original expressions.",
+      "socratic": [
+        "What were the original two costs at x=3, not just the transformed expression?",
+        "Can a wrong proposed graph be disproved by ONE counterexample?"
+      ],
+      "repair": "Use 4x+8≥x+20: x=2 gives 16≥22 (false); x=5 gives 28≥25 (true). Show both sides numerically.",
+      "fade": "Require original-LHS and original-RHS witness pairs without automatic calculation."
+    },
+    {
+      "code": "G7.COUNT_DOMAIN_CONFUSION",
+      "evidence": "Learner graphs negative or fractional visit counts as feasible actual visits.",
+      "socratic": [
+        "Can a person make -1 or 2.5 complete visits in this pass-plan model?",
+        "How is the real-number inequality different from feasible count choices?"
+      ],
+      "repair": "If x<5 for nonnegative WHOLE visits, list exactly 0,1,2,3,4; explain why -1 and 4.5 are excluded from the contextual answer.",
+      "fade": "Remove tick labels only when learner can state the domain and valid integer endpoints."
+    }
+  ],
+  "guided_practice": {
+    "variant_module": "variants.py",
+    "generate_api": "generate(seed, 'guided')",
+    "seed_scope": "0..79 example cohort",
+    "expected_diversity": "symbolic and authentic verbal modeling; positive and negative coefficient difference; four inequality relations; diverse exact integer boundaries",
+    "response_fields": [
+      "boundary",
+      "solution_relation",
+      "endpoint",
+      "graph_direction",
+      "satisfying_test",
+      "rejected_test",
+      "context_domain",
+      "equality_preservation",
+      "written_justification"
+    ],
+    "scaffold_fading": [
+      "model + labelled parts",
+      "number-line without worked values",
+      "independent written reasoning after observed guide evidence"
+    ],
+    "diagnosis": "Evidence-specific guided classifier, never authoritative mastery"
+  },
+  "unseen_transfer_and_independent_assessment": {
+    "variant_module": "variants.py",
+    "generate_api": "generate(seed, 'independent')",
+    "seed_scope": "200..279 example independent cohort; independent thresholds 16..26 versus guided 4..12",
+    "format": "Context problems do NOT supply the inequality; learner writes it, solves, graphs, tests, and explains.",
+    "answer_oracle": "teacher_oracle() is separate from public_payload(), not integrated into a server scorer",
+    "server_only_expected_fields": [
+      "boundary",
+      "solution_relation",
+      "endpoint",
+      "graph_direction",
+      "satisfying_test",
+      "rejected_test",
+      "context_domain",
+      "difference_coefficient",
+      "difference_constant",
+      "proof_left_at_witness",
+      "proof_right_at_witness"
+    ],
+    "public_forbidden_fields": [
+      "expected",
+      "teacher_oracle",
+      "parameters",
+      "hints",
+      "worked_solution",
+      "misconception_tag",
+      "review_status",
+      "canonical_skill_id",
+      "mastery"
+    ],
+    "independence_requirements": [
+      "Do not reuse guided seeds as independent evidence.",
+      "Do not preload hints or solved mathematical setup.",
+      "Require unassisted explanation and independently validated written reasoning.",
+      "Do not count assisted teacher/LLM judgments as mastery.",
+      "Backend agent must define signed/authenticated scorer with idempotency and no answer leakage; absent now."
+    ]
+  },
+  "mve_requirements": {
+    "existing_component_reuse": [
+      "guided inequality/balance visual review required; do not assume existing balance model supports inequality ordering",
+      "reuse number-line controls only after orientation/inclusion are accessible"
+    ],
+    "student_interactions": [
+      "Selectable equal operation on EACH side; no auto-calculation of the learner quotient",
+      "Drag endpoint or set text boundary and OPEN/CLOSED toggle; label accepted domain",
+      "Choose arrow direction, type proof witness and falsifying counterexample",
+      "Allow exact expression input, tab navigation and undo/redo",
+      "Gradually remove teaching scaffolds based on guided evidence"
+    ],
+    "accessibility": [
+      "Equivalent keyboard inputs for every drag/control",
+      "Readable original and transformed inequalities with meaningful screen-reader announcements",
+      "Alternative text table of valid/invalid sample x with original LHS and RHS",
+      "Reduced-motion mode; motion never sole feedback channel",
+      "No color-only indication; endpoint has OPEN/CLOSED label and direction has LEFT/RIGHT label",
+      "Maintain focus after hints and error messages; mobile tap targets and zoom"
+    ],
+    "engineering_ownership": "Frontend/MVE lane only; specification is not proof of an implemented interaction"
+  },
+  "provenance": {
+    "authorship": "Original Mihur-authored numbers and explanations, not copied from teacher PDFs, tutoring sites or assessment banks.",
+    "sources": [
+      {
+        "kind": "official Ontario curriculum candidate",
+        "url": "https://www.dcp.edu.gov.on.ca/en/curriculum/elementary-mathematics/grades/g7-math/strand-c/c2",
+        "use": "C2.4 grade-scope candidate only; independent mapping pending"
+      },
+      {
+        "kind": "Mihur repository existing Grade 7 seed",
+        "path": "scripts/seed_grade7.py",
+        "use": "Reuse local Grade 7 umbrella skill and preserve existing historical mappings"
+      },
+      {
+        "kind": "Mihur existing learning packages",
+        "path": "docs/curriculum/drafts/learning-packages-wave1, wave2, wave3, wave4",
+        "use": "No duplicate IQR/percent/ratio/cube-net package"
+      }
+    ]
+  },
+  "gates": {
+    "authored": true,
+    "draft_generator_implemented": true,
+    "tests_in_pr": true,
+    "mve_implemented": false,
+    "student_route_wired": false,
+    "server_scoring_wired": false,
+    "standards_accepted": false,
+    "math_accepted": false,
+    "pedagogy_accepted": false,
+    "muse_qa_accepted": false,
+    "deployed": false
+  }
+}
