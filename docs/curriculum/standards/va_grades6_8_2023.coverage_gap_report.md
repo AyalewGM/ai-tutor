@@ -65,3 +65,13 @@ Every expectation is classified separately for repository standards mapping, ind
 2. **Independent Math Review:** any accepted mapping requires review of the exact atomic target — broad `MATH.*` seed targets are not range-equivalent per the #293 precedent.
 3. **Content Production:** Grade 8 is the highest-priority authoring surface (16 unmapped expectations covering pre-algebra completion); Grade 6 integer/negative-number scope is second.
 4. **Engineering (Devin):** no work required until mappings are accepted; the inventory is coordination data only.
+
+### Official grade-document provenance (corrected 2026-10-12)
+
+| Grade | Authoritative VDOE 2023 SOL document | Published standard version | Status |
+|---|---|---|---|
+| 6 | [Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 6](https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000) | August 2023; Grade 6, printed page 1 | Standards authority |
+| 7 | [Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 7](https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000) | August 2023; Grade 7 section, printed page 49 (within the VDOE K–12 compilation) | Standards authority |
+| 8 | [Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8](https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000) | August 2023; Grade 8, printed page 1 | Standards authority |
+
+The VDOE [2023 instructional-resources page](https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources) remains an **implementation-support reference only**. Every expectation row links to the corresponding official standards document and a grade-specific source ID; no 2016 SOL code or instructional guide is promoted to 2023 authority. Exact item-page locators beyond the grade-section start remain **not independently recorded**. All proposed Mihur mappings remain unaccepted.

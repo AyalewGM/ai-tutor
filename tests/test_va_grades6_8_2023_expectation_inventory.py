@@ -164,3 +164,23 @@ def test_reconciliation_counts_are_internally_consistent() -> None:
     assert reconciliation["seed_rows_without_clear_expectation"] == [
         "VA6.PFA.EXPR"
     ]
+
+
+def test_each_va_expectation_links_to_official_grade_sol_document() -> None:
+    manifest = _manifest()
+    sources = manifest['provenance']['grade_standards_documents']
+    assert set(sources) == {'6', '7', '8'}
+    assert manifest['provenance']['instructional_support_role'] == 'IMPLEMENTATION_GUIDANCE_ONLY_NOT_STANDARDS_AUTHORITY'
+    for grade, source in sources.items():
+        assert source['grade'] == int(grade)
+        assert source['publication_or_revision'] == 'August 2023'
+        assert source['authority'] == 'VDOE_2023_STANDARDS_DOCUMENT'
+        assert source['source_url'].startswith('https://www.doe.virginia.gov/home/showpublisheddocument/')
+        assert source['checked_date'] == '2026-10-12'
+    for row in manifest['expectations']:
+        source = sources[str(row['grade'])]
+        assert row['source_locator'] == source['source_url']
+        assert row['source_document_id'] == source['source_id']
+        assert row['instructional_support_locator'] == manifest['provenance']['instructional_resources_url']
+        assert row['source_locator'] != row['instructional_support_locator']
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
