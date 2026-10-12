@@ -53,12 +53,27 @@ def test_mode_namespaces_are_disjoint():
         for seed in range(30):
             assert MODULE.generate(concept,seed,"guided").item_id != MODULE.generate(concept,seed,"independent").item_id
 
-def test_count_representation_boundary_and_ordering():
-    for seed in range(60):
+def test_count_representation_boundary_ordering_and_number_names():
+    exact={
+        0:"zero",7:"seven",10:"ten",19:"nineteen",20:"twenty",21:"twenty-one",
+        40:"forty",99:"ninety-nine",100:"one hundred",101:"one hundred one",
+        110:"one hundred ten",119:"one hundred nineteen",120:"one hundred twenty",
+    }
+    for value,name in exact.items():
+        assert MODULE._number_name_0_120(value)==name
+    for seed in range(120):
         o=MODULE.generate("G1-COUNT-REPRESENT",seed,"guided").teacher_oracle()
         assert 0<=o["numeral"]<=120
+        assert o["number_name"]==MODULE._number_name_0_120(o["numeral"])
         assert o["ordered"]==sorted(o["ordered"])
         assert o["within_boundary"] is True
+
+def test_number_name_oracle_fails_closed_outside_supported_range():
+    with pytest.raises(ValueError):
+        MODULE._number_name_0_120(-1)
+    with pytest.raises(ValueError):
+        MODULE._number_name_0_120(121)
+
 
 def test_place_value_reconstructs_two_digit_number():
     for seed in range(30):
