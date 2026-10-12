@@ -190,6 +190,18 @@ def test_va7_histogram_data_cycle_is_not_inferred_from_probability_seed() -> Non
     manifest = _manifest()
     row = next(r for r in manifest['expectations'] if r['expectation_id'] == '7.PS.2')
     assert row['repository_existing_crosswalks'] == []
+    assert row['classification']['standards_mapped'] == 'NO'
     assert row['proposed_mapping_status'] == 'NO_REPOSITORY_EXPECTATION_EQUIVALENCE_EVIDENCE'
     assert row['mapping_correction_evidence']['decision'] == 'REMOVE_UNSUPPORTED_PROVISIONAL_RELATION_NOT_A_MISSING_CORE_CLAIM'
     assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+
+
+def test_repository_relation_presence_matches_standards_mapped_classification() -> None:
+    manifest = _manifest()
+    for row in manifest['expectations']:
+        if row['repository_existing_crosswalks']:
+            assert row['proposed_mapping_status'] == 'REPOSITORY_EXISTING_UNVERIFIED'
+            assert row['classification']['standards_mapped'] == 'REPOSITORY_ROW_EXISTS_NOT_ACCEPTED'
+        else:
+            assert row['classification']['standards_mapped'] == 'NO'
+            assert row['proposed_mapping_status'] != 'REPOSITORY_EXISTING_UNVERIFIED'
