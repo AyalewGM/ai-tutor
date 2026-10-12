@@ -151,7 +151,7 @@ def _build(structure: str, variant: int, seed: int) -> dict:
         )
         operation = "add"
         relation = "start + increase = final"
-        verify = {"substituted_left": final, "substituted_right": final}
+        verify = {"substituted_left": start + increase, "substituted_right": answer}
     elif structure == "change-unknown":
         operands = {"start": start, "final": final}
         answer = increase
