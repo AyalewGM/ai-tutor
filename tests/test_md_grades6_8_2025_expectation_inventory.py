@@ -209,7 +209,7 @@ def test_official_pdf_printed_page_and_zero_based_index_are_not_conflated() -> N
         assert rows[expectation_id]['source_page'] == printed
         assert locators[expectation_id]['pdf_page_index_zero_based'] == pdf_index
         assert locators[expectation_id]['printed_page_start'] == printed
-        assert locators[expectation_id]['page_locator_evidence'] == 'MSDE_OFFICIAL_PDF_PAGE_IMAGE_FOOTER_CONFIRMED'
+        assert locators[expectation_id]['page_locator_evidence'] == 'OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER'
 
 
 def test_all_grade7_8_printed_pages_match_official_crosswalk_page_locations() -> None:
