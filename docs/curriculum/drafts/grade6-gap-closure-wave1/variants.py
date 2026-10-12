@@ -85,9 +85,27 @@ def generate(concept_id:str,seed:int,mode:str)->Variant:
         fields=("net_description","face_count","face_areas","surface_area","volume_vs_surface_explanation")
     elif concept_id=="G6-STAT-DISTRIBUTIONS":
         data=[rng.randint(1,20) for _ in range(9)]
-        s=sorted(data); med=s[4]; q1=s[2]; q3=s[6]; iqr=q3-q1
-        prompt=f"For data {data}, compute the five-number summary and IQR, describe spread, and choose mean or median as a more useful center with justification."
-        oracle={"min":s[0],"q1":q1,"median":med,"q3":q3,"max":s[-1],"iqr":iqr}
+        s=sorted(data)
+        med=s[4]
+        q1=Fraction(s[1]+s[2],2)
+        q3=Fraction(s[6]+s[7],2)
+        iqr=q3-q1
+        prompt=(
+            f"For data {data}, compute the five-number summary and IQR using the "
+            "exclusive-median convention: omit the overall median, then average the "
+            "middle two values of each four-value half. Describe spread and choose "
+            "mean or median as a more useful center with justification."
+        )
+        oracle={
+            "min":s[0],
+            "q1":q1,
+            "median":med,
+            "q3":q3,
+            "max":s[-1],
+            "iqr":iqr,
+            "sorted_data":s,
+            "quartile_convention":"EXCLUDE_MEDIAN_AVERAGE_HALVES",
+        }
         fields=("five_number_summary","iqr","shape_or_outlier_comment","center_choice","context_justification")
     elif concept_id=="G6-RATIO-RATE":
         a=rng.randint(2,6); b=rng.randint(3,9); scale=rng.randint(2,5)
