@@ -95,10 +95,19 @@ def test_nets_cover_prism_and_pyramid_and_face_counts():
     assert shapes["SQUARE_PYRAMID"]==5
 
 def test_statistics_five_number_summary_and_iqr_ordering():
-    for seed in range(50):
+    convention_difference_seen=False
+    for seed in range(80):
         o=MODULE.generate("G6-STAT-DISTRIBUTIONS",seed,"guided").teacher_oracle()
+        s=o["sorted_data"]
+        expected_q1=Fraction(s[1]+s[2],2)
+        expected_q3=Fraction(s[6]+s[7],2)
+        assert o["quartile_convention"]=="EXCLUDE_MEDIAN_AVERAGE_HALVES"
+        assert o["q1"]==expected_q1
+        assert o["q3"]==expected_q3
         assert o["min"]<=o["q1"]<=o["median"]<=o["q3"]<=o["max"]
         assert o["iqr"]==o["q3"]-o["q1"]>=0
+        convention_difference_seen = convention_difference_seen or o["q1"] != s[2] or o["q3"] != s[6]
+    assert convention_difference_seen
 
 def test_ratio_scaled_pair_and_reciprocal_unit_rates():
     for seed in range(50):
