@@ -128,7 +128,7 @@ function FractionLesson() {
           repairAnswer.trim().replaceAll(" ", "") === "2/5>2/10" && repairReason === "fifths-larger";
         if (ok) {
           setRepairFeedback("Repair verified with a different item.");
-          setRepair(""); setRepairAnswer(""); setRepairUnit(""); setRepairReason("");
+          setRepair(""); setRepairAnswer(""); setRepairReason("");
         } else setRepairFeedback("Not yet. Use the relationship between equal parts rather than copying the original answer.");
       }}>Check repair</button>
       <p role="status" aria-live="polite">{repairFeedback}</p>
