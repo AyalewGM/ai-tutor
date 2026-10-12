@@ -70,10 +70,10 @@ test("invalid parameters fail closed", () => {
 test("interactive lessons remain unmounted until a trusted capability and pedagogy acceptance", async () => {
   const ui = await readFile(new URL("./GuidedConceptPractice.tsx", import.meta.url), "utf8");
   const workspace = await readFile(new URL("../pages/Workspace.tsx", import.meta.url), "utf8");
-  assert.match(ui, /if \(props\.independentAssessment\) return null/);
+  assert.match(ui, /if \(props\.independentAssessment !== false\) return null/);
   assert.match(ui, /role="status" aria-live="polite"/);
   assert.match(ui, /type="submit"/);
-  assert.match(ui, /Show another representation/);
+  assert.match(ui, /Lock prediction/);\n  assert.match(ui, /Check explanation/);\n  assert.match(ui, /Repair and verify/);\n  assert.match(ui, /Transfer without/);
   assert.match(ui, /ProblemVisual/);
   // No accepted server-owned fraction-equivalence or ratio-partition
   // capability exists. Build flags and mutable display-name regexes are
@@ -82,4 +82,15 @@ test("interactive lessons remain unmounted until a trusted capability and pedago
   assert.doesNotMatch(workspace, /conceptGuidedPilotEnabled/);
   assert.doesNotMatch(workspace, /<GuidedConceptPractice\b/);
   assert.doesNotMatch(ui, /updateMastery|setMastery|recordAssessment|fetch\(|post\(/);
+});
+
+test("concept lessons implement real scaffold fading and transfer surfaces", async () => {
+  const ui = await readFile(new URL("./GuidedConceptPractice.tsx", import.meta.url), "utf8");
+  assert.match(ui, /!explanationVerified && <ProblemVisual/);
+  assert.match(ui, /!explanationVerified && <div aria-label="Five equal ratio parts"/);
+  assert.match(ui, /Fraction misconception repair/);
+  assert.match(ui, /Ratio misconception repair/);
+  assert.match(ui, /Fraction transfer/);
+  assert.match(ui, /Ratio transfer/);
+  assert.match(ui, /worked answer|stays unworked|without counters|without the completed bar/i);
 });
