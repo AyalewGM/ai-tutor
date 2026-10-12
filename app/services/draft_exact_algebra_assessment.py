@@ -36,6 +36,28 @@ class ExactAlgebraKind(StrEnum):
     GEOMETRY_TRANSFER = "GEOMETRY_TRANSFER"
 
 
+class ExactAssessmentTarget(StrEnum):
+    """One review-only atomic target for a generated independent task.
+
+    The ``MATH.*`` values are existing canonical or accepted DRAFT atom labels.
+    They are deliberately server-only here: this enum does not register an
+    alias, capability, mastery target, runtime route or production taxonomy row.
+    """
+
+    LINEAR_TWO_STEP = "MATH.EQ.TWO.DIRECT"
+    SQUARE_EQUATION_REAL_SOLUTIONS = "MATH.ALGEBRA.SQUARE_EQUATION_REAL_SOLUTIONS"
+    DIVIDE_MONOMIALS = "MATH.POLY.DIVIDE_MONOMIALS"
+    DIVIDE_POLYNOMIAL_BY_MONOMIAL = "MATH.POLY.DIVIDE_POLYNOMIAL_BY_MONOMIAL"
+    EXPONENT_PRODUCT = "MATH.EXPONENT.LAW.PRODUCT"
+    EXPONENT_QUOTIENT = "MATH.EXPONENT.LAW.QUOTIENT"
+    EXPONENT_POWER_OF_POWER = "MATH.EXPONENT.LAW.POWER_OF_POWER"
+    EXPONENT_ZERO = "MATH.EXPONENT.ZERO_NONZERO_BASE"
+    EXPONENT_NEGATIVE_RECIPROCAL = "MATH.EXPONENT.NEGATIVE_AS_RECIPROCAL"
+    SCIENTIFIC_CONVERT_NORMALIZE = "MATH.SCIENTIFIC_NOTATION.CONVERT_NORMALIZE"
+    SCIENTIFIC_MULTIPLY_NORMALIZE = "MATH.SCIENTIFIC_NOTATION.MULTIPLY_NORMALIZE"
+    SCIENTIFIC_DIVIDE_NORMALIZE = "MATH.SCIENTIFIC_NOTATION.DIVIDE_NORMALIZE"
+
+
 @dataclass(frozen=True)
 class HiddenExactVariant:
     """Server-only generated item, including its trusted exact oracle."""
@@ -47,6 +69,8 @@ class HiddenExactVariant:
     parameters: Mapping[str, object]
     oracle: Mapping[str, object]
     misconception_responses: Mapping[str, Mapping[str, object]]
+    primary_target: ExactAssessmentTarget
+    supporting_targets: tuple[ExactAssessmentTarget, ...] = ()
 
     def public_payload(self) -> dict[str, object]:
         """Return the only representation permitted in a student client."""
@@ -189,14 +213,12 @@ def _linear(seed: int) -> HiddenExactVariant:
     rng, variant_id = _seeded(ExactAlgebraKind.LINEAR_EQUATION, seed)
     solution = Fraction(rng.choice((-9, -7, -5, -3, 3, 5, 7, 9)), rng.choice((2, 3, 4)))
     left_coefficient = Fraction(rng.choice((-7, -5, -3, 3, 5, 7)), rng.choice((1, 2, 3)))
-    right_coefficient = Fraction(rng.choice((-6, -4, -2, 2, 4, 6)), rng.choice((1, 2, 3)))
-    while right_coefficient == left_coefficient:
-        right_coefficient += 1
-    right_constant = Fraction(rng.randint(-8, 8))
-    left_constant = (right_coefficient - left_coefficient) * solution + right_constant
+    left_constant = Fraction(rng.choice((*range(-8, 0), *range(1, 9))))
+    right_coefficient = Fraction(0)
+    right_constant = left_coefficient * solution + left_constant
     prompt = (
         f"Solve {_fraction_text(left_coefficient)}x + ({_fraction_text(left_constant)}) = "
-        f"{_fraction_text(right_coefficient)}x + ({_fraction_text(right_constant)}). "
+        f"{_fraction_text(right_constant)}. "
         "Return the complete exact solution set and verify it by substitution."
     )
     wrong_sign = -solution
@@ -227,6 +249,7 @@ def _linear(seed: int) -> HiddenExactVariant:
                 "substitution_checks": (_substitution_record(wrong_sign, wrong_left, wrong_right),),
             }
         },
+        ExactAssessmentTarget.LINEAR_TWO_STEP,
     )
 
 
@@ -302,6 +325,7 @@ def _root(seed: int) -> HiddenExactVariant:
             "substitution_checks": substitution_checks,
         },
         alternatives,
+        ExactAssessmentTarget.SQUARE_EQUATION_REAL_SOLUTIONS,
     )
 
 
@@ -423,6 +447,12 @@ def _monomial(seed: int, *, polynomial: bool) -> HiddenExactVariant:
         },
         oracle,
         alternatives if polynomial else {},
+        (
+            ExactAssessmentTarget.DIVIDE_POLYNOMIAL_BY_MONOMIAL
+            if polynomial
+            else ExactAssessmentTarget.DIVIDE_MONOMIALS
+        ),
+        ((ExactAssessmentTarget.DIVIDE_MONOMIALS,) if polynomial else ()),
     )
 
 
@@ -469,6 +499,8 @@ def _polynomial_area_transfer(seed: int) -> HiddenExactVariant:
             "units": ("units", "square units"),
         },
         {},
+        ExactAssessmentTarget.DIVIDE_POLYNOMIAL_BY_MONOMIAL,
+        (ExactAssessmentTarget.DIVIDE_MONOMIALS,),
     )
 
 
@@ -501,6 +533,19 @@ def _exponents(seed: int) -> HiddenExactVariant:
             "result_exponent": exponent,
             "exact_value": Fraction(0),
         }
+    primary_target = {
+        "POSITIVE": ExactAssessmentTarget.EXPONENT_POWER_OF_POWER,
+        "ZERO": ExactAssessmentTarget.EXPONENT_ZERO,
+        "NEGATIVE": ExactAssessmentTarget.EXPONENT_NEGATIVE_RECIPROCAL,
+    }[outcome]
+    supporting_targets = (
+        ExactAssessmentTarget.EXPONENT_PRODUCT,
+        ExactAssessmentTarget.EXPONENT_QUOTIENT,
+        ExactAssessmentTarget.EXPONENT_POWER_OF_POWER,
+    )
+    supporting_targets = tuple(
+        target for target in supporting_targets if target != primary_target
+    )
     return HiddenExactVariant(
         variant_id,
         ExactAlgebraKind.EXPONENT_LAWS,
@@ -520,6 +565,8 @@ def _exponents(seed: int) -> HiddenExactVariant:
         },
         {"result_exponent": exponent, "exact_value": value},
         misconception_responses,
+        primary_target,
+        supporting_targets,
     )
 
 
@@ -556,6 +603,12 @@ def _scientific(seed: int) -> HiddenExactVariant:
     ordinary = coefficient * (
         Fraction(10**exponent) if exponent >= 0 else Fraction(1, 10 ** (-exponent))
     )
+    primary_target = {
+        "TO_SCIENTIFIC": ExactAssessmentTarget.SCIENTIFIC_CONVERT_NORMALIZE,
+        "TO_ORDINARY": ExactAssessmentTarget.SCIENTIFIC_CONVERT_NORMALIZE,
+        "MULTIPLY": ExactAssessmentTarget.SCIENTIFIC_MULTIPLY_NORMALIZE,
+        "DIVIDE": ExactAssessmentTarget.SCIENTIFIC_DIVIDE_NORMALIZE,
+    }[operation]
     return HiddenExactVariant(
         variant_id,
         ExactAlgebraKind.SCIENTIFIC_NOTATION,
@@ -568,6 +621,7 @@ def _scientific(seed: int) -> HiddenExactVariant:
             "ordinary_value": ordinary,
         },
         {},
+        primary_target,
     )
 
 
@@ -609,6 +663,8 @@ def _geometry(seed: int) -> HiddenExactVariant:
                 "units": units,
             }
         },
+        ExactAssessmentTarget.EXPONENT_POWER_OF_POWER,
+        (ExactAssessmentTarget.EXPONENT_PRODUCT,),
     )
 
 
@@ -628,6 +684,106 @@ def generate_hidden_variant(kind: ExactAlgebraKind, seed: int) -> HiddenExactVar
         ExactAlgebraKind.GEOMETRY_TRANSFER: _geometry,
     }
     return builders[kind](seed)
+
+
+def _expected_primary_target(variant: HiddenExactVariant) -> ExactAssessmentTarget:
+    """Derive the only target this task may evidence from its hidden structure."""
+
+    if variant.kind == ExactAlgebraKind.LINEAR_EQUATION:
+        try:
+            left_coefficient = Fraction(variant.parameters["left_coefficient"])
+            left_constant = Fraction(variant.parameters["left_constant"])
+            right_coefficient = Fraction(variant.parameters["right_coefficient"])
+        except (KeyError, TypeError, ValueError, ZeroDivisionError) as error:
+            raise ValueError("linear task has no exact direct two-step structure") from error
+        if left_coefficient == 0 or left_constant == 0 or right_coefficient != 0:
+            raise ValueError("linear task is outside the direct two-step atom scope")
+        return ExactAssessmentTarget.LINEAR_TWO_STEP
+
+    static_targets = {
+        ExactAlgebraKind.ROOT_EQUATION: (
+            ExactAssessmentTarget.SQUARE_EQUATION_REAL_SOLUTIONS
+        ),
+        ExactAlgebraKind.MONOMIAL_QUOTIENT: ExactAssessmentTarget.DIVIDE_MONOMIALS,
+        ExactAlgebraKind.POLYNOMIAL_QUOTIENT: (
+            ExactAssessmentTarget.DIVIDE_POLYNOMIAL_BY_MONOMIAL
+        ),
+        ExactAlgebraKind.POLYNOMIAL_AREA_TRANSFER: (
+            ExactAssessmentTarget.DIVIDE_POLYNOMIAL_BY_MONOMIAL
+        ),
+        ExactAlgebraKind.GEOMETRY_TRANSFER: (
+            ExactAssessmentTarget.EXPONENT_POWER_OF_POWER
+        ),
+    }
+    if variant.kind in static_targets:
+        return static_targets[variant.kind]
+    if variant.kind == ExactAlgebraKind.SCIENTIFIC_NOTATION:
+        operation_targets = {
+            "TO_SCIENTIFIC": ExactAssessmentTarget.SCIENTIFIC_CONVERT_NORMALIZE,
+            "TO_ORDINARY": ExactAssessmentTarget.SCIENTIFIC_CONVERT_NORMALIZE,
+            "MULTIPLY": ExactAssessmentTarget.SCIENTIFIC_MULTIPLY_NORMALIZE,
+            "DIVIDE": ExactAssessmentTarget.SCIENTIFIC_DIVIDE_NORMALIZE,
+        }
+        try:
+            return operation_targets[variant.parameters["operation"]]
+        except (KeyError, TypeError) as error:
+            raise ValueError("scientific task has no exact atomic operation") from error
+    if variant.kind == ExactAlgebraKind.EXPONENT_LAWS:
+        outcome_targets = {
+            "POSITIVE": ExactAssessmentTarget.EXPONENT_POWER_OF_POWER,
+            "ZERO": ExactAssessmentTarget.EXPONENT_ZERO,
+            "NEGATIVE": ExactAssessmentTarget.EXPONENT_NEGATIVE_RECIPROCAL,
+        }
+        try:
+            return outcome_targets[variant.parameters["outcome"]]
+        except (KeyError, TypeError) as error:
+            raise ValueError("exponent task has no exact atomic outcome") from error
+    raise ValueError("assessment kind has no exact atomic target")
+
+
+def _expected_supporting_targets(
+    variant: HiddenExactVariant,
+) -> tuple[ExactAssessmentTarget, ...]:
+    """Return evidence-only atoms permitted by this exact task structure."""
+
+    if variant.kind in {
+        ExactAlgebraKind.POLYNOMIAL_QUOTIENT,
+        ExactAlgebraKind.POLYNOMIAL_AREA_TRANSFER,
+    }:
+        return (ExactAssessmentTarget.DIVIDE_MONOMIALS,)
+    if variant.kind == ExactAlgebraKind.EXPONENT_LAWS:
+        return tuple(
+            target
+            for target in (
+                ExactAssessmentTarget.EXPONENT_PRODUCT,
+                ExactAssessmentTarget.EXPONENT_QUOTIENT,
+                ExactAssessmentTarget.EXPONENT_POWER_OF_POWER,
+            )
+            if target != variant.primary_target
+        )
+    if variant.kind == ExactAlgebraKind.GEOMETRY_TRANSFER:
+        return (ExactAssessmentTarget.EXPONENT_PRODUCT,)
+    return ()
+
+
+def _validate_atomic_binding(variant: HiddenExactVariant) -> None:
+    """Fail closed on broad, missing, duplicated or structurally wrong bindings."""
+
+    if not isinstance(variant.primary_target, ExactAssessmentTarget):
+        raise TypeError("primary target must be one accepted exact assessment atom")
+    if variant.primary_target != _expected_primary_target(variant):
+        raise ValueError("primary target does not match the hidden task structure")
+    if any(
+        not isinstance(target, ExactAssessmentTarget)
+        for target in variant.supporting_targets
+    ):
+        raise ValueError("supporting targets must be accepted exact assessment atoms")
+    if len(set(variant.supporting_targets)) != len(variant.supporting_targets):
+        raise ValueError("supporting targets must not contain duplicates")
+    if variant.primary_target in variant.supporting_targets:
+        raise ValueError("the primary target must not be duplicated as supporting evidence")
+    if variant.supporting_targets != _expected_supporting_targets(variant):
+        raise ValueError("supporting targets do not match the hidden task structure")
 
 
 def _solutions(value: object) -> tuple[Fraction, ...]:
@@ -902,6 +1058,7 @@ def score_exact_response(
 ) -> ExactScore:
     """Score once against the hidden oracle; never return tutoring content."""
 
+    _validate_atomic_binding(variant)
     if already_answered:
         raise ValueError("variant already answered")
     normalized = _normalize_response(variant.kind, response)
