@@ -101,3 +101,11 @@ test("repairs do not reveal expected ratio shares and completed fraction model w
   assert.match(ui, /Ratio repair common unit/);
   assert.match(ui, /numericVerified && !explanationVerified && <ProblemVisual/);
 });
+
+test("concept predictions are evaluated with targeted reflection", async () => {
+  const ui = await readFile(new URL("./GuidedConceptPractice.tsx", import.meta.url), "utf8");
+  assert.match(ui, /Your prediction matches the mathematical relationship/);
+  assert.match(ui, /same whole is repartitioned/);
+  assert.match(ui, /2 of 5 equal parts is less than one half/);
+  assert.match(ui, /predictionFeedback/);
+});
