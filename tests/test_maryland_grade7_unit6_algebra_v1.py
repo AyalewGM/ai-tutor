@@ -103,7 +103,7 @@ def _truth_set_matches_boundary(variant) -> bool:
     oracle = variant.teacher_oracle()
     boundary = Fraction(oracle["boundary"])
     relation = oracle["solution_relation"]
-    for numerator in range(0, 31):
+    for numerator in range(31):
         x = Fraction(numerator)
         direct = variant.satisfies_inequality(x)
         by_boundary = {
