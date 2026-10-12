@@ -152,7 +152,7 @@ def test_reconciliation_counts_are_internally_consistent() -> None:
 
     assert reconciliation["official_expectation_count"] == len(rows) == 81
     assert reconciliation["repository_existing_expectation_rows"] == existing == 28
-    assert reconciliation["unmapped_expectations"] == 81 - existing == 52
+    assert reconciliation["unmapped_expectations"] == 81 - existing == 53
     assert reconciliation["existing_seed_rows_by_grade"] == {
         "6": 5,
         "7": 5,

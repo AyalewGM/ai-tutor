@@ -36,7 +36,7 @@ This completes the DMV Grade 6–8 inventory set alongside `md_grades6_8_2025.ex
 
 2. **`DC7.SP.PROBABILITY` is an extreme composite** — a single seed row provisionally linked to all eight `7.SP` expectations (sampling, inference, probability scale, models, compound events). It cannot transfer mastery to distinct atomic identities per the #293 precedent.
 
-3. **DC geometry coverage is zero across all three grades** — no `*.G.*` expectation has any linked seed (13 unmapped: area/volume/nets at G6, circles/angles/scale at G7, all of G8 geometry).
+3. **DC geometry coverage is zero across all three grades** — no `*.G.*` expectation has any linked seed (19 unmapped: area/volume/nets at G6, circles/angles/scale at G7, all of G8 geometry).
 
 4. **Integer/rational-number scope is thin locally** — `6.NS.C.5`–`6.NS.C.8` (negatives, coordinate plane, absolute value) unmapped, mirroring the same gap in MD (`6.NOS.C.*`) and VA (`6.NS.2`, `6.CE.2`). A jurisdiction-agnostic integer learning experience exists (merged `GuidedIntegerNumberLine` work) but any local reuse needs Standards Mapping acceptance, not assumption.
 
