@@ -830,6 +830,7 @@ export default function Workspace() {
                     />
                   )}
                   {/* Default off until LearnerWorkspace exposes an approved server-owned capability. */}
+                  {/* Probability-tree route remains disabled until an approved server-owned capability is available. */}
                   {showPolynomialDivisionExploration(workspace.state, undefined) && (
                     <InteractivePolynomialDivision
                       key={workspace.focus.active_skill_id}

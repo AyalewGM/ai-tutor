@@ -18,6 +18,7 @@ import { InteractiveLinearExplorer } from '/src/mve/InteractiveLinearExplorer';
 import { InteractiveIntegerNumberLine } from '/src/mve/InteractiveIntegerNumberLine';
 import { InteractiveEquationBalance } from '/src/mve/InteractiveEquationBalance';
 import { InteractiveDotPlotExplorer } from '/src/mve/InteractiveDotPlotExplorer';
+import { InteractiveProbabilityTree } from '/src/mve/InteractiveProbabilityTree';
 import { InteractivePolynomialDivision } from '/src/mve/InteractivePolynomialDivision';
 import '/src/styles.css';
 function Harness() {
@@ -28,6 +29,7 @@ function Harness() {
  <InteractiveIntegerNumberLine independentAssessment={assessment} />
  <InteractiveEquationBalance independentAssessment={assessment} />
  <InteractiveDotPlotExplorer independentAssessment={assessment} />
+ <InteractiveProbabilityTree independentAssessment={assessment} onMathEvent={e => setEvent(JSON.stringify(e))} />
  <InteractivePolynomialDivision independentAssessment={assessment} onMathEvent={e => setEvent(JSON.stringify(e))} />
  <output aria-label="Last semantic event">{event}</output></>;
 }
@@ -62,6 +64,35 @@ createRoot(document.getElementById('root')!).render(<Harness />);`);
   assert.ok((await data.getByRole('status').first().textContent()).includes('mean 24/5; median 3; range 10'));
   await data.getByRole('button', { name: 'Add another observation at this value' }).click();
   assert.equal(await data.getByRole('button', { name: 'Add another observation at this value' }).isDisabled(), true);
+  const probability = page.getByRole('region', { name: 'Guided probability tree exploration' });
+  // Prediction must be recorded before any manipulation or tree reveal.
+  assert.equal(await probability.getByLabel('First event total outcomes:').isDisabled(), true);
+  assert.equal(await probability.getByRole('img', { name: /Independent probability tree/ }).count(), 0);
+  await probability.getByRole('combobox').first().selectOption('increase');
+  await probability.getByRole('button', { name: 'Lock prediction' }).click();
+  assert.equal(await probability.getByLabel('First event total outcomes:').isEnabled(), true);
+  await probability.getByLabel('First event favorable outcomes:').focus();
+  await page.keyboard.press('ArrowRight');
+  assert.equal(await probability.getByLabel('First event total outcomes:').inputValue(), '8');
+  assert.equal(await probability.getByLabel('First event favorable outcomes:').inputValue(), '4');
+  const probabilityEvent = JSON.parse(await page.getByLabel('Last semantic event').textContent());
+  assert.equal(probabilityEvent.first_total, 8);
+  assert.equal(probabilityEvent.first_favorable, 4);
+  await probability.getByRole('combobox').last().selectOption('add');
+  await probability.getByRole('button', { name: 'Check explanation' }).click();
+  assert.ok((await probability.getByText(/Adding stage probabilities mixes separate stages/).count()) > 0);
+  await probability.getByLabel('Repair probability').fill('1/8');
+  await probability.getByLabel('Reasoning choice').selectOption('multiply');
+  await probability.getByRole('button', { name: 'Check repair' }).click();
+  await probability.getByText(/Scaffold faded/).waitFor();
+  assert.equal(await probability.getByRole('region', { name: 'Misconception repair' }).count(), 0);
+  assert.ok((await probability.getByText(/Scaffold faded/).count()) > 0);
+  assert.equal(await probability.getByRole('region', { name: 'Probability model transfer' }).count(), 1);
+  await probability.getByLabel('Probability practice answer').fill('1/5');
+  await probability.getByRole('button', { name: 'Check probability' }).click();
+  const probabilityPracticeFeedback = probability.locator('[id$="-feedback"]');
+  await probabilityPracticeFeedback.getByText(/^Correct/).waitFor();
+  assert.ok((await probabilityPracticeFeedback.textContent()).startsWith('Correct'));
   const polynomial = page.getByRole('region', { name: 'Guided polynomial division exploration' });
   await polynomial.getByRole('button', { name: /Term 1/ }).click();
   await polynomial.getByRole('button', { name: /Term 2/ }).click();
@@ -113,17 +144,20 @@ createRoot(document.getElementById('root')!).render(<Harness />);`);
   assert.equal(await balance.count(), 0);
   assert.equal(await data.count(), 0);
   assert.equal(await polynomial.count(), 0);
+  assert.equal(await probability.count(), 0);
   assert.equal(await page.getByRole('region', { name: 'Guided integer number line exploration' }).count(), 0);
   await page.getByRole('button', { name: 'Toggle assessment' }).click();
   assert.equal(await rise.inputValue(), '2');
   assert.equal(await data.getByLabel('Observation value:').inputValue(), '5');
+  assert.equal(await probability.getByLabel('First event total outcomes:').inputValue(), '8');
+  assert.equal(await probability.getByLabel('First event total outcomes:').isDisabled(), true);
   assert.ok((await balance.getByRole('status').first().textContent()).startsWith('2x + 4 = 10.'));
   assert.equal(await page.getByLabel('Slope as an integer or fraction').inputValue(), '');
   const integer = page.getByLabel('Starting integer:');
   await integer.focus(); await page.keyboard.press('ArrowRight');
   assert.equal(await integer.inputValue(), '-1');
   assert.deepEqual(errors, []);
-  console.log('PASS: keyboard arrows/Home, run boundary, semantic events, equivalent-fraction practice, grouped-term polynomial division, reduced-motion mode, assessment unmount and fresh remount for all five activities, plus equal-side operations and undo.');
+  console.log('PASS: keyboard arrows/Home, run boundary, semantic events, equivalent-fraction practice, grouped-term polynomial division, reduced-motion mode, assessment unmount and fresh remount for all six activities, plus equal-side operations and undo.');
 } finally {
   await browser?.close();
   await server?.close();

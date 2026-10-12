@@ -142,6 +142,14 @@ export interface EquationAttemptDiagnosedEvent extends MathInteractionBase {
   phase: "MANIPULATE" | "FRESH_EXIT";
 }
 
+export interface ProbabilityTreeChangedEvent extends MathInteractionBase {
+  type: "PROBABILITY_TREE_CHANGED";
+  first_favorable: number;
+  first_total: number;
+  second_favorable: number;
+  second_total: number;
+}
+
 export interface ExplorerDatasetChangedEvent extends MathInteractionBase {
   type: "EXPLORER_DATASET_CHANGED";
   values: readonly number[];
@@ -169,6 +177,7 @@ export interface ScientificNotationScaleChangedEvent extends MathInteractionBase
 }
 
 export type MathInteractionEvent =
+  | ProbabilityTreeChangedEvent
   | ScientificNotationScaleChangedEvent
   | PolynomialDivisionManipulatedEvent
   | ExplorerDatasetChangedEvent
@@ -258,6 +267,15 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
         Number.isSafeInteger(event.amount_numerator) && Math.abs(event.amount_numerator as number) <= 10000 &&
         Number.isSafeInteger(event.amount_denominator) && (event.amount_denominator as number) >= 1 && (event.amount_denominator as number) <= 10000 &&
         event.preserved === true && !(event.operation === "SCALE_BOTH" && event.amount_numerator === 0);
+    case "PROBABILITY_TREE_CHANGED":
+      return Object.keys(event).every(key => [
+        "schema_version", "type", "first_favorable", "first_total", "second_favorable", "second_total",
+      ].includes(key)) &&
+        [event.first_favorable, event.first_total, event.second_favorable, event.second_total].every(Number.isSafeInteger) &&
+        (event.first_total as number) >= 2 && (event.first_total as number) <= 12 &&
+        (event.second_total as number) >= 2 && (event.second_total as number) <= 12 &&
+        (event.first_favorable as number) >= 1 && (event.first_favorable as number) < (event.first_total as number) &&
+        (event.second_favorable as number) >= 1 && (event.second_favorable as number) < (event.second_total as number);
     case "EXPLORER_DATASET_CHANGED":
       return Object.keys(event).every(key => ["schema_version", "type", "values"].includes(key)) &&
         Array.isArray(event.values) && event.values.length >= 1 && event.values.length <= 6 &&
