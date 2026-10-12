@@ -573,8 +573,8 @@
       "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
       "source_url": "https://msde.maryland.gov/media/17818",
       "source_revision": "July 2025",
-      "printed_page_start": 2,
-      "printed_page_end": 2,
+      "printed_page_start": 1,
+      "printed_page_end": 1,
       "section": "7.NOS.A",
       "column": "2025 MD Index / 2025 Standards Statement",
       "official_subpart_ids": [
@@ -597,7 +597,9 @@
         ],
         "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
         "official_text_reproduction": false
-      }
+      },
+      "pdf_page_index_zero_based": 1,
+      "page_locator_evidence": "MSDE_OFFICIAL_PDF_PAGE_IMAGE_FOOTER_CONFIRMED"
     },
     {
       "expectation_id": "7.NOS.A.2",
@@ -689,8 +691,8 @@
       "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
       "source_url": "https://msde.maryland.gov/media/17818",
       "source_revision": "July 2025",
-      "printed_page_start": 5,
-      "printed_page_end": 5,
+      "printed_page_start": 4,
+      "printed_page_end": 4,
       "section": "7.AT.A",
       "column": "2025 MD Index / 2025 Standards Statement",
       "official_subpart_ids": [
@@ -709,7 +711,9 @@
         ],
         "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
         "official_text_reproduction": false
-      }
+      },
+      "pdf_page_index_zero_based": 4,
+      "page_locator_evidence": "MSDE_OFFICIAL_PDF_PAGE_IMAGE_FOOTER_CONFIRMED"
     },
     {
       "expectation_id": "7.AT.A.3",
@@ -1157,8 +1161,8 @@
       "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
       "source_url": "https://msde.maryland.gov/media/17820",
       "source_revision": "July 2025",
-      "printed_page_start": 2,
-      "printed_page_end": 2,
+      "printed_page_start": 1,
+      "printed_page_end": 1,
       "section": "8.NOS.A",
       "column": "2025 MD Index / 2025 Standards Statement",
       "official_subpart_ids": [],
@@ -1171,7 +1175,9 @@
         "lettered_scope_topics_editorial": [],
         "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
         "official_text_reproduction": false
-      }
+      },
+      "pdf_page_index_zero_based": 1,
+      "page_locator_evidence": "MSDE_OFFICIAL_PDF_PAGE_IMAGE_FOOTER_CONFIRMED"
     },
     {
       "expectation_id": "8.NOS.A.2",
@@ -1835,5 +1841,6 @@
     }
   ],
   "grade7_scope_evidence_note": "Grade 7 editorial scope and subpart topic checks were added against the MSDE July 2025 Grade 7 crosswalk, https://msde.maryland.gov/media/17818. These are author-side audit notes, not independently accepted standards text or mapping authority. Mathematical expressions rendered as images in the official PDF must be checked visually by the independent reviewer.",
-  "grade8_scope_evidence_note": "Grade 8 editorial scope/subpart topic notes are grounded in MSDE July 2025 Grade 8 crosswalk https://msde.maryland.gov/media/17820. Review exact equation/math glyphs visually where PDF extraction omits formulas. No independent acceptance or mapping promotion."
+  "grade8_scope_evidence_note": "Grade 8 editorial scope/subpart topic notes are grounded in MSDE July 2025 Grade 8 crosswalk https://msde.maryland.gov/media/17820. Review exact equation/math glyphs visually where PDF extraction omits formulas. No independent acceptance or mapping promotion.",
+  "page_locator_review_note": "2026-10-12: verified official PDF image footers for 7.NOS.A.1 (index 1, printed 1), 7.AT.A.2 (index 4, printed 4), 8.NOS.A.1 (index 1, printed 1). Other Grade 7/8 page locators remain pending visual footer verification; no global offset applied."
 }
