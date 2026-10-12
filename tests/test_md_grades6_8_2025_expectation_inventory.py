@@ -149,3 +149,25 @@ def test_reconciliation_counts_are_internally_consistent() -> None:
     assert reconciliation["unmapped_expectations"] == 79 - existing == 33
     assert reconciliation["seed_rows_reconciled"] == 28
     assert {r["grade"] for r in rows} == {6, 7, 8}
+
+
+def test_grade_specific_official_document_versions_and_adoption_sources() -> None:
+    manifest = _manifest()
+    curriculum = manifest['curriculum']
+    assert curriculum['adopted_date'] == '2025-07'
+    assert curriculum['board_adoption_date'] == '2025-07-29'
+    assert curriculum['board_adoption_source_url'] == manifest['provenance']['authoritative_landing_page']
+    sources = manifest['provenance']['grade_source_documents']
+    assert {grade: source['revision'] for grade, source in sources.items()} == {
+        '6': 'February 2026', '7': 'July 2025', '8': 'July 2025',
+    }
+    assert sources['6']['companion']['revision'] == 'Version 2, June 2026'
+    assert sources['7']['companion']['revision'] == 'Version 2, June 2026'
+    assert sources['8']['companion']['revision'] == 'UNKNOWN_PENDING_SOURCE_DOCUMENT_VERIFICATION'
+    for row in manifest['expectations']:
+        source = sources[str(row['grade'])]
+        assert row['source_locator'] == source['url']
+        assert row['source_document_id'] == source['source_id']
+        assert row['source_document_revision'] == source['revision']
+        assert source['role'] == 'AUTHORITATIVE_STANDARD_ID_AND_SCOPE'
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'

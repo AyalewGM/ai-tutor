@@ -7,7 +7,7 @@ Source checked: 2026-10-12
 
 ## Authoritative source
 
-The governing documents are MSDE's revised MCCRS Mathematics crosswalks, **adopted July 29, 2025, implemented SY 2026-2027**:
+The governing documents are MSDE's revised MCCRS Mathematics crosswalks, labeled **Adopted: July 2025** and **Implementation: SY 2026–2027**. The separate [official MSDE landing page](https://msde.maryland.gov/academics-0/curriculum-academic-standards/mathematics) confirms the State Board adoption date **July 29, 2025**:
 
 | Grade | Crosswalk | Companion |
 |---|---|---|
@@ -62,3 +62,13 @@ Seed linkage is copied verbatim from the merged reconciliation (`md_grades6_8_20
 2. **Independent Math Review:** review of exact atomic targets only — composite/broad seeds cannot be approved as equivalents per the #293 precedent.
 3. **Content Production:** Grade 8 linear relationships (`8.AT.*`) and Grade 6 rational-number/coordinate scope (`6.NOS.C.*`) are the priority authoring surfaces.
 4. **Engineering (Devin):** no work until mappings are accepted; this manifest is coordination data only.
+
+### Source-document revisions and authority boundaries (2026-10-12)
+
+| Grade | Standards crosswalk revision | Companion guide revision | Source authority |
+|---|---|---|---|
+| 6 | February 2026 | Version 2, June 2026 | MSDE crosswalk = identifiers/scope; companion = guidance |
+| 7 | July 2025 | Version 2, June 2026 | Same separation |
+| 8 | July 2025 | **UNKNOWN — pending direct document verification** | Same separation; do not inherit a guessed companion version |
+
+Each expectation now carries its grade-specific official crosswalk source ID and document revision. The July 29, 2025 Board adoption date is separately attributed to the [MSDE mathematics landing page](https://msde.maryland.gov/academics-0/curriculum-academic-standards/mathematics), not misattributed to a crosswalk cover. MCPS Amplify course listings are **district instructional research only**, never MSDE standards authority. All 79 proposed Mihur relations remain unaccepted.
