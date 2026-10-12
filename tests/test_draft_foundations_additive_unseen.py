@@ -67,6 +67,22 @@ def test_exact_answers_and_substitution_evidence(seed: int) -> None:
         assert expected >= 0
 
 
+def test_result_unknown_tampered_claim_fails_independent_substitution_check() -> None:
+    item = next(
+        candidate
+        for candidate in generate(20261011, 3)["items"]
+        if candidate["problem_structure"] == "result-unknown"
+    )
+    oracle = item["teacher_oracle_server_only"]
+    operands = oracle["operands"]
+    reconstructed_left = operands["start"] + operands["increase"]
+    correct_claim = int(oracle["exact_answer"])
+    tampered_claim = correct_claim + 1
+
+    assert reconstructed_left == correct_claim
+    assert reconstructed_left != tampered_claim
+
+
 def test_candidates_are_fresh_from_fixed_practice_and_fixed_exits() -> None:
     practice = json.loads((DRAFT / "content.draft.json").read_text())["practice_items"][:8]
     pathways = json.loads((DRAFT / "adaptive_pathways.draft.json").read_text())["pathways"][:8]
