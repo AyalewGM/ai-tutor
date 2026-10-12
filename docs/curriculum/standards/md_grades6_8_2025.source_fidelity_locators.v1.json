@@ -585,7 +585,19 @@
       ],
       "scope_summary_editorial": "Add and subtract rational numbers using multiple strategies and representations.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Add/subtract rational numbers; opposites sum to zero; signed number-line movement; subtraction as adding inverse; contextual multistep work.",
+        "lettered_scope_topics_editorial": [
+          "Opposite quantities and zero",
+          "Signed movement and additive inverses",
+          "Distance and subtraction as inverse",
+          "Multistep contextual addition/subtraction"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.NOS.A.2",
@@ -606,7 +618,20 @@
       ],
       "scope_summary_editorial": "Multiply and divide rational numbers using multiple strategies and representations.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Multiply/divide rational numbers; signed-product reasoning with properties; contextual quotient/nonzero divisor; terminating or repeating decimals; multistep contexts.",
+        "lettered_scope_topics_editorial": [
+          "Signed multiplication models and distributive property",
+          "Contextual quotient and nonzero divisor",
+          "Flexible properties",
+          "Terminating/repeating decimal reasoning",
+          "Multistep contextual multiplication/division"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.NOS.A.3",
@@ -624,7 +649,17 @@
       ],
       "scope_summary_editorial": "Solve multistep problems involving positive and negative rational numbers in any form using all four operations.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Solve multistep signed rational problems across fractions, decimals, percents and all four operations; convert forms and assess reasonableness.",
+        "lettered_scope_topics_editorial": [
+          "Properties and conversion among forms",
+          "Estimation/mental-math reasonableness"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.AT.A.1",
@@ -639,7 +674,14 @@
       "official_subpart_ids": [],
       "scope_summary_editorial": "Compute unit rates associated with ratios of fractions, including ratios of lengths, areas, and other quantities in like or different units.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Compute unit rates for ratios of fractions, including like or different units.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.AT.A.2",
@@ -657,7 +699,17 @@
       ],
       "scope_summary_editorial": "Identify proportional relationships between quantities.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Identify proportional relationships using ratio tables/graphs and identify unit rate across representations.",
+        "lettered_scope_topics_editorial": [
+          "Table/graph proportionality and origin",
+          "Constant of proportionality across representations"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.AT.A.3",
@@ -675,7 +727,17 @@
       ],
       "scope_summary_editorial": "Represent proportional relationships between quantities.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Represent proportional relationships by equations and interpret points in context, including origin and unit-rate point.",
+        "lettered_scope_topics_editorial": [
+          "Equation representation",
+          "Contextual interpretation of points"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.AT.A.4",
@@ -690,7 +752,14 @@
       "official_subpart_ids": [],
       "scope_summary_editorial": "Solve ratio and percent problems in context (simple interest, tax, markups/markdowns, tips, commissions, percent change, percent error) by applying proportional reasoning.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Apply proportional reasoning to ratio/percent contexts including interest, tax, markup, discount, tips, commission, fees, percent change and error.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.AT.B.5",
@@ -705,7 +774,14 @@
       "official_subpart_ids": [],
       "scope_summary_editorial": "Apply properties of operations as strategies to add, subtract, factor, and expand linear expressions with rational coefficients.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Add/subtract/factor/expand linear expressions with rational coefficients using operation properties.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.AT.B.6",
@@ -720,7 +796,14 @@
       "official_subpart_ids": [],
       "scope_summary_editorial": "Rewrite an expression in different forms to shed light on the represented context and how quantities in it are related.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Rewrite expressions to illuminate contextual relationships, including percent increase as multiplication.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.AT.C.7",
@@ -735,7 +818,14 @@
       "official_subpart_ids": [],
       "scope_summary_editorial": "Analyze contextual situations to determine whether an equation or inequality best represents the relationship between quantities; justify the choice. (New standard.)",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Choose and justify equation versus inequality for contextual quantitative relationships.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.AT.C.8",
@@ -754,7 +844,18 @@
       ],
       "scope_summary_editorial": "Use variables to represent quantities and write and solve equations to model and reason about relationships in context.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Write/solve rational-coefficient equations, explain equality-preserving solution, and interpret contextual solutions.",
+        "lettered_scope_topics_editorial": [
+          "Write specified equation forms",
+          "Solve and explain equality",
+          "Contextual modeling and interpretation"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.AT.C.9",
@@ -773,7 +874,18 @@
       ],
       "scope_summary_editorial": "Use variables to represent quantities and write and solve inequalities to model and reason about constraints and conditions in context.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Write/solve rational-coefficient inequalities, graph solution sets, and interpret feasible values.",
+        "lettered_scope_topics_editorial": [
+          "Write specified inequality forms",
+          "Solve and graph on number line",
+          "Contextual interpretation of feasible values"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.GR.A.1",
@@ -788,7 +900,14 @@
       "official_subpart_ids": [],
       "scope_summary_editorial": "Solve problems involving scale drawings of geometric figures, including computing actual lengths and areas and reproducing a drawing at a different scale.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Solve scale-drawing length/area problems and reproduce figures at another scale.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.GR.A.2",
@@ -803,7 +922,14 @@
       "official_subpart_ids": [],
       "scope_summary_editorial": "Describe the two-dimensional figures that result from slicing three-dimensional figures with a plane and connect the resulting shapes to the solid's structure.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Analyze 2D plane sections of 3D solids and relate sections to volume/surface-area structure.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.GR.B.3",
@@ -818,7 +944,14 @@
       "official_subpart_ids": [],
       "scope_summary_editorial": "Apply the formulas for area and circumference of a circle to solve problems in context, using informal reasoning to relate circumference and area.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Use circle area/circumference formulas in context and informal visual reasoning about their relationship.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.GR.B.4",
@@ -837,7 +970,18 @@
       ],
       "scope_summary_editorial": "Solve problems with and without context involving area, surface area, and volume of two- and three-dimensional objects.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Solve contextual/noncontextual area, surface area, volume for polygonal/polyhedral and curved solids; justify representations and reasonableness.",
+        "lettered_scope_topics_editorial": [
+          "Polygonal/polyhedral figures",
+          "Cones/cylinders/spheres volume",
+          "Contextual interpretation and justification"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.DS.A.1",
@@ -855,7 +999,17 @@
       ],
       "scope_summary_editorial": "Determine when generalizations about a population are appropriate based on how the sample was selected.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Judge sample representativeness, selection bias, and role of random sampling.",
+        "lettered_scope_topics_editorial": [
+          "Selection and representativeness",
+          "Random sampling and representativeness"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.DS.A.2",
@@ -873,7 +1027,17 @@
       ],
       "scope_summary_editorial": "Use data from random samples to make and evaluate estimates or predictions about a population.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Estimate population characteristics from random samples and compare multiple same-size samples to assess reliability.",
+        "lettered_scope_topics_editorial": [
+          "Single-sample population estimate",
+          "Multiple samples and variability"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.DS.B.3",
@@ -892,7 +1056,18 @@
       ],
       "scope_summary_editorial": "Compare two numerical data distributions using visual displays and numerical measures to draw inferences about populations.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Compare distributions using histograms/visual shape and spread, numerical center/variability including IQR, and contextual significance.",
+        "lettered_scope_topics_editorial": [
+          "Visual distributions",
+          "Center and variability",
+          "Combined contextual comparison"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.DS.C.4",
@@ -907,7 +1082,14 @@
       "official_subpart_ids": [],
       "scope_summary_editorial": "Explain probability on the 0-1 scale (impossible to certain) and use it to estimate the probability of chance events.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Interpret probability 0–1 scale, impossible/certain, relative likelihood and context.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.DS.C.5",
@@ -926,7 +1108,18 @@
       ],
       "scope_summary_editorial": "Understand and apply long-run relative frequency to approximate probabilities and make predictions about chance events.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Use long-run relative frequency and simulation to approximate chance probabilities and predict outcomes.",
+        "lettered_scope_topics_editorial": [
+          "Simulation/data collection",
+          "Relative-frequency approximation",
+          "Prediction"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "7.DS.C.6",
@@ -945,7 +1138,18 @@
       ],
       "scope_summary_editorial": "Develop and use probability models to find probabilities of events and compare them to observed results.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Compare theoretical models to experimental frequencies and evaluate probability-model suitability.",
+        "lettered_scope_topics_editorial": [
+          "Theoretical model",
+          "Experimental comparison",
+          "Model evaluation"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      }
     },
     {
       "expectation_id": "8.NOS.A.1",
@@ -1396,5 +1600,6 @@
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
       "independent_acceptance": "PENDING"
     }
-  ]
+  ],
+  "grade7_scope_evidence_note": "Grade 7 editorial scope and subpart topic checks were added against the MSDE July 2025 Grade 7 crosswalk, https://msde.maryland.gov/media/17818. These are author-side audit notes, not independently accepted standards text or mapping authority. Mathematical expressions rendered as images in the official PDF must be checked visually by the independent reviewer."
 }
