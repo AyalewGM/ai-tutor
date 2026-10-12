@@ -1,9 +1,13 @@
 """Fail-closed checks for Grade 3 comprehensive gap-closure wave."""
 
 from __future__ import annotations
-import importlib.util, json, sys
+
+import importlib.util
+import json
+import sys
 from fractions import Fraction
 from pathlib import Path
+
 import pytest
 
 ROOT=Path(__file__).resolve().parents[1]
