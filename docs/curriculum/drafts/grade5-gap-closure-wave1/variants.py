@@ -152,4 +152,7 @@ def generate(concept_id:str,seed:int,mode:str)->Variant:
 
     else:
         raise AssertionError
+
+    phase_label="Guided practice" if mode=="guided" else "Independent transfer"
+    prompt=f"{phase_label}: {prompt}"
     return Variant(concept_id,mode,seed,item_id,prompt,tuple(fields),oracle)
