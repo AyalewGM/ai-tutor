@@ -1,0 +1,30 @@
+# Middle Grades rational scale and inverse reasoning (DRAFT_UNVERIFIED)
+
+This package deepens an existing Grade 7 rational-operations family. It does not create or approve a canonical identity, alter runtime routing, change scoring, or award learner credit.
+
+## Reuse-first audit
+
+| Existing work | Actual gap | Planned improvement | Verification |
+| --- | --- | --- | --- |
+| Main has `MATH.RAT.MUL`, `MATH.RAT.DIV`, `MATH.RAT.NUMBER_LINE`, and exact `Fraction` generator tests | Existing prompts emphasize procedures; they do not establish direction-and-scale meaning, division as a missing scale, or reasoning transfer | Add one draft package that connects oriented fraction strips, a reflection/scale model, symbolic products, and inverse equations | Exact rational oracle and deterministic namespace tests in `tests/test_middle_grades_rational_scale_v1.py`; independent reviews remain pending |
+| R2 had four authored misconception descriptions and exact answer variants | Independent pedagogy review found that only one misconception was operationally diagnosed; the coordinate task was near transfer; assessment captured only a number | R3 captures operation, inverse strategy, direction, magnitude, exact result, and recomposition; routes observed response signatures to four repairs; and uses unfamiliar calibration records where the learner must identify the missing quantity and operation | Route-classification, scaffold-fade, multi-part oracle, contrast-case, and answer non-disclosure tests; pedagogy re-review remains pending |
+| PR #315 and PR #328 already own ratio/double-number-line content; PR #328 separately owns signed-integer addition and data/spatial depth | New work could duplicate active packages or imply that integer-addition evidence transfers to rational multiplication/division | Reuse only the exact-rational helper contract and explicitly exclude addition/subtraction, ratio lessons, IQR, cube nets, and assessment-backend changes | Scope-boundary assertions prevent overlap; Issue #278 coordination is required before integration |
+| PR #325 traces local `M7.NS.RAT` to Maryland `7.NOS.A.1`–`7.NOS.A.3` but accepts no mapping | A local seed and a canonical generator do not prove expectation-level coverage | Record `7.NOS.A.2` and `7.NOS.A.3` only as provisional candidate targets for independent Standards Mapping review | Provenance remains `PROVISIONAL_NOT_ACCEPTED`; no coverage or mastery claim |
+
+Ownership is separated: Middle Grades Content owns this draft package; Standards Mapping owns expectation approval; Mathematical Review owns correctness; Pedagogical Review owns learning-design acceptance; the assessment backend owner controls scoring contracts; Muse owns accessibility and assessment QA; Engineering Lead approval is required before integration or any scoring-contract change.
+
+The independent-assessment section is a content contract only. It requires server-controlled unseen variants and no hints, but this draft does not modify an API, persist an attempt, or activate mastery writes.
+
+## R3 diagnosis and transfer boundary
+
+The entry diagnostic does not assign a misconception from a total score. It records six response fields and applies ordered, explicit signatures. Each matched route names a repair, a new-number follow-up, and a condition for fading the scaffold. Unmatched responses remain `UNCLASSIFIED_FOR_HUMAN_REVIEW`; the package does not fall back to a generic hint.
+
+Transfer uses calibration logs rather than another expression with renamed variables. A record may hide an output or hide the scale, so the learner must first determine whether direct multiplication or missing-scale division is appropriate. Independent variants request operation choice, inverse strategy, direction, magnitude relation, exact result, and recomposition, while keeping every expected field in the teacher-only oracle.
+
+## R4 bounded Lane A author corrections (independent acceptance deferred)
+
+The R3 independent Pedagogical Review identified two contract defects. R4 now returns `CORRECT_NO_REMEDIATION` **only** after checking every guided response field (including exact rational result and the declared recomposition), instead of routing fully correct work to an unclassified error path. Missing, invalid, inconsistent or partial reasoning never receives that success label; guided success is not mastery and performs no persistence.
+
+All generated calibration prompts and response contracts now ask for `output_direction_prediction`: the direction/sign of the **output**, including when the missing quantity is a scale. This is deliberately different from the sign of the hidden scale (for negative input and positive shrink factor, output direction is NEGATIVE while scale sign is POSITIVE). The separate magnitude relation remains relative to the input. Existing teacher oracles remain server-only draft evidence.
+
+R4 regression assertions cover all four structure families, missing-scale sign contrasts, exact full-field success and adversarial incomplete evidence. This package remains `DRAFT_UNVERIFIED`, `runtime_activation=false`, unwired, and independently unaccepted; the owner's Lane B review deferral does not waive downstream mathematical, pedagogical, standards, backend, MVE or Muse gates.

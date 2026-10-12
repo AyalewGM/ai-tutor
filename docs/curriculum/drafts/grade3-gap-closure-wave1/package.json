@@ -1,0 +1,942 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "Grade 3 Gap Closure Wave 1",
+  "jurisdiction_focus": "Maryland Grade 3 / reusable elementary mathematics",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "base_commit": "cfda3f7301502c712c29f22ae5e4948cfa1ebc75",
+  "purpose": "Deepen all Grade 3 Maryland strand content in one PR while preserving the accepted vertical-slice foundations and shared canonical math.",
+  "existing_reuse": [
+    "docs/curriculum/packs/md-grade3-mccrs-2026_27.json",
+    "PR #92 / docs/curriculum/f024_md_grade3_vertical_slice.md",
+    "equal-groups multiplication",
+    "equal-sharing division",
+    "unit fractions",
+    "rectangle area",
+    "shared place-value/time/data/geometry canonical families"
+  ],
+  "packages": [
+    {
+      "id": "G3-MULTIPLICATION",
+      "title": "Multiplication as equal groups and arrays",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 3.OA",
+      "reuse_policy": "REUSE_EXISTING_MD3_PACK_PR92_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 3 reasoning for multiplication as equal groups and arrays through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer or strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/representation"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "interpret products as equal groups",
+        "connect arrays, repeated addition, and equations",
+        "solve unknown-factor/product stories",
+        "use properties to decompose harder facts"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G3.MULT.ADDITIVE_ONLY",
+          "evidence": "Observed response suggests weakness in interpret products as equal groups.",
+          "socratic_question": "What does the original model show about interpret products as equal groups?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.MULT.ROWS_COLUMNS_SWAP_WITH_MEANING",
+          "evidence": "Observed response suggests weakness in connect arrays, repeated addition, and equations.",
+          "socratic_question": "What does the original model show about connect arrays, repeated addition, and equations?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.MULT.UNKNOWN_ROLE_CONFUSION",
+          "evidence": "Observed response suggests weakness in solve unknown-factor/product stories.",
+          "socratic_question": "What does the original model show about solve unknown-factor/product stories?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for arrays/clocks/graphs/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G3-DIVISION",
+      "title": "Division as sharing and grouping",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 3.OA",
+      "reuse_policy": "REUSE_EXISTING_MD3_PACK_PR92_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 3 reasoning for division as sharing and grouping through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer or strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/representation"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "distinguish sharing vs measurement division",
+        "connect arrays/fact families to quotient",
+        "solve contextual division within 100",
+        "check with multiplication"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G3.DIV.SHARING_GROUPING_SWAP",
+          "evidence": "Observed response suggests weakness in distinguish sharing vs measurement division.",
+          "socratic_question": "What does the original model show about distinguish sharing vs measurement division?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.DIV.DIVISOR_QUOTIENT_SWAP",
+          "evidence": "Observed response suggests weakness in connect arrays/fact families to quotient.",
+          "socratic_question": "What does the original model show about connect arrays/fact families to quotient?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.DIV.NO_MULT_CHECK",
+          "evidence": "Observed response suggests weakness in solve contextual division within 100.",
+          "socratic_question": "What does the original model show about solve contextual division within 100?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for arrays/clocks/graphs/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G3-FACT-FAMILIES",
+      "title": "Multiplication/division properties and fact families",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 3.OA",
+      "reuse_policy": "REUSE_EXISTING_MD3_PACK_PR92_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 3 reasoning for multiplication/division properties and fact families through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer or strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/representation"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "commutative/associative/distributive properties",
+        "inverse relation of multiplication/division",
+        "derive unknown facts from known facts",
+        "explain fact-family structure"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G3.PROP.COMMUTATIVE_APPLIED_TO_DIVISION",
+          "evidence": "Observed response suggests weakness in commutative/associative/distributive properties.",
+          "socratic_question": "What does the original model show about commutative/associative/distributive properties?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.PROP.DISTRIBUTIVE_PARTIAL",
+          "evidence": "Observed response suggests weakness in inverse relation of multiplication/division.",
+          "socratic_question": "What does the original model show about inverse relation of multiplication/division?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.FACTFAMILY.UNRELATED_FACT",
+          "evidence": "Observed response suggests weakness in derive unknown facts from known facts.",
+          "socratic_question": "What does the original model show about derive unknown facts from known facts?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for arrays/clocks/graphs/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G3-PLACE-VALUE",
+      "title": "Place value, rounding, and add/subtract within 1000",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 3.NBT",
+      "reuse_policy": "REUSE_EXISTING_MD3_PACK_PR92_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 3 reasoning for place value, rounding, and add/subtract within 1000 through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer or strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/representation"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "represent hundreds/tens/ones flexibly",
+        "round using benchmark numbers",
+        "add/subtract with regrouping and place-value meaning",
+        "estimate/check reasonableness"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G3.PV.DIGIT_VALUE_CONFUSION",
+          "evidence": "Observed response suggests weakness in represent hundreds/tens/ones flexibly.",
+          "socratic_question": "What does the original model show about represent hundreds/tens/ones flexibly?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.ROUND.ALWAYS_UP",
+          "evidence": "Observed response suggests weakness in round using benchmark numbers.",
+          "socratic_question": "What does the original model show about round using benchmark numbers?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.REGROUP.CHANGE_VALUE",
+          "evidence": "Observed response suggests weakness in add/subtract with regrouping and place-value meaning.",
+          "socratic_question": "What does the original model show about add/subtract with regrouping and place-value meaning?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for arrays/clocks/graphs/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G3-FRACTIONS",
+      "title": "Fractions as numbers",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 3.NF",
+      "reuse_policy": "REUSE_EXISTING_MD3_PACK_PR92_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 3 reasoning for fractions as numbers through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer or strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/representation"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "unit fraction as one equal part",
+        "locate fractions on number line",
+        "generate/recognize equivalent fractions",
+        "compare fractions using same whole and benchmarks"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G3.FRAC.UNEQUAL_WHOLES",
+          "evidence": "Observed response suggests weakness in unit fraction as one equal part.",
+          "socratic_question": "What does the original model show about unit fraction as one equal part?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.FRAC.NUMERATOR_DENOMINATOR_SWAP",
+          "evidence": "Observed response suggests weakness in locate fractions on number line.",
+          "socratic_question": "What does the original model show about locate fractions on number line?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.FRAC.NUMBERLINE_INTERVAL_COUNT",
+          "evidence": "Observed response suggests weakness in generate/recognize equivalent fractions.",
+          "socratic_question": "What does the original model show about generate/recognize equivalent fractions?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for arrays/clocks/graphs/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G3-TIME",
+      "title": "Time and elapsed time",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 3.MD",
+      "reuse_policy": "REUSE_EXISTING_MD3_PACK_PR92_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 3 reasoning for time and elapsed time through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer or strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/representation"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "tell/write time to minute",
+        "represent elapsed time on clock/number line",
+        "cross hour boundaries",
+        "choose addition/subtraction strategy"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G3.TIME.MINUTE_HAND_HOUR_HAND",
+          "evidence": "Observed response suggests weakness in tell/write time to minute.",
+          "socratic_question": "What does the original model show about tell/write time to minute?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.TIME.CLOCK_WRAP",
+          "evidence": "Observed response suggests weakness in represent elapsed time on clock/number line.",
+          "socratic_question": "What does the original model show about represent elapsed time on clock/number line?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.TIME.END_MINUS_START_NO_HOUR_RENAME",
+          "evidence": "Observed response suggests weakness in cross hour boundaries.",
+          "socratic_question": "What does the original model show about cross hour boundaries?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for arrays/clocks/graphs/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G3-DATA",
+      "title": "Scaled picture and bar graphs",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 3.MD",
+      "reuse_policy": "REUSE_EXISTING_MD3_PACK_PR92_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 3 reasoning for scaled picture and bar graphs through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer or strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/representation"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "read graph scale/legend",
+        "construct scaled graphs from data",
+        "solve one/two-step comparison problems",
+        "distinguish category label from frequency"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G3.DATA.SCALE_IGNORED",
+          "evidence": "Observed response suggests weakness in read graph scale/legend.",
+          "socratic_question": "What does the original model show about read graph scale/legend?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.DATA.BAR_HEIGHT_AS_LABEL",
+          "evidence": "Observed response suggests weakness in construct scaled graphs from data.",
+          "socratic_question": "What does the original model show about construct scaled graphs from data?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.DATA.PICTURE_ONE_ICON_ONE",
+          "evidence": "Observed response suggests weakness in solve one/two-step comparison problems.",
+          "socratic_question": "What does the original model show about solve one/two-step comparison problems?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for arrays/clocks/graphs/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G3-AREA-PERIMETER",
+      "title": "Area and perimeter",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 3.MD",
+      "reuse_policy": "REUSE_EXISTING_MD3_PACK_PR92_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 3 reasoning for area and perimeter through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer or strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/representation"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "area as unit-square count",
+        "connect arrays to rectangle area",
+        "perimeter as boundary length",
+        "solve missing-side/context problems and distinguish measures"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G3.GEO.AREA_PERIMETER_SWAP",
+          "evidence": "Observed response suggests weakness in area as unit-square count.",
+          "socratic_question": "What does the original model show about area as unit-square count?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.GEO.UNITS_SQUARE_LINEAR",
+          "evidence": "Observed response suggests weakness in connect arrays to rectangle area.",
+          "socratic_question": "What does the original model show about connect arrays to rectangle area?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.GEO.MISSING_SIDE_DOUBLECOUNT",
+          "evidence": "Observed response suggests weakness in perimeter as boundary length.",
+          "socratic_question": "What does the original model show about perimeter as boundary length?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for arrays/clocks/graphs/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    },
+    {
+      "id": "G3-SHAPES",
+      "title": "Shapes and quadrilateral attributes",
+      "status": "DRAFT_UNVERIFIED",
+      "runtime_activation": false,
+      "mastery_writes": false,
+      "standards_candidate": "Maryland 3.G",
+      "reuse_policy": "REUSE_EXISTING_MD3_PACK_PR92_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
+      "learning_objective": "Develop independent Grade 3 reasoning for shapes and quadrilateral attributes through models, explanation, varied practice, and unseen transfer.",
+      "teaching_flow": [
+        {
+          "phase": "OBSERVE",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "identify quantities/structure"
+        },
+        {
+          "phase": "PREDICT",
+          "representation": "CONCRETE_OR_CONTEXT",
+          "learner_evidence": "predict answer or strategy"
+        },
+        {
+          "phase": "MANIPULATE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "manipulate model/representation"
+        },
+        {
+          "phase": "EXPLAIN",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "explain and verify"
+        },
+        {
+          "phase": "PRACTICE",
+          "representation": "VISUAL_TO_SYMBOLIC",
+          "learner_evidence": "practice with fading support"
+        },
+        {
+          "phase": "DIAGNOSE",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "repair misconception on fresh data"
+        },
+        {
+          "phase": "TRANSFER",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "transfer to unfamiliar context"
+        },
+        {
+          "phase": "VERIFY",
+          "representation": "SYMBOLIC_AND_TRANSFER",
+          "learner_evidence": "verify independently with hidden oracle"
+        }
+      ],
+      "core_reasoning": [
+        "classify by defining attributes",
+        "recognize shared attributes/categories",
+        "identify quadrilateral subcategories",
+        "partition shapes into equal-area parts"
+      ],
+      "misconception_routes": [
+        {
+          "code": "G3.SHAPE.APPEARANCE_OVER_ATTRIBUTE",
+          "evidence": "Observed response suggests weakness in classify by defining attributes.",
+          "socratic_question": "What does the original model show about classify by defining attributes?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.SHAPE.CATEGORIES_MUTUALLY_EXCLUSIVE",
+          "evidence": "Observed response suggests weakness in recognize shared attributes/categories.",
+          "socratic_question": "What does the original model show about recognize shared attributes/categories?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        },
+        {
+          "code": "G3.SHAPE.EQUAL_PARTS_BY_COUNT_ONLY",
+          "evidence": "Observed response suggests weakness in identify quadrilateral subcategories.",
+          "socratic_question": "What does the original model show about identify quadrilateral subcategories?",
+          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+        }
+      ],
+      "guided_practice": {
+        "minimum_seeded_structures": 4,
+        "scaffold_fading": true,
+        "exact_or_structured_oracle": true
+      },
+      "independent_transfer": {
+        "unseen_namespace": true,
+        "no_hints": true,
+        "no_prefilled_setup_when_modeling_is_target": true,
+        "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
+      },
+      "mve_accessibility": [
+        "keyboard-equivalent interaction",
+        "screen-reader mathematical state",
+        "text alternative for arrays/clocks/graphs/shapes",
+        "reduced motion",
+        "no color-only meaning",
+        "focus preserved after feedback"
+      ],
+      "provenance": {
+        "authorship": "Original Mihur-authored tasks and explanations.",
+        "copyright": "No copied worksheets, proprietary assessment items, PDFs, or learner data."
+      }
+    }
+  ],
+  "gates": {
+    "authored": true,
+    "production_wired": false,
+    "standards_accepted": false,
+    "math_accepted": false,
+    "pedagogy_accepted": false,
+    "architecture_accepted": false,
+    "mve_implemented": false,
+    "assessment_backend_wired": false,
+    "muse_qa": false,
+    "deployed": false
+  }
+}

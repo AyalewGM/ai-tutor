@@ -1,0 +1,396 @@
+from __future__ import annotations
+
+import importlib.util
+import json
+import re
+import sys
+from fractions import Fraction
+from pathlib import Path
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]
+DRAFT = ROOT / "docs" / "curriculum" / "drafts" / "ontario-seven-unit-algebra-r1"
+PHASES = [
+    "OBSERVE",
+    "PREDICT",
+    "MANIPULATE",
+    "EXPLAIN",
+    "PRACTICE",
+    "DIAGNOSE",
+    "TRANSFER",
+    "VERIFY",
+]
+
+
+def _load(name: str) -> dict:
+    return json.loads((DRAFT / name).read_text(encoding="utf-8"))
+
+
+def _variants():
+    path = DRAFT / "seeded_equations.py"
+    spec = importlib.util.spec_from_file_location("ontario_equation_variants", path)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_provenance_is_complete_fail_closed_and_build_once() -> None:
+    provenance = _load("provenance.json")
+
+    assert provenance["record_type"] == "MIHUR_CONTENT_PROVENANCE"
+    assert provenance["package_id"] == "ALG-EQUATION-REASONING-R1"
+    assert provenance["status"] == "DRAFT_UNVERIFIED"
+    assert provenance["runtime_activation"] is False
+    assert provenance["learner_data_writes"] is False
+    assert provenance["mastery_writes"] is False
+    assert provenance["canonical"]["new_canonical_identity"] is False
+    assert provenance["canonical"]["build_once_map_many"] is True
+    assert provenance["standards"]["exact_expectation_ids"] == []
+    assert provenance["standards"]["mapping_approval"] == "NONE"
+    assert provenance["standards"]["coverage_credit"] is False
+    assert provenance["classroom_evidence"]["worksheet_content_copied"] is False
+    assert provenance["classroom_evidence"]["student_or_school_identifiers_stored"] is False
+
+
+def test_question_type_matrix_covers_all_seven_units_without_false_coverage() -> None:
+    matrix = _load("question_type_traceability.json")
+    rows = matrix["rows"]
+
+    assert {row["unit"] for row in rows} == {
+        "Build Your Skills",
+        "2.6C",
+        "2.7C",
+        "2.9C",
+        "2.9 Homework",
+        "2.10 Homework",
+        "2.11 Homework",
+    }
+    assert matrix["standards_mapping"]["exact_expectation_ids"] == []
+    assert matrix["standards_mapping"]["approval"] == "NONE"
+    assert matrix["runtime_activation"] is False
+    assert all(row["generator_status"].startswith(("PARTIAL", "ABSENT")) for row in rows)
+    assert all("VERIFIED" not in row["generator_status"] for row in rows)
+    assert any(row["decision"] == "PROPOSED_GAP_PENDING_ARCHITECTURE" for row in rows)
+    assert all("UNKNOWN" in row["source_locator"] for row in rows)
+
+
+def test_original_design_taxonomy_is_ranked_reuse_first_and_rights_safe() -> None:
+    taxonomy = _load("original_question_type_design_taxonomy.json")
+    structures = taxonomy["ranked_structures"]
+
+    assert taxonomy["status"] == "DRAFT_UNVERIFIED"
+    assert taxonomy["runtime_activation"] is False
+    assert taxonomy["research_provenance"]["source_links_in_learner_lessons"] is False
+    assert taxonomy["research_provenance"]["source_wording_reused"] is False
+    assert len(taxonomy["research_provenance"]["sources"]) == 5
+    assert len(structures) == 12
+    assert [row["rank"] for row in structures] == list(range(1, 13))
+    assert len({row["question_type"] for row in structures}) == 12
+    assert all(row["reuse_decision"] != "CREATE_GRADE_SPECIFIC_CANONICAL" for row in structures)
+    assert all(row["existing_evidence"] for row in structures)
+    assert all(row["gap_types"] for row in structures)
+    assert all(row["task_structures"] for row in structures)
+    assert all(row["variability"] for row in structures)
+    assert all(row["mihur_scenario"] for row in structures)
+    assert all(row["accessible_mve"] for row in structures)
+    assert all(row["generator_oracle"] for row in structures)
+    assert all(row["misconception_repair"] for row in structures)
+    assert all(row["unseen_transfer"] for row in structures)
+    assert all(row["acceptance_checks"] for row in structures)
+
+
+def test_package_covers_mihur_flow_and_representation_progression() -> None:
+    package = _load("package.json")
+
+    assert [stage["phase"] for stage in package["learning_sequence"]] == PHASES
+    representations = {
+        representation
+        for stage in package["learning_sequence"]
+        for representation in stage["representations"]
+    }
+    assert representations == {"CONCRETE", "VISUAL", "SYMBOLIC"}
+    assert package["runtime_activation"] is False
+    assessment = package["independent_assessment_contract"]
+    assert assessment["hints_allowed"] is False
+    assert assessment["worked_steps_visible_before_submission"] is False
+    assert assessment["guided_mve_visible"] is False
+    assert assessment["answer_in_public_payload"] is False
+    assert assessment["guided_practice_credit"] is False
+    assert assessment["historical_mastery_mutation"] is False
+
+
+def test_diagnostics_are_response_evidence_specific() -> None:
+    routes = _load("package.json")["diagnostic_router"]
+
+    assert len(routes) == 5
+    assert len({route["misconception_id"] for route in routes}) == 5
+    assert len({route["observed_evidence"] for route in routes}) == 5
+    assert len({route["probe"] for route in routes}) == 5
+    assert len({route["repair"] for route in routes}) == 5
+    assert len({route["exit_check"] for route in routes}) == 5
+    assert all(len(route["socratic_path"]) == 3 for route in routes)
+    assert all(route["evidence_trigger"] for route in routes)
+    assert all(route["exit_variant_namespace"] for route in routes)
+
+
+def test_structured_diagnosis_correct_work_and_five_error_routes() -> None:
+    variants = _variants()
+
+    assert variants.diagnose_response({"response_correct": True}) is None
+    cases = [
+        ({"changed_left": True, "changed_right": False}, "EQ.OP.ONE_SIDE"),
+        (
+            {"outside_factor_applied_to_variable": True, "outside_factor_applied_to_constant": False},
+            "DIST.PARTIAL",
+        ),
+        (
+            {
+                "negative_factor_present": True,
+                "outside_factor_applied_to_constant": True,
+                "constant_product_sign_correct": False,
+            },
+            "DIST.NEGATIVE_DROPPED",
+        ),
+        (
+            {"denominator_present": True, "denominator_operation_both_sides": False},
+            "EQ.DENOMINATOR_IGNORED",
+        ),
+        (
+            {"equivalence_task": True, "global_nonzero_operation": False},
+            "EQ.FALSE_EQUIVALENCE",
+        ),
+    ]
+    for evidence, expected in cases:
+        assert variants.diagnose_response(evidence) == expected
+
+    with pytest.raises(ValueError, match="Unsupported evidence"):
+        variants.diagnose_response({"guess": False})
+    with pytest.raises(ValueError, match="Unsupported evidence"):
+        variants.diagnose_response({"response_correct": True, "guess": False})
+    with pytest.raises(TypeError, match="booleans"):
+        variants.diagnose_response({"changed_left": 1, "changed_right": False})
+
+
+def test_repair_exits_are_deterministic_fresh_and_targeted() -> None:
+    variants = _variants()
+    expected_structures = {
+        "EQ.OP.ONE_SIDE": "VARIABLES_BOTH_SIDES",
+        "DIST.PARTIAL": "NEGATIVE_DISTRIBUTION",
+        "DIST.NEGATIVE_DROPPED": "NEGATIVE_DISTRIBUTION",
+        "EQ.DENOMINATOR_IGNORED": "TWO_STEP_RATIONAL",
+        "EQ.FALSE_EQUIVALENCE": "EQUIVALENT_EQUATIONS",
+    }
+    for misconception, structure in expected_structures.items():
+        exit_item = variants.generate_repair_exit(7, misconception)
+        assert exit_item == variants.generate_repair_exit(7, misconception)
+        assert exit_item.structure == structure
+        assert exit_item.variant_id.startswith(f"{variants.NAMESPACE}:repair-exit:{misconception}:")
+        assert exit_item.prompt != variants.generate(7, "guided").prompt
+        if misconception == "EQ.DENOMINATOR_IGNORED":
+            assert exit_item.left_coefficient.denominator > 1
+            assert "entire left and right sides" in exit_item.prompt
+            solution = Fraction(exit_item.teacher_answer["solution"])
+            assert (
+                exit_item.left_coefficient * solution + exit_item.left_constant
+                == exit_item.right_constant
+            )
+    with pytest.raises(TypeError):
+        variants.generate_repair_exit(True, "EQ.OP.ONE_SIDE")
+    with pytest.raises(ValueError):
+        variants.generate_repair_exit(-1, "EQ.OP.ONE_SIDE")
+    with pytest.raises(ValueError, match="Unsupported misconception"):
+        variants.generate_repair_exit(1, "GENERIC")
+
+
+def test_scaffold_fading_is_evidence_based_and_restorative() -> None:
+    fading = _load("package.json")["scaffold_fading"]
+
+    assert [stage["stage"] for stage in fading["stages"]] == [
+        "MODELED",
+        "COACHED",
+        "INDEPENDENT_READINESS",
+    ]
+    assert all(stage["entry"] and stage["advance_when"] for stage in fading["stages"])
+    assert fading["stages"][-1]["supports"] == []
+    assert "fresh repair exit" in fading["restore_rule"]
+    assert fading["mastery_credit"] is False
+
+
+def test_seeded_replay_namespaces_and_public_non_disclosure() -> None:
+    variants = _variants()
+
+    for seed in range(120):
+        guided = variants.generate(seed, "guided")
+        independent = variants.generate(seed, "independent")
+        assert guided == variants.generate(seed, "guided")
+        assert independent == variants.generate(seed, "independent")
+        assert guided.variant_id != independent.variant_id
+        assert (guided.prompt, guided.options) != (independent.prompt, independent.options)
+        payload = independent.public_payload()
+        assert "teacher_answer" not in payload
+        rendered_keys = " ".join(payload).lower()
+        assert "answer" not in rendered_keys
+        assert "hint" not in rendered_keys
+        assert "teacher" not in rendered_keys
+
+
+def test_unseen_transfer_replay_multifield_oracle_and_non_disclosure() -> None:
+    variants = _variants()
+
+    for seed in range(120):
+        guided = variants.generate_transfer(seed, "guided")
+        independent = variants.generate_transfer(seed, "independent")
+        assert guided == variants.generate_transfer(seed, "guided")
+        assert independent == variants.generate_transfer(seed, "independent")
+        assert guided.variant_id != independent.variant_id
+        assert guided.prompt != independent.prompt
+        assert len(independent.response_schema) == 10
+        payload = independent.public_payload()
+        assert "teacher_answer" not in payload
+        assert set(independent.teacher_answer) == set(independent.response_schema)
+        assert Fraction(independent.teacher_answer["verification_left"]) == Fraction(
+            independent.teacher_answer["verification_right"]
+        )
+        if independent.structure == "PERIMETER_MODEL":
+            width = independent.model_parameters["width"]
+            length = independent.model_parameters["length"]
+            multiplier = independent.model_parameters["multiplier"]
+            offset = independent.model_parameters["offset"]
+            perimeter = independent.model_parameters["perimeter"]
+            assert length == multiplier * width + offset
+            assert 2 * width + 2 * length == perimeter
+            assert independent.teacher_answer["relationship_equation"] == (
+                f"2w + 2({multiplier}w + {offset}) = {perimeter}"
+            )
+            assert str(width) == independent.teacher_answer["unknown_value"]
+            assert independent.teacher_answer["unknown_unit"] == "metres"
+            assert str(length) == independent.teacher_answer["derived_quantity"]
+            assert independent.teacher_answer["derived_quantity_unit"] == "metres"
+            assert Fraction(independent.teacher_answer["verification_left"]) == 2 * width + 2 * length
+            assert independent.teacher_answer["verification_left_unit"] == "metres"
+            assert Fraction(independent.teacher_answer["verification_right"]) == perimeter
+            assert independent.teacher_answer["verification_right_unit"] == "metres"
+        else:
+            sessions = independent.model_parameters["sessions"]
+            rate = independent.model_parameters["rate"]
+            fixed_fee = independent.model_parameters["fixed_fee"]
+            total = independent.model_parameters["total"]
+            assert fixed_fee + rate * sessions == total
+            assert independent.teacher_answer["relationship_equation"] == (
+                f"{variants._text(fixed_fee)} + {variants._text(rate)}s = {variants._text(total)}"
+            )
+            assert str(sessions) == independent.teacher_answer["unknown_value"]
+            assert independent.teacher_answer["unknown_unit"] == "sessions"
+            assert Fraction(independent.teacher_answer["derived_quantity"]) == rate * sessions
+            assert independent.teacher_answer["derived_quantity_unit"] == "dollars"
+            assert Fraction(independent.teacher_answer["verification_left"]) == fixed_fee + rate * sessions
+            assert independent.teacher_answer["verification_left_unit"] == "dollars"
+            assert Fraction(independent.teacher_answer["verification_right"]) == total
+            assert independent.teacher_answer["verification_right_unit"] == "dollars"
+        assert "unit" not in independent.teacher_answer
+
+
+@pytest.mark.parametrize("seed", [-1, True, False, 1.5, "4", None])
+def test_transfer_invalid_seed_values_fail_closed(seed: object) -> None:
+    with pytest.raises((TypeError, ValueError)):
+        _variants().generate_transfer(seed, "independent")
+
+
+@pytest.mark.parametrize("mode", ["", "assessment", "INDEPENDENT", None, []])
+def test_transfer_invalid_modes_fail_closed(mode: object) -> None:
+    with pytest.raises(ValueError, match="Unsupported mode"):
+        _variants().generate_transfer(2, mode)
+
+
+def test_reasoning_rubric_matches_claimed_evidence_without_guided_credit() -> None:
+    package = _load("package.json")
+    assessment = package["independent_assessment_contract"]
+    rubric = assessment["reasoning_rubric"]
+
+    assert set(assessment["evidence_required"]) == {
+        "exact_solution",
+        "substitution_left",
+        "substitution_right",
+        "transformation_justification",
+    }
+    assert rubric["all_fields_required"] is True
+    assert rubric["partial_reasoning_awards_mastery"] is False
+    assert rubric["backend_owned"] is True
+    assert package["unseen_transfer_contract"]["guided_context_reuse"] is False
+    assert package["student_interaction_handoff"]["status"] == "IMPLEMENTED_UNROUTED_NOT_PACKAGE_INTEGRATED"
+
+
+def test_independent_exact_linear_oracle_and_substitution() -> None:
+    variants = _variants()
+
+    for seed in range(240):
+        item = variants.generate(seed, "independent")
+        denominator = item.left_coefficient - item.right_coefficient
+        assert denominator != 0
+        independently_solved = Fraction(
+            item.right_constant - item.left_constant,
+            denominator,
+        )
+        claimed = Fraction(item.teacher_answer["solution"])
+        assert claimed == independently_solved
+        left = item.left_coefficient * claimed + item.left_constant
+        right = item.right_coefficient * claimed + item.right_constant
+        assert left == right
+        assert Fraction(item.teacher_answer["left_at_solution"]) == left
+        assert Fraction(item.teacher_answer["right_at_solution"]) == right
+        assert item.teacher_answer["substitution_verified"] is True
+
+
+def test_distribution_expansion_and_equivalent_options_are_exact() -> None:
+    variants = _variants()
+
+    for seed in range(240):
+        item = variants.generate(seed, "independent")
+        if item.structure == "NEGATIVE_DISTRIBUTION":
+            assert item.distribution_factor is not None
+            assert item.distribution_shift is not None
+            assert item.left_coefficient == item.distribution_factor
+            # The expanded constant includes the distributed shift plus the
+            # separately authored outside constant, so it must differ from
+            # merely dropping the distribution for every generated case.
+            distributed = Fraction(item.distribution_factor * item.distribution_shift)
+            assert item.left_constant != -distributed
+        elif item.structure == "EQUIVALENT_EQUATIONS":
+            index = item.teacher_answer["equivalent_option_index"]
+            assert isinstance(index, int)
+            assert 0 <= index < len(item.options)
+            option = item.options[index]
+            assert re.search(r"=", option)
+            # The selected option must accept the independently solved value.
+            # We intentionally verify this through the stored exact solution
+            # and the base equation; Mathematical Review still owns acceptance
+            # of the option parser/scoring contract.
+            solution = Fraction(item.teacher_answer["solution"])
+            assert item.left_coefficient * solution + item.left_constant == item.right_constant
+
+
+@pytest.mark.parametrize("seed", [-1, True, False, 1.5, "4", None])
+def test_invalid_seed_values_fail_closed(seed: object) -> None:
+    with pytest.raises((TypeError, ValueError)):
+        _variants().generate(seed, "guided")
+
+
+@pytest.mark.parametrize("mode", ["", "assessment", "GUIDED", None, []])
+def test_invalid_modes_fail_closed(mode: object) -> None:
+    with pytest.raises(ValueError, match="Unsupported mode"):
+        _variants().generate(4, mode)
+
+
+def test_accessibility_contract_is_equation_specific() -> None:
+    contract = _load("package.json")["accessibility_contract"]
+
+    assert "both sides" in contract["keyboard_only"]
+    assert "substitution values" in contract["screen_reader_state"]
+    assert "transformation table" in contract["nonvisual_equivalent"].lower()
+    assert contract["focus_recovery"]
+    assert contract["reduced_motion"]
+    assert contract["color_independence"] is True
+    assert contract["independent_scaffolds"] is False

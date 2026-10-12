@@ -96,6 +96,7 @@ export interface LearnContent {
   examples: LearnExample[];
   key_terms?: LearnTerm[];
   watch_out?: string[];
+  guided_interactions?: string[];
 }
 
 export interface WorkspaceProblem {

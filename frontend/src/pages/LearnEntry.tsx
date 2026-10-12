@@ -355,7 +355,10 @@ export default function LearnEntry() {
                   </button>
                   {lessonOpen && (
                     <div className="border-t border-accent/30 px-4 py-3">
-                      <LearnPanel learn={selectedSkill.learn} />
+                      <LearnPanel
+                        learn={selectedSkill.learn}
+                        independentAssessment={false}
+                      />
                     </div>
                   )}
                 </div>

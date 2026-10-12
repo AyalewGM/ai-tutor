@@ -1,0 +1,298 @@
+{
+  "package_id": "draft-g45-fractions-misconception-progressions-v1",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "runtime_activation": false,
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "pathways": [
+    {
+      "id": "reference-whole",
+      "mathematical_invariant": "Reference whole and part count",
+      "visual_model_handoff_spec": "Use equal-sized strip divided into equal parts",
+      "diagnostic": {
+        "question": "A strip has 8 equal parts, 3 shaded. Fraction shaded?",
+        "expected": "3/8",
+        "misconception_answer": "8/3"
+      },
+      "progression": [
+        {
+          "phase": "concrete",
+          "question": "6 equal pieces, 2 shaded. Simplest fraction?",
+          "expected": "1/3",
+          "misconception_answer": "6/2",
+          "instruction": "Model the whole with objects; name the fractional unit."
+        },
+        {
+          "phase": "guided",
+          "question": "12 squares, 9 shaded. Simplest fraction?",
+          "expected": "3/4",
+          "misconception_answer": "12/9",
+          "instruction": "Explain the connection between visual and symbolic representations."
+        },
+        {
+          "phase": "independent",
+          "question": "15 tiles, 6 blue. Simplest fraction?",
+          "expected": "2/5",
+          "misconception_answer": "15/6",
+          "instruction": "Solve without showing worked steps; ask for an independent check."
+        },
+        {
+          "phase": "transfer",
+          "question": "20 seats, 7 empty. Fraction occupied?",
+          "expected": "13/20",
+          "misconception_answer": "7/20",
+          "instruction": "Change context or reference whole; request a written justification."
+        }
+      ],
+      "adaptive_routes": {
+        "diagnostic_incorrect": "concrete then guided",
+        "guided_incorrect": "target the unit/whole misconception and retry with fresh values",
+        "independent_correct_no_reason": "request explanation before assessment",
+        "transfer_incorrect": "return to new diagnostic; no mastery write"
+      },
+      "review_status": "PENDING",
+      "mastery_write_allowed": false
+    },
+    {
+      "id": "number-line-intervals",
+      "mathematical_invariant": "Count intervals, not ticks",
+      "visual_model_handoff_spec": "Show 5 equal intervals and 6 endpoints on a 0–1 line",
+      "diagnostic": {
+        "question": "0–1 line divided into 5 equal intervals. Third jump?",
+        "expected": "3/5",
+        "misconception_answer": "3/6"
+      },
+      "progression": [
+        {
+          "phase": "concrete",
+          "question": "0–1 line has 4 equal intervals. First jump?",
+          "expected": "1/4",
+          "misconception_answer": "1/5",
+          "instruction": "Model the whole with objects; name the fractional unit."
+        },
+        {
+          "phase": "guided",
+          "question": "0–1 line has 6 equal intervals. Fourth jump, simplest fraction?",
+          "expected": "2/3",
+          "misconception_answer": "4/7",
+          "instruction": "Explain the connection between visual and symbolic representations."
+        },
+        {
+          "phase": "independent",
+          "question": "0–1 line has 8 equal intervals. Fifth jump?",
+          "expected": "5/8",
+          "misconception_answer": "5/9",
+          "instruction": "Solve without showing worked steps; ask for an independent check."
+        },
+        {
+          "phase": "transfer",
+          "question": "0–2 line has 8 equal intervals. Sixth jump?",
+          "expected": "3/2",
+          "misconception_answer": "6/8",
+          "instruction": "Change context or reference whole; request a written justification."
+        }
+      ],
+      "adaptive_routes": {
+        "diagnostic_incorrect": "concrete then guided",
+        "guided_incorrect": "target the unit/whole misconception and retry with fresh values",
+        "independent_correct_no_reason": "request explanation before assessment",
+        "transfer_incorrect": "return to new diagnostic; no mastery write"
+      },
+      "review_status": "PENDING",
+      "mastery_write_allowed": false
+    },
+    {
+      "id": "equivalence",
+      "mathematical_invariant": "Scale both numerator and denominator",
+      "visual_model_handoff_spec": "Split 2/3 of a bar into 8/12 by subdividing each third into four",
+      "diagnostic": {
+        "question": "Complete 2/3 = ?/12; missing numerator?",
+        "expected": "8",
+        "misconception_answer": "11"
+      },
+      "progression": [
+        {
+          "phase": "concrete",
+          "question": "Complete 1/2 = ?/8; missing numerator?",
+          "expected": "4",
+          "misconception_answer": "7",
+          "instruction": "Model the whole with objects; name the fractional unit."
+        },
+        {
+          "phase": "guided",
+          "question": "Complete 3/5 = ?/20; missing numerator?",
+          "expected": "12",
+          "misconception_answer": "18",
+          "instruction": "Explain the connection between visual and symbolic representations."
+        },
+        {
+          "phase": "independent",
+          "question": "Complete 4/7 = ?/21; missing numerator?",
+          "expected": "12",
+          "misconception_answer": "18",
+          "instruction": "Solve without showing worked steps; ask for an independent check."
+        },
+        {
+          "phase": "transfer",
+          "question": "Complete 6/9 = ?/3; missing numerator?",
+          "expected": "2",
+          "misconception_answer": "6",
+          "instruction": "Change context or reference whole; request a written justification."
+        }
+      ],
+      "adaptive_routes": {
+        "diagnostic_incorrect": "concrete then guided",
+        "guided_incorrect": "target the unit/whole misconception and retry with fresh values",
+        "independent_correct_no_reason": "request explanation before assessment",
+        "transfer_incorrect": "return to new diagnostic; no mastery write"
+      },
+      "review_status": "PENDING",
+      "mastery_write_allowed": false
+    },
+    {
+      "id": "fraction-addition",
+      "mathematical_invariant": "Keep common-sized fractional units",
+      "visual_model_handoff_spec": "Join two sevenths and three sevenths on a fraction strip",
+      "diagnostic": {
+        "question": "2/7 + 3/7, simplest fraction?",
+        "expected": "5/7",
+        "misconception_answer": "5/14"
+      },
+      "progression": [
+        {
+          "phase": "concrete",
+          "question": "1/6 + 2/6, simplest fraction?",
+          "expected": "1/2",
+          "misconception_answer": "3/12",
+          "instruction": "Model the whole with objects; name the fractional unit."
+        },
+        {
+          "phase": "guided",
+          "question": "4/9 + 2/9, simplest fraction?",
+          "expected": "2/3",
+          "misconception_answer": "6/18",
+          "instruction": "Explain the connection between visual and symbolic representations."
+        },
+        {
+          "phase": "independent",
+          "question": "5/8 + 7/8, improper fraction simplest form?",
+          "expected": "3/2",
+          "misconception_answer": "12/16",
+          "instruction": "Solve without showing worked steps; ask for an independent check."
+        },
+        {
+          "phase": "transfer",
+          "question": "7/10 L + 8/10 L, improper fraction simplest form?",
+          "expected": "3/2",
+          "misconception_answer": "15/20",
+          "instruction": "Change context or reference whole; request a written justification."
+        }
+      ],
+      "adaptive_routes": {
+        "diagnostic_incorrect": "concrete then guided",
+        "guided_incorrect": "target the unit/whole misconception and retry with fresh values",
+        "independent_correct_no_reason": "request explanation before assessment",
+        "transfer_incorrect": "return to new diagnostic; no mastery write"
+      },
+      "review_status": "PENDING",
+      "mastery_write_allowed": false
+    },
+    {
+      "id": "compare-size",
+      "mathematical_invariant": "Compare fractions of the same whole",
+      "visual_model_handoff_spec": "Overlay same-size bars divided into thirds and fifths",
+      "diagnostic": {
+        "question": "Greater: 3/4 or 3/5?",
+        "expected": "3/4",
+        "misconception_answer": "3/5"
+      },
+      "progression": [
+        {
+          "phase": "concrete",
+          "question": "Greater: 1/3 or 1/6?",
+          "expected": "1/3",
+          "misconception_answer": "1/6",
+          "instruction": "Model the whole with objects; name the fractional unit."
+        },
+        {
+          "phase": "guided",
+          "question": "Greater: 2/5 or 2/7?",
+          "expected": "2/5",
+          "misconception_answer": "2/7",
+          "instruction": "Explain the connection between visual and symbolic representations."
+        },
+        {
+          "phase": "independent",
+          "question": "Greater: 5/8 or 3/4?",
+          "expected": "3/4",
+          "misconception_answer": "5/8",
+          "instruction": "Solve without showing worked steps; ask for an independent check."
+        },
+        {
+          "phase": "transfer",
+          "question": "Closer to 1: 7/9 or 4/5?",
+          "expected": "4/5",
+          "misconception_answer": "7/9",
+          "instruction": "Change context or reference whole; request a written justification."
+        }
+      ],
+      "adaptive_routes": {
+        "diagnostic_incorrect": "concrete then guided",
+        "guided_incorrect": "target the unit/whole misconception and retry with fresh values",
+        "independent_correct_no_reason": "request explanation before assessment",
+        "transfer_incorrect": "return to new diagnostic; no mastery write"
+      },
+      "review_status": "PENDING",
+      "mastery_write_allowed": false
+    },
+    {
+      "id": "remaining-whole",
+      "mathematical_invariant": "Reidentify the whole after each step",
+      "visual_model_handoff_spec": "Remove 1/3 of 24 counters then split the remaining 16 into fourths",
+      "diagnostic": {
+        "question": "Start with 24. Remove 1/3, then 1/4 of the remainder. How many remain?",
+        "expected": "12",
+        "misconception_answer": "10"
+      },
+      "progression": [
+        {
+          "phase": "concrete",
+          "question": "Start 12; remove 1/2, then 1/3 of remaining. How many left?",
+          "expected": "4",
+          "misconception_answer": "2",
+          "instruction": "Model the whole with objects; name the fractional unit."
+        },
+        {
+          "phase": "guided",
+          "question": "Start 30; remove 1/5, then 1/4 of remaining. How many left?",
+          "expected": "18",
+          "misconception_answer": "33/2",
+          "instruction": "Explain the connection between visual and symbolic representations."
+        },
+        {
+          "phase": "independent",
+          "question": "Start 48; remove 1/4, then 1/3 of remaining. How many left?",
+          "expected": "24",
+          "misconception_answer": "20",
+          "instruction": "Solve without showing worked steps; ask for an independent check."
+        },
+        {
+          "phase": "transfer",
+          "question": "Store sells 1/3 of 60, then 1/4 of remaining. How many left?",
+          "expected": "30",
+          "misconception_answer": "25",
+          "instruction": "Change context or reference whole; request a written justification."
+        }
+      ],
+      "adaptive_routes": {
+        "diagnostic_incorrect": "concrete then guided",
+        "guided_incorrect": "target the unit/whole misconception and retry with fresh values",
+        "independent_correct_no_reason": "request explanation before assessment",
+        "transfer_incorrect": "return to new diagnostic; no mastery write"
+      },
+      "review_status": "PENDING",
+      "mastery_write_allowed": false
+    }
+  ]
+}
