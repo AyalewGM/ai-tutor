@@ -78,3 +78,20 @@ def test_only_known_seeded_specific_expectations_have_existing_crosswalks():
             assert mapping["acceptance_status"] == (
                 "UNVERIFIED_UNDER_CURRENT_TAXONOMY_GATE"
             )
+
+
+def test_mth1w_official_chart_has_43_page_located_specific_expectations() -> None:
+    manifest = _manifest()
+    evidence = json.loads((MANIFEST.parent / 'on_mth1w_2021.source_fidelity_locators.v1.json').read_text(encoding='utf-8'))
+    assert evidence['status'] == 'AUTHOR_SOURCE_LOCATORS_REVIEW_REQUIRED'
+    assert len(evidence['records']) == len(manifest['expectations']) == 43
+    assert [x['id'] for x in evidence['overall_expectations']] == ['AA1','A1','A2']
+    assert {x['printed_page'] for x in evidence['records']} == {2,3,4,5,6}
+    for row, record in zip(manifest['expectations'], evidence['records'], strict=True):
+        assert row['expectation_id'] == record['expectation_id']
+        assert row['authoritative_chart_printed_page'] == record['printed_page']
+        assert row['full_scope_source_locator'].endswith('#page=' + str(record['printed_page']))
+        assert record['document_url'] == manifest['provenance']['authoritative_expectation_chart_url']
+        assert row['official_subpart_identifiers'] == record['lettered_subparts'] == []
+        assert record['independent_acceptance'] == 'PENDING'
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
