@@ -100,6 +100,18 @@ fraction equivalent to `3/4`, then write the fraction and justify the scaling."
 Expected evidence: `9/12`, scale factor `3`, same-whole explanation. Do not
 pre-fill the target numerator or display a completed fraction bar before response.
 
+### Fraction modeling-versus-independent-evidence boundary
+
+The completed `6/9` fraction bar may be shown during **guided modeling** after
+the learner has locked a prediction. It must not count as independent solution
+evidence for the missing numerator or for transfer. Any response collected while
+that completed bar is visible is guided/manipulative evidence only.
+
+For independent-like repair or transfer within this guided pilot, hide the
+completed target bar and require the learner to reconstruct the scale factor,
+target numerator, and same-whole justification before verification. Do not award
+mastery from either state.
+
 ### Ratio partition — required learner evidence
 
 **Prediction before reveal**
@@ -119,21 +131,42 @@ Require:
 
 **Misconception-specific repair exits**
 
+Learner-facing repair prompts must state only the **new whole and ratio**. They
+must **not** include the expected common unit, shares, recomposition, or any
+answer-formatted example. Expected values below are server/test-side verification
+targets only.
+
+Every repair response must independently provide:
+
+1. total ratio parts;
+2. common unit value;
+3. first share;
+4. second share;
+5. recomposition of both shares to the stated whole.
+
 - `WHOLE_AS_UNIT_VALUE`: learner treats 20 as one ratio part.
   - Socratic prompt: "How many equal ratio parts make the whole before any share
     is assigned?"
-  - Different repair item: share `24` in ratio `1:3`.
-  - Verified exit: `4` total parts, unit `6`, shares `6` and `18`.
+  - Learner-facing repair item: "Share 24 in the ratio 1:3. Find both shares and
+    show how they recombine to 24."
+  - Hidden verification target: `4` total parts, common unit `6`, shares
+    `6` and `18`, recomposition `6+18=24`.
 - `PART_COUNT_AS_SHARE`: learner answers `2` or `3` instead of a quantity.
   - Socratic prompt: "Does the ratio tell the number of counters directly, or the
     number of equal-sized parts each person receives?"
-  - Different repair item: share `30` in ratio `2:3`.
-  - Verified exit: unit `6`, shares `12` and `18`, recomposition `30`.
+  - Learner-facing repair item: "Share 30 in the ratio 2:3. Find both shares and
+    show how they recombine to 30."
+  - Hidden verification target: `5` total parts, common unit `6`, shares
+    `12` and `18`, recomposition `12+18=30`.
 - `UNEQUAL_UNIT_PARTS`: learner assigns different values to ratio parts.
-  - Socratic prompt: "What must be true about the size of every one of the five
-    ratio parts?"
-  - Different repair item: share `28` in ratio `3:4`.
-  - Verified exit: common unit `4`, shares `12` and `16`.
+  - Socratic prompt: "What must be true about the size of every ratio part?"
+  - Learner-facing repair item: "Share 28 in the ratio 3:4. Find both shares and
+    show how they recombine to 28."
+  - Hidden verification target: `7` total parts, common unit `4`, shares
+    `12` and `16`, recomposition `12+16=28`.
+
+A repair is not verified by matching the two final shares alone. The common-unit
+reasoning and exact recomposition must also agree with the hidden contract.
 
 **Unseen transfer**
 
