@@ -83,7 +83,7 @@ def test_seeded_oracle_independently_recomputed_and_replay(mode: str) -> None:
         assert oracle["graph_direction"] == (
             "RIGHT" if expected_sign in (">", ">=") else "LEFT"
         )
-        for x in range(0, 35):
+        for x in range(35):
             lhs = variant.a * x + variant.b
             rhs = variant.c * x + variant.d
             actual = {"<": lhs < rhs, "<=": lhs <= rhs, ">": lhs > rhs, ">=": lhs >= rhs}[
@@ -206,9 +206,14 @@ def test_original_worked_inequalities_are_exact() -> None:
         assert a * t + b == c * t + d
         sign = op if a > c else {"<": ">", "<=": ">=", ">": "<", ">=": "<="}[op]
         assert sign == result
-        def truth(x):
-            left, right = a*x+b, c*x+d
-            return {"<": left < right, "<=": left <= right, ">": left > right, ">=": left >= right}[op]
+        def truth(x, a=a, b=b, c=c, d=d, op=op):
+            left, right = a * x + b, c * x + d
+            return {
+                "<": left < right,
+                "<=": left <= right,
+                ">": left > right,
+                ">=": left >= right,
+            }[op]
         assert truth(yes)
         assert not truth(no)
     assert len(SPEC["worked_models"]) == len(source)
