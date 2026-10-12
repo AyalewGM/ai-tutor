@@ -60,12 +60,23 @@ def test_multistep_word_uses_multiply_then_add():
         assert o["answer"]>0
 
 def test_factors_are_complete_and_classification_consistent():
-    for seed in range(20):
+    for seed in range(40):
         o=MODULE.generate("G4-FACTORS-PATTERNS",seed,"independent").teacher_oracle()
         factors=o["factors"]
         n=max(factors)
         assert all(n%f==0 for f in factors)
         assert o["classification"]==("PRIME" if len(factors)==2 else "COMPOSITE")
+        base=o["multiple_base"]
+        assert o["multiples"]==[base*i for i in range(1,6)]
+        assert all(value%base==0 for value in o["multiples"])
+
+def test_place_value_uses_elementary_half_up_rounding():
+    assert MODULE._round_half_up_positive(14500,1000)==15000
+    assert MODULE._round_half_up_positive(15500,1000)==16000
+    for seed in range(80):
+        o=MODULE.generate("G4-PLACE-VALUE",seed,"guided").teacher_oracle()
+        assert o["rounded_thousand"]%1000==0
+
 
 def test_multiplication_and_division_oracles():
     for seed in range(30):
