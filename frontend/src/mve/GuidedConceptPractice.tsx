@@ -22,6 +22,7 @@ function FractionLesson() {
   const [predictionLocked, setPredictionLocked] = useState(false);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [numericVerified, setNumericVerified] = useState(false);
   const [explainScale, setExplainScale] = useState("");
   const [explainNumerator, setExplainNumerator] = useState("");
   const [explainSameWhole, setExplainSameWhole] = useState("");
@@ -39,13 +40,15 @@ function FractionLesson() {
     event.preventDefault();
     const result = classifyEquivalentAnswer(equivalent, answer);
     if (result.correct) {
-      setFeedback("Numeric practice is correct. Now verify the scaling explanation.");
+      setNumericVerified(true);
+      setFeedback("Numeric practice is correct. Now compare the completed representation and verify the scaling explanation.");
       return;
     }
     if (result.misconception === "NUMERATOR_NOT_SCALED") setRepair("denominator");
     else if (result.misconception === "ADDITIVE_SCALING") setRepair("additive");
     else if (answer.trim() === "2") setRepair("sameNumerator");
     setExplanationVerified(false);
+    setNumericVerified(false);
     setFeedback(result.misconception === "INVALID_INPUT" ? "Enter a whole-number numerator." :
       "Not yet. Complete the targeted repair without revealing the worked answer.");
   };
@@ -68,7 +71,7 @@ function FractionLesson() {
       onClick={() => setPredictionLocked(true)}>Lock prediction</button>
 
     {predictionLocked && <>
-      {!explanationVerified && <ProblemVisual spec={{ type: "fraction_bar",
+      {numericVerified && !explanationVerified && <ProblemVisual spec={{ type: "fraction_bar",
         numerator: equivalent.expandedNumerator, denominator: equivalent.expandedDenominator,
         aria_label: "Six of nine equal parts shaded, same length as two thirds" }} />}
       <form onSubmit={check} className="space-y-2">
@@ -118,7 +121,7 @@ function FractionLesson() {
           repairAnswer.trim().replaceAll(" ", "") === "2/5>2/10" && repairReason === "fifths-larger";
         if (ok) {
           setRepairFeedback("Repair verified with a different item.");
-          setRepair(""); setRepairAnswer(""); setRepairReason("");
+          setRepair(""); setRepairAnswer(""); setRepairUnit(""); setRepairReason("");
         } else setRepairFeedback("Not yet. Use the relationship between equal parts rather than copying the original answer.");
       }}>Check repair</button>
       <p role="status" aria-live="polite">{repairFeedback}</p>
@@ -159,6 +162,7 @@ function RatioLesson() {
   const [explanationVerified, setExplanationVerified] = useState(false);
   const [repair, setRepair] = useState<"" | "whole" | "part" | "unequal">("");
   const [repairAnswer, setRepairAnswer] = useState("");
+  const [repairUnit, setRepairUnit] = useState("");
   const [repairFeedback, setRepairFeedback] = useState("");
   const [transfer, setTransfer] = useState({ parts: "", unit: "", first: "", second: "" });
   const [transferFeedback, setTransferFeedback] = useState("");
@@ -226,14 +230,17 @@ function RatioLesson() {
 
     {repair && <section aria-label="Ratio misconception repair" className="space-y-2 rounded border p-3">
       <h3 className="font-semibold">Repair and verify</h3>
-      <p>{repair === "whole" ? "Share 24 in ratio 1:3. Enter both shares as 6,18." :
-        repair === "part" ? "Share 30 in ratio 2:3. Enter both shares as 12,18." :
-        "Share 28 in ratio 3:4. Enter both shares as 12,16."}</p>
+      <p>{repair === "whole" ? "Share 24 in ratio 1:3. Find the common unit value and both shares." :
+        repair === "part" ? "Share 30 in ratio 2:3. Find the common unit value and both shares." :
+        "Share 28 in ratio 3:4. Find the common unit value and both shares."}</p>
+      <input aria-label="Ratio repair common unit" className={control} value={repairUnit}
+        onChange={e => { setRepairUnit(e.target.value); setRepairFeedback(""); }} />
       <input aria-label="Ratio repair shares" className={control} value={repairAnswer}
         onChange={e => { setRepairAnswer(e.target.value); setRepairFeedback(""); }} />
       <button type="button" className={control} onClick={() => {
         const expected = repair === "whole" ? "6,18" : repair === "part" ? "12,18" : "12,16";
-        if (repairAnswer.replaceAll(" ", "") === expected) {
+        const expectedUnit = repair === "unequal" ? "4" : "6";
+        if (repairUnit.trim() === expectedUnit && repairAnswer.replaceAll(" ", "") === expected) {
           setRepairFeedback("Repair verified with a different partition.");
           setRepair(""); setRepairAnswer("");
         } else setRepairFeedback("Not yet. Find one common unit value before assigning shares.");
