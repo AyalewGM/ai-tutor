@@ -28,6 +28,11 @@ def _validate(concept_id:str,seed:int,mode:str)->None:
     if seed<0: raise ValueError("seed must be nonnegative")
     if mode not in MODES: raise ValueError("mode must be guided or independent")
 
+def _round_half_up_positive(value:int,place:int)->int:
+    if value<0 or place<=0:
+        raise ValueError("positive elementary rounding only")
+    return ((value + place//2)//place)*place
+
 def generate(concept_id:str,seed:int,mode:str)->Variant:
     _validate(concept_id,seed,mode)
     rng=Random(f"{NAMESPACE}:{concept_id}:{mode}:{seed}")
@@ -44,13 +49,20 @@ def generate(concept_id:str,seed:int,mode:str)->Variant:
         fields=("estimate","operation_sequence","intermediate_meaning","answer")
     elif concept_id=="G4-FACTORS-PATTERNS":
         n=rng.randint(12,60); factors=[i for i in range(1,n+1) if n%i==0]
-        prompt=f"List all factor pairs of {n}, classify it as prime or composite, and give the first five multiples of {n//max(1,len(factors)//2)}."
-        oracle={"factors":factors,"classification":"PRIME" if len(factors)==2 else "COMPOSITE"}
+        multiple_base=n//max(1,len(factors)//2)
+        multiples=[multiple_base*i for i in range(1,6)]
+        prompt=f"List all factor pairs of {n}, classify it as prime or composite, and give the first five multiples of {multiple_base}."
+        oracle={
+            "factors":factors,
+            "classification":"PRIME" if len(factors)==2 else "COMPOSITE",
+            "multiple_base":multiple_base,
+            "multiples":multiples,
+        }
         fields=("factor_pairs","classification","multiples","pattern_explanation")
     elif concept_id=="G4-PLACE-VALUE":
         n=rng.randint(10000,999999)
         prompt=f"Write {n} in expanded form, identify the value of its leftmost digit, and round it to the nearest thousand."
-        place=10**(len(str(n))-1); lead=int(str(n)[0]); rounded=round(n/1000)*1000
+        place=10**(len(str(n))-1); lead=int(str(n)[0]); rounded=_round_half_up_positive(n,1000)
         oracle={"expanded_required":True,"leftmost_value":lead*place,"rounded_thousand":rounded}
         fields=("expanded_form","leftmost_value","rounded_thousand","number_line_justification")
     elif concept_id=="G4-MULTIPLICATION":
