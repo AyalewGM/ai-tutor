@@ -121,9 +121,27 @@ def generate(concept_id: str, seed: int, mode: str) -> Variant:
         vertices = ((0, 0), (cap, 0), (0, cap))
         scored = [(px * x + py * y, x, y) for x, y in vertices]
         best = max(scored)
-        prompt = f"Maximize P={px}x+{py}y subject to x>=0, y>=0, x+y<={cap}. Justify the optimum using feasible vertices."
-        oracle = {"optimal_point": [best[1], best[2]], "optimal_value": best[0], "vertices": [list(v) for v in vertices]}
-        fields = ("feasible_vertices", "objective_values", "optimal_point", "context_justification")
+        tied_edge = px == py
+        prompt = (
+            f"Maximize P={px}x+{py}y subject to x>=0, y>=0, x+y<={cap}. "
+            "Justify the optimum using feasible vertices and identify the full optimal set if the optimum is not unique."
+        )
+        oracle = {
+            "optimal_point": [best[1], best[2]],
+            "optimal_value": best[0],
+            "vertices": [list(v) for v in vertices],
+            "unique_optimum": not tied_edge,
+            "optimal_set": (
+                {
+                    "kind": "EDGE",
+                    "equation": f"x+y={cap}",
+                    "endpoints": [[cap, 0], [0, cap]],
+                }
+                if tied_edge
+                else {"kind": "POINT", "point": [best[1], best[2]]}
+            ),
+        }
+        fields = ("feasible_vertices", "objective_values", "optimal_point", "optimal_set", "context_justification")
 
     elif concept_id == "G9-LINEAR-EXP-INTERSECTION":
         base = 2
@@ -201,8 +219,22 @@ def generate(concept_id: str, seed: int, mode: str) -> Variant:
     elif concept_id == "G9-TRIANGLE-CONGRUENCE":
         case = rng.choice(("SSS", "SAS", "ASA", "AAS", "HL", "AAA", "SSA"))
         valid = case in {"SSS", "SAS", "ASA", "AAS", "HL"}
-        prompt = f"Two triangles are claimed congruent using {case}. Is this sufficient in the stated generic case? Explain correspondence and limits."
-        oracle = {"criterion": case, "sufficient": valid}
+        if case == "HL":
+            prompt = (
+                "Two right triangles are claimed congruent because their hypotenuses and one pair "
+                "of corresponding legs are congruent. Is HL sufficient here? Explain correspondence "
+                "and why the right-triangle condition matters."
+            )
+        else:
+            prompt = (
+                f"Two triangles are claimed congruent using {case}. Is this sufficient in the stated "
+                "generic case? Explain correspondence and limits."
+            )
+        oracle = {
+            "criterion": case,
+            "sufficient": valid,
+            "right_triangle_condition_required": case == "HL",
+        }
         fields = ("sufficient", "criterion", "correspondence_explanation")
 
     elif concept_id == "G9-RANDOM-SAMPLING":
