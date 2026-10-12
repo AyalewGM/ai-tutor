@@ -98,8 +98,12 @@ def generate(concept_id:str,seed:int,mode:str)->Variant:
             a=Fraction(rng.randint(1,5),rng.choice((2,3,4,5)))
             b=Fraction(rng.randint(1,5),rng.choice((2,3,4,5)))
             result=a*b
-            prompt=f"Predict whether {_fmt(a)} × {_fmt(b)} is larger or smaller than {_fmt(a)}, then model and solve."
-            oracle={"answer":_fmt(result),"scaling_relation":"SMALLER" if 0<b<1 else "LARGER_OR_EQUAL"}
+            prompt=(
+                f"Predict whether {_fmt(a)} × {_fmt(b)} is larger than, smaller than, "
+                f"or equal to {_fmt(a)}, then model and solve."
+            )
+            relation = "SMALLER" if 0 < b < 1 else "EQUAL" if b == 1 else "LARGER"
+            oracle={"answer":_fmt(result),"scaling_relation":relation,"scale_factor":_fmt(b)}
         else:
             whole=rng.randint(2,8); unit=Fraction(1,rng.choice((2,3,4,5,6)))
             result=Fraction(whole,1)/unit
