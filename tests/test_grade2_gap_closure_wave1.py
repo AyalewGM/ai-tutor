@@ -57,6 +57,8 @@ def test_skip_patterns_have_constant_step():
         o=MODULE.generate("G2-SKIP-PATTERNS",seed,"independent").teacher_oracle()
         seq=o["sequence"]; step=o["step"]
         assert all(seq[i+1]-seq[i]==step for i in range(len(seq)-1))
+        assert o["previous_term"]==seq[-2]
+        assert o["previous_term"]+step==seq[-1]
 
 def test_addition_subtraction_oracles_within_grade_bounds():
     for seed in range(40):
