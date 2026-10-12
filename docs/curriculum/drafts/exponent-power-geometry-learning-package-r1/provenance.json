@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "MIHUR_CONTENT_PROVENANCE",
+  "package_id": "EXPONENT-POWER-GEOMETRY-LEARNING-PACKAGE-R1",
+  "revision": "issue-337-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "attempt_writes": false,
+  "mastery_writes": false,
+  "source_scope": {
+    "milestone": "GitHub Issue #337",
+    "teacher_unit": "2.10 powers and geometry",
+    "source_access": "ABSTRACT_QUESTION_TYPE_HANDOFF_ONLY",
+    "original_equivalent_content": true,
+    "copyrighted_wording_reused": false,
+    "child_or_school_identifiers": false
+  },
+  "standards": {
+    "official_source_url": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "publication_version": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "exact_expectation_ids": [],
+    "mapping_status": "NONE_NOT_CLAIMED",
+    "coverage_credit": false
+  },
+  "canonical": {
+    "family": "MATH.NS.EXPONENTS",
+    "status": "HISTORICAL_CANONICAL_FAMILY_REUSED_NO_IDENTITY_CHANGE",
+    "new_identity": false,
+    "build_once_map_many": true,
+    "jurisdiction_specific_identity": false,
+    "draft_scope_cards_are_authority": false
+  },
+  "reused_artifacts": [
+    {
+      "artifact": "docs/curriculum/drafts/ontario-algebra-family-generators-r1/seeded_family_extensions.py",
+      "source_pr": 344,
+      "accepted_head": "bb2c2e1293c556bc3ca365b945ec72caee83bac9",
+      "reuse": "combined product, quotient, power-of-power, positive/zero/negative exponent and square/cube transfer variants"
+    },
+    {
+      "artifact": "docs/curriculum/drafts/ontario-algebra-family-generators-r1/misconception_paths.json",
+      "source_pr": 344,
+      "accepted_head": "bb2c2e1293c556bc3ca365b945ec72caee83bac9",
+      "reuse": "accepted zero-exponent, negative-exponent and geometry-power repair starting paths"
+    },
+    {
+      "artifact": "app/domains/geometry_measurement.py",
+      "reuse": "historical Pythagorean implementation reference only; no runtime binding"
+    }
+  ],
+  "pedagogical_evidence": [
+    {
+      "reference": "NCTM, Principles to Actions, 2014",
+      "use": "connect repeated-factor, symbolic and geometric representations while eliciting reasoning",
+      "copied_material": false
+    },
+    {
+      "reference": "CAST Universal Design for Learning Guidelines 3.0, 2024",
+      "use": "multiple representations, keyboard and nonvisual equivalence, explicit scaffold removal",
+      "copied_material": false
+    }
+  ],
+  "progression_coverage": {
+    "observe_predict_manipulate_explain_practice_diagnose_transfer_verify": "AUTHORED_DRAFT_ALL_PHASES",
+    "concrete_visual_symbolic": "AUTHORED_AS_MVE_REQUIREMENTS_NOT_IMPLEMENTED",
+    "misconception_specific_paths": 11,
+    "deterministic_seeded_practice": true,
+    "independent_oracle": "IMPLEMENTED_AS_CONTENT_TEST_RECONSTRUCTION",
+    "unseen_assessment": "CONTRACT_AUTHORED_BACKEND_NOT_WIRED"
+  },
+  "existing_work_gap_improvement_verification": {
+    "existing_work": "PR #344 provides accepted exact combined exponent-law and square/cube transfer generators.",
+    "actual_gap": "No complete student package connected repeated factors, power of product/quotient, requested-base rewrites, structural comparison, zero/negative exponents, cube surface/volume, Pythagorean square areas and exact substitution.",
+    "improvement": "One jurisdiction-neutral package reuses accepted generators and adds original deterministic package-level practice, eleven evidence-specific repairs, geometry transfer and independent no-leak contracts.",
+    "verification": "Independent tests recompute every new oracle, accepted generator adapter, targeted repair exit, phase/representation contract and draft isolation; independent reviews remain pending."
+  },
+  "explicit_noncoverage": [
+    "irrational exponent values",
+    "fractional exponents and radical equivalence",
+    "three-dimensional Pythagorean distance",
+    "authoritative standards mapping",
+    "runtime MVE, routing or trusted assessment"
+  ],
+  "independent_reviews": {
+    "mathematical": "PENDING_FOR_NEW_PACKAGE_ONLY_REUSED_GENERATOR_MATH_PREVIOUSLY_ACCEPTED",
+    "pedagogical": "PENDING",
+    "standards": "PENDING",
+    "muse_qa": "PENDING_EXTERNAL_VERIFICATION",
+    "security": "PENDING_CI_APPSEC"
+  },
+  "delivery_status": {
+    "authored": true,
+    "implemented": "CONTENT_FLOW_GUIDED_DIAGNOSIS_AND_TEST_ORACLE_ONLY",
+    "wired": false,
+    "independently_accepted": false,
+    "deployed": false
+  }
+}
