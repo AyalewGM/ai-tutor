@@ -95,9 +95,12 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
         else:
             assert row["repository_existing_crosswalks"] == []
             assert row["classification"]["standards_mapped"] == "NO"
-            assert row["proposed_mapping_status"] == (
-                "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND"
+            expected_status = (
+                "NO_REPOSITORY_EXPECTATION_EQUIVALENCE_EVIDENCE"
+                if row["expectation_id"] == "7.PS.2"
+                else "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND"
             )
+            assert row["proposed_mapping_status"] == expected_status
 
 
 def test_grade8_has_no_repository_rows_at_all() -> None:
