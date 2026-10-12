@@ -60,6 +60,10 @@ def test_exact_answers_and_substitution_evidence(seed: int) -> None:
         assert int(oracle["exact_answer"]) == expected
         evidence = oracle["verification_evidence"]
         assert evidence["substituted_left"] == evidence["substituted_right"]
+        if item["problem_structure"] == "result-unknown":
+            operands = oracle["operands"]
+            assert evidence["substituted_left"] == operands["start"] + operands["increase"]
+            assert evidence["substituted_right"] == expected
         assert expected >= 0
 
 
