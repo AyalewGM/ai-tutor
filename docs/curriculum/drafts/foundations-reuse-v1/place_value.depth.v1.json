@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.1",
+  "package_id": "W1-G2-PLACE-VALUE-REGROUP",
+  "revision": "foundations-reuse-r2",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "source_pr": 327,
+  "source_pedagogy_review": {
+    "verdict": "ACCEPT_PEDAGOGY_ONLY",
+    "pinned_head_sha": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
+    "current_revision_status": "PENDING_INDEPENDENT_R2_REVIEW"
+  },
+  "existing_family": "MATH.PV.COMPOSE_NONSTANDARD",
+  "canonical_family": "MATH.NS.COMPOSE_DECOMPOSE",
+  "canonical_approval": "UNKNOWN",
+  "implementation": "DRAFT_EXECUTABLE_CONTENT_NOT_WIRED",
+  "invariants": [
+    "value = 100 × hundreds + 10 × tens + ones",
+    "one hundred and ten tens are equal quantities",
+    "comparison is decided by the highest place where digits differ"
+  ],
+  "generated_structures": [
+    "COMPOSE_NONSTANDARD",
+    "EXCHANGE_INVARIANT",
+    "ZERO_PLACEHOLDER",
+    "COMPARE_FIRST_DIFFERENCE",
+    "TRANSFER_BUNDLES"
+  ],
+  "representational_progression": [
+    {
+      "level": "CONCRETE",
+      "learner_evidence": "Build or describe hundreds, tens, and ones; exchange one hundred for ten tens while retaining the inventory total."
+    },
+    {
+      "level": "VISUAL",
+      "learner_evidence": "Use a labelled place-value table and a text-equivalent inventory; compare from the highest place without relying on colour or motion."
+    },
+    {
+      "level": "SYMBOLIC",
+      "learner_evidence": "Write 100h + 10t + o, a canonical numeral, and an equality proving that the exchange preserved value."
+    }
+  ],
+  "stages": [
+    {
+      "phase": "OBSERVE",
+      "prompt": "Read a base-ten inventory in objects and in a nonvisual table; state what each hundred, ten, and one is worth before calculating."
+    },
+    {
+      "phase": "PREDICT",
+      "prompt": "Predict the new counts and whether the total will change when one hundred is exchanged for ten tens; record both claims before manipulating."
+    },
+    {
+      "phase": "MANIPULATE",
+      "prompt": "Perform the exchange with keyboard-operable blocks or inventory controls and compare the spoken total before and after."
+    },
+    {
+      "phase": "EXPLAIN",
+      "prompt": "Connect the inventory to 100h + 10t + o; explain why changed counts can name the same total and why zero retains an empty place."
+    },
+    {
+      "phase": "PRACTICE",
+      "prompt": "Solve fresh compose, exchange, zero-placeholder, and comparison variants; record an equation and place-value reason, not only a numeral."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "prompt": "Use the response and stated place to select one evidence-specific repair, then require a different-structure exit item before fading the model."
+    },
+    {
+      "phase": "TRANSFER",
+      "prompt": "Interpret cartons of 100, packs of 10, and loose units when pack counts exceed nine; give the total and canonical inventory with an invariant equation."
+    },
+    {
+      "phase": "VERIFY",
+      "prompt": "Submit a hidden fresh variant with representation, equation, answer, and explanation; backend scoring remains unimplemented and guided work awards no mastery."
+    }
+  ],
+  "misconception_repairs": [
+    {
+      "error": "DIGIT_VS_VALUE",
+      "observed_evidence": "The response adds the visible counts rather than weighting hundreds by 100 and tens by 10.",
+      "probe": "Does a count of five tens mean five objects or fifty ones? How would both appear in the inventory table?",
+      "repair": "Build one ten as ten ones, label the unit of every count, then reconstruct 100h + 10t + o on a different item."
+    },
+    {
+      "error": "NONSTANDARD_COUNT_AS_DIGIT",
+      "observed_evidence": "For more than nine tens, the response keeps only the final tens digit and loses the hundreds created by regrouping.",
+      "probe": "Which ten tens can become one hundred, and what remains after that exchange?",
+      "repair": "Circle a group of ten tens, exchange it for one hundred, and verify that both inventories have the same weighted total."
+    },
+    {
+      "error": "EXCHANGE_CREATES_VALUE",
+      "observed_evidence": "The reported total increases by one hundred after one hundred is replaced with ten tens.",
+      "probe": "Were new objects added, or was the same quantity renamed in smaller units?",
+      "repair": "Count the same hundred as ten tens, compare both sides of the equality, and perform a reversible exchange."
+    },
+    {
+      "error": "ZERO_PLACEHOLDER_OMITTED",
+      "observed_evidence": "The response compresses a number with zero tens, such as 506, into a two-digit numeral such as 56.",
+      "probe": "Where will the hundreds digit stay if the tens column is empty?",
+      "repair": "Keep all three labelled columns, place a zero in the empty tens column, and read each digit with its value."
+    },
+    {
+      "error": "COMPARED_ONES_FIRST",
+      "observed_evidence": "The comparison symbol follows the ones digits even though equal hundreds and different tens decide the order.",
+      "probe": "What is the highest place where these numbers differ, and can any ones reverse that difference?",
+      "repair": "Align both numbers in a place-value table and stop at the first difference from the left before checking with quantities."
+    },
+    {
+      "error": "INEQUALITY_SYMBOL_REVERSED",
+      "observed_evidence": "The learner identifies the larger numeral but points the inequality symbol toward it.",
+      "probe": "Read your comparison aloud from left to right. Does the sentence match the symbol?",
+      "repair": "Name the left and right values aloud, choose the spoken relation, then verify with the highest differing place."
+    }
+  ],
+  "accessibility": {
+    "mve_requirement_status": "REQUIREMENT_ONLY_NOT_IMPLEMENTED_OR_WIRED",
+    "keyboard_exchange": true,
+    "spoken_inventory_and_total": true,
+    "nonvisual_place_value_table": true,
+    "focus_recovery": "Preserve the inventory and response; return focus to the first inconsistent field with a concise reason.",
+    "reduced_motion": true,
+    "no_colour_or_motion_only_evidence": true,
+    "assessment_scaffolds": false
+  },
+  "seeded_practice": {
+    "module": "place_value_seeded.py",
+    "guided_namespace": "foundations-place-value-r2:guided",
+    "independent_namespace": "foundations-place-value-r2:independent",
+    "answer_oracle": "Independent coefficient reconstruction and integer comparison in tests",
+    "public_answer_disclosure": false
+  },
+  "assessment_contract": {
+    "required_evidence": [
+      "representation_or_inventory",
+      "equation_or_comparison",
+      "answer",
+      "explanation"
+    ],
+    "hints_allowed": false,
+    "guided_mve_visible": false,
+    "guided_practice_credit": false,
+    "backend_status": "NOT_IMPLEMENTED",
+    "unseen_transfer": "TRANSFER_BUNDLES uses a distinct physical-unit context and noncanonical pack counts"
+  },
+  "review_status": "PENDING_INDEPENDENT_R2_REVIEW"
+}

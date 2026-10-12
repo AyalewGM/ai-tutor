@@ -156,6 +156,10 @@ function LinearGraph({ spec }: { spec: VisualSpec }) {
     ] as [number, number][]
   )
     .filter(([x, y]) => x >= min - 1e-9 && x <= max + 1e-9 && y >= min - 1e-9 && y <= max + 1e-9)
+    // A corner may occur in both the x-boundary and y-boundary candidates.
+    .filter(([x, y], index, points) => !points.slice(0, index).some(
+      ([px, py]) => Math.abs(px - x) < 1e-9 && Math.abs(py - y) < 1e-9,
+    ))
     .slice(0, 2);
   const lattice = spec.mark_lattice
     ? ([
@@ -195,6 +199,15 @@ function LinearGraph({ spec }: { spec: VisualSpec }) {
           y2={yPos(endpoints[1][1])}
           className="viz-curve"
         />
+      )}
+      {spec.show_slope_triangle && mDen > 0 && mDen <= max &&
+        intercept >= min && intercept <= max && intercept + mNum >= min && intercept + mNum <= max && (
+        <g>
+          <path d={`M ${pos(0)} ${yPos(intercept)} H ${pos(mDen)} V ${yPos(intercept + mNum)}`}
+            fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="4 3" />
+          <text x={pos(mDen / 2)} y={yPos(intercept) + 16} textAnchor="middle" className="viz-label">run {mDen}</text>
+          <text x={pos(mDen) + 5} y={yPos(intercept + mNum / 2) - 5} className="viz-label">rise {mNum}</text>
+        </g>
       )}
       {lattice.map(([x, y]) => (
         <circle key={`${x},${y}`} cx={pos(x)} cy={yPos(y)} r="4.5" className="viz-point viz-point-a" />

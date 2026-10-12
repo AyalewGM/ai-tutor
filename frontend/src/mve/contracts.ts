@@ -247,6 +247,7 @@ export interface LegacyVisualSpec extends VisualSpecBase {
   m_den?: number;
   labeled?: boolean;
   mark_lattice?: boolean;
+  show_slope_triangle?: boolean;
   a_num?: number;
   a_den?: number;
   h?: number;

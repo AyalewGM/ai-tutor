@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "MIHUR_CONTENT_PROVENANCE",
+  "package_id": "ALG-SIGNED-ONE-STEP-R1",
+  "revision": "build-your-skills-signed-one-step-r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "source": {
+    "milestone": "GitHub Issue #337",
+    "classroom_document": "Build Your Skills",
+    "source_access": "ABSTRACT_TOPIC_HANDOFF_ONLY",
+    "page_locator": "UNKNOWN",
+    "worksheet_wording_copied": false,
+    "student_or_school_data_stored": false
+  },
+  "standards": {
+    "official_source_url": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "publication_version": "UNKNOWN_PENDING_STANDARDS_MAPPING",
+    "exact_expectation_ids": [],
+    "mapping_status": "UNKNOWN",
+    "mapping_approval": "NONE",
+    "coverage_credit": false
+  },
+  "canonical": {
+    "family": "MATH.EE.EQUATION.ONE",
+    "family_approval_for_revision": "PENDING_INDEPENDENT_REVIEW",
+    "new_canonical_identity": false,
+    "build_once_map_many": true
+  },
+  "reuse": {
+    "families": [
+      "app/canonical_problem_families.py:MATH.EQ.ONE.ADD_DIRECT",
+      "app/domains/algebra_functions.py:MATH.ALG.EQ.ONE.MULT"
+    ],
+    "mve": [
+      "app/services/visualization.py:_balance_scale",
+      "frontend/src/mve/InteractiveEquationEquivalence.tsx"
+    ],
+    "reuse_status": "CONTRACT_REUSE_ONLY_NOT_WIRED"
+  },
+  "existing_work_gap_improvement_verification": {
+    "existing_work": "One-step additive and multiplicative generators plus equation balance/equivalence components exist in separate reviewed or draft assets.",
+    "actual_gap": "No connected package demonstrates signed addition, subtraction, multiplication and division inverse operations with operation-specific diagnosis, fresh exits and hidden exact substitution evidence.",
+    "improvement": "One jurisdiction-neutral seeded package covers all four structures, both-side equality evidence, signed-operand reasoning, misconception-specific repairs and independent answer non-disclosure.",
+    "verification": "Focused tests independently recompute all four operations across guided and independent seeds, inspect non-disclosure, adversarial diagnoses, fresh exits, provenance and runtime isolation. Independent review remains pending."
+  },
+  "learning_design": {
+    "mihur_phases": ["OBSERVE", "PREDICT", "MANIPULATE", "EXPLAIN", "PRACTICE", "DIAGNOSE", "TRANSFER", "VERIFY"],
+    "representations": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+    "misconception_paths": "OPERATION_SPECIFIC_PLUS_SIGN_ONE_SIDE_AND_SUBSTITUTION",
+    "deterministic_seeded_practice": true,
+    "unseen_assessment": "SEPARATE_INDEPENDENT_NAMESPACE_TEACHER_ORACLE_HIDDEN",
+    "independent_oracle": "INDEPENDENT_TEST_RECOMPUTATION_PLUS_TEACHER_SUBSTITUTION_EVIDENCE"
+  },
+  "independent_reviews": {
+    "mathematics": "PENDING",
+    "pedagogy": "PENDING",
+    "standards": "PENDING",
+    "muse_qa": "PENDING_EXTERNAL_VERIFICATION",
+    "assessment_backend": "NOT_IMPLEMENTED",
+    "release": "NOT_APPROVED",
+    "deployment": "NOT_DEPLOYED"
+  }
+}

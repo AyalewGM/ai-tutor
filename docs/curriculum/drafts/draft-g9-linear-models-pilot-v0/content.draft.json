@@ -1,0 +1,565 @@
+{
+  "package_id": "draft-g9-linear-models-pilot-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "grade_band": "9 / Algebra I",
+  "source_notes": [
+    "Original Mihur-authored questions; no copied proprietary exercises.",
+    "Content research themes: micro-progressions, application breadth, error analysis, explicit reasoning and self-checking.",
+    "Not a curriculum mapping; any jurisdiction/grade applicability is provisional."
+  ],
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "runtime_activation": false,
+  "practice_items": [
+    {
+      "item_id": "draft-g9-linear_equations-01",
+      "provisional_skill": "LINEAR_EQUATIONS",
+      "question": "Solve 3x+7=22 for x.",
+      "expected": "5",
+      "answer_contract": "integer",
+      "hints": [
+        "Subtract 7 from both sides.",
+        "Then divide both sides by 3.",
+        "3x=15, so x=5."
+      ],
+      "worked_solution": "3x=15, so x=5.",
+      "misconception_tag": "undoing-operations",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_equations-02",
+      "provisional_skill": "LINEAR_EQUATIONS",
+      "question": "Solve 5(x−2)=30 for x.",
+      "expected": "8",
+      "answer_contract": "integer",
+      "hints": [
+        "Divide both sides by 5.",
+        "Then add 2.",
+        "x−2=6, so x=8."
+      ],
+      "worked_solution": "x−2=6, so x=8.",
+      "misconception_tag": "distribution-or-inverse",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_equations-03",
+      "provisional_skill": "LINEAR_EQUATIONS",
+      "question": "Solve 4x+9=2x+21 for x.",
+      "expected": "6",
+      "answer_contract": "integer",
+      "hints": [
+        "Subtract 2x from both sides.",
+        "Subtract 9 from both sides.",
+        "2x=12, so x=6."
+      ],
+      "worked_solution": "2x=12, so x=6.",
+      "misconception_tag": "variables-on-both-sides",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_equations-04",
+      "provisional_skill": "LINEAR_EQUATIONS",
+      "question": "Solve (x/3)+5=9 for x.",
+      "expected": "12",
+      "answer_contract": "integer",
+      "hints": [
+        "Subtract 5.",
+        "Multiply by 3.",
+        "x/3=4, so x=12."
+      ],
+      "worked_solution": "x/3=4, so x=12.",
+      "misconception_tag": "fraction-coefficient",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_equations-05",
+      "provisional_skill": "LINEAR_EQUATIONS",
+      "question": "Solve 2(3x−1)=4x+10 for x.",
+      "expected": "6",
+      "answer_contract": "integer",
+      "hints": [
+        "Distribute the 2.",
+        "Collect x terms on one side.",
+        "6x−2=4x+10, so 2x=12 and x=6."
+      ],
+      "worked_solution": "6x−2=4x+10, so 2x=12 and x=6.",
+      "misconception_tag": "distribution",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_equations-06",
+      "provisional_skill": "LINEAR_EQUATIONS",
+      "question": "A taxi charges a $4 starting fee plus $3 per km. A trip costs $31. How many km was the trip?",
+      "expected": "9",
+      "answer_contract": "integer",
+      "hints": [
+        "Set up 4+3d=31.",
+        "Subtract the starting fee.",
+        "3d=27, so d=9 km."
+      ],
+      "worked_solution": "3d=27, so d=9 km.",
+      "misconception_tag": "fixed-fee-vs-rate",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_relations-01",
+      "provisional_skill": "LINEAR_RELATIONS",
+      "question": "For y=2x+3, what is y when x=5?",
+      "expected": "13",
+      "answer_contract": "integer",
+      "hints": [
+        "Substitute 5 for x.",
+        "Multiply 2 by 5.",
+        "10+3=13."
+      ],
+      "worked_solution": "10+3=13.",
+      "misconception_tag": "substitution",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_relations-02",
+      "provisional_skill": "LINEAR_RELATIONS",
+      "question": "For y=−3x+8, what is y when x=2?",
+      "expected": "2",
+      "answer_contract": "integer",
+      "hints": [
+        "Substitute x=2.",
+        "−3×2=−6.",
+        "−6+8=2."
+      ],
+      "worked_solution": "−6+8=2.",
+      "misconception_tag": "negative-slope",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_relations-03",
+      "provisional_skill": "LINEAR_RELATIONS",
+      "question": "A line passes through (0,4) and (2,10). What is its slope?",
+      "expected": "3",
+      "answer_contract": "integer",
+      "hints": [
+        "Slope is change in y over change in x.",
+        "Compute (10−4)/(2−0).",
+        "6/2=3."
+      ],
+      "worked_solution": "6/2=3.",
+      "misconception_tag": "slope-as-rise-run",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_relations-04",
+      "provisional_skill": "LINEAR_RELATIONS",
+      "question": "A line passes through (1,5) and (3,11). What is its y-intercept?",
+      "expected": "2",
+      "answer_contract": "integer",
+      "hints": [
+        "Find slope (11−5)/(3−1)=3.",
+        "Use y=3x+b with point (1,5).",
+        "5=3+b, so b=2."
+      ],
+      "worked_solution": "5=3+b, so b=2.",
+      "misconception_tag": "slope-vs-intercept",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_relations-05",
+      "provisional_skill": "LINEAR_RELATIONS",
+      "question": "A plant is 12 cm tall and grows 4 cm each week. What height in cm after 7 weeks?",
+      "expected": "40",
+      "answer_contract": "integer",
+      "hints": [
+        "Initial height is 12.",
+        "Add 4 for each week.",
+        "12+4×7=40."
+      ],
+      "worked_solution": "12+4×7=40.",
+      "misconception_tag": "initial-value",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_relations-06",
+      "provisional_skill": "LINEAR_RELATIONS",
+      "question": "For y=5x−7, find x when y=18.",
+      "expected": "5",
+      "answer_contract": "integer",
+      "hints": [
+        "Set 18=5x−7.",
+        "Add 7 to both sides.",
+        "5x=25, so x=5."
+      ],
+      "worked_solution": "5x=25, so x=5.",
+      "misconception_tag": "inverse-substitution",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-inequalities-01",
+      "provisional_skill": "INEQUALITIES",
+      "question": "Solve x+5>12. What is the smallest integer x that works?",
+      "expected": "8",
+      "answer_contract": "integer",
+      "hints": [
+        "Subtract 5 from both sides.",
+        "x>7.",
+        "Smallest integer greater than 7 is 8."
+      ],
+      "worked_solution": "Smallest integer greater than 7 is 8.",
+      "misconception_tag": "strict-boundary",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-inequalities-02",
+      "provisional_skill": "INEQUALITIES",
+      "question": "Solve 3x≤18. What is the greatest integer x that works?",
+      "expected": "6",
+      "answer_contract": "integer",
+      "hints": [
+        "Divide by positive 3.",
+        "x≤6.",
+        "Greatest integer is 6."
+      ],
+      "worked_solution": "Greatest integer is 6.",
+      "misconception_tag": "inclusive-boundary",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-inequalities-03",
+      "provisional_skill": "INEQUALITIES",
+      "question": "Solve −2x<10. What is the smallest integer x that works?",
+      "expected": "-4",
+      "answer_contract": "integer",
+      "hints": [
+        "Divide by negative −2 and reverse the inequality.",
+        "x>−5.",
+        "Smallest integer above −5 is −4."
+      ],
+      "worked_solution": "Smallest integer above −5 is −4.",
+      "misconception_tag": "negative-sign-flip",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-inequalities-04",
+      "provisional_skill": "INEQUALITIES",
+      "question": "Solve 4x−3≥13. What is the smallest integer x that works?",
+      "expected": "4",
+      "answer_contract": "integer",
+      "hints": [
+        "Add 3.",
+        "Divide by positive 4.",
+        "x≥4, so smallest integer is 4."
+      ],
+      "worked_solution": "x≥4, so smallest integer is 4.",
+      "misconception_tag": "inclusive-boundary",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-inequalities-05",
+      "provisional_skill": "INEQUALITIES",
+      "question": "A museum ticket costs $8 and you have at most $50. What is the greatest number of whole tickets you can buy?",
+      "expected": "6",
+      "answer_contract": "integer",
+      "hints": [
+        "Use 8n≤50.",
+        "Divide 50 by 8.",
+        "Six tickets cost $48; seven cost $56."
+      ],
+      "worked_solution": "Six tickets cost $48; seven cost $56.",
+      "misconception_tag": "integer-context",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-inequalities-06",
+      "provisional_skill": "INEQUALITIES",
+      "question": "Solve 5−x≥2. What is the greatest integer x that works?",
+      "expected": "3",
+      "answer_contract": "integer",
+      "hints": [
+        "Subtract 5: −x≥−3.",
+        "Multiply by −1 and reverse the inequality.",
+        "x≤3; greatest integer is 3."
+      ],
+      "worked_solution": "x≤3; greatest integer is 3.",
+      "misconception_tag": "negative-sign-flip",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_modeling-01",
+      "provisional_skill": "LINEAR_MODELING",
+      "question": "A streaming plan costs $12 per month plus $2 per movie. What is the total cost for 7 movies in one month?",
+      "expected": "26",
+      "answer_contract": "integer",
+      "hints": [
+        "The fixed fee is 12.",
+        "Each movie adds 2.",
+        "12+2×7=26."
+      ],
+      "worked_solution": "12+2×7=26.",
+      "misconception_tag": "fixed-vs-variable",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_modeling-02",
+      "provisional_skill": "LINEAR_MODELING",
+      "question": "A gym charges a $25 joining fee and $15 per month. How much for 6 months?",
+      "expected": "115",
+      "answer_contract": "integer",
+      "hints": [
+        "Join fee occurs once.",
+        "Monthly cost is 15×6.",
+        "25+90=115."
+      ],
+      "worked_solution": "25+90=115.",
+      "misconception_tag": "one-time-fee",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_modeling-03",
+      "provisional_skill": "LINEAR_MODELING",
+      "question": "A savings account starts with $40 and grows by $10 each week. After how many weeks will it reach $120?",
+      "expected": "8",
+      "answer_contract": "integer",
+      "hints": [
+        "Set 40+10w=120.",
+        "Subtract 40.",
+        "10w=80, so w=8."
+      ],
+      "worked_solution": "10w=80, so w=8.",
+      "misconception_tag": "initial-vs-rate",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_modeling-04",
+      "provisional_skill": "LINEAR_MODELING",
+      "question": "A tank starts with 90 L and drains 6 L per minute. How many minutes until 30 L remain?",
+      "expected": "10",
+      "answer_contract": "integer",
+      "hints": [
+        "Model volume as 90−6t.",
+        "Set 90−6t=30.",
+        "6t=60, so t=10."
+      ],
+      "worked_solution": "6t=60, so t=10.",
+      "misconception_tag": "negative-rate",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_modeling-05",
+      "provisional_skill": "LINEAR_MODELING",
+      "question": "Two plans cost A=20+3n and B=8+5n dollars. For what number n are their costs equal?",
+      "expected": "6",
+      "answer_contract": "integer",
+      "hints": [
+        "Set 20+3n=8+5n.",
+        "Subtract 3n and then 8.",
+        "12=2n, so n=6."
+      ],
+      "worked_solution": "12=2n, so n=6.",
+      "misconception_tag": "compare-two-plans",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-linear_modeling-06",
+      "provisional_skill": "LINEAR_MODELING",
+      "question": "A cyclist starts 15 km ahead and rides 12 km/h. Another starts at zero and rides 17 km/h. After how many hours will the second catch up?",
+      "expected": "3",
+      "answer_contract": "integer",
+      "hints": [
+        "First position 15+12t; second 17t.",
+        "Set positions equal.",
+        "5t=15, so t=3."
+      ],
+      "worked_solution": "5t=15, so t=3.",
+      "misconception_tag": "relative-speed",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-error_analysis-01",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "question": "A student solves 2x+3=15 as x=9 by subtracting 3 but not dividing. What is the correct x?",
+      "expected": "6",
+      "answer_contract": "integer",
+      "hints": [
+        "Subtract 3 to get 2x=12.",
+        "There are two copies of x.",
+        "Divide 12 by 2."
+      ],
+      "worked_solution": "Divide 12 by 2.",
+      "misconception_tag": "missing-division",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-error_analysis-02",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "question": "A student says the slope through (0,2) and (4,10) is 8. What is the correct slope?",
+      "expected": "2",
+      "answer_contract": "integer",
+      "hints": [
+        "Find change in y: 10−2.",
+        "Find change in x: 4−0.",
+        "Slope 8/4=2."
+      ],
+      "worked_solution": "Slope 8/4=2.",
+      "misconception_tag": "rise-without-run",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-error_analysis-03",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "question": "A student solves −3x>12 as x>−4. What is the greatest integer x that actually works?",
+      "expected": "-5",
+      "answer_contract": "integer",
+      "hints": [
+        "Dividing by −3 reverses > to <.",
+        "Correct inequality is x<−4.",
+        "Greatest integer below −4 is −5."
+      ],
+      "worked_solution": "Greatest integer below −4 is −5.",
+      "misconception_tag": "inequality-flip",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-error_analysis-04",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "question": "A student says y=4x+9 has y-intercept 4. What is the actual y-intercept?",
+      "expected": "9",
+      "answer_contract": "integer",
+      "hints": [
+        "The intercept is y when x=0.",
+        "Substitute x=0.",
+        "y=9."
+      ],
+      "worked_solution": "y=9.",
+      "misconception_tag": "slope-vs-intercept",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-error_analysis-05",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "question": "A student models a $10 fixed fee plus $3 per visit as 10v+3. What is the cost of 4 visits using the correct model?",
+      "expected": "22",
+      "answer_contract": "integer",
+      "hints": [
+        "The fixed fee does not multiply by visits.",
+        "Correct model is 10+3v.",
+        "10+3×4=22."
+      ],
+      "worked_solution": "10+3×4=22.",
+      "misconception_tag": "fixed-vs-variable",
+      "review_status": "PENDING"
+    },
+    {
+      "item_id": "draft-g9-error_analysis-06",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "question": "A student claims x=7 solves 2(x+1)=20. What is the correct x?",
+      "expected": "9",
+      "answer_contract": "integer",
+      "hints": [
+        "Divide both sides by 2.",
+        "Then subtract 1.",
+        "x+1=10, so x=9."
+      ],
+      "worked_solution": "x+1=10, so x=9.",
+      "misconception_tag": "distribution",
+      "review_status": "PENDING"
+    }
+  ],
+  "worked_examples": [
+    {
+      "example_id": "we-1",
+      "provisional_skill": "LINEAR_EQUATIONS",
+      "question": "Solve 4x+9=2x+21 for x.",
+      "expected": "6",
+      "steps": [
+        "Subtract 2x from both sides.",
+        "Subtract 9 from both sides.",
+        "2x=12, so x=6."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-2",
+      "provisional_skill": "LINEAR_RELATIONS",
+      "question": "A line passes through (0,4) and (2,10). What is its slope?",
+      "expected": "3",
+      "steps": [
+        "Slope is change in y over change in x.",
+        "Compute (10−4)/(2−0).",
+        "6/2=3."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-3",
+      "provisional_skill": "INEQUALITIES",
+      "question": "Solve −2x<10. What is the smallest integer x that works?",
+      "expected": "-4",
+      "steps": [
+        "Divide by negative −2 and reverse the inequality.",
+        "x>−5.",
+        "Smallest integer above −5 is −4."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-4",
+      "provisional_skill": "LINEAR_MODELING",
+      "question": "A savings account starts with $40 and grows by $10 each week. After how many weeks will it reach $120?",
+      "expected": "8",
+      "steps": [
+        "Set 40+10w=120.",
+        "Subtract 40.",
+        "10w=80, so w=8."
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "example_id": "we-5",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "question": "A student solves −3x>12 as x>−4. What is the greatest integer x that actually works?",
+      "expected": "-5",
+      "steps": [
+        "Dividing by −3 reverses > to <.",
+        "Correct inequality is x<−4.",
+        "Greatest integer below −4 is −5."
+      ],
+      "review_status": "PENDING"
+    }
+  ],
+  "misconceptions": [
+    {
+      "misconception_id": "misc-1",
+      "provisional_skill": "LINEAR_EQUATIONS",
+      "incorrect_pattern": "Performing inverse operations on only one side or skipping division",
+      "remediation": "Use balanced-scale visuals and substitution to check the solution",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-2",
+      "provisional_skill": "LINEAR_RELATIONS",
+      "incorrect_pattern": "Confusing slope with intercept",
+      "remediation": "Use points and a table to separate initial value from change per unit",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-3",
+      "provisional_skill": "INEQUALITIES",
+      "incorrect_pattern": "Failing to reverse the inequality when dividing by a negative",
+      "remediation": "Check a boundary and test a sample solution on a number line",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-4",
+      "provisional_skill": "LINEAR_MODELING",
+      "incorrect_pattern": "Multiplying fixed charges by number of uses",
+      "remediation": "Highlight fixed and variable terms with units and compare two data points",
+      "review_status": "PENDING"
+    },
+    {
+      "misconception_id": "misc-5",
+      "provisional_skill": "ERROR_ANALYSIS",
+      "incorrect_pattern": "Accepting a plausible answer without substitution or unit checking",
+      "remediation": "Require error location, corrected solution and independent verification",
+      "review_status": "PENDING"
+    }
+  ]
+}

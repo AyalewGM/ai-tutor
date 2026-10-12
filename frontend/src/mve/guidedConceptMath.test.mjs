@@ -67,7 +67,7 @@ test("invalid parameters fail closed", () => {
   }
 });
 
-test("interactive teaching is gated and does not award mastery", async () => {
+test("interactive lessons remain unmounted until a trusted capability and pedagogy acceptance", async () => {
   const ui = await readFile(new URL("./GuidedConceptPractice.tsx", import.meta.url), "utf8");
   const workspace = await readFile(new URL("../pages/Workspace.tsx", import.meta.url), "utf8");
   assert.match(ui, /if \(props\.independentAssessment\) return null/);
@@ -75,11 +75,11 @@ test("interactive teaching is gated and does not award mastery", async () => {
   assert.match(ui, /type="submit"/);
   assert.match(ui, /Show another representation/);
   assert.match(ui, /ProblemVisual/);
-  assert.match(workspace, /VITE_ENABLE_CONCEPT_GUIDED_PILOT === "true"/);
-  assert.match(workspace, /conceptGuidedPilotEnabled &&/);
-  assert.match(workspace, /workspace\.state === "GUIDED_PRACTICE"/);
-  assert.match(workspace, /workspace\.state === "REMEDIATION"/);
-  assert.match(workspace, /concept="fraction-equivalence"/);
-  assert.match(workspace, /concept="ratio-partition"/);
+  // No accepted server-owned fraction-equivalence or ratio-partition
+  // capability exists. Build flags and mutable display-name regexes are
+  // explicitly NOT authority to mount the guided component.
+  assert.doesNotMatch(workspace, /VITE_ENABLE_CONCEPT_GUIDED_PILOT/);
+  assert.doesNotMatch(workspace, /conceptGuidedPilotEnabled/);
+  assert.doesNotMatch(workspace, /<GuidedConceptPractice\b/);
   assert.doesNotMatch(ui, /updateMastery|setMastery|recordAssessment|fetch\(|post\(/);
 });

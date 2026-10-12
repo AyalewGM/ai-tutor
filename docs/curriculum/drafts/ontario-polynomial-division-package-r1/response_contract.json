@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "ONT-ALG-POLY-DIVISION-EVIDENCE",
+  "contract_revision": "poly-division-evidence-v1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "scoring_authority": "BACKEND_REQUIRED_NOT_WIRED",
+  "acceptance": {
+    "mathematical_review": "PENDING_R2_REVIEW",
+    "assessment_backend": "PENDING_CONTRACT_ACCEPTANCE",
+    "engineering_lead": "PENDING_API_DECISION",
+    "muse_qa": "UNKNOWN_NOT_RUN"
+  },
+  "term_record": {
+    "additional_properties": false,
+    "required": ["coefficient", "x_exponent", "y_exponent"],
+    "fields": {
+      "coefficient": "REDUCED_EXACT_RATIONAL_STRING",
+      "x_exponent": "INTEGER",
+      "y_exponent": "INTEGER"
+    },
+    "zero_coefficient_allowed": false,
+    "duplicate_exponent_pairs_allowed": false,
+    "comparison": "ORDER_INDEPENDENT_CANONICAL_TERM_ORDER"
+  },
+  "main_response": {
+    "additional_properties": false,
+    "required": [
+      "terms",
+      "domain_restrictions",
+      "coefficient_reason",
+      "exponent_reason",
+      "reconstruction"
+    ],
+    "fields": {
+      "terms": "LIST_1_TO_4_TERM_RECORDS",
+      "domain_restrictions": "SORTED_UNIQUE_SUBSET_OF_X_Y",
+      "coefficient_reason": {
+        "enum": [
+          "DIVIDEND_COEFFICIENT_DIVIDED_BY_DIVISOR_COEFFICIENT",
+          "DIVISOR_COEFFICIENT_DIVIDED_BY_DIVIDEND_COEFFICIENT"
+        ],
+        "accepted": "DIVIDEND_COEFFICIENT_DIVIDED_BY_DIVISOR_COEFFICIENT"
+      },
+      "exponent_reason": {
+        "enum": [
+          "DIVIDEND_EXPONENT_MINUS_DIVISOR_EXPONENT",
+          "DIVIDEND_EXPONENT_PLUS_DIVISOR_EXPONENT"
+        ],
+        "accepted": "DIVIDEND_EXPONENT_MINUS_DIVISOR_EXPONENT"
+      },
+      "reconstruction": "LIST_1_TO_4_RECONSTRUCTION_RECORDS"
+    }
+  },
+  "reconstruction_record": {
+    "additional_properties": false,
+    "required": ["quotient_term", "divisor_term", "product_term"],
+    "fields": {
+      "quotient_term": "TERM_RECORD",
+      "divisor_term": "TERM_RECORD",
+      "product_term": "TERM_RECORD"
+    },
+    "accepted_when": "EXACT_PRODUCT_EQUALS_MATCHED_ORIGINAL_DIVIDEND_TERM",
+    "server_recomputation_required": true,
+    "client_truth_flags_allowed": false
+  },
+  "transfer_response": {
+    "additional_properties": false,
+    "required": [
+      "width_terms",
+      "total_width_terms",
+      "domain_restrictions",
+      "multiplication_checks",
+      "units"
+    ],
+    "fields": {
+      "width_terms": "EXACT_TWO_TERM_RECORDS",
+      "total_width_terms": "ORDER_INDEPENDENT_EXACT_TWO_TERM_RECORDS",
+      "domain_restrictions": "SORTED_UNIQUE_SUBSET_OF_X_Y",
+      "multiplication_checks": "EXACT_TWO_RECONSTRUCTION_RECORDS",
+      "units": {
+        "width": "units",
+        "area": "square units"
+      }
+    }
+  },
+  "assessment_isolation": {
+    "guided_check_can_award_mastery": false,
+    "independent_payload_contains_oracle": false,
+    "independent_payload_contains_hints": false,
+    "partial_field_credit_can_award_mastery": false,
+    "historical_evidence_writes": false
+  }
+}

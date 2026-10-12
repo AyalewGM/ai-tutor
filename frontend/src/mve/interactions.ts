@@ -1,3 +1,4 @@
+import type { IntegerOperation } from "./integerNumberLine";
 import type { MathObject, Point2D } from "./contracts";
 
 /**
@@ -67,7 +68,7 @@ export interface DistributiveCoefficientsCheckedEvent extends MathInteractionBas
   variable_coefficient: number;
   constant_term: number;
   correct: boolean;
-  misconception: "MISSED_SECOND_TERM" | "COEFFICIENT_ERROR" | "CONSTANT_ERROR" | null;
+  misconception: "MISSED_SECOND_TERM" | "DROPPED_NEGATIVE" | "COEFFICIENT_ERROR" | "CONSTANT_ERROR" | null;
 }
 
 export interface FractionShadingChangedEvent extends MathInteractionBase {
@@ -76,7 +77,106 @@ export interface FractionShadingChangedEvent extends MathInteractionBase {
   denominator: number;
 }
 
+export interface FractionComparedEvent extends MathInteractionBase {
+  type: "FRACTION_COMPARED";
+  left: { numerator: number; denominator: number };
+  right: { numerator: number; denominator: number };
+  relation: "LESS_THAN" | "EQUAL_TO" | "GREATER_THAN";
+}
+
+export interface FractionEquivalenceExploredEvent extends MathInteractionBase {
+  type: "FRACTION_EQUIVALENCE_EXPLORED";
+  original: { numerator: number; denominator: number };
+  scaled: { numerator: number; denominator: number };
+  scale_factor: number;
+}
+
+export interface FractionSimplifiedEvent extends MathInteractionBase {
+  type: "FRACTION_SIMPLIFIED";
+  original: { numerator: number; denominator: number };
+  reduced: { numerator: number; denominator: number };
+}
+
+export interface FractionAdditionExploredEvent extends MathInteractionBase {
+  type: "FRACTION_ADDITION_EXPLORED";
+  first: { numerator: number; denominator: number };
+  second: { numerator: number; denominator: number };
+  common_denominator: number;
+  sum_numerator: number;
+  sum_denominator: number;
+}
+
+export interface IntegerDisplacementChangedEvent extends MathInteractionBase {
+  type: "INTEGER_DISPLACEMENT_CHANGED";
+  start: number;
+  operand: number;
+  operation: IntegerOperation;
+  displacement: number;
+  result: number;
+}
+
+export interface LinearParametersChangedEvent extends MathInteractionBase {
+  type: "LINEAR_PARAMETERS_CHANGED";
+  rise: number;
+  run: number;
+  intercept: number;
+}
+
+export interface BalanceOperationAppliedEvent extends MathInteractionBase {
+  type: "BALANCE_OPERATION_APPLIED";
+  operation: "add_unit" | "remove_unit" | "remove_x" | "divide_two" | "divide_three";
+  left_x: number; left_units: number; right_x: number; right_units: number;
+}
+
+export interface EquationTransformationAppliedEvent extends MathInteractionBase {
+  type: "EQUATION_TRANSFORMATION_APPLIED";
+  operation: "ADD_CONSTANT_BOTH" | "ADD_VARIABLE_BOTH" | "SCALE_BOTH";
+  amount_numerator: number;
+  amount_denominator: number;
+  preserved: true;
+}
+
+export interface EquationAttemptDiagnosedEvent extends MathInteractionBase {
+  type: "EQUATION_ATTEMPT_DIAGNOSED";
+  diagnosis: "EQ.OP.ONE_SIDE" | "EQ.DENOMINATOR_IGNORED" | "EQ.FALSE_EQUIVALENCE";
+  phase: "MANIPULATE" | "FRESH_EXIT";
+}
+
+export interface ExplorerDatasetChangedEvent extends MathInteractionBase {
+  type: "EXPLORER_DATASET_CHANGED";
+  values: readonly number[];
+}
+
+export interface PolynomialDivisionManipulatedEvent extends MathInteractionBase {
+  type: "POLYNOMIAL_DIVISION_MANIPULATED";
+  divided_terms: number;
+  coefficient_reason:
+    | "DIVIDEND_COEFFICIENT_DIVIDED_BY_DIVISOR_COEFFICIENT"
+    | "DIVISOR_COEFFICIENT_DIVIDED_BY_DIVIDEND_COEFFICIENT";
+  exponent_reason:
+    | "DIVIDEND_EXPONENT_MINUS_DIVISOR_EXPONENT"
+    | "DIVIDEND_EXPONENT_PLUS_DIVISOR_EXPONENT";
+  domain_x: boolean;
+  domain_y: boolean;
+}
+
+export interface ScientificNotationScaleChangedEvent extends MathInteractionBase {
+  type: "SCIENTIFIC_NOTATION_SCALE_CHANGED";
+  significant_digits: number;
+  coefficient_power: number;
+  exponent: number;
+  invariant_power: number;
+}
+
 export type MathInteractionEvent =
+  | ScientificNotationScaleChangedEvent
+  | PolynomialDivisionManipulatedEvent
+  | ExplorerDatasetChangedEvent
+  | BalanceOperationAppliedEvent
+  | EquationTransformationAppliedEvent
+  | EquationAttemptDiagnosedEvent
+  | LinearParametersChangedEvent
+  | IntegerDisplacementChangedEvent
   | PointPlacedEvent
   | PointMovedEvent
   | SegmentCreatedEvent
@@ -87,7 +187,11 @@ export type MathInteractionEvent =
   | PolygonCreatedEvent
   | DistributiveStepViewedEvent
   | DistributiveCoefficientsCheckedEvent
-  | FractionShadingChangedEvent;
+  | FractionShadingChangedEvent
+  | FractionComparedEvent
+  | FractionEquivalenceExploredEvent
+  | FractionSimplifiedEvent
+  | FractionAdditionExploredEvent;
 
 function isPoint2D(value: unknown): value is Point2D {
   return Array.isArray(value) &&
@@ -95,11 +199,93 @@ function isPoint2D(value: unknown): value is Point2D {
     value.every((coordinate) => typeof coordinate === "number" && Number.isFinite(coordinate));
 }
 
+function isBoundedFractionParts(value: unknown): value is { numerator: number; denominator: number } {
+  if (!value || typeof value !== "object") return false;
+  const p = value as Record<string, unknown>;
+  return Number.isSafeInteger(p.denominator) && (p.denominator as number) >= 1 &&
+    (p.denominator as number) <= 12 && Number.isSafeInteger(p.numerator) &&
+    (p.numerator as number) >= 0 && (p.numerator as number) <= (p.denominator as number);
+}
+
+function gcdOf(a: number, b: number): number {
+  while (b !== 0) {
+    const remainder = a % b;
+    a = b;
+    b = remainder;
+  }
+  return a;
+}
+
 export function isMathInteractionEvent(value: unknown): value is MathInteractionEvent {
   if (!value || typeof value !== "object") return false;
   const event = value as Record<string, unknown>;
   if (event.schema_version !== 1 || typeof event.type !== "string") return false;
   switch (event.type) {
+    case "SCIENTIFIC_NOTATION_SCALE_CHANGED":
+      return Object.keys(event).every(key => [
+        "schema_version", "type", "significant_digits", "coefficient_power", "exponent", "invariant_power",
+      ].includes(key)) &&
+        Number.isSafeInteger(event.significant_digits) &&
+        (event.significant_digits as number) >= 1 && (event.significant_digits as number) <= 999 &&
+        (event.significant_digits as number) % 10 !== 0 &&
+        Number.isSafeInteger(event.coefficient_power) && Math.abs(event.coefficient_power as number) <= 8 &&
+        Number.isSafeInteger(event.exponent) && Math.abs(event.exponent as number) <= 8 &&
+        Number.isSafeInteger(event.invariant_power) && Math.abs(event.invariant_power as number) <= 8 &&
+        event.invariant_power === (event.coefficient_power as number) + (event.exponent as number);
+    case "POLYNOMIAL_DIVISION_MANIPULATED":
+      return Object.keys(event).every(key => [
+        "schema_version", "type", "divided_terms", "coefficient_reason", "exponent_reason", "domain_x", "domain_y",
+      ].includes(key)) &&
+        Number.isSafeInteger(event.divided_terms) &&
+        (event.divided_terms as number) >= 0 && (event.divided_terms as number) <= 4 &&
+        [
+          "DIVIDEND_COEFFICIENT_DIVIDED_BY_DIVISOR_COEFFICIENT",
+          "DIVISOR_COEFFICIENT_DIVIDED_BY_DIVIDEND_COEFFICIENT",
+        ].includes(String(event.coefficient_reason)) &&
+        [
+          "DIVIDEND_EXPONENT_MINUS_DIVISOR_EXPONENT",
+          "DIVIDEND_EXPONENT_PLUS_DIVISOR_EXPONENT",
+        ].includes(String(event.exponent_reason)) &&
+        typeof event.domain_x === "boolean" &&
+        typeof event.domain_y === "boolean";
+    case "EQUATION_ATTEMPT_DIAGNOSED":
+      return Object.keys(event).every(key => ["schema_version", "type", "diagnosis", "phase"].includes(key)) &&
+        ["EQ.OP.ONE_SIDE", "EQ.DENOMINATOR_IGNORED", "EQ.FALSE_EQUIVALENCE"].includes(String(event.diagnosis)) &&
+        ["MANIPULATE", "FRESH_EXIT"].includes(String(event.phase));
+    case "EQUATION_TRANSFORMATION_APPLIED":
+      return Object.keys(event).every(key => ["schema_version", "type", "operation", "amount_numerator", "amount_denominator", "preserved"].includes(key)) &&
+        ["ADD_CONSTANT_BOTH", "ADD_VARIABLE_BOTH", "SCALE_BOTH"].includes(String(event.operation)) &&
+        Number.isSafeInteger(event.amount_numerator) && Math.abs(event.amount_numerator as number) <= 10000 &&
+        Number.isSafeInteger(event.amount_denominator) && (event.amount_denominator as number) >= 1 && (event.amount_denominator as number) <= 10000 &&
+        event.preserved === true && !(event.operation === "SCALE_BOTH" && event.amount_numerator === 0);
+    case "EXPLORER_DATASET_CHANGED":
+      return Object.keys(event).every(key => ["schema_version", "type", "values"].includes(key)) &&
+        Array.isArray(event.values) && event.values.length >= 1 && event.values.length <= 6 &&
+        Array.from(event.values).every(value => Number.isSafeInteger(value) && value >= 0 && value <= 12);
+    case "BALANCE_OPERATION_APPLIED": {
+      if (!Object.keys(event).every(key => ["schema_version", "type", "operation", "left_x", "left_units", "right_x", "right_units"].includes(key))) return false;
+      const values = [event.left_x, event.left_units, event.right_x, event.right_units];
+      if (!values.every(Number.isSafeInteger)) return false;
+      const [lx, lu, rx, ru] = values as number[];
+      if (rx < 0 || lx > 3 || lx <= rx || lu < 0 || ru > 12 || ru < lu) return false;
+      if (event.operation === "add_unit") return ru < 12;
+      if (event.operation === "remove_unit") return lu > 0;
+      if (event.operation === "remove_x") return rx > 0;
+      const divisor = event.operation === "divide_two" ? 2 : event.operation === "divide_three" ? 3 : 0;
+      return divisor > 0 && (values as number[]).every(value => value % divisor === 0);
+    }
+    case "LINEAR_PARAMETERS_CHANGED":
+      return Object.keys(event).every(key => ["schema_version", "type", "rise", "run", "intercept"].includes(key)) &&
+        Number.isSafeInteger(event.rise) && Math.abs(event.rise as number) <= 6 &&
+        Number.isSafeInteger(event.run) && (event.run as number) >= 1 && (event.run as number) <= 6 &&
+        Number.isSafeInteger(event.intercept) && Math.abs(event.intercept as number) <= 4;
+    case "INTEGER_DISPLACEMENT_CHANGED": {
+      if (Object.keys(event).some(key => !["schema_version", "type", "start", "operand", "operation", "displacement", "result"].includes(key))) return false;
+      if (![event.start, event.operand].every(v => Number.isSafeInteger(v) && Math.abs(v as number) <= 10) ||
+          (event.operation !== "add" && event.operation !== "subtract")) return false;
+      const delta = event.operation === "add" ? event.operand as number : -(event.operand as number);
+      return event.displacement === delta && event.result === (event.start as number) + delta;
+    }
     case "POINT_PLACED":
       return isPoint2D(event.point);
     case "POINT_MOVED":
@@ -126,6 +312,43 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
         Number.isSafeInteger(event.numerator) &&
         (event.numerator as number) >= 0 &&
         (event.numerator as number) <= (event.denominator as number);
+    case "FRACTION_COMPARED": {
+      if (!isBoundedFractionParts(event.left) || !isBoundedFractionParts(event.right)) return false;
+      const a = event.left.numerator * event.right.denominator;
+      const b = event.right.numerator * event.left.denominator;
+      return event.relation === (a < b ? "LESS_THAN" : a > b ? "GREATER_THAN" : "EQUAL_TO");
+    }
+    case "FRACTION_EQUIVALENCE_EXPLORED": {
+      if (!isBoundedFractionParts(event.original) || !isBoundedFractionParts(event.scaled)) return false;
+      const k = event.scale_factor;
+      if (!Number.isSafeInteger(k) || (k as number) < 2) return false;
+      // Fabricated equivalences fail: scaled parts must equal original * k exactly.
+      return event.scaled.numerator === event.original.numerator * (k as number) &&
+        event.scaled.denominator === event.original.denominator * (k as number);
+    }
+    case "FRACTION_SIMPLIFIED": {
+      if (!isBoundedFractionParts(event.original) || !isBoundedFractionParts(event.reduced)) return false;
+      const o = event.original;
+      const r = event.reduced;
+      if (o.numerator === r.numerator && o.denominator === r.denominator) return false;
+      // Fabricated simplifications fail: values must be exactly equal and the
+      // result must be genuine lowest terms.
+      if (o.numerator * r.denominator !== r.numerator * o.denominator) return false;
+      return gcdOf(r.numerator, r.denominator) === 1;
+    }
+    case "FRACTION_ADDITION_EXPLORED": {
+      if (!isBoundedFractionParts(event.first) || !isBoundedFractionParts(event.second)) return false;
+      const f = event.first;
+      const s = event.second;
+      const cd = event.common_denominator;
+      if (!Number.isSafeInteger(cd) || (cd as number) < 1 || (cd as number) > 24) return false;
+      // Fabricated sums fail: common_denominator must be the exact LCM and the
+      // sum must recompute exactly from the scaled operands.
+      if (cd !== (f.denominator / gcdOf(f.denominator, s.denominator)) * s.denominator) return false;
+      if (event.sum_denominator !== cd) return false;
+      const expected = f.numerator * ((cd as number) / f.denominator) + s.numerator * ((cd as number) / s.denominator);
+      return event.sum_numerator === expected;
+    }
     case "DISTRIBUTIVE_STEP_VIEWED":
       return typeof event.step_id === "string" &&
         ["identify", "distribute_variable", "distribute_constant", "simplify"].includes(event.step_id);
@@ -136,7 +359,7 @@ export function isMathInteractionEvent(value: unknown): value is MathInteraction
         Math.abs(event.constant_term as number) <= 10000 &&
         typeof event.correct === "boolean" &&
         (event.misconception === null ||
-          ["MISSED_SECOND_TERM", "COEFFICIENT_ERROR", "CONSTANT_ERROR"].includes(String(event.misconception))) &&
+          ["MISSED_SECOND_TERM", "DROPPED_NEGATIVE", "COEFFICIENT_ERROR", "CONSTANT_ERROR"].includes(String(event.misconception))) &&
         event.correct === (event.misconception === null);
     default:
       return false;

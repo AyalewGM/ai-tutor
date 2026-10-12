@@ -12,16 +12,18 @@ mastery.
 
 ## Release safety
 
-**Disabled by default.** The workspace mounts neither activity unless the
-build-time environment variable `VITE_ENABLE_CONCEPT_GUIDED_PILOT=true` is
-explicitly set. This flag must remain unset for production until the owner
-authorizes a reviewed pilot. Even with the flag, lessons only mount in
-`GUIDED_PRACTICE` or `REMEDIATION` when the skill label matches, and the
-component itself returns null for `independentAssessment=true`.
+**Unconditionally DEFAULT OFF at Workspace integration.** The guided
+fraction/ratio components are draft illustrations and are not mounted from the
+learner Workspace. A build-time flag or mutable `skill_name` match cannot
+authorize either journey, including broad siblings or grade/jurisdiction
+labels. There is no accepted server-owned exact capability identity for either
+pilot; do not invent one from draft taxonomy.
 
-Skill-name matching is a **temporary pilot adapter**, not a validated
-canonical skill mapping. Before wider activation, replace it with a reviewed
-canonical skill ID mapping and server-authorized lesson assignment.
+The component itself returns null for independent assessment. Before changing
+this default-off boundary, obtain independently approved mathematical scope,
+pedagogical eight-stage readiness, an exact server-owned capability contract,
+and a fresh Muse accessibility/browser review. Nothing in this PR enables
+learner/mastery/scoring/history/persistence changes or a deployment.
 
 ## Verification
 

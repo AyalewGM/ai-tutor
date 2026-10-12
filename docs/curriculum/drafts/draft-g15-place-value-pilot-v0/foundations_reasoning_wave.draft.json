@@ -1,0 +1,540 @@
+{
+  "package_id": "draft-g15-foundations-depth-wave-v1",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "grade_band": "1-5 provisional; precise grade placement requires mapping review",
+  "canonical_skill_ids": [],
+  "curriculum_mappings": [],
+  "runtime_activation": false,
+  "mastery_updater": false,
+  "items": [
+    {
+      "item_id": "g15-depth-01",
+      "provisional_topic": "place-value",
+      "question": "A collection has 4 bundles of ten sticks and 7 loose sticks. How many sticks are there?",
+      "expected": "47",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "Four tens are 40 and seven ones are 7; 40+7=47.",
+      "misconception": {
+        "plausible_wrong_answer": "11",
+        "feedback": "A bundle of ten represents ten, not one."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Represent 63 using bundles of ten and loose ones.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-02",
+      "provisional_topic": "place-value",
+      "question": "In 582, what value does the digit 8 represent?",
+      "expected": "80",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "The 8 is in the tens place, so its value is 8 tens.",
+      "misconception": {
+        "plausible_wrong_answer": "8",
+        "feedback": "A digit and its place value are not always the same."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "What value does 6 represent in 764?",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-03",
+      "provisional_topic": "place-value",
+      "question": "What number is 300+40+9?",
+      "expected": "349",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "Three hundreds, four tens and nine ones compose 349.",
+      "misconception": {
+        "plausible_wrong_answer": "3412",
+        "feedback": "Write digits according to place value, not by joining the addends."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Compose 600+20+5.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-04",
+      "provisional_topic": "place-value",
+      "question": "A learner has 13 tens and 4 ones. What number is represented?",
+      "expected": "134",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "Thirteen tens equal 130, and four ones make 134.",
+      "misconception": {
+        "plausible_wrong_answer": "17",
+        "feedback": "Ten tens can be regrouped as one hundred."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Represent 12 tens and 9 ones as a standard numeral.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-05",
+      "provisional_topic": "place-value",
+      "question": "Which number is greater: 407 or 470?",
+      "expected": "470",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "Both have four hundreds; compare tens: 7 tens is greater than 0 tens.",
+      "misconception": {
+        "plausible_wrong_answer": "407",
+        "feedback": "Compare the highest differing place, not the last digit."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Compare 506 and 560.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-06",
+      "provisional_topic": "place-value",
+      "question": "Round 286 to the nearest ten.",
+      "expected": "290",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "The ones digit 6 rounds the tens place up.",
+      "misconception": {
+        "plausible_wrong_answer": "280",
+        "feedback": "For nearest ten, inspect the ones digit."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Round 374 to the nearest ten.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-07",
+      "provisional_topic": "addition",
+      "question": "Maya had some stickers. She received 18 more and now has 45. How many did she have first?",
+      "expected": "27",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "Unknown start +18=45; 45−18=27.",
+      "misconception": {
+        "plausible_wrong_answer": "63",
+        "feedback": "Use the inverse operation to recover the starting amount."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "A jar had some marbles, gained 16, and now has 52. Find the start.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-08",
+      "provisional_topic": "addition",
+      "question": "A library has 128 picture books and 247 chapter books. How many books altogether?",
+      "expected": "375",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "128+247=375; regroup 8+7 ones into one ten.",
+      "misconception": {
+        "plausible_wrong_answer": "365",
+        "feedback": "Regroup the extra ten when adding ones."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Add 236+158 and explain regrouping.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-09",
+      "provisional_topic": "subtraction",
+      "question": "A school has 402 pencils and gives away 175. How many remain?",
+      "expected": "227",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "402−175=227; regroup through the zero tens.",
+      "misconception": {
+        "plausible_wrong_answer": "237",
+        "feedback": "Regroup one hundred into tens, then a ten into ones."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Compute 503−268 using a place-value model.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-10",
+      "provisional_topic": "subtraction",
+      "question": "Lena has 73 cards and Sam has 48. How many more cards does Lena have?",
+      "expected": "25",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "73−48=25 compares the two counts.",
+      "misconception": {
+        "plausible_wrong_answer": "121",
+        "feedback": "'How many more' asks for the difference, not the total."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Compare 92 and 57 using subtraction.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-11",
+      "provisional_topic": "multiplication",
+      "question": "There are 7 baskets with 6 apples in each. How many apples are there?",
+      "expected": "42",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "Seven equal groups of six gives 7×6=42.",
+      "misconception": {
+        "plausible_wrong_answer": "13",
+        "feedback": "Adding the group count and group size is not multiplication."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Find the total in 8 groups of 4.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-12",
+      "provisional_topic": "multiplication",
+      "question": "A seating chart has 9 rows with 4 seats in each row. How many seats?",
+      "expected": "36",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "An array of nine rows of four gives 9×4=36.",
+      "misconception": {
+        "plausible_wrong_answer": "13",
+        "feedback": "Count all equal groups, not only rows and columns."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Use an array to calculate 6×7.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-13",
+      "provisional_topic": "division",
+      "question": "Twenty-four counters are shared equally among 6 children. How many does each child receive?",
+      "expected": "4",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "24÷6=4; each child receives four counters.",
+      "misconception": {
+        "plausible_wrong_answer": "18",
+        "feedback": "Equal sharing asks for the size of each group."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Share 35 counters equally among 5 children.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-14",
+      "provisional_topic": "division",
+      "question": "A ribbon is 32 cm long. Each piece is 4 cm. How many full pieces can be cut?",
+      "expected": "8",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "32÷4=8 counts groups of four centimetres.",
+      "misconception": {
+        "plausible_wrong_answer": "28",
+        "feedback": "Division counts how many four-centimetre units fit."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Cut 45 cm into 5 cm pieces; count the pieces.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-15",
+      "provisional_topic": "division",
+      "question": "Thirty pencils are packed into boxes holding 8 pencils each. What is the minimum number of boxes needed?",
+      "expected": "4",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "Three boxes hold 24 pencils and six remain; a fourth box is required.",
+      "misconception": {
+        "plausible_wrong_answer": "3",
+        "feedback": "A nonzero remainder needs another box when all pencils must fit."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "How many buses of 12 seats are needed for 37 students?",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-16",
+      "provisional_topic": "word-problems",
+      "question": "A shelf has 36 books. Nine are borrowed, then 14 are returned. How many books are on the shelf?",
+      "expected": "41",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "36−9+14=41; track each change in order.",
+      "misconception": {
+        "plausible_wrong_answer": "13",
+        "feedback": "Do not subtract both changes when the second change adds books."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Start with 48, remove 17 and add 8. Find the result.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-17",
+      "provisional_topic": "word-problems",
+      "question": "A class has 4 tables with 6 students each, and 3 students at another table. How many students are there?",
+      "expected": "27",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "Four groups of six plus three gives 4×6+3=27.",
+      "misconception": {
+        "plausible_wrong_answer": "42",
+        "feedback": "Multiply the equal groups before adding the extra students."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Five groups of 4 and 7 extra students make how many?",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-18",
+      "provisional_topic": "word-problems",
+      "question": "A teacher puts 45 crayons into 5 equal packs. How many crayons are in each pack?",
+      "expected": "9",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "Five equal groups share 45 items: 45÷5=9.",
+      "misconception": {
+        "plausible_wrong_answer": "40",
+        "feedback": "Subtracting the number of packs does not find each pack's size."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Share 56 blocks into 7 equal bags.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-19",
+      "provisional_topic": "fractions-foundation",
+      "question": "A whole rectangle is split into 8 equal parts. Three are shaded. How many eighths are shaded?",
+      "expected": "3",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "The unit is one eighth, and three units are shaded.",
+      "misconception": {
+        "plausible_wrong_answer": "8",
+        "feedback": "The numerator counts selected parts; denominator names the size of each unit."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Shade five sixths and state how many sixths are shaded.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-20",
+      "provisional_topic": "fractions-foundation",
+      "question": "A tray has 20 cookies. One fourth are chocolate. How many chocolate cookies?",
+      "expected": "5",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "Divide 20 into four equal groups; one group has five.",
+      "misconception": {
+        "plausible_wrong_answer": "4",
+        "feedback": "The denominator gives number of groups, not number of cookies."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Find one fifth of 30 counters.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-21",
+      "provisional_topic": "patterns",
+      "question": "A pattern starts 5, 9, 13, 17. What is the next number?",
+      "expected": "21",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "The constant change is +4, so 17+4=21.",
+      "misconception": {
+        "plausible_wrong_answer": "18",
+        "feedback": "Look for a repeated difference rather than adding one."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Continue 12, 19, 26, ...",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-22",
+      "provisional_topic": "patterns",
+      "question": "A pattern is 3, 8, __, 18, 23. What is the missing number?",
+      "expected": "13",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "The repeated increase is five.",
+      "misconception": {
+        "plausible_wrong_answer": "10",
+        "feedback": "The difference must remain constant across every adjacent pair."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Fill the missing number in 6, 12, __, 24.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-23",
+      "provisional_topic": "word-problems",
+      "question": "A notebook costs $3 and a pen costs $2. You buy 4 notebooks and one pen. How much do you spend in dollars?",
+      "expected": "14",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "Four notebooks cost 4×3=12; add $2 for the pen.",
+      "misconception": {
+        "plausible_wrong_answer": "20",
+        "feedback": "Multiply only the repeated item, then add the single item."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Buy three $5 items and two $2 items. Find total cost.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    },
+    {
+      "item_id": "g15-depth-24",
+      "provisional_topic": "measurement",
+      "question": "A rectangular garden is 9 m long and 4 m wide. What is its perimeter in metres?",
+      "expected": "26",
+      "answer_contract": "nonnegative_integer",
+      "worked_reasoning": "Add all four sides: 9+4+9+4=26.",
+      "misconception": {
+        "plausible_wrong_answer": "36",
+        "feedback": "Perimeter measures the boundary, not area."
+      },
+      "socratic_hints": [
+        "What does each number count or represent?",
+        "Can you model the quantities with objects, a drawing, or a number sentence?",
+        "Can you check your result using an inverse operation or another representation?"
+      ],
+      "transfer_prompt": "Find the perimeter of a 7 m by 5 m rectangle.",
+      "reasoning_review": "HUMAN_REQUIRED",
+      "status": "DRAFT_UNVERIFIED",
+      "review_status": "PENDING",
+      "runtime_activation": false
+    }
+  ]
+}

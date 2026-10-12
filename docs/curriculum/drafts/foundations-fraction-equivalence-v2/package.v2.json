@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "W1-G4-FRACTION-EQUIVALENCE",
+  "revision": "foundations-fraction-equivalence-v2-r1",
+  "revision_of": {
+    "pull_request": 327,
+    "head": "5d4e613b4aa241384809e048c60ee082e6f14fe4",
+    "artifact": "docs/curriculum/drafts/learning-packages-wave1/content.draft.json"
+  },
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "canonical_family": "MATH.NF.EQUIVALENT_FRACTIONS",
+  "reused_problem_family": "MATH.FRAC.EQUIV.FIND",
+  "objective": "Construct and justify equivalent fractions by repartitioning the same whole, and distinguish equal fraction values from equal quantities when wholes differ.",
+  "conceptual_invariants": [
+    "Equivalent fractions name the same point or same proportion of one fixed whole.",
+    "Splitting every existing part into the same number of equal subparts changes the fraction name but not the represented amount.",
+    "Multiplying numerator and denominator by the same nonzero whole number preserves the fraction value.",
+    "Equal fraction values do not guarantee equal physical quantities when the wholes have different sizes."
+  ],
+  "learning_sequence": [
+    {
+      "phase": "OBSERVE",
+      "representations": ["CONCRETE", "VISUAL"],
+      "learner_action": "Overlay two equal-length paper strips showing 1/2 and 2/4. Describe what stays unchanged and what changes."
+    },
+    {
+      "phase": "PREDICT",
+      "representations": ["VISUAL"],
+      "learner_action": "Before repartitioning, predict the new numerator and denominator when every part is split into the same number of subparts, and predict whether the shaded length moves."
+    },
+    {
+      "phase": "MANIPULATE",
+      "representations": ["CONCRETE", "VISUAL"],
+      "learner_action": "Repartition each part of one fixed whole by a chosen factor, align the before/after bars, and inspect the nonvisual fraction table."
+    },
+    {
+      "phase": "EXPLAIN",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "learner_action": "Connect the unchanged shaded amount to multiplying numerator and denominator by the same factor; explain why adding the same amount does not preserve the value."
+    },
+    {
+      "phase": "PRACTICE",
+      "representations": ["VISUAL", "SYMBOLIC"],
+      "learner_action": "Complete a missing equivalent numerator, reject an add-both claim with a counterexample, and match an area model to a number-line point."
+    },
+    {
+      "phase": "DIAGNOSE",
+      "representations": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+      "learner_action": "Use the recorded response pattern to enter exactly one misconception branch, complete its probe, and pass a different exit check before scaffolds fade."
+    },
+    {
+      "phase": "TRANSFER",
+      "representations": ["CONCRETE", "SYMBOLIC"],
+      "learner_action": "Compare equivalent colored fractions on ribbons of different total lengths; decide separately whether the fractions are equivalent and whether the colored lengths are equal."
+    },
+    {
+      "phase": "VERIFY",
+      "representations": ["SYMBOLIC"],
+      "learner_action": "Complete server-controlled unseen repartition, counterexample and different-whole tasks with no bars, hints, worked steps or answer fields in the public payload."
+    }
+  ],
+  "diagnostic_router": [
+    {
+      "misconception_id": "FRAC.EQUIV.ADD_BOTH",
+      "observed_evidence": "Learner accepts n/d=(n+1)/(d+1) or produces the add-both fraction.",
+      "probe": "Compare 1/2 and 2/3 on equal bars and by exact cross-products.",
+      "socratic_path": [
+        "Did every original part split into the same number of subparts?",
+        "Which multiplication changes 1/2 into the proposed fraction?",
+        "Can both fractions occupy the same point on one number line?"
+      ],
+      "repair": "Repartition one bar multiplicatively and contrast it with the add-both bar.",
+      "exit_check": "Decide whether 2/5 and 3/6 are equivalent and give one invariant-based reason."
+    },
+    {
+      "misconception_id": "FRAC.EQUIV.DENOMINATOR_SIZE",
+      "observed_evidence": "Learner judges the larger denominator as the larger fraction without holding the whole fixed.",
+      "probe": "Compare one fourth and one eighth cut from equal-length strips.",
+      "socratic_path": [
+        "Are both wholes the same length?",
+        "What happens to one piece when the same whole has more equal parts?",
+        "Which piece covers more of the fixed whole?"
+      ],
+      "repair": "Align unit-fraction pieces on the same whole and announce their lengths nonvisually.",
+      "exit_check": "Order 1/3 and 1/6 using a fixed whole and explain the denominator's role."
+    },
+    {
+      "misconception_id": "FRAC.EQUIV.DIFFERENT_WHOLES",
+      "observed_evidence": "Learner concludes equal fraction names always represent equal physical quantities.",
+      "probe": "Compare one half of a 12-unit strip with one half of an 18-unit strip.",
+      "socratic_path": [
+        "Are the fractions of each whole equal?",
+        "Are the wholes themselves equal in size?",
+        "What are the two actual shaded lengths?"
+      ],
+      "repair": "Record fraction value and quantity in separate table columns before comparing.",
+      "exit_check": "Explain why 3/6 of 20 and 4/8 of 12 have equal fraction values but unequal quantities."
+    }
+  ],
+  "guided_task_structures": [
+    "REPARTITION_EQUIVALENCE",
+    "REJECT_ADD_BOTH_CLAIM",
+    "AREA_TO_NUMBER_LINE_MATCH"
+  ],
+  "unseen_transfer_contract": {
+    "structure": "EQUIVALENT_FRACTIONS_DIFFERENT_WHOLES",
+    "requires_two_decisions": [
+      "fraction_values_equivalent",
+      "represented_quantities_equal"
+    ],
+    "requires_explanation": "Name the fixed-whole condition and compute both represented quantities.",
+    "guided_numbers_reused": false
+  },
+  "independent_assessment_contract": {
+    "variant_namespace": "foundations-fraction-equivalence-v2:independent",
+    "server_controlled_required": true,
+    "hints_allowed": false,
+    "worked_steps_visible_before_submission": false,
+    "answer_in_public_payload": false,
+    "visual_scaffold_visible": false,
+    "feedback_after_submission": true,
+    "guided_practice_credit": false,
+    "historical_mastery_mutation": false,
+    "reserved_review_seeds": [901, 902, 903],
+    "status": "CONTENT_CONTRACT_ONLY_BACKEND_NOT_IMPLEMENTED"
+  },
+  "mve_reuse_contract": {
+    "renderer": "frontend/src/components/ProblemVisual.tsx:fraction_bar",
+    "guided_component": "frontend/src/mve/InteractiveFractionBars.tsx",
+    "reuse_status": "PARTIAL_REUSE_NOT_WIRED",
+    "reused_capability": "Keyboard-operable bounded shading of one fixed-denominator fraction bar with a live text status.",
+    "missing_capability": "Paired equal-whole bars, repartition-by-factor, alignment comparison, and separate fraction-value versus quantity table.",
+    "owner": "MVE",
+    "assessment_rule": "The guided component must remain absent from independent assessment."
+  },
+  "accessibility_contract": {
+    "keyboard_only": "Choose a bar, choose repartition factor, repartition, align, compare and submit using native controls without dragging.",
+    "screen_reader_state": "Announce whole identifier and length, numerator, denominator, repartition factor, shaded proportion and represented quantity after each change.",
+    "nonvisual_equivalent": "A table exposes whole length, fraction, equivalent name and represented quantity for each bar.",
+    "focus_recovery": "Rejected repartition keeps work and returns focus to the invalid factor with a concise reason.",
+    "reduced_motion": "Use discrete before/after bar states and optional alignment outlines; no required animation.",
+    "color_independence": true,
+    "independent_scaffolds": false
+  },
+  "review_status": {
+    "mathematics_current_revision": "PENDING",
+    "standards_current_revision": "PENDING",
+    "pedagogy_prior_revision": "ACCEPT_PR327_COMMENT_6102771217",
+    "pedagogy_current_revision": "PENDING",
+    "muse_qa": "PENDING",
+    "engineering_integration": "NOT_REQUESTED",
+    "release": "NOT_APPROVED"
+  }
+}

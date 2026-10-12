@@ -1,0 +1,265 @@
+{
+  "package_id": "draft-multiskill-depth-wave-mve-v0",
+  "status": "DRAFT_UNVERIFIED",
+  "review_status": "PENDING",
+  "scope": "Original interactive micro-lesson storyboards; specifications only, not implemented UI",
+  "copyright_policy": "Original Mihur interactive concepts and narration; no copied competitor screens or lessons.",
+  "specs": [
+    {
+      "spec_id": "draft-depth-mve-1",
+      "provisional_skill": "ADDITION_REGROUP",
+      "title": "Bundled base-ten blocks",
+      "example": "28 + 17",
+      "review_status": "PENDING",
+      "type": "interactive_storyboard_not_implemented",
+      "states": [
+        {
+          "name": "observe",
+          "narration": "Show 2 tens and 8 ones beside 1 ten and 7 ones"
+        },
+        {
+          "name": "manipulate",
+          "narration": "Drag 10 of the 15 ones into a new ten bundle"
+        },
+        {
+          "name": "reflect",
+          "narration": "Display 4 tens and 5 ones = 45"
+        }
+      ],
+      "mathematical_invariant": "Never change total represented value; exactly 10 ones exchange for 1 ten",
+      "misconception_feedback": "Forgot to carry? Count ones before and after the trade",
+      "accessibility": {
+        "keyboard": "Every drag interaction must have equivalent focusable select/move controls",
+        "screen_reader": "Announce numeric quantities, unit labels, and each completed state",
+        "reduced_motion": "Instant state transitions preserve identical mathematical content",
+        "color_independence": "Use shape, text and numeric labels in addition to color"
+      },
+      "assessment_prompt": "Explain why the interaction for 28 + 17 preserves the mathematical meaning and compute the answer without relying on the animation.",
+      "activation": false
+    },
+    {
+      "spec_id": "draft-depth-mve-2",
+      "provisional_skill": "SUBTRACTION_REGROUP",
+      "title": "Base-ten trade board",
+      "example": "52 − 18",
+      "review_status": "PENDING",
+      "type": "interactive_storyboard_not_implemented",
+      "states": [
+        {
+          "name": "observe",
+          "narration": "Show 5 tens and 2 ones"
+        },
+        {
+          "name": "manipulate",
+          "narration": "Trade 1 ten for 10 ones; remove 8 ones and 1 ten"
+        },
+        {
+          "name": "reflect",
+          "narration": "Display 3 tens and 4 ones = 34"
+        }
+      ],
+      "mathematical_invariant": "One ten becomes exactly 10 ones; minuend value unchanged by regrouping",
+      "misconception_feedback": "You cannot remove 8 ones from 2 ones without trading",
+      "accessibility": {
+        "keyboard": "Every drag interaction must have equivalent focusable select/move controls",
+        "screen_reader": "Announce numeric quantities, unit labels, and each completed state",
+        "reduced_motion": "Instant state transitions preserve identical mathematical content",
+        "color_independence": "Use shape, text and numeric labels in addition to color"
+      },
+      "assessment_prompt": "Explain why the interaction for 52 − 18 preserves the mathematical meaning and compute the answer without relying on the animation.",
+      "activation": false
+    },
+    {
+      "spec_id": "draft-depth-mve-3",
+      "provisional_skill": "MULTIPLICATION_GROUPS",
+      "title": "Array builder",
+      "example": "6 × 7",
+      "review_status": "PENDING",
+      "type": "interactive_storyboard_not_implemented",
+      "states": [
+        {
+          "name": "observe",
+          "narration": "Show 6 rows of 7 empty squares"
+        },
+        {
+          "name": "manipulate",
+          "narration": "Fill each row, highlight partial groups and count"
+        },
+        {
+          "name": "reflect",
+          "narration": "Display 42 squares and 6×7=42"
+        }
+      ],
+      "mathematical_invariant": "Total square count equals rows×columns regardless of grouping",
+      "misconception_feedback": "Adding 6+7 counts two factors, not all 42 squares",
+      "accessibility": {
+        "keyboard": "Every drag interaction must have equivalent focusable select/move controls",
+        "screen_reader": "Announce numeric quantities, unit labels, and each completed state",
+        "reduced_motion": "Instant state transitions preserve identical mathematical content",
+        "color_independence": "Use shape, text and numeric labels in addition to color"
+      },
+      "assessment_prompt": "Explain why the interaction for 6 × 7 preserves the mathematical meaning and compute the answer without relying on the animation.",
+      "activation": false
+    },
+    {
+      "spec_id": "draft-depth-mve-4",
+      "provisional_skill": "DIVISION_GROUPS",
+      "title": "Equal-sharing trays",
+      "example": "42 ÷ 6",
+      "review_status": "PENDING",
+      "type": "interactive_storyboard_not_implemented",
+      "states": [
+        {
+          "name": "observe",
+          "narration": "Show 42 tokens and 6 empty trays"
+        },
+        {
+          "name": "manipulate",
+          "narration": "Distribute tokens evenly, one per tray per round"
+        },
+        {
+          "name": "reflect",
+          "narration": "Display 7 per tray; verify 6×7=42"
+        }
+      ],
+      "mathematical_invariant": "Token count conserved; tray counts equal at completion",
+      "misconception_feedback": "Check whether the question asks number of trays or amount per tray",
+      "accessibility": {
+        "keyboard": "Every drag interaction must have equivalent focusable select/move controls",
+        "screen_reader": "Announce numeric quantities, unit labels, and each completed state",
+        "reduced_motion": "Instant state transitions preserve identical mathematical content",
+        "color_independence": "Use shape, text and numeric labels in addition to color"
+      },
+      "assessment_prompt": "Explain why the interaction for 42 ÷ 6 preserves the mathematical meaning and compute the answer without relying on the animation.",
+      "activation": false
+    },
+    {
+      "spec_id": "draft-depth-mve-5",
+      "provisional_skill": "LIKE_FRACTION_ADDITION",
+      "title": "Aligned fraction bars",
+      "example": "1/5 + 3/5",
+      "review_status": "PENDING",
+      "type": "interactive_storyboard_not_implemented",
+      "states": [
+        {
+          "name": "observe",
+          "narration": "Show two bars divided into equal fifths"
+        },
+        {
+          "name": "manipulate",
+          "narration": "Move shaded fifths into one aligned bar"
+        },
+        {
+          "name": "reflect",
+          "narration": "Show 4/5; denominator remains 5"
+        }
+      ],
+      "mathematical_invariant": "Whole-unit size and fifth partitions remain identical during combination",
+      "misconception_feedback": "Adding denominators changes the size of the unit pieces",
+      "accessibility": {
+        "keyboard": "Every drag interaction must have equivalent focusable select/move controls",
+        "screen_reader": "Announce numeric quantities, unit labels, and each completed state",
+        "reduced_motion": "Instant state transitions preserve identical mathematical content",
+        "color_independence": "Use shape, text and numeric labels in addition to color"
+      },
+      "assessment_prompt": "Explain why the interaction for 1/5 + 3/5 preserves the mathematical meaning and compute the answer without relying on the animation.",
+      "activation": false
+    },
+    {
+      "spec_id": "draft-depth-mve-6",
+      "provisional_skill": "DECIMAL_ADDITION",
+      "title": "Place-value hundredths grid",
+      "example": "1.25 + 2.35",
+      "review_status": "PENDING",
+      "type": "interactive_storyboard_not_implemented",
+      "states": [
+        {
+          "name": "observe",
+          "narration": "Show 1 whole, 2 tenths, 5 hundredths and 2 wholes, 3 tenths, 5 hundredths"
+        },
+        {
+          "name": "manipulate",
+          "narration": "Align place-value columns and trade 10 hundredths for a tenth"
+        },
+        {
+          "name": "reflect",
+          "narration": "Show 3.60"
+        }
+      ],
+      "mathematical_invariant": "Each column's unit value is preserved; 10 hundredths equals 1 tenth",
+      "misconception_feedback": "Do not align the final digits without checking decimal positions",
+      "accessibility": {
+        "keyboard": "Every drag interaction must have equivalent focusable select/move controls",
+        "screen_reader": "Announce numeric quantities, unit labels, and each completed state",
+        "reduced_motion": "Instant state transitions preserve identical mathematical content",
+        "color_independence": "Use shape, text and numeric labels in addition to color"
+      },
+      "assessment_prompt": "Explain why the interaction for 1.25 + 2.35 preserves the mathematical meaning and compute the answer without relying on the animation.",
+      "activation": false
+    },
+    {
+      "spec_id": "draft-depth-mve-7",
+      "provisional_skill": "RECTANGLE_PERIMETER",
+      "title": "Walk-the-boundary tool",
+      "example": "4 cm by 7 cm",
+      "review_status": "PENDING",
+      "type": "interactive_storyboard_not_implemented",
+      "states": [
+        {
+          "name": "observe",
+          "narration": "Show rectangle with 4 cm and 7 cm labeled"
+        },
+        {
+          "name": "manipulate",
+          "narration": "Trace all four edges while counting lengths"
+        },
+        {
+          "name": "reflect",
+          "narration": "Display 4+7+4+7=22 cm"
+        }
+      ],
+      "mathematical_invariant": "Perimeter is total length of boundary, not square-unit count",
+      "misconception_feedback": "The two unlabelled opposite sides also contribute",
+      "accessibility": {
+        "keyboard": "Every drag interaction must have equivalent focusable select/move controls",
+        "screen_reader": "Announce numeric quantities, unit labels, and each completed state",
+        "reduced_motion": "Instant state transitions preserve identical mathematical content",
+        "color_independence": "Use shape, text and numeric labels in addition to color"
+      },
+      "assessment_prompt": "Explain why the interaction for 4 cm by 7 cm preserves the mathematical meaning and compute the answer without relying on the animation.",
+      "activation": false
+    },
+    {
+      "spec_id": "draft-depth-mve-8",
+      "provisional_skill": "RECTANGLE_AREA",
+      "title": "Unit-square tiling board",
+      "example": "3 cm by 6 cm",
+      "review_status": "PENDING",
+      "type": "interactive_storyboard_not_implemented",
+      "states": [
+        {
+          "name": "observe",
+          "narration": "Show 3 by 6 grid of unit squares"
+        },
+        {
+          "name": "manipulate",
+          "narration": "Fill 3 rows of 6 squares, count equal groups"
+        },
+        {
+          "name": "reflect",
+          "narration": "Display 18 cm²"
+        }
+      ],
+      "mathematical_invariant": "No gaps or overlaps; number of unit squares equals length×width",
+      "misconception_feedback": "Area measures covering, not the distance around the edge",
+      "accessibility": {
+        "keyboard": "Every drag interaction must have equivalent focusable select/move controls",
+        "screen_reader": "Announce numeric quantities, unit labels, and each completed state",
+        "reduced_motion": "Instant state transitions preserve identical mathematical content",
+        "color_independence": "Use shape, text and numeric labels in addition to color"
+      },
+      "assessment_prompt": "Explain why the interaction for 3 cm by 6 cm preserves the mathematical meaning and compute the answer without relying on the animation.",
+      "activation": false
+    }
+  ]
+}
