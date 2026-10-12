@@ -154,8 +154,8 @@ def test_reconciliation_counts_are_internally_consistent() -> None:
     )
 
     assert reconciliation["official_expectation_count"] == len(rows) == 46
-    assert reconciliation["repository_existing_expectation_rows"] == existing == 16
-    assert reconciliation["unmapped_expectations"] == 46 - existing == 30
+    assert reconciliation["repository_existing_expectation_rows"] == existing == 15
+    assert reconciliation["unmapped_expectations"] == 46 - existing == 31
     assert reconciliation["existing_seed_rows_by_grade"] == {
         "6": 5,
         "7": 5,
@@ -184,3 +184,12 @@ def test_each_va_expectation_links_to_official_grade_sol_document() -> None:
         assert row['instructional_support_locator'] == manifest['provenance']['instructional_resources_url']
         assert row['source_locator'] != row['instructional_support_locator']
         assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+
+
+def test_va7_histogram_data_cycle_is_not_inferred_from_probability_seed() -> None:
+    manifest = _manifest()
+    row = next(r for r in manifest['expectations'] if r['expectation_id'] == '7.PS.2')
+    assert row['repository_existing_crosswalks'] == []
+    assert row['proposed_mapping_status'] == 'NO_REPOSITORY_EXPECTATION_EQUIVALENCE_EVIDENCE'
+    assert row['mapping_correction_evidence']['decision'] == 'REMOVE_UNSUPPORTED_PROVISIONAL_RELATION_NOT_A_MISSING_CORE_CLAIM'
+    assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
