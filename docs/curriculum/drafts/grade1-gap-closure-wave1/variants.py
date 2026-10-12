@@ -24,6 +24,32 @@ def _validate(concept_id:str,seed:int,mode:str)->None:
     if seed<0: raise ValueError("seed must be nonnegative")
     if mode not in MODES: raise ValueError("mode must be guided or independent")
 
+_ONES=(
+    "zero","one","two","three","four","five","six","seven","eight","nine",
+    "ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen",
+    "seventeen","eighteen","nineteen",
+)
+_TENS=("", "", "twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety")
+
+def _number_name_0_120(value:int)->str:
+    if isinstance(value,bool) or not isinstance(value,int):
+        raise TypeError("value must be integer")
+    if not 0<=value<=120:
+        raise ValueError("value must be between 0 and 120")
+    if value<20:
+        return _ONES[value]
+    if value<100:
+        tens,ones=divmod(value,10)
+        return _TENS[tens] if ones==0 else f"{_TENS[tens]}-{_ONES[ones]}"
+    if value==100:
+        return "one hundred"
+    remainder=value-100
+    if remainder<20:
+        return f"one hundred {_ONES[remainder]}"
+    tens,ones=divmod(remainder,10)
+    suffix=_TENS[tens] if ones==0 else f"{_TENS[tens]}-{_ONES[ones]}"
+    return f"one hundred {suffix}"
+
 def generate(concept_id:str,seed:int,mode:str)->Variant:
     _validate(concept_id,seed,mode)
     rng=Random(f"{NAMESPACE}:{concept_id}:{mode}:{seed}")
@@ -32,7 +58,12 @@ def generate(concept_id:str,seed:int,mode:str)->Variant:
         n=rng.randint(0,120)
         others=[max(0,min(120,n+d)) for d in (-2,1,3)]
         prompt=f"Show a quantity of {n}, write its numeral and number name, then order {n}, {others[0]}, {others[1]}, {others[2]} from least to greatest."
-        oracle={"numeral":n,"ordered":sorted([n,*others]),"within_boundary":0<=n<=120}
+        oracle={
+            "numeral":n,
+            "number_name":_number_name_0_120(n),
+            "ordered":sorted([n,*others]),
+            "within_boundary":0<=n<=120,
+        }
         fields=("quantity_description","numeral","number_name","ordered_list")
     elif concept_id=="G1-PLACE-VALUE":
         n=rng.randint(10,99); tens=n//10; ones=n%10
