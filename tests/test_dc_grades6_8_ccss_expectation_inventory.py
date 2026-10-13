@@ -196,3 +196,39 @@ def test_dc_source_fidelity_ledger_is_total_and_fail_closed() -> None:
         assert source['independent_acceptance'] == 'PENDING'
         assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
     assert next(x for x in evidence['records'] if x['expectation_id'] == '7.SP.C.8')['lettered_subpart_ids'] == ['7.SP.C.8.a','7.SP.C.8.b','7.SP.C.8.c']
+
+
+def test_dc_grade8_unlettered_scope_conditions_are_preserved_fail_closed() -> None:
+    manifest = _manifest()
+    ledger = json.loads(
+        (MANIFEST.parent / 'dc_grades6_8_ccss.source_fidelity_locators.v1.json').read_text(encoding='utf-8')
+    )
+    assert ledger['scope_summary_policy'] == (
+        'NON_EXHAUSTIVE_DISCOVERY_ONLY_NOT_FULL_MATHEMATICAL_SCOPE_EVIDENCE'
+    )
+    records = {row['expectation_id']: row for row in ledger['records']}
+    expectations = {row['expectation_id']: row for row in manifest['expectations']}
+    for expectation_id in ('8.EE.A.2', '8.SP.A.4'):
+        row = expectations[expectation_id]
+        record = records[expectation_id]
+        scope = record['bounded_mathematical_scope_evidence']
+        assert row['official_subpart_identifiers'] == []
+        assert record['lettered_subpart_ids'] == []
+        assert scope['unlettered_standard'] is True
+        assert scope['source_text_url'] == row['source_locator']
+        assert scope['short_summary_is_exhaustive'] is False
+        assert scope['scope_verification'] == 'PENDING_INDEPENDENT_SOURCE_FIDELITY'
+        assert scope['canonical_equivalence'] == 'NOT_ESTABLISHED'
+        assert scope['downstream_full_coverage_allowed'] is False
+        assert record['independent_acceptance'] == 'PENDING'
+        assert row['classification']['standards_mapped'] == 'NO'
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+
+    roots = ' '.join(records['8.EE.A.2']['bounded_mathematical_scope_evidence']['required_conditions'])
+    assert 'positive rational' in roots
+    assert '√2' in roots and 'irrational' in roots
+
+    tables = ' '.join(records['8.SP.A.4']['bounded_mathematical_scope_evidence']['required_conditions']).lower()
+    assert all(term in tables for term in (
+        'construct', 'interpret', 'same subjects', 'row-relative', 'column-relative', 'associations'
+    ))
