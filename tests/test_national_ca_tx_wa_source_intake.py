@@ -125,3 +125,33 @@ def test_texas_algebra1_critical_source_scope_distinctions():
     for row in rows.values():
         assert row["canonical_equivalence"] == "UNVERIFIED"
         assert row["mastery"] == "UNVERIFIED"
+
+
+def test_texas_algebra1_per_letter_pages_are_not_parent_stem_pages():
+    data = _data("TX")
+    inventory = data["algebra1_official_identifier_inventory"]
+    rows = inventory["expectations"]
+    assert len(rows) == 56
+    parent_spans = {int(k): v for k, v in inventory["source_locator_audit"]["parent_stem_pages"].items()}
+    assert parent_spans[2] == [2, 3]
+    assert parent_spans[6] == [3, 4]
+    assert parent_spans[10] == [4, 5]
+    expected = {}
+    for row in rows:
+        parent = int(row["source_parent_group"])
+        letter = row["expectation_id"][-1]
+        span = list(parent_spans[parent])
+        if parent == 2:
+            span = [2, 2] if letter <= "G" else [3, 3]
+        elif parent == 6:
+            span = [4, 4]
+        elif parent == 10:
+            span = [4, 4] if letter == "A" else [4, 5] if letter == "B" else [5, 5]
+        assert row["printed_page_span"] == span
+        assert row["parent_stem_printed_page_span"] == parent_spans[parent]
+        assert row["source_pdf_zero_based_index_span"] == [p - 1 for p in span]
+        assert row["canonical_equivalence"] == "UNVERIFIED"
+        expected[row["expectation_id"]] = span
+    assert expected["A1.2H"] == [3, 3]
+    assert expected["A1.6B"] == [4, 4]
+    assert expected["A1.10B"] == [4, 5]
