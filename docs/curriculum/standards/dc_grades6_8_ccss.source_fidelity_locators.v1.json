@@ -842,6 +842,23 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2010_CCSS",
+        "source_text_url": "https://www.thecorestandards.org/Math/Content/7/EE/B/3/",
+        "source_publication": "NGA/CCSSO CCSS Mathematics 2010",
+        "source_printed_page": 49,
+        "required_conditions": [
+          "Solve multi-step contextual problems with positive and negative rational quantities",
+          "Apply properties of operations to calculate and transform expressions",
+          "Convert among rational-number forms when appropriate to the problem",
+          "Assess solution reasonableness using mental computation, estimation, and strategic checks"
+        ],
+        "unlettered_standard": true,
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
       }
     },
     {
@@ -1124,6 +1141,22 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2010_CCSS",
+        "source_text_url": "https://www.thecorestandards.org/Math/Content/7/SP/B/3/",
+        "source_publication": "NGA/CCSSO CCSS Mathematics 2010",
+        "source_printed_page": 50,
+        "required_conditions": [
+          "Compare numerical distributions with comparable variability and assess visual overlap",
+          "Express separation between measures of center as a multiple of a measure of variability",
+          "Use mean absolute deviation as a possible variability measure in a contextual comparison"
+        ],
+        "unlettered_standard": true,
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
       }
     },
     {
@@ -1294,6 +1327,22 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2010_CCSS",
+        "source_text_url": "https://www.thecorestandards.org/Math/Content/8/NS/A/1/",
+        "source_publication": "NGA/CCSSO CCSS Mathematics 2010",
+        "source_printed_page": 55,
+        "required_conditions": [
+          "Distinguish rational and irrational numbers through decimal expansions",
+          "A rational number has a decimal expansion that eventually repeats, including terminating cases viewed with trailing zeros",
+          "Convert an eventually repeating decimal expansion to a rational-number fraction"
+        ],
+        "unlettered_standard": true,
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
       }
     },
     {
