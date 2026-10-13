@@ -262,6 +262,8 @@ def generate(seed: int, mode: str) -> Variant:
     if kind in ("EQUATION_P_TIMES_X_PLUS_Q", "INEQUALITY_P_TIMES_X_PLUS_Q"):
         p = Fraction(rng.choice((2, 3, 4, 5, 6)))
     q = Fraction(rng.randint(1, 9), rng.choice((1, 1, 2)))
+    if kind in ("EQUATION_P_TIMES_X_PLUS_Q", "INEQUALITY_P_TIMES_X_PLUS_Q"):
+        q = Fraction(rng.randint(1, 9))
     relation = rng.choice(("<", "<=", ">", ">="))
     domain = "NONNEGATIVE_WHOLE_NUMBERS"
 
