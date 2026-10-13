@@ -222,3 +222,19 @@ def test_texas_advanced_2025_complete_author_identifier_enumeration_is_fail_clos
         assert r["generator"] == "UNVERIFIED"
         assert r["assessment"] == "UNVERIFIED"
         assert r["mastery"] == "UNVERIFIED"
+
+
+def test_texas_advanced_parent_stems_and_scope_gap_accounting():
+    data = _data("TX")
+    inv = data["advanced_2025_final_adoption_evidence"]["advanced_course_expectation_identifier_inventory"]
+    ledger = inv["parent_stem_review_ledger"]
+    assert len(ledger) == 26
+    assert len({r["source_id"] for r in ledger}) == 26
+    assert sum(r["subpart_count"] for r in ledger) == 130
+    assert inv["scope_gap_accounting"]["total_expectations"] == 130
+    assert inv["scope_gap_accounting"]["with_editorial_scope"] == 14
+    assert inv["scope_gap_accounting"]["without_editorial_scope"] == 116
+    assert inv["scope_gap_accounting"]["independently_accepted_source_scopes"] == 0
+    assert inv["scope_gap_accounting"]["canonical_equivalences_accepted"] == 0
+    for r in ledger:
+        assert r["scope_status"].startswith("EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT")
