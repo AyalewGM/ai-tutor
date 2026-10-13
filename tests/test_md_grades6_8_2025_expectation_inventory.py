@@ -320,4 +320,53 @@ def test_md_grade6_bounded_scope_findings_are_fail_closed() -> None:
     assert all(term in stats for term in ('median', 'mean', 'interquartile range', 'outliers'))
     assert 'do not infer mean absolute deviation' in stats
     for standard_id in ('6.AT.C.8', '6.AT.C.10', '6.DS.B.6'):
-        assert records[standard_id]['bounded_mathematical_scope_evidence']['printed_page_locator_reconciliation'] == 'PENDING_INDEPENDENT_PAGE_RECONCILIATION'
+        assert records[standard_id]['bounded_mathematical_scope_evidence']['printed_page_locator_reconciliation'] == 'RECONCILED_TO_OFFICIAL_PDF_PRINTED_FOOTER'
+
+
+def test_all_30_md_grade6_original_pdf_footer_locations() -> None:
+    """Pin every 2025 Grade 6 parent to the original MSDE February 2026 PDF page."""
+    manifest = _manifest()
+    ledger = json.loads(
+        (MANIFEST.parent / 'md_grades6_8_2025.source_fidelity_locators.v1.json').read_text(encoding='utf-8')
+    )
+    rows = {r['expectation_id']: r for r in manifest['expectations'] if r['grade'] == 6}
+    records = {r['expectation_id']: r for r in ledger['records'] if r['grade'] == 6}
+    pages = {
+        '6.NOS.A.1': 1,
+        '6.NOS.B.2': 2, '6.NOS.B.3': 2, '6.NOS.B.4': 2,
+        '6.NOS.C.5': 3, '6.NOS.C.6': 3,
+        '6.NOS.C.7': 4, '6.NOS.C.8': 4, '6.NOS.C.9': 5,
+        '6.AT.A.1': 6, '6.AT.A.2': 6,
+        '6.AT.A.3': 7, '6.AT.A.4': 7,
+        '6.AT.B.5': 8, '6.AT.B.6': 8, '6.AT.B.7': 9,
+        '6.AT.C.8': 10, '6.AT.C.9': 10, '6.AT.C.10': 10,
+        '6.AT.D.11': 11,
+        '6.GR.A.1': 12, '6.GR.A.2': 12,
+        '6.GR.A.3': 12, '6.GR.A.4': 12,
+        '6.DS.A.1': 13, '6.DS.A.2': 13,
+        '6.DS.A.3': 13, '6.DS.A.4': 13,
+        '6.DS.B.5': 13, '6.DS.B.6': 14,
+    }
+    assert len(rows) == len(records) == len(pages) == 30
+    assert set(rows) == set(records) == set(pages)
+    for standard_id, printed_page in pages.items():
+        row = rows[standard_id]
+        record = records[standard_id]
+        assert row['source_page'] == row['source_page_end'] == printed_page
+        assert record['printed_page_start'] == record['printed_page_end'] == printed_page
+        assert row['pdf_page_index_zero_based'] == row['pdf_page_end_index_zero_based'] == printed_page
+        assert record['pdf_page_index_zero_based'] == record['pdf_page_end_index_zero_based'] == printed_page
+        assert row['page_locator_evidence'] == record['page_locator_evidence'] == (
+            'OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED'
+        )
+        assert row['source_locator'] == record['source_url'] == 'https://msde.maryland.gov/media/17816'
+        assert record['column'] == '2025 MD Index / 2025 Standards Statement'
+        assert record['independent_acceptance'] == 'PENDING'
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+    for standard_id in ('6.NOS.B.4', '6.AT.C.8', '6.AT.C.10', '6.DS.B.6'):
+        scope = records[standard_id]['bounded_mathematical_scope_evidence']
+        assert scope['printed_page_locator_reconciliation'] == 'RECONCILED_TO_OFFICIAL_PDF_PRINTED_FOOTER'
+        assert scope['reviewer_reported_printed_page'] == pages[standard_id]
+        assert scope['ledger_printed_page_start'] == pages[standard_id]
+        assert scope['pdf_page_index_zero_based'] == pages[standard_id]
+        assert scope['downstream_full_coverage_allowed'] is False
