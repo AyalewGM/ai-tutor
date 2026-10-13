@@ -64,6 +64,113 @@ def test_guided_model_accepts_commuted_terms_and_rejects_constant_miss():
     assert ALG.diagnose_guided(v, response) == "MD7.MODEL_TRANSLATION"
 
 
+
+def _complete_equation_response(v):
+    oracle = v.teacher_oracle()
+    return {
+        "symbolic_model": oracle["symbolic_model"],
+        "solution": oracle["solution"],
+        "inverse_steps": "practice-only explanation",
+        "substitution_check": True,
+        "context_interpretation": "practice-only context interpretation",
+    }
+
+
+def _complete_inequality_response(v):
+    oracle = v.teacher_oracle()
+    return {
+        "symbolic_model": oracle["symbolic_model"],
+        "boundary": oracle["boundary"],
+        "solution_relation": oracle["solution_relation"],
+        "endpoint": oracle["endpoint"],
+        "graph_direction": oracle["graph_direction"],
+        "graph_representation": oracle["graph_representation"],
+        "witness": oracle["witness"],
+        "counterexample": oracle["counterexample"],
+        "context_interpretation": "practice-only context interpretation",
+    }
+
+
+@pytest.mark.parametrize("seed", [1, 2])
+def test_guided_equation_diagnosis_accepts_equivalent_models_and_rejects_near_misses(seed):
+    v = ALG.generate(seed, "guided")
+    assert v.kind.startswith("EQUATION")
+    response = _complete_equation_response(v)
+
+    if v.kind == "EQUATION_PX_PLUS_Q":
+        response["symbolic_model"] = (
+            f"{ALG._fmt(v.q)} + {ALG._fmt(v.p)}*x = {ALG._fmt(v.r)}"
+        )
+    else:
+        response["symbolic_model"] = (
+            f"{ALG._fmt(v.p)}*x + {ALG._fmt(v.p * v.q)} = {ALG._fmt(v.r)}"
+        )
+    assert ALG.diagnose_guided(v, response) == "GUIDED_STRUCTURED_MATCH_REASONING_UNREVIEWED"
+
+    response["symbolic_model"] = (
+        f"{ALG._fmt(2 * v.p)}*x + {ALG._fmt(2 * v.p * v.q if v.kind == 'EQUATION_P_TIMES_X_PLUS_Q' else 2 * v.q)}"
+        f" = {ALG._fmt(2 * v.r)}"
+    )
+    assert ALG.diagnose_guided(v, response) == "GUIDED_STRUCTURED_MATCH_REASONING_UNREVIEWED"
+
+    response["symbolic_model"] = f"{ALG._fmt(v.p)}*x + {ALG._fmt(v.q + 1)} = {ALG._fmt(v.r)}"
+    assert ALG.diagnose_guided(v, response) == "MD7.MODEL_TRANSLATION"
+
+    response["symbolic_model"] = "x*x = 1"
+    assert ALG.diagnose_guided(v, response) == "MD7.MODEL_TRANSLATION"
+
+
+@pytest.mark.parametrize("seed", [3, 4])
+def test_guided_inequality_diagnosis_accepts_positive_scaling_and_rejects_relation_errors(seed):
+    v = ALG.generate(seed, "guided")
+    assert v.kind.startswith("INEQUALITY")
+    assert v.relation is not None
+    response = _complete_inequality_response(v)
+
+    constant = v.p * v.q if v.kind == "INEQUALITY_P_TIMES_X_PLUS_Q" else v.q
+    response["symbolic_model"] = (
+        f"{ALG._fmt(2 * v.p)}*x + {ALG._fmt(2 * constant)} "
+        f"{v.relation} {ALG._fmt(2 * v.r)}"
+    )
+    assert ALG.diagnose_guided(v, response) == "GUIDED_STRUCTURED_MATCH_REASONING_UNREVIEWED"
+
+    reversed_relation = {"<": ">", "<=": ">=", ">": "<", ">=": "<="}[v.relation]
+    response["symbolic_model"] = (
+        f"{ALG._fmt(v.p)}*x + {ALG._fmt(constant)} "
+        f"{reversed_relation} {ALG._fmt(v.r)}"
+    )
+    assert ALG.diagnose_guided(v, response) == "MD7.MODEL_TRANSLATION"
+
+    changed_strictness = {
+        "<": "<=", "<=": "<", ">": ">=", ">=": ">"
+    }[v.relation]
+    response["symbolic_model"] = (
+        f"{ALG._fmt(v.p)}*x + {ALG._fmt(constant)} "
+        f"{changed_strictness} {ALG._fmt(v.r)}"
+    )
+    assert ALG.diagnose_guided(v, response) == "MD7.MODEL_TRANSLATION"
+
+    response["symbolic_model"] = (
+        f"{ALG._fmt(-v.p)}*x + {ALG._fmt(-constant)} "
+        f"{v.relation} {ALG._fmt(-v.r)}"
+    )
+    assert ALG.diagnose_guided(v, response) == "MD7.MODEL_TRANSLATION"
+
+    response["symbolic_model"] = "__import__('os').system('true') < 1"
+    assert ALG.diagnose_guided(v, response) == "MD7.MODEL_TRANSLATION"
+
+
+def test_guided_explanations_and_client_substitution_flags_remain_practice_only():
+    v = ALG.generate(1, "guided")
+    response = _complete_equation_response(v)
+    response["inverse_steps"] = ""
+    assert ALG.diagnose_guided(v, response) == "MD7.INVERSE_STEPS_UNEXPLAINED"
+
+    response = _complete_equation_response(v)
+    response["substitution_check"] = False
+    assert ALG.diagnose_guided(v, response) == "MD7.SUBSTITUTION_CHECK_MISSING"
+
+
 @pytest.mark.parametrize("mode", ["guided", "independent"])
 @pytest.mark.parametrize(("seed", "scale"), [(4, Fraction(1)), (5, Fraction(-1))])
 def test_unit_scale_same_magnitude_exact_oracle(seed, scale, mode):
