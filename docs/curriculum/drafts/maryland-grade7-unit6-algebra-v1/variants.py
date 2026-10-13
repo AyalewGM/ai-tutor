@@ -380,7 +380,9 @@ def diagnose_guided(variant: Variant, response: Mapping[str, object]) -> str:
         return "GUIDED_STRUCTURED_MATCH_REASONING_UNREVIEWED"
 
     if variant.kind.startswith("EQUATION"):
-        if response["symbolic_model"] != oracle["symbolic_model"]:
+        if not _mathematically_equivalent(
+            response["symbolic_model"], str(oracle["symbolic_model"])
+        ):
             return "MD7.MODEL_TRANSLATION"
         if not _exact_number_matches(response["solution"], oracle["solution"]):
             return "MD7.INVERSE_OPERATION_OR_ARITHMETIC"
@@ -393,7 +395,9 @@ def diagnose_guided(variant: Variant, response: Mapping[str, object]) -> str:
         return "GUIDED_STRUCTURED_MATCH_REASONING_UNREVIEWED"
 
     if variant.kind.startswith("INEQUALITY"):
-        if response["symbolic_model"] != oracle["symbolic_model"]:
+        if not _mathematically_equivalent(
+            response["symbolic_model"], str(oracle["symbolic_model"])
+        ):
             return "MD7.MODEL_TRANSLATION"
         if not _exact_number_matches(response["boundary"], oracle["boundary"]):
             return "MD7.INEQUALITY_BOUNDARY_ERROR"
