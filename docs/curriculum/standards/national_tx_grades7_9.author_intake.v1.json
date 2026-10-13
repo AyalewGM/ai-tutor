@@ -1849,7 +1849,7 @@
     "effective": "2012-09-10",
     "parent_groups": 12,
     "lettered_expectations": 56,
-    "source_fidelity": "AUTHOR_IDENTIFIERS_AND_PARENT_PAGE_SPANS_LOCATED_PENDING_COMPLETE_LETTERED_MATHEMATICAL_SCOPE_REVIEW",
+    "source_fidelity": "AUTHOR_SCOPE_SUMMARIES_FOR_56_LETTERED_EXPECTATIONS_PENDING_INDEPENDENT_TEA_PUBLISHER_SCOPE_NOTATION_AND_CURRENT_TAC_PARITY",
     "warning": "This PDF is an October 2015 update to 2012-adopted Algebra I; current amendments must be checked against current TAC before independent acceptance",
     "expectations": [
       {
@@ -1866,14 +1866,16 @@
           2,
           2
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Apply mathematics to everyday, social and workplace problems",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.1B",
@@ -1889,14 +1891,16 @@
           2,
           2
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Analyze information, plan, solve, justify, evaluate solution and reasonableness",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.1C",
@@ -1912,14 +1916,16 @@
           2,
           2
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Select manipulatives, technology and estimation/number-sense tools",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.1D",
@@ -1935,14 +1941,16 @@
           2,
           2
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Communicate mathematical reasoning using symbols, diagrams, graphs and words",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.1E",
@@ -1958,14 +1966,16 @@
           2,
           2
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Create and use representations to organize and communicate ideas",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.1F",
@@ -1981,14 +1991,16 @@
           2,
           2
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Analyze mathematical relationships and connections",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.1G",
@@ -2004,14 +2016,16 @@
           2,
           2
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Explain and justify arguments precisely",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.2A",
@@ -2027,14 +2041,16 @@
           2,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Determine mathematical and contextual linear domain/range, continuous/discrete, expressed as inequalities",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.2B",
@@ -2050,14 +2066,16 @@
           2,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Write linear equations in slope-intercept, standard and point-slope forms from points and slopes",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.2C",
@@ -2073,14 +2091,16 @@
           2,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Construct linear equations from tables, graphs and verbal descriptions",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.2D",
@@ -2096,14 +2116,16 @@
           2,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Model direct variation with equations and solve",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.2E",
@@ -2119,14 +2141,16 @@
           2,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Write equation through a point parallel to a given line",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.2F",
@@ -2142,14 +2166,16 @@
           2,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Write equation through a point perpendicular to a given line",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.2G",
@@ -2165,14 +2191,16 @@
           2,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Write horizontal/vertical line equations and classify zero versus undefined slope",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.2H",
@@ -2188,14 +2216,16 @@
           2,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Write two-variable linear inequalities from tables, graphs and descriptions",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.2I",
@@ -2211,14 +2241,16 @@
           2,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Write two-variable systems of linear equations from tables, graphs and descriptions",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.3A",
@@ -2234,14 +2266,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Find slope from tables, graphs, point pairs and multiple linear-equation forms",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.3B",
@@ -2257,14 +2291,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Calculate contextual linear rate of change across tabular, graphical and algebraic forms",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.3C",
@@ -2280,14 +2316,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Graph linear functions and identify intercepts, zeros and slope",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.3D",
@@ -2303,14 +2341,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Graph solution regions of two-variable linear inequalities",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.3E",
@@ -2326,14 +2366,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Analyze effects of scaling and horizontal/vertical translations of parent f(x)=x",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.3F",
@@ -2349,14 +2391,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Graph two-variable linear systems and identify intersections or lack of solution",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.3G",
@@ -2372,14 +2416,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Estimate graphically the solutions of contextual two-variable linear systems",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.3H",
@@ -2395,14 +2441,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Graph feasible regions of two-variable linear-inequality systems",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.4A",
@@ -2418,14 +2466,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Use technology to calculate and interpret correlation coefficient as linear-association strength",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.4B",
@@ -2441,14 +2491,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Distinguish statistical association from causation",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.4C",
@@ -2464,14 +2516,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Fit linear functions to data, with or without technology, and use them for estimates/predictions",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.5A",
@@ -2487,14 +2541,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Solve one-variable linear equations with distribution and variables on both sides",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.5B",
@@ -2510,14 +2566,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Solve one-variable linear inequalities with distribution and variables on both sides",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.5C",
@@ -2533,14 +2591,16 @@
           3,
           3
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Solve two-variable linear systems in mathematical and contextual settings",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.6A",
@@ -2556,14 +2616,16 @@
           3,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Determine quadratic domain/range and express them with inequalities",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.6B",
@@ -2579,14 +2641,16 @@
           3,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Construct quadratic from vertex and point; convert vertex form to standard form",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.6C",
@@ -2602,14 +2666,16 @@
           3,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Construct quadratic functions from real roots and related graphs",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.7A",
@@ -2625,14 +2691,16 @@
           4,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Graph quadratics and identify intercepts, zeros, extrema, vertex and symmetry axis",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.7B",
@@ -2648,14 +2716,16 @@
           4,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Relate linear factors of quadratics to function zeros",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.7C",
@@ -2671,14 +2741,16 @@
           4,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Describe vertical/horizontal scale and translation effects on f(x)=x²",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.8A",
@@ -2694,14 +2766,16 @@
           4,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Solve real-root quadratic equations by factoring, roots, completing square and quadratic formula",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.8B",
@@ -2717,14 +2791,16 @@
           4,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Fit a quadratic function to real-world data using technology for estimates and predictions",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.9A",
@@ -2740,14 +2816,16 @@
           4,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Determine domain/range of exponential f(x)=ab^x and express them with inequalities",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.9B",
@@ -2763,14 +2841,16 @@
           4,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Interpret parameters a and b of exponential models contextually",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.9C",
@@ -2786,14 +2866,16 @@
           4,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Write exponential models with rational base for growth/decay in mathematical and real-world settings",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.9D",
@@ -2809,14 +2891,16 @@
           4,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Graph exponential growth/decay and identify y-intercept and asymptote",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.9E",
@@ -2832,14 +2916,16 @@
           4,
           4
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Use technology to fit exponential functions and predict real-world outcomes",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.10A",
@@ -2855,14 +2941,16 @@
           4,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Add and subtract degree-one and degree-two polynomials",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.10B",
@@ -2878,14 +2966,16 @@
           4,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Multiply degree-one and degree-two polynomials",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.10C",
@@ -2901,14 +2991,16 @@
           4,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Divide degree-one/two polynomials by degree-one/two divisors when divisor degree does not exceed dividend",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.10D",
@@ -2924,14 +3016,16 @@
           4,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Rewrite degree-one/two polynomial expressions by distribution",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.10E",
@@ -2947,14 +3041,16 @@
           4,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Factor real-factor quadratic trinomials including perfect-square trinomials",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.10F",
@@ -2970,14 +3066,16 @@
           4,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Recognize and factor difference of squares",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.11A",
@@ -2993,14 +3091,16 @@
           5,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Simplify numerical square-root radical expressions",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.11B",
@@ -3016,14 +3116,16 @@
           5,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Apply integral and rational exponent laws to numerical and algebraic expressions",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.12A",
@@ -3039,14 +3141,16 @@
           5,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Decide whether verbal, tabular, graphical and symbolic relations define functions",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.12B",
@@ -3062,14 +3166,16 @@
           5,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Evaluate functions in function notation for given domain inputs",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.12C",
@@ -3085,14 +3191,16 @@
           5,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Find arithmetic/geometric sequence terms from recursively defined functions",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.12D",
@@ -3108,14 +3216,16 @@
           5,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Write nth-term formulas for arithmetic and geometric sequences from terms",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       },
       {
         "expectation_id": "A1.12E",
@@ -3131,15 +3241,18 @@
           5,
           5
         ],
-        "official_scope_editorial": null,
+        "official_scope_editorial": "Solve mathematical/scientific formulas and other literal equations for a selected variable",
         "source_fidelity": "AUTHOR_IDENTIFIER_LOCATED_IN_OFFICIAL_TEA_PDF_SCOPE_PENDING_EXACT_LETTERED_REVIEW",
         "provisional_canonical_candidate": null,
         "canonical_equivalence": "UNVERIFIED",
         "generator": "UNVERIFIED",
         "mve_route": "UNVERIFIED",
         "assessment": "UNVERIFIED",
-        "mastery": "UNVERIFIED"
+        "mastery": "UNVERIFIED",
+        "scope_author_status": "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK",
+        "scope_requires_parent_context": true
       }
-    ]
+    ],
+    "parent_context_warning": "Each lettered scope must be interpreted together with the applicable §111.39(c) parent stem and Algebra I course introduction. Statements using 'including' are required, while 'such as' examples are illustrative; this summary does not supersede official wording."
   }
 }
