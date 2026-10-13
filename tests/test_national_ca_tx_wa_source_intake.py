@@ -50,3 +50,17 @@ def test_wa_2026_missing_originals_fail_closed():
     assert data["expectations"] == []
     assert data["required"] == "2027-2028"
     assert "2011" in data["crosswalk"]
+
+
+def test_wa_high_school_tracks_are_separate_from_legacy_2011_crosswalk():
+    data = _data("WA")
+    tracks = data["high_school_arrangements"]
+    assert tracks["not_grade9_equivalences"] is True
+    assert set(tracks["tracks"]) == {
+        "Integrated 1", "Integrated 2", "Integrated 3", "Geometry",
+        "Algebra 1", "Algebra 2", "Credit 3",
+    }
+    acquisition = data["source_acquisition"]
+    assert acquisition["initial_adoption_2025_role"].startswith("HISTORICAL_TRANSITION_RESEARCH_ONLY")
+    assert acquisition["official_2026_spreadsheet"] == "UNRESOLVED_DIRECT_URL"
+    assert acquisition["no_2011_2026_crosswalk_rows_invented"] is True
