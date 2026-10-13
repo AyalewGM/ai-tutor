@@ -67,13 +67,14 @@ def test_guided_model_accepts_commuted_terms_and_rejects_constant_miss():
 @pytest.mark.parametrize("mode", ["guided", "independent"])
 @pytest.mark.parametrize(("seed", "scale"), [(4, Fraction(1)), (5, Fraction(-1))])
 def test_unit_scale_same_magnitude_exact_oracle(seed, scale, mode):
-    v = SCALE.generate(seed, mode)
+    v = SCALE.generate(seed, mode, unit_scale=int(scale))
     assert v.input_value != 0
     assert v.magnitude_relation == "SAME"
     assert v.direction == "POSITIVE"
     assert v.answer == (scale if v.hidden_quantity == "scale" else v.input_value * scale)
     assert v.teacher_oracle()["magnitude_relation"] == "SAME"
-    assert SCALE.generate(seed, mode) == v
+    assert SCALE.generate(seed, mode, unit_scale=int(scale)) == v
+    assert SCALE.generate(seed, mode).variant_id != v.variant_id
     assert not any(key in v.public_payload() for key in ("answer", "direction", "magnitude_relation"))
 
 
