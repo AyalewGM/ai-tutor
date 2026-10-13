@@ -11,6 +11,13 @@
   },
   "separate_courses": [
     {
+      "track": "ADVANCED_GRADE_6",
+      "section": "111.29",
+      "version": "2025",
+      "rows_status": "PENDING_OFFICIAL_EXTRACTION_AFTER_G7_G9_PRIORITY",
+      "source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111"
+    },
+    {
       "track": "ALGEBRA_I",
       "section": "111.39",
       "version": "2012",
@@ -1795,5 +1802,40 @@
       "assessment": "UNVERIFIED",
       "mastery": "UNVERIFIED"
     }
-  ]
+  ],
+  "authority_section_audit": {
+    "verified_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+    "regular_grade7": "111.27 (2012)",
+    "regular_grade8": "111.28 (2012)",
+    "advanced_grade6": "111.29 (2025)",
+    "advanced_grade7": "111.30 (2025)",
+    "advanced_grade8_algebra1": "111.31 (2025)",
+    "algebra1": "111.39 (2012)",
+    "status": "OFFICIAL_TEA_SECTION_TITLES_CONFIRMED_NOT_EXPECTATION_TEXT_ACCEPTED"
+  },
+  "legacy_gap_reuse_research": {
+    "source": "https://im.tea.texas.gov/programs/aleks-course-3-grade-8",
+    "role": "TEA_INSTRUCTIONAL_MATERIALS_REVIEW_CONTEXT_NOT_AUTHORITATIVE_TEK_STANDARD_TEXT",
+    "rows": [
+      {
+        "expectation_id": "8.2A",
+        "reported_task_scope": "Real-number rational/irrational classification and Venn-set organization",
+        "candidate": "M8.NS.RAD",
+        "candidate_status": "UNVERIFIED_PARTIAL_SCOPE_CANDIDATE"
+      },
+      {
+        "expectation_id": "8.2B",
+        "reported_task_scope": "Approximate square roots, place irrational numbers on number line and compare",
+        "candidate": "M8.NS.RAD",
+        "candidate_status": "UNVERIFIED_PARTIAL_SCOPE_CANDIDATE"
+      },
+      {
+        "expectation_id": "8.2D",
+        "reported_task_scope": null,
+        "candidate": "M8.NS.RAD",
+        "candidate_status": "PENDING_OFFICIAL_TEA_EXPECTATION_TEXT"
+      }
+    ],
+    "warning": "Teacher/publisher materials are only instructional task-structure research; never official TEKS text or evidence of Mihur lesson readiness."
+  }
 }
