@@ -269,3 +269,40 @@ def test_additional_dc_geometric_and_scientific_scope_conditions() -> None:
     assert 'describe a transformation sequence' in evidence('8.G.A.4')
     assert 'measurement units' in evidence('8.EE.A.4')
     assert 'technology' in evidence('8.EE.A.4')
+
+
+def test_dc_three_new_grade7_8_unlettered_scope_findings_are_preserved() -> None:
+    manifest = _manifest()
+    ledger = json.loads(
+        (MANIFEST.parent / 'dc_grades6_8_ccss.source_fidelity_locators.v1.json').read_text(encoding='utf-8')
+    )
+    assert len(manifest['expectations']) == len(ledger['records']) == 81
+    rows = {r['expectation_id']: r for r in manifest['expectations']}
+    records = {r['expectation_id']: r for r in ledger['records']}
+    for standard_id in ('7.SP.B.3', '7.EE.B.3', '8.NS.A.1'):
+        row = rows[standard_id]
+        record = records[standard_id]
+        scope = record['bounded_mathematical_scope_evidence']
+        assert row['official_subpart_identifiers'] == record['lettered_subpart_ids'] == []
+        assert scope['source_text_url'] == row['source_locator']
+        assert scope['unlettered_standard'] is True
+        assert scope['required_conditions']
+        assert scope['short_summary_is_exhaustive'] is False
+        assert scope['scope_verification'] == 'PENDING_INDEPENDENT_SOURCE_FIDELITY'
+        assert scope['canonical_equivalence'] == 'NOT_ESTABLISHED'
+        assert scope['downstream_full_coverage_allowed'] is False
+        assert record['independent_acceptance'] == 'PENDING'
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+
+    def conditions(standard_id: str) -> str:
+        return ' '.join(records[standard_id]['bounded_mathematical_scope_evidence']['required_conditions']).lower()
+
+    assert all(word in conditions('7.SP.B.3') for word in (
+        'separation', 'measures of center', 'multiple', 'variability', 'mean absolute deviation'
+    ))
+    assert all(word in conditions('7.EE.B.3') for word in (
+        'properties of operations', 'convert', 'mental computation', 'estimation', 'reasonableness'
+    ))
+    assert all(word in conditions('8.NS.A.1') for word in (
+        'eventually repeats', 'eventually repeating', 'rational-number fraction'
+    ))
