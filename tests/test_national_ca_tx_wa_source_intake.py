@@ -94,3 +94,17 @@ def test_texas_algebra1_official_lettered_identifier_intake_remains_unaccepted()
         assert row["canonical_equivalence"] == "UNVERIFIED"
         assert row["assessment"] == "UNVERIFIED"
         assert row["mastery"] == "UNVERIFIED"
+
+
+def test_california_irrational_source_scope_does_not_imply_reuse_acceptance():
+    data = _data("CA")
+    evidence = data["official_pdf_source_evidence"]
+    assert evidence["grade8_source_pdf_indices"] == [60, 62]
+    rows = {r["expectation_id"]: r for r in data["expectations"] if r["track"] == "GRADE_8"}
+    for code in ("8.NS.1", "8.NS.2"):
+        row = rows[code]
+        assert row["source_pdf_page_index"] == 60
+        assert row["scope_audit_status"].endswith("PENDING_INDEPENDENT_ACCEPTANCE")
+        assert row["candidate_canonical"] == "M8.NS.RAD"
+        assert row["canonical_equivalence"] == "UNVERIFIED"
+        assert row["mastery"] == "UNVERIFIED"
