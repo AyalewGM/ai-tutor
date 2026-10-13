@@ -39,7 +39,7 @@ def test_california_grade8_irrational_candidates_do_not_imply_coverage():
 def test_texas_regular_and_advanced_are_not_conflated():
     data = _data("TX")
     assert {r["track"] for r in data["expectations"]} == {"REGULAR_GRADE_7", "REGULAR_GRADE_8"}
-    assert {p["section"] for p in data["separate_courses"]} == {"111.39", "111.30", "111.31"}
+    assert {p["section"] for p in data["separate_courses"]} == {"111.39", "111.29", "111.30", "111.31"}
     for row in data["expectations"]:
         assert row["exact_mathematical_scope"] is None
 
@@ -64,3 +64,15 @@ def test_wa_high_school_tracks_are_separate_from_legacy_2011_crosswalk():
     assert acquisition["initial_adoption_2025_role"].startswith("HISTORICAL_TRANSITION_RESEARCH_ONLY")
     assert acquisition["official_2026_spreadsheet"] == "UNRESOLVED_DIRECT_URL"
     assert acquisition["no_2011_2026_crosswalk_rows_invented"] is True
+
+
+def test_texas_instructional_research_cannot_promote_irrational_gap_to_coverage():
+    data = _data("TX")
+    research = data["legacy_gap_reuse_research"]
+    assert research["role"] == "TEA_INSTRUCTIONAL_MATERIALS_REVIEW_CONTEXT_NOT_AUTHORITATIVE_TEK_STANDARD_TEXT"
+    rows = {r["expectation_id"]: r for r in data["expectations"] if r["track"] == "REGULAR_GRADE_8"}
+    for code in ("8.2A", "8.2B", "8.2D"):
+        assert rows[code]["candidate_canonical"] == "M8.NS.RAD"
+        assert rows[code]["canonical_equivalence"] == "UNVERIFIED"
+        assert rows[code]["mastery"] == "UNVERIFIED"
+    assert data["authority_section_audit"]["status"].endswith("NOT_EXPECTATION_TEXT_ACCEPTED")
