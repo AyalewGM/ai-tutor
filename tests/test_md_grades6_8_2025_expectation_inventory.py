@@ -277,3 +277,47 @@ def test_bounded_mathematical_scope_evidence_preserves_reviewed_conditions() -> 
     assert 'substitution' in ' '.join(system['8.AT.B.5.b']).lower()
     assert all(s in ' '.join(system['8.AT.B.5.c']).lower() for s in ('no solution', 'exactly one', 'infinitely many'))
     assert 'contextual' in ' '.join(system['8.AT.B.5.d']).lower()
+
+
+def test_md_grade6_bounded_scope_findings_are_fail_closed() -> None:
+    manifest = _manifest()
+    ledger = json.loads(
+        (MANIFEST.parent / 'md_grades6_8_2025.source_fidelity_locators.v1.json').read_text(encoding='utf-8')
+    )
+    assert len(manifest['expectations']) == len(ledger['records']) == 79
+    records = {r['expectation_id']: r for r in ledger['records']}
+    expectations = {r['expectation_id']: r for r in manifest['expectations']}
+    required = {
+        '6.NOS.B.4': '6.NOS.B.4.a',
+        '6.AT.C.8': '6.AT.C.8.b',
+        '6.AT.C.10': '6.AT.C.10.b',
+        '6.DS.B.6': '6.DS.B.6.c',
+    }
+    for standard_id, subpart in required.items():
+        record = records[standard_id]
+        row = expectations[standard_id]
+        scope = record['bounded_mathematical_scope_evidence']
+        assert subpart in record['official_subpart_ids']
+        assert subpart in scope['subpart_requirements']
+        assert scope['source_url'] == row['source_locator']
+        assert scope['short_summary_is_exhaustive'] is False
+        assert scope['scope_verification'] == 'PENDING_INDEPENDENT_SOURCE_FIDELITY'
+        assert scope['canonical_equivalence'] == 'NOT_ESTABLISHED'
+        assert scope['downstream_full_coverage_allowed'] is False
+        assert record['independent_acceptance'] == 'PENDING'
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+
+    def requirement(standard_id: str, subpart: str) -> str:
+        return ' '.join(records[standard_id]['bounded_mathematical_scope_evidence']['subpart_requirements'][subpart]).lower()
+
+    factors = ' '.join(sum(records['6.NOS.B.4']['bounded_mathematical_scope_evidence']['subpart_requirements'].values(), [])).lower()
+    assert '100' in factors and '12' in factors and 'distributive' in factors
+    equations = requirement('6.AT.C.8', '6.AT.C.8.b')
+    assert all(term in equations for term in ('x+p=q', 'x−p=q', 'px=q', 'x/p=q', 'nonnegative rational'))
+    inequalities = requirement('6.AT.C.10', '6.AT.C.10.b')
+    assert all(term in inequalities for term in ('≥', '>', '≤', '<', 'nonnegative rational'))
+    stats = requirement('6.DS.B.6', '6.DS.B.6.c')
+    assert all(term in stats for term in ('median', 'mean', 'interquartile range', 'outliers'))
+    assert 'do not infer mean absolute deviation' in stats
+    for standard_id in ('6.AT.C.8', '6.AT.C.10', '6.DS.B.6'):
+        assert records[standard_id]['bounded_mathematical_scope_evidence']['printed_page_locator_reconciliation'] == 'PENDING_INDEPENDENT_PAGE_RECONCILIATION'
