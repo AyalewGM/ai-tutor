@@ -238,3 +238,23 @@ def test_texas_advanced_parent_stems_and_scope_gap_accounting():
     assert inv["scope_gap_accounting"]["canonical_equivalences_accepted"] == 0
     for r in ledger:
         assert r["scope_status"].startswith("EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT")
+
+
+def test_three_state_completion_matrix_stays_fail_closed():
+    matrix = json.loads((ROOT / 'national_ca_tx_wa_completion_matrix.v1.json').read_text())
+    assert matrix['status'] == 'INCOMPLETE_FAIL_CLOSED'
+    assert matrix['acceptance_contract']['all_three_complete'] is False
+    assert matrix['acceptance_contract']['runtime_activation'] == 'FORBIDDEN'
+    assert set(matrix['states']) == {'CA', 'TX', 'WA'}
+    ca, tx, wa = (_data(k) for k in ('CA', 'TX', 'WA'))
+    assert sum(matrix['states']['CA']['historic_rows_by_track'].values()) == len(ca['expectations']) == 173
+    assert sum(matrix['states']['TX']['historic_regular_rows_by_track'].values()) == len(tx['expectations']) == 88
+    advanced = tx['advanced_2025_final_adoption_evidence']['advanced_course_expectation_identifier_inventory']
+    assert matrix['states']['TX']['advanced_111_30_111_31_author_identifier_rows'] == len(advanced['expectations']) == 130
+    assert matrix['states']['TX']['advanced_remaining_unscoped_rows'] == sum(
+        r['editorial_mathematical_scope'] is None for r in advanced['expectations']
+    ) == 116
+    assert matrix['states']['WA']['verified_2026_expectation_rows'] == len(wa['expectations']) == 0
+    assert matrix['states']['WA']['official_final_workbook_bytes_obtained'] is False
+    for state in matrix['states'].values():
+        assert state['grade9_course_equivalence'] == 'NOT_ASSUMED'
