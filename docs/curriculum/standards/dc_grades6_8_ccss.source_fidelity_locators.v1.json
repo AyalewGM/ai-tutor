@@ -1356,6 +1356,22 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2010_CCSS",
+        "source_text_url": "https://www.thecorestandards.org/Math/Content/8/EE/A/2/",
+        "source_section": "Grade 8 / EE / A",
+        "required_conditions": [
+          "For x²=p and x³=p, the parameter p is positive rational",
+          "Use square-root and cube-root notation for applicable equation solutions",
+          "Evaluate roots of small perfect squares and cubes",
+          "Recognize √2 as irrational"
+        ],
+        "unlettered_standard": true,
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
       }
     },
     {
@@ -2002,8 +2018,24 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2010_CCSS",
+        "source_text_url": "https://www.thecorestandards.org/Math/Content/8/SP/A/4/",
+        "source_section": "Grade 8 / SP / A",
+        "required_conditions": [
+          "Construct and interpret two-way frequency tables for two categorical variables observed on the same subjects",
+          "Calculate and interpret row-relative or column-relative frequencies",
+          "Use conditional relative frequencies to assess possible associations between the categorical variables"
+        ],
+        "unlettered_standard": true,
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
       }
     }
   ],
-  "grade7_8_scope_note": "52 Grade 7–8 rows carry editorial mathematical scope for independent source-to-row review. Nine lettered-parent standards have author-indexed subpart topic prompts (27 subparts); none are accepted. Confirm each parent and subpart from original CCSS publication/OSSE adoption authority, not only unofficial site links."
+  "grade7_8_scope_note": "52 Grade 7–8 rows carry editorial mathematical scope for independent source-to-row review. Nine lettered-parent standards have author-indexed subpart topic prompts (27 subparts); none are accepted. Confirm each parent and subpart from original CCSS publication/OSSE adoption authority, not only unofficial site links.",
+  "scope_summary_policy": "NON_EXHAUSTIVE_DISCOVERY_ONLY_NOT_FULL_MATHEMATICAL_SCOPE_EVIDENCE"
 }
