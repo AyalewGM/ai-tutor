@@ -180,7 +180,7 @@ def test_texas_advanced_2025_final_adoption_slice_is_bounded_and_distinct():
     slice_ = adopted["verified_final_rule_scope_slice"]
     assert slice_["effective_date"] == "2025-07-06"
     assert slice_["school_year_implementation"] == "2025-2026"
-    assert slice_["completeness"].startswith("BOUNDED_14_OF_UNDETERMINED_TOTAL")
+    assert slice_["completeness"] == "BOUNDED_14_OF_130_ENUMERATED_STUDENT_EXPECTATIONS_NOT_A_COMPLETE_SCOPE_INVENTORY"
     rows = slice_["rows"]
     assert len(rows) == len({r["expectation_id"] for r in rows}) == 14
     assert sum(r["track"] == "ADVANCED_GRADE_7" for r in rows) == 8
