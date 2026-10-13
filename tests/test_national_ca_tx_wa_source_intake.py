@@ -172,3 +172,26 @@ def test_texas_2025_advanced_final_rule_is_not_proposal_or_regular_algebra1():
     assert all(x["expectations_extracted"] is False for x in changes.values())
     assert final["relationship_to_regular_algebra1"].startswith("NOT_ASSUMED_IDENTICAL")
     assert final["review_status"].endswith("NOT_FULL_STUDENT_EXPECTATION_SOURCE_FIDELITY")
+
+
+def test_texas_advanced_2025_final_adoption_slice_is_bounded_and_distinct():
+    data = _data("TX")
+    adopted = data["advanced_2025_final_adoption_evidence"]
+    slice_ = adopted["verified_final_rule_scope_slice"]
+    assert slice_["effective_date"] == "2025-07-06"
+    assert slice_["school_year_implementation"] == "2025-2026"
+    assert slice_["completeness"].startswith("BOUNDED_14_OF_UNDETERMINED_TOTAL")
+    rows = slice_["rows"]
+    assert len(rows) == len({r["expectation_id"] for r in rows}) == 14
+    assert sum(r["track"] == "ADVANCED_GRADE_7" for r in rows) == 8
+    assert sum(r["track"] == "ADVANCED_GRADE_8_ALGEBRA_I" for r in rows) == 6
+    ids = {r["expectation_id"] for r in rows}
+    assert "111.30(c)(8)(C)" in ids
+    assert "111.30(c)(13)(D)" in ids
+    assert "111.31(d)(12)(F)" in ids
+    assert adopted["critical_distinction_vs_regular_algebra1"]["status"].startswith("AUTHOR_SOURCE_STRUCTURE_DIFFERENCE")
+    for row in rows:
+        assert row["source_fidelity"].endswith("PENDING_INDEPENDENT_PUBLISHER_CHECK")
+        assert row["canonical_equivalence"] == "UNVERIFIED"
+        assert row["assessment"] == "UNVERIFIED"
+        assert row["mastery"] == "UNVERIFIED"
