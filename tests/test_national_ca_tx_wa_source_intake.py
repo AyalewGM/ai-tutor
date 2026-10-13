@@ -90,7 +90,9 @@ def test_texas_algebra1_official_lettered_identifier_intake_remains_unaccepted()
     for row in rows:
         assert row["official_reference"].startswith("19 TAC §111.39(c)")
         assert row["source_fidelity"].endswith("SCOPE_PENDING_EXACT_LETTERED_REVIEW")
-        assert row["official_scope_editorial"] is None
+        assert row["official_scope_editorial"]
+        assert row["scope_author_status"] == "EDITORIAL_PARAPHRASE_OF_TEA_2015_PDF_PENDING_INDEPENDENT_SCOPE_AND_NOTATION_CHECK"
+        assert row["scope_requires_parent_context"] is True
         assert row["canonical_equivalence"] == "UNVERIFIED"
         assert row["assessment"] == "UNVERIFIED"
         assert row["mastery"] == "UNVERIFIED"
@@ -106,5 +108,20 @@ def test_california_irrational_source_scope_does_not_imply_reuse_acceptance():
         assert row["source_pdf_page_index"] == 60
         assert row["scope_audit_status"].endswith("PENDING_INDEPENDENT_ACCEPTANCE")
         assert row["candidate_canonical"] == "M8.NS.RAD"
+        assert row["canonical_equivalence"] == "UNVERIFIED"
+        assert row["mastery"] == "UNVERIFIED"
+
+
+def test_texas_algebra1_critical_source_scope_distinctions():
+    data = _data("TX")
+    rows = {r["expectation_id"]: r for r in data["algebra1_official_identifier_inventory"]["expectations"]}
+    assert len(rows) == 56
+    assert "continuous/discrete" in rows["A1.2A"]["official_scope_editorial"]
+    assert "zero versus undefined slope" in rows["A1.2G"]["official_scope_editorial"]
+    assert "causation" in rows["A1.4B"]["official_scope_editorial"]
+    assert "completing square" in rows["A1.8A"]["official_scope_editorial"]
+    assert "rational exponent" in rows["A1.11B"]["official_scope_editorial"]
+    assert "literal equations" in rows["A1.12E"]["official_scope_editorial"]
+    for row in rows.values():
         assert row["canonical_equivalence"] == "UNVERIFIED"
         assert row["mastery"] == "UNVERIFIED"
