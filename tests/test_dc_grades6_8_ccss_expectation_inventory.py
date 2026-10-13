@@ -232,3 +232,40 @@ def test_dc_grade8_unlettered_scope_conditions_are_preserved_fail_closed() -> No
     assert all(term in tables for term in (
         'construct', 'interpret', 'same subjects', 'row-relative', 'column-relative', 'associations'
     ))
+
+
+def test_additional_dc_geometric_and_scientific_scope_conditions() -> None:
+    manifest = _manifest()
+    ledger = json.loads(
+        (MANIFEST.parent / 'dc_grades6_8_ccss.source_fidelity_locators.v1.json').read_text(encoding='utf-8')
+    )
+    records = {row['expectation_id']: row for row in ledger['records']}
+    rows = {row['expectation_id']: row for row in manifest['expectations']}
+    expected_pages = {'7.G.A.2': 50, '8.G.A.2': 55, '8.G.A.4': 56, '8.EE.A.4': 54}
+    for standard_id, page in expected_pages.items():
+        row = rows[standard_id]
+        record = records[standard_id]
+        scope = record['bounded_mathematical_scope_evidence']
+        assert scope['source_printed_page'] == page
+        assert scope['source_text_url'] == row['source_locator']
+        assert scope['unlettered_standard'] is True
+        assert row['official_subpart_identifiers'] == []
+        assert scope['short_summary_is_exhaustive'] is False
+        assert scope['scope_verification'] == 'PENDING_INDEPENDENT_SOURCE_FIDELITY'
+        assert scope['canonical_equivalence'] == 'NOT_ESTABLISHED'
+        assert scope['downstream_full_coverage_allowed'] is False
+        assert record['independent_acceptance'] == 'PENDING'
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+
+    def evidence(standard_id: str) -> str:
+        return ' '.join(records[standard_id]['bounded_mathematical_scope_evidence']['required_conditions']).lower()
+
+    assert all(term in evidence('7.G.A.2') for term in (
+        'freehand', 'ruler/protractor', 'technology', 'exactly one', 'multiple', 'no triangle'
+    ))
+    assert 'given congruent figures' in evidence('8.G.A.2')
+    assert 'describe a sequence' in evidence('8.G.A.2')
+    assert 'given similar figures' in evidence('8.G.A.4')
+    assert 'describe a transformation sequence' in evidence('8.G.A.4')
+    assert 'measurement units' in evidence('8.EE.A.4')
+    assert 'technology' in evidence('8.EE.A.4')
