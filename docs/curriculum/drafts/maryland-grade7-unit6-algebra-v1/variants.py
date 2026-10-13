@@ -8,6 +8,8 @@ Never imported by runtime code. No database, routing, scoring, or mastery writes
 
 from __future__ import annotations
 
+import ast
+import re
 from collections.abc import Mapping
 from dataclasses import dataclass
 from fractions import Fraction
@@ -43,6 +45,91 @@ def _holds(left: Fraction, relation: str, right: Fraction) -> bool:
 def _flip(relation: str) -> str:
     return {"<": ">", "<=": ">=", ">": "<", ">=": "<="}[relation]
 
+
+
+def _linear_coefficients(source: object) -> tuple[Fraction, Fraction] | None:
+    """Parse only exact linear rational arithmetic; no calls, powers or names but x."""
+    if not isinstance(source, str) or len(source) > 180:
+        return None
+    text = source.replace("−", "-").replace("×", "*").strip()
+    text = re.sub(r"(?<=\\d)\\s*(?=x\\b|\\()", "*", text)
+    text = re.sub(r"(?<=\\))\\s*(?=x\\b|\\()", "*", text)
+    text = re.sub(r"(?<=x)\\s*(?=\\()", "*", text)
+    try:
+        expression = ast.parse(text, mode="eval").body
+
+        def visit(node: ast.AST) -> tuple[Fraction, Fraction]:
+            if isinstance(node, ast.Name) and node.id == "x":
+                return Fraction(1), Fraction(0)
+            if isinstance(node, ast.Constant) and type(node.value) is int:
+                return Fraction(0), Fraction(node.value)
+            if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
+                a, b = visit(node.operand)
+                sign = -1 if isinstance(node.op, ast.USub) else 1
+                return sign * a, sign * b
+            if isinstance(node, ast.BinOp):
+                a, b = visit(node.left)
+                c, d = visit(node.right)
+                if isinstance(node.op, ast.Add):
+                    return a + c, b + d
+                if isinstance(node.op, ast.Sub):
+                    return a - c, b - d
+                if isinstance(node.op, ast.Mult) and not (a and c):
+                    return a * d + b * c, b * d
+                if isinstance(node.op, ast.Div) and not c and d:
+                    return a / d, b / d
+            raise ValueError("Not a supported exact linear expression")
+
+        return visit(expression)
+    except (SyntaxError, ValueError, ZeroDivisionError, OverflowError, RecursionError):
+        return None
+
+
+def _mathematically_equivalent(actual: object, expected: str) -> bool:
+    """Compare exact linear expressions or zero-set/half-plane representations.
+
+    Equation differences may have a nonzero common multiplier. Inequalities
+    require a positive multiplier with identical relational orientation.
+    """
+    def parse(value: object) -> tuple[str | None, tuple[Fraction, Fraction]] | None:
+        if not isinstance(value, str) or len(value) > 180:
+            return None
+        pieces = re.split(r"(<=|>=|=|<|>)", value, maxsplit=1)
+        if len(pieces) == 1:
+            coefficients = _linear_coefficients(pieces[0])
+            return (None, coefficients) if coefficients is not None else None
+        if len(pieces) != 3:
+            return None
+        lhs, rel, rhs = pieces
+        left = _linear_coefficients(lhs)
+        right = _linear_coefficients(rhs)
+        if left is None or right is None:
+            return None
+        return rel, (left[0] - right[0], left[1] - right[1])
+
+    found, target = parse(actual), parse(expected)
+    if found is None or target is None:
+        return False
+    actual_rel, (a, b) = found
+    expected_rel, (c, d) = target
+    if actual_rel != expected_rel:
+        return False
+    if actual_rel is None:
+        return (a, b) == (c, d)
+    if not (c or d):
+        # Avoid accepting arbitrary tautologies or degenerate equalities.
+        return (a, b) == (c, d)
+    factor = a / c if c else b / d
+    return factor != 0 and (actual_rel == "=" or factor > 0) and (a, b) == (factor * c, factor * d)
+
+
+def _exact_number_matches(actual: object, expected: object) -> bool:
+    if isinstance(actual, (bool, float)) or not isinstance(actual, (int, str, Fraction)):
+        return False
+    try:
+        return Fraction(str(actual)) == Fraction(str(expected))
+    except (ValueError, ZeroDivisionError, TypeError):
+        return False
 
 @dataclass(frozen=True)
 class Variant:
@@ -267,7 +354,7 @@ def diagnose_guided(variant: Variant, response: Mapping[str, object]) -> str:
     if variant.kind == "CHOOSE_MODEL":
         if response["model_type"] != oracle["model_type"]:
             return "MD7.EQ_VS_INEQ_CONTEXT_SIGNAL"
-        if response["symbolic_model"] != oracle["symbolic_model"]:
+        if not _mathematically_equivalent(response["symbolic_model"], str(oracle["symbolic_model"])):
             return "MD7.MODEL_TRANSLATION"
         if not str(response["context_justification"]).strip():
             return "MD7.CONTEXT_JUSTIFICATION_MISSING"
@@ -276,7 +363,7 @@ def diagnose_guided(variant: Variant, response: Mapping[str, object]) -> str:
     if variant.kind.startswith("EQUATION"):
         if response["symbolic_model"] != oracle["symbolic_model"]:
             return "MD7.MODEL_TRANSLATION"
-        if str(response["solution"]) != oracle["solution"]:
+        if not _exact_number_matches(response["solution"], oracle["solution"]):
             return "MD7.INVERSE_OPERATION_OR_ARITHMETIC"
         if response["substitution_check"] is not True:
             return "MD7.SUBSTITUTION_CHECK_MISSING"
@@ -289,7 +376,7 @@ def diagnose_guided(variant: Variant, response: Mapping[str, object]) -> str:
     if variant.kind.startswith("INEQUALITY"):
         if response["symbolic_model"] != oracle["symbolic_model"]:
             return "MD7.MODEL_TRANSLATION"
-        if str(response["boundary"]) != oracle["boundary"]:
+        if not _exact_number_matches(response["boundary"], oracle["boundary"]):
             return "MD7.INEQUALITY_BOUNDARY_ERROR"
         if response["solution_relation"] != oracle["solution_relation"]:
             return "MD7.INEQUALITY_DIRECTION_ERROR"
@@ -308,7 +395,7 @@ def diagnose_guided(variant: Variant, response: Mapping[str, object]) -> str:
             return "MD7.CONTEXT_INTERPRETATION_MISSING"
         return "GUIDED_STRUCTURED_MATCH_REASONING_UNREVIEWED"
 
-    if response["equivalent_expression"] != oracle["equivalent_expression"]:
+    if not _mathematically_equivalent(response["equivalent_expression"], str(oracle["equivalent_expression"])):
         return "MD7.DISTRIBUTIVE_STRUCTURE_ERROR"
     if response["property_justification"] != oracle["property"]:
         return "MD7.PROPERTY_JUSTIFICATION"
