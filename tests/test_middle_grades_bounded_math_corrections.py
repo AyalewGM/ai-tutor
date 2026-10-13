@@ -113,6 +113,7 @@ def test_fractional_physical_group_count_is_never_generated(mode):
         v = ALG.generate(seed, mode)
         if v.kind in ("EQUATION_P_TIMES_X_PLUS_Q", "INEQUALITY_P_TIMES_X_PLUS_Q"):
             assert v.p > 0 and v.p.denominator == 1
+            assert v.q.denominator == 1
             assert v.r == v.p * (v.answer + v.q)
 
 
