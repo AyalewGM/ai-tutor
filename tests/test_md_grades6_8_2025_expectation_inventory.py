@@ -231,3 +231,49 @@ def test_all_grade7_8_printed_pages_match_official_crosswalk_page_locations() ->
                 assert (row['pdf_page_index_zero_based'], row['pdf_page_end_index_zero_based']) == (first, last)
                 assert record['page_locator_evidence'] == 'OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER'
                 assert record['independent_acceptance'] == 'PENDING'
+
+
+def test_bounded_mathematical_scope_evidence_preserves_reviewed_conditions() -> None:
+    """A short editorial summary or subpart ID is never full coverage evidence."""
+    manifest = _manifest()
+    ledger = json.loads(
+        (MANIFEST.parent / 'md_grades6_8_2025.source_fidelity_locators.v1.json').read_text(encoding='utf-8')
+    )
+    assert ledger['scope_summary_policy'] == (
+        'NON_EXHAUSTIVE_DISCOVERY_ONLY_NOT_FULL_PARENT_OR_SUBPART_COVERAGE_EVIDENCE'
+    )
+    rows = {r['expectation_id']: r for r in manifest['expectations']}
+    records = {r['expectation_id']: r for r in ledger['records']}
+    required_parts = {
+        '7.GR.A.2': set(),
+        '8.GR.B.4': {'8.GR.B.4.a', '8.GR.B.4.b'},
+        '8.NOS.B.4': {'8.NOS.B.4.a', '8.NOS.B.4.b'},
+        '8.AT.B.5': {'8.AT.B.5.a', '8.AT.B.5.b', '8.AT.B.5.c', '8.AT.B.5.d'},
+    }
+    for expectation_id, parts in required_parts.items():
+        row = rows[expectation_id]
+        record = records[expectation_id]
+        scope = record['bounded_mathematical_scope_evidence']
+        assert set(row['official_subpart_identifiers']) == parts
+        assert set(scope['subpart_requirements']) == parts
+        assert scope['parent_requirements']
+        assert scope['short_summary_is_exhaustive'] is False
+        assert scope['scope_verification'] == 'PENDING_INDEPENDENT_SOURCE_FIDELITY'
+        assert scope['canonical_equivalence'] == 'NOT_ESTABLISHED'
+        assert scope['downstream_full_coverage_allowed'] is False
+        assert scope['printed_page_start'] == record['printed_page_start']
+        assert scope['printed_page_end'] == record['printed_page_end']
+        assert record['independent_acceptance'] == 'PENDING'
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+
+    cross_sections = ' '.join(records['7.GR.A.2']['bounded_mathematical_scope_evidence']['parent_requirements']).lower()
+    assert 'volume' in cross_sections and 'surface-area' in cross_sections
+    inequalities = ' '.join(records['8.GR.B.4']['bounded_mathematical_scope_evidence']['subpart_requirements']['8.GR.B.4.b']).lower()
+    assert all(word in inequalities for word in ('inequalities', 'acute', 'obtuse'))
+    powers = ' '.join(records['8.NOS.B.4']['bounded_mathematical_scope_evidence']['subpart_requirements']['8.NOS.B.4.b']).lower()
+    assert '1 through 100' in powers and '1 through 125' in powers
+    system = records['8.AT.B.5']['bounded_mathematical_scope_evidence']['subpart_requirements']
+    assert 'graph' in ' '.join(system['8.AT.B.5.b']).lower()
+    assert 'substitution' in ' '.join(system['8.AT.B.5.b']).lower()
+    assert all(s in ' '.join(system['8.AT.B.5.c']).lower() for s in ('no solution', 'exactly one', 'infinitely many'))
+    assert 'contextual' in ' '.join(system['8.AT.B.5.d']).lower()
