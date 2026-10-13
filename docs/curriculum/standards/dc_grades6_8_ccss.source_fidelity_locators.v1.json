@@ -847,7 +847,6 @@
         "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2010_CCSS",
         "source_text_url": "https://www.thecorestandards.org/Math/Content/7/EE/B/3/",
         "source_publication": "NGA/CCSSO CCSS Mathematics 2010",
-        "source_printed_page": 49,
         "required_conditions": [
           "Solve multi-step contextual problems with positive and negative rational quantities",
           "Apply properties of operations to calculate and transform expressions",
@@ -1146,7 +1145,6 @@
         "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2010_CCSS",
         "source_text_url": "https://www.thecorestandards.org/Math/Content/7/SP/B/3/",
         "source_publication": "NGA/CCSSO CCSS Mathematics 2010",
-        "source_printed_page": 50,
         "required_conditions": [
           "Compare numerical distributions with comparable variability and assess visual overlap",
           "Express separation between measures of center as a multiple of a measure of variability",
@@ -1332,7 +1330,6 @@
         "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2010_CCSS",
         "source_text_url": "https://www.thecorestandards.org/Math/Content/8/NS/A/1/",
         "source_publication": "NGA/CCSSO CCSS Mathematics 2010",
-        "source_printed_page": 55,
         "required_conditions": [
           "Distinguish rational and irrational numbers through decimal expansions",
           "A rational number has a decimal expansion that eventually repeats, including terminating cases viewed with trailing zeros",
