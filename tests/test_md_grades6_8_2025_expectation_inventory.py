@@ -310,7 +310,11 @@ def test_md_grade6_bounded_scope_findings_are_fail_closed() -> None:
     def requirement(standard_id: str, subpart: str) -> str:
         return ' '.join(records[standard_id]['bounded_mathematical_scope_evidence']['subpart_requirements'][subpart]).lower()
 
-    factors = ' '.join(sum(records['6.NOS.B.4']['bounded_mathematical_scope_evidence']['subpart_requirements'].values(), [])).lower()
+    factors = ' '.join(
+        term
+        for requirements in records['6.NOS.B.4']['bounded_mathematical_scope_evidence']['subpart_requirements'].values()
+        for term in requirements
+    ).lower()
     assert '100' in factors and '12' in factors and 'distributive' in factors
     equations = requirement('6.AT.C.8', '6.AT.C.8.b')
     assert all(term in equations for term in ('x+p=q', 'x−p=q', 'px=q', 'x/p=q', 'nonnegative rational'))
