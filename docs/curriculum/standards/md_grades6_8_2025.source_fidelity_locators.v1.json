@@ -971,7 +971,23 @@
       },
       "pdf_page_index_zero_based": 8,
       "pdf_page_end_index_zero_based": 8,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17818",
+        "source_column": "2025 MD Index / 2025 Standards Statement",
+        "printed_page_start": 8,
+        "printed_page_end": 8,
+        "parent_requirements": [
+          "Identify plane cross-sections of three-dimensional solids",
+          "Relate the cross-section geometry to volume and surface-area reasoning"
+        ],
+        "subpart_requirements": {},
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "7.GR.B.3",
@@ -1321,7 +1337,30 @@
       },
       "pdf_page_index_zero_based": 2,
       "pdf_page_end_index_zero_based": 2,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "source_column": "2025 MD Index / 2025 Standards Statement",
+        "printed_page_start": 2,
+        "printed_page_end": 2,
+        "parent_requirements": [
+          "Square-root and cube-root reasoning, with explicit finite perfect-power inspection ranges"
+        ],
+        "subpart_requirements": {
+          "8.NOS.B.4.a": [
+            "Represent applicable square-root and cube-root equation solutions with radical notation"
+          ],
+          "8.NOS.B.4.b": [
+            "Inspect perfect squares from 1 through 100 inclusive",
+            "Inspect perfect cubes from 1 through 125 inclusive"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "8.NOS.B.5",
@@ -1511,7 +1550,36 @@
       },
       "pdf_page_index_zero_based": 4,
       "pdf_page_end_index_zero_based": 5,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "source_column": "2025 MD Index / 2025 Standards Statement",
+        "printed_page_start": 4,
+        "printed_page_end": 5,
+        "parent_requirements": [
+          "Solve systems of two linear equations in two variables with multiple methods and interpret solution structure"
+        ],
+        "subpart_requirements": {
+          "8.AT.B.5.a": [
+            "Interpret solution pairs and intersection/verification for a two-equation linear system"
+          ],
+          "8.AT.B.5.b": [
+            "Graph and use substitution to solve systems",
+            "Select and justify an appropriate solving method"
+          ],
+          "8.AT.B.5.c": [
+            "Distinguish no solution, exactly one solution, and infinitely many solutions"
+          ],
+          "8.AT.B.5.d": [
+            "Formulate and interpret systems of linear equations in contextual situations"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "8.AT.C.6",
@@ -1785,7 +1853,29 @@
       },
       "pdf_page_index_zero_based": 9,
       "pdf_page_end_index_zero_based": 10,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "source_column": "2025 MD Index / 2025 Standards Statement",
+        "printed_page_start": 9,
+        "printed_page_end": 10,
+        "parent_requirements": [
+          "Pythagorean Theorem, converse, and triangle classification using side-length relationships"
+        ],
+        "subpart_requirements": {
+          "8.GR.B.4.a": [
+            "Provide a diagram-based or informal justification for right-triangle Pythagorean relationships"
+          ],
+          "8.GR.B.4.b": [
+            "Use the converse and inequalities comparing the longest-side square with the sum of the other two squares to distinguish right, acute and obtuse triangles"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "8.GR.B.5",
@@ -1983,5 +2073,6 @@
   ],
   "grade7_scope_evidence_note": "Grade 7 editorial scope and subpart topic checks were added against the MSDE July 2025 Grade 7 crosswalk, https://msde.maryland.gov/media/17818. These are author-side audit notes, not independently accepted standards text or mapping authority. Mathematical expressions rendered as images in the official PDF must be checked visually by the independent reviewer.",
   "grade8_scope_evidence_note": "Grade 8 editorial scope/subpart topic notes are grounded in MSDE July 2025 Grade 8 crosswalk https://msde.maryland.gov/media/17820. Review exact equation/math glyphs visually where PDF extraction omits formulas. No independent acceptance or mapping promotion.",
-  "page_locator_review_note": "2026-10-12: all 49 Grade 7/8 2025 Standards Statement parent rows audited against original MSDE July 2025 PDFs. PDF page index is zero-based and happens to equal printed footer page in these files; no global adjustment applied to Grade 6. 2025 parent/subpart scope fidelity still requires independent verification."
+  "page_locator_review_note": "2026-10-12: all 49 Grade 7/8 2025 Standards Statement parent rows audited against original MSDE July 2025 PDFs. PDF page index is zero-based and happens to equal printed footer page in these files; no global adjustment applied to Grade 6. 2025 parent/subpart scope fidelity still requires independent verification.",
+  "scope_summary_policy": "NON_EXHAUSTIVE_DISCOVERY_ONLY_NOT_FULL_PARENT_OR_SUBPART_COVERAGE_EVIDENCE"
 }
