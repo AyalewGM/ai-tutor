@@ -40,7 +40,6 @@ REPOSITORY_EXISTING_IDS = {
     "7.MG.3",
     "7.MG.4",
     "7.PS.1",
-    "7.PS.2",
     "7.PFA.1",
     "7.PFA.3",
     "7.PFA.4",
@@ -82,7 +81,7 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
     }
 
     assert existing == REPOSITORY_EXISTING_IDS
-    assert len(existing) == 16
+    assert len(existing) == 15
     for row in rows:
         if row["expectation_id"] in existing:
             assert row["repository_existing_crosswalks"]
@@ -96,9 +95,12 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
         else:
             assert row["repository_existing_crosswalks"] == []
             assert row["classification"]["standards_mapped"] == "NO"
-            assert row["proposed_mapping_status"] == (
-                "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND"
+            expected_status = (
+                "NO_REPOSITORY_EXPECTATION_EQUIVALENCE_EVIDENCE"
+                if row["expectation_id"] == "7.PS.2"
+                else "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND"
             )
+            assert row["proposed_mapping_status"] == expected_status
 
 
 def test_grade8_has_no_repository_rows_at_all() -> None:
@@ -154,8 +156,8 @@ def test_reconciliation_counts_are_internally_consistent() -> None:
     )
 
     assert reconciliation["official_expectation_count"] == len(rows) == 46
-    assert reconciliation["repository_existing_expectation_rows"] == existing == 16
-    assert reconciliation["unmapped_expectations"] == 46 - existing == 30
+    assert reconciliation["repository_existing_expectation_rows"] == existing == 15
+    assert reconciliation["unmapped_expectations"] == 46 - existing == 31
     assert reconciliation["existing_seed_rows_by_grade"] == {
         "6": 5,
         "7": 5,
@@ -184,3 +186,24 @@ def test_each_va_expectation_links_to_official_grade_sol_document() -> None:
         assert row['instructional_support_locator'] == manifest['provenance']['instructional_resources_url']
         assert row['source_locator'] != row['instructional_support_locator']
         assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+
+
+def test_va7_histogram_data_cycle_is_not_inferred_from_probability_seed() -> None:
+    manifest = _manifest()
+    row = next(r for r in manifest['expectations'] if r['expectation_id'] == '7.PS.2')
+    assert row['repository_existing_crosswalks'] == []
+    assert row['classification']['standards_mapped'] == 'NO'
+    assert row['proposed_mapping_status'] == 'NO_REPOSITORY_EXPECTATION_EQUIVALENCE_EVIDENCE'
+    assert row['mapping_correction_evidence']['decision'] == 'REMOVE_UNSUPPORTED_PROVISIONAL_RELATION_NOT_A_MISSING_CORE_CLAIM'
+    assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+
+
+def test_repository_relation_presence_matches_standards_mapped_classification() -> None:
+    manifest = _manifest()
+    for row in manifest['expectations']:
+        if row['repository_existing_crosswalks']:
+            assert row['proposed_mapping_status'] == 'REPOSITORY_EXISTING_UNVERIFIED'
+            assert row['classification']['standards_mapped'] == 'REPOSITORY_ROW_EXISTS_NOT_ACCEPTED'
+        else:
+            assert row['classification']['standards_mapped'] == 'NO'
+            assert row['proposed_mapping_status'] != 'REPOSITORY_EXISTING_UNVERIFIED'

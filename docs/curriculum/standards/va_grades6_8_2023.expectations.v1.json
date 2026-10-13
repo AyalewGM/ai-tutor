@@ -62,8 +62,8 @@
   },
   "reconciliation": {
     "official_expectation_count": 46,
-    "repository_existing_expectation_rows": 16,
-    "unmapped_expectations": 30,
+    "repository_existing_expectation_rows": 15,
+    "unmapped_expectations": 31,
     "existing_seed_rows_by_grade": {
       "6": 5,
       "7": 5,
@@ -72,7 +72,7 @@
     "seed_rows_without_clear_expectation": [
       "VA6.PFA.EXPR"
     ],
-    "warning": "Existing VA6.*/VA7.* seed rows and their MATH.* canonical-looking targets predate the reviewed-taxonomy gate. Strand-composite seeds (e.g., VA7.MG.GEOMETRY, VA7.PS.PROBABILITY) overlap several expectations partially and must not be treated as accepted coverage. Grade 8 has no repository seed rows at all."
+    "warning": "Existing VA6.*/VA7.* seed rows and their MATH.* canonical-looking targets predate the reviewed-taxonomy gate. Strand-composite seeds (e.g., VA7.MG.GEOMETRY, VA7.PS.PROBABILITY) overlap several expectations partially and must not be treated as accepted coverage. Grade 8 has no repository seed rows at all. Corrected 2026-10-12: 7.PS.2 histogram/data-cycle relation to VA7.PS.PROBABILITY removed after inspecting the seed's actual question types; this is a mapping-evidence gap, not proof of missing canonical content."
   },
   "safety": {
     "activation": "FORBIDDEN",
@@ -747,12 +747,10 @@
       "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
       "scope_summary": "Apply the data cycle (formulate questions; collect or acquire data; organize and represent data; analyze data and communicate results) with a focus on histograms.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
-      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
-      "repository_existing_crosswalks": [
-        "VA7.PS.PROBABILITY"
-      ],
+      "proposed_mapping_status": "NO_REPOSITORY_EXPECTATION_EQUIVALENCE_EVIDENCE",
+      "repository_existing_crosswalks": [],
       "classification": {
-        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "standards_mapped": "NO",
         "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
         "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
         "validated_practice": "NO_VERIFIED_EVIDENCE",
@@ -761,10 +759,17 @@
       },
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
-        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope.",
+        "Prior provisional VA7.PS.PROBABILITY link is unsupported for the 2023 7.PS.2 histogram/data-cycle target: actual scripts/seed_va_grade7.py provides one chance-event probability item and one simple sample-percentage item, but no histogram construction/interpretation or full data-cycle task. Preserve seed identity; require independent source-fidelity and mathematical/architecture review before any replacement atomic relation."
       ],
       "source_document_id": "VA_SOL_2023_G7",
-      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources",
+      "mapping_correction_evidence": {
+        "seed_source": "scripts/seed_va_grade7.py",
+        "observed_seed_scope": "One bag-draw probability and one sample-percent item; no histogram or data-cycle generator demonstrated",
+        "decision": "REMOVE_UNSUPPORTED_PROVISIONAL_RELATION_NOT_A_MISSING_CORE_CLAIM",
+        "standards_scope_status": "PENDING_INDEPENDENT_ORIGINAL_VDOE_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "7.PFA.1",
