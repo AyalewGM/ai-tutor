@@ -19,6 +19,33 @@
   "limitations": [
     "OSPI webpage is authoritative for adoption and downloadable resource existence, but original 2026 PDF/Excel bytes were blocked (HTTP 403).",
     "No 2026 identifiers, mathematical scopes or crosswalk relations invented from 2011 standards.",
-    "Four connected domains and data-science inquiry require exact publisher file verification."
-  ]
+    "Four connected domains and data-science inquiry require exact publisher file verification.",
+    "OSPI 2026 official FAQ names Integrated 1/2/3, Geometry, Algebra 1/2 and Credit 3; exact course requirement lists remain unextracted.",
+    "An OSPI March 2026 support PDF references math25-initial-adoption-spreadsheet.xlsx; this is NOT proof of final 2026 formal-adoption workbook content."
+  ],
+  "high_school_arrangements": {
+    "source": "https://ospi.k12.wa.us/student-success/learning-standards-instructional-materials/washington-state-learning-standards-review/learning-standards-review-faqs",
+    "tracks": [
+      "Integrated 1",
+      "Integrated 2",
+      "Integrated 3",
+      "Geometry",
+      "Algebra 1",
+      "Algebra 2",
+      "Credit 3"
+    ],
+    "status": "OFFICIAL_FAQ_CONFIRMS_COURSE_LABELS_BUT_NO_COURSE_EXPECTATION_EXTRACTION",
+    "not_grade9_equivalences": true
+  },
+  "source_acquisition": {
+    "official_2026_page": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
+    "adoption_bulletin": "https://ospi.k12.wa.us/about-ospi/bulletins/2026",
+    "official_2026_pdf": "UNRESOLVED_DIRECT_URL",
+    "official_2026_spreadsheet": "UNRESOLVED_DIRECT_URL",
+    "initial_adoption_2025_spreadsheet": "https://ospi.k12.wa.us/sites/default/files/2025-12/math25-initial-adoption-spreadsheet.xlsx",
+    "initial_adoption_2025_role": "HISTORICAL_TRANSITION_RESEARCH_ONLY_NOT_2026_FORMAL_STANDARD_AUTHORITY",
+    "initial_adoption_source": "https://ospi.k12.wa.us/sites/default/files/2026-03/math-ls-technical-support-activities.pdf",
+    "publisher_file_access": "BLOCKED_403",
+    "no_2011_2026_crosswalk_rows_invented": true
+  }
 }
