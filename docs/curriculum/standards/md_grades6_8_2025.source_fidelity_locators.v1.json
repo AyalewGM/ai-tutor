@@ -131,7 +131,30 @@
       ],
       "scope_summary_editorial": "Identify the common factors and multiples of two whole numbers.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17816",
+        "source_column": "2025 Standards Statement",
+        "reviewer_reported_printed_page": 3,
+        "ledger_printed_page_start": 3,
+        "printed_page_locator_reconciliation": "MATCH",
+        "subpart_requirements": {
+          "6.NOS.B.4.a": [
+            "Find greatest common factors of whole numbers bounded by 100"
+          ],
+          "6.NOS.B.4.b": [
+            "Find least common multiples of whole numbers bounded by 12"
+          ],
+          "6.NOS.B.4.c": [
+            "Use distributive reasoning to factor sums with whole-number addends bounded by 100"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "6.NOS.C.5",
@@ -355,7 +378,25 @@
       ],
       "scope_summary_editorial": "Solve problems in context by writing and solving equations and interpreting the solutions in context.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17816",
+        "source_column": "2025 Standards Statement",
+        "reviewer_reported_printed_page": 10,
+        "ledger_printed_page_start": 11,
+        "printed_page_locator_reconciliation": "PENDING_INDEPENDENT_PAGE_RECONCILIATION",
+        "subpart_requirements": {
+          "6.AT.C.8.b": [
+            "Solve one-step equations of forms x+p=q, x−p=q, px=q, x/p=q",
+            "Parameters p and q and unknown x are nonnegative rational numbers"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "6.AT.C.9",
@@ -389,7 +430,26 @@
       ],
       "scope_summary_editorial": "Solve problems in context by writing and solving inequalities and interpreting solution sets in context.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17816",
+        "source_column": "2025 Standards Statement",
+        "reviewer_reported_printed_page": 10,
+        "ledger_printed_page_start": 11,
+        "printed_page_locator_reconciliation": "PENDING_INDEPENDENT_PAGE_RECONCILIATION",
+        "subpart_requirements": {
+          "6.AT.C.10.b": [
+            "Represent one-step inequalities using addition, subtraction, multiplication, or division of an unknown and parameter",
+            "Include comparisons ≥, >, ≤, <",
+            "Parameters p and q are nonnegative rational numbers"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "6.AT.D.11",
@@ -565,7 +625,26 @@
       ],
       "scope_summary_editorial": "Summarize numerical data sets in relation to their context.",
       "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17816",
+        "source_column": "2025 Standards Statement",
+        "reviewer_reported_printed_page": 14,
+        "ledger_printed_page_start": 15,
+        "printed_page_locator_reconciliation": "PENDING_INDEPENDENT_PAGE_RECONCILIATION",
+        "subpart_requirements": {
+          "6.DS.B.6.c": [
+            "Use median and/or mean and interquartile range to describe distributions",
+            "Discuss outliers in the context of the data",
+            "Do not infer mean absolute deviation from the separate 2010 historical comparison column"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "7.NOS.A.1",
