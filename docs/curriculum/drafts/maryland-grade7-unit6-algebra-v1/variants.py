@@ -356,7 +356,9 @@ def diagnose_guided(variant: Variant, response: Mapping[str, object]) -> str:
     if variant.kind == "CHOOSE_MODEL":
         if response["model_type"] != oracle["model_type"]:
             return "MD7.EQ_VS_INEQ_CONTEXT_SIGNAL"
-        if not _mathematically_equivalent(response["symbolic_model"], str(oracle["symbolic_model"])):
+        if not _mathematically_equivalent(
+            response["symbolic_model"], str(oracle["symbolic_model"])
+        ):
             return "MD7.MODEL_TRANSLATION"
         if not str(response["context_justification"]).strip():
             return "MD7.CONTEXT_JUSTIFICATION_MISSING"
@@ -397,7 +399,9 @@ def diagnose_guided(variant: Variant, response: Mapping[str, object]) -> str:
             return "MD7.CONTEXT_INTERPRETATION_MISSING"
         return "GUIDED_STRUCTURED_MATCH_REASONING_UNREVIEWED"
 
-    if not _mathematically_equivalent(response["equivalent_expression"], str(oracle["equivalent_expression"])):
+    if not _mathematically_equivalent(
+        response["equivalent_expression"], str(oracle["equivalent_expression"])
+    ):
         return "MD7.DISTRIBUTIVE_STRUCTURE_ERROR"
     if response["property_justification"] != oracle["property"]:
         return "MD7.PROPERTY_JUSTIFICATION"
