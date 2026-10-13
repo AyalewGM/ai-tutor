@@ -110,3 +110,26 @@ def test_mastery_check_pass_and_fail_are_application_owned() -> None:
     assert passed.action == "MARK_MASTERED"
     assert failed.state == TutorState.REMEDIATION
     assert failed.action == "REMEDIATE"
+
+
+def test_guided_no_hint_attempt_cannot_count_as_independent_mastery() -> None:
+    from types import SimpleNamespace
+
+    from app.services.mastery_gate_evidence import _is_independent_correct_attempt
+
+    for state in (TutorState.GUIDED_PRACTICE, TutorState.MODEL, TutorState.REMEDIATION, None):
+        attempt = SimpleNamespace(
+            is_correct=True, assistance_level=0, state_at_attempt=state
+        )
+        assert _is_independent_correct_attempt(attempt) is False
+
+    for state in (TutorState.INDEPENDENT_PRACTICE, TutorState.MASTERY_CHECK):
+        attempt = SimpleNamespace(
+            is_correct=True, assistance_level=0, state_at_attempt=state
+        )
+        assert _is_independent_correct_attempt(attempt) is True
+        attempt.assistance_level = 1
+        assert _is_independent_correct_attempt(attempt) is False
+        attempt.assistance_level = 0
+        attempt.is_correct = False
+        assert _is_independent_correct_attempt(attempt) is False
