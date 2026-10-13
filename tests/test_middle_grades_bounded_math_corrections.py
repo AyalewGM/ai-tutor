@@ -86,3 +86,52 @@ def test_zero_direction_explicitly_unsupported():
             v = SCALE.generate(seed, mode)
             assert v.input_value != 0
             assert v.given_value != 0
+
+
+@pytest.mark.parametrize("mode", ["guided", "independent"])
+def test_all_discrete_inequalities_have_genuine_domain_witnesses(mode):
+    for seed in range(3, 120, 6):
+        for which in (seed, seed + 1):
+            v = ALG.generate(which, mode)
+            if not v.kind.startswith("INEQUALITY"):
+                continue
+            oracle = v.teacher_oracle()
+            witness = Fraction(oracle["witness"])
+            counterexample = Fraction(oracle["counterexample"])
+            assert oracle["graph_representation"] == "DISCRETE_NONNEGATIVE_INTEGER_POINTS"
+            assert all(x >= 0 and x.denominator == 1 for x in (witness, counterexample))
+            assert v.satisfies_inequality(witness)
+            assert not v.satisfies_inequality(counterexample)
+            assert not v.satisfies_inequality(Fraction(-1))
+            assert not v.satisfies_inequality(Fraction(1, 2))
+            assert v.public_payload()["response_fields"].count("graph_representation") == 1
+
+
+@pytest.mark.parametrize("mode", ["guided", "independent"])
+def test_fractional_physical_group_count_is_never_generated(mode):
+    for seed in range(300):
+        v = ALG.generate(seed, mode)
+        if v.kind in ("EQUATION_P_TIMES_X_PLUS_Q", "INEQUALITY_P_TIMES_X_PLUS_Q"):
+            assert v.p > 0 and v.p.denominator == 1
+            assert v.r == v.p * (v.answer + v.q)
+
+
+def test_discrete_graph_diagnosis_rejects_continuous_ray():
+    v = ALG.generate(3, "guided")
+    oracle = v.teacher_oracle()
+    response = {
+        "symbolic_model": oracle["symbolic_model"],
+        "boundary": oracle["boundary"],
+        "solution_relation": oracle["solution_relation"],
+        "endpoint": oracle["endpoint"],
+        "graph_direction": oracle["graph_direction"],
+        "graph_representation": "CONTINUOUS_REAL_RAY",
+        "witness": oracle["witness"],
+        "counterexample": oracle["counterexample"],
+        "context_interpretation": "whole number visit counts",
+    }
+    assert ALG.diagnose_guided(v, response) == "MD7.CONTINUOUS_VS_DISCRETE_DOMAIN"
+    response["graph_representation"] = oracle["graph_representation"]
+    assert ALG.diagnose_guided(v, response) == "GUIDED_STRUCTURED_MATCH_REASONING_UNREVIEWED"
+    response["witness"] = "-1"
+    assert ALG.diagnose_guided(v, response) == "MD7.WITNESS_COUNTEREXAMPLE_INVALID"
