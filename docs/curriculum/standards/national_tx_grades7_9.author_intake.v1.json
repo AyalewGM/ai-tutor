@@ -4179,14 +4179,12 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": "Classify real numbers as rational or irrational and organize nested number sets.",
+          "editorial_mathematical_scope": null,
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED",
-          "scope_review_status": "AUTHOR_HYPOTHESIS_NOT_PUBLISHER_TEXT_VERIFIED",
-          "scope_note": "Topic-level research hypothesis only; do not treat as verified official requirement or canonical equivalence."
+          "mastery": "UNVERIFIED"
         },
         {
           "expectation_id": "111.30(c)(2)(B)",
@@ -4196,14 +4194,12 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": "Approximate irrational square roots to compare and position numbers on a number line.",
+          "editorial_mathematical_scope": null,
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED",
-          "scope_review_status": "AUTHOR_HYPOTHESIS_NOT_PUBLISHER_TEXT_VERIFIED",
-          "scope_note": "Topic-level research hypothesis only; do not treat as verified official requirement or canonical equivalence."
+          "mastery": "UNVERIFIED"
         },
         {
           "expectation_id": "111.30(c)(2)(C)",
@@ -4213,14 +4209,12 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": "Convert and compare numerical representations, including scientific notation.",
+          "editorial_mathematical_scope": null,
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED",
-          "scope_review_status": "AUTHOR_HYPOTHESIS_NOT_PUBLISHER_TEXT_VERIFIED",
-          "scope_note": "Topic-level research hypothesis only; do not treat as verified official requirement or canonical equivalence."
+          "mastery": "UNVERIFIED"
         },
         {
           "expectation_id": "111.30(c)(2)(D)",
@@ -4230,14 +4224,12 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": "Apply integer-exponent rules in equivalent numerical representations.",
+          "editorial_mathematical_scope": null,
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED",
-          "scope_review_status": "AUTHOR_HYPOTHESIS_NOT_PUBLISHER_TEXT_VERIFIED",
-          "scope_note": "Topic-level research hypothesis only; do not treat as verified official requirement or canonical equivalence."
+          "mastery": "UNVERIFIED"
         },
         {
           "expectation_id": "111.30(c)(3)(A)",
@@ -4247,14 +4239,12 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": "Apply rational-number operations in mathematical and contextual problems.",
+          "editorial_mathematical_scope": null,
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED",
-          "scope_review_status": "AUTHOR_HYPOTHESIS_NOT_PUBLISHER_TEXT_VERIFIED",
-          "scope_note": "Topic-level research hypothesis only; do not treat as verified official requirement or canonical equivalence."
+          "mastery": "UNVERIFIED"
         },
         {
           "expectation_id": "111.30(c)(3)(B)",
@@ -4264,14 +4254,12 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": "Use properties of operations to justify signed rational computation.",
+          "editorial_mathematical_scope": null,
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED",
-          "scope_review_status": "AUTHOR_HYPOTHESIS_NOT_PUBLISHER_TEXT_VERIFIED",
-          "scope_note": "Topic-level research hypothesis only; do not treat as verified official requirement or canonical equivalence."
+          "mastery": "UNVERIFIED"
         },
         {
           "expectation_id": "111.30(c)(4)(A)",
@@ -4461,14 +4449,12 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": "Represent simple and compound events with organized sample spaces.",
+          "editorial_mathematical_scope": null,
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED",
-          "scope_review_status": "AUTHOR_HYPOTHESIS_NOT_PUBLISHER_TEXT_VERIFIED",
-          "scope_note": "Topic-level research hypothesis only; do not treat as verified official requirement or canonical equivalence."
+          "mastery": "UNVERIFIED"
         },
         {
           "expectation_id": "111.30(c)(6)(B)",
@@ -4478,14 +4464,12 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": "Use simulations to approximate compound-event probabilities.",
+          "editorial_mathematical_scope": null,
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED",
-          "scope_review_status": "AUTHOR_HYPOTHESIS_NOT_PUBLISHER_TEXT_VERIFIED",
-          "scope_note": "Topic-level research hypothesis only; do not treat as verified official requirement or canonical equivalence."
+          "mastery": "UNVERIFIED"
         },
         {
           "expectation_id": "111.30(c)(6)(C)",
@@ -4495,14 +4479,12 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": "Distinguish theoretical probability from experimental relative frequency.",
+          "editorial_mathematical_scope": null,
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED",
-          "scope_review_status": "AUTHOR_HYPOTHESIS_NOT_PUBLISHER_TEXT_VERIFIED",
-          "scope_note": "Topic-level research hypothesis only; do not treat as verified official requirement or canonical equivalence."
+          "mastery": "UNVERIFIED"
         },
         {
           "expectation_id": "111.30(c)(6)(D)",
@@ -4512,14 +4494,12 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": "Compute and interpret probabilities of simple and compound events.",
+          "editorial_mathematical_scope": null,
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED",
-          "scope_review_status": "AUTHOR_HYPOTHESIS_NOT_PUBLISHER_TEXT_VERIFIED",
-          "scope_note": "Topic-level research hypothesis only; do not treat as verified official requirement or canonical equivalence."
+          "mastery": "UNVERIFIED"
         },
         {
           "expectation_id": "111.30(c)(6)(E)",
@@ -6255,11 +6235,23 @@
         "independently_accepted_source_scopes": 0,
         "canonical_equivalences_accepted": 0,
         "priority": "Complete official parent-stem and each student-expectation scope, with required qualifiers and mathematical notation; distinguish 2025 §111.31 from 2012 §111.39.",
-        "author_scope_rows": 24,
-        "remaining_unscoped_rows": 106,
-        "scope_status": "24_AUTHOR_NOTES_OF_130_ZERO_INDEPENDENT_ACCEPTANCE"
+        "author_scope_rows": 14,
+        "remaining_unscoped_rows": 116,
+        "scope_status": "14_AUTHOR_NOTES_OF_130_ZERO_INDEPENDENT_ACCEPTANCE"
       },
-      "author_hypothesis_warning": "Ten additional topic-level hypotheses were attached only to aid targeted source review. They must be replaced/corrected against exact official 2025 adopted text; especially Grade 7 2A-D and 6A-D. No new source-fidelity claim."
+      "next_author_source_review_ids": [
+        "111.30(c)(2)(A)",
+        "111.30(c)(2)(B)",
+        "111.30(c)(2)(C)",
+        "111.30(c)(2)(D)",
+        "111.30(c)(3)(A)",
+        "111.30(c)(3)(B)",
+        "111.30(c)(6)(A)",
+        "111.30(c)(6)(B)",
+        "111.30(c)(6)(C)",
+        "111.30(c)(6)(D)"
+      ],
+      "next_author_source_review_status": "QUEUED_OFFICIAL_ADOPTED_TEXT_NOT_YET_VERIFIED"
     }
   }
 }
