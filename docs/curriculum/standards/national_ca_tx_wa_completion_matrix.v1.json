@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0.0",
+  "as_of": "2026-10-13",
+  "status": "INCOMPLETE_FAIL_CLOSED",
+  "purpose": "Exact evidence accounting for all three states, not accepted curriculum coverage",
+  "states": {
+    "CA": {
+      "official_source": "https://www.cde.ca.gov/re/cc/mathresources.asp",
+      "version": "CA CCSS Mathematics modified 2013; 2023 Mathematics Framework is guidance, not a new standards edition",
+      "current_intake_file": "national_ca_grades7_9.author_intake.v1.json",
+      "historic_rows_by_track": {
+        "GRADE_7": 24,
+        "GRADE_8": 28,
+        "ALGEBRA_I": 62,
+        "MATHEMATICS_I": 59
+      },
+      "accepted_source_fidelity_rows": 0,
+      "unverified_scope_rows": 173,
+      "unextracted_tracks": [
+        "GRADE_1",
+        "GRADE_2",
+        "GRADE_3",
+        "GRADE_4",
+        "GRADE_5",
+        "GRADE_6"
+      ],
+      "grade9_course_equivalence": "NOT_ASSUMED",
+      "next_gate": "Independently reconcile each official standard and California addition, course-specific annotations, mathematical conditions, subparts and exact source pages"
+    },
+    "TX": {
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "version": "Regular grades adopted 2012; advanced grades adopted 2025; Algebra I §111.39 separate",
+      "current_intake_file": "national_tx_grades7_9.author_intake.v1.json",
+      "historic_regular_rows_by_track": {
+        "REGULAR_GRADE_7": 43,
+        "REGULAR_GRADE_8": 45
+      },
+      "algebra1_111_39_author_identifier_rows": 56,
+      "advanced_111_30_111_31_author_identifier_rows": 130,
+      "advanced_author_scope_rows": 14,
+      "advanced_remaining_unscoped_rows": 116,
+      "accepted_source_fidelity_rows": 0,
+      "unextracted_tracks": [
+        "REGULAR_GRADE_1",
+        "REGULAR_GRADE_2",
+        "REGULAR_GRADE_3",
+        "REGULAR_GRADE_4",
+        "REGULAR_GRADE_5",
+        "REGULAR_GRADE_6",
+        "ADVANCED_GRADE_6"
+      ],
+      "grade9_course_equivalence": "NOT_ASSUMED",
+      "next_gate": "Independently compare final adopted 2025 advanced text and all §111.39/regular grade expectations, exact qualifiers and parent/subpart structure; extract missing grades"
+    },
+    "WA": {
+      "official_source": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
+      "adoption_bulletin": "B023-26",
+      "adopted": "2026-06-18",
+      "required_school_year": "2027-2028",
+      "current_intake_file": "national_wa_2026_grades7_9.source_blocker.v1.json",
+      "verified_2026_expectation_rows": 0,
+      "official_final_workbook_bytes_obtained": false,
+      "official_final_crosswalk_rows_obtained": false,
+      "unextracted_tracks": [
+        "GRADE_1",
+        "GRADE_2",
+        "GRADE_3",
+        "GRADE_4",
+        "GRADE_5",
+        "GRADE_6",
+        "GRADE_7",
+        "GRADE_8",
+        "HIGH_SCHOOL_COURSE_ARRANGEMENTS"
+      ],
+      "grade9_course_equivalence": "NOT_ASSUMED",
+      "next_gate": "Obtain original final OSPI 2026 Excel/PDF, verify source hash and final revision, extract expectation and 2011 crosswalk rows without treating 2025 initial draft as final"
+    }
+  },
+  "acceptance_contract": {
+    "all_three_complete": false,
+    "source_fidelity": "INDEPENDENT_REVIEW_REQUIRED",
+    "canonical_equivalence": "INDEPENDENT_ARCHITECTURE_AND_MATH_REVIEW_REQUIRED",
+    "assessment_mastery": "NOT_ESTABLISHED",
+    "runtime_activation": "FORBIDDEN",
+    "no_automatic_merge": true,
+    "requirements": [
+      "All relevant official Grades 1–8 and high-school/course expectations source-verified per state",
+      "All material lettered/unlettered mathematical conditions represented",
+      "Original publisher version/locator for every expectation",
+      "All unknown rows resolved or explicitly excluded with owner-approved scope",
+      "Independent source-fidelity acceptance at exact SHA",
+      "Canonical identity and assessment gates separate from standards acceptance",
+      "CI and AppSec pass on accepted exact SHA"
+    ]
+  }
+}
