@@ -174,6 +174,7 @@ class Variant:
                 "solution_relation",
                 "endpoint",
                 "graph_direction",
+                "graph_representation",
                 "witness",
                 "counterexample",
                 "context_interpretation",
@@ -203,17 +204,23 @@ class Variant:
             solution_relation = self.relation if self.p > 0 else _flip(self.relation)
             endpoint = "CLOSED" if "=" in solution_relation else "OPEN"
             direction = "RIGHT" if solution_relation in (">", ">=") else "LEFT"
-            witness = self.answer + (1 if direction == "RIGHT" else -1)
-            counterexample = self.answer - (1 if direction == "RIGHT" else -1)
-            if self.context_domain == "NONNEGATIVE_WHOLE_NUMBERS":
-                witness = max(Fraction(0), witness)
-                counterexample = max(Fraction(0), counterexample)
+            if self.context_domain != "NONNEGATIVE_WHOLE_NUMBERS":
+                raise ValueError("Unsupported inequality context domain")
+            candidates = (Fraction(n) for n in range(int(self.answer) + 3))
+            values = tuple(candidates)
+            witness = next((x for x in values if self.satisfies_inequality(x)), None)
+            counterexample = next(
+                (x for x in values if not self.satisfies_inequality(x)), None
+            )
+            if witness is None or counterexample is None:
+                raise ValueError("No domain-valid witness/counterexample pair")
             return {
                 "symbolic_model": self.model,
                 "boundary": _fmt(self.answer),
                 "solution_relation": solution_relation,
                 "endpoint": endpoint,
                 "graph_direction": direction,
+                "graph_representation": "DISCRETE_NONNEGATIVE_INTEGER_POINTS",
                 "witness": _fmt(witness),
                 "counterexample": _fmt(counterexample),
             }
@@ -227,6 +234,10 @@ class Variant:
     def satisfies_inequality(self, x: Fraction) -> bool:
         if not self.kind.startswith("INEQUALITY") or self.relation is None:
             raise ValueError("Not an inequality variant")
+        if self.context_domain == "NONNEGATIVE_WHOLE_NUMBERS" and (
+            x.denominator != 1 or x < 0
+        ):
+            return False
         if self.kind == "INEQUALITY_PX_PLUS_Q":
             lhs = self.p * x + self.q
         else:
@@ -248,6 +259,8 @@ def generate(seed: int, mode: str) -> Variant:
     # Guided and independent namespaces intentionally use disjoint solution bands.
     solution = Fraction(rng.randint(2, 10) if mode == "guided" else rng.randint(12, 24), 1)
     p = Fraction(rng.choice((2, 3, 4, 5, 6)), rng.choice((1, 1, 1, 2)))
+    if kind in ("EQUATION_P_TIMES_X_PLUS_Q", "INEQUALITY_P_TIMES_X_PLUS_Q"):
+        p = Fraction(rng.choice((2, 3, 4, 5, 6)))
     q = Fraction(rng.randint(1, 9), rng.choice((1, 1, 2)))
     relation = rng.choice(("<", "<=", ">", ">="))
     domain = "NONNEGATIVE_WHOLE_NUMBERS"
@@ -388,10 +401,16 @@ def diagnose_guided(variant: Variant, response: Mapping[str, object]) -> str:
             return "MD7.STRICT_VS_INCLUSIVE_ENDPOINT"
         if response["graph_direction"] != oracle["graph_direction"]:
             return "MD7.GRAPH_DIRECTION_ERROR"
+        if response["graph_representation"] != oracle["graph_representation"]:
+            return "MD7.CONTINUOUS_VS_DISCRETE_DOMAIN"
         try:
+            if isinstance(response["witness"], (float, bool)) or isinstance(
+                response["counterexample"], (float, bool)
+            ):
+                return "MD7.WITNESS_COUNTEREXAMPLE_INVALID"
             witness = Fraction(str(response["witness"]))
             counterexample = Fraction(str(response["counterexample"]))
-        except (ValueError, ZeroDivisionError):
+        except (ValueError, ZeroDivisionError, TypeError):
             return "MD7.WITNESS_COUNTEREXAMPLE_INVALID"
         if not variant.satisfies_inequality(witness) or variant.satisfies_inequality(counterexample):
             return "MD7.WITNESS_COUNTEREXAMPLE_INVALID"
