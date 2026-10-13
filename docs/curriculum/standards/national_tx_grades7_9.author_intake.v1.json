@@ -6016,7 +6016,226 @@
           "assessment": "UNVERIFIED",
           "mastery": "UNVERIFIED"
         }
-      ]
+      ],
+      "parent_stem_review_ledger": [
+        {
+          "source_id": "111.30(c)(1)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Mathematical process standards",
+          "subpart_count": 7,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(2)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Numeracy: foundations of real numbers",
+          "subpart_count": 4,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(3)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Numeracy: rational-number operations",
+          "subpart_count": 2,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(4)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Numeracy: applications of percents",
+          "subpart_count": 7,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(5)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Proportionality: geometric ratios",
+          "subpart_count": 5,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(6)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Proportionality: probability",
+          "subpart_count": 7,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(7)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "One-variable equations and inequalities",
+          "subpart_count": 5,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(8)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Two-variable linear relationship foundations",
+          "subpart_count": 3,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(9)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Applications of linear relationships",
+          "subpart_count": 1,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(10)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Geometric concepts: foundations",
+          "subpart_count": 8,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(11)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Geometric concepts: applications",
+          "subpart_count": 7,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(12)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Transformations",
+          "subpart_count": 4,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(13)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Data science: measurement and data",
+          "subpart_count": 4,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.30(c)(14)",
+          "track": "ADVANCED_GRADE_7",
+          "parent_topic_editorial": "Personal financial literacy",
+          "subpart_count": 3,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.31(d)(1)",
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_topic_editorial": "Mathematical process standards",
+          "subpart_count": 7,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.31(d)(2)",
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_topic_editorial": "Linear functions: equations and inequalities",
+          "subpart_count": 9,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.31(d)(3)",
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_topic_editorial": "Linear graphs, transformations and systems",
+          "subpart_count": 11,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.31(d)(4)",
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_topic_editorial": "Linear statistical relationships",
+          "subpart_count": 6,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.31(d)(5)",
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_topic_editorial": "Solving linear equations, inequalities and systems",
+          "subpart_count": 3,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.31(d)(6)",
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_topic_editorial": "Writing quadratic functions",
+          "subpart_count": 3,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.31(d)(7)",
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_topic_editorial": "Quadratic graphs and transformations",
+          "subpart_count": 3,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.31(d)(8)",
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_topic_editorial": "Solving quadratic equations",
+          "subpart_count": 2,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.31(d)(9)",
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_topic_editorial": "Exponential functions and equations",
+          "subpart_count": 5,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.31(d)(10)",
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_topic_editorial": "Polynomial expressions and operations",
+          "subpart_count": 6,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.31(d)(11)",
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_topic_editorial": "Radicals and laws of exponents",
+          "subpart_count": 2,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        },
+        {
+          "source_id": "111.31(d)(12)",
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_topic_editorial": "Equations, relations, functions and sequences",
+          "subpart_count": 6,
+          "official_source": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "scope_status": "EDITORIAL_PARENT_TOPIC_PENDING_INDEPENDENT_PUBLISHER_STEM_AND_MATH_SCOPE_REVIEW"
+        }
+      ],
+      "scope_gap_accounting": {
+        "total_expectations": 130,
+        "with_editorial_scope": 14,
+        "without_editorial_scope": 116,
+        "parent_stems_with_editorial_topics": 26,
+        "independently_accepted_source_scopes": 0,
+        "canonical_equivalences_accepted": 0,
+        "priority": "Complete official parent-stem and each student-expectation scope, with required qualifiers and mathematical notation; distinguish 2025 §111.31 from 2012 §111.39."
+      }
     }
   }
 }
