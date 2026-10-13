@@ -155,3 +155,20 @@ def test_texas_algebra1_per_letter_pages_are_not_parent_stem_pages():
     assert expected["A1.2H"] == [3, 3]
     assert expected["A1.6B"] == [4, 4]
     assert expected["A1.10B"] == [4, 5]
+
+
+def test_texas_2025_advanced_final_rule_is_not_proposal_or_regular_algebra1():
+    data = _data("TX")
+    final = data["advanced_2025_final_adoption_evidence"]
+    assert final["publication_date"] == "2025-06-27"
+    assert set(final["sections"]) == {"111.29", "111.30", "111.31"}
+    changes = {x["section"]: x for x in final["adoption_differences"]}
+    assert changes["111.29"]["final_adoption"].startswith("ADOPTED_WITHOUT_CHANGE")
+    assert changes["111.30"]["expectation"] == "111.30(c)(8)(C)"
+    assert changes["111.31"]["graduation_credit"].startswith("One credit")
+    assert changes["111.31"]["prerequisite"] == (
+        "Middle School Advanced Mathematics, Grade 7 or Mathematics, Grade 8"
+    )
+    assert all(x["expectations_extracted"] is False for x in changes.values())
+    assert final["relationship_to_regular_algebra1"].startswith("NOT_ASSUMED_IDENTICAL")
+    assert final["review_status"].endswith("NOT_FULL_STUDENT_EXPECTATION_SOURCE_FIDELITY")
