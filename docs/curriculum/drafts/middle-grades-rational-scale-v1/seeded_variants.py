@@ -92,13 +92,16 @@ def _validate(seed: int, mode: str) -> None:
         raise ValueError("seed must be nonnegative")
 
 
-def generate(seed: int, mode: str) -> Variant:
+def generate(seed: int, mode: str, *, unit_scale: int | None = None) -> Variant:
     """Generate an unseen calibration record without announcing its operation."""
 
     _validate(seed, mode)
     mode_salt = 104_729 if mode == "independent" else 13_337
     rng = random.Random(seed * 1_000_003 + mode_salt)
-    family = seed % 6
+    if unit_scale not in (None, 1, -1) or isinstance(unit_scale, bool):
+        raise ValueError("unit_scale must be None, +1, or -1")
+    # Existing seed->structure mappings remain bit-for-bit stable.
+    family = seed % 4 if unit_scale is None else (4 if unit_scale == 1 else 5)
 
     if family == 0:
         structure = "DIRECT_NEGATIVE_GROW"
@@ -112,7 +115,7 @@ def generate(seed: int, mode: str) -> Variant:
         prompt = (
             f"A calibration log shows input {input_value} and scale {scale}, with the "
             "output hidden. Decide which operation recovers the hidden value; then "
-            "predict the output direction and whether magnitude grows, shrinks, or STAYS THE SAME; calculate and recompose."
+            "predict direction and magnitude change, calculate, and recompose."
         )
     elif family == 1:
         structure = "DIRECT_DOUBLE_NEGATIVE_SHRINK"
@@ -184,7 +187,11 @@ def generate(seed: int, mode: str) -> Variant:
     magnitude_relation = _magnitude_relation(result, input_value)
     recomposition = f"({scale}) * ({input_value}) = {result}"
     return Variant(
-        variant_id=f"{NAMESPACE}:{mode}:{seed}",
+        variant_id=(
+            f"{NAMESPACE}:{mode}:{seed}"
+            if unit_scale is None
+            else f"{NAMESPACE}:{mode}:{seed}:unit_scale:{unit_scale:+d}"
+        ),
         mode=mode,
         structure=structure,
         prompt=prompt,
