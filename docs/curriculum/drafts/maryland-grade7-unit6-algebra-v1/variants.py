@@ -52,9 +52,9 @@ def _linear_coefficients(source: object) -> tuple[Fraction, Fraction] | None:
     if not isinstance(source, str) or len(source) > 180:
         return None
     text = source.replace("−", "-").replace("×", "*").strip()
-    text = re.sub(r"(?<=\\d)\\s*(?=x\\b|\\()", "*", text)
-    text = re.sub(r"(?<=\\))\\s*(?=x\\b|\\()", "*", text)
-    text = re.sub(r"(?<=x)\\s*(?=\\()", "*", text)
+    text = re.sub(r"(?<=\d)\s*(?=x\b|\()", "*", text)
+    text = re.sub(r"(?<=\))\s*(?=x\b|\()", "*", text)
+    text = re.sub(r"(?<=x)\s*(?=\()", "*", text)
     try:
         expression = ast.parse(text, mode="eval").body
 
@@ -91,6 +91,7 @@ def _mathematically_equivalent(actual: object, expected: str) -> bool:
     Equation differences may have a nonzero common multiplier. Inequalities
     require a positive multiplier with identical relational orientation.
     """
+
     def parse(value: object) -> tuple[str | None, tuple[Fraction, Fraction]] | None:
         if not isinstance(value, str) or len(value) > 180:
             return None
@@ -130,6 +131,7 @@ def _exact_number_matches(actual: object, expected: object) -> bool:
         return Fraction(str(actual)) == Fraction(str(expected))
     except (ValueError, ZeroDivisionError, TypeError):
         return False
+
 
 @dataclass(frozen=True)
 class Variant:
