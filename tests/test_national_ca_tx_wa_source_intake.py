@@ -195,3 +195,30 @@ def test_texas_advanced_2025_final_adoption_slice_is_bounded_and_distinct():
         assert row["canonical_equivalence"] == "UNVERIFIED"
         assert row["assessment"] == "UNVERIFIED"
         assert row["mastery"] == "UNVERIFIED"
+
+
+def test_texas_advanced_2025_complete_author_identifier_enumeration_is_fail_closed():
+    data = _data("TX")
+    inventory = data["advanced_2025_final_adoption_evidence"]["advanced_course_expectation_identifier_inventory"]
+    rows = inventory["expectations"]
+    assert len(rows) == 130
+    assert len({r["expectation_id"] for r in rows}) == 130
+    assert inventory["count_grade7"] == 67
+    assert inventory["count_grade8_advanced_algebra1"] == 63
+    assert inventory["complete_scope_rows_independently_accepted"] == 0
+    assert sum(r["editorial_mathematical_scope"] is not None for r in rows) == 14
+    assert sum(r["editorial_mathematical_scope"] is None for r in rows) == 116
+    grade7 = [r for r in rows if r["track"] == "ADVANCED_GRADE_7"]
+    grade8 = [r for r in rows if r["track"] == "ADVANCED_GRADE_8_ALGEBRA_I"]
+    assert len(grade7) == 67
+    assert len(grade8) == 63
+    assert [r["expectation_id"] for r in grade7 if r["lettered_subpart"] is None] == ["111.30(c)(9)"]
+    assert all(r["lettered_subpart"] is not None for r in grade8)
+    assert "111.30(c)(8)(C)" in {r["expectation_id"] for r in grade7}
+    assert "111.31(d)(12)(F)" in {r["expectation_id"] for r in grade8}
+    for r in rows:
+        assert r["source_fidelity"].endswith("PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW")
+        assert r["canonical_equivalence"] == "UNVERIFIED"
+        assert r["generator"] == "UNVERIFIED"
+        assert r["assessment"] == "UNVERIFIED"
+        assert r["mastery"] == "UNVERIFIED"
