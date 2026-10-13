@@ -76,3 +76,21 @@ def test_texas_instructional_research_cannot_promote_irrational_gap_to_coverage(
         assert rows[code]["canonical_equivalence"] == "UNVERIFIED"
         assert rows[code]["mastery"] == "UNVERIFIED"
     assert data["authority_section_audit"]["status"].endswith("NOT_EXPECTATION_TEXT_ACCEPTED")
+
+
+def test_texas_algebra1_official_lettered_identifier_intake_remains_unaccepted():
+    data = _data("TX")
+    a1 = data["algebra1_official_identifier_inventory"]
+    assert a1["section"] == "111.39"
+    assert a1["parent_groups"] == 12
+    assert a1["lettered_expectations"] == 56
+    rows = a1["expectations"]
+    assert len(rows) == len({r["expectation_id"] for r in rows}) == 56
+    assert {r["source_parent_group"] for r in rows} == {str(n) for n in range(1, 13)}
+    for row in rows:
+        assert row["official_reference"].startswith("19 TAC §111.39(c)")
+        assert row["source_fidelity"].endswith("SCOPE_PENDING_EXACT_LETTERED_REVIEW")
+        assert row["official_scope_editorial"] is None
+        assert row["canonical_equivalence"] == "UNVERIFIED"
+        assert row["assessment"] == "UNVERIFIED"
+        assert row["mastery"] == "UNVERIFIED"
