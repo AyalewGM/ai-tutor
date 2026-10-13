@@ -16,7 +16,8 @@
   "limitations": [
     "Identifiers reused from merged #266; publisher-text mathematical scope, California additions, exact page and lettered subparts require independent original-source verification.",
     "Prior gap statuses and candidates are historical leads, not accepted canonical equivalence or current teaching depth.",
-    "Algebra I and Mathematics I are distinct pathways, not universal Grade 9 equivalence."
+    "Algebra I and Mathematics I are distinct pathways, not universal Grade 9 equivalence.",
+    "CDE original 2013/2014 corrected PDF located; Grade 8 8.NS.1/8.NS.2 source text reviewed at PDF index 60, with targeted scope-risk notes, still pending independent verification."
   ],
   "expectations": [
     {
@@ -542,7 +543,11 @@
       "generator": "UNVERIFIED",
       "mve_route": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_page_index": 60,
+      "official_scope_editorial": "Irrational numbers; rational decimal expansions eventually repeat, and eventually repeating decimals can be converted to rational numbers.",
+      "scope_audit_status": "AUTHOR_SUMMARY_FROM_CDE_PDF_PENDING_INDEPENDENT_ACCEPTANCE",
+      "candidate_reuse_scope_risk": "M8.NS.RAD generator may address radicals but must independently demonstrate repeating-decimal characterization and rational conversion."
     },
     {
       "expectation_id": "8.NS.2",
@@ -563,7 +568,11 @@
       "generator": "UNVERIFIED",
       "mve_route": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_page_index": 60,
+      "official_scope_editorial": "Use rational approximations of irrational numbers to compare sizes, locate on number line, and estimate expressions.",
+      "scope_audit_status": "AUTHOR_SUMMARY_FROM_CDE_PDF_PENDING_INDEPENDENT_ACCEPTANCE",
+      "candidate_reuse_scope_risk": "Check progressive rational bounds, comparative reasoning, number-line placement and expression estimation; radicals alone are insufficient."
     },
     {
       "expectation_id": "8.EE.1",
@@ -3652,5 +3661,27 @@
       "assessment": "UNVERIFIED",
       "mastery": "UNVERIFIED"
     }
-  ]
+  ],
+  "official_pdf_source_evidence": {
+    "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+    "publisher": "California Department of Education",
+    "electronic_edition": "2013/2014 corrected electronic edition",
+    "adoption": "August 2010",
+    "modification": "January 2013",
+    "grade7_source_pdf_indices": [
+      54,
+      57
+    ],
+    "grade8_source_pdf_indices": [
+      60,
+      62
+    ],
+    "algebra1_course_source_pdf_indices": [
+      70,
+      73
+    ],
+    "page_note": "These are zero-based PDF indices from the official source, not printed page footer numbers; source pages need exact per-row confirmation",
+    "course_scope_note": "Algebra I is limited to linear/quadratic/exponential and some absolute-value/step/piecewise functions; shared conceptual-category standards must honor course bracket notes",
+    "mathematical_practices_note": "California higher mathematics includes additional MP3.1 induction/contradiction proof practice; preserve course context"
+  }
 }
