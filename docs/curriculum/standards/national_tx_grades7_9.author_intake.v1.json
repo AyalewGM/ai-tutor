@@ -1,0 +1,1799 @@
+{
+  "schema_version": "1.0.0",
+  "status": "DRAFT_INCOMPLETE_SOURCE_FIDELITY",
+  "as_of": "2026-10-12",
+  "authority": "Texas Education Agency",
+  "source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+  "existing_merged_pr": 268,
+  "counts": {
+    "REGULAR_GRADE_7": 43,
+    "REGULAR_GRADE_8": 45
+  },
+  "separate_courses": [
+    {
+      "track": "ALGEBRA_I",
+      "section": "111.39",
+      "version": "2012",
+      "rows_status": "PENDING_OFFICIAL_EXTRACTION"
+    },
+    {
+      "track": "ADVANCED_GRADE_7",
+      "section": "111.30",
+      "version": "2025",
+      "rows_status": "PENDING_OFFICIAL_EXTRACTION"
+    },
+    {
+      "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+      "section": "111.31",
+      "version": "2025",
+      "rows_status": "PENDING_OFFICIAL_EXTRACTION"
+    }
+  ],
+  "limitations": [
+    "Regular Grade 7/8 identifiers reused from merged #268; complete subsection and lettered text unverified.",
+    "Advanced 2025 and regular 2012 are separate; never substitute one for another.",
+    "Legacy GAP labels are not verified missing canonical mathematics."
+  ],
+  "expectations": [
+    {
+      "expectation_id": "7.2A",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.NS.RATIONAL.OPERATIONS",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.3A",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.NS.RATIONAL.OPERATIONS",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.3B",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.NS.RATIONAL.OPERATIONS",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.4A",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.F.LINEAR.SLOPE_INTERCEPT",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.4B",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.RP.RATE.UNIT",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.4C",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.RP.PROPORTIONAL.REPRESENT",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.4D",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.RP.PERCENT.APPLICATIONS",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.4E",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.MEAS.UNIT_CONVERSION",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.5A",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.SIMILARITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.5B",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.GEO.CIRCLES",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.5C",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.SCALE_DRAWING",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.6A",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.PROB.COMPOUND",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.6B",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.PROB.COMPOUND",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.6C",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.PROB.EXPERIMENTAL",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.6D",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.PROB.COMPOUND",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.6E",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.PROB.SIMPLE",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.6F",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.DATA.SAMPLING",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.6G",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.DATA.REPRESENTATIONS",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.6H",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.PROB.EXPERIMENTAL",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.6I",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.PROB.THEORY.VS_EXPERIMENT",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.7A",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.F.LINEAR.SLOPE_INTERCEPT",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.8A",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.GEO.MEASURE.VOLUME",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.8B",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.GEO.MEASURE.VOLUME",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.8C",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.GEO.CIRCLES",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.9A",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.GEO.MEASURE.VOLUME",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.9B",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.CIRCLES",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.9C",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.GEO.MEASURE.AREA",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.9D",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.GEO.SURFACE_AREA",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.10A",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.EE.INEQUALITY.MULTISTEP",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.10B",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.EE.INEQUALITY.MULTISTEP",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.10C",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.EE.EQUATION.MULTISTEP",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.11A",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.EE.EQUATION.MULTISTEP",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.11B",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.EE.EQUATION.MULTISTEP",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.11C",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.ANGLES",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.12A",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.DATA.REPRESENTATIONS",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.12B",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.DATA.SAMPLING",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.12C",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.DATA.SAMPLING",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.13A",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.13B",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.13C",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.13D",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.13E",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.13F",
+      "track": "REGULAR_GRADE_7",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.27",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade7_gap_audit.py",
+        "blob_sha": "21f5d57e59022149e7ac98d8d542c5d223acf390",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.2A",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": "M8.NS.RAD",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.2B",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": "M8.NS.RAD",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.2C",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.NS.SCIENTIFIC_NOTATION",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.2D",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": "M8.NS.RAD",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.3A",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.SIMILARITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.3B",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.GEO.TRANSFORMATIONS",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.3C",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.TRANSFORMATIONS",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.4A",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.F.LINEAR.SLOPE_INTERCEPT",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.4B",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.F.LINEAR.SLOPE_INTERCEPT",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.4C",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.F.LINEAR.SLOPE_INTERCEPT",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.5A",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.F.LINEAR.SLOPE_INTERCEPT",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.5B",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.F.LINEAR.SLOPE_INTERCEPT",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.5C",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.DATA.BIVARIATE",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.5D",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.DATA.LINEAR_MODEL",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.5E",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.RP.PROPORTIONAL.REPRESENT",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.5F",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.F.LINEAR.COMPARE",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.5G",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.F.FUNCTIONS",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.5H",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.F.LINEAR.COMPARE",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.5I",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.F.LINEAR.SLOPE_INTERCEPT",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.6A",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.MEASURE.VOLUME",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.6B",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.MEASURE.VOLUME",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.6C",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.GEO.PYTHAGOREAN",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.7A",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.MEASURE.VOLUME",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.7B",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.SURFACE_AREA",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.7C",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.PYTHAGOREAN",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.7D",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.PYTHAGOREAN",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.8A",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.EE.EQUATION.MULTISTEP",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.8B",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.EE.EQUATION.MULTISTEP",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.8C",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.EE.EQUATION.MULTISTEP",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.8D",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.ANGLES",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.9A",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.EE.SYSTEMS",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.10A",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.TRANSFORMATIONS",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.10B",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.CONGRUENCE",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.10C",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.GEO.TRANSFORMATIONS",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.10D",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "PARTIAL"
+      },
+      "candidate_canonical": "MATH.GEO.SIMILARITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.11A",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.DATA.BIVARIATE",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.11B",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.11C",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "COVERED"
+      },
+      "candidate_canonical": "MATH.DATA.SAMPLING",
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.12A",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.12B",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.12C",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.12D",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.12E",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.12F",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.12G",
+      "track": "REGULAR_GRADE_8",
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "legal_section": "111.28",
+      "exact_mathematical_scope": null,
+      "lettered_requirement": null,
+      "source_fidelity": "AUTHOR_REUSE_FROM_HISTORIC_AUDIT_PENDING_TEA_ROW_REVIEW",
+      "historical_audit": {
+        "path": "app/texas_grade8_gap_audit.py",
+        "blob_sha": "405e24f0d37235b915777183bf98de5234178ae2",
+        "legacy_gap_status": "GAP"
+      },
+      "candidate_canonical": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "generator": "UNVERIFIED",
+      "mve_route": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}

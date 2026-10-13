@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "status": "BLOCKED_AUTHORITATIVE_2026_DOCUMENT_BYTES_NOT_RETRIEVED",
+  "as_of": "2026-10-12",
+  "authority": "Washington OSPI",
+  "official_landing_page": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
+  "adoption_bulletin": "B023-26",
+  "adopted": "2026-06-18",
+  "exploration": "2026-2027",
+  "required": "2027-2028",
+  "prior_version": "2011 adopted CCSS Mathematics",
+  "crosswalk": "2026 official Excel crosswalk to 2011 CCSS listed on OSPI page; source rows not obtained",
+  "pathways": [
+    "GRADE_7",
+    "GRADE_8",
+    "HIGH_SCHOOL_COURSE_ARRANGEMENTS"
+  ],
+  "expectations": [],
+  "limitations": [
+    "OSPI webpage is authoritative for adoption and downloadable resource existence, but original 2026 PDF/Excel bytes were blocked (HTTP 403).",
+    "No 2026 identifiers, mathematical scopes or crosswalk relations invented from 2011 standards.",
+    "Four connected domains and data-science inquiry require exact publisher file verification."
+  ]
+}
