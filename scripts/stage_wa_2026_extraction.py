@@ -1,7 +1,7 @@
 """Stage the exact WA 2026 extraction in the repository without accepting mappings.
 
 Usage:
-  python scripts/stage_wa_2026_extraction.py /path/to/wa_2026_v3_1_source_extraction.json
+  python -m scripts.stage_wa_2026_extraction /path/to/wa_2026_v3_1_source_extraction.json
 
 The staged file must be committed and independently reviewed before use.
 """
