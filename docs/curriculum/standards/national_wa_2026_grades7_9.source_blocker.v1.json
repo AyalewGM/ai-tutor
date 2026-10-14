@@ -21,7 +21,8 @@
     "Four connected domains and data-science inquiry require exact publisher file verification.",
     "OSPI 2026 official FAQ names Integrated 1/2/3, Geometry, Algebra 1/2 and Credit 3; exact course requirement lists remain unextracted.",
     "An OSPI March 2026 support PDF references math25-initial-adoption-spreadsheet.xlsx; this is NOT proof of final 2026 formal-adoption workbook content.",
-    "Workbook received from user; source bytes and 264 K-8, 464 HS course, 425 crosswalk rows extracted outside repository; full rows must be imported, independently verified, and mapped before claiming coverage."
+    "Workbook received from user; source bytes and 264 K-8, 464 HS course, 425 crosswalk rows extracted outside repository; full rows must be imported, independently verified, and mapped before claiming coverage.",
+    "The 425 crosswalk rows include an explicit removal of 7.NS.A.3 (null 2026 code); never fabricate a mapping or count it as an unmapped 2026 expectation."
   ],
   "high_school_arrangements": {
     "source": "https://ospi.k12.wa.us/student-success/learning-standards-instructional-materials/washington-state-learning-standards-review/learning-standards-review-faqs",
@@ -59,6 +60,14 @@
     "publisher_hash_independently_verified": false,
     "extracted_json": "wa_2026_v3_1_source_extraction.json (conversation artifact, not yet checked into repository)",
     "scope_acceptance": "PENDING_INDEPENDENT_SOURCE_REVIEW",
-    "course_rows_not_unique_skills": true
+    "course_rows_not_unique_skills": true,
+    "unique_high_school_standard_codes": 160,
+    "crosswalk_removed_legacy_standard": {
+      "ccss_code": "7.NS.A.3",
+      "wa_2026_code": null,
+      "source_note": "Removed as redundant following M.7.Q.NS.1 and M.7.Q.NS.2",
+      "classification": "EXPLICIT_REMOVAL_NOT_UNMAPPED_OR_ACCEPTED_EQUIVALENCE"
+    },
+    "validation_script": "scripts/validate_wa_2026_source_extraction.py"
   }
 }
