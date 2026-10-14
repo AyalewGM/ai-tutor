@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0.0",
+  "publisher": "Texas Education Agency",
+  "track": "2025 Advanced Grade 6 — separate from regular Grade 6",
+  "controlling_section": "19 TAC §111.29(c)",
+  "source_pdf": "https://tea.texas.gov/state-board-of-education/sboe-2025/sboe-2025-april/1a3cofb2-chap111-sub-b.pdf",
+  "source_status": "PROPOSED 2025 TEXT: CURRENT CODIFIED PARITY REQUIRES INDEPENDENT CHECK",
+  "adoption_notice": "https://www.sos.state.tx.us/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+  "source_audit_group_scope": "(c)(2)(A-H) and (c)(3)(A-I)",
+  "editorial_scope_rows_in_this_batch": 17,
+  "existing_grade6_id_queue_expected_total": 68,
+  "other_grade6_records_still_unscoped": 51,
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "disclaimer": "Author-created paraphrases for independent review; not accepted standards coverage, canonical mapping, assessment, or mastery.",
+  "rows": [
+    {
+      "expectation_id": "111.29(c)(2)(A)",
+      "parent_group": 2,
+      "lettered_subpart": "A",
+      "author_mathematical_scope": "Classify sets and subsets of rational numbers using Venn diagrams or hierarchies.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(B)",
+      "parent_group": 2,
+      "lettered_subpart": "B",
+      "author_mathematical_scope": "Identify a number, its opposite, and its absolute value.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(C)",
+      "parent_group": 2,
+      "lettered_subpart": "C",
+      "author_mathematical_scope": "Represent benchmark fractions and percents with 10-by-10 grids, strip diagrams, number lines, and numbers as proportional relationships.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(D)",
+      "parent_group": 2,
+      "lettered_subpart": "D",
+      "author_mathematical_scope": "Generate equivalent fraction, decimal, and percent forms in real-world proportional problems, including money.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(E)",
+      "parent_group": 2,
+      "lettered_subpart": "E",
+      "author_mathematical_scope": "Use equivalent fractions, decimals, and percents to express equal portions of the same whole.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(F)",
+      "parent_group": 2,
+      "lettered_subpart": "F",
+      "author_mathematical_scope": "Locate, compare, and order integers and rational numbers on a number line.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(G)",
+      "parent_group": 2,
+      "lettered_subpart": "G",
+      "author_mathematical_scope": "Order rational numbers from mathematical and real-world contexts.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(H)",
+      "parent_group": 2,
+      "lettered_subpart": "H",
+      "author_mathematical_scope": "Graph rational ordered pairs in all four quadrants.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(A)",
+      "parent_group": 3,
+      "lettered_subpart": "A",
+      "author_mathematical_scope": "Relate rational-number division to multiplication by the reciprocal, with nonzero divisor.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(B)",
+      "parent_group": 3,
+      "lettered_subpart": "B",
+      "author_mathematical_scope": "Predict whether multiplication by a fraction increases or decreases a quantity, with and without calculation.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(C)",
+      "parent_group": 3,
+      "lettered_subpart": "C",
+      "author_mathematical_scope": "Interpret a/b as a divided by b, with b nonzero.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(D)",
+      "parent_group": 3,
+      "lettered_subpart": "D",
+      "author_mathematical_scope": "Model integer operations concretely and connect to algorithms.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(E)",
+      "parent_group": 3,
+      "lettered_subpart": "E",
+      "author_mathematical_scope": "Fluently add, subtract, multiply, and divide integers.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(F)",
+      "parent_group": 3,
+      "lettered_subpart": "F",
+      "author_mathematical_scope": "Add, subtract, multiply, and divide rational numbers.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(G)",
+      "parent_group": 3,
+      "lettered_subpart": "G",
+      "author_mathematical_scope": "Generate equivalent numerical expressions using order of operations, whole-number exponents, and prime factorization.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(H)",
+      "parent_group": 3,
+      "lettered_subpart": "H",
+      "author_mathematical_scope": "Balance check registers using deposits, withdrawals, and transfers.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(I)",
+      "parent_group": 3,
+      "lettered_subpart": "I",
+      "author_mathematical_scope": "Organize financial assets and liabilities to produce a net-worth statement.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
