@@ -25,8 +25,10 @@
   "assessment": "UNVERIFIED",
   "mastery": "UNVERIFIED",
   "runtime_activation": "FORBIDDEN",
-  "next_gate": "A Grade 1 21-identifier/page-locator slice is staged, but 0 full scope audits from the 271-row local bundle have been imported. Import full mathematical conditions and tests, then request independent publisher-fidelity and page/subpart review.",
+  "next_gate": "Twenty-one direct-source Grade 1 editorial scopes now staged separately. Zero rows from the original 271-row local archive imported. Independent source-fidelity review is still required for all 21 direct scopes.",
   "grade1_identifier_page_slice_staged": 21,
   "grade1_full_scope_rows_imported": 0,
-  "author_full_scope_rows_not_imported": 271
+  "author_full_scope_rows_not_imported": 271,
+  "grade1_direct_official_page_scope_rows_authored": 21,
+  "grade1_direct_scope_independent_acceptance": "PENDING"
 }
