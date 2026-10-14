@@ -66,6 +66,16 @@ def candidate_links(html: str, page: str = OFFICIAL_PAGE) -> list[tuple[str, str
     return list(dict.fromkeys(result))
 
 
+def validate_candidate_url(url: str) -> str:
+    """Accept publisher-hosted document URLs, never the 2025 initial draft."""
+    parsed = urlparse(url)
+    if not official_url(url) or not parsed.path.lower().endswith(EXTENSIONS):
+        raise ValueError("Candidate must be an OSPI-hosted Office/PDF file")
+    if "initial" in url.lower():
+        raise ValueError("Initial-adoption documents are not final 2026 authority")
+    return url
+
+
 def signature_matches(path: Path) -> bool:
     suffix = path.suffix.lower()
     with path.open("rb") as stream:
@@ -101,7 +111,7 @@ def fetch(url: str, dest: Path) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", default="source-evidence/ospi-2026")
+    parser.add_argument("--output", default="source-evidence/ospi-2026")\n    parser.add_argument("--candidate-url", action="append", default=[], help="Publisher-hosted final source candidate URL")
     args = parser.parse_args()
     folder = Path(args.output)
     folder.mkdir(parents=True, exist_ok=True)
