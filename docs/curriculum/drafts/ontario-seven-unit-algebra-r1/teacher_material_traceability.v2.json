@@ -301,7 +301,7 @@
       ],
       "status": "PARTIAL",
       "gap": "Existing package explicitly identifies learner-produced quotient/reconstruction and trusted unseen scoring as open.",
-      "next_action": "Complete the existing polynomial-division journey; no new package."
+      "next_action": "Complete the existing polynomial-division journey; reuse existing package only."
     },
     {
       "id": "G9T-EXPONENT-POWER-OF-POWER",
@@ -535,7 +535,7 @@
       ],
       "status": "PARTIAL",
       "gap": "Exact generators and misconception routes exist; complete trusted independent learner journey is not yet accepted.",
-      "next_action": "Close existing assessment/QA gates; no new package."
+      "next_action": "Close existing assessment/QA gates; reuse existing package only."
     },
     {
       "id": "G9T-EXPONENTIAL-DECAY-HALVING",
@@ -560,9 +560,9 @@
     }
   ],
   "summary": {
-    "total_rows": 20,
+    "total_rows": 21,
     "verified": 0,
-    "partial": 18,
+    "partial": 19,
     "absent": 2,
     "blocked": 0,
     "key_absent": [
