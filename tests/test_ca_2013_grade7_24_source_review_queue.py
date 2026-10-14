@@ -25,3 +25,12 @@ def test_grade7_subject_counts():
     expected = {"7.RP": 3, "7.NS": 3, "7.EE": 4, "7.G": 6, "7.SP": 8}
     actual = {prefix: sum(r["expectation_id"].startswith(prefix + ".") for r in d["rows"]) for prefix in expected}
     assert actual == expected
+
+def test_grade7_exact_source_page_corrections():
+    d = json.loads(PATH.read_text(encoding="utf-8"))
+    rows = {r["expectation_id"]: r for r in d["rows"]}
+    assert rows["7.NS.2"]["source_printed_page"] == 48
+    assert rows["7.NS.2"]["source_printed_pages"] == [48, 49]
+    assert rows["7.NS.2"]["lettered_subparts"] == ["a", "b", "c", "d"]
+    assert rows["7.G.1"]["source_printed_page"] == 49
+    assert rows["7.G.2"]["source_printed_page"] == 50
