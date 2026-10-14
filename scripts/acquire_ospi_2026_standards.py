@@ -69,7 +69,7 @@ def signature_matches(path: Path) -> bool:
     with path.open("rb") as stream:
         header = stream.read(8)
     if suffix in (".xlsx", ".docx"):
-        return header.startswith(b"PK\\x03\\x04")
+        return header.startswith(bytes.fromhex("504B0304"))
     if suffix == ".pdf":
         return header.startswith(b"%PDF-")
     if suffix in (".xls", ".doc"):
