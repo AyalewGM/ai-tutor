@@ -175,7 +175,7 @@ def record_pending(number: int, sha: str, state: str, reason: str) -> None:
     record = {"pr": number, "sha": sha, "state": state,
               "reason": reason, "delivery": "PENDING_MANUAL_RECONCILIATION"}
     with path.open("a", encoding="utf-8") as stream:
-        stream.write(json.dumps(record, sort_keys=True) + "\\n")
+        stream.write(json.dumps(record, sort_keys=True) + "\n")
     print(f"::warning::PR #{number} handoff pending, not delivered: {reason}")
 
 def main() -> int:
