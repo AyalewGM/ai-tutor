@@ -142,7 +142,22 @@
       "lettered_subpart_ids": [],
       "scope_summary_editorial": "Find the greatest common factor of two whole numbers up to 100 and the least common multiple of two whole numbers up to 12; use the distributive property.",
       "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2010_CCSS",
+        "source_text_url": "https://www.thecorestandards.org/Math/Content/6/NS/B/4/",
+        "source_publication": "NGA/CCSSO CCSS Mathematics 2010",
+        "required_conditions": [
+          "Find greatest common factors for two whole numbers at most 100",
+          "Find least common multiples for two whole numbers at most 12",
+          "Factor a sum of two whole numbers in the 1–100 range sharing a common factor into a product of that common factor and a sum of two whole numbers with no common factor"
+        ],
+        "unlettered_standard": true,
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "6.NS.C.5",
