@@ -321,11 +321,11 @@
         50
       ],
       "required_lettered_subparts": [],
-      "author_mathematical_scope_summary": "Apply circle area and circumference formulas and give an informal explanation linking circumference and area.",
+      "author_mathematical_scope_summary": "Apply circle area and circumference formulas and give an informal derivation of the relationship between circumference and area.",
       "test_material_conditions": [
         "circumference",
         "area",
-        "informal"
+        "informal derivation"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
