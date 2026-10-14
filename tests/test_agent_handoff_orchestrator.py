@@ -106,9 +106,11 @@ def test_changed_head_does_not_post():
 
 
 def test_pagination_limit_fails_closed():
-    with patch.object(orchestrator, "request", return_value=[{"body": "other"}] * 100):
-        with pytest.raises(ValueError, match="Pagination limit"):
-            orchestrator.pages("root", "/issues/17/comments", "token")
+    with (
+        patch.object(orchestrator, "request", return_value=[{"body": "other"}] * 100),
+        pytest.raises(ValueError, match="Pagination limit"),
+    ):
+        orchestrator.pages("root", "/issues/17/comments", "token")
 
 
 def test_write_failure_reconciles_and_retries_once():
@@ -134,3 +136,60 @@ def test_write_failure_reconciles_and_retries_once():
         orchestrator.deliver("root", 17, "token")
     assert len(calls) == 2
     assert len(posted) == 1
+
+def test_two_failed_writes_preserve_pending_record(tmp_path, monkeypatch):
+    import json
+
+    pending = tmp_path / "pending.jsonl"
+    monkeypatch.setenv("MIHUR_PENDING_FILE", str(pending))
+    attempts = []
+
+    def fake(method, url, token, payload=None):
+        if url.endswith("/pulls/17"):
+            return _pr()
+        if method == "POST":
+            attempts.append(payload)
+            raise OSError("temporary outage")
+        raise AssertionError(url)
+
+    with (
+        patch.object(orchestrator, "request", side_effect=fake),
+        patch.object(orchestrator, "pages", return_value=[]),
+        patch.object(orchestrator, "checks_for", return_value={"CI": "success", "AppSec Baseline": "success"}),
+    ):
+        orchestrator.deliver("root", 17, "token")
+    assert len(attempts) == 2
+    records = [json.loads(line) for line in pending.read_text().splitlines()]
+    assert len(records) == 1
+    assert records[0]["delivery"] == "PENDING_MANUAL_RECONCILIATION"
+    assert records[0]["sha"] == "head"
+
+
+def test_unknown_post_result_never_retries(tmp_path, monkeypatch):
+    pending = tmp_path / "pending.jsonl"
+    monkeypatch.setenv("MIHUR_PENDING_FILE", str(pending))
+    attempts = []
+
+    def fake(method, url, token, payload=None):
+        if url.endswith("/pulls/17"):
+            return _pr()
+        if method == "POST":
+            attempts.append(payload)
+            raise OSError("lost response")
+        raise AssertionError(url)
+
+    def fake_pages(root, suffix, token):
+        if "/files" in suffix:
+            return []
+        if attempts:
+            raise OSError("cannot reconcile")
+        return []
+
+    with (
+        patch.object(orchestrator, "request", side_effect=fake),
+        patch.object(orchestrator, "pages", side_effect=fake_pages),
+        patch.object(orchestrator, "checks_for", return_value={"CI": "success", "AppSec Baseline": "success"}),
+    ):
+        orchestrator.deliver("root", 17, "token")
+    assert len(attempts) == 1
+    assert "COMMENT_STATUS_UNKNOWN" in pending.read_text()
