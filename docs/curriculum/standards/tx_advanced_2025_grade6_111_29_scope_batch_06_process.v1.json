@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0.0",
+  "as_of": "2026-10-14",
+  "jurisdiction": "TX",
+  "track": "ADVANCED_GRADE_6",
+  "official_section": "19 TAC §111.29(c)",
+  "scope": "(c)(1)(A-G) mathematical process standards",
+  "source_publisher": "Texas Education Agency",
+  "author_review_source": "https://tea.texas.gov/state-board-of-education/sboe-2025/sboe-2025-january/cofb6-chap111-math-teks-sub-b-mid-sch-attach.pdf",
+  "source_adoption_notice": "https://www.sos.state.tx.us/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+  "source_provenance": "Author paraphrases of seven Grade 6 Advanced cross-cutting process expectations, not new canonical mathematical skills; unchanged §111.29 adoption notice references February proposal. Original February/codified parity and pedagogical integration require independent review.",
+  "total_grade6_advanced_candidate_ids": 68,
+  "previous_author_scoped": 61,
+  "new_author_scoped": 7,
+  "remaining_unscoped": 0,
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "111.29(c)(1)(A)",
+      "parent_group": 1,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "author_mathematical_scope": "Apply mathematical reasoning to problems encountered in everyday life, society and the workplace.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(1)(B)",
+      "parent_group": 1,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "author_mathematical_scope": "Use a problem-solving cycle: analyze the given information, devise a plan or strategy, determine a solution, justify it, evaluate the process and assess the reasonableness of the solution.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(1)(C)",
+      "parent_group": 1,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "author_mathematical_scope": "Select appropriate problem-solving tools (real objects, manipulatives, paper/pencil and technology) and techniques (mental math, estimation and number sense).",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(1)(D)",
+      "parent_group": 1,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "author_mathematical_scope": "Communicate mathematical ideas, reasoning and their implications with appropriate symbols, diagrams, graphs and language.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(1)(E)",
+      "parent_group": 1,
+      "lettered_subpart": "E",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "author_mathematical_scope": "Create and use representations to organize, record and communicate mathematical ideas.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(1)(F)",
+      "parent_group": 1,
+      "lettered_subpart": "F",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "author_mathematical_scope": "Analyze mathematical relationships in order to connect and communicate mathematical ideas.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(1)(G)",
+      "parent_group": 1,
+      "lettered_subpart": "G",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "author_mathematical_scope": "Display, explain and justify mathematical ideas and arguments using precise mathematical language, in writing or orally.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
