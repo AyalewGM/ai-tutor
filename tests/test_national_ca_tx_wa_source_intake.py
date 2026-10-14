@@ -300,3 +300,21 @@ def test_wa_2026_null_priority_and_course_scope_cells_remain_distinct():
         assert variant['independent_source_acceptance'] == 'PENDING'
     assert ledger['publisher_byte_match'] == 'NOT_INDEPENDENTLY_VERIFIED'
     assert ledger['activation'] == 'FORBIDDEN'
+
+
+def test_controlling_ca_tx_sources_preserve_version_and_course_boundaries():
+    source = json.loads(
+        (ROOT / "ca_tx_controlling_source_versions.v1.json").read_text(encoding="utf-8")
+    )
+    assert source["status"].endswith("NOT_FULL_SCOPE_ACCEPTANCE")
+    assert "April 2014" in source["california"]["controlling_standard"]
+    assert source["california"]["historical_intake_tracks"] == [
+        "GRADE_7", "GRADE_8", "ALGEBRA_I", "MATHEMATICS_I"
+    ]
+    texas = source["texas"]
+    assert texas["effective_date"] == "2025-07-06"
+    assert texas["advanced_grade6"]["status"].startswith("ADOPTED_UNCHANGED")
+    assert texas["advanced_grade7"]["critical_requirement"] == "111.30(c)(8)(C)"
+    assert texas["advanced_grade8_algebra1"]["course_distinct_from"].startswith("111.39")
+    assert texas["acceptance"].startswith("ALL_130_ADVANCED_SCOPE_ROWS_PENDING")
+    assert source["acceptance"]["activation"] == "FORBIDDEN"
