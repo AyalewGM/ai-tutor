@@ -46,7 +46,7 @@ def test_texas_regular_and_advanced_are_not_conflated():
 
 def test_wa_2026_missing_originals_fail_closed():
     data = _data("WA")
-    assert data["status"] == "BLOCKED_AUTHORITATIVE_2026_DOCUMENT_BYTES_NOT_RETRIEVED"
+    assert data["status"] == "SOURCE_WORKBOOK_UPLOADED_AUTHOR_EXTRACTION_PENDING_REPOSITORY_IMPORT_AND_INDEPENDENT_VERIFICATION"
     assert data["expectations"] == []
     assert data["required"] == "2027-2028"
     assert "2011" in data["crosswalk"]
@@ -62,7 +62,7 @@ def test_wa_high_school_tracks_are_separate_from_legacy_2011_crosswalk():
     }
     acquisition = data["source_acquisition"]
     assert acquisition["initial_adoption_2025_role"].startswith("HISTORICAL_TRANSITION_RESEARCH_ONLY")
-    assert acquisition["official_2026_spreadsheet"] == "UNRESOLVED_DIRECT_URL"
+    assert acquisition["official_2026_spreadsheet"] == "UPLOADED_FILE_HASH_RECORDED_PUBLISHER_URL_NOT_VERIFIED"
     assert acquisition["no_2011_2026_crosswalk_rows_invented"] is True
 
 
@@ -258,3 +258,17 @@ def test_three_state_completion_matrix_stays_fail_closed():
     assert matrix['states']['WA']['official_final_workbook_bytes_obtained'] is False
     for state in matrix['states'].values():
         assert state['grade9_course_equivalence'] == 'NOT_ASSUMED'
+
+
+def test_wa_uploaded_2026_v3_1_source_provenance_is_not_accepted_coverage():
+    data = _data("WA")
+    uploaded = data["uploaded_final_adoption_workbook"]
+    assert uploaded["workbook_label"] == "August 2026 | v3.1"
+    assert len(uploaded["sha256"]) == 64
+    assert uploaded["k8_rows"] == 264
+    assert uploaded["high_school_course_rows"] == 464
+    assert uploaded["crosswalk_rows"] == 425
+    assert uploaded["publisher_hash_independently_verified"] is False
+    assert uploaded["course_rows_not_unique_skills"] is True
+    assert uploaded["scope_acceptance"] == "PENDING_INDEPENDENT_SOURCE_REVIEW"
+    assert data["expectations"] == []
