@@ -51,3 +51,12 @@ def test_grade8_source_acceptance_remains_fail_closed():
     assert all(r["author_mathematical_scope_summary"].strip() for r in author["rows"])
     assert all(r["test_material_conditions"] for r in author["rows"])
     assert all(all(r[k] == "UNVERIFIED" for k in ("canonical_equivalence", "assessment", "mastery")) for r in author["rows"])
+
+
+def test_grade8_source_scope_subtleties_remain_explicit():
+    author = json.loads(AUTHOR.read_text(encoding="utf-8"))
+    rows = {r["expectation_id"]: r for r in author["rows"]}
+    assert "every real number has decimal expansion" in rows["8.NS.1"]["test_material_conditions"]
+    assert "x=a or a=a or a=b (a != b)" in rows["8.EE.7"]["test_material_conditions"]
+    assert "solutions satisfy both equations" in rows["8.EE.8"]["test_material_conditions"]
+    assert all(word in rows["8.G.9"]["author_mathematical_scope_summary"] for word in ("cylinder", "cone", "sphere"))
