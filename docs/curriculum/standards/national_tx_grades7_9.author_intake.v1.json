@@ -4061,7 +4061,7 @@
       "count_grade8_advanced_algebra1": 63,
       "total": 130,
       "unlettered_grade7_expectation": "111.30(c)(9)",
-      "author_scope_rows": 14,
+      "author_scope_rows": 130,
       "complete_scope_rows_independently_accepted": 0,
       "review_status": "AUTHOR_ENUMERATION_FROM_ADOPTED_RULE_REPUBLICATION_NOT_INDEPENDENTLY_PUBLISHER_VERIFIED",
       "warning": "Parent (9) Grade 7 is an unlettered student expectation; retain it. The 14 pre-existing editorial scope summaries are research aids, not independently verified publisher transcriptions. Parent stems and exact required subpart mathematical scopes are pending.",
@@ -4074,12 +4074,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Apply mathematics to practical problems in daily life, society and workplaces.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(1)(B)",
@@ -4089,12 +4091,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Use a problem-solving cycle: analyze, plan, solve, justify and evaluate conclusions and their reasonableness.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(1)(C)",
@@ -4104,12 +4108,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Select appropriate tools (objects, manipulatives, pencil-and-paper and technology) and techniques (mental arithmetic, estimates, number sense).",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(1)(D)",
@@ -4119,12 +4125,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Communicate mathematical ideas and reasoning using symbolic, diagrammatic, graphical and verbal representations.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(1)(E)",
@@ -4134,12 +4142,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Construct and use representations to organize, record and communicate mathematical ideas.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(1)(F)",
@@ -4149,12 +4159,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Identify and analyze mathematical relationships to connect and communicate ideas.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(1)(G)",
@@ -4164,12 +4176,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Explain and justify mathematical arguments using precise mathematical language in written or spoken form.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(2)(A)",
@@ -4179,12 +4193,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Describe subset relationships among real-number sets using visual representations.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(2)(B)",
@@ -4194,12 +4210,18 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Approximate irrational values, including π and square roots of numbers below 225, and place rational estimates on a number line.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "π included",
+            "radicand < 225",
+            "rational number-line approximation"
+          ]
         },
         {
           "expectation_id": "111.30(c)(2)(C)",
@@ -4209,12 +4231,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Convert standard decimal and scientific notation in both directions.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(2)(D)",
@@ -4224,12 +4248,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Order real numbers in mathematical and applied contexts.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(3)(A)",
@@ -4239,12 +4265,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Fluently add, subtract, multiply and divide rational numbers.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(3)(B)",
@@ -4254,12 +4282,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Use all four rational-number operations to solve problems.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(4)(A)",
@@ -4269,12 +4299,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Solve ratio, rate and percent problems, including multistep percent increases/decreases and financial contexts.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(4)(B)",
@@ -4284,12 +4316,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Calculate and compare simple- and compound-interest earnings.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(4)(C)",
@@ -4299,12 +4333,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Analyze and compare sales, rebates, coupons and related monetary incentives.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(4)(D)",
@@ -4314,12 +4350,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Compare how borrowing interest rate and loan length affect the overall cost of credit.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(4)(E)",
@@ -4329,12 +4367,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Calculate repayment costs of credit cards and easy-access loans for varying rates and terms using an online calculator.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "online calculator",
+            "credit cards and easy-access loans"
+          ]
         },
         {
           "expectation_id": "111.30(c)(4)(F)",
@@ -4344,12 +4387,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Explain long-term growth when small amounts are invested regularly, including college and retirement savings.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(4)(G)",
@@ -4359,12 +4404,18 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Estimate two- and four-year college costs, including a family contribution; devise periodic savings toward at least first-year attendance.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "two-/four-year costs",
+            "family contribution",
+            "at least first year"
+          ]
         },
         {
           "expectation_id": "111.30(c)(5)(A)",
@@ -4374,12 +4425,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Relate π to the ratio of a circle's circumference to its diameter.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(5)(B)",
@@ -4389,12 +4442,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Generalize similarity attributes, including ratios within and between similar shapes.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(5)(C)",
@@ -4404,12 +4459,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Solve similar-figure and scale-drawing problems in mathematics and real-world contexts.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(5)(D)",
@@ -4419,12 +4476,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Compare shape attributes with those of coordinate-plane dilations.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(5)(E)",
@@ -4434,12 +4493,18 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Explain origin-centered coordinate-plane dilations of two-dimensional figures algebraically for a given positive rational scale factor.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "positive rational scale factor",
+            "origin-centered",
+            "two-dimensional figures"
+          ]
         },
         {
           "expectation_id": "111.30(c)(6)(A)",
@@ -4449,12 +4514,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Represent sample spaces for simple and compound events using lists and tree diagrams.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "sample space",
+            "simple and compound events"
+          ]
         },
         {
           "expectation_id": "111.30(c)(6)(B)",
@@ -4464,12 +4534,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Choose and use simulations for simple and compound events with or without technology.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(6)(C)",
@@ -4479,12 +4551,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Use experimental results to predict and solve simple and compound probability questions.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(6)(D)",
@@ -4494,12 +4568,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Use theoretical probability to predict and solve simple and compound-event questions.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(6)(E)",
@@ -4509,12 +4585,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Calculate event and complement probabilities and explain their relationship.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(6)(F)",
@@ -4524,12 +4602,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Use qualitative and quantitative predictions and comparisons from simple probability experiments.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(6)(G)",
@@ -4539,12 +4619,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Determine experimental and theoretical probabilities for simple and compound events from data and sample spaces.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(7)(A)",
@@ -4554,12 +4636,18 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Display solutions of one-variable, two-step inequalities on number lines.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "two-step",
+            "one-variable",
+            "number line"
+          ]
         },
         {
           "expectation_id": "111.30(c)(7)(B)",
@@ -4569,12 +4657,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Model and solve inequalities in one variable requiring two steps.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "two-step",
+            "one-variable"
+          ]
         },
         {
           "expectation_id": "111.30(c)(7)(C)",
@@ -4584,12 +4677,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Translate situations into one-variable equations or inequalities with variables on both sides and rational coefficients/constants.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "both sides",
+            "rational coefficients and constants"
+          ]
         },
         {
           "expectation_id": "111.30(c)(7)(D)",
@@ -4599,12 +4697,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Write a corresponding real-world problem for a given one-variable equation or inequality with variables on both sides and rational number coefficients and constants.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "both sides",
+            "rational coefficients and constants"
+          ]
         },
         {
           "expectation_id": "111.30(c)(7)(E)",
@@ -4614,12 +4717,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Model and solve equations with one variable appearing on both sides, using rational coefficients/constants in mathematical and applied problems.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "both sides",
+            "rational coefficients and constants"
+          ]
         },
         {
           "expectation_id": "111.30(c)(8)(A)",
@@ -4629,12 +4737,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Calculate constant of proportionality k=y/x from mathematical and real-world relationships.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "k=y/x",
+            "x≠0 implicit quotient domain"
+          ]
         },
         {
           "expectation_id": "111.30(c)(8)(B)",
@@ -4644,12 +4757,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Distinguish proportional and nonproportional relationships in tables, graphs and equations, including y=kx and y=mx+b with b≠0.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "tables, graphs, equations",
+            "b≠0"
+          ]
         },
         {
           "expectation_id": "111.30(c)(8)(C)",
@@ -4674,12 +4792,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Represent both proportional and nonproportional linear relationships verbally, in tables, graphs and equations reducible to y=mx+b.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "unlettered expectation",
+            "y=mx+b"
+          ]
         },
         {
           "expectation_id": "111.30(c)(10)(A)",
@@ -4689,12 +4812,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Use models to approximate circumference and circle-area formulas, then connect them to exact formulas.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(10)(B)",
@@ -4704,12 +4829,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Solve lateral and total surface-area problems for rectangular prisms, rectangular pyramids, triangular prisms and triangular pyramids by determining areas from their nets.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "four listed solids",
+            "nets"
+          ]
         },
         {
           "expectation_id": "111.30(c)(10)(C)",
@@ -4719,12 +4849,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Explain cylinder volume V=Bh as base area multiplied by height.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "V=Bh"
+          ]
         },
         {
           "expectation_id": "111.30(c)(10)(D)",
@@ -4734,12 +4868,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Model the volume relationship between rectangular prisms and pyramids with congruent bases and heights.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(10)(E)",
@@ -4749,12 +4885,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Explain verbally and symbolically the volume relationship for triangular prisms and pyramids with congruent bases and heights.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(10)(F)",
@@ -4764,12 +4902,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Model the volume relationship between cylinders and cones with congruent bases and heights.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(10)(G)",
@@ -4779,12 +4919,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Use models and diagrams to explain the Pythagorean theorem.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "theorem explanation"
+          ]
         },
         {
           "expectation_id": "111.30(c)(10)(H)",
@@ -4794,12 +4938,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Give informal arguments for triangle interior/exterior angle facts, parallel-line transversal angles and AA triangle-similarity criterion.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "informal arguments",
+            "AA similarity"
+          ]
         },
         {
           "expectation_id": "111.30(c)(11)(A)",
@@ -4809,12 +4958,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Compute circumference and area of circles.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(11)(B)",
@@ -4824,12 +4975,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Determine the area of composite figures formed from rectangles, squares, parallelograms, trapezoids, triangles, semicircles and quarter circles.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "rectangles, squares, parallelograms, trapezoids, triangles, semicircles, quarter circles"
+          ]
         },
         {
           "expectation_id": "111.30(c)(11)(C)",
@@ -4839,12 +4994,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Connect prior surface-area models to lateral/total surface-area formulas for rectangular/triangular prisms and cylinders.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(11)(D)",
@@ -4854,12 +5011,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Solve volume problems for rectangular and triangular pyramids.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(11)(E)",
@@ -4869,12 +5028,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Solve volume problems for cylinders, cones and spheres.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(11)(F)",
@@ -4884,12 +5045,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Apply the Pythagorean theorem and its converse in problem solving.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "converse required"
+          ]
         },
         {
           "expectation_id": "111.30(c)(11)(G)",
@@ -4899,12 +5064,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Calculate coordinate-plane distance between two points using the Pythagorean theorem.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(12)(A)",
@@ -4914,12 +5081,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Generalize orientation and congruence properties of rotations, reflections, translations and dilations of two-dimensional shapes on a coordinate plane.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(12)(B)",
@@ -4929,12 +5098,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Distinguish transformations that preserve congruence from those that do not.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.30(c)(12)(C)",
@@ -4944,12 +5115,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Describe coordinate-plane translations, reflections over x- or y-axis, and rotations by 90°, 180°, 270° or 360° algebraically.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "x/y-axis reflections",
+            "90°, 180°, 270°, 360°"
+          ]
         },
         {
           "expectation_id": "111.30(c)(12)(D)",
@@ -4959,12 +5135,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Model how dilation changes length measures and area of two-dimensional figures.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "length and area"
+          ]
         },
         {
           "expectation_id": "111.30(c)(13)(A)",
@@ -5079,12 +5259,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Apply mathematical knowledge to everyday, societal and workplace problems.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(1)(B)",
@@ -5094,12 +5276,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Analyze givens, plan and solve, justify conclusions, then judge whether the solution and method are reasonable.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(1)(C)",
@@ -5109,12 +5293,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Choose suitable physical tools, manipulatives, paper-and-pencil and technology alongside estimation and mental arithmetic.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(1)(D)",
@@ -5124,12 +5310,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Explain mathematical reasoning with symbols, diagrams, graphs and words.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(1)(E)",
@@ -5139,12 +5327,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Build and use representations for organizing, recording and communicating mathematical ideas.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(1)(F)",
@@ -5154,12 +5344,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Analyze mathematical relationships and explain connections between ideas.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(1)(G)",
@@ -5169,12 +5361,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "State and justify mathematical arguments with precise written and spoken language.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(2)(A)",
@@ -5184,12 +5378,18 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Determine domain and range of linear functions; choose realistic discrete or continuous values and express restrictions using inequalities.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "domain/range",
+            "discrete and continuous",
+            "inequalities"
+          ]
         },
         {
           "expectation_id": "111.31(d)(2)(B)",
@@ -5199,12 +5399,18 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Write two-variable line equations in slope-intercept, standard and point-slope form given slope/point or two points.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "y=mx+b",
+            "Ax+By=C",
+            "y-y₁=m(x-x₁)"
+          ]
         },
         {
           "expectation_id": "111.31(d)(2)(C)",
@@ -5214,12 +5420,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Model two-variable linear equations from tables, graphs and verbal descriptions.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(2)(D)",
@@ -5229,12 +5437,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Write and solve direct-variation equations.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(2)(E)",
@@ -5244,12 +5454,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Find a line equation through a point parallel to a specified line.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(2)(F)",
@@ -5259,12 +5471,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Find a line equation through a point perpendicular to a specified line.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(2)(G)",
@@ -5274,12 +5488,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Write horizontal or vertical line equations and distinguish zero from undefined slope.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "horizontal slope=0",
+            "vertical slope undefined"
+          ]
         },
         {
           "expectation_id": "111.31(d)(2)(H)",
@@ -5289,12 +5508,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Write inequalities in two variables from a table, graph or verbal model.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(2)(I)",
@@ -5304,12 +5525,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Write a two-equation, two-variable linear system from tabular, graphical or verbal data.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(3)(A)",
@@ -5319,12 +5542,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Use similar right triangles to justify invariant slope between any two points on a line using rise over run.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "(y₂-y₁)/(x₂-x₁)",
+            "x₂≠x₁"
+          ]
         },
         {
           "expectation_id": "111.31(d)(3)(B)",
@@ -5334,12 +5562,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Graph proportional relationships and interpret their unit rate as line slope.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(3)(C)",
@@ -5349,12 +5579,18 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Determine slope from tables, graphs, two points and line equations, including slope-intercept, standard and point-slope forms.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "y=mx+b",
+            "Ax+By=C",
+            "point-slope form"
+          ]
         },
         {
           "expectation_id": "111.31(d)(3)(D)",
@@ -5364,12 +5600,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Find linear rate of change from tables, graphs or equations in mathematical and real-world contexts.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(3)(E)",
@@ -5379,12 +5617,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Find line slope/rate of change and y-intercept from table or graph in applied and mathematical settings.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(3)(F)",
@@ -5394,12 +5634,19 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Graph linear functions and identify x/y-intercepts, zeros and slopes in mathematical and applied settings.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "x-intercept",
+            "y-intercept",
+            "zeros",
+            "slope"
+          ]
         },
         {
           "expectation_id": "111.31(d)(3)(G)",
@@ -5409,12 +5656,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Represent the solution region of a two-variable linear inequality on a coordinate plane.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(3)(H)",
@@ -5424,12 +5673,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Investigate the graph of f(x)=x under af(x), f(x)+d, f(x-c), f(bx) for given constants.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "four named transformations",
+            "parent f(x)=x"
+          ]
         },
         {
           "expectation_id": "111.31(d)(3)(I)",
@@ -5439,12 +5693,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Graph two-equation linear systems in two variables and find solutions when they exist.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "solutions may not exist"
+          ]
         },
         {
           "expectation_id": "111.31(d)(3)(J)",
@@ -5454,12 +5712,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Estimate solutions graphically for two-variable two-equation linear systems arising from real situations.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(3)(K)",
@@ -5469,12 +5729,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Graph the simultaneous solution set of a system of two-variable linear inequalities.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(4)(A)",
@@ -5484,12 +5746,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Create a scatterplot and classify two-variable associations as linear, nonlinear or none.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "scatterplot",
+            "three association types"
+          ]
         },
         {
           "expectation_id": "111.31(d)(4)(B)",
@@ -5499,12 +5766,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Contrast plotted bivariate data with and without a suggestive linear relationship.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(4)(C)",
@@ -5514,12 +5783,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Use an approximate linear trend line to predict from bivariate data.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(4)(D)",
@@ -5529,12 +5800,18 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Calculate a correlation coefficient with technology and interpret its strength-of-linear-association meaning.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "technology",
+            "quantitative variables",
+            "correlation versus causation"
+          ]
         },
         {
           "expectation_id": "111.31(d)(4)(E)",
@@ -5544,12 +5821,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Distinguish real-world association from a cause-and-effect conclusion.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(4)(F)",
@@ -5559,12 +5838,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Fit an approximate linear function to data, with and without technology, to estimate and predict in real contexts.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(5)(A)",
@@ -5574,12 +5855,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Solve one-variable linear equations, including distribution and variables on both sides.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "distributive property",
+            "variables on both sides"
+          ]
         },
         {
           "expectation_id": "111.31(d)(5)(B)",
@@ -5589,12 +5875,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Solve one-variable linear inequalities, including distribution and variables on both sides.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "distributive property",
+            "variables on both sides"
+          ]
         },
         {
           "expectation_id": "111.31(d)(5)(C)",
@@ -5604,12 +5895,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Solve two-equation linear systems in two variables in mathematical and real-world contexts.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(6)(A)",
@@ -5619,12 +5912,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Determine quadratic-function domain and range, reporting restrictions through inequalities.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(6)(B)",
@@ -5634,12 +5929,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Build quadratic equations from a vertex and another point in vertex form and convert to standard form.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "f(x)=a(x-h)²+k",
+            "f(x)=ax²+bx+c"
+          ]
         },
         {
           "expectation_id": "111.31(d)(6)(C)",
@@ -5649,12 +5949,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Construct quadratics given real roots and a related graph.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "real solutions",
+            "graph"
+          ]
         },
         {
           "expectation_id": "111.31(d)(7)(A)",
@@ -5664,12 +5969,20 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Graph quadratics and identify possible intercepts, zeros, maximum/minimum, vertex and axis of symmetry.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "where possible",
+            "x- and y-intercepts",
+            "zeros",
+            "vertex",
+            "axis of symmetry"
+          ]
         },
         {
           "expectation_id": "111.31(d)(7)(B)",
@@ -5679,12 +5992,19 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Describe the relationship between the linear factors of a quadratic expression and the zeros of its associated quadratic function.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "linear factors (not arbitrary polynomial factors)",
+            "zeros of associated quadratic function",
+            "does not presume every quadratic has real linear factors"
+          ],
+          "author_scope_source_annotation": "AUTHOR_PARAPHRASE_VALIDATED_AGAINST_TEXAS_REGISTER_2025_SECTION_111_31_D_7_B_PENDING_INDEPENDENT_REVIEW"
         },
         {
           "expectation_id": "111.31(d)(7)(C)",
@@ -5694,12 +6014,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Investigate graphs of parent f(x)=x² under af(x), f(x)+d, f(x-c), f(bx) for specified constants.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "four named transformations",
+            "parent f(x)=x²"
+          ]
         },
         {
           "expectation_id": "111.31(d)(8)(A)",
@@ -5709,12 +6034,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Solve quadratic equations having real roots by factoring, square-root extraction, completing the square and quadratic formula.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "real solutions",
+            "all four methods"
+          ]
         },
         {
           "expectation_id": "111.31(d)(8)(B)",
@@ -5724,12 +6054,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Use technology to fit quadratics to data and use them for real-world prediction/estimation.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "technology"
+          ]
         },
         {
           "expectation_id": "111.31(d)(9)(A)",
@@ -5739,12 +6073,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Determine domain and range of f(x)=ab^x and express restrictions as inequalities.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "f(x)=ab^x"
+          ]
         },
         {
           "expectation_id": "111.31(d)(9)(B)",
@@ -5754,12 +6092,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Interpret coefficients a and b in real-context models f(x)=ab^x.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(9)(C)",
@@ -5769,12 +6109,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Model growth and decay as f(x)=ab^x, using rational base b, in mathematical and real-world situations.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "rational b",
+            "growth and decay"
+          ]
         },
         {
           "expectation_id": "111.31(d)(9)(D)",
@@ -5784,12 +6129,17 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Graph exponential growth/decay and identify y-intercept and asymptote in applied problems.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "y-intercept",
+            "asymptote"
+          ]
         },
         {
           "expectation_id": "111.31(d)(9)(E)",
@@ -5799,12 +6149,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Use technology to fit an exponential model to data and make real-world predictions.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "technology"
+          ]
         },
         {
           "expectation_id": "111.31(d)(10)(A)",
@@ -5814,12 +6168,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Add and subtract first- and second-degree polynomials.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "degree 1 and 2"
+          ]
         },
         {
           "expectation_id": "111.31(d)(10)(B)",
@@ -5829,12 +6187,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Multiply first- and second-degree polynomials.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "degree 1 and 2"
+          ]
         },
         {
           "expectation_id": "111.31(d)(10)(C)",
@@ -5844,12 +6206,18 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Divide polynomials of degree one or two by polynomial divisors of degree one or two, only when divisor degree is no larger than dividend degree.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "dividend degree 1 or 2",
+            "divisor degree 1 or 2",
+            "degree(divisor)≤degree(dividend)"
+          ]
         },
         {
           "expectation_id": "111.31(d)(10)(D)",
@@ -5859,12 +6227,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Use distribution to rewrite first- and second-degree polynomials into equivalent forms.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(10)(E)",
@@ -5874,12 +6244,18 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Factor quadratic trinomials ax²+bx+c over real factors when possible, including perfect-square trinomials.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "real factors",
+            "perfect squares",
+            "factor if possible"
+          ]
         },
         {
           "expectation_id": "111.31(d)(10)(F)",
@@ -5889,12 +6265,14 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Recognize differences of two squares and rewrite such binomials via their algebraic structure.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": []
         },
         {
           "expectation_id": "111.31(d)(11)(A)",
@@ -5904,12 +6282,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Simplify numeric radical expressions involving square roots.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "numerical radicals"
+          ]
         },
         {
           "expectation_id": "111.31(d)(11)(B)",
@@ -5919,12 +6301,16 @@
           "source_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
           "secondary_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
           "source_version": "2025-06-27_TEXAS_REGISTER_ADOPTED_EFFECTIVE_2025-07-06",
-          "editorial_mathematical_scope": null,
+          "editorial_mathematical_scope": "Simplify numeric and symbolic expressions using integer and rational exponent laws.",
           "source_fidelity": "AUTHOR_ENUMERATED_FROM_ADOPTED_RULE_REPUBLICATION_PENDING_INDEPENDENT_PUBLISHER_TEXT_AND_SUBPART_REVIEW",
           "canonical_equivalence": "UNVERIFIED",
           "generator": "UNVERIFIED",
           "assessment": "UNVERIFIED",
-          "mastery": "UNVERIFIED"
+          "mastery": "UNVERIFIED",
+          "scope_author_status": "AUTHOR_EDITORIAL_ABSTRACT_FROM_SECONDARY_MIRROR_PENDING_INDEPENDENT_PUBLISHER_TEXT_REVIEW",
+          "source_scope_review_note": [
+            "integral and rational exponents"
+          ]
         },
         {
           "expectation_id": "111.31(d)(12)(A)",
@@ -6229,29 +6615,149 @@
       ],
       "scope_gap_accounting": {
         "total_expectations": 130,
-        "with_editorial_scope": 14,
-        "without_editorial_scope": 116,
+        "with_editorial_scope": 130,
+        "without_editorial_scope": 0,
         "parent_stems_with_editorial_topics": 26,
         "independently_accepted_source_scopes": 0,
         "canonical_equivalences_accepted": 0,
         "priority": "Complete official parent-stem and each student-expectation scope, with required qualifiers and mathematical notation; distinguish 2025 §111.31 from 2012 §111.39.",
-        "author_scope_rows": 14,
-        "remaining_unscoped_rows": 116,
-        "scope_status": "14_AUTHOR_NOTES_OF_130_ZERO_INDEPENDENT_ACCEPTANCE"
+        "author_scope_rows": 130,
+        "remaining_unscoped_rows": 0,
+        "scope_status": "130_AUTHOR_EDITORIAL_ABSTRACTS_ZERO_INDEPENDENT_SOURCE_ACCEPTANCE"
       },
       "next_author_source_review_ids": [
+        "111.30(c)(1)(A)",
+        "111.30(c)(1)(B)",
+        "111.30(c)(1)(C)",
+        "111.30(c)(1)(D)",
+        "111.30(c)(1)(E)",
+        "111.30(c)(1)(F)",
+        "111.30(c)(1)(G)",
         "111.30(c)(2)(A)",
         "111.30(c)(2)(B)",
         "111.30(c)(2)(C)",
         "111.30(c)(2)(D)",
         "111.30(c)(3)(A)",
         "111.30(c)(3)(B)",
+        "111.30(c)(4)(A)",
+        "111.30(c)(4)(B)",
+        "111.30(c)(4)(C)",
+        "111.30(c)(4)(D)",
+        "111.30(c)(4)(E)",
+        "111.30(c)(4)(F)",
+        "111.30(c)(4)(G)",
+        "111.30(c)(5)(A)",
+        "111.30(c)(5)(B)",
+        "111.30(c)(5)(C)",
+        "111.30(c)(5)(D)",
+        "111.30(c)(5)(E)",
         "111.30(c)(6)(A)",
         "111.30(c)(6)(B)",
         "111.30(c)(6)(C)",
-        "111.30(c)(6)(D)"
+        "111.30(c)(6)(D)",
+        "111.30(c)(6)(E)",
+        "111.30(c)(6)(F)",
+        "111.30(c)(6)(G)",
+        "111.30(c)(7)(A)",
+        "111.30(c)(7)(B)",
+        "111.30(c)(7)(C)",
+        "111.30(c)(7)(D)",
+        "111.30(c)(7)(E)",
+        "111.30(c)(8)(A)",
+        "111.30(c)(8)(B)",
+        "111.30(c)(8)(C)",
+        "111.30(c)(9)",
+        "111.30(c)(10)(A)",
+        "111.30(c)(10)(B)",
+        "111.30(c)(10)(C)",
+        "111.30(c)(10)(D)",
+        "111.30(c)(10)(E)",
+        "111.30(c)(10)(F)",
+        "111.30(c)(10)(G)",
+        "111.30(c)(10)(H)",
+        "111.30(c)(11)(A)",
+        "111.30(c)(11)(B)",
+        "111.30(c)(11)(C)",
+        "111.30(c)(11)(D)",
+        "111.30(c)(11)(E)",
+        "111.30(c)(11)(F)",
+        "111.30(c)(11)(G)",
+        "111.30(c)(12)(A)",
+        "111.30(c)(12)(B)",
+        "111.30(c)(12)(C)",
+        "111.30(c)(12)(D)",
+        "111.30(c)(13)(A)",
+        "111.30(c)(13)(B)",
+        "111.30(c)(13)(C)",
+        "111.30(c)(13)(D)",
+        "111.30(c)(14)(A)",
+        "111.30(c)(14)(B)",
+        "111.30(c)(14)(C)",
+        "111.31(d)(1)(A)",
+        "111.31(d)(1)(B)",
+        "111.31(d)(1)(C)",
+        "111.31(d)(1)(D)",
+        "111.31(d)(1)(E)",
+        "111.31(d)(1)(F)",
+        "111.31(d)(1)(G)",
+        "111.31(d)(2)(A)",
+        "111.31(d)(2)(B)",
+        "111.31(d)(2)(C)",
+        "111.31(d)(2)(D)",
+        "111.31(d)(2)(E)",
+        "111.31(d)(2)(F)",
+        "111.31(d)(2)(G)",
+        "111.31(d)(2)(H)",
+        "111.31(d)(2)(I)",
+        "111.31(d)(3)(A)",
+        "111.31(d)(3)(B)",
+        "111.31(d)(3)(C)",
+        "111.31(d)(3)(D)",
+        "111.31(d)(3)(E)",
+        "111.31(d)(3)(F)",
+        "111.31(d)(3)(G)",
+        "111.31(d)(3)(H)",
+        "111.31(d)(3)(I)",
+        "111.31(d)(3)(J)",
+        "111.31(d)(3)(K)",
+        "111.31(d)(4)(A)",
+        "111.31(d)(4)(B)",
+        "111.31(d)(4)(C)",
+        "111.31(d)(4)(D)",
+        "111.31(d)(4)(E)",
+        "111.31(d)(4)(F)",
+        "111.31(d)(5)(A)",
+        "111.31(d)(5)(B)",
+        "111.31(d)(5)(C)",
+        "111.31(d)(6)(A)",
+        "111.31(d)(6)(B)",
+        "111.31(d)(6)(C)",
+        "111.31(d)(7)(A)",
+        "111.31(d)(7)(B)",
+        "111.31(d)(7)(C)",
+        "111.31(d)(8)(A)",
+        "111.31(d)(8)(B)",
+        "111.31(d)(9)(A)",
+        "111.31(d)(9)(B)",
+        "111.31(d)(9)(C)",
+        "111.31(d)(9)(D)",
+        "111.31(d)(9)(E)",
+        "111.31(d)(10)(A)",
+        "111.31(d)(10)(B)",
+        "111.31(d)(10)(C)",
+        "111.31(d)(10)(D)",
+        "111.31(d)(10)(E)",
+        "111.31(d)(10)(F)",
+        "111.31(d)(11)(A)",
+        "111.31(d)(11)(B)",
+        "111.31(d)(12)(A)",
+        "111.31(d)(12)(B)",
+        "111.31(d)(12)(C)",
+        "111.31(d)(12)(D)",
+        "111.31(d)(12)(E)",
+        "111.31(d)(12)(F)"
       ],
-      "next_author_source_review_status": "QUEUED_OFFICIAL_ADOPTED_TEXT_NOT_YET_VERIFIED"
+      "next_author_source_review_status": "130_SOURCE_SCOPE_EDITORIAL_ABSTRACTS_AWAIT_PUBLISHER_TEXT_AND_SUBPART_INDEPENDENT_REVIEW"
     }
   }
 }
