@@ -25,7 +25,10 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1
+      ]
     },
     {
       "expectation_id": "111.29(c)(2)(B)",
@@ -35,7 +38,10 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1
+      ]
     },
     {
       "expectation_id": "111.29(c)(2)(C)",
@@ -45,7 +51,10 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1
+      ]
     },
     {
       "expectation_id": "111.29(c)(2)(D)",
@@ -55,7 +64,10 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1
+      ]
     },
     {
       "expectation_id": "111.29(c)(2)(E)",
@@ -65,7 +77,10 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1
+      ]
     },
     {
       "expectation_id": "111.29(c)(2)(F)",
@@ -75,7 +90,10 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1
+      ]
     },
     {
       "expectation_id": "111.29(c)(2)(G)",
@@ -85,7 +103,10 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1
+      ]
     },
     {
       "expectation_id": "111.29(c)(2)(H)",
@@ -95,7 +116,10 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1
+      ]
     },
     {
       "expectation_id": "111.29(c)(3)(A)",
@@ -105,7 +129,11 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ]
     },
     {
       "expectation_id": "111.29(c)(3)(B)",
@@ -115,7 +143,11 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ]
     },
     {
       "expectation_id": "111.29(c)(3)(C)",
@@ -125,7 +157,11 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ]
     },
     {
       "expectation_id": "111.29(c)(3)(D)",
@@ -135,7 +171,11 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ]
     },
     {
       "expectation_id": "111.29(c)(3)(E)",
@@ -145,7 +185,11 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ]
     },
     {
       "expectation_id": "111.29(c)(3)(F)",
@@ -155,7 +199,11 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ]
     },
     {
       "expectation_id": "111.29(c)(3)(G)",
@@ -165,7 +213,11 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ]
     },
     {
       "expectation_id": "111.29(c)(3)(H)",
@@ -175,7 +227,11 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ]
     },
     {
       "expectation_id": "111.29(c)(3)(I)",
@@ -185,7 +241,12 @@
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ]
     }
-  ]
+  ],
+  "author_locator_provenance": "The 17 source_pdf_zero_based_pages values are copied from the existing independent-review-pending 68-ID §111.29(c) author queue, not independently authenticated publisher page images. Final February 2025 proposed-rule/codified parity remains pending."
 }
