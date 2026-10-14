@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "status": "LOCAL_AUTHOR_BUNDLE_VERIFIED_NOT_IMPORTED",
+  "source": "Local 2026-10-14 author-work bundle, NOT publisher-authenticated",
+  "archive_name": "mihur_pr384_grade1_6_and_prior_ca_source_evidence_turn6.zip",
+  "archive_sha256": "edb5569e4511400f255efd5deba0d413ada912bc0148f634a3b85e30fdc932c4",
+  "manifest_entries": 19,
+  "manifest_sha256_matches": 19,
+  "author_row_counts": {
+    "GRADE_1": 21,
+    "GRADE_2": 27,
+    "GRADE_3": 25,
+    "GRADE_4": 28,
+    "GRADE_5": 27,
+    "GRADE_6": 29,
+    "GRADE_7": 24,
+    "GRADE_8": 28,
+    "ALGEBRA_I": 62
+  },
+  "author_total_not_imported": 271,
+  "mathematics_i_already_committed_author_rows": 59,
+  "independent_source_acceptance": "PENDING",
+  "publisher_pdf_byte_authentication": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "runtime_activation": "FORBIDDEN",
+  "next_gate": "Import source-audit JSON and tests from verified archive; independently compare expectation/subparts and page locators to controlling California CDE publisher edition and errata"
+}
