@@ -26,4 +26,13 @@ jobs:
       - name: Route without executing PR code
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          MIHUR_PENDING_FILE: mihur-pending-handoffs.jsonl
         run: python scripts/agent_handoff_orchestrator.py
+      - name: Preserve undelivered handoffs for manual recovery
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mihur-pending-handoffs-${{ github.run_id }}
+          path: mihur-pending-handoffs.jsonl
+          if-no-files-found: ignore
+          retention-days: 30
