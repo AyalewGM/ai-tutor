@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_SOURCE_VERSION_BOUNDARIES_RECORDED_NOT_FULL_SCOPE_ACCEPTANCE",
+  "as_of": "2026-10-13",
+  "california": {
+    "controlling_standard": "California Common Core State Standards for Mathematics, adopted 2010, modified January 2013, April 2014 electronic corrections",
+    "authority": "https://www.cde.ca.gov/BE/ST/SS/index.asp",
+    "framework_guidance_not_standard": "2023 California Mathematics Framework",
+    "historical_intake_tracks": [
+      "GRADE_7",
+      "GRADE_8",
+      "ALGEBRA_I",
+      "MATHEMATICS_I"
+    ],
+    "note": "Traditional Algebra I and integrated Mathematics I remain distinct; 173 historic rows require original-source row-level reconciliation and California additions."
+  },
+  "texas": {
+    "controlling_final_rule": "https://www.sos.state.tx.us/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+    "official_chapter_index": "https://www.sboe.texas.gov/about-tea/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+    "effective_date": "2025-07-06",
+    "advanced_grade6": {
+      "section": "111.29",
+      "status": "ADOPTED_UNCHANGED_NOT_REPUBLISHED_IN_FINAL_NOTICE",
+      "source_requirement": "February 28, 2025 proposal plus current codified TAC required for complete text"
+    },
+    "advanced_grade7": {
+      "section": "111.30",
+      "status": "FINAL_RULE_REPUBLISHED_WITH_AMENDMENTS",
+      "critical_requirement": "111.30(c)(8)(C)",
+      "scope_paraphrase": "Identify examples of proportional and nonproportional relationships arising in mathematics and real-world problems"
+    },
+    "advanced_grade8_algebra1": {
+      "section": "111.31",
+      "status": "FINAL_RULE_REPUBLISHED_WITH_AMENDMENTS",
+      "course_title": "Grade 8, Middle School Advanced Mathematics, Algebra I (One Credit)",
+      "prerequisite": "Middle School Advanced Mathematics, Grade 7 or Mathematics, Grade 8",
+      "graduation_credit": "One credit satisfying the Algebra I graduation requirement",
+      "course_distinct_from": "111.39 Algebra I adopted 2012"
+    },
+    "acceptance": "ALL_130_ADVANCED_SCOPE_ROWS_PENDING_INDEPENDENT_SOURCE_VERIFICATION"
+  },
+  "acceptance": {
+    "publisher_original_bytes_and_revision": "PENDING",
+    "expectation_scope_and_subparts": "PENDING",
+    "canonical_mapping": "UNVERIFIED",
+    "assessment_mastery": "UNVERIFIED",
+    "activation": "FORBIDDEN"
+  }
+}
