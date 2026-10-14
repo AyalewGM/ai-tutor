@@ -206,7 +206,8 @@ def pending_records(root: str, token: str) -> list[dict]:
             with zipfile.ZipFile(io.BytesIO(data)) as archive:
                 if archive.namelist() != ["mihur-pending-handoffs.jsonl"]:
                     raise ValueError("Unexpected recovery artifact contents")
-                raw = archive.read("mihur-pending-handoffs.jsonl")
+                with archive.open("mihur-pending-handoffs.jsonl") as pending_file:
+                    raw = pending_file.read(1024 * 1024 + 1)
                 if len(raw) > 1024 * 1024:
                     raise ValueError("Pending ledger too large")
                 for line in raw.decode("utf-8").splitlines():
@@ -241,6 +242,9 @@ def reconcile_pending(root: str, token: str) -> None:
             continue
         # deliver() independently revalidates head, checks, and duplicate markers.
         deliver(root, number, token)
+        pending_path = Path(os.environ.get("MIHUR_PENDING_FILE", "mihur-pending-handoffs.jsonl"))
+        if pending_path.exists() and pending_path.stat().st_size:
+            raise ValueError("Recovery still pending; defer new handoffs")
 
 
 def main() -> int:
