@@ -56,9 +56,11 @@ def candidate_links(html: str, page: str = OFFICIAL_PAGE) -> list[tuple[str, str
     result = []
     for href, label in parser.links:
         url = urljoin(page, href)
-        if official_url(url) and (
-            urlparse(url).path.lower().endswith(EXTENSIONS)
-            or "mathematics learning standards" in label.lower()
+        if (
+            official_url(url)
+            and "mathematics learning standards" in label.lower()
+            and "initial" not in label.lower()
+            and "initial" not in url.lower()
         ):
             result.append((url, label))
     return list(dict.fromkeys(result))
