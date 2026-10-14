@@ -25,5 +25,8 @@
   "assessment": "UNVERIFIED",
   "mastery": "UNVERIFIED",
   "runtime_activation": "FORBIDDEN",
-  "next_gate": "Import source-audit JSON and tests from verified archive; independently compare expectation/subparts and page locators to controlling California CDE publisher edition and errata"
+  "next_gate": "A Grade 1 21-identifier/page-locator slice is staged, but 0 full scope audits from the 271-row local bundle have been imported. Import full mathematical conditions and tests, then request independent publisher-fidelity and page/subpart review.",
+  "grade1_identifier_page_slice_staged": 21,
+  "grade1_full_scope_rows_imported": 0,
+  "author_full_scope_rows_not_imported": 271
 }
