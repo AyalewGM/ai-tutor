@@ -1,0 +1,184 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_REVIEW_QUEUE_NOT_ACCEPTED",
+  "source_publisher": "California Department of Education",
+  "official_source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "edition": "2013 modified mathematics standards; electronic corrections 2014",
+  "scope": "Grade 7 only; source locators for existing historical identifiers, not new canonical skills",
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "7.RP.1",
+      "source_printed_page": 48,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.RP.2",
+      "source_printed_page": 48,
+      "lettered_subparts": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.RP.3",
+      "source_printed_page": 48,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.NS.1",
+      "source_printed_page": 48,
+      "lettered_subparts": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.NS.2",
+      "source_printed_page": 48,
+      "lettered_subparts": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.NS.3",
+      "source_printed_page": 49,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.EE.1",
+      "source_printed_page": 49,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.EE.2",
+      "source_printed_page": 49,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.EE.3",
+      "source_printed_page": 49,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.EE.4",
+      "source_printed_page": 49,
+      "lettered_subparts": [
+        "a",
+        "b"
+      ],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.G.1",
+      "source_printed_page": 50,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.G.2",
+      "source_printed_page": 50,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.G.3",
+      "source_printed_page": 50,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.G.4",
+      "source_printed_page": 50,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.G.5",
+      "source_printed_page": 50,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.G.6",
+      "source_printed_page": 50,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.SP.1",
+      "source_printed_page": 50,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.SP.2",
+      "source_printed_page": 50,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.SP.3",
+      "source_printed_page": 51,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.SP.4",
+      "source_printed_page": 51,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.SP.5",
+      "source_printed_page": 51,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.SP.6",
+      "source_printed_page": 51,
+      "lettered_subparts": [],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.SP.7",
+      "source_printed_page": 51,
+      "lettered_subparts": [
+        "a",
+        "b"
+      ],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "7.SP.8",
+      "source_printed_page": 51,
+      "lettered_subparts": [
+        "a",
+        "b",
+        "c"
+      ],
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    }
+  ]
+}
