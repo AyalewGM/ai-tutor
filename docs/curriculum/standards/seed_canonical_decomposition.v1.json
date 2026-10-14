@@ -1,0 +1,904 @@
+{
+  "schema_version": "seed_canonical_decomposition.v1",
+  "status": "DRAFT_PROPOSED_NOT_VERIFIED",
+  "summary": {
+    "absent_codes": 35,
+    "decompose_required": 20,
+    "remap_candidates": 2,
+    "taxonomy_candidates": 13
+  },
+  "rows": [
+    {
+      "seed_code": "MATH.ALGEBRA1",
+      "references": [
+        {
+          "seed": "seed_md_algebra1.py",
+          "local_code": null,
+          "name": null,
+          "scope": "DYNAMIC_CODE_GENERATION \u2014 canonical code built by string concatenation; identity invisible to review"
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.EE.EQUATION.ONE",
+        "MATH.FUNC.LINEAR.MODEL"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.ALGEBRA1.EXPR",
+      "references": [
+        {
+          "seed": "seed_dc_algebra1.py",
+          "local_code": "DCA1.EXPR",
+          "name": "Algebraic Expressions",
+          "scope": "Interpret and simplify algebraic expressions."
+        },
+        {
+          "seed": "seed_va_algebra1.py",
+          "local_code": "VAA1.EXPR",
+          "name": "Algebraic Expressions",
+          "scope": "Interpret, simplify, and transform algebraic expressions."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.ALG.EXPR.EVALUATE",
+        "MATH.ALG.EXPR.TRANSLATE",
+        "MATH.ALG.LIKE.COMBINE",
+        "MATH.POLY.ADD",
+        "MATH.POLY.MULT.BINOMIAL"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.ALGEBRA1.LINEAR_EQ",
+      "references": [
+        {
+          "seed": "seed_dc_algebra1.py",
+          "local_code": "DCA1.LINEAR.EQ",
+          "name": "Linear Equations",
+          "scope": "Solve one-variable linear equations and justify equivalent steps."
+        },
+        {
+          "seed": "seed_va_algebra1.py",
+          "local_code": "VAA1.LINEAR.EQ",
+          "name": "Linear Equations",
+          "scope": "Solve and justify one-variable linear equations."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EQUATION.ONE",
+        "MATH.EE.EQUATION.MULTISTEP",
+        "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "MATH.ALG.EQ.MULTISTEP.DISTRIBUTE",
+        "MATH.EE.SYSTEMS"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.ALGEBRA1.LINEAR_FN",
+      "references": [
+        {
+          "seed": "seed_dc_algebra1.py",
+          "local_code": "DCA1.LINEAR.FN",
+          "name": "Linear Functions",
+          "scope": "Represent linear relationships using equations, tables, and rates of change."
+        },
+        {
+          "seed": "seed_va_algebra1.py",
+          "local_code": "VAA1.LINEAR.FN",
+          "name": "Linear Functions",
+          "scope": "Represent and analyze linear relationships using multiple representations."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.FUNC.LINEAR.MODEL",
+        "MATH.FUNC.LINEAR.SLOPE.TABLE",
+        "MATH.F.LINEAR.COMPARE",
+        "MATH.F.LINEAR.SEQUENCE"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.ALGEBRA1.LINEAR_FN_SLOPE",
+      "references": [
+        {
+          "seed": "seed_dc_algebra1.py",
+          "local_code": "DCA1.LINEAR.FN.SLOPE",
+          "name": "Slope-Intercept Form",
+          "scope": "Write linear equations in y = mx + b form."
+        },
+        {
+          "seed": "seed_va_algebra1.py",
+          "local_code": "VAA1.LINEAR.FN.SLOPE",
+          "name": "Slope-Intercept Form",
+          "scope": "Write and interpret linear equations in slope-intercept form."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.FUNC.LINEAR.SLOPE.TABLE",
+        "MATH.DATA.LINEFIT.SLOPE"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.EE.EQUATIONS_INEQUALITIES",
+      "references": [
+        {
+          "seed": "seed_dc_grade7.py",
+          "local_code": "DC7.EE.EQUATION",
+          "name": "Equations and Inequalities",
+          "scope": "Solve real-world equations and inequalities."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EQUATION.ONE",
+        "MATH.EE.EQUATION.MULTISTEP",
+        "MATH.EE.INEQUALITY.ONE",
+        "MATH.EE.INEQUALITY.MULTISTEP"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.EE.ONE_VARIABLE_EQUATIONS",
+      "references": [
+        {
+          "seed": "seed_dc_grade6.py",
+          "local_code": "DC6.EE.EQUATION",
+          "name": "One-variable Equations",
+          "scope": "Represent and solve one-variable equations."
+        },
+        {
+          "seed": "seed_grade6.py",
+          "local_code": "M6.EE.EQUATION",
+          "name": "One-variable Equations",
+          "scope": "Represent and solve one-variable equations."
+        },
+        {
+          "seed": "seed_va_grade6.py",
+          "local_code": "VA6.PFA.EQUATION",
+          "name": "One-variable Equations",
+          "scope": "Represent and solve linear equations in one variable."
+        },
+        {
+          "seed": "seed_va_grade7.py",
+          "local_code": "VA7.PFA.EQUATION",
+          "name": "Equations and Inequalities",
+          "scope": "Represent and solve one-variable equations and inequalities."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EQUATION.ONE",
+        "MATH.EE.EQUATION.MULTISTEP",
+        "MATH.ALG.EQ.ONE.MULT",
+        "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.G.GEOMETRY_APPLICATIONS",
+      "references": [
+        {
+          "seed": "seed_va_grade7.py",
+          "local_code": "VA7.MG.GEOMETRY",
+          "name": "Geometry Applications",
+          "scope": "Solve measurement and geometry problems using properties of figures."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.GEO.SCALE.DRAWING",
+        "MATH.GEO.SIMILARITY",
+        "MATH.GEO.SIMILAR.SCALE",
+        "MATH.GEO.CIRCLE.CIRCUMFERENCE",
+        "MATH.GEO.CIRCLE.AREA",
+        "MATH.GEO.ANGLES"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.G.MEASURE",
+      "references": [
+        {
+          "seed": "seed_grade6.py",
+          "local_code": "M6.G.GEO",
+          "name": "Area, Volume and Distance",
+          "scope": "Find the area of triangles, parallelograms and trapezoids, the volume and surface area of rectangular prisms, and distances between coordinate-plane points sharing an axis."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.GEO.MEASURE.AREA",
+        "MATH.GEO.MEASURE.VOLUME",
+        "MATH.GEO.MEASURE.SURFACE_AREA",
+        "MATH.GEO.AREA.TRI",
+        "MATH.GEO.AREA.TRAPEZOID",
+        "MATH.GEO.AREA.PARALLELOGRAM",
+        "MATH.GEO.COORD.AXIS_DISTANCE"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.NS.FRACTION_DIVISION",
+      "references": [
+        {
+          "seed": "seed_dc_grade6.py",
+          "local_code": "DC6.NS.FRACTION",
+          "name": "Fraction Division",
+          "scope": "Divide fractions in mathematical and contextual problems."
+        },
+        {
+          "seed": "seed_grade6.py",
+          "local_code": "M6.NS.FRACTION",
+          "name": "Fraction Division",
+          "scope": "Divide fractions in mathematical and contextual problems."
+        },
+        {
+          "seed": "seed_va_grade6.py",
+          "local_code": "VA6.CE.FRACTION",
+          "name": "Fraction Operations",
+          "scope": "Solve contextual problems involving positive rational numbers."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.FRAC.DIV",
+        "MATH.FRAC.WORD.DIVISION"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.NS.RATIONAL_ARITHMETIC",
+      "references": [
+        {
+          "seed": "seed_dc_grade7.py",
+          "local_code": "DC7.NS.RATIONAL",
+          "name": "Rational Number Arithmetic",
+          "scope": "Add, subtract, multiply, and divide rational numbers."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.NS.RATIONAL.OPERATIONS",
+        "MATH.RAT.ADD",
+        "MATH.RAT.MUL",
+        "MATH.RAT.DIV",
+        "MATH.INT.ADD",
+        "MATH.INT.SUB",
+        "MATH.INT.MUL",
+        "MATH.INT.DIV"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.NS.RATIONAL_EQUIVALENCE",
+      "references": [
+        {
+          "seed": "seed_va_grade6.py",
+          "local_code": "VA6.NS.RATIONAL",
+          "name": "Rational Number Equivalence",
+          "scope": "Compare and represent fractions, decimals, and percents."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.NS.RATIONAL.COMPARE",
+        "MATH.RAT.COMPARE",
+        "MATH.FRAC.EQUIV.FIND",
+        "MATH.FRAC.COMPARE"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.NS.RATIONAL_OPERATIONS",
+      "references": [
+        {
+          "seed": "seed_va_grade7.py",
+          "local_code": "VA7.CE.RATIONAL",
+          "name": "Rational Number Operations",
+          "scope": "Use rational-number operations accurately in mathematical and contextual problems."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.NS.RATIONAL.OPERATIONS",
+        "MATH.RAT.ADD",
+        "MATH.RAT.MUL",
+        "MATH.RAT.DIV"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.RP.PERCENT",
+      "references": [
+        {
+          "seed": "seed_dc_grade7.py",
+          "local_code": "DC7.RP.PERCENT",
+          "name": "Percent Problems",
+          "scope": "Solve multistep percent problems in context."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.RP.PERCENT.OF",
+        "MATH.RP.PERCENT.CONVERT",
+        "MATH.RP.PERCENT.CHANGE",
+        "MATH.RP.PERCENT.APPLICATIONS",
+        "MATH.FIN.PERCENT.DISCOUNT",
+        "MATH.FIN.PERCENT.TAX"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.RP.PROPORTIONAL_RELATIONSHIPS",
+      "references": [
+        {
+          "seed": "seed_dc_grade7.py",
+          "local_code": "DC7.RP.PROPORTIONAL",
+          "name": "Proportional Relationships",
+          "scope": "Recognize, represent, and solve proportional relationships."
+        },
+        {
+          "seed": "seed_va_grade7.py",
+          "local_code": "VA7.PFA.PROPORTIONAL",
+          "name": "Proportional Relationships",
+          "scope": "Represent and solve proportional relationships, including percent applications."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.RP.PROPORTION.IDENTIFY",
+        "MATH.RP.PROPORTION.SOLVE",
+        "MATH.RP.PROPORTIONAL.REPRESENT",
+        "MATH.RP.PROPORTIONAL.COMPARE",
+        "MATH.PROP.IDENTIFY",
+        "MATH.PROP.SOLVE_WORD"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.RP.RATIO",
+      "references": [
+        {
+          "seed": "seed_dc_grade6.py",
+          "local_code": "DC6.RP.RATIO",
+          "name": "Ratio Reasoning",
+          "scope": "Reason about ratios and equivalent ratios."
+        },
+        {
+          "seed": "seed_grade6.py",
+          "local_code": "M6.RP.RATIO",
+          "name": "Ratio Reasoning",
+          "scope": "Reason about ratios and equivalent ratios."
+        },
+        {
+          "seed": "seed_va_grade6.py",
+          "local_code": "VA6.PFA.RATIO",
+          "name": "Ratio Reasoning",
+          "scope": "Use ratios to compare quantities and represent proportional relationships."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.RP.RATIO.INTERPRET",
+        "MATH.RP.RATIO.EQUIVALENT",
+        "MATH.RATIO.INTERPRET",
+        "MATH.RATIO.EQUIVALENT",
+        "MATH.RATIO.SCALE"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.RP.UNIT_RATE",
+      "references": [
+        {
+          "seed": "seed_dc_grade6.py",
+          "local_code": null,
+          "name": null,
+          "scope": "referenced without skill tuple"
+        },
+        {
+          "seed": "seed_grade6.py",
+          "local_code": null,
+          "name": null,
+          "scope": "referenced without skill tuple"
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.RP.RATE.UNIT",
+        "MATH.RATE.UNIT",
+        "MATH.RATE.COMPARE",
+        "MATH.RATE.DRT"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.SP.CENTER_SPREAD",
+      "references": [
+        {
+          "seed": "seed_grade6.py",
+          "local_code": "M6.SP.STAT",
+          "name": "Center and Spread",
+          "scope": "Find the mean, median, mode and range of a data set, read dot plots, and choose the best measure of center when data contain an outlier."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.DATA.MEAN",
+        "MATH.DATA.MEDIAN",
+        "MATH.DATA.RANGE",
+        "MATH.DATA.SPREAD",
+        "MATH.DATA.CENTER",
+        "MATH.DATA.OUTLIER.CENTER"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.SP.PROBABILITY",
+      "references": [
+        {
+          "seed": "seed_va_grade7.py",
+          "local_code": "VA7.PS.PROBABILITY",
+          "name": "Probability and Data",
+          "scope": "Reason about probability and interpret data from samples and displays."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.PROB.SIMPLE",
+        "MATH.PROB.SAMPLE_SPACE",
+        "MATH.PROB.INDEPENDENT.AND",
+        "MATH.PROB.DISJOINT.OR",
+        "MATH.PROB.COMPOUND",
+        "MATH.PROB.COMPLEMENT",
+        "MATH.PROB.EXPECTED_COUNT"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.SP.PROBABILITY_SAMPLING",
+      "references": [
+        {
+          "seed": "seed_dc_grade7.py",
+          "local_code": "DC7.SP.PROBABILITY",
+          "name": "Probability and Sampling",
+          "scope": "Use probability models and samples to reason about populations."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.DATA.SAMPLING",
+        "MATH.DATA.SAMPLE.BIAS",
+        "MATH.DATA.SAMPLE.REPRESENTATIVE",
+        "MATH.PROB.EXPECTED_COUNT"
+      ],
+      "disposition": "DECOMPOSE_REQUIRED",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.ALGEBRA1.LINEAR_FN_EVAL",
+      "references": [
+        {
+          "seed": "seed_dc_algebra1.py",
+          "local_code": "DCA1.LINEAR.FN.EVAL",
+          "name": "Evaluating Linear Functions",
+          "scope": "Evaluate a linear function for a given input."
+        },
+        {
+          "seed": "seed_va_algebra1.py",
+          "local_code": "VAA1.LINEAR.FN.EVAL",
+          "name": "Evaluating Linear Functions",
+          "scope": "Evaluate linear functions for specified inputs."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.FUNC.LINEAR.MODEL",
+        "MATH.F.LINEAR.COMPARE",
+        "MATH.F.LINEAR.SEQUENCE"
+      ],
+      "disposition": "REMAP_CANDIDATES",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.EE.EXPRESSIONS",
+      "references": [
+        {
+          "seed": "seed_dc_grade6.py",
+          "local_code": "DC6.EE.EXPR",
+          "name": "Expressions",
+          "scope": "Write and evaluate numerical and algebraic expressions."
+        },
+        {
+          "seed": "seed_grade6.py",
+          "local_code": "M6.EE.EXPR",
+          "name": "Expressions",
+          "scope": "Write and evaluate numerical and algebraic expressions."
+        },
+        {
+          "seed": "seed_va_grade6.py",
+          "local_code": "VA6.PFA.EXPR",
+          "name": "Expressions",
+          "scope": "Use algebraic terminology and evaluate expressions."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.ALG.EXPR.EVALUATE",
+        "MATH.ALG.EXPR.TRANSLATE"
+      ],
+      "disposition": "REMAP_CANDIDATES",
+      "needs_math_review": true,
+      "note": ""
+    },
+    {
+      "seed_code": "MATH.IA1.AT.A.1",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.AT.A.1",
+          "name": "Equivalent Linear and Exponential Expressions",
+          "scope": "Interpret components of linear and exponential expressions and rewrite equivalent forms to reveal contextual properties such as initial value, rate of change, growth, or decay."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.ALG.EXPR.EVALUATE",
+        "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "MATH.FUNC.LINEAR.MODEL",
+        "MATH.FUNC.LINEAR.SLOPE.TABLE",
+        "MATH.EXPFUNC.MODEL",
+        "MATH.EXPFUNC.EVALUATE",
+        "MATH.F.QUADRATIC.INTERPRET",
+        "MATH.POLY.FACTOR.GCF",
+        "MATH.EE.SYSTEMS",
+        "MATH.F.LINEAR.COMPARE"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    },
+    {
+      "seed_code": "MATH.IA1.AT.B.8",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.AT.B.8",
+          "name": "Linear-Inequality Optimization",
+          "scope": "Model constraints with systems of linear inequalities, identify the feasible region, and justify an optimal solution in context."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.ALG.EXPR.EVALUATE",
+        "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "MATH.FUNC.LINEAR.MODEL",
+        "MATH.FUNC.LINEAR.SLOPE.TABLE",
+        "MATH.EXPFUNC.MODEL",
+        "MATH.EXPFUNC.EVALUATE",
+        "MATH.F.QUADRATIC.INTERPRET",
+        "MATH.POLY.FACTOR.GCF",
+        "MATH.EE.SYSTEMS",
+        "MATH.F.LINEAR.COMPARE"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    },
+    {
+      "seed_code": "MATH.IA1.AT.C.10",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.AT.C.10",
+          "name": "Functions, Domain, and Range",
+          "scope": "Identify, represent, and analyze functions using domain, range, tables, graphs, equations, and function notation."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.ALG.EXPR.EVALUATE",
+        "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "MATH.FUNC.LINEAR.MODEL",
+        "MATH.FUNC.LINEAR.SLOPE.TABLE",
+        "MATH.EXPFUNC.MODEL",
+        "MATH.EXPFUNC.EVALUATE",
+        "MATH.F.QUADRATIC.INTERPRET",
+        "MATH.POLY.FACTOR.GCF",
+        "MATH.EE.SYSTEMS",
+        "MATH.F.LINEAR.COMPARE"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    },
+    {
+      "seed_code": "MATH.IA1.AT.C.11",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.AT.C.11",
+          "name": "Average Rate of Change",
+          "scope": "Calculate or estimate and interpret the average rate of change of linear and exponential functions over a specified interval using graphs, tables, or symbolic representations."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.ALG.EXPR.EVALUATE",
+        "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "MATH.FUNC.LINEAR.MODEL",
+        "MATH.FUNC.LINEAR.SLOPE.TABLE",
+        "MATH.EXPFUNC.MODEL",
+        "MATH.EXPFUNC.EVALUATE",
+        "MATH.F.QUADRATIC.INTERPRET",
+        "MATH.POLY.FACTOR.GCF",
+        "MATH.EE.SYSTEMS",
+        "MATH.F.LINEAR.COMPARE"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    },
+    {
+      "seed_code": "MATH.IA1.AT.C.12",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.AT.C.12",
+          "name": "Compare Linear and Exponential Functions",
+          "scope": "Compare rates of change, intercepts, and growth patterns of a linear function and an exponential function when the functions are represented in different ways, including equations, graphs, tables, and contextual descriptions."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.ALG.EXPR.EVALUATE",
+        "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "MATH.FUNC.LINEAR.MODEL",
+        "MATH.FUNC.LINEAR.SLOPE.TABLE",
+        "MATH.EXPFUNC.MODEL",
+        "MATH.EXPFUNC.EVALUATE",
+        "MATH.F.QUADRATIC.INTERPRET",
+        "MATH.POLY.FACTOR.GCF",
+        "MATH.EE.SYSTEMS",
+        "MATH.F.LINEAR.COMPARE"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    },
+    {
+      "seed_code": "MATH.IA1.AT.D.13",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.AT.D.13",
+          "name": "Arithmetic and Geometric Sequences",
+          "scope": "Analyze arithmetic and geometric sequences using explicit and recursive representations, and model contextual patterns with sequence rules."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.ALG.EXPR.EVALUATE",
+        "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "MATH.FUNC.LINEAR.MODEL",
+        "MATH.FUNC.LINEAR.SLOPE.TABLE",
+        "MATH.EXPFUNC.MODEL",
+        "MATH.EXPFUNC.EVALUATE",
+        "MATH.F.QUADRATIC.INTERPRET",
+        "MATH.POLY.FACTOR.GCF",
+        "MATH.EE.SYSTEMS",
+        "MATH.F.LINEAR.COMPARE"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    },
+    {
+      "seed_code": "MATH.IA1.AT.D.14",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.AT.D.14",
+          "name": "Function Representations and Features",
+          "scope": "Represent functions with tables, graphs, equations, and contextual descriptions and interpret key features, including piecewise and absolute-value representations."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.ALG.EXPR.EVALUATE",
+        "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "MATH.FUNC.LINEAR.MODEL",
+        "MATH.FUNC.LINEAR.SLOPE.TABLE",
+        "MATH.EXPFUNC.MODEL",
+        "MATH.EXPFUNC.EVALUATE",
+        "MATH.F.QUADRATIC.INTERPRET",
+        "MATH.POLY.FACTOR.GCF",
+        "MATH.EE.SYSTEMS",
+        "MATH.F.LINEAR.COMPARE"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    },
+    {
+      "seed_code": "MATH.IA1.AT.D.15",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.AT.D.15",
+          "name": "Linear and Exponential Models",
+          "scope": "Construct, compare, and interpret linear and exponential models in context, including rates of change and growth factors."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.ALG.EXPR.EVALUATE",
+        "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "MATH.FUNC.LINEAR.MODEL",
+        "MATH.FUNC.LINEAR.SLOPE.TABLE",
+        "MATH.EXPFUNC.MODEL",
+        "MATH.EXPFUNC.EVALUATE",
+        "MATH.F.QUADRATIC.INTERPRET",
+        "MATH.POLY.FACTOR.GCF",
+        "MATH.EE.SYSTEMS",
+        "MATH.F.LINEAR.COMPARE"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    },
+    {
+      "seed_code": "MATH.IA1.AT.D.16",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.AT.D.16",
+          "name": "Function Transformations",
+          "scope": "Describe and compare transformations of functions, including translations, reflections, and changes in scale, using representations and function notation."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.ALG.EXPR.EVALUATE",
+        "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "MATH.FUNC.LINEAR.MODEL",
+        "MATH.FUNC.LINEAR.SLOPE.TABLE",
+        "MATH.EXPFUNC.MODEL",
+        "MATH.EXPFUNC.EVALUATE",
+        "MATH.F.QUADRATIC.INTERPRET",
+        "MATH.POLY.FACTOR.GCF",
+        "MATH.EE.SYSTEMS",
+        "MATH.F.LINEAR.COMPARE"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    },
+    {
+      "seed_code": "MATH.IA1.AT.D.17",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.AT.D.17",
+          "name": "Inverse Linear Functions",
+          "scope": "Find and interpret inverse linear functions and connect an inverse to reversing the input-output relationship."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.EE.EXPR",
+        "MATH.ALG.EXPR.EVALUATE",
+        "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "MATH.FUNC.LINEAR.MODEL",
+        "MATH.FUNC.LINEAR.SLOPE.TABLE",
+        "MATH.EXPFUNC.MODEL",
+        "MATH.EXPFUNC.EVALUATE",
+        "MATH.F.QUADRATIC.INTERPRET",
+        "MATH.POLY.FACTOR.GCF",
+        "MATH.EE.SYSTEMS",
+        "MATH.F.LINEAR.COMPARE"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    },
+    {
+      "seed_code": "MATH.IA1.DS.A.1",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.DS.A.1",
+          "name": "Correlation and Causation",
+          "scope": "Distinguish correlation from causation when interpreting statistical relationships."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.DATA.FREQUENCY",
+        "MATH.DATA.MEAN",
+        "MATH.DATA.BIVARIATE",
+        "MATH.DATA.SCATTER.ASSOCIATION",
+        "MATH.DATA.LINEAR_MODEL",
+        "MATH.DATA.SAMPLING",
+        "MATH.PROB.COMPOUND",
+        "MATH.DATA.TWOWAY.RELATIVE"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    },
+    {
+      "seed_code": "MATH.IA1.DS.B.6",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.DS.B.6",
+          "name": "Two-Way Data and Association",
+          "scope": "Use two-way frequency data and relative frequencies to describe possible associations between categorical variables without treating association as causation."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.DATA.FREQUENCY",
+        "MATH.DATA.MEAN",
+        "MATH.DATA.BIVARIATE",
+        "MATH.DATA.SCATTER.ASSOCIATION",
+        "MATH.DATA.LINEAR_MODEL",
+        "MATH.DATA.SAMPLING",
+        "MATH.PROB.COMPOUND",
+        "MATH.DATA.TWOWAY.RELATIVE"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    },
+    {
+      "seed_code": "MATH.IA1.GR.A.1",
+      "references": [
+        {
+          "seed": "seed_md_integrated_algebra1.py",
+          "local_code": "IA1.GR.A.1",
+          "name": "Rigid Transformations and Congruence",
+          "scope": "Apply rotations, reflections, and translations and use preserved distance and angle measure to justify congruence."
+        }
+      ],
+      "candidate_catalog_codes": [
+        "MATH.GEO.TRANSFORMATIONS",
+        "MATH.GEO.TRANSFORM.DILATE",
+        "MATH.GEO.SIMILARITY",
+        "MATH.GEO.CONGRUENCE.SAS",
+        "MATH.GEO.PYTHAGOREAN",
+        "MATH.GEO.ANGLES"
+      ],
+      "disposition": "TAXONOMY_CANDIDATE",
+      "needs_math_review": true,
+      "note": "Atomic code mirroring official MSDE expectation numbering; never registered in the taxonomy catalog. Register via canonical_taxonomy_candidates or remap to a listed catalog code after math review."
+    }
+  ],
+  "safety": "Review-support artifact only. No row activates a mapping, mutates learner evidence, or claims verified coverage. Every change MUST pass Standards Mapping + Math Review acceptance before seeds are edited."
+}
