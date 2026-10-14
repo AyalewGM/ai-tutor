@@ -206,8 +206,8 @@ def test_texas_advanced_2025_complete_author_identifier_enumeration_is_fail_clos
     assert inventory["count_grade7"] == 67
     assert inventory["count_grade8_advanced_algebra1"] == 63
     assert inventory["complete_scope_rows_independently_accepted"] == 0
-    assert sum(r["editorial_mathematical_scope"] is not None for r in rows) == 14
-    assert sum(r["editorial_mathematical_scope"] is None for r in rows) == 116
+    assert sum(r["editorial_mathematical_scope"] is not None for r in rows) == 130
+    assert sum(r["editorial_mathematical_scope"] is None for r in rows) == 0
     grade7 = [r for r in rows if r["track"] == "ADVANCED_GRADE_7"]
     grade8 = [r for r in rows if r["track"] == "ADVANCED_GRADE_8_ALGEBRA_I"]
     assert len(grade7) == 67
@@ -232,8 +232,8 @@ def test_texas_advanced_parent_stems_and_scope_gap_accounting():
     assert len({r["source_id"] for r in ledger}) == 26
     assert sum(r["subpart_count"] for r in ledger) == 130
     assert inv["scope_gap_accounting"]["total_expectations"] == 130
-    assert inv["scope_gap_accounting"]["with_editorial_scope"] == 14
-    assert inv["scope_gap_accounting"]["without_editorial_scope"] == 116
+    assert inv["scope_gap_accounting"]["with_editorial_scope"] == 130
+    assert inv["scope_gap_accounting"]["without_editorial_scope"] == 0
     assert inv["scope_gap_accounting"]["independently_accepted_source_scopes"] == 0
     assert inv["scope_gap_accounting"]["canonical_equivalences_accepted"] == 0
     for r in ledger:
@@ -253,7 +253,7 @@ def test_three_state_completion_matrix_stays_fail_closed():
     assert matrix['states']['TX']['advanced_111_30_111_31_author_identifier_rows'] == len(advanced['expectations']) == 130
     assert matrix['states']['TX']['advanced_remaining_unscoped_rows'] == sum(
         r['editorial_mathematical_scope'] is None for r in advanced['expectations']
-    ) == 116
+    ) == 0
     assert matrix['states']['WA']['verified_2026_expectation_rows'] == len(wa['expectations']) == 0
     assert matrix['states']['WA']['official_final_workbook_bytes_obtained'] is False
     for state in matrix['states'].values():
