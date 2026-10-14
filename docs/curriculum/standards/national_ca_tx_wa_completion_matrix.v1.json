@@ -73,7 +73,16 @@
         "HIGH_SCHOOL_COURSE_ARRANGEMENTS"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Obtain original final OSPI 2026 Excel/PDF, verify source hash and final revision, extract expectation and 2011 crosswalk rows without treating 2025 initial draft as final"
+      "next_gate": "Import uploaded v3.1 extraction into versioned repository evidence, verify publisher original/revision, reconcile all expectation/crosswalk rows and independently review canonical mapping",
+      "uploaded_workbook_source_extraction": {
+        "sha256": "d522101f430758dcbc21d7ecc800977761b3ccdb224de2b3e6fd6217faa80875",
+        "revision": "August 2026 v3.1",
+        "k8_rows": 264,
+        "hs_course_rows": 464,
+        "crosswalk_rows": 425,
+        "independent_publisher_verification": "PENDING",
+        "repository_expectation_import": "PENDING"
+      }
     }
   },
   "acceptance_contract": {
