@@ -54,7 +54,11 @@
         "c",
         "d"
       ],
-      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "source_printed_pages": [
+        48,
+        49
+      ]
     },
     {
       "expectation_id": "7.NS.3",
@@ -91,7 +95,7 @@
     },
     {
       "expectation_id": "7.G.1",
-      "source_printed_page": 50,
+      "source_printed_page": 49,
       "lettered_subparts": [],
       "author_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
     },
