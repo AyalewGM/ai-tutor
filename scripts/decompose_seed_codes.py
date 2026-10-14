@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Generate the seed-code decomposition review table.
 
 For every canonical code that seed scripts reference but the candidate catalog
@@ -211,9 +210,9 @@ def to_markdown(d: dict) -> str:
         "",
         f"Status: `{d['status']}` — proposals for Math Review; nothing here is decided.",
         "",
-        f"{s['absent_codes']} seed-referenced codes absent from the candidate catalog — "
-        f"{s['decompose_required']} composite (decompose), {s['remap_candidates']} remap "
-        f"candidates, {s['taxonomy_candidates']} taxonomy candidates.",
+        (f"{s['absent_codes']} seed-referenced codes absent from the candidate catalog — "
+         f"{s['decompose_required']} composite (decompose), {s['remap_candidates']} remap "
+         f"candidates, {s['taxonomy_candidates']} taxonomy candidates."),
         "",
         "| Seed code | Referenced by | Disposition | Candidate catalog codes |",
         "|---|---|---|---|",
