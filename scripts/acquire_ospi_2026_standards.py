@@ -118,11 +118,17 @@ def main() -> None:
     folder = Path(args.output)
     folder.mkdir(parents=True, exist_ok=True)
     try:
-        with urlopen(Request(OFFICIAL_PAGE, headers={"User-Agent": "MihurStandardsEvidence/1.0"}), timeout=35) as response:
-            if not official_url(response.geturl()):
-                raise ValueError("OSPI page redirected outside publisher host")
-            html = response.read(3_000_000).decode("utf-8", "replace")
-        candidates = candidate_links(html)
+        # Explicit publisher document candidates bypass landing-page access failures.
+        # Acquired bytes remain unverified and never establish standards coverage.
+        if args.candidate_url:
+            candidates = [(validate_candidate_url(url), "Explicit OSPI document candidate")
+                          for url in args.candidate_url]
+        else:
+            with urlopen(Request(OFFICIAL_PAGE, headers={"User-Agent": "MihurStandardsEvidence/1.0"}), timeout=35) as response:
+                if not official_url(response.geturl()):
+                    raise ValueError("OSPI page redirected outside publisher host")
+                html = response.read(3_000_000).decode("utf-8", "replace")
+            candidates = candidate_links(html)
         evidence = []
         for i, (url, label) in enumerate(candidates):
             suffix = Path(urlparse(url).path).suffix.lower()
