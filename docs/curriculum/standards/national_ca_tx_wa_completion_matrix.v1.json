@@ -37,8 +37,8 @@
       },
       "algebra1_111_39_author_identifier_rows": 56,
       "advanced_111_30_111_31_author_identifier_rows": 130,
-      "advanced_author_scope_rows": 14,
-      "advanced_remaining_unscoped_rows": 116,
+      "advanced_author_scope_rows": 130,
+      "advanced_remaining_unscoped_rows": 0,
       "accepted_source_fidelity_rows": 0,
       "unextracted_tracks": [
         "REGULAR_GRADE_1",
@@ -50,7 +50,7 @@
         "ADVANCED_GRADE_6"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independently compare final adopted 2025 advanced text and all §111.39/regular grade expectations, exact qualifiers and parent/subpart structure; extract missing grades"
+      "next_gate": "All 130 advanced Grade 7/Grade 8 Algebra I author scope summaries are present but none is independently accepted; reconcile official final 2025 publisher text, parent stems, mathematical conditions and individual subparts; continue missing grades"
     },
     "WA": {
       "official_source": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
