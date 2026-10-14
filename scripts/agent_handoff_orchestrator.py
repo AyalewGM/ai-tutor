@@ -7,6 +7,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -103,7 +104,7 @@ def pages(root: str, suffix: str, token: str) -> list[dict]:
         sep = "&" if "?" in suffix else "?"
         batch = request("GET", f"{root}{suffix}{sep}{urlencode({'per_page': 100, 'page': page})}", token)
         if not isinstance(batch, list):
-            raise ValueError("Unexpected paginated response")
+            raise TypeError("Unexpected paginated response")
         collected.extend(batch)
         if len(batch) < 100:
             return collected
@@ -153,12 +154,29 @@ def deliver(root: str, number: int, token: str) -> None:
             request("POST", f"{root}{comments_url}", token, {"body": body})
             print(f"Posted {state} for #{number} at {sha}")
             return
-        except (HTTPError, URLError, OSError):
-            if any(tag in c.get("body", "") for c in pages(root, comments_url, token)):
+        except (HTTPError, URLError, OSError) as exc:
+            try:
+                if any(tag in c.get("body", "") for c in pages(root, comments_url, token)):
+                    return
+            except (HTTPError, URLError, OSError):
+                # A lost POST response may mean delivery succeeded.
+                # Never blindly retry if the reconciliation GET also fails.
+                record_pending(number, sha, state, "COMMENT_STATUS_UNKNOWN")
                 return
             if attempt:
-                raise
+                record_pending(number, sha, state, type(exc).__name__)
+                return
 
+
+
+def record_pending(number: int, sha: str, state: str, reason: str) -> None:
+    """Persist unresolved delivery in a workflow artifact for manual reconciliation."""
+    path = Path(os.environ.get("MIHUR_PENDING_FILE", "mihur-pending-handoffs.jsonl"))
+    record = {"pr": number, "sha": sha, "state": state,
+              "reason": reason, "delivery": "PENDING_MANUAL_RECONCILIATION"}
+    with path.open("a", encoding="utf-8") as stream:
+        stream.write(json.dumps(record, sort_keys=True) + "\\n")
+    print(f"::warning::PR #{number} handoff pending, not delivered: {reason}")
 
 def main() -> int:
     repo = os.environ["GITHUB_REPOSITORY"]
