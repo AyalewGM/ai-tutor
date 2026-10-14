@@ -277,3 +277,100 @@ def test_bounded_mathematical_scope_evidence_preserves_reviewed_conditions() -> 
     assert 'substitution' in ' '.join(system['8.AT.B.5.b']).lower()
     assert all(s in ' '.join(system['8.AT.B.5.c']).lower() for s in ('no solution', 'exactly one', 'infinitely many'))
     assert 'contextual' in ' '.join(system['8.AT.B.5.d']).lower()
+
+
+def test_md_grade6_bounded_scope_findings_are_fail_closed() -> None:
+    manifest = _manifest()
+    ledger = json.loads(
+        (MANIFEST.parent / 'md_grades6_8_2025.source_fidelity_locators.v1.json').read_text(encoding='utf-8')
+    )
+    assert len(manifest['expectations']) == len(ledger['records']) == 79
+    records = {r['expectation_id']: r for r in ledger['records']}
+    expectations = {r['expectation_id']: r for r in manifest['expectations']}
+    required = {
+        '6.NOS.B.4': '6.NOS.B.4.a',
+        '6.AT.C.8': '6.AT.C.8.b',
+        '6.AT.C.10': '6.AT.C.10.b',
+        '6.DS.B.6': '6.DS.B.6.c',
+    }
+    for standard_id, subpart in required.items():
+        record = records[standard_id]
+        row = expectations[standard_id]
+        scope = record['bounded_mathematical_scope_evidence']
+        assert subpart in record['official_subpart_ids']
+        assert subpart in scope['subpart_requirements']
+        assert scope['source_url'] == row['source_locator']
+        assert scope['short_summary_is_exhaustive'] is False
+        assert scope['scope_verification'] == 'PENDING_INDEPENDENT_SOURCE_FIDELITY'
+        assert scope['canonical_equivalence'] == 'NOT_ESTABLISHED'
+        assert scope['downstream_full_coverage_allowed'] is False
+        assert record['independent_acceptance'] == 'PENDING'
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+
+    def requirement(standard_id: str, subpart: str) -> str:
+        return ' '.join(records[standard_id]['bounded_mathematical_scope_evidence']['subpart_requirements'][subpart]).lower()
+
+    factors = ' '.join(
+        term
+        for requirements in records['6.NOS.B.4']['bounded_mathematical_scope_evidence']['subpart_requirements'].values()
+        for term in requirements
+    ).lower()
+    assert '100' in factors and '12' in factors and 'distributive' in factors
+    equations = requirement('6.AT.C.8', '6.AT.C.8.b')
+    assert all(term in equations for term in ('x+p=q', 'x−p=q', 'px=q', 'x/p=q', 'nonnegative rational'))
+    inequalities = requirement('6.AT.C.10', '6.AT.C.10.b')
+    assert all(term in inequalities for term in ('≥', '>', '≤', '<', 'nonnegative rational'))
+    stats = requirement('6.DS.B.6', '6.DS.B.6.c')
+    assert all(term in stats for term in ('median', 'mean', 'interquartile range', 'outliers'))
+    assert 'do not infer mean absolute deviation' in stats
+    for standard_id in ('6.AT.C.8', '6.AT.C.10', '6.DS.B.6'):
+        assert records[standard_id]['bounded_mathematical_scope_evidence']['printed_page_locator_reconciliation'] == 'RECONCILED_TO_OFFICIAL_PDF_PRINTED_FOOTER'
+
+
+def test_all_30_md_grade6_original_pdf_footer_locations() -> None:
+    """Pin every 2025 Grade 6 parent to the original MSDE February 2026 PDF page."""
+    manifest = _manifest()
+    ledger = json.loads(
+        (MANIFEST.parent / 'md_grades6_8_2025.source_fidelity_locators.v1.json').read_text(encoding='utf-8')
+    )
+    rows = {r['expectation_id']: r for r in manifest['expectations'] if r['grade'] == 6}
+    records = {r['expectation_id']: r for r in ledger['records'] if r['grade'] == 6}
+    pages = {
+        '6.NOS.A.1': 1,
+        '6.NOS.B.2': 2, '6.NOS.B.3': 2, '6.NOS.B.4': 2,
+        '6.NOS.C.5': 3, '6.NOS.C.6': 3,
+        '6.NOS.C.7': 4, '6.NOS.C.8': 4, '6.NOS.C.9': 5,
+        '6.AT.A.1': 6, '6.AT.A.2': 6,
+        '6.AT.A.3': 7, '6.AT.A.4': 7,
+        '6.AT.B.5': 8, '6.AT.B.6': 8, '6.AT.B.7': 9,
+        '6.AT.C.8': 10, '6.AT.C.9': 10, '6.AT.C.10': 10,
+        '6.AT.D.11': 11,
+        '6.GR.A.1': 12, '6.GR.A.2': 12,
+        '6.GR.A.3': 12, '6.GR.A.4': 12,
+        '6.DS.A.1': 13, '6.DS.A.2': 13,
+        '6.DS.A.3': 13, '6.DS.A.4': 13,
+        '6.DS.B.5': 13, '6.DS.B.6': 14,
+    }
+    assert len(rows) == len(records) == len(pages) == 30
+    assert set(rows) == set(records) == set(pages)
+    for standard_id, printed_page in pages.items():
+        row = rows[standard_id]
+        record = records[standard_id]
+        assert row['source_page'] == row['source_page_end'] == printed_page
+        assert record['printed_page_start'] == record['printed_page_end'] == printed_page
+        assert row['pdf_page_index_zero_based'] == row['pdf_page_end_index_zero_based'] == printed_page
+        assert record['pdf_page_index_zero_based'] == record['pdf_page_end_index_zero_based'] == printed_page
+        assert row['page_locator_evidence'] == record['page_locator_evidence'] == (
+            'OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED'
+        )
+        assert row['source_locator'] == record['source_url'] == 'https://msde.maryland.gov/media/17816'
+        assert record['column'] == '2025 MD Index / 2025 Standards Statement'
+        assert record['independent_acceptance'] == 'PENDING'
+        assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+    for standard_id in ('6.NOS.B.4', '6.AT.C.8', '6.AT.C.10', '6.DS.B.6'):
+        scope = records[standard_id]['bounded_mathematical_scope_evidence']
+        assert scope['printed_page_locator_reconciliation'] == 'RECONCILED_TO_OFFICIAL_PDF_PRINTED_FOOTER'
+        assert scope['reviewer_reported_printed_page'] == pages[standard_id]
+        assert scope['ledger_printed_page_start'] == pages[standard_id]
+        assert scope['pdf_page_index_zero_based'] == pages[standard_id]
+        assert scope['downstream_full_coverage_allowed'] is False
