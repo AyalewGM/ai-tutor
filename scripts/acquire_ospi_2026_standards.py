@@ -111,7 +111,8 @@ def fetch(url: str, dest: Path) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", default="source-evidence/ospi-2026")\n    parser.add_argument("--candidate-url", action="append", default=[], help="Publisher-hosted final source candidate URL")
+    parser.add_argument("--output", default="source-evidence/ospi-2026")
+    parser.add_argument("--candidate-url", action="append", default=[], help="Publisher-hosted final source candidate URL")
     args = parser.parse_args()
     folder = Path(args.output)
     folder.mkdir(parents=True, exist_ok=True)
