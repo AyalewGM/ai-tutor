@@ -306,3 +306,27 @@ def test_dc_three_new_grade7_8_unlettered_scope_findings_are_preserved() -> None
     assert all(word in conditions('8.NS.A.1') for word in (
         'eventually repeats', 'eventually repeating', 'rational-number fraction'
     ))
+
+
+def test_dc_6_ns_b_4_relatively_prime_factorization_scope_is_preserved() -> None:
+    manifest = _manifest()
+    ledger = json.loads(
+        (MANIFEST.parent / 'dc_grades6_8_ccss.source_fidelity_locators.v1.json').read_text(encoding='utf-8')
+    )
+    assert len(manifest['expectations']) == len(ledger['records']) == 81
+    row = next(r for r in manifest['expectations'] if r['expectation_id'] == '6.NS.B.4')
+    record = next(r for r in ledger['records'] if r['expectation_id'] == '6.NS.B.4')
+    scope = record['bounded_mathematical_scope_evidence']
+    assert row['official_subpart_identifiers'] == record['lettered_subpart_ids'] == []
+    assert scope['source_text_url'] == row['source_locator']
+    assert scope['unlettered_standard'] is True
+    assert scope['short_summary_is_exhaustive'] is False
+    assert scope['scope_verification'] == 'PENDING_INDEPENDENT_SOURCE_FIDELITY'
+    assert scope['canonical_equivalence'] == 'NOT_ESTABLISHED'
+    assert scope['downstream_full_coverage_allowed'] is False
+    conditions = ' '.join(scope['required_conditions']).lower()
+    assert all(term in conditions for term in (
+        '100', '12', 'common factor', 'product', 'no common factor'
+    ))
+    assert record['independent_acceptance'] == 'PENDING'
+    assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
