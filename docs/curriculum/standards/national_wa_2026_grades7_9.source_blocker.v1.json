@@ -9,7 +9,7 @@
   "exploration": "2026-2027",
   "required": "2027-2028",
   "prior_version": "2011 adopted CCSS Mathematics",
-  "crosswalk": "425 user-uploaded August 2026 v3.1 workbook crosswalk rows author-extracted in wa_2026_v3_1_source_extraction.json; official publisher byte/version identity and individual rows NOT independently verified",
+  "crosswalk": "425 2011 CCSS-to-2026 WA crosswalk rows author-extracted from user-uploaded August 2026 v3.1 workbook in wa_2026_v3_1_source_extraction.json; original OSPI publisher byte/version identity and individual row source fidelity NOT independently verified",
   "pathways": [
     "GRADE_7",
     "GRADE_8",
