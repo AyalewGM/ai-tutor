@@ -73,7 +73,7 @@
         "HIGH_SCHOOL_COURSE_ARRANGEMENTS"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Import uploaded v3.1 extraction into versioned repository evidence, verify publisher original/revision, reconcile all expectation/crosswalk rows and independently review canonical mapping",
+      "next_gate": "Authenticate August 2026 v3.1 workbook against original OSPI publisher bytes and revision; independently verify already staged K-8, course, and crosswalk rows, notation anomalies and mathematical scopes before any coverage acceptance",
       "uploaded_workbook_source_extraction": {
         "sha256": "d522101f430758dcbc21d7ecc800977761b3ccdb224de2b3e6fd6217faa80875",
         "revision": "August 2026 v3.1",
@@ -81,7 +81,7 @@
         "hs_course_rows": 464,
         "crosswalk_rows": 425,
         "independent_publisher_verification": "PENDING",
-        "repository_expectation_import": "PENDING"
+        "repository_expectation_import": "AUTHOR_EXTRACTION_STAGED_IN_REPOSITORY_NOT_INDEPENDENTLY_VERIFIED"
       }
     }
   },
