@@ -193,3 +193,86 @@ def test_unknown_post_result_never_retries(tmp_path, monkeypatch):
         orchestrator.deliver("root", 17, "token")
     assert len(attempts) == 1
     assert "COMMENT_STATUS_UNKNOWN" in pending.read_text()
+
+
+def test_next_run_reconciles_pending_before_new_handoff(tmp_path, monkeypatch):
+    import json
+
+    event_path = tmp_path / "event.json"
+    event_path.write_text(json.dumps({"pull_request": {"number": 19}}))
+    monkeypatch.setenv("GITHUB_REPOSITORY", "org/repo")
+    monkeypatch.setenv("GITHUB_TOKEN", "fake")
+    monkeypatch.setenv("GITHUB_EVENT_PATH", str(event_path))
+    order = []
+    sha = "a" * 40
+    pending = [{"pr": 17, "sha": sha, "state": "WAIT_CHECKS",
+                "delivery": "PENDING_MANUAL_RECONCILIATION"}]
+
+    def fake(method, url, token, payload=None):
+        if url.endswith("/pulls/17"):
+            return {"state": "open", "head": {"sha": sha}}
+        raise AssertionError(url)
+
+    with (
+        patch.object(orchestrator, "pending_records", return_value=pending),
+        patch.object(orchestrator, "request", side_effect=fake),
+        patch.object(orchestrator, "pages", return_value=[]),
+        patch.object(orchestrator, "deliver", side_effect=lambda root, n, token: order.append(n)),
+    ):
+        assert orchestrator.main() == 0
+    assert order == [17, 19]
+
+
+def test_recovery_artifact_read_and_validation():
+    import io
+    import json
+    import zipfile
+
+    sha = "b" * 40
+    record = {"pr": 17, "sha": sha, "state": "WAIT_CHECKS",
+              "delivery": "PENDING_MANUAL_RECONCILIATION"}
+    data = io.BytesIO()
+    with zipfile.ZipFile(data, "w") as archive:
+        archive.writestr("mihur-pending-handoffs.jsonl", json.dumps(record) + "\n")
+
+    def fake(method, url, token, payload=None):
+        return {"artifacts": [{"name": "mihur-pending-handoffs-42",
+                               "archive_download_url": "https://example.test/zip",
+                               "expired": False}]}
+
+    with (
+        patch.object(orchestrator, "request", side_effect=fake),
+        patch.object(orchestrator, "artifact_bytes", return_value=data.getvalue()),
+    ):
+        assert orchestrator.pending_records("root", "token") == [record]
+
+
+def test_pending_recovery_failure_prevents_new_routing(tmp_path, monkeypatch):
+    import json
+
+    event_path = tmp_path / "event.json"
+    event_path.write_text(json.dumps({"pull_request": {"number": 19}}))
+    monkeypatch.setenv("GITHUB_REPOSITORY", "org/repo")
+    monkeypatch.setenv("GITHUB_TOKEN", "fake")
+    monkeypatch.setenv("GITHUB_EVENT_PATH", str(event_path))
+    with (
+        patch.object(orchestrator, "pending_records", side_effect=OSError("artifact unavailable")),
+        patch.object(orchestrator, "deliver") as deliver,
+        pytest.raises(OSError, match="artifact unavailable"),
+    ):
+        orchestrator.main()
+    deliver.assert_not_called()
+
+
+def test_stale_pending_sha_never_replayed():
+    pending = [{"pr": 17, "sha": "a" * 40, "state": "WAIT_CHECKS",
+                "delivery": "PENDING_MANUAL_RECONCILIATION"}]
+    with (
+        patch.object(orchestrator, "pending_records", return_value=pending),
+        patch.object(orchestrator, "request", return_value={
+            "state": "open", "head": {"sha": "b" * 40}
+        }),
+        patch.object(orchestrator, "deliver") as deliver,
+    ):
+        orchestrator.reconcile_pending("root", "token")
+    deliver.assert_not_called()
