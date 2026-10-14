@@ -272,3 +272,31 @@ def test_wa_uploaded_2026_v3_1_source_provenance_is_not_accepted_coverage():
     assert uploaded["course_rows_not_unique_skills"] is True
     assert uploaded["scope_acceptance"] == "PENDING_INDEPENDENT_SOURCE_REVIEW"
     assert data["expectations"] == []
+
+
+def test_wa_2026_null_priority_and_course_scope_cells_remain_distinct():
+    ledger = json.loads(
+        (ROOT / 'wa_2026_v3_1_course_scope_cell_audit.v1.json').read_text(encoding='utf-8')
+    )
+    extraction = json.loads(
+        (ROOT / 'wa_2026_v3_1_source_extraction.json').read_text(encoding='utf-8')
+    )
+    assert ledger['priority_exception']['code'] == 'M.1.SR.G.2'
+    assert ledger['priority_exception']['cell'] == 'F53'
+    assert ledger['priority_exception']['source_value'] is None
+    assert next(x for x in extraction['k8'] if x['code'] == 'M.1.SR.G.2')['priority'] is None
+    variants = ledger['course_scope_variants']
+    assert len(variants) == ledger['summary']['variant_codes'] == 22
+    assert sum(len(v['scope_cells']) for v in variants) == ledger['summary']['course_placements'] == 116
+    assert len({v['code'] for v in variants}) == 22
+    grouped = {}
+    for row in extraction['high_school_course_rows']:
+        grouped.setdefault(row['code'], []).append(row)
+    for variant in variants:
+        rows = grouped[variant['code']]
+        assert len(rows) == len(variant['scope_cells'])
+        assert len({r['scope'] for r in rows}) == variant['distinct_source_scope_texts']
+        assert variant['extraction_matches_original_cells'] is True
+        assert variant['independent_source_acceptance'] == 'PENDING'
+    assert ledger['publisher_byte_match'] == 'NOT_INDEPENDENTLY_VERIFIED'
+    assert ledger['activation'] == 'FORBIDDEN'
