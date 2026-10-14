@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_IDENTIFIER_PAGE_LOCATOR_SLICE_PENDING_INDEPENDENT_VERIFICATION",
+  "track": "GRADE_1",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "Modified January 2013 with April 2014 electronic corrections",
+  "source_archive_sha256": "edb5569e4511400f255efd5deba0d413ada912bc0148f634a3b85e30fdc932c4",
+  "original_full_audit_filename": "ca_2013_grade1_pages16_17_author_audit.v1.json",
+  "full_author_scope_audit_imported": false,
+  "official_page_byte_authentication": "PENDING",
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "expectations": [
+    {
+      "expectation_id": "1.OA.1",
+      "source_printed_page": 16
+    },
+    {
+      "expectation_id": "1.OA.2",
+      "source_printed_page": 16
+    },
+    {
+      "expectation_id": "1.OA.3",
+      "source_printed_page": 16
+    },
+    {
+      "expectation_id": "1.OA.4",
+      "source_printed_page": 16
+    },
+    {
+      "expectation_id": "1.OA.5",
+      "source_printed_page": 16
+    },
+    {
+      "expectation_id": "1.OA.6",
+      "source_printed_page": 16
+    },
+    {
+      "expectation_id": "1.OA.7",
+      "source_printed_page": 16
+    },
+    {
+      "expectation_id": "1.OA.8",
+      "source_printed_page": 16
+    },
+    {
+      "expectation_id": "1.NBT.1",
+      "source_printed_page": 16
+    },
+    {
+      "expectation_id": "1.NBT.2",
+      "source_printed_page": 16
+    },
+    {
+      "expectation_id": "1.NBT.3",
+      "source_printed_page": 17
+    },
+    {
+      "expectation_id": "1.NBT.4",
+      "source_printed_page": 17
+    },
+    {
+      "expectation_id": "1.NBT.5",
+      "source_printed_page": 17
+    },
+    {
+      "expectation_id": "1.NBT.6",
+      "source_printed_page": 17
+    },
+    {
+      "expectation_id": "1.MD.1",
+      "source_printed_page": 17
+    },
+    {
+      "expectation_id": "1.MD.2",
+      "source_printed_page": 17
+    },
+    {
+      "expectation_id": "1.MD.3",
+      "source_printed_page": 17
+    },
+    {
+      "expectation_id": "1.MD.4",
+      "source_printed_page": 17
+    },
+    {
+      "expectation_id": "1.G.1",
+      "source_printed_page": 17
+    },
+    {
+      "expectation_id": "1.G.2",
+      "source_printed_page": 17
+    },
+    {
+      "expectation_id": "1.G.3",
+      "source_printed_page": 17
+    }
+  ]
+}
