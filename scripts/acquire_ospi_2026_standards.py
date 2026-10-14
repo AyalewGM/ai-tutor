@@ -10,8 +10,8 @@ import hashlib
 import json
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urljoin, urlparse
 from urllib.error import HTTPError, URLError
+from urllib.parse import urljoin, urlparse
 from urllib.request import Request, urlopen
 
 OFFICIAL_PAGE = (
