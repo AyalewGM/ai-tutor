@@ -95,7 +95,7 @@ def main() -> int:
         return 0
     body = (
         f"{tag}\n### Mihur automated handoff (routing only)\n"
-        f"- Exact head: \`{sha}\`\n"
+        f"- Exact head: `{sha}`\n"
         f"- State: **{state}**\n"
         f"- CI: {checks.get('CI', 'unknown')}; AppSec: {checks.get('AppSec Baseline', 'unknown')}\n"
         f"- Suggested next lane: **{lane(pr['title'], paths)}**\n"
