@@ -10,7 +10,7 @@ permissions:
   pull-requests: read
   issues: write
 concurrency:
-  group: mihur-handoff-${{ github.event.pull_request.number || github.event.workflow_run.head_sha }}
+  group: mihur-handoff-repository
   cancel-in-progress: false
 jobs:
   route:
