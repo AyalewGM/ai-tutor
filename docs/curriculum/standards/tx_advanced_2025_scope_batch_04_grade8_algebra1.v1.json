@@ -246,7 +246,13 @@
     },
     {
       "expectation_id": "111.31(d)(7)(B)",
-      "scope": "Relate factors of quadratic expressions to zeros of their associated functions."
+      "scope": "Describe the relationship between the linear factors of a quadratic expression and the zeros of its associated quadratic function.",
+      "material_bounds": [
+        "linear factors (not arbitrary polynomial factors)",
+        "zeros of associated quadratic function",
+        "does not presume every quadratic has real linear factors"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_VALIDATED_AGAINST_TEXAS_REGISTER_2025_SECTION_111_31_D_7_B_PENDING_INDEPENDENT_REVIEW"
     },
     {
       "expectation_id": "111.31(d)(7)(C)",
