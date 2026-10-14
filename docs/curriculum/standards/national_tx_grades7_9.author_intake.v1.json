@@ -29,13 +29,13 @@
       "track": "ADVANCED_GRADE_7",
       "section": "111.30",
       "version": "2025",
-      "rows_status": "67_AUTHOR_ENUMERATED_IDS_8_SCOPE_SUMMARIES_NO_INDEPENDENT_ACCEPTANCE"
+      "rows_status": "67_AUTHOR_SCOPE_SUMMARIES_PENDING_INDEPENDENT_SOURCE_ACCEPTANCE"
     },
     {
       "track": "ADVANCED_GRADE_8_ALGEBRA_I",
       "section": "111.31",
       "version": "2025",
-      "rows_status": "63_AUTHOR_ENUMERATED_IDS_6_SCOPE_SUMMARIES_NO_INDEPENDENT_ACCEPTANCE"
+      "rows_status": "63_AUTHOR_SCOPE_SUMMARIES_PENDING_INDEPENDENT_SOURCE_ACCEPTANCE"
     }
   ],
   "limitations": [
@@ -45,7 +45,7 @@
     "Algebra I §111.39 56 lettered student-expectation IDs located in TEA's October 2015 official PDF; per-letter full mathematical scope and current TAC amendment parity remain pending.",
     "Algebra I §111.39(c) author-corrected per-letter printed-page locators against official October 2015 TEA PDF, including 2H/2I on p3, 6A-C on p4, and 10B crossing p4-5. Independent exact-page acceptance pending.",
     "June 27, 2025 official adopted rule amends §111.30(c)(8)(C) and §111.31 title/prerequisites/course description. Do not transcribe February proposal as final 2025 text or assume §111.31 and §111.39 are identical.",
-    "Advanced 2025 Grade 7 has 67 author-enumerated student expectations (including unlettered 111.30(c)(9)); Grade 8 Algebra I has 63; all require original publisher-text independent verification and 116 currently have no editorial scope summary."
+    "Advanced 2025 Grade 7 has 67 author-enumerated student expectations (including unlettered 111.30(c)(9)); Grade 8 Algebra I has 63; all require original publisher-text independent verification and all 130 have author editorial scope summaries but zero are independently source-accepted."
   ],
   "expectations": [
     {
