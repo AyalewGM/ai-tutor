@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "status": "SOURCE_WORKBOOK_UPLOADED_AUTHOR_EXTRACTION_PENDING_REPOSITORY_IMPORT_AND_INDEPENDENT_VERIFICATION",
+  "status": "AUTHOR_WORKBOOK_EXTRACTION_STAGED_PUBLISHER_AUTHENTICATION_AND_INDEPENDENT_REVIEW_PENDING",
   "as_of": "2026-10-13",
   "authority": "Washington OSPI",
   "official_landing_page": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
@@ -9,7 +9,7 @@
   "exploration": "2026-2027",
   "required": "2027-2028",
   "prior_version": "2011 adopted CCSS Mathematics",
-  "crosswalk": "2026 official Excel crosswalk to 2011 CCSS listed on OSPI page; source rows not obtained",
+  "crosswalk": "425 user-uploaded August 2026 v3.1 workbook crosswalk rows author-extracted in wa_2026_v3_1_source_extraction.json; official publisher byte/version identity and individual rows NOT independently verified",
   "pathways": [
     "GRADE_7",
     "GRADE_8",
@@ -21,7 +21,7 @@
     "Four connected domains and data-science inquiry require exact publisher file verification.",
     "OSPI 2026 official FAQ names Integrated 1/2/3, Geometry, Algebra 1/2 and Credit 3; exact course requirement lists remain unextracted.",
     "An OSPI March 2026 support PDF references math25-initial-adoption-spreadsheet.xlsx; this is NOT proof of final 2026 formal-adoption workbook content.",
-    "Workbook received from user; source bytes and 264 K-8, 464 HS course, 425 crosswalk rows extracted outside repository; full rows must be imported, independently verified, and mapped before claiming coverage.",
+    "Workbook received from user; source bytes and 264 K-8, 464 HS course, 425 crosswalk rows extracted outside repository; draft extraction is committed, but publisher identity, individual source rows, mathematical scope and mappings remain independently unverified.",
     "The 425 crosswalk rows include an explicit removal of 7.NS.A.3 (null 2026 code); never fabricate a mapping or count it as an unmapped 2026 expectation."
   ],
   "high_school_arrangements": {
@@ -58,7 +58,7 @@
     "crosswalk_rows": 425,
     "source": "USER_UPLOADED_DOCUMENT",
     "publisher_hash_independently_verified": false,
-    "extracted_json": "wa_2026_v3_1_source_extraction.json (conversation artifact, not yet checked into repository)",
+    "extracted_json": "wa_2026_v3_1_source_extraction.json (committed draft extraction, not publisher-authenticated or independently accepted)",
     "scope_acceptance": "PENDING_INDEPENDENT_SOURCE_REVIEW",
     "course_rows_not_unique_skills": true,
     "unique_high_school_standard_codes": 160,
