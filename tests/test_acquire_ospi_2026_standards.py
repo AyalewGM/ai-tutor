@@ -20,7 +20,6 @@ def test_candidate_links_filter_off_domain_and_preserve_labels():
     links = candidate_links(html)
     assert len(links) == 1
     assert links[0][0] == "https://ospi.k12.wa.us/sites/default/files/2026/final.xlsx"
-    assert links[1][0].endswith("/2025/initial.pdf")
 
 
 def test_source_signature_validation(tmp_path: Path):
