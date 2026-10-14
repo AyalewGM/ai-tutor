@@ -1,0 +1,549 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_SOURCE_SCOPE_DRAFT_PENDING_INDEPENDENT_REVIEW",
+  "source_publisher": "California Department of Education",
+  "official_source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "edition": "California CCSS Mathematics modified January 2013; electronic edition with 2014 corrections",
+  "printed_page_span": [
+    48,
+    51
+  ],
+  "pdf_page_index_span": [
+    54,
+    57
+  ],
+  "overlap_notice": "These 24 Grade 7 standards already occur in the 173-row national_ca_grades7_9 historical ID inventory; these are scoped author evidence for the existing IDs, not new IDs or canonical skills. The previously prepared 271-row source archive is not imported by this file.",
+  "source_byte_authentication": "OFFICIAL_HOST_PDF_VIEWED_NOT_LOCAL_FILE_HASH_VERIFIED",
+  "all_grade7_parent_identifiers_scoped_in_this_author_slice": 24,
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "7.RP.1",
+      "track": "GRADE_7",
+      "source_printed_page": 48,
+      "source_pdf_page_index": 54,
+      "source_printed_page_span": [
+        48
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Compute unit rates of fractional ratios for measurements in matching or different units, including lengths and areas.",
+      "test_material_conditions": [
+        "unit rates",
+        "fractional ratios",
+        "matching or different units"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.RP.2",
+      "track": "GRADE_7",
+      "source_printed_page": 48,
+      "source_pdf_page_index": 54,
+      "source_printed_page_span": [
+        48
+      ],
+      "required_lettered_subparts": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "author_mathematical_scope_summary": "Test proportionality with equivalent ratios in a table or a straight-line graph through (0, 0); find the constant of proportionality (unit rate) using tables, graphs, equations, diagrams and verbal descriptions; express proportionality as an equation and interpret contextual points (x, y), particularly (0, 0) and (1, r).",
+      "test_material_conditions": [
+        "equivalent ratios",
+        "(0, 0)",
+        "constant of proportionality",
+        "(1, r)",
+        "equation"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.RP.3",
+      "track": "GRADE_7",
+      "source_printed_page": 48,
+      "source_pdf_page_index": 54,
+      "source_printed_page_span": [
+        48
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Solve multistep proportional ratio and percent applications, including simple interest, taxes, markups, markdowns, gratuities, commissions, fees, percent increase/decrease, and percent error.",
+      "test_material_conditions": [
+        "simple interest",
+        "percent error",
+        "multistep"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.NS.1",
+      "track": "GRADE_7",
+      "source_printed_page": 48,
+      "source_pdf_page_index": 54,
+      "source_printed_page_span": [
+        48
+      ],
+      "required_lettered_subparts": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "author_mathematical_scope_summary": "Add and subtract rational values on horizontal and vertical number lines; model opposite quantities summing to zero, displacement and additive inverses, subtract by adding the opposite, connect distance to absolute difference, and use operation properties.",
+      "test_material_conditions": [
+        "number line",
+        "additive inverses",
+        "absolute",
+        "properties"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.NS.2",
+      "track": "GRADE_7",
+      "source_printed_page": 48,
+      "source_pdf_page_index": 54,
+      "source_printed_page_span": [
+        48,
+        49
+      ],
+      "required_lettered_subparts": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "author_mathematical_scope_summary": "Extend multiplication and division of fractions to signed rational numbers using operation properties, especially the distributive law; justify sign rules and interpret signed products/quotients in context; divide integers by nonzero divisors with -(p/q) = (-p)/q = p/(-q); convert rational numbers by long division to decimals that terminate or eventually repeat.",
+      "test_material_conditions": [
+        "distributive",
+        "nonzero divisors",
+        "-(p/q)",
+        "long division",
+        "repeat"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.NS.3",
+      "track": "GRADE_7",
+      "source_printed_page": 49,
+      "source_pdf_page_index": 55,
+      "source_printed_page_span": [
+        49
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Solve mathematical and contextual tasks using all four rational-number operations, including complex fractions under the publisher footnote.",
+      "test_material_conditions": [
+        "four",
+        "rational",
+        "complex fractions"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.EE.1",
+      "track": "GRADE_7",
+      "source_printed_page": 49,
+      "source_pdf_page_index": 55,
+      "source_printed_page_span": [
+        49
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Use operation properties to add, subtract, factor, and expand linear algebraic expressions with rational coefficients.",
+      "test_material_conditions": [
+        "add",
+        "subtract",
+        "factor",
+        "expand",
+        "rational"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.EE.2",
+      "track": "GRADE_7",
+      "source_printed_page": 49,
+      "source_pdf_page_index": 55,
+      "source_printed_page_span": [
+        49
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Explain how rewriting algebraic expressions in equivalent forms reveals relationships among contextual quantities, including a percentage increase in additive and multiplicative forms.",
+      "test_material_conditions": [
+        "equivalent",
+        "contextual",
+        "percentage"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.EE.3",
+      "track": "GRADE_7",
+      "source_printed_page": 49,
+      "source_pdf_page_index": 55,
+      "source_printed_page_span": [
+        49
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Solve multistep mathematical and real-life problems involving positive and negative rational numbers in whole-number, fraction or decimal form; choose tools, transform representations, and check answers by mental computation or estimation.",
+      "test_material_conditions": [
+        "multistep",
+        "rational",
+        "estimation"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.EE.4",
+      "track": "GRADE_7",
+      "source_printed_page": 49,
+      "source_pdf_page_index": 55,
+      "source_printed_page_span": [
+        49
+      ],
+      "required_lettered_subparts": [
+        "a",
+        "b"
+      ],
+      "author_mathematical_scope_summary": "Model real-world quantities with variables; solve equations of types px + q = r and p(x + q) = r with rational parameters and compare arithmetic with algebraic reasoning; form, graph and interpret contextual px + q > r and px + q < r inequalities.",
+      "test_material_conditions": [
+        "px + q = r",
+        "p(x + q) = r",
+        "px + q > r",
+        "px + q < r",
+        "graph"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.G.1",
+      "track": "GRADE_7",
+      "source_printed_page": 49,
+      "source_pdf_page_index": 55,
+      "source_printed_page_span": [
+        49
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Solve scale-drawing geometry problems, recovering actual lengths and areas from a drawing and producing a drawing at another scale.",
+      "test_material_conditions": [
+        "scale",
+        "lengths",
+        "areas"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.G.2",
+      "track": "GRADE_7",
+      "source_printed_page": 50,
+      "source_pdf_page_index": 56,
+      "source_printed_page_span": [
+        50
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Construct geometric shapes with given conditions freehand, with a ruler and protractor, and using technology; analyze when three angle/side measurements determine one triangle, more than one triangle, or no triangle.",
+      "test_material_conditions": [
+        "ruler",
+        "protractor",
+        "technology",
+        "one triangle",
+        "no triangle"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.G.3",
+      "track": "GRADE_7",
+      "source_printed_page": 50,
+      "source_pdf_page_index": 56,
+      "source_printed_page_span": [
+        50
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Describe planar cross-sections produced by slicing solids such as right rectangular prisms and right rectangular pyramids.",
+      "test_material_conditions": [
+        "cross-sections",
+        "prisms",
+        "pyramids"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.G.4",
+      "track": "GRADE_7",
+      "source_printed_page": 50,
+      "source_pdf_page_index": 56,
+      "source_printed_page_span": [
+        50
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Apply circle area and circumference formulas and give an informal explanation linking circumference and area.",
+      "test_material_conditions": [
+        "circumference",
+        "area",
+        "informal"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.G.5",
+      "track": "GRADE_7",
+      "source_printed_page": 50,
+      "source_pdf_page_index": 56,
+      "source_printed_page_span": [
+        50
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Use supplementary, complementary, vertical and adjacent angle facts in multistep problems; construct and solve equations for unknown angle measures.",
+      "test_material_conditions": [
+        "supplementary",
+        "complementary",
+        "vertical",
+        "adjacent",
+        "equations"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.G.6",
+      "track": "GRADE_7",
+      "source_printed_page": 50,
+      "source_pdf_page_index": 56,
+      "source_printed_page_span": [
+        50
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Solve real-world and mathematical area, surface-area and volume problems with composite two- and three-dimensional shapes built from triangles, quadrilaterals, polygons, cubes and right prisms.",
+      "test_material_conditions": [
+        "surface-area",
+        "volume",
+        "composite",
+        "right prisms"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.SP.1",
+      "track": "GRADE_7",
+      "source_printed_page": 50,
+      "source_pdf_page_index": 56,
+      "source_printed_page_span": [
+        50
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Explain that population inference from a sample is defensible only when the sample is representative, and that random sampling supports representative samples.",
+      "test_material_conditions": [
+        "population",
+        "representative",
+        "random"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.SP.2",
+      "track": "GRADE_7",
+      "source_printed_page": 50,
+      "source_pdf_page_index": 56,
+      "source_printed_page_span": [
+        50
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Use random sample data to infer an unknown population property, drawing or simulating multiple equally sized samples to estimate uncertainty and variation.",
+      "test_material_conditions": [
+        "random",
+        "multiple",
+        "variation"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.SP.3",
+      "track": "GRADE_7",
+      "source_printed_page": 50,
+      "source_pdf_page_index": 56,
+      "source_printed_page_span": [
+        50
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Informally compare the visual overlap of two numerical distributions with comparable variability; express differences of centers as a multiple of a variability measure.",
+      "test_material_conditions": [
+        "overlap",
+        "centers",
+        "variability"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.SP.4",
+      "track": "GRADE_7",
+      "source_printed_page": 50,
+      "source_pdf_page_index": 56,
+      "source_printed_page_span": [
+        50
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Use measures of center and spread computed from random samples to make informal comparative inferences about two populations.",
+      "test_material_conditions": [
+        "center",
+        "spread",
+        "random samples",
+        "two populations"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.SP.5",
+      "track": "GRADE_7",
+      "source_printed_page": 50,
+      "source_pdf_page_index": 56,
+      "source_printed_page_span": [
+        50
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Interpret probability on the 0–1 scale as event likelihood; distinguish events near zero, one-half, and one.",
+      "test_material_conditions": [
+        "0–1",
+        "one-half",
+        "likelihood"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.SP.6",
+      "track": "GRADE_7",
+      "source_printed_page": 50,
+      "source_pdf_page_index": 56,
+      "source_printed_page_span": [
+        50
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Approximate event probabilities from observed long-run relative frequencies of repeated chance trials and predict approximate counts of outcomes.",
+      "test_material_conditions": [
+        "long-run",
+        "relative frequencies",
+        "predict"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.SP.7",
+      "track": "GRADE_7",
+      "source_printed_page": 51,
+      "source_pdf_page_index": 57,
+      "source_printed_page_span": [
+        51
+      ],
+      "required_lettered_subparts": [
+        "a",
+        "b"
+      ],
+      "author_mathematical_scope_summary": "Construct and use theoretical uniform-outcome models and observed-frequency models, compare model probabilities with empirical frequencies, and explain discrepancies.",
+      "test_material_conditions": [
+        "uniform",
+        "frequencies",
+        "discrepancies"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "7.SP.8",
+      "track": "GRADE_7",
+      "source_printed_page": 51,
+      "source_pdf_page_index": 57,
+      "source_printed_page_span": [
+        51
+      ],
+      "required_lettered_subparts": [
+        "a",
+        "b",
+        "c"
+      ],
+      "author_mathematical_scope_summary": "Determine compound-event probabilities from fractions of a sample space, organized outcome lists, tables or probability trees; enumerate outcomes for verbal events and design simulations to estimate compound probabilities.",
+      "test_material_conditions": [
+        "compound",
+        "sample space",
+        "lists",
+        "tree",
+        "simulation"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
