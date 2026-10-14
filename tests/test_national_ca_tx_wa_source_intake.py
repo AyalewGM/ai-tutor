@@ -46,8 +46,8 @@ def test_texas_regular_and_advanced_are_not_conflated():
 
 def test_wa_2026_missing_originals_fail_closed():
     data = _data("WA")
-    assert data["status"] == "SOURCE_WORKBOOK_UPLOADED_AUTHOR_EXTRACTION_PENDING_REPOSITORY_IMPORT_AND_INDEPENDENT_VERIFICATION"
-    assert data["expectations"] == []
+    assert data["status"] == "AUTHOR_WORKBOOK_EXTRACTION_STAGED_PUBLISHER_AUTHENTICATION_AND_INDEPENDENT_REVIEW_PENDING"
+    assert data["expectations"] == []  # source extraction is staged separately, not accepted coverage
     assert data["required"] == "2027-2028"
     assert "2011" in data["crosswalk"]
 
