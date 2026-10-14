@@ -1,0 +1,29 @@
+name: Mihur Agent Handoff (Phase 1)
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review, converted_to_draft]
+  workflow_run:
+    workflows: ["CI", "AppSec Baseline"]
+    types: [completed]
+permissions:
+  contents: read
+  pull-requests: read
+  issues: write
+concurrency:
+  group: mihur-handoff-${{ github.event.pull_request.number || github.event.workflow_run.head_sha }}
+  cancel-in-progress: false
+jobs:
+  route:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Route without executing PR code
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/agent_handoff_orchestrator.py
