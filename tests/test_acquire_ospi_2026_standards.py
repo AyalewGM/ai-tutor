@@ -1,7 +1,7 @@
 """Local-only tests for the OSPI source acquisition helper."""
 from pathlib import Path
 
-from scripts.acquire_ospi_2026_standards import candidate_links, official_url, signature_matches
+from scripts.acquire_ospi_2026_standards import candidate_links, official_url, signature_matches, validate_candidate_url
 
 
 def test_only_official_https_ospi_sources_allowed():
@@ -31,3 +31,18 @@ def test_source_signature_validation(tmp_path: Path):
     pdf = tmp_path / "final.pdf"
     pdf.write_bytes(b"%PDF-1.7 example")
     assert signature_matches(pdf)
+
+
+def test_direct_candidate_url_is_restricted_to_ospi_non_initial_documents():
+    valid = "https://ospi.k12.wa.us/sites/default/files/2026-06/final-math.xlsx"
+    assert validate_candidate_url(valid) == valid
+    import pytest
+
+    for bad in (
+        "https://example.org/final-math.xlsx",
+        "http://ospi.k12.wa.us/sites/default/files/final.xlsx",
+        "https://ospi.k12.wa.us/sites/default/files/2025-12/math25-initial-adoption-spreadsheet.xlsx",
+        "https://ospi.k12.wa.us/sites/default/files/index.html",
+    ):
+        with pytest.raises(ValueError):
+            validate_candidate_url(bad)
