@@ -20,8 +20,10 @@ Track coordination in #377 and #278. The orchestrator may be enabled only after 
 
 **Phase 2 remains separate:** authorized runners, identities, least-privilege credentials, isolated execution and independent review enforcement are not implemented in this PR.
 
-## Pending delivery recovery
+## Durable next-run pending recovery
 
-If both comment POST attempts fail, the coordinator records `PENDING_MANUAL_RECONCILIATION` in a newline-delimited JSON file. GitHub Actions uploads it as the `mihur-pending-handoffs-<run-id>` artifact (30-day retention) and logs a workflow warning. This means **handoff not delivered** even if the job itself succeeds; it is never an acceptance signal.
+The coordinator records failed or uncertain comment deliveries in `mihur-pending-handoffs.jsonl`, which the workflow uploads as a GitHub Actions artifact (up to 90 days, subject to repository retention policy). A scheduled **hourly** run, as well as every PR/CI/AppSec event, first lists previous pending artifacts, validates their JSONL records, and reconciles each against the **current PR SHA and exact-head checks** before processing new work. Existing exact-SHA/state comments are recognized and not reposted. Stale SHA records are skipped; they are not approvals.
 
-Engineering must inspect the artifact, re-read the PR's current head and exact-head checks, inspect all PR comments for the marker, and only then retry the missing handoff. Do not replay stale SHA approvals. If a POST response was lost and reconciliation failed, the coordinator does **not** issue another POST automatically. An artifact-upload failure requires manual investigation of the workflow run.
+If recovery is still blocked, the new run creates a fresh pending artifact and defers new routing. Missing/unreadable artifacts, malformed records and pagination overflow fail closed. A lost comment POST response is reconciled before retry; an uncertain result never triggers a blind duplicate POST. The repository-wide concurrency group serializes writers.
+
+**Limitations:** GitHub Actions artifacts are retention-limited, not an indefinite database. The hourly schedule reduces loss risk, but prolonged outages, disabled schedules, retention overrides or failed artifact uploads still require manual intervention. The workflow logs pending-delivery warnings; green CI/AppSec is not evidence that a handoff was delivered. No agent execution, approval, merge, mastery credit or activation is performed.
