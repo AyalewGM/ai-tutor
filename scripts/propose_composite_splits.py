@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Generate composite-skill split proposals for Math Review.
 
 For each DECOMPOSE_REQUIRED seed canonical code (from the coverage audit),
@@ -155,9 +154,9 @@ def to_markdown(d: dict) -> str:
         "",
         f"Status: `{d['status']}` — {d['rule']}",
         "",
-        f"{s['composite_local_skills']} composite local skills → "
-        f"{s['proposed_atomic_skills']} proposed atomic skills "
-        f"({s['no_official_claims']} skills have no official expectation claims).",
+        (f"{s['composite_local_skills']} composite local skills → "
+         f"{s['proposed_atomic_skills']} proposed atomic skills "
+         f"({s['no_official_claims']} skills have no official expectation claims)."),
         "",
     ]
     for p in d["proposals"]:
