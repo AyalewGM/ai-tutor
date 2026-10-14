@@ -1,0 +1,896 @@
+{
+  "schema_version": "1.0.0",
+  "as_of": "2026-10-14",
+  "jurisdiction": "TX",
+  "track": "ADVANCED_GRADE_6",
+  "official_section": "19 TAC 111.29(c)",
+  "status": "AUTHOR_IDENTIFIER_INTAKE_NOT_INDEPENDENTLY_ACCEPTED",
+  "adoption": {
+    "year": 2025,
+    "effective_date": "2025-07-06",
+    "implementation_school_year": "2025-2026",
+    "notice": "https://www.sos.state.tx.us/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+    "section_111_29": "Adopted unchanged from February 28 2025 proposal and not republished in final notice"
+  },
+  "source": {
+    "publisher": "Texas Education Agency",
+    "pdf": "https://tea.texas.gov/state-board-of-education/sboe-2025/sboe-2025-april/1a3cofb2-chap111-sub-b.pdf",
+    "pdf_zero_based_page_range": [
+      1,
+      4
+    ],
+    "source_level": "OFFICIAL_PROPOSED_TEXT_PLUS_OFFICIAL_ADOPTED_NOTICE",
+    "current_codified_text_parity": "PENDING"
+  },
+  "accounting": {
+    "groups": 15,
+    "distinct_student_expectation_identifiers": 68,
+    "group_expected_counts": [
+      7,
+      8,
+      9,
+      2,
+      4,
+      3,
+      3,
+      6,
+      4,
+      1,
+      2,
+      4,
+      2,
+      6,
+      7
+    ],
+    "unlettered_groups": [
+      10
+    ]
+  },
+  "constraints": [
+    "Section 111.29 (Grade 6 Advanced) is distinct from regular Grade 6 111.26, Grade 7 Advanced 111.30, and Grade 8 Advanced Algebra I 111.31.",
+    "111.29(c)(10) is unlettered: do not invent 10(A).",
+    "Publisher source row locations are author-indexed; official final/code parity and all mathematical scopes need independent source-fidelity review.",
+    "No canonical, generator, assessment, MVE, mastery, or activation claim."
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "111.29(c)(1)(A)",
+      "parent_group": 1,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(1)(B)",
+      "parent_group": 1,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(1)(C)",
+      "parent_group": 1,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(1)(D)",
+      "parent_group": 1,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(1)(E)",
+      "parent_group": 1,
+      "lettered_subpart": "E",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(1)(F)",
+      "parent_group": 1,
+      "lettered_subpart": "F",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(1)(G)",
+      "parent_group": 1,
+      "lettered_subpart": "G",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(A)",
+      "parent_group": 2,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(B)",
+      "parent_group": 2,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(C)",
+      "parent_group": 2,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(D)",
+      "parent_group": 2,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(E)",
+      "parent_group": 2,
+      "lettered_subpart": "E",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(F)",
+      "parent_group": 2,
+      "lettered_subpart": "F",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(G)",
+      "parent_group": 2,
+      "lettered_subpart": "G",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(2)(H)",
+      "parent_group": 2,
+      "lettered_subpart": "H",
+      "source_pdf_zero_based_pages": [
+        1
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(A)",
+      "parent_group": 3,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(B)",
+      "parent_group": 3,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(C)",
+      "parent_group": 3,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(D)",
+      "parent_group": 3,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(E)",
+      "parent_group": 3,
+      "lettered_subpart": "E",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(F)",
+      "parent_group": 3,
+      "lettered_subpart": "F",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(G)",
+      "parent_group": 3,
+      "lettered_subpart": "G",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(H)",
+      "parent_group": 3,
+      "lettered_subpart": "H",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(3)(I)",
+      "parent_group": 3,
+      "lettered_subpart": "I",
+      "source_pdf_zero_based_pages": [
+        1,
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(4)(A)",
+      "parent_group": 4,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(4)(B)",
+      "parent_group": 4,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(5)(A)",
+      "parent_group": 5,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(5)(B)",
+      "parent_group": 5,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(5)(C)",
+      "parent_group": 5,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(5)(D)",
+      "parent_group": 5,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(6)(A)",
+      "parent_group": 6,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(6)(B)",
+      "parent_group": 6,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(6)(C)",
+      "parent_group": 6,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(7)(A)",
+      "parent_group": 7,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(7)(B)",
+      "parent_group": 7,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(7)(C)",
+      "parent_group": 7,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(8)(A)",
+      "parent_group": 8,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        2,
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(8)(B)",
+      "parent_group": 8,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        2,
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(8)(C)",
+      "parent_group": 8,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        2,
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(8)(D)",
+      "parent_group": 8,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        2,
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(8)(E)",
+      "parent_group": 8,
+      "lettered_subpart": "E",
+      "source_pdf_zero_based_pages": [
+        2,
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(8)(F)",
+      "parent_group": 8,
+      "lettered_subpart": "F",
+      "source_pdf_zero_based_pages": [
+        2,
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(9)(A)",
+      "parent_group": 9,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(9)(B)",
+      "parent_group": 9,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(9)(C)",
+      "parent_group": 9,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(9)(D)",
+      "parent_group": 9,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(10)",
+      "parent_group": 10,
+      "lettered_subpart": null,
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(11)(A)",
+      "parent_group": 11,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(11)(B)",
+      "parent_group": 11,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(12)(A)",
+      "parent_group": 12,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        3,
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(12)(B)",
+      "parent_group": 12,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        3,
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(12)(C)",
+      "parent_group": 12,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        3,
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(12)(D)",
+      "parent_group": 12,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        3,
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(13)(A)",
+      "parent_group": 13,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(13)(B)",
+      "parent_group": 13,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(14)(A)",
+      "parent_group": 14,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(14)(B)",
+      "parent_group": 14,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(14)(C)",
+      "parent_group": 14,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(14)(D)",
+      "parent_group": 14,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(14)(E)",
+      "parent_group": 14,
+      "lettered_subpart": "E",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(14)(F)",
+      "parent_group": 14,
+      "lettered_subpart": "F",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(A)",
+      "parent_group": 15,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(B)",
+      "parent_group": 15,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(C)",
+      "parent_group": 15,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(D)",
+      "parent_group": 15,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(E)",
+      "parent_group": 15,
+      "lettered_subpart": "E",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(F)",
+      "parent_group": 15,
+      "lettered_subpart": "F",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(G)",
+      "parent_group": 15,
+      "lettered_subpart": "G",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "source_fidelity": "AUTHOR_LOCATED_IN_TEA_PROPOSAL_INDEPENDENT_REVIEW_PENDING",
+      "mathematical_scope": null,
+      "canonical_equivalence": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
