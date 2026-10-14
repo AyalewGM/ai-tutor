@@ -48,7 +48,7 @@
     },
     {
       "expectation_id": "111.30(c)(6)(A)",
-      "scope": "Represent outcomes of simple and compound events with lists and tree diagrams.",
+      "scope": "Represent sample spaces for simple and compound events using lists and tree diagrams.",
       "material_bounds": [
         "sample space",
         "simple and compound events"
@@ -105,7 +105,7 @@
     },
     {
       "expectation_id": "111.30(c)(7)(D)",
-      "scope": "Write a corresponding real-world situation for a one-variable equation or inequality with variables on both sides and rational terms.",
+      "scope": "Write a corresponding real-world problem for a given one-variable equation or inequality with variables on both sides and rational number coefficients and constants.",
       "material_bounds": [
         "both sides",
         "rational coefficients and constants"
@@ -149,7 +149,7 @@
     },
     {
       "expectation_id": "111.30(c)(10)(B)",
-      "scope": "Derive lateral and total surface areas from nets of rectangular and triangular prisms and pyramids.",
+      "scope": "Solve lateral and total surface-area problems for rectangular prisms, rectangular pyramids, triangular prisms and triangular pyramids by determining areas from their nets.",
       "material_bounds": [
         "four listed solids",
         "nets"
@@ -176,7 +176,7 @@
     },
     {
       "expectation_id": "111.30(c)(10)(G)",
-      "scope": "Use manipulatives, models or diagrams to explain the Pythagorean theorem.",
+      "scope": "Use models and diagrams to explain the Pythagorean theorem.",
       "material_bounds": [
         "theorem explanation"
       ]
@@ -195,7 +195,7 @@
     },
     {
       "expectation_id": "111.30(c)(11)(B)",
-      "scope": "Compute areas of composite figures assembled from listed polygon types plus semicircles and quarter circles.",
+      "scope": "Determine the area of composite figures formed from rectangles, squares, parallelograms, trapezoids, triangles, semicircles and quarter circles.",
       "material_bounds": [
         "rectangles, squares, parallelograms, trapezoids, triangles, semicircles, quarter circles"
       ]
@@ -225,7 +225,7 @@
     },
     {
       "expectation_id": "111.30(c)(12)(A)",
-      "scope": "Generalize orientation and congruence properties of rotations, reflections, translations and dilations of plane figures."
+      "scope": "Generalize orientation and congruence properties of rotations, reflections, translations and dilations of two-dimensional shapes on a coordinate plane."
     },
     {
       "expectation_id": "111.30(c)(12)(B)",
