@@ -56,6 +56,7 @@ def test_direct_candidate_url_is_restricted_to_ospi_non_initial_documents():
 def test_direct_candidate_bypasses_blocked_landing_page(monkeypatch, tmp_path: Path):
     import json
     import sys
+
     import scripts.acquire_ospi_2026_standards as acquisition
 
     url = "https://ospi.k12.wa.us/sites/default/files/2026-08/final-math.xlsx"
@@ -82,7 +83,9 @@ def test_direct_candidate_bypasses_blocked_landing_page(monkeypatch, tmp_path: P
 def test_direct_initial_adoption_url_fails_closed_before_fetch(monkeypatch, tmp_path: Path):
     import json
     import sys
+
     import pytest
+
     import scripts.acquire_ospi_2026_standards as acquisition
 
     def no_fetch(*args, **kwargs):
