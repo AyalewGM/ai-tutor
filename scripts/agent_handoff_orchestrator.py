@@ -60,7 +60,8 @@ def request(method: str, url: str, token: str, payload: dict | None = None):
 def main() -> int:
     repo = os.environ["GITHUB_REPOSITORY"]
     token = os.environ["GITHUB_TOKEN"]
-    event = json.loads(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8").read())
+    with open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8") as event_file:
+        event = json.load(event_file)
     api = os.environ.get("GITHUB_API_URL", "https://api.github.com")
     if "pull_request" in event:
         number = event["pull_request"]["number"]
