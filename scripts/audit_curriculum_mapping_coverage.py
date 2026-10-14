@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Read-only curriculum mapping-coverage audit.
 
 Computes the mapping pyramid from checked-in artifacts only (no DB access):
@@ -73,10 +72,6 @@ def audit() -> dict:
         for row in d.get("expectations", []):
             grade = int(row["grade"])
             links = row.get("repository_existing_crosswalks") or []
-            has_candidate = (
-                row.get("proposed_mapping_status") != NO_CANDIDATE
-                or len(links) > 0
-            )
             all_expectations.append(
                 {
                     "jurisdiction": juris,
