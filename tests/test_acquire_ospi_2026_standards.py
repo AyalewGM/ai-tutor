@@ -51,3 +51,49 @@ def test_direct_candidate_url_is_restricted_to_ospi_non_initial_documents():
     ):
         with pytest.raises(ValueError):
             validate_candidate_url(bad)
+
+
+def test_direct_candidate_bypasses_blocked_landing_page(monkeypatch, tmp_path: Path):
+    import json
+    import sys
+    import scripts.acquire_ospi_2026_standards as acquisition
+
+    url = "https://ospi.k12.wa.us/sites/default/files/2026-08/final-math.xlsx"
+    seen = []
+
+    def fake_fetch(candidate, dest):
+        seen.append(candidate)
+        return {"url": candidate, "filename": dest.name,
+                "status": "ACQUIRED_UNVERIFIED_SOURCE_BYTES"}
+
+    def blocked_landing(*args, **kwargs):
+        raise AssertionError("landing page must not be called for direct candidate")
+
+    monkeypatch.setattr(acquisition, "urlopen", blocked_landing)
+    monkeypatch.setattr(acquisition, "fetch", fake_fetch)
+    monkeypatch.setattr(sys, "argv", ["acquire", "--output", str(tmp_path),
+                                      "--candidate-url", url])
+    acquisition.main()
+    assert seen == [url]
+    result = json.loads((tmp_path / "acquisition.json").read_text())
+    assert result["accepted_expectation_rows"] == 0
+
+
+def test_direct_initial_adoption_url_fails_closed_before_fetch(monkeypatch, tmp_path: Path):
+    import json
+    import sys
+    import pytest
+    import scripts.acquire_ospi_2026_standards as acquisition
+
+    def no_fetch(*args, **kwargs):
+        raise AssertionError("should never download initial-adoption document")
+
+    monkeypatch.setattr(acquisition, "fetch", no_fetch)
+    monkeypatch.setattr(sys, "argv", ["acquire", "--output", str(tmp_path),
+        "--candidate-url",
+        "https://ospi.k12.wa.us/sites/default/files/2025-12/math25-initial-adoption-spreadsheet.xlsx"])
+    with pytest.raises(ValueError, match="Initial-adoption"):
+        acquisition.main()
+    failure = json.loads((tmp_path / "failure.json").read_text())
+    assert failure["status"] == "BLOCKED"
+    assert failure["accepted_expectation_rows"] == 0
