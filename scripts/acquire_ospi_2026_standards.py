@@ -11,6 +11,7 @@ import json
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 OFFICIAL_PAGE = (
@@ -131,7 +132,7 @@ def main() -> None:
                 entry = fetch(url, folder / f"ospi_candidate_{i}{suffix}")
                 entry["anchor_label"] = label
                 evidence.append(entry)
-            except Exception as exc:
+            except (HTTPError, URLError, OSError, ValueError) as exc:
                 evidence.append({"url": url, "status": "FETCH_FAILED",
                                  "error": str(exc)[:250]})
         result = {"publisher_page": OFFICIAL_PAGE, "status": "SOURCE_CANDIDATES_ONLY",
