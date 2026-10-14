@@ -24,7 +24,7 @@ def validate(data: dict) -> dict:
     assert len({(r["course"], r["code"]) for r in hs}) == 464
     assert all(r["code"] and r["scope"] and r["grade"] for r in k8)
     assert all(r["code"] and r["scope"] and r["course"] for r in hs)
-    assert set(r["grade"] for r in k8) == {"K", "1", "2", "3", "4", "5", "6", "7", "8"}
+    assert {r["grade"] for r in k8} == {"K", "1", "2", "3", "4", "5", "6", "7", "8"}
     known_codes = {r["code"] for r in k8} | {r["code"] for r in hs}
     missing = [r for r in crosswalk if r["wa_2026_code"] not in known_codes]
     assert len(missing) == 1
