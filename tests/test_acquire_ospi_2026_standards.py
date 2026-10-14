@@ -1,7 +1,12 @@
 """Local-only tests for the OSPI source acquisition helper."""
 from pathlib import Path
 
-from scripts.acquire_ospi_2026_standards import candidate_links, official_url, signature_matches, validate_candidate_url
+from scripts.acquire_ospi_2026_standards import (
+    candidate_links,
+    official_url,
+    signature_matches,
+    validate_candidate_url,
+)
 
 
 def test_only_official_https_ospi_sources_allowed():
