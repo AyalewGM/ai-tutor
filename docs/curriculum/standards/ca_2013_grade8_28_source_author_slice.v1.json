@@ -40,10 +40,11 @@
         54
       ],
       "required_lettered_subparts": [],
-      "author_mathematical_scope_summary": "Distinguish rational from irrational numbers using decimal behavior; show eventual repetition for rational numbers and convert eventually repeating decimals into rational numbers.",
+      "author_mathematical_scope_summary": "Understand informally that every real number has a decimal expansion; identify irrational numbers, show that rational decimals eventually repeat, and convert eventually repeating decimals to rational numbers.",
       "test_material_conditions": [
         "eventual repetition",
-        "decimal to rational"
+        "decimal to rational",
+        "every real number has decimal expansion"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
@@ -202,11 +203,12 @@
         "a",
         "b"
       ],
-      "author_mathematical_scope_summary": "Classify linear equations as having one, zero, or infinitely many solutions; solve rational-coefficient equations using expansion and like-term collection.",
+      "author_mathematical_scope_summary": "Classify linear equations in one variable as having one, none, or infinitely many solutions by reducing to x=a, a=a, or a=b (a != b); solve equations with rational coefficients using distribution and like terms.",
       "test_material_conditions": [
         "one/no/infinitely many solutions",
         "rational coefficients",
-        "distributive property"
+        "distributive property",
+        "x=a or a=a or a=b (a != b)"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
@@ -226,12 +228,13 @@
         "b",
         "c"
       ],
-      "author_mathematical_scope_summary": "Interpret systems as graph intersections; solve or estimate solutions algebraically and graphically, including no-solution cases and contextual applications.",
+      "author_mathematical_scope_summary": "Relate simultaneous solutions of two linear equations to intersections of their graphs; solve systems algebraically, by inspection, or approximately by graphing, including context and no-solution cases.",
       "test_material_conditions": [
         "intersection",
         "two linear equations",
         "no solution",
-        "graphical estimate"
+        "graphical estimate",
+        "solutions satisfy both equations"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
@@ -508,7 +511,7 @@
         56
       ],
       "required_lettered_subparts": [],
-      "author_mathematical_scope_summary": "Use formulas for volumes of cylinders, cones, and spheres in mathematical and applied problems.",
+      "author_mathematical_scope_summary": "Know and apply the cylinder, cone, and sphere volume formulas in real-world and mathematical problems.",
       "test_material_conditions": [
         "cylinder",
         "cone",
