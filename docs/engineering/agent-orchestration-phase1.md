@@ -19,3 +19,9 @@ This GitHub Actions workflow observes PR changes and CI/AppSec completion, then 
 Track coordination in #377 and #278. The orchestrator may be enabled only after exact-head CI/AppSec and independent Architecture/security review of the privileged workflow. To stop it, disable the GitHub Action without changing existing agent schedules.
 
 **Phase 2 remains separate:** authorized runners, identities, least-privilege credentials, isolated execution and independent review enforcement are not implemented in this PR.
+
+## Pending delivery recovery
+
+If both comment POST attempts fail, the coordinator records `PENDING_MANUAL_RECONCILIATION` in a newline-delimited JSON file. GitHub Actions uploads it as the `mihur-pending-handoffs-<run-id>` artifact (30-day retention) and logs a workflow warning. This means **handoff not delivered** even if the job itself succeeds; it is never an acceptance signal.
+
+Engineering must inspect the artifact, re-read the PR's current head and exact-head checks, inspect all PR comments for the marker, and only then retry the missing handoff. Do not replay stale SHA approvals. If a POST response was lost and reconciliation failed, the coordinator does **not** issue another POST automatically. An artifact-upload failure requires manual investigation of the workflow run.
