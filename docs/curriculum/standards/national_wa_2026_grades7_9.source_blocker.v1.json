@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
-  "status": "BLOCKED_AUTHORITATIVE_2026_DOCUMENT_BYTES_NOT_RETRIEVED",
-  "as_of": "2026-10-12",
+  "status": "SOURCE_WORKBOOK_UPLOADED_AUTHOR_EXTRACTION_PENDING_REPOSITORY_IMPORT_AND_INDEPENDENT_VERIFICATION",
+  "as_of": "2026-10-13",
   "authority": "Washington OSPI",
   "official_landing_page": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
   "adoption_bulletin": "B023-26",
@@ -17,11 +17,11 @@
   ],
   "expectations": [],
   "limitations": [
-    "OSPI webpage is authoritative for adoption and downloadable resource existence, but original 2026 PDF/Excel bytes were blocked (HTTP 403).",
     "No 2026 identifiers, mathematical scopes or crosswalk relations invented from 2011 standards.",
     "Four connected domains and data-science inquiry require exact publisher file verification.",
     "OSPI 2026 official FAQ names Integrated 1/2/3, Geometry, Algebra 1/2 and Credit 3; exact course requirement lists remain unextracted.",
-    "An OSPI March 2026 support PDF references math25-initial-adoption-spreadsheet.xlsx; this is NOT proof of final 2026 formal-adoption workbook content."
+    "An OSPI March 2026 support PDF references math25-initial-adoption-spreadsheet.xlsx; this is NOT proof of final 2026 formal-adoption workbook content.",
+    "Workbook received from user; source bytes and 264 K-8, 464 HS course, 425 crosswalk rows extracted outside repository; full rows must be imported, independently verified, and mapped before claiming coverage."
   ],
   "high_school_arrangements": {
     "source": "https://ospi.k12.wa.us/student-success/learning-standards-instructional-materials/washington-state-learning-standards-review/learning-standards-review-faqs",
@@ -41,11 +41,24 @@
     "official_2026_page": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
     "adoption_bulletin": "https://ospi.k12.wa.us/about-ospi/bulletins/2026",
     "official_2026_pdf": "UNRESOLVED_DIRECT_URL",
-    "official_2026_spreadsheet": "UNRESOLVED_DIRECT_URL",
+    "official_2026_spreadsheet": "UPLOADED_FILE_HASH_RECORDED_PUBLISHER_URL_NOT_VERIFIED",
     "initial_adoption_2025_spreadsheet": "https://ospi.k12.wa.us/sites/default/files/2025-12/math25-initial-adoption-spreadsheet.xlsx",
     "initial_adoption_2025_role": "HISTORICAL_TRANSITION_RESEARCH_ONLY_NOT_2026_FORMAL_STANDARD_AUTHORITY",
     "initial_adoption_source": "https://ospi.k12.wa.us/sites/default/files/2026-03/math-ls-technical-support-activities.pdf",
-    "publisher_file_access": "BLOCKED_403",
+    "publisher_file_access": "USER_UPLOADED_AUGUST_2026_V3_1_WORKBOOK_AVAILABLE",
     "no_2011_2026_crosswalk_rows_invented": true
+  },
+  "uploaded_final_adoption_workbook": {
+    "filename": "math26-final-adoption-spreadsheet.xlsx",
+    "sha256": "d522101f430758dcbc21d7ecc800977761b3ccdb224de2b3e6fd6217faa80875",
+    "workbook_label": "August 2026 | v3.1",
+    "k8_rows": 264,
+    "high_school_course_rows": 464,
+    "crosswalk_rows": 425,
+    "source": "USER_UPLOADED_DOCUMENT",
+    "publisher_hash_independently_verified": false,
+    "extracted_json": "wa_2026_v3_1_source_extraction.json (conversation artifact, not yet checked into repository)",
+    "scope_acceptance": "PENDING_INDEPENDENT_SOURCE_REVIEW",
+    "course_rows_not_unique_skills": true
   }
 }
