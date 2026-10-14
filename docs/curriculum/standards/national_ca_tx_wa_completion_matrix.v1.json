@@ -25,7 +25,10 @@
         "GRADE_6"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independently reconcile each official standard and California addition, course-specific annotations, mathematical conditions, subparts and exact source pages"
+      "next_gate": "Independent source-fidelity review of provisional Grade 8 28-row CDE scope/locator batch; continue remaining Grade 1–6 and Algebra I/Mathematics I official scope audits, including California additions and course notes.",
+      "grade8_author_scope_rows": 28,
+      "grade8_author_scope_source": "ca_2013_grade8_28_source_author_slice.v1.json",
+      "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY"
     },
     "TX": {
       "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
