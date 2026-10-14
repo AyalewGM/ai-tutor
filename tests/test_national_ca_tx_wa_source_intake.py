@@ -256,6 +256,9 @@ def test_three_state_completion_matrix_stays_fail_closed():
     ) == 0
     assert matrix['states']['WA']['verified_2026_expectation_rows'] == len(wa['expectations']) == 0
     assert matrix['states']['WA']['official_final_workbook_bytes_obtained'] is False
+    assert matrix['states']['WA']['uploaded_workbook_source_extraction']['repository_expectation_import'] == (
+        'AUTHOR_EXTRACTION_STAGED_IN_REPOSITORY_NOT_INDEPENDENTLY_VERIFIED'
+    )
     for state in matrix['states'].values():
         assert state['grade9_course_equivalence'] == 'NOT_ASSUMED'
 
