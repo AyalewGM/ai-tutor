@@ -4,9 +4,11 @@ Never executes PR code, grants approval, merges, or activates content.
 """
 from __future__ import annotations
 
+import io
 import json
 import os
 import sys
+import zipfile
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -178,16 +180,80 @@ def record_pending(number: int, sha: str, state: str, reason: str) -> None:
         stream.write(json.dumps(record, sort_keys=True) + "\n")
     print(f"::warning::PR #{number} handoff pending, not delivered: {reason}")
 
+
+def artifact_bytes(url: str, token: str) -> bytes:
+    req = Request(url, headers={"Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json", "User-Agent": "mihur-recovery"})
+    with urlopen(req, timeout=30) as response:
+        return response.read(5 * 1024 * 1024 + 1)
+
+
+def pending_records(root: str, token: str) -> list[dict]:
+    """Recover prior pending deliveries from GitHub Actions artifacts."""
+    records: dict[tuple[int, str, str], dict] = {}
+    for page in range(1, MAX_PAGES + 1):
+        result = request("GET", f"{root}/actions/artifacts?"
+                         f"{urlencode({'per_page': 100, 'page': page})}", token)
+        artifacts = result.get("artifacts", [])
+        for artifact in artifacts:
+            if artifact.get("expired") or not artifact.get("name", "").startswith(
+                "mihur-pending-handoffs-"
+            ):
+                continue
+            data = artifact_bytes(artifact["archive_download_url"], token)
+            if len(data) > 5 * 1024 * 1024:
+                raise ValueError("Recovery artifact too large")
+            with zipfile.ZipFile(io.BytesIO(data)) as archive:
+                if archive.namelist() != ["mihur-pending-handoffs.jsonl"]:
+                    raise ValueError("Unexpected recovery artifact contents")
+                raw = archive.read("mihur-pending-handoffs.jsonl")
+                if len(raw) > 1024 * 1024:
+                    raise ValueError("Pending ledger too large")
+                for line in raw.decode("utf-8").splitlines():
+                    record = json.loads(line)
+                    if record.get("delivery") != "PENDING_MANUAL_RECONCILIATION":
+                        raise ValueError("Invalid pending delivery state")
+                    number, sha, state = record["pr"], record["sha"], record["state"]
+                    if not isinstance(number, int) or number < 1:
+                        raise ValueError("Invalid pending PR")
+                    if not isinstance(sha, str) or len(sha) != 40:
+                        raise ValueError("Invalid pending SHA")
+                    if state not in ("AUTHOR_CORRECTION", "WAIT_CHECKS",
+                                     "INDEPENDENT_REVIEW", "INDEPENDENT_REVIEW_DRAFT"):
+                        raise ValueError("Invalid pending workflow state")
+                    records[(number, sha, state)] = record
+        if len(artifacts) < 100:
+            return list(records.values())
+    raise ValueError("Recovery pagination exceeded; manual intervention required")
+
+
+def reconcile_pending(root: str, token: str) -> None:
+    """Reconcile old pending work before processing the current event."""
+    for record in pending_records(root, token):
+        number, sha, state = record["pr"], record["sha"], record["state"]
+        pr = request("GET", f"{root}/pulls/{number}", token)
+        if pr["state"] != "open" or pr["head"]["sha"] != sha:
+            print(f"Obsolete pending handoff for #{number}; skip stale SHA")
+            continue
+        tag = marker(sha, state)
+        if any(tag in c.get("body", "") for c in pages(root, f"/issues/{number}/comments", token)):
+            print(f"Pending #{number} already delivered")
+            continue
+        # deliver() independently revalidates head, checks, and duplicate markers.
+        deliver(root, number, token)
+
+
 def main() -> int:
     repo = os.environ["GITHUB_REPOSITORY"]
     token = os.environ["GITHUB_TOKEN"]
     with open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8") as event_file:
         event = json.load(event_file)
     numbers = event_pr_numbers(event)
-    if not numbers:
-        print("No linked PR; manual workflow-run association may be needed")
-        return 0
     root = f"{os.environ.get('GITHUB_API_URL', 'https://api.github.com')}/repos/{repo}"
+    reconcile_pending(root, token)
+    if not numbers:
+        print("No linked PR; pending reconciliation completed")
+        return 0
     for number in numbers:
         deliver(root, number, token)
     return 0
