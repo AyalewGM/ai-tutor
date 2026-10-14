@@ -510,3 +510,119 @@ def adapt_accepted_geometry(item: Any) -> dict[str, Any]:
         "teacher_oracle_hidden": True,
         "mastery_credit": False,
     }
+
+
+def generate_first_error_localization(index: int, mode: str) -> PackageVariant:
+    """Generate a fresh exponent derivation with one earliest incorrect law application.
+
+    This additive teacher-depth extension deliberately does not enter KINDS so
+    previously reviewed package-seed behavior remains stable.
+    """
+
+    _validate(index, mode)
+    rng = random.Random(f"{NAMESPACE}:first-error:{mode}:{index}")
+    base = rng.randint(2, 7)
+    inner = rng.randint(2, 5)
+    outer = rng.randint(3, 5)
+    product_exponent = rng.randint(2, 6)
+    divisor_exponent = rng.randint(1, 5)
+
+    correct_step_1 = inner * outer
+    correct_step_2 = correct_step_1 + product_exponent
+    correct_step_3 = correct_step_2 - divisor_exponent
+    case = index % 3
+
+    if case == 0:
+        shown_step_1 = inner + outer
+        shown_step_2 = shown_step_1 + product_exponent
+        shown_step_3 = shown_step_2 - divisor_exponent
+        first_error_step = 1
+        violated_law = "POWER_OF_POWER_MULTIPLIES_EXPONENTS"
+        corrected_step_exponent = correct_step_1
+    elif case == 1:
+        shown_step_1 = correct_step_1
+        shown_step_2 = shown_step_1 * product_exponent
+        shown_step_3 = shown_step_2 - divisor_exponent
+        first_error_step = 2
+        violated_law = "PRODUCT_OF_POWERS_ADDS_EXPONENTS"
+        corrected_step_exponent = correct_step_2
+    else:
+        shown_step_1 = correct_step_1
+        shown_step_2 = correct_step_2
+        shown_step_3 = shown_step_2 + divisor_exponent
+        first_error_step = 3
+        violated_law = "QUOTIENT_OF_POWERS_SUBTRACTS_EXPONENTS"
+        corrected_step_exponent = correct_step_3
+
+    prefix = "Guided error analysis" if mode == "guided" else "Independent error analysis"
+    prompt = (
+        f"{prefix}: A derivation starts with (({base}^{inner})^{outer} x "
+        f"{base}^{product_exponent}) / {base}^{divisor_exponent}. "
+        f"Step 1 reports {base}^{shown_step_1}. "
+        f"Step 2 reports {base}^{shown_step_2}. "
+        f"Step 3 reports {base}^{shown_step_3}. "
+        "Identify the first incorrect step, name the exponent law that was violated, "
+        "and give the corrected exponent for that step."
+    )
+    return PackageVariant(
+        variant_id=f"{NAMESPACE}:first-error:{mode}:{index}",
+        mode=mode,
+        kind="FIRST_ERROR_LOCALIZATION",
+        prompt=prompt,
+        response_fields=(
+            "first_error_step",
+            "violated_law",
+            "corrected_step_exponent",
+            "explanation",
+        ),
+        parameters={
+            "base": base,
+            "inner": inner,
+            "outer": outer,
+            "product_exponent": product_exponent,
+            "divisor_exponent": divisor_exponent,
+            "shown_exponents": (shown_step_1, shown_step_2, shown_step_3),
+        },
+        teacher_oracle={
+            "first_error_step": first_error_step,
+            "violated_law": violated_law,
+            "corrected_step_exponent": corrected_step_exponent,
+            "correct_final_exponent": correct_step_3,
+        },
+    )
+
+
+def verify_first_error_localization(item: PackageVariant) -> bool:
+    """Recompute the first invalid step independently from the original expression."""
+
+    if item.kind != "FIRST_ERROR_LOCALIZATION":
+        raise ValueError("expected FIRST_ERROR_LOCALIZATION")
+    p = item.parameters
+    shown = tuple(p["shown_exponents"])
+    expected = (
+        p["inner"] * p["outer"],
+        p["inner"] * p["outer"] + p["product_exponent"],
+        p["inner"] * p["outer"] + p["product_exponent"] - p["divisor_exponent"],
+    )
+    first = next(
+        (
+            i + 1
+            for i, (actual, correct) in enumerate(zip(shown, expected, strict=True))
+            if actual != correct
+        ),
+        None,
+    )
+    if first is None:
+        return False
+    law_by_step = {
+        1: "POWER_OF_POWER_MULTIPLIES_EXPONENTS",
+        2: "PRODUCT_OF_POWERS_ADDS_EXPONENTS",
+        3: "QUOTIENT_OF_POWERS_SUBTRACTS_EXPONENTS",
+    }
+    oracle = item.teacher_oracle
+    return (
+        oracle["first_error_step"] == first
+        and oracle["violated_law"] == law_by_step[first]
+        and oracle["corrected_step_exponent"] == expected[first - 1]
+        and oracle["correct_final_exponent"] == expected[2]
+    )
