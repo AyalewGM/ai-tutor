@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_SOURCE_SCOPE_SLICE_PENDING_INDEPENDENT_REVIEW",
+  "official_source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "edition": "California CCSS Mathematics modified January 2013, corrected 2014 electronic edition",
+  "track": "GRADE_1",
+  "note": "Five bounded requirement summaries, not the 21-expectation full audit. These paraphrases preserve material conditions; no canonical equivalence or acceptance.",
+  "rows": [
+    {
+      "expectation_id": "1.OA.1",
+      "printed_page": 16,
+      "pdf_page_index": 22,
+      "scope": "Solve addition and subtraction word problems within 20 across adding-to, taking-from, putting-together, taking-apart and comparing situations, unknown in any position, using objects, drawings or equations."
+    },
+    {
+      "expectation_id": "1.OA.6",
+      "printed_page": 16,
+      "pdf_page_index": 22,
+      "scope": "Add and subtract within 20; demonstrate fluency within 10; use counting on, making ten, decomposing to ten, inverse operations and equivalent easier sums."
+    },
+    {
+      "expectation_id": "1.NBT.2",
+      "printed_page": 16,
+      "pdf_page_index": 22,
+      "scope": "Understand tens and ones in two-digit numerals, with separate required cases for ten as a group of ten ones, 11 through 19 as ten and ones, and decade numerals as tens with zero ones.",
+      "required_subparts": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "expectation_id": "1.MD.2",
+      "printed_page": 17,
+      "pdf_page_index": 23,
+      "scope": "Measure an object's length with a whole number of identical length units placed end to end; no gaps or overlaps; restriction requires whole-number spanning units."
+    },
+    {
+      "expectation_id": "1.G.3",
+      "printed_page": 17,
+      "pdf_page_index": 23,
+      "scope": "Partition circles and rectangles into two and four equal shares; describe halves, fourths and quarters; recognize that more equal shares yield smaller shares."
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}
