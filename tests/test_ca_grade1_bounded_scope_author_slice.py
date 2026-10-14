@@ -15,6 +15,9 @@ def test_ca_grade1_bounded_scopes_preserve_mathematical_constraints():
     assert rows["1.NBT.2"]["required_subparts"] == ["a", "b", "c"]
     assert "no gaps or overlaps" in rows["1.MD.2"]["scope"]
     assert "two and four equal shares" in rows["1.G.3"]["scope"]
+    shape_scope = rows["1.G.3"]["scope"]
+    assert "describe the whole as two of, or four of, the equal shares" in shape_scope
+    assert all(phrase in shape_scope for phrase in ("half of", "fourth of", "quarter of"))
     assert d["independent_source_fidelity"] == "PENDING"
     assert all(d[k] == "UNVERIFIED" for k in
                ("canonical_equivalence", "generator", "assessment", "mastery"))
