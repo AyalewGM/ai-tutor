@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_SCOPE_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+  "jurisdiction": "CA",
+  "track": "GRADE_3",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "Modified January 2013; electronic 2014 corrections",
+  "source_printed_page": 27,
+  "source_pdf_zero_based_page_index": 33,
+  "expectation_count": 8,
+  "scope": "Final Grade 3 page 27 author scope slice, complementary to printed pp25-26 batches; eight parent expectations, with required subparts explicitly represented.",
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "3.MD.3",
+      "source_printed_page": 27,
+      "source_pdf_zero_based_page_index": 33,
+      "author_mathematical_scope": "Draw scaled picture/bar graphs for multiple categories, and solve one- and two-step how-many-more/how-many-less comparisons using scaled bar graph data.",
+      "required_material_conditions": [
+        "scaled picture graph and scaled bar graph",
+        "one- and two-step comparison"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.MD.4",
+      "source_printed_page": 27,
+      "source_pdf_zero_based_page_index": 33,
+      "author_mathematical_scope": "Measure lengths to nearest halves and fourths of an inch using rulers; record the measurement data in line plots with whole, half, or quarter horizontal units.",
+      "required_material_conditions": [
+        "nearest halves and fourths of an inch",
+        "line plot at whole, half and quarter units"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.MD.5",
+      "source_printed_page": 27,
+      "source_pdf_zero_based_page_index": 33,
+      "author_mathematical_scope": "Understand area as count of unit squares: a side-one unit square has one square unit area; a plane figure covered without gaps or overlaps by n unit squares has area n square units.",
+      "required_material_conditions": [
+        "unit square side length one",
+        "no gaps or overlaps",
+        "required subparts a and b"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.MD.6",
+      "source_printed_page": 27,
+      "source_pdf_zero_based_page_index": 33,
+      "author_mathematical_scope": "Measure area by counting unit squares, including square centimeters, meters, inches, feet, and improvised units.",
+      "required_material_conditions": [
+        "count unit squares",
+        "standard and improvised square units"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.MD.7",
+      "source_printed_page": 27,
+      "source_pdf_zero_based_page_index": 33,
+      "author_mathematical_scope": "Relate rectangle area to multiplication and addition: tiled whole-number rectangles equal side-length products; model rectangle products; use tiling to demonstrate area a(b+c)=ab+ac and distributivity; decompose rectilinear figures into non-overlapping rectangles and add their areas.",
+      "required_material_conditions": [
+        "whole-number side lengths",
+        "required subparts a b c d",
+        "distributive area models",
+        "non-overlapping rectilinear decomposition"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.MD.8",
+      "source_printed_page": 27,
+      "source_pdf_zero_based_page_index": 33,
+      "author_mathematical_scope": "Solve polygon perimeter problems, including given side lengths, unknown side lengths, equal perimeters with different areas, and equal areas with different perimeters.",
+      "required_material_conditions": [
+        "unknown side length",
+        "same perimeter/different areas",
+        "same area/different perimeters"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.G.1",
+      "source_printed_page": 27,
+      "source_pdf_zero_based_page_index": 33,
+      "author_mathematical_scope": "Classify shapes by shared attributes and broad categories, recognize rhombuses, rectangles and squares as quadrilaterals, and draw quadrilaterals outside those three subcategories.",
+      "required_material_conditions": [
+        "shared shape attributes",
+        "quadrilateral hierarchy",
+        "nonexample subcategory drawing"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.G.2",
+      "source_printed_page": 27,
+      "source_pdf_zero_based_page_index": 33,
+      "author_mathematical_scope": "Partition shapes into equal-area parts and express each part's area as a unit fraction of the whole.",
+      "required_material_conditions": [
+        "equal-area partitions",
+        "unit fraction of whole"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
