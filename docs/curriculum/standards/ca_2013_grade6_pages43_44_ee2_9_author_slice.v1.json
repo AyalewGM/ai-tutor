@@ -22,11 +22,12 @@
         43,
         44
       ],
-      "author_mathematical_scope": "Write/read/evaluate expressions with variable letters; include subparts (a) write operations, (b) identify terms/factors/coefficients and grouped subexpressions, (c) substitute given values including formulas, whole-number exponents and order of operations.",
+      "author_mathematical_scope": "Write/read/evaluate expressions with variable letters; include subparts (a) write operations, (b) identify sums/terms/products/factors/quotients/coefficients and one or more parts viewed as a single entity, (c) substitute given values including formulas, whole-number exponents and order of operations.",
       "required_material_conditions": [
         "subparts a b c",
-        "terms factors coefficients",
-        "substitution and order of operations"
+        "sum term product factor quotient coefficient",
+        "substitution and order of operations",
+        "view one or more expression parts as a single entity"
       ],
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
