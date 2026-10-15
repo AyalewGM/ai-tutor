@@ -165,6 +165,76 @@ def test_extension_opt_in_and_evidence_isolation() -> None:
         ) == 0
 
 
+def test_extension_falls_back_to_generated_problem() -> None:
+    """When the authored extension pool is empty for a skill, opt-in should
+    still serve a generated stretch item tagged extension_eligible so fast
+    learners never hit a ceiling."""
+    from decimal import Decimal
+
+    code = f"TEST.EXT.GEN.{uuid.uuid4().hex[:8]}"
+    with SessionLocal() as db:
+        curriculum = db.scalar(
+            select(Curriculum).where(Curriculum.code == "MCPS_MATH_8")
+        )
+        assert curriculum is not None
+        skill = Skill(
+            curriculum_id=curriculum.id,
+            code=code,
+            name="Extension generation fallback probe",
+            description="Test skill with no authored extension problems",
+            difficulty_level=Decimal("1.0"),
+            mastery_threshold=Decimal("0.850"),
+        )
+        db.add(skill)
+        db.flush()
+        # A generator-capable problem type is what makes the fallback work.
+        db.add(
+            Problem(
+                primary_skill_id=skill.id,
+                problem_type="SOLVE_EQUATION",
+                difficulty=3,
+                prompt="Solve for x: x + 4 = 11.",
+                canonical_answer="x=7",
+                source_type="CURATED",
+            )
+        )
+        student = Student(
+            curriculum_id=curriculum.id,
+            first_name="Extension Gen Learner",
+            grade_level="8",
+            school_system="MCPS",
+        )
+        db.add(student)
+        db.flush()
+        authenticate_parent_for_student(client, db, student)
+        db.refresh(student)
+        db.commit()
+        student_id, skill_id = student.id, skill.id
+
+    session_response = client.post(
+        "/api/v1/tutor/sessions",
+        json={"student_id": str(student_id), "skill_id": str(skill_id)},
+    )
+    assert session_response.status_code == 200
+    session_id = session_response.json()["session_id"]
+
+    ext_response = client.post(f"/api/v1/tutor/sessions/{session_id}/extension")
+    assert ext_response.status_code == 200
+    ext_id = uuid.UUID(ext_response.json()["id"])
+
+    with SessionLocal() as db:
+        problem = db.get(Problem, ext_id)
+        assert problem is not None
+        assert problem.source_type == "GENERATED"
+        assert problem.primary_skill_id == skill_id
+        meta = db.scalar(
+            select(ProblemContentMetadata).where(
+                ProblemContentMetadata.problem_id == ext_id
+            )
+        )
+        assert meta is not None and meta.extension_eligible is True
+
+
 def test_extension_endpoint_on_adaptive_router() -> None:
     """The frontend talks to /adaptive-tutor — the same opt-in must work."""
     student_id, skill_id, _ = _seed_student_with_extension_problem()

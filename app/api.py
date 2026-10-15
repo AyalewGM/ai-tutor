@@ -499,4 +499,7 @@ def request_extension_problem(
     )
     if problem is None:
         raise HTTPException(404, "No extension problem configured for this skill")
+    # Persist generated extension items now — the pool is exhausted path
+    # creates them, and the student's answer attempt needs the row to exist.
+    db.commit()
     return _problem_out(problem)

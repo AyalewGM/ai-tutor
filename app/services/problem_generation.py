@@ -8,7 +8,8 @@ from fractions import Fraction
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.models import Problem
+from app.content_models import ProblemContentMetadata
+from app.models import Problem, Skill
 
 
 def _module_contextualizer():
@@ -4802,6 +4803,7 @@ def generate_problem(
     student_id: uuid.UUID | None = None,
     session_id: uuid.UUID | None = None,
     rng: random.Random | None = None,
+    extension: bool = False,
 ) -> Problem | None:
     rng = rng or random.Random()
     if problem_type is not None:
@@ -4878,6 +4880,20 @@ def generate_problem(
     )
     db.add(problem)
     db.flush()
+    if extension:
+        skill = db.get(Skill, skill_id)
+        if skill is None:
+            raise ValueError(f"Skill {skill_id} not found for generated extension problem")
+        db.add(
+            ProblemContentMetadata(
+                problem_id=problem.id,
+                curriculum_id=skill.curriculum_id,
+                objective="Generated opt-in stretch problem.",
+                evaluation_type="EXACT",
+                extension_eligible=True,
+            )
+        )
+        db.flush()
     return problem
 
 

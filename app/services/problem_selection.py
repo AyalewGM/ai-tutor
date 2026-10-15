@@ -72,17 +72,25 @@ def select_next_problem(
         )
         if problem is not None:
             return problem
-        if not offer_extension:
-            generated = generate_problem(
-                db,
-                skill_id=skill_id,
-                difficulty=target_difficulty,
-                avoid_family=last_family,
-                student_id=student_id,
-                session_id=session_id,
-            )
-            if generated is not None:
-                return generated
+        # Fast learners can exhaust the authored pools on either path, so the
+        # generator is the fallback for both. Extension opt-in generates at a
+        # fixed stretch band (above the ladder) and tags the item
+        # extension_eligible so it joins the challenge pool, never evidence.
+        generated = generate_problem(
+            db,
+            skill_id=skill_id,
+            difficulty=(
+                min(10, max(current_difficulty + 2, 6))
+                if offer_extension
+                else target_difficulty
+            ),
+            avoid_family=last_family,
+            student_id=student_id,
+            session_id=session_id,
+            extension=offer_extension,
+        )
+        if generated is not None:
+            return generated
     return db.scalar(
         _ordered(stmt, target_difficulty, hardest_first=offer_extension).limit(1)
     )
