@@ -25,7 +25,13 @@
       "lettered_subpart_ids": [],
       "unlettered_parent_scope_review": "REQUIRED_EVEN_IF_SUBPARTS_ARE_COMPLETE",
       "subpart_completeness_evidence": "EXPLICIT_LETTERED_ITEMS_RECONCILED_WITH_2022_OFFICIAL_DOCUMENT",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "material_scope_conditions": [
+        "sum and product of rational numbers are rational",
+        "sum of rational and irrational numbers is irrational",
+        "product of NONZERO rational and irrational numbers is irrational"
+      ],
+      "material_scope_review_status": "AUTHOR_SUBPART_SCOPE_PENDING_INDEPENDENT_PUBLISHER_REVIEW"
     },
     {
       "expectation_id": "N.Q.A.1",
@@ -245,7 +251,12 @@
       ],
       "unlettered_parent_scope_review": "REQUIRED_EVEN_IF_SUBPARTS_ARE_COMPLETE",
       "subpart_completeness_evidence": "EXPLICIT_LETTERED_ITEMS_RECONCILED_WITH_2022_OFFICIAL_DOCUMENT",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "material_scope_conditions": [
+        "solve quadratic equations using appropriate methods including quadratic formula",
+        "A.REI.B.4.b: recognize when quadratic formula gives complex solutions and express using real a and b"
+      ],
+      "material_scope_review_status": "AUTHOR_SUBPART_SCOPE_PENDING_INDEPENDENT_PUBLISHER_REVIEW"
     },
     {
       "expectation_id": "A.REI.C.5",
@@ -315,7 +326,12 @@
       "lettered_subpart_ids": [],
       "unlettered_parent_scope_review": "REQUIRED_EVEN_IF_SUBPARTS_ARE_COMPLETE",
       "subpart_completeness_evidence": "EXPLICIT_LETTERED_ITEMS_RECONCILED_WITH_2022_OFFICIAL_DOCUMENT",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "material_scope_conditions": [
+        "strict inequality boundary line is excluded from solution region",
+        "system solutions are intersection of the associated half-planes"
+      ],
+      "material_scope_review_status": "AUTHOR_SUBPART_SCOPE_PENDING_INDEPENDENT_PUBLISHER_REVIEW"
     },
     {
       "expectation_id": "F.IF.A.1",
