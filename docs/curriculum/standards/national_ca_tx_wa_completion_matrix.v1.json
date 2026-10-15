@@ -17,7 +17,6 @@
       "accepted_source_fidelity_rows": 0,
       "unverified_scope_rows": 173,
       "unextracted_tracks": [
-        "GRADE_1",
         "GRADE_2",
         "GRADE_3",
         "GRADE_4",
@@ -25,10 +24,38 @@
         "GRADE_6"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independent source-fidelity review of provisional Grade 8 28-row CDE scope/locator batch; continue remaining Grade 1–6 and Algebra I/Mathematics I official scope audits, including California additions and course notes.",
+      "next_gate": "Independently verify staged 21 G1 plus 173 G7/G8/Algebra I/Mathematics I editorial source records against CDE official 2013/2014 text, including additions and course caveats. Complete direct source audit for Grades 2–6. Local archive drafts remain separate from committed records.",
       "grade8_author_scope_rows": 28,
       "grade8_author_scope_source": "ca_2013_grade8_28_source_author_slice.v1.json",
-      "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY"
+      "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY",
+      "author_source_scope_rows_by_track": {
+        "GRADE_1": 21,
+        "GRADE_7": 24,
+        "GRADE_8": 28,
+        "ALGEBRA_I": 62,
+        "MATHEMATICS_I": 59
+      },
+      "author_scope_total_staged": 194,
+      "author_scope_acceptance": "DRAFT_ALL_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "author_source_scope_files": {
+        "GRADE_1": [
+          "ca_2013_grade1_bounded_scope_author_slice.v1.json",
+          "ca_2013_grade1_remaining16_scope_author_slice.v1.json"
+        ],
+        "GRADE_7": [
+          "ca_2013_grade7_24_source_author_slice.v1.json"
+        ],
+        "GRADE_8": [
+          "ca_2013_grade8_28_source_author_slice.v1.json"
+        ],
+        "ALGEBRA_I": [
+          "ca_2013_algebra1_pages64_65_source_author_slice.v1.json",
+          "ca_2013_algebra1_pages66_68_source_author_slice.v1.json"
+        ],
+        "MATHEMATICS_I": [
+          "ca_2013_mathematics1_pages90_94_author_audit.v1.json"
+        ]
+      }
     },
     "TX": {
       "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
