@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "MATHEMATICS_I",
+  "status": "AUTHOR_PENDING_REVIEW",
+  "source_printed_page": 94,
+  "source_pdf_zero_based_page_index": 100,
+  "source_url": "https://www.cde.ca.gov/BE/ST/SS/documents/ccssmathstandardaug2013.pdf",
+  "supplemental_existing_placements_only": true,
+  "rows": [
+    {
+      "expectation_id": "S-ID.1",
+      "material_conditions": [
+        "Plot single-variable numerical data on real number line using dot plots, histograms and box plots."
+      ]
+    },
+    {
+      "expectation_id": "S-ID.2",
+      "material_conditions": [
+        "Compare two or more distributions using center (median, mean) and spread (interquartile range, standard deviation), chosen appropriately to shape."
+      ]
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}
