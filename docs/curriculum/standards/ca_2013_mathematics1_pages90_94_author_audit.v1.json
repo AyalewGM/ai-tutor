@@ -120,7 +120,22 @@
       "canonical_equivalence": "UNVERIFIED",
       "generator": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_bracket_author_evidence": {
+        "source_printed_page": 90,
+        "source_pdf_zero_based_page_index": 96,
+        "course_bracket_author_paraphrase": "Mathematics I creating-equations strand emphasizes linear and exponential relationships with integer inputs; A-CED.3 alone is explicitly linear only.",
+        "publisher_subpart_or_addition_author_paraphrase": "One-variable equations and inequalities include absolute value; the California-added example line also names linear, quadratic, simple rational and exponential functions.",
+        "scope_tension": "CA_ADDED_EXAMPLE_BREADTH_VS_COURSE_BRACKET",
+        "material_conditions": [
+          "one-variable equation and inequality modeling",
+          "absolute-value cases explicitly included",
+          "California-added quadratic and simple-rational examples preserved as publisher text, not automatically activated Math I skills",
+          "course limitation to linear/exponential and integer inputs recorded independently"
+        ],
+        "independent_resolution": "PENDING",
+        "curriculum_activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "A-CED.2",
@@ -190,7 +205,22 @@
       "canonical_equivalence": "UNVERIFIED",
       "generator": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_bracket_author_evidence": {
+        "source_printed_page": 91,
+        "source_pdf_zero_based_page_index": 97,
+        "course_bracket_author_paraphrase": "Linear inequalities and literal equations linear in solved-for variables; source additionally illustrates a simple exponential equation.",
+        "publisher_subpart_or_addition_author_paraphrase": "Solve one-variable linear equations and inequalities, including equations whose coefficients are letters.",
+        "scope_tension": "LITERAL_LINEAR_VS_SIMPLE_EXPONENTIAL_EXAMPLE",
+        "material_conditions": [
+          "literal coefficients",
+          "linear inequalities",
+          "simple exponential example shown by publisher",
+          "no inference of general transcendental equation solver"
+        ],
+        "independent_resolution": "PENDING",
+        "curriculum_activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "A-REI.3.1",
@@ -260,7 +290,21 @@
       "canonical_equivalence": "UNVERIFIED",
       "generator": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_bracket_author_evidence": {
+        "source_printed_page": 91,
+        "source_pdf_zero_based_page_index": 97,
+        "course_bracket_author_paraphrase": "Mathematics I graphically represents linear and exponential relations while learning the intersection principle more generally.",
+        "publisher_subpart_or_addition_author_paraphrase": "Graph intersections solve f(x)=g(x); printed illustrative cases cover linear, polynomial, rational, absolute value, exponential and logarithmic functions.",
+        "scope_tension": "BROADER_PRINTED_FUNCTION_EXAMPLES_VS_MATH_I_BRACKET",
+        "material_conditions": [
+          "f(x)=g(x) as x-coordinates of graphical intersections",
+          "numeric approximation from graphs, tables or successive approximations",
+          "full printed range of example functions retained separately from course scope"
+        ],
+        "independent_resolution": "PENDING",
+        "curriculum_activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "A-REI.12",
@@ -372,7 +416,21 @@
       "canonical_equivalence": "UNVERIFIED",
       "generator": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_bracket_author_evidence": {
+        "source_printed_page": 92,
+        "source_pdf_zero_based_page_index": 98,
+        "course_bracket_author_paraphrase": "Parent analyze-functions strand for Mathematics I specifies linear and exponential graphing.",
+        "publisher_subpart_or_addition_author_paraphrase": "Printed (a) names linear and quadratic functions and their intercepts and extrema.",
+        "scope_tension": "QUADRATIC_IN_SUBPART_VS_LINEAR_EXPONENTIAL_COURSE_BRACKET",
+        "material_conditions": [
+          "printed linear-and-quadratic wording retained",
+          "intercepts, maxima and minima",
+          "no automatic quadratic mastery promotion into Mathematics I"
+        ],
+        "independent_resolution": "PENDING",
+        "curriculum_activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "F-IF.7.e",
@@ -386,7 +444,21 @@
       "canonical_equivalence": "UNVERIFIED",
       "generator": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_bracket_author_evidence": {
+        "source_printed_page": 92,
+        "source_pdf_zero_based_page_index": 98,
+        "course_bracket_author_paraphrase": "Mathematics I parent graphing strand focuses on linear and exponential functions.",
+        "publisher_subpart_or_addition_author_paraphrase": "Printed (e) names exponential and logarithmic intercept/end behavior, and trigonometric period, midline and amplitude.",
+        "scope_tension": "LOGARITHMIC_TRIG_IN_SUBPART_VS_COURSE_BRACKET",
+        "material_conditions": [
+          "exponential/logarithmic intercepts and end behavior in printed text",
+          "trigonometric period midline and amplitude in printed text",
+          "course bracket preserved and not widened without independent decision"
+        ],
+        "independent_resolution": "PENDING",
+        "curriculum_activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "F-IF.9",
@@ -456,7 +528,23 @@
       "canonical_equivalence": "UNVERIFIED",
       "generator": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_bracket_author_evidence": {
+        "source_printed_page": 92,
+        "source_pdf_zero_based_page_index": 98,
+        "course_bracket_author_paraphrase": "The Mathematics I strand limits function-building to linear and exponential and emphasizes vertical exponential translations.",
+        "publisher_subpart_or_addition_author_paraphrase": "Printed parent also discusses shifts and scales at positive and negative parameter values and recognizing even/odd functions.",
+        "scope_tension": "GENERAL_TRANSFORMATIONS_VS_VERTICAL_EXPONENTIAL_FOCUS",
+        "material_conditions": [
+          "f(x)+k, kf(x), f(kx), f(x+k) printed transformation families",
+          "positive and negative k",
+          "graphical exploration including technology",
+          "source even/odd function clause retained",
+          "vertical exponential translation is course focus"
+        ],
+        "independent_resolution": "PENDING",
+        "curriculum_activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "F-LE.1.a",
@@ -540,7 +628,21 @@
       "canonical_equivalence": "UNVERIFIED",
       "generator": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_bracket_author_evidence": {
+        "source_printed_page": 93,
+        "source_pdf_zero_based_page_index": 99,
+        "course_bracket_author_paraphrase": "Printed Mathematics I course bracket refers to linear and exponential functions of the form f(x)=b^x+k.",
+        "publisher_subpart_or_addition_author_paraphrase": "Interpret functional parameters in terms of the modeling situation.",
+        "scope_tension": "NONE_BRACKET_RESTRICTION_RECORDED",
+        "material_conditions": [
+          "linear and exponential parameters",
+          "specific exponential form f(x)=b^x+k",
+          "parameters interpreted in context"
+        ],
+        "independent_resolution": "PENDING",
+        "curriculum_activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "G-CO.1",
@@ -792,7 +894,22 @@
       "canonical_equivalence": "UNVERIFIED",
       "generator": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_bracket_author_evidence": {
+        "source_printed_page": 94,
+        "source_pdf_zero_based_page_index": 100,
+        "course_bracket_author_paraphrase": "Mathematics I bivariate data strand emphasizes linear fits while discussing broader modeling as a general principle.",
+        "publisher_subpart_or_addition_author_paraphrase": "Printed (a) requests contextual model fitting and explicitly names linear, quadratic and exponential models as emphasis examples.",
+        "scope_tension": "QUADRATIC_EXPONENTIAL_PUBLISHER_EXAMPLES_VS_LINEAR_FOCUS",
+        "material_conditions": [
+          "fit contextual data using functions",
+          "printed linear quadratic exponential model examples retained",
+          "Mathematics I linear focus preserved separately",
+          "no automatically inferred nonlinear assessment or mastery"
+        ],
+        "independent_resolution": "PENDING",
+        "curriculum_activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "S-ID.6.b",
@@ -871,6 +988,38 @@
     "generator": "UNVERIFIED",
     "assessment": "UNVERIFIED",
     "mastery": "UNVERIFIED",
+    "curriculum_activation": "FORBIDDEN"
+  },
+  "bounded_author_course_bracket_evidence": {
+    "record_count": 8,
+    "expectation_ids": [
+      "A-CED.1",
+      "A-REI.3",
+      "A-REI.11",
+      "F-IF.7.a",
+      "F-IF.7.e",
+      "F-BF.3",
+      "F-LE.5",
+      "S-ID.6.a"
+    ],
+    "publisher_source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+    "printed_pages": [
+      90,
+      91,
+      92,
+      93,
+      94
+    ],
+    "pdf_zero_based_indices": [
+      96,
+      97,
+      98,
+      99,
+      100
+    ],
+    "assertion": "Author page-image observations only; preserve full publisher text and Mathematics I bracket separately; independent reviewer adjudicates tensions.",
+    "independent_source_fidelity": "PENDING",
+    "canonical_equivalence": "UNVERIFIED",
     "curriculum_activation": "FORBIDDEN"
   }
 }
