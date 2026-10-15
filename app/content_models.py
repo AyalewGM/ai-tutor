@@ -77,6 +77,9 @@ class ProblemContentMetadata(Base):
     guided_eligible: Mapped[bool] = mapped_column(Boolean, default=False)
     independent_eligible: Mapped[bool] = mapped_column(Boolean, default=False)
     mastery_eligible: Mapped[bool] = mapped_column(Boolean, default=False)
+    # Optional stretch tier: served only on explicit student opt-in, never
+    # required for mastery, and attempts on it are evidence-isolated.
+    extension_eligible: Mapped[bool] = mapped_column(Boolean, default=False)
     llm_solution_required: Mapped[bool] = mapped_column(Boolean, default=False)
     provenance_json: Mapped[dict | None] = mapped_column(JSONB)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))

@@ -23,6 +23,8 @@ Every skill must satisfy its declared readiness policy. The default requires:
 - at least four curated problems;
 - at least one problem in each deterministic mode;
 - no problem reused across diagnostic, guided, independent, and mastery pools;
+- `extension` may appear in a problem's `modes` to mark it for the optional
+  challenge tier, but may never appear in `required_modes`;
 - at least one eligible problem family;
 - every family registered in the application generator registry;
 - every problem family allowed by its curriculum-local skill;
@@ -31,6 +33,19 @@ Every skill must satisfy its declared readiness policy. The default requires:
 - an acyclic prerequisite graph.
 
 A pack that fails validation is not partially persisted.
+
+## Extension (challenge) tier
+
+Problems whose `modes` include `"extension"` form an optional stretch pool
+above the mastery difficulty band:
+
+- they are **excluded from normal selection** and served only through the
+  explicit opt-in endpoint (`POST /tutor/sessions/{id}/extension`);
+- they are **never required** — a pack validates with zero extension problems;
+- attempts on them are recorded with `TutorState.EXTENSION` and are excluded
+  from mastery scoring, skill-progress counters, and `MasteryEvent` writes;
+- they may not overlap the deterministic pools (reuse rules apply
+  independently per mode).
 
 ## Evidence isolation
 

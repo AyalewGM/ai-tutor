@@ -46,6 +46,9 @@ def load_mastery_gate_evidence(
             .where(
                 Attempt.student_id == student_id,
                 Problem.primary_skill_id == skill_id,
+                # Optional stretch tier is evidence-isolated: it must not
+                # move the strong-help recovery baseline either.
+                Attempt.state_at_attempt != TutorState.EXTENSION,
             )
             .order_by(Attempt.created_at.asc(), Attempt.id.asc())
         )

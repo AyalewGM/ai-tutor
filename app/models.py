@@ -33,6 +33,9 @@ class TutorState(str, enum.Enum):
     MASTERY_CHECK = "MASTERY_CHECK"
     REMEDIATION = "REMEDIATION"
     REVIEW = "REVIEW"
+    # Optional challenge tier: attempts recorded under this state are excluded
+    # from mastery evidence and skill-progress gating.
+    EXTENSION = "EXTENSION"
     COMPLETE = "COMPLETE"
 
 

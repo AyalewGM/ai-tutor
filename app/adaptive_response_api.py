@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 
 from app.adaptive_api import _focus
 from app.api import _problem_out, _student_skill, _tutor_context
+from app.content_models import ProblemContentMetadata
 from app.core.database import SessionLocal, get_db
 from app.hint_models import HintEvent
 from app.identity import CurrentLearningAccess, require_learning_owns_session
@@ -121,6 +122,16 @@ def respond(
         raise HTTPException(404, "Student or skill not found")
 
     state_at_attempt = session.current_state
+    content_meta = db.scalar(
+        select(ProblemContentMetadata).where(
+            ProblemContentMetadata.problem_id == problem.id
+        )
+    )
+    is_extension = bool(content_meta and content_meta.extension_eligible)
+    if is_extension:
+        # Optional stretch tier: tagged EXTENSION so mastery gating, progress
+        # counters, and evidence queries exclude it.
+        state_at_attempt = TutorState.EXTENSION
     highest_hint_level = (
         db.scalar(
             select(func.max(HintEvent.level)).where(
@@ -187,6 +198,7 @@ def respond(
         answer_kind=problem.answer_kind,
         choices=problem.choices,
         step_misconception_code=step_misconception_code,
+        count_evidence=not is_extension,
     )
 
     prior_attempt_count = (
@@ -244,6 +256,7 @@ def respond(
                 Problem.primary_skill_id == active_skill_id,
                 Attempt.is_correct.is_(True),
                 Attempt.assistance_level == 0,
+                Attempt.state_at_attempt != TutorState.EXTENSION,
             )
         )
         or 0
@@ -374,11 +387,14 @@ def respond(
                 gap_fixed = True
                 transition = Transition(TutorState.GUIDED_PRACTICE, "RESUME_TARGET")
 
-    session.current_state = transition.state
-    if engine_action == "INCREASE_DIFFICULTY":
-        progress.current_difficulty = min(10, progress.current_difficulty + 1)
-    elif engine_action == "REMEDIATE":
-        progress.current_difficulty = max(1, progress.current_difficulty - 1)
+    if not is_extension:
+        # Extension attempts never move the session state machine or the
+        # difficulty ladder — the optional tier is progression-neutral.
+        session.current_state = transition.state
+        if engine_action == "INCREASE_DIFFICULTY":
+            progress.current_difficulty = min(10, progress.current_difficulty + 1)
+        elif engine_action == "REMEDIATE":
+            progress.current_difficulty = max(1, progress.current_difficulty - 1)
 
     # --- Independent-assessment guard: block ALL tutoring assistance ---
     assessment_guard = check_assessment_guard(
@@ -414,7 +430,11 @@ def respond(
         generation_state = transition.state
     else:
         next_problem = None
-        if evidence.evaluation.correct is False and problem.primary_skill_id == next_skill_id:
+        if (
+            not is_extension
+            and evidence.evaluation.correct is False
+            and problem.primary_skill_id == next_skill_id
+        ):
             next_problem = regenerate_variant(
                 db, source_problem=problem, session_id=session.id
             )
@@ -426,9 +446,10 @@ def respond(
                 if problem.primary_skill_id == next_skill_id
                 else None,
                 current_difficulty=next_progress.current_difficulty,
-                state=transition.state,
-                correct=evidence.evaluation.correct,
+                state=state_at_attempt,
+                correct=None if is_extension else evidence.evaluation.correct,
                 session_id=session.id,
+                offer_extension=is_extension,
             )
         tutor_action = transition.action
         tutor_hint_level = transition.hint_level

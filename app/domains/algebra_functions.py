@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import random
 
-from app.canonical_problem_families import ALL_MODES, ProblemFamilySpec
+from app.problem_family_spec import ALL_MODES, ProblemFamilySpec
 
 FAMILIES: dict[str, ProblemFamilySpec] = {
     "MATH.ALG.EXPR.EVALUATE": ProblemFamilySpec("MATH.ALG.EXPR.EVALUATE","Evaluate an algebraic expression","MATH.EE.EXPR","EVALUATE_EXPRESSION",1,4,ALL_MODES,frozenset({"procedural_fluency","representation"})),

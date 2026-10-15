@@ -13,7 +13,7 @@ def _build(code: str, seed: int = 43):
 
 def test_proportional_representation_batch_has_eight_families() -> None:
     assert len(CODES) == 8
-    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}
+    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW", "EXTENSION"}
     assert all(
         {mode.value for mode in domain.FAMILIES[code].modes} == expected for code in CODES
     )

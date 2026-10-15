@@ -11,7 +11,7 @@ import random
 from fractions import Fraction
 from math import gcd
 
-from app.canonical_problem_families import (
+from app.problem_family_spec import (
     ALL_MODES,
     ProblemFamilySpec,
 )

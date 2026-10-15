@@ -12,7 +12,7 @@ def _build(code: str, seed: int = 41):
 
 def test_geometry_reasoning_batch_has_fourteen_families() -> None:
     assert len(CODES) == 14
-    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}
+    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW", "EXTENSION"}
     assert all(
         {mode.value for mode in domain.FAMILIES[code].modes} == expected for code in CODES
     )

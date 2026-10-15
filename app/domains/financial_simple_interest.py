@@ -3,7 +3,7 @@
 import random
 
 from app.answer_contracts import AnswerContract, AnswerKind
-from app.canonical_problem_families import ALL_MODES, ProblemFamilySpec
+from app.problem_family_spec import ALL_MODES, ProblemFamilySpec
 
 CODE = "MATH.FIN.INTEREST.SIMPLE"
 FAMILIES = {

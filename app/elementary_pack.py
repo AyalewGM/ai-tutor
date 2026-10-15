@@ -26,7 +26,9 @@ from app.models import Curriculum, Problem, Skill
 from app.prerequisite_ingestion import PrerequisiteEdgeInput, persist_prerequisite_edges
 from app.services.problem_generation import GENERATORS
 
-LearningMode = Literal["diagnostic", "guided", "independent", "mastery"]
+LearningMode = Literal[
+    "diagnostic", "guided", "independent", "mastery", "extension"
+]
 
 
 class PackModel(BaseModel):
@@ -87,8 +89,13 @@ class ProblemSpec(PackModel):
     def validate_modes(self):
         if not self.modes:
             raise ValueError("problem must be eligible for at least one learning mode")
-        if len(set(self.modes)) != len(self.modes):
+        lowered = {str(m).lower() for m in self.modes}
+        if len(lowered) != len(self.modes):
             raise ValueError("problem learning modes must be unique")
+        if "extension" in lowered and len(self.modes) > 1:
+            raise ValueError(
+                "extension problems cannot also claim a required mode pool"
+            )
         return self
 
 
@@ -112,6 +119,14 @@ class ReadinessPolicy(PackModel):
         "independent",
         "mastery",
     )
+
+    @model_validator(mode="after")
+    def validate_required_modes(self):
+        if {str(m).lower() for m in self.required_modes} & {"extension"}:
+            raise ValueError(
+                "extension is an optional stretch mode and cannot be required"
+            )
+        return self
 
 
 class ElementaryPack(PackModel):
@@ -427,6 +442,7 @@ def _problems(session: Session, curriculum: Curriculum, pack: ElementaryPack, sk
             metadata.guided_eligible = "guided" in spec.modes
             metadata.independent_eligible = "independent" in spec.modes
             metadata.mastery_eligible = "mastery" in spec.modes
+            metadata.extension_eligible = "extension" in spec.modes
             metadata.llm_solution_required = False
             metadata.provenance_json = {
                 "source_type": "AI_TUTOR_AUTHORED",

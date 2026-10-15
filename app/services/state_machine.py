@@ -54,4 +54,9 @@ def determine_next_action(context: TutorContext) -> Transition:
     if context.state in {TutorState.REMEDIATION, TutorState.REVIEW}:
         return Transition(TutorState.GUIDED_PRACTICE, "ASK_RETRY")
 
+    if context.state == TutorState.EXTENSION:
+        # Optional stretch tier self-loops: extension attempts never move the
+        # session state machine — callers keep the learner's real state.
+        return Transition(TutorState.EXTENSION, "CONTINUE_EXTENSION")
+
     return Transition(TutorState.COMPLETE, "MARK_MASTERED")

@@ -6,7 +6,7 @@ import math
 import random
 from fractions import Fraction
 
-from app.canonical_problem_families import ALL_MODES, ProblemFamilySpec
+from app.problem_family_spec import ALL_MODES, ProblemFamilySpec
 
 
 def _spec(

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import random
 
-from app.canonical_problem_families import ALL_MODES, ProblemFamilySpec
+from app.problem_family_spec import ALL_MODES, ProblemFamilySpec
 
 
 def _spec(code: str, name: str, *dimensions: str) -> ProblemFamilySpec:
