@@ -93,5 +93,7 @@
   "canonical_equivalence": "UNVERIFIED",
   "assessment": "UNVERIFIED",
   "mastery": "UNVERIFIED",
-  "activation": "FORBIDDEN"
+  "activation": "FORBIDDEN",
+  "next_review_owner": "Independent Standards Source-Fidelity Reviewer",
+  "review_request": "Verify nine author notes against CDE original page 90; check Math I course brackets, graph labels, A-SSE subparts, and publisher byte identity. Review at exact latest PR head. GitHub issue-comment handoff is blocked by connector safety checks."
 }
