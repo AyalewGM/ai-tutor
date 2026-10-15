@@ -196,6 +196,28 @@
           "parameters": {
             "exponent": 2
           }
+        },
+        {
+          "prompt": "Evaluate: 12 \u00f7 (3 + 1) \u00d7 2 + 4.",
+          "canonical_answer": "10",
+          "difficulty": 6,
+          "objective": "Stretch: parentheses, then left-to-right.",
+          "key": "md5-oa-expressions-extension-01",
+          "family": "DECIMAL_OPERATIONS",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "Evaluate: (14 - 3 \u00d7 2)^2.",
+          "canonical_answer": "64",
+          "difficulty": 7,
+          "objective": "Stretch: inner expression, then square.",
+          "key": "md5-oa-expressions-extension-02",
+          "family": "DECIMAL_OPERATIONS",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -338,6 +360,28 @@
             "start": 400,
             "step": 100
           }
+        },
+        {
+          "prompt": "A pattern follows the rule 'multiply by 2, then add 3' starting at 4: 4, 11, 25, ... What is the next term?",
+          "canonical_answer": "53",
+          "difficulty": 7,
+          "objective": "Stretch: apply a two-part recursive rule.",
+          "key": "md5-oa-patterns-extension-01",
+          "family": "NUMBER_PATTERN",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "Pattern A adds 4 each step from 3; pattern B doubles each step from 3. What is the 4th term of the faster-growing pattern?",
+          "canonical_answer": "24",
+          "difficulty": 7,
+          "objective": "Stretch: compare arithmetic and doubling growth.",
+          "key": "md5-oa-patterns-extension-02",
+          "family": "NUMBER_PATTERN",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -481,6 +525,28 @@
             "b": 2.0,
             "operation": "-"
           }
+        },
+        {
+          "prompt": "6.25 \u00d7 5 = ?",
+          "canonical_answer": "31.25",
+          "difficulty": 6,
+          "objective": "Stretch: decimal times a whole number.",
+          "key": "md5-nbt-decimals-extension-01",
+          "family": "DECIMAL_PLACE_VALUE",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "0.36 \u00f7 0.04 = ?",
+          "canonical_answer": "9",
+          "difficulty": 7,
+          "objective": "Stretch: divide a decimal by a decimal.",
+          "key": "md5-nbt-decimals-extension-02",
+          "family": "DECIMAL_PLACE_VALUE",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -634,6 +700,28 @@
             "numerator": 2,
             "denominator": 5
           }
+        },
+        {
+          "prompt": "5/6 - 1/4 = ? Write as a fraction.",
+          "canonical_answer": "7/12",
+          "difficulty": 6,
+          "objective": "Stretch: subtract with unlike denominators.",
+          "key": "md5-nf-add-subtract-extension-01",
+          "family": "ADD_SUBTRACT_UNLIKE_FRACTIONS",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "2/3 + 3/4 + 1/6 = ? Write as a fraction.",
+          "canonical_answer": "19/12",
+          "difficulty": 7,
+          "objective": "Stretch: three addends, three denominators.",
+          "key": "md5-nf-add-subtract-extension-02",
+          "family": "ADD_SUBTRACT_UNLIKE_FRACTIONS",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -792,6 +880,28 @@
             "numerator2": 6,
             "denominator2": 7
           }
+        },
+        {
+          "prompt": "3/4 \u00d7 8/9 = ? Write as a fraction.",
+          "canonical_answer": "2/3",
+          "difficulty": 6,
+          "objective": "Stretch: cross-cancel before multiplying.",
+          "key": "md5-nf-multiply-divide-extension-01",
+          "family": "FRACTION_MULTIPLY",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "7/8 \u00f7 (1/4) = ? Write as a fraction.",
+          "canonical_answer": "7/2",
+          "difficulty": 6,
+          "objective": "Stretch: divide by a fraction.",
+          "key": "md5-nf-multiply-divide-extension-02",
+          "family": "FRACTION_MULTIPLY",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -940,6 +1050,28 @@
             "from": "m",
             "to": "cm"
           }
+        },
+        {
+          "prompt": "4.5 kg is how many grams?",
+          "canonical_answer": "4500",
+          "difficulty": 5,
+          "objective": "Stretch: decimal kilograms to grams.",
+          "key": "md5-md-conversion-extension-01",
+          "family": "MEASUREMENT_CONVERSION",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A trip takes 2 hours 15 minutes. How many minutes is that?",
+          "canonical_answer": "135",
+          "difficulty": 5,
+          "objective": "Stretch: hours and minutes to minutes.",
+          "key": "md5-md-conversion-extension-02",
+          "family": "MEASUREMENT_CONVERSION",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1090,6 +1222,28 @@
             "width": 2,
             "height": 2
           }
+        },
+        {
+          "prompt": "A box is 3 cm \u00d7 3 cm \u00d7 7 cm. What is its volume in cubic cm?",
+          "canonical_answer": "63",
+          "difficulty": 5,
+          "objective": "Stretch: volume from three dimensions.",
+          "key": "md5-md-volume-extension-01",
+          "family": "VOLUME",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A cube has volume 125 cubic cm. What is its edge length in cm?",
+          "canonical_answer": "5",
+          "difficulty": 7,
+          "objective": "Stretch: cube root from a known cube.",
+          "key": "md5-md-volume-extension-02",
+          "family": "VOLUME",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1230,6 +1384,28 @@
             "x": 2,
             "y": 5
           }
+        },
+        {
+          "prompt": "The point (2, 6) moves right 3 and down 2. What are its new coordinates? Write like (7, 5).",
+          "canonical_answer": "(5, 4)",
+          "difficulty": 6,
+          "objective": "Stretch: translate a point.",
+          "key": "md5-g-coordinates-extension-01",
+          "family": "COORDINATE_PLANE",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "How far apart are the points (1, 7) and (6, 7)?",
+          "canonical_answer": "5",
+          "difficulty": 6,
+          "objective": "Stretch: horizontal distance on the plane.",
+          "key": "md5-g-coordinates-extension-02",
+          "family": "COORDINATE_PLANE",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1370,6 +1546,28 @@
             "shape": "pentagon",
             "sides": 5
           }
+        },
+        {
+          "prompt": "A quadrilateral has both pairs of opposite sides equal but no right angles. What is it called?",
+          "canonical_answer": "parallelogram",
+          "difficulty": 6,
+          "objective": "Stretch: classify by attribute combinations.",
+          "key": "md5-g-shapes-extension-01",
+          "family": "CLASSIFY_SHAPE",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A square has side 6 cm and a rectangle is 6 cm by 10 cm. How many more cm of perimeter does the rectangle have?",
+          "canonical_answer": "8",
+          "difficulty": 6,
+          "objective": "Stretch: compare perimeters of related figures.",
+          "key": "md5-g-shapes-extension-02",
+          "family": "CLASSIFY_SHAPE",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     }

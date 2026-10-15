@@ -3,6 +3,7 @@ import uuid
 from sqlalchemy import case, func, select
 from sqlalchemy.orm import Session
 
+from app.content_models import ProblemContentMetadata
 from app.models import Attempt, Problem, TutorState
 from app.services.problem_generation import generate_problem
 
@@ -17,14 +18,40 @@ def select_next_problem(
     correct: bool | None = None,
     student_id: uuid.UUID | None = None,
     session_id: uuid.UUID | None = None,
+    offer_extension: bool = False,
 ) -> Problem | None:
+    """Pick the next problem for a skill.
+
+    Difficulty ladders within the authored/generated pool: +1 on success in
+    independent/mastery states, -1 on failure in remediation.
+
+    Extension problems are never served through the normal ladder — they are
+    excluded unless ``offer_extension`` is true, which is the explicit
+    student opt-in for the optional challenge tier.
+    """
     target_difficulty = current_difficulty
     if correct and state in {TutorState.INDEPENDENT_PRACTICE, TutorState.MASTERY_CHECK}:
         target_difficulty = min(10, current_difficulty + 1)
     elif correct is False and state == TutorState.REMEDIATION:
         target_difficulty = max(1, current_difficulty - 1)
 
-    stmt = select(Problem).where(Problem.primary_skill_id == skill_id)
+    stmt = (
+        select(Problem)
+        .outerjoin(
+            ProblemContentMetadata,
+            ProblemContentMetadata.problem_id == Problem.id,
+        )
+        .where(Problem.primary_skill_id == skill_id)
+    )
+    if offer_extension:
+        # Optional stretch tier only: hardest first, no gating semantics.
+        stmt = stmt.where(ProblemContentMetadata.extension_eligible.is_(True))
+    else:
+        stmt = stmt.where(
+            (ProblemContentMetadata.extension_eligible.is_(False))
+            | (ProblemContentMetadata.extension_eligible.is_(None))
+        )
+
     if current_problem_id is not None:
         stmt = stmt.where(Problem.id != current_problem_id)
 
@@ -40,21 +67,33 @@ def select_next_problem(
                 stmt.where(Problem.id.not_in(seen)),
                 target_difficulty,
                 avoid_family=last_family,
+                hardest_first=offer_extension,
             ).limit(1)
         )
         if problem is not None:
             return problem
+        # Fast learners can exhaust the authored pools on either path, so the
+        # generator is the fallback for both. Extension opt-in generates at a
+        # fixed stretch band (above the ladder) and tags the item
+        # extension_eligible so it joins the challenge pool, never evidence.
         generated = generate_problem(
             db,
             skill_id=skill_id,
-            difficulty=target_difficulty,
+            difficulty=(
+                min(10, max(current_difficulty + 2, 6))
+                if offer_extension
+                else target_difficulty
+            ),
             avoid_family=last_family,
             student_id=student_id,
             session_id=session_id,
+            extension=offer_extension,
         )
         if generated is not None:
             return generated
-    return db.scalar(_ordered(stmt, target_difficulty).limit(1))
+    return db.scalar(
+        _ordered(stmt, target_difficulty, hardest_first=offer_extension).limit(1)
+    )
 
 
 def _last_attempt_family(db: Session, session_id: uuid.UUID) -> str | None:
@@ -72,12 +111,20 @@ def _last_attempt_family(db: Session, session_id: uuid.UUID) -> str | None:
     return row[0].get("problem_family")
 
 
-def _ordered(stmt, target_difficulty: int, avoid_family: str | None = None):
-    ordering = [
-        case((Problem.difficulty == target_difficulty, 0), else_=1),
-        func.abs(Problem.difficulty - target_difficulty),
-        Problem.id,
-    ]
+def _ordered(
+    stmt,
+    target_difficulty: int,
+    avoid_family: str | None = None,
+    hardest_first: bool = False,
+):
+    if hardest_first:
+        ordering = [Problem.difficulty.desc(), Problem.id]
+    else:
+        ordering = [
+            case((Problem.difficulty == target_difficulty, 0), else_=1),
+            func.abs(Problem.difficulty - target_difficulty),
+            Problem.id,
+        ]
     if avoid_family is not None:
         # Prefer a different problem family than the one just served; family is
         # stored in solution metadata for generated problems (NULL → preferred).

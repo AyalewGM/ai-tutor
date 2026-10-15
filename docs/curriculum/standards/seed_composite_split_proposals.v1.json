@@ -4,9 +4,9 @@
   "rule": "ONE_ATOMIC_SKILL_PER_OFFICIAL_EXPECTATION \u2014 composite skills cannot transfer mastery (#293 precedent)",
   "summary": {
     "composite_local_skills": 30,
-    "with_claims": 22,
-    "proposed_atomic_skills": 51,
-    "no_official_claims": 8
+    "with_claims": 30,
+    "proposed_atomic_skills": 71,
+    "no_official_claims": 0
   },
   "proposals": [
     {
@@ -14,72 +14,321 @@
       "seed": "seed_dc_algebra1.py",
       "current_canonical_code": "MATH.ALGEBRA1.EXPR",
       "current_scope": "Interpret and simplify algebraic expressions.",
-      "claimed_expectation_count": 0,
-      "proposed_atomic_skills": [],
-      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "DCA1.EXPR.EXPR",
+          "covers_expectation": "A.SSE.1",
+          "expectation_scope": "Interpret expressions that represent a quantity in terms of its context.\u2605 a. Interpret parts of an expression, such as terms, factors, and coefficients. b. Interpret complicated expressions by viewing",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EXPR",
+            "MATH.ALG.EXPR.EVALUATE",
+            "MATH.ALG.EXPR.TRANSLATE",
+            "MATH.ALG.LIKE.COMBINE",
+            "MATH.POLY.ADD"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
     },
     {
       "local_skill_code": "VAA1.EXPR",
       "seed": "seed_va_algebra1.py",
       "current_canonical_code": "MATH.ALGEBRA1.EXPR",
       "current_scope": "Interpret, simplify, and transform algebraic expressions.",
-      "claimed_expectation_count": 0,
-      "proposed_atomic_skills": [],
-      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VAA1.EXPR.EVALUATE",
+          "covers_expectation": "A.EO.1",
+          "expectation_scope": "The student will represent verbal quantitative situations algebraically and evaluate these expressions for given replacement values of the variables.",
+          "catalog_candidates_ranked": [
+            "MATH.ALG.EXPR.EVALUATE",
+            "MATH.ALG.EXPR.TRANSLATE",
+            "MATH.EE.EXPR",
+            "MATH.ALG.LIKE.COMBINE",
+            "MATH.POLY.ADD"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
     },
     {
       "local_skill_code": "DCA1.LINEAR.EQ",
       "seed": "seed_dc_algebra1.py",
       "current_canonical_code": "MATH.ALGEBRA1.LINEAR_EQ",
       "current_scope": "Solve one-variable linear equations and justify equivalent steps.",
-      "claimed_expectation_count": 0,
-      "proposed_atomic_skills": [],
-      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+      "claimed_expectation_count": 4,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "DCA1.LINEAR.EQ.ONE",
+          "covers_expectation": "A.CED.1",
+          "expectation_scope": "Create equations and inequalities in one variable and use them to solve problems. Include equations arising from linear and quadratic functions, and simple rational and exponential functions.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+            "MATH.ALG.EQ.MULTISTEP.DISTRIBUTE",
+            "MATH.EE.SYSTEMS"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DCA1.LINEAR.EQ.ONE_2",
+          "covers_expectation": "A.CED.2",
+          "expectation_scope": "Create equations in two or more variables to represent relationships between quantities; graph equations on coordinate axes with labels and scales.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+            "MATH.ALG.EQ.MULTISTEP.DISTRIBUTE",
+            "MATH.EE.SYSTEMS"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DCA1.LINEAR.EQ.ONE_3",
+          "covers_expectation": "A.REI.1",
+          "expectation_scope": "Explain each step in solving a simple equation as following from the equality of numbers asserted at the previous step, starting from the assumption that the original equation has a solution. Construc",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+            "MATH.ALG.EQ.MULTISTEP.DISTRIBUTE",
+            "MATH.EE.SYSTEMS"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DCA1.LINEAR.EQ.ONE_4",
+          "covers_expectation": "A.REI.3",
+          "expectation_scope": "Solve linear equations and inequalities in one variable, including equations with coefficients represented by letters.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+            "MATH.ALG.EQ.MULTISTEP.DISTRIBUTE",
+            "MATH.EE.SYSTEMS"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
     },
     {
       "local_skill_code": "VAA1.LINEAR.EQ",
       "seed": "seed_va_algebra1.py",
       "current_canonical_code": "MATH.ALGEBRA1.LINEAR_EQ",
       "current_scope": "Solve and justify one-variable linear equations.",
-      "claimed_expectation_count": 0,
-      "proposed_atomic_skills": [],
-      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VAA1.LINEAR.EQ.MULTISTEP",
+          "covers_expectation": "A.EI.1",
+          "expectation_scope": "The student will represent, solve, explain, and interpret the solution to multistep linear equations and inequalities in one variable and literal equations for a specified variable.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.EE.EQUATION.ONE",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+            "MATH.ALG.EQ.MULTISTEP.DISTRIBUTE",
+            "MATH.EE.SYSTEMS"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
     },
     {
       "local_skill_code": "DCA1.LINEAR.FN",
       "seed": "seed_dc_algebra1.py",
       "current_canonical_code": "MATH.ALGEBRA1.LINEAR_FN",
       "current_scope": "Represent linear relationships using equations, tables, and rates of change.",
-      "claimed_expectation_count": 0,
-      "proposed_atomic_skills": [],
-      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+      "claimed_expectation_count": 9,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "DCA1.LINEAR.FN.COMPARE",
+          "covers_expectation": "A.REI.10",
+          "expectation_scope": "Understand that the graph of an equation in two variables is the set of all its solutions plotted in the coordinate plane, often forming a curve (which could be a line).",
+          "catalog_candidates_ranked": [
+            "MATH.F.LINEAR.COMPARE",
+            "MATH.F.LINEAR.SEQUENCE",
+            "MATH.FUNC.LINEAR.MODEL",
+            "MATH.FUNC.LINEAR.SLOPE.TABLE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DCA1.LINEAR.FN.MODEL",
+          "covers_expectation": "F.IF.1",
+          "expectation_scope": "Understand that a function from one set (called the domain) to another set (called the range) assigns to each element of the domain exactly one element of the range. If f is a function and x is an ele",
+          "catalog_candidates_ranked": [
+            "MATH.FUNC.LINEAR.MODEL",
+            "MATH.FUNC.LINEAR.SLOPE.TABLE",
+            "MATH.F.LINEAR.COMPARE",
+            "MATH.F.LINEAR.SEQUENCE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DCA1.LINEAR.FN.MODEL_2",
+          "covers_expectation": "F.IF.2",
+          "expectation_scope": "Use function notation, evaluate functions for inputs in their domains, and interpret statements that use function notation in terms of a context.",
+          "catalog_candidates_ranked": [
+            "MATH.FUNC.LINEAR.MODEL",
+            "MATH.FUNC.LINEAR.SLOPE.TABLE",
+            "MATH.F.LINEAR.COMPARE",
+            "MATH.F.LINEAR.SEQUENCE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DCA1.LINEAR.FN.SEQUENCE",
+          "covers_expectation": "F.IF.3",
+          "expectation_scope": "Recognize that sequences are functions, sometimes defined recursively, whose domain is a subset of the integers. For example, the Fibonacci sequence is defined recursively by f(0) = f(1) = 1, f(n+1) =",
+          "catalog_candidates_ranked": [
+            "MATH.F.LINEAR.SEQUENCE",
+            "MATH.FUNC.LINEAR.MODEL",
+            "MATH.FUNC.LINEAR.SLOPE.TABLE",
+            "MATH.F.LINEAR.COMPARE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DCA1.LINEAR.FN.MODEL_3",
+          "covers_expectation": "F.IF.4",
+          "expectation_scope": "For a function that models a relationship between two quantities, interpret key features of graphs and tables in terms of the quantities, and sketch graphs showing key features given a verbal descript",
+          "catalog_candidates_ranked": [
+            "MATH.FUNC.LINEAR.MODEL",
+            "MATH.FUNC.LINEAR.SLOPE.TABLE",
+            "MATH.F.LINEAR.COMPARE",
+            "MATH.F.LINEAR.SEQUENCE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DCA1.LINEAR.FN.TABLE",
+          "covers_expectation": "F.IF.6",
+          "expectation_scope": "Calculate and interpret the average rate of change of a function (presented symbolically or as a table) over a specified interval. Estimate the rate of change from a graph.\u2605",
+          "catalog_candidates_ranked": [
+            "MATH.FUNC.LINEAR.SLOPE.TABLE",
+            "MATH.FUNC.LINEAR.MODEL",
+            "MATH.F.LINEAR.COMPARE",
+            "MATH.F.LINEAR.SEQUENCE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DCA1.LINEAR.FN.MODEL_4",
+          "covers_expectation": "F.LE.1",
+          "expectation_scope": "Distinguish between situations that can be modeled with linear functions and with exponential functions. a. Prove that linear functions grow by equal differences over equal intervals, and that exponen",
+          "catalog_candidates_ranked": [
+            "MATH.FUNC.LINEAR.MODEL",
+            "MATH.FUNC.LINEAR.SLOPE.TABLE",
+            "MATH.F.LINEAR.COMPARE",
+            "MATH.F.LINEAR.SEQUENCE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DCA1.LINEAR.FN.TABLE_2",
+          "covers_expectation": "F.LE.2",
+          "expectation_scope": "Construct linear and exponential functions, including arithmetic and geometric sequences, given a graph, a description of a relationship, or two input-output pairs (include reading these from a table)",
+          "catalog_candidates_ranked": [
+            "MATH.FUNC.LINEAR.SLOPE.TABLE",
+            "MATH.F.LINEAR.SEQUENCE",
+            "MATH.FUNC.LINEAR.MODEL",
+            "MATH.F.LINEAR.COMPARE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DCA1.LINEAR.FN.MODEL_5",
+          "covers_expectation": "F.LE.5",
+          "expectation_scope": "Interpret the parameters in a linear or exponential function in terms of a context. Trigonometric Functions HSF-TF",
+          "catalog_candidates_ranked": [
+            "MATH.FUNC.LINEAR.MODEL",
+            "MATH.FUNC.LINEAR.SLOPE.TABLE",
+            "MATH.F.LINEAR.COMPARE",
+            "MATH.F.LINEAR.SEQUENCE"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
     },
     {
       "local_skill_code": "VAA1.LINEAR.FN",
       "seed": "seed_va_algebra1.py",
       "current_canonical_code": "MATH.ALGEBRA1.LINEAR_FN",
       "current_scope": "Represent and analyze linear relationships using multiple representations.",
-      "claimed_expectation_count": 0,
-      "proposed_atomic_skills": [],
-      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VAA1.LINEAR.FN.MODEL",
+          "covers_expectation": "A.F.1",
+          "expectation_scope": "The student will investigate, analyze, and compare linear functions algebraically and graphically, and model linear relationships.",
+          "catalog_candidates_ranked": [
+            "MATH.FUNC.LINEAR.MODEL",
+            "MATH.F.LINEAR.COMPARE",
+            "MATH.FUNC.LINEAR.SLOPE.TABLE",
+            "MATH.F.LINEAR.SEQUENCE"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
     },
     {
       "local_skill_code": "DCA1.LINEAR.FN.SLOPE",
       "seed": "seed_dc_algebra1.py",
       "current_canonical_code": "MATH.ALGEBRA1.LINEAR_FN_SLOPE",
       "current_scope": "Write linear equations in y = mx + b form.",
-      "claimed_expectation_count": 0,
-      "proposed_atomic_skills": [],
-      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+      "claimed_expectation_count": 2,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "DCA1.LINEAR.FN.SLOPE.TABLE",
+          "covers_expectation": "F.LE.1",
+          "expectation_scope": "Distinguish between situations that can be modeled with linear functions and with exponential functions. a. Prove that linear functions grow by equal differences over equal intervals, and that exponen",
+          "catalog_candidates_ranked": [
+            "MATH.FUNC.LINEAR.SLOPE.TABLE",
+            "MATH.DATA.LINEFIT.SLOPE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DCA1.LINEAR.FN.SLOPE.TABLE_2",
+          "covers_expectation": "S.ID.7",
+          "expectation_scope": "Interpret the slope (rate of change) and the intercept (constant term) of a linear model in the context of the data.",
+          "catalog_candidates_ranked": [
+            "MATH.FUNC.LINEAR.SLOPE.TABLE",
+            "MATH.DATA.LINEFIT.SLOPE"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
     },
     {
       "local_skill_code": "VAA1.LINEAR.FN.SLOPE",
       "seed": "seed_va_algebra1.py",
       "current_canonical_code": "MATH.ALGEBRA1.LINEAR_FN_SLOPE",
       "current_scope": "Write and interpret linear equations in slope-intercept form.",
-      "claimed_expectation_count": 0,
-      "proposed_atomic_skills": [],
-      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VAA1.LINEAR.FN.SLOPE.TABLE",
+          "covers_expectation": "A.F.1",
+          "expectation_scope": "The student will investigate, analyze, and compare linear functions algebraically and graphically, and model linear relationships.",
+          "catalog_candidates_ranked": [
+            "MATH.FUNC.LINEAR.SLOPE.TABLE",
+            "MATH.DATA.LINEFIT.SLOPE"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
     },
     {
       "local_skill_code": "DC7.EE.EQUATION",

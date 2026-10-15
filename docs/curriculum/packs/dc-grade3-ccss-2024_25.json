@@ -210,6 +210,28 @@
             "operation": "\u00d7",
             "answer": 40
           }
+        },
+        {
+          "prompt": "8 rows of 8 chairs are set up, and 14 more chairs arrive. How many chairs in all?",
+          "canonical_answer": "78",
+          "difficulty": 5,
+          "objective": "Stretch: multiply, then add.",
+          "key": "dc3-oa-multiplication-extension-01",
+          "family": "EQUAL_GROUPS",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "5 \u00d7 ? = 6 \u00d7 5. What is the missing factor?",
+          "canonical_answer": "6",
+          "difficulty": 5,
+          "objective": "Stretch: commutative property in disguise.",
+          "key": "dc3-oa-multiplication-extension-02",
+          "family": "EQUAL_GROUPS",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -364,6 +386,28 @@
             "b": 7,
             "operation": "\u00f7"
           }
+        },
+        {
+          "prompt": "56 pencils are shared equally into 7 boxes. How many pencils are in 3 boxes together?",
+          "canonical_answer": "24",
+          "difficulty": 5,
+          "objective": "Stretch: divide, then scale back up.",
+          "key": "dc3-oa-division-extension-01",
+          "family": "EQUAL_SHARING",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A number divided by 8 gives 6. What is the number?",
+          "canonical_answer": "48",
+          "difficulty": 5,
+          "objective": "Stretch: undo a division.",
+          "key": "dc3-oa-division-extension-02",
+          "family": "EQUAL_SHARING",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -519,6 +563,28 @@
             "b": 7,
             "operation": "\u00f7"
           }
+        },
+        {
+          "prompt": "48 = 8 \u00d7 ?. What is the missing factor?",
+          "canonical_answer": "6",
+          "difficulty": 6,
+          "objective": "Stretch: product hidden inside a bigger product.",
+          "key": "dc3-oa-fact-families-extension-01",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "To find 8 \u00d7 6, you can compute 8 \u00d7 10 and then subtract 8 \u00d7 ?. What is the missing number?",
+          "canonical_answer": "4",
+          "difficulty": 7,
+          "objective": "Stretch: use the distributive property.",
+          "key": "dc3-oa-fact-families-extension-02",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -668,6 +734,28 @@
             "number": 738,
             "place": 100
           }
+        },
+        {
+          "prompt": "Round 3315 to the nearest hundred, then subtract 500. What is the result?",
+          "canonical_answer": "2800",
+          "difficulty": 6,
+          "objective": "Stretch: round first, then subtract.",
+          "key": "dc3-nbt-place-value-extension-01",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A number rounds to 500 to the nearest hundred and to 480 to the nearest ten. Its ones digit is 4. What is the number?",
+          "canonical_answer": "484",
+          "difficulty": 7,
+          "objective": "Stretch: satisfy two rounding constraints.",
+          "key": "dc3-nbt-place-value-extension-02",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -813,6 +901,28 @@
             "numerator2": 2,
             "denominator2": 3
           }
+        },
+        {
+          "prompt": "Which is larger: 3/4 of 20 or 2/3 of 18? Give the larger value.",
+          "canonical_answer": "15",
+          "difficulty": 6,
+          "objective": "Stretch: compare fractions of different wholes.",
+          "key": "dc3-nf-fractions-extension-01",
+          "family": "UNIT_FRACTION",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "How many sixths are equal to 3 halves?",
+          "canonical_answer": "9",
+          "difficulty": 6,
+          "objective": "Stretch: convert halves into sixths.",
+          "key": "dc3-nf-fractions-extension-02",
+          "family": "UNIT_FRACTION",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -958,6 +1068,28 @@
             "end": "6:15",
             "elapsed_minutes": 45
           }
+        },
+        {
+          "prompt": "A film starts at 3:15 PM and is 80 minutes long. When does it end? Write like 5:05 PM.",
+          "canonical_answer": "4:35 PM",
+          "difficulty": 6,
+          "objective": "Stretch: elapsed minutes across the hour.",
+          "key": "dc3-md-time-extension-01",
+          "family": "TIME_TO_5_MINUTES",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "School ends at 3:30 PM. It is now 2:46 PM. How many minutes until school ends?",
+          "canonical_answer": "44",
+          "difficulty": 6,
+          "objective": "Stretch: minutes remaining to a clock time.",
+          "key": "dc3-md-time-extension-02",
+          "family": "TIME_TO_5_MINUTES",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1099,6 +1231,28 @@
             "category": "cat",
             "value": 6
           }
+        },
+        {
+          "prompt": "A bar graph shows Mon: 9, Tue: 15, Wed: 9 books read. How many more books were read on Mon and Tue together than on Wed?",
+          "canonical_answer": "15",
+          "difficulty": 6,
+          "objective": "Stretch: combine two bars, then compare.",
+          "key": "dc3-md-data-extension-01",
+          "family": "BAR_GRAPH_READ",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "In a picture graph each book symbol = 4 books. Fiction has 6 symbols and nonfiction has 2 symbols. How many more fiction books than nonfiction?",
+          "canonical_answer": "16",
+          "difficulty": 6,
+          "objective": "Stretch: scale symbols before comparing.",
+          "key": "dc3-md-data-extension-02",
+          "family": "BAR_GRAPH_READ",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1246,6 +1400,28 @@
             "width": 5,
             "measure": "area"
           }
+        },
+        {
+          "prompt": "A rectangle has area 28 square cm and width 28 cm. What is its perimeter in cm?",
+          "canonical_answer": "70",
+          "difficulty": 6,
+          "objective": "Stretch: find length from area, then perimeter.",
+          "key": "dc3-md-area-perimeter-extension-01",
+          "family": "RECTANGLE_AREA",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A square has perimeter 32 cm. What is its area in square cm?",
+          "canonical_answer": "64",
+          "difficulty": 6,
+          "objective": "Stretch: perimeter to side to area.",
+          "key": "dc3-md-area-perimeter-extension-02",
+          "family": "RECTANGLE_AREA",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1386,6 +1562,28 @@
             "shape": "pentagon",
             "sides": 5
           }
+        },
+        {
+          "prompt": "A hexagon has all sides 2 cm long. What is its perimeter in cm?",
+          "canonical_answer": "12",
+          "difficulty": 5,
+          "objective": "Stretch: perimeter of a regular polygon.",
+          "key": "dc3-g-shapes-extension-01",
+          "family": "CLASSIFY_SHAPE",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "Two identical squares share one whole side. How many sides does the outside of the combined figure have?",
+          "canonical_answer": "6",
+          "difficulty": 6,
+          "objective": "Stretch: shared edges disappear from the outside count.",
+          "key": "dc3-g-shapes-extension-02",
+          "family": "CLASSIFY_SHAPE",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     }

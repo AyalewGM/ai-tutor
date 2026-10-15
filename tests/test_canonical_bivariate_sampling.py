@@ -13,7 +13,7 @@ def _build(code: str, seed: int = 37):
 
 def test_bivariate_sampling_batch_has_ten_families() -> None:
     assert len(CODES) == 10
-    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}
+    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW", "EXTENSION"}
     assert all(
         {mode.value for mode in domain.FAMILIES[code].modes} == expected for code in CODES
     )

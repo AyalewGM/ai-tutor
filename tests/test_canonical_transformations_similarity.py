@@ -17,7 +17,7 @@ def _parse_point(text: str) -> tuple[int, int]:
 
 def test_transform_similarity_batch_has_nine_families() -> None:
     assert len(CODES) == 9
-    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}
+    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW", "EXTENSION"}
     assert all(
         {mode.value for mode in domain.FAMILIES[code].modes} == expected for code in CODES
     )

@@ -212,6 +212,28 @@
             "operation": "\u00d7",
             "answer": 40
           }
+        },
+        {
+          "prompt": "Jordan has 6 times as many cards as Kai. Kai has 5 fewer cards than Leo, who has 23. How many cards does Jordan have?",
+          "canonical_answer": "108",
+          "difficulty": 6,
+          "objective": "Stretch: chained multiplicative and additive comparison.",
+          "key": "md4-oa-comparison-extension-01",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A is 5 times B, and together A and B make 66. What is B?",
+          "canonical_answer": "11",
+          "difficulty": 7,
+          "objective": "Stretch: total split by a multiplicative ratio.",
+          "key": "md4-oa-comparison-extension-02",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -371,6 +393,28 @@
             "operation": "\u00d7",
             "answer": 486
           }
+        },
+        {
+          "prompt": "You buy 3 packs of 12 pens, give away one whole pack, then lose 3 pens. How many pens are left?",
+          "canonical_answer": "21",
+          "difficulty": 6,
+          "objective": "Stretch: multiply, remove a pack, remove more.",
+          "key": "md4-oa-multi-step-extension-01",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "You earn $9 per day for 5 days and spend $15 twice. How many dollars do you have left?",
+          "canonical_answer": "15",
+          "difficulty": 6,
+          "objective": "Stretch: earnings minus repeated spending.",
+          "key": "md4-oa-multi-step-extension-02",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -521,6 +565,28 @@
             "operation": "\u00d7",
             "answer": 40
           }
+        },
+        {
+          "prompt": "What is the smallest number greater than 41 that is a multiple of both 6 and 8?",
+          "canonical_answer": "48",
+          "difficulty": 7,
+          "objective": "Stretch: common multiple above a bound.",
+          "key": "md4-oa-factors-patterns-extension-01",
+          "family": "NUMBER_PATTERN",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "How many factors does 24 have?",
+          "canonical_answer": "8",
+          "difficulty": 6,
+          "objective": "Stretch: count factor pairs.",
+          "key": "md4-oa-factors-patterns-extension-02",
+          "family": "NUMBER_PATTERN",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -670,6 +736,28 @@
             "a": 3200,
             "b": 320
           }
+        },
+        {
+          "prompt": "In the number 470325, what digit is in the ten thousands place?",
+          "canonical_answer": "7",
+          "difficulty": 4,
+          "objective": "Stretch: identify a place beyond thousands.",
+          "key": "md4-nbt-place-value-extension-01",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "The 4 in 245,381 is how many times as large as the 4 in 3,420?",
+          "canonical_answer": "100",
+          "difficulty": 7,
+          "objective": "Stretch: same digit, different place values.",
+          "key": "md4-nbt-place-value-extension-02",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -812,6 +900,28 @@
             "a": 58,
             "b": 49
           }
+        },
+        {
+          "prompt": "34 \u00d7 43 = ?",
+          "canonical_answer": "1462",
+          "difficulty": 6,
+          "objective": "Stretch: two-digit by two-digit multiplication.",
+          "key": "md4-nbt-multiply-extension-01",
+          "family": "MULTI_DIGIT_MULTIPLICATION",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "What is 25 \u00d7 64? Think of 25 as a quarter of 100.",
+          "canonical_answer": "1600",
+          "difficulty": 6,
+          "objective": "Stretch: multiply by 25 via quarters.",
+          "key": "md4-nbt-multiply-extension-02",
+          "family": "MULTI_DIGIT_MULTIPLICATION",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -954,6 +1064,28 @@
             "a": 884,
             "b": 4
           }
+        },
+        {
+          "prompt": "942 \u00f7 6 = ?",
+          "canonical_answer": "157",
+          "difficulty": 5,
+          "objective": "Stretch: four-digit division by one digit.",
+          "key": "md4-nbt-divide-extension-01",
+          "family": "LONG_DIVISION",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A number divided by 7 gives 139 with remainder 4. What is the number?",
+          "canonical_answer": "977",
+          "difficulty": 7,
+          "objective": "Stretch: undo division with a remainder.",
+          "key": "md4-nbt-divide-extension-02",
+          "family": "LONG_DIVISION",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1107,6 +1239,28 @@
             "numerator": 2,
             "denominator": 7
           }
+        },
+        {
+          "prompt": "5/4 + 3/8 = ? Write as a fraction.",
+          "canonical_answer": "13/8",
+          "difficulty": 6,
+          "objective": "Stretch: add fractions with unlike denominators.",
+          "key": "md4-nf-fractions-extension-01",
+          "family": "FRACTION_EQUIVALENCE",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "Which is greater, 7/8 or 5/6? Answer with the fraction.",
+          "canonical_answer": "7/8",
+          "difficulty": 6,
+          "objective": "Stretch: compare fractions across denominators.",
+          "key": "md4-nf-fractions-extension-02",
+          "family": "FRACTION_EQUIVALENCE",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1247,6 +1401,28 @@
             "digit": 6,
             "number": 0.67
           }
+        },
+        {
+          "prompt": "What is 0.7 + 0.06 + 0.004?",
+          "canonical_answer": "0.764",
+          "difficulty": 5,
+          "objective": "Stretch: align three different decimal places.",
+          "key": "md4-nf-decimals-extension-01",
+          "family": "DECIMAL_PLACE_VALUE",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "Which is greater, 0.608 or 0.68? Give the value.",
+          "canonical_answer": "0.68",
+          "difficulty": 5,
+          "objective": "Stretch: tenths beat hundredths.",
+          "key": "md4-nf-decimals-extension-02",
+          "family": "DECIMAL_PLACE_VALUE",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1395,6 +1571,28 @@
             "from": "m",
             "to": "cm"
           }
+        },
+        {
+          "prompt": "A jug holds 4 liters. How many 250-mL cups fill it?",
+          "canonical_answer": "16",
+          "difficulty": 5,
+          "objective": "Stretch: convert, then measure out.",
+          "key": "md4-md-measurement-extension-01",
+          "family": "MEASUREMENT_CONVERSION",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A board is 3 feet 4 inches long. How many inches is that?",
+          "canonical_answer": "40",
+          "difficulty": 5,
+          "objective": "Stretch: feet-and-inches to inches.",
+          "key": "md4-md-measurement-extension-02",
+          "family": "MEASUREMENT_CONVERSION",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1535,6 +1733,28 @@
           "parameters": {
             "relation": "perpendicular"
           }
+        },
+        {
+          "prompt": "Two angles form a right angle. One is 28 degrees. How many degrees is the other?",
+          "canonical_answer": "62",
+          "difficulty": 5,
+          "objective": "Stretch: complementary angles.",
+          "key": "md4-md-angle-lines-extension-01",
+          "family": "ANGLE_MEASUREMENT",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A straight angle is split into 57 degrees, 48 degrees, and a third angle. How many degrees is the third angle?",
+          "canonical_answer": "75",
+          "difficulty": 6,
+          "objective": "Stretch: partition 180 degrees.",
+          "key": "md4-md-angle-lines-extension-02",
+          "family": "ANGLE_MEASUREMENT",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     }

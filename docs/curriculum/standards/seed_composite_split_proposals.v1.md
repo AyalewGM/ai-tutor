@@ -2,63 +2,91 @@
 
 Status: `DRAFT_PROPOSED_NOT_VERIFIED` — ONE_ATOMIC_SKILL_PER_OFFICIAL_EXPECTATION — composite skills cannot transfer mastery (#293 precedent)
 
-30 composite local skills → 51 proposed atomic skills (8 skills have no official expectation claims).
+30 composite local skills → 71 proposed atomic skills (0 skills have no official expectation claims).
 
 ## `DCA1.EXPR` (seed_dc_algebra1.py)
-canonical today: `MATH.ALGEBRA1.EXPR` — 0 claimed expectations — `NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE`
+canonical today: `MATH.ALGEBRA1.EXPR` — 1 claimed expectations — `PROPOSED_SPLIT_NEEDS_MATH_REVIEW`
 
 > Interpret and simplify algebraic expressions.
 
-*No manifest expectations claim this skill — align to nearest expectations or retire.*
+| Proposed atomic skill | Covers | Top catalog candidate |
+|---|---|---|
+| `DCA1.EXPR.EXPR` | `A.SSE.1` | `MATH.EE.EXPR` |
 
 ## `VAA1.EXPR` (seed_va_algebra1.py)
-canonical today: `MATH.ALGEBRA1.EXPR` — 0 claimed expectations — `NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE`
+canonical today: `MATH.ALGEBRA1.EXPR` — 1 claimed expectations — `PROPOSED_SPLIT_NEEDS_MATH_REVIEW`
 
 > Interpret, simplify, and transform algebraic expressions.
 
-*No manifest expectations claim this skill — align to nearest expectations or retire.*
+| Proposed atomic skill | Covers | Top catalog candidate |
+|---|---|---|
+| `VAA1.EXPR.EVALUATE` | `A.EO.1` | `MATH.ALG.EXPR.EVALUATE` |
 
 ## `DCA1.LINEAR.EQ` (seed_dc_algebra1.py)
-canonical today: `MATH.ALGEBRA1.LINEAR_EQ` — 0 claimed expectations — `NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE`
+canonical today: `MATH.ALGEBRA1.LINEAR_EQ` — 4 claimed expectations — `PROPOSED_SPLIT_NEEDS_MATH_REVIEW`
 
 > Solve one-variable linear equations and justify equivalent steps.
 
-*No manifest expectations claim this skill — align to nearest expectations or retire.*
+| Proposed atomic skill | Covers | Top catalog candidate |
+|---|---|---|
+| `DCA1.LINEAR.EQ.ONE` | `A.CED.1` | `MATH.EE.EQUATION.ONE` |
+| `DCA1.LINEAR.EQ.ONE_2` | `A.CED.2` | `MATH.EE.EQUATION.ONE` |
+| `DCA1.LINEAR.EQ.ONE_3` | `A.REI.1` | `MATH.EE.EQUATION.ONE` |
+| `DCA1.LINEAR.EQ.ONE_4` | `A.REI.3` | `MATH.EE.EQUATION.ONE` |
 
 ## `VAA1.LINEAR.EQ` (seed_va_algebra1.py)
-canonical today: `MATH.ALGEBRA1.LINEAR_EQ` — 0 claimed expectations — `NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE`
+canonical today: `MATH.ALGEBRA1.LINEAR_EQ` — 1 claimed expectations — `PROPOSED_SPLIT_NEEDS_MATH_REVIEW`
 
 > Solve and justify one-variable linear equations.
 
-*No manifest expectations claim this skill — align to nearest expectations or retire.*
+| Proposed atomic skill | Covers | Top catalog candidate |
+|---|---|---|
+| `VAA1.LINEAR.EQ.MULTISTEP` | `A.EI.1` | `MATH.EE.EQUATION.MULTISTEP` |
 
 ## `DCA1.LINEAR.FN` (seed_dc_algebra1.py)
-canonical today: `MATH.ALGEBRA1.LINEAR_FN` — 0 claimed expectations — `NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE`
+canonical today: `MATH.ALGEBRA1.LINEAR_FN` — 9 claimed expectations — `PROPOSED_SPLIT_NEEDS_MATH_REVIEW`
 
 > Represent linear relationships using equations, tables, and rates of change.
 
-*No manifest expectations claim this skill — align to nearest expectations or retire.*
+| Proposed atomic skill | Covers | Top catalog candidate |
+|---|---|---|
+| `DCA1.LINEAR.FN.COMPARE` | `A.REI.10` | `MATH.F.LINEAR.COMPARE` |
+| `DCA1.LINEAR.FN.MODEL` | `F.IF.1` | `MATH.FUNC.LINEAR.MODEL` |
+| `DCA1.LINEAR.FN.MODEL_2` | `F.IF.2` | `MATH.FUNC.LINEAR.MODEL` |
+| `DCA1.LINEAR.FN.SEQUENCE` | `F.IF.3` | `MATH.F.LINEAR.SEQUENCE` |
+| `DCA1.LINEAR.FN.MODEL_3` | `F.IF.4` | `MATH.FUNC.LINEAR.MODEL` |
+| `DCA1.LINEAR.FN.TABLE` | `F.IF.6` | `MATH.FUNC.LINEAR.SLOPE.TABLE` |
+| `DCA1.LINEAR.FN.MODEL_4` | `F.LE.1` | `MATH.FUNC.LINEAR.MODEL` |
+| `DCA1.LINEAR.FN.TABLE_2` | `F.LE.2` | `MATH.FUNC.LINEAR.SLOPE.TABLE` |
+| `DCA1.LINEAR.FN.MODEL_5` | `F.LE.5` | `MATH.FUNC.LINEAR.MODEL` |
 
 ## `VAA1.LINEAR.FN` (seed_va_algebra1.py)
-canonical today: `MATH.ALGEBRA1.LINEAR_FN` — 0 claimed expectations — `NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE`
+canonical today: `MATH.ALGEBRA1.LINEAR_FN` — 1 claimed expectations — `PROPOSED_SPLIT_NEEDS_MATH_REVIEW`
 
 > Represent and analyze linear relationships using multiple representations.
 
-*No manifest expectations claim this skill — align to nearest expectations or retire.*
+| Proposed atomic skill | Covers | Top catalog candidate |
+|---|---|---|
+| `VAA1.LINEAR.FN.MODEL` | `A.F.1` | `MATH.FUNC.LINEAR.MODEL` |
 
 ## `DCA1.LINEAR.FN.SLOPE` (seed_dc_algebra1.py)
-canonical today: `MATH.ALGEBRA1.LINEAR_FN_SLOPE` — 0 claimed expectations — `NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE`
+canonical today: `MATH.ALGEBRA1.LINEAR_FN_SLOPE` — 2 claimed expectations — `PROPOSED_SPLIT_NEEDS_MATH_REVIEW`
 
 > Write linear equations in y = mx + b form.
 
-*No manifest expectations claim this skill — align to nearest expectations or retire.*
+| Proposed atomic skill | Covers | Top catalog candidate |
+|---|---|---|
+| `DCA1.LINEAR.FN.SLOPE.TABLE` | `F.LE.1` | `MATH.FUNC.LINEAR.SLOPE.TABLE` |
+| `DCA1.LINEAR.FN.SLOPE.TABLE_2` | `S.ID.7` | `MATH.FUNC.LINEAR.SLOPE.TABLE` |
 
 ## `VAA1.LINEAR.FN.SLOPE` (seed_va_algebra1.py)
-canonical today: `MATH.ALGEBRA1.LINEAR_FN_SLOPE` — 0 claimed expectations — `NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE`
+canonical today: `MATH.ALGEBRA1.LINEAR_FN_SLOPE` — 1 claimed expectations — `PROPOSED_SPLIT_NEEDS_MATH_REVIEW`
 
 > Write and interpret linear equations in slope-intercept form.
 
-*No manifest expectations claim this skill — align to nearest expectations or retire.*
+| Proposed atomic skill | Covers | Top catalog candidate |
+|---|---|---|
+| `VAA1.LINEAR.FN.SLOPE.TABLE` | `A.F.1` | `MATH.FUNC.LINEAR.SLOPE.TABLE` |
 
 ## `DC7.EE.EQUATION` (seed_dc_grade7.py)
 canonical today: `MATH.EE.EQUATIONS_INEQUALITIES` — 2 claimed expectations — `PROPOSED_SPLIT_NEEDS_MATH_REVIEW`

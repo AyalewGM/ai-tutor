@@ -31,7 +31,14 @@ def record_evidence(
     answer_kind: str = "FREE_TEXT",
     choices: list | None = None,
     step_misconception_code: str | None = None,
+    count_evidence: bool = True,
 ) -> EvidenceResult:
+    """Evaluate an answer and record learner evidence.
+
+    ``count_evidence=False`` keeps full deterministic evaluation and
+    misconception detection but skips all mastery/progress mutation — used by
+    the optional extension tier, whose attempts are evidence-isolated.
+    """
     previous_score = progress.mastery_score
     previous_confidence = progress.confidence_score
     evaluation = evaluate_problem(
@@ -85,27 +92,28 @@ def record_evidence(
                 row.confidence = Decimal(str(misconception_confidence or 0))
             misconception_count = row.occurrence_count
 
-    mastery = update_mastery(
-        float(progress.mastery_score),
-        progress.attempt_count,
-        evaluation.correct,
-        assistance_level,
-        problem_difficulty=problem_difficulty,
-        learner_level=progress.current_difficulty,
-    )
-    progress.attempt_count += 1
-    if evaluation.correct:
-        progress.correct_count += 1
-        if assistance_level == 0:
+    if count_evidence:
+        mastery = update_mastery(
+            float(progress.mastery_score),
+            progress.attempt_count,
+            evaluation.correct,
+            assistance_level,
+            problem_difficulty=problem_difficulty,
+            learner_level=progress.current_difficulty,
+        )
+        progress.attempt_count += 1
+        if evaluation.correct:
+            progress.correct_count += 1
+            if assistance_level == 0:
+                progress.independent_attempt_count += 1
+                progress.independent_correct_count += 1
+                progress.last_independent_evidence_at = datetime.now(UTC)
+            else:
+                progress.hinted_correct_count += 1
+        elif assistance_level == 0:
             progress.independent_attempt_count += 1
-            progress.independent_correct_count += 1
-            progress.last_independent_evidence_at = datetime.now(UTC)
-        else:
-            progress.hinted_correct_count += 1
-    elif assistance_level == 0:
-        progress.independent_attempt_count += 1
-    progress.mastery_score = Decimal(str(mastery.mastery))
-    progress.confidence_score = Decimal(str(mastery.confidence))
+        progress.mastery_score = Decimal(str(mastery.mastery))
+        progress.confidence_score = Decimal(str(mastery.confidence))
 
     return EvidenceResult(
         evaluation=evaluation,

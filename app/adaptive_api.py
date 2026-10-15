@@ -1,11 +1,16 @@
+import uuid
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.api import _student_skill, _supports_steps, _tutor_context
+from app.api import _problem_out, _student_skill, _supports_steps, _tutor_context
 from app.core.database import get_db
-from app.identity import CurrentLearningAccess, require_learning_owns_student
+from app.identity import (
+    CurrentLearningAccess,
+    require_learning_owns_session,
+    require_learning_owns_student,
+)
 from app.models import Skill, Student, TutorSession, TutorState, TutorTurn
 from app.schemas import (
     LearningFocusOut,
@@ -143,3 +148,44 @@ def create_session(payload: SessionCreate, access: CurrentLearningAccess, db: Db
         ),
         message=generation.message,
     )
+
+
+@router.post("/sessions/{session_id}/extension", response_model=ProblemOut)
+def request_extension_problem(
+    session_id: uuid.UUID, access: CurrentLearningAccess, db: DbSession
+) -> ProblemOut:
+    """Serve the optional extension (challenge) problem for the session skill.
+
+    Opt-in only: extension problems sit above the mastery difficulty band,
+    never gate progression, and attempts on them are tagged
+    TutorState.EXTENSION so they stay out of mastery evidence.
+    """
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    try:
+        scope = resolve_student_curriculum_scope(
+            db, db.get(Student, session.student_id)
+        )
+        require_skill_in_scope(
+            db, skill_id=session.active_skill_id or session.primary_skill_id, scope=scope
+        )
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+    skill_id = session.active_skill_id or session.primary_skill_id
+    progress = _student_skill(db, session.student_id, skill_id)
+    problem = select_next_problem(
+        db,
+        skill_id=skill_id,
+        current_problem_id=None,
+        current_difficulty=progress.current_difficulty,
+        state=TutorState.EXTENSION,
+        student_id=session.student_id,
+        session_id=session.id,
+        offer_extension=True,
+    )
+    if problem is None:
+        raise HTTPException(404, "No extension problem configured for this skill")
+    # Persist generated extension items now — the pool is exhausted path
+    # creates them, and the student's answer attempt needs the row to exist.
+    db.commit()
+    return _problem_out(problem)

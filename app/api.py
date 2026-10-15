@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from app.content_models import ProblemContentMetadata
 from app.core.database import get_db
 from app.identity import (
     CurrentLearningAccess,
@@ -266,24 +267,32 @@ def respond(
                 )
             misconception_count = student_misconception.occurrence_count
 
+    content_meta = db.scalar(
+        select(ProblemContentMetadata).where(
+            ProblemContentMetadata.problem_id == problem.id
+        )
+    )
+    is_extension = bool(content_meta and content_meta.extension_eligible)
+
     mastery = update_mastery(
         float(progress.mastery_score),
         progress.attempt_count,
         evaluation.correct,
         payload.assistance_level,
     )
-    progress.attempt_count += 1
-    if evaluation.correct:
-        progress.correct_count += 1
-        if payload.assistance_level == 0:
+    if not is_extension:
+        progress.attempt_count += 1
+        if evaluation.correct:
+            progress.correct_count += 1
+            if payload.assistance_level == 0:
+                progress.independent_attempt_count += 1
+                progress.independent_correct_count += 1
+            else:
+                progress.hinted_correct_count += 1
+        elif payload.assistance_level == 0:
             progress.independent_attempt_count += 1
-            progress.independent_correct_count += 1
-        else:
-            progress.hinted_correct_count += 1
-    elif payload.assistance_level == 0:
-        progress.independent_attempt_count += 1
-    progress.mastery_score = Decimal(str(mastery.mastery))
-    progress.confidence_score = Decimal(str(mastery.confidence))
+        progress.mastery_score = Decimal(str(mastery.mastery))
+        progress.confidence_score = Decimal(str(mastery.confidence))
 
     consecutive_successes = (
         db.scalar(
@@ -291,6 +300,7 @@ def respond(
                 Attempt.session_id == session.id,
                 Attempt.is_correct.is_(True),
                 Attempt.assistance_level == 0,
+                Attempt.state_at_attempt != TutorState.EXTENSION,
             )
         )
         or 0
@@ -331,7 +341,9 @@ def respond(
             else None
         ),
         evaluation_confidence=Decimal(str(evaluation.confidence)),
-        state_at_attempt=session.current_state,
+        state_at_attempt=(
+            TutorState.EXTENSION if is_extension else session.current_state
+        ),
     )
     db.add(attempt)
     db.flush()
@@ -347,39 +359,44 @@ def respond(
             attempt_id=attempt.id,
         )
     )
-    db.add(
-        MasteryEvent(
-            student_id=session.student_id,
-            skill_id=session.primary_skill_id,
-            attempt_id=attempt.id,
-            previous_score=previous_score,
-            new_score=progress.mastery_score,
-            previous_confidence=previous_confidence,
-            new_confidence=progress.confidence_score,
-            reason="ATTEMPT_EVIDENCE",
-            metadata_json={
-                "correct": evaluation.correct,
-                "assistance_level": payload.assistance_level,
-                "evidence": mastery.evidence,
-                "curriculum_id": str(scope.curriculum_id),
-            },
+    if not is_extension:
+        db.add(
+            MasteryEvent(
+                student_id=session.student_id,
+                skill_id=session.primary_skill_id,
+                attempt_id=attempt.id,
+                previous_score=previous_score,
+                new_score=progress.mastery_score,
+                previous_confidence=previous_confidence,
+                new_confidence=progress.confidence_score,
+                reason="ATTEMPT_EVIDENCE",
+                metadata_json={
+                    "correct": evaluation.correct,
+                    "assistance_level": payload.assistance_level,
+                    "evidence": mastery.evidence,
+                    "curriculum_id": str(scope.curriculum_id),
+                },
+            )
         )
-    )
 
-    session.current_state = transition.state
-    if transition.action == "INCREASE_DIFFICULTY":
-        progress.current_difficulty = min(10, progress.current_difficulty + 1)
-    elif transition.action == "REMEDIATE":
-        progress.current_difficulty = max(1, progress.current_difficulty - 1)
+    if not is_extension:
+        # Extension attempts never drive the session state machine or the
+        # difficulty ladder — the optional tier is progression-neutral.
+        session.current_state = transition.state
+        if transition.action == "INCREASE_DIFFICULTY":
+            progress.current_difficulty = min(10, progress.current_difficulty + 1)
+        elif transition.action == "REMEDIATE":
+            progress.current_difficulty = max(1, progress.current_difficulty - 1)
 
     next_problem = select_next_problem(
         db,
         skill_id=session.primary_skill_id,
         current_problem_id=problem.id,
         current_difficulty=progress.current_difficulty,
-        state=transition.state,
-        correct=evaluation.correct,
+        state=TutorState.EXTENSION if is_extension else transition.state,
+        correct=None if is_extension else evaluation.correct,
         session_id=session.id,
+        offer_extension=is_extension,
     )
 
     # --- Independent-assessment guard ---
@@ -450,3 +467,39 @@ def respond(
         mastery=MasteryOut(score=progress.mastery_score, confidence=progress.confidence_score),
         next_problem=_problem_out(next_problem),
     )
+
+
+@router.post("/sessions/{session_id}/extension", response_model=ProblemOut)
+def request_extension_problem(
+    session_id: uuid.UUID, access: CurrentLearningAccess, db: DbSession
+) -> ProblemOut:
+    """Serve the optional extension (challenge) problem for the session's skill.
+
+    Extension problems are opt-in only: they sit above the mastery difficulty
+    band, never gate progression, and attempts on them are marked
+    TutorState.EXTENSION so they stay out of mastery evidence.
+    """
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    try:
+        scope = require_session_scope(db, session)
+        require_skill_in_scope(db, skill_id=session.primary_skill_id, scope=scope)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+    progress = _student_skill(db, session.student_id, session.primary_skill_id)
+    problem = select_next_problem(
+        db,
+        skill_id=session.primary_skill_id,
+        current_problem_id=None,
+        current_difficulty=progress.current_difficulty,
+        state=session.current_state,
+        student_id=session.student_id,
+        session_id=session.id,
+        offer_extension=True,
+    )
+    if problem is None:
+        raise HTTPException(404, "No extension problem configured for this skill")
+    # Persist generated extension items now — the pool is exhausted path
+    # creates them, and the student's answer attempt needs the row to exist.
+    db.commit()
+    return _problem_out(problem)

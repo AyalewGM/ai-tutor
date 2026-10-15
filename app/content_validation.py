@@ -65,12 +65,14 @@ def validate_problem_metadata(
     independent_eligible: bool,
     mastery_eligible: bool,
     llm_solution_required: bool,
+    extension_eligible: bool = False,
 ) -> None:
     """Validate application-owned problem usage metadata.
 
     Assessment evidence must be deterministically evaluable and must never
     require an LLM solution. At least one usage mode is required so orphaned
-    content cannot silently enter a pilot pack.
+    content cannot silently enter a pilot pack. The optional extension tier
+    counts as a usage mode even though it is evidence-isolated.
     """
     validate_problem_scope(
         pack_curriculum_id=metadata_curriculum_id,
@@ -86,6 +88,7 @@ def validate_problem_metadata(
             guided_eligible,
             independent_eligible,
             mastery_eligible,
+            extension_eligible,
         )
     ):
         raise ContentValidationError("Problem must be eligible for at least one learning mode")

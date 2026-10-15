@@ -10,7 +10,7 @@ import random
 from decimal import ROUND_HALF_UP, Decimal
 from math import gcd
 
-from app.canonical_problem_families import (
+from app.problem_family_spec import (
     ALL_MODES,
     ProblemFamilySpec,
 )

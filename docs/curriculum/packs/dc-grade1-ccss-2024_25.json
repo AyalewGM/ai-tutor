@@ -197,6 +197,28 @@
             "a": 101,
             "b": 110
           }
+        },
+        {
+          "prompt": "Start at 79. Count forward 27. What number do you reach?",
+          "canonical_answer": "106",
+          "difficulty": 4,
+          "objective": "Stretch: count forward across a decade.",
+          "key": "dc1-ns-count-compare-extension-01",
+          "family": "NUMBER_SEQUENCE",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "Which number is bigger, 86 or 91? Answer with the number.",
+          "canonical_answer": "91",
+          "difficulty": 4,
+          "objective": "Stretch: compare two two-digit numbers.",
+          "key": "dc1-ns-count-compare-extension-02",
+          "family": "NUMBER_SEQUENCE",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -359,6 +381,28 @@
             "ones": 0,
             "place": "hundreds_tens_ones"
           }
+        },
+        {
+          "prompt": "A number has 6 tens and 16 ones. What is the number?",
+          "canonical_answer": "76",
+          "difficulty": 5,
+          "objective": "Stretch: regroup more than ten ones.",
+          "key": "dc1-nbt-place-value-extension-01",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "What is 10 more than the number made of 6 tens and 7 ones?",
+          "canonical_answer": "77",
+          "difficulty": 5,
+          "objective": "Stretch: compose, then add a ten.",
+          "key": "dc1-nbt-place-value-extension-02",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -517,6 +561,28 @@
             "operation": "+",
             "answer": 12
           }
+        },
+        {
+          "prompt": "8 + 6 + 3 = ?",
+          "canonical_answer": "17",
+          "difficulty": 5,
+          "objective": "Stretch: three addends with regrouping.",
+          "key": "dc1-oa-addition-20-extension-01",
+          "family": "ADDITION_WITHIN_20",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "? + 6 = 14. Add 4 more to the missing number. What do you get?",
+          "canonical_answer": "12",
+          "difficulty": 5,
+          "objective": "Stretch: find a missing addend, then keep going.",
+          "key": "dc1-oa-addition-20-extension-02",
+          "family": "ADDITION_WITHIN_20",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -675,6 +741,28 @@
             "operation": "-",
             "answer": 9
           }
+        },
+        {
+          "prompt": "16 - 4 - 2 = ?",
+          "canonical_answer": "10",
+          "difficulty": 5,
+          "objective": "Stretch: two subtractions in a row.",
+          "key": "dc1-oa-subtraction-20-extension-01",
+          "family": "SUBTRACTION_WITHIN_20",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "Start at 14, subtract a number, and land on 4. What number was subtracted?",
+          "canonical_answer": "10",
+          "difficulty": 5,
+          "objective": "Stretch: unknown subtrahend.",
+          "key": "dc1-oa-subtraction-20-extension-02",
+          "family": "SUBTRACTION_WITHIN_20",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -834,6 +922,28 @@
             "operation": "-",
             "answer": 8
           }
+        },
+        {
+          "prompt": "Mia had 18 stickers. She gave some away and has 4 left. How many stickers did she give away?",
+          "canonical_answer": "14",
+          "difficulty": 5,
+          "objective": "Stretch: missing-part word problem.",
+          "key": "dc1-oa-word-problem-20-extension-01",
+          "family": "WORD_PROBLEM_ADD_SUB_20",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "There are 9 red and 5 blue marbles in a jar. After losing 6 marbles, how many remain?",
+          "canonical_answer": "8",
+          "difficulty": 5,
+          "objective": "Stretch: combine, then take away.",
+          "key": "dc1-oa-word-problem-20-extension-02",
+          "family": "WORD_PROBLEM_ADD_SUB_20",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -984,6 +1094,28 @@
             "b": 7,
             "c": 13
           }
+        },
+        {
+          "prompt": "Fill in the missing number: 9 + ? = 6 + 4.",
+          "canonical_answer": "1",
+          "difficulty": 5,
+          "objective": "Stretch: balance both sides of the equal sign.",
+          "key": "dc1-oa-equation-balance-extension-01",
+          "family": "EQUATION_BALANCE",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "Fill in the missing number: 15 - ? = 4 + 3.",
+          "canonical_answer": "8",
+          "difficulty": 5,
+          "objective": "Stretch: missing subtrahend on a balance.",
+          "key": "dc1-oa-equation-balance-extension-02",
+          "family": "EQUATION_BALANCE",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1126,6 +1258,28 @@
             "hour": 1,
             "minute": 0
           }
+        },
+        {
+          "prompt": "Recess starts at 3:30 and ends at 4:00. How many minutes is recess?",
+          "canonical_answer": "30",
+          "difficulty": 4,
+          "objective": "Stretch: elapsed time across the hour.",
+          "key": "dc1-md-tell-time-extension-01",
+          "family": "TIME_TO_HOUR_HALF_HOUR",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "The clock shows half past 4. What time is it 30 minutes later? Write like 8:00.",
+          "canonical_answer": "5:00",
+          "difficulty": 5,
+          "objective": "Stretch: half past plus a half hour.",
+          "key": "dc1-md-tell-time-extension-02",
+          "family": "TIME_TO_HOUR_HALF_HOUR",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1266,6 +1420,28 @@
             "shape": "rectangle",
             "sides": 4
           }
+        },
+        {
+          "prompt": "A shape has 3 straight sides and 3 corners. What shape is it?",
+          "canonical_answer": "triangle",
+          "difficulty": 4,
+          "objective": "Stretch: name a shape from its attributes.",
+          "key": "dc1-g-shapes-extension-01",
+          "family": "GEOMETRY_SHAPES",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "How many sides do two separate triangles have altogether?",
+          "canonical_answer": "6",
+          "difficulty": 4,
+          "objective": "Stretch: count attributes across two figures.",
+          "key": "dc1-g-shapes-extension-02",
+          "family": "GEOMETRY_SHAPES",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     }

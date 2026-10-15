@@ -198,6 +198,28 @@
             "answer": 35,
             "sequence": "25, 30, ?, 40, 45"
           }
+        },
+        {
+          "prompt": "A number has 5 hundreds, 11 tens, and 1 ones. What is the number?",
+          "canonical_answer": "611",
+          "difficulty": 6,
+          "objective": "Stretch: regroup more than ten tens.",
+          "key": "va2-nbt-place-value-extension-01",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "Start with 348. Add 15, then subtract 100. What number do you get?",
+          "canonical_answer": "263",
+          "difficulty": 5,
+          "objective": "Stretch: two-step across a hundred.",
+          "key": "va2-nbt-place-value-extension-02",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -353,6 +375,28 @@
             "answer": 35,
             "sequence": "25, 30, ?, 40, 45"
           }
+        },
+        {
+          "prompt": "Count by 25s starting at 450: what is the 4th number you say?",
+          "canonical_answer": "525",
+          "difficulty": 5,
+          "objective": "Stretch: skip-count by 25s.",
+          "key": "va2-nbt-patterns-extension-01",
+          "family": "NUMBER_PATTERN",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "Pattern: 18, 24, 30, ... What comes next?",
+          "canonical_answer": "36",
+          "difficulty": 5,
+          "objective": "Stretch: extend an add-d pattern.",
+          "key": "va2-nbt-patterns-extension-02",
+          "family": "NUMBER_PATTERN",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -511,6 +555,28 @@
             "operation": "+",
             "answer": 82
           }
+        },
+        {
+          "prompt": "52 + 26 + ? = 100. What is the missing number?",
+          "canonical_answer": "22",
+          "difficulty": 6,
+          "objective": "Stretch: three addends to a round hundred.",
+          "key": "va2-nbt-addition-100-extension-01",
+          "family": "ADDITION_WITHIN_100",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "Two numbers add to 100. One of them is 25. What is the other?",
+          "canonical_answer": "75",
+          "difficulty": 5,
+          "objective": "Stretch: unknown part of 100.",
+          "key": "va2-nbt-addition-100-extension-02",
+          "family": "ADDITION_WITHIN_100",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -669,6 +735,28 @@
             "operation": "-",
             "answer": 33
           }
+        },
+        {
+          "prompt": "100 - 34 - 18 = ?",
+          "canonical_answer": "48",
+          "difficulty": 5,
+          "objective": "Stretch: subtract twice from 100.",
+          "key": "va2-nbt-subtraction-100-extension-01",
+          "family": "SUBTRACTION_WITHIN_100",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "77 - ? = 51. What is the missing number?",
+          "canonical_answer": "26",
+          "difficulty": 5,
+          "objective": "Stretch: unknown subtrahend within 100.",
+          "key": "va2-nbt-subtraction-100-extension-02",
+          "family": "SUBTRACTION_WITHIN_100",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -828,6 +916,28 @@
             "operation": "-",
             "answer": 34
           }
+        },
+        {
+          "prompt": "A baker made 55 rolls, sold 27 in the morning and 16 after lunch. How many rolls are left?",
+          "canonical_answer": "12",
+          "difficulty": 6,
+          "objective": "Stretch: two take-aways in one story.",
+          "key": "va2-oa-word-problem-100-extension-01",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "The library had 52 books on the shelf. 16 were borrowed and 6 were returned. How many are on the shelf now?",
+          "canonical_answer": "42",
+          "difficulty": 6,
+          "objective": "Stretch: subtract then add in context.",
+          "key": "va2-oa-word-problem-100-extension-02",
+          "family": "WORD_PROBLEM_ADD_SUB_100",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -994,6 +1104,28 @@
             "pennies": 0,
             "total_cents": 85
           }
+        },
+        {
+          "prompt": "You have 3 quarters, 2 dimes, and 4 pennies. How many cents is that?",
+          "canonical_answer": "99",
+          "difficulty": 6,
+          "objective": "Stretch: mixed coins to cents.",
+          "key": "va2-md-money-extension-01",
+          "family": "MONEY_COUNT",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A snack costs 82 cents. You pay with a dollar bill. How many cents change do you get?",
+          "canonical_answer": "18",
+          "difficulty": 5,
+          "objective": "Stretch: change from a dollar.",
+          "key": "va2-md-money-extension-02",
+          "family": "MONEY_COUNT",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1144,6 +1276,28 @@
             "b": 8,
             "difference": 6
           }
+        },
+        {
+          "prompt": "A pencil is 20 cm long and a crayon is 10 cm long. How many cm longer is the pencil?",
+          "canonical_answer": "10",
+          "difficulty": 5,
+          "objective": "Stretch: compare lengths by subtracting.",
+          "key": "va2-md-length-extension-01",
+          "family": "COMPARE_LENGTH",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A ribbon is 58 cm long. You cut off two pieces of 16 cm each. How much ribbon is left?",
+          "canonical_answer": "26",
+          "difficulty": 6,
+          "objective": "Stretch: repeated measurement removal.",
+          "key": "va2-md-length-extension-02",
+          "family": "COMPARE_LENGTH",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1286,6 +1440,28 @@
             "hour": 6,
             "minute": 40
           }
+        },
+        {
+          "prompt": "A cartoon starts at 5:45 and lasts 30 minutes. What time does it end? Write like 5:15.",
+          "canonical_answer": "6:15",
+          "difficulty": 5,
+          "objective": "Stretch: duration across the hour.",
+          "key": "va2-md-time-extension-01",
+          "family": "TIME_TO_5_MINUTES",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "The clock shows 13 minutes before 8 o'clock. What time is it? Write like 7:50.",
+          "canonical_answer": "7:47",
+          "difficulty": 6,
+          "objective": "Stretch: minutes before the hour.",
+          "key": "va2-md-time-extension-02",
+          "family": "TIME_TO_5_MINUTES",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1429,6 +1605,28 @@
             "numerator": 3,
             "denominator": 4
           }
+        },
+        {
+          "prompt": "A pizza is cut into 6 equal slices. You eat 2 slices. What fraction of the pizza is left?",
+          "canonical_answer": "4/6",
+          "difficulty": 5,
+          "objective": "Stretch: fraction remaining after eating some.",
+          "key": "va2-g-shapes-fractions-extension-01",
+          "family": "GEOMETRY_SHAPES",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "prompt": "A rectangle is split into 4 equal parts and 3 are shaded. What fraction is shaded?",
+          "canonical_answer": "3/4",
+          "difficulty": 4,
+          "objective": "Stretch: part-whole fraction of a figure.",
+          "key": "va2-g-shapes-fractions-extension-02",
+          "family": "GEOMETRY_SHAPES",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     }

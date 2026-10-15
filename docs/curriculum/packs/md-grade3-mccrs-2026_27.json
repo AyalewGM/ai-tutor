@@ -210,6 +210,50 @@
             "operation": "\u00d7",
             "answer": 40
           }
+        },
+        {
+          "key": "md3-multiplication-extension-01",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "A theater has 9 rows with 8 seats in each row. 5 seats are already taken. How many seats are still empty?",
+          "canonical_answer": "67",
+          "difficulty": 5,
+          "objective": "Stretch: two-step multiplication-and-subtraction modeling.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-multiplication-extension-02",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What number makes this true?  7 \u00d7 ? = 56 \u2212 14",
+          "canonical_answer": "6",
+          "difficulty": 4,
+          "objective": "Stretch: missing factor with a two-step right side.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-multiplication-extension-03",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "If \u25b2 \u00d7 \u25b2 = 36 and \u25b2 \u00d7 \u25cf = 42, what number does \u25cf stand for?",
+          "canonical_answer": "7",
+          "difficulty": 6,
+          "objective": "Stretch: solve for a shape unknown through a shared factor.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-multiplication-extension-04",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "A bookshelf has 6 shelves. Each shelf holds the same number of books. After putting 9 books on each shelf, there are 4 empty spots left on every shelf. How many books fit on the whole bookshelf?",
+          "canonical_answer": "78",
+          "difficulty": 7,
+          "objective": "Stretch: hidden unit size \u2014 capacity per shelf before total.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -364,6 +408,50 @@
             "b": 7,
             "operation": "\u00f7"
           }
+        },
+        {
+          "key": "md3-division-extension-01",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "Mrs. Lee puts 63 stickers equally on 7 pages. Then she moves 2 stickers off each page. How many stickers are on each page now?",
+          "canonical_answer": "7",
+          "difficulty": 5,
+          "objective": "Stretch: divide then adjust \u2014 two-step reasoning.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-division-extension-02",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "What number makes this true?  48 \u00f7 ? = 4 + 4",
+          "canonical_answer": "6",
+          "difficulty": 4,
+          "objective": "Stretch: missing divisor with a computed quotient.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-division-extension-03",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "What number makes this true?  63 \u00f7 ? = 9 \u2212 2",
+          "canonical_answer": "9",
+          "difficulty": 6,
+          "objective": "Stretch: divisor hidden behind a computed quotient.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-division-extension-04",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "A farmer packs 90 eggs into cartons of 6 eggs each. He sells 7 cartons at the market. How many cartons does he have left?",
+          "canonical_answer": "8",
+          "difficulty": 6,
+          "objective": "Stretch: divide to cartons, then subtract.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -519,6 +607,50 @@
             "b": 7,
             "operation": "\u00f7"
           }
+        },
+        {
+          "key": "md3-fact_families-extension-01",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "Use the distributive property: 6 \u00d7 9 = (6 \u00d7 5) + (6 \u00d7 ?)",
+          "canonical_answer": "4",
+          "difficulty": 4,
+          "objective": "Stretch: decompose a factor to build 6\u00d79.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-fact_families-extension-02",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "If 8 \u00d7 7 = 56, what is 56 \u00f7 8 + 56 \u00f7 7?",
+          "canonical_answer": "15",
+          "difficulty": 5,
+          "objective": "Stretch: fact-family inversion combined into one expression.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-fact_families-extension-03",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "7 \u00d7 8 = (7 \u00d7 5) + (7 \u00d7 ?). What number belongs in the box?",
+          "canonical_answer": "3",
+          "difficulty": 6,
+          "objective": "Stretch: decompose the second factor freely.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-fact_families-extension-04",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "If 9 \u00d7 6 = 54, what is (54 \u00f7 9) \u00d7 (54 \u00f7 6)?",
+          "canonical_answer": "54",
+          "difficulty": 7,
+          "objective": "Stretch: invert a fact family twice and recombine.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -668,6 +800,50 @@
             "number": 738,
             "place": 100
           }
+        },
+        {
+          "key": "md3-place_value-extension-01",
+          "family": "ROUNDING",
+          "prompt": "A number rounds to 400 when rounded to the nearest hundred, and to 430 when rounded to the nearest ten. What could the number be? Give the smallest possible answer.",
+          "canonical_answer": "425",
+          "difficulty": 5,
+          "objective": "Stretch: intersect two rounding constraints.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-place_value-extension-02",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "The digit in the hundreds place of a 3-digit number is 4. The tens digit is twice the hundreds digit. The ones digit is 3 less than the tens digit. What is the number?",
+          "canonical_answer": "485",
+          "difficulty": 4,
+          "objective": "Stretch: reconstruct a number from digit relationships.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-place_value-extension-03",
+          "family": "ROUNDING",
+          "prompt": "Using each digit 3, 7, and 9 exactly once, build the largest number that rounds to 800.",
+          "canonical_answer": "793",
+          "difficulty": 7,
+          "objective": "Stretch: optimize a number under a rounding constraint.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-place_value-extension-04",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "A 3-digit number has a hundreds digit of 5, and its digits add to 15. What is the largest possible number?",
+          "canonical_answer": "591",
+          "difficulty": 6,
+          "objective": "Stretch: maximize under a digit-sum constraint.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -813,6 +989,50 @@
             "numerator2": 2,
             "denominator2": 3
           }
+        },
+        {
+          "key": "md3-fractions-extension-01",
+          "family": "FRACTION_EQUIVALENCE",
+          "prompt": "Which fraction is equivalent to 6/8 and has a denominator of 4?",
+          "canonical_answer": "3/4",
+          "difficulty": 4,
+          "objective": "Stretch: find the missing equivalent fraction.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-fractions-extension-02",
+          "family": "FRACTION_COMPARE",
+          "prompt": "Order from least to greatest: 5/6, 2/3, 3/4. Write your answer with commas.",
+          "canonical_answer": "2/3, 3/4, 5/6",
+          "difficulty": 5,
+          "objective": "Stretch: three-way comparison across unlike denominators.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-fractions-extension-03",
+          "family": "FRACTION_NUMBER_LINE",
+          "prompt": "What fraction is exactly halfway between 1/4 and 3/4 on a number line? Write your answer like 1/2.",
+          "canonical_answer": "1/2",
+          "difficulty": 6,
+          "objective": "Stretch: midpoint reasoning on a fractional number line.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-fractions-extension-04",
+          "family": "FRACTION_EQUIVALENCE",
+          "prompt": "A puzzle says: 2/3 of a dozen eggs is the same as ?/12 of a dozen. What number fills the blank?",
+          "canonical_answer": "8",
+          "difficulty": 7,
+          "objective": "Stretch: equivalence across denominators in context.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -958,6 +1178,50 @@
             "end": "6:15",
             "elapsed_minutes": 45
           }
+        },
+        {
+          "key": "md3-time-extension-01",
+          "family": "ELAPSED_TIME",
+          "prompt": "Soccer practice starts at 4:35 PM and lasts 1 hour 50 minutes. What time does it end? Write your answer like 6:25 PM.",
+          "canonical_answer": "6:25 PM",
+          "difficulty": 5,
+          "objective": "Stretch: elapsed time crossing the hour with minutes.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-time-extension-02",
+          "family": "ELAPSED_TIME",
+          "prompt": "A bus left at 8:50 AM and arrived at 10:15 AM. How many minutes was the trip?",
+          "canonical_answer": "85",
+          "difficulty": 4,
+          "objective": "Stretch: elapsed minutes across an hour boundary.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-time-extension-03",
+          "family": "ELAPSED_TIME",
+          "prompt": "A ferry leaves the dock every 45 minutes. The 9:10 AM ferry just left. What time does the next ferry leave? Write your answer like 9:55 AM.",
+          "canonical_answer": "9:55 AM",
+          "difficulty": 6,
+          "objective": "Stretch: interval schedules crossing the hour.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-time-extension-04",
+          "family": "ELAPSED_TIME",
+          "prompt": "School ends at 3:15 PM. Alex walks for 25 minutes, then stops at the park for 10 minutes, then walks 15 more minutes home. What time does Alex get home? Write your answer like 4:05 PM.",
+          "canonical_answer": "4:05 PM",
+          "difficulty": 7,
+          "objective": "Stretch: chain three intervals onto a start time.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1099,6 +1363,50 @@
             "category": "cat",
             "value": 6
           }
+        },
+        {
+          "key": "md3-data-extension-01",
+          "family": "BAR_GRAPH_READ",
+          "prompt": "A bar graph shows books read: Ana=6, Ben=9, Cora=3. Each bar shows books read in one week. How many more books must Cora read to match Ben and Ana combined?",
+          "canonical_answer": "12",
+          "difficulty": 5,
+          "objective": "Stretch: combine categories before comparing.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-data-extension-02",
+          "family": "PICTURE_GRAPH_READ",
+          "prompt": "A picture graph uses a star for every 4 points. Mia has 7 stars. How many points does Mia have?",
+          "canonical_answer": "28",
+          "difficulty": 4,
+          "objective": "Stretch: multiply by the picture-graph scale.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-data-extension-03",
+          "family": "BAR_GRAPH_READ",
+          "prompt": "A bar graph shows goals scored: Mia=8, Leo=5, Sam=12. How many more goals must Leo score to tie Mia and Sam combined?",
+          "canonical_answer": "15",
+          "difficulty": 7,
+          "objective": "Stretch: combine two bars before comparing.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-data-extension-04",
+          "family": "PICTURE_GRAPH_READ",
+          "prompt": "In a picture graph each star means 4 points. Mia has 7 stars and Zoe has 8 stars. How many more points does Zoe have than Mia?",
+          "canonical_answer": "4",
+          "difficulty": 6,
+          "objective": "Stretch: convert through the scale before subtracting.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1246,6 +1554,50 @@
             "width": 5,
             "measure": "area"
           }
+        },
+        {
+          "key": "md3-area_perimeter-extension-01",
+          "family": "AREA_PERIMETER_RECTANGLE",
+          "prompt": "A rectangle has perimeter 20 units. Its length is 6 units. What is its width?",
+          "canonical_answer": "4",
+          "difficulty": 5,
+          "objective": "Stretch: work backward from perimeter to a missing side.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-area_perimeter-extension-02",
+          "family": "RECTANGLE_AREA",
+          "prompt": "Two squares each have side length 3 units. They are pushed together along one full side to make a rectangle. What is the perimeter of the new rectangle?",
+          "canonical_answer": "12",
+          "difficulty": 4,
+          "objective": "Stretch: compose shapes \u2014 the joined side disappears.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-area_perimeter-extension-03",
+          "family": "AREA_PERIMETER_RECTANGLE",
+          "prompt": "A rectangle has an area of 24 square units, and its side lengths are whole numbers. What is the largest possible perimeter it could have?",
+          "canonical_answer": "50",
+          "difficulty": 7,
+          "objective": "Stretch: enumerate factor pairs to maximize perimeter.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-area_perimeter-extension-04",
+          "family": "AREA_PERIMETER_RECTANGLE",
+          "prompt": "A garden is 8 meters long and 5 meters wide. A square sandbox 2 meters on each side is placed in one corner. How many square meters of garden are left?",
+          "canonical_answer": "36",
+          "difficulty": 6,
+          "objective": "Stretch: area of a composite figure by subtraction.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1386,6 +1738,50 @@
             "shape": "pentagon",
             "sides": 5
           }
+        },
+        {
+          "key": "md3-shapes-extension-01",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "I am a quadrilateral with 4 equal sides, but I am not a square because my corners are not square corners. What am I?",
+          "canonical_answer": "rhombus",
+          "difficulty": 4,
+          "objective": "Stretch: classify by attributes, not name recall.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-shapes-extension-02",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides do a hexagon and a quadrilateral have altogether?",
+          "canonical_answer": "10",
+          "difficulty": 4,
+          "objective": "Stretch: combine attributes of two categories.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-shapes-extension-03",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "A mystery shape has twice as many sides as a hexagon, minus the sides of a quadrilateral. How many sides does it have, and what is it called? Answer with the shape name.",
+          "canonical_answer": "octagon",
+          "difficulty": 6,
+          "objective": "Stretch: compute sides across categories, then name it.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-shapes-extension-04",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "I have 3 triangles and 2 quadrilaterals. How many sides do all these shapes have altogether?",
+          "canonical_answer": "17",
+          "difficulty": 6,
+          "objective": "Stretch: aggregate attributes across shape families.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     }

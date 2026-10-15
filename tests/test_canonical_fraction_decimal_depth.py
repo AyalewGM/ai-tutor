@@ -13,7 +13,7 @@ def _build(code: str, seed: int = 31):
 
 def test_fraction_decimal_depth_has_sixteen_families() -> None:
     assert len(CODES) == 16
-    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW"}
+    expected = {"DIAGNOSTIC", "GUIDED", "INDEPENDENT", "MASTERY", "REVIEW", "EXTENSION"}
     assert all(
         {mode.value for mode in domain.FAMILIES[code].modes} == expected for code in CODES
     )

@@ -9,17 +9,18 @@ from __future__ import annotations
 import hashlib
 import random
 from dataclasses import dataclass
-from enum import StrEnum
 
 from app.answer_contracts import AnswerContract
+from app.problem_family_spec import ALL_MODES, LearningMode, ProblemFamilySpec
 
-
-class LearningMode(StrEnum):
-    DIAGNOSTIC = "DIAGNOSTIC"
-    GUIDED = "GUIDED"
-    INDEPENDENT = "INDEPENDENT"
-    MASTERY = "MASTERY"
-    REVIEW = "REVIEW"
+__all__ = [
+    "ALL_MODES",
+    "FAMILIES",
+    "GeneratedProblem",
+    "LearningMode",
+    "ProblemFamilySpec",
+    "generate",
+]
 
 
 @dataclass(frozen=True)
@@ -52,19 +53,6 @@ class GeneratedProblem:
         return None
 
 
-@dataclass(frozen=True)
-class ProblemFamilySpec:
-    code: str
-    name: str
-    canonical_skill_code: str
-    problem_type: str
-    min_difficulty: int
-    max_difficulty: int
-    modes: frozenset[LearningMode]
-    evidence_dimensions: frozenset[str]
-    answer_contract: AnswerContract | None = None
-
-
 def _normalize(answer: str) -> str:
     return "".join(answer.lower().split()).replace("*", "")
 
@@ -81,8 +69,6 @@ def _rng(
     digest = hashlib.sha256(key.encode()).hexdigest()
     return random.Random(int(digest[:16], 16)), digest[:16]
 
-
-ALL_MODES = frozenset(LearningMode)
 
 # Domain modules contribute families and build functions.
 from app.domains import addition as _add_mod

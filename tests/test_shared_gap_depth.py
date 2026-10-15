@@ -8,6 +8,7 @@ from fractions import Fraction
 
 import pytest
 
+from app.canonical_problem_families import LearningMode
 from app.domains.shared_gap_depth import FAMILIES, build
 
 
@@ -15,7 +16,7 @@ from app.domains.shared_gap_depth import FAMILIES, build
 def test_seeded_build_is_stable_and_has_learning_metadata(code: str) -> None:
     spec = FAMILIES[code]
     assert spec.canonical_skill_code.startswith("MATH.")
-    assert len(spec.modes) == 5
+    assert len(spec.modes) == len(LearningMode)
     assert spec.min_difficulty <= spec.max_difficulty
     for difficulty in range(spec.min_difficulty, spec.max_difficulty + 1):
         for seed in range(20):
