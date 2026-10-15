@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "GRADE_7",
+  "status": "AUTHOR_SUPPLEMENT_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "2013 modified / 2014 corrected electronic edition",
+  "publisher_original_bytes_authenticated": false,
+  "reference_author_scope_file": "ca_2013_grade7_24_source_author_slice.v1.json",
+  "scope": "Material subpart distinctions for three existing Grade 7 parent expectations; no new identifiers or placement claims",
+  "existing_grade7_parent_count": 24,
+  "new_standard_count": 0,
+  "rows": [
+    {
+      "expectation_id": "7.SP.6",
+      "printed_page": 50,
+      "pdf_zero_based_page": 56,
+      "subparts": [],
+      "material_conditions": [
+        "Approximate probabilities by observing long-run relative frequencies of chance processes",
+        "Given a probability, predict an approximate relative frequency in repeated trials",
+        "Observed results in finite trials need not equal exact expected counts"
+      ]
+    },
+    {
+      "expectation_id": "7.SP.7",
+      "printed_page": 51,
+      "pdf_zero_based_page": 57,
+      "subparts": [
+        "a",
+        "b"
+      ],
+      "material_conditions": [
+        "7.SP.7.a: assign equal probabilities to all outcomes in a uniform model",
+        "7.SP.7.b: model probabilities from observed frequencies of a chance process; this empirical model may be nonuniform",
+        "Compare predicted model probabilities and observed frequencies; explain possible discrepancies"
+      ]
+    },
+    {
+      "expectation_id": "7.SP.8",
+      "printed_page": 51,
+      "pdf_zero_based_page": 57,
+      "subparts": [
+        "a",
+        "b",
+        "c"
+      ],
+      "material_conditions": [
+        "7.SP.8.a: probabilities of compound events are fractions of outcomes in sample space",
+        "7.SP.8.b: map everyday-language events to outcomes by organized lists, tables and tree diagrams",
+        "7.SP.8.c: design and use simulations that generate event frequencies to approximate compound-event probabilities"
+      ]
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}
