@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_2",
+  "section": "111.4(b)(10)(A-D)",
+  "official_pdf": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "publisher_edition": "TEA December 2014 Update",
+  "publisher_original_bytes_authenticated": false,
+  "row_count": 4,
+  "rows": [
+    {
+      "id": "111.4(b)(10)(A)",
+      "scope": "Explain that bar lengths on bar graphs and picture counts in pictographs show the number of observations in a category.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(10)(B)",
+      "scope": "Organize data from up to four categories in pictographs and bar graphs using intervals of one or more.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(10)(C)",
+      "scope": "Write and solve one-step addition or subtraction word problems using pictograph/bar-graph data where intervals are one.",
+      "source_pdf_printed_page": 11,
+      "source_pdf_page_index": 10,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(10)(D)",
+      "scope": "Draw conclusions and make predictions from graph information.",
+      "source_pdf_printed_page": 11,
+      "source_pdf_page_index": 10,
+      "independent_source_fidelity": "PENDING"
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}
