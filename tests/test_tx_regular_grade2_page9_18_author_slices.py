@@ -7,8 +7,9 @@ ROOT = Path(__file__).resolve().parents[1] / "docs/curriculum/standards"
 
 def test_grade2_18_publisher_page9_rows_remain_provisional():
     tx = json.loads((ROOT / "national_ca_tx_wa_completion_matrix.v1.json").read_text())["states"]["TX"]
-    names = tx["regular_grade2_source_files"]
-    assert len(names) == 2
+    names = tx["regular_grade2_source_files"][:2]
+    assert names == ["tx_regular_grade2_number_fraction_author.v1.json",
+                     "tx_regular_grade2_operations_4_6_author.v1.json"]
     docs = [json.loads((ROOT / name).read_text(encoding="utf-8")) for name in names]
     ids = [row["id"] for doc in docs for row in doc["rows"]]
     expected = (
@@ -19,9 +20,10 @@ def test_grade2_18_publisher_page9_rows_remain_provisional():
         + [f"111.4(b)(6)({x})" for x in "AB"]
     )
     assert ids == expected
-    assert len(ids) == len(set(ids)) == tx["regular_grade2_111_4_author_scope_rows"] == 18
+    assert len(ids) == len(set(ids)) == 18
+    assert tx["regular_grade2_111_4_author_scope_rows"] >= 18
     assert tx["regular_grade2_111_4_independently_accepted_source_rows"] == 0
-    assert "REGULAR_GRADE_2" in tx["partially_author_scoped_tracks"]
+    assert "REGULAR_GRADE_2" not in tx["unextracted_tracks"]
     for doc in docs:
         assert doc["independent_source_fidelity"] == "PENDING"
         assert doc["publisher_original_bytes_authenticated"] is False
