@@ -196,6 +196,14 @@ def test_extension_falls_back_to_generated_problem() -> None:
                 prompt="Solve for x: x + 4 = 11.",
                 canonical_answer="x=7",
                 source_type="CURATED",
+                solution={
+                    "provenance": {
+                        "origin": "AUTHORED",
+                        "author": "Mihur synthetic test fixture",
+                        "license": "Internal test fixture",
+                        "source_uri": "https://github.com/AyalewGM/ai-tutor",
+                    }
+                },
             )
         )
         student = Student(
