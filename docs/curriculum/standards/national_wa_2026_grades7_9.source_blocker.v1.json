@@ -47,7 +47,13 @@
     "initial_adoption_2025_role": "HISTORICAL_TRANSITION_RESEARCH_ONLY_NOT_2026_FORMAL_STANDARD_AUTHORITY",
     "initial_adoption_source": "https://ospi.k12.wa.us/sites/default/files/2026-03/math-ls-technical-support-activities.pdf",
     "publisher_file_access": "USER_UPLOADED_AUGUST_2026_V3_1_WORKBOOK_AVAILABLE",
-    "no_2011_2026_crosswalk_rows_invented": true
+    "no_2011_2026_crosswalk_rows_invented": true,
+    "official_2026_publisher_landing_page_verified": "OSPI mathematics standards page currently identifies 2026 formally adopted Word, PDF and Excel sources",
+    "publisher_file_hash_comparison": "IMPLEMENTED_IN_ACQUISITION_SCRIPT_BUT_NOT_EXECUTED_ON_AUTHENTICATED_PUBLISHER_BYTES",
+    "expected_uploaded_workbook_sha256": "d522101f430758dcbc21d7ecc800977761b3ccdb224de2b3e6fd6217faa80875",
+    "direct_final_workbook_url_status": "UNRESOLVED_OFFICIAL_OSPI_FILE_LINK",
+    "publisher_hash_independently_verified": false,
+    "review_gate": "PENDING_INDEPENDENT_PUBLISHER_BYTES_AND_ROW_LEVEL_VERIFICATION"
   },
   "uploaded_final_adoption_workbook": {
     "filename": "math26-final-adoption-spreadsheet.xlsx",
