@@ -46,5 +46,14 @@
   "activation": "FORBIDDEN",
   "grade9_course_equivalence": "NOT_ASSUMED",
   "next_author_track": "California Grades 1–6; prioritize verified original-source intake and California-added clause preservation",
-  "next_reviewer_gate": "Independent Standards Source-Fidelity Reviewer exact-head 173-placement row and course-scope verification; multiple bounded reviews acceptable, do not assert 173 full source approvals"
+  "next_reviewer_gate": "Independent Standards Source-Fidelity Reviewer exact-head 173-placement row and course-scope verification; multiple bounded reviews acceptable, do not assert 173 full source approvals",
+  "supplemental_review_evidence": {
+    "MATHEMATICS_I_PAGE_90": {
+      "file": "ca_2013_mathematics1_page90_additional9_scope_notes.v1.json",
+      "existing_historical_placements": 9,
+      "additional_placements": 0,
+      "publisher_original_bytes_authenticated": false,
+      "independent_source_fidelity": "PENDING"
+    }
+  }
 }
