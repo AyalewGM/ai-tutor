@@ -150,13 +150,13 @@
         "tx_regular_grade6_remaining_source_author.v1.json"
       ],
       "regular_grade6_author_scope_status": "59_OF_59_AUTHOR_PARAPHRASES_STAGED_INDEPENDENT_SOURCE_FIDELITY_PENDING",
-      "regular_grade1_author_scope_rows": 45,
+      "regular_grade1_author_scope_rows": 50,
       "regular_grade1_source_files": [
         "tx_regular_grade1_process_number_operations_author.v1.json",
         "tx_regular_grade1_remaining_author.v1.json"
       ],
       "regular_grade1_independently_accepted_source_rows": 0,
-      "regular_grade1_author_scope_status": "45_AUTHOR_SCOPE_RECORDS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "regular_grade1_author_scope_status": "50_AUTHOR_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "regular_grade2_111_4_author_scope_rows": 10,
       "regular_grade2_111_4_independently_accepted_source_rows": 0,
       "regular_grade2_source_files": [
