@@ -36,7 +36,7 @@
         "GRADE_5": 27,
         "GRADE_6": 7
       },
-      "author_scope_total_staged": 312,
+      "author_scope_total_staged": 317,
       "author_scope_acceptance": "DRAFT_ALL_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "author_source_scope_files": {
         "GRADE_1": [
@@ -75,7 +75,8 @@
           "ca_2013_grade5_pages37_39_source_author_slice.v1.json"
         ],
         "GRADE_6": [
-          "ca_2013_grade6_page42_source_author_slice.v1.json"
+          "ca_2013_grade6_page42_source_author_slice.v1.json",
+          "ca_2013_grade6_page43_complete_parent_source_author_slice.v1.json"
         ]
       },
       "grade2_partial_author_source_scope_rows": 10,
@@ -96,10 +97,10 @@
         "source_version": "CA_CCSSM_MODIFIED_2013_CORRECTED_ELECTRONIC",
         "historical_audit": "app/california_grade6_gap_audit.py",
         "author_identifiers": 29,
-        "source_scope_status": "SEVEN_GRADE6_AUTHOR_PARENT_SCOPE_ROWS_STAGED_INDEPENDENT_REVIEW_PENDING",
+        "source_scope_status": "TWELVE_GRADE6_AUTHOR_PARENT_SCOPE_ROWS_STAGED_INDEPENDENT_REVIEW_PENDING",
         "independent_acceptance": 0,
         "prior_gap_labels_role": "UNVERIFIED_HISTORICAL_CANDIDATES_ONLY",
-        "author_scope_rows": 7,
+        "author_scope_rows": 12,
         "author_scope_file": "ca_2013_grade6_page42_source_author_slice.v1.json"
       }
     },
