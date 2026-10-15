@@ -1,0 +1,360 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_3",
+  "section": "111.5(b)(4)-(9)",
+  "publisher": "Texas Education Agency",
+  "official_source_url": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "edition": "December 2014 update, Grade 3 amended October 2013",
+  "source_locator_convention": "Printed footer page; PDF zero-based index = printed page - 1",
+  "author_scope_rows": 34,
+  "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_VERIFICATION",
+  "independent_source_fidelity": "PENDING",
+  "publisher_original_bytes_authenticated": false,
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "id": "111.5(b)(4)(A)",
+      "scope": "Fluently solve one- and two-step addition/subtraction problems within 1,000 using place value, operation properties and inverse relationships.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(4)(B)",
+      "scope": "Estimate addition/subtraction solutions by rounding to nearest 10 or 100 or using compatible numbers.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(4)(C)",
+      "scope": "Determine value of a collection of coins and bills.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(4)(D)",
+      "scope": "Count total objects in equal-size groups or arrays up to 10 by 10.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(4)(E)",
+      "scope": "Represent multiplication facts with repeated addition, equal groups, arrays, area models, number-line jumps and skip counting.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(4)(F)",
+      "scope": "Recall multiplication facts through 10 by 10 automatically and the corresponding division facts.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(4)(G)",
+      "scope": "Multiply a two-digit number by a one-digit number using strategies and algorithms including standard algorithm; include partial products and operation properties.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(4)(H)",
+      "scope": "Determine number of objects in each group when objects are divided into equal shares.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(4)(I)",
+      "scope": "Classify even and odd numbers using divisibility rules.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(4)(J)",
+      "scope": "Determine quotients using multiplication/division relationships.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(4)(K)",
+      "scope": "Solve one- and two-step multiplication/division problems within 100 using objects, arrays, area models, equal groups, operation properties or fact recall.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(5)(A)",
+      "scope": "Represent one- and two-step addition/subtraction problems through 1,000 with pictorial models, number lines and equations.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(5)(B)",
+      "scope": "Represent and solve one- and two-step multiplication/division problems within 100 using arrays, strip diagrams and equations.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(5)(C)",
+      "scope": "Interpret a multiplication expression as a multiplicative comparison, e.g. three times another quantity.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(5)(D)",
+      "scope": "Find unknown whole number in a multiplication/division equation involving three whole numbers, where unknown is factor or product.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(5)(E)",
+      "scope": "Represent real-world relationships with number pairs in tables and verbal descriptions.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(6)(A)",
+      "scope": "Classify and sort 2D/3D figures including cones, cylinders, spheres, triangular and rectangular prisms and cubes using formal attributes.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(6)(B)",
+      "scope": "Recognize rhombuses, parallelograms, trapezoids, rectangles and squares as quadrilaterals and draw quadrilaterals outside these named subcategories.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(6)(C)",
+      "scope": "Determine area of rectangles with whole-number side lengths through multiplication of rows by unit squares per row.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(6)(D)",
+      "scope": "Decompose composite rectangular figures into non-overlapping rectangles and add their areas.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(6)(E)",
+      "scope": "Partition two congruent figures into equal-area parts, express each part as a unit fraction of the whole, and recognize equal shares may differ in shape.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(7)(A)",
+      "scope": "Represent halves, fourths and eighths as distances from zero on number lines.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(7)(B)",
+      "scope": "Determine polygon perimeter or missing side length from perimeter and other side lengths.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(7)(C)",
+      "scope": "Solve addition/subtraction problems involving time intervals in minutes using pictures or tools.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(7)(D)",
+      "scope": "Determine when to measure liquid volume/capacity versus weight.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(7)(E)",
+      "scope": "Measure liquid volume/capacity or weight with appropriate units and tools.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(8)(A)",
+      "scope": "Summarize multi-category data using frequency tables, dot plots, pictographs or bar graphs with scaled intervals.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(8)(B)",
+      "scope": "Solve one- and two-step problems using categorical data represented by frequency tables, dot plots, pictographs or scaled bar graphs.",
+      "source_printed_page": 14,
+      "source_pdf_page_index": 13,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(9)(A)",
+      "scope": "Explain relationship between human capital or labor and income.",
+      "source_printed_page": 15,
+      "source_pdf_page_index": 14,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(9)(B)",
+      "scope": "Explain how resource availability or scarcity affects cost.",
+      "source_printed_page": 15,
+      "source_pdf_page_index": 14,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(9)(C)",
+      "scope": "Identify costs and benefits of planned and unplanned spending decisions.",
+      "source_printed_page": 15,
+      "source_pdf_page_index": 14,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(9)(D)",
+      "scope": "Explain credit when wants/needs exceed ability to pay and borrower's responsibility to repay, usually with interest.",
+      "source_printed_page": 15,
+      "source_pdf_page_index": 14,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(9)(E)",
+      "scope": "List reasons to save and explain benefits of a savings plan, including college.",
+      "source_printed_page": 15,
+      "source_pdf_page_index": 14,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(9)(F)",
+      "scope": "Identify financial decisions involving income, spending, saving, credit and charitable giving.",
+      "source_printed_page": 15,
+      "source_pdf_page_index": 14,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
