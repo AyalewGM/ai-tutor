@@ -59,7 +59,7 @@ def candidate_links(html: str, page: str = OFFICIAL_PAGE) -> list[tuple[str, str
         url = urljoin(page, href)
         if (
             official_url(url)
-            and "mathematics learning standards" in label.lower()
+            and "mathematics learning standards" in " ".join(label.lower().split())
             and "initial" not in label.lower()
             and "initial" not in url.lower()
         ):
