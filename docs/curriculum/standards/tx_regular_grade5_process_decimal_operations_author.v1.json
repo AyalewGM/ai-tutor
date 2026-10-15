@@ -8,7 +8,7 @@
   "edition": "December 2014 Update; Grade 5 adopted 2012",
   "source_page_convention": "Printed footer page; zero-based PDF index = printed page - 1",
   "author_scope_rows": 22,
-  "remaining_grade5_sections": "111.7(b)(4)-(10) NOT YET AUTHOR SCOPED",
+  "remaining_grade5_sections": "111.7(b)(4)-(10) STAGED IN SEPARATE SOURCE FILE; INDEPENDENT SOURCE FIDELITY PENDING",
   "independent_source_fidelity": "PENDING",
   "publisher_original_bytes_authenticated": false,
   "canonical_mapping": "UNVERIFIED",
@@ -138,7 +138,7 @@
     },
     {
       "id": "111.7(b)(3)(C)",
-      "scope": "Solve quotients of up-to-four-digit dividend by two-digit divisor with strategies and standard algorithm.",
+      "scope": "Solve with proficiency quotients of up-to-four-digit dividends by two-digit divisors using strategies and the standard algorithm.",
       "source_printed_page": 20,
       "source_pdf_page_index": 19,
       "source_fidelity": "PENDING",
