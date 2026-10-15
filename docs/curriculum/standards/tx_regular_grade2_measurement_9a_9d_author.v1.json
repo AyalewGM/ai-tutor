@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_2",
+  "section": "111.4(b)(9)(A-D)",
+  "publisher": "Texas Education Agency",
+  "official_pdf": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "publisher_edition": "December 2014 Update of 2012 adopted standards",
+  "publisher_original_bytes_authenticated": false,
+  "row_count": 4,
+  "rows": [
+    {
+      "id": "111.4(b)(9)(A)",
+      "scope": "Find object lengths with concrete models representing standard length units.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(9)(B)",
+      "scope": "Explain that smaller measurement units require more units to span the same object length, and larger units fewer.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(9)(C)",
+      "scope": "Represent whole numbers as distances measured from any selected location on a number line.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(9)(D)",
+      "scope": "Determine length to the nearest marked unit using rulers, yardsticks, meter sticks or measuring tapes.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}
