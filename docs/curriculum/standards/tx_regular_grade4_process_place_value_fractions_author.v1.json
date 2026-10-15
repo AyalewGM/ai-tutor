@@ -1,0 +1,241 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_4",
+  "section": "111.6(b)(1)-(3)",
+  "publisher": "Texas Education Agency",
+  "official_source_url": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "edition": "December 2014 Update; Grade 4 TEKS adopted 2012",
+  "source_page_convention": "Printed footer page, PDF zero-based page index = printed page minus one",
+  "author_scope_rows": 22,
+  "remaining_grade4_sections": "111.6(b)(4) onward NOT YET AUTHOR-SCOPED",
+  "source_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+  "independent_source_fidelity": "PENDING",
+  "publisher_original_bytes_authenticated": false,
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "id": "111.6(b)(1)(A)",
+      "scope": "Apply mathematics in everyday life, society and the workplace.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(1)(B)",
+      "scope": "Analyze information, plan, solve, justify, and evaluate the solution and problem-solving process.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(1)(C)",
+      "scope": "Choose appropriate tools (objects, manipulatives, paper, technology) and mental math, estimation and number sense.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(1)(D)",
+      "scope": "Communicate mathematical reasoning and implications through symbols, diagrams, graphs and language.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(1)(E)",
+      "scope": "Create and use representations to organize, record and communicate mathematical ideas.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(1)(F)",
+      "scope": "Analyze relationships to connect and communicate mathematical ideas.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(1)(G)",
+      "scope": "Display, explain and justify mathematical arguments with precise oral and written language.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(2)(A)",
+      "scope": "Explain each place-value position as ten times the value to its right and one-tenth the value to its left.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(2)(B)",
+      "scope": "Represent digit values in whole numbers through 1,000,000,000 and decimals to hundredths using numerals and expanded notation.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(2)(C)",
+      "scope": "Compare and order whole numbers through 1,000,000,000 with >, < and =.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(2)(D)",
+      "scope": "Round whole numbers to a given place through the hundred-thousands place.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(2)(E)",
+      "scope": "Represent tenths and hundredths with concrete models, visual models and money.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(2)(F)",
+      "scope": "Compare and order decimals through hundredths using concrete and visual models.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(2)(G)",
+      "scope": "Relate decimals to fractions representing tenths and hundredths.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(2)(H)",
+      "scope": "Determine the decimal at tenths or hundredths corresponding to a specified point on a number line.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(3)(A)",
+      "scope": "Represent a/b as the sum of a copies of 1/b for whole-number a and positive whole-number b, including improper fractions where a>b.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(3)(B)",
+      "scope": "Decompose a fraction in more than one way as a sum of fractions sharing the same denominator, using models and symbols.",
+      "source_printed_page": 16,
+      "source_pdf_page_index": 15,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(3)(C)",
+      "scope": "Determine whether two fractions are equivalent using a variety of methods.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(3)(D)",
+      "scope": "Compare fractions with different numerators and denominators, recording >, = or <.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(3)(E)",
+      "scope": "Represent and solve addition/subtraction of fractions with equal denominators using objects, visual models, number lines and operation properties.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(3)(F)",
+      "scope": "Evaluate reasonableness of fraction sums and differences using 0, 1/4, 1/2, 3/4 and 1 benchmarks, referring to the same whole.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(3)(G)",
+      "scope": "Represent tenths/hundredths fractions and decimals as distances from zero on a number line.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
