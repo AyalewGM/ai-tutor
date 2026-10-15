@@ -8,7 +8,7 @@ def test_course_manifest_without_grade_keeps_null_grade(tmp_path, monkeypatch):
     (standards / "md_algebra1_expectations.v1.json").write_text(
         '{"jurisdiction":"Maryland","expectations":['
         '{"expectation_id":"N.RN.B.3","grade_course":"Algebra I",'
-        '"proposed_mapping_status":"NO_REPOSITORY_SPECIFIC_MAPPING_FOUND"}]}'
+        '"scope":"unverified"}]}'
     )
     packs = tmp_path / "packs"
     packs.mkdir()
@@ -26,4 +26,5 @@ def test_course_manifest_without_grade_keeps_null_grade(tmp_path, monkeypatch):
     assert md[0]["grade"] is None  # not inferred as Grade 9
     assert md[0]["inventoried_expectations"] == 1
     assert md[0]["accepted_mappings"] == 0
+    assert md[0]["with_provisional_candidate"] == 0
     assert md[0]["status"] != "ACCEPTED_FULL"
