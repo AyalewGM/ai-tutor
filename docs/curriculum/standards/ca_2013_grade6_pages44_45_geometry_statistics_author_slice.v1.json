@@ -1,0 +1,158 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "GRADE_6",
+  "status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+  "official_source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "edition": "2013 modified / 2014 corrected",
+  "source_printed_pages": [
+    44,
+    45
+  ],
+  "expectation_count": 9,
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "6.G.1",
+      "source_printed_pages": [
+        44
+      ],
+      "author_mathematical_scope": "Find areas of right and other triangles, special quadrilaterals and polygons by composing/decomposing shapes in mathematical and contextual problems.",
+      "required_material_conditions": [
+        "triangles and quadrilaterals",
+        "compose/decompose"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.G.2",
+      "source_printed_pages": [
+        44
+      ],
+      "author_mathematical_scope": "Find volume of right rectangular prisms with fractional edge lengths by unit-fraction cubes; connect to edge-length product and formulas V=lwh and V=Bh.",
+      "required_material_conditions": [
+        "fractional edges",
+        "cube packing",
+        "both formulas"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.G.3",
+      "source_printed_pages": [
+        45
+      ],
+      "author_mathematical_scope": "Draw polygons from vertex coordinates and determine horizontal or vertical side lengths from endpoints sharing a coordinate.",
+      "required_material_conditions": [
+        "given vertex coordinates",
+        "same first or second coordinate"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.G.4",
+      "source_printed_pages": [
+        45
+      ],
+      "author_mathematical_scope": "Use nets of rectangles and triangles to represent three-dimensional figures and find surface area.",
+      "required_material_conditions": [
+        "nets",
+        "surface area"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.SP.1",
+      "source_printed_pages": [
+        45
+      ],
+      "author_mathematical_scope": "Identify statistical questions that anticipate variability and account for it in potential responses.",
+      "required_material_conditions": [
+        "variability in questions and answers"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.SP.2",
+      "source_printed_pages": [
+        45
+      ],
+      "author_mathematical_scope": "Describe numerical-data distributions by center, spread, and overall shape.",
+      "required_material_conditions": [
+        "center",
+        "spread",
+        "shape"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.SP.3",
+      "source_printed_pages": [
+        45
+      ],
+      "author_mathematical_scope": "Distinguish one-number summaries of a data set's center from measures summarizing its variation.",
+      "required_material_conditions": [
+        "center versus variation"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.SP.4",
+      "source_printed_pages": [
+        45
+      ],
+      "author_mathematical_scope": "Represent numerical data with number-line plots, including dot plots, histograms and box plots.",
+      "required_material_conditions": [
+        "dot plots",
+        "histograms",
+        "box plots"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.SP.5",
+      "source_printed_pages": [
+        45
+      ],
+      "author_mathematical_scope": "Summarize data in context: (a) count; (b) attribute, measurement and units; (c) median/mean and IQR/MAD plus patterns and deviations; (d) connect chosen measures to distribution shape and context.",
+      "required_material_conditions": [
+        "subparts a b c d",
+        "median or mean",
+        "IQR or MAD",
+        "contextual interpretation"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
