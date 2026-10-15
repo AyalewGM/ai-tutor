@@ -130,3 +130,16 @@ def test_uploaded_workbook_hash_mismatch_fails_closed(monkeypatch, tmp_path: Pat
     with pytest.raises(ValueError, match="SHA256 differs"):
         acquisition.fetch(url, output, "0" * 64)
     assert not output.exists()
+
+
+def test_official_ospi_label_with_narrow_no_break_space_is_discovered():
+    # Publisher's visible label contains U+202F between Learning and Standards.
+    html = (
+        '<a href="/sites/default/files/2026-08/math26-final-adoption-spreadsheet.xlsx">'
+        'Mathematics Learning\u202fStandards Spreadsheet</a>'
+    )
+    links = candidate_links(html)
+    assert links == [(
+        "https://ospi.k12.wa.us/sites/default/files/2026-08/math26-final-adoption-spreadsheet.xlsx",
+        "Mathematics Learning\u202fStandards Spreadsheet",
+    )]
