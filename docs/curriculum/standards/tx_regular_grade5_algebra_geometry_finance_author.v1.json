@@ -201,7 +201,7 @@
     },
     {
       "id": "111.7(b)(10)(A)",
-      "scope": "Define income, payroll, sales and property taxes.",
+      "scope": "Define income tax, payroll tax, sales tax, and property tax.",
       "source_printed_page": 22,
       "source_pdf_page_index": 21,
       "source_fidelity": "PENDING",
@@ -241,7 +241,7 @@
     },
     {
       "id": "111.7(b)(10)(E)",
-      "scope": "Describe how to rebalance a budget when expenses exceed income.",
+      "scope": "Describe possible actions to balance a budget when expenses exceed income.",
       "source_printed_page": 22,
       "source_pdf_page_index": 21,
       "source_fidelity": "PENDING",
