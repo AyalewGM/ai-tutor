@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "MATHEMATICS_I",
+  "status": "AUTHOR_PENDING_REVIEW",
+  "source_printed_page": 94,
+  "source_pdf_zero_based_page_index": 100,
+  "source_url": "https://www.cde.ca.gov/BE/ST/SS/documents/ccssmathstandardaug2013.pdf",
+  "supplemental_existing_placements_only": true,
+  "rows": [
+    {
+      "expectation_id": "S-ID.7",
+      "material_conditions": [
+        "Interpret linear-model slope as rate of change and intercept as constant term, both in data context."
+      ]
+    },
+    {
+      "expectation_id": "S-ID.8",
+      "material_conditions": [
+        "Calculate a correlation coefficient for a linear fit using technology and interpret it."
+      ]
+    },
+    {
+      "expectation_id": "S-ID.9",
+      "material_conditions": [
+        "Distinguish correlation from causation; an association alone does not establish causality."
+      ]
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}
