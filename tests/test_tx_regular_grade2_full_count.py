@@ -32,3 +32,20 @@ def test_grade2_exact_ids_and_page_locators():
     for row in rows:
         assert row["source_pdf_page_index"] + 1 == row["source_pdf_printed_page"]
         assert row["independent_source_fidelity"] == "PENDING"
+
+
+def test_grade2_page_splits_and_math_qualifiers():
+    tx = json.loads((P / "national_ca_tx_wa_completion_matrix.v1.json").read_text())["states"]["TX"]
+    rows = {r["id"]: r for name in tx["regular_grade2_source_files"]
+            for r in json.loads((P / name).read_text())["rows"]}
+    for ident, row in rows.items():
+        group = int(ident.split("(b)(")[1].split(")")[0])
+        sub = ident.rsplit("(", 1)[1][0]
+        page = 8 if group == 1 else 9 if group <= 6 else (
+            10 if group <= 9 or (group == 10 and sub in "AB") else 11)
+        assert row["source_pdf_printed_page"] == page, ident
+    assert "40" in rows["111.4(b)(7)(A)"]["scope"]
+    assert "12 sides" in rows["111.4(b)(8)(C)"]["scope"]
+    assert "gaps or overlaps" in rows["111.4(b)(9)(F)"]["scope"]
+    assert "intervals of one or more" in rows["111.4(b)(10)(B)"]["scope"]
+    assert "intervals are one" in rows["111.4(b)(10)(C)"]["scope"]
