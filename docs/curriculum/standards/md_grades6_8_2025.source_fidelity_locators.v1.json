@@ -1444,7 +1444,7 @@
         "printed_page_end": 11,
         "requirements": {
           "7.DS.B.3.a": "Compare histograms including range, distribution shape and clustering.",
-          "7.DS.B.3.b": "Compare numerical measures of center and variability for two distributions.",
+          "7.DS.B.3.b": "Use center measures (mean or median) and variability measures (range or interquartile range) to describe the size and significance of differences between two numerical distributions.",
           "7.DS.B.3.c": "Express meaningful differences between two populations in their real-world context."
         },
         "independent_source_fidelity": "PENDING",
@@ -1518,8 +1518,8 @@
         "printed_page_end": 12,
         "requirements": {
           "7.DS.C.5.a": "Use data and simulations to estimate long-run relative frequency of chance events.",
-          "7.DS.C.5.b": "Judge whether number of simulation trials is reasonable given probability and expected frequency.",
-          "7.DS.C.5.c": "Use bar graphs and circle graphs to compare probabilities of events."
+          "7.DS.C.5.b": "Use known or estimated event probability to judge whether the number of observed outcomes in a given number of simulation trials is reasonable.",
+          "7.DS.C.5.c": "Compare and interpret event probabilities using bar graphs, circle graphs or other visual representations."
         },
         "independent_source_fidelity": "PENDING",
         "canonical_equivalence": "UNVERIFIED",
