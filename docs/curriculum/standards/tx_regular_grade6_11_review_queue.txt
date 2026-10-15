@@ -1,0 +1,2 @@
+TX regular G6 reviewer queue, source/test SHA 9cc7324e0d6e8b4070c0da817f69ad8877ef3ded.
+TEA ch111b.pdf (July 2025), printed p.3. Eleven 111.26(b)(4-5) author rows, no independent acceptance. Verify ratios/rates and percent examples; do not equate with 111.29 advanced.
