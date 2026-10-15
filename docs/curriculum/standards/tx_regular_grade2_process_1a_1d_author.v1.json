@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_2",
+  "section": "111.4(b)(1)(A-D)",
+  "official_pdf": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "publisher_edition": "TEA December 2014 Update, Grade 2 §111.4(b)(1)",
+  "publisher_original_bytes_authenticated": false,
+  "row_count": 4,
+  "rows": [
+    {
+      "id": "111.4(b)(1)(A)",
+      "scope": "Apply mathematics to problems encountered in everyday life, society, and workplaces.",
+      "source_pdf_printed_page": 8,
+      "source_pdf_page_index": 7,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(1)(B)",
+      "scope": "Use a complete problem-solving model: analyze information, formulate strategy, solve, justify, and evaluate both process and reasonableness.",
+      "source_pdf_printed_page": 8,
+      "source_pdf_page_index": 7,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(1)(C)",
+      "scope": "Select appropriate problem-solving tools (real objects, manipulatives, paper, pencil, technology) and techniques (mental math, estimation and number sense).",
+      "source_pdf_printed_page": 8,
+      "source_pdf_page_index": 7,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(1)(D)",
+      "scope": "Communicate mathematical ideas, reasoning and implications with representations including symbols, diagrams, graphs and language.",
+      "source_pdf_printed_page": 8,
+      "source_pdf_page_index": 7,
+      "independent_source_fidelity": "PENDING"
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}
