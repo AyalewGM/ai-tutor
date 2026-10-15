@@ -20,7 +20,7 @@
         "GRADE_6"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independently verify California Grades 1-5 and Grade 7/8/Algebra I/Mathematics I draft source statements, including California additions; complete Grade 6 and verify publisher version and source locators. All author evidence remains unaccepted.",
+      "next_gate": "Independently source-verify seven CDE Grade 6 p42 scope rows and required ratio/number conditions; author remaining Grade 6 requirements from p43–45 and source-review CA all other grades. No identity or mastery acceptance.",
       "grade8_author_scope_rows": 28,
       "grade8_author_scope_source": "ca_2013_grade8_28_source_author_slice.v1.json",
       "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY",
@@ -33,9 +33,10 @@
         "ALGEBRA_I": 62,
         "MATHEMATICS_I": 59,
         "GRADE_4": 28,
-        "GRADE_5": 27
+        "GRADE_5": 27,
+        "GRADE_6": 7
       },
-      "author_scope_total_staged": 305,
+      "author_scope_total_staged": 312,
       "author_scope_acceptance": "DRAFT_ALL_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "author_source_scope_files": {
         "GRADE_1": [
@@ -72,6 +73,9 @@
         "GRADE_5": [
           "ca_2013_grade5_page36_source_author_slice.v1.json",
           "ca_2013_grade5_pages37_39_source_author_slice.v1.json"
+        ],
+        "GRADE_6": [
+          "ca_2013_grade6_page42_source_author_slice.v1.json"
         ]
       },
       "grade2_partial_author_source_scope_rows": 10,
@@ -80,10 +84,10 @@
       "grade2_author_scope_total": 27,
       "grade2_author_scope_status": "ALL_27_AUTHOR_DESCRIPTIONS_STAGED_ZERO_INDEPENDENT_SOURCE_ACCEPTANCE",
       "grade3_partial_author_scope_total": 29,
-      "partially_scoped_tracks": [],
-      "not_yet_author_scoped_tracks": [
+      "partially_scoped_tracks": [
         "GRADE_6"
       ],
+      "not_yet_author_scoped_tracks": [],
       "grade2_scope_fidelity_accepted_rows": 0,
       "grade3_author_scope_status": "29_AUTHOR_PARENT_AND_SUBPART_IDENTIFIERS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "grade6_source_intake": {
@@ -92,9 +96,11 @@
         "source_version": "CA_CCSSM_MODIFIED_2013_CORRECTED_ELECTRONIC",
         "historical_audit": "app/california_grade6_gap_audit.py",
         "author_identifiers": 29,
-        "source_scope_status": "PENDING_OFFICIAL_PUBLISHER_TEXT_AND_CA_ADDITIONS_REVIEW",
+        "source_scope_status": "SEVEN_GRADE6_AUTHOR_PARENT_SCOPE_ROWS_STAGED_INDEPENDENT_REVIEW_PENDING",
         "independent_acceptance": 0,
-        "prior_gap_labels_role": "UNVERIFIED_HISTORICAL_CANDIDATES_ONLY"
+        "prior_gap_labels_role": "UNVERIFIED_HISTORICAL_CANDIDATES_ONLY",
+        "author_scope_rows": 7,
+        "author_scope_file": "ca_2013_grade6_page42_source_author_slice.v1.json"
       }
     },
     "TX": {
