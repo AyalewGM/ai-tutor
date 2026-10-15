@@ -40,7 +40,7 @@ def test_identifier_format() -> None:
 def test_grade9_is_algebra1_appendix_a_set() -> None:
     g9 = {r["expectation_id"] for r in _manifest()["expectations"] if r["grade"] == 9}
     assert "A.REI.4" in g9 and "A.REI.2" not in g9 and "S.ID.4" not in g9
-    ced1 = [r for r in _manifest()["expectations"] if r["expectation_id"] == "A.CED.1"][0]
+    ced1 = next(r for r in _manifest()["expectations"] if r["expectation_id"] == "A.CED.1")
     assert "absolute" in ced1["ca_modification_note"].lower()
 
 
