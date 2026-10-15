@@ -1,0 +1,240 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_5",
+  "section": "111.7(b)(1)-(3)",
+  "publisher": "Texas Education Agency",
+  "official_source_url": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "edition": "December 2014 Update; Grade 5 adopted 2012",
+  "source_page_convention": "Printed footer page; zero-based PDF index = printed page - 1",
+  "author_scope_rows": 22,
+  "remaining_grade5_sections": "111.7(b)(4)-(10) NOT YET AUTHOR SCOPED",
+  "independent_source_fidelity": "PENDING",
+  "publisher_original_bytes_authenticated": false,
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "id": "111.7(b)(1)(A)",
+      "scope": "Apply mathematics to problems in everyday life, society and workplace.",
+      "source_printed_page": 19,
+      "source_pdf_page_index": 18,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(1)(B)",
+      "scope": "Use a problem-solving model: analyze given information, plan, solve, justify and evaluate reasonableness.",
+      "source_printed_page": 19,
+      "source_pdf_page_index": 18,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(1)(C)",
+      "scope": "Select suitable tools and techniques including manipulatives, technology, mental math, estimation and number sense.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(1)(D)",
+      "scope": "Communicate reasoning through symbols, diagrams, graphs and mathematical language.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(1)(E)",
+      "scope": "Create and use representations to organize, record and communicate mathematical ideas.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(1)(F)",
+      "scope": "Analyze mathematical relationships to connect and communicate ideas.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(1)(G)",
+      "scope": "Explain and justify mathematical arguments precisely in oral and written communication.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(2)(A)",
+      "scope": "Represent decimal digit values through thousandths using expanded notation and numerals.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(2)(B)",
+      "scope": "Compare/order two decimals through thousandths using >, < and =.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(2)(C)",
+      "scope": "Round decimals to tenths or hundredths.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(3)(A)",
+      "scope": "Estimate solutions of real-world/mathematical addition, subtraction, multiplication or division problems.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(3)(B)",
+      "scope": "Fluently multiply three-digit by two-digit whole numbers with the standard algorithm.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(3)(C)",
+      "scope": "Solve quotients of up-to-four-digit dividend by two-digit divisor with strategies and standard algorithm.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(3)(D)",
+      "scope": "Represent multiplication of decimals with products to hundredths using objects and pictorial/area models.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(3)(E)",
+      "scope": "Solve decimal products to hundredths including money using place value, properties and whole-number multiplication relationships.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(3)(F)",
+      "scope": "Represent decimal quotients to hundredths, up-to-four-digit dividends and two-digit whole-number divisors, with objects and area models.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(3)(G)",
+      "scope": "Solve decimal quotients to hundredths with up-to-four-digit dividends and two-digit whole-number divisors using algorithms including standard algorithm.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(3)(H)",
+      "scope": "Represent and solve fraction addition/subtraction with unequal denominators referring to same whole, with models and properties.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(3)(I)",
+      "scope": "Represent and solve whole-number by fraction multiplication referring to same whole using objects and pictorial/area models.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(3)(J)",
+      "scope": "Model unit fraction divided by whole number and whole number divided by unit fraction with objects and pictorial/area models.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(3)(K)",
+      "scope": "Fluently add and subtract positive rational numbers.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(3)(L)",
+      "scope": "Divide whole numbers by unit fractions and unit fractions by whole numbers.",
+      "source_printed_page": 20,
+      "source_pdf_page_index": 19,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
