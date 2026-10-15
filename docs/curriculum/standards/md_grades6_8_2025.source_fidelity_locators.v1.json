@@ -1107,7 +1107,23 @@
       },
       "pdf_page_index_zero_based": 6,
       "pdf_page_end_index_zero_based": 6,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17818",
+        "printed_page_start": 6,
+        "printed_page_end": 6,
+        "requirements": {
+          "7.AT.C.8.a": "Use both px+q=r and p(x+q)=r, with specified rational p, q, r.",
+          "7.AT.C.8.b": "Solve both equation forms flexibly and efficiently; explain steps and how transformations preserve original equality.",
+          "7.AT.C.8.c": "Solve contextual word problems leading to these forms and interpret solution in original context."
+        },
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "7.AT.C.9",
@@ -1140,7 +1156,23 @@
       },
       "pdf_page_index_zero_based": 7,
       "pdf_page_end_index_zero_based": 7,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17818",
+        "printed_page_start": 7,
+        "printed_page_end": 7,
+        "requirements": {
+          "7.AT.C.9.a": "Use strict px+q>r or px+q<r with specified rational p, q, r; do not replace with >= or <=.",
+          "7.AT.C.9.b": "Solve inequalities and graph entire solution set on a number line.",
+          "7.AT.C.9.c": "Interpret possible and reasonable solution values in original situation, including domain constraints."
+        },
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "7.GR.A.1",
@@ -1295,7 +1327,22 @@
       },
       "pdf_page_index_zero_based": 10,
       "pdf_page_end_index_zero_based": 10,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17818",
+        "printed_page_start": 10,
+        "printed_page_end": 10,
+        "requirements": {
+          "7.DS.A.1.a": "Assess whether sample represents the population and how selection method affects validity of generalizations.",
+          "7.DS.A.1.b": "Random sampling increases the likelihood of representativeness; not a guarantee."
+        },
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "7.DS.A.2",
@@ -1326,7 +1373,22 @@
       },
       "pdf_page_index_zero_based": 10,
       "pdf_page_end_index_zero_based": 10,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17818",
+        "printed_page_start": 10,
+        "printed_page_end": 10,
+        "requirements": {
+          "7.DS.A.2.a": "Use one random sample to estimate an unknown population characteristic.",
+          "7.DS.A.2.b": "Generate multiple random samples of the same size, examine variability in estimates and assess reliability."
+        },
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "7.DS.B.3",
@@ -1359,7 +1421,23 @@
       },
       "pdf_page_index_zero_based": 11,
       "pdf_page_end_index_zero_based": 11,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17818",
+        "printed_page_start": 11,
+        "printed_page_end": 11,
+        "requirements": {
+          "7.DS.B.3.a": "Compare histograms including range, distribution shape and clustering.",
+          "7.DS.B.3.b": "Compare numerical measures of center and variability for two distributions.",
+          "7.DS.B.3.c": "Express meaningful differences between two populations in their real-world context."
+        },
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "7.DS.C.4",
@@ -1417,7 +1495,23 @@
       },
       "pdf_page_index_zero_based": 12,
       "pdf_page_end_index_zero_based": 12,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17818",
+        "printed_page_start": 12,
+        "printed_page_end": 12,
+        "requirements": {
+          "7.DS.C.5.a": "Use data and simulations to estimate long-run relative frequency of chance events.",
+          "7.DS.C.5.b": "Judge whether number of simulation trials is reasonable given probability and expected frequency.",
+          "7.DS.C.5.c": "Use bar graphs and circle graphs to compare probabilities of events."
+        },
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "7.DS.C.6",
@@ -1450,7 +1544,23 @@
       },
       "pdf_page_index_zero_based": 12,
       "pdf_page_end_index_zero_based": 12,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17818",
+        "printed_page_start": 12,
+        "printed_page_end": 12,
+        "requirements": {
+          "7.DS.C.6.a": "Build uniform probability model with equally likely outcomes.",
+          "7.DS.C.6.b": "Build empirical frequency probability model from observed outcomes, which need not be equally likely.",
+          "7.DS.C.6.c": "Compare model probabilities with observed data and explain discrepancies."
+        },
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "8.NOS.A.1",
@@ -1879,7 +1989,21 @@
       },
       "pdf_page_index_zero_based": 6,
       "pdf_page_end_index_zero_based": 6,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "printed_page_start": 6,
+        "printed_page_end": 6,
+        "requirements": {
+          "parent": "Identify linear versus nonlinear functions from equations, graphs or input-output pairs; justify using constant rate of change and its relationship to proportional reasoning."
+        },
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "8.AT.D.9",
@@ -1966,7 +2090,21 @@
       },
       "pdf_page_index_zero_based": 7,
       "pdf_page_end_index_zero_based": 7,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "printed_page_start": 7,
+        "printed_page_end": 7,
+        "requirements": {
+          "parent": "Analyze graphs for increasing/decreasing and linear/nonlinear behavior; sketch qualitative graph from narrative description."
+        },
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "8.GR.A.1",
@@ -2016,7 +2154,21 @@
       },
       "pdf_page_index_zero_based": 8,
       "pdf_page_end_index_zero_based": 8,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "printed_page_start": 8,
+        "printed_page_end": 8,
+        "requirements": {
+          "parent": "Construct triangles from three given side/angle measures with ruler, protractor, technology or physical manipulatives; decide unique, multiple or no triangle."
+        },
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "8.GR.A.3",
@@ -2041,7 +2193,21 @@
       },
       "pdf_page_index_zero_based": 8,
       "pdf_page_end_index_zero_based": 8,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "printed_page_start": 8,
+        "printed_page_end": 8,
+        "requirements": {
+          "parent": "Informally verify triangle interior angles sum to 180 degrees and an exterior angle equals the sum of the two remote interior angles."
+        },
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "8.GR.B.4",
