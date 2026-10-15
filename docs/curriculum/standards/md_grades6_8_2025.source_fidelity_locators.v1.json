@@ -167,7 +167,20 @@
       },
       "pdf_page_index_zero_based": 2,
       "pdf_page_end_index_zero_based": 2,
-      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED",
+      "retrospective_source_scope_evidence": {
+        "source_column": "2025 MD Standards Statement (not 2010 comparison)",
+        "publisher_grade": 6,
+        "requirements": {
+          "6.NOS.B.4.a": "GCF of whole numbers within 100",
+          "6.NOS.B.4.b": "LCM of whole numbers within 12",
+          "6.NOS.B.4.c": "Factor sums with whole-number addends within 100 by distributivity"
+        },
+        "short_summary_exhaustive": false,
+        "independent_acceptance": "PENDING",
+        "downstream_full_coverage_allowed": false,
+        "canonical_equivalence": "UNVERIFIED"
+      }
     },
     {
       "expectation_id": "6.NOS.C.5",
@@ -449,7 +462,18 @@
       },
       "pdf_page_index_zero_based": 10,
       "pdf_page_end_index_zero_based": 10,
-      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED",
+      "retrospective_source_scope_evidence": {
+        "source_column": "2025 MD Standards Statement (not 2010 comparison)",
+        "publisher_grade": 6,
+        "requirements": {
+          "6.AT.C.8.b": "x+p=q, x-p=q, px=q and x/p=q; x,p,q nonnegative rational"
+        },
+        "short_summary_exhaustive": false,
+        "independent_acceptance": "PENDING",
+        "downstream_full_coverage_allowed": false,
+        "canonical_equivalence": "UNVERIFIED"
+      }
     },
     {
       "expectation_id": "6.AT.C.9",
@@ -509,7 +533,18 @@
       },
       "pdf_page_index_zero_based": 10,
       "pdf_page_end_index_zero_based": 10,
-      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED",
+      "retrospective_source_scope_evidence": {
+        "source_column": "2025 MD Standards Statement (not 2010 comparison)",
+        "publisher_grade": 6,
+        "requirements": {
+          "6.AT.C.10.b": "One-step addition, subtraction, multiplication, division inequalities using >=, >, <=, < and p,q nonnegative rational"
+        },
+        "short_summary_exhaustive": false,
+        "independent_acceptance": "PENDING",
+        "downstream_full_coverage_allowed": false,
+        "canonical_equivalence": "UNVERIFIED"
+      }
     },
     {
       "expectation_id": "6.AT.D.11",
@@ -738,7 +773,18 @@
       },
       "pdf_page_index_zero_based": 14,
       "pdf_page_end_index_zero_based": 14,
-      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED",
+      "retrospective_source_scope_evidence": {
+        "source_column": "2025 MD Standards Statement (not 2010 comparison)",
+        "publisher_grade": 6,
+        "requirements": {
+          "6.DS.B.6.c": "2025 column requires median and/or mean, IQR and outlier context; historical 2010 MAD comparison NOT imported as 2025 requirement"
+        },
+        "short_summary_exhaustive": false,
+        "independent_acceptance": "PENDING",
+        "downstream_full_coverage_allowed": false,
+        "canonical_equivalence": "UNVERIFIED"
+      }
     },
     {
       "expectation_id": "7.NOS.A.1",
@@ -2135,7 +2181,18 @@
       },
       "pdf_page_index_zero_based": 11,
       "pdf_page_end_index_zero_based": 11,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_source_scope_evidence": {
+        "source_column": "2025 MD Standards Statement (not 2010 comparison)",
+        "publisher_grade": 8,
+        "requirements": {
+          "association": "Distinguish positive and negative associations in observed bivariate data"
+        },
+        "short_summary_exhaustive": false,
+        "independent_acceptance": "PENDING",
+        "downstream_full_coverage_allowed": false,
+        "canonical_equivalence": "UNVERIFIED"
+      }
     },
     {
       "expectation_id": "8.DS.B.3",
@@ -2210,7 +2267,18 @@
       },
       "pdf_page_index_zero_based": 12,
       "pdf_page_end_index_zero_based": 12,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_source_scope_evidence": {
+        "source_column": "2025 MD Standards Statement (not 2010 comparison)",
+        "publisher_grade": 8,
+        "requirements": {
+          "two_way_table_population": "Two categorical variables must be collected on the same subjects"
+        },
+        "short_summary_exhaustive": false,
+        "independent_acceptance": "PENDING",
+        "downstream_full_coverage_allowed": false,
+        "canonical_equivalence": "UNVERIFIED"
+      }
     },
     {
       "expectation_id": "8.DS.C.6",
@@ -2241,7 +2309,18 @@
       },
       "pdf_page_index_zero_based": 12,
       "pdf_page_end_index_zero_based": 13,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_source_scope_evidence": {
+        "source_column": "2025 MD Standards Statement (not 2010 comparison)",
+        "publisher_grade": 8,
+        "requirements": {
+          "8.DS.C.6.b": "Compound-event probability is fraction of sample-space outcomes satisfying event; simulation is distinct parent-level scope"
+        },
+        "short_summary_exhaustive": false,
+        "independent_acceptance": "PENDING",
+        "downstream_full_coverage_allowed": false,
+        "canonical_equivalence": "UNVERIFIED"
+      }
     }
   ],
   "grade7_scope_evidence_note": "Grade 7 editorial scope and subpart topic checks were added against the MSDE July 2025 Grade 7 crosswalk, https://msde.maryland.gov/media/17818. These are author-side audit notes, not independently accepted standards text or mapping authority. Mathematical expressions rendered as images in the official PDF must be checked visually by the independent reviewer.",
