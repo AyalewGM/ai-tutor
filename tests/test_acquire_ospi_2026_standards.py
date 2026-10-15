@@ -100,3 +100,31 @@ def test_direct_initial_adoption_url_fails_closed_before_fetch(monkeypatch, tmp_
     failure = json.loads((tmp_path / "failure.json").read_text())
     assert failure["status"] == "BLOCKED"
     assert failure["accepted_expectation_rows"] == 0
+
+
+def test_uploaded_workbook_hash_mismatch_fails_closed(monkeypatch, tmp_path: Path):
+    import hashlib
+    import pytest
+    import scripts.acquire_ospi_2026_standards as acquisition
+
+    url = "https://ospi.k12.wa.us/sites/default/files/2026-08/math26-final-adoption-spreadsheet.xlsx"
+    content = bytes.fromhex("504B0304") + b"workbook-bytes"
+    class Response:
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            return False
+        def geturl(self):
+            return url
+        def read(self, size):
+            return content
+    monkeypatch.setattr(acquisition, "urlopen", lambda *args, **kwargs: Response())
+    output = tmp_path / "candidate.xlsx"
+    expected = hashlib.sha256(content).hexdigest()
+    result = acquisition.fetch(url, output, expected)
+    assert result["sha256"] == expected
+    assert result["publisher_hash_matches_uploaded_workbook"] is True
+    assert result["expectation_source_fidelity"] == "PENDING_INDEPENDENT_REVIEW"
+    with pytest.raises(ValueError, match="SHA256 differs"):
+        acquisition.fetch(url, output, "0" * 64)
+    assert not output.exists()
