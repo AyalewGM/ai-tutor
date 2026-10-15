@@ -8,10 +8,10 @@ ROOT = Path(__file__).resolve().parents[1] / "docs/curriculum/standards"
 def test_california_staged_scope_counts_are_unique_and_unaccepted():
     matrix = json.loads((ROOT / "national_ca_tx_wa_completion_matrix.v1.json").read_text())
     ca = matrix["states"]["CA"]
-    expected = {"GRADE_1": 21, "GRADE_2": 27, "GRADE_3": 21, "GRADE_7": 24, "GRADE_8": 28,
+    expected = {"GRADE_1": 21, "GRADE_2": 27, "GRADE_3": 29, "GRADE_7": 24, "GRADE_8": 28,
                 "ALGEBRA_I": 62, "MATHEMATICS_I": 59}
     assert ca["author_source_scope_rows_by_track"] == expected
-    assert ca["author_scope_total_staged"] == sum(expected.values()) == 242
+    assert ca["author_scope_total_staged"] == sum(expected.values()) == 250
     assert ca["accepted_source_fidelity_rows"] == 0
     assert ca["grade2_partial_author_source_scope_rows"] == 10
     assert ca["grade2_author_scope_total"] == 27
@@ -33,5 +33,5 @@ def test_california_staged_scope_counts_are_unique_and_unaccepted():
         identifiers = [r["expectation_id"] for r in rows]
         assert len(identifiers) == len(set(identifiers)) == count
     assert ca["unextracted_tracks"] == [
-        "GRADE_3", "GRADE_4", "GRADE_5", "GRADE_6"
+        "GRADE_4", "GRADE_5", "GRADE_6"
     ]
