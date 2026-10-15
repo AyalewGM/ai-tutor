@@ -90,7 +90,7 @@ def signature_matches(path: Path) -> bool:
     return False
 
 
-def fetch(url: str, dest: Path) -> dict:
+def fetch(url: str, dest: Path, expected_sha256: str | None = None) -> dict:
     if not official_url(url):
         raise ValueError("Only the official OSPI HTTPS host is allowed")
     request = Request(url, headers={"User-Agent": "MihurStandardsEvidence/1.0"})
@@ -104,8 +104,13 @@ def fetch(url: str, dest: Path) -> dict:
     if not signature_matches(dest):
         dest.unlink(missing_ok=True)
         raise ValueError("Downloaded bytes do not match expected file signature")
+    digest = hashlib.sha256(data).hexdigest()
+    if expected_sha256 is not None and digest != expected_sha256.lower():
+        dest.unlink(missing_ok=True)
+        raise ValueError("Publisher candidate SHA256 differs from uploaded workbook")
     return {"url": url, "filename": dest.name, "bytes": len(data),
-            "sha256": hashlib.sha256(data).hexdigest(),
+            "sha256": digest,
+            "publisher_hash_matches_uploaded_workbook": expected_sha256 is not None,
             "status": "ACQUIRED_UNVERIFIED_SOURCE_BYTES",
             "expectation_source_fidelity": "PENDING_INDEPENDENT_REVIEW"}
 
@@ -114,7 +119,12 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="source-evidence/ospi-2026")
     parser.add_argument("--candidate-url", action="append", default=[], help="Publisher-hosted final source candidate URL")
+    parser.add_argument("--expected-sha256", default=None, help="Optional uploaded-workbook SHA256; mismatches fail closed")
     args = parser.parse_args()
+    if args.expected_sha256 is not None:
+        expected = args.expected_sha256.lower()
+        if len(expected) != 64 or any(ch not in "0123456789abcdef" for ch in expected):
+            parser.error("--expected-sha256 must be a 64-character hexadecimal digest")
     folder = Path(args.output)
     folder.mkdir(parents=True, exist_ok=True)
     try:
@@ -135,7 +145,7 @@ def main() -> None:
             if suffix not in EXTENSIONS:
                 continue
             try:
-                entry = fetch(url, folder / f"ospi_candidate_{i}{suffix}")
+                entry = fetch(url, folder / f"ospi_candidate_{i}{suffix}", args.expected_sha256 if suffix == ".xlsx" else None)
                 entry["anchor_label"] = label
                 evidence.append(entry)
             except (HTTPError, URLError, OSError, ValueError) as exc:
