@@ -273,28 +273,29 @@ def respond(
     )
     engine_action = transition.action
 
-    db.add(
-        MasteryEvent(
-            student_id=session.student_id,
-            skill_id=active_skill_id,
-            attempt_id=attempt.id,
-            previous_score=evidence.previous_score,
-            new_score=progress.mastery_score,
-            previous_confidence=evidence.previous_confidence,
-            new_confidence=progress.confidence_score,
-            reason="ATTEMPT_EVIDENCE",
-            metadata_json={
-                "correct": evidence.evaluation.correct,
-                "assistance_level": effective_assistance_level,
-                "reported_assistance_level": payload.assistance_level,
-                "highest_hint_level": int(highest_hint_level),
-                "curriculum_id": str(scope.curriculum_id),
-                "curriculum_enrollment_id": (
-                    str(scope.enrollment_id) if scope.enrollment_id else None
-                ),
-            },
+    if not is_extension:
+        db.add(
+            MasteryEvent(
+                student_id=session.student_id,
+                skill_id=active_skill_id,
+                attempt_id=attempt.id,
+                previous_score=evidence.previous_score,
+                new_score=progress.mastery_score,
+                previous_confidence=evidence.previous_confidence,
+                new_confidence=progress.confidence_score,
+                reason="ATTEMPT_EVIDENCE",
+                metadata_json={
+                    "correct": evidence.evaluation.correct,
+                    "assistance_level": effective_assistance_level,
+                    "reported_assistance_level": payload.assistance_level,
+                    "highest_hint_level": int(highest_hint_level),
+                    "curriculum_id": str(scope.curriculum_id),
+                    "curriculum_enrollment_id": (
+                        str(scope.enrollment_id) if scope.enrollment_id else None
+                    ),
+                },
+            )
         )
-    )
 
     if state_at_attempt in {TutorState.INDEPENDENT_PRACTICE, TutorState.MASTERY_CHECK}:
         db.add(
