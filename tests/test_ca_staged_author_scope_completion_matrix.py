@@ -8,14 +8,14 @@ ROOT = Path(__file__).resolve().parents[1] / "docs/curriculum/standards"
 def test_california_staged_scope_counts_are_unique_and_unaccepted():
     matrix = json.loads((ROOT / "national_ca_tx_wa_completion_matrix.v1.json").read_text())
     ca = matrix["states"]["CA"]
-    expected = {"GRADE_1": 21, "GRADE_2": 27, "GRADE_3": 29, "GRADE_4": 28, "GRADE_5": 27, "GRADE_6": 12, "GRADE_7": 24, "GRADE_8": 28,
+    expected = {"GRADE_1": 21, "GRADE_2": 27, "GRADE_3": 29, "GRADE_4": 28, "GRADE_5": 27, "GRADE_6": 29, "GRADE_7": 24, "GRADE_8": 28,
                 "ALGEBRA_I": 62, "MATHEMATICS_I": 59}
     assert ca["author_source_scope_rows_by_track"] == expected
-    assert ca["author_scope_total_staged"] == sum(expected.values()) == 317
+    assert ca["author_scope_total_staged"] == sum(expected.values()) == 334
     assert ca["accepted_source_fidelity_rows"] == 0
     assert ca["grade6_source_intake"]["author_identifiers"] == 29
-    assert ca["grade6_source_intake"]["author_scope_rows"] == 12
-    assert len(ca["author_source_scope_files"]["GRADE_6"]) == 2
+    assert ca["grade6_source_intake"]["author_scope_rows"] == 29
+    assert len(ca["author_source_scope_files"]["GRADE_6"]) == 4
     assert ca["grade2_partial_author_source_scope_rows"] == 10
     assert ca["grade2_author_scope_total"] == 27
     assert ca["grade2_partial_not_complete"] is False
@@ -35,6 +35,4 @@ def test_california_staged_scope_counts_are_unique_and_unaccepted():
             rows.extend(data["rows"])
         identifiers = [r["expectation_id"] for r in rows]
         assert len(identifiers) == len(set(identifiers)) == count
-    assert ca["unextracted_tracks"] == [
-        "GRADE_6"
-    ]
+    assert ca["unextracted_tracks"] == []
