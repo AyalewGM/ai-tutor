@@ -58,6 +58,19 @@ def test_material_scope_restrictions_remain_visible():
     d = _load(LATER)
     rows = {r["expectation_id"]: r for r in d["rows"]}
     assert "COURSE_BOUNDARY_CONFLICT_PENDING_INDEPENDENT_INTERPRETATION" in rows["F-IF.7.e"]["test_material_conditions"]
+    f_if_7e = rows["F-IF.7.e"]
+    assert f_if_7e["source_standard_full_scope_components"] == [
+        "exponential graphs: intercepts and end behavior",
+        "logarithmic graphs: intercepts and end behavior",
+        "trigonometric graphs: period, midline and amplitude",
+    ]
+    assert set(f_if_7e["deferred_by_explicit_course_introduction"]) == {
+        "logarithmic functions", "trigonometric functions",
+    }
+    assert f_if_7e["course_introduction_source_printed_page"] == 60
+    assert f_if_7e["course_introduction_source_pdf_zero_based_index"] == 66
+    assert "PENDING_INDEPENDENT_VERIFICATION" in f_if_7e["course_scope_disposition"]
+    assert "exponential" in f_if_7e["algebra1_course_instructional_scope"][0]
     assert "square root and cube root" in rows["F-IF.7.b"]["test_material_conditions"]
     fbf3 = rows["F-BF.3"]
     assert "find the value of k given the graphs" in fbf3["author_mathematical_scope_summary"]
