@@ -46,3 +46,17 @@ def test_math1_bracket_evidence_remains_review_only():
             assert evidence["independent_resolution"] == "PENDING"
             assert evidence["curriculum_activation"] == "FORBIDDEN"
             assert row["publisher_wording_verification"] == "REQUIRES_INDEPENDENT_LINE_BY_LINE_CHECK"
+
+
+def test_math1_p90_supplement_is_nine_existing_placements_only():
+    supplement = json.loads((BASE / "ca_2013_mathematics1_page90_additional9_scope_notes.v1.json").read_text())
+    audit = json.loads((BASE / "ca_2013_mathematics1_pages90_94_author_audit.v1.json").read_text())
+    ids = [r["expectation_id"] for r in supplement["requirements"]]
+    assert len(ids) == len(set(ids)) == 9
+    existing = {r["expectation_id"]: r for r in audit["rows"]}
+    assert len(audit["rows"]) == 59
+    assert all(existing[name]["source_printed_page"] == 90 for name in ids)
+    assert supplement["source_pdf_zero_based_page"] == 96
+    assert supplement["publisher_original_byte_identity"] == "UNVERIFIED"
+    assert supplement["independent_source_fidelity"] == "PENDING"
+    assert supplement["activation"] == "FORBIDDEN"
