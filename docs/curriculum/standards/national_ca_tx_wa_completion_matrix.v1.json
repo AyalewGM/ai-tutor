@@ -18,7 +18,7 @@
       "unverified_scope_rows": 173,
       "unextracted_tracks": [],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "California Grade 6: 29 parent requirements authored, none independently accepted. Independently verify new 17 author rows pp.43-45 and prior 12; continue unfinished CA Grades 3-4 and other gaps. All acceptance and activation gates remain closed.",
+      "next_gate": "CA Grades 1–8, Algebra I and Mathematics I have 334 provisional authored track placements, none independently accepted. Prioritize independent publisher subpart/course-bracket fidelity for 173 Grades 7–9 historical placements, including eight bounded Math I scope tensions on printed pp.90–94; then remaining CA review gaps. Grade 9 course equivalence not assumed.",
       "grade8_author_scope_rows": 28,
       "grade8_author_scope_source": "ca_2013_grade8_28_source_author_slice.v1.json",
       "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY",
@@ -85,9 +85,7 @@
       "grade2_author_scope_total": 27,
       "grade2_author_scope_status": "ALL_27_AUTHOR_DESCRIPTIONS_STAGED_ZERO_INDEPENDENT_SOURCE_ACCEPTANCE",
       "grade3_partial_author_scope_total": 29,
-      "partially_scoped_tracks": [
-        "GRADE_6"
-      ],
+      "partially_scoped_tracks": [],
       "not_yet_author_scoped_tracks": [],
       "grade2_scope_fidelity_accepted_rows": 0,
       "grade3_author_scope_status": "29_AUTHOR_PARENT_AND_SUBPART_IDENTIFIERS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
@@ -97,7 +95,7 @@
         "source_version": "CA_CCSSM_MODIFIED_2013_CORRECTED_ELECTRONIC",
         "historical_audit": "app/california_grade6_gap_audit.py",
         "author_identifiers": 29,
-        "source_scope_status": "ALL_29_GRADE6_PARENT_AUTHOR_SCOPE_ROWS_STAGED_INDEPENDENT_REVIEW_PENDING",
+        "source_scope_status": "ALL_29_GRADE6_PARENT_AUTHOR_SCOPE_ROWS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
         "independent_acceptance": 0,
         "prior_gap_labels_role": "UNVERIFIED_HISTORICAL_CANDIDATES_ONLY",
         "author_scope_rows": 29,
