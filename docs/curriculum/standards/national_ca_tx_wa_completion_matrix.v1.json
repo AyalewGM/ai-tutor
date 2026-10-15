@@ -22,7 +22,7 @@
         "GRADE_6"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independently verify Grade 3 final p27 eight rows and all 250 staged California draft expectation identifiers against controlling official CDE text; complete Grades 4–6 author scopes; no downstream mapping/mastery approval.",
+      "next_gate": "Independent fidelity review of the eleven Grade 4 printed-p30 author scope rows and CDE whole-number ≤1,000,000 domain restriction; complete Grade 4 pages 31-33 and Grades 5-6. Zero source approvals.",
       "grade8_author_scope_rows": 28,
       "grade8_author_scope_source": "ca_2013_grade8_28_source_author_slice.v1.json",
       "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY",
@@ -33,9 +33,10 @@
         "GRADE_7": 24,
         "GRADE_8": 28,
         "ALGEBRA_I": 62,
-        "MATHEMATICS_I": 59
+        "MATHEMATICS_I": 59,
+        "GRADE_4": 11
       },
-      "author_scope_total_staged": 250,
+      "author_scope_total_staged": 261,
       "author_scope_acceptance": "DRAFT_ALL_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "author_source_scope_files": {
         "GRADE_1": [
@@ -64,6 +65,9 @@
           "ca_2013_grade3_page25_source_author_slice.v1.json",
           "ca_2013_grade3_page26_source_author_slice.v1.json",
           "ca_2013_grade3_page27_source_author_slice.v1.json"
+        ],
+        "GRADE_4": [
+          "ca_2013_grade4_page30_source_author_slice.v1.json"
         ]
       },
       "grade2_partial_author_source_scope_rows": 10,
@@ -72,9 +76,10 @@
       "grade2_author_scope_total": 27,
       "grade2_author_scope_status": "ALL_27_AUTHOR_DESCRIPTIONS_STAGED_ZERO_INDEPENDENT_SOURCE_ACCEPTANCE",
       "grade3_partial_author_scope_total": 29,
-      "partially_scoped_tracks": [],
+      "partially_scoped_tracks": [
+        "GRADE_4"
+      ],
       "not_yet_author_scoped_tracks": [
-        "GRADE_4",
         "GRADE_5",
         "GRADE_6"
       ],
