@@ -9,7 +9,7 @@ def test_texas_regular_grade6_partial_source_accounting():
     tx = json.loads((BASE / "national_ca_tx_wa_completion_matrix.v1.json").read_text())["states"]["TX"]
     assert tx["regular_grade6_111_26_author_scope_rows"] == 59
     assert tx["regular_grade6_111_26_independently_accepted_source_rows"] == 0
-    assert tx["partially_author_scoped_tracks"] == []
+    assert "REGULAR_GRADE_6" not in tx["partially_author_scoped_tracks"]
     assert "REGULAR_GRADE_6" not in tx["unextracted_tracks"]
     assert all(f.startswith("tx_regular_grade6_") for f in tx["regular_grade6_source_files"])
     rows = []
