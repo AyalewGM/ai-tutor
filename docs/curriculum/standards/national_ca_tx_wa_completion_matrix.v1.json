@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "as_of": "2026-10-13",
+  "as_of": "2026-10-14",
   "status": "INCOMPLETE_FAIL_CLOSED",
   "purpose": "Exact evidence accounting for all three states, not accepted curriculum coverage",
   "states": {
@@ -17,25 +17,26 @@
       "accepted_source_fidelity_rows": 0,
       "unverified_scope_rows": 173,
       "unextracted_tracks": [
-        "GRADE_2",
         "GRADE_3",
         "GRADE_4",
         "GRADE_5",
         "GRADE_6"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independently verify ten Grade 2 CDE printed-page-20 author scopes and California additions; complete remaining Grade 2 pages plus Grades 3–6. Existing 194 other staged CA source-scope records require independent expectation-level review.",
+      "next_gate": "Grade 2: independently verify 27 author identifiers against CDE official printed pp.20-22, including California additions. Grade 3: verify current 10 p25 draft records and author remaining p26-27. Grades 4-6: author official source intake. All 231 author rows remain pending independent source fidelity; no mapping/mastery acceptance.",
       "grade8_author_scope_rows": 28,
       "grade8_author_scope_source": "ca_2013_grade8_28_source_author_slice.v1.json",
       "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY",
       "author_source_scope_rows_by_track": {
         "GRADE_1": 21,
+        "GRADE_2": 27,
+        "GRADE_3": 10,
         "GRADE_7": 24,
         "GRADE_8": 28,
         "ALGEBRA_I": 62,
         "MATHEMATICS_I": 59
       },
-      "author_scope_total_staged": 194,
+      "author_scope_total_staged": 231,
       "author_scope_acceptance": "DRAFT_ALL_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "author_source_scope_files": {
         "GRADE_1": [
@@ -54,11 +55,30 @@
         ],
         "MATHEMATICS_I": [
           "ca_2013_mathematics1_pages90_94_author_audit.v1.json"
+        ],
+        "GRADE_2": [
+          "ca_2013_grade2_page20_source_author_slice.v1.json",
+          "ca_2013_grade2_ca_additions_author_slice.v1.json",
+          "ca_2013_grade2_pages21_22_source_author_slice.v1.json"
+        ],
+        "GRADE_3": [
+          "ca_2013_grade3_page25_source_author_slice.v1.json"
         ]
       },
       "grade2_partial_author_source_scope_rows": 10,
       "grade2_partial_author_source_file": "ca_2013_grade2_page20_source_author_slice.v1.json",
-      "grade2_partial_not_complete": true
+      "grade2_partial_not_complete": true,
+      "grade2_author_scope_total": 27,
+      "grade2_author_scope_status": "ALL_27_IDENTIFIERS_HAVE_AUTHOR_DESCRIPTIONS_NOT_SOURCE_ACCEPTED",
+      "grade3_partial_author_scope_total": 10,
+      "partially_scoped_tracks": [
+        "GRADE_3"
+      ],
+      "not_yet_author_scoped_tracks": [
+        "GRADE_4",
+        "GRADE_5",
+        "GRADE_6"
+      ]
     },
     "TX": {
       "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
