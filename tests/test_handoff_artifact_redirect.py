@@ -64,3 +64,46 @@ def test_artifact_redirect_preserves_bearer_within_same_host(monkeypatch):
 
     monkeypatch.setattr(module, "build_opener", make_opener)
     assert module.artifact_bytes("https://api.github.com/artifacts/1/zip", "secret") == b"zip-content"
+
+
+def test_artifact_rejects_untrusted_origin_before_sending_token(monkeypatch):
+    def forbidden(*_args, **_kwargs):
+        raise AssertionError("Must not construct opener for untrusted URL")
+
+    monkeypatch.setattr(module, "build_opener", forbidden)
+    for url in (
+        "https://attacker.example/repos/AyalewGM/ai-tutor/actions/artifacts/1/zip",
+        "http://api.github.com/repos/AyalewGM/ai-tutor/actions/artifacts/1/zip",
+        "https://api.github.com/repos/other/repo/actions/artifacts/1/zip",
+    ):
+        try:
+            module.artifact_bytes(url, "secret")
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"Untrusted URL accepted: {url}")
+
+
+def test_artifact_redirect_rejects_http_downgrade(monkeypatch):
+    seen = {}
+
+    class _Opener:
+        def open(self, request, timeout):
+            try:
+                seen["handler"].redirect_request(
+                    request, None, 302, "Found", {},
+                    "http://api.github.com/repos/AyalewGM/ai-tutor/actions/artifacts/1/zip",
+                )
+            except ValueError:
+                return _Response()
+            raise AssertionError("HTTP downgrade was accepted")
+
+    def make_opener(handler):
+        seen["handler"] = handler()
+        return _Opener()
+
+    monkeypatch.setattr(module, "build_opener", make_opener)
+    assert module.artifact_bytes(
+        "https://api.github.com/repos/AyalewGM/ai-tutor/actions/artifacts/1/zip",
+        "secret",
+    ) == b"zip-content"
