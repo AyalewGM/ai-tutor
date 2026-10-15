@@ -138,9 +138,7 @@
         "tx_advanced_2025_grade6_111_29_scope_batch_05_geometry_data_finance.v1.json",
         "tx_advanced_2025_grade6_111_29_scope_batch_06_process.v1.json"
       ],
-      "partially_author_scoped_tracks": [
-        "REGULAR_GRADE_2"
-      ],
+      "partially_author_scoped_tracks": [],
       "regular_grade6_111_26_author_scope_rows": 59,
       "regular_grade6_111_26_independently_accepted_source_rows": 0,
       "regular_grade6_source_files": [
@@ -157,13 +155,22 @@
       ],
       "regular_grade1_independently_accepted_source_rows": 0,
       "regular_grade1_author_scope_status": "50_AUTHOR_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
-      "regular_grade2_111_4_author_scope_rows": 18,
+      "regular_grade2_111_4_author_scope_rows": 50,
       "regular_grade2_111_4_independently_accepted_source_rows": 0,
       "regular_grade2_source_files": [
         "tx_regular_grade2_number_fraction_author.v1.json",
-        "tx_regular_grade2_operations_4_6_author.v1.json"
+        "tx_regular_grade2_operations_4_6_author.v1.json",
+        "tx_regular_grade2_process_1a_1d_author.v1.json",
+        "tx_regular_grade2_process_1e_1g_author.v1.json",
+        "tx_regular_grade2_algebraic_reasoning_7_author.v1.json",
+        "tx_regular_grade2_geometry_author.v1.json",
+        "tx_regular_grade2_measurement_9a_9d_author.v1.json",
+        "tx_regular_grade2_measurement_9e_9g_author.v1.json",
+        "tx_regular_grade2_data_10_author.v1.json",
+        "tx_regular_grade2_finance_11a_11c_author.v1.json",
+        "tx_regular_grade2_finance_11d_11f_author.v1.json"
       ],
-      "regular_grade2_author_scope_status": "18_OF_GRADE2_REQUIREMENTS_AUTHOR_DESCRIBED_NOT_COMPLETE_ZERO_INDEPENDENT_SOURCE_ACCEPTANCE"
+      "regular_grade2_author_scope_status": "50_OF_50_AUTHOR_ROWS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY"
     },
     "WA": {
       "official_source": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
