@@ -145,7 +145,11 @@ def main() -> None:
             if suffix not in EXTENSIONS:
                 continue
             try:
-                entry = fetch(url, folder / f"ospi_candidate_{i}{suffix}", args.expected_sha256 if suffix == ".xlsx" else None)
+                destination = folder / f"ospi_candidate_{i}{suffix}"
+                if suffix == ".xlsx" and args.expected_sha256 is not None:
+                    entry = fetch(url, destination, args.expected_sha256)
+                else:
+                    entry = fetch(url, destination)
                 entry["anchor_label"] = label
                 evidence.append(entry)
             except (HTTPError, URLError, OSError, ValueError) as exc:
