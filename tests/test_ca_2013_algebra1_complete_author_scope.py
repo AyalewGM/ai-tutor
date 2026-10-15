@@ -59,6 +59,11 @@ def test_material_scope_restrictions_remain_visible():
     rows = {r["expectation_id"]: r for r in d["rows"]}
     assert "COURSE_BOUNDARY_CONFLICT_PENDING_INDEPENDENT_INTERPRETATION" in rows["F-IF.7.e"]["test_material_conditions"]
     assert "square root and cube root" in rows["F-IF.7.b"]["test_material_conditions"]
+    fbf3 = rows["F-BF.3"]
+    assert "find the value of k given the graphs" in fbf3["author_mathematical_scope_summary"]
+    assert "find k from given graphs" in fbf3["test_material_conditions"]
+    assert fbf3["source_printed_page"] == 67
+    assert fbf3["source_pdf_page_index"] == 73
     assert "F-BF.4a linear-only course note" in rows["F-BF.4.a"]["test_material_conditions"]
     assert "California addition" in rows["F-LE.6"]["test_material_conditions"]
     assert "IQR and standard deviation" in rows["S-ID.2"]["test_material_conditions"]
