@@ -1,0 +1,211 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_3",
+  "section": "111.5(b)(1)-(3)",
+  "publisher": "Texas Education Agency",
+  "official_source_url": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "edition": "December 2014 update; Grade 3 adopted 2012, amended October 2013",
+  "source_locator_convention": "Printed TEA footer page; zero-based PDF index = printed page - 1",
+  "author_scope_rows": 19,
+  "not_yet_scoped_sections": "111.5(b)(4)-(9)",
+  "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_VERIFICATION",
+  "independent_source_fidelity": "PENDING",
+  "publisher_original_bytes_authenticated": false,
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "id": "111.5(b)(1)(A)",
+      "scope": "Apply mathematics in everyday, societal and workplace problems.",
+      "source_printed_page": 12,
+      "source_pdf_page_index": 11,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(1)(B)",
+      "scope": "Use a problem-solving cycle to analyze information, plan, solve, justify, and evaluate process and reasonableness.",
+      "source_printed_page": 12,
+      "source_pdf_page_index": 11,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(1)(C)",
+      "scope": "Select manipulatives, real objects, paper, technology and suitable mental mathematics, estimation and number sense.",
+      "source_printed_page": 12,
+      "source_pdf_page_index": 11,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(1)(D)",
+      "scope": "Communicate reasoning through symbols, diagrams, graphs and mathematical language.",
+      "source_printed_page": 12,
+      "source_pdf_page_index": 11,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(1)(E)",
+      "scope": "Create and use representations to organize and communicate mathematical ideas.",
+      "source_printed_page": 12,
+      "source_pdf_page_index": 11,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(1)(F)",
+      "scope": "Analyze mathematical relationships to connect and communicate ideas.",
+      "source_printed_page": 12,
+      "source_pdf_page_index": 11,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(1)(G)",
+      "scope": "Explain and justify mathematical arguments precisely, orally and in writing.",
+      "source_printed_page": 12,
+      "source_pdf_page_index": 11,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(2)(A)",
+      "scope": "Compose and decompose whole numbers through 100,000 using ten-thousands, thousands, hundreds, tens and ones, including expanded notation.",
+      "source_printed_page": 12,
+      "source_pdf_page_index": 11,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(2)(B)",
+      "scope": "Describe base-ten place-value relationships through the hundred-thousands place.",
+      "source_printed_page": 12,
+      "source_pdf_page_index": 11,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(2)(C)",
+      "scope": "Locate whole numbers between consecutive multiples of 10, 100, 1,000 or 10,000 on a number line and reason about rounding.",
+      "source_printed_page": 12,
+      "source_pdf_page_index": 11,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(2)(D)",
+      "scope": "Compare and order whole numbers through 100,000 with >, < and =.",
+      "source_printed_page": 12,
+      "source_pdf_page_index": 11,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(3)(A)",
+      "scope": "Represent fractions greater than zero and at most one with denominators 2, 3, 4, 6 or 8 using objects, strip diagrams and number lines.",
+      "source_printed_page": 12,
+      "source_pdf_page_index": 11,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(3)(B)",
+      "scope": "Identify the fraction at a number-line point, greater than zero and at most one, with denominator 2, 3, 4, 6 or 8.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(3)(C)",
+      "scope": "Explain unit fraction 1/b as one equal part of a whole partitioned into b parts, where b is a nonzero whole number.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(3)(D)",
+      "scope": "Compose and decompose a/b, with numerator greater than zero and no greater than b, as a sum of 1/b unit fractions.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(3)(E)",
+      "scope": "Solve equal-sharing problems among two or more recipients using fraction pictures with denominators 2, 3, 4, 6 and 8.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(3)(F)",
+      "scope": "Represent equivalent fractions with denominators 2, 3, 4, 6 and 8 using objects, pictorial models and number lines.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(3)(G)",
+      "scope": "Explain equivalence as the same number-line point or same fraction of an equally sized whole in an area model.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.5(b)(3)(H)",
+      "scope": "Compare fractions with the same numerator or same denominator, justify sizes with symbols, words and visual models.",
+      "source_printed_page": 13,
+      "source_pdf_page_index": 12,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
