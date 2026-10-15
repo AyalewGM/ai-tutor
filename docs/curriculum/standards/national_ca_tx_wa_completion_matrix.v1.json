@@ -23,20 +23,20 @@
         "GRADE_6"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Grade 2: independently verify 27 author identifiers against CDE official printed pp.20-22, including California additions. Grade 3: verify current 10 p25 draft records and author remaining p26-27. Grades 4-6: author official source intake. All 231 author rows remain pending independent source fidelity; no mapping/mastery acceptance.",
+      "next_gate": "Independently verify 242 staged CA author-scope placements, including 21 partial Grade 3 pp.25-26 records; author Grade 3 p.27 and Grades 4-6; all source fidelity pending, no canonical/assessment/mastery acceptance.",
       "grade8_author_scope_rows": 28,
       "grade8_author_scope_source": "ca_2013_grade8_28_source_author_slice.v1.json",
       "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY",
       "author_source_scope_rows_by_track": {
         "GRADE_1": 21,
         "GRADE_2": 27,
-        "GRADE_3": 10,
+        "GRADE_3": 21,
         "GRADE_7": 24,
         "GRADE_8": 28,
         "ALGEBRA_I": 62,
         "MATHEMATICS_I": 59
       },
-      "author_scope_total_staged": 231,
+      "author_scope_total_staged": 242,
       "author_scope_acceptance": "DRAFT_ALL_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "author_source_scope_files": {
         "GRADE_1": [
@@ -62,7 +62,8 @@
           "ca_2013_grade2_pages21_22_source_author_slice.v1.json"
         ],
         "GRADE_3": [
-          "ca_2013_grade3_page25_source_author_slice.v1.json"
+          "ca_2013_grade3_page25_source_author_slice.v1.json",
+          "ca_2013_grade3_page26_source_author_slice.v1.json"
         ]
       },
       "grade2_partial_author_source_scope_rows": 10,
@@ -70,7 +71,7 @@
       "grade2_partial_not_complete": true,
       "grade2_author_scope_total": 27,
       "grade2_author_scope_status": "ALL_27_IDENTIFIERS_HAVE_AUTHOR_DESCRIPTIONS_NOT_SOURCE_ACCEPTED",
-      "grade3_partial_author_scope_total": 10,
+      "grade3_partial_author_scope_total": 21,
       "partially_scoped_tracks": [
         "GRADE_3"
       ],
