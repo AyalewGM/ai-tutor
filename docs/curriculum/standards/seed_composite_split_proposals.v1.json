@@ -1,0 +1,940 @@
+{
+  "schema_version": "seed_composite_split_proposals.v1",
+  "status": "DRAFT_PROPOSED_NOT_VERIFIED",
+  "rule": "ONE_ATOMIC_SKILL_PER_OFFICIAL_EXPECTATION \u2014 composite skills cannot transfer mastery (#293 precedent)",
+  "summary": {
+    "composite_local_skills": 30,
+    "with_claims": 22,
+    "proposed_atomic_skills": 51,
+    "no_official_claims": 8
+  },
+  "proposals": [
+    {
+      "local_skill_code": "DCA1.EXPR",
+      "seed": "seed_dc_algebra1.py",
+      "current_canonical_code": "MATH.ALGEBRA1.EXPR",
+      "current_scope": "Interpret and simplify algebraic expressions.",
+      "claimed_expectation_count": 0,
+      "proposed_atomic_skills": [],
+      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+    },
+    {
+      "local_skill_code": "VAA1.EXPR",
+      "seed": "seed_va_algebra1.py",
+      "current_canonical_code": "MATH.ALGEBRA1.EXPR",
+      "current_scope": "Interpret, simplify, and transform algebraic expressions.",
+      "claimed_expectation_count": 0,
+      "proposed_atomic_skills": [],
+      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+    },
+    {
+      "local_skill_code": "DCA1.LINEAR.EQ",
+      "seed": "seed_dc_algebra1.py",
+      "current_canonical_code": "MATH.ALGEBRA1.LINEAR_EQ",
+      "current_scope": "Solve one-variable linear equations and justify equivalent steps.",
+      "claimed_expectation_count": 0,
+      "proposed_atomic_skills": [],
+      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+    },
+    {
+      "local_skill_code": "VAA1.LINEAR.EQ",
+      "seed": "seed_va_algebra1.py",
+      "current_canonical_code": "MATH.ALGEBRA1.LINEAR_EQ",
+      "current_scope": "Solve and justify one-variable linear equations.",
+      "claimed_expectation_count": 0,
+      "proposed_atomic_skills": [],
+      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+    },
+    {
+      "local_skill_code": "DCA1.LINEAR.FN",
+      "seed": "seed_dc_algebra1.py",
+      "current_canonical_code": "MATH.ALGEBRA1.LINEAR_FN",
+      "current_scope": "Represent linear relationships using equations, tables, and rates of change.",
+      "claimed_expectation_count": 0,
+      "proposed_atomic_skills": [],
+      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+    },
+    {
+      "local_skill_code": "VAA1.LINEAR.FN",
+      "seed": "seed_va_algebra1.py",
+      "current_canonical_code": "MATH.ALGEBRA1.LINEAR_FN",
+      "current_scope": "Represent and analyze linear relationships using multiple representations.",
+      "claimed_expectation_count": 0,
+      "proposed_atomic_skills": [],
+      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+    },
+    {
+      "local_skill_code": "DCA1.LINEAR.FN.SLOPE",
+      "seed": "seed_dc_algebra1.py",
+      "current_canonical_code": "MATH.ALGEBRA1.LINEAR_FN_SLOPE",
+      "current_scope": "Write linear equations in y = mx + b form.",
+      "claimed_expectation_count": 0,
+      "proposed_atomic_skills": [],
+      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+    },
+    {
+      "local_skill_code": "VAA1.LINEAR.FN.SLOPE",
+      "seed": "seed_va_algebra1.py",
+      "current_canonical_code": "MATH.ALGEBRA1.LINEAR_FN_SLOPE",
+      "current_scope": "Write and interpret linear equations in slope-intercept form.",
+      "claimed_expectation_count": 0,
+      "proposed_atomic_skills": [],
+      "status": "NO_OFFICIAL_CLAIMS_ALIGN_OR_RETIRE"
+    },
+    {
+      "local_skill_code": "DC7.EE.EQUATION",
+      "seed": "seed_dc_grade7.py",
+      "current_canonical_code": "MATH.EE.EQUATIONS_INEQUALITIES",
+      "current_scope": "Solve real-world equations and inequalities.",
+      "claimed_expectation_count": 2,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "DC7.EE.EQUATION.MULTISTEP",
+          "covers_expectation": "7.EE.B.3",
+          "expectation_scope": "Solve multistep real-life and mathematical problems posed with positive and negative rational numbers in any form, using tools strategically.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.EE.INEQUALITY.MULTISTEP",
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.INEQUALITY.ONE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC7.EE.EQUATION.ONE",
+          "covers_expectation": "7.EE.B.4",
+          "expectation_scope": "Use variables to represent quantities in real-world or mathematical problems and construct simple equations and inequalities to solve problems by reasoning.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.EE.INEQUALITY.ONE",
+            "MATH.EE.INEQUALITY.MULTISTEP"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "DC6.EE.EQUATION",
+      "seed": "seed_dc_grade6.py",
+      "current_canonical_code": "MATH.EE.ONE_VARIABLE_EQUATIONS",
+      "current_scope": "Represent and solve one-variable equations.",
+      "claimed_expectation_count": 4,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "DC6.EE.EQUATION.ONE",
+          "covers_expectation": "6.EE.B.5",
+          "expectation_scope": "Understand solving an equation or inequality as finding values that make it true; use substitution to determine whether a given number is a solution.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.ALG.EQ.ONE.MULT",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC6.EE.EQUATION.ONE_2",
+          "covers_expectation": "6.EE.B.6",
+          "expectation_scope": "Use variables to represent numbers and write expressions when solving real-world or mathematical problems.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.ALG.EQ.ONE.MULT",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC6.EE.EQUATION.ONE_3",
+          "covers_expectation": "6.EE.B.7",
+          "expectation_scope": "Solve real-world and mathematical problems by writing and solving equations of the form x + p = q and px = q for nonnegative rational numbers.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.ALG.EQ.ONE.MULT",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC6.EE.EQUATION.ONE_4",
+          "covers_expectation": "6.EE.B.8",
+          "expectation_scope": "Write an inequality of the form x > c or x < c to represent a constraint; recognize infinitely many solutions and represent them on number line diagrams.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.ALG.EQ.ONE.MULT",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "M6.EE.EQUATION",
+      "seed": "seed_grade6.py",
+      "current_canonical_code": "MATH.EE.ONE_VARIABLE_EQUATIONS",
+      "current_scope": "Represent and solve one-variable equations.",
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "M6.EE.EQUATION.ONE",
+          "covers_expectation": "6.AT.C.8",
+          "expectation_scope": "Solve problems in context by writing and solving equations and interpreting the solutions in context.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.ALG.EQ.ONE.MULT",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "VA6.PFA.EQUATION",
+      "seed": "seed_va_grade6.py",
+      "current_canonical_code": "MATH.EE.ONE_VARIABLE_EQUATIONS",
+      "current_scope": "Represent and solve linear equations in one variable.",
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VA6.PFA.EQUATION.ONE",
+          "covers_expectation": "6.PFA.3",
+          "expectation_scope": "Write and solve one-step linear equations in one variable, including contextual problems.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.ALG.EQ.ONE.MULT",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "VA7.PFA.EQUATION",
+      "seed": "seed_va_grade7.py",
+      "current_canonical_code": "MATH.EE.ONE_VARIABLE_EQUATIONS",
+      "current_scope": "Represent and solve one-variable equations and inequalities.",
+      "claimed_expectation_count": 2,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VA7.PFA.EQUATION.ONE",
+          "covers_expectation": "7.PFA.3",
+          "expectation_scope": "Write and solve two-step linear equations in one variable, including problems in context.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.ALG.EQ.ONE.MULT",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "VA7.PFA.EQUATION.ONE_2",
+          "covers_expectation": "7.PFA.4",
+          "expectation_scope": "Write and solve one- and two-step linear inequalities in one variable, including problems in context.",
+          "catalog_candidates_ranked": [
+            "MATH.EE.EQUATION.ONE",
+            "MATH.ALG.EQ.ONE.MULT",
+            "MATH.EE.EQUATION.MULTISTEP",
+            "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "VA7.MG.GEOMETRY",
+      "seed": "seed_va_grade7.py",
+      "current_canonical_code": "MATH.G.GEOMETRY_APPLICATIONS",
+      "current_scope": "Solve measurement and geometry problems using properties of figures.",
+      "claimed_expectation_count": 4,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VA7.MG.GEOMETRY.AREA",
+          "covers_expectation": "7.MG.1",
+          "expectation_scope": "Investigate and determine the volume formula for right cylinders and the surface area formulas for rectangular prisms and right cylinders and apply the formulas in context.",
+          "catalog_candidates_ranked": [
+            "MATH.GEO.CIRCLE.AREA",
+            "MATH.GEO.SCALE.DRAWING",
+            "MATH.GEO.SIMILARITY",
+            "MATH.GEO.SIMILAR.SCALE",
+            "MATH.GEO.CIRCLE.CIRCUMFERENCE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "VA7.MG.GEOMETRY.SIMILARITY",
+          "covers_expectation": "7.MG.2",
+          "expectation_scope": "Solve problems and justify relationships of similarity using proportional reasoning.",
+          "catalog_candidates_ranked": [
+            "MATH.GEO.SIMILARITY",
+            "MATH.GEO.SIMILAR.SCALE",
+            "MATH.GEO.SCALE.DRAWING",
+            "MATH.GEO.CIRCLE.CIRCUMFERENCE",
+            "MATH.GEO.CIRCLE.AREA"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "VA7.MG.GEOMETRY.DRAWING",
+          "covers_expectation": "7.MG.3",
+          "expectation_scope": "Compare and contrast quadrilaterals based on their properties and determine unknown side lengths and angle measures of quadrilaterals.",
+          "catalog_candidates_ranked": [
+            "MATH.GEO.SCALE.DRAWING",
+            "MATH.GEO.SIMILARITY",
+            "MATH.GEO.SIMILAR.SCALE",
+            "MATH.GEO.CIRCLE.CIRCUMFERENCE",
+            "MATH.GEO.CIRCLE.AREA"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "VA7.MG.GEOMETRY.DRAWING_2",
+          "covers_expectation": "7.MG.4",
+          "expectation_scope": "Apply dilations of polygons in the coordinate plane.",
+          "catalog_candidates_ranked": [
+            "MATH.GEO.SCALE.DRAWING",
+            "MATH.GEO.SIMILARITY",
+            "MATH.GEO.SIMILAR.SCALE",
+            "MATH.GEO.CIRCLE.CIRCUMFERENCE",
+            "MATH.GEO.CIRCLE.AREA"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "M6.G.GEO",
+      "seed": "seed_grade6.py",
+      "current_canonical_code": "MATH.G.MEASURE",
+      "current_scope": "Find the area of triangles, parallelograms and trapezoids, the volume and surface area of rectangular prisms, and distances between coordinate-plane points sharing an axis.",
+      "claimed_expectation_count": 4,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "M6.G.GEO.TRI",
+          "covers_expectation": "6.GR.A.1",
+          "expectation_scope": "Find the area of triangles, quadrilaterals, and polygons by composing into rectangles or decomposing into triangles and quadrilaterals.",
+          "catalog_candidates_ranked": [
+            "MATH.GEO.AREA.TRI",
+            "MATH.GEO.MEASURE.AREA",
+            "MATH.GEO.MEASURE.SURFACE_AREA",
+            "MATH.GEO.AREA.TRAPEZOID",
+            "MATH.GEO.AREA.PARALLELOGRAM"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "M6.G.GEO.VOLUME",
+          "covers_expectation": "6.GR.A.2",
+          "expectation_scope": "Find the volume of a right rectangular prism with fractional edge lengths.",
+          "catalog_candidates_ranked": [
+            "MATH.GEO.MEASURE.VOLUME",
+            "MATH.GEO.MEASURE.AREA",
+            "MATH.GEO.MEASURE.SURFACE_AREA",
+            "MATH.GEO.AREA.TRI",
+            "MATH.GEO.AREA.TRAPEZOID"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "M6.G.GEO.AXIS_DISTANCE",
+          "covers_expectation": "6.GR.A.3",
+          "expectation_scope": "Draw polygons in the Coordinate Plane given vertex coordinates and use coordinates to find side lengths; apply these techniques in context.",
+          "catalog_candidates_ranked": [
+            "MATH.GEO.COORD.AXIS_DISTANCE",
+            "MATH.GEO.MEASURE.AREA",
+            "MATH.GEO.MEASURE.VOLUME",
+            "MATH.GEO.MEASURE.SURFACE_AREA",
+            "MATH.GEO.AREA.TRI"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "M6.G.GEO.SURFACE_AREA",
+          "covers_expectation": "6.GR.A.4",
+          "expectation_scope": "Represent three-dimensional figures using nets of rectangles and triangles and use the nets to find surface area to solve problems.",
+          "catalog_candidates_ranked": [
+            "MATH.GEO.MEASURE.SURFACE_AREA",
+            "MATH.GEO.AREA.TRI",
+            "MATH.GEO.MEASURE.AREA",
+            "MATH.GEO.AREA.TRAPEZOID",
+            "MATH.GEO.AREA.PARALLELOGRAM"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "DC6.NS.FRACTION",
+      "seed": "seed_dc_grade6.py",
+      "current_canonical_code": "MATH.NS.FRACTION_DIVISION",
+      "current_scope": "Divide fractions in mathematical and contextual problems.",
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "DC6.NS.FRACTION.DIVISION",
+          "covers_expectation": "6.NS.A.1",
+          "expectation_scope": "Interpret and compute quotients of fractions and solve word problems involving division of fractions by fractions.",
+          "catalog_candidates_ranked": [
+            "MATH.FRAC.WORD.DIVISION",
+            "MATH.FRAC.DIV"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "M6.NS.FRACTION",
+      "seed": "seed_grade6.py",
+      "current_canonical_code": "MATH.NS.FRACTION_DIVISION",
+      "current_scope": "Divide fractions in mathematical and contextual problems.",
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "M6.NS.FRACTION.DIV",
+          "covers_expectation": "6.NOS.A.1",
+          "expectation_scope": "Divide fractions by fractions in context, extending estimation, concrete/visual fraction models, and equations.",
+          "catalog_candidates_ranked": [
+            "MATH.FRAC.DIV",
+            "MATH.FRAC.WORD.DIVISION"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "VA6.CE.FRACTION",
+      "seed": "seed_va_grade6.py",
+      "current_canonical_code": "MATH.NS.FRACTION_DIVISION",
+      "current_scope": "Solve contextual problems involving positive rational numbers.",
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VA6.CE.FRACTION.DIV",
+          "covers_expectation": "6.CE.1",
+          "expectation_scope": "Estimate, demonstrate, solve, and justify solutions to problems using operations with fractions and mixed numbers, including those in context (denominators of 12 or less).",
+          "catalog_candidates_ranked": [
+            "MATH.FRAC.DIV",
+            "MATH.FRAC.WORD.DIVISION"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "DC7.NS.RATIONAL",
+      "seed": "seed_dc_grade7.py",
+      "current_canonical_code": "MATH.NS.RATIONAL_ARITHMETIC",
+      "current_scope": "Add, subtract, multiply, and divide rational numbers.",
+      "claimed_expectation_count": 3,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "DC7.NS.RATIONAL.OPERATIONS",
+          "covers_expectation": "7.NS.A.1",
+          "expectation_scope": "Apply and extend previous understandings of addition and subtraction to add and subtract rational numbers (number line, opposites, additive inverses, context).",
+          "catalog_candidates_ranked": [
+            "MATH.NS.RATIONAL.OPERATIONS",
+            "MATH.RAT.ADD",
+            "MATH.RAT.MUL",
+            "MATH.RAT.DIV",
+            "MATH.INT.ADD"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC7.NS.RATIONAL.OPERATIONS_2",
+          "covers_expectation": "7.NS.A.2",
+          "expectation_scope": "Apply and extend previous understandings of multiplication and division and of fractions to multiply and divide rational numbers.",
+          "catalog_candidates_ranked": [
+            "MATH.NS.RATIONAL.OPERATIONS",
+            "MATH.RAT.MUL",
+            "MATH.RAT.DIV",
+            "MATH.RAT.ADD",
+            "MATH.INT.MUL"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC7.NS.RATIONAL.OPERATIONS_3",
+          "covers_expectation": "7.NS.A.3",
+          "expectation_scope": "Solve real-world and mathematical problems involving the four operations with rational numbers.",
+          "catalog_candidates_ranked": [
+            "MATH.NS.RATIONAL.OPERATIONS",
+            "MATH.RAT.ADD",
+            "MATH.RAT.MUL",
+            "MATH.RAT.DIV",
+            "MATH.INT.ADD"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "VA6.NS.RATIONAL",
+      "seed": "seed_va_grade6.py",
+      "current_canonical_code": "MATH.NS.RATIONAL_EQUIVALENCE",
+      "current_scope": "Compare and represent fractions, decimals, and percents.",
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VA6.NS.RATIONAL.COMPARE",
+          "covers_expectation": "6.NS.1",
+          "expectation_scope": "Reason and use multiple strategies to express equivalency, compare, and order numbers written as fractions, mixed numbers, decimals, and percents.",
+          "catalog_candidates_ranked": [
+            "MATH.FRAC.COMPARE",
+            "MATH.NS.RATIONAL.COMPARE",
+            "MATH.FRAC.EQUIV.FIND",
+            "MATH.RAT.COMPARE"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "VA7.CE.RATIONAL",
+      "seed": "seed_va_grade7.py",
+      "current_canonical_code": "MATH.NS.RATIONAL_OPERATIONS",
+      "current_scope": "Use rational-number operations accurately in mathematical and contextual problems.",
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VA7.CE.RATIONAL.OPERATIONS",
+          "covers_expectation": "7.CE.1",
+          "expectation_scope": "Estimate, solve, and justify solutions to multistep contextual problems involving operations with rational numbers.",
+          "catalog_candidates_ranked": [
+            "MATH.NS.RATIONAL.OPERATIONS",
+            "MATH.RAT.MUL",
+            "MATH.RAT.ADD",
+            "MATH.RAT.DIV"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "DC7.RP.PERCENT",
+      "seed": "seed_dc_grade7.py",
+      "current_canonical_code": "MATH.RP.PERCENT",
+      "current_scope": "Solve multistep percent problems in context.",
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "DC7.RP.PERCENT.CHANGE",
+          "covers_expectation": "7.RP.A.3",
+          "expectation_scope": "Use proportional relationships to solve multistep ratio and percent problems (simple interest, tax, markups/markdowns, gratuities, percent change, percent error).",
+          "catalog_candidates_ranked": [
+            "MATH.RP.PERCENT.CHANGE",
+            "MATH.FIN.PERCENT.TAX",
+            "MATH.RP.PERCENT.OF",
+            "MATH.RP.PERCENT.CONVERT",
+            "MATH.RP.PERCENT.APPLICATIONS"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "DC7.RP.PROPORTIONAL",
+      "seed": "seed_dc_grade7.py",
+      "current_canonical_code": "MATH.RP.PROPORTIONAL_RELATIONSHIPS",
+      "current_scope": "Recognize, represent, and solve proportional relationships.",
+      "claimed_expectation_count": 3,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "DC7.RP.PROPORTIONAL.IDENTIFY",
+          "covers_expectation": "7.RP.A.1",
+          "expectation_scope": "Compute unit rates associated with ratios of fractions, including ratios of lengths, areas, and other quantities in like or different units.",
+          "catalog_candidates_ranked": [
+            "MATH.RP.PROPORTION.IDENTIFY",
+            "MATH.RP.PROPORTION.SOLVE",
+            "MATH.RP.PROPORTIONAL.REPRESENT",
+            "MATH.RP.PROPORTIONAL.COMPARE",
+            "MATH.PROP.IDENTIFY"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC7.RP.PROPORTIONAL.REPRESENT",
+          "covers_expectation": "7.RP.A.2",
+          "expectation_scope": "Recognize and represent proportional relationships between quantities (tables, graphs, equations, unit rate, constant of proportionality).",
+          "catalog_candidates_ranked": [
+            "MATH.RP.PROPORTIONAL.REPRESENT",
+            "MATH.RP.PROPORTIONAL.COMPARE",
+            "MATH.RP.PROPORTION.IDENTIFY",
+            "MATH.RP.PROPORTION.SOLVE",
+            "MATH.PROP.IDENTIFY"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC7.RP.PROPORTIONAL.SOLVE",
+          "covers_expectation": "7.RP.A.3",
+          "expectation_scope": "Use proportional relationships to solve multistep ratio and percent problems (simple interest, tax, markups/markdowns, gratuities, percent change, percent error).",
+          "catalog_candidates_ranked": [
+            "MATH.RP.PROPORTION.SOLVE",
+            "MATH.RP.PROPORTIONAL.REPRESENT",
+            "MATH.RP.PROPORTIONAL.COMPARE",
+            "MATH.RP.PROPORTION.IDENTIFY",
+            "MATH.PROP.SOLVE_WORD"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "VA7.PFA.PROPORTIONAL",
+      "seed": "seed_va_grade7.py",
+      "current_canonical_code": "MATH.RP.PROPORTIONAL_RELATIONSHIPS",
+      "current_scope": "Represent and solve proportional relationships, including percent applications.",
+      "claimed_expectation_count": 2,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VA7.PFA.PROPORTIONAL.SOLVE",
+          "covers_expectation": "7.CE.2",
+          "expectation_scope": "Solve problems, including those in context, involving proportional relationships (ratio tables, proportions, unit conversions, benchmark percentages).",
+          "catalog_candidates_ranked": [
+            "MATH.RP.PROPORTION.SOLVE",
+            "MATH.RP.PROPORTIONAL.REPRESENT",
+            "MATH.RP.PROPORTIONAL.COMPARE",
+            "MATH.RP.PROPORTION.IDENTIFY",
+            "MATH.PROP.SOLVE_WORD"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "VA7.PFA.PROPORTIONAL.REPRESENT",
+          "covers_expectation": "7.PFA.1",
+          "expectation_scope": "Investigate and analyze proportional relationships between two quantities using verbal descriptions, tables, equations in y = mx form, and graphs, including problems in context.",
+          "catalog_candidates_ranked": [
+            "MATH.RP.PROPORTIONAL.REPRESENT",
+            "MATH.RP.PROPORTIONAL.COMPARE",
+            "MATH.RP.PROPORTION.IDENTIFY",
+            "MATH.RP.PROPORTION.SOLVE",
+            "MATH.PROP.IDENTIFY"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "DC6.RP.RATIO",
+      "seed": "seed_dc_grade6.py",
+      "current_canonical_code": "MATH.RP.RATIO",
+      "current_scope": "Reason about ratios and equivalent ratios.",
+      "claimed_expectation_count": 2,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "DC6.RP.RATIO.INTERPRET",
+          "covers_expectation": "6.RP.A.1",
+          "expectation_scope": "Understand the concept of a ratio and use ratio language to describe a ratio relationship between two quantities.",
+          "catalog_candidates_ranked": [
+            "MATH.RP.RATIO.INTERPRET",
+            "MATH.RP.RATIO.EQUIVALENT",
+            "MATH.RATIO.INTERPRET",
+            "MATH.RATIO.EQUIVALENT",
+            "MATH.RATIO.SCALE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC6.RP.RATIO.INTERPRET_2",
+          "covers_expectation": "6.RP.A.3",
+          "expectation_scope": "Use ratio and rate reasoning to solve real-world and mathematical problems (tables, tape diagrams, double number lines, equations, unit rates, percent, unit conversion).",
+          "catalog_candidates_ranked": [
+            "MATH.RP.RATIO.INTERPRET",
+            "MATH.RP.RATIO.EQUIVALENT",
+            "MATH.RATIO.INTERPRET",
+            "MATH.RATIO.EQUIVALENT",
+            "MATH.RATIO.SCALE"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "M6.RP.RATIO",
+      "seed": "seed_grade6.py",
+      "current_canonical_code": "MATH.RP.RATIO",
+      "current_scope": "Reason about ratios and equivalent ratios.",
+      "claimed_expectation_count": 2,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "M6.RP.RATIO.INTERPRET",
+          "covers_expectation": "6.AT.A.1",
+          "expectation_scope": "Use ratio language in context to describe a ratio relationship between two quantities, including part-to-part and part-to-whole.",
+          "catalog_candidates_ranked": [
+            "MATH.RP.RATIO.INTERPRET",
+            "MATH.RP.RATIO.EQUIVALENT",
+            "MATH.RATIO.INTERPRET",
+            "MATH.RATIO.EQUIVALENT",
+            "MATH.RATIO.SCALE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "M6.RP.RATIO.EQUIVALENT",
+          "covers_expectation": "6.AT.A.3",
+          "expectation_scope": "Use ratio and rate reasoning to solve problems in context with tables of equivalent ratios, tape diagrams, double number lines, or the Coordinate Plane.",
+          "catalog_candidates_ranked": [
+            "MATH.RP.RATIO.EQUIVALENT",
+            "MATH.RATIO.EQUIVALENT",
+            "MATH.RP.RATIO.INTERPRET",
+            "MATH.RATIO.INTERPRET",
+            "MATH.RATIO.SCALE"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "VA6.PFA.RATIO",
+      "seed": "seed_va_grade6.py",
+      "current_canonical_code": "MATH.RP.RATIO",
+      "current_scope": "Use ratios to compare quantities and represent proportional relationships.",
+      "claimed_expectation_count": 2,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VA6.PFA.RATIO.INTERPRET",
+          "covers_expectation": "6.PFA.1",
+          "expectation_scope": "Use ratios to represent relationships between quantities, including those in context.",
+          "catalog_candidates_ranked": [
+            "MATH.RP.RATIO.INTERPRET",
+            "MATH.RP.RATIO.EQUIVALENT",
+            "MATH.RATIO.INTERPRET",
+            "MATH.RATIO.EQUIVALENT",
+            "MATH.RATIO.SCALE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "VA6.PFA.RATIO.INTERPRET_2",
+          "covers_expectation": "6.PFA.2",
+          "expectation_scope": "Identify and represent proportional relationships between two quantities, including those in context (unit rates limited to positive values).",
+          "catalog_candidates_ranked": [
+            "MATH.RP.RATIO.INTERPRET",
+            "MATH.RP.RATIO.EQUIVALENT",
+            "MATH.RATIO.INTERPRET",
+            "MATH.RATIO.EQUIVALENT",
+            "MATH.RATIO.SCALE"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "M6.SP.STAT",
+      "seed": "seed_grade6.py",
+      "current_canonical_code": "MATH.SP.CENTER_SPREAD",
+      "current_scope": "Find the mean, median, mode and range of a data set, read dot plots, and choose the best measure of center when data contain an outlier.",
+      "claimed_expectation_count": 4,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "M6.SP.STAT.SPREAD",
+          "covers_expectation": "6.DS.A.3",
+          "expectation_scope": "Explain how a data set collected to answer a statistical question has a distribution described by center, spread, and overall shape.",
+          "catalog_candidates_ranked": [
+            "MATH.DATA.SPREAD",
+            "MATH.DATA.CENTER",
+            "MATH.DATA.OUTLIER.CENTER",
+            "MATH.DATA.MEAN",
+            "MATH.DATA.MEDIAN"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "M6.SP.STAT.CENTER",
+          "covers_expectation": "6.DS.A.4",
+          "expectation_scope": "Recognize that a measure of center summarizes all values with a single number while a measure of variation describes how values vary.",
+          "catalog_candidates_ranked": [
+            "MATH.DATA.CENTER",
+            "MATH.DATA.OUTLIER.CENTER",
+            "MATH.DATA.MEAN",
+            "MATH.DATA.MEDIAN",
+            "MATH.DATA.RANGE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "M6.SP.STAT.MEAN",
+          "covers_expectation": "6.DS.B.5",
+          "expectation_scope": "Interpret numerical data in plots on a number line, including line plots, histograms, and box plots.",
+          "catalog_candidates_ranked": [
+            "MATH.DATA.MEAN",
+            "MATH.DATA.MEDIAN",
+            "MATH.DATA.RANGE",
+            "MATH.DATA.SPREAD",
+            "MATH.DATA.CENTER"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "M6.SP.STAT.MEAN_2",
+          "covers_expectation": "6.DS.B.6",
+          "expectation_scope": "Summarize numerical data sets in relation to their context.",
+          "catalog_candidates_ranked": [
+            "MATH.DATA.MEAN",
+            "MATH.DATA.MEDIAN",
+            "MATH.DATA.RANGE",
+            "MATH.DATA.SPREAD",
+            "MATH.DATA.CENTER"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "VA7.PS.PROBABILITY",
+      "seed": "seed_va_grade7.py",
+      "current_canonical_code": "MATH.SP.PROBABILITY",
+      "current_scope": "Reason about probability and interpret data from samples and displays.",
+      "claimed_expectation_count": 1,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "VA7.PS.PROBABILITY.OR",
+          "covers_expectation": "7.PS.1",
+          "expectation_scope": "Use statistical investigation to determine the probability of an event and investigate and describe the difference between experimental and theoretical probability.",
+          "catalog_candidates_ranked": [
+            "MATH.PROB.DISJOINT.OR",
+            "MATH.PROB.SIMPLE",
+            "MATH.PROB.SAMPLE_SPACE",
+            "MATH.PROB.INDEPENDENT.AND",
+            "MATH.PROB.COMPOUND"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    },
+    {
+      "local_skill_code": "DC7.SP.PROBABILITY",
+      "seed": "seed_dc_grade7.py",
+      "current_canonical_code": "MATH.SP.PROBABILITY_SAMPLING",
+      "current_scope": "Use probability models and samples to reason about populations.",
+      "claimed_expectation_count": 8,
+      "proposed_atomic_skills": [
+        {
+          "proposed_skill_code": "DC7.SP.PROBABILITY.REPRESENTATIVE",
+          "covers_expectation": "7.SP.A.1",
+          "expectation_scope": "Understand that statistics can be used to gain information about a population by examining a sample; generalizations are valid only for representative samples.",
+          "catalog_candidates_ranked": [
+            "MATH.DATA.SAMPLE.REPRESENTATIVE",
+            "MATH.DATA.SAMPLE.BIAS",
+            "MATH.DATA.SAMPLING",
+            "MATH.PROB.EXPECTED_COUNT"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC7.SP.PROBABILITY.BIAS",
+          "covers_expectation": "7.SP.A.2",
+          "expectation_scope": "Use data from a random sample to draw inferences about a population; generate multiple samples to gauge variation in estimates or predictions.",
+          "catalog_candidates_ranked": [
+            "MATH.DATA.SAMPLE.BIAS",
+            "MATH.DATA.SAMPLE.REPRESENTATIVE",
+            "MATH.DATA.SAMPLING",
+            "MATH.PROB.EXPECTED_COUNT"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC7.SP.PROBABILITY.SAMPLING",
+          "covers_expectation": "7.SP.B.3",
+          "expectation_scope": "Informally assess the degree of visual overlap of two numerical data distributions with similar variabilities.",
+          "catalog_candidates_ranked": [
+            "MATH.DATA.SAMPLING",
+            "MATH.DATA.SAMPLE.BIAS",
+            "MATH.DATA.SAMPLE.REPRESENTATIVE",
+            "MATH.PROB.EXPECTED_COUNT"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC7.SP.PROBABILITY.BIAS_2",
+          "covers_expectation": "7.SP.B.4",
+          "expectation_scope": "Use measures of center and measures of variability for numerical data from random samples to draw informal comparative inferences about two populations.",
+          "catalog_candidates_ranked": [
+            "MATH.DATA.SAMPLE.BIAS",
+            "MATH.DATA.SAMPLE.REPRESENTATIVE",
+            "MATH.DATA.SAMPLING",
+            "MATH.PROB.EXPECTED_COUNT"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC7.SP.PROBABILITY.EXPECTED_COUNT",
+          "covers_expectation": "7.SP.C.5",
+          "expectation_scope": "Understand that the probability of a chance event is a number between 0 and 1 expressing the likelihood of the event occurring.",
+          "catalog_candidates_ranked": [
+            "MATH.PROB.EXPECTED_COUNT",
+            "MATH.DATA.SAMPLING",
+            "MATH.DATA.SAMPLE.BIAS",
+            "MATH.DATA.SAMPLE.REPRESENTATIVE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC7.SP.PROBABILITY.SAMPLING_2",
+          "covers_expectation": "7.SP.C.6",
+          "expectation_scope": "Approximate the probability of a chance event by collecting data and observing long-run relative frequency; predict approximate probability.",
+          "catalog_candidates_ranked": [
+            "MATH.DATA.SAMPLING",
+            "MATH.DATA.SAMPLE.BIAS",
+            "MATH.DATA.SAMPLE.REPRESENTATIVE",
+            "MATH.PROB.EXPECTED_COUNT"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC7.SP.PROBABILITY.EXPECTED_COUNT_2",
+          "covers_expectation": "7.SP.C.7",
+          "expectation_scope": "Develop a probability model and use it to find probabilities of events; compare probabilities from the model to observed frequencies.",
+          "catalog_candidates_ranked": [
+            "MATH.PROB.EXPECTED_COUNT",
+            "MATH.DATA.SAMPLING",
+            "MATH.DATA.SAMPLE.BIAS",
+            "MATH.DATA.SAMPLE.REPRESENTATIVE"
+          ],
+          "needs_math_review": true
+        },
+        {
+          "proposed_skill_code": "DC7.SP.PROBABILITY.EXPECTED_COUNT_3",
+          "covers_expectation": "7.SP.C.8",
+          "expectation_scope": "Find probabilities of compound events using organized lists, tables, tree diagrams, and simulation.",
+          "catalog_candidates_ranked": [
+            "MATH.PROB.EXPECTED_COUNT",
+            "MATH.DATA.SAMPLING",
+            "MATH.DATA.SAMPLE.BIAS",
+            "MATH.DATA.SAMPLE.REPRESENTATIVE"
+          ],
+          "needs_math_review": true
+        }
+      ],
+      "status": "PROPOSED_SPLIT_NEEDS_MATH_REVIEW"
+    }
+  ],
+  "safety": "Proposals only. Atomic splits MUST pass Standards Mapping + Math Review before any seed edit. No learner-evidence mutation."
+}

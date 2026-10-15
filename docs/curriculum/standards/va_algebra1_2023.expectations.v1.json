@@ -1,0 +1,301 @@
+{
+ "schema_version": "1.0.0",
+ "manifest_id": "VA-ALGEBRA1-2023-expectation-inventory-v1",
+ "status": "DRAFT_PROPOSED_NOT_VERIFIED",
+ "jurisdiction": {
+  "country": "United States",
+  "state": "Virginia",
+  "authority": "Virginia Department of Education",
+  "authority_code": "VDOE"
+ },
+ "curriculum": {
+  "course_code": "VA_SOL_ALGEBRA1_2023",
+  "course_title": "Virginia Mathematics Standards of Learning \u2014 Algebra 1",
+  "standards_version": "2023 Mathematics SOL",
+  "adopted_date": "2023-08-31",
+  "implementation_school_year": "2024-2025",
+  "note": "Algebra 1 is the first VDOE high-school course; strand scheme is EO/EI/F/ST (not the K-8 NS/CE/MG/PS/PFA scheme)."
+ },
+ "provenance": {
+  "authoritative_source_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+  "checked_date": "2026-10-14",
+  "source_notes": [
+   "Direct VDOE fetch returns HTTP 403; statements extracted from the Feb-2025 Internet Archive capture of the official Algebra 1 SOL document (48985).",
+   "The 2023 Algebra 1 SOL has exactly 10 top-level expectations: A.EO.1-4, A.EI.1-3, A.F.1-2, A.ST.1.",
+   "seed_va_algebra1.py creates 5 local skills mapped to invented MATH.ALGEBRA1.* canonical codes that are NOT in the candidate catalog; provisional links are scope-derived and unverified."
+  ]
+ },
+ "reconciliation": {
+  "official_expectation_count": 10,
+  "expectations_with_provisional_links": 3,
+  "unmapped_expectations": 7,
+  "warning": "Seed covers only the linear/verbal-expression slice; polynomials, exponents, radicals, systems, quadratics, exponentials, and statistics have NO repository candidate."
+ },
+ "safety": {
+  "activation": "FORBIDDEN",
+  "mapping_review_required": true,
+  "new_canonical_ids_created": false,
+  "learner_mastery_mutation": false,
+  "verified_coverage_claim": false
+ },
+ "expectations": [
+  {
+   "expectation_id": "A.EI.1",
+   "grade": 9,
+   "course": "Algebra 1",
+   "strand": "EI",
+   "strand_title": "Equations and Inequalities",
+   "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48985/638603403347570000",
+   "scope_summary": "The student will represent, solve, explain, and interpret the solution to multistep linear equations and inequalities in one variable and literal equations for a specified variable.",
+   "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED_VIA_ARCHIVE",
+   "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+   "repository_existing_crosswalks": [
+    "VAA1.LINEAR.EQ"
+   ],
+   "crosswalk_note": "Seed skills reference invented MATH.ALGEBRA1.* canonical codes absent from the taxonomy catalog; links are scope-derived, not expectation-verified.",
+   "classification": {
+    "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+    "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+    "exact_target_generator": "NOT_AUDITED",
+    "validated_practice": "NOT_AUDITED",
+    "independent_assessment": "NOT_AUDITED",
+    "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+   },
+   "blockers": [
+    "SEED_USES_UNREGISTERED_CANONICAL_CODES"
+   ],
+   "source_document_id": "VA_SOL_2023_ALGEBRA1"
+  },
+  {
+   "expectation_id": "A.EI.2",
+   "grade": 9,
+   "course": "Algebra 1",
+   "strand": "EI",
+   "strand_title": "Equations and Inequalities",
+   "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48985/638603403347570000",
+   "scope_summary": "The student will represent, solve, explain, and interpret the solution to a system of two linear equations, a linear inequality in two variables, or a system of two linear inequalities in two variables.",
+   "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED_VIA_ARCHIVE",
+   "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+   "repository_existing_crosswalks": [],
+   "crosswalk_note": null,
+   "classification": {
+    "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+    "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+    "exact_target_generator": "NOT_AUDITED",
+    "validated_practice": "NOT_AUDITED",
+    "independent_assessment": "NOT_AUDITED",
+    "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+   },
+   "blockers": [
+    "NO_REPOSITORY_SKILL_CANDIDATE"
+   ],
+   "source_document_id": "VA_SOL_2023_ALGEBRA1"
+  },
+  {
+   "expectation_id": "A.EI.3",
+   "grade": 9,
+   "course": "Algebra 1",
+   "strand": "EI",
+   "strand_title": "Equations and Inequalities",
+   "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48985/638603403347570000",
+   "scope_summary": "The student will represent, solve, and interpret the solution to a quadratic equation in one variable.",
+   "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED_VIA_ARCHIVE",
+   "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+   "repository_existing_crosswalks": [],
+   "crosswalk_note": null,
+   "classification": {
+    "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+    "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+    "exact_target_generator": "NOT_AUDITED",
+    "validated_practice": "NOT_AUDITED",
+    "independent_assessment": "NOT_AUDITED",
+    "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+   },
+   "blockers": [
+    "NO_REPOSITORY_SKILL_CANDIDATE"
+   ],
+   "source_document_id": "VA_SOL_2023_ALGEBRA1"
+  },
+  {
+   "expectation_id": "A.EO.1",
+   "grade": 9,
+   "course": "Algebra 1",
+   "strand": "EO",
+   "strand_title": "Expressions and Operations",
+   "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48985/638603403347570000",
+   "scope_summary": "The student will represent verbal quantitative situations algebraically and evaluate these expressions for given replacement values of the variables.",
+   "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED_VIA_ARCHIVE",
+   "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+   "repository_existing_crosswalks": [
+    "VAA1.EXPR"
+   ],
+   "crosswalk_note": "Seed skills reference invented MATH.ALGEBRA1.* canonical codes absent from the taxonomy catalog; links are scope-derived, not expectation-verified.",
+   "classification": {
+    "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+    "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+    "exact_target_generator": "NOT_AUDITED",
+    "validated_practice": "NOT_AUDITED",
+    "independent_assessment": "NOT_AUDITED",
+    "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+   },
+   "blockers": [
+    "SEED_USES_UNREGISTERED_CANONICAL_CODES"
+   ],
+   "source_document_id": "VA_SOL_2023_ALGEBRA1"
+  },
+  {
+   "expectation_id": "A.EO.2",
+   "grade": 9,
+   "course": "Algebra 1",
+   "strand": "EO",
+   "strand_title": "Expressions and Operations",
+   "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48985/638603403347570000",
+   "scope_summary": "The student will perform operations on and factor polynomial expressions in one variable.",
+   "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED_VIA_ARCHIVE",
+   "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+   "repository_existing_crosswalks": [],
+   "crosswalk_note": null,
+   "classification": {
+    "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+    "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+    "exact_target_generator": "NOT_AUDITED",
+    "validated_practice": "NOT_AUDITED",
+    "independent_assessment": "NOT_AUDITED",
+    "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+   },
+   "blockers": [
+    "NO_REPOSITORY_SKILL_CANDIDATE"
+   ],
+   "source_document_id": "VA_SOL_2023_ALGEBRA1"
+  },
+  {
+   "expectation_id": "A.EO.3",
+   "grade": 9,
+   "course": "Algebra 1",
+   "strand": "EO",
+   "strand_title": "Expressions and Operations",
+   "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48985/638603403347570000",
+   "scope_summary": "The student will derive and apply the laws of exponents.",
+   "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED_VIA_ARCHIVE",
+   "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+   "repository_existing_crosswalks": [],
+   "crosswalk_note": null,
+   "classification": {
+    "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+    "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+    "exact_target_generator": "NOT_AUDITED",
+    "validated_practice": "NOT_AUDITED",
+    "independent_assessment": "NOT_AUDITED",
+    "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+   },
+   "blockers": [
+    "NO_REPOSITORY_SKILL_CANDIDATE"
+   ],
+   "source_document_id": "VA_SOL_2023_ALGEBRA1"
+  },
+  {
+   "expectation_id": "A.EO.4",
+   "grade": 9,
+   "course": "Algebra 1",
+   "strand": "EO",
+   "strand_title": "Expressions and Operations",
+   "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48985/638603403347570000",
+   "scope_summary": "The student will simplify and determine equivalent radical expressions involving square roots of whole numbers and cube roots of integers.",
+   "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED_VIA_ARCHIVE",
+   "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+   "repository_existing_crosswalks": [],
+   "crosswalk_note": null,
+   "classification": {
+    "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+    "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+    "exact_target_generator": "NOT_AUDITED",
+    "validated_practice": "NOT_AUDITED",
+    "independent_assessment": "NOT_AUDITED",
+    "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+   },
+   "blockers": [
+    "NO_REPOSITORY_SKILL_CANDIDATE"
+   ],
+   "source_document_id": "VA_SOL_2023_ALGEBRA1"
+  },
+  {
+   "expectation_id": "A.F.1",
+   "grade": 9,
+   "course": "Algebra 1",
+   "strand": "F",
+   "strand_title": "Functions",
+   "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48985/638603403347570000",
+   "scope_summary": "The student will investigate, analyze, and compare linear functions algebraically and graphically, and model linear relationships.",
+   "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED_VIA_ARCHIVE",
+   "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+   "repository_existing_crosswalks": [
+    "VAA1.LINEAR.FN",
+    "VAA1.LINEAR.FN.SLOPE",
+    "VAA1.LINEAR.FN.EVAL"
+   ],
+   "crosswalk_note": "Seed skills reference invented MATH.ALGEBRA1.* canonical codes absent from the taxonomy catalog; links are scope-derived, not expectation-verified.",
+   "classification": {
+    "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+    "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+    "exact_target_generator": "NOT_AUDITED",
+    "validated_practice": "NOT_AUDITED",
+    "independent_assessment": "NOT_AUDITED",
+    "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+   },
+   "blockers": [
+    "SEED_USES_UNREGISTERED_CANONICAL_CODES"
+   ],
+   "source_document_id": "VA_SOL_2023_ALGEBRA1"
+  },
+  {
+   "expectation_id": "A.F.2",
+   "grade": 9,
+   "course": "Algebra 1",
+   "strand": "F",
+   "strand_title": "Functions",
+   "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48985/638603403347570000",
+   "scope_summary": "The student will investigate, analyze, and compare characteristics of functions, including quadratic, and exponential functions, and model quadratic and exponential relationships.",
+   "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED_VIA_ARCHIVE",
+   "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+   "repository_existing_crosswalks": [],
+   "crosswalk_note": null,
+   "classification": {
+    "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+    "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+    "exact_target_generator": "NOT_AUDITED",
+    "validated_practice": "NOT_AUDITED",
+    "independent_assessment": "NOT_AUDITED",
+    "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+   },
+   "blockers": [
+    "NO_REPOSITORY_SKILL_CANDIDATE"
+   ],
+   "source_document_id": "VA_SOL_2023_ALGEBRA1"
+  },
+  {
+   "expectation_id": "A.ST.1",
+   "grade": 9,
+   "course": "Algebra 1",
+   "strand": "ST",
+   "strand_title": "Statistics",
+   "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48985/638603403347570000",
+   "scope_summary": "The student will apply the data cycle (formulate questions; collect or acquire data; organize and represent data; and analyze data and communicate results) with a focus on representing bivariate data in scatterplots and determining the curve of best fit using linear and quadratic functions.",
+   "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED_VIA_ARCHIVE",
+   "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+   "repository_existing_crosswalks": [],
+   "crosswalk_note": null,
+   "classification": {
+    "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+    "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+    "exact_target_generator": "NOT_AUDITED",
+    "validated_practice": "NOT_AUDITED",
+    "independent_assessment": "NOT_AUDITED",
+    "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+   },
+   "blockers": [
+    "NO_REPOSITORY_SKILL_CANDIDATE"
+   ],
+   "source_document_id": "VA_SOL_2023_ALGEBRA1"
+  }
+ ]
+}

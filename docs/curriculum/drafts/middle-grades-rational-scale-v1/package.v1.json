@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "package_id": "MG-G7-RATIONAL-SCALE-INVERSE",
-  "revision": "middle-grades-rational-scale-v1-r4",
+  "revision": "middle-grades-rational-scale-v1-r5",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "mastery_writes": false,
@@ -259,5 +259,25 @@
     "pedagogy": "R3_CHANGES_REQUIRED_R4_REVIEW_DEFERRED",
     "muse_qa": "PENDING",
     "release": "NOT_APPROVED"
+  },
+  "boundary_correction_2026_10_13": {
+    "status": "PROVISIONAL_PENDING_INDEPENDENT_MATH_PEDAGOGY",
+    "source": "https://github.com/AyalewGM/ai-tutor/pull/385",
+    "deterministic_structures": [
+      "UNIT_SCALE_POSITIVE",
+      "UNIT_SCALE_NEGATIVE"
+    ],
+    "scale_values": [
+      "+1",
+      "-1"
+    ],
+    "magnitude_oracle": "SAME",
+    "zero_domain": "EXCLUDED: signed direction defined only for nonzero input and nonzero scale/output",
+    "canonical_approval": "UNCHANGED_EXISTING_REUSE",
+    "standards_approval": "UNKNOWN",
+    "independent_math_verdict": "PENDING_R5",
+    "independent_pedagogy_verdict": "PENDING_R5",
+    "muse_verdict": "UNKNOWN",
+    "runtime_activation": false
   }
 }

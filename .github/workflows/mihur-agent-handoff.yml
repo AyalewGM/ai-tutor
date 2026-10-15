@@ -1,0 +1,41 @@
+name: Mihur Agent Handoff (Phase 1)
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review, converted_to_draft]
+  schedule:
+    - cron: "17 * * * *"
+  workflow_run:
+    workflows: ["CI", "AppSec Baseline"]
+    types: [completed]
+permissions:
+  actions: read
+  contents: read
+  pull-requests: read
+  issues: write
+concurrency:
+  group: mihur-handoff-repository
+  cancel-in-progress: false
+jobs:
+  route:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Route without executing PR code
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          MIHUR_PENDING_FILE: mihur-pending-handoffs.jsonl
+        run: python scripts/agent_handoff_orchestrator.py
+      - name: Preserve undelivered handoffs for next-run recovery
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mihur-pending-handoffs-${{ github.run_id }}
+          path: mihur-pending-handoffs.jsonl
+          if-no-files-found: ignore
+          retention-days: 90

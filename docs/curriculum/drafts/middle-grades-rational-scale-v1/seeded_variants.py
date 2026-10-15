@@ -70,6 +70,8 @@ def _positive_fraction(rng: random.Random) -> Fraction:
 
 
 def _direction(value: Fraction) -> str:
+    if value == 0:
+        raise ValueError("Direction is undefined for zero in this nonzero calibration model")
     return "POSITIVE" if value > 0 else "NEGATIVE"
 
 
@@ -90,13 +92,16 @@ def _validate(seed: int, mode: str) -> None:
         raise ValueError("seed must be nonnegative")
 
 
-def generate(seed: int, mode: str) -> Variant:
+def generate(seed: int, mode: str, *, unit_scale: int | None = None) -> Variant:
     """Generate an unseen calibration record without announcing its operation."""
 
     _validate(seed, mode)
     mode_salt = 104_729 if mode == "independent" else 13_337
     rng = random.Random(seed * 1_000_003 + mode_salt)
-    family = seed % 4
+    if unit_scale not in (None, 1, -1) or isinstance(unit_scale, bool):
+        raise ValueError("unit_scale must be None, +1, or -1")
+    # Existing seed->structure mappings remain bit-for-bit stable.
+    family = seed % 4 if unit_scale is None else (4 if unit_scale == 1 else 5)
 
     if family == 0:
         structure = "DIRECT_NEGATIVE_GROW"
@@ -138,7 +143,7 @@ def generate(seed: int, mode: str) -> Variant:
             "with the scale hidden. Decide which operation recovers the hidden value; "
             "then predict the output's direction and magnitude relative to the input (not the hidden scale's sign), calculate, and recompose."
         )
-    else:
+    elif family == 3:
         structure = "MISSING_SCALE_POSITIVE_SHRINK"
         input_value = -_positive_fraction(rng)
         scale = Fraction(rng.randint(1, 4), rng.randint(5, 9))
@@ -151,13 +156,42 @@ def generate(seed: int, mode: str) -> Variant:
             "then predict the output's direction and magnitude relative to the input (not the hidden scale's sign), calculate, and recompose."
         )
 
+    elif family in (4, 5):
+        # Unit-scale boundary: +1 preserves direction, -1 reverses direction.
+        # Input is nonzero; outputs and scales must remain nonzero.
+        structure = "UNIT_SCALE_POSITIVE" if family == 4 else "UNIT_SCALE_NEGATIVE"
+        input_value = _positive_fraction(rng) if family == 4 else -_positive_fraction(rng)
+        scale = Fraction(1 if family == 4 else -1)
+        hidden_quantity = "output" if family == 4 else "scale"
+        given_value = scale if hidden_quantity == "output" else input_value * scale
+        operation = "MULTIPLY" if hidden_quantity == "output" else "DIVIDE_AS_MISSING_SCALE"
+        if hidden_quantity == "output":
+            prompt = (
+                f"A calibration log shows nonzero input {input_value} and scale +1, "
+                "with output hidden. Predict the output's direction and decide "
+                "whether its magnitude grows, shrinks, or STAYS THE SAME; calculate and recompose."
+            )
+        else:
+            prompt = (
+                f"A calibration log shows nonzero input {input_value} and output "
+                f"{given_value}, with scale hidden. Determine the scale and predict "
+                "the OUTPUT'S direction (not the hidden scale's sign); decide "
+                "whether the output's magnitude grows, shrinks, or STAYS THE SAME."
+            )
+
+    if input_value == 0 or scale == 0:
+        raise ValueError("This signed-direction calibration scope excludes zero")
     answer = scale if hidden_quantity == "scale" else input_value * scale
     result = input_value * scale
     direction = _direction(result)
     magnitude_relation = _magnitude_relation(result, input_value)
     recomposition = f"({scale}) * ({input_value}) = {result}"
     return Variant(
-        variant_id=f"{NAMESPACE}:{mode}:{seed}",
+        variant_id=(
+            f"{NAMESPACE}:{mode}:{seed}"
+            if unit_scale is None
+            else f"{NAMESPACE}:{mode}:{seed}:unit_scale:{unit_scale:+d}"
+        ),
         mode=mode,
         structure=structure,
         prompt=prompt,

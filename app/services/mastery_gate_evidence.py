@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.models import Attempt, Problem
+from app.models import Attempt, Problem, TutorState
 
 
 @dataclass(frozen=True)
@@ -11,6 +11,18 @@ class MasteryGateEvidence:
     independent_correct_count: int
     strong_help_seen: bool
     independent_successes_after_strong_help: int
+
+
+def _is_independent_correct_attempt(attempt: Attempt) -> bool:
+    """Assistance-free guided answers cannot qualify for independent mastery."""
+    return (
+        attempt.is_correct is True
+        and attempt.assistance_level == 0
+        and attempt.state_at_attempt in (
+            TutorState.INDEPENDENT_PRACTICE,
+            TutorState.MASTERY_CHECK,
+        )
+    )
 
 
 def load_mastery_gate_evidence(
@@ -42,7 +54,7 @@ def load_mastery_gate_evidence(
     independent_problem_ids = {
         attempt.problem_id
         for attempt in attempts
-        if attempt.is_correct is True and attempt.assistance_level == 0
+        if _is_independent_correct_attempt(attempt)
     }
 
     latest_strong_help_index = None
@@ -62,8 +74,7 @@ def load_mastery_gate_evidence(
         attempt.problem_id
         for attempt in attempts[latest_strong_help_index + 1 :]
         if (
-            attempt.is_correct is True
-            and attempt.assistance_level == 0
+            _is_independent_correct_attempt(attempt)
             and attempt.problem_id != strong_help_problem_id
         )
     }

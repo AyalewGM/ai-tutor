@@ -1,0 +1,2252 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "MD-G6-G8-2025-source-fidelity-locator-ledger-v1",
+  "status": "AUTHOR_SOURCE_LOCATORS_REVIEW_REQUIRED",
+  "as_of": "2026-10-12",
+  "authority": "Maryland State Department of Education",
+  "sources": {
+    "6": {
+      "source_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "grade": 6,
+      "title": "Grade 6 MCCRS Mathematics Standards Crosswalk",
+      "url": "https://msde.maryland.gov/media/17816",
+      "revision": "February 2026",
+      "role": "AUTHORITATIVE_STANDARD_ID_AND_SCOPE",
+      "checked_date": "2026-10-12",
+      "companion": {
+        "title": "Grade 6 MCCRS Mathematics Companion Guide",
+        "url": "https://msde.maryland.gov/media/17817",
+        "revision": "Version 2, June 2026",
+        "role": "MSDE_STANDARDS_IMPLEMENTATION_GUIDANCE"
+      }
+    },
+    "7": {
+      "source_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "grade": 7,
+      "title": "Grade 7 MCCRS Mathematics Standards Crosswalk",
+      "url": "https://msde.maryland.gov/media/17818",
+      "revision": "July 2025",
+      "role": "AUTHORITATIVE_STANDARD_ID_AND_SCOPE",
+      "checked_date": "2026-10-12",
+      "companion": {
+        "title": "Grade 7 MCCRS Mathematics Companion Guide",
+        "url": "https://msde.maryland.gov/media/17819",
+        "revision": "Version 2, June 2026",
+        "role": "MSDE_STANDARDS_IMPLEMENTATION_GUIDANCE"
+      }
+    },
+    "8": {
+      "source_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "grade": 8,
+      "title": "Grade 8 MCCRS Mathematics Standards Crosswalk",
+      "url": "https://msde.maryland.gov/media/17820",
+      "revision": "July 2025",
+      "role": "AUTHORITATIVE_STANDARD_ID_AND_SCOPE",
+      "checked_date": "2026-10-12",
+      "companion": {
+        "title": "Grade 8 MCCRS Mathematics Companion Guide",
+        "url": "https://msde.maryland.gov/media/17821",
+        "revision": "Version 1, February 2026",
+        "role": "MSDE_STANDARDS_IMPLEMENTATION_GUIDANCE",
+        "version_verification": "DIRECT_MSDE_COMPANION_GUIDE_COVER_PAGE"
+      }
+    }
+  },
+  "scope_reference_policy": "Official 2025 MD Standards Statement column, not the legacy 2010 previous-standards column; each parent includes any lettered requirements listed. Original wording resides in official linked PDF; editorial scope_summary in inventory is not accepted source-fidelity proof.",
+  "completeness_status": "PARENT_AND_SUBPART_INVENTORY_AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+  "records": [
+    {
+      "expectation_id": "6.NOS.A.1",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 1,
+      "printed_page_end": 1,
+      "section": "6.NOS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.NOS.A.1.a",
+        "6.NOS.A.1.b",
+        "6.NOS.A.1.c"
+      ],
+      "scope_summary_editorial": "Divide fractions by fractions in context, extending estimation, concrete/visual fraction models, and equations.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 1,
+      "pdf_page_end_index_zero_based": 1,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.NOS.B.2",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 2,
+      "printed_page_end": 2,
+      "section": "6.NOS.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.NOS.B.2.a",
+        "6.NOS.B.2.b",
+        "6.NOS.B.2.c",
+        "6.NOS.B.2.d"
+      ],
+      "scope_summary_editorial": "Fluently divide multi-digit numbers, choosing efficient strategies or the standard algorithm.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 2,
+      "pdf_page_end_index_zero_based": 2,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.NOS.B.3",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 2,
+      "printed_page_end": 2,
+      "section": "6.NOS.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.NOS.B.3.a",
+        "6.NOS.B.3.b",
+        "6.NOS.B.3.c",
+        "6.NOS.B.3.d"
+      ],
+      "scope_summary_editorial": "Fluently multiply and divide multi-digit decimals to the thousandths in context.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 2,
+      "pdf_page_end_index_zero_based": 2,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.NOS.B.4",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 2,
+      "printed_page_end": 2,
+      "section": "6.NOS.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.NOS.B.4.a",
+        "6.NOS.B.4.b",
+        "6.NOS.B.4.c"
+      ],
+      "scope_summary_editorial": "Identify the common factors and multiples of two whole numbers.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17816",
+        "source_column": "2025 Standards Statement",
+        "reviewer_reported_printed_page": 2,
+        "ledger_printed_page_start": 2,
+        "printed_page_locator_reconciliation": "RECONCILED_TO_OFFICIAL_PDF_PRINTED_FOOTER",
+        "subpart_requirements": {
+          "6.NOS.B.4.a": [
+            "Find greatest common factors of whole numbers bounded by 100"
+          ],
+          "6.NOS.B.4.b": [
+            "Find least common multiples of whole numbers bounded by 12"
+          ],
+          "6.NOS.B.4.c": [
+            "Use distributive reasoning to factor sums with whole-number addends bounded by 100"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false,
+        "pdf_page_index_zero_based": 2
+      },
+      "pdf_page_index_zero_based": 2,
+      "pdf_page_end_index_zero_based": 2,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.NOS.C.5",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 3,
+      "printed_page_end": 3,
+      "section": "6.NOS.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Use understanding of rational numbers as positive and negative numbers to describe quantities with opposite directions or values.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 3,
+      "pdf_page_end_index_zero_based": 3,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.NOS.C.6",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 3,
+      "printed_page_end": 3,
+      "section": "6.NOS.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.NOS.C.6.a",
+        "6.NOS.C.6.b",
+        "6.NOS.C.6.c"
+      ],
+      "scope_summary_editorial": "Represent rational numbers as points on vertical or horizontal number lines, including points with negative coordinates.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 3,
+      "pdf_page_end_index_zero_based": 3,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.NOS.C.7",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 4,
+      "printed_page_end": 4,
+      "section": "6.NOS.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.NOS.C.7.a",
+        "6.NOS.C.7.b"
+      ],
+      "scope_summary_editorial": "Use perpendicular number lines intersecting at (0,0) to introduce the four quadrants of the Coordinate Plane and represent points with positive and negative coordinates.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 4,
+      "pdf_page_end_index_zero_based": 4,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.NOS.C.8",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 4,
+      "printed_page_end": 4,
+      "section": "6.NOS.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.NOS.C.8.a",
+        "6.NOS.C.8.b",
+        "6.NOS.C.8.c"
+      ],
+      "scope_summary_editorial": "Order rational numbers and identify absolute value.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 4,
+      "pdf_page_end_index_zero_based": 4,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.NOS.C.9",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 5,
+      "printed_page_end": 5,
+      "section": "6.NOS.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.NOS.C.9.a",
+        "6.NOS.C.9.b"
+      ],
+      "scope_summary_editorial": "Solve problems in context by graphing points with a shared coordinate in all four quadrants of the Coordinate Plane.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 5,
+      "pdf_page_end_index_zero_based": 5,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.AT.A.1",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 6,
+      "printed_page_end": 6,
+      "section": "6.AT.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Use ratio language in context to describe a ratio relationship between two quantities, including part-to-part and part-to-whole.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 6,
+      "pdf_page_end_index_zero_based": 6,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.AT.A.2",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 6,
+      "printed_page_end": 6,
+      "section": "6.AT.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.AT.A.2.a",
+        "6.AT.A.2.b"
+      ],
+      "scope_summary_editorial": "Represent and use unit rates, written as fractions with whole number numerators and denominators, in context.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 6,
+      "pdf_page_end_index_zero_based": 6,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.AT.A.3",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 7,
+      "printed_page_end": 7,
+      "section": "6.AT.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.AT.A.3.a",
+        "6.AT.A.3.b",
+        "6.AT.A.3.c"
+      ],
+      "scope_summary_editorial": "Use ratio and rate reasoning to solve problems in context with tables of equivalent ratios, tape diagrams, double number lines, or the Coordinate Plane.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 7,
+      "pdf_page_end_index_zero_based": 7,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.AT.A.4",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 7,
+      "printed_page_end": 7,
+      "section": "6.AT.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Find a percent of a quantity in context as a rate per 100, including finding the whole given a part and the percent, using tables, tape diagrams, and double number lines.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 7,
+      "pdf_page_end_index_zero_based": 7,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.AT.B.5",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 8,
+      "printed_page_end": 8,
+      "section": "6.AT.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Write numerical expressions involving whole number exponents and positive rational number bases; evaluate with technology.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 8,
+      "pdf_page_end_index_zero_based": 8,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.AT.B.6",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 8,
+      "printed_page_end": 8,
+      "section": "6.AT.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.AT.B.6.a",
+        "6.AT.B.6.b",
+        "6.AT.B.6.c"
+      ],
+      "scope_summary_editorial": "Write, read, and evaluate expressions in which letters stand for numbers.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 8,
+      "pdf_page_end_index_zero_based": 8,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.AT.B.7",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 9,
+      "printed_page_end": 9,
+      "section": "6.AT.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Apply properties of operations to generate equivalent algebraic expressions and to identify when two expressions are equivalent.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 9,
+      "pdf_page_end_index_zero_based": 9,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.AT.C.8",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 10,
+      "printed_page_end": 10,
+      "section": "6.AT.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.AT.C.8.a",
+        "6.AT.C.8.b",
+        "6.AT.C.8.c"
+      ],
+      "scope_summary_editorial": "Solve problems in context by writing and solving equations and interpreting the solutions in context.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17816",
+        "source_column": "2025 Standards Statement",
+        "reviewer_reported_printed_page": 10,
+        "ledger_printed_page_start": 10,
+        "printed_page_locator_reconciliation": "RECONCILED_TO_OFFICIAL_PDF_PRINTED_FOOTER",
+        "subpart_requirements": {
+          "6.AT.C.8.b": [
+            "Solve one-step equations of forms x+p=q, x−p=q, px=q, x/p=q",
+            "Parameters p and q and unknown x are nonnegative rational numbers"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false,
+        "pdf_page_index_zero_based": 10
+      },
+      "pdf_page_index_zero_based": 10,
+      "pdf_page_end_index_zero_based": 10,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.AT.C.9",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 10,
+      "printed_page_end": 10,
+      "section": "6.AT.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Write an inequality of the form x > c or x < c to represent a constraint in context; recognize infinitely many solutions and represent them on number lines.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 10,
+      "pdf_page_end_index_zero_based": 10,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.AT.C.10",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 10,
+      "printed_page_end": 10,
+      "section": "6.AT.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.AT.C.10.a",
+        "6.AT.C.10.b",
+        "6.AT.C.10.c"
+      ],
+      "scope_summary_editorial": "Solve problems in context by writing and solving inequalities and interpreting solution sets in context.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17816",
+        "source_column": "2025 Standards Statement",
+        "reviewer_reported_printed_page": 10,
+        "ledger_printed_page_start": 10,
+        "printed_page_locator_reconciliation": "RECONCILED_TO_OFFICIAL_PDF_PRINTED_FOOTER",
+        "subpart_requirements": {
+          "6.AT.C.10.b": [
+            "Represent one-step inequalities using addition, subtraction, multiplication, or division of an unknown and parameter",
+            "Include comparisons ≥, >, ≤, <",
+            "Parameters p and q are nonnegative rational numbers"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false,
+        "pdf_page_index_zero_based": 10
+      },
+      "pdf_page_index_zero_based": 10,
+      "pdf_page_end_index_zero_based": 10,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.AT.D.11",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 11,
+      "printed_page_end": 11,
+      "section": "6.AT.D",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.AT.D.11.a",
+        "6.AT.D.11.b"
+      ],
+      "scope_summary_editorial": "Use variables to represent two quantities in context that change in relationship to one another.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 11,
+      "pdf_page_end_index_zero_based": 11,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.GR.A.1",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 12,
+      "printed_page_end": 12,
+      "section": "6.GR.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Find the area of triangles, quadrilaterals, and polygons by composing into rectangles or decomposing into triangles and quadrilaterals.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 12,
+      "pdf_page_end_index_zero_based": 12,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.GR.A.2",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 12,
+      "printed_page_end": 12,
+      "section": "6.GR.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.GR.A.2.a",
+        "6.GR.A.2.b"
+      ],
+      "scope_summary_editorial": "Find the volume of a right rectangular prism with fractional edge lengths.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 12,
+      "pdf_page_end_index_zero_based": 12,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.GR.A.3",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 12,
+      "printed_page_end": 12,
+      "section": "6.GR.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Draw polygons in the Coordinate Plane given vertex coordinates and use coordinates to find side lengths; apply these techniques in context.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 12,
+      "pdf_page_end_index_zero_based": 12,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.GR.A.4",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 12,
+      "printed_page_end": 12,
+      "section": "6.GR.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Represent three-dimensional figures using nets of rectangles and triangles and use the nets to find surface area to solve problems.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 12,
+      "pdf_page_end_index_zero_based": 12,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.DS.A.1",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 13,
+      "printed_page_end": 13,
+      "section": "6.DS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Recognize a statistical question as one that anticipates variability in the data related to the question and accounts for it in the answers.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 13,
+      "pdf_page_end_index_zero_based": 13,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.DS.A.2",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 13,
+      "printed_page_end": 13,
+      "section": "6.DS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Use the language of probability to describe the likelihood of possible outcomes and to anticipate variability in data collected from statistical questions.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 13,
+      "pdf_page_end_index_zero_based": 13,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.DS.A.3",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 13,
+      "printed_page_end": 13,
+      "section": "6.DS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Explain how a data set collected to answer a statistical question has a distribution described by center, spread, and overall shape.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 13,
+      "pdf_page_end_index_zero_based": 13,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.DS.A.4",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 13,
+      "printed_page_end": 13,
+      "section": "6.DS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Recognize that a measure of center summarizes all values with a single number while a measure of variation describes how values vary.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 13,
+      "pdf_page_end_index_zero_based": 13,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.DS.B.5",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 13,
+      "printed_page_end": 13,
+      "section": "6.DS.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Interpret numerical data in plots on a number line, including line plots, histograms, and box plots.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "pdf_page_index_zero_based": 13,
+      "pdf_page_end_index_zero_based": 13,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "6.DS.B.6",
+      "grade": 6,
+      "source_document_id": "MD_MCCRS_2025_G6_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17816",
+      "source_revision": "February 2026",
+      "printed_page_start": 14,
+      "printed_page_end": 14,
+      "section": "6.DS.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "6.DS.B.6.a",
+        "6.DS.B.6.b",
+        "6.DS.B.6.c",
+        "6.DS.B.6.d"
+      ],
+      "scope_summary_editorial": "Summarize numerical data sets in relation to their context.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17816",
+        "source_column": "2025 Standards Statement",
+        "reviewer_reported_printed_page": 14,
+        "ledger_printed_page_start": 14,
+        "printed_page_locator_reconciliation": "RECONCILED_TO_OFFICIAL_PDF_PRINTED_FOOTER",
+        "subpart_requirements": {
+          "6.DS.B.6.c": [
+            "Use median and/or mean and interquartile range to describe distributions",
+            "Discuss outliers in the context of the data",
+            "Do not infer mean absolute deviation from the separate 2010 historical comparison column"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false,
+        "pdf_page_index_zero_based": 14
+      },
+      "pdf_page_index_zero_based": 14,
+      "pdf_page_end_index_zero_based": 14,
+      "page_locator_evidence": "OFFICIAL_MSDE_G6_2025_STANDARDS_COLUMN_PAGE_IMAGE_FOOTER_VERIFIED"
+    },
+    {
+      "expectation_id": "7.NOS.A.1",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 1,
+      "printed_page_end": 1,
+      "section": "7.NOS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.NOS.A.1.a",
+        "7.NOS.A.1.b",
+        "7.NOS.A.1.c",
+        "7.NOS.A.1.d"
+      ],
+      "scope_summary_editorial": "Add and subtract rational numbers using multiple strategies and representations.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Add/subtract rational numbers; opposites sum to zero; signed number-line movement; subtraction as adding inverse; contextual multistep work.",
+        "lettered_scope_topics_editorial": [
+          "Opposite quantities and zero",
+          "Signed movement and additive inverses",
+          "Distance and subtraction as inverse",
+          "Multistep contextual addition/subtraction"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 1,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "pdf_page_end_index_zero_based": 1
+    },
+    {
+      "expectation_id": "7.NOS.A.2",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 2,
+      "printed_page_end": 2,
+      "section": "7.NOS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.NOS.A.2.a",
+        "7.NOS.A.2.b",
+        "7.NOS.A.2.c",
+        "7.NOS.A.2.d",
+        "7.NOS.A.2.e"
+      ],
+      "scope_summary_editorial": "Multiply and divide rational numbers using multiple strategies and representations.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Multiply/divide rational numbers; signed-product reasoning with properties; contextual quotient/nonzero divisor; terminating or repeating decimals; multistep contexts.",
+        "lettered_scope_topics_editorial": [
+          "Signed multiplication models and distributive property",
+          "Contextual quotient and nonzero divisor",
+          "Flexible properties",
+          "Terminating/repeating decimal reasoning",
+          "Multistep contextual multiplication/division"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 2,
+      "pdf_page_end_index_zero_based": 2,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.NOS.A.3",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 3,
+      "printed_page_end": 3,
+      "section": "7.NOS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.NOS.A.3.a",
+        "7.NOS.A.3.b"
+      ],
+      "scope_summary_editorial": "Solve multistep problems involving positive and negative rational numbers in any form using all four operations.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Solve multistep signed rational problems across fractions, decimals, percents and all four operations; convert forms and assess reasonableness.",
+        "lettered_scope_topics_editorial": [
+          "Properties and conversion among forms",
+          "Estimation/mental-math reasonableness"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 3,
+      "pdf_page_end_index_zero_based": 3,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.AT.A.1",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 4,
+      "printed_page_end": 4,
+      "section": "7.AT.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Compute unit rates associated with ratios of fractions, including ratios of lengths, areas, and other quantities in like or different units.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Compute unit rates for ratios of fractions, including like or different units.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 4,
+      "pdf_page_end_index_zero_based": 4,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.AT.A.2",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 4,
+      "printed_page_end": 4,
+      "section": "7.AT.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.AT.A.2.a",
+        "7.AT.A.2.b"
+      ],
+      "scope_summary_editorial": "Identify proportional relationships between quantities.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Identify proportional relationships using ratio tables/graphs and identify unit rate across representations.",
+        "lettered_scope_topics_editorial": [
+          "Table/graph proportionality and origin",
+          "Constant of proportionality across representations"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 4,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "pdf_page_end_index_zero_based": 4
+    },
+    {
+      "expectation_id": "7.AT.A.3",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 5,
+      "printed_page_end": 5,
+      "section": "7.AT.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.AT.A.3.a",
+        "7.AT.A.3.b"
+      ],
+      "scope_summary_editorial": "Represent proportional relationships between quantities.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Represent proportional relationships by equations and interpret points in context, including origin and unit-rate point.",
+        "lettered_scope_topics_editorial": [
+          "Equation representation",
+          "Contextual interpretation of points"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 5,
+      "pdf_page_end_index_zero_based": 5,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.AT.A.4",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 5,
+      "printed_page_end": 5,
+      "section": "7.AT.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Solve ratio and percent problems in context (simple interest, tax, markups/markdowns, tips, commissions, percent change, percent error) by applying proportional reasoning.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Apply proportional reasoning to ratio/percent contexts including interest, tax, markup, discount, tips, commission, fees, percent change and error.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 5,
+      "pdf_page_end_index_zero_based": 5,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.AT.B.5",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 5,
+      "printed_page_end": 5,
+      "section": "7.AT.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Apply properties of operations as strategies to add, subtract, factor, and expand linear expressions with rational coefficients.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Add/subtract/factor/expand linear expressions with rational coefficients using operation properties.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 5,
+      "pdf_page_end_index_zero_based": 5,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.AT.B.6",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 6,
+      "printed_page_end": 6,
+      "section": "7.AT.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Rewrite an expression in different forms to shed light on the represented context and how quantities in it are related.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Rewrite expressions to illuminate contextual relationships, including percent increase as multiplication.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 6,
+      "pdf_page_end_index_zero_based": 6,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.AT.C.7",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 6,
+      "printed_page_end": 6,
+      "section": "7.AT.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Analyze contextual situations to determine whether an equation or inequality best represents the relationship between quantities; justify the choice. (New standard.)",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Choose and justify equation versus inequality for contextual quantitative relationships.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 6,
+      "pdf_page_end_index_zero_based": 6,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.AT.C.8",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 6,
+      "printed_page_end": 6,
+      "section": "7.AT.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.AT.C.8.a",
+        "7.AT.C.8.b",
+        "7.AT.C.8.c"
+      ],
+      "scope_summary_editorial": "Use variables to represent quantities and write and solve equations to model and reason about relationships in context.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Write/solve rational-coefficient equations, explain equality-preserving solution, and interpret contextual solutions.",
+        "lettered_scope_topics_editorial": [
+          "Write specified equation forms",
+          "Solve and explain equality",
+          "Contextual modeling and interpretation"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 6,
+      "pdf_page_end_index_zero_based": 6,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.AT.C.9",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 7,
+      "printed_page_end": 7,
+      "section": "7.AT.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.AT.C.9.a",
+        "7.AT.C.9.b",
+        "7.AT.C.9.c"
+      ],
+      "scope_summary_editorial": "Use variables to represent quantities and write and solve inequalities to model and reason about constraints and conditions in context.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Write/solve rational-coefficient inequalities, graph solution sets, and interpret feasible values.",
+        "lettered_scope_topics_editorial": [
+          "Write specified inequality forms",
+          "Solve and graph on number line",
+          "Contextual interpretation of feasible values"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 7,
+      "pdf_page_end_index_zero_based": 7,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.GR.A.1",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 8,
+      "printed_page_end": 8,
+      "section": "7.GR.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Solve problems involving scale drawings of geometric figures, including computing actual lengths and areas and reproducing a drawing at a different scale.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Solve scale-drawing length/area problems and reproduce figures at another scale.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 8,
+      "pdf_page_end_index_zero_based": 8,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.GR.A.2",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 8,
+      "printed_page_end": 8,
+      "section": "7.GR.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Describe the two-dimensional figures that result from slicing three-dimensional figures with a plane and connect the resulting shapes to the solid's structure.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Analyze 2D plane sections of 3D solids and relate sections to volume/surface-area structure.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 8,
+      "pdf_page_end_index_zero_based": 8,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17818",
+        "source_column": "2025 MD Index / 2025 Standards Statement",
+        "printed_page_start": 8,
+        "printed_page_end": 8,
+        "parent_requirements": [
+          "Identify plane cross-sections of three-dimensional solids",
+          "Relate the cross-section geometry to volume and surface-area reasoning"
+        ],
+        "subpart_requirements": {},
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
+    },
+    {
+      "expectation_id": "7.GR.B.3",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 9,
+      "printed_page_end": 9,
+      "section": "7.GR.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Apply the formulas for area and circumference of a circle to solve problems in context, using informal reasoning to relate circumference and area.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Use circle area/circumference formulas in context and informal visual reasoning about their relationship.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 9,
+      "pdf_page_end_index_zero_based": 9,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.GR.B.4",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 9,
+      "printed_page_end": 9,
+      "section": "7.GR.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.GR.B.4.a",
+        "7.GR.B.4.b",
+        "7.GR.B.4.c"
+      ],
+      "scope_summary_editorial": "Solve problems with and without context involving area, surface area, and volume of two- and three-dimensional objects.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Solve contextual/noncontextual area, surface area, volume for polygonal/polyhedral and curved solids; justify representations and reasonableness.",
+        "lettered_scope_topics_editorial": [
+          "Polygonal/polyhedral figures",
+          "Cones/cylinders/spheres volume",
+          "Contextual interpretation and justification"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 9,
+      "pdf_page_end_index_zero_based": 9,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.DS.A.1",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 10,
+      "printed_page_end": 10,
+      "section": "7.DS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.DS.A.1.a",
+        "7.DS.A.1.b"
+      ],
+      "scope_summary_editorial": "Determine when generalizations about a population are appropriate based on how the sample was selected.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Judge sample representativeness, selection bias, and role of random sampling.",
+        "lettered_scope_topics_editorial": [
+          "Selection and representativeness",
+          "Random sampling and representativeness"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 10,
+      "pdf_page_end_index_zero_based": 10,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.DS.A.2",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 10,
+      "printed_page_end": 10,
+      "section": "7.DS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.DS.A.2.a",
+        "7.DS.A.2.b"
+      ],
+      "scope_summary_editorial": "Use data from random samples to make and evaluate estimates or predictions about a population.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Estimate population characteristics from random samples and compare multiple same-size samples to assess reliability.",
+        "lettered_scope_topics_editorial": [
+          "Single-sample population estimate",
+          "Multiple samples and variability"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 10,
+      "pdf_page_end_index_zero_based": 10,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.DS.B.3",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 11,
+      "printed_page_end": 11,
+      "section": "7.DS.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.DS.B.3.a",
+        "7.DS.B.3.b",
+        "7.DS.B.3.c"
+      ],
+      "scope_summary_editorial": "Compare two numerical data distributions using visual displays and numerical measures to draw inferences about populations.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Compare distributions using histograms/visual shape and spread, numerical center/variability including IQR, and contextual significance.",
+        "lettered_scope_topics_editorial": [
+          "Visual distributions",
+          "Center and variability",
+          "Combined contextual comparison"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 11,
+      "pdf_page_end_index_zero_based": 11,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.DS.C.4",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 11,
+      "printed_page_end": 12,
+      "section": "7.DS.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Explain probability on the 0-1 scale (impossible to certain) and use it to estimate the probability of chance events.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Interpret probability 0–1 scale, impossible/certain, relative likelihood and context.",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 11,
+      "pdf_page_end_index_zero_based": 12,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.DS.C.5",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 12,
+      "printed_page_end": 12,
+      "section": "7.DS.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.DS.C.5.a",
+        "7.DS.C.5.b",
+        "7.DS.C.5.c"
+      ],
+      "scope_summary_editorial": "Understand and apply long-run relative frequency to approximate probabilities and make predictions about chance events.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Use long-run relative frequency and simulation to approximate chance probabilities and predict outcomes.",
+        "lettered_scope_topics_editorial": [
+          "Simulation/data collection",
+          "Relative-frequency approximation",
+          "Prediction"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 12,
+      "pdf_page_end_index_zero_based": 12,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "7.DS.C.6",
+      "grade": 7,
+      "source_document_id": "MD_MCCRS_2025_G7_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17818",
+      "source_revision": "July 2025",
+      "printed_page_start": 12,
+      "printed_page_end": 12,
+      "section": "7.DS.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "7.DS.C.6.a",
+        "7.DS.C.6.b",
+        "7.DS.C.6.c"
+      ],
+      "scope_summary_editorial": "Develop and use probability models to find probabilities of events and compare them to observed results.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Compare theoretical models to experimental frequencies and evaluate probability-model suitability.",
+        "lettered_scope_topics_editorial": [
+          "Theoretical model",
+          "Experimental comparison",
+          "Model evaluation"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 12,
+      "pdf_page_end_index_zero_based": 12,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.NOS.A.1",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 1,
+      "printed_page_end": 1,
+      "section": "8.NOS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Identify a number as irrational when its decimal expansion neither terminates nor repeats; explain that irrational numbers are not a ratio of two integers.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Irrational decimal expansion neither terminates nor repeats; cannot be ratio of integers",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 1,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "pdf_page_end_index_zero_based": 1
+    },
+    {
+      "expectation_id": "8.NOS.A.2",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 1,
+      "printed_page_end": 1,
+      "section": "8.NOS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Use rational approximations of irrational numbers to estimate locations on a number line, compare size, and estimate expressions in context.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Approximate irrational numbers rationally to locate/compare and estimate expressions in context",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 1,
+      "pdf_page_end_index_zero_based": 1,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.NOS.B.3",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 1,
+      "printed_page_end": 1,
+      "section": "8.NOS.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Know and apply the properties of integer exponents to generate equivalent numerical expressions.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Apply integer-exponent laws to equivalent numerical expressions",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 1,
+      "pdf_page_end_index_zero_based": 1,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.NOS.B.4",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 2,
+      "printed_page_end": 2,
+      "section": "8.NOS.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.NOS.B.4.a",
+        "8.NOS.B.4.b"
+      ],
+      "scope_summary_editorial": "Use square and cube roots to represent solutions to equations and describe numbers.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Use roots to describe numbers and equation solutions",
+        "lettered_scope_topics_editorial": [
+          "Represent positive-rational square/cube equation solutions using radicals",
+          "Inspect small perfect square/cube roots"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 2,
+      "pdf_page_end_index_zero_based": 2,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "source_column": "2025 MD Index / 2025 Standards Statement",
+        "printed_page_start": 2,
+        "printed_page_end": 2,
+        "parent_requirements": [
+          "Square-root and cube-root reasoning, with explicit finite perfect-power inspection ranges"
+        ],
+        "subpart_requirements": {
+          "8.NOS.B.4.a": [
+            "Represent applicable square-root and cube-root equation solutions with radical notation"
+          ],
+          "8.NOS.B.4.b": [
+            "Inspect perfect squares from 1 through 100 inclusive",
+            "Inspect perfect cubes from 1 through 125 inclusive"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
+    },
+    {
+      "expectation_id": "8.NOS.B.5",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 2,
+      "printed_page_end": 2,
+      "section": "8.NOS.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.NOS.B.5.a",
+        "8.NOS.B.5.b"
+      ],
+      "scope_summary_editorial": "Apply scientific notation to represent and compare very large and very small quantities in context, and use technology to compute with numbers in scientific notation.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Scientific notation magnitude, contextual units and technology-assisted computation",
+        "lettered_scope_topics_editorial": [
+          "Normalize to one-digit coefficient times integer power of ten; compare magnitude",
+          "Model and compute contextual quantities, choose units and interpret"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 2,
+      "pdf_page_end_index_zero_based": 2,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.AT.A.1",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 3,
+      "printed_page_end": 3,
+      "section": "8.AT.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.AT.A.1.a",
+        "8.AT.A.1.b"
+      ],
+      "scope_summary_editorial": "Analyze and compare proportional relationships using slope.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Analyze proportional relationships by slope",
+        "lettered_scope_topics_editorial": [
+          "Graph proportional relationships; interpret unit rate as slope",
+          "Compare slope across graphs, equations and tables"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 3,
+      "pdf_page_end_index_zero_based": 3,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.AT.A.2",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 3,
+      "printed_page_end": 3,
+      "section": "8.AT.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.AT.A.2.a",
+        "8.AT.A.2.b"
+      ],
+      "scope_summary_editorial": "Use proportional reasoning to identify slope and represent linear relationships.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Derive slope consistency and equations from proportional reasoning",
+        "lettered_scope_topics_editorial": [
+          "Equivalent rise/run ratios across nonvertical line segments",
+          "Equation through origin and vertically shifted line with y-intercept"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 3,
+      "pdf_page_end_index_zero_based": 3,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.AT.B.3",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 4,
+      "printed_page_end": 4,
+      "section": "8.AT.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.AT.B.3.a",
+        "8.AT.B.3.b"
+      ],
+      "scope_summary_editorial": "Solve linear equations in one variable.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Solve one-variable linear equations with rational coefficients and multiple solution cardinalities",
+        "lettered_scope_topics_editorial": [
+          "Justify one, infinitely many, or no solution using equivalent forms",
+          "Expand/distribute and combine like terms to solve"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 4,
+      "pdf_page_end_index_zero_based": 4,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.AT.B.4",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 4,
+      "printed_page_end": 4,
+      "section": "8.AT.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.AT.B.4.a",
+        "8.AT.B.4.b"
+      ],
+      "scope_summary_editorial": "Solve linear inequalities in one variable.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Solve and contextualize one-variable linear inequalities",
+        "lettered_scope_topics_editorial": [
+          "Distribute/combine like terms",
+          "Graph solution set and interpret feasible values"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 4,
+      "pdf_page_end_index_zero_based": 4,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.AT.B.5",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 4,
+      "printed_page_end": 5,
+      "section": "8.AT.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.AT.B.5.a",
+        "8.AT.B.5.b",
+        "8.AT.B.5.c",
+        "8.AT.B.5.d"
+      ],
+      "scope_summary_editorial": "Analyze and solve systems of two linear equations in two variables.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Analyze and solve two-variable systems of two linear equations",
+        "lettered_scope_topics_editorial": [
+          "Graph intersection and substitution verification",
+          "Graphing/substitution; justify method and precision",
+          "Zero/one/infinite solution classification",
+          "Contextual systems modeling"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 4,
+      "pdf_page_end_index_zero_based": 5,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "source_column": "2025 MD Index / 2025 Standards Statement",
+        "printed_page_start": 4,
+        "printed_page_end": 5,
+        "parent_requirements": [
+          "Solve systems of two linear equations in two variables with multiple methods and interpret solution structure"
+        ],
+        "subpart_requirements": {
+          "8.AT.B.5.a": [
+            "Interpret solution pairs and intersection/verification for a two-equation linear system"
+          ],
+          "8.AT.B.5.b": [
+            "Graph and use substitution to solve systems",
+            "Select and justify an appropriate solving method"
+          ],
+          "8.AT.B.5.c": [
+            "Distinguish no solution, exactly one solution, and infinitely many solutions"
+          ],
+          "8.AT.B.5.d": [
+            "Formulate and interpret systems of linear equations in contextual situations"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
+    },
+    {
+      "expectation_id": "8.AT.C.6",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 5,
+      "printed_page_end": 5,
+      "section": "8.AT.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.AT.C.6.a",
+        "8.AT.C.6.b"
+      ],
+      "scope_summary_editorial": "Determine whether a relationship is a function by analyzing whether each input is assigned to exactly one output.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Decide whether each input has exactly one output",
+        "lettered_scope_topics_editorial": [
+          "Table/mapping/description classification and justification",
+          "Graph input-output classification"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 5,
+      "pdf_page_end_index_zero_based": 5,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.AT.C.7",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 5,
+      "printed_page_end": 6,
+      "section": "8.AT.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Compare the properties (rate of change, intercepts) of two linear functions each represented in a different way.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Compare rate of change/intercepts across representations",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 5,
+      "pdf_page_end_index_zero_based": 6,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.AT.C.8",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 6,
+      "printed_page_end": 6,
+      "section": "8.AT.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Identify whether a function is linear or non-linear given equations, graphs, or input-output pairs, and justify using constant rate of change.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Distinguish linear from nonlinear functions with constant-rate reasoning",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 6,
+      "pdf_page_end_index_zero_based": 6,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.AT.D.9",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 6,
+      "printed_page_end": 6,
+      "section": "8.AT.D",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.AT.D.9.a",
+        "8.AT.D.9.b"
+      ],
+      "scope_summary_editorial": "Interpret the graph of a linear function in the form y = mx + b, identifying slope and y-intercept and matching equations to graphs. (New standard.)",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Identify slope/intercept and graph-to-equation matches",
+        "lettered_scope_topics_editorial": [
+          "Read slope and y-intercept from graph",
+          "Match linear equation to graph"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 6,
+      "pdf_page_end_index_zero_based": 6,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.AT.D.10",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 6,
+      "printed_page_end": 7,
+      "section": "8.AT.D",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.AT.D.10.a",
+        "8.AT.D.10.b"
+      ],
+      "scope_summary_editorial": "Construct and interpret a linear function to model a relationship between two quantities.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Build and interpret linear functions modeling two quantities",
+        "lettered_scope_topics_editorial": [
+          "Construct from pairs/table/graph/description, find rate and initial value",
+          "Interpret rate and initial value in context"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 6,
+      "pdf_page_end_index_zero_based": 7,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.AT.D.11",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 7,
+      "printed_page_end": 7,
+      "section": "8.AT.D",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Describe qualitatively the functional relationship between two quantities by analyzing a graph; sketch a graph exhibiting qualitative features.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Qualitative graph interpretation and sketching from narratives",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 7,
+      "pdf_page_end_index_zero_based": 7,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.GR.A.1",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 8,
+      "printed_page_end": 8,
+      "section": "8.GR.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Use relationships between supplementary, complementary, vertical, and adjacent angles to write and solve equations for an unknown angle.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Unknown-angle equations from supplementary, complementary, vertical and adjacent relationships",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 8,
+      "pdf_page_end_index_zero_based": 8,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.GR.A.2",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 8,
+      "printed_page_end": 8,
+      "section": "8.GR.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Draw or build triangles given three measures of angles or sides and determine whether the conditions produce a unique triangle, more than one, or none.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Construct triangles from three measures and reason about zero/one/multiple solutions",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 8,
+      "pdf_page_end_index_zero_based": 8,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.GR.A.3",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 8,
+      "printed_page_end": 8,
+      "section": "8.GR.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Use informal arguments to verify that the sum of interior angles of a triangle is 180 degrees and the exterior-angle relationship.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Informal triangle interior and exterior-angle reasoning",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 8,
+      "pdf_page_end_index_zero_based": 8,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.GR.B.4",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 9,
+      "printed_page_end": 10,
+      "section": "8.GR.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.GR.B.4.a",
+        "8.GR.B.4.b"
+      ],
+      "scope_summary_editorial": "Understand and reason about the Pythagorean Theorem and its extensions.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Pythagorean theorem and converse/inequality extension",
+        "lettered_scope_topics_editorial": [
+          "Diagram/informal justification for right triangles",
+          "Converse and acute/obtuse Pythagorean inequalities"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 9,
+      "pdf_page_end_index_zero_based": 10,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2025_MSDE_STANDARDS_STATEMENT",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "source_column": "2025 MD Index / 2025 Standards Statement",
+        "printed_page_start": 9,
+        "printed_page_end": 10,
+        "parent_requirements": [
+          "Pythagorean Theorem, converse, and triangle classification using side-length relationships"
+        ],
+        "subpart_requirements": {
+          "8.GR.B.4.a": [
+            "Provide a diagram-based or informal justification for right-triangle Pythagorean relationships"
+          ],
+          "8.GR.B.4.b": [
+            "Use the converse and inequalities comparing the longest-side square with the sum of the other two squares to distinguish right, acute and obtuse triangles"
+          ]
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
+    },
+    {
+      "expectation_id": "8.GR.B.5",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 10,
+      "printed_page_end": 10,
+      "section": "8.GR.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.GR.B.5.a",
+        "8.GR.B.5.b"
+      ],
+      "scope_summary_editorial": "Apply the Pythagorean Theorem to solve problems in context.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Contextual Pythagorean applications",
+        "lettered_scope_topics_editorial": [
+          "Unknown right-triangle sides",
+          "Coordinate-plane distance"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 10,
+      "pdf_page_end_index_zero_based": 10,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.DS.A.1",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 11,
+      "printed_page_end": 11,
+      "section": "8.DS.A",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.DS.A.1.a",
+        "8.DS.A.1.b"
+      ],
+      "scope_summary_editorial": "Evaluate predictions and conclusions drawn from bivariate data.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Evaluate bivariate conclusions and sampling bias",
+        "lettered_scope_topics_editorial": [
+          "Generalization beyond sample",
+          "Scatter-plot collection/interpretation bias"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 11,
+      "pdf_page_end_index_zero_based": 11,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.DS.B.2",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 11,
+      "printed_page_end": 11,
+      "section": "8.DS.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Construct and interpret scatter plots for bivariate measurement data to investigate patterns of association.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Scatter-plot association, outliers, clustering and linear/nonlinear patterns",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 11,
+      "pdf_page_end_index_zero_based": 11,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.DS.B.3",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 11,
+      "printed_page_end": 11,
+      "section": "8.DS.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Compare the fit of different linear models on scatter plots of the same data by describing the overall pattern and closeness of points.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Compare fit of alternative linear models to same scatter data",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 11,
+      "pdf_page_end_index_zero_based": 11,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.DS.B.4",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 12,
+      "printed_page_end": 12,
+      "section": "8.DS.B",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Use a provided linear model to make predictions based on bivariate data and interpret slope and y-intercept in context.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Predict from provided linear model and contextualize slope/intercept",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 12,
+      "pdf_page_end_index_zero_based": 12,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.DS.C.5",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 12,
+      "printed_page_end": 12,
+      "section": "8.DS.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [],
+      "scope_summary_editorial": "Construct a two-way table for two categorical variables; calculate and interpret relative frequencies to describe possible associations.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Two-way categorical tables, row/column relative frequency and association",
+        "lettered_scope_topics_editorial": [],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 12,
+      "pdf_page_end_index_zero_based": 12,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    },
+    {
+      "expectation_id": "8.DS.C.6",
+      "grade": 8,
+      "source_document_id": "MD_MCCRS_2025_G8_CROSSWALK",
+      "source_url": "https://msde.maryland.gov/media/17820",
+      "source_revision": "July 2025",
+      "printed_page_start": 12,
+      "printed_page_end": 13,
+      "section": "8.DS.C",
+      "column": "2025 MD Index / 2025 Standards Statement",
+      "official_subpart_ids": [
+        "8.DS.C.6.a",
+        "8.DS.C.6.b"
+      ],
+      "scope_summary_editorial": "Find probabilities of compound events by representing or simulating the sample space or simulating events.",
+      "author_evidence": "OFFICIAL_PDF_ROW_AND_LETTERED_LIST_LOCATED",
+      "independent_acceptance": "PENDING",
+      "scope_fidelity_author_evidence": {
+        "source_column": "2025 Standards Statement",
+        "scope_detail_editorial": "Compound probability via sample spaces and simulation",
+        "lettered_scope_topics_editorial": [
+          "Organize compound outcomes using lists/tables/tree diagrams",
+          "Calculate or approximate probabilities with simulation"
+        ],
+        "review_status": "AUTHOR_SUMMARY_FROM_OFFICIAL_SOURCE_PENDING_INDEPENDENT_CHECK",
+        "official_text_reproduction": false
+      },
+      "pdf_page_index_zero_based": 12,
+      "pdf_page_end_index_zero_based": 13,
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+    }
+  ],
+  "grade7_scope_evidence_note": "Grade 7 editorial scope and subpart topic checks were added against the MSDE July 2025 Grade 7 crosswalk, https://msde.maryland.gov/media/17818. These are author-side audit notes, not independently accepted standards text or mapping authority. Mathematical expressions rendered as images in the official PDF must be checked visually by the independent reviewer.",
+  "grade8_scope_evidence_note": "Grade 8 editorial scope/subpart topic notes are grounded in MSDE July 2025 Grade 8 crosswalk https://msde.maryland.gov/media/17820. Review exact equation/math glyphs visually where PDF extraction omits formulas. No independent acceptance or mapping promotion.",
+  "page_locator_review_note": "2026-10-12: all 49 Grade 7/8 2025 Standards Statement parent rows audited against original MSDE July 2025 PDFs. PDF page index is zero-based and happens to equal printed footer page in these files; no global adjustment applied to Grade 6. 2025 parent/subpart scope fidelity still requires independent verification.",
+  "scope_summary_policy": "NON_EXHAUSTIVE_DISCOVERY_ONLY_NOT_FULL_PARENT_OR_SUBPART_COVERAGE_EVIDENCE",
+  "grade6_page_locator_review_note": "2026-10-13: all 30 Grade 6 parent standards were located individually in the original MSDE February 2026 crosswalk, 2025 Standards Statement column. The original ledger's Grade 6 printed page locators were uniformly one too high. Each corrected printed footer page 1–14 and corresponding zero-based PDF page index 1–14 is explicitly recorded. This relation was verified for this document only, not assumed for other sources. Grade 7/8 records unchanged; mathematical scope remains independently unaccepted except previously bounded findings."
+}

@@ -1,0 +1,1281 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "VA-G6-G8-2023-expectation-inventory-v1",
+  "status": "DRAFT_PROPOSED_NOT_VERIFIED",
+  "jurisdiction": {
+    "country": "United States",
+    "state": "Virginia",
+    "authority": "Virginia Department of Education",
+    "authority_code": "VDOE"
+  },
+  "curriculum": {
+    "course_code": "VA_SOL_MATH_6_8_2023",
+    "course_title": "Virginia Mathematics Standards of Learning, Grades 6-8",
+    "standards_version": "2023 Mathematics SOL",
+    "adopted_date": "2023-08-31",
+    "implementation_school_year": "2024-2025",
+    "note": "Single VDOE 2023 SOL framework covering K-8 and high school; this inventory enumerates the Grade 6, 7, and 8 grade-level expectations only."
+  },
+  "provenance": {
+    "authoritative_source_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+    "instructional_resources_url": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources",
+    "checked_date": "2026-10-12",
+    "source_notes": [
+      "The 2023 Mathematics Standards of Learning were approved by the Virginia Board of Education on 2023-08-31 and are fully implemented in SY 2024-2025.",
+      "Expectation identifiers follow the VDOE strand-coded scheme (e.g., 6.NS.1, 8.PFA.4); strands are NS, CE, MG, PS, and PFA.",
+      "Scope summaries are editorial paraphrases; reviewers must compare them with the official wording before accepting any mapping.",
+      "Each Grade 6–8 expectation now links to a VDOE 2023 Standards of Learning document; the instructional-resources page is support only, never source authority."
+    ],
+    "grade_standards_documents": {
+      "6": {
+        "source_id": "VA_SOL_2023_G6",
+        "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 6",
+        "grade": 6,
+        "publication_or_revision": "August 2023",
+        "source_url": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+        "authority": "VDOE_2023_STANDARDS_DOCUMENT",
+        "checked_date": "2026-10-12",
+        "grade_section_locator": "Grade 6, printed page 1"
+      },
+      "7": {
+        "source_id": "VA_SOL_2023_G7",
+        "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 7",
+        "grade": 7,
+        "publication_or_revision": "August 2023",
+        "source_url": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+        "authority": "VDOE_2023_STANDARDS_DOCUMENT",
+        "checked_date": "2026-10-12",
+        "grade_section_locator": "Grade 7 section, printed page 49 (within the VDOE K–12 compilation)"
+      },
+      "8": {
+        "source_id": "VA_SOL_2023_G8",
+        "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+        "grade": 8,
+        "publication_or_revision": "August 2023",
+        "source_url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+        "authority": "VDOE_2023_STANDARDS_DOCUMENT",
+        "checked_date": "2026-10-12",
+        "grade_section_locator": "Grade 8, printed page 1"
+      }
+    },
+    "instructional_support_role": "IMPLEMENTATION_GUIDANCE_ONLY_NOT_STANDARDS_AUTHORITY"
+  },
+  "reconciliation": {
+    "official_expectation_count": 46,
+    "repository_existing_expectation_rows": 15,
+    "unmapped_expectations": 31,
+    "existing_seed_rows_by_grade": {
+      "6": 5,
+      "7": 5,
+      "8": 0
+    },
+    "seed_rows_without_clear_expectation": [
+      "VA6.PFA.EXPR"
+    ],
+    "warning": "Existing VA6.*/VA7.* seed rows and their MATH.* canonical-looking targets predate the reviewed-taxonomy gate. Strand-composite seeds (e.g., VA7.MG.GEOMETRY, VA7.PS.PROBABILITY) overlap several expectations partially and must not be treated as accepted coverage. Grade 8 has no repository seed rows at all. Corrected 2026-10-12: 7.PS.2 histogram/data-cycle relation to VA7.PS.PROBABILITY removed after inspecting the seed's actual question types; this is a mapping-evidence gap, not proof of missing canonical content."
+  },
+  "safety": {
+    "activation": "FORBIDDEN",
+    "mapping_review_required": true,
+    "new_canonical_ids_created": false,
+    "learner_mastery_mutation": false,
+    "verified_coverage_claim": false
+  },
+  "classification_legend": {
+    "standards_mapped": "A repository-specific seed row partially overlaps this expectation; this does not mean the mapping is accepted or complete.",
+    "reviewed_skill": "Independent mathematical approval must cover the exact atomic target and definition.",
+    "generator_available": "A generator must target the exact reviewed identity; local content is not enough.",
+    "validated_practice": "Practice must be independently validated against both expectation and skill scope.",
+    "assessment_ready": "An accepted independent assessment contract must exist.",
+    "verified_mastery_evidence": "Learner evidence is never inferred from mappings, generators, practice, or tests."
+  },
+  "expectations": [
+    {
+      "expectation_id": "6.NS.1",
+      "grade": 6,
+      "strand": "NS",
+      "strand_title": "Number and Number Sense",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Reason and use multiple strategies to express equivalency, compare, and order numbers written as fractions, mixed numbers, decimals, and percents.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA6.NS.RATIONAL"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.NS.2",
+      "grade": 6,
+      "strand": "NS",
+      "strand_title": "Number and Number Sense",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Reason and use multiple strategies to represent, compare, and order integers, including identifying integers on a number line, comparing with symbols, and describing absolute value as distance from zero.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.NS.3",
+      "grade": 6,
+      "strand": "NS",
+      "strand_title": "Number and Number Sense",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Recognize and represent patterns with whole number exponents and perfect squares, including perfect squares to 20^2 and powers of 10.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.CE.1",
+      "grade": 6,
+      "strand": "CE",
+      "strand_title": "Computation and Estimation",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Estimate, demonstrate, solve, and justify solutions to problems using operations with fractions and mixed numbers, including those in context (denominators of 12 or less).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA6.CE.FRACTION"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.CE.2",
+      "grade": 6,
+      "strand": "CE",
+      "strand_title": "Computation and Estimation",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Estimate, demonstrate, solve, and justify solutions to problems using operations with integers, including those in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.MG.1",
+      "grade": 6,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Identify the characteristics of circles and solve problems, including those in context, involving circumference and area.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.MG.2",
+      "grade": 6,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Reason mathematically to solve problems, including those in context, that involve the area and perimeter of triangles and parallelograms.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.MG.3",
+      "grade": 6,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Describe the characteristics of the coordinate plane and graph ordered pairs.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.MG.4",
+      "grade": 6,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Determine congruence of segments, angles, and polygons.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.PS.1",
+      "grade": 6,
+      "strand": "PS",
+      "strand_title": "Probability and Statistics",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Apply the data cycle (formulate questions; collect or acquire data; organize and represent data; analyze data and communicate results) with a focus on circle graphs.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.PS.2",
+      "grade": 6,
+      "strand": "PS",
+      "strand_title": "Probability and Statistics",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Represent the mean as a balance point and determine the effect on statistical measures when a data point is added, removed, or changed.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.PFA.1",
+      "grade": 6,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Use ratios to represent relationships between quantities, including those in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA6.PFA.RATIO"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.PFA.2",
+      "grade": 6,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Identify and represent proportional relationships between two quantities, including those in context (unit rates limited to positive values).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA6.PFA.RATIO"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.PFA.3",
+      "grade": 6,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Write and solve one-step linear equations in one variable, including contextual problems.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA6.PFA.EQUATION"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "6.PFA.4",
+      "grade": 6,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48936/638296739041730000",
+      "scope_summary": "Represent a contextual situation using a linear inequality in one variable with symbols and graphs on a number line.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G6",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.NS.1",
+      "grade": 7,
+      "strand": "NS",
+      "strand_title": "Number and Number Sense",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Investigate and describe the concept of exponents for powers of ten and compare and order numbers greater than zero written in scientific notation.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.NS.2",
+      "grade": 7,
+      "strand": "NS",
+      "strand_title": "Number and Number Sense",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Reason and use multiple strategies to compare and order rational numbers (integers, fractions, mixed numbers, decimals, percents).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.NS.3",
+      "grade": 7,
+      "strand": "NS",
+      "strand_title": "Number and Number Sense",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Recognize and describe the relationship between square roots and perfect squares (perfect squares 0 to 400).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.CE.1",
+      "grade": 7,
+      "strand": "CE",
+      "strand_title": "Computation and Estimation",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Estimate, solve, and justify solutions to multistep contextual problems involving operations with rational numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA7.CE.RATIONAL"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.CE.2",
+      "grade": 7,
+      "strand": "CE",
+      "strand_title": "Computation and Estimation",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Solve problems, including those in context, involving proportional relationships (ratio tables, proportions, unit conversions, benchmark percentages).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA7.PFA.PROPORTIONAL"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.MG.1",
+      "grade": 7,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Investigate and determine the volume formula for right cylinders and the surface area formulas for rectangular prisms and right cylinders and apply the formulas in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA7.MG.GEOMETRY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.MG.2",
+      "grade": 7,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Solve problems and justify relationships of similarity using proportional reasoning.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA7.MG.GEOMETRY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.MG.3",
+      "grade": 7,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Compare and contrast quadrilaterals based on their properties and determine unknown side lengths and angle measures of quadrilaterals.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA7.MG.GEOMETRY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.MG.4",
+      "grade": 7,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Apply dilations of polygons in the coordinate plane.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA7.MG.GEOMETRY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.PS.1",
+      "grade": 7,
+      "strand": "PS",
+      "strand_title": "Probability and Statistics",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Use statistical investigation to determine the probability of an event and investigate and describe the difference between experimental and theoretical probability.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA7.PS.PROBABILITY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.PS.2",
+      "grade": 7,
+      "strand": "PS",
+      "strand_title": "Probability and Statistics",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Apply the data cycle (formulate questions; collect or acquire data; organize and represent data; analyze data and communicate results) with a focus on histograms.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_EXPECTATION_EQUIVALENCE_EVIDENCE",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope.",
+        "Prior provisional VA7.PS.PROBABILITY link is unsupported for the 2023 7.PS.2 histogram/data-cycle target: actual scripts/seed_va_grade7.py provides one chance-event probability item and one simple sample-percentage item, but no histogram construction/interpretation or full data-cycle task. Preserve seed identity; require independent source-fidelity and mathematical/architecture review before any replacement atomic relation."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources",
+      "mapping_correction_evidence": {
+        "seed_source": "scripts/seed_va_grade7.py",
+        "observed_seed_scope": "One bag-draw probability and one sample-percent item; no histogram or data-cycle generator demonstrated",
+        "decision": "REMOVE_UNSUPPORTED_PROVISIONAL_RELATION_NOT_A_MISSING_CORE_CLAIM",
+        "standards_scope_status": "PENDING_INDEPENDENT_ORIGINAL_VDOE_SOURCE_FIDELITY"
+      }
+    },
+    {
+      "expectation_id": "7.PFA.1",
+      "grade": 7,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Investigate and analyze proportional relationships between two quantities using verbal descriptions, tables, equations in y = mx form, and graphs, including problems in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA7.PFA.PROPORTIONAL"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.PFA.2",
+      "grade": 7,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Simplify numerical expressions, simplify and generate equivalent algebraic expressions in one variable, and evaluate algebraic expressions for given replacement values.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.PFA.3",
+      "grade": 7,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Write and solve two-step linear equations in one variable, including problems in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA7.PFA.EQUATION"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "7.PFA.4",
+      "grade": 7,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48908/638741650017470000",
+      "scope_summary": "Write and solve one- and two-step linear inequalities in one variable, including problems in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "VA7.PFA.EQUATION"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Repository seed rows predate the current reviewed-taxonomy gate and may be composites that only partially overlap this expectation's scope."
+      ],
+      "source_document_id": "VA_SOL_2023_G7",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.NS.1",
+      "grade": 8,
+      "strand": "NS",
+      "strand_title": "Number and Number Sense",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Compare and order real numbers and determine the relationships between real numbers (including rational approximations of irrational numbers and square roots).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.NS.2",
+      "grade": 8,
+      "strand": "NS",
+      "strand_title": "Number and Number Sense",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Investigate and describe the relationship between the subsets of the real number system (rational, irrational, integers, whole, natural).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.CE.1",
+      "grade": 8,
+      "strand": "CE",
+      "strand_title": "Computation and Estimation",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Estimate and apply proportional reasoning and computational procedures to solve contextual problems (discount/markup, sales tax and tip, percent increase/decrease).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.MG.1",
+      "grade": 8,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Use the relationships among pairs of angles that are vertical, adjacent, supplementary, and complementary to determine the measure of unknown angles.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.MG.2",
+      "grade": 8,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Investigate and determine the surface area of square-based pyramids and the volume of cones and square-based pyramids.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.MG.3",
+      "grade": 8,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Apply translations and reflections to polygons in the coordinate plane.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.MG.4",
+      "grade": 8,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Apply the Pythagorean Theorem to solve problems involving right triangles, including those in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.MG.5",
+      "grade": 8,
+      "strand": "MG",
+      "strand_title": "Measurement and Geometry",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Solve area and perimeter problems involving composite plane figures, including those in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.PS.1",
+      "grade": 8,
+      "strand": "PS",
+      "strand_title": "Probability and Statistics",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Use statistical investigation to determine the probability of independent and dependent events, including those in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.PS.2",
+      "grade": 8,
+      "strand": "PS",
+      "strand_title": "Probability and Statistics",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Apply the data cycle (formulate questions; collect or acquire data; organize and represent data; analyze data and communicate results) with a focus on boxplots.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.PS.3",
+      "grade": 8,
+      "strand": "PS",
+      "strand_title": "Probability and Statistics",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Apply the data cycle (formulate questions; collect or acquire data; organize and represent data; analyze data and communicate results) with a focus on scatterplots.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.PFA.1",
+      "grade": 8,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Represent, simplify, and generate equivalent algebraic expressions in one variable.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.PFA.2",
+      "grade": 8,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Determine whether a given relation is a function and determine the domain and range of a function.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.PFA.3",
+      "grade": 8,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Represent and solve problems, including those in context, by using linear functions and analyzing their key characteristics (slope and y-intercept).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.PFA.4",
+      "grade": 8,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Write and solve multistep linear equations in one variable, including problems in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    },
+    {
+      "expectation_id": "8.PFA.5",
+      "grade": 8,
+      "strand": "PFA",
+      "strand_title": "Patterns, Functions, and Algebra",
+      "source_locator": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000",
+      "scope_summary": "Write and solve multistep linear inequalities in one variable, including problems in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_VA_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "source_document_id": "VA_SOL_2023_G8",
+      "instructional_support_locator": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources"
+    }
+  ]
+}
