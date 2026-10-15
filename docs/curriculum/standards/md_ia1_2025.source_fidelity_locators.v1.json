@@ -1,0 +1,505 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "MD-IA1-2025-source-fidelity-locators-v1",
+  "status": "AUTHOR_SOURCE_LOCATORS_REVIEW_REQUIRED",
+  "as_of": "2026-10-12",
+  "publisher": "Maryland State Department of Education",
+  "document_title": "Integrated Algebra 1 Maryland College and Career Ready Standards for Mathematics — Standards Crosswalk Document",
+  "publication_revision": "July 2025",
+  "adoption": "July 2025",
+  "implementation": "SY 2027-2028",
+  "document_url": "https://msde.maryland.gov/media/17822",
+  "source_page_convention": "Original manifest source_page is zero-based PDF page index. printed_page = source_page + 1. Cover is PDF index 0 / printed page 1.",
+  "column": "2025 MD Index / 2025 Standards Statement",
+  "scope_boundary": "30 IA1 top-level standards with listed lettered subparts; original MSDE column is authority, not legacy 2010 column. Traditional Algebra I 2026-27 is separate.",
+  "records": [
+    {
+      "expectation_id": "IA1.AT.A.1",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 2,
+      "printed_page": 3,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.A",
+      "lettered_subpart_ids": [
+        "IA1.AT.A.1.a",
+        "IA1.AT.A.1.b",
+        "IA1.AT.A.1.c"
+      ],
+      "scope_summary_editorial": "Rewrite and interpret linear and exponential expressions to explain key relationship properties.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.B.2",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 3,
+      "printed_page": 4,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.B",
+      "lettered_subpart_ids": [
+        "IA1.AT.B.2.a",
+        "IA1.AT.B.2.b",
+        "IA1.AT.B.2.c",
+        "IA1.AT.B.2.d"
+      ],
+      "scope_summary_editorial": "Create and solve one-variable linear, exponential, and isolated absolute-value equations; justify and interpret solutions.",
+      "independent_acceptance": "PENDING",
+      "material_subpart_requirements": {
+        "IA1.AT.B.2.d": "Solve comparable exponential expressions in at most two steps by rewriting to a common base using exponent properties; explain solution."
+      },
+      "material_scope_review_status": "AUTHOR_SUBPART_SCOPE_PENDING_INDEPENDENT_PUBLISHER_REVIEW"
+    },
+    {
+      "expectation_id": "IA1.AT.B.3",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 4,
+      "printed_page": 5,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.B",
+      "lettered_subpart_ids": [
+        "IA1.AT.B.3.a",
+        "IA1.AT.B.3.b",
+        "IA1.AT.B.3.c",
+        "IA1.AT.B.3.d"
+      ],
+      "scope_summary_editorial": "Create and solve one-variable inequalities; represent and interpret solution sets in context.",
+      "independent_acceptance": "PENDING",
+      "material_subpart_requirements": {
+        "IA1.AT.B.3.c": "Absolute-value expression isolated on one side of inequality; express solution sets with compound inequalities and a number line."
+      },
+      "material_scope_review_status": "AUTHOR_SUBPART_SCOPE_PENDING_INDEPENDENT_PUBLISHER_REVIEW"
+    },
+    {
+      "expectation_id": "IA1.AT.B.4",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 4,
+      "printed_page": 5,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.B",
+      "lettered_subpart_ids": [
+        "IA1.AT.B.4.a",
+        "IA1.AT.B.4.b"
+      ],
+      "scope_summary_editorial": "Create and graph linear and exponential equations in two variables and interpret their solution sets.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.B.5",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 5,
+      "printed_page": 6,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.B",
+      "lettered_subpart_ids": [
+        "IA1.AT.B.5.a",
+        "IA1.AT.B.5.b",
+        "IA1.AT.B.5.c",
+        "IA1.AT.B.5.d"
+      ],
+      "scope_summary_editorial": "Create, solve, and analyze contextual systems of two linear equations in two variables.",
+      "independent_acceptance": "PENDING",
+      "material_subpart_requirements": {
+        "IA1.AT.B.5.b": "Solve systems using substitution and linear combination.",
+        "IA1.AT.B.5.c": "Graph-based approximate solutions and verify at intersection points.",
+        "IA1.AT.B.5.d": "Interpret solutions to systems of linear equations in problem contexts."
+      },
+      "material_scope_review_status": "AUTHOR_SUBPART_SCOPE_PENDING_INDEPENDENT_PUBLISHER_REVIEW"
+    },
+    {
+      "expectation_id": "IA1.AT.B.6",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 5,
+      "printed_page": 6,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.B",
+      "lettered_subpart_ids": [],
+      "scope_summary_editorial": "Create and graph linear inequalities in two variables as contextual half-plane constraints.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.B.7",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 6,
+      "printed_page": 7,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.B",
+      "lettered_subpart_ids": [
+        "IA1.AT.B.7.a",
+        "IA1.AT.B.7.b",
+        "IA1.AT.B.7.c"
+      ],
+      "scope_summary_editorial": "Represent and analyze contextual systems of two linear inequalities and their intersecting solution regions.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.B.8",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 6,
+      "printed_page": 7,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.B",
+      "lettered_subpart_ids": [
+        "IA1.AT.B.8.a",
+        "IA1.AT.B.8.b",
+        "IA1.AT.B.8.c"
+      ],
+      "scope_summary_editorial": "Model and solve optimization problems using systems of linear inequalities and justified feasible optima.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.B.9",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 6,
+      "printed_page": 7,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.B",
+      "lettered_subpart_ids": [],
+      "scope_summary_editorial": "Use technology to solve a linear–exponential system and interpret its contextual solution.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.C.10",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 7,
+      "printed_page": 8,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.C",
+      "lettered_subpart_ids": [
+        "IA1.AT.C.10.a",
+        "IA1.AT.C.10.b",
+        "IA1.AT.C.10.c",
+        "IA1.AT.C.10.d"
+      ],
+      "scope_summary_editorial": "Identify, represent, and analyze functions using domain, range, notation, tables, graphs, equations, and context.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.C.11",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 8,
+      "printed_page": 9,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.C",
+      "lettered_subpart_ids": [],
+      "scope_summary_editorial": "Calculate or estimate and interpret average rate of change for linear and exponential functions across representations.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.C.12",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 8,
+      "printed_page": 9,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.C",
+      "lettered_subpart_ids": [],
+      "scope_summary_editorial": "Compare key properties of linear and exponential functions presented in different representations.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.D.13",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 8,
+      "printed_page": 9,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.D",
+      "lettered_subpart_ids": [
+        "IA1.AT.D.13.a",
+        "IA1.AT.D.13.b",
+        "IA1.AT.D.13.c"
+      ],
+      "scope_summary_editorial": "Analyze and model arithmetic and geometric sequences using recursive and explicit representations.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.D.14",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 9,
+      "printed_page": 10,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.D",
+      "lettered_subpart_ids": [
+        "IA1.AT.D.14.a",
+        "IA1.AT.D.14.b",
+        "IA1.AT.D.14.c"
+      ],
+      "scope_summary_editorial": "Represent functions with tables and graphs and interpret contextual features, including piecewise and absolute-value functions.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.D.15",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 10,
+      "printed_page": 11,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.D",
+      "lettered_subpart_ids": [
+        "IA1.AT.D.15.a",
+        "IA1.AT.D.15.b"
+      ],
+      "scope_summary_editorial": "Distinguish and construct linear versus exponential contextual models.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.D.16",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 10,
+      "printed_page": 11,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.D",
+      "lettered_subpart_ids": [
+        "IA1.AT.D.16.a",
+        "IA1.AT.D.16.b"
+      ],
+      "scope_summary_editorial": "Analyze how input and output changes transform a function graph and affect contextual meaning.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.AT.D.17",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 11,
+      "printed_page": 12,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.AT.D",
+      "lettered_subpart_ids": [
+        "IA1.AT.D.17.a",
+        "IA1.AT.D.17.b",
+        "IA1.AT.D.17.c"
+      ],
+      "scope_summary_editorial": "Find and interpret the inverse of a linear function in context.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.GR.A.1",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 12,
+      "printed_page": 13,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.GR.A",
+      "lettered_subpart_ids": [
+        "IA1.GR.A.1.a",
+        "IA1.GR.A.1.b"
+      ],
+      "scope_summary_editorial": "Apply rotations, reflections, and translations and use preserved properties to verify congruence.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.GR.A.2",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 12,
+      "printed_page": 13,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.GR.A",
+      "lettered_subpart_ids": [],
+      "scope_summary_editorial": "Use rigid-motion congruence to connect corresponding triangle sides and angles.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.GR.B.3",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 13,
+      "printed_page": 14,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.GR.B",
+      "lettered_subpart_ids": [],
+      "scope_summary_editorial": "Apply triangle-congruence theorems to verify congruence and solve unknown measures.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.GR.B.4",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 13,
+      "printed_page": 14,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.GR.B",
+      "lettered_subpart_ids": [
+        "IA1.GR.B.4.a",
+        "IA1.GR.B.4.b"
+      ],
+      "scope_summary_editorial": "Apply angle and slope criteria for parallel and perpendicular lines.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.GR.B.5",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 13,
+      "printed_page": 14,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.GR.B",
+      "lettered_subpart_ids": [
+        "IA1.GR.B.5.a",
+        "IA1.GR.B.5.b"
+      ],
+      "scope_summary_editorial": "Use angle relationships and slope criteria to verify parallelogram properties.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.DS.A.1",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 14,
+      "printed_page": 15,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.DS.A",
+      "lettered_subpart_ids": [],
+      "scope_summary_editorial": "Distinguish correlation from causation.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.DS.A.2",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 14,
+      "printed_page": 15,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.DS.A",
+      "lettered_subpart_ids": [
+        "IA1.DS.A.2.a",
+        "IA1.DS.A.2.b"
+      ],
+      "scope_summary_editorial": "Use random samples to reason about population parameters and sample representativeness.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.DS.A.3",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 14,
+      "printed_page": 15,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.DS.A",
+      "lettered_subpart_ids": [
+        "IA1.DS.A.3.a",
+        "IA1.DS.A.3.b",
+        "IA1.DS.A.3.c"
+      ],
+      "scope_summary_editorial": "Evaluate data representations, collection methods, and claims in arguments or reports.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.DS.A.4",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 15,
+      "printed_page": 16,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.DS.A",
+      "lettered_subpart_ids": [
+        "IA1.DS.A.4.a",
+        "IA1.DS.A.4.b"
+      ],
+      "scope_summary_editorial": "Plan statistical investigations with answerable questions and valid data-collection methods.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.DS.B.5",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 15,
+      "printed_page": 16,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.DS.B",
+      "lettered_subpart_ids": [
+        "IA1.DS.B.5.a",
+        "IA1.DS.B.5.b"
+      ],
+      "scope_summary_editorial": "Analyze and compare one-variable data visualizations using shape, center, and spread.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.DS.B.6",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 16,
+      "printed_page": 17,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.DS.B",
+      "lettered_subpart_ids": [
+        "IA1.DS.B.6.a",
+        "IA1.DS.B.6.b"
+      ],
+      "scope_summary_editorial": "Construct and interpret two-way frequency tables, associations, independence, and joint or marginal probability.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.DS.B.7",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 16,
+      "printed_page": 17,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.DS.B",
+      "lettered_subpart_ids": [
+        "IA1.DS.B.7.a",
+        "IA1.DS.B.7.b"
+      ],
+      "scope_summary_editorial": "Model two-variable quantitative data with scatter plots and linear or exponential functions and assess fit.",
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "expectation_id": "IA1.DS.B.8",
+      "grade_course": "Integrated Algebra 1",
+      "document_url": "https://msde.maryland.gov/media/17822",
+      "publication_revision": "July 2025",
+      "pdf_page_index": 16,
+      "printed_page": 17,
+      "source_column": "2025 MD Index / 2025 Standards Statement",
+      "section": "IA1.DS.B",
+      "lettered_subpart_ids": [
+        "IA1.DS.B.8.a",
+        "IA1.DS.B.8.b"
+      ],
+      "scope_summary_editorial": "Interpret components of linear and exponential data models, with and without technology.",
+      "independent_acceptance": "PENDING"
+    }
+  ]
+}
