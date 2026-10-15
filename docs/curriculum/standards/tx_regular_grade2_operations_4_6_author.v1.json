@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_2",
+  "section": "111.4(b)(4)-(6)",
+  "official_source": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "publisher_edition": "Texas Education Agency December 2014 Chapter 111 Subchapter A",
+  "source_pdf_printed_page": 9,
+  "source_pdf_page_index": 8,
+  "source_status": "AUTHOR_PROVISIONAL_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+  "publisher_original_bytes_authenticated": false,
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "row_count": 8,
+  "rows": [
+    {
+      "id": "111.4(b)(4)(A)",
+      "scope": "Recall basic addition and subtraction facts within 20 with automaticity.",
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(4)(B)",
+      "scope": "Add up to four two-digit numbers and subtract two-digit numbers using place-value and operation-property based mental strategies and algorithms.",
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(4)(C)",
+      "scope": "Solve one-step and multi-step addition/subtraction word problems within 1,000 with varied place-value strategies, including algorithms.",
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(4)(D)",
+      "scope": "Generate and solve problem situations for a given mathematical number sentence involving addition or subtraction of whole numbers within 1,000.",
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(5)(A)",
+      "scope": "Determine the value of a collection of coins up to one dollar.",
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(5)(B)",
+      "scope": "Use the cent symbol, dollar sign and decimal point when naming the value of a coin collection.",
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(6)(A)",
+      "scope": "Model, create and describe contextual multiplication by joining equivalent groups of concrete objects.",
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(6)(B)",
+      "scope": "Model, create and describe contextual division by separating concrete objects into equivalent sets.",
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    }
+  ]
+}
