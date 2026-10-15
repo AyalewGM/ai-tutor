@@ -25,7 +25,7 @@
   "combined_algebra_i_authored_identifier_rows": 62,
   "remaining_algebra_i_historical_ids_unscoped": 0,
   "source_cautions": [
-    "F-IF.7.e source text explicitly refers to logarithmic and trigonometric graph features; the printed p.60 Algebra I introduction excludes logarithmic and trigonometric coursework. Retain both texts; do not silently delete the publisher requirement or count those full functions as Algebra I mastered content without independent course-scope adjudication.",
+    "F-IF.7.e's complete printed p.67 standard explicitly covers exponential, logarithmic and trigonometric graphing. The Algebra I printed p.60 course introduction explicitly excludes logarithmic and trigonometric functions from this course and defers them to Algebra II; preserve the full original standard and a separate instructional-scope annotation, subject to independent verification. Never count deferred components as Algebra I mastery.",
     "F-IF.7.b separately mentions square-root and cube-root graphs despite the brief introductory description of model families; retain both.",
     "F-BF.4.a is explicitly linear only in the bracketed Algebra I note.",
     "F-LE.6 is a separately numbered California quadratic-physical-problems addition, not a substitute for ordinary F-LE.5.",
@@ -264,16 +264,33 @@
       "track": "ALGEBRA_I",
       "source_printed_page": 67,
       "source_pdf_page_index": 73,
-      "author_mathematical_scope_summary": "Source expectation names graphs of exponential/logarithmic and trigonometric functions with corresponding features; Algebra I introductory course note explicitly excludes logarithms and trigonometry.",
+      "author_mathematical_scope_summary": "The complete F-IF.7.e standard describes graphing exponential and logarithmic functions with intercepts and end behavior and trigonometric functions with period, midline, and amplitude. The Algebra I course introduction on printed page 60 expressly excludes logarithmic and trigonometric functions from Algebra I coursework and defers them to Algebra II; exponential graphing remains in course scope under the course-level function-family restrictions.",
       "test_material_conditions": [
         "exponential intercepts end behavior",
-        "source mentions logarithms and trigonometric features",
+        "full source preserves logarithmic intercepts and end behavior",
+        "full source preserves trigonometric period midline amplitude",
+        "Algebra I printed page 60 explicitly defers logarithmic and trigonometric functions to Algebra II",
         "COURSE_BOUNDARY_CONFLICT_PENDING_INDEPENDENT_INTERPRETATION"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_standard_full_scope_components": [
+        "exponential graphs: intercepts and end behavior",
+        "logarithmic graphs: intercepts and end behavior",
+        "trigonometric graphs: period, midline and amplitude"
+      ],
+      "algebra1_course_instructional_scope": [
+        "exponential function graphing as appropriate for Algebra I"
+      ],
+      "deferred_by_explicit_course_introduction": [
+        "logarithmic functions",
+        "trigonometric functions"
+      ],
+      "course_introduction_source_printed_page": 60,
+      "course_introduction_source_pdf_zero_based_index": 66,
+      "course_scope_disposition": "AUTHOR_RECONCILED_SOURCE_STANDARD_VS_EXPLICIT_COURSE_INTRODUCTION_PENDING_INDEPENDENT_VERIFICATION"
     },
     {
       "expectation_id": "F-IF.8.a",
