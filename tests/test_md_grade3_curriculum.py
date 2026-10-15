@@ -3,6 +3,7 @@ from decimal import Decimal
 from sqlalchemy import select
 
 from app.core.database import SessionLocal
+from app.content_models import ProblemContentMetadata
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
 from app.models import (
     Curriculum,
@@ -59,7 +60,13 @@ def test_md_grade3_seed_is_idempotent_provenanced_and_content_ready():
                 )
             )
         )
-        assert len(problems) == 72
+        assert len(problems) == 108
+        extension_ids = set(db.scalars(select(ProblemContentMetadata.problem_id).where(
+            ProblemContentMetadata.problem_id.in_([p.id for p in problems]),
+            ProblemContentMetadata.extension_eligible.is_(True),
+        )))
+        assert len(extension_ids) == 36
+        assert len(problems) - len(extension_ids) == 72
         assert all(problem.solution["provenance"]["origin"] == "AUTHORED" for problem in problems)
         assert all(
             problem.solution["provenance"]["standards_source"].startswith(
@@ -205,7 +212,7 @@ def test_md_grade3_pack_loaded_via_declarative_framework():
         assert curriculum.code == CURRICULUM_CODE
         assert result.skill_count == 9
         assert result.expectation_count == 5
-        assert result.problem_count == 72
+        assert result.problem_count == 108
 
         skills = list(
             db.scalars(select(Skill).where(Skill.curriculum_id == curriculum.id))
@@ -219,7 +226,13 @@ def test_md_grade3_pack_loaded_via_declarative_framework():
                 )
             )
         )
-        assert len(problems) == 72
+        assert len(problems) == 108
+        extension_ids = set(db.scalars(select(ProblemContentMetadata.problem_id).where(
+            ProblemContentMetadata.problem_id.in_([p.id for p in problems]),
+            ProblemContentMetadata.extension_eligible.is_(True),
+        )))
+        assert len(extension_ids) == 36
+        assert len(problems) - len(extension_ids) == 72
         assert all("pack_problem_key" in problem.solution for problem in problems)
         assert all(problem.solution["provenance"]["origin"] == "AUTHORED" for problem in problems)
         assert all(
