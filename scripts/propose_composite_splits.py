@@ -50,23 +50,14 @@ STOPWORDS = {"the", "and", "with", "for", "in", "of", "to", "a", "an", "by",
 
 def _manifest_rows() -> list[dict]:
     rows = []
-
-    def _collect(manifest: dict) -> None:
-        # Single-course manifests (e.g. Ontario MTH1W) keep the grade at the
-        # curriculum level rather than per expectation row.
-        course_grade = (manifest.get("curriculum") or {}).get("grade")
-        for row in manifest.get("expectations", []):
-            row.setdefault("grade", course_grade)
-            rows.append(row)
-
     for f in sorted(glob.glob(str(ROOT / "docs/curriculum/standards/*expectations*.v1.json"))):
-        _collect(json.loads(Path(f).read_text()))
+        rows += json.loads(Path(f).read_text()).get("expectations", [])
     for ref, path in EXTRA_MANIFESTS.items():
         try:
             raw = subprocess.run(
                 ["git", "-C", str(ROOT), "show", f"{ref}:{path}"],
                 capture_output=True, text=True, check=True).stdout
-            _collect(json.loads(raw))
+            rows += json.loads(raw).get("expectations", [])
         except subprocess.CalledProcessError:
             pass
     return rows
@@ -97,15 +88,20 @@ def propose() -> dict:
     # local_code -> claimed expectations, inverted from manifest crosswalks
     claims: dict[str, list[dict]] = {}
     for e in _manifest_rows():
-        for lc in e.get("repository_existing_crosswalks") or []:
-            # Crosswalks are plain local codes in most manifests; the MTH1W
-            # manifest uses {local_skill_code, canonical_skill_code, ...} dicts.
-            local_code = lc.get("local_skill_code") if isinstance(lc, dict) else lc
-            if not local_code:
+        for link in e.get("repository_existing_crosswalks") or []:
+            # Manifests contain both legacy string codes and structured evidence.
+            # Only explicit local-skill identities may enter split proposals.
+            if isinstance(link, str):
+                lc = link
+            elif isinstance(link, dict):
+                lc = link.get("local_skill_code") or link.get("local_code")
+            else:
+                lc = None
+            if not isinstance(lc, str) or not lc.strip():
                 continue
-            claims.setdefault(local_code, []).append(
+            claims.setdefault(lc, []).append(
                 {"expectation_id": e["expectation_id"], "grade": e.get("grade"),
-                 "scope": e.get("scope_summary", "")})
+                 "scope": e.get("scope_summary") or ""})
 
     proposals = []
     for row in rows:

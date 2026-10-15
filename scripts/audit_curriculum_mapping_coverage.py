@@ -71,11 +71,13 @@ def audit() -> dict:
         version = ""
         cur = d.get("curriculum") or {}
         version = cur.get("standards_version") or d.get("schema_version", "")
-        course_grade = cur.get("grade")
         for row in d.get("expectations", []):
-            # Single-course manifests (e.g. Ontario MTH1W) carry the grade at
-            # the curriculum level rather than per expectation row.
-            grade = int(row.get("grade") or course_grade)
+            # Preserve ungraded standards without inventing a grade identity.
+            raw_grade = row.get("grade")
+            grade = (
+                int(raw_grade) if isinstance(raw_grade, (int, str))
+                and str(raw_grade).isdigit() else None
+            )
             links = row.get("repository_existing_crosswalks") or []
             all_expectations.append(
                 {
