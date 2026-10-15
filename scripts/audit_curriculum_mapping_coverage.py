@@ -82,7 +82,7 @@ def audit() -> dict:
                     "jurisdiction": juris,
                     "grade": grade,
                     "expectation_id": row["expectation_id"],
-                    "status": row.get("proposed_mapping_status"),
+                    "status": row.get("proposed_mapping_status") or NO_CANDIDATE,
                     "candidates": links,
                     "manifest": path.name,
                 }
