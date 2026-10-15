@@ -121,14 +121,13 @@
       "advanced_remaining_unscoped_rows": 0,
       "accepted_source_fidelity_rows": 0,
       "unextracted_tracks": [
-        "REGULAR_GRADE_1",
         "REGULAR_GRADE_2",
         "REGULAR_GRADE_3",
         "REGULAR_GRADE_4",
         "REGULAR_GRADE_5"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independent source fidelity of 59 TX regular Grade 6 §111.26 expectation paraphrases, including page spans and notation, then complete regular Grades 1–5 and publisher-byte authentication. Zero independent acceptance; 198 advanced author descriptions separate.",
+      "next_gate": "Independently review TX Grade 1 §111.3(b)(1)-(3) 20 author descriptions, finish Grade 1 sections (4)-(9), and Grades 2–5. Grade 6 59 author descriptions and advanced 198 remain source-fidelity pending. Authenticate official publisher bytes and Washington source.",
       "advanced_grade6_111_29_author_identifier_rows": 68,
       "advanced_grade6_111_29_author_scope_rows": 68,
       "advanced_grade6_111_29_independently_accepted_source_rows": 0,
@@ -140,7 +139,9 @@
         "tx_advanced_2025_grade6_111_29_scope_batch_05_geometry_data_finance.v1.json",
         "tx_advanced_2025_grade6_111_29_scope_batch_06_process.v1.json"
       ],
-      "partially_author_scoped_tracks": [],
+      "partially_author_scoped_tracks": [
+        "REGULAR_GRADE_1"
+      ],
       "regular_grade6_111_26_author_scope_rows": 59,
       "regular_grade6_111_26_independently_accepted_source_rows": 0,
       "regular_grade6_source_files": [
@@ -149,7 +150,12 @@
         "tx_regular_grade6_proportionality_4e_5c_author.v1.json",
         "tx_regular_grade6_remaining_source_author.v1.json"
       ],
-      "regular_grade6_author_scope_status": "59_OF_59_AUTHOR_PARAPHRASES_STAGED_INDEPENDENT_SOURCE_FIDELITY_PENDING"
+      "regular_grade6_author_scope_status": "59_OF_59_AUTHOR_PARAPHRASES_STAGED_INDEPENDENT_SOURCE_FIDELITY_PENDING",
+      "regular_grade1_author_scope_rows": 20,
+      "regular_grade1_source_files": [
+        "tx_regular_grade1_process_number_operations_author.v1.json"
+      ],
+      "regular_grade1_independently_accepted_source_rows": 0
     },
     "WA": {
       "official_source": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
