@@ -32,6 +32,10 @@ def test_grade5_all_46_source_identifiers_and_material_bounds():
     assert "first quadrant" in by_id["111.7(b)(8)(B)"]
     assert "scatterplots" in by_id["111.7(b)(9)(B)"]
     assert "gross versus net" in by_id["111.7(b)(10)(B)"]
+    assert "with proficiency" in by_id["111.7(b)(3)(C)"]
+    assert "income tax" in by_id["111.7(b)(10)(A)"]
+    assert "possible actions" in by_id["111.7(b)(10)(E)"]
+    assert "INDEPENDENT SOURCE FIDELITY PENDING" in docs[0]["remaining_grade5_sections"]
     for d in docs:
         assert d["independent_source_fidelity"] == "PENDING"
         assert d["publisher_original_bytes_authenticated"] is False
