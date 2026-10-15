@@ -85,7 +85,17 @@
         "GRADE_6"
       ],
       "grade2_scope_fidelity_accepted_rows": 0,
-      "grade3_author_scope_status": "29_AUTHOR_PARENT_AND_SUBPART_IDENTIFIERS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      "grade3_author_scope_status": "29_AUTHOR_PARENT_AND_SUBPART_IDENTIFIERS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "grade6_source_intake": {
+        "authority": "California Department of Education",
+        "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+        "source_version": "CA_CCSSM_MODIFIED_2013_CORRECTED_ELECTRONIC",
+        "historical_audit": "app/california_grade6_gap_audit.py",
+        "author_identifiers": 29,
+        "source_scope_status": "PENDING_OFFICIAL_PUBLISHER_TEXT_AND_CA_ADDITIONS_REVIEW",
+        "independent_acceptance": 0,
+        "prior_gap_labels_role": "UNVERIFIED_HISTORICAL_CANDIDATES_ONLY"
+      }
     },
     "TX": {
       "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
