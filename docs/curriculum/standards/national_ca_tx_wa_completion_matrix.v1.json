@@ -17,12 +17,11 @@
       "accepted_source_fidelity_rows": 0,
       "unverified_scope_rows": 173,
       "unextracted_tracks": [
-        "GRADE_4",
         "GRADE_5",
         "GRADE_6"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independent fidelity review of the eleven Grade 4 printed-p30 author scope rows and CDE whole-number ≤1,000,000 domain restriction; complete Grade 4 pages 31-33 and Grades 5-6. Zero source approvals.",
+      "next_gate": "Independently verify Grade 4 all 28 parent source expectations, required fraction subparts and denominator exclusions; author Grades 5–6, then independently review all staged CA tracks. No canonical mapping/mastery acceptance.",
       "grade8_author_scope_rows": 28,
       "grade8_author_scope_source": "ca_2013_grade8_28_source_author_slice.v1.json",
       "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY",
@@ -34,9 +33,9 @@
         "GRADE_8": 28,
         "ALGEBRA_I": 62,
         "MATHEMATICS_I": 59,
-        "GRADE_4": 11
+        "GRADE_4": 28
       },
-      "author_scope_total_staged": 261,
+      "author_scope_total_staged": 278,
       "author_scope_acceptance": "DRAFT_ALL_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "author_source_scope_files": {
         "GRADE_1": [
@@ -67,7 +66,8 @@
           "ca_2013_grade3_page27_source_author_slice.v1.json"
         ],
         "GRADE_4": [
-          "ca_2013_grade4_page30_source_author_slice.v1.json"
+          "ca_2013_grade4_page30_source_author_slice.v1.json",
+          "ca_2013_grade4_pages31_33_source_author_slice.v1.json"
         ]
       },
       "grade2_partial_author_source_scope_rows": 10,
@@ -76,9 +76,7 @@
       "grade2_author_scope_total": 27,
       "grade2_author_scope_status": "ALL_27_AUTHOR_DESCRIPTIONS_STAGED_ZERO_INDEPENDENT_SOURCE_ACCEPTANCE",
       "grade3_partial_author_scope_total": 29,
-      "partially_scoped_tracks": [
-        "GRADE_4"
-      ],
+      "partially_scoped_tracks": [],
       "not_yet_author_scoped_tracks": [
         "GRADE_5",
         "GRADE_6"
