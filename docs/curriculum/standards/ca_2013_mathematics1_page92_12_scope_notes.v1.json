@@ -1,0 +1,164 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "MATHEMATICS_I",
+  "status": "AUTHOR_SUPPLEMENT_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "California CCSS Mathematics, modified January 2013, 2014 corrected electronic edition",
+  "source_printed_page": 92,
+  "source_pdf_zero_based_page_index": 98,
+  "publisher_page_image_examined": true,
+  "publisher_original_file_bytes_hash_authenticated": false,
+  "existing_source_audit": "ca_2013_mathematics1_pages90_94_author_audit.v1.json",
+  "record_semantics": "Source-scope and bracket notes for 12 pre-existing Mathematics I p.92 placements; not new standards or canonical capabilities",
+  "requirement_count": 12,
+  "original_math1_placement_count": 59,
+  "historical_grade7_8_algebra1_math1_placements": 173,
+  "rows": [
+    {
+      "expectation_id": "F-IF.5",
+      "source_printed_page": 92,
+      "source_pdf_zero_based_page_index": 98,
+      "material_conditions": [
+        "relate a function's domain to its graph and to the quantity being modeled",
+        "context can require discrete positive integer inputs, not an unrestricted continuous domain"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-IF.6",
+      "source_printed_page": 92,
+      "source_pdf_zero_based_page_index": 98,
+      "material_conditions": [
+        "compute and interpret average rate of change over a specified interval from a symbolic expression or table",
+        "estimate rate of change from a graph; retain interval dependence"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-IF.7.a",
+      "source_printed_page": 92,
+      "source_pdf_zero_based_page_index": 98,
+      "material_conditions": [
+        "graph linear and quadratic functions and identify intercepts, maxima and minima",
+        "general F-IF.7 graphing includes simple hand graphs and technology for complicated cases",
+        "Mathematics I strand bracket narrows emphasis to linear and exponential; quadratic publisher subpart is not blanket Math I mastery"
+      ],
+      "source_scope_tension": "FULL_SUBPART_QUADRATIC_VS_MATH_I_LINEAR_EXPONENTIAL_BRACKET",
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-IF.7.e",
+      "source_printed_page": 92,
+      "source_pdf_zero_based_page_index": 98,
+      "material_conditions": [
+        "graph exponential and logarithmic functions with intercepts and end behavior",
+        "graph trigonometric functions with period, midline and amplitude",
+        "Mathematics I strand bracket focuses linear and exponential; preserve logarithmic/trigonometric source examples without automatic activation"
+      ],
+      "source_scope_tension": "FULL_SUBPART_LOG_TRIG_VS_MATH_I_LINEAR_EXPONENTIAL_BRACKET",
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-IF.9",
+      "source_printed_page": 92,
+      "source_pdf_zero_based_page_index": 98,
+      "material_conditions": [
+        "compare two functions represented algebraically, graphically, numerically in tables or by verbal description",
+        "preserve comparison across *different* representations, not just two formulas"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-BF.1.a",
+      "source_printed_page": 92,
+      "source_pdf_zero_based_page_index": 98,
+      "material_conditions": [
+        "determine from context an explicit function expression, recursive process or steps for calculation",
+        "Mathematics I F-BF.1–2 bracket limits linear and exponential relationships with integer inputs"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-BF.1.b",
+      "source_printed_page": 92,
+      "source_pdf_zero_based_page_index": 98,
+      "material_conditions": [
+        "combine standard function types using arithmetic operations to model a relationship",
+        "publisher illustrates combining a constant and decaying exponential; do not infer unrelated advanced composition mastery",
+        "Mathematics I F-BF.1–2 bracket limits linear and exponential relationships with integer inputs"
+      ],
+      "source_scope_tension": "GENERAL_COMBINED_FUNCTION_EXAMPLE_VS_MATH_I_COURSE_BRACKET",
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-BF.2",
+      "source_printed_page": 92,
+      "source_pdf_zero_based_page_index": 98,
+      "material_conditions": [
+        "write arithmetic and geometric sequences with both recursive and explicit formulas",
+        "model situations with sequences and translate between recursive and explicit forms",
+        "Mathematics I F-BF.1–2 bracket specifies linear/exponential relationships and integer inputs"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-BF.3",
+      "source_printed_page": 92,
+      "source_pdf_zero_based_page_index": 98,
+      "material_conditions": [
+        "analyze replacing f(x) with f(x)+k, k*f(x), f(k*x) and f(x+k) for positive and negative k",
+        "read k from a graph, experiment and explain transformations with technology",
+        "recognize even and odd functions from graphs and algebraic expressions",
+        "Mathematics I course bracket limits focus to linear/exponential functions and vertical translations for exponential"
+      ],
+      "source_scope_tension": "FULL_TRANSFORMATION_STANDARD_VS_COURSE_FOCUS_VERTICAL_EXPONENTIAL",
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-LE.1.a",
+      "source_printed_page": 92,
+      "source_pdf_zero_based_page_index": 98,
+      "material_conditions": [
+        "prove equal differences over equal input intervals for linear functions and equal multiplicative factors over equal intervals for exponential functions",
+        "Mathematics I models bracket focuses linear/exponential despite wider heading mentioning quadratic"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-LE.1.b",
+      "source_printed_page": 92,
+      "source_pdf_zero_based_page_index": 98,
+      "material_conditions": [
+        "recognize a constant absolute change per unit interval of another quantity",
+        "distinguish additive linear change from percent-based growth"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-LE.1.c",
+      "source_printed_page": 92,
+      "source_pdf_zero_based_page_index": 98,
+      "material_conditions": [
+        "recognize growth or decay by a constant percentage per unit interval of another quantity",
+        "retain exponential multiplicative interpretation of percent change"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "reviewer_handoff": "Independent Standards Source-Fidelity Reviewer: compare each of 12 rows with the original CDE printed p.92, especially F-IF.7 a/e, F-BF.3 course brackets; preserve broader source text separately from Math I limits. Determine exact source fidelity only. Do not authorize curriculum activation."
+}
