@@ -120,11 +120,9 @@
       "advanced_author_scope_rows": 130,
       "advanced_remaining_unscoped_rows": 0,
       "accepted_source_fidelity_rows": 0,
-      "unextracted_tracks": [
-        "REGULAR_GRADE_5"
-      ],
+      "unextracted_tracks": [],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independently verify all 53 Grade 4 §111.6(b)(1)-(10) source rows, including fraction/decimal bounds and official printed page locators. Then author Texas regular Grade 5 and authenticate Washington publisher original; no canonical/mastery acceptance.",
+      "next_gate": "All Texas regular Grades 1–6 now have provisional author scope inventories; independent original-source fidelity, mathematical qualifiers, printed page spans and publisher-byte authentication remain unverified. Continue Washington OSPI publisher authentication and CA/TX source acceptance; no canonical mapping/mastery approval.",
       "advanced_grade6_111_29_author_identifier_rows": 68,
       "advanced_grade6_111_29_author_scope_rows": 68,
       "advanced_grade6_111_29_independently_accepted_source_rows": 0,
@@ -182,7 +180,14 @@
         "tx_regular_grade4_process_place_value_fractions_author.v1.json",
         "tx_regular_grade4_operations_geometry_finance_author.v1.json"
       ],
-      "regular_grade4_author_scope_status": "53_OF_53_AUTHOR_PARAPHRASES_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      "regular_grade4_author_scope_status": "53_OF_53_AUTHOR_PARAPHRASES_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "regular_grade5_author_scope_rows": 46,
+      "regular_grade5_independently_accepted_source_rows": 0,
+      "regular_grade5_source_files": [
+        "tx_regular_grade5_process_decimal_operations_author.v1.json",
+        "tx_regular_grade5_algebra_geometry_finance_author.v1.json"
+      ],
+      "regular_grade5_author_scope_status": "46_OF_46_AUTHOR_PARAPHRASES_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY"
     },
     "WA": {
       "official_source": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
