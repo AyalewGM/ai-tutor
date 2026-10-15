@@ -1,0 +1,2451 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "DC-G6-G8-CCSS-expectation-inventory-v1",
+  "status": "DRAFT_PROPOSED_NOT_VERIFIED",
+  "jurisdiction": {
+    "country": "United States",
+    "state": "District of Columbia",
+    "authority": "Office of the State Superintendent of Education",
+    "authority_code": "OSSE"
+  },
+  "curriculum": {
+    "course_code": "DC_CCSS_MATH_GRADES_6_8",
+    "course_title": "District of Columbia Mathematics Standards (Common Core), Grades 6-8",
+    "standards_version": "CCSS-2010 (current DC adoption)",
+    "adopted_date": "2010-07 (District adoption of CCSS)",
+    "implementation_school_year": "2014-2015",
+    "note": "DC adopted the Common Core State Standards verbatim; expectation identifiers are the canonical CCSS codes (e.g., 6.NS.A.1). Unlike Maryland's 2025 MCCRS re-domained framework, DC retains the legacy domain letters RP/NS/EE/G/SP/F.",
+    "implementation_milestone": "FULL_IMPLEMENTATION_OF_2010_CCSS"
+  },
+  "provenance": {
+    "authoritative_source_url": "https://osse.dc.gov/page/dc-standards",
+    "standards_text_url": "https://www.thecorestandards.org/Math",
+    "checked_date": "2026-10-12",
+    "source_notes": [
+      "The District of Columbia adopted the Common Core State Standards; OSSE publishes DC standards as the CCSS verbatim.",
+      "Expectation identifiers follow the canonical CCSS scheme {grade}.{domain}.{cluster}.{number}; the inventory unit is the top-level standard (lettered sub-parts are not enumerated).",
+      "Scope summaries are editorial paraphrases of the CCSS statements; reviewers must compare them with official wording before accepting any mapping.",
+      "OSSE adoption was July 2010; implementation began SY 2011-2012 and was complete by SY 2014-2015. The inventory_as_of date is not a standards version or school-year code.",
+      "2026-10-12 completeness correction: Grade 8 Geometry includes 8.G.C.9 (volume of cylinders, cones, spheres), omitted from the earlier 80-row draft; authoritative CCSS Grade 8 Geometry domain lists nine standards."
+    ],
+    "inventory_as_of": "2026-10-12",
+    "adoption_history_authority_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
+    "source_text_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers (CCSS 2010)",
+    "source_text_host_classification": "THECORESTANDARDS.ORG_IS_UNOFFICIAL_REPUBLICATION; OSSE_ADOPTION_IS_JURISDICTIONAL_AUTHORITY",
+    "license_note": "CCSS text ©2010 NGA/CCSSO; link to official publication/license, do not copy text into student-facing Mihur."
+  },
+  "reconciliation": {
+    "official_expectation_count": 81,
+    "repository_existing_expectation_rows": 28,
+    "unmapped_expectations": 53,
+    "existing_seed_rows_by_grade": {
+      "6": 5,
+      "7": 5,
+      "8": 0
+    },
+    "seed_rows_without_clear_expectation": [],
+    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate; several are broad domain-level composites (e.g., DC7.SP.PROBABILITY spans all eight 7.SP expectations). Grade 8 has no repository seed rows at all."
+  },
+  "safety": {
+    "activation": "FORBIDDEN",
+    "mapping_review_required": true,
+    "new_canonical_ids_created": false,
+    "learner_mastery_mutation": false,
+    "verified_coverage_claim": false
+  },
+  "classification_legend": {
+    "standards_mapped": "A repository-specific seed row partially overlaps this expectation; this does not mean the mapping is accepted or complete.",
+    "reviewed_skill": "Independent mathematical approval must cover the exact atomic target and definition.",
+    "generator_available": "A generator must target the exact reviewed identity; local content is not enough.",
+    "validated_practice": "Practice must be independently validated against both expectation and skill scope.",
+    "assessment_ready": "An accepted independent assessment contract must exist.",
+    "verified_mastery_evidence": "Learner evidence is never inferred from mappings, generators, practice, or tests."
+  },
+  "expectations": [
+    {
+      "expectation_id": "6.RP.A.1",
+      "grade": 6,
+      "domain": "RP",
+      "cluster": "A",
+      "domain_title": "Ratios and Proportional Relationships",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/RP/A/1/",
+      "scope_summary": "Understand the concept of a ratio and use ratio language to describe a ratio relationship between two quantities.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC6.RP.RATIO"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/RP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.RP.A.2",
+      "grade": 6,
+      "domain": "RP",
+      "cluster": "A",
+      "domain_title": "Ratios and Proportional Relationships",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/RP/A/2/",
+      "scope_summary": "Understand the concept of a unit rate a/b associated with a ratio a:b and use rate language in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC6.RP.UNIT_RATE"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/RP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.RP.A.3",
+      "grade": 6,
+      "domain": "RP",
+      "cluster": "A",
+      "domain_title": "Ratios and Proportional Relationships",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/RP/A/3/",
+      "scope_summary": "Use ratio and rate reasoning to solve real-world and mathematical problems (tables, tape diagrams, double number lines, equations, unit rates, percent, unit conversion).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC6.RP.RATIO",
+        "DC6.RP.UNIT_RATE"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [
+        "6.RP.A.3.a",
+        "6.RP.A.3.b",
+        "6.RP.A.3.c",
+        "6.RP.A.3.d"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/RP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.NS.A.1",
+      "grade": 6,
+      "domain": "NS",
+      "cluster": "A",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/NS/A/1/",
+      "scope_summary": "Interpret and compute quotients of fractions and solve word problems involving division of fractions by fractions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC6.NS.FRACTION"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.NS.B.2",
+      "grade": 6,
+      "domain": "NS",
+      "cluster": "B",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/NS/B/2/",
+      "scope_summary": "Fluently divide multi-digit numbers using the standard algorithm.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.NS.B.3",
+      "grade": 6,
+      "domain": "NS",
+      "cluster": "B",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/NS/B/3/",
+      "scope_summary": "Fluently add, subtract, multiply, and divide multi-digit decimals using the standard algorithm for each operation.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.NS.B.4",
+      "grade": 6,
+      "domain": "NS",
+      "cluster": "B",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/NS/B/4/",
+      "scope_summary": "Find the greatest common factor of two whole numbers up to 100 and the least common multiple of two whole numbers up to 12; use the distributive property.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.NS.C.5",
+      "grade": 6,
+      "domain": "NS",
+      "cluster": "C",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/NS/C/5/",
+      "scope_summary": "Understand that positive and negative numbers describe quantities with opposite directions or values; use them in real-world contexts and explain the meaning of 0.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.NS.C.6",
+      "grade": 6,
+      "domain": "NS",
+      "cluster": "C",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/NS/C/6/",
+      "scope_summary": "Understand a rational number as a point on the number line; represent points on the line and in the plane with negative coordinates (opposites, reflections, positioning).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [
+        "6.NS.C.6.a",
+        "6.NS.C.6.b",
+        "6.NS.C.6.c"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.NS.C.7",
+      "grade": 6,
+      "domain": "NS",
+      "cluster": "C",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/NS/C/7/",
+      "scope_summary": "Understand ordering and absolute value of rational numbers (inequalities on the number line, order in context, absolute value as distance, distinguishing absolute value from order).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [
+        "6.NS.C.7.a",
+        "6.NS.C.7.b",
+        "6.NS.C.7.c",
+        "6.NS.C.7.d"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.NS.C.8",
+      "grade": 6,
+      "domain": "NS",
+      "cluster": "C",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/NS/C/8/",
+      "scope_summary": "Solve real-world and mathematical problems by graphing points in all four quadrants, using coordinates and absolute value to find distances.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.EE.A.1",
+      "grade": 6,
+      "domain": "EE",
+      "cluster": "A",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/EE/A/1/",
+      "scope_summary": "Write and evaluate numerical expressions involving whole-number exponents.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC6.EE.EXPR"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.EE.A.2",
+      "grade": 6,
+      "domain": "EE",
+      "cluster": "A",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/EE/A/2/",
+      "scope_summary": "Write, read, and evaluate expressions in which letters stand for numbers (including expressions from formulas and with variables raised to powers).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC6.EE.EXPR"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [
+        "6.EE.A.2.a",
+        "6.EE.A.2.b",
+        "6.EE.A.2.c"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.EE.A.3",
+      "grade": 6,
+      "domain": "EE",
+      "cluster": "A",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/EE/A/3/",
+      "scope_summary": "Apply the properties of operations to generate equivalent expressions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC6.EE.EXPR"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.EE.A.4",
+      "grade": 6,
+      "domain": "EE",
+      "cluster": "A",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/EE/A/4/",
+      "scope_summary": "Identify when two expressions are equivalent.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC6.EE.EXPR"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.EE.B.5",
+      "grade": 6,
+      "domain": "EE",
+      "cluster": "B",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/EE/B/5/",
+      "scope_summary": "Understand solving an equation or inequality as finding values that make it true; use substitution to determine whether a given number is a solution.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC6.EE.EQUATION"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.EE.B.6",
+      "grade": 6,
+      "domain": "EE",
+      "cluster": "B",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/EE/B/6/",
+      "scope_summary": "Use variables to represent numbers and write expressions when solving real-world or mathematical problems.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC6.EE.EQUATION"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.EE.B.7",
+      "grade": 6,
+      "domain": "EE",
+      "cluster": "B",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/EE/B/7/",
+      "scope_summary": "Solve real-world and mathematical problems by writing and solving equations of the form x + p = q and px = q for nonnegative rational numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC6.EE.EQUATION"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.EE.B.8",
+      "grade": 6,
+      "domain": "EE",
+      "cluster": "B",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/EE/B/8/",
+      "scope_summary": "Write an inequality of the form x > c or x < c to represent a constraint; recognize infinitely many solutions and represent them on number line diagrams.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC6.EE.EQUATION"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.EE.C.9",
+      "grade": 6,
+      "domain": "EE",
+      "cluster": "C",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/EE/C/9/",
+      "scope_summary": "Use variables to represent two quantities that change in relationship to one another; write an equation and analyze the relationship using graphs and tables.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.G.A.1",
+      "grade": 6,
+      "domain": "G",
+      "cluster": "A",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/G/A/1/",
+      "scope_summary": "Find the area of triangles, special quadrilaterals, and polygons by composing into rectangles or decomposing into triangles and other shapes.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.G.A.2",
+      "grade": 6,
+      "domain": "G",
+      "cluster": "A",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/G/A/2/",
+      "scope_summary": "Find the volume of a right rectangular prism with fractional edge lengths, including with the formulas V = lwh and V = bh.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.G.A.3",
+      "grade": 6,
+      "domain": "G",
+      "cluster": "A",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/G/A/3/",
+      "scope_summary": "Draw polygons in the coordinate plane given vertex coordinates; use coordinates to find side lengths of points with a shared coordinate.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.G.A.4",
+      "grade": 6,
+      "domain": "G",
+      "cluster": "A",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/G/A/4/",
+      "scope_summary": "Represent three-dimensional figures using nets of rectangles and triangles and use the nets to find surface area.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.SP.A.1",
+      "grade": 6,
+      "domain": "SP",
+      "cluster": "A",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/SP/A/1/",
+      "scope_summary": "Recognize a statistical question as one that anticipates variability in the data and accounts for it in the answers.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.SP.A.2",
+      "grade": 6,
+      "domain": "SP",
+      "cluster": "A",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/SP/A/2/",
+      "scope_summary": "Understand that a set of data collected to answer a statistical question has a distribution described by center, spread, and overall shape.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.SP.A.3",
+      "grade": 6,
+      "domain": "SP",
+      "cluster": "A",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/SP/A/3/",
+      "scope_summary": "Recognize that a measure of center summarizes all values with a single number while a measure of variation describes how values vary.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.SP.B.4",
+      "grade": 6,
+      "domain": "SP",
+      "cluster": "B",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/SP/B/4/",
+      "scope_summary": "Display numerical data in plots on a number line, including dot plots, histograms, and box plots.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "6.SP.B.5",
+      "grade": 6,
+      "domain": "SP",
+      "cluster": "B",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/6/SP/B/5/",
+      "scope_summary": "Summarize numerical data sets in relation to their context (observations, attributes, measures of center and variability, patterns and deviations).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [
+        "6.SP.B.5.a",
+        "6.SP.B.5.b",
+        "6.SP.B.5.c",
+        "6.SP.B.5.d"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/6/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.RP.A.1",
+      "grade": 7,
+      "domain": "RP",
+      "cluster": "A",
+      "domain_title": "Ratios and Proportional Relationships",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/RP/A/1/",
+      "scope_summary": "Compute unit rates associated with ratios of fractions, including ratios of lengths, areas, and other quantities in like or different units.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.RP.PROPORTIONAL"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/RP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.RP.A.2",
+      "grade": 7,
+      "domain": "RP",
+      "cluster": "A",
+      "domain_title": "Ratios and Proportional Relationships",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/RP/A/2/",
+      "scope_summary": "Recognize and represent proportional relationships between quantities (tables, graphs, equations, unit rate, constant of proportionality).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.RP.PROPORTIONAL"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [
+        "7.RP.A.2.a",
+        "7.RP.A.2.b",
+        "7.RP.A.2.c",
+        "7.RP.A.2.d"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/RP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.RP.A.3",
+      "grade": 7,
+      "domain": "RP",
+      "cluster": "A",
+      "domain_title": "Ratios and Proportional Relationships",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/RP/A/3/",
+      "scope_summary": "Use proportional relationships to solve multistep ratio and percent problems (simple interest, tax, markups/markdowns, gratuities, percent change, percent error).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.RP.PROPORTIONAL",
+        "DC7.RP.PERCENT"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/RP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.NS.A.1",
+      "grade": 7,
+      "domain": "NS",
+      "cluster": "A",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/NS/A/1/",
+      "scope_summary": "Apply and extend previous understandings of addition and subtraction to add and subtract rational numbers (number line, opposites, additive inverses, context).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.NS.RATIONAL"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [
+        "7.NS.A.1.a",
+        "7.NS.A.1.b",
+        "7.NS.A.1.c",
+        "7.NS.A.1.d"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.NS.A.2",
+      "grade": 7,
+      "domain": "NS",
+      "cluster": "A",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/NS/A/2/",
+      "scope_summary": "Apply and extend previous understandings of multiplication and division and of fractions to multiply and divide rational numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.NS.RATIONAL"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [
+        "7.NS.A.2.a",
+        "7.NS.A.2.b",
+        "7.NS.A.2.c",
+        "7.NS.A.2.d"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.NS.A.3",
+      "grade": 7,
+      "domain": "NS",
+      "cluster": "A",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/NS/A/3/",
+      "scope_summary": "Solve real-world and mathematical problems involving the four operations with rational numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.NS.RATIONAL"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.EE.A.1",
+      "grade": 7,
+      "domain": "EE",
+      "cluster": "A",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/EE/A/1/",
+      "scope_summary": "Apply properties of operations as strategies to add, subtract, factor, and expand linear expressions with rational coefficients.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.EE.A.2",
+      "grade": 7,
+      "domain": "EE",
+      "cluster": "A",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/EE/A/2/",
+      "scope_summary": "Understand that rewriting an expression in different forms can shed light on the problem and how quantities in it are related.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.EE.B.3",
+      "grade": 7,
+      "domain": "EE",
+      "cluster": "B",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/EE/B/3/",
+      "scope_summary": "Solve multistep real-life and mathematical problems posed with positive and negative rational numbers in any form, using tools strategically.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.EE.EQUATION"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.EE.B.4",
+      "grade": 7,
+      "domain": "EE",
+      "cluster": "B",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/EE/B/4/",
+      "scope_summary": "Use variables to represent quantities in real-world or mathematical problems and construct simple equations and inequalities to solve problems by reasoning.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.EE.EQUATION"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [
+        "7.EE.B.4.a",
+        "7.EE.B.4.b"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.G.A.1",
+      "grade": 7,
+      "domain": "G",
+      "cluster": "A",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/G/A/1/",
+      "scope_summary": "Solve problems involving scale drawings of geometric figures, including computing actual lengths and areas and reproducing a drawing at a different scale.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.G.A.2",
+      "grade": 7,
+      "domain": "G",
+      "cluster": "A",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/G/A/2/",
+      "scope_summary": "Draw geometric shapes with given conditions; focus on constructing triangles from three measures of angles or sides, noticing when conditions determine a unique triangle.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.G.A.3",
+      "grade": 7,
+      "domain": "G",
+      "cluster": "A",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/G/A/3/",
+      "scope_summary": "Describe the two-dimensional figures that result from slicing three-dimensional figures.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.G.B.4",
+      "grade": 7,
+      "domain": "G",
+      "cluster": "B",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/G/B/4/",
+      "scope_summary": "Know the formulas for the area and circumference of a circle and use them to solve problems; give an informal derivation of the relationship between circumference and area.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.G.B.5",
+      "grade": 7,
+      "domain": "G",
+      "cluster": "B",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/G/B/5/",
+      "scope_summary": "Use facts about supplementary, complementary, vertical, and adjacent angles in a multistep problem to write and solve simple equations for an unknown angle.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.G.B.6",
+      "grade": 7,
+      "domain": "G",
+      "cluster": "B",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/G/B/6/",
+      "scope_summary": "Solve real-world and mathematical problems involving area, volume, and surface area of two- and three-dimensional objects.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.SP.A.1",
+      "grade": 7,
+      "domain": "SP",
+      "cluster": "A",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/SP/A/1/",
+      "scope_summary": "Understand that statistics can be used to gain information about a population by examining a sample; generalizations are valid only for representative samples.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.SP.PROBABILITY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.SP.A.2",
+      "grade": 7,
+      "domain": "SP",
+      "cluster": "A",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/SP/A/2/",
+      "scope_summary": "Use data from a random sample to draw inferences about a population; generate multiple samples to gauge variation in estimates or predictions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.SP.PROBABILITY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.SP.B.3",
+      "grade": 7,
+      "domain": "SP",
+      "cluster": "B",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/SP/B/3/",
+      "scope_summary": "Informally assess the degree of visual overlap of two numerical data distributions with similar variabilities.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.SP.PROBABILITY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.SP.B.4",
+      "grade": 7,
+      "domain": "SP",
+      "cluster": "B",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/SP/B/4/",
+      "scope_summary": "Use measures of center and measures of variability for numerical data from random samples to draw informal comparative inferences about two populations.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.SP.PROBABILITY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.SP.C.5",
+      "grade": 7,
+      "domain": "SP",
+      "cluster": "C",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/SP/C/5/",
+      "scope_summary": "Understand that the probability of a chance event is a number between 0 and 1 expressing the likelihood of the event occurring.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.SP.PROBABILITY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.SP.C.6",
+      "grade": 7,
+      "domain": "SP",
+      "cluster": "C",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/SP/C/6/",
+      "scope_summary": "Approximate the probability of a chance event by collecting data and observing long-run relative frequency; predict approximate probability.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.SP.PROBABILITY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.SP.C.7",
+      "grade": 7,
+      "domain": "SP",
+      "cluster": "C",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/SP/C/7/",
+      "scope_summary": "Develop a probability model and use it to find probabilities of events; compare probabilities from the model to observed frequencies.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.SP.PROBABILITY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [
+        "7.SP.C.7.a",
+        "7.SP.C.7.b"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "7.SP.C.8",
+      "grade": 7,
+      "domain": "SP",
+      "cluster": "C",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/7/SP/C/8/",
+      "scope_summary": "Find probabilities of compound events using organized lists, tables, tree diagrams, and simulation.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "repository_existing_crosswalks": [
+        "DC7.SP.PROBABILITY"
+      ],
+      "classification": {
+        "standards_mapped": "REPOSITORY_ROW_EXISTS_NOT_ACCEPTED",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "Local DC seed rows predate the reviewed-taxonomy gate and carry broad CCSS-domain scopes that may be composites covering multiple distinct expectations."
+      ],
+      "official_subpart_identifiers": [
+        "7.SP.C.8.a",
+        "7.SP.C.8.b",
+        "7.SP.C.8.c"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/7/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.NS.A.1",
+      "grade": 8,
+      "domain": "NS",
+      "cluster": "A",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/NS/A/1/",
+      "scope_summary": "Know that numbers that are not rational are called irrational; understand that every number has a decimal expansion; convert repeating decimals to fractions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.NS.A.2",
+      "grade": 8,
+      "domain": "NS",
+      "cluster": "A",
+      "domain_title": "The Number System",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/NS/A/2/",
+      "scope_summary": "Use rational approximations of irrational numbers to compare size, locate on a number line, and estimate the value of expressions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/NS/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.EE.A.1",
+      "grade": 8,
+      "domain": "EE",
+      "cluster": "A",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/EE/A/1/",
+      "scope_summary": "Know and apply the properties of integer exponents to generate equivalent numerical expressions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.EE.A.2",
+      "grade": 8,
+      "domain": "EE",
+      "cluster": "A",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/EE/A/2/",
+      "scope_summary": "Use square root and cube root symbols to represent solutions to equations; evaluate square roots of small perfect squares and cube roots of small perfect cubes.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.EE.A.3",
+      "grade": 8,
+      "domain": "EE",
+      "cluster": "A",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/EE/A/3/",
+      "scope_summary": "Use numbers expressed in the form of a single digit times an integer power of 10 to estimate very large or very small quantities.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.EE.A.4",
+      "grade": 8,
+      "domain": "EE",
+      "cluster": "A",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/EE/A/4/",
+      "scope_summary": "Perform operations with numbers expressed in scientific notation, including problems where both decimal and scientific notation are used.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.EE.B.5",
+      "grade": 8,
+      "domain": "EE",
+      "cluster": "B",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/EE/B/5/",
+      "scope_summary": "Graph proportional relationships, interpreting the unit rate as the slope of the graph; compare two different proportional relationships in different ways.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.EE.B.6",
+      "grade": 8,
+      "domain": "EE",
+      "cluster": "B",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/EE/B/6/",
+      "scope_summary": "Use similar triangles to explain why the slope m is the same between any two distinct points on a non-vertical line; derive y = mx and y = mx + b.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.EE.C.7",
+      "grade": 8,
+      "domain": "EE",
+      "cluster": "C",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/EE/C/7/",
+      "scope_summary": "Solve linear equations in one variable (including one solution, no solution, infinitely many solutions, and equations requiring the distributive property).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [
+        "8.EE.C.7.a",
+        "8.EE.C.7.b"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.EE.C.8",
+      "grade": 8,
+      "domain": "EE",
+      "cluster": "C",
+      "domain_title": "Expressions and Equations",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/EE/C/8/",
+      "scope_summary": "Analyze and solve pairs of simultaneous linear equations (graphically, algebraically, and in context).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [
+        "8.EE.C.8.a",
+        "8.EE.C.8.b",
+        "8.EE.C.8.c"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.F.A.1",
+      "grade": 8,
+      "domain": "F",
+      "cluster": "A",
+      "domain_title": "Functions",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/F/A/1/",
+      "scope_summary": "Understand that a function is a rule that assigns to each input exactly one output; the graph of a function is the set of ordered pairs.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/F/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.F.A.2",
+      "grade": 8,
+      "domain": "F",
+      "cluster": "A",
+      "domain_title": "Functions",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/F/A/2/",
+      "scope_summary": "Compare properties of two functions each represented in a different way (algebraically, graphically, numerically in tables, or by verbal descriptions).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/F/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.F.A.3",
+      "grade": 8,
+      "domain": "F",
+      "cluster": "A",
+      "domain_title": "Functions",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/F/A/3/",
+      "scope_summary": "Interpret the equation y = mx + b as defining a linear function whose graph is a straight line; give examples of non-linear functions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/F/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.F.B.4",
+      "grade": 8,
+      "domain": "F",
+      "cluster": "B",
+      "domain_title": "Functions",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/F/B/4/",
+      "scope_summary": "Construct a function to model a linear relationship between two quantities; determine rate of change and initial value and interpret them in context.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/F/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.F.B.5",
+      "grade": 8,
+      "domain": "F",
+      "cluster": "B",
+      "domain_title": "Functions",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/F/B/5/",
+      "scope_summary": "Describe qualitatively the functional relationship between two quantities by analyzing a graph; sketch a graph exhibiting qualitative features.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/F/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.G.A.1",
+      "grade": 8,
+      "domain": "G",
+      "cluster": "A",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/A/1/",
+      "scope_summary": "Verify experimentally the properties of rotations, reflections, and translations (lines, angles, parallel lines).",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [
+        "8.G.A.1.a",
+        "8.G.A.1.b",
+        "8.G.A.1.c"
+      ],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.G.A.2",
+      "grade": 8,
+      "domain": "G",
+      "cluster": "A",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/A/2/",
+      "scope_summary": "Understand that a two-dimensional figure is congruent to another if it can be obtained by a sequence of rotations, reflections, and translations.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.G.A.3",
+      "grade": 8,
+      "domain": "G",
+      "cluster": "A",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/A/3/",
+      "scope_summary": "Describe the effect of dilations, translations, rotations, and reflections on two-dimensional figures using coordinates.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.G.A.4",
+      "grade": 8,
+      "domain": "G",
+      "cluster": "A",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/A/4/",
+      "scope_summary": "Understand that a two-dimensional figure is similar to another if it can be obtained by rotations, reflections, translations, and dilations.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.G.A.5",
+      "grade": 8,
+      "domain": "G",
+      "cluster": "A",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/A/5/",
+      "scope_summary": "Use informal arguments to establish facts about the angle sum and exterior angle of triangles, angles created by parallel lines and transversals, and the angle-angle criterion for similarity.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.G.B.6",
+      "grade": 8,
+      "domain": "G",
+      "cluster": "B",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/B/6/",
+      "scope_summary": "Explain a proof of the Pythagorean Theorem and its converse.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.G.B.7",
+      "grade": 8,
+      "domain": "G",
+      "cluster": "B",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/B/7/",
+      "scope_summary": "Apply the Pythagorean Theorem to determine unknown side lengths in right triangles in real-world and mathematical problems in two and three dimensions.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.G.B.8",
+      "grade": 8,
+      "domain": "G",
+      "cluster": "B",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/B/8/",
+      "scope_summary": "Apply the Pythagorean Theorem to find the distance between two points in a coordinate system.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.G.C.9",
+      "grade": 8,
+      "domain": "G",
+      "cluster": "C",
+      "domain_title": "Geometry",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/C/9/",
+      "scope_summary": "Use formulas for the volumes of cones, cylinders, and spheres to solve real-world and mathematical problems.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards review must confirm full 8.G.C.9 scope and its source-to-canonical relation.",
+        "No repository-specific DC Grade 8 geometry seed or accepted mapping exists."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.SP.A.1",
+      "grade": 8,
+      "domain": "SP",
+      "cluster": "A",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/SP/A/1/",
+      "scope_summary": "Construct and interpret scatter plots for bivariate measurement data to investigate patterns of association.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.SP.A.2",
+      "grade": 8,
+      "domain": "SP",
+      "cluster": "A",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/SP/A/2/",
+      "scope_summary": "Know that straight lines are widely used to model relationships between two quantitative variables; informally fit and assess a straight line to scatter plots.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.SP.A.3",
+      "grade": 8,
+      "domain": "SP",
+      "cluster": "A",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/SP/A/3/",
+      "scope_summary": "Use the equation of a linear model to solve problems in the context of bivariate measurement data, interpreting slope and intercept.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "8.SP.A.4",
+      "grade": 8,
+      "domain": "SP",
+      "cluster": "A",
+      "domain_title": "Statistics and Probability",
+      "source_locator": "https://www.thecorestandards.org/Math/Content/8/SP/A/4/",
+      "scope_summary": "Understand that patterns of association can also be seen in bivariate categorical data by displaying frequencies and relative frequencies in a two-way table.",
+      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO",
+        "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
+        "generator_available": "NOT_AUDITED_FOR_EXACT_EXPECTATION_AND_TARGET",
+        "validated_practice": "NO_VERIFIED_EVIDENCE",
+        "assessment_ready": "NO_VERIFIED_EVIDENCE",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
+        "No repository-specific local skill candidate was located for this expectation."
+      ],
+      "official_subpart_identifiers": [],
+      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/SP/",
+      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+    }
+  ]
+}
