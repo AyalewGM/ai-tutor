@@ -104,7 +104,9 @@ def test_direct_initial_adoption_url_fails_closed_before_fetch(monkeypatch, tmp_
 
 def test_uploaded_workbook_hash_mismatch_fails_closed(monkeypatch, tmp_path: Path):
     import hashlib
+
     import pytest
+
     import scripts.acquire_ospi_2026_standards as acquisition
 
     url = "https://ospi.k12.wa.us/sites/default/files/2026-08/math26-final-adoption-spreadsheet.xlsx"
