@@ -38,7 +38,7 @@ def test_provenance_is_complete_and_fail_closed() -> None:
     provenance = load("provenance.v1.json")
 
     assert provenance["package_id"] == "MG-G7-RATIONAL-SCALE-INVERSE"
-    assert provenance["revision"] == "middle-grades-rational-scale-v1-r4"
+    assert provenance["revision"] == "middle-grades-rational-scale-v1-r5"
     assert provenance["status"] == "DRAFT_UNVERIFIED"
     assert provenance["runtime_activation"] is False
     assert provenance["mastery_writes"] is False

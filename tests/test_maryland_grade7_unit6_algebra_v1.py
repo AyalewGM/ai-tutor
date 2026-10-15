@@ -184,6 +184,7 @@ def _complete_response(variant):
             "solution_relation": oracle["solution_relation"],
             "endpoint": oracle["endpoint"],
             "graph_direction": oracle["graph_direction"],
+            "graph_representation": oracle["graph_representation"],
             "witness": oracle["witness"],
             "counterexample": oracle["counterexample"],
             "context_interpretation": "These nonnegative whole-number values meet the condition.",

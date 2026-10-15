@@ -1,0 +1,580 @@
+{
+  "schema_version": "2.0.0",
+  "milestone": "GitHub Issue #337",
+  "revision": "teacher-material-traceability-v2",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "source_policy": {
+    "role": "OWNER_SUPPLIED_CLASSROOM_EVIDENCE_ONLY",
+    "copyright_boundary": "Store only document/section/page locators and abstract mathematical structures. Do not reproduce worksheet wording, diagrams, handwriting, answer keys, or page images.",
+    "standards_authority": false,
+    "learner_data": false,
+    "source_documents": [
+      {
+        "id": "UNIT2_REVIEW",
+        "title": "Unit 2 Review: Algebra & Exponents",
+        "pages": 4
+      },
+      {
+        "id": "EQAO_REVIEW_2",
+        "title": "EQAO review #2 for this unit",
+        "pages": 5
+      },
+      {
+        "id": "UNIT_2_6C",
+        "title": "2.6C Two step Equations",
+        "pages": 5
+      },
+      {
+        "id": "UNIT_2_7C",
+        "title": "2.7C Multi Step Solving Equations",
+        "pages": 5
+      },
+      {
+        "id": "UNIT_2_9C",
+        "title": "2.9C Dividing a Polynomial by a Monomial",
+        "pages": 4
+      },
+      {
+        "id": "UNIT_2_9_HWK",
+        "title": "2.9 Hwk Handout",
+        "pages": 1
+      },
+      {
+        "id": "UNIT_2_10_HWK",
+        "title": "2.10 HWk Handout",
+        "pages": 2
+      },
+      {
+        "id": "UNIT_2_11_HWK",
+        "title": "2.11 Hwk Handout",
+        "pages": 1
+      }
+    ]
+  },
+  "status_definition": {
+    "VERIFIED": "All required Mihur acceptance evidence for this row is present: deterministic generator/oracle, independently accepted mathematics, runnable learner journey, trusted independent scoring/isolation, relevant tests and external QA. Do not infer VERIFIED from source files alone.",
+    "PARTIAL": "Some substantive implementation/review evidence exists, but one or more required learner-delivery, trusted-assessment, independent-review, accessibility/QA, or depth requirements remain.",
+    "ABSENT": "No implementation evidence was found for the abstract teacher-observed structure after checking current main and the referenced existing packages.",
+    "BLOCKED": "Implementation exists or is planned, but an explicit unresolved architecture/identity/review blocker prevents claiming the row."
+  },
+  "rows": [
+    {
+      "id": "G9T-SUBSTITUTION-MULTIVARIABLE",
+      "source": [
+        {
+          "document": "UNIT2_REVIEW",
+          "pages": [
+            1
+          ],
+          "section": "Substitution Practice"
+        }
+      ],
+      "structure": "substitute signed values into multivariable algebraic expressions containing coefficients and powers",
+      "existing_evidence": [
+        "app/domains/algebra_functions.py:MATH.ALG.EXPR.EVALUATE",
+        "docs/curriculum/drafts/exponent-power-geometry-learning-package-r1:SIMPLIFY_THEN_SUBSTITUTE"
+      ],
+      "status": "PARTIAL",
+      "gap": "Current canonical expression evaluation is primarily single-variable ax+b; exponent package covers simplify-then-substitute but does not establish full multivariable classroom-depth coverage.",
+      "next_action": "Extend existing expression/substitution generator with exact multivariable/power cases; reuse canonical expression/exponent mathematics."
+    },
+    {
+      "id": "G9T-LIKE-TERMS",
+      "source": [
+        {
+          "document": "UNIT2_REVIEW",
+          "pages": [
+            1
+          ],
+          "section": "Simplifying Expression Practice"
+        }
+      ],
+      "structure": "combine like terms while keeping unlike variable/power terms separate",
+      "existing_evidence": [
+        "app/domains/algebra_functions.py:MATH.ALG.LIKE.COMBINE",
+        "app/domains/algebra_functions.py:MATH.ALG.LIKE.CLASSIFY",
+        "docs/curriculum/f025_mth1w_classroom_algebra_mapping.md"
+      ],
+      "status": "PARTIAL",
+      "gap": "Canonical core exists, but the complete Ontario learner journey/trusted independent assessment/Muse acceptance is not established for the teacher-depth slice.",
+      "next_action": "Reuse existing family; verify seeded multivariable/multidegree depth before authoring any new variants."
+    },
+    {
+      "id": "G9T-POLYNOMIAL-ADD-SUB",
+      "source": [
+        {
+          "document": "UNIT2_REVIEW",
+          "pages": [
+            1
+          ],
+          "section": "Add/Subtract Polynomials"
+        }
+      ],
+      "structure": "add and subtract multi-term polynomials, including subtraction of an entire polynomial",
+      "existing_evidence": [
+        "app/domains/advanced_algebra_highschool.py:MATH.POLY.ADD",
+        "app/domains/advanced_algebra_highschool.py:MATH.POLY.SUB"
+      ],
+      "status": "PARTIAL",
+      "gap": "Canonical generators exist, but teacher-level multidegree/multivariable depth plus accepted runnable journey is not fully evidenced.",
+      "next_action": "Depth-audit current seeded variants; add only missing structures."
+    },
+    {
+      "id": "G9T-DISTRIBUTE-SIMPLIFY",
+      "source": [
+        {
+          "document": "UNIT2_REVIEW",
+          "pages": [
+            1,
+            3
+          ],
+          "section": "Expand and/or simplify"
+        },
+        {
+          "document": "UNIT_2_7C",
+          "pages": [
+            2,
+            4
+          ],
+          "section": "Simplify each side before solving"
+        }
+      ],
+      "structure": "distribute positive/negative or monomial factors across every term, then collect like terms",
+      "existing_evidence": [
+        "app/domains/advanced_algebra_highschool.py:MATH.POLY.MULT.MONOMIAL",
+        "app/domains/advanced_algebra_highschool.py:MATH.POLY.ERROR.DISTRIBUTE",
+        "app/domains/algebra_functions.py:MATH.ALG.EXPR.ERROR.DISTRIBUTE"
+      ],
+      "status": "PARTIAL",
+      "gap": "Mathematics and misconception families exist; complete Ontario-specific delivery/trusted verification is not established.",
+      "next_action": "Reuse existing distribution families and deepen only response-evidence/transfer gaps."
+    },
+    {
+      "id": "G9T-EQUATION-TWO-STEP-EXACT",
+      "source": [
+        {
+          "document": "UNIT_2_6C",
+          "pages": [
+            1,
+            2,
+            4
+          ],
+          "section": "Two-step equations"
+        },
+        {
+          "document": "UNIT2_REVIEW",
+          "pages": [
+            2
+          ],
+          "section": "Solve for the unknown"
+        }
+      ],
+      "structure": "solve signed/fractional two-step equations exactly using inverse operations and verify by substitution",
+      "existing_evidence": [
+        "docs/curriculum/drafts/ontario-seven-unit-algebra-r1",
+        "frontend/src/mve/InteractiveEquationBalance.tsx",
+        "frontend/src/mve/InteractiveEquationEquivalence.tsx",
+        "docs/curriculum/f025_mth1w_classroom_algebra_mapping.md"
+      ],
+      "status": "PARTIAL",
+      "gap": "Bounded content/math/pedagogy evidence is strong, but trusted unseen scoring, final routing, standards acceptance and Muse browser/AT evidence remain incomplete.",
+      "next_action": "Delivery/assessment/QA work only; do not create another equation family."
+    },
+    {
+      "id": "G9T-EQUATION-MULTISTEP-BOTH-SIDES",
+      "source": [
+        {
+          "document": "UNIT_2_7C",
+          "pages": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "section": "Multi-step equations"
+        }
+      ],
+      "structure": "simplify each side, distribute brackets, collect variable terms to one side/constants to the other, then isolate",
+      "existing_evidence": [
+        "app/domains/algebra_functions.py:MATH.ALG.EQ.MULTISTEP.DISTRIBUTE",
+        "app/domains/algebra_functions.py:MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+        "docs/curriculum/drafts/ontario-seven-unit-algebra-r1"
+      ],
+      "status": "PARTIAL",
+      "gap": "Core deterministic content exists; full routed learner journey/trusted scoring/Muse evidence remains incomplete.",
+      "next_action": "Reuse existing multi-step package; close delivery gates rather than author duplicate content."
+    },
+    {
+      "id": "G9T-EQUATION-POWERS-ROOTS",
+      "source": [
+        {
+          "document": "UNIT_2_6C",
+          "pages": [
+            3
+          ],
+          "section": "Undo exponent/root"
+        }
+      ],
+      "structure": "solve equations involving squared terms or square roots and preserve exact solution-set semantics",
+      "existing_evidence": [
+        "docs/curriculum/drafts/ontario-algebra-family-generators-r1:equation in a squared expression",
+        "docs/curriculum/drafts/ontario-seven-unit-algebra-r1"
+      ],
+      "status": "PARTIAL",
+      "gap": "Exact root-solution-set mathematics is authored, but a complete root-specific learner interaction and trusted routed assessment are not established.",
+      "next_action": "Deepen existing root-equation package/MVE; do not create a new identity."
+    },
+    {
+      "id": "G9T-PERIMETER-MODELING",
+      "source": [
+        {
+          "document": "UNIT_2_7C",
+          "pages": [
+            5
+          ],
+          "section": "Perimeter application"
+        }
+      ],
+      "structure": "translate algebraic side labels into a perimeter equation, solve the variable, derive every side length, and reconstruct the perimeter",
+      "existing_evidence": [
+        "docs/curriculum/drafts/ontario-seven-unit-algebra-r1:PERIMETER_MODEL unseen transfer",
+        "app/domains/algebra_functions.py:MATH.ALG.EQ.WORD.TARGET"
+      ],
+      "status": "PARTIAL",
+      "gap": "Content-level transfer oracle exists; routed geometry representation, trusted scoring and Muse verification remain incomplete.",
+      "next_action": "Reuse existing perimeter transfer; finish delivery/assessment evidence."
+    },
+    {
+      "id": "G9T-MONOMIAL-QUOTIENT",
+      "source": [
+        {
+          "document": "UNIT_2_9C",
+          "pages": [
+            1,
+            2,
+            3
+          ],
+          "section": "Monomial divided by monomial / quotient power laws"
+        },
+        {
+          "document": "UNIT_2_9_HWK",
+          "pages": [
+            1
+          ],
+          "section": "Monomial quotient practice"
+        }
+      ],
+      "structure": "divide monomials by dividing coefficients, subtracting same-base exponents, preserving nonzero divisor restrictions, and expressing negative exponents as reciprocals where required",
+      "existing_evidence": [
+        "docs/curriculum/drafts/ontario-algebra-family-generators-r1:MONOMIAL_QUOTIENT",
+        "docs/curriculum/drafts/ontario-polynomial-division-package-r1",
+        "frontend/src/mve/InteractivePolynomialDivision.tsx"
+      ],
+      "status": "PARTIAL",
+      "gap": "Strong draft content and guided MVE evidence exist, but learner-produced reconstruction, trusted unseen assessment and Muse QA remain incomplete.",
+      "next_action": "Do not duplicate generator; close existing learner-produced reconstruction/assessment/QA gaps."
+    },
+    {
+      "id": "G9T-POLYNOMIAL-BY-MONOMIAL",
+      "source": [
+        {
+          "document": "UNIT_2_9C",
+          "pages": [
+            4
+          ],
+          "section": "Polynomial divided by monomial"
+        },
+        {
+          "document": "UNIT_2_9_HWK",
+          "pages": [
+            1
+          ],
+          "section": "Polynomial quotient practice"
+        }
+      ],
+      "structure": "split a polynomial quotient term-by-term, divide every term by the monomial, and reconstruct by multiplication",
+      "existing_evidence": [
+        "docs/curriculum/drafts/ontario-algebra-family-generators-r1:POLYNOMIAL_BY_MONOMIAL",
+        "docs/curriculum/drafts/ontario-polynomial-division-package-r1",
+        "frontend/src/mve/InteractivePolynomialDivision.tsx"
+      ],
+      "status": "PARTIAL",
+      "gap": "Existing package explicitly identifies learner-produced quotient/reconstruction and trusted unseen scoring as open.",
+      "next_action": "Complete the existing polynomial-division journey; reuse existing package only."
+    },
+    {
+      "id": "G9T-EXPONENT-POWER-OF-POWER",
+      "source": [
+        {
+          "document": "UNIT_2_10_HWK",
+          "pages": [
+            1
+          ],
+          "section": "Power of a power / single exponent"
+        }
+      ],
+      "structure": "simplify powers of powers and products/quotients of powers by reasoning from repeated factors",
+      "existing_evidence": [
+        "docs/curriculum/drafts/exponent-power-geometry-learning-package-r1",
+        "docs/curriculum/drafts/ontario-algebra-family-generators-r1:COMBINED_EXPONENT_LAWS"
+      ],
+      "status": "PARTIAL",
+      "gap": "Bounded package/oracle and misconception repairs are authored; full routed MVE/trusted assessment/Muse acceptance remains incomplete.",
+      "next_action": "Reuse existing exponent package; close delivery gates."
+    },
+    {
+      "id": "G9T-EXPONENT-REQUESTED-BASE",
+      "source": [
+        {
+          "document": "UNIT_2_10_HWK",
+          "pages": [
+            1
+          ],
+          "section": "Rewrite using an indicated base"
+        }
+      ],
+      "structure": "rewrite an exponential expression using a requested compatible base and adjust the exponent exactly",
+      "existing_evidence": [
+        "docs/curriculum/drafts/exponent-power-geometry-learning-package-r1:REWRITE_TO_REQUESTED_BASE"
+      ],
+      "status": "PARTIAL",
+      "gap": "Content structure exists; no separately verified production learner route/trusted assessment.",
+      "next_action": "Reuse package structure and verify delivery."
+    },
+    {
+      "id": "G9T-EXPONENT-EXPLAIN-LAW",
+      "source": [
+        {
+          "document": "UNIT_2_10_HWK",
+          "pages": [
+            1
+          ],
+          "section": "Explain exponent principles with examples"
+        }
+      ],
+      "structure": "state an exponent law and justify it from repeated-factor structure rather than rule recall",
+      "existing_evidence": [
+        "docs/curriculum/drafts/exponent-power-geometry-learning-package-r1:EXPLAIN phase",
+        "docs/curriculum/drafts/exponent-power-geometry-learning-package-r1:diagnostic_router"
+      ],
+      "status": "PARTIAL",
+      "gap": "Authored explanation requirement exists, but learner-produced justification scoring is not trusted/verified.",
+      "next_action": "Add/verify structured learner explanation evidence within the existing package."
+    },
+    {
+      "id": "G9T-EXPONENT-SIGN-PARENTHESES",
+      "source": [
+        {
+          "document": "UNIT2_REVIEW",
+          "pages": [
+            2,
+            3
+          ],
+          "section": "Exponent evaluation / agree-disagree"
+        },
+        {
+          "document": "UNIT_2_10_HWK",
+          "pages": [
+            1,
+            2
+          ],
+          "section": "Powers with signed coefficients"
+        }
+      ],
+      "structure": "distinguish a negative base inside parentheses from a leading negative sign and apply powers to coefficients and variables correctly",
+      "existing_evidence": [
+        "docs/curriculum/drafts/exponent-power-geometry-learning-package-r1:POWER_OF_PRODUCT"
+      ],
+      "status": "PARTIAL",
+      "gap": "Power-of-product supports coefficient powers, but no explicit accepted sign/parentheses contrast task was found.",
+      "next_action": "Add one bounded sign/parentheses contrast structure to the existing exponent package."
+    },
+    {
+      "id": "G9T-EXPONENT-FIRST-ERROR",
+      "source": [
+        {
+          "document": "EQAO_REVIEW_2",
+          "pages": [
+            4
+          ],
+          "section": "Identify erroneous exponent-law step"
+        },
+        {
+          "document": "UNIT2_REVIEW",
+          "pages": [
+            3,
+            4
+          ],
+          "section": "Agree/disagree and justify"
+        }
+      ],
+      "structure": "identify the first mathematically invalid step in a multi-step exponent derivation and explain the violated law",
+      "existing_evidence": [
+        "docs/curriculum/drafts/exponent-power-geometry-learning-package-r1:misconception-specific routes"
+      ],
+      "status": "ABSENT",
+      "gap": "Misconception routes diagnose outcomes, but no deterministic first-error-localization response contract was found.",
+      "next_action": "Add a first-error localization structure to the existing exponent package, not a new canonical family."
+    },
+    {
+      "id": "G9T-EXPONENT-GEOMETRY",
+      "source": [
+        {
+          "document": "UNIT_2_10_HWK",
+          "pages": [
+            2
+          ],
+          "section": "Cube surface area/volume and square-on-hypotenuse area"
+        },
+        {
+          "document": "EQAO_REVIEW_2",
+          "pages": [
+            1,
+            3,
+            5
+          ],
+          "section": "Algebraic dimensions / volume"
+        }
+      ],
+      "structure": "apply exponent laws to area and volume, preserving squared/cubic dimensions and exact symbolic coefficients",
+      "existing_evidence": [
+        "docs/curriculum/drafts/exponent-power-geometry-learning-package-r1:CUBE_SURFACE_AREA_AND_VOLUME",
+        "docs/curriculum/drafts/exponent-power-geometry-learning-package-r1:PYTHAGOREAN_SQUARE_AREAS",
+        "docs/curriculum/drafts/ontario-algebra-family-generators-r1:EXPONENT_GEOMETRY_TRANSFER"
+      ],
+      "status": "PARTIAL",
+      "gap": "Strong content oracle exists; production MVE/routing/trusted scoring/Muse remain incomplete.",
+      "next_action": "Reuse package; close delivery gates."
+    },
+    {
+      "id": "G9T-ALGEBRAIC-MEASUREMENT-INVERSION",
+      "source": [
+        {
+          "document": "EQAO_REVIEW_2",
+          "pages": [
+            1,
+            3,
+            5
+          ],
+          "section": "Find missing symbolic dimension from area/volume"
+        }
+      ],
+      "structure": "derive an unknown length/width/height from symbolic area or volume using exact algebra/monomial division, then reconstruct the measure with units",
+      "existing_evidence": [
+        "docs/curriculum/drafts/ontario-algebra-family-generators-r1:MONOMIAL_QUOTIENT",
+        "generic solid-volume generators/tests"
+      ],
+      "status": "ABSENT",
+      "gap": "No integrated learner contract was found that composes symbolic measurement inversion with exact monomial division and dimensional reconstruction.",
+      "next_action": "Author one reusable measurement-inversion structure using existing quotient mathematics; no new Ontario-specific identity."
+    },
+    {
+      "id": "G9T-SCI-CONVERT",
+      "source": [
+        {
+          "document": "UNIT_2_11_HWK",
+          "pages": [
+            1
+          ],
+          "section": "Ordinary to scientific / scientific to ordinary"
+        },
+        {
+          "document": "UNIT2_REVIEW",
+          "pages": [
+            2
+          ],
+          "section": "Scientific Notation Practice"
+        }
+      ],
+      "structure": "convert exactly between ordinary notation and normalized scientific notation for large and small values",
+      "existing_evidence": [
+        "docs/curriculum/drafts/scientific-notation-learning-package-r1",
+        "docs/curriculum/drafts/ontario-algebra-family-generators-r1:SCIENTIFIC_NOTATION",
+        "frontend/src/mve/InteractiveScientificNotationScale.tsx"
+      ],
+      "status": "PARTIAL",
+      "gap": "Generator/package/MVE exist, but trusted routed assessment and external Muse acceptance remain incomplete.",
+      "next_action": "Close existing scientific-notation integration and QA gates."
+    },
+    {
+      "id": "G9T-SCI-NORMALIZE",
+      "source": [
+        {
+          "document": "UNIT_2_11_HWK",
+          "pages": [
+            1
+          ],
+          "section": "Correct non-normalized scientific notation"
+        }
+      ],
+      "structure": "renormalize a value-equivalent scientific-notation form so the coefficient magnitude is in the accepted range while preserving value",
+      "existing_evidence": [
+        "docs/curriculum/drafts/scientific-notation-learning-package-r1:SCI.NOT_NORMALIZED",
+        "frontend/src/mve/InteractiveScientificNotationScale.tsx"
+      ],
+      "status": "PARTIAL",
+      "gap": "Authored and interactive guided support exists; final trusted scoring/routing/Muse evidence is incomplete.",
+      "next_action": "Reuse existing normalization path."
+    },
+    {
+      "id": "G9T-SCI-MULT-DIV",
+      "source": [
+        {
+          "document": "UNIT_2_11_HWK",
+          "pages": [
+            1
+          ],
+          "section": "Scientific-notation multiplication/division"
+        }
+      ],
+      "structure": "multiply or divide exact scientific-notation quantities, combine powers of ten correctly, and normalize the result",
+      "existing_evidence": [
+        "docs/curriculum/drafts/scientific-notation-learning-package-r1",
+        "docs/curriculum/drafts/ontario-algebra-family-generators-r1:SCIENTIFIC_NOTATION"
+      ],
+      "status": "PARTIAL",
+      "gap": "Exact generators and misconception routes exist; complete trusted independent learner journey is not yet accepted.",
+      "next_action": "Close existing assessment/QA gates; reuse existing package only."
+    },
+    {
+      "id": "G9T-EXPONENTIAL-DECAY-HALVING",
+      "source": [
+        {
+          "document": "EQAO_REVIEW_2",
+          "pages": [
+            1,
+            4
+          ],
+          "section": "Repeated halving / repeated folding power context"
+        }
+      ],
+      "structure": "model repeated multiplicative change including factor one-half and powers-of-two counts",
+      "existing_evidence": [
+        "app/domains/advanced_algebra_highschool.py:MATH.EXPFUNC.GROWTH.FACTOR",
+        "app/domains/advanced_algebra_highschool.py:MATH.EXPFUNC.MODEL"
+      ],
+      "status": "PARTIAL",
+      "gap": "Existing exponential-function builders emphasize integer growth factors; explicit factor-1/2 decay transfer is not evidenced.",
+      "next_action": "Extend existing exponential model family to positive rational decay factors if Architecture confirms no contract conflict."
+    }
+  ],
+  "summary": {
+    "total_rows": 21,
+    "verified": 0,
+    "partial": 19,
+    "absent": 2,
+    "blocked": 0,
+    "key_absent": [
+      "first-error localization in exponent derivations",
+      "integrated algebraic measurement inversion using symbolic area/volume and monomial division"
+    ],
+    "strongest_reuse_areas": [
+      "equation solving and equivalence",
+      "polynomial division",
+      "exponent/power/geometry",
+      "scientific notation"
+    ],
+    "policy": "Do not create a new broad Ontario Grade 9 package. Deepen existing packages and close delivery/trusted-assessment/QA gates."
+  }
+}
