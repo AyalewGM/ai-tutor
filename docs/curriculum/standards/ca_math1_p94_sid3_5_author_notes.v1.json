@@ -27,5 +27,7 @@
   "canonical_equivalence": "UNVERIFIED",
   "assessment": "UNVERIFIED",
   "mastery": "UNVERIFIED",
-  "activation": "FORBIDDEN"
+  "activation": "FORBIDDEN",
+  "publisher_strand_bracket_author_note": "Printed Mathematics I p.94 two-variable data strand carries '[Linear focus; discuss general principle.]'. Preserve this literal course qualification separately from S-ID.5 categorical two-way-table, joint/marginal/conditional frequency requirements; independent reviewer must adjudicate strand-level application.",
+  "publisher_strand_bracket_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
 }
