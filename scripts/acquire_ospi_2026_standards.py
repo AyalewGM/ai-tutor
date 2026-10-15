@@ -158,7 +158,17 @@ def main() -> None:
         result = {"publisher_page": OFFICIAL_PAGE, "status": "SOURCE_CANDIDATES_ONLY",
                   "candidates": evidence, "accepted_expectation_rows": 0}
         (folder / "acquisition.json").write_text(json.dumps(result, indent=2) + "\n")
-        if not any(e.get("status") == "ACQUIRED_UNVERIFIED_SOURCE_BYTES" for e in evidence):
+        if args.expected_sha256 is not None:
+            # A PDF or an unrelated spreadsheet cannot satisfy authentication
+            # of the uploaded final-adoption XLSX, even when its download works.
+            if not any(
+                e.get("status") == "ACQUIRED_UNVERIFIED_SOURCE_BYTES"
+                and e.get("publisher_hash_matches_uploaded_workbook") is True
+                and e.get("filename", "").lower().endswith(".xlsx")
+                for e in evidence
+            ):
+                raise RuntimeError("No OSPI XLSX matched the uploaded workbook SHA256")
+        elif not any(e.get("status") == "ACQUIRED_UNVERIFIED_SOURCE_BYTES" for e in evidence):
             raise RuntimeError("No official OSPI source bytes acquired")
     except Exception as exc:
         (folder / "failure.json").write_text(json.dumps({
