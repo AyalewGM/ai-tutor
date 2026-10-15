@@ -11,11 +11,17 @@ def test_grade1_50_distinct_source_drafts_fail_closed():
     docs = [json.loads((ROOT / name).read_text()) for name in names]
     ids = [r["id"] for doc in docs for r in doc["rows"]]
     assert len(ids) == len(set(ids)) == 50
+    expected = [f"111.3(b)({n})({letter})" for n, letters in
+                [(1, "ABCDEFG"), (2, "ABCDEFG"), (3, "ABCDEF"),
+                 (4, "ABC"), (5, "ABCDEFG"), (6, "ABCDEFGH"),
+                 (7, "ABCDE"), (8, "ABC"), (9, "ABCD")]
+                for letter in letters]
+    assert ids == expected
     rows = {r["id"]: r for doc in docs for r in doc["rows"]}
     assert "multiple of ten" in rows["111.3(b)(3)(A)"]["scope"]
     assert "fair shares" in rows["111.3(b)(6)(G)"]["scope"]
     assert "no gaps or overlaps" in rows["111.3(b)(7)(B)"]["scope"]
-    assert "spending from saving" in rows["111.3(b)(9)(C)"]["scope"]
+    assert "spending and saving" in rows["111.3(b)(9)(C)"]["scope"]
     assert "income" in rows["111.3(b)(9)(A)"]["scope"]
     for doc in docs:
         assert doc["independent_source_fidelity"] == "PENDING"
