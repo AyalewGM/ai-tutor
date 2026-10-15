@@ -29,5 +29,9 @@
   "mastery": "UNVERIFIED",
   "activation": "FORBIDDEN",
   "publisher_strand_bracket_author_note": "Printed Mathematics I p.94 two-variable data strand carries '[Linear focus; discuss general principle.]'. Preserve this literal course qualification separately from S-ID.5 categorical two-way-table, joint/marginal/conditional frequency requirements; independent reviewer must adjudicate strand-level application.",
-  "publisher_strand_bracket_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+  "publisher_strand_bracket_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+  "publisher_sid6a_scope_author_note": "CDE 2013 Mathematics I printed p.94 S-ID.6a mentions linear, quadratic, and exponential models, while the Mathematics I course introduction limits course work to linear and exponential expressions/functions and defers quadratic functions to Mathematics II or III. Preserve both publisher statements; do not silently expand Mathematics I to quadratic modeling or erase the source wording. Independent source-fidelity/course-scope adjudication required.",
+  "publisher_sid6a_scope_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+  "publisher_sid6a_source_id": "S-ID.6.a",
+  "publisher_sid6a_source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf"
 }
