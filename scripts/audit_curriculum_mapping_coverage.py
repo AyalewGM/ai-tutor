@@ -41,7 +41,9 @@ LOCAL_CODE_RE = re.compile(r'"([A-Z]{1,5}\d?\.[A-Z][A-Z0-9.]+)"')
 
 _JURIS_TABLE = {
     "Maryland": "MD", "Virginia": "VA", "District of Columbia": "DC",
-    "Ontario": "ON", "MD": "MD", "VA": "VA", "DC": "DC", "ON": "ON",
+    "Ontario": "ON", "Washington": "WA", "California": "CA", "Texas": "TX",
+    "MD": "MD", "VA": "VA", "DC": "DC", "ON": "ON",
+    "WA": "WA", "CA": "CA", "TX": "TX",
 }
 
 
