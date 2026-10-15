@@ -35,3 +35,21 @@ def test_grade6_matrix_counts_unaccepted():
     assert ca["accepted_source_fidelity_rows"] == 0
     assert all(name in ca["author_source_scope_files"]["GRADE_6"] for name in NEW)
     assert matrix["acceptance_contract"]["runtime_activation"] == "FORBIDDEN"
+
+
+def test_grade6_independent_review_scope_defects_preserved():
+    ee = json.loads((BASE / NEW[0]).read_text(encoding="utf-8"))
+    geometry = json.loads((BASE / NEW[1]).read_text(encoding="utf-8"))
+    e = next(r for r in ee["rows"] if r["expectation_id"] == "6.EE.2")
+    e_material = set(e["required_material_conditions"])
+    assert "sum term product factor quotient coefficient" in e_material
+    assert "view one or more expression parts as a single entity" in e_material
+    assert "sums/terms/products/factors/quotients/coefficients" in e["author_mathematical_scope"]
+    g = {r["expectation_id"]: r for r in geometry["rows"]}
+    assert {"compose into rectangles", "decompose into triangles and other shapes",
+            "apply to real-world and mathematical problems"} <= set(g["6.G.1"]["required_material_conditions"])
+    for code in ("6.G.3", "6.G.4"):
+        assert "apply to real-world and mathematical problems" in g[code]["required_material_conditions"]
+        assert "real-world and mathematical problems" in g[code]["author_mathematical_scope"]
+    assert ee["independent_source_fidelity"] == geometry["independent_source_fidelity"] == "PENDING"
+    assert ee["activation"] == geometry["activation"] == "FORBIDDEN"
