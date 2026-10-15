@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "MATHEMATICS_I",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_printed_page": 93,
+  "source_pdf_zero_based_page_index": 99,
+  "status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_REVIEW",
+  "existing_source_audit": "ca_2013_mathematics1_pages90_94_author_audit.v1.json",
+  "supplemental_existing_placements_only": true,
+  "rows": [
+    {
+      "expectation_id": "G-CO.12",
+      "material_conditions": [
+        "Make and explain formal geometric constructions with compass/straightedge, string, reflective devices, folding or geometry software.",
+        "Examples include copying segments and angles, bisecting segments and angles, constructing perpendicular lines (including a perpendicular bisector), and drawing a parallel line through a point not on the given line."
+      ]
+    },
+    {
+      "expectation_id": "G-CO.13",
+      "material_conditions": [
+        "Construct an equilateral triangle, a square and a regular hexagon inscribed in a circle.",
+        "Course bracket for G-CO.12–13: formalize and explain construction processes."
+      ]
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}
