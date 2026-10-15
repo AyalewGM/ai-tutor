@@ -1238,6 +1238,21 @@
         "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
         "canonical_equivalence": "NOT_ESTABLISHED",
         "downstream_full_coverage_allowed": false
+      },
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17818",
+        "printed_page_start": 8,
+        "printed_page_end": 8,
+        "requirements": {
+          "parent": "Relate plane cross-sections of three-dimensional solids to both volume and surface area; do not reduce to generic solid structure."
+        },
+        "short_summary_exhaustive": false,
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
       }
     },
     {
@@ -1689,6 +1704,21 @@
         "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
         "canonical_equivalence": "NOT_ESTABLISHED",
         "downstream_full_coverage_allowed": false
+      },
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "printed_page_start": 2,
+        "printed_page_end": 2,
+        "requirements": {
+          "8.NOS.B.4.b": "Inspect perfect squares of whole numbers 1–100 and perfect cubes of whole numbers 1–125 as source-bounded cases."
+        },
+        "short_summary_exhaustive": false,
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
       }
     },
     {
@@ -1908,6 +1938,23 @@
         "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
         "canonical_equivalence": "NOT_ESTABLISHED",
         "downstream_full_coverage_allowed": false
+      },
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "printed_page_start": 4,
+        "printed_page_end": 5,
+        "requirements": {
+          "8.AT.B.5.b": "Solve systems using graphing and substitution, choosing methods strategically.",
+          "8.AT.B.5.c": "Classify linear systems with zero, one or infinitely many solutions.",
+          "8.AT.B.5.d": "Model and solve contextual situations with systems of linear equations."
+        },
+        "short_summary_exhaustive": false,
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
       }
     },
     {
@@ -2260,6 +2307,21 @@
         "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
         "canonical_equivalence": "NOT_ESTABLISHED",
         "downstream_full_coverage_allowed": false
+      },
+      "retrospective_reviewer_requested_2025_scope": {
+        "publisher_column": "2025 Standards Statement",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "printed_page_start": 9,
+        "printed_page_end": 10,
+        "requirements": {
+          "8.GR.B.4.b": "Apply Pythagorean converse and inequalities to classify triangles as right, acute or obtuse using squared side-length comparisons."
+        },
+        "short_summary_exhaustive": false,
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
       }
     },
     {
