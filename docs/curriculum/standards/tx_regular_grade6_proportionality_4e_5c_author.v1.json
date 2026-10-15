@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_6",
+  "section": "111.26(b)(4)(E-H), (5)(A-C)",
+  "source_url": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111b.pdf",
+  "source_edition": "TEA July 2025 Subchapter B PDF",
+  "source_pdf_page_index": 2,
+  "source_pdf_printed_page": 3,
+  "publisher_original_bytes_authenticated": false,
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "id": "111.26(b)(4)(E)",
+      "scope": "Represent ratios and percents with concrete models, fractions, and decimals."
+    },
+    {
+      "id": "111.26(b)(4)(F)",
+      "scope": "Represent benchmark fractions and percents using 10-by-10 grids, strip diagrams, number lines, and numbers; 1%, 10%, 25%, and 33 1/3% are illustrative examples marked 'such as'."
+    },
+    {
+      "id": "111.26(b)(4)(G)",
+      "scope": "Generate equivalent fractions, decimals, and percents in real-world problems; monetary contexts are included and must be preserved."
+    },
+    {
+      "id": "111.26(b)(4)(H)",
+      "scope": "Convert units within a measurement system, including proportional and unit-rate methods."
+    },
+    {
+      "id": "111.26(b)(5)(A)",
+      "scope": "Use scale factors, tables, graphs, and proportions to represent mathematical and contextual ratios/rates."
+    },
+    {
+      "id": "111.26(b)(5)(B)",
+      "scope": "Solve the three part/whole/percent unknown cases in real-world problems, including concrete and pictorial models."
+    },
+    {
+      "id": "111.26(b)(5)(C)",
+      "scope": "Use equivalent fractions, decimals, and percents to represent equal parts of the same whole."
+    }
+  ]
+}
