@@ -24,7 +24,7 @@
         "GRADE_6"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independently verify staged 21 G1 plus 173 G7/G8/Algebra I/Mathematics I editorial source records against CDE official 2013/2014 text, including additions and course caveats. Complete direct source audit for Grades 2–6. Local archive drafts remain separate from committed records.",
+      "next_gate": "Independently verify ten Grade 2 CDE printed-page-20 author scopes and California additions; complete remaining Grade 2 pages plus Grades 3–6. Existing 194 other staged CA source-scope records require independent expectation-level review.",
       "grade8_author_scope_rows": 28,
       "grade8_author_scope_source": "ca_2013_grade8_28_source_author_slice.v1.json",
       "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY",
@@ -55,7 +55,10 @@
         "MATHEMATICS_I": [
           "ca_2013_mathematics1_pages90_94_author_audit.v1.json"
         ]
-      }
+      },
+      "grade2_partial_author_source_scope_rows": 10,
+      "grade2_partial_author_source_file": "ca_2013_grade2_page20_source_author_slice.v1.json",
+      "grade2_partial_not_complete": true
     },
     "TX": {
       "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
