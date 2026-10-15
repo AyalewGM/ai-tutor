@@ -16,9 +16,7 @@
       },
       "accepted_source_fidelity_rows": 0,
       "unverified_scope_rows": 173,
-      "unextracted_tracks": [
-        "GRADE_6"
-      ],
+      "unextracted_tracks": [],
       "grade9_course_equivalence": "NOT_ASSUMED",
       "next_gate": "California Grade 6: 29 parent requirements authored, none independently accepted. Independently verify new 17 author rows pp.43-45 and prior 12; continue unfinished CA Grades 3-4 and other gaps. All acceptance and activation gates remain closed.",
       "grade8_author_scope_rows": 28,
@@ -99,13 +97,15 @@
         "source_version": "CA_CCSSM_MODIFIED_2013_CORRECTED_ELECTRONIC",
         "historical_audit": "app/california_grade6_gap_audit.py",
         "author_identifiers": 29,
-        "source_scope_status": "TWELVE_GRADE6_AUTHOR_PARENT_SCOPE_ROWS_STAGED_INDEPENDENT_REVIEW_PENDING",
+        "source_scope_status": "ALL_29_GRADE6_PARENT_AUTHOR_SCOPE_ROWS_STAGED_INDEPENDENT_REVIEW_PENDING",
         "independent_acceptance": 0,
         "prior_gap_labels_role": "UNVERIFIED_HISTORICAL_CANDIDATES_ONLY",
         "author_scope_rows": 29,
         "author_scope_files": [
           "ca_2013_grade6_page42_source_author_slice.v1.json",
-          "ca_2013_grade6_page43_complete_parent_source_author_slice.v1.json"
+          "ca_2013_grade6_page43_complete_parent_source_author_slice.v1.json",
+          "ca_2013_grade6_pages43_44_ee2_9_author_slice.v1.json",
+          "ca_2013_grade6_pages44_45_geometry_statistics_author_slice.v1.json"
         ]
       }
     },
