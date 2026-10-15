@@ -1,0 +1,255 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_GRADE2_PRINTED_PAGES21_22_DRAFT_NOT_ACCEPTED",
+  "jurisdiction": "CA",
+  "track": "GRADE_2",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "California CCSS Mathematics January 2013 modification; electronic edition minor corrections ©2013/2014",
+  "source_printed_pages": [
+    21,
+    22
+  ],
+  "source_pdf_zero_based_page_indices": [
+    27,
+    28
+  ],
+  "expectation_count": 14,
+  "non_overlapping_preexisting_records": [
+    "2.NBT.7",
+    "2.NBT.7.1",
+    "2.MD.7"
+  ],
+  "non_overlapping_existing_file": "ca_2013_grade2_ca_additions_author_slice.v1.json",
+  "prior_grade2_page20_file": "ca_2013_grade2_page20_source_author_slice.v1.json",
+  "source_cautions": [
+    "2.NBT.7.1 is a separate California-added requirement, not a replacement for 2.NBT.7; neither is duplicated here.",
+    "2.MD.7 includes California-added time relationships; already staged separately, excluded here.",
+    "Grade 2 2.G.1 footnote specifies direct/visual size comparisons rather than measurement.",
+    "These are author editorial paraphrases for source audit, not accepted standards, canonical equivalence or assessment/mastery authorization."
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "2.NBT.8",
+      "source_printed_page": 21,
+      "source_pdf_zero_based_page_index": 27,
+      "author_mathematical_scope": "Mentally add or subtract 10 or 100 to or from a given whole number from 100 through 900.",
+      "required_material_conditions": [
+        "mental computation",
+        "add or subtract 10 or 100",
+        "given number 100–900"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.NBT.9",
+      "source_printed_page": 21,
+      "source_pdf_zero_based_page_index": 27,
+      "author_mathematical_scope": "Explain why addition and subtraction strategies work using place value and properties of operations; explanations may use drawings or objects.",
+      "required_material_conditions": [
+        "explain why strategies work",
+        "place value",
+        "operation properties",
+        "drawings or objects may support explanations"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.MD.1",
+      "source_printed_page": 21,
+      "source_pdf_zero_based_page_index": 27,
+      "author_mathematical_scope": "Measure an object's length by choosing and using an appropriate length-measuring tool, such as a ruler, yardstick, meter stick, or measuring tape.",
+      "required_material_conditions": [
+        "select tool appropriately",
+        "length measurement",
+        "ruler, yardstick, meter stick or tape"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.MD.2",
+      "source_printed_page": 21,
+      "source_pdf_zero_based_page_index": 27,
+      "author_mathematical_scope": "Measure the same object twice using two different-sized units of length and describe how the numerical measurements depend on the size of the chosen unit.",
+      "required_material_conditions": [
+        "same object measured twice",
+        "two length-unit sizes",
+        "numerical measurements relate to unit size"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.MD.3",
+      "source_printed_page": 21,
+      "source_pdf_zero_based_page_index": 27,
+      "author_mathematical_scope": "Estimate lengths using inches, feet, centimeters, and meters.",
+      "required_material_conditions": [
+        "estimate lengths",
+        "inches and feet",
+        "centimeters and meters"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.MD.4",
+      "source_printed_page": 21,
+      "source_pdf_zero_based_page_index": 27,
+      "author_mathematical_scope": "Measure to determine how much longer one object is than another and express the length difference in a standard unit.",
+      "required_material_conditions": [
+        "measure both lengths",
+        "how much longer",
+        "standard length unit"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.MD.5",
+      "source_printed_page": 21,
+      "source_pdf_zero_based_page_index": 27,
+      "author_mathematical_scope": "Use addition and subtraction within 100 to solve word problems involving lengths given in the same units; drawings and equations with a symbol for an unknown may represent the problem.",
+      "required_material_conditions": [
+        "addition and subtraction within 100",
+        "lengths in same units",
+        "word problems",
+        "drawings or equations with unknown symbol"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.MD.6",
+      "source_printed_page": 21,
+      "source_pdf_zero_based_page_index": 27,
+      "author_mathematical_scope": "Represent whole numbers as lengths from 0 on an equally spaced number line diagram and represent whole-number sums and differences within 100 on that line.",
+      "required_material_conditions": [
+        "whole numbers as lengths from zero",
+        "equally spaced points",
+        "sums and differences within 100"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.MD.8",
+      "source_printed_page": 21,
+      "source_pdf_zero_based_page_index": 27,
+      "author_mathematical_scope": "Solve word problems involving dollar bills, quarters, dimes, nickels, and pennies, using dollar and cent symbols appropriately.",
+      "required_material_conditions": [
+        "money word problems",
+        "dollar bills and four named coins",
+        "use $ and ¢ correctly"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.MD.9",
+      "source_printed_page": 21,
+      "source_pdf_zero_based_page_index": 27,
+      "author_mathematical_scope": "Generate measurement data from several objects measured to the nearest whole unit or repeated measurements of one object; display the data as a line plot with a horizontal scale marked in whole-number units.",
+      "required_material_conditions": [
+        "several objects or repeated same-object measurements",
+        "nearest whole unit",
+        "line plot",
+        "whole-number horizontal scale"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.MD.10",
+      "source_printed_page": 21,
+      "source_pdf_zero_based_page_index": 27,
+      "author_mathematical_scope": "Draw a picture graph and single-unit-scale bar graph for a data set of up to four categories; solve simple put-together, take-apart, and compare problems using bar-graph information.",
+      "required_material_conditions": [
+        "picture graph and bar graph",
+        "single-unit scale",
+        "at most four categories",
+        "put-together, take-apart and compare problems"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.G.1",
+      "source_printed_page": 22,
+      "source_pdf_zero_based_page_index": 28,
+      "author_mathematical_scope": "Recognize and draw shapes with specified attributes, including a specified number of angles or equal faces; identify triangles, quadrilaterals, pentagons, hexagons, and cubes. Compare size directly or visually, not by measuring.",
+      "required_material_conditions": [
+        "specified angles or equal faces",
+        "triangles, quadrilaterals, pentagons, hexagons and cubes",
+        "size comparison directly or visually, not by measurement"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.G.2",
+      "source_printed_page": 22,
+      "source_pdf_zero_based_page_index": 28,
+      "author_mathematical_scope": "Partition a rectangle into rows and columns of equal-sized squares and count the squares to find the total.",
+      "required_material_conditions": [
+        "rectangle",
+        "rows and columns",
+        "equal-size squares",
+        "count total"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.G.3",
+      "source_printed_page": 22,
+      "source_pdf_zero_based_page_index": 28,
+      "author_mathematical_scope": "Partition circles and rectangles into two, three, or four equal shares; describe shares as halves, thirds, and fourths and the whole as two halves, three thirds, or four fourths; recognize equal shares of identical wholes need not have the same shape.",
+      "required_material_conditions": [
+        "circles and rectangles",
+        "2, 3 or 4 equal shares",
+        "halves, thirds, fourths",
+        "describe whole in unit fractions",
+        "equal shares of identical wholes may differ in shape"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
