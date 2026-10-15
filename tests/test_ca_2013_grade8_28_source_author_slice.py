@@ -60,3 +60,29 @@ def test_grade8_source_scope_subtleties_remain_explicit():
     assert "x=a or a=a or a=b (a != b)" in rows["8.EE.7"]["test_material_conditions"]
     assert "solutions satisfy both equations" in rows["8.EE.8"]["test_material_conditions"]
     assert all(word in rows["8.G.9"]["author_mathematical_scope_summary"] for word in ("cylinder", "cone", "sphere"))
+
+
+def test_grade8_recent_publisher_scope_restorations_are_locked():
+    """Publisher CDE printed pp.55-56 / PDF pages 61-62; author evidence only."""
+    rows = {
+        r["expectation_id"]: r
+        for r in json.loads(AUTHOR.read_text(encoding="utf-8"))["rows"]
+    }
+    system = rows["8.EE.8"]
+    assert system["required_lettered_subparts"] == ["a", "b", "c"]
+    assert "real-world and mathematical problems leading to two linear equations in two variables" in system["test_material_conditions"]
+    assert "two variables" in system["author_mathematical_scope_summary"]
+
+    linear = rows["8.F.4"]
+    assert "interpret rate of change and initial value in context and in graphs or tables" in linear["test_material_conditions"]
+    assert "tables or graphs" in linear["author_mathematical_scope_summary"]
+    assert "rate of change and initial value" in linear["author_mathematical_scope_summary"]
+
+    bivariate = rows["8.SP.4"]
+    assert "two categorical variables collected from the same subjects" in bivariate["test_material_conditions"]
+    assert "same subjects" in bivariate["author_mathematical_scope_summary"]
+    assert "row or column relative frequency" in bivariate["test_material_conditions"]
+
+    for row in (system, linear, bivariate):
+        assert row["source_review_status"] == "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY"
+        assert row["assessment"] == row["mastery"] == "UNVERIFIED"
