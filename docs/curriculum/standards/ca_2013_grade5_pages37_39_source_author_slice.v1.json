@@ -1,0 +1,345 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_DIRECT_CDE_PAGES_REVIEW_PENDING_INDEPENDENT_FIDELITY",
+  "jurisdiction": "CA",
+  "track": "GRADE_5",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "January 2013 modified / 2014 corrected CDE electronic edition",
+  "source_printed_pages": [
+    37,
+    38,
+    39
+  ],
+  "source_pdf_zero_based_indices": [
+    43,
+    44,
+    45
+  ],
+  "rows_count": 16,
+  "other_grade5_batch": "ca_2013_grade5_page36_source_author_slice.v1.json",
+  "combined_grade5_author_row_identifiers": 27,
+  "grade5_full_author_inventory_only": true,
+  "source_cautions": [
+    "5.NF.7 source spans printed pages 37 and 38; footnote explicitly excludes general fraction-by-fraction division.",
+    "5.NF.5 greater-than/less-than multiplier intuition must not be interpreted as a universal inequality for negative base quantities.",
+    "5.G.2 requires first-quadrant point graphing, not all-four-quadrant mastery.",
+    "5.MD.5 prism formulas are scoped to whole-number edge lengths; composite prism volume concerns non-overlapping parts."
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "5.NF.1",
+      "author_mathematical_scope": "Add and subtract fractions and mixed numbers with unlike denominators by replacing them with equivalent fractions sharing a denominator.",
+      "required_material_conditions": [
+        "unlike denominators",
+        "mixed numbers",
+        "equivalent common-denominator fractions"
+      ],
+      "source_printed_pages": [
+        37
+      ],
+      "source_pdf_zero_based_indices": [
+        43
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NF.2",
+      "author_mathematical_scope": "Solve same-whole fraction addition/subtraction word problems, including unlike denominators; use models or equations and benchmark-fraction estimates to check reasonableness.",
+      "required_material_conditions": [
+        "same whole",
+        "unlike denominators",
+        "represent with model or equation",
+        "mental benchmark estimate and reasonableness"
+      ],
+      "source_printed_pages": [
+        37
+      ],
+      "source_pdf_zero_based_indices": [
+        43
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NF.3",
+      "author_mathematical_scope": "Interpret a/b as a divided by b and solve whole-number division situations giving fraction or mixed-number results, supported by models or equations.",
+      "required_material_conditions": [
+        "numerator divided by nonzero denominator",
+        "whole-number sharing/division contexts",
+        "fraction or mixed-number answer"
+      ],
+      "source_printed_pages": [
+        37
+      ],
+      "source_pdf_zero_based_indices": [
+        43
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NF.4",
+      "author_mathematical_scope": "Multiply a fraction or whole number by a fraction: interpret (a/b)×q as a equal parts of q/b and as a×q÷b; find fractional-side rectangular areas by tiling and multiplying lengths.",
+      "required_material_conditions": [
+        "subpart a: interpret fraction times quantity and sequence a×q÷b",
+        "subpart b: area of rectangles with fractional side lengths",
+        "fraction-product area model"
+      ],
+      "source_printed_pages": [
+        37
+      ],
+      "source_pdf_zero_based_indices": [
+        43
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NF.5",
+      "author_mathematical_scope": "Reason about multiplication as scaling: compare product magnitude to a factor without computing, explain the Grade 5 context of fractional multipliers above and below one, and connect fraction equivalence to multiplication by one.",
+      "required_material_conditions": [
+        "subpart a: comparative factor-size reasoning without computation",
+        "subpart b: multipliers >1 versus <1",
+        "multiplication by one and fraction equivalence",
+        "nonnegative Grade 5 context; do not universalize greater/less inequalities to negative numbers"
+      ],
+      "source_printed_pages": [
+        37
+      ],
+      "source_pdf_zero_based_indices": [
+        43
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NF.6",
+      "author_mathematical_scope": "Solve real-world problems involving multiplication of fractions and mixed numbers using suitable visual models or equations.",
+      "required_material_conditions": [
+        "real-world problems",
+        "fraction and mixed-number multiplication",
+        "visual models or equations"
+      ],
+      "source_printed_pages": [
+        37
+      ],
+      "source_pdf_zero_based_indices": [
+        43
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NF.7",
+      "author_mathematical_scope": "Interpret, calculate and model division of unit fractions by nonzero whole numbers and of whole numbers by unit fractions, including contextual word problems; do not require general fraction-by-fraction division.",
+      "required_material_conditions": [
+        "subpart a: unit fraction ÷ nonzero whole number",
+        "subpart b: whole number ÷ unit fraction",
+        "subpart c: both real-world division cases",
+        "source footnote: general fraction ÷ fraction not required in Grade 5"
+      ],
+      "source_printed_pages": [
+        37,
+        38
+      ],
+      "source_pdf_zero_based_indices": [
+        43,
+        44
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.MD.1",
+      "author_mathematical_scope": "Convert between different-sized standard units of measure within one measurement system and use conversions in multistep real-world problems.",
+      "required_material_conditions": [
+        "within one measurement system",
+        "different-sized standard units",
+        "multistep real-world problems"
+      ],
+      "source_printed_pages": [
+        38
+      ],
+      "source_pdf_zero_based_indices": [
+        44
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.MD.2",
+      "author_mathematical_scope": "Construct line plots of measurement data in halves, quarters and eighths of a unit; apply grade-level fraction operations to interpret and solve problems from the plots.",
+      "required_material_conditions": [
+        "line plots",
+        "fractions 1/2 1/4 1/8",
+        "fraction-operation reasoning"
+      ],
+      "source_printed_pages": [
+        38
+      ],
+      "source_pdf_zero_based_indices": [
+        44
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.MD.3",
+      "author_mathematical_scope": "Recognize volume as an attribute of three-dimensional solids: a unit-side cube has one cubic unit of volume, and gap-free, overlap-free packing by n unit cubes gives n cubic units.",
+      "required_material_conditions": [
+        "subpart a: unit cube = one cubic unit",
+        "subpart b: packing without gaps or overlaps"
+      ],
+      "source_printed_pages": [
+        38
+      ],
+      "source_pdf_zero_based_indices": [
+        44
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.MD.4",
+      "author_mathematical_scope": "Measure volumes by counting unit cubes, including cubic centimeters, inches, feet, and improvised units.",
+      "required_material_conditions": [
+        "count unit cubes",
+        "cm³ in³ ft³",
+        "improvised units"
+      ],
+      "source_printed_pages": [
+        38
+      ],
+      "source_pdf_zero_based_indices": [
+        44
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.MD.5",
+      "author_mathematical_scope": "Solve prism-volume problems by connecting packing cubes to multiplication of whole-number edge lengths and V=l×w×h or V=B×h; add non-overlapping prism volumes for composite solids.",
+      "required_material_conditions": [
+        "subpart a: unit-cube packing and volume as threefold whole-number product",
+        "subpart b: right rectangular prisms with whole-number edges and both formulas",
+        "subpart c: two non-overlapping prisms and additive volume",
+        "real-world mathematical volume problems"
+      ],
+      "source_printed_pages": [
+        38
+      ],
+      "source_pdf_zero_based_indices": [
+        44
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.G.1",
+      "author_mathematical_scope": "Define a coordinate plane using perpendicular axes intersecting at a zero origin; locate points by ordered pairs and distinguish x-coordinate direction from y-coordinate direction.",
+      "required_material_conditions": [
+        "perpendicular axes and origin at (0,0)",
+        "ordered pair and coordinate convention",
+        "axis names match coordinates"
+      ],
+      "source_printed_pages": [
+        39
+      ],
+      "source_pdf_zero_based_indices": [
+        45
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.G.2",
+      "author_mathematical_scope": "Represent mathematical and real-world situations by graphing points in the first quadrant and interpreting coordinates in context.",
+      "required_material_conditions": [
+        "first quadrant only",
+        "real-world and mathematical problems",
+        "coordinate interpretation"
+      ],
+      "source_printed_pages": [
+        39
+      ],
+      "source_pdf_zero_based_indices": [
+        45
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.G.3",
+      "author_mathematical_scope": "Explain that properties belonging to a two-dimensional figure category also apply to its nested subcategories (for example squares inherit properties of rectangles).",
+      "required_material_conditions": [
+        "attribute inheritance",
+        "category and subcategory",
+        "square and rectangle example"
+      ],
+      "source_printed_pages": [
+        39
+      ],
+      "source_pdf_zero_based_indices": [
+        45
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.G.4",
+      "author_mathematical_scope": "Classify two-dimensional figures in hierarchies based on their defining properties.",
+      "required_material_conditions": [
+        "two-dimensional shapes",
+        "hierarchical classification",
+        "defining properties"
+      ],
+      "source_printed_pages": [
+        39
+      ],
+      "source_pdf_zero_based_indices": [
+        45
+      ],
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
