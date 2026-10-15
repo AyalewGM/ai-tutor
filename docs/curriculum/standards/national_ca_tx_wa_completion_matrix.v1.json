@@ -68,9 +68,9 @@
       },
       "grade2_partial_author_source_scope_rows": 10,
       "grade2_partial_author_source_file": "ca_2013_grade2_page20_source_author_slice.v1.json",
-      "grade2_partial_not_complete": true,
+      "grade2_partial_not_complete": false,
       "grade2_author_scope_total": 27,
-      "grade2_author_scope_status": "ALL_27_IDENTIFIERS_HAVE_AUTHOR_DESCRIPTIONS_NOT_SOURCE_ACCEPTED",
+      "grade2_author_scope_status": "ALL_27_AUTHOR_DESCRIPTIONS_STAGED_ZERO_INDEPENDENT_SOURCE_ACCEPTANCE",
       "grade3_partial_author_scope_total": 21,
       "partially_scoped_tracks": [
         "GRADE_3"
@@ -79,7 +79,8 @@
         "GRADE_4",
         "GRADE_5",
         "GRADE_6"
-      ]
+      ],
+      "grade2_scope_fidelity_accepted_rows": 0
     },
     "TX": {
       "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
