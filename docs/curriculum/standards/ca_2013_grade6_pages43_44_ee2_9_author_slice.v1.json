@@ -1,0 +1,140 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "GRADE_6",
+  "status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+  "official_source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "edition": "2013 modified / 2014 corrected",
+  "source_printed_pages": [
+    43,
+    44
+  ],
+  "expectation_count": 8,
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "6.EE.2",
+      "source_printed_pages": [
+        43,
+        44
+      ],
+      "author_mathematical_scope": "Write/read/evaluate expressions with variable letters; include subparts (a) write operations, (b) identify terms/factors/coefficients and grouped subexpressions, (c) substitute given values including formulas, whole-number exponents and order of operations.",
+      "required_material_conditions": [
+        "subparts a b c",
+        "terms factors coefficients",
+        "substitution and order of operations"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.EE.3",
+      "source_printed_pages": [
+        44
+      ],
+      "author_mathematical_scope": "Use operation properties to produce equivalent expressions, including distributive expansion and factoring.",
+      "required_material_conditions": [
+        "properties of operations",
+        "equivalent expressions"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.EE.4",
+      "source_printed_pages": [
+        44
+      ],
+      "author_mathematical_scope": "Recognize two expressions are equivalent when equal for every permissible variable substitution.",
+      "required_material_conditions": [
+        "all variable values, not one example"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.EE.5",
+      "source_printed_pages": [
+        44
+      ],
+      "author_mathematical_scope": "Solve an equation or inequality by identifying values from a specified set that make it true; test candidates by substitution.",
+      "required_material_conditions": [
+        "equations and inequalities",
+        "specified set"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.EE.6",
+      "source_printed_pages": [
+        44
+      ],
+      "author_mathematical_scope": "Use variables for unknown numbers or arbitrary members of specified sets in mathematical and real-world problems.",
+      "required_material_conditions": [
+        "unknowns and arbitrary specified-set members"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.EE.7",
+      "source_printed_pages": [
+        44
+      ],
+      "author_mathematical_scope": "Write and solve x+p=q and px=q in mathematical and real-world problems with x,p,q nonnegative rational.",
+      "required_material_conditions": [
+        "both equation forms",
+        "all three variables nonnegative rational"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.EE.8",
+      "source_printed_pages": [
+        44
+      ],
+      "author_mathematical_scope": "Write strict inequalities x>c or x<c as constraints; show infinitely many solutions on a number line.",
+      "required_material_conditions": [
+        "strict inequalities only",
+        "infinitely many solutions"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.EE.9",
+      "source_printed_pages": [
+        44
+      ],
+      "author_mathematical_scope": "Model two related real-world quantities, writing dependent in terms of independent, and analyze equations, tables and graphs.",
+      "required_material_conditions": [
+        "dependent and independent variables",
+        "table graph equation"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
