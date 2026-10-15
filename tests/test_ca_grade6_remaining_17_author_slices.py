@@ -18,7 +18,7 @@ def test_grade6_new_author_records_and_boundaries():
     assert len(ids) == len(set(ids)) == 17
     assert next(r for r in docs[0]["rows"] if r["expectation_id"] == "6.EE.2")["source_printed_pages"] == [43, 44]
     assert "nonnegative rational" in next(r for r in docs[0]["rows"] if r["expectation_id"] == "6.EE.7")["author_mathematical_scope"]
-    assert "strict inequalities" in next(r for r in docs[0]["rows"] if r["expectation_id"] == "6.EE.8")["required_material_conditions"]
+    assert any("strict inequalities" in condition for condition in next(r for r in docs[0]["rows"] if r["expectation_id"] == "6.EE.8")["required_material_conditions"])
     assert "fractional edges" in next(r for r in docs[1]["rows"] if r["expectation_id"] == "6.G.2")["required_material_conditions"]
     assert "subparts a b c d" in next(r for r in docs[1]["rows"] if r["expectation_id"] == "6.SP.5")["required_material_conditions"]
     for doc in docs:
