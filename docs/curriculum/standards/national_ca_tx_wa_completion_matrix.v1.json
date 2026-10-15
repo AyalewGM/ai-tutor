@@ -128,7 +128,7 @@
         "REGULAR_GRADE_5"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Regular Grade 6 §111.26: 16 provisional author rows, not complete and zero independently accepted; independently compare TEA July 2025 pp.2–3, finish remaining requirements and regular Grades 1–5. Advanced 198 author descriptions remain independently unaccepted.",
+      "next_gate": "Independent source fidelity of 59 TX regular Grade 6 §111.26 expectation paraphrases, including page spans and notation, then complete regular Grades 1–5 and publisher-byte authentication. Zero independent acceptance; 198 advanced author descriptions separate.",
       "advanced_grade6_111_29_author_identifier_rows": 68,
       "advanced_grade6_111_29_author_scope_rows": 68,
       "advanced_grade6_111_29_independently_accepted_source_rows": 0,
@@ -140,16 +140,16 @@
         "tx_advanced_2025_grade6_111_29_scope_batch_05_geometry_data_finance.v1.json",
         "tx_advanced_2025_grade6_111_29_scope_batch_06_process.v1.json"
       ],
-      "partially_author_scoped_tracks": [
-        "REGULAR_GRADE_6"
-      ],
-      "regular_grade6_111_26_author_scope_rows": 16,
+      "partially_author_scoped_tracks": [],
+      "regular_grade6_111_26_author_scope_rows": 59,
       "regular_grade6_111_26_independently_accepted_source_rows": 0,
       "regular_grade6_source_files": [
         "tx_regular_grade6_number_systems_2a_2e_author.v1.json",
         "tx_regular_grade6_proportionality_4a_4d_author.v1.json",
-        "tx_regular_grade6_proportionality_4e_5c_author.v1.json"
-      ]
+        "tx_regular_grade6_proportionality_4e_5c_author.v1.json",
+        "tx_regular_grade6_remaining_source_author.v1.json"
+      ],
+      "regular_grade6_author_scope_status": "59_OF_59_AUTHOR_PARAPHRASES_STAGED_INDEPENDENT_SOURCE_FIDELITY_PENDING"
     },
     "WA": {
       "official_source": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
