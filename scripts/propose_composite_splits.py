@@ -88,9 +88,15 @@ def propose() -> dict:
     # local_code -> claimed expectations, inverted from manifest crosswalks
     claims: dict[str, list[dict]] = {}
     for e in _manifest_rows():
-        for lc in e.get("repository_existing_crosswalks") or []:
+        for link in e.get("repository_existing_crosswalks") or []:
+            # Older manifests contain local skill-code strings; newer ones can
+            # contain structured links. Only explicit local identifiers qualify.
+            lc = (link.get("local_code") or link.get("local_skill_code")
+                  if isinstance(link, dict) else link)
+            if not isinstance(lc, str) or not lc.strip():
+                continue
             claims.setdefault(lc, []).append(
-                {"expectation_id": e["expectation_id"], "grade": e["grade"],
+                {"expectation_id": e["expectation_id"], "grade": e.get("grade"),
                  "scope": e.get("scope_summary", "")})
 
     proposals = []
