@@ -121,12 +121,11 @@
       "advanced_remaining_unscoped_rows": 0,
       "accepted_source_fidelity_rows": 0,
       "unextracted_tracks": [
-        "REGULAR_GRADE_3",
         "REGULAR_GRADE_4",
         "REGULAR_GRADE_5"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Review all 50 Texas Grade 2 provisional source rows and original TEA pages 8–11; continue regular Grades 3–5, California verification, and Washington publisher authentication.",
+      "next_gate": "Independent verification of 19 Texas Grade 3 §111.5(b)(1)-(3) author scopes against TEA pp12–13; complete Grade 3 (4)-(9), Grades 4–5, and WA publisher authentication. All unaccepted mappings remain disabled.",
       "advanced_grade6_111_29_author_identifier_rows": 68,
       "advanced_grade6_111_29_author_scope_rows": 68,
       "advanced_grade6_111_29_independently_accepted_source_rows": 0,
@@ -138,7 +137,9 @@
         "tx_advanced_2025_grade6_111_29_scope_batch_05_geometry_data_finance.v1.json",
         "tx_advanced_2025_grade6_111_29_scope_batch_06_process.v1.json"
       ],
-      "partially_author_scoped_tracks": [],
+      "partially_author_scoped_tracks": [
+        "REGULAR_GRADE_3"
+      ],
       "regular_grade6_111_26_author_scope_rows": 59,
       "regular_grade6_111_26_independently_accepted_source_rows": 0,
       "regular_grade6_source_files": [
@@ -170,7 +171,13 @@
         "tx_regular_grade2_finance_11a_11c_author.v1.json",
         "tx_regular_grade2_finance_11d_11f_author.v1.json"
       ],
-      "regular_grade2_author_scope_status": "50_OF_50_AUTHOR_ROWS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      "regular_grade2_author_scope_status": "50_OF_50_AUTHOR_ROWS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "regular_grade3_author_scope_rows": 19,
+      "regular_grade3_independently_accepted_source_rows": 0,
+      "regular_grade3_source_files": [
+        "tx_regular_grade3_process_place_value_fractions_author.v1.json"
+      ],
+      "regular_grade3_author_scope_status": "19_OF_GRADE3_REQUIREMENTS_AUTHOR_STAGED_SECTIONS_4_TO_9_NOT_YET_SCOPED"
     },
     "WA": {
       "official_source": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
