@@ -485,11 +485,11 @@
         50
       ],
       "required_lettered_subparts": [],
-      "author_mathematical_scope_summary": "Approximate event probabilities from observed long-run relative frequencies of repeated chance trials and predict approximate counts of outcomes.",
+      "author_mathematical_scope_summary": "Approximate chance-event probabilities from observed long-run relative frequencies; given an event probability, predict approximate relative frequency and corresponding event counts over repeated trials.",
       "test_material_conditions": [
-        "long-run",
-        "relative frequencies",
-        "predict"
+        "long-run relative frequency",
+        "predict relative frequency from probability",
+        "predict approximate counts for a stated trial count"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
