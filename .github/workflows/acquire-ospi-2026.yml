@@ -22,9 +22,9 @@ jobs:
           OSPI_CANDIDATE_URL: ${{ inputs.candidate_url }}
         run: |
           if [ -n "$OSPI_CANDIDATE_URL" ]; then
-            python scripts/acquire_ospi_2026_standards.py --output source-evidence/ospi-2026 --candidate-url "$OSPI_CANDIDATE_URL"
+            python scripts/acquire_ospi_2026_standards.py --output source-evidence/ospi-2026 --candidate-url "$OSPI_CANDIDATE_URL" --expected-sha256 d522101f430758dcbc21d7ecc800977761b3ccdb224de2b3e6fd6217faa80875
           else
-            python scripts/acquire_ospi_2026_standards.py --output source-evidence/ospi-2026
+            python scripts/acquire_ospi_2026_standards.py --output source-evidence/ospi-2026 --expected-sha256 d522101f430758dcbc21d7ecc800977761b3ccdb224de2b3e6fd6217faa80875
           fi
       - name: Preserve evidence and failure diagnostics
         if: always()
