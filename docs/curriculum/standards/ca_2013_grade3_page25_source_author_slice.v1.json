@@ -1,0 +1,179 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_GRADE3_PRINTED_PAGE25_DRAFT_NOT_ACCEPTED",
+  "jurisdiction": "CA",
+  "track": "GRADE_3",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "CDE 2013 modification/2014 corrected electronic edition",
+  "source_printed_page": 25,
+  "source_pdf_zero_based_page_index": 31,
+  "expectation_count": 10,
+  "scope": "3.OA.1-9 and 3.NBT.1; not a complete Grade 3 inventory",
+  "source_cautions": [
+    "3.OA.8 has footnote constraints: whole-number inputs/answers, conventional order when no parentheses.",
+    "3.OA.5 students are not required to use formal names for the operation properties.",
+    "3.OA.7 Grade 3 end-of-year product-memory requirement is distinct from merely gaining strategy fluency.",
+    "This is editorial source intake for independent verification, not accepted curriculum mapping or mastery."
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "3.OA.1",
+      "source_printed_page": 25,
+      "source_pdf_zero_based_page_index": 31,
+      "author_mathematical_scope": "Interpret products of whole numbers as totals in equal-sized groups, including describing a context for a multiplication such as five groups of seven.",
+      "required_material_conditions": [
+        "interpret product",
+        "equal-sized groups",
+        "context for multiplication"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.OA.2",
+      "source_printed_page": 25,
+      "source_pdf_zero_based_page_index": 31,
+      "author_mathematical_scope": "Interpret whole-number quotients as either objects in each equally-sized share or the number of equal shares of a specified size, and describe a matching context.",
+      "required_material_conditions": [
+        "group size interpretation",
+        "number of groups interpretation",
+        "context for quotient"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.OA.3",
+      "source_printed_page": 25,
+      "source_pdf_zero_based_page_index": 31,
+      "author_mathematical_scope": "Use multiplication and division within 100 to solve word problems involving equal groups, arrays, and measurement quantities, representing unknowns by drawings or equations.",
+      "required_material_conditions": [
+        "multiply and divide within 100",
+        "equal groups, arrays and measurement",
+        "word problems",
+        "unknown symbol in equation"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.OA.4",
+      "source_printed_page": 25,
+      "source_pdf_zero_based_page_index": 31,
+      "author_mathematical_scope": "Find an unknown whole number in a multiplication or division equation relating three whole numbers, including unknown factors, dividends, or quotients.",
+      "required_material_conditions": [
+        "three whole numbers",
+        "unknown in multiplication or division equation"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.OA.5",
+      "source_printed_page": 25,
+      "source_pdf_zero_based_page_index": 31,
+      "author_mathematical_scope": "Apply properties of operations as strategies for multiplication and division, including commutative, associative, and distributive reasoning; formal property terms need not be used by students.",
+      "required_material_conditions": [
+        "properties as strategies",
+        "commutative, associative and distributive",
+        "formal property terms not required"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.OA.6",
+      "source_printed_page": 25,
+      "source_pdf_zero_based_page_index": 31,
+      "author_mathematical_scope": "Understand division as an unknown-factor problem by relating a division equation to a multiplication equation.",
+      "required_material_conditions": [
+        "division",
+        "unknown factor",
+        "multiplication relationship"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.OA.7",
+      "source_printed_page": 25,
+      "source_pdf_zero_based_page_index": 31,
+      "author_mathematical_scope": "Multiply and divide fluently within 100 using multiplication-division relationships or properties; by the end of Grade 3 know from memory all products of two one-digit numbers.",
+      "required_material_conditions": [
+        "fluency within 100",
+        "multiplication/division relationship",
+        "memorized one-digit-by-one-digit products by end of grade"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.OA.8",
+      "source_printed_page": 25,
+      "source_pdf_zero_based_page_index": 31,
+      "author_mathematical_scope": "Solve two-step word problems using the four operations, with whole-number inputs and whole-number answers; model unknowns with letter equations and assess answers with mental computation and estimation, including rounding.",
+      "required_material_conditions": [
+        "two-step word problems",
+        "all four operations",
+        "whole-number inputs and answers",
+        "letter for unknown",
+        "reasonableness using estimation including rounding",
+        "conventional order when no parentheses"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.OA.9",
+      "source_printed_page": 25,
+      "source_pdf_zero_based_page_index": 31,
+      "author_mathematical_scope": "Identify arithmetic patterns, including in addition or multiplication tables, and explain the patterns using properties of operations.",
+      "required_material_conditions": [
+        "arithmetic patterns",
+        "addition/multiplication tables",
+        "explain using operation properties"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.NBT.1",
+      "source_printed_page": 25,
+      "source_pdf_zero_based_page_index": 31,
+      "author_mathematical_scope": "Use place-value understanding to round whole numbers to the nearest 10 or nearest 100.",
+      "required_material_conditions": [
+        "whole numbers",
+        "nearest 10",
+        "nearest 100"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
