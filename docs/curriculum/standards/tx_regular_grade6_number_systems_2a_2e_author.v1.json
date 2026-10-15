@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_6",
+  "section": "111.26(b)(2)(A-E)",
+  "publisher": "Texas Education Agency",
+  "official_pdf": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111b.pdf",
+  "edition": "TEA July 2025 Chapter 111 Subchapter B",
+  "source_pdf_page_index": 1,
+  "source_pdf_printed_page": 2,
+  "independent_source_fidelity": "PENDING",
+  "publisher_original_bytes_authenticated": false,
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "id": "111.26(b)(2)(A)",
+      "scope": "Classify whole numbers, integers, and rational numbers with a visual display of number-set relationships; Venn diagrams are an example."
+    },
+    {
+      "id": "111.26(b)(2)(B)",
+      "scope": "Identify a number, its opposite, and its absolute value."
+    },
+    {
+      "id": "111.26(b)(2)(C)",
+      "scope": "Locate, compare, and order integers and rational numbers on a number line."
+    },
+    {
+      "id": "111.26(b)(2)(D)",
+      "scope": "Order rational numbers arising in mathematical and real-world contexts."
+    },
+    {
+      "id": "111.26(b)(2)(E)",
+      "scope": "Recognize fraction a/b as the same numerical value as a divided by b, requiring a nonzero divisor b."
+    }
+  ]
+}
