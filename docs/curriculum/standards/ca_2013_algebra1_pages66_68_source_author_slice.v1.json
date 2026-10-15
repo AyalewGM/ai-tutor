@@ -372,12 +372,13 @@
       "track": "ALGEBRA_I",
       "source_printed_page": 67,
       "source_pdf_page_index": 73,
-      "author_mathematical_scope_summary": "Describe positive or negative changes to k in f(x)+k, kf(x), f(kx) and f(x+k), experimentally explaining graph transformations and recognizing even and odd functions.",
+      "author_mathematical_scope_summary": "Identify how the graphs change when f(x) is replaced by f(x)+k, kf(x), f(kx), and f(x+k) for positive and negative k; find the value of k given the graphs; experiment with technology to explain transformations; recognize even and odd functions from graphs and algebraic expressions.",
       "test_material_conditions": [
         "four k transformations",
         "positive or negative k",
         "even and odd function properties",
-        "technology experiments"
+        "technology experiments",
+        "find k from given graphs"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
