@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_NOT_INDEPENDENTLY_ACCEPTED",
+  "track": "MATHEMATICS_I",
+  "source_cde": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "reviewed_public_education_agency_mirror": "https://www.rcoe.us/media/1zpjov0k/ccssmathstandardaug2013.pdf",
+  "publisher_original_byte_identity": "UNVERIFIED",
+  "source_printed_page": 90,
+  "source_pdf_zero_based_page": 96,
+  "source_audit_file": "ca_2013_mathematics1_pages90_94_author_audit.v1.json",
+  "entry_semantics": "Supplemental author notes to existing nine placements; not new standards or additional placement counts.",
+  "requirements": [
+    {
+      "expectation_id": "N-Q.1",
+      "material_conditions": [
+        "multi-step uses of units",
+        "consistent formula units",
+        "interpreted scale and origin in graph/data displays"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_PUBLISHER_FIDELITY"
+    },
+    {
+      "expectation_id": "N-Q.2",
+      "material_conditions": [
+        "appropriate quantities for descriptive modeling"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_PUBLISHER_FIDELITY"
+    },
+    {
+      "expectation_id": "N-Q.3",
+      "material_conditions": [
+        "reporting accuracy chosen for measurement limitations"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_PUBLISHER_FIDELITY"
+    },
+    {
+      "expectation_id": "A-SSE.1.a",
+      "material_conditions": [
+        "expression represents quantity in context",
+        "interpret terms factors coefficients",
+        "course: linear and exponential with integer exponents"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_PUBLISHER_FIDELITY"
+    },
+    {
+      "expectation_id": "A-SSE.1.b",
+      "material_conditions": [
+        "compound parts interpreted as single entity",
+        "P(1+r)^n example separates P and growth factor",
+        "course: linear and exponential with integer exponents"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_PUBLISHER_FIDELITY"
+    },
+    {
+      "expectation_id": "A-CED.2",
+      "material_conditions": [
+        "two or more variables represent quantity relationships",
+        "coordinate graph with labels and scales",
+        "course: linear and exponential, integer inputs"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_PUBLISHER_FIDELITY"
+    },
+    {
+      "expectation_id": "A-CED.3",
+      "material_conditions": [
+        "equations inequalities and systems encode constraints",
+        "viable versus nonviable modeling outcomes",
+        "course: linear only"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_PUBLISHER_FIDELITY"
+    },
+    {
+      "expectation_id": "A-CED.4",
+      "material_conditions": [
+        "rearrange formulas to isolate quantity",
+        "reasoning mirrors equation solving",
+        "Ohm law illustration; not mandatory task"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_PUBLISHER_FIDELITY"
+    },
+    {
+      "expectation_id": "A-REI.1",
+      "material_conditions": [
+        "each solving step justified by preceding equality",
+        "start assuming original equation has solution",
+        "viable argument for method",
+        "course: master linear; learn general principle"
+      ],
+      "source_review_status": "PENDING_INDEPENDENT_PUBLISHER_FIDELITY"
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}
