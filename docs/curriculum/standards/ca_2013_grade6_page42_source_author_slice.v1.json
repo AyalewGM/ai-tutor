@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_SOURCE_SCOPE_PENDING_INDEPENDENT_PUBLISHER_REVIEW",
+  "jurisdiction": "CA",
+  "track": "GRADE_6",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "edition": "2013 modified standards with electronic 2014 corrections",
+  "source_printed_page": 42,
+  "source_pdf_zero_based_page_index": 48,
+  "expectation_count": 7,
+  "source_footnote": "Grade 6 unit-rate expectations limited to non-complex fractions.",
+  "coverage_boundary": "Only 7 parent expectations; Grade 6 source inventory not completed.",
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "6.RP.1",
+      "source_printed_page": 42,
+      "source_pdf_zero_based_page_index": 48,
+      "author_mathematical_scope": "Understand ratios as relationships between two quantities and use ratio language to describe their multiplicative comparison.",
+      "required_material_conditions": [
+        "two-quantity ratio relationship",
+        "ratio-language interpretation"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.RP.2",
+      "source_printed_page": 42,
+      "source_pdf_zero_based_page_index": 48,
+      "author_mathematical_scope": "Understand a unit rate a/b corresponding to ratio a:b with nonzero b, and use unit-rate language to describe the relationship.",
+      "required_material_conditions": [
+        "denominator nonzero",
+        "Grade 6 unit rate fractions non-complex"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.RP.3",
+      "source_printed_page": 42,
+      "source_pdf_zero_based_page_index": 48,
+      "author_mathematical_scope": "Solve mathematical and real-world ratio/rate problems using equivalent-ratio tables, tape diagrams, double number lines or equations; (a) whole-number-measurement ratio tables, missing values, plotting and comparison; (b) unit pricing and constant speed; (c) percentage as rate per 100 and finding whole from part and percent; (d) unit conversion with appropriate multiplication/division.",
+      "required_material_conditions": [
+        "required subparts a b c d",
+        "whole-number measurements in ratio table",
+        "percent as rate per 100",
+        "unit conversion"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.NS.1",
+      "source_printed_page": 42,
+      "source_pdf_zero_based_page_index": 48,
+      "author_mathematical_scope": "Interpret and compute quotients of fractions and solve fraction-by-fraction division word problems using visual fraction models, equations and the relation between multiplication and division.",
+      "required_material_conditions": [
+        "fraction divided by fraction",
+        "visual models and equations"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.NS.2",
+      "source_printed_page": 42,
+      "source_pdf_zero_based_page_index": 48,
+      "author_mathematical_scope": "Fluently divide multi-digit numbers using the standard algorithm.",
+      "required_material_conditions": [
+        "standard division algorithm",
+        "multi-digit integers"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.NS.3",
+      "source_printed_page": 42,
+      "source_pdf_zero_based_page_index": 48,
+      "author_mathematical_scope": "Fluently add, subtract, multiply and divide multi-digit decimals, using the standard algorithm for each operation.",
+      "required_material_conditions": [
+        "all four decimal operations",
+        "standard algorithms"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.NS.4",
+      "source_printed_page": 42,
+      "source_pdf_zero_based_page_index": 48,
+      "author_mathematical_scope": "Find greatest common factor of two whole numbers at most 100 and least common multiple of two whole numbers at most 12; use distributivity to rewrite sums of integers 1–100 sharing a factor.",
+      "required_material_conditions": [
+        "GCF inputs <=100",
+        "LCM inputs <=12",
+        "distributive rewrite integers 1-100"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
