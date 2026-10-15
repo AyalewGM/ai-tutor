@@ -1,0 +1,243 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_1",
+  "section": "111.3(b)(4)-(9)",
+  "official_source": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "edition": "December 2014 TEA elementary Subchapter A",
+  "source_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+  "source_page_locator_status": "AUTHOR_REVIEW_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+  "independent_source_fidelity": "PENDING",
+  "publisher_original_bytes_authenticated": false,
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "id": "111.3(b)(4)(A)",
+      "scope": "Identify U.S. coins including pennies, nickels, dimes and quarters by value and describe relationships among them.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(4)(B)",
+      "scope": "Write the value of a collection of coins using the cent symbol.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(5)(A)",
+      "scope": "Recite numbers forward and backward from any given number between 1 and 120.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(5)(B)",
+      "scope": "Skip-count by twos, fives and tens to determine a total number of objects up to 120.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(5)(C)",
+      "scope": "Use concrete and pictorial models to determine a number 10 more and 10 less than a given number up to 120.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(5)(D)",
+      "scope": "Represent a number on a number line using distances from zero.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(6)(A)",
+      "scope": "Classify and sort regular and irregular two-dimensional shapes by attributes using informal and formal geometric language.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(6)(B)",
+      "scope": "Distinguish defining attributes of shapes from non-defining attributes.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(6)(C)",
+      "scope": "Create two-dimensional figures including circles, triangles, rectangles and squares.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(6)(D)",
+      "scope": "Identify two-dimensional shapes including circles, triangles, rectangles, squares, rhombuses and hexagons and describe their attributes.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(6)(E)",
+      "scope": "Classify and sort three-dimensional solids including spheres, rectangular prisms, cubes, cones and cylinders by attributes.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(6)(F)",
+      "scope": "Compose two-dimensional shapes by joining two, three or four figures to produce a target shape.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(6)(G)",
+      "scope": "Partition two-dimensional figures into two and four fair shares and describe halves and fourths using words.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(7)(A)",
+      "scope": "Use measuring tools to measure length of objects to nearest whole unit.",
+      "source_printed_page": 7,
+      "source_pdf_page_index": 6,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(7)(B)",
+      "scope": "Illustrate that an object's length is number of same-size length units placed end-to-end with no gaps or overlaps.",
+      "source_printed_page": 7,
+      "source_pdf_page_index": 6,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(7)(C)",
+      "scope": "Measure the same object with units of two different lengths and describe how unit size affects the count.",
+      "source_printed_page": 7,
+      "source_pdf_page_index": 6,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(7)(D)",
+      "scope": "Describe length of an object using a whole number of units.",
+      "source_printed_page": 7,
+      "source_pdf_page_index": 6,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(7)(E)",
+      "scope": "Compare lengths of two objects using comparative language.",
+      "source_printed_page": 7,
+      "source_pdf_page_index": 6,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(8)(A)",
+      "scope": "Collect, sort and organize data into up to three categories using models/representations.",
+      "source_printed_page": 7,
+      "source_pdf_page_index": 6,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(8)(B)",
+      "scope": "Use data to create picture and bar-type graphs.",
+      "source_printed_page": 7,
+      "source_pdf_page_index": 6,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(8)(C)",
+      "scope": "Draw conclusions and generate/answer questions from picture and bar-type graphs.",
+      "source_printed_page": 7,
+      "source_pdf_page_index": 6,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(9)(A)",
+      "scope": "Explain connection between income as a means to obtain goods and services.",
+      "source_printed_page": 7,
+      "source_pdf_page_index": 6,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(9)(B)",
+      "scope": "Identify income as a means of obtaining goods and services.",
+      "source_printed_page": 7,
+      "source_pdf_page_index": 6,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(9)(C)",
+      "scope": "Distinguish spending from saving.",
+      "source_printed_page": 7,
+      "source_pdf_page_index": 6,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.3(b)(9)(D)",
+      "scope": "Consider choices when spending and saving money.",
+      "source_printed_page": 7,
+      "source_pdf_page_index": 6,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
