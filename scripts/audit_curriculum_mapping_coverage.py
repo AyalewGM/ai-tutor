@@ -72,7 +72,10 @@ def audit() -> dict:
         cur = d.get("curriculum") or {}
         version = cur.get("standards_version") or d.get("schema_version", "")
         for row in d.get("expectations", []):
-            grade = int(row["grade"])
+            # Standards for a course (e.g. Algebra I) may not specify a
+            # numbered grade. Keep them ungraded, rather than invent Grade 9.
+            raw_grade = row.get("grade", d.get("grade"))
+            grade = int(raw_grade) if str(raw_grade).isdigit() else None
             links = row.get("repository_existing_crosswalks") or []
             all_expectations.append(
                 {
