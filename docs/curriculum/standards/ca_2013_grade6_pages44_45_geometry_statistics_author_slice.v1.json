@@ -31,7 +31,10 @@
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_indices": [
+        50
+      ]
     },
     {
       "expectation_id": "6.G.2",
@@ -47,7 +50,10 @@
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_indices": [
+        50
+      ]
     },
     {
       "expectation_id": "6.G.3",
@@ -63,7 +69,10 @@
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_indices": [
+        51
+      ]
     },
     {
       "expectation_id": "6.G.4",
@@ -79,7 +88,10 @@
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_indices": [
+        51
+      ]
     },
     {
       "expectation_id": "6.SP.1",
@@ -93,7 +105,10 @@
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_indices": [
+        51
+      ]
     },
     {
       "expectation_id": "6.SP.2",
@@ -109,7 +124,10 @@
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_indices": [
+        51
+      ]
     },
     {
       "expectation_id": "6.SP.3",
@@ -123,7 +141,10 @@
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_indices": [
+        51
+      ]
     },
     {
       "expectation_id": "6.SP.4",
@@ -139,7 +160,10 @@
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_indices": [
+        51
+      ]
     },
     {
       "expectation_id": "6.SP.5",
@@ -156,7 +180,11 @@
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "source_pdf_zero_based_indices": [
+        51
+      ]
     }
-  ]
+  ],
+  "source_pdf_page_index_convention": "Zero-based PDF index = printed page + 6; derived locator, pending independent publisher review"
 }
