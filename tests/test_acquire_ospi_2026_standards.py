@@ -143,3 +143,67 @@ def test_official_ospi_label_with_narrow_no_break_space_is_discovered():
         "https://ospi.k12.wa.us/sites/default/files/2026-08/math26-final-adoption-spreadsheet.xlsx",
         "Mathematics Learning\u202fStandards Spreadsheet",
     )]
+
+
+def test_pinned_workbook_cannot_be_authenticated_by_pdf_only(monkeypatch, tmp_path: Path):
+    import json
+    import sys
+
+    import pytest
+
+    import scripts.acquire_ospi_2026_standards as acquisition
+
+    pdf_url = "https://ospi.k12.wa.us/sites/default/files/2026-08/math26-final.pdf"
+
+    def fake_fetch(url, dest):
+        return {
+            "url": url,
+            "filename": dest.name,
+            "status": "ACQUIRED_UNVERIFIED_SOURCE_BYTES",
+            "publisher_hash_matches_uploaded_workbook": False,
+        }
+
+    monkeypatch.setattr(acquisition, "fetch", fake_fetch)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["acquire", "--output", str(tmp_path), "--candidate-url", pdf_url,
+         "--expected-sha256", "a" * 64],
+    )
+    with pytest.raises(RuntimeError, match="No OSPI XLSX matched"):
+        acquisition.main()
+    result = json.loads((tmp_path / "acquisition.json").read_text())
+    failure = json.loads((tmp_path / "failure.json").read_text())
+    assert result["accepted_expectation_rows"] == 0
+    assert failure["status"] == "BLOCKED"
+    assert failure["accepted_expectation_rows"] == 0
+
+
+def test_pinned_workbook_requires_explicit_matching_digest_flag(monkeypatch, tmp_path: Path):
+    import json
+    import sys
+
+    import scripts.acquire_ospi_2026_standards as acquisition
+
+    xlsx_url = "https://ospi.k12.wa.us/sites/default/files/2026-08/math26-final.xlsx"
+
+    def fake_fetch(url, dest, expected_sha256):
+        assert expected_sha256 == "b" * 64
+        return {
+            "url": url,
+            "filename": dest.name,
+            "status": "ACQUIRED_UNVERIFIED_SOURCE_BYTES",
+            "publisher_hash_matches_uploaded_workbook": True,
+        }
+
+    monkeypatch.setattr(acquisition, "fetch", fake_fetch)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["acquire", "--output", str(tmp_path), "--candidate-url", xlsx_url,
+         "--expected-sha256", "b" * 64],
+    )
+    acquisition.main()
+    result = json.loads((tmp_path / "acquisition.json").read_text())
+    assert result["accepted_expectation_rows"] == 0
+    assert result["candidates"][0]["publisher_hash_matches_uploaded_workbook"] is True
