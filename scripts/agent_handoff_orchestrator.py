@@ -11,8 +11,13 @@ import sys
 import zipfile
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode
-from urllib.request import Request, urlopen
+from urllib.parse import urlencode, urlsplit
+from urllib.request import (
+    HTTPRedirectHandler,
+    Request,
+    build_opener,
+    urlopen,
+)
 
 REQUIRED = ("CI", "AppSec Baseline")
 FAILURES = {"failure", "cancelled", "timed_out", "action_required", "startup_failure"}
@@ -182,9 +187,34 @@ def record_pending(number: int, sha: str, state: str, reason: str) -> None:
 
 
 def artifact_bytes(url: str, token: str) -> bytes:
+    # The token must only be sent to the configured GitHub API's artifact endpoint.
+    api = urlsplit(os.environ.get("GITHUB_API_URL", "https://api.github.com"))
+    source = urlsplit(url)
+    repo = os.environ.get("GITHUB_REPOSITORY", "AyalewGM/ai-tutor")
+    prefix = f"{api.path.rstrip('/')}/repos/{repo}/actions/artifacts/"
+    if (source.scheme != "https" or api.scheme != "https"
+            or source.netloc != api.netloc or source.username is not None
+            or source.password is not None
+            or not source.path.startswith(prefix)
+            or not source.path[len(prefix):].split("/")[:1][0].isdigit()
+            or not source.path.endswith("/zip")):
+        raise ValueError("Untrusted GitHub artifact archive URL")
+    # archive_download_url redirects to Azure Blob Storage. urllib forwards
+    # the Authorization header across the redirect, and Azure rejects requests
+    # carrying both SAS credentials and an auth header (HTTP 401 "Server
+    # failed to authenticate"). Strip the header on redirect to other hosts.
+    class _StripAuthOnCrossHostRedirect(HTTPRedirectHandler):
+        def redirect_request(self, req, fp, code, msg, headers, newurl):
+            if urlsplit(newurl).scheme != "https":
+                raise ValueError("Insecure artifact redirect")
+            new_req = super().redirect_request(req, fp, code, msg, headers, newurl)
+            if new_req is not None and new_req.host != req.host:
+                new_req.headers.pop("Authorization", None)
+            return new_req
+
     req = Request(url, headers={"Authorization": f"Bearer {token}",
         "Accept": "application/vnd.github+json", "User-Agent": "mihur-recovery"})
-    with urlopen(req, timeout=30) as response:
+    with build_opener(_StripAuthOnCrossHostRedirect).open(req, timeout=30) as response:
         return response.read(5 * 1024 * 1024 + 1)
 
 
