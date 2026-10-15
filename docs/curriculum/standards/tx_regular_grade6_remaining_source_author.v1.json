@@ -1,0 +1,411 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_6",
+  "section": "111.26(b)",
+  "publisher": "Texas Education Agency",
+  "official_pdf": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111b.pdf",
+  "edition": "July 2025 Subchapter B codification, §111.26 adopted 2012",
+  "source_page_convention": "Printed July 2025 page = zero-based PDF index + 1",
+  "rows_count": 43,
+  "complementary_existing_groups": [
+    "(2)(A-E)",
+    "(4)(A-H)",
+    "(5)(A-C)"
+  ],
+  "independent_source_fidelity": "PENDING",
+  "publisher_original_bytes_authenticated": false,
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "id": "111.26(b)(1)(A)",
+      "scope": "Apply mathematics in everyday life, society, and the workplace.",
+      "source_pdf_printed_page": 2,
+      "source_pdf_page_index": 1,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(1)(B)",
+      "scope": "Analyze information, plan, solve, justify, and evaluate reasonableness.",
+      "source_pdf_printed_page": 2,
+      "source_pdf_page_index": 1,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(1)(C)",
+      "scope": "Select tools and techniques including manipulatives, technology, mental mathematics and estimation.",
+      "source_pdf_printed_page": 2,
+      "source_pdf_page_index": 1,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(1)(D)",
+      "scope": "Communicate reasoning using symbols, diagrams, graphs and language.",
+      "source_pdf_printed_page": 2,
+      "source_pdf_page_index": 1,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(1)(E)",
+      "scope": "Create representations to organize, record and communicate ideas.",
+      "source_pdf_printed_page": 2,
+      "source_pdf_page_index": 1,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(1)(F)",
+      "scope": "Analyze relationships to connect mathematical ideas.",
+      "source_pdf_printed_page": 2,
+      "source_pdf_page_index": 1,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(1)(G)",
+      "scope": "Justify mathematical arguments using precise oral or written language.",
+      "source_pdf_printed_page": 2,
+      "source_pdf_page_index": 1,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(3)(A)",
+      "scope": "Recognize division by a rational number and multiplication by its reciprocal as equivalent.",
+      "source_pdf_printed_page": 3,
+      "source_pdf_page_index": 2,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(3)(B)",
+      "scope": "Determine whether multiplying by a fraction greater or less than one increases or decreases a quantity, with and without computation.",
+      "source_pdf_printed_page": 3,
+      "source_pdf_page_index": 2,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(3)(C)",
+      "scope": "Represent integer operations with concrete models and connect to standard algorithms.",
+      "source_pdf_printed_page": 3,
+      "source_pdf_page_index": 2,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(3)(D)",
+      "scope": "Fluently add, subtract, multiply and divide integers.",
+      "source_pdf_printed_page": 3,
+      "source_pdf_page_index": 2,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(3)(E)",
+      "scope": "Fluently multiply and divide positive rational numbers.",
+      "source_pdf_printed_page": 3,
+      "source_pdf_page_index": 2,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(6)(A)",
+      "scope": "Identify independent and dependent quantities from tables and graphs.",
+      "source_pdf_printed_page": 3,
+      "source_pdf_page_index": 2,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(6)(B)",
+      "scope": "Write equations from tables relating independent and dependent quantities.",
+      "source_pdf_printed_page": 3,
+      "source_pdf_page_index": 2,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(6)(C)",
+      "scope": "Represent situations verbally, in tables, graphs and equations of the forms y=kx or y=x+b.",
+      "source_pdf_printed_page": 3,
+      "source_pdf_page_index": 2,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(7)(A)",
+      "scope": "Generate equivalent numerical expressions using order of operations, whole-number exponents and prime factorization.",
+      "source_pdf_printed_page": 3,
+      "source_pdf_page_index": 2,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(7)(B)",
+      "scope": "Distinguish expressions from equations verbally, numerically and algebraically.",
+      "source_pdf_printed_page": 3,
+      "source_pdf_page_index": 2,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(7)(C)",
+      "scope": "Determine expression equivalence with concrete, pictorial and algebraic representations.",
+      "source_pdf_printed_page": 3,
+      "source_pdf_page_index": 2,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(7)(D)",
+      "scope": "Generate equivalent expressions with inverse, identity, commutative, associative and distributive properties.",
+      "source_pdf_printed_page": 3,
+      "source_pdf_page_index": 2,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(8)(A)",
+      "scope": "Determine triangle angle sums, side-length and angle relationships, and whether three lengths form a triangle.",
+      "source_pdf_printed_page": 4,
+      "source_pdf_page_index": 3,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(8)(B)",
+      "scope": "Model area formulas for parallelograms, trapezoids and triangles by decomposition/rearrangement.",
+      "source_pdf_printed_page": 4,
+      "source_pdf_page_index": 3,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(8)(C)",
+      "scope": "Write area equations for rectangles, parallelograms, trapezoids and triangles and volume equations for right rectangular prisms with positive rational dimensions.",
+      "source_pdf_printed_page": 4,
+      "source_pdf_page_index": 3,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(8)(D)",
+      "scope": "Solve area and volume problems for these figures with positive rational dimensions.",
+      "source_pdf_printed_page": 4,
+      "source_pdf_page_index": 3,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(9)(A)",
+      "scope": "Write one-variable one-step equations and inequalities representing problem constraints.",
+      "source_pdf_printed_page": 4,
+      "source_pdf_page_index": 3,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(9)(B)",
+      "scope": "Represent solution sets of one-step equations and inequalities on number lines.",
+      "source_pdf_printed_page": 4,
+      "source_pdf_page_index": 3,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(9)(C)",
+      "scope": "Write contextual problems from one-step equations or inequalities.",
+      "source_pdf_printed_page": 4,
+      "source_pdf_page_index": 3,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(10)(A)",
+      "scope": "Model and solve one-variable one-step equations and inequalities including geometric contexts.",
+      "source_pdf_printed_page": 4,
+      "source_pdf_page_index": 3,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(10)(B)",
+      "scope": "Test whether given values satisfy one-variable one-step equations or inequalities.",
+      "source_pdf_printed_page": 4,
+      "source_pdf_page_index": 3,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(11)",
+      "scope": "Graph points in all four quadrants using ordered pairs of rational numbers to identify locations.",
+      "source_pdf_printed_page": 4,
+      "source_pdf_page_index": 3,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(12)(A)",
+      "scope": "Graph numerical data with dot plots, stem-and-leaf plots, histograms and box plots.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(12)(B)",
+      "scope": "Describe center, spread and shape from numerical graphs.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(12)(C)",
+      "scope": "Summarize numerical data with mean, median, range and IQR, and use summaries to describe center, spread and shape.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(12)(D)",
+      "scope": "Summarize categorical data using mode, category relative-frequency percentages and percent bar graphs.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(13)(A)",
+      "scope": "Interpret numerical data in dot plots, stem-and-leaf plots, histograms and box plots.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(13)(B)",
+      "scope": "Distinguish data-producing situations with variability from those without.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(14)(A)",
+      "scope": "Compare checking-account and debit-card features and costs across local financial institutions.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(14)(B)",
+      "scope": "Distinguish debit cards from credit cards.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(14)(C)",
+      "scope": "Balance a check register including deposits, withdrawals and transfers.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(14)(D)",
+      "scope": "Explain importance of positive credit history.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(14)(E)",
+      "scope": "Describe information in a credit report and retention periods.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(14)(F)",
+      "scope": "Explain value of credit reports to borrowers and lenders.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(14)(G)",
+      "scope": "Explain college payment options including savings, grants, scholarships, loans and work-study.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.26(b)(14)(H)",
+      "scope": "Compare annual salaries by educational/vocational preparation and calculate lifetime-income effects.",
+      "source_pdf_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
