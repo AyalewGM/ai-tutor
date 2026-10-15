@@ -92,11 +92,14 @@
     },
     {
       "expectation_id": "5.NF.4",
-      "author_mathematical_scope": "Multiply a fraction or whole number by a fraction: interpret (a/b)×q as a equal parts of q/b and as a×q÷b; find fractional-side rectangular areas by tiling and multiplying lengths.",
+      "author_mathematical_scope": "Multiply a fraction or whole number by a fraction: interpret (a/b)×q as a equal parts of q/b and as a×q÷b; find fractional-side rectangular areas by tiling and multiplying lengths. For 5.NF.4.b, tile with unit squares whose side lengths are appropriate unit fractions, demonstrate the tiled area equals the product of rectangle side lengths, and represent products of fractions as rectangular areas.",
       "required_material_conditions": [
         "subpart a: interpret fraction times quantity and sequence a×q÷b",
         "subpart b: area of rectangles with fractional side lengths",
-        "fraction-product area model"
+        "fraction-product area model",
+        "5.NF.4.b: tile using squares with appropriate unit-fraction side lengths",
+        "5.NF.4.b: tiled area equals length-product area",
+        "5.NF.4.b: fractional products represented by rectangular areas"
       ],
       "source_printed_pages": [
         37
@@ -150,12 +153,12 @@
     },
     {
       "expectation_id": "5.NF.7",
-      "author_mathematical_scope": "Interpret, calculate and model division of unit fractions by nonzero whole numbers and of whole numbers by unit fractions, including contextual word problems; do not require general fraction-by-fraction division.",
+      "author_mathematical_scope": "For 5.NF.7.a, interpret and compute a unit fraction divided by a nonzero whole number using a story context, visual fraction model and multiplication-division relationship. For 5.NF.7.b, interpret and compute a whole number divided by a unit fraction with a model and justified relationship. For 5.NF.7.c, solve real-world word problems for both forms with diagrams and equations. General fraction-by-fraction division is not required in Grade 5.",
       "required_material_conditions": [
-        "subpart a: unit fraction ÷ nonzero whole number",
-        "subpart b: whole number ÷ unit fraction",
-        "subpart c: both real-world division cases",
-        "source footnote: general fraction ÷ fraction not required in Grade 5"
+        "5.NF.7.a: unit fraction divided by nonzero whole number with context, visual model and multiplication-division explanation",
+        "5.NF.7.b: whole number divided by unit fraction with visual model and justification",
+        "5.NF.7.c: real-world word problems for both forms with diagrams and equations",
+        "source footnote: general fraction divided by fraction not required"
       ],
       "source_printed_pages": [
         37,
