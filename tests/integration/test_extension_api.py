@@ -44,36 +44,44 @@ def _seed_student_with_extension_problem():
         authenticate_parent_for_student(client, db, student)
         db.refresh(student)
 
-        ext = Problem(
-            primary_skill_id=skill.id,
-            problem_type="WORD_PROBLEM",
-            difficulty=9,
-            prompt=(
-                "Challenge: distribute across a two-step context: "
-                "3(x + 2) - (x - 4) = 20. Solve for x."
-            ),
-            canonical_answer="5",
-            source_type="CURATED",
-            solution={
-                "provenance": {
-                    "origin": "AUTHORED",
-                    "author": "Mihur test suite",
-                    "license": "Internal test fixture",
-                    "source_uri": "https://github.com/AyalewGM/ai-tutor",
-                }
-            },
+        prompt = (
+            "Challenge: distribute across a two-step context: "
+            "3(x + 2) - (x - 4) = 20. Solve for x."
         )
-        db.add(ext)
-        db.flush()
-        db.add(
-            ProblemContentMetadata(
-                problem_id=ext.id,
-                curriculum_id=curriculum.id,
-                objective="Stretch: multi-step distribution above mastery band.",
-                evaluation_type="DETERMINISTIC",
-                extension_eligible=True,
+        ext = db.scalar(
+            select(Problem).where(
+                Problem.primary_skill_id == skill.id,
+                Problem.prompt == prompt,
             )
         )
+        if ext is None:
+            ext = Problem(
+                primary_skill_id=skill.id,
+                problem_type="WORD_PROBLEM",
+                difficulty=9,
+                prompt=prompt,
+                canonical_answer="5",
+                source_type="CURATED",
+                solution={
+                    "provenance": {
+                        "origin": "AUTHORED",
+                        "author": "Mihur test suite",
+                        "license": "Internal test fixture",
+                        "source_uri": "https://github.com/AyalewGM/ai-tutor",
+                    }
+                },
+            )
+            db.add(ext)
+            db.flush()
+            db.add(
+                ProblemContentMetadata(
+                    problem_id=ext.id,
+                    curriculum_id=curriculum.id,
+                    objective="Stretch: multi-step distribution above mastery band.",
+                    evaluation_type="DETERMINISTIC",
+                    extension_eligible=True,
+                )
+            )
         db.commit()
         return student.id, skill.id, ext.id
 
