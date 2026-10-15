@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "MATHEMATICS_I",
+  "status": "AUTHOR_PENDING_REVIEW",
+  "source_printed_page": 94,
+  "source_pdf_zero_based_page_index": 100,
+  "source_url": "https://www.cde.ca.gov/BE/ST/SS/documents/ccssmathstandardaug2013.pdf",
+  "supplemental_existing_placements_only": true,
+  "rows": [
+    {
+      "expectation_id": "S-ID.3",
+      "material_conditions": [
+        "Interpret differences in shape, center and spread in the context of data sets.",
+        "Include possible impact of extreme observations (outliers)."
+      ]
+    },
+    {
+      "expectation_id": "S-ID.5",
+      "material_conditions": [
+        "Summarize two categorical variables with two-way frequency tables.",
+        "Explain joint, marginal and conditional relative frequencies in context; recognize associations and trends."
+      ]
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}
