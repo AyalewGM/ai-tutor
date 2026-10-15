@@ -21,10 +21,12 @@
       "source_printed_pages": [
         44
       ],
-      "author_mathematical_scope": "Find areas of right and other triangles, special quadrilaterals and polygons by composing/decomposing shapes in mathematical and contextual problems.",
+      "author_mathematical_scope": "Find areas of right and other triangles, special quadrilaterals and polygons by composing into rectangles or decomposing into triangles and other shapes; apply to real-world and mathematical problems.",
       "required_material_conditions": [
-        "triangles and quadrilaterals",
-        "compose/decompose"
+        "areas of right and other triangles, special quadrilaterals, polygons",
+        "compose into rectangles",
+        "decompose into triangles and other shapes",
+        "apply to real-world and mathematical problems"
       ],
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
@@ -52,10 +54,11 @@
       "source_printed_pages": [
         45
       ],
-      "author_mathematical_scope": "Draw polygons from vertex coordinates and determine horizontal or vertical side lengths from endpoints sharing a coordinate.",
+      "author_mathematical_scope": "Draw polygons from vertex coordinates and determine horizontal or vertical side lengths from endpoints sharing a coordinate. Apply these techniques to real-world and mathematical problems.",
       "required_material_conditions": [
         "given vertex coordinates",
-        "same first or second coordinate"
+        "same first or second coordinate",
+        "apply to real-world and mathematical problems"
       ],
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
@@ -67,10 +70,11 @@
       "source_printed_pages": [
         45
       ],
-      "author_mathematical_scope": "Use nets of rectangles and triangles to represent three-dimensional figures and find surface area.",
+      "author_mathematical_scope": "Use nets of rectangles and triangles to represent three-dimensional figures and find surface area. Apply these techniques to real-world and mathematical problems.",
       "required_material_conditions": [
         "nets",
-        "surface area"
+        "surface area",
+        "apply to real-world and mathematical problems"
       ],
       "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
