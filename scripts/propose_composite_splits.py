@@ -89,15 +89,19 @@ def propose() -> dict:
     claims: dict[str, list[dict]] = {}
     for e in _manifest_rows():
         for link in e.get("repository_existing_crosswalks") or []:
-            # Older manifests contain local skill-code strings; newer ones can
-            # contain structured links. Only explicit local identifiers qualify.
-            lc = (link.get("local_code") or link.get("local_skill_code")
-                  if isinstance(link, dict) else link)
+            # Manifests contain both legacy string codes and structured evidence.
+            # Only explicit local-skill identities may enter split proposals.
+            if isinstance(link, str):
+                lc = link
+            elif isinstance(link, dict):
+                lc = link.get("local_skill_code") or link.get("local_code")
+            else:
+                lc = None
             if not isinstance(lc, str) or not lc.strip():
                 continue
             claims.setdefault(lc, []).append(
                 {"expectation_id": e["expectation_id"], "grade": e.get("grade"),
-                 "scope": e.get("scope_summary", "")})
+                 "scope": e.get("scope_summary") or ""})
 
     proposals = []
     for row in rows:
