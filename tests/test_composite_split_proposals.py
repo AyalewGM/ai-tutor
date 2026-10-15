@@ -54,10 +54,27 @@ def test_summary_reconciles_and_fails_closed():
     assert "MUST" in d["safety"]
 
 
-def test_checked_in_artifact_is_fresh():
+def test_checked_in_review_snapshot_is_preserved():
+    """New provisional standards may add candidates without approving taxonomy.
+
+    The checked-in artifact is a historical review snapshot, not an
+    automatically accepted live inventory. Ensure every prior claimed
+    expectation remains proposed and no previous proposal disappears.
+    """
     path = ROOT / "docs/curriculum/standards/seed_composite_split_proposals.v1.json"
     if not path.exists():
         import pytest
         pytest.skip("artifact not generated")
     checked_in = json.loads(path.read_text())
-    assert checked_in["summary"] == mod.propose()["summary"]
+    current = mod.propose()
+    assert checked_in["status"] == current["status"] == "DRAFT_PROPOSED_NOT_VERIFIED"
+    old_by_local = {p["local_skill_code"]: p for p in checked_in["proposals"]}
+    new_by_local = {p["local_skill_code"]: p for p in current["proposals"]}
+    assert old_by_local.keys() == new_by_local.keys()
+    for local, previous in old_by_local.items():
+        existing = new_by_local[local]
+        old_claims = {a["covers_expectation"] for a in previous["proposed_atomic_skills"]}
+        new_claims = {a["covers_expectation"] for a in existing["proposed_atomic_skills"]}
+        assert old_claims <= new_claims, f"{local}: reviewed proposal evidence disappeared"
+        assert all(a["needs_math_review"] is True for a in existing["proposed_atomic_skills"])
+    assert current["summary"]["proposed_atomic_skills"] >= checked_in["summary"]["proposed_atomic_skills"]
