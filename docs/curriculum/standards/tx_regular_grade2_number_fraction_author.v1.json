@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_2",
+  "section": "111.4(b)(2)(A-F),111.4(b)(3)(A-D)",
+  "publisher": "Texas Education Agency",
+  "official_pdf": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "publisher_edition": "December 2014 Update, §111.4 Grade 2, Adopted 2012",
+  "source_pdf_page_index": 8,
+  "source_pdf_printed_page": 9,
+  "source_review_mode": "AUTHOR_PUBLISHER_PDF_PAGE_RENDER_INSPECTED",
+  "publisher_original_bytes_authenticated": false,
+  "parent_stems": {
+    "111.4(b)(2)": "Number and operations: represent and compare whole numbers using place value.",
+    "111.4(b)(3)": "Number and operations: recognize and represent fractional units and name parts of a whole."
+  },
+  "parent_level_interpretation": "The two quoted parent scopes are author paraphrases; the official parent stems must be checked independently.",
+  "publisher_language_rule": "Official §111.4(a)(5): including denotes required content, such as introduces illustrative examples.",
+  "row_count": 10,
+  "rows": [
+    {
+      "id": "111.4(b)(2)(A)",
+      "scope": "Use concrete and pictorial models to compose and decompose whole numbers up to 1,200 in more than one way, in thousands, hundreds, tens and ones.",
+      "material_qualifiers": [
+        "up to 1,200",
+        "concrete and pictorial",
+        "more than one way"
+      ],
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(2)(B)",
+      "scope": "Represent whole numbers up to 1,200 in standard form, word form and expanded form.",
+      "material_qualifiers": [
+        "up to 1,200",
+        "three forms"
+      ],
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(2)(C)",
+      "scope": "Generate a number greater than or less than a given whole number up to 1,200.",
+      "material_qualifiers": [
+        "up to 1,200",
+        "greater and less"
+      ],
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(2)(D)",
+      "scope": "Compare and order whole numbers up to 1,200 using place value, comparative language, numerals and >, < or = symbols.",
+      "material_qualifiers": [
+        "up to 1,200",
+        "all comparison representations"
+      ],
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(2)(E)",
+      "scope": "Locate a given whole number on an open number line.",
+      "material_qualifiers": [
+        "open number line"
+      ],
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(2)(F)",
+      "scope": "Name the whole number corresponding to a specified point on a number line.",
+      "material_qualifiers": [
+        "point to whole number"
+      ],
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(3)(A)",
+      "scope": "Partition objects into equal parts and name the parts in words, including halves, fourths and eighths.",
+      "material_qualifiers": [
+        "equal parts",
+        "including is mandatory",
+        "name using words"
+      ],
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(3)(B)",
+      "scope": "Explain the inverse relationship between the number of equal fractional parts per whole and the size of each part.",
+      "material_qualifiers": [
+        "more equal parts means smaller parts",
+        "fewer equal parts means larger parts"
+      ],
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(3)(C)",
+      "scope": "Use concrete models to count fractional parts beyond one whole using words and recognize how many parts equal a whole.",
+      "material_qualifiers": [
+        "beyond one whole",
+        "concrete models",
+        "word-based counting"
+      ],
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(3)(D)",
+      "scope": "Identify examples and non-examples of halves, fourths and eighths.",
+      "material_qualifiers": [
+        "examples and non-examples"
+      ],
+      "source_pdf_printed_page": 9,
+      "source_pdf_page_index": 8,
+      "independent_source_fidelity": "PENDING"
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "next_owner": "Independent Standards Source-Fidelity Reviewer"
+}
