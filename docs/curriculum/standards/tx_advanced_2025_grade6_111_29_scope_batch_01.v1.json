@@ -73,7 +73,7 @@
       "expectation_id": "111.29(c)(2)(E)",
       "parent_group": 2,
       "lettered_subpart": "E",
-      "author_mathematical_scope": "Use equivalent fractions, decimals, and percents to express equal portions of the same whole.",
+      "author_mathematical_scope": "Use equivalent fractions, decimals, and percents to express equal portions of the same whole as proportional relationships.",
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
@@ -112,7 +112,7 @@
       "expectation_id": "111.29(c)(2)(H)",
       "parent_group": 2,
       "lettered_subpart": "H",
-      "author_mathematical_scope": "Graph rational ordered pairs in all four quadrants.",
+      "author_mathematical_scope": "Use coordinate geometry to identify locations on a plane, including graphing points in all four quadrants using ordered pairs of rational numbers.",
       "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
@@ -248,5 +248,17 @@
       ]
     }
   ],
-  "author_locator_provenance": "The 17 source_pdf_zero_based_pages values are copied from the existing independent-review-pending 68-ID §111.29(c) author queue, not independently authenticated publisher page images. Final February 2025 proposed-rule/codified parity remains pending."
+  "author_locator_provenance": "The 17 source_pdf_zero_based_pages values are copied from the existing independent-review-pending 68-ID §111.29(c) author queue, not independently authenticated publisher page images. Final February 2025 proposed-rule/codified parity remains pending.",
+  "codified_requirement_review": {
+    "publisher_text_boundary": "19 TAC §111.29 adopted 2025, effective July 6 2025",
+    "paragraph_locator": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-29#content",
+    "author_checked_ids": [
+      "111.29(c)(2)(E)",
+      "111.29(c)(2)(H)",
+      "111.29(c)(3)(B)",
+      "111.29(c)(3)(I)"
+    ],
+    "current_tea_pdf_page_locators": "PENDING_DIRECT_PUBLISHER_PDF_ACCESS",
+    "independent_source_fidelity": "PENDING"
+  }
 }
