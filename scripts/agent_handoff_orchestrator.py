@@ -9,6 +9,7 @@ import json
 import os
 import sys
 import zipfile
+from enum import StrEnum
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, urlsplit
@@ -127,25 +128,58 @@ def checks_for(root: str, sha: str, branch: str, token: str) -> dict[str, str]:
     return select_checks(result.get("workflow_runs", []), sha, branch)
 
 
-def deliver(root: str, number: int, token: str) -> None:
+class DeliveryOutcome(StrEnum):
+    DELIVERED = "delivered"
+    ALREADY_PRESENT = "already_present"
+    OBSOLETE = "obsolete"
+    DEFERRED = "deferred"
+    PENDING = "pending"
+    SUPERSEDED_BY_CURRENT_CHECKS = "superseded_by_current_checks"
+
+
+def reject_persistent_denial(exc: Exception) -> None:
+    if isinstance(exc, HTTPError) and 400 <= exc.code < 500 and exc.code not in {408, 429}:
+        raise exc
+
+
+def deliver(root: str, number: int, token: str, *, intended_sha: str | None = None,
+            intended_state: str | None = None) -> DeliveryOutcome:
     pr = request("GET", f"{root}/pulls/{number}", token)
     if pr["state"] != "open":
-        return
+        return DeliveryOutcome.OBSOLETE
     sha, branch = pr["head"]["sha"], pr["head"]["ref"]
+    if intended_sha is not None and sha != intended_sha:
+        return DeliveryOutcome.OBSOLETE
     paths = [item["filename"] for item in pages(root, f"/pulls/{number}/files", token)]
     checks = checks_for(root, sha, branch, token)
     state = next_step(pr["draft"], checks, pr["title"], paths)
     tag = marker(sha, state)
     comments_url = f"/issues/{number}/comments"
-    if any(tag in c.get("body", "") for c in pages(root, comments_url, token)):
-        return
+
+    def confirmed(outcome: DeliveryOutcome, comment: dict) -> DeliveryOutcome:
+        resolved = (DeliveryOutcome.SUPERSEDED_BY_CURRENT_CHECKS
+                    if intended_state is not None and intended_state != state else outcome)
+        print(json.dumps({"pr": number, "sha": sha, "branch": branch,
+                          "intended_state": intended_state, "current_state": state,
+                          "intended_marker": marker(sha, intended_state) if intended_state else None,
+                          "actual_marker": tag, "checks": checks,
+                          "outcome": resolved, "write_outcome": outcome,
+                          "comment_id": comment.get("id"),
+                          "comment_url": comment.get("html_url")}, sort_keys=True))
+        return resolved
+
+    existing = next((c for c in pages(root, comments_url, token)
+                     if tag in c.get("body", "")), None)
+    if existing is not None:
+        return confirmed(DeliveryOutcome.ALREADY_PRESENT, existing)
 
     # Re-read the authoritative head and checks immediately before writing.
     latest = request("GET", f"{root}/pulls/{number}", token)
     fresh_checks = checks_for(root, sha, branch, token)
-    if latest["state"] != "open" or latest["head"]["sha"] != sha or fresh_checks != checks:
-        print(f"PR #{number} changed during inspection; no handoff")
-        return
+    if (latest["state"] != "open" or latest["head"]["sha"] != sha or fresh_checks != checks
+            or latest["head"]["ref"] != branch or latest["draft"] != pr["draft"]):
+        record_pending(number, sha, state, "CHANGED_DURING_INSPECTION")
+        return DeliveryOutcome.DEFERRED
     body = (
         f"{tag}\n### Mihur automated handoff — advisory only\n"
         f"- Exact head: `{sha}`\n- State: **{state}**\n"
@@ -157,22 +191,32 @@ def deliver(root: str, number: int, token: str) -> None:
     # A single repository-wide concurrency group serializes all workflow dispatches.
     # Re-read on transient failures; retry once, never blindly duplicate a POST.
     for attempt in range(2):
+        if attempt:
+            latest = request("GET", f"{root}/pulls/{number}", token)
+            if (latest["state"] != "open" or latest["head"]["sha"] != sha
+                    or latest["head"]["ref"] != branch or latest["draft"] != pr["draft"]
+                    or checks_for(root, sha, branch, token) != checks):
+                record_pending(number, sha, state, "CHANGED_BEFORE_RETRY")
+                return DeliveryOutcome.DEFERRED
         try:
-            request("POST", f"{root}{comments_url}", token, {"body": body})
-            print(f"Posted {state} for #{number} at {sha}")
-            return
+            receipt = request("POST", f"{root}{comments_url}", token, {"body": body})
+            return confirmed(DeliveryOutcome.DELIVERED, receipt)
         except (HTTPError, URLError, OSError) as exc:
+            reject_persistent_denial(exc)
             try:
-                if any(tag in c.get("body", "") for c in pages(root, comments_url, token)):
-                    return
-            except (HTTPError, URLError, OSError):
+                existing = next((c for c in pages(root, comments_url, token)
+                                 if tag in c.get("body", "")), None)
+                if existing is not None:
+                    return confirmed(DeliveryOutcome.ALREADY_PRESENT, existing)
+            except (HTTPError, URLError, OSError) as read_error:
+                reject_persistent_denial(read_error)
                 # A lost POST response may mean delivery succeeded.
                 # Never blindly retry if the reconciliation GET also fails.
                 record_pending(number, sha, state, "COMMENT_STATUS_UNKNOWN")
-                return
+                return DeliveryOutcome.PENDING
             if attempt:
                 record_pending(number, sha, state, type(exc).__name__)
-                return
+                return DeliveryOutcome.PENDING
 
 
 
@@ -258,7 +302,7 @@ def pending_records(root: str, token: str) -> list[dict]:
     raise ValueError("Recovery pagination exceeded; manual intervention required")
 
 
-def reconcile_pending(root: str, token: str) -> None:
+def reconcile_pending(root: str, token: str) -> bool:
     """Reconcile old pending work before processing the current event."""
     for record in pending_records(root, token):
         number, sha, state = record["pr"], record["sha"], record["state"]
@@ -271,10 +315,14 @@ def reconcile_pending(root: str, token: str) -> None:
             print(f"Pending #{number} already delivered")
             continue
         # deliver() independently revalidates head, checks, and duplicate markers.
-        deliver(root, number, token)
-        pending_path = Path(os.environ.get("MIHUR_PENDING_FILE", "mihur-pending-handoffs.jsonl"))
-        if pending_path.exists() and pending_path.stat().st_size:
-            raise ValueError("Recovery still pending; defer new handoffs")
+        outcome = deliver(root, number, token, intended_sha=sha, intended_state=state)
+        if outcome in {DeliveryOutcome.PENDING, DeliveryOutcome.DEFERRED}:
+            print("::warning::Recovery pending; evidence preserved, new dispatch deferred")
+            return False
+        if outcome not in {DeliveryOutcome.DELIVERED, DeliveryOutcome.ALREADY_PRESENT,
+                           DeliveryOutcome.OBSOLETE, DeliveryOutcome.SUPERSEDED_BY_CURRENT_CHECKS}:
+            raise ValueError("Unknown recovery outcome; manual intervention required")
+    return True
 
 
 def main() -> int:
@@ -284,12 +332,19 @@ def main() -> int:
         event = json.load(event_file)
     numbers = event_pr_numbers(event)
     root = f"{os.environ.get('GITHUB_API_URL', 'https://api.github.com')}/repos/{repo}"
-    reconcile_pending(root, token)
+    if not reconcile_pending(root, token):
+        return 0
     if not numbers:
         print("No linked PR; pending reconciliation completed")
         return 0
     for number in numbers:
-        deliver(root, number, token)
+        outcome = deliver(root, number, token)
+        if outcome in {DeliveryOutcome.PENDING, DeliveryOutcome.DEFERRED}:
+            print("::warning::Delivery pending; evidence preserved, remaining dispatch deferred")
+            return 0
+        if outcome not in {DeliveryOutcome.DELIVERED, DeliveryOutcome.ALREADY_PRESENT,
+                           DeliveryOutcome.OBSOLETE}:
+            raise ValueError("Unknown delivery outcome; manual intervention required")
     return 0
 
 

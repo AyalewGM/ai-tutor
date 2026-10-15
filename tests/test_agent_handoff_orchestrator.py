@@ -85,7 +85,8 @@ def test_mocked_api_posts_once_and_does_not_execute_pr_code():
     assert "INDEPENDENT_REVIEW_DRAFT" in posted[0]
 
 
-def test_changed_head_does_not_post():
+def test_changed_head_does_not_post(tmp_path, monkeypatch):
+    monkeypatch.setenv("MIHUR_PENDING_FILE", str(tmp_path / "pending.jsonl"))
     reads = iter([_pr(), _pr("changed")])
     posted = []
 
@@ -217,7 +218,7 @@ def test_next_run_reconciles_pending_before_new_handoff(tmp_path, monkeypatch):
         patch.object(orchestrator, "pending_records", return_value=pending),
         patch.object(orchestrator, "request", side_effect=fake),
         patch.object(orchestrator, "pages", return_value=[]),
-        patch.object(orchestrator, "deliver", side_effect=lambda root, n, token: order.append(n)),
+        patch.object(orchestrator, "deliver", side_effect=lambda root, n, token, **kwargs: (order.append(n) or orchestrator.DeliveryOutcome.DELIVERED)),
     ):
         assert orchestrator.main() == 0
     assert order == [17, 19]
@@ -276,3 +277,159 @@ def test_stale_pending_sha_never_replayed():
     ):
         orchestrator.reconcile_pending("root", "token")
     deliver.assert_not_called()
+
+
+@pytest.mark.parametrize("outcome", [orchestrator.DeliveryOutcome.PENDING,
+                                     orchestrator.DeliveryOutcome.DEFERRED])
+def test_recovery_requires_explicit_terminal_outcome(outcome, tmp_path, monkeypatch):
+    # Absence of a local ledger is not evidence of successful delivery.
+    monkeypatch.setenv("MIHUR_PENDING_FILE", str(tmp_path / "absent.jsonl"))
+    sha = "a" * 40
+    with (
+        patch.object(orchestrator, "pending_records", return_value=[
+            {"pr": 17, "sha": sha, "state": "WAIT_CHECKS"}]),
+        patch.object(orchestrator, "request", return_value=_pr(sha)),
+        patch.object(orchestrator, "pages", return_value=[]),
+        patch.object(orchestrator, "deliver", return_value=outcome),
+    ):
+        assert orchestrator.reconcile_pending("root", "token") is False
+
+
+def test_retry_revalidates_head_before_second_post(tmp_path, monkeypatch):
+    monkeypatch.setenv("MIHUR_PENDING_FILE", str(tmp_path / "pending.jsonl"))
+    reads = iter([_pr(), _pr(), _pr("changed")])
+    posts = []
+
+    def request(method, url, token, payload=None):
+        if method == "POST":
+            posts.append(payload)
+            raise OSError("lost response")
+        return next(reads)
+
+    with (
+        patch.object(orchestrator, "request", side_effect=request),
+        patch.object(orchestrator, "pages", return_value=[]),
+        patch.object(orchestrator, "checks_for", return_value={
+            "CI": "success", "AppSec Baseline": "success"}),
+    ):
+        assert orchestrator.deliver("root", 17, "token") == orchestrator.DeliveryOutcome.DEFERRED
+    assert len(posts) == 1
+    assert "CHANGED_BEFORE_RETRY" in (tmp_path / "pending.jsonl").read_text()
+
+
+def test_current_event_pending_warns_successfully_and_stops_batch(tmp_path, monkeypatch):
+    import json
+
+    event = tmp_path / "event.json"
+    event.write_text(json.dumps({"workflow_run": {"pull_requests": [
+        {"number": 17}, {"number": 19}]}}))
+    monkeypatch.setenv("GITHUB_REPOSITORY", "org/repo")
+    monkeypatch.setenv("GITHUB_TOKEN", "fake")
+    monkeypatch.setenv("GITHUB_EVENT_PATH", str(event))
+    with (
+        patch.object(orchestrator, "reconcile_pending"),
+        patch.object(orchestrator, "deliver",
+                     return_value=orchestrator.DeliveryOutcome.PENDING) as deliver,
+    ):
+        assert orchestrator.main() == 0
+    assert deliver.call_count == 1
+
+
+def test_existing_marker_returns_explicit_confirmation():
+    checks = {"CI": "success", "AppSec Baseline": "success"}
+    with (
+        patch.object(orchestrator, "request", return_value=_pr()) as request,
+        patch.object(orchestrator, "pages", side_effect=[[], [{"body":
+            orchestrator.marker("head", "INDEPENDENT_REVIEW_DRAFT")}]]),
+        patch.object(orchestrator, "checks_for", return_value=checks),
+    ):
+        assert orchestrator.deliver("root", 17, "token") == orchestrator.DeliveryOutcome.ALREADY_PRESENT
+    assert request.call_count == 1
+
+
+@pytest.mark.parametrize("existing", [False, True])
+def test_changed_checks_explicitly_supersede_original_marker(existing, capsys):
+    import json
+
+    sha = "a" * 40
+    current = "INDEPENDENT_REVIEW_DRAFT"
+    receipt = {"id": 42, "html_url": "https://github.com/org/repo/issues/17#issuecomment-42"}
+    posted = []
+
+    def request(method, url, token, payload=None):
+        if method == "POST":
+            posted.append(payload["body"])
+            return receipt
+        return _pr(sha)
+
+    def pages(root, suffix, token):
+        if "/files" in suffix or not existing:
+            return []
+        return [{**receipt, "body": orchestrator.marker(sha, current)}]
+
+    with (
+        patch.object(orchestrator, "request", side_effect=request),
+        patch.object(orchestrator, "pages", side_effect=pages),
+        patch.object(orchestrator, "checks_for", return_value={
+            "CI": "success", "AppSec Baseline": "success"}),
+    ):
+        result = orchestrator.deliver("root", 17, "token", intended_sha=sha,
+                                      intended_state="WAIT_CHECKS")
+    assert result == orchestrator.DeliveryOutcome.SUPERSEDED_BY_CURRENT_CHECKS
+    evidence = json.loads(capsys.readouterr().out)
+    assert evidence["intended_marker"] == orchestrator.marker(sha, "WAIT_CHECKS")
+    assert evidence["actual_marker"] == orchestrator.marker(sha, current)
+    assert evidence["comment_id"] == 42
+    assert evidence["checks"] == {"CI": "success", "AppSec Baseline": "success"}
+    assert evidence["write_outcome"] == ("already_present" if existing else "delivered")
+    assert len(posted) == (0 if existing else 1)
+
+
+@pytest.mark.parametrize("code", [401, 403, 422])
+def test_persistent_write_denial_is_not_softened(code):
+    from urllib.error import HTTPError
+
+    def request(method, url, token, payload=None):
+        if method == "POST":
+            raise HTTPError(url, code, "denied", {}, None)
+        return _pr()
+
+    with (
+        patch.object(orchestrator, "request", side_effect=request),
+        patch.object(orchestrator, "pages", return_value=[]),
+        patch.object(orchestrator, "checks_for", return_value={
+            "CI": "success", "AppSec Baseline": "success"}),
+        patch.object(orchestrator, "record_pending") as pending,
+        pytest.raises(HTTPError),
+    ):
+        orchestrator.deliver("root", 17, "token")
+    pending.assert_not_called()
+
+
+def test_recovery_pending_stops_new_event_with_success(tmp_path, monkeypatch):
+    import json
+
+    event = tmp_path / "event.json"
+    event.write_text(json.dumps({"pull_request": {"number": 19}}))
+    monkeypatch.setenv("GITHUB_REPOSITORY", "org/repo")
+    monkeypatch.setenv("GITHUB_TOKEN", "fake")
+    monkeypatch.setenv("GITHUB_EVENT_PATH", str(event))
+    with (
+        patch.object(orchestrator, "reconcile_pending", return_value=False),
+        patch.object(orchestrator, "deliver") as deliver,
+    ):
+        assert orchestrator.main() == 0
+    deliver.assert_not_called()
+
+
+def test_unknown_recovery_outcome_remains_safety_failure():
+    sha = "a" * 40
+    with (
+        patch.object(orchestrator, "pending_records", return_value=[
+            {"pr": 17, "sha": sha, "state": "WAIT_CHECKS"}]),
+        patch.object(orchestrator, "request", return_value=_pr(sha)),
+        patch.object(orchestrator, "pages", return_value=[]),
+        patch.object(orchestrator, "deliver", return_value=None),
+        pytest.raises(ValueError, match="Unknown recovery outcome"),
+    ):
+        orchestrator.reconcile_pending("root", "token")
