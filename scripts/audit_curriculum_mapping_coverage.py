@@ -101,7 +101,7 @@ def audit() -> dict:
             {"inventoried": 0, "with_candidate": 0, "no_candidate": []},
         )
         cell["inventoried"] += 1
-        if e["status"] != NO_CANDIDATE or e["candidates"]:
+        if bool(e["status"]) and e["status"] != NO_CANDIDATE or e["candidates"]:
             cell["with_candidate"] += 1
         else:
             cell["no_candidate"].append(e["expectation_id"])
@@ -213,8 +213,8 @@ def audit() -> dict:
         "cells": cells,
         "totals": {
             "inventoried_expectations": len(all_expectations),
-            "with_provisional_candidate": sum(1 for e in all_expectations if e["status"] != NO_CANDIDATE or e["candidates"]),
-            "no_candidate": sum(1 for e in all_expectations if e["status"] == NO_CANDIDATE and not e["candidates"]),
+            "with_provisional_candidate": sum(1 for e in all_expectations if bool(e["status"]) and e["status"] != NO_CANDIDATE or e["candidates"]),
+            "no_candidate": sum(1 for e in all_expectations if (not e["status"] or e["status"] == NO_CANDIDATE) and not e["candidates"]),
             "accepted_mappings": sum(c["accepted_mappings"] for c in cells),
             "seed_courses": len(seeds),
             "seed_referenced_canonical_codes": len(seeded_canonical),
