@@ -1,7 +1,6 @@
 """Regression for GitHub artifact 302 redirects to SAS-signed blob storage."""
 import importlib.util
 from pathlib import Path
-from urllib.request import Request
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
