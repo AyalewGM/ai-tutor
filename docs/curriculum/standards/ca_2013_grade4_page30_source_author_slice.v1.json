@@ -1,0 +1,182 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_DIRECT_CDE_PAGE_REVIEW_PENDING_INDEPENDENT_FIDELITY",
+  "jurisdiction": "CA",
+  "track": "GRADE_4",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "January 2013 modified / 2014 corrected electronic edition",
+  "source_printed_page": 30,
+  "source_pdf_zero_based_index": 36,
+  "rows_count": 11,
+  "domain_footnote": "Grade 4 Number and Operations in Base Ten expectations are limited to whole numbers less than or equal to 1,000,000.",
+  "not_full_grade4": true,
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "4.OA.1",
+      "author_mathematical_scope": "Interpret multiplication equations as multiplicative comparisons and express verbal times-as-many comparisons with equations.",
+      "required_material_conditions": [
+        "multiplicative comparison",
+        "equation"
+      ],
+      "source_printed_page": 30,
+      "source_pdf_zero_based_index": 36,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.OA.2",
+      "author_mathematical_scope": "Solve multiplicative comparison word problems by multiplying or dividing; model with drawings and equations containing unknowns and distinguish multiplicative from additive comparisons.",
+      "required_material_conditions": [
+        "multiplication or division",
+        "unknown",
+        "not additive comparison"
+      ],
+      "source_printed_page": 30,
+      "source_pdf_zero_based_index": 36,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.OA.3",
+      "author_mathematical_scope": "Solve multistep four-operation whole-number word problems with whole-number answers, interpret remainders in context, write equations with a letter unknown and use mental calculation, estimation and rounding to assess reasonableness.",
+      "required_material_conditions": [
+        "whole-number answers",
+        "contextual remainders",
+        "reasonableness"
+      ],
+      "source_printed_page": 30,
+      "source_pdf_zero_based_index": 36,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.OA.4",
+      "author_mathematical_scope": "Find all factor pairs for whole numbers 1 through 100, identify multiples of one-digit numbers and classify numbers 1 through 100 as prime or composite.",
+      "required_material_conditions": [
+        "1 through 100",
+        "factors",
+        "prime or composite"
+      ],
+      "source_printed_page": 30,
+      "source_pdf_zero_based_index": 36,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.OA.5",
+      "author_mathematical_scope": "Generate number or shape patterns by given rules, identify features not explicitly stated by the rule and informally explain pattern behavior.",
+      "required_material_conditions": [
+        "number or shape pattern",
+        "unstated features",
+        "explanation"
+      ],
+      "source_printed_page": 30,
+      "source_pdf_zero_based_index": 36,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.NBT.1",
+      "author_mathematical_scope": "Explain that each place in a multi-digit whole number has ten times the value of the place immediately to its right.",
+      "required_material_conditions": [
+        "ten times",
+        "place value"
+      ],
+      "source_printed_page": 30,
+      "source_pdf_zero_based_index": 36,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.NBT.2",
+      "author_mathematical_scope": "Read, write and compare multi-digit whole numbers using base-ten numerals, number names, expanded form, and comparison symbols.",
+      "required_material_conditions": [
+        "number names",
+        "expanded form",
+        "comparison symbols"
+      ],
+      "source_printed_page": 30,
+      "source_pdf_zero_based_index": 36,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.NBT.3",
+      "author_mathematical_scope": "Round multi-digit whole numbers to any place using place-value understanding.",
+      "required_material_conditions": [
+        "round",
+        "any place"
+      ],
+      "source_printed_page": 30,
+      "source_pdf_zero_based_index": 36,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.NBT.4",
+      "author_mathematical_scope": "Fluently add and subtract multi-digit whole numbers using the standard algorithm.",
+      "required_material_conditions": [
+        "standard algorithm",
+        "add and subtract"
+      ],
+      "source_printed_page": 30,
+      "source_pdf_zero_based_index": 36,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.NBT.5",
+      "author_mathematical_scope": "Multiply up to four-digit whole numbers by one-digit numbers and multiply two two-digit numbers using place-value and properties strategies; illustrate and explain with equations, arrays or area models.",
+      "required_material_conditions": [
+        "four-digit by one-digit",
+        "two-digit by two-digit",
+        "equations arrays area models"
+      ],
+      "source_printed_page": 30,
+      "source_pdf_zero_based_index": 36,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.NBT.6",
+      "author_mathematical_scope": "Find whole-number quotients and remainders using up to four-digit dividends and one-digit divisors, explaining strategies with place value, operation properties and multiplication/division relationships through equations, rectangular arrays or area models.",
+      "required_material_conditions": [
+        "four-digit dividend",
+        "one-digit divisor",
+        "remainders"
+      ],
+      "source_printed_page": 30,
+      "source_pdf_zero_based_index": 36,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
