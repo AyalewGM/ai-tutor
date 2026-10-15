@@ -1,0 +1,210 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_SCOPE_REVIEW_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+  "jurisdiction": "CA",
+  "track": "GRADE_4",
+  "official_source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "Modified January 2013 / 2014 corrected electronic",
+  "source_printed_pages": [
+    31,
+    32,
+    33
+  ],
+  "source_pdf_zero_based_pages": [
+    37,
+    38,
+    39
+  ],
+  "grade4_fraction_domain_denominators": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    10,
+    12,
+    100
+  ],
+  "grade4_unlike_denominator_general_add_sub_required": false,
+  "overlap_with_page30": [],
+  "scope_count": 17,
+  "author_not_independently_accepted": true,
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "4.NF.1",
+      "source_printed_page": 31,
+      "source_pdf_zero_based_index": 37,
+      "author_mathematical_scope": "Explain equivalence a/b=(n*a)/(n*b) via visual models showing proportional changes in number/size of parts; generate equivalent fractions.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.NF.2",
+      "source_printed_page": 31,
+      "source_pdf_zero_based_index": 37,
+      "author_mathematical_scope": "Compare fractions with different numerators and denominators by common denominators/numerators or benchmark 1/2, only for the same whole; record with > = < and justify via visual models.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.NF.3",
+      "source_printed_page": 31,
+      "source_pdf_zero_based_index": 37,
+      "author_mathematical_scope": "Understand a/b (a>1) as sum of unit fractions 1/b; required a-d: same-whole fraction addition/subtraction, decompositions and justified equations, mixed numbers with like denominators, and like-denominator word problems.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.NF.4",
+      "source_printed_page": 31,
+      "source_pdf_zero_based_index": 37,
+      "author_mathematical_scope": "Multiply a fraction by a whole number; required a-c: a/b as a copies of 1/b, n*(a/b)=(n*a)/b and fraction-by-whole-number word problems with models/equations.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.NF.5",
+      "source_printed_page": 31,
+      "source_pdf_zero_based_index": 37,
+      "author_mathematical_scope": "Rewrite tenths as equivalent hundredths and use this to add one tenth-denominator fraction to one hundredth-denominator fraction; no general unlike-denominator algorithm required.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.NF.6",
+      "source_printed_page": 31,
+      "source_pdf_zero_based_index": 37,
+      "author_mathematical_scope": "Express tenths and hundredths in decimal notation, including measurement and number-line locations.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.NF.7",
+      "source_printed_page": 32,
+      "source_pdf_zero_based_index": 38,
+      "author_mathematical_scope": "Compare decimals through hundredths only for the same whole, express relation with > = <, justify using number lines or visual models; California-specific explicit number-line wording.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.MD.1",
+      "source_printed_page": 32,
+      "source_pdf_zero_based_index": 38,
+      "author_mathematical_scope": "Convert measurements from larger to smaller units within one system and record conversions in two-column tables: km/m/cm, kg/g, lb/oz, l/ml, hr/min/sec.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.MD.2",
+      "source_printed_page": 32,
+      "source_pdf_zero_based_index": 38,
+      "author_mathematical_scope": "Use four operations in measurements of distance, time, liquid volume, mass and money with simple fractions/decimals, including larger-to-smaller unit conversions; diagram measurements on scales.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.MD.3",
+      "source_printed_page": 32,
+      "source_pdf_zero_based_index": 38,
+      "author_mathematical_scope": "Apply rectangle area and perimeter formulas to real-world and mathematical problems, including an unknown side length from area and other dimension.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.MD.4",
+      "source_printed_page": 32,
+      "source_pdf_zero_based_index": 38,
+      "author_mathematical_scope": "Make line plots with unit fractions 1/2, 1/4, 1/8 and solve fraction addition/subtraction problems using line-plot measurements.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.MD.5",
+      "source_printed_page": 32,
+      "source_pdf_zero_based_index": 38,
+      "author_mathematical_scope": "Understand degrees as 1/360 of a full circle and angle measure as count of unit one-degree angles, covering both subparts a and b.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.MD.6",
+      "source_printed_page": 32,
+      "source_pdf_zero_based_index": 38,
+      "author_mathematical_scope": "Use a protractor to measure angles in whole-number degrees and draw angles of specified measures.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.MD.7",
+      "source_printed_page": 32,
+      "source_pdf_zero_based_index": 38,
+      "author_mathematical_scope": "Use additivity of non-overlapping angle parts and solve missing angle measures with equations.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.G.1",
+      "source_printed_page": 33,
+      "source_pdf_zero_based_index": 39,
+      "author_mathematical_scope": "Draw and identify points, lines, line segments, rays, right/acute/obtuse angles and parallel/perpendicular lines in plane figures.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.G.2",
+      "source_printed_page": 33,
+      "source_pdf_zero_based_index": 39,
+      "author_mathematical_scope": "Classify shapes by parallel/perpendicular lines and angle sizes, recognize right triangles, and include California specified special triangles and quadrilaterals.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "4.G.3",
+      "source_printed_page": 33,
+      "source_pdf_zero_based_index": 39,
+      "author_mathematical_scope": "Identify and draw lines of reflection symmetry in plane figures, including figures with matching folded halves.",
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
