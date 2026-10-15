@@ -60,3 +60,12 @@ def test_math1_p90_supplement_is_nine_existing_placements_only():
     assert supplement["publisher_original_byte_identity"] == "UNVERIFIED"
     assert supplement["independent_source_fidelity"] == "PENDING"
     assert supplement["activation"] == "FORBIDDEN"
+    clauses = {r["expectation_id"]: " ".join(r["material_conditions"]) for r in supplement["requirements"]}
+    assert "scale and origin" in clauses["N-Q.1"]
+    assert "integer exponents" in clauses["A-SSE.1.a"]
+    assert "single entity" in clauses["A-SSE.1.b"]
+    assert "labels and scales" in clauses["A-CED.2"]
+    assert "linear only" in clauses["A-CED.3"]
+    assert "master linear" in clauses["A-REI.1"]
+    assert all(r["source_review_status"] == "PENDING_INDEPENDENT_PUBLISHER_FIDELITY"
+               for r in supplement["requirements"])
