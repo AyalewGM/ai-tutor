@@ -134,20 +134,44 @@ class DeliveryOutcome(StrEnum):
     OBSOLETE = "obsolete"
     DEFERRED = "deferred"
     PENDING = "pending"
+    SUPERSEDED_BY_CURRENT_CHECKS = "superseded_by_current_checks"
 
 
-def deliver(root: str, number: int, token: str) -> DeliveryOutcome:
+def reject_persistent_denial(exc: Exception) -> None:
+    if isinstance(exc, HTTPError) and 400 <= exc.code < 500 and exc.code not in {408, 429}:
+        raise exc
+
+
+def deliver(root: str, number: int, token: str, *, intended_sha: str | None = None,
+            intended_state: str | None = None) -> DeliveryOutcome:
     pr = request("GET", f"{root}/pulls/{number}", token)
     if pr["state"] != "open":
         return DeliveryOutcome.OBSOLETE
     sha, branch = pr["head"]["sha"], pr["head"]["ref"]
+    if intended_sha is not None and sha != intended_sha:
+        return DeliveryOutcome.OBSOLETE
     paths = [item["filename"] for item in pages(root, f"/pulls/{number}/files", token)]
     checks = checks_for(root, sha, branch, token)
     state = next_step(pr["draft"], checks, pr["title"], paths)
     tag = marker(sha, state)
     comments_url = f"/issues/{number}/comments"
-    if any(tag in c.get("body", "") for c in pages(root, comments_url, token)):
-        return DeliveryOutcome.ALREADY_PRESENT
+
+    def confirmed(outcome: DeliveryOutcome, comment: dict) -> DeliveryOutcome:
+        resolved = (DeliveryOutcome.SUPERSEDED_BY_CURRENT_CHECKS
+                    if intended_state is not None and intended_state != state else outcome)
+        print(json.dumps({"pr": number, "sha": sha, "branch": branch,
+                          "intended_state": intended_state, "current_state": state,
+                          "intended_marker": marker(sha, intended_state) if intended_state else None,
+                          "actual_marker": tag, "checks": checks,
+                          "outcome": resolved, "write_outcome": outcome,
+                          "comment_id": comment.get("id"),
+                          "comment_url": comment.get("html_url")}, sort_keys=True))
+        return resolved
+
+    existing = next((c for c in pages(root, comments_url, token)
+                     if tag in c.get("body", "")), None)
+    if existing is not None:
+        return confirmed(DeliveryOutcome.ALREADY_PRESENT, existing)
 
     # Re-read the authoritative head and checks immediately before writing.
     latest = request("GET", f"{root}/pulls/{number}", token)
@@ -175,14 +199,17 @@ def deliver(root: str, number: int, token: str) -> DeliveryOutcome:
                 record_pending(number, sha, state, "CHANGED_BEFORE_RETRY")
                 return DeliveryOutcome.DEFERRED
         try:
-            request("POST", f"{root}{comments_url}", token, {"body": body})
-            print(f"Posted {state} for #{number} at {sha}")
-            return DeliveryOutcome.DELIVERED
+            receipt = request("POST", f"{root}{comments_url}", token, {"body": body})
+            return confirmed(DeliveryOutcome.DELIVERED, receipt)
         except (HTTPError, URLError, OSError) as exc:
+            reject_persistent_denial(exc)
             try:
-                if any(tag in c.get("body", "") for c in pages(root, comments_url, token)):
-                    return DeliveryOutcome.ALREADY_PRESENT
-            except (HTTPError, URLError, OSError):
+                existing = next((c for c in pages(root, comments_url, token)
+                                 if tag in c.get("body", "")), None)
+                if existing is not None:
+                    return confirmed(DeliveryOutcome.ALREADY_PRESENT, existing)
+            except (HTTPError, URLError, OSError) as read_error:
+                reject_persistent_denial(read_error)
                 # A lost POST response may mean delivery succeeded.
                 # Never blindly retry if the reconciliation GET also fails.
                 record_pending(number, sha, state, "COMMENT_STATUS_UNKNOWN")
@@ -275,7 +302,7 @@ def pending_records(root: str, token: str) -> list[dict]:
     raise ValueError("Recovery pagination exceeded; manual intervention required")
 
 
-def reconcile_pending(root: str, token: str) -> None:
+def reconcile_pending(root: str, token: str) -> bool:
     """Reconcile old pending work before processing the current event."""
     for record in pending_records(root, token):
         number, sha, state = record["pr"], record["sha"], record["state"]
@@ -288,10 +315,14 @@ def reconcile_pending(root: str, token: str) -> None:
             print(f"Pending #{number} already delivered")
             continue
         # deliver() independently revalidates head, checks, and duplicate markers.
-        outcome = deliver(root, number, token)
+        outcome = deliver(root, number, token, intended_sha=sha, intended_state=state)
+        if outcome in {DeliveryOutcome.PENDING, DeliveryOutcome.DEFERRED}:
+            print("::warning::Recovery pending; evidence preserved, new dispatch deferred")
+            return False
         if outcome not in {DeliveryOutcome.DELIVERED, DeliveryOutcome.ALREADY_PRESENT,
-                           DeliveryOutcome.OBSOLETE}:
-            raise ValueError("Recovery still pending; defer new handoffs")
+                           DeliveryOutcome.OBSOLETE, DeliveryOutcome.SUPERSEDED_BY_CURRENT_CHECKS}:
+            raise ValueError("Unknown recovery outcome; manual intervention required")
+    return True
 
 
 def main() -> int:
@@ -301,15 +332,19 @@ def main() -> int:
         event = json.load(event_file)
     numbers = event_pr_numbers(event)
     root = f"{os.environ.get('GITHUB_API_URL', 'https://api.github.com')}/repos/{repo}"
-    reconcile_pending(root, token)
+    if not reconcile_pending(root, token):
+        return 0
     if not numbers:
         print("No linked PR; pending reconciliation completed")
         return 0
     for number in numbers:
         outcome = deliver(root, number, token)
+        if outcome in {DeliveryOutcome.PENDING, DeliveryOutcome.DEFERRED}:
+            print("::warning::Delivery pending; evidence preserved, remaining dispatch deferred")
+            return 0
         if outcome not in {DeliveryOutcome.DELIVERED, DeliveryOutcome.ALREADY_PRESENT,
                            DeliveryOutcome.OBSOLETE}:
-            return 1
+            raise ValueError("Unknown delivery outcome; manual intervention required")
     return 0
 
 

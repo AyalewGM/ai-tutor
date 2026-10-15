@@ -30,10 +30,23 @@ If recovery is still blocked, the new run creates a fresh pending artifact and d
 
 ## Explicit delivery outcomes
 
-Delivery returns `DELIVERED`, `ALREADY_PRESENT`, `OBSOLETE`, `DEFERRED`, or `PENDING`.
-Only the first three are terminal outcomes. Recovery must not infer completion from
+Delivery returns `DELIVERED`, `ALREADY_PRESENT`, `OBSOLETE`,
+`SUPERSEDED_BY_CURRENT_CHECKS`, `DEFERRED`, or `PENDING`. The first four are
+terminal outcomes, but superseded is explicitly not delivery of the original marker. Recovery must not infer completion from
 an absent or empty local JSONL file: a head/check/draft change can defer a handoff.
-Deferred inspections are recorded for later reconciliation. Unresolved current-event
-delivery exits nonzero and stops the batch; the workflow's always-upload step preserves
+Deferred inspections are recorded for later reconciliation. Recoverable unresolved current-event
+delivery warns, stops the batch and exits successfully; the workflow's always-upload step preserves
 its pending ledger. Every retry revalidates the PR head, branch, draft state and checks.
 These outcomes remain advisory routing evidence, never independent acceptance.
+
+Recovery returns an explicit deferred result for recoverable pending delivery. The
+caller stops dispatch with exit zero, preserving the ledger through the always-upload
+step. Authentication/permission and other persistent HTTP 4xx denials (except transient
+408/429), malformed artifacts and unknown outcomes remain blocking errors. This is not
+permission to bypass a denial. An unavailable artifact still fails closed.
+
+When current check results change the intended state, confirmed posting or recognition
+of the current marker returns `SUPERSEDED_BY_CURRENT_CHECKS`. Structured run-log evidence
+records PR/SHA/branch, intended and actual markers, selected check results, actual write
+outcome and comment ID/URL. The old marker is never described as delivered. A SHA change
+before delivery is obsolete, not a license to write for a different head.
