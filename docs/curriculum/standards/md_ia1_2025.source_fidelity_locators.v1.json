@@ -46,7 +46,11 @@
         "IA1.AT.B.2.d"
       ],
       "scope_summary_editorial": "Create and solve one-variable linear, exponential, and isolated absolute-value equations; justify and interpret solutions.",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "material_subpart_requirements": {
+        "IA1.AT.B.2.d": "Solve comparable exponential expressions in at most two steps by rewriting to a common base using exponent properties; explain solution."
+      },
+      "material_scope_review_status": "AUTHOR_SUBPART_SCOPE_PENDING_INDEPENDENT_PUBLISHER_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.B.3",
@@ -64,7 +68,11 @@
         "IA1.AT.B.3.d"
       ],
       "scope_summary_editorial": "Create and solve one-variable inequalities; represent and interpret solution sets in context.",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "material_subpart_requirements": {
+        "IA1.AT.B.3.c": "Absolute-value expression isolated on one side of inequality; express solution sets with compound inequalities and a number line."
+      },
+      "material_scope_review_status": "AUTHOR_SUBPART_SCOPE_PENDING_INDEPENDENT_PUBLISHER_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.B.4",
@@ -98,7 +106,13 @@
         "IA1.AT.B.5.d"
       ],
       "scope_summary_editorial": "Create, solve, and analyze contextual systems of two linear equations in two variables.",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "material_subpart_requirements": {
+        "IA1.AT.B.5.b": "Solve systems using substitution and linear combination.",
+        "IA1.AT.B.5.c": "Graph-based approximate solutions and verify at intersection points.",
+        "IA1.AT.B.5.d": "Interpret solutions to systems of linear equations in problem contexts."
+      },
+      "material_scope_review_status": "AUTHOR_SUBPART_SCOPE_PENDING_INDEPENDENT_PUBLISHER_REVIEW"
     },
     {
       "expectation_id": "IA1.AT.B.6",
