@@ -54,6 +54,14 @@ def _seed_student_with_extension_problem():
             ),
             canonical_answer="5",
             source_type="CURATED",
+            solution={
+                "provenance": {
+                    "origin": "AUTHORED",
+                    "author": "Mihur test suite",
+                    "license": "Internal test fixture",
+                    "source_uri": "https://github.com/AyalewGM/ai-tutor",
+                }
+            },
         )
         db.add(ext)
         db.flush()
