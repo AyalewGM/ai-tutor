@@ -9,7 +9,6 @@ import argparse
 import json
 import sqlite3
 import time
-from pathlib import Path
 
 ROLES = ("content", "math", "pedagogy", "engineering")
 TRANSITIONS = {"content": "math", "math": "pedagogy", "pedagogy": "engineering"}
