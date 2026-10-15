@@ -126,7 +126,7 @@
         "REGULAR_GRADE_5"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independent source-fidelity review required for 10 TX regular Grade 2 §111.4(b)(2-3) records (TEA December 2014 p9); finish the other Grade 2 requirements and TX Grades 3-5. All staged rows, including regular Grade 1 and 6 and advanced Grades 6-8, require independent acceptance.",
+      "next_gate": "Independently verify 18 Grade 2 §111.4(b)(2)-(6) provisional rows on TEA Dec 2014 p9, including all subparts; source intake of §111.4(b)(1),(7)-(11) and regular Grades 3-5 remains. Grade 1 50-row corrected test requires synchronization; zero independent acceptance for this new Grade 2 batch.",
       "advanced_grade6_111_29_author_identifier_rows": 68,
       "advanced_grade6_111_29_author_scope_rows": 68,
       "advanced_grade6_111_29_independently_accepted_source_rows": 0,
@@ -157,12 +157,13 @@
       ],
       "regular_grade1_independently_accepted_source_rows": 0,
       "regular_grade1_author_scope_status": "50_AUTHOR_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
-      "regular_grade2_111_4_author_scope_rows": 10,
+      "regular_grade2_111_4_author_scope_rows": 18,
       "regular_grade2_111_4_independently_accepted_source_rows": 0,
       "regular_grade2_source_files": [
-        "tx_regular_grade2_number_fraction_author.v1.json"
+        "tx_regular_grade2_number_fraction_author.v1.json",
+        "tx_regular_grade2_operations_4_6_author.v1.json"
       ],
-      "regular_grade2_author_scope_status": "10_OF_GRADE2_REQUIREMENTS_AUTHOR_DESCRIBED_NOT_COMPLETE_ZERO_INDEPENDENT_SOURCE_ACCEPTANCE"
+      "regular_grade2_author_scope_status": "18_OF_GRADE2_REQUIREMENTS_AUTHOR_DESCRIBED_NOT_COMPLETE_ZERO_INDEPENDENT_SOURCE_ACCEPTANCE"
     },
     "WA": {
       "official_source": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
