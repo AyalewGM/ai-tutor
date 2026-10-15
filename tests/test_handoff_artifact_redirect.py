@@ -43,7 +43,7 @@ def test_artifact_redirect_strips_bearer_on_cross_host(monkeypatch):
         return _Opener()
 
     monkeypatch.setattr(module, "build_opener", make_opener)
-    assert module.artifact_bytes("https://api.github.com/artifacts/1/zip", "secret") == b"zip-content"
+    assert module.artifact_bytes("https://api.github.com/repos/AyalewGM/ai-tutor/actions/artifacts/1/zip", "secret") == b"zip-content"
 
 
 def test_artifact_redirect_preserves_bearer_within_same_host(monkeypatch):
@@ -53,7 +53,7 @@ def test_artifact_redirect_preserves_bearer_within_same_host(monkeypatch):
         def open(self, request, timeout):
             moved = seen["handler"].redirect_request(
                 request, None, 302, "Found", {},
-                "https://api.github.com/artifacts/other",
+                "https://api.github.com/repos/AyalewGM/ai-tutor/actions/artifacts/2/zip",
             )
             assert moved.get_header("Authorization") == "Bearer secret"
             return _Response()
@@ -63,7 +63,7 @@ def test_artifact_redirect_preserves_bearer_within_same_host(monkeypatch):
         return _Opener()
 
     monkeypatch.setattr(module, "build_opener", make_opener)
-    assert module.artifact_bytes("https://api.github.com/artifacts/1/zip", "secret") == b"zip-content"
+    assert module.artifact_bytes("https://api.github.com/repos/AyalewGM/ai-tutor/actions/artifacts/1/zip", "secret") == b"zip-content"
 
 
 def test_artifact_rejects_untrusted_origin_before_sending_token(monkeypatch):
