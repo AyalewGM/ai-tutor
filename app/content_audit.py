@@ -238,6 +238,7 @@ def audit_curriculum_problem_inventory(
                 independent_eligible=metadata.independent_eligible,
                 mastery_eligible=metadata.mastery_eligible,
                 llm_solution_required=metadata.llm_solution_required,
+                extension_eligible=metadata.extension_eligible,
             )
             if metadata.diagnostic_eligible:
                 pools["diagnostic"].append(problem_id)

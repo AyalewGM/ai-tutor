@@ -210,6 +210,28 @@
             "operation": "\u00d7",
             "answer": 40
           }
+        },
+        {
+          "key": "md3-multiplication-extension-01",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "A theater has 9 rows with 8 seats in each row. 5 seats are already taken. How many seats are still empty?",
+          "canonical_answer": "67",
+          "difficulty": 5,
+          "objective": "Stretch: two-step multiplication-and-subtraction modeling.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-multiplication-extension-02",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "What number makes this true?  7 \u00d7 ? = 56 \u2212 14",
+          "canonical_answer": "6",
+          "difficulty": 4,
+          "objective": "Stretch: missing factor with a two-step right side.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -364,6 +386,28 @@
             "b": 7,
             "operation": "\u00f7"
           }
+        },
+        {
+          "key": "md3-division-extension-01",
+          "family": "WORD_PROBLEM_MULTIPLY_DIVIDE_100",
+          "prompt": "Mrs. Lee puts 63 stickers equally on 7 pages. Then she moves 2 stickers off each page. How many stickers are on each page now?",
+          "canonical_answer": "7",
+          "difficulty": 5,
+          "objective": "Stretch: divide then adjust \u2014 two-step reasoning.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-division-extension-02",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "What number makes this true?  48 \u00f7 ? = 4 + 4",
+          "canonical_answer": "6",
+          "difficulty": 4,
+          "objective": "Stretch: missing divisor with a computed quotient.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -519,6 +563,28 @@
             "b": 7,
             "operation": "\u00f7"
           }
+        },
+        {
+          "key": "md3-fact_families-extension-01",
+          "family": "MULTIPLICATION_WITHIN_100",
+          "prompt": "Use the distributive property: 6 \u00d7 9 = (6 \u00d7 5) + (6 \u00d7 ?)",
+          "canonical_answer": "4",
+          "difficulty": 4,
+          "objective": "Stretch: decompose a factor to build 6\u00d79.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-fact_families-extension-02",
+          "family": "DIVISION_WITHIN_100",
+          "prompt": "If 8 \u00d7 7 = 56, what is 56 \u00f7 8 + 56 \u00f7 7?",
+          "canonical_answer": "15",
+          "difficulty": 5,
+          "objective": "Stretch: fact-family inversion combined into one expression.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -668,6 +734,28 @@
             "number": 738,
             "place": 100
           }
+        },
+        {
+          "key": "md3-place_value-extension-01",
+          "family": "ROUNDING",
+          "prompt": "A number rounds to 400 when rounded to the nearest hundred, and to 430 when rounded to the nearest ten. What could the number be? Give the smallest possible answer.",
+          "canonical_answer": "425",
+          "difficulty": 5,
+          "objective": "Stretch: intersect two rounding constraints.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-place_value-extension-02",
+          "family": "PLACE_VALUE_BASE_TEN",
+          "prompt": "The digit in the hundreds place of a 3-digit number is 4. The tens digit is twice the hundreds digit. The ones digit is 3 less than the tens digit. What is the number?",
+          "canonical_answer": "485",
+          "difficulty": 4,
+          "objective": "Stretch: reconstruct a number from digit relationships.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -813,6 +901,28 @@
             "numerator2": 2,
             "denominator2": 3
           }
+        },
+        {
+          "key": "md3-fractions-extension-01",
+          "family": "FRACTION_EQUIVALENCE",
+          "prompt": "Which fraction is equivalent to 6/8 and has a denominator of 4?",
+          "canonical_answer": "3/4",
+          "difficulty": 4,
+          "objective": "Stretch: find the missing equivalent fraction.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-fractions-extension-02",
+          "family": "FRACTION_COMPARE",
+          "prompt": "Order from least to greatest: 5/6, 2/3, 3/4. Write your answer with commas.",
+          "canonical_answer": "2/3, 3/4, 5/6",
+          "difficulty": 5,
+          "objective": "Stretch: three-way comparison across unlike denominators.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -958,6 +1068,28 @@
             "end": "6:15",
             "elapsed_minutes": 45
           }
+        },
+        {
+          "key": "md3-time-extension-01",
+          "family": "ELAPSED_TIME",
+          "prompt": "Soccer practice starts at 4:35 PM and lasts 1 hour 50 minutes. What time does it end? Write your answer like 6:25 PM.",
+          "canonical_answer": "6:25 PM",
+          "difficulty": 5,
+          "objective": "Stretch: elapsed time crossing the hour with minutes.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-time-extension-02",
+          "family": "ELAPSED_TIME",
+          "prompt": "A bus left at 8:50 AM and arrived at 10:15 AM. How many minutes was the trip?",
+          "canonical_answer": "85",
+          "difficulty": 4,
+          "objective": "Stretch: elapsed minutes across an hour boundary.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1099,6 +1231,28 @@
             "category": "cat",
             "value": 6
           }
+        },
+        {
+          "key": "md3-data-extension-01",
+          "family": "BAR_GRAPH_READ",
+          "prompt": "A bar graph shows books read: Ana=6, Ben=9, Cora=3. Each bar shows books read in one week. How many more books must Cora read to match Ben and Ana combined?",
+          "canonical_answer": "12",
+          "difficulty": 5,
+          "objective": "Stretch: combine categories before comparing.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-data-extension-02",
+          "family": "PICTURE_GRAPH_READ",
+          "prompt": "A picture graph uses a star for every 4 points. Mia has 7 stars. How many points does Mia have?",
+          "canonical_answer": "28",
+          "difficulty": 4,
+          "objective": "Stretch: multiply by the picture-graph scale.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1246,6 +1400,28 @@
             "width": 5,
             "measure": "area"
           }
+        },
+        {
+          "key": "md3-area_perimeter-extension-01",
+          "family": "AREA_PERIMETER_RECTANGLE",
+          "prompt": "A rectangle has perimeter 20 units. Its length is 6 units. What is its width?",
+          "canonical_answer": "4",
+          "difficulty": 5,
+          "objective": "Stretch: work backward from perimeter to a missing side.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-area_perimeter-extension-02",
+          "family": "RECTANGLE_AREA",
+          "prompt": "Two squares each have side length 3 units. They are pushed together along one full side to make a rectangle. What is the perimeter of the new rectangle?",
+          "canonical_answer": "12",
+          "difficulty": 4,
+          "objective": "Stretch: compose shapes \u2014 the joined side disappears.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     },
@@ -1386,6 +1562,28 @@
             "shape": "pentagon",
             "sides": 5
           }
+        },
+        {
+          "key": "md3-shapes-extension-01",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "I am a quadrilateral with 4 equal sides, but I am not a square because my corners are not square corners. What am I?",
+          "canonical_answer": "rhombus",
+          "difficulty": 4,
+          "objective": "Stretch: classify by attributes, not name recall.",
+          "modes": [
+            "extension"
+          ]
+        },
+        {
+          "key": "md3-shapes-extension-02",
+          "family": "CLASSIFY_SHAPE",
+          "prompt": "How many sides do a hexagon and a quadrilateral have altogether?",
+          "canonical_answer": "10",
+          "difficulty": 4,
+          "objective": "Stretch: combine attributes of two categories.",
+          "modes": [
+            "extension"
+          ]
         }
       ]
     }

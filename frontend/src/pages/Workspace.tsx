@@ -46,6 +46,7 @@ import type {
   RespondOut,
   SessionSummary,
   TutorState,
+  WorkspaceProblem,
 } from "../types";
 
 const STEP_ORDER = [
@@ -141,6 +142,7 @@ export default function Workspace() {
   const [masteryWin, setMasteryWin] = useState<Award | null>(null);
   const [learnOpen, setLearnOpen] = useState(false);
   const [goalOpen, setGoalOpen] = useState(false);
+  const [extensionProblem, setExtensionProblem] = useState<WorkspaceProblem | null>(null);
   const [recap, setRecap] = useState<SessionSummary | null>(null);
   const [goalWasReached, setGoalWasReached] = useState(false);
   const answerRef = useRef<HTMLInputElement>(null);
@@ -180,7 +182,11 @@ export default function Workspace() {
   const hasAction = (action: string) =>
     workspace?.allowed_actions.includes(action) ?? false;
 
-  const problemKind = workspace?.problem?.answer_kind ?? "FREE_TEXT";
+  // The optional challenge tier: while an extension problem is active it is
+  // the problem being answered; it never changes mastery or progress.
+  const currentProblem = extensionProblem ?? workspace?.problem ?? null;
+
+  const problemKind = currentProblem?.answer_kind ?? "FREE_TEXT";
   const effectiveAnswer =
     problemKind === "FRACTION"
       ? fracNum.trim() && fracDen.trim()
@@ -188,7 +194,7 @@ export default function Workspace() {
         : ""
       : answer;
 
-  const problemId = workspace?.problem?.id;
+  const problemId = currentProblem?.id;
   useEffect(() => {
     setAnswer("");
     setFracNum("");
@@ -261,14 +267,14 @@ export default function Workspace() {
   }
 
   async function submitAnswerText(text: string) {
-    if (!workspace?.problem || !text) return;
+    if (!currentProblem || !text) return;
     setError("");
     setStatus("Checking your work…");
     try {
       const result = await post<RespondOut>(
         `/adaptive-tutor/sessions/${sessionId}/respond`,
         {
-          problem_id: workspace.problem.id,
+          problem_id: currentProblem.id,
           answer: text,
           assistance_level: 0,
         },
@@ -302,6 +308,15 @@ export default function Workspace() {
           title: result.growth.level_title,
         });
       }
+      if (extensionProblem) {
+        // Challenge streak: the server offers the next extension problem
+        // (or null when the stretch pool is exhausted).
+        setExtensionProblem(result.next_problem ?? null);
+        if (!result.next_problem) {
+          setStatus("Challenge set complete — nice work!");
+          setStatusOk(true);
+        }
+      }
       await load();
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Submit failed");
@@ -314,14 +329,42 @@ export default function Workspace() {
     void submitAnswerText(effectiveAnswer);
   }
 
+  async function requestExtension() {
+    if (extensionProblem) return;
+    setError("");
+    setStatus("Loading a challenge…");
+    try {
+      const problem = await post<WorkspaceProblem>(
+        `/adaptive-tutor/sessions/${sessionId}/extension`,
+      );
+      setExtensionProblem(problem);
+      setStatus("Challenge mode — optional, doesn't affect your mastery.");
+      setStatusOk(true);
+    } catch (err) {
+      setStatus("");
+      setError(
+        err instanceof ApiError && err.status === 404
+          ? "No challenge problems for this skill yet."
+          : err instanceof ApiError
+            ? err.message
+            : "Could not load a challenge",
+      );
+    }
+  }
+
+  function exitExtension() {
+    setExtensionProblem(null);
+    setStatus("");
+  }
+
   async function requestHelp(reason: "HINT" | "I_DONT_UNDERSTAND") {
-    if (!workspace?.problem) return;
+    if (!currentProblem) return;
     setError("");
     setStatus("");
     try {
       const result = await post<HintResponse>(
         `/adaptive-tutor/sessions/${sessionId}/hint`,
-        { problem_id: workspace.problem.id, reason },
+        { problem_id: currentProblem.id, reason },
       );
       setStatus(
         result.message || "Support is not available in this learning state.",
@@ -750,10 +793,38 @@ export default function Workspace() {
             ) : (
               <Card>
                 <CardHeader className="pb-3">
-                  <CardTitle>Current problem</CardTitle>
+                  <div className="flex items-center justify-between gap-2">
+                    <CardTitle>
+                      {extensionProblem ? "Challenge" : "Current problem"}
+                    </CardTitle>
+                    {extensionProblem ? (
+                      <Badge variant="secondary">Optional</Badge>
+                    ) : (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => void requestExtension()}
+                        title="Try a harder problem — optional, doesn't affect your mastery"
+                      >
+                        <Target className="h-4 w-4" /> Challenge me
+                      </Button>
+                    )}
+                  </div>
                   <p className="text-sm text-muted-foreground">
-                    {workspace.focus.skill_name} · {friendly(workspace.state)}
+                    {extensionProblem
+                      ? `${workspace.focus.skill_name} · stretch — doesn't count toward mastery`
+                      : `${workspace.focus.skill_name} · ${friendly(workspace.state)}`}
                   </p>
+                  {extensionProblem && (
+                    <button
+                      type="button"
+                      className="text-left text-xs font-medium text-primary hover:underline"
+                      onClick={exitExtension}
+                    >
+                      Back to practice
+                    </button>
+                  )}
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {learn && (workspace.state === "GUIDED_PRACTICE" || workspace.state === "REMEDIATION") && (
@@ -780,7 +851,7 @@ export default function Workspace() {
                             integerPracticeSeed={
                               integerAdditionEligible(workspace.state, learn)
                                 ? integerSeedFromString(
-                                    workspace.problem?.id ??
+                                    currentProblem?.id ??
                                       workspace.focus.active_skill_id,
                                   )
                                 : undefined
@@ -815,9 +886,9 @@ export default function Workspace() {
                   )}
                   {equationEquivalenceEnabled && (
                     <InteractiveEquationEquivalence
-                      key={`equation-equivalence-${workspace.problem?.id ?? workspace.focus.active_skill_id}`}
+                      key={`equation-equivalence-${currentProblem?.id ?? workspace.focus.active_skill_id}`}
                       exampleIndex={equationEquivalenceExampleIndex(
-                        workspace.problem?.id ?? workspace.focus.active_skill_id,
+                        currentProblem?.id ?? workspace.focus.active_skill_id,
                         workspace.focus.skill_name,
                       )}
                       independentAssessment={false}
@@ -841,41 +912,41 @@ export default function Workspace() {
                     <div className={`problem ${feedback}`} aria-live="polite">
                       <MathText
                         text={
-                          workspace.problem?.prompt ??
+                          currentProblem?.prompt ??
                           "No problem is currently assigned."
                         }
                       />
                     </div>
-                    <ProblemVisual spec={workspace.problem?.visual ?? null} />
+                    <ProblemVisual spec={currentProblem?.visual ?? null} />
                     {(workspace.state === "GUIDED_PRACTICE" ||
                       workspace.state === "REMEDIATION") &&
-                      workspace.problem?.visual?.type === "fraction_bar" && (
+                      currentProblem?.visual?.type === "fraction_bar" && (
                         <InteractiveFractionBars
-                          key={workspace.problem.id}
+                          key={currentProblem.id}
                           independentAssessment={
                             workspace.state !== "GUIDED_PRACTICE" &&
                             workspace.state !== "REMEDIATION"
                           }
-                          denominator={workspace.problem.visual.denominator}
-                          initialNumerator={workspace.problem.visual.numerator}
+                          denominator={currentProblem.visual.denominator}
+                          initialNumerator={currentProblem.visual.numerator}
                           compareWith={
-                            fractionComparisonTarget(workspace.problem.visual) ??
+                            fractionComparisonTarget(currentProblem.visual) ??
                             undefined
                           }
                         />
                       )}
                     {(workspace.state === "GUIDED_PRACTICE" ||
                       workspace.state === "REMEDIATION") &&
-                      workspace.problem?.visual?.type === "fraction_operation" &&
-                      workspace.problem.visual.operation === "+" && (
+                      currentProblem?.visual?.type === "fraction_operation" &&
+                      currentProblem.visual.operation === "+" && (
                         <InteractiveFractionAddition
-                          key={workspace.problem.id}
+                          key={currentProblem.id}
                           independentAssessment={
                             workspace.state !== "GUIDED_PRACTICE" &&
                             workspace.state !== "REMEDIATION"
                           }
-                          first={workspace.problem.visual.first}
-                          second={workspace.problem.visual.second}
+                          first={currentProblem.visual.first}
+                          second={currentProblem.visual.second}
                         />
                       )}
                     <ScratchPad />
@@ -884,28 +955,28 @@ export default function Workspace() {
                   <form onSubmit={submitAnswer} className="space-y-3">
                     <div className="space-y-1.5">
                       <Label htmlFor="answer">
-                        {workspace.problem?.supports_steps
+                        {currentProblem?.supports_steps
                           ? "Your work"
                           : "Your answer"}
                       </Label>
-                      {workspace.problem?.supports_steps && sessionId ? (
+                      {currentProblem?.supports_steps && sessionId ? (
                         <StepWork
-                          key={workspace.problem.id}
+                          key={currentProblem.id}
                           sessionId={sessionId}
-                          problemId={workspace.problem.id}
-                          problemType={workspace.problem.problem_type}
+                          problemId={currentProblem.id}
+                          problemType={currentProblem.problem_type}
                           disabled={!hasAction("SUBMIT_ANSWER")}
                           onSolved={(line) => void submitAnswerText(line)}
                           onError={setError}
                         />
                       ) : problemKind === "MULTIPLE_CHOICE" &&
-                      workspace.problem?.choices?.length ? (
+                      currentProblem?.choices?.length ? (
                         <div
                           role="radiogroup"
                           aria-label="Answer choices"
                           className="grid gap-2 sm:grid-cols-2"
                         >
-                          {workspace.problem.choices.map((choice) => (
+                          {currentProblem.choices.map((choice) => (
                             <button
                               key={choice.id}
                               type="button"
@@ -914,7 +985,7 @@ export default function Workspace() {
                               onClick={() => setAnswer(choice.id)}
                               disabled={
                                 !hasAction("SUBMIT_ANSWER") ||
-                                !workspace.problem
+                                !currentProblem
                               }
                               className={cn(
                                 "rounded-lg border px-4 py-3 text-left text-base transition-colors",
@@ -939,7 +1010,7 @@ export default function Workspace() {
                             value={fracNum}
                             onChange={(e) => setFracNum(e.target.value)}
                             disabled={
-                              !hasAction("SUBMIT_ANSWER") || !workspace.problem
+                              !hasAction("SUBMIT_ANSWER") || !currentProblem
                             }
                             autoComplete="off"
                           />
@@ -952,7 +1023,7 @@ export default function Workspace() {
                             value={fracDen}
                             onChange={(e) => setFracDen(e.target.value)}
                             disabled={
-                              !hasAction("SUBMIT_ANSWER") || !workspace.problem
+                              !hasAction("SUBMIT_ANSWER") || !currentProblem
                             }
                             autoComplete="off"
                           />
@@ -969,7 +1040,7 @@ export default function Workspace() {
                             value={answer}
                             onChange={(e) => setAnswer(e.target.value)}
                             disabled={
-                              !hasAction("SUBMIT_ANSWER") || !workspace.problem
+                              !hasAction("SUBMIT_ANSWER") || !currentProblem
                             }
                             autoComplete="off"
                           />
@@ -977,27 +1048,27 @@ export default function Workspace() {
                             onKey={insertToken}
                             variables={problemKind === "FREE_TEXT"}
                             disabled={
-                              !hasAction("SUBMIT_ANSWER") || !workspace.problem
+                              !hasAction("SUBMIT_ANSWER") || !currentProblem
                             }
                           />
                         </div>
                       )}
                     </div>
-                    {!workspace.problem?.supports_steps && (
+                    {!currentProblem?.supports_steps && (
                       <VoiceChatControls
                         onTranscript={setAnswer}
                         promptToRead={workspace.coaching_message}
-                        disabled={!hasAction("SUBMIT_ANSWER") || !workspace.problem}
+                        disabled={!hasAction("SUBMIT_ANSWER") || !currentProblem}
                       />
                     )}
                     <div className="flex flex-wrap gap-2">
-                      {!workspace.problem?.supports_steps && (
+                      {!currentProblem?.supports_steps && (
                         <Button
                           type="submit"
                           size="lg"
                           disabled={
                             !hasAction("SUBMIT_ANSWER") ||
-                            !workspace.problem ||
+                            !currentProblem ||
                             !effectiveAnswer
                           }
                         >
@@ -1009,7 +1080,7 @@ export default function Workspace() {
                         variant="outline"
                         size="lg"
                         onClick={() => requestHelp("HINT")}
-                        disabled={!hasAction("REQUEST_HINT") || !workspace.problem}
+                        disabled={!hasAction("REQUEST_HINT") || !currentProblem}
                       >
                         <Lightbulb className="h-4 w-4" /> Hint
                       </Button>
@@ -1019,7 +1090,7 @@ export default function Workspace() {
                         size="lg"
                         onClick={() => requestHelp("I_DONT_UNDERSTAND")}
                         disabled={
-                          !hasAction("I_DONT_UNDERSTAND") || !workspace.problem
+                          !hasAction("I_DONT_UNDERSTAND") || !currentProblem
                         }
                       >
                         <HelpCircle className="h-4 w-4" /> I don&apos;t understand

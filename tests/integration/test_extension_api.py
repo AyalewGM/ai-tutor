@@ -157,6 +157,31 @@ def test_extension_opt_in_and_evidence_isolation() -> None:
         ) == 0
 
 
+def test_extension_endpoint_on_adaptive_router() -> None:
+    """The frontend talks to /adaptive-tutor — the same opt-in must work."""
+    student_id, skill_id, _ = _seed_student_with_extension_problem()
+
+    session_response = client.post(
+        "/api/v1/adaptive-tutor/sessions",
+        json={"student_id": str(student_id), "skill_id": str(skill_id)},
+    )
+    assert session_response.status_code == 200
+    session_id = session_response.json()["session_id"]
+
+    ext_response = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/extension"
+    )
+    assert ext_response.status_code == 200
+    with SessionLocal() as db:
+        meta = db.scalar(
+            select(ProblemContentMetadata).where(
+                ProblemContentMetadata.problem_id
+                == uuid.UUID(ext_response.json()["id"])
+            )
+        )
+        assert meta is not None and meta.extension_eligible is True
+
+
 def test_extension_attempt_does_not_change_session_state() -> None:
     student_id, skill_id, ext_id = _seed_student_with_extension_problem()
 

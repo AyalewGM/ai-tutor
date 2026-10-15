@@ -242,6 +242,7 @@ export interface RespondOut {
   new_awards?: Award[];
   xp_earned?: number;
   growth?: (LearnerGrowth & { leveled_up?: boolean }) | null;
+  next_problem?: WorkspaceProblem | null;
 }
 
 export interface Badge {
