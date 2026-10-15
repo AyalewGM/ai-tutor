@@ -39,7 +39,7 @@ def test_artifact_redirect_strips_bearer_on_cross_host(monkeypatch):
             return _Response()
 
     def make_opener(handler):
-        seen["handler"] = handler
+        seen["handler"] = handler()
         return _Opener()
 
     monkeypatch.setattr(module, "build_opener", make_opener)
@@ -59,7 +59,7 @@ def test_artifact_redirect_preserves_bearer_within_same_host(monkeypatch):
             return _Response()
 
     def make_opener(handler):
-        seen["handler"] = handler
+        seen["handler"] = handler()
         return _Opener()
 
     monkeypatch.setattr(module, "build_opener", make_opener)
