@@ -42,7 +42,17 @@
       "lettered_subpart_ids": [],
       "scope_summary_editorial": "Understand the concept of a unit rate a/b associated with a ratio a:b and use rate language in context.",
       "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "retrospective_bounded_scope_evidence": {
+        "source": "NGA/CCSSO 2010 Mathematics / DC OSSE adopted CCSS",
+        "requirements": {
+          "unit_rate_noncomplex": "Unit rate a/b associated with ratio a:b where b is nonzero; Grade 6 unit rates limited to non-complex fractions."
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "6.RP.A.3",
@@ -199,7 +209,17 @@
       ],
       "scope_summary_editorial": "Understand a rational number as a point on the number line; represent points on the line and in the plane with negative coordinates (opposites, reflections, positioning).",
       "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "retrospective_bounded_scope_evidence": {
+        "source": "NGA/CCSSO 2010 Mathematics / DC OSSE adopted CCSS",
+        "requirements": {
+          "6.NS.C.6.a": "Opposite signs denote opposite directions/values in contexts such as positive/negative temperatures or elevation; zero is its own opposite."
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "6.NS.C.7",
@@ -242,7 +262,17 @@
       "lettered_subpart_ids": [],
       "scope_summary_editorial": "Solve real-world and mathematical problems by graphing points in all four quadrants, using coordinates and absolute value to find distances.",
       "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "retrospective_bounded_scope_evidence": {
+        "source": "NGA/CCSSO 2010 Mathematics / DC OSSE adopted CCSS",
+        "requirements": {
+          "coordinate_distance": "Solve real-world and mathematical problems by plotting points in all four quadrants, including distance between points sharing first or second coordinate using absolute differences."
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "6.EE.A.1",
@@ -322,7 +352,17 @@
       "lettered_subpart_ids": [],
       "scope_summary_editorial": "Identify when two expressions are equivalent.",
       "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "retrospective_bounded_scope_evidence": {
+        "source": "NGA/CCSSO 2010 Mathematics / DC OSSE adopted CCSS",
+        "requirements": {
+          "equivalent_expressions": "Identify equivalence when expressions name the same number regardless of substitution, using operation properties."
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "6.EE.B.5",
@@ -341,7 +381,17 @@
       "lettered_subpart_ids": [],
       "scope_summary_editorial": "Understand solving an equation or inequality as finding values that make it true; use substitution to determine whether a given number is a solution.",
       "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "retrospective_bounded_scope_evidence": {
+        "source": "NGA/CCSSO 2010 Mathematics / DC OSSE adopted CCSS",
+        "requirements": {
+          "solution_meaning": "A solution makes an equation or inequality true; use substitution to test a specified value."
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "6.EE.B.6",
@@ -360,7 +410,17 @@
       "lettered_subpart_ids": [],
       "scope_summary_editorial": "Use variables to represent numbers and write expressions when solving real-world or mathematical problems.",
       "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "retrospective_bounded_scope_evidence": {
+        "source": "NGA/CCSSO 2010 Mathematics / DC OSSE adopted CCSS",
+        "requirements": {
+          "variable_role": "A variable can stand for one unknown number or any number in a specified set, depending on purpose."
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "6.EE.B.7",
@@ -455,7 +515,17 @@
       "lettered_subpart_ids": [],
       "scope_summary_editorial": "Find the volume of a right rectangular prism with fractional edge lengths, including with the formulas V = lwh and V = bh.",
       "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "retrospective_bounded_scope_evidence": {
+        "source": "NGA/CCSSO 2010 Mathematics / DC OSSE adopted CCSS",
+        "requirements": {
+          "unit_fraction_cube_packing": "Pack right rectangular prisms with fractional edge lengths using unit-fraction cubes and show counted volume equals the product of edge lengths, alongside V=lwh and V=bh."
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "6.G.A.3",
@@ -593,7 +663,20 @@
       ],
       "scope_summary_editorial": "Summarize numerical data sets in relation to their context (observations, attributes, measures of center and variability, patterns and deviations).",
       "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "retrospective_bounded_scope_evidence": {
+        "source": "NGA/CCSSO 2010 Mathematics / DC OSSE adopted CCSS",
+        "requirements": {
+          "6.SP.B.5.a": "Report number of observations.",
+          "6.SP.B.5.b": "Describe attribute, how measured, and units.",
+          "6.SP.B.5.c": "Give median and/or mean and IQR and/or MAD, overall patterns and striking deviations in context.",
+          "6.SP.B.5.d": "Relate choice of center and variability to distribution shape and data-collection context."
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      }
     },
     {
       "expectation_id": "7.RP.A.1",
@@ -1280,6 +1363,18 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "retrospective_bounded_scope_evidence": {
+        "source": "NGA/CCSSO 2010 Mathematics / DC OSSE adopted CCSS",
+        "requirements": {
+          "7.SP.C.7.a": "Build uniform probability models with equally likely outcomes.",
+          "7.SP.C.7.b": "Build empirical model from observed frequencies; outcomes need not have uniform probabilities.",
+          "discrepancy": "Compare model probability to observed frequency and explain poor agreement."
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
       }
     },
     {
@@ -1314,6 +1409,18 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "retrospective_bounded_scope_evidence": {
+        "source": "NGA/CCSSO 2010 Mathematics / DC OSSE adopted CCSS",
+        "requirements": {
+          "7.SP.C.8.a": "Compute compound-event probabilities as favorable outcomes divided by all equally likely sample-space outcomes.",
+          "7.SP.C.8.b": "Represent sample spaces with organized lists, tables and tree diagrams.",
+          "7.SP.C.8.c": "Design and use simulations for compound events."
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
       }
     },
     {
@@ -1601,6 +1708,17 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "retrospective_bounded_scope_evidence": {
+        "source": "NGA/CCSSO 2010 Mathematics / DC OSSE adopted CCSS",
+        "requirements": {
+          "8.EE.C.7.a": "Transform to x=a, a=a, or a=b to classify one, infinitely many, or no solutions.",
+          "8.EE.C.7.b": "Solve rational-coefficient linear equations, including expanding and collecting like terms."
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
       }
     },
     {
@@ -1635,6 +1753,18 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "retrospective_bounded_scope_evidence": {
+        "source": "NGA/CCSSO 2010 Mathematics / DC OSSE adopted CCSS",
+        "requirements": {
+          "8.EE.C.8.a": "Solutions are intersections of the corresponding graphs.",
+          "8.EE.C.8.b": "Solve systems algebraically and use graphs to estimate and inspect solutions.",
+          "8.EE.C.8.c": "Solve real-world and mathematical problems modeled by two-variable linear systems."
+        },
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
       }
     },
     {
