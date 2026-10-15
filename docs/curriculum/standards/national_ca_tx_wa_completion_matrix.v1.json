@@ -20,7 +20,7 @@
         "GRADE_6"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independently review CDE Grade 6 printed pp.42–43 author scopes (12 parent requirements) and mathematical subparts; continue official-source author intake from p.44 onward. Grade 6 remains partial and all CA source-fidelity and canonical/assessment/mastery gates remain closed.",
+      "next_gate": "California Grade 6: 29 parent requirements authored, none independently accepted. Independently verify new 17 author rows pp.43-45 and prior 12; continue unfinished CA Grades 3-4 and other gaps. All acceptance and activation gates remain closed.",
       "grade8_author_scope_rows": 28,
       "grade8_author_scope_source": "ca_2013_grade8_28_source_author_slice.v1.json",
       "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY",
@@ -34,9 +34,9 @@
         "MATHEMATICS_I": 59,
         "GRADE_4": 28,
         "GRADE_5": 27,
-        "GRADE_6": 12
+        "GRADE_6": 29
       },
-      "author_scope_total_staged": 317,
+      "author_scope_total_staged": 334,
       "author_scope_acceptance": "DRAFT_ALL_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "author_source_scope_files": {
         "GRADE_1": [
@@ -76,7 +76,9 @@
         ],
         "GRADE_6": [
           "ca_2013_grade6_page42_source_author_slice.v1.json",
-          "ca_2013_grade6_page43_complete_parent_source_author_slice.v1.json"
+          "ca_2013_grade6_page43_complete_parent_source_author_slice.v1.json",
+          "ca_2013_grade6_pages43_44_ee2_9_author_slice.v1.json",
+          "ca_2013_grade6_pages44_45_geometry_statistics_author_slice.v1.json"
         ]
       },
       "grade2_partial_author_source_scope_rows": 10,
@@ -100,7 +102,7 @@
         "source_scope_status": "TWELVE_GRADE6_AUTHOR_PARENT_SCOPE_ROWS_STAGED_INDEPENDENT_REVIEW_PENDING",
         "independent_acceptance": 0,
         "prior_gap_labels_role": "UNVERIFIED_HISTORICAL_CANDIDATES_ONLY",
-        "author_scope_rows": 12,
+        "author_scope_rows": 29,
         "author_scope_files": [
           "ca_2013_grade6_page42_source_author_slice.v1.json",
           "ca_2013_grade6_page43_complete_parent_source_author_slice.v1.json"
