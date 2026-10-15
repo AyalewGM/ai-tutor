@@ -52,7 +52,7 @@ def test_page92_source_qualifiers_fail_closed():
     f7e = " ".join(by_id["F-IF.7.e"]["material_conditions"])
     fbf3 = " ".join(by_id["F-BF.3"]["material_conditions"])
     fle1a = " ".join(by_id["F-LE.1.a"]["material_conditions"])
-    assert "quadratic" in f7a and "course" in f7a
+    assert "quadratic" in f7a and "Mathematics I" in f7a
     assert "logarithmic" in f7e and "trigonometric" in f7e
     assert "vertical translations" in fbf3
     assert all(
