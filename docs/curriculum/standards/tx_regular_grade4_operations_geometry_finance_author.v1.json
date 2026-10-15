@@ -1,0 +1,329 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_4",
+  "section": "111.6(b)(4)-(10)",
+  "publisher": "Texas Education Agency",
+  "official_source_url": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "edition": "December 2014 Update; Grade 4 TEKS adopted 2012",
+  "source_page_convention": "Printed footer page; zero-based PDF index = printed page - 1",
+  "author_scope_rows": 31,
+  "independent_source_fidelity": "PENDING",
+  "publisher_original_bytes_authenticated": false,
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "id": "111.6(b)(4)(A)",
+      "scope": "Add/subtract whole numbers and decimals to hundredths using standard algorithm.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(4)(B)",
+      "scope": "Find products of a number and 10 or 100 using place value and operation properties.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(4)(C)",
+      "scope": "Represent product of two two-digit numbers with arrays, area models or equations, including perfect squares through 15 by 15.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(4)(D)",
+      "scope": "Use strategies including standard algorithm for up-to-four-digit by one-digit and two-digit by two-digit multiplication; justify place-value/operation-property strategies.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(4)(E)",
+      "scope": "Represent quotient of up-to-four-digit whole-number dividend by one-digit divisor using arrays, area models or equations.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(4)(F)",
+      "scope": "Divide up-to-four-digit dividend by one-digit divisor with strategies including standard algorithm.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(4)(G)",
+      "scope": "Estimate whole-number results by rounding to nearest 10, 100 or 1,000 or using compatible numbers.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(4)(H)",
+      "scope": "Fluently solve one- and two-step multiplication/division problems, interpreting remainders.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(5)(A)",
+      "scope": "Represent multistep whole-number four-operation problems with strip diagrams and equations containing an unknown letter.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(5)(B)",
+      "scope": "Represent input-output problems and number-pattern rules using tables and numerical expressions relating sequence values to positions.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(5)(C)",
+      "scope": "Develop formulas for rectangle perimeter (2l+2w), square perimeter (4s) and rectangle area (lw) from models.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(5)(D)",
+      "scope": "Solve rectangle perimeter and area problems with whole-number dimensions.",
+      "source_printed_page": 17,
+      "source_pdf_page_index": 16,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(6)(A)",
+      "scope": "Identify points, lines, segments, rays, angles and perpendicular/parallel lines.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(6)(B)",
+      "scope": "Identify and draw one or more symmetry lines in a 2D figure when they exist.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(6)(C)",
+      "scope": "Classify triangles as acute, right or obtuse using right-angle reasoning.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(6)(D)",
+      "scope": "Classify 2D figures by parallel/perpendicular lines and angle-size conditions.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(7)(A)",
+      "scope": "Illustrate angle measure as part of a circle centered at its vertex; whole-number degree measures at most 180.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(7)(B)",
+      "scope": "Describe 1 degree as 1/360 of a circle, and n degrees as n/360 of the circle; whole-number angles.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(7)(C)",
+      "scope": "Approximate angle measures to nearest whole degree with a protractor.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(7)(D)",
+      "scope": "Draw an angle with specified measure.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(7)(E)",
+      "scope": "Find unknown angles formed by two non-overlapping adjacent angles given one or both angle measures.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(8)(A)",
+      "scope": "Identify relative sizes of customary and metric measurement units.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(8)(B)",
+      "scope": "Convert within one customary or metric system between smaller and larger units when given other equivalent measures in a table.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(8)(C)",
+      "scope": "Solve length, elapsed time, liquid volume, mass and money problems using suitable arithmetic operations.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(9)(A)",
+      "scope": "Represent whole-number and fractional data using frequency tables, dot plots or stem-and-leaf plots.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(9)(B)",
+      "scope": "Solve one- and two-step problems from whole-number, decimal and fractional data in frequency tables, dot plots or stem-and-leaf plots.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(10)(A)",
+      "scope": "Distinguish fixed from variable expenses.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(10)(B)",
+      "scope": "Calculate profit for a given situation.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(10)(C)",
+      "scope": "Compare advantages and disadvantages of savings options.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(10)(D)",
+      "scope": "Allocate weekly allowance among spending, saving (including college) and sharing.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.6(b)(10)(E)",
+      "scope": "Describe financial institutions' purposes: safeguarding money, borrowing and lending.",
+      "source_printed_page": 18,
+      "source_pdf_page_index": 17,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
