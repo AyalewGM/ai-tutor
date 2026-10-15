@@ -13,6 +13,11 @@ def test_california_staged_scope_counts_are_unique_and_unaccepted():
     assert ca["author_source_scope_rows_by_track"] == expected
     assert ca["author_scope_total_staged"] == sum(expected.values()) == 242
     assert ca["accepted_source_fidelity_rows"] == 0
+    assert ca["grade2_partial_author_source_scope_rows"] == 10
+    assert ca["grade2_author_scope_total"] == 27
+    assert ca["grade2_partial_not_complete"] is False
+    assert ca["grade2_scope_fidelity_accepted_rows"] == 0
+    assert ca["grade2_author_scope_status"].endswith("ZERO_INDEPENDENT_SOURCE_ACCEPTANCE")
     assert ca["grade9_course_equivalence"] == "NOT_ASSUMED"
     for track, count in expected.items():
         rows = []
