@@ -27,3 +27,13 @@ The coordinator records failed or uncertain comment deliveries in `mihur-pending
 If recovery is still blocked, the new run creates a fresh pending artifact and defers new routing. Missing/unreadable artifacts, malformed records and pagination overflow fail closed. A lost comment POST response is reconciled before retry; an uncertain result never triggers a blind duplicate POST. The repository-wide concurrency group serializes writers.
 
 **Limitations:** GitHub Actions artifacts are retention-limited, not an indefinite database. The hourly schedule reduces loss risk, but prolonged outages, disabled schedules, retention overrides or failed artifact uploads still require manual intervention. The workflow logs pending-delivery warnings; green CI/AppSec is not evidence that a handoff was delivered. No agent execution, approval, merge, mastery credit or activation is performed.
+
+## Explicit delivery outcomes
+
+Delivery returns `DELIVERED`, `ALREADY_PRESENT`, `OBSOLETE`, `DEFERRED`, or `PENDING`.
+Only the first three are terminal outcomes. Recovery must not infer completion from
+an absent or empty local JSONL file: a head/check/draft change can defer a handoff.
+Deferred inspections are recorded for later reconciliation. Unresolved current-event
+delivery exits nonzero and stops the batch; the workflow's always-upload step preserves
+its pending ledger. Every retry revalidates the PR head, branch, draft state and checks.
+These outcomes remain advisory routing evidence, never independent acceptance.

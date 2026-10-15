@@ -85,7 +85,8 @@ def test_mocked_api_posts_once_and_does_not_execute_pr_code():
     assert "INDEPENDENT_REVIEW_DRAFT" in posted[0]
 
 
-def test_changed_head_does_not_post():
+def test_changed_head_does_not_post(tmp_path, monkeypatch):
+    monkeypatch.setenv("MIHUR_PENDING_FILE", str(tmp_path / "pending.jsonl"))
     reads = iter([_pr(), _pr("changed")])
     posted = []
 
@@ -217,7 +218,7 @@ def test_next_run_reconciles_pending_before_new_handoff(tmp_path, monkeypatch):
         patch.object(orchestrator, "pending_records", return_value=pending),
         patch.object(orchestrator, "request", side_effect=fake),
         patch.object(orchestrator, "pages", return_value=[]),
-        patch.object(orchestrator, "deliver", side_effect=lambda root, n, token: order.append(n)),
+        patch.object(orchestrator, "deliver", side_effect=lambda root, n, token: (order.append(n) or orchestrator.DeliveryOutcome.DELIVERED)),
     ):
         assert orchestrator.main() == 0
     assert order == [17, 19]
@@ -276,3 +277,72 @@ def test_stale_pending_sha_never_replayed():
     ):
         orchestrator.reconcile_pending("root", "token")
     deliver.assert_not_called()
+
+
+@pytest.mark.parametrize("outcome", [orchestrator.DeliveryOutcome.PENDING,
+                                     orchestrator.DeliveryOutcome.DEFERRED, None])
+def test_recovery_requires_explicit_terminal_outcome(outcome, tmp_path, monkeypatch):
+    # Absence of a local ledger is not evidence of successful delivery.
+    monkeypatch.setenv("MIHUR_PENDING_FILE", str(tmp_path / "absent.jsonl"))
+    sha = "a" * 40
+    with (
+        patch.object(orchestrator, "pending_records", return_value=[
+            {"pr": 17, "sha": sha, "state": "WAIT_CHECKS"}]),
+        patch.object(orchestrator, "request", return_value=_pr(sha)),
+        patch.object(orchestrator, "pages", return_value=[]),
+        patch.object(orchestrator, "deliver", return_value=outcome),
+        pytest.raises(ValueError, match="Recovery still pending"),
+    ):
+        orchestrator.reconcile_pending("root", "token")
+
+
+def test_retry_revalidates_head_before_second_post(tmp_path, monkeypatch):
+    monkeypatch.setenv("MIHUR_PENDING_FILE", str(tmp_path / "pending.jsonl"))
+    reads = iter([_pr(), _pr(), _pr("changed")])
+    posts = []
+
+    def request(method, url, token, payload=None):
+        if method == "POST":
+            posts.append(payload)
+            raise OSError("lost response")
+        return next(reads)
+
+    with (
+        patch.object(orchestrator, "request", side_effect=request),
+        patch.object(orchestrator, "pages", return_value=[]),
+        patch.object(orchestrator, "checks_for", return_value={
+            "CI": "success", "AppSec Baseline": "success"}),
+    ):
+        assert orchestrator.deliver("root", 17, "token") == orchestrator.DeliveryOutcome.DEFERRED
+    assert len(posts) == 1
+    assert "CHANGED_BEFORE_RETRY" in (tmp_path / "pending.jsonl").read_text()
+
+
+def test_current_event_pending_is_nonzero_and_stops_batch(tmp_path, monkeypatch):
+    import json
+
+    event = tmp_path / "event.json"
+    event.write_text(json.dumps({"workflow_run": {"pull_requests": [
+        {"number": 17}, {"number": 19}]}}))
+    monkeypatch.setenv("GITHUB_REPOSITORY", "org/repo")
+    monkeypatch.setenv("GITHUB_TOKEN", "fake")
+    monkeypatch.setenv("GITHUB_EVENT_PATH", str(event))
+    with (
+        patch.object(orchestrator, "reconcile_pending"),
+        patch.object(orchestrator, "deliver",
+                     return_value=orchestrator.DeliveryOutcome.PENDING) as deliver,
+    ):
+        assert orchestrator.main() == 1
+    assert deliver.call_count == 1
+
+
+def test_existing_marker_returns_explicit_confirmation():
+    checks = {"CI": "success", "AppSec Baseline": "success"}
+    with (
+        patch.object(orchestrator, "request", return_value=_pr()) as request,
+        patch.object(orchestrator, "pages", side_effect=[[], [{"body":
+            orchestrator.marker("head", "INDEPENDENT_REVIEW_DRAFT")}]]),
+        patch.object(orchestrator, "checks_for", return_value=checks),
+    ):
+        assert orchestrator.deliver("root", 17, "token") == orchestrator.DeliveryOutcome.ALREADY_PRESENT
+    assert request.call_count == 1

@@ -9,6 +9,7 @@ import json
 import os
 import sys
 import zipfile
+from enum import StrEnum
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, urlsplit
@@ -127,10 +128,18 @@ def checks_for(root: str, sha: str, branch: str, token: str) -> dict[str, str]:
     return select_checks(result.get("workflow_runs", []), sha, branch)
 
 
-def deliver(root: str, number: int, token: str) -> None:
+class DeliveryOutcome(StrEnum):
+    DELIVERED = "delivered"
+    ALREADY_PRESENT = "already_present"
+    OBSOLETE = "obsolete"
+    DEFERRED = "deferred"
+    PENDING = "pending"
+
+
+def deliver(root: str, number: int, token: str) -> DeliveryOutcome:
     pr = request("GET", f"{root}/pulls/{number}", token)
     if pr["state"] != "open":
-        return
+        return DeliveryOutcome.OBSOLETE
     sha, branch = pr["head"]["sha"], pr["head"]["ref"]
     paths = [item["filename"] for item in pages(root, f"/pulls/{number}/files", token)]
     checks = checks_for(root, sha, branch, token)
@@ -138,14 +147,15 @@ def deliver(root: str, number: int, token: str) -> None:
     tag = marker(sha, state)
     comments_url = f"/issues/{number}/comments"
     if any(tag in c.get("body", "") for c in pages(root, comments_url, token)):
-        return
+        return DeliveryOutcome.ALREADY_PRESENT
 
     # Re-read the authoritative head and checks immediately before writing.
     latest = request("GET", f"{root}/pulls/{number}", token)
     fresh_checks = checks_for(root, sha, branch, token)
-    if latest["state"] != "open" or latest["head"]["sha"] != sha or fresh_checks != checks:
-        print(f"PR #{number} changed during inspection; no handoff")
-        return
+    if (latest["state"] != "open" or latest["head"]["sha"] != sha or fresh_checks != checks
+            or latest["head"]["ref"] != branch or latest["draft"] != pr["draft"]):
+        record_pending(number, sha, state, "CHANGED_DURING_INSPECTION")
+        return DeliveryOutcome.DEFERRED
     body = (
         f"{tag}\n### Mihur automated handoff — advisory only\n"
         f"- Exact head: `{sha}`\n- State: **{state}**\n"
@@ -157,22 +167,29 @@ def deliver(root: str, number: int, token: str) -> None:
     # A single repository-wide concurrency group serializes all workflow dispatches.
     # Re-read on transient failures; retry once, never blindly duplicate a POST.
     for attempt in range(2):
+        if attempt:
+            latest = request("GET", f"{root}/pulls/{number}", token)
+            if (latest["state"] != "open" or latest["head"]["sha"] != sha
+                    or latest["head"]["ref"] != branch or latest["draft"] != pr["draft"]
+                    or checks_for(root, sha, branch, token) != checks):
+                record_pending(number, sha, state, "CHANGED_BEFORE_RETRY")
+                return DeliveryOutcome.DEFERRED
         try:
             request("POST", f"{root}{comments_url}", token, {"body": body})
             print(f"Posted {state} for #{number} at {sha}")
-            return
+            return DeliveryOutcome.DELIVERED
         except (HTTPError, URLError, OSError) as exc:
             try:
                 if any(tag in c.get("body", "") for c in pages(root, comments_url, token)):
-                    return
+                    return DeliveryOutcome.ALREADY_PRESENT
             except (HTTPError, URLError, OSError):
                 # A lost POST response may mean delivery succeeded.
                 # Never blindly retry if the reconciliation GET also fails.
                 record_pending(number, sha, state, "COMMENT_STATUS_UNKNOWN")
-                return
+                return DeliveryOutcome.PENDING
             if attempt:
                 record_pending(number, sha, state, type(exc).__name__)
-                return
+                return DeliveryOutcome.PENDING
 
 
 
@@ -271,9 +288,9 @@ def reconcile_pending(root: str, token: str) -> None:
             print(f"Pending #{number} already delivered")
             continue
         # deliver() independently revalidates head, checks, and duplicate markers.
-        deliver(root, number, token)
-        pending_path = Path(os.environ.get("MIHUR_PENDING_FILE", "mihur-pending-handoffs.jsonl"))
-        if pending_path.exists() and pending_path.stat().st_size:
+        outcome = deliver(root, number, token)
+        if outcome not in {DeliveryOutcome.DELIVERED, DeliveryOutcome.ALREADY_PRESENT,
+                           DeliveryOutcome.OBSOLETE}:
             raise ValueError("Recovery still pending; defer new handoffs")
 
 
@@ -289,7 +306,10 @@ def main() -> int:
         print("No linked PR; pending reconciliation completed")
         return 0
     for number in numbers:
-        deliver(root, number, token)
+        outcome = deliver(root, number, token)
+        if outcome not in {DeliveryOutcome.DELIVERED, DeliveryOutcome.ALREADY_PRESENT,
+                           DeliveryOutcome.OBSOLETE}:
+            return 1
     return 0
 
 
