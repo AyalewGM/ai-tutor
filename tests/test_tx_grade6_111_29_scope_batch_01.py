@@ -40,3 +40,17 @@ def test_reviewer_magnitude_and_financial_actions_preserved():
     assert "assets and liabilities" in financial
     assert "construct" in financial
     assert "net-worth" in financial
+
+
+def test_codified_proportional_and_coordinate_conditions_not_dropped():
+    data = json.loads(PATH.read_text(encoding="utf-8"))
+    rows = {r["expectation_id"]: r["author_mathematical_scope"].lower()
+            for r in data["rows"]}
+    assert "proportional relationships" in rows["111.29(c)(2)(E)"]
+    coordinate = rows["111.29(c)(2)(H)"]
+    assert "identify locations" in coordinate
+    assert "all four quadrants" in coordinate
+    assert "rational numbers" in coordinate
+    reviewed = data["codified_requirement_review"]
+    assert reviewed["current_tea_pdf_page_locators"] == "PENDING_DIRECT_PUBLISHER_PDF_ACCESS"
+    assert reviewed["independent_source_fidelity"] == "PENDING"
