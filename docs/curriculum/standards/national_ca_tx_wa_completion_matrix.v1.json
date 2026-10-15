@@ -125,11 +125,10 @@
         "REGULAR_GRADE_2",
         "REGULAR_GRADE_3",
         "REGULAR_GRADE_4",
-        "REGULAR_GRADE_5",
-        "REGULAR_GRADE_6"
+        "REGULAR_GRADE_5"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independently verify all 68 Grade 6 advanced and 130 Grade 7/Grade 8 advanced author scopes against final adopted 2025 publisher text, including mathematical qualifiers and notation; continue regular Grades 1–6, which remain unextracted.",
+      "next_gate": "Regular Grade 6 §111.26: 16 provisional author rows, not complete and zero independently accepted; independently compare TEA July 2025 pp.2–3, finish remaining requirements and regular Grades 1–5. Advanced 198 author descriptions remain independently unaccepted.",
       "advanced_grade6_111_29_author_identifier_rows": 68,
       "advanced_grade6_111_29_author_scope_rows": 68,
       "advanced_grade6_111_29_independently_accepted_source_rows": 0,
@@ -140,6 +139,16 @@
         "tx_advanced_2025_grade6_111_29_scope_batch_04_relations.v1.json",
         "tx_advanced_2025_grade6_111_29_scope_batch_05_geometry_data_finance.v1.json",
         "tx_advanced_2025_grade6_111_29_scope_batch_06_process.v1.json"
+      ],
+      "partially_author_scoped_tracks": [
+        "REGULAR_GRADE_6"
+      ],
+      "regular_grade6_111_26_author_scope_rows": 16,
+      "regular_grade6_111_26_independently_accepted_source_rows": 0,
+      "regular_grade6_source_files": [
+        "tx_regular_grade6_number_systems_2a_2e_author.v1.json",
+        "tx_regular_grade6_proportionality_4a_4d_author.v1.json",
+        "tx_regular_grade6_proportionality_4e_5c_author.v1.json"
       ]
     },
     "WA": {
