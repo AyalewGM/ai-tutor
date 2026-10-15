@@ -100,7 +100,13 @@ def propose() -> dict:
             local = ref.get("local_code")
             if not local:
                 continue
-            claimed = claims.get(local, [])
+            seen_exp = set()
+            claimed = []
+            for c in claims.get(local, []):
+                if c["expectation_id"] in seen_exp:
+                    continue
+                seen_exp.add(c["expectation_id"])
+                claimed.append(c)
             atomics = []
             used_codes = set()
             for c in claimed:
