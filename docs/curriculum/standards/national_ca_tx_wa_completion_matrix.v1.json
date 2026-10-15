@@ -17,26 +17,25 @@
       "accepted_source_fidelity_rows": 0,
       "unverified_scope_rows": 173,
       "unextracted_tracks": [
-        "GRADE_3",
         "GRADE_4",
         "GRADE_5",
         "GRADE_6"
       ],
       "grade9_course_equivalence": "NOT_ASSUMED",
-      "next_gate": "Independently verify 242 staged CA author-scope placements, including 21 partial Grade 3 pp.25-26 records; author Grade 3 p.27 and Grades 4-6; all source fidelity pending, no canonical/assessment/mastery acceptance.",
+      "next_gate": "Independently verify Grade 3 final p27 eight rows and all 250 staged California draft expectation identifiers against controlling official CDE text; complete Grades 4–6 author scopes; no downstream mapping/mastery approval.",
       "grade8_author_scope_rows": 28,
       "grade8_author_scope_source": "ca_2013_grade8_28_source_author_slice.v1.json",
       "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY",
       "author_source_scope_rows_by_track": {
         "GRADE_1": 21,
         "GRADE_2": 27,
-        "GRADE_3": 21,
+        "GRADE_3": 29,
         "GRADE_7": 24,
         "GRADE_8": 28,
         "ALGEBRA_I": 62,
         "MATHEMATICS_I": 59
       },
-      "author_scope_total_staged": 242,
+      "author_scope_total_staged": 250,
       "author_scope_acceptance": "DRAFT_ALL_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
       "author_source_scope_files": {
         "GRADE_1": [
@@ -63,7 +62,8 @@
         ],
         "GRADE_3": [
           "ca_2013_grade3_page25_source_author_slice.v1.json",
-          "ca_2013_grade3_page26_source_author_slice.v1.json"
+          "ca_2013_grade3_page26_source_author_slice.v1.json",
+          "ca_2013_grade3_page27_source_author_slice.v1.json"
         ]
       },
       "grade2_partial_author_source_scope_rows": 10,
@@ -71,16 +71,15 @@
       "grade2_partial_not_complete": false,
       "grade2_author_scope_total": 27,
       "grade2_author_scope_status": "ALL_27_AUTHOR_DESCRIPTIONS_STAGED_ZERO_INDEPENDENT_SOURCE_ACCEPTANCE",
-      "grade3_partial_author_scope_total": 21,
-      "partially_scoped_tracks": [
-        "GRADE_3"
-      ],
+      "grade3_partial_author_scope_total": 29,
+      "partially_scoped_tracks": [],
       "not_yet_author_scoped_tracks": [
         "GRADE_4",
         "GRADE_5",
         "GRADE_6"
       ],
-      "grade2_scope_fidelity_accepted_rows": 0
+      "grade2_scope_fidelity_accepted_rows": 0,
+      "grade3_author_scope_status": "29_AUTHOR_PARENT_AND_SUBPART_IDENTIFIERS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY"
     },
     "TX": {
       "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
