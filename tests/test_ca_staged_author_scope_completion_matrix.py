@@ -18,8 +18,12 @@ def test_california_staged_scope_counts_are_unique_and_unaccepted():
         rows = []
         for filename in ca["author_source_scope_files"][track]:
             data = json.loads((ROOT / filename).read_text(encoding="utf-8"))
-            assert data["independent_source_fidelity"] == "PENDING"
-            assert data["activation"] == "FORBIDDEN"
+            if track == "MATHEMATICS_I":
+                assert data["gates"]["publisher_source_fidelity"] == "AUTHOR_ONLY_NOT_INDEPENDENT"
+                assert data["gates"]["curriculum_activation"] == "FORBIDDEN"
+            else:
+                assert data["independent_source_fidelity"] == "PENDING"
+                assert data["activation"] == "FORBIDDEN"
             rows.extend(data["rows"])
         identifiers = [r["expectation_id"] for r in rows]
         assert len(identifiers) == len(set(identifiers)) == count
