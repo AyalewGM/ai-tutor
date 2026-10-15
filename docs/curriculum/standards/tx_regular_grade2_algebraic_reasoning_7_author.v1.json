@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_2",
+  "section": "111.4(b)(7)(A-C)",
+  "publisher": "Texas Education Agency",
+  "official_pdf": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "publisher_edition": "December 2014 Update, adopted 2012",
+  "source_pdf_printed_page": 10,
+  "source_pdf_page_index": 9,
+  "publisher_original_bytes_authenticated": false,
+  "row_count": 3,
+  "rows": [
+    {
+      "id": "111.4(b)(7)(A)",
+      "scope": "Determine whether a whole number up to 40 is even or odd by pairing objects; the concrete pairing method is required.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(7)(B)",
+      "scope": "Use place value to find 10 more, 10 less, 100 more, or 100 less than a given number up to 1,200.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(7)(C)",
+      "scope": "Represent and solve addition and subtraction word problems with an unknown in any term.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}
