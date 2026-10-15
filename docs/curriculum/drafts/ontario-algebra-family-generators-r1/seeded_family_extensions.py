@@ -438,3 +438,120 @@ def diagnose_response(evidence: dict[str, bool]) -> str | None:
     if evidence.get("coefficient_normalized") is False:
         return "SCI.NOT_NORMALIZED"
     return None
+
+
+def generate_measurement_inversion(seed: int, mode: str) -> DraftVariant:
+    """Solve a symbolic area/volume relation for one missing dimension exactly.
+
+    This additive depth extension reuses divide_monomials and stays outside
+    STRUCTURES so existing reviewed seed behavior is unchanged.
+    """
+
+    _validate(seed, mode)
+    rng = random.Random(f"{NAMESPACE}:measurement-inversion:{mode}:{seed}")
+    shape = "RECTANGLE" if seed % 2 == 0 else "RECTANGULAR_PRISM"
+
+    if shape == "RECTANGLE":
+        known = Monomial.make(
+            rng.randint(2, 6),
+            {"x": rng.randint(1, 2), "y": rng.randint(1, 2)},
+        )
+        unknown = Monomial.make(
+            rng.randint(2, 7),
+            {"x": rng.randint(0, 2), "y": rng.randint(0, 2)},
+        )
+        if not unknown.powers:
+            unknown = Monomial.make(unknown.coefficient, {"x": 1})
+        measure = known.multiply(unknown)
+        relation = "AREA = WIDTH x LENGTH"
+        known_role = "width"
+        unknown_role = "length"
+        known_units = "linear units"
+        measure_units = "square units"
+    else:
+        known = Monomial.make(
+            rng.randint(2, 6),
+            {"x": rng.randint(1, 2), "y": rng.randint(1, 2)},
+        )
+        unknown = Monomial.make(
+            rng.randint(2, 7),
+            {"x": rng.randint(0, 2), "y": rng.randint(0, 2)},
+        )
+        if not unknown.powers:
+            unknown = Monomial.make(unknown.coefficient, {"y": 1})
+        measure = known.multiply(unknown)
+        relation = "VOLUME = BASE_AREA x HEIGHT"
+        known_role = "base area"
+        unknown_role = "height"
+        known_units = "square units"
+        measure_units = "cubic units"
+
+    recovered, restrictions = divide_monomials(measure, known)
+    if recovered != unknown:
+        raise AssertionError("measurement inversion construction failed")
+
+    prefix = "Guided modeling" if mode == "guided" else "Independent transfer"
+    prompt = (
+        f"{prefix}: A {shape.lower().replace('_', ' ')} has {measure_units} measure "
+        f"{measure.text()} and known {known_role} {known.text()}. "
+        f"Use {relation} to determine the missing {unknown_role} exactly. "
+        "State the original nonzero restrictions, linear units for the missing dimension, "
+        "and verify by multiplying the recovered dimension by the known factor."
+    )
+    return DraftVariant(
+        variant_id=f"{NAMESPACE}:measurement-inversion:{mode}:{seed}",
+        mode=mode,
+        structure="ALGEBRAIC_MEASUREMENT_INVERSION",
+        canonical_family="MATH.EE.POLYNOMIAL_OPERATIONS",
+        prompt=prompt,
+        response_schema=(
+            "unknown_dimension",
+            "domain_restrictions",
+            "reconstruction",
+            "units_explanation",
+        ),
+        parameters={
+            "shape": shape,
+            "relation": relation,
+            "measure": measure,
+            "known_factor": known,
+            "known_role": known_role,
+            "unknown_role": unknown_role,
+            "known_units": known_units,
+            "measure_units": measure_units,
+        },
+        teacher_oracle={
+            "unknown_dimension": unknown,
+            "domain_restrictions": restrictions,
+            "reconstructed_measure": recovered.multiply(known),
+            "unknown_units": "linear units",
+            "known_units": known_units,
+            "measure_units": measure_units,
+        },
+    )
+
+
+def verify_measurement_inversion(item: DraftVariant) -> bool:
+    """Independently divide and reconstruct the symbolic measurement relation."""
+
+    if item.structure != "ALGEBRAIC_MEASUREMENT_INVERSION":
+        raise ValueError("expected ALGEBRAIC_MEASUREMENT_INVERSION")
+    measure = item.parameters["measure"]
+    known = item.parameters["known_factor"]
+    recovered, restrictions = divide_monomials(measure, known)
+    oracle = item.teacher_oracle
+    expected_measure_units = (
+        "square units" if item.parameters["shape"] == "RECTANGLE" else "cubic units"
+    )
+    expected_known_units = (
+        "linear units" if item.parameters["shape"] == "RECTANGLE" else "square units"
+    )
+    return (
+        recovered == oracle["unknown_dimension"]
+        and restrictions == oracle["domain_restrictions"]
+        and recovered.multiply(known) == measure
+        and oracle["reconstructed_measure"] == measure
+        and oracle["unknown_units"] == "linear units"
+        and oracle["known_units"] == expected_known_units
+        and oracle["measure_units"] == expected_measure_units
+    )
