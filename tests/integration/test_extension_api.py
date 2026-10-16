@@ -244,7 +244,8 @@ def test_extension_falls_back_to_generated_problem() -> None:
 
 
 def test_extension_endpoint_on_adaptive_router() -> None:
-    """The frontend talks to /adaptive-tutor — the same opt-in must work."""
+    """The frontend talks to /adaptive-tutor — the same opt-in must work,
+    and answering through the adaptive router must stay evidence-free."""
     student_id, skill_id, _ = _seed_student_with_extension_problem()
 
     session_response = client.post(
@@ -258,14 +259,46 @@ def test_extension_endpoint_on_adaptive_router() -> None:
         f"/api/v1/adaptive-tutor/sessions/{session_id}/extension"
     )
     assert ext_response.status_code == 200
+    ext_id = uuid.UUID(ext_response.json()["id"])
     with SessionLocal() as db:
         meta = db.scalar(
             select(ProblemContentMetadata).where(
-                ProblemContentMetadata.problem_id
-                == uuid.UUID(ext_response.json()["id"])
+                ProblemContentMetadata.problem_id == ext_id
             )
         )
         assert meta is not None and meta.extension_eligible is True
+        progress_before = db.get(
+            StudentSkill, {"student_id": student_id, "skill_id": skill_id}
+        )
+        mastery_before = progress_before.mastery_score
+        attempts_before = progress_before.attempt_count
+
+    respond = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{session_id}/respond",
+        json={"problem_id": str(ext_id), "answer": "5", "assistance_level": 0},
+    )
+    assert respond.status_code == 200
+
+    with SessionLocal() as db:
+        progress = db.get(
+            StudentSkill, {"student_id": student_id, "skill_id": skill_id}
+        )
+        assert progress.mastery_score == mastery_before
+        assert progress.attempt_count == attempts_before
+        attempt = db.scalar(
+            select(Attempt).where(
+                Attempt.session_id == uuid.UUID(session_id),
+                Attempt.problem_id == ext_id,
+            )
+        )
+        assert attempt is not None
+        assert attempt.state_at_attempt == TutorState.EXTENSION
+        # The adaptive respond path must not write a MasteryEvent either.
+        assert db.scalar(
+            select(func.count()).select_from(MasteryEvent).where(
+                MasteryEvent.attempt_id == attempt.id
+            )
+        ) == 0
 
 
 def test_extension_attempt_does_not_change_session_state() -> None:
