@@ -11,6 +11,8 @@ from app.content_models import ProblemContentMetadata
 from app.core.database import SessionLocal
 from app.models import Curriculum, Problem, Skill
 
+MCPS_SOURCE = "https://www.montgomeryschoolsmd.org/curriculum/math/ms/"
+
 # (skill_code, prompt, answer, difficulty, problem_type, answer_kind, objective)
 EXTENSIONS: dict[str, dict[str, list[tuple[str, str, str, int, str, str, str]]]] = {
     "MCPS_MATH_6": {
@@ -209,12 +211,14 @@ def _extension_problem(
     problem_type: str,
     answer_kind: str,
     objective: str,
+    source_uri: str,
 ) -> None:
     provenance = {
         "origin": "AUTHORED",
         "author": "AI Tutor curriculum team",
         "license": "proprietary",
         "tier": "extension",
+        "source_uri": source_uri,
     }
     problem = db.scalar(
         select(Problem).where(
@@ -235,6 +239,13 @@ def _extension_problem(
         )
         db.add(problem)
         db.flush()
+    else:
+        prior = (problem.solution or {}).get("provenance") or {}
+        if prior.get("tier") == "extension" and not prior.get("source_uri"):
+            problem.solution = {
+                **(problem.solution or {}),
+                "provenance": {**prior, "source_uri": source_uri},
+            }
 
     metadata = db.scalar(
         select(ProblemContentMetadata).where(
@@ -281,7 +292,7 @@ def seed() -> None:
                 for prompt, answer, difficulty, ptype, akind, objective in problems:
                     _extension_problem(
                         db, curriculum, skill, prompt, answer, difficulty,
-                        ptype, akind, objective,
+                        ptype, akind, objective, MCPS_SOURCE,
                     )
                     written += 1
         db.commit()
