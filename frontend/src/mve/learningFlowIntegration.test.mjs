@@ -38,6 +38,16 @@ test("display labels, malformed metadata and unrelated families fail closed", ()
     null,
     {},
     { guided_interactions: [] },
+    { guided_interactions: "MATH.INT.ADD" },
+    { guided_interactions: "PROPOSED.MATH.INT.ADD.SIBLING" },
+    { guided_interactions: {} },
+    { guided_interactions: 42 },
+    { guided_interactions: { includes: () => true } },
+    { guided_interactions: ["MATH.INT.ADD", null] },
+    { guided_interactions: ["PROPOSED.MATH.INT.ADD"] },
+    { guided_interactions: ["MATH.INT.ADD.SIBLING"] },
+    { guided_interactions: [" MATH.INT.ADD"] },
+    { guided_interactions: ["MATH.INT.ADD\n"] },
     { guided_interactions: ["Signed Number Operations"] },
     { guided_interactions: ["Integer Operations"] },
     { guided_interactions: ["MATH.INT.SUB"] },
@@ -66,6 +76,9 @@ test("draft equation routing requires the exact MTH1W identity and explicit runt
 
   assert.equal(api.equationEquivalenceEligible("GUIDED_PRACTICE", mth1wTwoStep), false);
   assert.equal(api.equationEquivalenceEligible("GUIDED_PRACTICE", mth1wTwoStep, false), false);
+  for (const malformedGate of ["false", "true", 1, {}, []]) {
+    assert.equal(api.equationEquivalenceEligible("GUIDED_PRACTICE", mth1wTwoStep, malformedGate), false);
+  }
   for (const state of ["DIAGNOSE", "INDEPENDENT_PRACTICE", "MASTERY_CHECK", "COMPLETE"]) {
     assert.equal(api.equationEquivalenceEligible(state, mth1wTwoStep, true), false);
   }

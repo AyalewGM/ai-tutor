@@ -27,8 +27,11 @@ export function integerAdditionEligible(
   learn: Pick<LearnContent, "guided_interactions"> | null | undefined,
 ): boolean {
   const guidedState = state === "GUIDED_PRACTICE" || state === "REMEDIATION";
+  const interactions = learn?.guided_interactions;
   return guidedState &&
-    learn?.guided_interactions?.includes(INTEGER_ADDITION_INTERACTION) === true;
+    Array.isArray(interactions) &&
+    interactions.every((identity) => typeof identity === "string") &&
+    interactions.includes(INTEGER_ADDITION_INTERACTION);
 }
 
 /**
@@ -44,7 +47,7 @@ export function equationEquivalenceEligible(
   identity: EquationLearningIdentity | null | undefined,
   draftRuntimeEnabled = false,
 ): boolean {
-  if (!draftRuntimeEnabled || !identity) return false;
+  if (draftRuntimeEnabled !== true || !identity) return false;
   if (state !== "GUIDED_PRACTICE" && state !== "REMEDIATION") return false;
   return identity.curriculumName === MTH1W_EQUATION_CURRICULUM.name &&
     identity.jurisdiction === MTH1W_EQUATION_CURRICULUM.jurisdiction &&
