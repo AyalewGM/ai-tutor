@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "MATHEMATICS_I",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_printed_page": 93,
+  "source_pdf_zero_based_page_index": 99,
+  "status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_REVIEW",
+  "existing_source_audit": "ca_2013_mathematics1_pages90_94_author_audit.v1.json",
+  "supplemental_existing_placements_only": true,
+  "rows": [
+    {
+      "expectation_id": "G-CO.1",
+      "material_conditions": [
+        "Precisely define angle, circle, perpendicular and parallel lines, and line segment using undefined point, line, distance along a line and distance around a circular arc."
+      ]
+    },
+    {
+      "expectation_id": "G-CO.2",
+      "material_conditions": [
+        "Represent plane transformations using transparencies or geometric software; model transformations as point-input/output functions; distinguish distance/angle-preserving from nonpreserving transformations (translation vs horizontal stretch)."
+      ]
+    },
+    {
+      "expectation_id": "G-CO.3",
+      "material_conditions": [
+        "For a rectangle, parallelogram, trapezoid or regular polygon, describe rotations/reflections mapping each figure onto itself."
+      ]
+    },
+    {
+      "expectation_id": "G-CO.4",
+      "material_conditions": [
+        "Define rotations, reflections and translations using angles, circles, perpendicular lines, parallel lines and line segments."
+      ]
+    },
+    {
+      "expectation_id": "G-CO.5",
+      "material_conditions": [
+        "Draw image of figure under rotation, reflection or translation using graph/tracing/software; specify a sequence of transformations taking one figure onto another."
+      ]
+    },
+    {
+      "expectation_id": "G-CO.6",
+      "material_conditions": [
+        "Use descriptions of rigid motions to transform figures/predict effects and determine congruence of two figures using rigid-motion definition.",
+        "Course bracket: use rigid motions as familiar entry to geometric-proof concepts."
+      ]
+    },
+    {
+      "expectation_id": "G-CO.7",
+      "material_conditions": [
+        "Show triangle congruence under rigid motions if and only if corresponding sides AND corresponding angles are congruent; preserve both implications."
+      ]
+    },
+    {
+      "expectation_id": "G-CO.8",
+      "material_conditions": [
+        "Explain how ASA, SAS and SSS triangle-congruence criteria follow from congruence by rigid motions; not rule memorization alone."
+      ]
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_SCOPE_NOT_ACCEPTED",
+  "source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "CDE modified 2013, corrected 2014",
+  "scope": "Grade 2 bounded CA-specific distinctions, NOT whole Grade 2 coverage",
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "2.NBT.7",
+      "printed_page": 20,
+      "pdf_page_index": 26,
+      "ca_addition_kind": "NONE",
+      "author_scope": "Add and subtract within 1000 with concrete models or drawings and strategies using place value, operation properties or addition/subtraction relationships; connect to a written method and compose or decompose tens or hundreds.",
+      "source_fidelity": "PENDING",
+      "canonical_equivalence": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.NBT.7.1",
+      "printed_page": 21,
+      "pdf_page_index": 27,
+      "ca_addition_kind": "SEPARATE_CA_REQUIREMENT",
+      "author_scope": "Use estimation strategies to make reasonable estimates when solving problems.",
+      "source_fidelity": "PENDING",
+      "canonical_equivalence": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.MD.7",
+      "printed_page": 21,
+      "pdf_page_index": 27,
+      "ca_addition_kind": "CA_CLAUSE_WITHIN_PARENT",
+      "author_scope": "Tell and write time from analog and digital clocks to nearest five minutes using a.m. and p.m.; California addition: know relationships of time such as minutes per hour, days per month, and weeks per year.",
+      "source_fidelity": "PENDING",
+      "canonical_equivalence": "UNVERIFIED"
+    }
+  ]
+}

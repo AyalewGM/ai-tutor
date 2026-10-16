@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_2",
+  "section": "111.4(b)(9)(E-G)",
+  "official_pdf": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "publisher_edition": "TEA December 2014 Update",
+  "publisher_original_bytes_authenticated": false,
+  "row_count": 3,
+  "rows": [
+    {
+      "id": "111.4(b)(9)(E)",
+      "scope": "Solve problems concerning length, including length estimates.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(9)(F)",
+      "scope": "Use square-unit concrete models to cover rectangles with no gaps or overlaps, count the squares and state area with a number and square unit.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(9)(G)",
+      "scope": "Read and write time at one-minute precision with analog and digital clocks and distinguish a.m. from p.m.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}

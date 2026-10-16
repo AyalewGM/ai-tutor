@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "MATHEMATICS_I",
+  "status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+  "source_url": "https://www.cde.ca.gov/BE/ST/SS/documents/ccssmathstandardaug2013.pdf",
+  "source_printed_page": 94,
+  "source_pdf_zero_based_page_index": 100,
+  "publisher_bytes_hash_authenticated": false,
+  "existing_source_audit": "ca_2013_mathematics1_pages90_94_author_audit.v1.json",
+  "supplemental_existing_placements_only": true,
+  "rows": [
+    {
+      "expectation_id": "G-GPE.4",
+      "material_conditions": [
+        "Use coordinates for algebraic proofs of elementary geometric theorems.",
+        "Course bracket includes distance formula and its relation to the Pythagorean theorem."
+      ]
+    },
+    {
+      "expectation_id": "G-GPE.5",
+      "material_conditions": [
+        "Prove slope criteria for parallel and perpendicular lines, then use them to solve geometric problems.",
+        "Application: construct equation of parallel or perpendicular line through a given point."
+      ]
+    },
+    {
+      "expectation_id": "G-GPE.7",
+      "material_conditions": [
+        "Use coordinates to determine polygon perimeters and the areas of triangles and rectangles.",
+        "Retain distance-formula example."
+      ]
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}

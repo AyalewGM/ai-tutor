@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "MATHEMATICS_I",
+  "status": "AUTHOR_PENDING_REVIEW",
+  "source_printed_page": 94,
+  "source_pdf_zero_based_page_index": 100,
+  "source_url": "https://www.cde.ca.gov/BE/ST/SS/documents/ccssmathstandardaug2013.pdf",
+  "supplemental_existing_placements_only": true,
+  "source_heading_course_bracket": "For S-ID two-variable statistics: linear focus; discuss general principle",
+  "rows": [
+    {
+      "expectation_id": "S-ID.6.a",
+      "material_conditions": [
+        "Fit a function to data and use the fitted function to solve contextual problems.",
+        "Use a provided function or select one suggested by context; general subpart emphasizes linear, quadratic and exponential models.",
+        "Preserve separate Mathematics I heading bracket: linear focus and discussion of the general principle."
+      ],
+      "scope_tension": "FULL_SUBPART_MODELS_VS_MATHEMATICS_I_LINEAR_FOCUS"
+    },
+    {
+      "expectation_id": "S-ID.6.b",
+      "material_conditions": [
+        "Informally evaluate model fit by plotting and analyzing residuals.",
+        "Preserve course linear focus and general-principle discussion."
+      ]
+    },
+    {
+      "expectation_id": "S-ID.6.c",
+      "material_conditions": [
+        "Fit a linear function to a scatter plot suggesting a linear association."
+      ]
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}

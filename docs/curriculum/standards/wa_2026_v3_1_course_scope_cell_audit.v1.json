@@ -1,0 +1,339 @@
+{
+  "schema_version": "1.0.0",
+  "workbook": "math26-final-adoption-spreadsheet.xlsx",
+  "source_sha256": "d522101f430758dcbc21d7ecc800977761b3ccdb224de2b3e6fd6217faa80875",
+  "source_version": "August 2026 v3.1",
+  "priority_exception": {
+    "code": "M.1.SR.G.2",
+    "sheet": "K-8 and Connections",
+    "cell": "F53",
+    "source_value": null,
+    "extracted_value": null,
+    "disposition": "PRESERVE_NULL_DO_NOT_DEFAULT"
+  },
+  "course_scope_variants": [
+    {
+      "code": "M.HS.DA.SID.6",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E14",
+        "E125",
+        "E220",
+        "E271",
+        "E319"
+      ],
+      "distinct_source_scope_texts": 3,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.Q.AAPR.1",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E85",
+        "E140",
+        "E240",
+        "E286",
+        "E386"
+      ],
+      "distinct_source_scope_texts": 3,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.Q.ACED.3",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E24",
+        "E135",
+        "E232",
+        "E281",
+        "E353"
+      ],
+      "distinct_source_scope_texts": 3,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.Q.ACED.4",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E25",
+        "E79",
+        "E136",
+        "E233",
+        "E282",
+        "E354"
+      ],
+      "distinct_source_scope_texts": 4,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.Q.ASSE.1",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E21",
+        "E74",
+        "E126",
+        "E227",
+        "E272",
+        "E348"
+      ],
+      "distinct_source_scope_texts": 2,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.Q.ASSE.2",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E75",
+        "E127",
+        "E228",
+        "E273",
+        "E349"
+      ],
+      "distinct_source_scope_texts": 3,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.Q.FBF.1",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E26",
+        "E80",
+        "E128",
+        "E234",
+        "E274",
+        "E355"
+      ],
+      "distinct_source_scope_texts": 2,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.Q.FBF.3",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E28",
+        "E81",
+        "E134",
+        "E236",
+        "E280",
+        "E359"
+      ],
+      "distinct_source_scope_texts": 5,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.Q.FIF.7",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E22",
+        "E76",
+        "E131",
+        "E229",
+        "E277",
+        "E350"
+      ],
+      "distinct_source_scope_texts": 6,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.Q.FIF.8",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E77",
+        "E132",
+        "E230",
+        "E278",
+        "E351"
+      ],
+      "distinct_source_scope_texts": 3,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.Q.FIF.9",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E23",
+        "E78",
+        "E133",
+        "E231",
+        "E279",
+        "E352"
+      ],
+      "distinct_source_scope_texts": 2,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.R.ACED.1",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E32",
+        "E90",
+        "E145",
+        "E245",
+        "E291",
+        "E400"
+      ],
+      "distinct_source_scope_texts": 2,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.R.ACED.2",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E33",
+        "E91",
+        "E146",
+        "E246",
+        "E292",
+        "E401"
+      ],
+      "distinct_source_scope_texts": 3,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.R.AREI.4",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E93",
+        "E148",
+        "E253",
+        "E294",
+        "E403"
+      ],
+      "distinct_source_scope_texts": 4,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.R.ASSE.3",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E89",
+        "E147",
+        "E244",
+        "E293",
+        "E402"
+      ],
+      "distinct_source_scope_texts": 5,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.R.FBF.4",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E153",
+        "E299",
+        "E414"
+      ],
+      "distinct_source_scope_texts": 3,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.R.FIF.4",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E29",
+        "E86",
+        "E150",
+        "E241",
+        "E296",
+        "E397"
+      ],
+      "distinct_source_scope_texts": 2,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.R.FIF.5",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E30",
+        "E87",
+        "E151",
+        "E242",
+        "E297",
+        "E398"
+      ],
+      "distinct_source_scope_texts": 3,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.R.FIF.6",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E31",
+        "E88",
+        "E152",
+        "E243",
+        "E298",
+        "E399"
+      ],
+      "distinct_source_scope_texts": 4,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.R.FLE.3",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E36",
+        "E92",
+        "E249",
+        "E406"
+      ],
+      "distinct_source_scope_texts": 3,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.SR.AREI.11",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E43",
+        "E155",
+        "E258",
+        "E301",
+        "E463"
+      ],
+      "distinct_source_scope_texts": 2,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    },
+    {
+      "code": "M.HS.SR.GCO.12",
+      "sheet": "HS and Connections",
+      "scope_cells": [
+        "E57",
+        "E198",
+        "E452"
+      ],
+      "distinct_source_scope_texts": 2,
+      "extraction_matches_original_cells": true,
+      "independent_source_acceptance": "PENDING"
+    }
+  ],
+  "summary": {
+    "variant_codes": 22,
+    "course_placements": 116,
+    "all_116_source_cells_match_extracted_scope": true
+  },
+  "publisher_byte_match": "NOT_INDEPENDENTLY_VERIFIED",
+  "canonical_equivalence": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}

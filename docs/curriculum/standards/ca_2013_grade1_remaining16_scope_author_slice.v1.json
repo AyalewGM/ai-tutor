@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_SOURCE_SCOPE_SLICE_PENDING_INDEPENDENT_REVIEW",
+  "official_source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "edition": "California CCSS Mathematics modified January 2013, corrected 2014 electronic edition",
+  "track": "GRADE_1",
+  "note": "Sixteen additional direct official-page editorial scope summaries, complementary to the existing five-row Grade 1 slice. This does NOT import the separate 271-row local author archive; all 21 direct-source summaries still require independent publisher/page/subpart review. No canonical mapping or accepted coverage.",
+  "rows": [
+    {
+      "expectation_id": "1.OA.2",
+      "printed_page": 16,
+      "pdf_page_index": 22,
+      "scope": "Solve word problems involving addition of three whole numbers with a sum at most 20; represent the situation using objects, drawings, or equations with an unknown-number symbol."
+    },
+    {
+      "expectation_id": "1.OA.3",
+      "printed_page": 16,
+      "pdf_page_index": 22,
+      "scope": "Use properties of operations as strategies to add and subtract, including commutativity of addition and associativity of addition; students need not use formal property names."
+    },
+    {
+      "expectation_id": "1.OA.4",
+      "printed_page": 16,
+      "pdf_page_index": 22,
+      "scope": "Interpret subtraction as an unknown-addend problem; find a missing addend that completes an addition equation to determine a difference."
+    },
+    {
+      "expectation_id": "1.OA.5",
+      "printed_page": 16,
+      "pdf_page_index": 22,
+      "scope": "Connect counting with addition and subtraction, including counting on to add."
+    },
+    {
+      "expectation_id": "1.OA.7",
+      "printed_page": 16,
+      "pdf_page_index": 22,
+      "scope": "Understand the meaning of the equal sign; determine whether addition and subtraction equations are true or false, including equations with nonstandard placement or expressions on both sides."
+    },
+    {
+      "expectation_id": "1.OA.8",
+      "printed_page": 16,
+      "pdf_page_index": 22,
+      "scope": "Determine the unknown whole number in an addition or subtraction equation relating three whole numbers, including an unknown in different positions."
+    },
+    {
+      "expectation_id": "1.NBT.1",
+      "printed_page": 16,
+      "pdf_page_index": 22,
+      "scope": "Count to 120 beginning at any number less than 120; read and write numerals in that range and represent a number of objects with a written numeral."
+    },
+    {
+      "expectation_id": "1.NBT.3",
+      "printed_page": 17,
+      "pdf_page_index": 23,
+      "scope": "Compare two two-digit numbers using the place values of their tens and ones digits and record comparisons using >, =, and <."
+    },
+    {
+      "expectation_id": "1.NBT.4",
+      "printed_page": 17,
+      "pdf_page_index": 23,
+      "scope": "Add within 100, including two-digit plus one-digit and two-digit plus a multiple of 10, using concrete models or drawings and place-value, operation-property, or addition/subtraction-relationship strategies; connect strategies to written methods and explain reasoning; combine tens with tens and ones with ones, sometimes composing a ten."
+    },
+    {
+      "expectation_id": "1.NBT.5",
+      "printed_page": 17,
+      "pdf_page_index": 23,
+      "scope": "Given a two-digit number, mentally determine 10 more and 10 less without counting, and explain the reasoning."
+    },
+    {
+      "expectation_id": "1.NBT.6",
+      "printed_page": 17,
+      "pdf_page_index": 23,
+      "scope": "Subtract a multiple of 10 between 10 and 90 from a multiple of 10 between 10 and 90, with a positive or zero result; use concrete models or drawings and place value, properties, or addition/subtraction relationships, connect strategies to written methods, and explain the reasoning."
+    },
+    {
+      "expectation_id": "1.MD.1",
+      "printed_page": 17,
+      "pdf_page_index": 23,
+      "scope": "Order three objects by length and compare the lengths of two objects indirectly using a third object."
+    },
+    {
+      "expectation_id": "1.MD.3",
+      "printed_page": 17,
+      "pdf_page_index": 23,
+      "scope": "Tell and write time in hours and half-hours using both analog and digital clocks."
+    },
+    {
+      "expectation_id": "1.MD.4",
+      "printed_page": 17,
+      "pdf_page_index": 23,
+      "scope": "Organize, represent, and interpret data with up to three categories; answer questions about total data points, category counts, and how many more or fewer are in one category than another."
+    },
+    {
+      "expectation_id": "1.G.1",
+      "printed_page": 17,
+      "pdf_page_index": 23,
+      "scope": "Distinguish defining shape attributes, such as being closed and three-sided, from nondefining features such as color, orientation, and overall size; build and draw shapes having specified defining attributes."
+    },
+    {
+      "expectation_id": "1.G.2",
+      "printed_page": 17,
+      "pdf_page_index": 23,
+      "scope": "Compose two-dimensional shapes (rectangles, squares, trapezoids, triangles, half-circles, quarter-circles) or three-dimensional shapes (cubes, right rectangular prisms, right circular cones, right circular cylinders) into composite shapes, then compose new shapes from the composite shapes; formal solid names are not required."
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}

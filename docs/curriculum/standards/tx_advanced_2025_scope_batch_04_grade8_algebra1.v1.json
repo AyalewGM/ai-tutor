@@ -1,0 +1,377 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_EDITORIAL_SOURCE_SCOPE_NOT_INDEPENDENTLY_ACCEPTED",
+  "source": {
+    "legal_mirror": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31",
+    "original_adoption": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+    "effective_date": "2025-07-06",
+    "publisher_bytes_verified": false,
+    "source_text_version": "2025_19_TAC_111.31_GRADE8_ADVANCED_ALGEBRA1",
+    "verification_scope": "Author reading of secondary regulation mirror; publisher-original and mathematical fidelity require independent review"
+  },
+  "summary": {
+    "new_scopes": 57,
+    "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+    "previously_in_intake": 6,
+    "combined_track_author_abstracts_if_integrated": 63
+  },
+  "rows": [
+    {
+      "expectation_id": "111.31(d)(1)(A)",
+      "scope": "Apply mathematical knowledge to everyday, societal and workplace problems."
+    },
+    {
+      "expectation_id": "111.31(d)(1)(B)",
+      "scope": "Analyze givens, plan and solve, justify conclusions, then judge whether the solution and method are reasonable."
+    },
+    {
+      "expectation_id": "111.31(d)(1)(C)",
+      "scope": "Choose suitable physical tools, manipulatives, paper-and-pencil and technology alongside estimation and mental arithmetic."
+    },
+    {
+      "expectation_id": "111.31(d)(1)(D)",
+      "scope": "Explain mathematical reasoning with symbols, diagrams, graphs and words."
+    },
+    {
+      "expectation_id": "111.31(d)(1)(E)",
+      "scope": "Build and use representations for organizing, recording and communicating mathematical ideas."
+    },
+    {
+      "expectation_id": "111.31(d)(1)(F)",
+      "scope": "Analyze mathematical relationships and explain connections between ideas."
+    },
+    {
+      "expectation_id": "111.31(d)(1)(G)",
+      "scope": "State and justify mathematical arguments with precise written and spoken language."
+    },
+    {
+      "expectation_id": "111.31(d)(2)(A)",
+      "scope": "Determine domain and range of linear functions; choose realistic discrete or continuous values and express restrictions using inequalities.",
+      "material_bounds": [
+        "domain/range",
+        "discrete and continuous",
+        "inequalities"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(2)(B)",
+      "scope": "Write two-variable line equations in slope-intercept, standard and point-slope form given slope/point or two points.",
+      "material_bounds": [
+        "y=mx+b",
+        "Ax+By=C",
+        "y-y₁=m(x-x₁)"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(2)(C)",
+      "scope": "Model two-variable linear equations from tables, graphs and verbal descriptions."
+    },
+    {
+      "expectation_id": "111.31(d)(2)(D)",
+      "scope": "Write and solve direct-variation equations."
+    },
+    {
+      "expectation_id": "111.31(d)(2)(E)",
+      "scope": "Find a line equation through a point parallel to a specified line."
+    },
+    {
+      "expectation_id": "111.31(d)(2)(F)",
+      "scope": "Find a line equation through a point perpendicular to a specified line."
+    },
+    {
+      "expectation_id": "111.31(d)(2)(G)",
+      "scope": "Write horizontal or vertical line equations and distinguish zero from undefined slope.",
+      "material_bounds": [
+        "horizontal slope=0",
+        "vertical slope undefined"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(2)(H)",
+      "scope": "Write inequalities in two variables from a table, graph or verbal model."
+    },
+    {
+      "expectation_id": "111.31(d)(2)(I)",
+      "scope": "Write a two-equation, two-variable linear system from tabular, graphical or verbal data."
+    },
+    {
+      "expectation_id": "111.31(d)(3)(A)",
+      "scope": "Use similar right triangles to justify invariant slope between any two points on a line using rise over run.",
+      "material_bounds": [
+        "(y₂-y₁)/(x₂-x₁)",
+        "x₂≠x₁"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(3)(B)",
+      "scope": "Graph proportional relationships and interpret their unit rate as line slope."
+    },
+    {
+      "expectation_id": "111.31(d)(3)(C)",
+      "scope": "Determine slope from tables, graphs, two points and line equations, including slope-intercept, standard and point-slope forms.",
+      "material_bounds": [
+        "y=mx+b",
+        "Ax+By=C",
+        "point-slope form"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(3)(D)",
+      "scope": "Find linear rate of change from tables, graphs or equations in mathematical and real-world contexts."
+    },
+    {
+      "expectation_id": "111.31(d)(3)(E)",
+      "scope": "Find line slope/rate of change and y-intercept from table or graph in applied and mathematical settings."
+    },
+    {
+      "expectation_id": "111.31(d)(3)(F)",
+      "scope": "Graph linear functions and identify x/y-intercepts, zeros and slopes in mathematical and applied settings.",
+      "material_bounds": [
+        "x-intercept",
+        "y-intercept",
+        "zeros",
+        "slope"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(3)(G)",
+      "scope": "Represent the solution region of a two-variable linear inequality on a coordinate plane."
+    },
+    {
+      "expectation_id": "111.31(d)(3)(H)",
+      "scope": "Investigate the graph of f(x)=x under af(x), f(x)+d, f(x-c), f(bx) for given constants.",
+      "material_bounds": [
+        "four named transformations",
+        "parent f(x)=x"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(3)(I)",
+      "scope": "Graph two-equation linear systems in two variables and find solutions when they exist.",
+      "material_bounds": [
+        "solutions may not exist"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(3)(J)",
+      "scope": "Estimate solutions graphically for two-variable two-equation linear systems arising from real situations."
+    },
+    {
+      "expectation_id": "111.31(d)(3)(K)",
+      "scope": "Graph the simultaneous solution set of a system of two-variable linear inequalities."
+    },
+    {
+      "expectation_id": "111.31(d)(4)(A)",
+      "scope": "Create a scatterplot and classify two-variable associations as linear, nonlinear or none.",
+      "material_bounds": [
+        "scatterplot",
+        "three association types"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(4)(B)",
+      "scope": "Contrast plotted bivariate data with and without a suggestive linear relationship."
+    },
+    {
+      "expectation_id": "111.31(d)(4)(C)",
+      "scope": "Use an approximate linear trend line to predict from bivariate data."
+    },
+    {
+      "expectation_id": "111.31(d)(4)(D)",
+      "scope": "Calculate a correlation coefficient with technology and interpret its strength-of-linear-association meaning.",
+      "material_bounds": [
+        "technology",
+        "quantitative variables",
+        "correlation versus causation"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(4)(E)",
+      "scope": "Distinguish real-world association from a cause-and-effect conclusion."
+    },
+    {
+      "expectation_id": "111.31(d)(4)(F)",
+      "scope": "Fit an approximate linear function to data, with and without technology, to estimate and predict in real contexts."
+    },
+    {
+      "expectation_id": "111.31(d)(5)(A)",
+      "scope": "Solve one-variable linear equations, including distribution and variables on both sides.",
+      "material_bounds": [
+        "distributive property",
+        "variables on both sides"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(5)(B)",
+      "scope": "Solve one-variable linear inequalities, including distribution and variables on both sides.",
+      "material_bounds": [
+        "distributive property",
+        "variables on both sides"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(5)(C)",
+      "scope": "Solve two-equation linear systems in two variables in mathematical and real-world contexts."
+    },
+    {
+      "expectation_id": "111.31(d)(6)(A)",
+      "scope": "Determine quadratic-function domain and range, reporting restrictions through inequalities."
+    },
+    {
+      "expectation_id": "111.31(d)(6)(B)",
+      "scope": "Build quadratic equations from a vertex and another point in vertex form and convert to standard form.",
+      "material_bounds": [
+        "f(x)=a(x-h)²+k",
+        "f(x)=ax²+bx+c"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(6)(C)",
+      "scope": "Construct quadratics given real roots and a related graph.",
+      "material_bounds": [
+        "real solutions",
+        "graph"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(7)(A)",
+      "scope": "Graph quadratics and identify possible intercepts, zeros, maximum/minimum, vertex and axis of symmetry.",
+      "material_bounds": [
+        "where possible",
+        "x- and y-intercepts",
+        "zeros",
+        "vertex",
+        "axis of symmetry"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(7)(B)",
+      "scope": "Describe the relationship between the linear factors of a quadratic expression and the zeros of its associated quadratic function.",
+      "material_bounds": [
+        "linear factors (not arbitrary polynomial factors)",
+        "zeros of associated quadratic function",
+        "does not presume every quadratic has real linear factors"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_VALIDATED_AGAINST_TEXAS_REGISTER_2025_SECTION_111_31_D_7_B_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "expectation_id": "111.31(d)(7)(C)",
+      "scope": "Investigate graphs of parent f(x)=x² under af(x), f(x)+d, f(x-c), f(bx) for specified constants.",
+      "material_bounds": [
+        "four named transformations",
+        "parent f(x)=x²"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(8)(A)",
+      "scope": "Solve quadratic equations having real roots by factoring, square-root extraction, completing the square and quadratic formula.",
+      "material_bounds": [
+        "real solutions",
+        "all four methods"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(8)(B)",
+      "scope": "Use technology to fit quadratics to data and use them for real-world prediction/estimation.",
+      "material_bounds": [
+        "technology"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(9)(A)",
+      "scope": "Determine domain and range of f(x)=ab^x and express restrictions as inequalities.",
+      "material_bounds": [
+        "f(x)=ab^x"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(9)(B)",
+      "scope": "Interpret coefficients a and b in real-context models f(x)=ab^x."
+    },
+    {
+      "expectation_id": "111.31(d)(9)(C)",
+      "scope": "Model growth and decay as f(x)=ab^x, using rational base b, in mathematical and real-world situations.",
+      "material_bounds": [
+        "rational b",
+        "growth and decay"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(9)(D)",
+      "scope": "Graph exponential growth/decay and identify y-intercept and asymptote in applied problems.",
+      "material_bounds": [
+        "y-intercept",
+        "asymptote"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(9)(E)",
+      "scope": "Use technology to fit an exponential model to data and make real-world predictions.",
+      "material_bounds": [
+        "technology"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(10)(A)",
+      "scope": "Add and subtract first- and second-degree polynomials.",
+      "material_bounds": [
+        "degree 1 and 2"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(10)(B)",
+      "scope": "Multiply first- and second-degree polynomials.",
+      "material_bounds": [
+        "degree 1 and 2"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(10)(C)",
+      "scope": "Divide polynomials of degree one or two by polynomial divisors of degree one or two, only when divisor degree is no larger than dividend degree.",
+      "material_bounds": [
+        "dividend degree 1 or 2",
+        "divisor degree 1 or 2",
+        "degree(divisor)≤degree(dividend)"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(10)(D)",
+      "scope": "Use distribution to rewrite first- and second-degree polynomials into equivalent forms."
+    },
+    {
+      "expectation_id": "111.31(d)(10)(E)",
+      "scope": "Factor quadratic trinomials ax²+bx+c over real factors when possible, including perfect-square trinomials.",
+      "material_bounds": [
+        "real factors",
+        "perfect squares",
+        "factor if possible"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(10)(F)",
+      "scope": "Recognize differences of two squares and rewrite such binomials via their algebraic structure."
+    },
+    {
+      "expectation_id": "111.31(d)(11)(A)",
+      "scope": "Simplify numeric radical expressions involving square roots.",
+      "material_bounds": [
+        "numerical radicals"
+      ]
+    },
+    {
+      "expectation_id": "111.31(d)(11)(B)",
+      "scope": "Simplify numeric and symbolic expressions using integer and rational exponent laws.",
+      "material_bounds": [
+        "integral and rational exponents"
+      ]
+    }
+  ],
+  "editorial_rule": "Preserve parent stems/subpart letters and material qualifiers. No implied equivalence with traditional §111.39 Algebra I.",
+  "gates": {
+    "source_fidelity": "UNVERIFIED",
+    "canonical_equivalence": "UNVERIFIED",
+    "assessment": "UNVERIFIED",
+    "mastery": "UNVERIFIED",
+    "activation": "FORBIDDEN"
+  }
+}

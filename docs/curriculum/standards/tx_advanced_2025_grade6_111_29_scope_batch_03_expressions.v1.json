@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0.0",
+  "as_of": "2026-10-14",
+  "source": "https://tea.texas.gov/state-board-of-education/sboe-2025/sboe-2025-january/cofb6-chap111-math-teks-sub-b-mid-sch-attach.pdf",
+  "adoption_notice": "https://www.sos.state.tx.us/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+  "track": "TX_2025_ADVANCED_GRADE6",
+  "section": "111.29(c)(7)",
+  "grade6_advanced_total": 68,
+  "prior_scoped": 26,
+  "new_author_scoped": 3,
+  "remaining_unscoped": 39,
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "111.29(c)(7)(A)",
+      "parent_group": 7,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "author_mathematical_scope": "Distinguish expressions and equations using verbal, numerical, and algebraic representations.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(7)(B)",
+      "parent_group": 7,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "author_mathematical_scope": "Determine if two expressions are equivalent using concrete models, pictorial models, and algebraic representations.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(7)(C)",
+      "parent_group": 7,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "author_mathematical_scope": "Generate equivalent expressions with inverse, identity, commutative, associative, and distributive properties of operations.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}

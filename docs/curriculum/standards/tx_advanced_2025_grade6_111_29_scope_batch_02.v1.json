@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0.0",
+  "as_of": "2026-10-14",
+  "jurisdiction": "TX",
+  "track": "ADVANCED_GRADE_6",
+  "official_section": "19 TAC §111.29(c)",
+  "scope": "(c)(4)(A-B), (5)(A-D), (6)(A-C)",
+  "publisher_proposal_source": "https://tea.texas.gov/state-board-of-education/sboe-2025/sboe-2025-january/cofb6-chap111-math-teks-sub-b-mid-sch-attach.pdf",
+  "adopted_rule_notice": "https://www.sos.state.tx.us/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+  "author_provenance_note": "The January 2025 TEA proposal is used as author source; the official adoption notice confirms unchanged §111.29 from February proposed text. Independent comparison to the adopted/codified text remains required.",
+  "total_grade6_advanced_candidate_ids": 68,
+  "previous_author_scopes": 17,
+  "author_scopes_in_this_batch": 9,
+  "remaining_unscoped_after_batch": 42,
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "111.29(c)(4)(A)",
+      "parent_group": 4,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "author_mathematical_scope": "Solve real-world percent problems for missing whole, missing part, or missing percent, using concrete and pictorial models.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(4)(B)",
+      "parent_group": 4,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "author_mathematical_scope": "Calculate sales tax for a purchase and income tax for earned wages.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(5)(A)",
+      "parent_group": 5,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "author_mathematical_scope": "Give examples of ratios as multiplicative comparisons of two quantities describing the same attribute.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(5)(B)",
+      "parent_group": 5,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "author_mathematical_scope": "Give examples of rates as comparisons by division of two quantities with different attributes, including rates as quotients.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(5)(C)",
+      "parent_group": 5,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "author_mathematical_scope": "Represent ratios and percents with concrete models, fractions, and decimals.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(5)(D)",
+      "parent_group": 5,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "author_mathematical_scope": "Represent mathematical and real-world ratios and rates using scale factors, tables, graphs, and proportions.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(6)(A)",
+      "parent_group": 6,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "author_mathematical_scope": "Use qualitative and quantitative reasoning to predict and compare real-world situations involving ratios and rates.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(6)(B)",
+      "parent_group": 6,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "author_mathematical_scope": "Calculate unit rates from rates in mathematical and real-world problems.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(6)(C)",
+      "parent_group": 6,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        2
+      ],
+      "author_mathematical_scope": "Convert within and between measurement systems using proportions and unit rates.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}

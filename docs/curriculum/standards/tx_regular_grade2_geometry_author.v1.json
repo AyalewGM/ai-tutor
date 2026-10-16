@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_2",
+  "section": "111.4(b)(8)",
+  "official_pdf": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "publisher_edition": "TEA December 2014 Update; Grade 2 adopted 2012",
+  "source_pdf_printed_page": 10,
+  "source_pdf_page_index": 9,
+  "source_review_mode": "AUTHOR_PUBLISHER_PAGE_IMAGE_INSPECTED",
+  "publisher_original_bytes_authenticated": false,
+  "row_count": 5,
+  "rows": [
+    {
+      "id": "111.4(b)(8)(A)",
+      "scope": "Create two-dimensional shapes using specified attributes, including numbers of sides and vertices.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(8)(B)",
+      "scope": "Classify and sort three-dimensional solids by attributes using formal geometry terms; include spheres, cones, cylinders, rectangular prisms (including cubes as special rectangular prisms), and triangular prisms.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(8)(C)",
+      "scope": "Classify and sort polygons with at most 12 sides by attributes, including counting sides and vertices.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(8)(D)",
+      "scope": "Compose two-dimensional shapes and three-dimensional solids with specified properties or attributes.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    },
+    {
+      "id": "111.4(b)(8)(E)",
+      "scope": "Decompose two-dimensional shapes and identify the resulting parts; publisher illustrations include a rectangle with a square removed, a bisected shape, and a rectangle partitioned into identical triangles.",
+      "source_pdf_printed_page": 10,
+      "source_pdf_page_index": 9,
+      "independent_source_fidelity": "PENDING"
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}

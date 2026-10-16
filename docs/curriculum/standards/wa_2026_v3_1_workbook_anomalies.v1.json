@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "workbook": "math26-final-adoption-spreadsheet.xlsx",
+  "workbook_label": "August 2026 | v3.1",
+  "workbook_sha256": "d522101f430758dcbc21d7ecc800977761b3ccdb224de2b3e6fd6217faa80875",
+  "inspection_method": "Read original uploaded XLSX cells with spreadsheet parser; compare to author JSON",
+  "status": "AUTHOR_VERIFIED_WORKBOOK_CONTENT_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+  "anomalies": [
+    {
+      "code": "M.HS.Q.NVM.5",
+      "sheet": "HS and Connections",
+      "cell": "E376",
+      "related_code": "M.HS.Q.NVM.10",
+      "related_cell": "E381",
+      "finding": "NVM.5 cell includes a matrix zero/identity/determinant paragraph also assigned to NVM.10, following vector scalar-multiplication subpart a.",
+      "classification": "PRESENT_IN_UPLOADED_WORKBOOK_NOT_AN_EXTRACTION_DUPLICATION",
+      "action": "Preserve verbatim source and course placement; independently determine whether original publisher intended NVM.5(b) or a repeated NVM.10 paragraph. Do not silently edit or deduplicate."
+    },
+    {
+      "code": "M.HS.DA.SCP.3",
+      "sheet": "HS and Connections",
+      "cells": [
+        "E65",
+        "E169",
+        "E331"
+      ],
+      "finding": "Conditional probability fraction appears as '(P(A and B),)/(P(B))' in original workbook cells.",
+      "classification": "PRESENT_IN_UPLOADED_WORKBOOK_MALFORMED_MATH_NOTATION",
+      "mathematical_interpretation_unapproved": "P(A|B)=P(A∩B)/P(B), provided P(B)>0",
+      "action": "Preserve workbook text verbatim. Record denominator positivity only as reviewer-proposed mathematical interpretation, not publisher-verified corrected standard. Seek publisher clarification."
+    }
+  ],
+  "source_fidelity": "PENDING_INDEPENDENT_REVIEW",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment_mastery": "UNVERIFIED",
+  "curriculum_activation": "FORBIDDEN"
+}

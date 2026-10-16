@@ -1,0 +1,173 @@
+{
+  "schema_version": "1.0.0",
+  "as_of": "2026-10-14",
+  "jurisdiction": "TX",
+  "track": "ADVANCED_GRADE_6",
+  "official_section": "19 TAC §111.29(c)",
+  "scope": "(c)(8)(A-F), (c)(9)(A-D), and unlettered (c)(10)",
+  "source_publisher": "Texas Education Agency",
+  "author_review_source": "https://tea.texas.gov/state-board-of-education/sboe-2025/sboe-2025-january/cofb6-chap111-math-teks-sub-b-mid-sch-attach.pdf",
+  "source_adoption_notice": "https://www.sos.state.tx.us/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+  "source_provenance": "TEA January 2025 proposed attachment, PDF zero-based pages 2-3, and official June 27 2025 adoption notice that §111.29 was adopted unchanged from the February 28 2025 proposal. January-to-February proposal parity and current codified line-by-line source fidelity require independent reviewer confirmation.",
+  "source_fidelity_status": "AUTHOR_EDITORIAL_NOT_INDEPENDENTLY_VERIFIED",
+  "total_grade6_advanced_candidate_ids": 68,
+  "previous_author_scoped": 29,
+  "new_author_scoped": 11,
+  "remaining_unscoped": 28,
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "111.29(c)(8)(A)",
+      "parent_group": 8,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        2,
+        3
+      ],
+      "author_mathematical_scope": "Translate problem constraints into one-variable equations and inequalities involving one or two steps; keep equation versus inequality conditions distinct.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(8)(B)",
+      "parent_group": 8,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        2,
+        3
+      ],
+      "author_mathematical_scope": "Construct corresponding real-world problem situations from supplied one-variable one-step or two-step equations or inequalities.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(8)(C)",
+      "parent_group": 8,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        2,
+        3
+      ],
+      "author_mathematical_scope": "Represent solution sets of one-variable one-step or two-step equations and inequalities on number lines, distinguishing individual equation solutions from inequality solution regions.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(8)(D)",
+      "parent_group": 8,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        2,
+        3
+      ],
+      "author_mathematical_scope": "Model and solve one-variable one-step equations and inequalities arising from problems, including geometric situations.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(8)(E)",
+      "parent_group": 8,
+      "lettered_subpart": "E",
+      "source_pdf_zero_based_pages": [
+        2,
+        3
+      ],
+      "author_mathematical_scope": "Model and solve one-variable two-step equations and inequalities; maintain correct inequality relationships.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(8)(F)",
+      "parent_group": 8,
+      "lettered_subpart": "F",
+      "source_pdf_zero_based_pages": [
+        2,
+        3
+      ],
+      "author_mathematical_scope": "Substitute specified value(s) to determine whether they make a one-variable one-step or two-step equation or inequality true.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(9)(A)",
+      "parent_group": 9,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "author_mathematical_scope": "Identify independent and dependent quantities in tables and graphs, preserving which variable depends on the other.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(9)(B)",
+      "parent_group": 9,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "author_mathematical_scope": "Write an equation expressing the relationship between independent and dependent quantities given a table.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(9)(C)",
+      "parent_group": 9,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "author_mathematical_scope": "Represent a situation through words, tables, graphs and an equation of the restricted forms y = kx or y = x + b.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(9)(D)",
+      "parent_group": 9,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "author_mathematical_scope": "Compare two rules verbally, numerically, graphically and symbolically, using the forms y = ax or y = x + a to distinguish multiplicative from additive relationships.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(10)",
+      "parent_group": 10,
+      "lettered_subpart": null,
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "author_mathematical_scope": "Represent constant rates of change in mathematical and real-world proportional situations using pictorial, tabular, verbal, numerical, graphical and algebraic representations, including d = rt.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}

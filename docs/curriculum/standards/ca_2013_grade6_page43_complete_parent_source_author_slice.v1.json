@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_SOURCE_SCOPE_PENDING_INDEPENDENT_PUBLISHER_REVIEW",
+  "jurisdiction": "CA",
+  "track": "GRADE_6",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "edition": "2013 modified standards / 2014 corrected CDE electronic edition",
+  "source_printed_page": 43,
+  "source_pdf_zero_based_page_index": 49,
+  "expectation_count": 5,
+  "prior_author_slice": "ca_2013_grade6_page42_source_author_slice.v1.json",
+  "coverage_boundary": "Only the complete printed-page-43 parent requirements 6.NS.5–8 and 6.EE.1 are included. 6.EE.2 crosses printed pages 43–44 and is explicitly deferred to a separate complete-parent source slice; p44–45 and later Grade 6 standards remain partial.",
+  "parent_stems": {
+    "6.NS.6": "Understand a rational number as a point on the number line and extend diagrams and coordinate axes to negative coordinates.",
+    "6.NS.7": "Understand ordering and absolute value of rational numbers."
+  },
+  "source_cautions": [
+    "Parent identifiers are counted once per full requirement; nested lettered subparts are required material conditions, not duplicate independent canonical skills.",
+    "Official source verified visually from CDE PDF page 49 (zero-based), corresponding to printed page 43.",
+    "No source-fidelity acceptance or canonical assessment/mastery promotion follows from the author transcription."
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "6.NS.5",
+      "source_printed_page": 43,
+      "source_pdf_zero_based_page_index": 49,
+      "author_mathematical_scope": "Interpret positive and negative numbers as quantities of opposite directions or values in real-world settings, and explain what zero represents in each context.",
+      "required_material_conditions": [
+        "positive and negative quantities in real-world contexts",
+        "opposite directions or values",
+        "contextual meaning of zero"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.NS.6",
+      "source_printed_page": 43,
+      "source_pdf_zero_based_page_index": 49,
+      "author_mathematical_scope": "Represent rational numbers as points on number lines and coordinate planes, including negative coordinates; (a) interpret opposite signs, double negation and zero as its own opposite; (b) interpret signs in ordered pairs as quadrant locations and sign changes as reflections across axes; (c) locate rational numbers on horizontal/vertical number lines and coordinate planes.",
+      "required_material_conditions": [
+        "required subparts a b c",
+        "opposites on sides of zero",
+        "opposite of opposite equals original and zero is its own opposite",
+        "ordered pair signs and quadrants",
+        "reflections across one or both axes",
+        "horizontal or vertical number-line placement",
+        "rational coordinate plotting"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.NS.7",
+      "source_printed_page": 43,
+      "source_pdf_zero_based_page_index": 49,
+      "author_mathematical_scope": "Reason about ordering and absolute value of rational numbers: (a) inequalities express relative number-line position; (b) write, interpret and explain ordering in real-world settings; (c) interpret absolute value as distance from zero and as the size of a signed quantity; (d) distinguish comparisons of magnitude from statements about signed order.",
+      "required_material_conditions": [
+        "required subparts a b c d",
+        "inequality and left-right number-line position",
+        "real-world signed ordering and inequalities",
+        "absolute value as distance from zero",
+        "absolute value as magnitude of signed quantity",
+        "magnitude comparison not conflated with order"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.NS.8",
+      "source_printed_page": 43,
+      "source_pdf_zero_based_page_index": 49,
+      "author_mathematical_scope": "Solve mathematical and real-world coordinate problems by graphing points in all four quadrants and use coordinates and absolute value to find distances between points sharing one coordinate.",
+      "required_material_conditions": [
+        "all four coordinate-plane quadrants",
+        "distance between points with equal first coordinate or equal second coordinate",
+        "coordinate use and absolute value for axis-aligned distance"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "6.EE.1",
+      "source_printed_page": 43,
+      "source_pdf_zero_based_page_index": 49,
+      "author_mathematical_scope": "Write and evaluate numerical expressions containing whole-number exponents.",
+      "required_material_conditions": [
+        "both writing and evaluating expressions",
+        "whole-number exponents"
+      ],
+      "source_review_status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}

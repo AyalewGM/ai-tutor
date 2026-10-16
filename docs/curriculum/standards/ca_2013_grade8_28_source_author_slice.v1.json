@@ -1,0 +1,614 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_GRADE8_SOURCE_SCOPE_DRAFT_NOT_ACCEPTED",
+  "source_publisher": "California Department of Education",
+  "official_source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "edition": "2013 modified standards, 2014 electronic corrections",
+  "track": "GRADE_8",
+  "source_printed_page_span": [
+    54,
+    56
+  ],
+  "source_pdf_page_index_span": [
+    60,
+    62
+  ],
+  "author_scoped_parent_expectation_count": 28,
+  "grade8_historic_intake_source": "national_ca_grades7_9.author_intake.v1.json",
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "source_scope_note": "Author paraphrases and locators directly reviewed against official CDE PDF pp.54-56 (PDF zero-based indices 60-62). Confirm all subparts, mathematical qualifiers and exceptions independently; do not infer accepted canonical mapping.",
+  "special_conditions": [
+    "8.NS.1 eventual periodic decimals and conversion",
+    "8.EE.2 positive rational p and irrational sqrt(2)",
+    "8.EE.7 parts a-b and 8.EE.8 parts a-c",
+    "8.F.1 footnote: function notation is not required in Grade 8",
+    "8.G.1 parts a-c; 8.G.6 proof and converse",
+    "8.SP.4 relative frequencies may be by row or column",
+    "8.EE.8.c both real-world and mathematical problems leading to systems of two equations in two variables",
+    "8.F.4 rates and initial values derived from descriptions, coordinate values, tables or graphs; interpreted in context AND graph/table",
+    "8.SP.4 two categorical variables measured on the SAME subjects; relative frequencies by row or column"
+  ],
+  "rows": [
+    {
+      "expectation_id": "8.NS.1",
+      "track": "GRADE_8",
+      "source_printed_page": 54,
+      "source_pdf_page_index": 60,
+      "source_printed_page_span": [
+        54
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Understand informally that every real number has a decimal expansion; identify irrational numbers, show that rational decimals eventually repeat, and convert eventually repeating decimals to rational numbers.",
+      "test_material_conditions": [
+        "eventual repetition",
+        "decimal to rational",
+        "every real number has decimal expansion"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.NS.2",
+      "track": "GRADE_8",
+      "source_printed_page": 54,
+      "source_pdf_page_index": 60,
+      "source_printed_page_span": [
+        54
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Compare and approximately locate irrational numbers through rational bounds; use successive decimal approximations to estimate expressions.",
+      "test_material_conditions": [
+        "rational approximation",
+        "number line",
+        "successive bounds"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.EE.1",
+      "track": "GRADE_8",
+      "source_printed_page": 54,
+      "source_pdf_page_index": 60,
+      "source_printed_page_span": [
+        54
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Use integer-exponent laws to rewrite numerical expressions into equivalent forms, including negative exponents.",
+      "test_material_conditions": [
+        "integer powers",
+        "equivalent numerical expressions"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.EE.2",
+      "track": "GRADE_8",
+      "source_printed_page": 54,
+      "source_pdf_page_index": 60,
+      "source_printed_page_span": [
+        54
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Represent solutions of square- and cube-equations with radicals for positive rational parameters; evaluate small perfect powers and recognize square root of two as irrational.",
+      "test_material_conditions": [
+        "positive rational p",
+        "square and cube roots",
+        "sqrt(2) irrational"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.EE.3",
+      "track": "GRADE_8",
+      "source_printed_page": 54,
+      "source_pdf_page_index": 60,
+      "source_printed_page_span": [
+        54
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Estimate extremely large and small quantities using single-digit multiples of powers of ten, and compare their relative sizes.",
+      "test_material_conditions": [
+        "single-digit coefficient",
+        "integer power of ten",
+        "multiplicative comparison"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.EE.4",
+      "track": "GRADE_8",
+      "source_printed_page": 54,
+      "source_pdf_page_index": 60,
+      "source_printed_page_span": [
+        54
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Calculate with scientific notation alongside decimal notation, select suitable measurement units, and interpret technology-produced notation.",
+      "test_material_conditions": [
+        "mixed decimal/scientific notation",
+        "units",
+        "technology"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.EE.5",
+      "track": "GRADE_8",
+      "source_printed_page": 54,
+      "source_pdf_page_index": 60,
+      "source_printed_page_span": [
+        54
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Interpret the unit rate as slope in graphs of proportional relationships; compare rates from multiple representations.",
+      "test_material_conditions": [
+        "proportionality",
+        "unit-rate slope",
+        "representation comparison"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.EE.6",
+      "track": "GRADE_8",
+      "source_printed_page": 54,
+      "source_pdf_page_index": 60,
+      "source_printed_page_span": [
+        54
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Use similar triangles to justify constant slope along nonvertical lines and derive origin-passing and intercept forms of linear equations.",
+      "test_material_conditions": [
+        "nonvertical line",
+        "similar triangles",
+        "y=mx",
+        "y=mx+b"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.EE.7",
+      "track": "GRADE_8",
+      "source_printed_page": 54,
+      "source_pdf_page_index": 60,
+      "source_printed_page_span": [
+        54
+      ],
+      "required_lettered_subparts": [
+        "a",
+        "b"
+      ],
+      "author_mathematical_scope_summary": "Classify linear equations in one variable as having one, none, or infinitely many solutions by reducing to x=a, a=a, or a=b (a != b); solve equations with rational coefficients using distribution and like terms.",
+      "test_material_conditions": [
+        "one/no/infinitely many solutions",
+        "rational coefficients",
+        "distributive property",
+        "x=a or a=a or a=b (a != b)"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.EE.8",
+      "track": "GRADE_8",
+      "source_printed_page": 55,
+      "source_pdf_page_index": 61,
+      "source_printed_page_span": [
+        55
+      ],
+      "required_lettered_subparts": [
+        "a",
+        "b",
+        "c"
+      ],
+      "author_mathematical_scope_summary": "Relate solutions of two simultaneous linear equations to graph intersections; solve systems algebraically, by inspection, or approximately by graphing, including real-world and mathematical problems leading to two linear equations in two variables.",
+      "test_material_conditions": [
+        "intersection",
+        "two linear equations",
+        "no solution",
+        "graphical estimate",
+        "solutions satisfy both equations",
+        "real-world and mathematical problems leading to two linear equations in two variables"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.F.1",
+      "track": "GRADE_8",
+      "source_printed_page": 55,
+      "source_pdf_page_index": 61,
+      "source_printed_page_span": [
+        55
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Define functions as single-valued input/output correspondences, with graphs made of ordered input/output pairs.",
+      "test_material_conditions": [
+        "one output per input",
+        "ordered pairs",
+        "function notation not required"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.F.2",
+      "track": "GRADE_8",
+      "source_printed_page": 55,
+      "source_pdf_page_index": 61,
+      "source_printed_page_span": [
+        55
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Compare properties of two functions expressed in different tables, graphs, formulas, or verbal models.",
+      "test_material_conditions": [
+        "two representations",
+        "rate of change"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.F.3",
+      "track": "GRADE_8",
+      "source_printed_page": 55,
+      "source_pdf_page_index": 61,
+      "source_printed_page_span": [
+        55
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Identify straight-line graphs as linear functions using slope-intercept equations; contrast with nonlinear examples.",
+      "test_material_conditions": [
+        "y=mx+b",
+        "nonlinear counterexample"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.F.4",
+      "track": "GRADE_8",
+      "source_printed_page": 55,
+      "source_pdf_page_index": 61,
+      "source_printed_page_span": [
+        55
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Construct a function modeling a linear relationship from a description or two coordinate pairs, including values read from tables or graphs; determine rate of change and initial value and interpret both in context and in a graph or table.",
+      "test_material_conditions": [
+        "two points",
+        "rate of change",
+        "initial value",
+        "interpret rate of change and initial value in context and in graphs or tables"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.F.5",
+      "track": "GRADE_8",
+      "source_printed_page": 55,
+      "source_pdf_page_index": 61,
+      "source_printed_page_span": [
+        55
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Describe increasing, decreasing, linear, or nonlinear behavior from graphs and sketch curves from verbal behavior.",
+      "test_material_conditions": [
+        "qualitative behavior",
+        "sketch from verbal description"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.G.1",
+      "track": "GRADE_8",
+      "source_printed_page": 55,
+      "source_pdf_page_index": 61,
+      "source_printed_page_span": [
+        55
+      ],
+      "required_lettered_subparts": [
+        "a",
+        "b",
+        "c"
+      ],
+      "author_mathematical_scope_summary": "Experimentally verify that rigid motions preserve line/segment structure, lengths, angle measures, and parallelism.",
+      "test_material_conditions": [
+        "rotations",
+        "reflections",
+        "translations",
+        "length and angle invariance"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.G.2",
+      "track": "GRADE_8",
+      "source_printed_page": 56,
+      "source_pdf_page_index": 62,
+      "source_printed_page_span": [
+        56
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Explain congruence through sequences of translations, rotations, and reflections; exhibit a sequence between congruent figures.",
+      "test_material_conditions": [
+        "rigid-motion sequence",
+        "congruence"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.G.3",
+      "track": "GRADE_8",
+      "source_printed_page": 56,
+      "source_pdf_page_index": 62,
+      "source_printed_page_span": [
+        56
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Describe coordinate effects of dilations and rigid transformations of plane figures.",
+      "test_material_conditions": [
+        "coordinates",
+        "dilations",
+        "translations",
+        "rotations",
+        "reflections"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.G.4",
+      "track": "GRADE_8",
+      "source_printed_page": 56,
+      "source_pdf_page_index": 62,
+      "source_printed_page_span": [
+        56
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Explain similarity using a combination of rigid motions and dilations; exhibit a transformation sequence.",
+      "test_material_conditions": [
+        "similarity",
+        "dilation",
+        "rigid motion"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.G.5",
+      "track": "GRADE_8",
+      "source_printed_page": 56,
+      "source_pdf_page_index": 62,
+      "source_printed_page_span": [
+        56
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Use informal angle arguments for triangle sums, exterior angles, parallel-line transversals, and triangle similarity.",
+      "test_material_conditions": [
+        "angle sum",
+        "exterior angle",
+        "parallel transversal",
+        "AA similarity"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.G.6",
+      "track": "GRADE_8",
+      "source_printed_page": 56,
+      "source_pdf_page_index": 62,
+      "source_printed_page_span": [
+        56
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Explain a proof of the Pythagorean theorem and a proof of its converse.",
+      "test_material_conditions": [
+        "proof",
+        "converse"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.G.7",
+      "track": "GRADE_8",
+      "source_printed_page": 56,
+      "source_pdf_page_index": 62,
+      "source_printed_page_span": [
+        56
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Apply the Pythagorean theorem to missing lengths in right-triangle contexts in two and three dimensions.",
+      "test_material_conditions": [
+        "right triangles",
+        "2D and 3D"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.G.8",
+      "track": "GRADE_8",
+      "source_printed_page": 56,
+      "source_pdf_page_index": 62,
+      "source_printed_page_span": [
+        56
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Find coordinate-plane distances through the Pythagorean theorem.",
+      "test_material_conditions": [
+        "coordinates",
+        "distance"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.G.9",
+      "track": "GRADE_8",
+      "source_printed_page": 56,
+      "source_pdf_page_index": 62,
+      "source_printed_page_span": [
+        56
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Know and apply the cylinder, cone, and sphere volume formulas in real-world and mathematical problems.",
+      "test_material_conditions": [
+        "cylinder",
+        "cone",
+        "sphere",
+        "volume"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.SP.1",
+      "track": "GRADE_8",
+      "source_printed_page": 56,
+      "source_pdf_page_index": 62,
+      "source_printed_page_span": [
+        56
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Create and read bivariate quantitative scatterplots, examining clusters, outliers, directional associations, and linearity.",
+      "test_material_conditions": [
+        "scatterplots",
+        "outliers",
+        "positive/negative associations",
+        "nonlinear"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.SP.2",
+      "track": "GRADE_8",
+      "source_printed_page": 56,
+      "source_pdf_page_index": 62,
+      "source_printed_page_span": [
+        56
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Fit an informal linear model to roughly linear scatterplots and evaluate fit by point proximity.",
+      "test_material_conditions": [
+        "informal fit",
+        "closeness to line"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.SP.3",
+      "track": "GRADE_8",
+      "source_printed_page": 56,
+      "source_pdf_page_index": 62,
+      "source_printed_page_span": [
+        56
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Solve contextual problems with equations for linear bivariate models and interpret slope and intercept units.",
+      "test_material_conditions": [
+        "linear model",
+        "slope",
+        "intercept",
+        "context"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "8.SP.4",
+      "track": "GRADE_8",
+      "source_printed_page": 56,
+      "source_pdf_page_index": 62,
+      "source_printed_page_span": [
+        56
+      ],
+      "required_lettered_subparts": [],
+      "author_mathematical_scope_summary": "Construct and interpret two-way frequency tables from data on two categorical variables collected from the same subjects; use row or column relative frequencies to investigate possible association.",
+      "test_material_conditions": [
+        "two-way table",
+        "row or column relative frequency",
+        "association",
+        "two categorical variables collected from the same subjects"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}

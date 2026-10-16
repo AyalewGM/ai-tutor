@@ -1,0 +1,3 @@
+# California Mathematics I p94 — independent source review
+
+Author evidence SHA `88dc770f714353901683ea2061ef22945262aac3` in PR #384. Check CDE Mathematics I printed p94 (PDF p100): https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf. Independently verify S-ID.5 categorical two-way tables, joint/marginal/conditional frequencies, and source strand bracket `[Linear focus; discuss general principle.]` before accepting. Source note `ca_math1_p94_sid3_5_author_notes.v1.json`, test `test_ca_math1_p94_bracket_status.py`. **Next owner: Independent Standards Source-Fidelity Reviewer**. Do not activate, merge, or claim accepted coverage.

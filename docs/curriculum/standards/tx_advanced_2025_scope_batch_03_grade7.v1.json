@@ -1,0 +1,258 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_EDITORIAL_SOURCE_SCOPE_NOT_INDEPENDENTLY_ACCEPTED",
+  "source": {
+    "legal_mirror": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
+    "original_adoption": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+    "effective_date": "2025-07-06",
+    "workbook_or_publisher_bytes_verified": false,
+    "source_text_version": "2025_19_TAC_111.30_GRADE7_ADVANCED",
+    "verification_scope": "Author reading of secondary regulation mirror; not independently verified against signed or authenticated publisher original"
+  },
+  "summary": {
+    "new_scopes": 41,
+    "track": "ADVANCED_GRADE_7",
+    "already_staged_batch02": 18,
+    "previously_in_intake_g7": 8,
+    "combined_grade7_author_abstracts_if_integrated": 67,
+    "known_advanced_grade8_author_abstracts": 6
+  },
+  "rows": [
+    {
+      "expectation_id": "111.30(c)(1)(A)",
+      "scope": "Apply mathematics to practical problems in daily life, society and workplaces."
+    },
+    {
+      "expectation_id": "111.30(c)(1)(B)",
+      "scope": "Use a problem-solving cycle: analyze, plan, solve, justify and evaluate conclusions and their reasonableness."
+    },
+    {
+      "expectation_id": "111.30(c)(1)(C)",
+      "scope": "Select appropriate tools (objects, manipulatives, pencil-and-paper and technology) and techniques (mental arithmetic, estimates, number sense)."
+    },
+    {
+      "expectation_id": "111.30(c)(1)(D)",
+      "scope": "Communicate mathematical ideas and reasoning using symbolic, diagrammatic, graphical and verbal representations."
+    },
+    {
+      "expectation_id": "111.30(c)(1)(E)",
+      "scope": "Construct and use representations to organize, record and communicate mathematical ideas."
+    },
+    {
+      "expectation_id": "111.30(c)(1)(F)",
+      "scope": "Identify and analyze mathematical relationships to connect and communicate ideas."
+    },
+    {
+      "expectation_id": "111.30(c)(1)(G)",
+      "scope": "Explain and justify mathematical arguments using precise mathematical language in written or spoken form."
+    },
+    {
+      "expectation_id": "111.30(c)(6)(A)",
+      "scope": "Represent sample spaces for simple and compound events using lists and tree diagrams.",
+      "material_bounds": [
+        "sample space",
+        "simple and compound events"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(6)(B)",
+      "scope": "Choose and use simulations for simple and compound events with or without technology."
+    },
+    {
+      "expectation_id": "111.30(c)(6)(C)",
+      "scope": "Use experimental results to predict and solve simple and compound probability questions."
+    },
+    {
+      "expectation_id": "111.30(c)(6)(D)",
+      "scope": "Use theoretical probability to predict and solve simple and compound-event questions."
+    },
+    {
+      "expectation_id": "111.30(c)(6)(E)",
+      "scope": "Calculate event and complement probabilities and explain their relationship."
+    },
+    {
+      "expectation_id": "111.30(c)(6)(F)",
+      "scope": "Use qualitative and quantitative predictions and comparisons from simple probability experiments."
+    },
+    {
+      "expectation_id": "111.30(c)(6)(G)",
+      "scope": "Determine experimental and theoretical probabilities for simple and compound events from data and sample spaces."
+    },
+    {
+      "expectation_id": "111.30(c)(7)(A)",
+      "scope": "Display solutions of one-variable, two-step inequalities on number lines.",
+      "material_bounds": [
+        "two-step",
+        "one-variable",
+        "number line"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(7)(B)",
+      "scope": "Model and solve inequalities in one variable requiring two steps.",
+      "material_bounds": [
+        "two-step",
+        "one-variable"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(7)(C)",
+      "scope": "Translate situations into one-variable equations or inequalities with variables on both sides and rational coefficients/constants.",
+      "material_bounds": [
+        "both sides",
+        "rational coefficients and constants"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(7)(D)",
+      "scope": "Write a corresponding real-world problem for a given one-variable equation or inequality with variables on both sides and rational number coefficients and constants.",
+      "material_bounds": [
+        "both sides",
+        "rational coefficients and constants"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(7)(E)",
+      "scope": "Model and solve equations with one variable appearing on both sides, using rational coefficients/constants in mathematical and applied problems.",
+      "material_bounds": [
+        "both sides",
+        "rational coefficients and constants"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(8)(A)",
+      "scope": "Calculate constant of proportionality k=y/x from mathematical and real-world relationships.",
+      "material_bounds": [
+        "k=y/x",
+        "x≠0 implicit quotient domain"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(8)(B)",
+      "scope": "Distinguish proportional and nonproportional relationships in tables, graphs and equations, including y=kx and y=mx+b with b≠0.",
+      "material_bounds": [
+        "tables, graphs, equations",
+        "b≠0"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(9)",
+      "scope": "Represent both proportional and nonproportional linear relationships verbally, in tables, graphs and equations reducible to y=mx+b.",
+      "material_bounds": [
+        "unlettered expectation",
+        "y=mx+b"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(10)(A)",
+      "scope": "Use models to approximate circumference and circle-area formulas, then connect them to exact formulas."
+    },
+    {
+      "expectation_id": "111.30(c)(10)(B)",
+      "scope": "Solve lateral and total surface-area problems for rectangular prisms, rectangular pyramids, triangular prisms and triangular pyramids by determining areas from their nets.",
+      "material_bounds": [
+        "four listed solids",
+        "nets"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(10)(C)",
+      "scope": "Explain cylinder volume V=Bh as base area multiplied by height.",
+      "material_bounds": [
+        "V=Bh"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(10)(D)",
+      "scope": "Model the volume relationship between rectangular prisms and pyramids with congruent bases and heights."
+    },
+    {
+      "expectation_id": "111.30(c)(10)(E)",
+      "scope": "Explain verbally and symbolically the volume relationship for triangular prisms and pyramids with congruent bases and heights."
+    },
+    {
+      "expectation_id": "111.30(c)(10)(F)",
+      "scope": "Model the volume relationship between cylinders and cones with congruent bases and heights."
+    },
+    {
+      "expectation_id": "111.30(c)(10)(G)",
+      "scope": "Use models and diagrams to explain the Pythagorean theorem.",
+      "material_bounds": [
+        "theorem explanation"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(10)(H)",
+      "scope": "Give informal arguments for triangle interior/exterior angle facts, parallel-line transversal angles and AA triangle-similarity criterion.",
+      "material_bounds": [
+        "informal arguments",
+        "AA similarity"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(11)(A)",
+      "scope": "Compute circumference and area of circles."
+    },
+    {
+      "expectation_id": "111.30(c)(11)(B)",
+      "scope": "Determine the area of composite figures formed from rectangles, squares, parallelograms, trapezoids, triangles, semicircles and quarter circles.",
+      "material_bounds": [
+        "rectangles, squares, parallelograms, trapezoids, triangles, semicircles, quarter circles"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(11)(C)",
+      "scope": "Connect prior surface-area models to lateral/total surface-area formulas for rectangular/triangular prisms and cylinders."
+    },
+    {
+      "expectation_id": "111.30(c)(11)(D)",
+      "scope": "Solve volume problems for rectangular and triangular pyramids."
+    },
+    {
+      "expectation_id": "111.30(c)(11)(E)",
+      "scope": "Solve volume problems for cylinders, cones and spheres."
+    },
+    {
+      "expectation_id": "111.30(c)(11)(F)",
+      "scope": "Apply the Pythagorean theorem and its converse in problem solving.",
+      "material_bounds": [
+        "converse required"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(11)(G)",
+      "scope": "Calculate coordinate-plane distance between two points using the Pythagorean theorem."
+    },
+    {
+      "expectation_id": "111.30(c)(12)(A)",
+      "scope": "Generalize orientation and congruence properties of rotations, reflections, translations and dilations of two-dimensional shapes on a coordinate plane."
+    },
+    {
+      "expectation_id": "111.30(c)(12)(B)",
+      "scope": "Distinguish transformations that preserve congruence from those that do not."
+    },
+    {
+      "expectation_id": "111.30(c)(12)(C)",
+      "scope": "Describe coordinate-plane translations, reflections over x- or y-axis, and rotations by 90°, 180°, 270° or 360° algebraically.",
+      "material_bounds": [
+        "x/y-axis reflections",
+        "90°, 180°, 270°, 360°"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(12)(D)",
+      "scope": "Model how dilation changes length measures and area of two-dimensional figures.",
+      "material_bounds": [
+        "length and area"
+      ]
+    }
+  ],
+  "reviewer_limits": "Maintain separate official source wording from paraphrases, original parent stems and required including/such as qualifiers. Do not assert accepted source fidelity or canonical reuse from this ledger.",
+  "gates": {
+    "source_fidelity": "UNVERIFIED",
+    "canonical_equivalence": "UNVERIFIED",
+    "assessment": "UNVERIFIED",
+    "mastery": "UNVERIFIED",
+    "activation": "FORBIDDEN"
+  }
+}

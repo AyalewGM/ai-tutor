@@ -1,0 +1,242 @@
+{
+  "schema_version": "1.0.0",
+  "as_of": "2026-10-14",
+  "status": "INCOMPLETE_FAIL_CLOSED",
+  "purpose": "Exact evidence accounting for all three states, not accepted curriculum coverage",
+  "states": {
+    "CA": {
+      "official_source": "https://www.cde.ca.gov/re/cc/mathresources.asp",
+      "version": "CA CCSS Mathematics modified 2013; 2023 Mathematics Framework is guidance, not a new standards edition",
+      "current_intake_file": "national_ca_grades7_9.author_intake.v1.json",
+      "historic_rows_by_track": {
+        "GRADE_7": 24,
+        "GRADE_8": 28,
+        "ALGEBRA_I": 62,
+        "MATHEMATICS_I": 59
+      },
+      "accepted_source_fidelity_rows": 0,
+      "unverified_scope_rows": 173,
+      "unextracted_tracks": [],
+      "grade9_course_equivalence": "NOT_ASSUMED",
+      "next_gate": "CA Grades 1–8, Algebra I and Mathematics I have 334 provisional authored track placements, none independently accepted. Prioritize independent publisher subpart/course-bracket fidelity for 173 Grades 7–9 historical placements, including eight bounded Math I scope tensions on printed pp.90–94; then remaining CA review gaps. Grade 9 course equivalence not assumed.",
+      "grade8_author_scope_rows": 28,
+      "grade8_author_scope_source": "ca_2013_grade8_28_source_author_slice.v1.json",
+      "grade8_author_scope_status": "AUTHOR_PDF_REVIEW_DRAFT_PENDING_INDEPENDENT_FIDELITY",
+      "author_source_scope_rows_by_track": {
+        "GRADE_1": 21,
+        "GRADE_2": 27,
+        "GRADE_3": 29,
+        "GRADE_7": 24,
+        "GRADE_8": 28,
+        "ALGEBRA_I": 62,
+        "MATHEMATICS_I": 59,
+        "GRADE_4": 28,
+        "GRADE_5": 27,
+        "GRADE_6": 29
+      },
+      "author_scope_total_staged": 334,
+      "author_scope_acceptance": "DRAFT_ALL_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "author_source_scope_files": {
+        "GRADE_1": [
+          "ca_2013_grade1_bounded_scope_author_slice.v1.json",
+          "ca_2013_grade1_remaining16_scope_author_slice.v1.json"
+        ],
+        "GRADE_7": [
+          "ca_2013_grade7_24_source_author_slice.v1.json"
+        ],
+        "GRADE_8": [
+          "ca_2013_grade8_28_source_author_slice.v1.json"
+        ],
+        "ALGEBRA_I": [
+          "ca_2013_algebra1_pages64_65_source_author_slice.v1.json",
+          "ca_2013_algebra1_pages66_68_source_author_slice.v1.json"
+        ],
+        "MATHEMATICS_I": [
+          "ca_2013_mathematics1_pages90_94_author_audit.v1.json"
+        ],
+        "GRADE_2": [
+          "ca_2013_grade2_page20_source_author_slice.v1.json",
+          "ca_2013_grade2_ca_additions_author_slice.v1.json",
+          "ca_2013_grade2_pages21_22_source_author_slice.v1.json"
+        ],
+        "GRADE_3": [
+          "ca_2013_grade3_page25_source_author_slice.v1.json",
+          "ca_2013_grade3_page26_source_author_slice.v1.json",
+          "ca_2013_grade3_page27_source_author_slice.v1.json"
+        ],
+        "GRADE_4": [
+          "ca_2013_grade4_page30_source_author_slice.v1.json",
+          "ca_2013_grade4_pages31_33_source_author_slice.v1.json"
+        ],
+        "GRADE_5": [
+          "ca_2013_grade5_page36_source_author_slice.v1.json",
+          "ca_2013_grade5_pages37_39_source_author_slice.v1.json"
+        ],
+        "GRADE_6": [
+          "ca_2013_grade6_page42_source_author_slice.v1.json",
+          "ca_2013_grade6_page43_complete_parent_source_author_slice.v1.json",
+          "ca_2013_grade6_pages43_44_ee2_9_author_slice.v1.json",
+          "ca_2013_grade6_pages44_45_geometry_statistics_author_slice.v1.json"
+        ]
+      },
+      "grade2_partial_author_source_scope_rows": 10,
+      "grade2_partial_author_source_file": "ca_2013_grade2_page20_source_author_slice.v1.json",
+      "grade2_partial_not_complete": false,
+      "grade2_author_scope_total": 27,
+      "grade2_author_scope_status": "ALL_27_AUTHOR_DESCRIPTIONS_STAGED_ZERO_INDEPENDENT_SOURCE_ACCEPTANCE",
+      "grade3_partial_author_scope_total": 29,
+      "partially_scoped_tracks": [],
+      "not_yet_author_scoped_tracks": [],
+      "grade2_scope_fidelity_accepted_rows": 0,
+      "grade3_author_scope_status": "29_AUTHOR_PARENT_AND_SUBPART_IDENTIFIERS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "grade6_source_intake": {
+        "authority": "California Department of Education",
+        "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+        "source_version": "CA_CCSSM_MODIFIED_2013_CORRECTED_ELECTRONIC",
+        "historical_audit": "app/california_grade6_gap_audit.py",
+        "author_identifiers": 29,
+        "source_scope_status": "ALL_29_GRADE6_PARENT_AUTHOR_SCOPE_ROWS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "independent_acceptance": 0,
+        "prior_gap_labels_role": "UNVERIFIED_HISTORICAL_CANDIDATES_ONLY",
+        "author_scope_rows": 29,
+        "author_scope_files": [
+          "ca_2013_grade6_page42_source_author_slice.v1.json",
+          "ca_2013_grade6_page43_complete_parent_source_author_slice.v1.json",
+          "ca_2013_grade6_pages43_44_ee2_9_author_slice.v1.json",
+          "ca_2013_grade6_pages44_45_geometry_statistics_author_slice.v1.json"
+        ]
+      }
+    },
+    "TX": {
+      "official_source": "https://tea.texas.gov/laws-and-rules/texas-administrative-code/19-tac-chapter-111",
+      "version": "Regular grades adopted 2012; advanced grades adopted 2025; Algebra I §111.39 separate",
+      "current_intake_file": "national_tx_grades7_9.author_intake.v1.json",
+      "historic_regular_rows_by_track": {
+        "REGULAR_GRADE_7": 43,
+        "REGULAR_GRADE_8": 45
+      },
+      "algebra1_111_39_author_identifier_rows": 56,
+      "advanced_111_30_111_31_author_identifier_rows": 130,
+      "advanced_author_scope_rows": 130,
+      "advanced_remaining_unscoped_rows": 0,
+      "accepted_source_fidelity_rows": 0,
+      "unextracted_tracks": [],
+      "grade9_course_equivalence": "NOT_ASSUMED",
+      "next_gate": "All Texas regular Grades 1–6 now have provisional author scope inventories; independent original-source fidelity, mathematical qualifiers, printed page spans and publisher-byte authentication remain unverified. Continue Washington OSPI publisher authentication and CA/TX source acceptance; no canonical mapping/mastery approval.",
+      "advanced_grade6_111_29_author_identifier_rows": 68,
+      "advanced_grade6_111_29_author_scope_rows": 68,
+      "advanced_grade6_111_29_independently_accepted_source_rows": 0,
+      "advanced_grade6_source_batches": [
+        "tx_advanced_2025_grade6_111_29_scope_batch_01.v1.json",
+        "tx_advanced_2025_grade6_111_29_scope_batch_02.v1.json",
+        "tx_advanced_2025_grade6_111_29_scope_batch_03_expressions.v1.json",
+        "tx_advanced_2025_grade6_111_29_scope_batch_04_relations.v1.json",
+        "tx_advanced_2025_grade6_111_29_scope_batch_05_geometry_data_finance.v1.json",
+        "tx_advanced_2025_grade6_111_29_scope_batch_06_process.v1.json"
+      ],
+      "partially_author_scoped_tracks": [],
+      "regular_grade6_111_26_author_scope_rows": 59,
+      "regular_grade6_111_26_independently_accepted_source_rows": 0,
+      "regular_grade6_source_files": [
+        "tx_regular_grade6_number_systems_2a_2e_author.v1.json",
+        "tx_regular_grade6_proportionality_4a_4d_author.v1.json",
+        "tx_regular_grade6_proportionality_4e_5c_author.v1.json",
+        "tx_regular_grade6_remaining_source_author.v1.json"
+      ],
+      "regular_grade6_author_scope_status": "59_OF_59_AUTHOR_PARAPHRASES_STAGED_INDEPENDENT_SOURCE_FIDELITY_PENDING",
+      "regular_grade1_author_scope_rows": 50,
+      "regular_grade1_source_files": [
+        "tx_regular_grade1_process_number_operations_author.v1.json",
+        "tx_regular_grade1_remaining_author.v1.json"
+      ],
+      "regular_grade1_independently_accepted_source_rows": 0,
+      "regular_grade1_author_scope_status": "50_AUTHOR_ROWS_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "regular_grade2_111_4_author_scope_rows": 50,
+      "regular_grade2_111_4_independently_accepted_source_rows": 0,
+      "regular_grade2_source_files": [
+        "tx_regular_grade2_number_fraction_author.v1.json",
+        "tx_regular_grade2_operations_4_6_author.v1.json",
+        "tx_regular_grade2_process_1a_1d_author.v1.json",
+        "tx_regular_grade2_process_1e_1g_author.v1.json",
+        "tx_regular_grade2_algebraic_reasoning_7_author.v1.json",
+        "tx_regular_grade2_geometry_author.v1.json",
+        "tx_regular_grade2_measurement_9a_9d_author.v1.json",
+        "tx_regular_grade2_measurement_9e_9g_author.v1.json",
+        "tx_regular_grade2_data_10_author.v1.json",
+        "tx_regular_grade2_finance_11a_11c_author.v1.json",
+        "tx_regular_grade2_finance_11d_11f_author.v1.json"
+      ],
+      "regular_grade2_author_scope_status": "50_OF_50_AUTHOR_ROWS_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "regular_grade3_author_scope_rows": 53,
+      "regular_grade3_independently_accepted_source_rows": 0,
+      "regular_grade3_source_files": [
+        "tx_regular_grade3_process_place_value_fractions_author.v1.json",
+        "tx_regular_grade3_operations_geometry_data_finance_author.v1.json"
+      ],
+      "regular_grade3_author_scope_status": "53_OF_53_AUTHOR_PARAPHRASES_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "regular_grade4_author_scope_rows": 53,
+      "regular_grade4_independently_accepted_source_rows": 0,
+      "regular_grade4_source_files": [
+        "tx_regular_grade4_process_place_value_fractions_author.v1.json",
+        "tx_regular_grade4_operations_geometry_finance_author.v1.json"
+      ],
+      "regular_grade4_author_scope_status": "53_OF_53_AUTHOR_PARAPHRASES_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+      "regular_grade5_author_scope_rows": 46,
+      "regular_grade5_independently_accepted_source_rows": 0,
+      "regular_grade5_source_files": [
+        "tx_regular_grade5_process_decimal_operations_author.v1.json",
+        "tx_regular_grade5_algebra_geometry_finance_author.v1.json"
+      ],
+      "regular_grade5_author_scope_status": "46_OF_46_AUTHOR_PARAPHRASES_STAGED_PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    "WA": {
+      "official_source": "https://ospi.k12.wa.us/student-success/resources-subject-area/mathematics/mathematics-k-12-learning-standards",
+      "adoption_bulletin": "B023-26",
+      "adopted": "2026-06-18",
+      "required_school_year": "2027-2028",
+      "current_intake_file": "national_wa_2026_grades7_9.source_blocker.v1.json",
+      "verified_2026_expectation_rows": 0,
+      "official_final_workbook_bytes_obtained": false,
+      "official_final_crosswalk_rows_obtained": false,
+      "unextracted_tracks": [
+        "GRADE_1",
+        "GRADE_2",
+        "GRADE_3",
+        "GRADE_4",
+        "GRADE_5",
+        "GRADE_6",
+        "GRADE_7",
+        "GRADE_8",
+        "HIGH_SCHOOL_COURSE_ARRANGEMENTS"
+      ],
+      "grade9_course_equivalence": "NOT_ASSUMED",
+      "next_gate": "Authenticate August 2026 v3.1 workbook against original OSPI publisher bytes and revision; independently verify already staged K-8, course, and crosswalk rows, notation anomalies and mathematical scopes before any coverage acceptance",
+      "uploaded_workbook_source_extraction": {
+        "sha256": "d522101f430758dcbc21d7ecc800977761b3ccdb224de2b3e6fd6217faa80875",
+        "revision": "August 2026 v3.1",
+        "k8_rows": 264,
+        "hs_course_rows": 464,
+        "crosswalk_rows": 425,
+        "independent_publisher_verification": "PENDING",
+        "repository_expectation_import": "AUTHOR_EXTRACTION_STAGED_IN_REPOSITORY_NOT_INDEPENDENTLY_VERIFIED"
+      }
+    }
+  },
+  "acceptance_contract": {
+    "all_three_complete": false,
+    "source_fidelity": "INDEPENDENT_REVIEW_REQUIRED",
+    "canonical_equivalence": "INDEPENDENT_ARCHITECTURE_AND_MATH_REVIEW_REQUIRED",
+    "assessment_mastery": "NOT_ESTABLISHED",
+    "runtime_activation": "FORBIDDEN",
+    "no_automatic_merge": true,
+    "requirements": [
+      "All relevant official Grades 1–8 and high-school/course expectations source-verified per state",
+      "All material lettered/unlettered mathematical conditions represented",
+      "Original publisher version/locator for every expectation",
+      "All unknown rows resolved or explicitly excluded with owner-approved scope",
+      "Independent source-fidelity acceptance at exact SHA",
+      "Canonical identity and assessment gates separate from standards acceptance",
+      "CI and AppSec pass on accepted exact SHA"
+    ]
+  }
+}

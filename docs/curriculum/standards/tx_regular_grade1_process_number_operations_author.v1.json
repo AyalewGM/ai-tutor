@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_1",
+  "section": "111.3(b)(1)-(3)",
+  "publisher": "Texas Education Agency",
+  "source_url": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "publisher_edition": "December 2014 update of elementary mathematics TEKS adopted 2012",
+  "source_page_convention": "Printed footer pages; zero-based PDF page index is printed page minus one",
+  "source_scope_status": "PARTIAL_AUTHOR_EDITORIAL_PENDING_INDEPENDENT_SOURCE_FIDELITY",
+  "remaining_grade1_sections": "111.3(b)(4)-(9) not yet author scoped",
+  "independent_source_fidelity": "PENDING",
+  "publisher_original_bytes_authenticated": false,
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "id": "111.3(b)(1)(A)",
+      "scope": "Apply mathematics to problems in everyday life, society and workplace.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(1)(B)",
+      "scope": "Use a problem-solving model: analyze, plan, solve, justify, and evaluate reasonableness.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(1)(C)",
+      "scope": "Select tools and techniques including objects, manipulatives, technology, mental mathematics, estimation and number sense.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(1)(D)",
+      "scope": "Communicate reasoning through symbols, diagrams, graphs and language.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(1)(E)",
+      "scope": "Create representations to organize, record and communicate mathematical ideas.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(1)(F)",
+      "scope": "Analyze mathematical relationships to connect and communicate ideas.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(1)(G)",
+      "scope": "Explain and justify arguments using precise written or oral mathematical language.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(2)(A)",
+      "scope": "Recognize quantities of structured arrangements instantly.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(2)(B)",
+      "scope": "Compose and decompose numbers up to 120 with concrete/pictorial models in hundreds, tens and ones in more than one way.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(2)(C)",
+      "scope": "Represent numbers up to 120 using objects, pictures, expanded and standard forms.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(2)(D)",
+      "scope": "Generate numbers greater or less than a given whole number up to 120.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(2)(E)",
+      "scope": "Compare whole numbers up to 120 using place value and comparative language.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(2)(F)",
+      "scope": "Order whole numbers up to 120 using place value and open number lines.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(2)(G)",
+      "scope": "Compare two numbers up to 100 with >, <, or = symbols.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(3)(A)",
+      "scope": "Use concrete and pictorial models to find the sum of a multiple of ten and a one-digit number in problems up to 99.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(3)(B)",
+      "scope": "Solve joining, separating and comparing word problems within 20, allowing unknowns in any term.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(3)(C)",
+      "scope": "Compose ten with two or more addends, with and without objects.",
+      "source_printed_page": 5,
+      "source_pdf_page_index": 4,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(3)(D)",
+      "scope": "Apply addition/subtraction fact strategies within 20, including making ten and decomposing to ten.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(3)(E)",
+      "scope": "Explain addition/subtraction strategies through words, models and number sentences for problems up to 20.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "independent_acceptance": "PENDING"
+    },
+    {
+      "id": "111.3(b)(3)(F)",
+      "scope": "Generate and solve situations from given addition/subtraction number sentences within 20.",
+      "source_printed_page": 6,
+      "source_pdf_page_index": 5,
+      "independent_acceptance": "PENDING"
+    }
+  ]
+}

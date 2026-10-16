@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "status": "ALL_173_HISTORICAL_PLACEMENTS_HAVE_AUTHOR_TOPICS_NOT_SOURCE_ACCEPTED",
+  "publisher": "California Department of Education",
+  "official_source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "historical_inventory": "national_ca_grades7_9.author_intake.v1.json",
+  "as_of": "2026-10-14",
+  "source_edition": "2013 modification / 2014 electronic corrections",
+  "record_semantics": "173 HISTORICAL TRACK PLACEMENTS across Grades 7, 8, traditional Algebra I, and integrated Mathematics I; not 173 distinct canonical skills or independently accepted source requirements.",
+  "placements_by_track": {
+    "GRADE_7": 24,
+    "GRADE_8": 28,
+    "ALGEBRA_I": 62,
+    "MATHEMATICS_I": 59
+  },
+  "total_historical_placements": 173,
+  "distinct_expectation_ids_across_tracks": 127,
+  "cross_track_repeated_placements": 46,
+  "notes": [
+    "Cross-track identical standard IDs in traditional Algebra I and integrated Mathematics I are course placements, not automatic duplicate mathematical skills; each may have different course-specific scope bracket.",
+    "GRADE_7 and GRADE_8 author summaries describe parent expectations, while Algebra I and Math I historic intakes may enumerate lettered subparts separately. Totals are not a count of atomic or mastered skills.",
+    "Mathematics I audit contains SHORT AUTHOR TOPICS that still require course-bracket and publisher line-by-line fidelity; Algebra I batches contain provisional mathematical summaries.",
+    "No source acceptance or canonical equivalence follows from inventory parity or passing regression tests."
+  ],
+  "author_scope_files_by_track": {
+    "GRADE_7": [
+      "ca_2013_grade7_24_source_author_slice.v1.json"
+    ],
+    "GRADE_8": [
+      "ca_2013_grade8_28_source_author_slice.v1.json"
+    ],
+    "ALGEBRA_I": [
+      "ca_2013_algebra1_pages64_65_source_author_slice.v1.json",
+      "ca_2013_algebra1_pages66_68_source_author_slice.v1.json"
+    ],
+    "MATHEMATICS_I": [
+      "ca_2013_mathematics1_pages90_94_author_audit.v1.json"
+    ]
+  },
+  "rows_independently_accepted": 0,
+  "publisher_source_fidelity": "PENDING_INDEPENDENT_REVIEW",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "grade9_course_equivalence": "NOT_ASSUMED",
+  "next_author_track": "California Grades 1–6; prioritize verified original-source intake and California-added clause preservation",
+  "next_reviewer_gate": "Independent Standards Source-Fidelity Reviewer exact-head 173-placement row and course-scope verification; multiple bounded reviews acceptable, do not assert 173 full source approvals",
+  "supplemental_review_evidence": {
+    "MATHEMATICS_I_PAGE_90": {
+      "file": "ca_2013_mathematics1_page90_additional9_scope_notes.v1.json",
+      "existing_historical_placements": 9,
+      "additional_placements": 0,
+      "publisher_original_bytes_authenticated": false,
+      "independent_source_fidelity": "PENDING"
+    }
+  }
+}

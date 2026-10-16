@@ -1,0 +1,688 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_ALGEBRA_I_PAGES66_68_DRAFT_NOT_ACCEPTED",
+  "source_publisher": "California Department of Education",
+  "official_source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "2013 modified / 2014-corrected CDE electronic mathematics standards",
+  "track": "ALGEBRA_I",
+  "course_not_grade9_automatic_equivalence": true,
+  "source_printed_pages": [
+    66,
+    67,
+    68
+  ],
+  "source_pdf_zero_based_indices": [
+    72,
+    73,
+    74
+  ],
+  "course_intro_source_printed_page": 60,
+  "course_intro_pdf_index": 66,
+  "existing_historical_intake": "national_ca_grades7_9.author_intake.v1.json",
+  "first_algebra_i_batch": "ca_2013_algebra1_pages64_65_source_author_slice.v1.json",
+  "expected_total_historical_algebra_i_rows": 62,
+  "author_scoped_identifier_rows": 40,
+  "combined_algebra_i_authored_identifier_rows": 62,
+  "remaining_algebra_i_historical_ids_unscoped": 0,
+  "source_cautions": [
+    "F-IF.7.e's complete printed p.67 standard explicitly covers exponential, logarithmic and trigonometric graphing. The Algebra I printed p.60 course introduction explicitly excludes logarithmic and trigonometric functions from this course and defers them to Algebra II; preserve the full original standard and a separate instructional-scope annotation, subject to independent verification. Never count deferred components as Algebra I mastery.",
+    "F-IF.7.b separately mentions square-root and cube-root graphs despite the brief introductory description of model families; retain both.",
+    "F-BF.4.a is explicitly linear only in the bracketed Algebra I note.",
+    "F-LE.6 is a separately numbered California quadratic-physical-problems addition, not a substitute for ordinary F-LE.5.",
+    "No canonical teaching/generator/assessment/mastery contracts or independent publisher source acceptance are claimed."
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "A-REI.5",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 66,
+      "source_pdf_page_index": 72,
+      "author_mathematical_scope_summary": "Prove that replacing one equation in a two-equation system by its sum with a multiple of the other preserves the system's solution set.",
+      "test_material_conditions": [
+        "proof of equivalence",
+        "two equations two variables",
+        "replacement by sum"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "A-REI.6",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 66,
+      "source_pdf_page_index": 72,
+      "author_mathematical_scope_summary": "Solve pairs of linear equations in two variables exactly and approximately, including graphical approaches.",
+      "test_material_conditions": [
+        "linear-linear systems",
+        "exact solution",
+        "approximate graphical solution"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "A-REI.7",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 66,
+      "source_pdf_page_index": 72,
+      "author_mathematical_scope_summary": "Solve a simple system containing one linear and one quadratic equation in two variables both algebraically and graphically.",
+      "test_material_conditions": [
+        "linear-quadratic system",
+        "algebraic and graphical"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "A-REI.10",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 66,
+      "source_pdf_page_index": 72,
+      "author_mathematical_scope_summary": "Recognize a graph of a two-variable equation as all its ordered-pair solutions in the coordinate plane.",
+      "test_material_conditions": [
+        "solution set as graph",
+        "two variables"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "A-REI.11",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 66,
+      "source_pdf_page_index": 72,
+      "author_mathematical_scope_summary": "Explain graph intersections of y=f(x) and y=g(x) as solutions of f(x)=g(x), and approximate those solutions using technology, tables or successive approximations.",
+      "test_material_conditions": [
+        "intersection x-coordinates",
+        "graphing technology tables approximations",
+        "source lists logarithmic cases beyond Algebra I course restriction"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "A-REI.12",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 66,
+      "source_pdf_page_index": 72,
+      "author_mathematical_scope_summary": "Graph the solution of a linear inequality in two variables as an appropriate half-plane, with open boundary for strict inequalities; intersect half-planes for systems.",
+      "test_material_conditions": [
+        "half-plane",
+        "exclude strict boundary",
+        "system intersection"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-IF.1",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 66,
+      "source_pdf_page_index": 72,
+      "author_mathematical_scope_summary": "Define a function as assigning each domain input exactly one range output, and connect f(x) to the graph y=f(x).",
+      "test_material_conditions": [
+        "exactly one output per input",
+        "domain and range",
+        "function notation"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-IF.2",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 66,
+      "source_pdf_page_index": 72,
+      "author_mathematical_scope_summary": "Use and evaluate function notation on allowed domain inputs, interpreting notation statements in context.",
+      "test_material_conditions": [
+        "function notation",
+        "domain restrictions",
+        "context"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-IF.3",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 66,
+      "source_pdf_page_index": 72,
+      "author_mathematical_scope_summary": "Recognize sequences as integer-domain functions, including recursively defined examples.",
+      "test_material_conditions": [
+        "integer-subset domain",
+        "recursive sequences"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-IF.4",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 66,
+      "source_pdf_page_index": 72,
+      "author_mathematical_scope_summary": "Interpret graph and table key features in context and sketch features from a verbal description, including intercepts, increasing/decreasing and positive/negative intervals, extrema, symmetry, end behavior and periodicity.",
+      "test_material_conditions": [
+        "intercepts and intervals",
+        "relative extrema",
+        "symmetry end behavior periodicity",
+        "linear exponential quadratic course scope"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-IF.5",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 66,
+      "source_pdf_page_index": 72,
+      "author_mathematical_scope_summary": "Relate a function's domain to its graph and the quantities that its modeling context permits.",
+      "test_material_conditions": [
+        "domain",
+        "graph",
+        "context-appropriate inputs"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-IF.6",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 66,
+      "source_pdf_page_index": 72,
+      "author_mathematical_scope_summary": "Calculate average rate of change over a specified interval from symbols or tables and estimate it from graphs.",
+      "test_material_conditions": [
+        "average rate of change",
+        "specific interval",
+        "graphical estimate"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-IF.7.a",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 67,
+      "source_pdf_page_index": 73,
+      "author_mathematical_scope_summary": "Graph linear and quadratic functions and display intercepts and extrema.",
+      "test_material_conditions": [
+        "linear and quadratic graphs",
+        "intercepts",
+        "maxima minima"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-IF.7.b",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 67,
+      "source_pdf_page_index": 73,
+      "author_mathematical_scope_summary": "Graph square-root, cube-root and piecewise functions, including step and absolute-value functions.",
+      "test_material_conditions": [
+        "square root and cube root",
+        "piecewise step absolute value"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-IF.7.e",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 67,
+      "source_pdf_page_index": 73,
+      "author_mathematical_scope_summary": "The complete F-IF.7.e standard describes graphing exponential and logarithmic functions with intercepts and end behavior and trigonometric functions with period, midline, and amplitude. The Algebra I course introduction on printed page 60 expressly excludes logarithmic and trigonometric functions from Algebra I coursework and defers them to Algebra II; exponential graphing remains in course scope under the course-level function-family restrictions.",
+      "test_material_conditions": [
+        "exponential intercepts end behavior",
+        "full source preserves logarithmic intercepts and end behavior",
+        "full source preserves trigonometric period midline amplitude",
+        "Algebra I printed page 60 explicitly defers logarithmic and trigonometric functions to Algebra II",
+        "COURSE_BOUNDARY_CONFLICT_PENDING_INDEPENDENT_INTERPRETATION"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED",
+      "source_standard_full_scope_components": [
+        "exponential graphs: intercepts and end behavior",
+        "logarithmic graphs: intercepts and end behavior",
+        "trigonometric graphs: period, midline and amplitude"
+      ],
+      "algebra1_course_instructional_scope": [
+        "exponential function graphing as appropriate for Algebra I"
+      ],
+      "deferred_by_explicit_course_introduction": [
+        "logarithmic functions",
+        "trigonometric functions"
+      ],
+      "course_introduction_source_printed_page": 60,
+      "course_introduction_source_pdf_zero_based_index": 66,
+      "course_scope_disposition": "AUTHOR_RECONCILED_SOURCE_STANDARD_VS_EXPLICIT_COURSE_INTRODUCTION_PENDING_INDEPENDENT_VERIFICATION"
+    },
+    {
+      "expectation_id": "F-IF.8.a",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 67,
+      "source_pdf_page_index": 73,
+      "author_mathematical_scope_summary": "Use quadratic factoring or completed-square forms to explain zeros, extrema and symmetry in the graph and context.",
+      "test_material_conditions": [
+        "factor and complete square",
+        "zeros extrema symmetry",
+        "context"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-IF.8.b",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 67,
+      "source_pdf_page_index": 73,
+      "author_mathematical_scope_summary": "Rewrite exponential forms to interpret growth and decay as percent rates.",
+      "test_material_conditions": [
+        "exponential form",
+        "percent rate of growth or decay"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-IF.9",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 67,
+      "source_pdf_page_index": 73,
+      "author_mathematical_scope_summary": "Compare two functions represented differently in expressions, graphs, tables or verbal descriptions.",
+      "test_material_conditions": [
+        "cross-representation comparison",
+        "function properties"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-BF.1.a",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 67,
+      "source_pdf_page_index": 73,
+      "author_mathematical_scope_summary": "Construct an explicit expression, recursive process or computation steps for a function from a contextual relationship.",
+      "test_material_conditions": [
+        "explicit and recursive",
+        "contextual model"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-BF.1.b",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 67,
+      "source_pdf_page_index": 73,
+      "author_mathematical_scope_summary": "Combine standard function types using arithmetic operations to construct contextual models.",
+      "test_material_conditions": [
+        "arithmetic combinations of functions",
+        "contextual model"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-BF.2",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 67,
+      "source_pdf_page_index": 73,
+      "author_mathematical_scope_summary": "Model arithmetic and geometric sequences recursively and explicitly and convert between these representations.",
+      "test_material_conditions": [
+        "arithmetic sequences",
+        "geometric sequences",
+        "recursive and explicit"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-BF.3",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 67,
+      "source_pdf_page_index": 73,
+      "author_mathematical_scope_summary": "Identify how the graphs change when f(x) is replaced by f(x)+k, kf(x), f(kx), and f(x+k) for positive and negative k; find the value of k given the graphs; experiment with technology to explain transformations; recognize even and odd functions from graphs and algebraic expressions.",
+      "test_material_conditions": [
+        "four k transformations",
+        "positive or negative k",
+        "even and odd function properties",
+        "technology experiments",
+        "find k from given graphs"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-BF.4.a",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 67,
+      "source_pdf_page_index": 73,
+      "author_mathematical_scope_summary": "For a simple invertible linear function in the Algebra I course limitation, solve f(x)=c for x and express its inverse.",
+      "test_material_conditions": [
+        "inverse function",
+        "F-BF.4a linear-only course note"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-LE.1.a",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Prove equal increases over equal input intervals for linear functions versus equal multiplicative factors over equal intervals for exponential functions.",
+      "test_material_conditions": [
+        "additive versus multiplicative",
+        "equal intervals",
+        "proof"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-LE.1.b",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Recognize situations where a quantity changes by a constant rate per unit interval relative to another.",
+      "test_material_conditions": [
+        "constant rate",
+        "linear modeling"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-LE.1.c",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Recognize situations of growth or decay by a fixed percent rate per unit interval.",
+      "test_material_conditions": [
+        "constant percentage",
+        "exponential growth and decay"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-LE.2",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Construct linear and exponential functions, including arithmetic and geometric sequences, from graphs, descriptions or two input-output pairs from a table.",
+      "test_material_conditions": [
+        "graph description or two input-output pairs",
+        "arithmetic and geometric sequences"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-LE.3",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Observe in graphs and tables the eventual dominance of exponential growth over linear, quadratic or more general polynomial growth.",
+      "test_material_conditions": [
+        "eventual exponential dominance",
+        "graph and table",
+        "linear quadratic polynomial"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-LE.5",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Interpret parameters of linear and exponential functions in context, respecting the source's course-specific example form f(x)=b^x+k.",
+      "test_material_conditions": [
+        "parameter interpretation",
+        "linear and exponential",
+        "course-form f(x)=b^x+k"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "F-LE.6",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Apply quadratic functions to physical problems such as gravitational motion (California-added standard).",
+      "test_material_conditions": [
+        "California addition",
+        "quadratic physical problems",
+        "gravity"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "S-ID.1",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Display distributions of one measurement or count variable using dot, histogram or box plots.",
+      "test_material_conditions": [
+        "dot plots",
+        "histograms",
+        "box plots"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "S-ID.2",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Compare data-set centers using mean or median and spreads using interquartile range or standard deviation as appropriate to distribution shape.",
+      "test_material_conditions": [
+        "mean median",
+        "IQR and standard deviation",
+        "shape of distribution"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "S-ID.3",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Interpret differences in shape, center and spread of data sets in context, considering outliers.",
+      "test_material_conditions": [
+        "shape center spread",
+        "outlier effects",
+        "context"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "S-ID.5",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Use two-way category frequency tables, including joint, marginal and conditional relative frequencies, to assess association.",
+      "test_material_conditions": [
+        "two-way table",
+        "joint marginal conditional relative frequencies",
+        "associations"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "S-ID.6.a",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Fit and use an appropriate function for bivariate quantitative data and context, emphasizing linear, quadratic and exponential models.",
+      "test_material_conditions": [
+        "scatter plot two quantitative variables",
+        "fitted function",
+        "linear quadratic exponential"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "S-ID.6.b",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Assess fitted-function goodness of fit informally through plotted and analyzed residuals.",
+      "test_material_conditions": [
+        "residual plot",
+        "model goodness of fit"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "S-ID.6.c",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Fit a linear function to scatter-plot data showing an apparent linear association.",
+      "test_material_conditions": [
+        "scatter plot",
+        "linear association",
+        "fit line"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "S-ID.7",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Interpret slope as rate of change and intercept as constant term of a linear data model in context.",
+      "test_material_conditions": [
+        "linear slope",
+        "intercept",
+        "context"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "S-ID.8",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Use technology to compute and interpret the correlation coefficient for a linear fit.",
+      "test_material_conditions": [
+        "technology",
+        "correlation coefficient",
+        "linear fit"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "S-ID.9",
+      "track": "ALGEBRA_I",
+      "source_printed_page": 68,
+      "source_pdf_page_index": 74,
+      "author_mathematical_scope_summary": "Distinguish correlation from causation.",
+      "test_material_conditions": [
+        "correlation",
+        "causation"
+      ],
+      "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_GRADE3_PRINTED_PAGE26_DRAFT_NOT_ACCEPTED",
+  "jurisdiction": "CA",
+  "track": "GRADE_3",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "CDE 2013 modification/2014 corrected electronic edition",
+  "source_printed_page": 26,
+  "source_pdf_zero_based_page_index": 32,
+  "expectation_count": 11,
+  "scope": "3.NBT.2–3, 3.NF.1–3 (lettered subparts), and 3.MD.1–2. Partial Grade 3 only.",
+  "parent_stems": {
+    "3.NF.2": "Understand a fraction as a number on a number line and represent fractions on a number-line diagram.",
+    "3.NF.3": "Explain fraction equivalence in special cases and compare fractions by reasoning about their size."
+  },
+  "fraction_allowed_denominators": [
+    2,
+    3,
+    4,
+    6,
+    8
+  ],
+  "footnote_exclusions": [
+    "3.MD.2: excludes compound units and geometric container volume",
+    "3.MD.2: excludes multiplicative-comparison (times-as-much) problems"
+  ],
+  "source_cautions": [
+    "CDE printed p.26; PDF zero-based page index 32 verified against publisher page rendering.",
+    "3.NF.3.d permits visual fraction models as examples of a valid justification, not the unique allowable proof.",
+    "Grade 3 records on pp.25 and 26 remain partial; p.27 not staged in this batch."
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "3.NBT.2",
+      "source_printed_page": 26,
+      "source_pdf_zero_based_page_index": 32,
+      "author_mathematical_scope": "Fluently add and subtract within 1000 using strategies and algorithms based on place value, operation properties, or the addition–subtraction relationship.",
+      "required_material_conditions": [
+        "within 1000",
+        "addition and subtraction fluency",
+        "strategies and algorithms",
+        "place value, properties, inverse relationship"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.NBT.3",
+      "source_printed_page": 26,
+      "source_pdf_zero_based_page_index": 32,
+      "author_mathematical_scope": "Multiply a one-digit whole number by a multiple of ten from 10 through 90 using place value and operation properties.",
+      "required_material_conditions": [
+        "one-digit whole number",
+        "multiples of ten 10–90",
+        "place value and properties"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.NF.1",
+      "source_printed_page": 26,
+      "source_pdf_zero_based_page_index": 32,
+      "author_mathematical_scope": "Understand 1/b as the quantity from one of b equal parts of a whole and a/b as a parts each of size 1/b.",
+      "required_material_conditions": [
+        "b equal parts of whole",
+        "unit fraction 1/b",
+        "a copies of 1/b"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.NF.2.a",
+      "source_printed_page": 26,
+      "source_pdf_zero_based_page_index": 32,
+      "author_mathematical_scope": "Represent 1/b on a number line by treating [0,1] as the whole, partitioning it into b equal intervals, and locating the endpoint of the first interval.",
+      "required_material_conditions": [
+        "0-to-1 unit whole",
+        "b equal intervals",
+        "endpoint locates 1/b"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.NF.2.b",
+      "source_printed_page": 26,
+      "source_pdf_zero_based_page_index": 32,
+      "author_mathematical_scope": "Represent a/b on a number line by marking off a intervals, each of length 1/b, from zero and locating the endpoint.",
+      "required_material_conditions": [
+        "a lengths of 1/b",
+        "starting from zero",
+        "endpoint locates a/b"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.NF.3.a",
+      "source_printed_page": 26,
+      "source_pdf_zero_based_page_index": 32,
+      "author_mathematical_scope": "Understand two fractions as equivalent when they represent the same size or point on a number line.",
+      "required_material_conditions": [
+        "same size",
+        "same number-line location"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.NF.3.b",
+      "source_printed_page": 26,
+      "source_pdf_zero_based_page_index": 32,
+      "author_mathematical_scope": "Recognize and generate simple equivalent fractions, and explain equivalence, for example using a visual fraction model.",
+      "required_material_conditions": [
+        "recognize and generate equivalents",
+        "explain why",
+        "visual fraction model as example"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.NF.3.c",
+      "source_printed_page": 26,
+      "source_pdf_zero_based_page_index": 32,
+      "author_mathematical_scope": "Express whole numbers as fractions and recognize fractions equivalent to whole numbers, including co-locating such values on a number line.",
+      "required_material_conditions": [
+        "whole numbers as fractions",
+        "equivalent to whole numbers",
+        "number-line location"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.NF.3.d",
+      "source_printed_page": 26,
+      "source_pdf_zero_based_page_index": 32,
+      "author_mathematical_scope": "Compare fractions with the same numerator or the same denominator by reasoning about relative size, only when both refer to the same whole; record >, =, or < and justify conclusions, for example using a visual model.",
+      "required_material_conditions": [
+        "same numerator or denominator",
+        "same whole",
+        "symbols > = <",
+        "reasoned justification (visual model is example, not sole method)"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.MD.1",
+      "source_printed_page": 26,
+      "source_pdf_zero_based_page_index": 32,
+      "author_mathematical_scope": "Tell and write time to the nearest minute, measure intervals in minutes, and solve addition/subtraction word problems involving time intervals (for example on number-line diagrams).",
+      "required_material_conditions": [
+        "nearest minute",
+        "minute time intervals",
+        "addition and subtraction word problems"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "3.MD.2",
+      "source_printed_page": 26,
+      "source_pdf_zero_based_page_index": 32,
+      "author_mathematical_scope": "Measure and estimate liquid volume and mass in liters, grams, and kilograms, then solve one-step same-unit word problems using all four operations; exclude compound units, geometric volume, and multiplicative-comparison problems.",
+      "required_material_conditions": [
+        "liquid volume and mass",
+        "grams kilograms liters",
+        "one-step same-units problems",
+        "addition subtraction multiplication division",
+        "no compound units or geometric volume",
+        "no multiplicative comparisons"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}

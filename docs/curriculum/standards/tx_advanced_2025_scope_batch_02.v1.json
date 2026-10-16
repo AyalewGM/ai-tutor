@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_EDITORIAL_SOURCE_SCOPE_NOT_INDEPENDENTLY_ACCEPTED",
+  "source": {
+    "final_2025_adoption": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+    "accessible_legal_mirror": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
+    "regulation": "19 TAC §111.30(c), Grade 7 Middle School Advanced Mathematics",
+    "publication_date": "2025-06-27",
+    "effective_date": "2025-07-06",
+    "publisher_bytes_verified": false,
+    "original_publisher_retrieval": "HTTP_403_IN_THIS_REVIEW_ENVIRONMENT"
+  },
+  "summary": {
+    "additional_author_scopes": 18,
+    "previously_documented_author_scopes": 14,
+    "cumulative_author_scopes_when_integrated": 32,
+    "out_of_total": 130,
+    "remaining_scope_abstracts": 98,
+    "independently_accepted_scopes": 0
+  },
+  "note": "Editorial abstracts, not official verbatim expectations; preserve parent-stem, subpart, and qualifier distinctions. Do not infer canonical equivalence, teacher/generator implementation, assessments, or mastery.",
+  "rows": [
+    {
+      "expectation_id": "111.30(c)(2)(A)",
+      "scope": "Describe subset relationships among real-number sets using visual representations."
+    },
+    {
+      "expectation_id": "111.30(c)(2)(B)",
+      "scope": "Approximate irrational values, including π and square roots of numbers below 225, and place rational estimates on a number line.",
+      "material_bounds": [
+        "π included",
+        "radicand < 225",
+        "rational number-line approximation"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(2)(C)",
+      "scope": "Convert standard decimal and scientific notation in both directions."
+    },
+    {
+      "expectation_id": "111.30(c)(2)(D)",
+      "scope": "Order real numbers in mathematical and applied contexts."
+    },
+    {
+      "expectation_id": "111.30(c)(3)(A)",
+      "scope": "Fluently add, subtract, multiply and divide rational numbers."
+    },
+    {
+      "expectation_id": "111.30(c)(3)(B)",
+      "scope": "Use all four rational-number operations to solve problems."
+    },
+    {
+      "expectation_id": "111.30(c)(4)(A)",
+      "scope": "Solve ratio, rate and percent problems, including multistep percent increases/decreases and financial contexts."
+    },
+    {
+      "expectation_id": "111.30(c)(4)(B)",
+      "scope": "Calculate and compare simple- and compound-interest earnings."
+    },
+    {
+      "expectation_id": "111.30(c)(4)(C)",
+      "scope": "Analyze and compare sales, rebates, coupons and related monetary incentives."
+    },
+    {
+      "expectation_id": "111.30(c)(4)(D)",
+      "scope": "Compare how borrowing interest rate and loan length affect the overall cost of credit."
+    },
+    {
+      "expectation_id": "111.30(c)(4)(E)",
+      "scope": "Calculate repayment costs of credit cards and easy-access loans for varying rates and terms using an online calculator.",
+      "material_bounds": [
+        "online calculator",
+        "credit cards and easy-access loans"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(4)(F)",
+      "scope": "Explain long-term growth when small amounts are invested regularly, including college and retirement savings."
+    },
+    {
+      "expectation_id": "111.30(c)(4)(G)",
+      "scope": "Estimate two- and four-year college costs, including a family contribution; devise periodic savings toward at least first-year attendance.",
+      "material_bounds": [
+        "two-/four-year costs",
+        "family contribution",
+        "at least first year"
+      ]
+    },
+    {
+      "expectation_id": "111.30(c)(5)(A)",
+      "scope": "Relate π to the ratio of a circle's circumference to its diameter."
+    },
+    {
+      "expectation_id": "111.30(c)(5)(B)",
+      "scope": "Generalize similarity attributes, including ratios within and between similar shapes."
+    },
+    {
+      "expectation_id": "111.30(c)(5)(C)",
+      "scope": "Solve similar-figure and scale-drawing problems in mathematics and real-world contexts."
+    },
+    {
+      "expectation_id": "111.30(c)(5)(D)",
+      "scope": "Compare shape attributes with those of coordinate-plane dilations."
+    },
+    {
+      "expectation_id": "111.30(c)(5)(E)",
+      "scope": "Explain origin-centered coordinate-plane dilations of two-dimensional figures algebraically for a given positive rational scale factor.",
+      "material_bounds": [
+        "positive rational scale factor",
+        "origin-centered",
+        "two-dimensional figures"
+      ]
+    }
+  ],
+  "source_fidelity": "AUTHOR_PENDING_INDEPENDENT_PUBLISHER_VERIFICATION",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}

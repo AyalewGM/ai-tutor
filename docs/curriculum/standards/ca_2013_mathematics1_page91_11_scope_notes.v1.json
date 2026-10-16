@@ -1,0 +1,158 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "MATHEMATICS_I",
+  "status": "AUTHOR_SUPPLEMENT_NOT_INDEPENDENTLY_ACCEPTED",
+  "reviewed_repo_head": "ac7fb72246244091f14fe81c9a36e5c0cfc52118",
+  "source_url": "https://www.cde.ca.gov/be/st/SS/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "California CCSS Mathematics 2013 modified / 2014 corrected electronic edition",
+  "source_printed_page": 91,
+  "source_pdf_zero_based_page_index": 97,
+  "author_examined_publisher_page_render": true,
+  "publisher_original_file_bytes_hash_authenticated": false,
+  "source_audit_file": "ca_2013_mathematics1_pages90_94_author_audit.v1.json",
+  "entry_semantics": "11 supplemental material-scope notes for existing Mathematics I page-91 placements, 0 additional source identifiers or canonical skills",
+  "requirement_count": 11,
+  "original_math1_placement_count": 59,
+  "historical_grade7_8_algebra1_math1_placements": 173,
+  "rows": [
+    {
+      "expectation_id": "A-REI.3",
+      "source_printed_page": 91,
+      "source_pdf_zero_based_page_index": 97,
+      "material_conditions": [
+        "solve one-variable linear equations and inequalities, including equations with letter coefficients",
+        "Mathematics I bracket: linear inequalities; literal equations linear in the variable being solved for",
+        "printed bracket also illustrates a simple exponential equation (e.g., 2^x=1/16), not a general exponential or transcendental-solving entitlement"
+      ],
+      "source_scope_tension": "COURSE_BRACKET_EXAMPLE_NOT_AUTOMATIC_GENERAL_MASTERY",
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "A-REI.3.1",
+      "source_printed_page": 91,
+      "source_pdf_zero_based_page_index": 97,
+      "material_conditions": [
+        "California-added one-variable absolute-value equations and inequalities",
+        "graph solutions and interpret them in context",
+        "CA addition is distinct from national A-REI.3"
+      ],
+      "source_scope_tension": "CALIFORNIA_ADDITION",
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "A-REI.5",
+      "source_printed_page": 91,
+      "source_pdf_zero_based_page_index": 97,
+      "material_conditions": [
+        "prove that replacing one equation in a two-equation, two-variable system by its sum with a multiple of the other preserves exactly the same solution set",
+        "course bracket limits this strand to linear systems"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "A-REI.6",
+      "source_printed_page": 91,
+      "source_pdf_zero_based_page_index": 97,
+      "material_conditions": [
+        "solve systems of linear equations exactly and approximately, including graph-based approximations",
+        "focus on pairs of linear equations in two variables"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "A-REI.10",
+      "source_printed_page": 91,
+      "source_pdf_zero_based_page_index": 97,
+      "material_conditions": [
+        "a graph of a two-variable equation consists of all its coordinate-plane solutions",
+        "resulting graph may be a line or another curve"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "A-REI.11",
+      "source_printed_page": 91,
+      "source_pdf_zero_based_page_index": 97,
+      "material_conditions": [
+        "x-coordinates of intersections of y=f(x) and y=g(x) solve f(x)=g(x)",
+        "approximate intersections with technology, value tables, or successive approximations",
+        "publisher lists linear, polynomial, rational, absolute-value, exponential and logarithmic cases",
+        "Mathematics I bracket focuses linear and exponential; wider printed examples are not automatically course-wide mastery"
+      ],
+      "source_scope_tension": "FULL_STANDARD_FUNCTION_FAMILIES_VS_MATH1_BRACKET",
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "A-REI.12",
+      "source_printed_page": 91,
+      "source_pdf_zero_based_page_index": 97,
+      "material_conditions": [
+        "graph solutions of two-variable linear inequalities as half-planes",
+        "exclude boundary for a strict inequality",
+        "graph a system as intersection of the corresponding half-planes"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-IF.1",
+      "source_printed_page": 91,
+      "source_pdf_zero_based_page_index": 97,
+      "material_conditions": [
+        "function maps each domain element to exactly one element of range",
+        "for x in domain, f(x) denotes corresponding output",
+        "graph of f is graph of y=f(x)"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-IF.2",
+      "source_printed_page": 91,
+      "source_pdf_zero_based_page_index": 97,
+      "material_conditions": [
+        "use function notation and evaluate functions at inputs inside their domain",
+        "interpret function notation in a stated context"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-IF.3",
+      "source_printed_page": 91,
+      "source_pdf_zero_based_page_index": 97,
+      "material_conditions": [
+        "sequences are functions whose domain is a subset of integers",
+        "recursive sequence definitions allowed",
+        "Fibonacci recurrence is a publisher illustration, not a separate required identifier",
+        "do not treat sequence inputs as an unrestricted continuous domain"
+      ],
+      "source_scope_tension": null,
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    },
+    {
+      "expectation_id": "F-IF.4",
+      "source_printed_page": 91,
+      "source_pdf_zero_based_page_index": 97,
+      "material_conditions": [
+        "interpret contextual features of graphs and tables and sketch graph features from verbal description",
+        "intercepts; increasing/decreasing; positive/negative; relative minima and maxima; symmetry; end behavior; periodicity",
+        "literal publisher bracket says 'Linear and exponential (linear domain)' and requires independent adjudication, not editorial replacement",
+        "preceding Math I concept-of-function bracket focuses linear/exponential integer domains and arithmetic/geometric sequences; both brackets recorded separately"
+      ],
+      "source_scope_tension": "LITERAL_MATH1_LINEAR_DOMAIN_BRACKET_PENDING_ADJUDICATION",
+      "source_review_status": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "next_owner": "Independent Standards Source-Fidelity Reviewer (after Standards Mapping author-side integration and independent checks)"
+}

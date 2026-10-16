@@ -1,0 +1,201 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_DIRECT_CDE_PAGE_REVIEW_PENDING_INDEPENDENT_FIDELITY",
+  "jurisdiction": "CA",
+  "track": "GRADE_5",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "January 2013 modified / 2014 corrected CDE electronic edition",
+  "source_printed_page": 36,
+  "source_pdf_zero_based_index": 42,
+  "rows_count": 11,
+  "source_scope": "Grade 5 printed page 36 only: 5.OA and 5.NBT; not full Grade 5.",
+  "california_additions": [
+    "5.OA.2.1"
+  ],
+  "parent_subpart_conditions": {
+    "5.NBT.3": [
+      "a",
+      "b"
+    ]
+  },
+  "next_unstaged_pages": [
+    37,
+    38,
+    39
+  ],
+  "not_full_grade5": true,
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "5.OA.1",
+      "author_mathematical_scope": "Evaluate numerical expressions containing parentheses, brackets, or braces by using those grouping symbols.",
+      "required_material_conditions": [
+        "parentheses brackets braces",
+        "evaluate numerical expressions"
+      ],
+      "source_printed_page": 36,
+      "source_pdf_zero_based_index": 42,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.OA.2",
+      "author_mathematical_scope": "Write simple numerical expressions to record calculations and interpret the expressions without evaluating them.",
+      "required_material_conditions": [
+        "express calculations symbolically",
+        "interpret without evaluating"
+      ],
+      "source_printed_page": 36,
+      "source_pdf_zero_based_index": 42,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.OA.2.1",
+      "author_mathematical_scope": "Express each whole number from 2 through 50 as a product of prime factors (California addition).",
+      "required_material_conditions": [
+        "CALIFORNIA_ADDITION",
+        "inclusive 2–50",
+        "product of prime factors"
+      ],
+      "source_printed_page": 36,
+      "source_pdf_zero_based_index": 42,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.OA.3",
+      "author_mathematical_scope": "Generate two numerical sequences using two given rules, identify relationships between corresponding terms, form ordered pairs, graph them on the coordinate plane and informally explain observed relationships.",
+      "required_material_conditions": [
+        "two given rules and numerical patterns",
+        "corresponding ordered pairs",
+        "coordinate-plane graphs",
+        "informal explanation"
+      ],
+      "source_printed_page": 36,
+      "source_pdf_zero_based_index": 42,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NBT.1",
+      "author_mathematical_scope": "Recognize that a digit in one place of a multi-digit number is ten times the value it has one place to the right and one tenth its value one place to the left.",
+      "required_material_conditions": [
+        "10 times to the right",
+        "one tenth to the left"
+      ],
+      "source_printed_page": 36,
+      "source_pdf_zero_based_index": 42,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NBT.2",
+      "author_mathematical_scope": "Explain zero-count patterns in products by powers of ten and decimal-place shifts when multiplying or dividing decimals by powers of ten; represent powers of ten with whole-number exponents.",
+      "required_material_conditions": [
+        "zeros in products by powers of ten",
+        "multiply and divide decimals by powers of ten",
+        "whole-number exponents"
+      ],
+      "source_printed_page": 36,
+      "source_pdf_zero_based_index": 42,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NBT.3",
+      "author_mathematical_scope": "Read, write and compare decimals through thousandths, including number names, base-ten numerals and expanded form, and comparisons justified by place value using >, = and <.",
+      "required_material_conditions": [
+        "parent stem: decimals through thousandths",
+        "subpart a: numeral, number name, expanded form",
+        "subpart b: place-value comparison",
+        "symbols > = <"
+      ],
+      "source_printed_page": 36,
+      "source_pdf_zero_based_index": 42,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NBT.4",
+      "author_mathematical_scope": "Round decimals to any place using place-value understanding.",
+      "required_material_conditions": [
+        "round decimals",
+        "any place"
+      ],
+      "source_printed_page": 36,
+      "source_pdf_zero_based_index": 42,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NBT.5",
+      "author_mathematical_scope": "Fluently multiply multi-digit whole numbers using the standard algorithm.",
+      "required_material_conditions": [
+        "multi-digit whole numbers",
+        "standard multiplication algorithm",
+        "fluency"
+      ],
+      "source_printed_page": 36,
+      "source_pdf_zero_based_index": 42,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NBT.6",
+      "author_mathematical_scope": "Find whole-number quotients for dividends of up to four digits and two-digit divisors using place value, operation properties or inverse operations, and illustrate and explain using equations, rectangular arrays or area models.",
+      "required_material_conditions": [
+        "whole-number quotients",
+        "up to four-digit dividend",
+        "two-digit divisor",
+        "illustrate and explain",
+        "equations arrays or area models"
+      ],
+      "source_printed_page": 36,
+      "source_pdf_zero_based_index": 42,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "5.NBT.7",
+      "author_mathematical_scope": "Add, subtract, multiply and divide decimals to hundredths using visual or concrete representations or place-value/operation strategies; connect the strategy to a written method and explain the reasoning.",
+      "required_material_conditions": [
+        "all four decimal operations",
+        "to hundredths",
+        "models or drawings",
+        "written method and explanation"
+      ],
+      "source_printed_page": 36,
+      "source_pdf_zero_based_index": 42,
+      "source_fidelity": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_PUBLISHER_CHECK",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}

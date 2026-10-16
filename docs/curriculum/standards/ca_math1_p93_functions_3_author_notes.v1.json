@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "CA",
+  "track": "MATHEMATICS_I",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_printed_page": 93,
+  "source_pdf_zero_based_page_index": 99,
+  "status": "AUTHOR_PARAPHRASE_PENDING_INDEPENDENT_REVIEW",
+  "existing_source_audit": "ca_2013_mathematics1_pages90_94_author_audit.v1.json",
+  "supplemental_existing_placements_only": true,
+  "rows": [
+    {
+      "expectation_id": "F-LE.2",
+      "material_conditions": [
+        "Construct linear and exponential functions, including arithmetic/geometric sequences, from graph, relation description or two input-output pairs (including a table)."
+      ]
+    },
+    {
+      "expectation_id": "F-LE.3",
+      "material_conditions": [
+        "Use graphs and tables to observe exponential growth eventually exceeds linear, quadratic and any general polynomial growth; do not infer mastery of general polynomial solving."
+      ]
+    },
+    {
+      "expectation_id": "F-LE.5",
+      "material_conditions": [
+        "Interpret linear/exponential parameters in context; preserve source Mathematics I bracket naming exponential form f(x)=b^x+k separately from generalized exponentials."
+      ],
+      "independent_adjudication": "LITERAL_COURSE_BRACKET"
+    }
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}

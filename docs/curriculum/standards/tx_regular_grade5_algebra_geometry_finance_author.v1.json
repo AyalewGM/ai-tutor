@@ -1,0 +1,263 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "TX",
+  "track": "REGULAR_GRADE_5",
+  "section": "111.7(b)(4)-(10)",
+  "publisher": "Texas Education Agency",
+  "official_source_url": "https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch111a.pdf",
+  "edition": "December 2014 Update; Grade 5 adopted 2012",
+  "author_scope_rows": 24,
+  "unlettered_parent_expectations": [
+    "111.7(b)(5)",
+    "111.7(b)(7)"
+  ],
+  "source_page_convention": "Printed footer page; zero-based PDF index = printed page - 1",
+  "independent_source_fidelity": "PENDING",
+  "publisher_original_bytes_authenticated": false,
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "id": "111.7(b)(4)(A)",
+      "scope": "Identify prime and composite numbers.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(4)(B)",
+      "scope": "Represent/solve multistep four-operation whole-number problems with equations containing an unknown letter.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(4)(C)",
+      "scope": "Generate and graph patterns given y=ax or y=x+a; distinguish input-output relationship.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(4)(D)",
+      "scope": "Distinguish additive versus multiplicative patterns in tables or graphs.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(4)(E)",
+      "scope": "Explain meaning of parentheses and brackets in numerical expressions.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(4)(F)",
+      "scope": "Simplify expressions without exponents, including up to two levels of grouping.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(4)(G)",
+      "scope": "Develop rectangular-prism volume formulas with models, including cube form V=s×s×s, V=l×w×h and V=Bh.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(4)(H)",
+      "scope": "Represent and solve perimeter, area and volume problems.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(5)",
+      "scope": "Classify two-dimensional figures in a hierarchy of sets and subsets using graphic organizers based on attributes and properties.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(6)(A)",
+      "scope": "Recognize a unit cube with unit-length edges as one cubic unit and volume as the number of unit cubes filling a solid with no gaps or overlaps.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(6)(B)",
+      "scope": "Find rectangular-prism volume with whole-number edge lengths using number of layers times base unit-cube count.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(7)",
+      "scope": "Solve customary or metric measurement conversion problems within one measurement system.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(8)(A)",
+      "scope": "Describe coordinate-plane axes as perpendicular number lines meeting at origin (0,0), and ordered-pair x/y movements parallel to corresponding axes.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(8)(B)",
+      "scope": "Describe plotting ordered pairs in the first quadrant.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(8)(C)",
+      "scope": "Graph first-quadrant ordered pairs from mathematical and real-world problems, including input-output tables and patterns.",
+      "source_printed_page": 21,
+      "source_pdf_page_index": 20,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(9)(A)",
+      "scope": "Represent categorical data with bar graphs/frequency tables and numerical data, including fractional/decimal measurements, with dot plots or stem-and-leaf plots.",
+      "source_printed_page": 22,
+      "source_pdf_page_index": 21,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(9)(B)",
+      "scope": "Represent discrete paired data using scatterplots.",
+      "source_printed_page": 22,
+      "source_pdf_page_index": 21,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(9)(C)",
+      "scope": "Solve one- and two-step problems using frequency tables, dot plots, bar graphs, stem-and-leaf plots and scatterplots.",
+      "source_printed_page": 22,
+      "source_pdf_page_index": 21,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(10)(A)",
+      "scope": "Define income tax, payroll tax, sales tax, and property tax.",
+      "source_printed_page": 22,
+      "source_pdf_page_index": 21,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(10)(B)",
+      "scope": "Explain gross versus net income.",
+      "source_printed_page": 22,
+      "source_pdf_page_index": 21,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(10)(C)",
+      "scope": "Compare advantages/disadvantages of checks, credit cards, debit cards and electronic payments.",
+      "source_printed_page": 22,
+      "source_pdf_page_index": 21,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(10)(D)",
+      "scope": "Develop a system to keep and use financial records.",
+      "source_printed_page": 22,
+      "source_pdf_page_index": 21,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(10)(E)",
+      "scope": "Describe possible actions to balance a budget when expenses exceed income.",
+      "source_printed_page": 22,
+      "source_pdf_page_index": 21,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "id": "111.7(b)(10)(F)",
+      "scope": "Balance a simple budget.",
+      "source_printed_page": 22,
+      "source_pdf_page_index": 21,
+      "source_fidelity": "PENDING",
+      "canonical_mapping": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}

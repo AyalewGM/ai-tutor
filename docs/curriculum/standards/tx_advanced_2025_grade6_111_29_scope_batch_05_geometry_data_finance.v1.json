@@ -1,0 +1,301 @@
+{
+  "schema_version": "1.0.0",
+  "as_of": "2026-10-14",
+  "jurisdiction": "TX",
+  "track": "ADVANCED_GRADE_6",
+  "official_section": "19 TAC §111.29(c)",
+  "scope": "(c)(11)(A-B), (12)(A-D), (13)(A-B), (14)(A-F), (15)(A-G)",
+  "source_publisher": "Texas Education Agency",
+  "author_review_source": "https://tea.texas.gov/state-board-of-education/sboe-2025/sboe-2025-january/cofb6-chap111-math-teks-sub-b-mid-sch-attach.pdf",
+  "source_adoption_notice": "https://www.sos.state.tx.us/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+  "codified_reference_for_non_authoritative_crosscheck": "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-29",
+  "source_provenance": "Official TEA January 2025 proposal and June 27 2025 adopted-without-changes notice for February 2025 proposal; January-to-February original text and final codified parity await independent authentication. No acceptance from third-party crosscheck.",
+  "total_grade6_advanced_candidate_ids": 68,
+  "previous_author_scoped": 40,
+  "new_author_scoped": 21,
+  "remaining_unscoped": 7,
+  "independent_source_fidelity": "PENDING",
+  "canonical_mapping": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "111.29(c)(11)(A)",
+      "parent_group": 11,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "author_mathematical_scope": "Model parallelogram, trapezoid and triangle area formulas by decomposing shapes into parts and rearranging the parts.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(11)(B)",
+      "parent_group": 11,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        3
+      ],
+      "author_mathematical_scope": "Write equations for areas of rectangles, parallelograms, trapezoids and triangles and volumes of right rectangular prisms, keeping dimensions positive rational numbers.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(12)(A)",
+      "parent_group": 12,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        3,
+        4
+      ],
+      "author_mathematical_scope": "Explain the triangle angle sum, relationships between side lengths and angle measures, and conditions for three lengths to form a triangle.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(12)(B)",
+      "parent_group": 12,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        3,
+        4
+      ],
+      "author_mathematical_scope": "Solve area problems for rectangles, parallelograms, trapezoids and triangles with positive rational dimensions.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(12)(C)",
+      "parent_group": 12,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        3,
+        4
+      ],
+      "author_mathematical_scope": "Solve volume problems involving right rectangular prisms and triangular prisms.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(12)(D)",
+      "parent_group": 12,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        3,
+        4
+      ],
+      "author_mathematical_scope": "Write and solve equations that use geometric concepts, including triangle angle sums and angle relationships.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(13)(A)",
+      "parent_group": 13,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Distinguish situations that produce data with variability from those without variability.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(13)(B)",
+      "parent_group": 13,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Represent quantitative numeric data graphically in dot plots, stem-and-leaf plots, histograms and box plots.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(14)(A)",
+      "parent_group": 14,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Use a graph of numeric data to describe the distribution's center, spread and shape.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(14)(B)",
+      "parent_group": 14,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Summarize numeric data using mean and median as centers and range and interquartile range (IQR) as spreads; interpret center, spread and shape.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(14)(C)",
+      "parent_group": 14,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Interpret numeric data in dot plots, stem-and-leaf plots, histograms and box plots.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(14)(D)",
+      "parent_group": 14,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Solve problems with bar graphs, dot plots and circle graphs involving part-to-whole and part-to-part comparisons and equivalent representations.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(14)(E)",
+      "parent_group": 14,
+      "lettered_subpart": "E",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Compare two groups of numeric data with comparative dot plots or box plots, discussing shape, center and spread.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(14)(F)",
+      "parent_group": 14,
+      "lettered_subpart": "F",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Summarize categorical data using mode, percent of values by category in a relative frequency table, and percent bar graph, and describe the distribution.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(A)",
+      "parent_group": 15,
+      "lettered_subpart": "A",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Compare features and costs of checking accounts and debit cards from different local financial institutions.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(B)",
+      "parent_group": 15,
+      "lettered_subpart": "B",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Explain advantages and disadvantages of payment methods, including differences between debit cards and credit cards.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(C)",
+      "parent_group": 15,
+      "lettered_subpart": "C",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Explain the importance of establishing a positive credit history.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(D)",
+      "parent_group": 15,
+      "lettered_subpart": "D",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Describe information included in a credit report and how long that information is retained; do not assume an unsupported retention duration.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(E)",
+      "parent_group": 15,
+      "lettered_subpart": "E",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Explain why credit reports are valuable to both borrowers and lenders.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(F)",
+      "parent_group": 15,
+      "lettered_subpart": "F",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Explain ways to pay for college: savings, grants, scholarships, student loans and work-study.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "111.29(c)(15)(G)",
+      "parent_group": 15,
+      "lettered_subpart": "G",
+      "source_pdf_zero_based_pages": [
+        4
+      ],
+      "author_mathematical_scope": "Compare annual salaries of several occupations with different postsecondary education or vocational-training requirements, and calculate effects on lifetime income.",
+      "source_scope_status": "AUTHOR_EDITORIAL_PARAPHRASE_AWAITING_INDEPENDENT_SOURCE_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_DIRECT_OFFICIAL_CDE_PDF_SCOPE_PENDING_INDEPENDENT_REVIEW",
+  "jurisdiction": "CA",
+  "track": "GRADE_2",
+  "source_url": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "source_edition": "Modified January 2013; electronic edition with 2014 corrections",
+  "source_printed_page": 20,
+  "source_pdf_zero_based_page_index": 26,
+  "expectation_count": 10,
+  "overlap_note": "2.NBT.7 and 2.NBT.7.1 are already documented separately in ca_2013_grade2_ca_additions_author_slice.v1.json. Do not duplicate or overwrite.",
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN",
+  "rows": [
+    {
+      "expectation_id": "2.OA.1",
+      "source_printed_page": 20,
+      "source_pdf_zero_based_page_index": 26,
+      "author_mathematical_scope": "Solve one- and two-step addition/subtraction word problems within 100 across adding-to, taking-from, putting-together, taking-apart and comparing situations, with unknowns in all positions; represent by drawings and equations.",
+      "required_material_conditions": [
+        "within 100",
+        "one- and two-step",
+        "unknowns in all positions"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.OA.2",
+      "source_printed_page": 20,
+      "source_pdf_zero_based_page_index": 26,
+      "author_mathematical_scope": "Fluently add and subtract within 20 using mental strategies; by the end of Grade 2, recall from memory every sum of two one-digit numbers.",
+      "required_material_conditions": [
+        "within 20",
+        "mental strategies",
+        "memory"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.OA.3",
+      "source_printed_page": 20,
+      "source_pdf_zero_based_page_index": 26,
+      "author_mathematical_scope": "Determine odd or even cardinality for sets of up to 20 objects, using pairing or counting by twos; represent an even number as two equal addends in an equation.",
+      "required_material_conditions": [
+        "up to 20",
+        "odd or even",
+        "equal addends"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.OA.4",
+      "source_printed_page": 20,
+      "source_pdf_zero_based_page_index": 26,
+      "author_mathematical_scope": "Use addition to count objects in rectangular arrays with no more than five rows and five columns, writing an equation for the sum of equal addends.",
+      "required_material_conditions": [
+        "five rows",
+        "five columns",
+        "equal addends"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.NBT.1",
+      "source_printed_page": 20,
+      "source_pdf_zero_based_page_index": 26,
+      "author_mathematical_scope": "Explain that each digit in a three-digit number denotes hundreds, tens or ones; additionally identify 100 as ten tens and hundreds multiples 100–900 as one through nine hundreds with zero tens and ones.",
+      "required_material_conditions": [
+        "three-digit",
+        "ten tens",
+        "100–900"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.NBT.2",
+      "source_printed_page": 20,
+      "source_pdf_zero_based_page_index": 26,
+      "author_mathematical_scope": "Count within 1,000; skip-count by 2s, 5s, 10s and 100s. California specifically includes counting by 2s.",
+      "required_material_conditions": [
+        "within 1,000",
+        "2s, 5s, 10s and 100s",
+        "California"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.NBT.3",
+      "source_printed_page": 20,
+      "source_pdf_zero_based_page_index": 26,
+      "author_mathematical_scope": "Read and write numbers through 1,000 using base-ten numerals, number names and expanded form.",
+      "required_material_conditions": [
+        "1,000",
+        "number names",
+        "expanded form"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.NBT.4",
+      "source_printed_page": 20,
+      "source_pdf_zero_based_page_index": 26,
+      "author_mathematical_scope": "Compare three-digit numbers using the hundreds/tens/ones place values and record comparisons with greater-than, equal-to and less-than symbols.",
+      "required_material_conditions": [
+        "three-digit",
+        "hundreds/tens/ones",
+        "symbols"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.NBT.5",
+      "source_printed_page": 20,
+      "source_pdf_zero_based_page_index": 26,
+      "author_mathematical_scope": "Fluently add and subtract within 100 using place-value reasoning, operation properties and the inverse relationship of addition and subtraction.",
+      "required_material_conditions": [
+        "within 100",
+        "place-value",
+        "inverse"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    },
+    {
+      "expectation_id": "2.NBT.6",
+      "source_printed_page": 20,
+      "source_pdf_zero_based_page_index": 26,
+      "author_mathematical_scope": "Add up to four two-digit numbers using place-value strategies and properties of operations.",
+      "required_material_conditions": [
+        "four two-digit",
+        "place-value",
+        "properties"
+      ],
+      "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
+      "canonical_equivalence": "UNVERIFIED",
+      "assessment": "UNVERIFIED",
+      "mastery": "UNVERIFIED"
+    }
+  ]
+}
