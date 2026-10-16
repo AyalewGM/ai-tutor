@@ -1,0 +1,1317 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "NY-NGMLS-2019-ALGEBRA1-expectation-inventory-v1",
+  "status": "DRAFT_PROPOSED_NOT_VERIFIED",
+  "jurisdiction": {
+    "country": "United States",
+    "state": "New York",
+    "authority": "New York State Education Department",
+    "authority_code": "NYSED"
+  },
+  "curriculum": {
+    "course_code": "NY_NGMLS_ALGEBRA_I",
+    "course_title": "New York State Next Generation Mathematics Learning Standards (2017, updated June 2019), Algebra I",
+    "standards_version": "NYS NGMLS 2017 (updated June 2019)",
+    "adoption": {
+      "board_of_regents_adoption": "2017-09",
+      "document_update": "2019-06",
+      "full_implementation_3_8": "2020-09",
+      "first_regents_algebra_i": "2024-06"
+    }
+  },
+  "provenance": {
+    "authoritative_source_url": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf",
+    "authority_overview_url": "https://www.nysed.gov/standards-instruction/mathematics",
+    "checked_date": "2026-10-16",
+    "source_notes": [
+      "Extracted programmatically from the official NYSED P-12 standards PDF; two-column layout interleaves statements with marginalia, so statement text and cluster headings are best-effort pending Standards Mapping review.",
+      "Coherence chains are official vertical-alignment content published inside the document and are preserved per-row.",
+      "NY identifiers are jurisdiction-native (NY- / AI- / AII- / GEO- prefixes); they must never be merged with CCSS identifiers from other states' inventories by similarity.",
+      "New York has no repository packs, seeds, or skills; every row is NO_REPOSITORY_SPECIFIC_MAPPING_FOUND pending Standards Mapping work."
+    ]
+  },
+  "reconciliation": {
+    "official_expectation_count": 43,
+    "expectations_with_provisional_links": 0,
+    "unmapped_expectations": 43,
+    "deduplicated_phantom_rows": [],
+    "warning": "Official count is derived from this extraction, not an independent NYSED count; reconciliation against a second authoritative source is a documented blocker."
+  },
+  "safety": {
+    "activation": "FORBIDDEN",
+    "mapping_review_required": true,
+    "new_canonical_ids_created": false,
+    "learner_mastery_mutation": false,
+    "verified_coverage_claim": false
+  },
+  "expectations": [
+    {
+      "expectation_id": "AI-N.RN.3",
+      "grade": "AI",
+      "domain": "N.RN",
+      "domain_title": "Number and Quantity The Real Number System",
+      "cluster_title": "Use properties of rational and irrational numbers.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=109",
+      "scope_summary": "Use properties and operations to understand the different forms of rational and irrational numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-A.APR.6"
+      ],
+      "notes": [
+        "Note: Tasks include rationalizing numerical denominators of the form"
+      ]
+    },
+    {
+      "expectation_id": "AI-N.Q.1",
+      "grade": "AI",
+      "domain": "N.Q",
+      "domain_title": "Number and Quantity Quantities",
+      "cluster_title": "Reason quantitatively and use units to solve problems. \u2605",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=109",
+      "scope_summary": "Select quantities and use units as a way to: i) interpret and guide the solution of multi-step problems; ii) choose and interpret units consistently in formulas; and iii) choose and interpret the scale and the origin in graphs and data displays.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-N.Q.3",
+      "grade": "AI",
+      "domain": "N.Q",
+      "domain_title": "Number and Quantity Quantities",
+      "cluster_title": "Reason quantitatively and use units to solve problems. \u2605",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=109",
+      "scope_summary": "Choose a level of accuracy appropriate to limitations on measurement and context when reporting quantities.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-A.SSE.1",
+      "grade": "AI",
+      "domain": "A.SSE",
+      "domain_title": "Algebra Seeing Structure in Expressions",
+      "cluster_title": "Interpret the structure of expressions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=110",
+      "scope_summary": "Interpret expressions that represent a quantity in terms of its context. \u2605 a. Write the standard form of a given polynomial and identify the terms, coefficients, degree, leading coefficient, and constant term. b. Interpret expressions by viewing one or more of their parts as a single entity.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: This standard is a fluency recommendation for Algebra I. Fluency in"
+      ]
+    },
+    {
+      "expectation_id": "AI-A.SSE.2",
+      "grade": "AI",
+      "domain": "A.SSE",
+      "domain_title": "Algebra Seeing Structure in Expressions",
+      "cluster_title": "Interpret the structure of expressions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=110",
+      "scope_summary": "Recognize and use the structure of an expression to identify ways to rewrite it.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-A.SSE.2",
+        "AII-A.SSE.3a",
+        "AI-A.SSE.1",
+        "AI-A.APR.3"
+      ],
+      "notes": [
+        "Shared standard with Algebra II) Coherence: NY-8.EE.1 \u2192 AI-A.SSE.2 \u2192 AII-A.SSE.2 AII-A.SSE.3a",
+        "Note: Algebra I expressions are limited to numerical and polynomial"
+      ]
+    },
+    {
+      "expectation_id": "AI-A.SSE.3",
+      "grade": "AI",
+      "domain": "A.SSE",
+      "domain_title": "Algebra Seeing Structure in Expressions",
+      "cluster_title": "Write expressions in equivalent forms to reveal their characteristics. \u2605",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=111",
+      "scope_summary": "Choose and produce an equivalent form of an expression to reveal and explain properties of the quantity represented by the expression.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-A.SSE.3c",
+        "AII-A.SSE.3c",
+        "AI-F.IF.1",
+        "AI-F.IF.4"
+      ],
+      "notes": [
+        "Shared standard with Algebra II",
+        "Shared standard with Algebra II",
+        "Note: Exponential expressions will include those with integer exponents, as"
+      ]
+    },
+    {
+      "expectation_id": "AI-A.APR.1",
+      "grade": "AI",
+      "domain": "A.APR",
+      "domain_title": "Algebra Arithmetic with Polynomials and Rational Expressions",
+      "cluster_title": "Perform arithmetic operations on polynomials.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=112",
+      "scope_summary": "Add, subtract, and multiply polynomials and recognize that the result of the operation is also a polynomial. This forms a system analogous to the integers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-A.APR.2",
+        "AI-F.IF.1",
+        "AI-F.IF.4"
+      ],
+      "notes": [
+        "Note: This standard is a fluency recommendation for Algebra I. Fluency in"
+      ]
+    },
+    {
+      "expectation_id": "AI-A.APR.3",
+      "grade": "AI",
+      "domain": "A.APR",
+      "domain_title": "Algebra Arithmetic with Polynomials and Rational Expressions",
+      "cluster_title": "Understand the relationship between zeros and factors of polynomials.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=112",
+      "scope_summary": "Identify zeros of polynomial functions when suitable factorizations are available.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-A.APR.2",
+        "AII-A.APR.3",
+        "AI-F.IF.8",
+        "AI-A.SSE.1"
+      ],
+      "notes": [
+        "Shared standard with Algebra II) Coherence: AI-A.APR.3 \u2192 AII-A.APR.2 AII-A.APR.3",
+        "Note: Algebra I tasks will focus on identifying the zeros of quadratic and cubic"
+      ]
+    },
+    {
+      "expectation_id": "AI-A.CED.1",
+      "grade": "AI",
+      "domain": "A.CED",
+      "domain_title": "Algebra Creating Equations",
+      "cluster_title": "Create equations that describe numbers or relationships. \u2605",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=113",
+      "scope_summary": "Create equations and inequalities in one variable to represent a real -world context.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-A.CED.1"
+      ],
+      "notes": [
+        "Shared standard with Algebra II"
+      ]
+    },
+    {
+      "expectation_id": "AI-A.CED.2",
+      "grade": "AI",
+      "domain": "A.CED",
+      "domain_title": "Algebra Creating Equations",
+      "cluster_title": "Create equations that describe numbers or relationships. \u2605",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=113",
+      "scope_summary": "Create equations and linear inequalities in two variables to represent a real-world context.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-A.CED.3",
+      "grade": "AI",
+      "domain": "A.CED",
+      "domain_title": "Algebra Creating Equations",
+      "cluster_title": "Create equations that describe numbers or relationships. \u2605",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=113",
+      "scope_summary": "Represent constraints by equations or inequalities, and by systems of equations and/or inequalities, and interpret solutions as viable or non-viable options in a modeling context.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-A.CED.4",
+      "grade": "AI",
+      "domain": "A.CED",
+      "domain_title": "Algebra Creating Equations",
+      "cluster_title": "Create equations that describe numbers or relationships. \u2605",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=113",
+      "scope_summary": "Rewrite formulas to highlight a quantity of interest, using the same reasoning as in solving equations.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-A.CED.3",
+        "AI-A.REI.1a",
+        "AI-A.CED.1"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-A.REI.1a",
+      "grade": "AI",
+      "domain": "A.REI",
+      "domain_title": "Algebra Reasoning with Equations and Inequalities",
+      "cluster_title": "Understand solving equations as a process of reasoning and explain the reasoning.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=114",
+      "scope_summary": "Explain each step when solving a linear or quadratic equation as following from the equality of numbers asserted at the previous step, starting from the assumption that the original equation has a solution. Construct a viable argument to justify a solution method.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-A.REI.1b",
+        "AI-A.CED.3"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-A.REI.3",
+      "grade": "AI",
+      "domain": "A.REI",
+      "domain_title": "Algebra Reasoning with Equations and Inequalities",
+      "cluster_title": "Solve equations and inequalities in one variable.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=115",
+      "scope_summary": "Solve linear equations and inequalities in one variable, including equations with coefficients represented by letters.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Algebra I tasks do not involve solving compound inequalities."
+      ]
+    },
+    {
+      "expectation_id": "AI-A.REI.4",
+      "grade": "AI",
+      "domain": "A.REI",
+      "domain_title": "Algebra Reasoning with Equations and Inequalities",
+      "cluster_title": "Solve equations and inequalities in one variable.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=115",
+      "scope_summary": "Solve quadratic equations in one variable.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-A.REI.4b",
+        "AI-A.APR.3",
+        "AI-F.IF.8a",
+        "AI-F.IF.4a",
+        "AI-F.IF.7a"
+      ],
+      "notes": [
+        "Note: Solutions may include simplifying radicals.",
+        "Note: When utilizing the method of completing the square, the quadratic's",
+        "Shared standard with Algebra II"
+      ]
+    },
+    {
+      "expectation_id": "AI-A.REI.6a",
+      "grade": "AI",
+      "domain": "A.REI",
+      "domain_title": "Algebra Reasoning with Equations and Inequalities",
+      "cluster_title": "Solve systems of equations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=116",
+      "scope_summary": "Solve systems of linear equations in two variables both algebraically and graphically.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Algebraic methods include both elimination and substitution."
+      ]
+    },
+    {
+      "expectation_id": "AI-A.REI.7a",
+      "grade": "AI",
+      "domain": "A.REI",
+      "domain_title": "Algebra Reasoning with Equations and Inequalities",
+      "cluster_title": "Solve systems of equations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=116",
+      "scope_summary": "Solve a system, with rational solutions, consisting of a linear equation and a quadratic equation (parabolas only) in two variables algebraically and graphically.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-A.REI.7b"
+      ],
+      "notes": [
+        "Shared standard with Algebra II"
+      ]
+    },
+    {
+      "expectation_id": "AI-A.REI.10",
+      "grade": "AI",
+      "domain": "A.REI",
+      "domain_title": "Algebra Reasoning with Equations and Inequalities",
+      "cluster_title": "Represent and solve equations and inequalities graphically.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=117",
+      "scope_summary": "Understand that the graph of an equation in two variables is the set of all its solutions plotted in the coordinate plane.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Graphing linear equations is a fluency recommendation for Algebra I."
+      ]
+    },
+    {
+      "expectation_id": "AI-A.REI.11",
+      "grade": "AI",
+      "domain": "A.REI",
+      "domain_title": "Algebra Reasoning with Equations and Inequalities",
+      "cluster_title": "Represent and solve equations and inequalities graphically.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=117",
+      "scope_summary": "Given the equations y = f(x) and y = g(x):",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-A.REI.11"
+      ],
+      "notes": [
+        "Note: Algebra I tasks are limited to cases where f(x) and g(x) are linear,",
+        "Note: Students should be taught to find the solutions approximately using",
+        "Shared standard with Algebra II"
+      ]
+    },
+    {
+      "expectation_id": "AI-A.REI.12",
+      "grade": "AI",
+      "domain": "A.REI",
+      "domain_title": "Algebra Reasoning with Equations and Inequalities",
+      "cluster_title": "Represent and solve equations and inequalities graphically.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=117",
+      "scope_summary": "Graph the solutions to a linear inequality in two variables as a half-plane (excluding the boundary in the case of a strict inequality), and graph the solution set to a system of linear inequalities in two variables as the intersection of the corresponding half-planes.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Graphing linear equations is a fluency recommendation for Algebra I."
+      ]
+    },
+    {
+      "expectation_id": "AI-F.IF.1",
+      "grade": "AI",
+      "domain": "F.IF",
+      "domain_title": "Functions Interpreting Functions",
+      "cluster_title": "Understand the concept of a function and use function notation.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=118",
+      "scope_summary": "Understand that a function from one set (called the domain) to another set (called the range) assigns to each element of the domain exactly one element of the range. If f is a function and x is an element of its domain, then f(x) denotes the output of f corresponding to the input x. The graph of f is the graph of the equation y = f(x).",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-F.IF.7e"
+      ],
+      "notes": [
+        "Note: Domain and range can be expressed using inequalities, set builder,"
+      ]
+    },
+    {
+      "expectation_id": "AI-F.IF.2",
+      "grade": "AI",
+      "domain": "F.IF",
+      "domain_title": "Functions Interpreting Functions",
+      "cluster_title": "Understand the concept of a function and use function notation.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=118",
+      "scope_summary": "Use function notation, evaluate functions for inputs in their domains, and interpret statements that use function notation in terms of a context.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-F.IF.3",
+      "grade": "AI",
+      "domain": "F.IF",
+      "domain_title": "Functions Interpreting Functions",
+      "cluster_title": "Understand the concept of a function and use function notation.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=118",
+      "scope_summary": "Recognize that a sequence is a function whose domain is a subset of the integers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-F.IF.3",
+        "AI-F.IF.1",
+        "AI-F.IF.4"
+      ],
+      "notes": [
+        "Shared standard with Algebra II"
+      ]
+    },
+    {
+      "expectation_id": "AI-F.IF.4",
+      "grade": "AI",
+      "domain": "F.IF",
+      "domain_title": "Functions Interpreting Functions",
+      "cluster_title": "Interpret functions that arise in applications in terms of the context. \u2605",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=119",
+      "scope_summary": "For a function that models a relationship between two quantities: i) interpret key features of graphs and tables in terms of the quantities; and ii) sketch graphs showing key features given a verbal description of the relationship.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-F.IF.4a",
+        "AII-F.IF.4b"
+      ],
+      "notes": [
+        "Shared standard with Algebra II"
+      ]
+    },
+    {
+      "expectation_id": "AI-F.IF.5",
+      "grade": "AI",
+      "domain": "F.IF",
+      "domain_title": "Functions Interpreting Functions",
+      "cluster_title": "Interpret functions that arise in applications in terms of the context. \u2605",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=119",
+      "scope_summary": "Determine the domain of a function from its graph and, where applicable, identify the appropriate domain for a function in context.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-F.IF.6",
+      "grade": "AI",
+      "domain": "F.IF",
+      "domain_title": "Functions Interpreting Functions",
+      "cluster_title": "Interpret functions that arise in applications in terms of the context. \u2605",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=119",
+      "scope_summary": "Calculate and interpret the average rate of change of a function over a specified interval.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-F.IF.6",
+        "AI-F.IF.1",
+        "AI-F.IF.4"
+      ],
+      "notes": [
+        "Shared standard with Algebra II"
+      ]
+    },
+    {
+      "expectation_id": "AI-F.IF.7",
+      "grade": "AI",
+      "domain": "F.IF",
+      "domain_title": "Functions Interpreting Functions",
+      "cluster_title": "Analyze functions using different representations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=120",
+      "scope_summary": "Graph functions and show key features of the graph by hand and by using technology where appropriate. \u2605",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-F.IF.7c",
+        "AII-F.IF.7e"
+      ],
+      "notes": [
+        "Shared standard with Algebra II",
+        "Note: Algebra I key features include the following: intercepts, zeros; intervals"
+      ]
+    },
+    {
+      "expectation_id": "AI-F.IF.8",
+      "grade": "AI",
+      "domain": "F.IF",
+      "domain_title": "Functions Interpreting Functions",
+      "cluster_title": "Analyze functions using different representations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=120",
+      "scope_summary": "Write a function in different but equivalent forms to reveal and explain different properties of the function.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-F.IF.8a",
+        "AII-A.SSE.3a"
+      ],
+      "notes": [
+        "Shared standard with Algebra II",
+        "Note: Algebraic processes include but not limited to factoring, completing the"
+      ]
+    },
+    {
+      "expectation_id": "AI-F.IF.9",
+      "grade": "AI",
+      "domain": "F.IF",
+      "domain_title": "Functions Interpreting Functions",
+      "cluster_title": "Analyze functions using different representations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=120",
+      "scope_summary": "Compare properties of two functions each represented in a different way (algebraically, graphically, numerically in tables, or by verbal descriptions).",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-F.IF.9"
+      ],
+      "notes": [
+        "Shared standard with Algebra II",
+        "Note: Algebra I tasks are limited to the following functions: linear, quadratic,"
+      ]
+    },
+    {
+      "expectation_id": "AI-F.BF.1",
+      "grade": "AI",
+      "domain": "F.BF",
+      "domain_title": "Functions Building Functions",
+      "cluster_title": "Build a function that models a relationship between two quantities.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=121",
+      "scope_summary": "Write a function that describes a relationship between two quantities. \u2605",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-F.BF.1a",
+        "AII-F.BF.1a"
+      ],
+      "notes": [
+        "Shared standard with Algebra II",
+        "Shared standard with Algebra II"
+      ]
+    },
+    {
+      "expectation_id": "AI-F.BF.3a",
+      "grade": "AI",
+      "domain": "F.BF",
+      "domain_title": "Functions Building Functions",
+      "cluster_title": "Build new functions from existing functions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=121",
+      "scope_summary": "Using f(x) + k, k f(x), and f(x + k): i) identify the effect on the graph when replacing f(x) by f(x) + k, k f(x), and f(x + k) for specific values of k (both positive and negative); ii) find the value of k given the graphs; iii) write a new function using the value of k; and iv) use technology to experiment with cases and explore the effects on the graph.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-F.BF.3b"
+      ],
+      "notes": [
+        "Shared standard with Algebra II",
+        "Note: Tasks are limited to linear, quadratic, square root, and absolute value"
+      ]
+    },
+    {
+      "expectation_id": "AI-F.LE.1",
+      "grade": "AI",
+      "domain": "F.LE",
+      "domain_title": "Functions Linear, Quadratic, and Exponential Models \u2605",
+      "cluster_title": "Construct and compare linear, quadratic, and exponential models and solve problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=122",
+      "scope_summary": "Distinguish between situations that can be modeled with linear functions and with exponential functions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-F.LE.2",
+      "grade": "AI",
+      "domain": "F.LE",
+      "domain_title": "Functions Linear, Quadratic, and Exponential Models \u2605",
+      "cluster_title": "Construct and compare linear, quadratic, and exponential models and solve problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=122",
+      "scope_summary": "Construct a linear or exponential function symbolically given: i) a graph; ii) a description of the relationship; iii) two input-output pairs (include reading these from a table).",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-F.LE.2"
+      ],
+      "notes": [
+        "Shared standard with Algebra II",
+        "Note: Tasks are limited to constructing linear and exponential functions in"
+      ]
+    },
+    {
+      "expectation_id": "AI-F.LE.3",
+      "grade": "AI",
+      "domain": "F.LE",
+      "domain_title": "Functions Linear, Quadratic, and Exponential Models \u2605",
+      "cluster_title": "Construct and compare linear, quadratic, and exponential models and solve problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=122",
+      "scope_summary": "Observe using graphs and tables that a quantity increasing exponentially eventually exceeds a quantity increasing linearly, quadratically, or (more generally) as a polynomial function.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-F.LE.5",
+      "grade": "AI",
+      "domain": "F.LE",
+      "domain_title": "Functions Linear, Quadratic, and Exponential Models \u2605",
+      "cluster_title": "Interpret expressions for functions in terms of the situation they model.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=122",
+      "scope_summary": "Interpret the parameters in a linear or exponential function in terms of a context.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-F.LE.5",
+        "AI-A.SSE.1b"
+      ],
+      "notes": [
+        "Shared standard with Algebra II",
+        "Note: Tasks have a real-world context. Exponential functions are limited to"
+      ]
+    },
+    {
+      "expectation_id": "AI-S.ID.1",
+      "grade": "AI",
+      "domain": "S.ID",
+      "domain_title": "Statistics and Probability Interpreting Categorical and Quantitative Data",
+      "cluster_title": "Summarize, represent, and interpret data on a single count or measurement variable.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=123",
+      "scope_summary": "Represent data with plots on the real number line (dot plots, histograms, and box plots).",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-S.ID.4a"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-S.ID.2",
+      "grade": "AI",
+      "domain": "S.ID",
+      "domain_title": "Statistics and Probability Interpreting Categorical and Quantitative Data",
+      "cluster_title": "Summarize, represent, and interpret data on a single count or measurement variable.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=123",
+      "scope_summary": "Use statistics appropriate to the shape of the data distribution to compare center (median, mean) and spread (inter-quartile range, sample standard deviation) of two or more different data sets.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-S.ID.4a"
+      ],
+      "notes": [
+        "Note: Values in the given data sets will represent samples of larger"
+      ]
+    },
+    {
+      "expectation_id": "AI-S.ID.3",
+      "grade": "AI",
+      "domain": "S.ID",
+      "domain_title": "Statistics and Probability Interpreting Categorical and Quantitative Data",
+      "cluster_title": "Summarize, represent, and interpret data on a single count or measurement variable.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=123",
+      "scope_summary": "Interpret differences in shape, center, and spread in the context of the data sets, accounting for possible effects of extreme data points (outliers).",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-S.ID.5",
+      "grade": "AI",
+      "domain": "S.ID",
+      "domain_title": "Statistics and Probability Interpreting Categorical and Quantitative Data",
+      "cluster_title": "Summarize, represent, and interpret data on two categorical and quantitative variables.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=123",
+      "scope_summary": "Summarize categorical data for two categories in two-way frequency tables. Interpret relative frequencies in the context of the data (including joint, marginal, and conditional relative frequencies). Recognize possible associations and trends in the data.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-S.ID.6",
+      "grade": "AI",
+      "domain": "S.ID",
+      "domain_title": "Statistics and Probability Interpreting Categorical and Quantitative Data",
+      "cluster_title": "Summarize, represent, and interpret data on two categorical and quantitative variables.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=123",
+      "scope_summary": "Represent bivariate data on a scatter plot, and describe how the variables\u2019 values are related.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AII-S.ID.6",
+        "AI-S.ID.6a",
+        "AII-S.ID.6a"
+      ],
+      "notes": [
+        "Note: It\u2019s important to keep in mind that the data must be linked to the same",
+        "Shared standard with Algebra II",
+        "Note: Algebra I emphasis is on linear models and includes the regression"
+      ]
+    },
+    {
+      "expectation_id": "AI-S.ID.7",
+      "grade": "AI",
+      "domain": "S.ID",
+      "domain_title": "Statistics and Probability Interpreting Categorical and Quantitative Data",
+      "cluster_title": "Interpret linear models.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=124",
+      "scope_summary": "Interpret the slope (rate of change) and the intercept (constant term) of a linear model in the context of the data.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-S.ID.8",
+      "grade": "AI",
+      "domain": "S.ID",
+      "domain_title": "Statistics and Probability Interpreting Categorical and Quantitative Data",
+      "cluster_title": "Interpret linear models.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=124",
+      "scope_summary": "Calculate (using technology) and interpret the correlation coefficient of a linear fit.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "AI-S.ID.9",
+      "grade": "AI",
+      "domain": "S.ID",
+      "domain_title": "Statistics and Probability Interpreting Categorical and Quantitative Data",
+      "cluster_title": "Interpret linear models.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=124",
+      "scope_summary": "Distinguish between correlation and causation.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    }
+  ]
+}
