@@ -17,6 +17,18 @@ from app.core.database import SessionLocal
 from app.models import Curriculum, Skill
 
 # (skill_code, prompt, answer, difficulty, problem_type, answer_kind, objective)
+SOURCE_URI = {
+    "VA_MATH_6": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+    "VA_MATH_7": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+    "VA_ALGEBRA_1_SOL_2023": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+    "DC_MATH_6": "https://osse.dc.gov/node/1210952",
+    "DC_MATH_7": "https://osse.dc.gov/node/1210952",
+    "DC_ALGEBRA_1_CCSS_M": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
+    "MD_ALGEBRA_1_2026_27": "https://www.marylandpublicschools.org/about/Pages/DCAA/Math/index.aspx",
+    "MD_INTEGRATED_ALGEBRA_1_2027_28": "https://www.marylandpublicschools.org/about/Pages/DCAA/Math/index.aspx",
+    "MTH1W": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w",
+}
+
 EXTENSIONS: dict[str, dict[str, list[tuple[str, str, str, int, str, str, str]]]] = {
     "VA_MATH_6": {
         "VA6.PFA.RATIO": [
@@ -578,6 +590,7 @@ def seed() -> None:
             )
             if curriculum is None:
                 raise ValueError(f"Curriculum {curriculum_code} not seeded")
+            source_uri = SOURCE_URI[curriculum_code]
             for skill_code, problems in by_skill.items():
                 skill = db.scalar(
                     select(Skill).where(
@@ -592,7 +605,7 @@ def seed() -> None:
                 for prompt, answer, difficulty, ptype, akind, objective in problems:
                     _extension_problem(
                         db, curriculum, skill, prompt, answer, difficulty,
-                        ptype, akind, objective,
+                        ptype, akind, objective, source_uri,
                     )
                     written += 1
         db.commit()
