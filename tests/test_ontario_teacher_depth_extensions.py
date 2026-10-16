@@ -69,6 +69,24 @@ def test_first_error_localization_is_deterministic_exact_and_answer_hidden(mode:
             "explanation",
         }
 
+        p = item.parameters
+        shown_1, shown_2, shown_3 = p["shown_exponents"]
+        assert (
+            f"Step 1: (({p['base']}^{p['inner']})^{p['outer']} x "
+            f"{p['base']}^{p['product_exponent']}) / {p['base']}^{p['divisor_exponent']} = "
+            f"({p['base']}^{shown_1} x {p['base']}^{p['product_exponent']}) / "
+            f"{p['base']}^{p['divisor_exponent']}."
+        ) in item.prompt
+        assert (
+            f"Step 2: ({p['base']}^{shown_1} x {p['base']}^{p['product_exponent']}) / "
+            f"{p['base']}^{p['divisor_exponent']} = {p['base']}^{shown_2} / "
+            f"{p['base']}^{p['divisor_exponent']}."
+        ) in item.prompt
+        assert (
+            f"Step 3: {p['base']}^{shown_2} / {p['base']}^{p['divisor_exponent']} = "
+            f"{p['base']}^{shown_3}."
+        ) in item.prompt
+
     assert positions == {1, 2, 3}
     assert laws == {
         "POWER_OF_POWER_MULTIPLIES_EXPONENTS",

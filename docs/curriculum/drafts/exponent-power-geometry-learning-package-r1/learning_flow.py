@@ -558,9 +558,14 @@ def generate_first_error_localization(index: int, mode: str) -> PackageVariant:
     prompt = (
         f"{prefix}: A derivation starts with (({base}^{inner})^{outer} x "
         f"{base}^{product_exponent}) / {base}^{divisor_exponent}. "
-        f"Step 1 reports {base}^{shown_step_1}. "
-        f"Step 2 reports {base}^{shown_step_2}. "
-        f"Step 3 reports {base}^{shown_step_3}. "
+        f"Step 1: (({base}^{inner})^{outer} x {base}^{product_exponent}) / "
+        f"{base}^{divisor_exponent} = ({base}^{shown_step_1} x "
+        f"{base}^{product_exponent}) / {base}^{divisor_exponent}. "
+        f"Step 2: ({base}^{shown_step_1} x {base}^{product_exponent}) / "
+        f"{base}^{divisor_exponent} = {base}^{shown_step_2} / "
+        f"{base}^{divisor_exponent}. "
+        f"Step 3: {base}^{shown_step_2} / {base}^{divisor_exponent} = "
+        f"{base}^{shown_step_3}. "
         "Identify the first incorrect step, name the exponent law that was violated, "
         "and give the corrected exponent for that step."
     )

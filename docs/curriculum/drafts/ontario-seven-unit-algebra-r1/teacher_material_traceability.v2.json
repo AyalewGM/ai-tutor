@@ -1,7 +1,7 @@
 {
   "schema_version": "2.0.0",
   "milestone": "GitHub Issue #337",
-  "revision": "teacher-material-traceability-v2",
+  "revision": "teacher-material-traceability-v2.1",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "source_policy": {
@@ -411,11 +411,12 @@
       ],
       "structure": "identify the first mathematically invalid step in a multi-step exponent derivation and explain the violated law",
       "existing_evidence": [
-        "docs/curriculum/drafts/exponent-power-geometry-learning-package-r1:misconception-specific routes"
+        "docs/curriculum/drafts/exponent-power-geometry-learning-package-r1:generate_first_error_localization",
+        "tests/test_ontario_teacher_depth_extensions.py:first-error deterministic oracle and answer-hiding checks"
       ],
-      "status": "ABSENT",
-      "gap": "Misconception routes diagnose outcomes, but no deterministic first-error-localization response contract was found.",
-      "next_action": "Add a first-error localization structure to the existing exponent package, not a new canonical family."
+      "status": "PARTIAL",
+      "gap": "A deterministic first-error response contract and independent oracle now exist; revised full-expression display semantics still require targeted independent mathematical and pedagogical re-review, and production delivery gates remain open.",
+      "next_action": "Re-review the corrected display semantics, then reuse the existing exponent package to close routing, trusted assessment, accessibility and Muse gates."
     },
     {
       "id": "G9T-EXPONENT-GEOMETRY",
@@ -463,11 +464,12 @@
       "structure": "derive an unknown length/width/height from symbolic area or volume using exact algebra/monomial division, then reconstruct the measure with units",
       "existing_evidence": [
         "docs/curriculum/drafts/ontario-algebra-family-generators-r1:MONOMIAL_QUOTIENT",
-        "generic solid-volume generators/tests"
+        "docs/curriculum/drafts/ontario-algebra-family-generators-r1:generate_measurement_inversion",
+        "tests/test_ontario_teacher_depth_extensions.py:exact division, reconstruction and dimensional-unit checks"
       ],
-      "status": "ABSENT",
-      "gap": "No integrated learner contract was found that composes symbolic measurement inversion with exact monomial division and dimensional reconstruction.",
-      "next_action": "Author one reusable measurement-inversion structure using existing quotient mathematics; no new Ontario-specific identity."
+      "status": "PARTIAL",
+      "gap": "The draft generator now composes exact monomial division with dimensional reconstruction; production MVE, trusted routed assessment, accessibility and Muse gates remain open.",
+      "next_action": "Reuse the existing quotient mathematics and measurement-inversion structure to close delivery and independent QA gates; create no jurisdiction-specific identity."
     },
     {
       "id": "G9T-SCI-CONVERT",
@@ -562,13 +564,10 @@
   "summary": {
     "total_rows": 21,
     "verified": 0,
-    "partial": 19,
-    "absent": 2,
+    "partial": 21,
+    "absent": 0,
     "blocked": 0,
-    "key_absent": [
-      "first-error localization in exponent derivations",
-      "integrated algebraic measurement inversion using symbolic area/volume and monomial division"
-    ],
+    "key_absent": [],
     "strongest_reuse_areas": [
       "equation solving and equivalence",
       "polynomial division",
