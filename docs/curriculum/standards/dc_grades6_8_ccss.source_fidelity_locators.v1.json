@@ -1929,6 +1929,20 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "retrospective_source_fidelity_correction_20261016": {
+        "source_authority": "DC OSSE adoption of CCSS mathematics / NGA CCSSO source",
+        "source_url": "https://www.thecorestandards.org/Math/Content/8/G/A/1/",
+        "source_locator": "Grade 8 / G / A",
+        "requirements": {
+          "8.G.A.1.a": "Rotations, reflections and translations preserve lines and line segments as lines and line segments of the same length."
+        },
+        "short_summary_exhaustive": false,
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
       }
     },
     {
@@ -2193,6 +2207,20 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "retrospective_source_fidelity_correction_20261016": {
+        "source_authority": "DC OSSE adoption of CCSS mathematics / NGA CCSSO source",
+        "source_url": "https://www.thecorestandards.org/Math/Content/8/SP/A/1/",
+        "source_locator": "Grade 8 / SP / A",
+        "requirements": {
+          "parent": "Interpret scatter plots including clustering, outliers, positive or negative association, and linear or nonlinear association."
+        },
+        "short_summary_exhaustive": false,
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
       }
     },
     {
@@ -2219,6 +2247,20 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "retrospective_source_fidelity_correction_20261016": {
+        "source_authority": "DC OSSE adoption of CCSS mathematics / NGA CCSSO source",
+        "source_url": "https://www.thecorestandards.org/Math/Content/8/SP/A/2/",
+        "source_locator": "Grade 8 / SP / A",
+        "requirements": {
+          "parent": "Informally assess straight-line model fit by how closely data points lie to the fitted line."
+        },
+        "short_summary_exhaustive": false,
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
       }
     },
     {
