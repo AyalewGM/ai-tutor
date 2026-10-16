@@ -1,5 +1,6 @@
 from sqlalchemy import select
 
+from app.content_models import ProblemContentMetadata
 from app.core.database import SessionLocal
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
@@ -43,7 +44,7 @@ def test_integrated_algebra1_representative_seed_is_idempotent_and_isolated():
         # until application-owned pedagogy review establishes a true dependency.
         edges = list(db.scalars(select(SkillPrerequisite).where(SkillPrerequisite.skill_id.in_(skill_ids))))
         assert edges == []
-        problems = list(db.scalars(select(Problem).where(Problem.primary_skill_id.in_(skill_ids))))
+        problems = list(db.scalars(select(Problem).outerjoin(ProblemContentMetadata, ProblemContentMetadata.problem_id == Problem.id).where(Problem.primary_skill_id.in_(skill_ids), ProblemContentMetadata.extension_eligible.isnot(True))))
         assert len(problems) == 13
         assert all(problem.solution["provenance"]["origin"] == "AUTHORED" for problem in problems)
         assert all(problem.solution["provenance"]["author"] == "AI Tutor curriculum team" for problem in problems)

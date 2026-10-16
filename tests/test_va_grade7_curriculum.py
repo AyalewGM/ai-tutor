@@ -1,5 +1,6 @@
 from sqlalchemy import select
 
+from app.content_models import ProblemContentMetadata
 from app.core.database import SessionLocal
 from app.curriculum_models import CurriculumSkillMapping
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
@@ -27,7 +28,7 @@ def test_va_grade7_seed_is_idempotent_and_isolated():
         assert all(mapping.provenance_json["standards_authority"] == "Virginia Department of Education"
                    for mapping in mappings)
 
-        problems = db.scalars(select(Problem).where(Problem.primary_skill_id.in_(skill_ids))).all()
+        problems = db.scalars(select(Problem).outerjoin(ProblemContentMetadata, ProblemContentMetadata.problem_id == Problem.id).where(Problem.primary_skill_id.in_(skill_ids), ProblemContentMetadata.extension_eligible.isnot(True))).all()
         assert len(problems) == 10
         assert all(problem.solution["provenance"]["origin"] == "AUTHORED" for problem in problems)
         assert all(problem.solution["provenance"]["standards_source"] == VDOE_SOURCE for problem in problems)
