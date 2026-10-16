@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_PROVISIONAL_NOT_PUBLISHER_ACCEPTED",
+  "source_publisher": "California Department of Education",
+  "official_source": "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf",
+  "public_education_agency_mirror": "https://www.rcoe.us/media/1zpjov0k/ccssmathstandardaug2013.pdf",
+  "publisher_original_bytes_authenticated": false,
+  "source_printed_page": 27,
+  "source_pdf_zero_based_page_index": 33,
+  "source_parent_records_file": "ca_2013_grade3_page27_source_author_slice.v1.json",
+  "subparts_by_parent": {
+    "3.MD.5": [
+      "a",
+      "b"
+    ],
+    "3.MD.7": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ]
+  },
+  "notes": [
+    "Supplemental subpart inventory only; does not introduce additional parent standards or canonical skills.",
+    "Author read source page rendering; direct CDE URL returned a web access redirect/block, so original publisher byte identity remains unverified."
+  ],
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "assessment": "UNVERIFIED",
+  "mastery": "UNVERIFIED",
+  "activation": "FORBIDDEN"
+}
