@@ -80,6 +80,66 @@ const assert = require("node:assert/strict");
   await c.reload();
   await p.locator("svg text").filter({ hasText: "x = 4" }).waitFor();
   await c.locator("svg text").filter({ hasText: "x = 4" }).waitFor();
+  const photo = await p.evaluate(() => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 800;
+    canvas.height = 500;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, 800, 500);
+    ctx.fillStyle = "#222";
+    ctx.font = "36px sans-serif";
+    ctx.fillText("Homework: 2x + 3 = 11", 50, 80);
+    return canvas.toDataURL("image/png").split(",")[1];
+  });
+  await p.locator('input[type="file"]').setInputFiles({
+    name: "homework.png",
+    mimeType: "image/png",
+    buffer: Buffer.from(photo, "base64"),
+  });
+  await c.getByTestId("homework-photo").waitFor();
+  const imageUrl = await c.getByTestId("homework-photo").getAttribute("href");
+  const imageResponse = await child.request.get(
+    "http://127.0.0.1:5173" + imageUrl,
+  );
+  assert.equal(imageResponse.status(), 200);
+  assert.equal(imageResponse.headers()["content-type"], "image/jpeg");
+  assert.equal(imageResponse.headers()["cache-control"], "no-store");
+  const beforeZoom = await c
+    .getByRole("img", { name: /Shared family whiteboard/ })
+    .boundingBox();
+  await c.getByRole("button", { name: "Zoom in", exact: true }).click();
+  const afterZoom = await c
+    .getByRole("img", { name: /Shared family whiteboard/ })
+    .boundingBox();
+  assert.ok(afterZoom.width > beforeZoom.width);
+  await c.getByRole("button", { name: "Move page", exact: true }).click();
+  const viewport = c.getByRole("region", { name: "Whiteboard viewport" });
+  await viewport.scrollIntoViewIfNeeded();
+  const viewportBox = await viewport.boundingBox();
+  await c.mouse.move(viewportBox.x + 250, viewportBox.y + 100);
+  await c.mouse.down();
+  await c.mouse.move(viewportBox.x + 120, viewportBox.y + 100, { steps: 5 });
+  await c.mouse.up();
+  assert.ok((await viewport.evaluate((element) => element.scrollLeft)) > 0);
+  await c.getByRole("button", { name: "Fit page", exact: true }).click();
+  await c
+    .getByRole("button", { name: "Eraser (my marks)", exact: true })
+    .click();
+  await c.locator("svg text").filter({ hasText: "x = 4" }).click();
+  await p
+    .locator("svg text")
+    .filter({ hasText: "x = 4" })
+    .waitFor({ state: "detached" });
+  await c.locator("svg text").filter({ hasText: "2x + 3 = 11" }).click();
+  await c
+    .getByRole("alert")
+    .filter({ hasText: "eraser removes your own marks" })
+    .waitFor();
+  assert.equal(
+    await p.locator("svg text").filter({ hasText: "2x + 3 = 11" }).count(),
+    1,
+  );
   await c.setViewportSize({ width: 390, height: 844 });
   assert.equal(
     await c.getByRole("button", { name: "Type", exact: true }).isVisible(),
@@ -92,7 +152,7 @@ const assert = require("node:assert/strict");
   assert.deepEqual(errors, []);
   await browser.close();
   console.log(
-    "PASS: parent/child sync, author undo, drawing, offline queued edit + reload recovery, phone layout; no page errors.",
+    "PASS: parent/child sync, author undo, drawing, offline queued edit + reload recovery, photo synchronization, zoom, own-mark eraser, phone layout; no page errors.",
   );
 })().catch((e) => {
   console.error(e);

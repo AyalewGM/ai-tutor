@@ -8,7 +8,7 @@ const PRACTICES = [
   {
     icon: ShieldCheck,
     title: "What we collect",
-    body: "A parent's email, a learner nickname (never a legal name), grade level, practice answers used to adapt instruction, and drawings and typed notes saved when your family uses Learn Together.",
+    body: "A parent's email, a learner nickname (never a legal name), grade level, practice answers used to adapt instruction, and drawings, typed notes, and homework photos saved when your family uses Learn Together.",
   },
   {
     icon: Lock,
@@ -112,9 +112,13 @@ export default function Privacy() {
             <Camera className="h-5 w-5 text-primary" /> Photos of written work
           </h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            If your child uploads a photo of their work, it is sent to Mathpix,
-            a handwriting-recognition service, to read the math. Mihur processes
-            the photo in memory and never stores or logs it.
+            Photos submitted for handwriting recognition are sent to Mathpix to
+            read the math and are processed in memory without being stored or logged.
+            Photos added to a Learn Together board are different: Mihur saves a
+            resized copy for your family, removes embedded metadata such as GPS,
+            and does not send it to Mathpix or an AI provider. Saved board photos
+            are removed when you delete the learner's data. Avoid including names
+            or other personal details in homework photos.
           </p>
         </section>
 

@@ -25,7 +25,7 @@ def serve(config_path):
     from tests.test_collaboration import create_board, family
 
     patches = pytest.MonkeyPatch()
-    fixture = family.__wrapped__(patches)
+    fixture = family.__wrapped__(patches, Path(config_path).parent)
     client, _factory, child, *_ = next(fixture)
     path = create_board(client, child)
     Path(config_path).write_text(

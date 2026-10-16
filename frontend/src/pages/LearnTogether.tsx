@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { api, ApiError, post } from "../api";
+import { api, ApiError, post, postForm } from "../api";
 import NavBar from "../components/NavBar";
 
 type Point = { x: number; y: number };
 type Mark = {
   operation_id: string;
-  kind: "stroke" | "text" | "undo";
+  kind: "stroke" | "text" | "undo" | "erase" | "image";
+  image_id?: string;
   points?: Point[];
   text?: string;
   x?: number;
@@ -37,13 +38,25 @@ export default function LearnTogether() {
   const [marks, setMarks] = useState<Mark[]>([]);
   const [pending, setPending] = useState<Mark[]>([]);
   const [draft, setDraft] = useState<Point[]>([]);
-  const [tool, setTool] = useState<"pen" | "text">("pen");
+  const [tool, setTool] = useState<"pen" | "text" | "erase" | "pan">("pen");
+  const [zoom, setZoom] = useState(1);
+  const [uploading, setUploading] = useState(false);
+  const uploadBusy = useRef(false);
+  const uploadAttempt = useRef<{ file: File; id: string } | null>(null);
+  const [uploadFailed, setUploadFailed] = useState(false);
   const [text, setText] = useState("");
   const [status, setStatus] = useState("Connecting…");
   const [error, setError] = useState("");
   const [share, setShare] = useState("");
   const svg = useRef<SVGSVGElement>(null);
   const pointer = useRef<number | null>(null);
+  const panStart = useRef<{
+    id: number;
+    x: number;
+    y: number;
+    left: number;
+    top: number;
+  } | null>(null);
   const stroke = useRef<Point[]>([]);
   const queue = useRef<Mark[]>([]);
   const revision = useRef(0);
@@ -196,14 +209,14 @@ export default function LearnTogether() {
         });
     }
     const beforeUnload = (event: BeforeUnloadEvent) => {
-      if (queue.current.length) {
+      if (queue.current.length || uploadBusy.current) {
         event.preventDefault();
         event.returnValue = "";
       }
     };
     const guardNavigation = (event: MouseEvent) => {
       if (
-        queue.current.length &&
+        (queue.current.length || uploadBusy.current) &&
         (event.target as Element).closest?.("a[href]")
       ) {
         event.preventDefault();
@@ -248,14 +261,59 @@ export default function LearnTogether() {
     ),
   ];
   const undone = new Set(
-    all.filter((m) => m.kind === "undo").map((m) => m.target),
+    all
+      .filter((m) => m.kind === "undo" || m.kind === "erase")
+      .map((m) => m.target),
   );
   const visible = all.filter(
-    (m) => m.kind !== "undo" && !undone.has(m.operation_id),
+    (m) =>
+      m.kind !== "undo" && m.kind !== "erase" && !undone.has(m.operation_id),
   );
   const lastOwn = [...visible]
     .reverse()
     .find((m) => m.author === board?.author);
+  const background = [...visible].reverse().find((m) => m.kind === "image");
+  async function uploadPhoto(file: File, id: string) {
+    if (!boardId) return;
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Choose a JPEG or PNG photo smaller than 5 MB.");
+      return;
+    }
+    uploadBusy.current = true;
+    setUploading(true);
+    setUploadFailed(false);
+    setError("");
+    uploadAttempt.current = { file, id };
+    const form = new FormData();
+    form.append("photo", file);
+    form.append("operation_id", id);
+    try {
+      await postForm(`/together/boards/${boardId}/photos`, form);
+      uploadAttempt.current = null;
+    } catch (err) {
+      setError((err as Error).message);
+      setUploadFailed(true);
+    } finally {
+      uploadBusy.current = false;
+      setUploading(false);
+    }
+  }
+  function eraseMark(event: React.PointerEvent, mark: Mark) {
+    if (tool !== "erase") return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (mark.author !== board?.author) {
+      setError(
+        "The eraser removes your own marks. Ask the other person to edit theirs.",
+      );
+      return;
+    }
+    enqueue({
+      operation_id: crypto.randomUUID(),
+      kind: "erase",
+      target: mark.operation_id,
+    });
+  }
   const disabled = !board || board.closed || pending.length >= 50;
 
   return (
@@ -361,7 +419,7 @@ export default function LearnTogether() {
               {board?.author.startsWith("parent:") && !board.closed && (
                 <button
                   className={button}
-                  disabled={pending.length > 0}
+                  disabled={pending.length > 0 || uploading}
                   onClick={async () => {
                     try {
                       setBoard(
@@ -376,6 +434,74 @@ export default function LearnTogether() {
                 </button>
               )}
             </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                className={button}
+                disabled={disabled}
+                aria-pressed={tool === "erase"}
+                onClick={() => setTool("erase")}
+              >
+                Eraser (my marks)
+              </button>
+              <label className={`${button} max-w-full`}>
+                Add homework photo
+                <input
+                  className="block max-w-full text-sm"
+                  type="file"
+                  accept="image/jpeg,image/png"
+                  disabled={disabled || uploading}
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) void uploadPhoto(file, crypto.randomUUID());
+                    event.target.value = "";
+                  }}
+                />
+              </label>
+              <button
+                className={button}
+                aria-pressed={tool === "pan"}
+                onClick={() => setTool("pan")}
+              >
+                Move page
+              </button>
+              <button
+                className={button}
+                aria-label="Zoom out"
+                disabled={zoom <= 1}
+                onClick={() => setZoom((value) => Math.max(1, value - 0.5))}
+              >
+                −
+              </button>
+              <span aria-live="polite">{Math.round(zoom * 100)}%</span>
+              <button
+                className={button}
+                aria-label="Zoom in"
+                disabled={zoom >= 3}
+                onClick={() => setZoom((value) => Math.min(3, value + 0.5))}
+              >
+                +
+              </button>
+              <button className={button} onClick={() => setZoom(1)}>
+                Fit page
+              </button>
+            </div>
+            {uploading && <p role="status">Uploading homework photo…</p>}
+            {uploadFailed && uploadAttempt.current && (
+              <button
+                className={button}
+                disabled={uploading}
+                onClick={() => {
+                  const attempt = uploadAttempt.current;
+                  if (attempt) void uploadPhoto(attempt.file, attempt.id);
+                }}
+              >
+                Retry photo upload
+              </button>
+            )}
+            <p className="text-sm">
+              Photos are saved privately with this board. Use JPEG or PNG, up to
+              5 MB. PDF import is coming later.
+            </p>
             {share && <p role="status">{share}</p>}
             <p role="status" className="text-sm">
               {status}
@@ -420,11 +546,44 @@ export default function LearnTogether() {
               Parent: purple · Child: blue. Scroll outside the board to move the
               page. Rotate your device for more writing space.
             </p>
-            <div className="overflow-auto rounded-xl border bg-white">
+            <div
+              className="overflow-auto rounded-xl border bg-white"
+              tabIndex={0}
+              role="region"
+              aria-label="Whiteboard viewport"
+              style={{ maxHeight: "75vh" }}
+              onPointerDown={(event) => {
+                if (tool !== "pan" || event.pointerType !== "mouse") return;
+                event.preventDefault();
+                event.currentTarget.setPointerCapture(event.pointerId);
+                panStart.current = {
+                  id: event.pointerId,
+                  x: event.clientX,
+                  y: event.clientY,
+                  left: event.currentTarget.scrollLeft,
+                  top: event.currentTarget.scrollTop,
+                };
+              }}
+              onPointerMove={(event) => {
+                const start = panStart.current;
+                if (!start || start.id !== event.pointerId) return;
+                event.currentTarget.scrollLeft =
+                  start.left - (event.clientX - start.x);
+                event.currentTarget.scrollTop =
+                  start.top - (event.clientY - start.y);
+              }}
+              onPointerUp={() => {
+                panStart.current = null;
+              }}
+              onPointerCancel={() => {
+                panStart.current = null;
+              }}
+            >
               <svg
                 ref={svg}
                 viewBox="0 0 1600 1000"
-                className="w-full"
+                className="block"
+                width={`${zoom * 100}%`}
                 style={{
                   minWidth: 600,
                   touchAction: tool === "pen" ? "none" : "auto",
@@ -432,7 +591,13 @@ export default function LearnTogether() {
                 role="img"
                 aria-label="Shared family whiteboard. Use Type to add text, or Pen to draw."
                 onPointerDown={(e) => {
-                  if (disabled || pointer.current !== null) return;
+                  if (
+                    disabled ||
+                    pointer.current !== null ||
+                    tool === "erase" ||
+                    tool === "pan"
+                  )
+                    return;
                   if (tool === "text") {
                     if (text.trim()) {
                       enqueue({
@@ -493,39 +658,60 @@ export default function LearnTogether() {
                   </pattern>
                 </defs>
                 <rect width="1600" height="1000" fill="url(#grid)" />
-                {visible.map((m) =>
-                  m.kind === "stroke" ? (
-                    m.points?.length === 1 ? (
-                      <circle
-                        key={m.operation_id}
-                        cx={m.points[0].x}
-                        cy={m.points[0].y}
-                        r="2"
-                        fill={color(m.author)}
-                      />
-                    ) : (
-                      <polyline
-                        key={m.operation_id}
-                        points={m.points?.map((p) => `${p.x},${p.y}`).join(" ")}
-                        fill="none"
-                        stroke={color(m.author)}
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    )
-                  ) : (
-                    <text
-                      key={m.operation_id}
-                      x={m.x}
-                      y={m.y}
-                      fill={color(m.author)}
-                      fontSize="28"
-                    >
-                      {m.text}
-                    </text>
-                  ),
+                {background && (
+                  <image
+                    data-testid="homework-photo"
+                    href={`/api/v1/together/boards/${boardId}/photos/${background.image_id}`}
+                    x="0"
+                    y="0"
+                    width="1600"
+                    height="1000"
+                    preserveAspectRatio="xMidYMid meet"
+                    onPointerDown={(event) => eraseMark(event, background)}
+                  />
                 )}
+                {visible
+                  .filter((m) => m.kind !== "image")
+                  .map((m) => (
+                    <g
+                      key={m.operation_id}
+                      onPointerDown={(event) => eraseMark(event, m)}
+                      style={{
+                        cursor: tool === "erase" ? "crosshair" : undefined,
+                      }}
+                    >
+                      {m.kind === "stroke" ? (
+                        m.points?.length === 1 ? (
+                          <circle
+                            cx={m.points[0].x}
+                            cy={m.points[0].y}
+                            r="2"
+                            fill={color(m.author)}
+                          />
+                        ) : (
+                          <polyline
+                            points={m.points
+                              ?.map((p) => `${p.x},${p.y}`)
+                              .join(" ")}
+                            fill="none"
+                            stroke={color(m.author)}
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        )
+                      ) : (
+                        <text
+                          x={m.x}
+                          y={m.y}
+                          fill={color(m.author)}
+                          fontSize="28"
+                        >
+                          {m.text}
+                        </text>
+                      )}
+                    </g>
+                  ))}
                 <polyline
                   points={draft.map((p) => `${p.x},${p.y}`).join(" ")}
                   fill="none"
@@ -541,7 +727,26 @@ export default function LearnTogether() {
                 {visible.map((m) => (
                   <li key={m.operation_id}>
                     {m.author?.startsWith("parent:") ? "Parent" : "Child"}:{" "}
-                    {m.kind === "text" ? m.text : "Handwritten mark"}
+                    {m.kind === "text"
+                      ? m.text
+                      : m.kind === "image"
+                        ? "Homework photo"
+                        : "Handwritten mark"}
+                    {m.author === board?.author && (
+                      <button
+                        className={`${button} ml-2`}
+                        disabled={disabled}
+                        onClick={() =>
+                          enqueue({
+                            operation_id: crypto.randomUUID(),
+                            kind: "erase",
+                            target: m.operation_id,
+                          })
+                        }
+                      >
+                        Erase this mark
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>

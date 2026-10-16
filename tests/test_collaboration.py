@@ -10,25 +10,25 @@ from datetime import UTC, datetime, timedelta
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine, event, select
+from sqlalchemy import DateTime, create_engine, event, select
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 from starlette.websockets import WebSocketDisconnect
 
 from app import collaboration_api as api
 from app.auth import SESSION_COOKIE, _digest, create_session
 from app.auth_models import AuthSession
-from app.collaboration_models import BoardOperation, CollaborationBoard
+from app.collaboration_models import BoardImage, BoardOperation, CollaborationBoard
 from app.core.database import get_db
+from app.middleware.board_upload_limit import BoardUploadLimitMiddleware
 from app.middleware.pii_sanitizer import PIISanitizerMiddleware
 from app.models import Student, User
 from app.parent_models import FamilyPracticePass, LearnerPassSession, ParentProfile
 
 
 @pytest.fixture
-def family(monkeypatch):
+def family(monkeypatch, tmp_path):
     engine = create_engine(
-        "sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool
+        f"sqlite:///{tmp_path / 'boards.db'}", connect_args={"check_same_thread": False}
     )
     for model in (
         User,
@@ -39,6 +39,7 @@ def family(monkeypatch):
         LearnerPassSession,
         CollaborationBoard,
         BoardOperation,
+        BoardImage,
     ):
         model.__table__.create(engine)
     factory = sessionmaker(engine, expire_on_commit=False)
@@ -47,12 +48,15 @@ def family(monkeypatch):
     def sqlite_utc(_session, obj):
         # SQLite strips timezone information; PostgreSQL preserves it.
         for column in obj.__table__.columns:
+            if not isinstance(column.type, DateTime):
+                continue
             value = getattr(obj, column.name)
             if isinstance(value, datetime) and value.tzinfo is None:
                 setattr(obj, column.name, value.replace(tzinfo=UTC))
 
     app = FastAPI()
     app.add_middleware(PIISanitizerMiddleware)
+    app.add_middleware(BoardUploadLimitMiddleware)
     app.include_router(api.router, prefix="/api/v1")
 
     def db_dependency():
@@ -258,3 +262,163 @@ def test_migration_round_trip_and_learner_erasure_cascade():
             assert "collaboration_boards" not in sa.inspect(connection).get_table_names()
             migration.upgrade()
     engine.dispose()
+
+
+def photo_bytes(size=(300, 200), exif=True):
+    from io import BytesIO
+
+    from PIL import Image
+
+    photo = Image.new("RGB", size, "white")
+    metadata = Image.Exif()
+    if exif:
+        metadata[270] = "private student name"
+        metadata[274] = 6
+    output = BytesIO()
+    photo.save(output, "JPEG", exif=metadata)
+    return output.getvalue()
+
+
+def upload(client, path, photo=None, operation_id=None):
+    return client.post(
+        path + "/photos",
+        data={"operation_id": operation_id or str(uuid.uuid4())},
+        files={
+            "photo": (
+                "private-student-name.jpg",
+                photo if photo is not None else photo_bytes(),
+                "image/jpeg",
+            )
+        },
+    )
+
+
+def test_photo_privacy_replay_and_eraser_ownership(family):
+    from io import BytesIO
+
+    from PIL import Image
+
+    client, factory, child, _, other_token, _ = family
+    path = create_board(client, child)
+    operation_id = str(uuid.uuid4())
+    assert upload(client, path, operation_id=operation_id).json() == {"revision": 1}
+    assert upload(client, path, operation_id=operation_id).json() == {"revision": 1}
+    assert upload(client, path, photo_bytes((200, 200)), operation_id).status_code == 409
+    operation = client.get(path + "/operations").json()[0]
+    photo_url = path + "/photos/" + operation["image_id"]
+    response = client.get(photo_url)
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    assert response.headers["content-type"] == "image/jpeg"
+    with Image.open(BytesIO(response.content)) as image:
+        assert image.size == (200, 300)  # EXIF orientation applied before metadata removal.
+        assert not image.getexif()
+        assert "private student name" not in str(image.info)
+    client.cookies.set(SESSION_COOKIE, other_token)
+    assert client.get(photo_url).status_code == 404
+    client.cookies.set("ai_tutor_learner", "child-cookie")
+    assert client.get(photo_url).status_code == 200
+    assert (
+        client.post(
+            path + "/operations", json=mark(kind="erase", points=[], target=operation_id)
+        ).status_code
+        == 403
+    )
+    child_mark = mark(kind="text", points=[], text="x = 4")
+    assert client.post(path + "/operations", json=child_mark).status_code == 200
+    assert (
+        client.post(
+            path + "/operations",
+            json=mark(kind="erase", points=[], target=child_mark["operation_id"]),
+        ).status_code
+        == 200
+    )
+    with factory() as db:
+        assert len(db.scalars(select(BoardImage)).all()) == 1
+
+
+def test_photo_validation_and_closed_board(family):
+    client, _, child, *_ = family
+    path = create_board(client, child)
+    assert upload(client, path, b"<svg onload='alert(1)'/>").status_code == 422
+    assert upload(client, path, b"x" * (5 * 1024 * 1024 + 1)).status_code == 413
+    assert upload(client, path, b"x" * (6 * 1024 * 1024 + 1)).status_code == 413
+    assert upload(client, path, photo_bytes((5000, 4000))).status_code == 413
+    client.post(path + "/close")
+    assert upload(client, path).status_code == 409
+
+
+def test_photo_limit_is_enforced_under_board_transaction(family):
+    client, _, child, *_ = family
+    path = create_board(client, child)
+    for _ in range(10):
+        assert upload(client, path).status_code == 200
+    assert upload(client, path).status_code == 409
+    assert len(client.get(path + "/operations").json()) == 10
+
+
+def test_photo_migration_metadata_bootstrap_and_cascade():
+    import importlib.util
+
+    import sqlalchemy as sa
+    from alembic.migration import MigrationContext
+    from alembic.operations import Operations
+
+    modules = []
+    for filename in ("0036_collaboration.py", "0037_board_images.py"):
+        spec = importlib.util.spec_from_file_location(filename[:-3], "alembic/versions/" + filename)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        modules.append(module)
+    engine = create_engine("sqlite://")
+    with engine.begin() as connection:
+        connection.exec_driver_sql("PRAGMA foreign_keys=ON")
+        connection.exec_driver_sql("CREATE TABLE users (id CHAR(32) PRIMARY KEY)")
+        connection.exec_driver_sql("CREATE TABLE students (id CHAR(32) PRIMARY KEY)")
+        # Reproduce the existing 0001 live-metadata bootstrap, before 0036/0037.
+        for model in (CollaborationBoard, BoardOperation, BoardImage):
+            model.__table__.create(connection)
+        with Operations.context(MigrationContext.configure(connection)):
+            for module in modules:
+                module.upgrade()
+            user_id, child_id, board_id = uuid.uuid4(), uuid.uuid4(), uuid.uuid4()
+            connection.exec_driver_sql("INSERT INTO users VALUES (?)", (user_id.hex,))
+            connection.exec_driver_sql("INSERT INTO students VALUES (?)", (child_id.hex,))
+            connection.execute(
+                sa.insert(CollaborationBoard),
+                {"id": board_id, "student_id": child_id, "owner_id": user_id},
+            )
+            connection.execute(
+                sa.insert(BoardImage),
+                {
+                    "board_id": board_id,
+                    "operation_id": uuid.uuid4(),
+                    "digest": "x" * 64,
+                    "pixels": photo_bytes(),
+                },
+            )
+            connection.exec_driver_sql("DELETE FROM students WHERE id=?", (child_id.hex,))
+            assert connection.scalar(sa.select(sa.func.count()).select_from(BoardImage)) == 0
+            for module in reversed(modules):
+                module.downgrade()
+            for module in modules:
+                module.upgrade()
+    engine.dispose()
+
+
+def test_photo_chunked_body_is_bounded_before_spooling(family):
+    client, _, child, *_ = family
+    path = create_board(client, child)
+
+    def body():
+        yield b'--boundary\r\nContent-Disposition: form-data; name="photo"; filename="photo.jpg"\r\nContent-Type: image/jpeg\r\n\r\n'
+        for _ in range(7):
+            yield b"x" * (1024 * 1024)
+        yield b"\r\n--boundary--\r\n"
+
+    response = client.post(
+        path + "/photos",
+        content=body(),
+        headers={"Content-Type": "multipart/form-data; boundary=boundary"},
+    )
+    assert response.status_code == 413

@@ -137,7 +137,7 @@ def get_parent_data_summary(
             "learner identity and curriculum enrollment",
             "authoritative learning evidence and progress",
             "minimized first-party pilot telemetry",
-            "saved family whiteboard drawings and typed notes",
+            "saved family whiteboard drawings, typed notes, and homework photos",
             "privacy notice acknowledgement metadata",
         ],
         excluded_sensitive_categories=[

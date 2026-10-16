@@ -15,6 +15,7 @@ from app.core.settings import settings
 from app.diagnostic_api import router as diagnostic_router
 from app.effectiveness_api import router as effectiveness_router
 from app.hint_api import router as hint_router
+from app.middleware.board_upload_limit import BoardUploadLimitMiddleware
 from app.middleware.geo_restriction import geo_restriction_middleware
 from app.middleware.pii_sanitizer import PIISanitizerMiddleware
 from app.onboarding_api import router as onboarding_router
@@ -30,6 +31,7 @@ configure_logging()
 
 app = FastAPI(title=settings.app_name, version="0.1.0")
 app.add_middleware(PIISanitizerMiddleware)
+app.add_middleware(BoardUploadLimitMiddleware)
 # Geo runs inside session identity (it reads authenticated_* state) and inside
 # request logging (blocks are logged). Registration order → outer→inner:
 # request_logging, session, geo, PII.
