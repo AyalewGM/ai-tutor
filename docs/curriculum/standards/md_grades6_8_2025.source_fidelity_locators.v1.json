@@ -2384,7 +2384,24 @@
       },
       "pdf_page_index_zero_based": 11,
       "pdf_page_end_index_zero_based": 11,
-      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER"
+      "page_locator_evidence": "OFFICIAL_MSDE_PDF_2025_STANDARDS_COLUMN_PAGE_AND_FOOTER",
+      "retrospective_source_fidelity_correction_20261016": {
+        "source_authority": "MSDE 2025 Standards Statement (not 2010 historical comparison)",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "source_locator": {
+          "printed_page_start": 11,
+          "printed_page_end": 11
+        },
+        "requirements": {
+          "8.DS.A.1.b": "Evaluate conclusions from bivariate data, explicitly identifying limitations OR potential bias."
+        },
+        "short_summary_exhaustive": false,
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "8.DS.B.2",
@@ -2548,6 +2565,23 @@
         "independent_acceptance": "PENDING",
         "downstream_full_coverage_allowed": false,
         "canonical_equivalence": "UNVERIFIED"
+      },
+      "retrospective_source_fidelity_correction_20261016": {
+        "source_authority": "MSDE 2025 Standards Statement (not 2010 historical comparison)",
+        "source_url": "https://msde.maryland.gov/media/17820",
+        "source_locator": {
+          "printed_page_start": 12,
+          "printed_page_end": 13
+        },
+        "requirements": {
+          "8.DS.C.6.a": "Translate an everyday-language description of a compound event into the corresponding outcomes in the sample space."
+        },
+        "short_summary_exhaustive": false,
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
       }
     }
   ],
