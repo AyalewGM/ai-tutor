@@ -1,0 +1,434 @@
+{
+  "schema_version": "1.0.0",
+  "status": "DRAFT_PROVISIONAL_SUBPART_EXTRACTION",
+  "course_code": "MD_ALGEBRA_1_2026_27",
+  "parent_manifest": "md_algebra1_traditional_2026_27.expectations.v1.json",
+  "source": {
+    "publisher": "Maryland State Department of Education",
+    "url": "https://msde.maryland.gov/media/17798",
+    "date": "August 2022",
+    "pages": 7
+  },
+  "identifier_normalization": "For indexing, append '.' plus published letter to the parent code. This normalized key is NOT a new canonical ID and may differ from MCAP item label formatting.",
+  "counts": {
+    "parent_standards_with_lettered_subparts": 8,
+    "lettered_subparts": 17
+  },
+  "subparts": [
+    {
+      "parent_standard_id": "A.SSE.A.1",
+      "subpart_letter": "a",
+      "normalized_subpart_id": "A.SSE.A.1.a",
+      "source_page": 1,
+      "editorial_scope_summary": "Interpret terms, factors and coefficients in a contextual expression",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "A.SSE.A.1",
+      "subpart_letter": "b",
+      "normalized_subpart_id": "A.SSE.A.1.b",
+      "source_page": 1,
+      "editorial_scope_summary": "Interpret a compound expression by treating a meaningful part as one entity",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "A.SSE.B.3",
+      "subpart_letter": "a",
+      "normalized_subpart_id": "A.SSE.B.3.a",
+      "source_page": 2,
+      "editorial_scope_summary": "Factor a quadratic to reveal function zeros",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "A.SSE.B.3",
+      "subpart_letter": "b",
+      "normalized_subpart_id": "A.SSE.B.3.b",
+      "source_page": 2,
+      "editorial_scope_summary": "Complete the square to reveal quadratic maximum or minimum",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "A.SSE.B.3",
+      "subpart_letter": "c",
+      "normalized_subpart_id": "A.SSE.B.3.c",
+      "source_page": 2,
+      "editorial_scope_summary": "Transform exponential expressions using exponent properties",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "A.REI.B.4",
+      "subpart_letter": "a",
+      "normalized_subpart_id": "A.REI.B.4.a",
+      "source_page": 3,
+      "editorial_scope_summary": "Complete the square and derive the quadratic formula",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "A.REI.B.4",
+      "subpart_letter": "b",
+      "normalized_subpart_id": "A.REI.B.4.b",
+      "source_page": 3,
+      "editorial_scope_summary": "Select and apply quadratic-solving methods; recognize complex solutions",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "F.IF.C.7",
+      "subpart_letter": "a",
+      "normalized_subpart_id": "F.IF.C.7.a",
+      "source_page": 5,
+      "editorial_scope_summary": "Graph linear and quadratic functions with intercepts and extrema",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "F.IF.C.7",
+      "subpart_letter": "b",
+      "normalized_subpart_id": "F.IF.C.7.b",
+      "source_page": 5,
+      "editorial_scope_summary": "Graph square-root, cube-root and piecewise-defined functions",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "F.IF.C.8",
+      "subpart_letter": "a",
+      "normalized_subpart_id": "F.IF.C.8.a",
+      "source_page": 5,
+      "editorial_scope_summary": "Use factoring and completing the square to interpret quadratic features in context",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "F.BF.A.1",
+      "subpart_letter": "a",
+      "normalized_subpart_id": "F.BF.A.1.a",
+      "source_page": 5,
+      "editorial_scope_summary": "Build explicit or recursive expressions or calculation procedures from context",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "F.LE.A.1",
+      "subpart_letter": "a",
+      "normalized_subpart_id": "F.LE.A.1.a",
+      "source_page": 6,
+      "editorial_scope_summary": "Explain equal differences versus equal factors over equal intervals",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "F.LE.A.1",
+      "subpart_letter": "b",
+      "normalized_subpart_id": "F.LE.A.1.b",
+      "source_page": 6,
+      "editorial_scope_summary": "Recognize constant additive rate in context",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "F.LE.A.1",
+      "subpart_letter": "c",
+      "normalized_subpart_id": "F.LE.A.1.c",
+      "source_page": 6,
+      "editorial_scope_summary": "Recognize constant percent growth or decay in context",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "S.ID.B.6",
+      "subpart_letter": "a",
+      "normalized_subpart_id": "S.ID.B.6.a",
+      "source_page": 6,
+      "editorial_scope_summary": "Fit contextual functions to bivariate data",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "S.ID.B.6",
+      "subpart_letter": "b",
+      "normalized_subpart_id": "S.ID.B.6.b",
+      "source_page": 6,
+      "editorial_scope_summary": "Assess fit through residual plots",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    },
+    {
+      "parent_standard_id": "S.ID.B.6",
+      "subpart_letter": "c",
+      "normalized_subpart_id": "S.ID.B.6.c",
+      "source_page": 6,
+      "editorial_scope_summary": "Fit a linear function when scatter suggests linear association",
+      "source_url": "https://msde.maryland.gov/media/17798",
+      "status": "SOURCE_LOCATED_PROVISIONAL_EXTRACTION",
+      "atomicity": "NOT_DETERMINED_BY_STANDARDS_AGENT",
+      "proposed_canonical_skill_ids": [],
+      "required_evidence": [
+        "Independent source wording verification",
+        "Architecture atomic/composite and ALL_OF decision",
+        "Independent mathematical scope approval",
+        "Independent generator/practice/assessment verification"
+      ],
+      "readiness": {
+        "accepted_mapping": false,
+        "reviewed_skill": false,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "verified_mastery_evidence": false
+      }
+    }
+  ],
+  "safety": {
+    "activation": "FORBIDDEN",
+    "automatic_parent_coverage_from_one_subpart": false,
+    "automatic_mastery_from_public_item": false,
+    "create_canonical_ids": false,
+    "change_historical_mastery": false
+  }
+}

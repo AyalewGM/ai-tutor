@@ -1,0 +1,129 @@
+{
+  "schema_version": "1.0.0",
+  "status": "DRAFT_PUBLIC_ASSESSMENT_EVIDENCE_INDEX_NOT_MASTERY",
+  "course_code": "MD_ALGEBRA_1_2026_27",
+  "source": {
+    "publisher": "Maryland State Department of Education",
+    "release_year": 2024,
+    "source_url": "https://assessments.msde.maryland.gov/public/algebra-i-2024",
+    "notes": [
+      "Only source-reported item identifiers, calculator designation, format and standards tags are indexed; question text and answer keys are not copied.",
+      "These released items illustrate assessed evidence; they do not establish Mihur generator, validated practice, assessment readiness or learner mastery.",
+      "The source is a public release of 2024 MCAP items, not a replacement for the 2022 standards or 2024 official evidence statements."
+    ]
+  },
+  "items": [
+    {
+      "item_number": 1,
+      "standards": [
+        "A.SSE.B.3.b"
+      ],
+      "calculator": "NO_CALCULATOR",
+      "response_format": "SINGLE_SELECT",
+      "evidence_focus": "Quadratic expression form and minimum value"
+    },
+    {
+      "item_number": 6,
+      "standards": [
+        "A.REI.B.4.a"
+      ],
+      "calculator": "NO_CALCULATOR",
+      "response_format": "TWO_PART_NUMERIC_ENTRY",
+      "evidence_focus": "Completing square transformation of a quadratic"
+    },
+    {
+      "item_number": 8,
+      "standards": [
+        "F.BF.B.3"
+      ],
+      "calculator": "NO_CALCULATOR",
+      "response_format": "GRAPHIC_REGION_MULTI_SELECT",
+      "evidence_focus": "Function transformation and graphical region"
+    },
+    {
+      "item_number": 10,
+      "standards": [
+        "A.REI.C.6"
+      ],
+      "calculator": "NO_CALCULATOR",
+      "response_format": "TWO_PART_FRACTION_ENTRY",
+      "evidence_focus": "Linear system exact fractional solution"
+    },
+    {
+      "item_number": 15,
+      "standards": [
+        "F.IF.A.3"
+      ],
+      "calculator": "CALCULATOR",
+      "response_format": "NUMERIC_ENTRY",
+      "evidence_focus": "Sequence rule evaluated at a given index"
+    },
+    {
+      "item_number": 16,
+      "standards": [
+        "A.REI.B.4.b"
+      ],
+      "additional_evidence_tags": [
+        "A1.R.1"
+      ],
+      "calculator": "CALCULATOR",
+      "response_format": "SINGLE_SELECT",
+      "evidence_focus": "Quadratic real-root solution structure"
+    },
+    {
+      "item_number": 17,
+      "standards": [
+        "A.CED.A.3"
+      ],
+      "additional_evidence_tags": [
+        "A1.M.7"
+      ],
+      "calculator": "CALCULATOR",
+      "response_format": "SINGLE_SELECT",
+      "evidence_focus": "Information sufficiency in contextual linear constraints"
+    },
+    {
+      "item_number": 18,
+      "standards": [
+        "A.REI.A.1",
+        "A.REI.C.6"
+      ],
+      "additional_evidence_tags": [
+        "A1.R.8"
+      ],
+      "calculator": "CALCULATOR",
+      "response_format": "CONSTRUCTED_RESPONSE_WITH_JUSTIFICATION",
+      "evidence_focus": "Solve linear system algebraically and validate solution"
+    },
+    {
+      "item_number": 34,
+      "standards": [
+        "A.REI.D.11",
+        "F.BF.B.3"
+      ],
+      "additional_evidence_tags": [
+        "A1.R.10"
+      ],
+      "calculator": "CALCULATOR",
+      "response_format": "MATCHING",
+      "evidence_focus": "Graph transformations and number of intersection solutions"
+    },
+    {
+      "item_number": 36,
+      "standards": [
+        "F.LE.A.2"
+      ],
+      "calculator": "CALCULATOR",
+      "response_format": "SINGLE_SELECT",
+      "evidence_focus": "Exponential growth model from tabulated values"
+    }
+  ],
+  "readiness": {
+    "accepted_standards_mapping": false,
+    "mathematically_reviewed_skill": false,
+    "generator_available": "NOT_AUDITED",
+    "validated_practice": false,
+    "assessment_ready": false,
+    "verified_mastery_evidence": false
+  }
+}
