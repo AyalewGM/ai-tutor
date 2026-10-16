@@ -485,6 +485,59 @@ def fresh_exit(seed: int, mode: str, misconception_id: str) -> PackageVariant:
     raise RuntimeError("unable to generate a bounded negative-exponent fresh exit")
 
 
+
+def evaluate_repair_progress(
+    failed_response: object,
+    repaired_response: object,
+    fresh_response: object,
+    variant: PackageVariant,
+    fresh_variant: PackageVariant,
+) -> dict[str, Any]:
+    """Require a repaired original *and* a different complete guided exit.
+
+    This local draft evidence gate only recommends scaffold fading; it cannot
+    authorize a learner route, independent grade, or mastery event. The caller
+    must supply all typed response fields, including original-domain evidence,
+    exponent/coefficient reasons, and multiplication reconstruction.
+    """
+
+    if not isinstance(variant, PackageVariant) or not isinstance(
+        fresh_variant, PackageVariant
+    ):
+        raise TypeError("repair variants must be package variants")
+    if variant.mode != "guided" or fresh_variant.mode != "guided":
+        raise PermissionError("guided repair is unavailable in independent mode")
+
+    misconception = diagnose_response(failed_response, variant)
+    if misconception in {"NO_REMEDIATION", "UNCLASSIFIED_FOR_HUMAN_REVIEW"}:
+        return {
+            "misconception_id": misconception,
+            "original_repaired": False,
+            "fresh_exit_verified": False,
+            "ready_to_fade": False,
+            "mastery_credit": False,
+        }
+
+    seed = int(variant.variant_id.rsplit(":", 1)[1])
+    expected_fresh = fresh_exit(seed, "guided", misconception)
+    if fresh_variant != expected_fresh:
+        raise ValueError("fresh repair attempt must match its diagnosed exit")
+
+    original_repaired = evaluate_structured_response(repaired_response, variant)
+    fresh_exit_verified = (
+        evaluate_structured_response(fresh_response, fresh_variant)
+        if original_repaired
+        else False
+    )
+    return {
+        "misconception_id": misconception,
+        "original_repaired": original_repaired,
+        "fresh_exit_verified": fresh_exit_verified,
+        "ready_to_fade": original_repaired and fresh_exit_verified,
+        "mastery_credit": False,
+    }
+
+
 def advance_scaffold(state: str, event: str) -> str:
     if state not in SCAFFOLD_STATES:
         raise ValueError(f"Unsupported scaffold state: {state!r}")
