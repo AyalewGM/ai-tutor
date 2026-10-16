@@ -81,14 +81,18 @@
       "source_pdf_zero_based_page_index": 26,
       "author_mathematical_scope": "Explain that each digit in a three-digit number denotes hundreds, tens or ones; additionally identify 100 as ten tens and hundreds multiples 100–900 as one through nine hundreds with zero tens and ones.",
       "required_material_conditions": [
-        "three-digit",
-        "ten tens",
-        "100–900"
+        "three-digit place values: hundreds tens and ones",
+        "(a) 100 represents ten tens",
+        "(b) 100–900 each represent one through nine hundreds with zero tens and zero ones"
       ],
       "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "required_lettered_subparts": [
+        "a",
+        "b"
+      ]
     },
     {
       "expectation_id": "2.NBT.2",
