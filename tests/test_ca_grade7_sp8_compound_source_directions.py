@@ -31,6 +31,15 @@ def test_ca_7sp8_three_material_source_directions():
                and "approximate compound-event probabilities" in clause
                for clause in conditions)
 
+    summary = record["author_mathematical_scope_summary"]
+    for requirement in (
+        "7.SP.8.a", "sample-space outcomes",
+        "7.SP.8.b", "organized lists, tables and tree diagrams",
+        "everyday-language", "7.SP.8.c",
+        "design and use simulations", "generate frequencies",
+    ):
+        assert requirement in summary
+
     assert len(parent["rows"]) == 24
     assert notes["new_standard_count"] == 0
     assert parent["independent_source_fidelity"] == notes["independent_source_fidelity"] == "PENDING"
