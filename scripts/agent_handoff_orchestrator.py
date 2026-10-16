@@ -137,9 +137,42 @@ class DeliveryOutcome(StrEnum):
     SUPERSEDED_BY_CURRENT_CHECKS = "superseded_by_current_checks"
 
 
+def rate_limited(exc: Exception) -> bool:
+    """Distinguish transient GitHub rate limiting from persistent denials.
+
+    Secondary rate limits surface as 403 (not 429); without this check a
+    transient throttle would be treated as a persistent denial and fail
+    the whole run instead of deferring to the next trigger.
+    """
+    if not isinstance(exc, HTTPError):
+        return False
+    if exc.code == 429:
+        return True
+    if exc.headers.get("x-ratelimit-remaining") == "0":
+        return True
+    if exc.headers.get("retry-after"):
+        return True
+    if exc.code == 403:
+        try:
+            body = exc.read().decode("utf-8", "replace").lower()
+        except (OSError, UnicodeError):
+            return False
+        return "rate limit" in body or "secondary rate" in body
+    return False
+
+
 def reject_persistent_denial(exc: Exception) -> None:
-    if isinstance(exc, HTTPError) and 400 <= exc.code < 500 and exc.code not in {408, 429}:
+    if isinstance(exc, HTTPError) and 400 <= exc.code < 500 and not rate_limited(exc):
         raise exc
+
+
+def http_error_detail(exc: HTTPError) -> str:
+    """Include the API denial body so fail-closed output is diagnosable."""
+    try:
+        body = exc.read().decode("utf-8", "replace")[:500]
+    except (OSError, UnicodeError):
+        body = ""
+    return f"{exc} body={body!r}"
 
 
 def deliver(root: str, number: int, token: str, *, intended_sha: str | None = None,
@@ -351,6 +384,15 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except (HTTPError, URLError, OSError, ValueError, KeyError) as exc:
+    except HTTPError as exc:
+        if rate_limited(exc):
+            print("::warning::GitHub rate limit; handoff deferred to the next trigger")
+            sys.exit(0)
+        print(
+            f"Fail-closed; manual intervention required: {http_error_detail(exc)}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    except (URLError, OSError, ValueError, KeyError) as exc:
         print(f"Fail-closed; manual intervention required: {exc}", file=sys.stderr)
         sys.exit(1)
