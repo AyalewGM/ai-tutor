@@ -449,12 +449,12 @@
         50
       ],
       "required_lettered_subparts": [],
-      "author_mathematical_scope_summary": "Use measures of center and spread computed from random samples to make informal comparative inferences about two populations.",
+      "author_mathematical_scope_summary": "Use measures of center and measures of variability for numerical data from random samples to draw informal comparative inferences about two populations; for example, compare sampled word lengths in seventh- and fourth-grade science-book chapters.",
       "test_material_conditions": [
-        "center",
-        "spread",
-        "random samples",
-        "two populations"
+        "measures of center",
+        "measures of variability",
+        "numerical data from random samples",
+        "informal comparative inferences about two populations"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
