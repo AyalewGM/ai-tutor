@@ -6,7 +6,6 @@ This tests authored evidence only; it does not approve publisher source fidelity
 import json
 from pathlib import Path
 
-
 STANDARDS = (
     Path(__file__).resolve().parents[1] / "docs" / "curriculum" / "standards"
 )
