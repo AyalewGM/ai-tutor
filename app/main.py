@@ -8,6 +8,7 @@ from app.api import router as tutor_router
 from app.auth import session_identity_middleware
 from app.auth_api import router as auth_router
 from app.billing_api import router as billing_router
+from app.collaboration_api import router as collaboration_router
 from app.core.database import SessionLocal
 from app.core.observability import configure_logging, request_logging_middleware
 from app.core.settings import settings
@@ -35,6 +36,7 @@ app.add_middleware(PIISanitizerMiddleware)
 app.middleware("http")(geo_restriction_middleware)
 app.middleware("http")(session_identity_middleware)
 app.middleware("http")(request_logging_middleware)
+app.include_router(collaboration_router, prefix=settings.api_prefix)
 app.include_router(auth_router, prefix=settings.api_prefix)
 app.include_router(onboarding_router, prefix=settings.api_prefix)
 app.include_router(tutor_router, prefix=settings.api_prefix)

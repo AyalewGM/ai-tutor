@@ -8,7 +8,7 @@ const PRACTICES = [
   {
     icon: ShieldCheck,
     title: "What we collect",
-    body: "A parent's email, a learner nickname (never a legal name), grade level, and practice answers used to adapt instruction. That is the whole list.",
+    body: "A parent's email, a learner nickname (never a legal name), grade level, practice answers used to adapt instruction, and drawings and typed notes saved when your family uses Learn Together.",
   },
   {
     icon: Lock,
