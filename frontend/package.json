@@ -7,7 +7,8 @@
     "build": "tsc --noEmit && vite build",
     "check:mve": "tsc --noEmit",
     "test:mve": "node --test src/mve/*.test.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "node scripts/copy-pdf-assets.mjs"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.2.6",
@@ -22,6 +23,7 @@
     "clsx": "^2.1.1",
     "katex": "^0.18.10",
     "lucide-react": "^0.468.0",
+    "pdfjs-dist": "6.4.299",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^9.1.0",

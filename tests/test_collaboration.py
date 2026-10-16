@@ -422,3 +422,100 @@ def test_photo_chunked_body_is_bounded_before_spooling(family):
         headers={"Content-Type": "multipart/form-data; boundary=boundary"},
     )
     assert response.status_code == 413
+
+
+def test_worksheet_pages_are_scoped_and_navigation_cannot_be_erased(family):
+    client, _, child, *_ = family
+    path = create_board(client, child)
+    page_id = str(uuid.uuid4())
+    assert upload(client, path, operation_id=page_id).status_code == 200
+    annotation = mark(kind="text", points=[], text="page one", page_id=page_id)
+    assert client.post(path + "/operations", json=annotation).status_code == 200
+    assert client.post(path + "/operations", json=annotation).json()["revision"] == 2
+    navigation = mark(kind="page", points=[], target=page_id)
+    assert client.post(path + "/operations", json=navigation).status_code == 200
+    assert (
+        client.post(
+            path + "/operations",
+            json=mark(kind="erase", points=[], target=navigation["operation_id"]),
+        ).status_code
+        == 403
+    )
+    assert (
+        client.post(
+            path + "/operations",
+            json=mark(kind="erase", points=[], target=annotation["operation_id"]),
+        ).status_code
+        == 409
+    )
+    assert (
+        client.post(
+            path + "/operations",
+            json=mark(kind="erase", points=[], target=annotation["operation_id"], page_id=page_id),
+        ).status_code
+        == 200
+    )
+    assert (
+        client.post(
+            path + "/operations", json=mark(kind="page", points=[], target=None)
+        ).status_code
+        == 200
+    )
+    other_path = create_board(client, child)
+    assert client.post(other_path + "/operations", json=mark(page_id=page_id)).status_code == 404
+    assert (
+        client.post(
+            other_path + "/operations", json=mark(kind="page", points=[], target=page_id)
+        ).status_code
+        == 404
+    )
+    assert (
+        client.post(
+            path + "/operations",
+            json=mark(kind="page", points=[], target=annotation["operation_id"]),
+        ).status_code
+        == 404
+    )
+
+
+def test_historical_blank_page_payload_remains_retry_compatible(family):
+    client, _, child, *_ = family
+    path = create_board(client, child)
+    payload = mark()
+    assert client.post(path + "/operations", json=payload).status_code == 200
+    assert "page_id" not in client.get(path + "/operations").json()[0]
+    assert client.post(path + "/operations", json={**payload, "page_id": None}).json() == {
+        "revision": 1
+    }
+
+
+def test_closed_board_replays_every_batch_before_disconnect(family):
+    client, factory, child, *_ = family
+    path = create_board(client, child)
+    board_id = uuid.UUID(path.rsplit("/", 1)[-1])
+    with factory() as db:
+        board = db.get(CollaborationBoard, board_id)
+        board.closed = True
+        board.revision = 201
+        db.add_all(
+            [
+                BoardOperation(
+                    board_id=board_id,
+                    operation_id=uuid.uuid4(),
+                    revision=index,
+                    author=f"parent:{board.owner_id}",
+                    payload={"kind": "text", "text": str(index)},
+                )
+                for index in range(1, 202)
+            ]
+        )
+        db.commit()
+    with client.websocket_connect(
+        path + "/live", headers={"origin": "http://testserver"}
+    ) as socket:
+        first, second = socket.receive_json(), socket.receive_json()
+        assert len(first["operations"]) == 200
+        assert second["operations"][0]["revision"] == 201
+        assert second["closed"] is True
+        with pytest.raises(WebSocketDisconnect):
+            socket.receive_json()

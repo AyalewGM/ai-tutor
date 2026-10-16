@@ -1,4 +1,4 @@
-const { chromium } = require("@playwright/test");
+const { chromium, expect } = require("@playwright/test");
 const fs = require("fs");
 const assert = require("node:assert/strict");
 (async () => {
@@ -123,6 +123,10 @@ const assert = require("node:assert/strict");
   await c.mouse.up();
   assert.ok((await viewport.evaluate((element) => element.scrollLeft)) > 0);
   await c.getByRole("button", { name: "Fit page", exact: true }).click();
+  await c.getByRole("combobox", { name: "Worksheet page" }).selectOption("");
+  await c.locator("svg text").filter({ hasText: "x = 4" }).waitFor();
+  await p.locator("svg text").filter({ hasText: "x = 4" }).waitFor();
+  await p.locator("svg text").filter({ hasText: "2x + 3 = 11" }).waitFor();
   await c
     .getByRole("button", { name: "Eraser (my marks)", exact: true })
     .click();
@@ -140,6 +144,138 @@ const assert = require("node:assert/strict");
     await p.locator("svg text").filter({ hasText: "2x + 3 = 11" }).count(),
     1,
   );
+  // Minimal synthetic two-page PDF, kept in memory rather than a document artifact.
+  function testPDF() {
+    const contents = [
+      "BT /F1 24 Tf 50 700 Td (Worksheet A: solve 2x + 3 = 11) Tj ET",
+      "BT /F1 24 Tf 50 700 Td (Worksheet B: solve 3y - 4 = 8) Tj ET",
+    ];
+    const objects = [
+      "<< /Type /Catalog /Pages 2 0 R >>",
+      "<< /Type /Pages /Kids [3 0 R 5 0 R] /Count 2 >>",
+      "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 600 800] /Resources << /Font << /F1 7 0 R >> >> /Contents 4 0 R >>",
+      `<< /Length ${contents[0].length} >>\nstream\n${contents[0]}\nendstream`,
+      "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 600 800] /Resources << /Font << /F1 7 0 R >> >> /Contents 6 0 R >>",
+      `<< /Length ${contents[1].length} >>\nstream\n${contents[1]}\nendstream`,
+      "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
+    ];
+    let data = "%PDF-1.4\n%PRIVATE-ORIGINAL-WORKSHEET\n";
+    const offsets = [0];
+    objects.forEach((object, index) => {
+      offsets.push(Buffer.byteLength(data));
+      data += `${index + 1} 0 obj\n${object}\nendobj\n`;
+    });
+    const xref = Buffer.byteLength(data);
+    data += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+    for (const offset of offsets.slice(1))
+      data += `${String(offset).padStart(10, "0")} 00000 n \n`;
+    data += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+    return Buffer.from(data);
+  }
+  const postedOriginals = [];
+  p.on("request", (request) => {
+    if (
+      request.method() === "POST" &&
+      request.url().includes("/together/boards/")
+    ) {
+      const data = request.postDataBuffer();
+      if (data?.includes(Buffer.from("PRIVATE-ORIGINAL-WORKSHEET")))
+        postedOriginals.push(request.url());
+    }
+  });
+  await p.getByRole("button", { name: "Import PDF", exact: true }).click();
+  const importer = p.getByRole("region", { name: "PDF homework importer" });
+  await importer.locator('input[type="file"]').setInputFiles({
+    name: "private.pdf",
+    mimeType: "application/pdf",
+    buffer: testPDF(),
+  });
+  await importer.getByText("PDF page 1 of 2", { exact: true }).waitFor();
+  await importer
+    .getByRole("button", { name: "Add selected PDF page", exact: true })
+    .waitFor({ state: "visible" });
+  await expect(
+    importer.getByRole("button", {
+      name: "Add selected PDF page",
+      exact: true,
+    }),
+  ).toBeEnabled();
+  const previewPixels = await importer
+    .locator("canvas")
+    .evaluate((canvas) => canvas.toDataURL());
+  if (process.env.MIHUR_PDF_PREVIEW)
+    await importer.screenshot({ path: process.env.MIHUR_PDF_PREVIEW });
+  await importer
+    .getByRole("button", { name: "Add selected PDF page", exact: true })
+    .click();
+  await importer
+    .getByText("Page added to your shared board.", { exact: true })
+    .waitFor();
+  await c
+    .getByRole("combobox", { name: "Worksheet page" })
+    .locator("option[value]")
+    .filter({ hasText: "Page 2" })
+    .waitFor({ state: "attached" });
+  await c.getByTestId("homework-photo").waitFor();
+  await p.getByRole("button", { name: "Type", exact: true }).click();
+  await p
+    .getByPlaceholder("Type, then tap the board to place")
+    .fill("PDF first-page note");
+  await p
+    .getByRole("button", { name: "Add text to board", exact: true })
+    .click();
+  await c
+    .locator("svg text")
+    .filter({ hasText: "PDF first-page note" })
+    .waitFor();
+  const firstPDFPage = await c
+    .getByRole("combobox", { name: "Worksheet page" })
+    .inputValue();
+  await importer
+    .getByRole("button", { name: "Next PDF page", exact: true })
+    .click();
+  await importer.getByText("PDF page 2 of 2", { exact: true }).waitFor();
+  await expect(
+    importer.getByRole("button", {
+      name: "Add selected PDF page",
+      exact: true,
+    }),
+  ).toBeEnabled();
+  assert.ok(
+    (await importer
+      .locator("canvas")
+      .evaluate((canvas) => canvas.toDataURL())) !== previewPixels,
+    "PDF preview must change before the next page can be imported",
+  );
+  await importer
+    .getByRole("button", { name: "Add selected PDF page", exact: true })
+    .click();
+  await importer
+    .getByText("Page added to your shared board.", { exact: true })
+    .waitFor();
+  await c
+    .locator("svg text")
+    .filter({ hasText: "PDF first-page note" })
+    .waitFor({ state: "detached" });
+  await c
+    .getByRole("combobox", { name: "Worksheet page" })
+    .selectOption(firstPDFPage);
+  await p
+    .locator("svg text")
+    .filter({ hasText: "PDF first-page note" })
+    .waitFor();
+  await c.reload();
+  await c
+    .locator("svg text")
+    .filter({ hasText: "PDF first-page note" })
+    .waitFor();
+  assert.deepEqual(postedOriginals, []);
+  await importer.locator('input[type="file"]').setInputFiles({
+    name: "broken.pdf",
+    mimeType: "application/pdf",
+    buffer: Buffer.from("not a PDF"),
+  });
+  await importer.getByRole("alert").filter({ hasText: "valid PDF" }).waitFor();
   await c.setViewportSize({ width: 390, height: 844 });
   assert.equal(
     await c.getByRole("button", { name: "Type", exact: true }).isVisible(),
@@ -152,7 +288,7 @@ const assert = require("node:assert/strict");
   assert.deepEqual(errors, []);
   await browser.close();
   console.log(
-    "PASS: parent/child sync, author undo, drawing, offline queued edit + reload recovery, photo synchronization, zoom, own-mark eraser, phone layout; no page errors.",
+    "PASS: parent/child sync, author undo, drawing, offline queued edit + reload recovery, photo/PDF synchronization, per-page notes and navigation replay, local-only PDF bytes, zoom, own-mark eraser, phone layout; no page errors.",
   );
 })().catch((e) => {
   console.error(e);

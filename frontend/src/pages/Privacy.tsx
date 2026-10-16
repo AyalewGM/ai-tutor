@@ -117,7 +117,9 @@ export default function Privacy() {
             Photos added to a Learn Together board are different: Mihur saves a
             resized copy for your family, removes embedded metadata such as GPS,
             and does not send it to Mathpix or an AI provider. Saved board photos
-            are removed when you delete the learner's data. Avoid including names
+            are removed when you delete the learner's data. For PDF imports, the
+            original PDF stays in your browser; only the page images you choose
+            to share are saved. Avoid including names
             or other personal details in homework photos.
           </p>
         </section>

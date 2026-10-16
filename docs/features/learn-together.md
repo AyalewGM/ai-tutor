@@ -9,7 +9,12 @@ board URL is an identifier, not a bearer invitation. It does not grant access.
 ## Included
 
 - Shared pen strokes and plain typed math/text, fixed 1600 × 1000 page coordinates.
-- JPEG/PNG homework backgrounds, latest photo displayed beneath annotations.
+- JPEG/PNG homework pages with separate annotations for each page.
+- Browser-only PDF preview and selected-page import (5 MiB / 50 pages maximum
+  per original PDF). Only rendered page pixels are uploaded, through the same
+  private image path. Shared page navigation is persisted and replayed.
+- Existing annotations without a page scope remain on Blank page; historical
+  operation payloads and idempotent retries are preserved.
 - Zoom from 100% to 300%, mouse-drag or native-touch panning, and fit-page reset.
 - Own-mark eraser, including keyboard-accessible erase buttons in the written-work list.
 - Purple parent marks, blue learner marks, author-scoped undo.
@@ -68,12 +73,14 @@ python e2e/run-learn-together-check.py
 Optionally set `MIHUR_CHROMIUM_PATH` to a local Chromium executable. This check
 covers parent/child text synchronization, child undo preserving parent work,
 handwriting delivery, offline edit recovery after refresh, shared photo retrieval,
-zoom, mouse panning, own-mark erasing, and phone viewport overflow. It uses Chromium touch emulation, not a physical iPad.
+zoom, mouse panning, own-mark erasing, PDF preview/import, local-only original
+PDF bytes, per-page annotations, navigation replay, and phone viewport overflow. It uses Chromium touch emulation, not a physical iPad.
 
-Executed author-side: 16 API/deletion tests passed, Ruff passed, production
-frontend build passed, and the two-browser check passed. PostgreSQL concurrency
-is covered by `tests/integration/test_collaboration_postgres.py` for CI execution;
-it was not executed locally because no PostgreSQL server was available.
+Executed author-side: 19 API/deletion tests passed, Ruff passed, production
+frontend build passed, and the two-browser check passed. The prior head `aa0f0ed3aa57d022d5feaed6b8220f36223f882d` passed all CI/security
+checks, including PostgreSQL tests (11,982 passed, 9 expected failures) and the
+container/browser job. The PDF/page-scoping increment requires its own fresh CI
+run. PostgreSQL is not available in the local author environment.
 
 The isolated API suite exercises real cookie identities and SQL persistence with
 SQLite, plus origin rejection, replay/retry, author-only undo, learner scope,
@@ -81,22 +88,37 @@ revocation, closure, validation, PII filtering, migration upgrade/downgrade, and
 learner-erasure cascades. SQLite timezone normalization is confined to the test
 fixture. It does not prove PostgreSQL concurrency behavior.
 
-Before pilot activation, verify concurrent writers against PostgreSQL, staging
+Before pilot activation, verify the latest-head PostgreSQL tests, staging
 WebSocket forwarding, and real iPad/Safari + Chromebook handwriting. Measure
 resource use on the target VPS. Current live readers query revisions every 500ms;
 this is a bounded first implementation, not a scale-tested room broker.
 
 ## Deliberate limits
 
-- One fixed page; completed strokes are synchronized, not each in-progress point.
-- No PDF import, HEIC support, pressure-sensitive widths, pinch zoom, pointer,
-  participant presence, follow-parent navigation, integrated voice, or AI reading.
+- One fixed-size coordinate plane per worksheet page; completed strokes are
+  synchronized, not each in-progress point. Closed-board replay drains every
+  operation batch before disconnecting.
+- No HEIC support, pressure-sensitive widths, pinch zoom, pointer, live presence,
+  independent view/follow mode, integrated voice, or AI reading.
+- PDF forms, attachments, links, and scripts are not interactive. Locked, invalid,
+  overly large, or slow-to-render PDFs fail with an actionable error. PDF previews
+  are raster images; no OCR or PDF-text scoring is introduced.
 - Typed math is plain text; no claim of equation parsing or scoring.
 - Photo uploads require connectivity and are not retained for offline retry after
   closing/reloading a tab. Erasing hides marks through recorded operations; photo
-  history remains stored until learner-data deletion.
+  history remains stored until learner-data deletion. Ten imported image/PDF pages
+  may be saved per board, in addition to Blank page.
 - Fifty pending writes per tab, 4,000 points per stroke, 1,000 characters per text
   mark, and 10,000 operations per board. Start another board when full.
 - Pending recovery is scoped to the same browser tab and authenticated identity;
   it is not cross-device offline synchronization.
 - No student email/password or anonymous public room joining is introduced.
+
+## PDF asset packaging
+
+PDF.js is lazy-loaded only when the importer opens. `npm ci` runs the postinstall
+asset copy script, placing CMaps, font data, WebAssembly helpers, and licenses in
+ignored `public/pdfjs/`; Vite packages them with the site. The Docker frontend
+builder uses Node 22 and copies the script before installation. nginx explicitly
+serves module workers and WebAssembly with the correct MIME types. No CDN or
+external document URL is used for PDF processing.

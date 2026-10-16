@@ -137,12 +137,20 @@ class Point(BaseModel):
 class Operation(BaseModel):
     model_config = ConfigDict(extra="forbid")
     operation_id: uuid.UUID
-    kind: Literal["stroke", "text", "undo", "erase"]
+    kind: Literal["stroke", "text", "undo", "erase", "page"]
     points: list[Point] = Field(default_factory=list, max_length=4000)
     text: str = Field(default="", max_length=1000)
     x: float = Field(default=40, ge=0, le=1600, allow_inf_nan=False)
     y: float = Field(default=60, ge=0, le=1000, allow_inf_nan=False)
     target: uuid.UUID | None = None
+    page_id: uuid.UUID | None = None
+
+    def stored_payload(self):
+        # Preserve exact historical payloads and idempotent retries from older tabs.
+        excluded = {"operation_id"}
+        if self.page_id is None:
+            excluded.add("page_id")
+        return self.model_dump(mode="json", exclude=excluded)
 
 
 def operations(db, board_id, after):
@@ -179,13 +187,22 @@ def write_operation(board_id: uuid.UUID, payload: Operation, request: Request, d
         )
     )
     if old:
-        if old.author != author or old.payload != payload.model_dump(
-            mode="json", exclude={"operation_id"}
-        ):
+        if old.author != author or old.payload != payload.stored_payload():
             raise HTTPException(409, "Operation ID already used")
         return {"revision": old.revision}
     if board.revision >= 10000:
         raise HTTPException(409, "Board is full; start another board")
+    page_id = payload.target if payload.kind == "page" else payload.page_id
+    if page_id is not None:
+        image_page = db.scalar(
+            select(BoardImage.id).where(
+                BoardImage.board_id == board_id, BoardImage.operation_id == page_id
+            )
+        )
+        if image_page is None:
+            raise HTTPException(404, "Worksheet page not found")
+    if payload.kind == "page" and payload.page_id is not None:
+        raise HTTPException(422, "Page navigation cannot carry annotation scope")
     if payload.kind == "stroke" and len(payload.points) < 1:
         raise HTTPException(422, "Stroke needs points")
     if payload.kind == "text" and not payload.text.strip():
@@ -196,8 +213,19 @@ def write_operation(board_id: uuid.UUID, payload: Operation, request: Request, d
                 BoardOperation.board_id == board_id, BoardOperation.operation_id == payload.target
             )
         )
-        if not target or target.author != author or target.payload["kind"] in {"undo", "erase"}:
+        if (
+            not target
+            or target.author != author
+            or target.payload["kind"] in {"undo", "erase", "page"}
+        ):
             raise HTTPException(403, "You can only remove your own marks")
+        target_page = (
+            str(target.operation_id)
+            if target.payload["kind"] == "image"
+            else target.payload.get("page_id")
+        )
+        if (str(payload.page_id) if payload.page_id else None) != target_page:
+            raise HTTPException(409, "The mark belongs to a different worksheet page")
     board.revision += 1
     db.add(
         BoardOperation(
@@ -205,7 +233,7 @@ def write_operation(board_id: uuid.UUID, payload: Operation, request: Request, d
             operation_id=payload.operation_id,
             revision=board.revision,
             author=author,
-            payload=payload.model_dump(mode="json", exclude={"operation_id"}),
+            payload=payload.stored_payload(),
         )
     )
     db.commit()
@@ -325,7 +353,7 @@ async def live_board(socket: WebSocket, board_id: uuid.UUID, after: int = 0):
             await socket.send_json({"operations": batch, "closed": closed})
             if batch:
                 after = batch[-1]["revision"]
-            if closed:
+            if closed and len(batch) < 200:
                 await socket.close(code=1000)
                 return
             await asyncio.sleep(0.5)

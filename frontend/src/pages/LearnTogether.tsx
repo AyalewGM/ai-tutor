@@ -1,12 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { api, ApiError, post, postForm } from "../api";
 import NavBar from "../components/NavBar";
 
+const PDFImport = lazy(() => import("../components/PDFImport"));
+
 type Point = { x: number; y: number };
 type Mark = {
   operation_id: string;
-  kind: "stroke" | "text" | "undo" | "erase" | "image";
+  kind: "stroke" | "text" | "undo" | "erase" | "image" | "page";
+  page_id?: string | null;
   image_id?: string;
   points?: Point[];
   text?: string;
@@ -35,6 +38,9 @@ export default function LearnTogether() {
     { id: string; first_name: string }[]
   >([]);
   const [board, setBoard] = useState<Board | null>(null);
+  const [selectedPage, setSelectedPage] = useState<string | null>(null);
+  const [ready, setReady] = useState(false);
+  const [showPDF, setShowPDF] = useState(false);
   const [marks, setMarks] = useState<Mark[]>([]);
   const [pending, setPending] = useState<Mark[]>([]);
   const [draft, setDraft] = useState<Point[]>([]);
@@ -81,6 +87,9 @@ export default function LearnTogether() {
     let retry: ReturnType<typeof setTimeout>;
     let sending = false;
     setError("");
+    setReady(false);
+    setSelectedPage(null);
+    setShowPDF(false);
     setBoard(null);
     setMarks([]);
     setDraft([]);
@@ -89,6 +98,7 @@ export default function LearnTogether() {
     revision.current = 0;
     function merge(batch: Mark[]) {
       if (disposed || !batch.length) return;
+      const previousRevision = revision.current;
       revision.current = Math.max(
         revision.current,
         ...batch.map((m) => m.revision || 0),
@@ -97,6 +107,16 @@ export default function LearnTogether() {
       queue.current = queue.current.filter((m) => !ids.has(m.operation_id));
       persistQueue();
       setPending([...queue.current]);
+      const navigation = batch
+        .filter((m) => (m.revision || 0) > previousRevision)
+        .reverse()
+        .find((m) => m.kind === "page" || m.kind === "image");
+      if (navigation)
+        setSelectedPage(
+          navigation.kind === "image"
+            ? navigation.operation_id
+            : navigation.target || null,
+        );
       setMarks((old) =>
         [...old.filter((m) => !ids.has(m.operation_id)), ...batch].sort(
           (a, b) => (a.revision || 0) - (b.revision || 0),
@@ -148,6 +168,7 @@ export default function LearnTogether() {
         if (disposed) return;
         const data = JSON.parse(event.data);
         merge(data.operations);
+        if (data.operations.length < 200) setReady(true);
         if (data.closed) {
           setBoard((old) => old && { ...old, closed: true });
           setStatus("Board closed · saved work is available");
@@ -240,7 +261,11 @@ export default function LearnTogether() {
 
   function enqueue(mark: Mark) {
     if (!board || board.closed || queue.current.length >= 50) return;
-    queue.current.push({ ...mark, author: author.current });
+    queue.current.push({
+      ...mark,
+      ...(mark.kind === "page" ? {} : { page_id: selectedPage }),
+      author: author.current,
+    });
     persistQueue();
     setPending([...queue.current]);
   }
@@ -267,17 +292,35 @@ export default function LearnTogether() {
   );
   const visible = all.filter(
     (m) =>
-      m.kind !== "undo" && m.kind !== "erase" && !undone.has(m.operation_id),
+      m.kind !== "undo" &&
+      m.kind !== "erase" &&
+      m.kind !== "page" &&
+      !undone.has(m.operation_id) &&
+      (m.kind === "image"
+        ? m.operation_id === selectedPage
+        : (m.page_id || null) === selectedPage),
   );
   const lastOwn = [...visible]
     .reverse()
     .find((m) => m.author === board?.author);
-  const background = [...visible].reverse().find((m) => m.kind === "image");
+  const pages = marks.filter((m) => m.kind === "image");
+  const background = visible.find((m) => m.kind === "image");
+  function changePage(value: string) {
+    const page = value || null;
+    setSelectedPage(page);
+    setZoom(1);
+    if (!board?.closed)
+      enqueue({
+        operation_id: crypto.randomUUID(),
+        kind: "page",
+        target: page || undefined,
+      });
+  }
   async function uploadPhoto(file: File, id: string) {
-    if (!boardId) return;
+    if (!boardId) return false;
     if (file.size > 5 * 1024 * 1024) {
       setError("Choose a JPEG or PNG photo smaller than 5 MB.");
-      return;
+      return false;
     }
     uploadBusy.current = true;
     setUploading(true);
@@ -290,9 +333,11 @@ export default function LearnTogether() {
     try {
       await postForm(`/together/boards/${boardId}/photos`, form);
       uploadAttempt.current = null;
+      return true;
     } catch (err) {
       setError((err as Error).message);
       setUploadFailed(true);
+      return false;
     } finally {
       uploadBusy.current = false;
       setUploading(false);
@@ -314,7 +359,7 @@ export default function LearnTogether() {
       target: mark.operation_id,
     });
   }
-  const disabled = !board || board.closed || pending.length >= 50;
+  const disabled = !board || !ready || board.closed || pending.length >= 50;
 
   return (
     <>
@@ -435,6 +480,30 @@ export default function LearnTogether() {
               )}
             </div>
             <div className="flex flex-wrap items-center gap-2">
+              <label>
+                Worksheet page{" "}
+                <select
+                  aria-label="Worksheet page"
+                  className={button}
+                  disabled={!ready || uploading || pending.length > 0}
+                  value={selectedPage || ""}
+                  onChange={(event) => changePage(event.target.value)}
+                >
+                  <option value="">Blank page</option>
+                  {pages.map((page, index) => (
+                    <option key={page.operation_id} value={page.operation_id}>
+                      Page {index + 1}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <button
+                className={button}
+                disabled={disabled || uploading}
+                onClick={() => setShowPDF((value) => !value)}
+              >
+                Import PDF
+              </button>
               <button
                 className={button}
                 disabled={disabled}
@@ -485,7 +554,15 @@ export default function LearnTogether() {
                 Fit page
               </button>
             </div>
-            {uploading && <p role="status">Uploading homework photo…</p>}
+            {showPDF && (
+              <Suspense fallback={<p role="status">Loading PDF importer…</p>}>
+                <PDFImport
+                  disabled={disabled || uploading}
+                  onImport={(file) => uploadPhoto(file, crypto.randomUUID())}
+                />
+              </Suspense>
+            )}
+            {uploading && <p role="status">Uploading worksheet page…</p>}
             {uploadFailed && uploadAttempt.current && (
               <button
                 className={button}
@@ -500,7 +577,7 @@ export default function LearnTogether() {
             )}
             <p className="text-sm">
               Photos are saved privately with this board. Use JPEG or PNG, up to
-              5 MB. PDF import is coming later.
+              5 MB. Import a PDF page using the Import PDF button.
             </p>
             {share && <p role="status">{share}</p>}
             <p role="status" className="text-sm">
