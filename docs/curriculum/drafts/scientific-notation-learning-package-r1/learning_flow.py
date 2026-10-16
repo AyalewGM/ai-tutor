@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import re
 from collections.abc import Mapping
+from dataclasses import replace
 from fractions import Fraction
 from typing import Any
 
@@ -158,6 +159,85 @@ def guided_lesson(item: Any) -> dict[str, Any]:
         "rounded_response_policy": "PROVISIONAL_NOT_IMPLEMENTED",
         "mastery_credit": False,
     }
+
+
+
+def generate_contextual_transfer(index: int, mode: str, source_generate: Any) -> Any:
+    """Reuse accepted exact generators for a genuinely shifted-context draft exit.
+
+    The source variant retains its typed teacher-only oracle. The returned item
+    can be passed to independent_public_task, which exposes only an opaque ID
+    and the necessary task input. This is not an authorized assessment route.
+    """
+
+    if type(index) is not int or index < 0:
+        raise ValueError("index must be a non-negative integer")
+    if mode not in {"guided", "independent"}:
+        raise ValueError("unsupported transfer mode")
+    if not callable(source_generate):
+        raise TypeError("source_generate must be the accepted draft generator")
+
+    practice = source_generate(scientific_seed(index), "guided")
+    _validate_item(practice)
+    operations = ("TO_SCIENTIFIC", "TO_ORDINARY", "MULTIPLY", "DIVIDE")
+    previous = _field(practice, "parameters")["operation"]
+    if previous not in operations:
+        raise ValueError("unsupported practice operation")
+    previous_position = operations.index(previous)
+    target_position = (previous_position + 1 + (index // 4) % 3) % len(operations)
+
+    # The source generator's scientific operation is selected by seed % 4.
+    # 5 * (10_000 + transfer_index) + 4 retains transfer_index % 4.
+    transfer_index = 10_000 + 16 * index + target_position
+    candidate = source_generate(scientific_seed(transfer_index, transfer=True), mode)
+    _validate_item(candidate)
+    parameters = _field(candidate, "parameters")
+    operation = parameters["operation"]
+    if operation != operations[target_position] or operation == previous:
+        raise ValueError("fresh transfer failed the operation-shift invariant")
+
+    c1, e1 = Fraction(parameters["c1"]), parameters["e1"]
+    c2, e2 = Fraction(parameters["c2"]), parameters["e2"]
+    context = (index // 4) % 2
+    if operation == "TO_SCIENTIFIC":
+        unit = ("pulses", "events")[context]
+        ordinary = Fraction(_field(candidate, "teacher_oracle")["ordinary_value"])
+        task = (
+            f"A synthetic counter recorded exactly {ordinary} {unit}. "
+            "Express the reading in normalized scientific notation, explain the "
+            "inverse factor-of-ten change, and verify the original exact count."
+        )
+    elif operation == "TO_ORDINARY":
+        unit = ("micrometres", "grams")[context]
+        task = (
+            f"A synthetic sensor reports {c1} x 10^{e1} {unit}. "
+            "Express this as an exact ordinary value and explain the direction "
+            "of the place-value shift."
+        )
+    elif operation == "MULTIPLY":
+        unit = ("metres", "centimetres")[context]
+        task = (
+            f"A rectangular display measures {c1} x 10^{e1} {unit} by "
+            f"{c2} x 10^{e2} {unit}. Find its exact area in square {unit}, "
+            "combine exponents, normalize, and verify the ordinary value."
+        )
+    else:
+        unit = ("metres per second", "records per second")[context]
+        numerator_unit = ("metres", "records")[context]
+        task = (
+            f"A synthetic process covers {c1} x 10^{e1} {numerator_unit} "
+            f"in {c2} x 10^{e2} seconds. Find the exact rate in {unit}, "
+            "subtract exponents, normalize, and verify the ordinary value."
+        )
+
+    return replace(
+        candidate,
+        variant_id=f"{PACKAGE_ID}:contextual-transfer:{mode}:{index}:{operation}",
+        prompt=(
+            f"Contextual {'guided practice' if mode == 'guided' else 'independent transfer'}: "
+            f"{task} State why the resulting units match the operation."
+        ),
+    )
 
 
 def verify_teacher_oracle(item: Any) -> bool:
