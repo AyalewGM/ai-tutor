@@ -465,11 +465,13 @@
         50
       ],
       "required_lettered_subparts": [],
-      "author_mathematical_scope_summary": "Interpret probability on the 0–1 scale as event likelihood; distinguish events near zero, one-half, and one.",
+      "author_mathematical_scope_summary": "Interpret chance-event probability as a number from 0 to 1 indicating event likelihood; explain that larger numbers indicate greater likelihood, a probability near 0 indicates an unlikely event, a probability around 1/2 indicates an event that is neither unlikely nor likely, and a probability near 1 indicates a likely event.",
       "test_material_conditions": [
-        "0–1",
-        "one-half",
-        "likelihood"
+        "probability between 0 and 1",
+        "larger number indicates greater likelihood",
+        "near 0: unlikely",
+        "around 1/2: neither unlikely nor likely",
+        "near 1: likely"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
