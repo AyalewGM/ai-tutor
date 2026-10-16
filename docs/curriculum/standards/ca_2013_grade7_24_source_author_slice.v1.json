@@ -508,11 +508,14 @@
         "a",
         "b"
       ],
-      "author_mathematical_scope_summary": "Construct and use theoretical uniform-outcome models and observed-frequency models, compare model probabilities with empirical frequencies, and explain discrepancies.",
+      "author_mathematical_scope_summary": "Develop and use a uniform probability model by assigning equal probabilities to outcomes (7.SP.7.a); develop an empirical probability model from observed frequencies in chance-process data (7.SP.7.b), which need not be uniform, and use those observations to examine whether outcomes seem equally likely. Compare probabilities from the models with observed frequencies and explain possible discrepancies.",
       "test_material_conditions": [
-        "uniform",
-        "frequencies",
-        "discrepancies"
+        "uniform equal-probability outcome model (a)",
+        "empirical chance-process frequency model (b)",
+        "empirical model may be nonuniform (b)",
+        "assess equal likelihood from observed frequencies (b)",
+        "compare model probabilities with observed frequencies",
+        "explain discrepancies between model and data"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
