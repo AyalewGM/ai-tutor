@@ -1,5 +1,6 @@
 from sqlalchemy import select
 
+from app.content_models import ProblemContentMetadata
 from app.core.database import SessionLocal
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, EducationAuthority
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
@@ -30,7 +31,7 @@ def test_dc_algebra1_seed_is_idempotent_provenanced_and_isolated():
         assert "MATH.ALGEBRA1.LINEAR_EQ" in canonical_codes
         assert "MATH.ALGEBRA1.LINEAR_FN" in canonical_codes
 
-        problems = list(db.scalars(select(Problem).where(Problem.primary_skill_id.in_(ids))))
+        problems = list(db.scalars(select(Problem).outerjoin(ProblemContentMetadata, ProblemContentMetadata.problem_id == Problem.id).where(Problem.primary_skill_id.in_(ids), ProblemContentMetadata.extension_eligible.isnot(True))))
         assert len(problems) == 10
         assert all(problem.solution["provenance"]["origin"] == "AUTHORED" for problem in problems)
         edges = list(db.scalars(select(SkillPrerequisite).where(SkillPrerequisite.skill_id.in_(ids))))

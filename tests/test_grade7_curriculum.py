@@ -1,5 +1,6 @@
 from sqlalchemy import select
 
+from app.content_models import ProblemContentMetadata
 from app.core.database import SessionLocal
 from app.models import Curriculum, Problem, Skill, SkillPrerequisite
 from scripts.seed_grade7 import CURRICULUM_CODE, seed
@@ -47,7 +48,7 @@ def test_grade7_seed_is_idempotent_and_curriculum_local():
         assert len(edges) == 10
         assert all(edge.prerequisite_skill_id in skill_ids for edge in edges)
 
-        problems = list(db.scalars(select(Problem).where(Problem.primary_skill_id.in_(skill_ids))))
+        problems = list(db.scalars(select(Problem).outerjoin(ProblemContentMetadata, ProblemContentMetadata.problem_id == Problem.id).where(Problem.primary_skill_id.in_(skill_ids), ProblemContentMetadata.extension_eligible.isnot(True))))
         assert len(problems) == 42
         assert all(problem.primary_skill_id in skill_ids for problem in problems)
 

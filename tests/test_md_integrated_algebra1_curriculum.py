@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from sqlalchemy import func, select
 
+from app.content_models import ProblemContentMetadata
 from app.core.database import SessionLocal
 from app.curriculum_models import EducationAuthority
 from app.models import Curriculum, Problem, Skill, Student, StudentSkill
@@ -49,7 +50,7 @@ def test_integrated_algebra1_registers_idempotently_without_mutating_traditional
         assert "piecewise" in d14.description.lower()
         assert "absolute-value" in d14.description.lower()
         assert db.scalar(
-            select(func.count(Problem.id)).where(Problem.primary_skill_id == d14.id)
+            select(func.count(Problem.id)).outerjoin(ProblemContentMetadata, ProblemContentMetadata.problem_id == Problem.id).where(Problem.primary_skill_id == d14.id, ProblemContentMetadata.extension_eligible.isnot(True))
         ) == 1
 
         traditional = db.scalar(
