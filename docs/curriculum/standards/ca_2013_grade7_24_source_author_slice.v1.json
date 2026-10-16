@@ -492,11 +492,13 @@
         50
       ],
       "required_lettered_subparts": [],
-      "author_mathematical_scope_summary": "Approximate chance-event probabilities from observed long-run relative frequencies; given an event probability, predict approximate relative frequency and corresponding event counts over repeated trials.",
+      "author_mathematical_scope_summary": "Approximate the probability of a chance event by collecting data on the process that produces it and observing its long-run relative frequency. Given an event probability, predict its approximate relative frequency over repeated trials and approximate event count; predictions are not exact guarantees (for example, about—but not necessarily exactly—200 rolls of 3 or 6 out of 600 rolls of a fair number cube).",
       "test_material_conditions": [
-        "long-run relative frequency",
-        "predict relative frequency from probability",
-        "predict approximate counts for a stated trial count"
+        "collect data on the chance process",
+        "observe long-run relative frequency",
+        "predict approximate relative frequency from known probability",
+        "predict approximate event count over repeated trials",
+        "predicted count is not an exact guarantee"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
