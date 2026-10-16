@@ -393,7 +393,26 @@
       "scope_summary_editorial": "Graph specified equation and inequality forms with constants and identify their characteristics, points, and regions.",
       "lettered_subparts": [],
       "source_scope_reference": "Official chart page 4, specific expectation C4.2",
-      "independent_acceptance": "PENDING"
+      "independent_acceptance": "PENDING",
+      "retrospective_bounded_scope_evidence": {
+        "publisher": "Ontario Ministry of Education 2021 MTH1W chart",
+        "printed_page": 4,
+        "equation_families": [
+          "x=k",
+          "y=k",
+          "x+y=k",
+          "x-y=k",
+          "ax+by=k",
+          "xy=k"
+        ],
+        "inequality_families": "associated inequalities for listed equation families",
+        "nonlinear_boundary": "xy=k is nonlinear and cannot be represented as linear-only coverage",
+        "independent_acceptance": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "runtime_activation": "FORBIDDEN"
+      }
     },
     {
       "expectation_id": "MTH1W.C4.3",
