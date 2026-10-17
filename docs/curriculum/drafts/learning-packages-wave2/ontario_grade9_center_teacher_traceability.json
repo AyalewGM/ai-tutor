@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0.0",
+  "revision": "ontario-grade9-central-tendency-teacher-evidence-r1",
+  "tracking_issue": 424,
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "verified_count": 0,
+  "teacher_source_policy": "PRIVATE_TWO_PAGE_OWNER_SUPPLIED_CLASSROOM_EVIDENCE_ONLY",
+  "copyright_boundary": "No worksheet wording, numbers, tables, images, answers or identifiable names stored.",
+  "standards_authority": false,
+  "ontario_expectation_ids": "NOT_ASSERTED_PENDING_INDEPENDENT_SOURCE_MAPPING",
+  "existing_reuse": [
+    "M6.SP.STAT",
+    "MATH.DATA.MEAN",
+    "MATH.DATA.MEDIAN",
+    "MATH.DATA.RANGE",
+    "MATH.DATA.MISSING_MEAN",
+    "MATH.DATA.OUTLIER.CENTER",
+    "MATH.DATA.FREQ.MODE"
+  ],
+  "coverage_policy": "PARTIAL is not classroom-verified: requires learner interaction, independent exact scorer, relevant Math/Pedagogy review, accessibility and external Muse QA.",
+  "rows": [
+    {
+      "id": "CENTER_MULTI_MEASURE",
+      "source": "page-1",
+      "abstract_structure": "Mean, median, mode and range for unordered odd/even numeric sets",
+      "status": "PARTIAL",
+      "evidence": "M6.SP.STAT; MATH.DATA.MEAN; MATH.DATA.MEDIAN; MATH.DATA.RANGE",
+      "next_action": "Add integrated responses and ambiguous/tied/no-mode evidence"
+    },
+    {
+      "id": "CONTEXTUAL_MULTIMEASURE",
+      "source": "page-1",
+      "abstract_structure": "Mean, median, mode and range applied to original everyday counts and measurements",
+      "status": "PARTIAL",
+      "evidence": "M6.SP.STAT; MATH.DATA.MEAN",
+      "next_action": "Verify context understanding and all four measures without answer cards"
+    },
+    {
+      "id": "SELECT_CENTER_OUTLIER",
+      "source": "page-1",
+      "abstract_structure": "Outlier-sensitive financial summary choice",
+      "status": "PARTIAL",
+      "evidence": "MATH.DATA.OUTLIER.CENTER",
+      "next_action": "Require observed comparison, reason and consequences of outliers"
+    },
+    {
+      "id": "SELECT_CENTER_REPEATED",
+      "source": "page-1",
+      "abstract_structure": "Choosing center for repeated performance results",
+      "status": "PARTIAL",
+      "evidence": "M6.SP.STAT best_measure",
+      "next_action": "Evaluate competing defensible explanations, not a single arbitrary code"
+    },
+    {
+      "id": "MODAL_CATEGORY",
+      "source": "page-1",
+      "abstract_structure": "Mode for nominal sizes versus invalid arithmetic averaging",
+      "status": "PARTIAL",
+      "evidence": "MATH.DATA.FREQ.MODE",
+      "next_action": "Add categorical rationale and inaccessible-average diagnosis"
+    },
+    {
+      "id": "PERCENT_CATEGORY_MODE",
+      "source": "page-2",
+      "abstract_structure": "Read categorical percent table and select representative category",
+      "status": "PARTIAL",
+      "evidence": "MATH.DATA.FREQ.JOINT; MATH.DATA.FREQ.MODE",
+      "next_action": "Support table-to-frequency interpretation and units"
+    },
+    {
+      "id": "AUDIENCE_CENTER_INTERPRETATION",
+      "source": "page-2",
+      "abstract_structure": "Different audiences choose persuasive center summaries of one data set",
+      "status": "PARTIAL",
+      "evidence": "MATH.DATA.OUTLIER.CENTER; G9-STAT-INVESTIGATION draft",
+      "next_action": "Show distribution and ethical explanation; no automatic fixed best answer"
+    },
+    {
+      "id": "GROUP_FAIR_RATE",
+      "source": "page-2",
+      "abstract_structure": "Compare absolute grouped totals with normalized per-participant rates",
+      "status": "PARTIAL",
+      "evidence": "Existing mean and rate concepts; ontario_center_reasoning_depth.FAIR_RATE_COMPARISON",
+      "next_action": "Real MVE and trusted distinct transfer still required"
+    },
+    {
+      "id": "OPTIMAL_DISTINCT_SET",
+      "source": "page-2",
+      "abstract_structure": "Optimize largest of five distinct natural numbers under mean/median constraints",
+      "status": "PARTIAL",
+      "evidence": "MATH.DATA.MEAN; MATH.DATA.MEDIAN; ontario_center_reasoning_depth.DISTINCT_FIVE_VALUE_MAXIMUM",
+      "next_action": "Independent optimization proof and solver/learner interaction required"
+    },
+    {
+      "id": "MEAN_SINGLE_MODE_CONSTRUCTION",
+      "source": "page-2",
+      "abstract_structure": "Construct a four-integer set given mean and exactly one repeated mode",
+      "status": "ABSENT",
+      "evidence": "Mean and mode general operators only; no evidenced combined structural generator",
+      "next_action": "Algebra Content to specify uniqueness/existence constraints before authored variants"
+    },
+    {
+      "id": "REVERSE_THREE_CENTER",
+      "source": "page-2",
+      "abstract_structure": "Find missing extreme from mean, median and smallest of three",
+      "status": "PARTIAL",
+      "evidence": "MATH.DATA.MISSING_MEAN; ontario_center_reasoning_depth.MISSING_EXTREME_FROM_MEAN_MEDIAN",
+      "next_action": "Require actual reconstruction and order validation in UI"
+    },
+    {
+      "id": "SCORE_FRAMING",
+      "source": "page-2",
+      "abstract_structure": "Contrast an individual's score against mean, median or mode with accountable interpretation",
+      "status": "PARTIAL",
+      "evidence": "MATH.DATA.OUTLIER.CENTER; G9-STAT-INVESTIGATION draft",
+      "next_action": "Learner justification and evidence revision needed"
+    }
+  ]
+}
