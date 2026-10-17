@@ -3,6 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer" />
+    <script>
+      // Strip the bearer URL before any stylesheet, icon or application request.
+      // The one-time token remains in this tab's memory only until activation.
+      (() => {
+        const match = /^\/practice\/([^/]+)\/?$/.exec(window.location.pathname);
+        if (!match || match[1] === "claim") return;
+        window.__mihurPracticeToken = /^[A-Za-z0-9_-]{32,256}$/.test(match[1]) ? match[1] : "";
+        window.history.replaceState(window.history.state, "", "/practice/claim");
+      })();
+    </script>
     <meta name="description" content="Mihur — personalized mathematics learning. Mathematics makes sense." />
     <meta name="theme-color" content="#6730c3" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
