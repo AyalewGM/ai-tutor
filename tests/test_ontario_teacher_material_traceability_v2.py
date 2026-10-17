@@ -16,6 +16,7 @@ def _load() -> dict:
 def test_traceability_is_evidence_only_and_runtime_off() -> None:
     data = _load()
     assert data["schema_version"] == "2.0.0"
+    assert data["revision"] == "teacher-material-traceability-v2.1"
     assert data["status"] == "DRAFT_UNVERIFIED"
     assert data["runtime_activation"] is False
     assert data["source_policy"]["role"] == "OWNER_SUPPLIED_CLASSROOM_EVIDENCE_ONLY"
@@ -53,19 +54,28 @@ def test_summary_counts_are_exact_and_conservative() -> None:
         "BLOCKED": data["summary"]["blocked"],
     }
     assert data["summary"]["verified"] == 0
-    assert data["summary"]["absent"] == 2
+    assert data["summary"]["partial"] == 21
+    assert data["summary"]["absent"] == 0
     assert data["summary"]["policy"].startswith("Do not create a new broad Ontario Grade 9 package")
 
 
-def test_known_absent_rows_are_depth_gaps_not_new_jurisdiction_identities() -> None:
+def test_merged_depth_extensions_are_partial_not_verified() -> None:
     data = _load()
-    absent = {row["id"]: row for row in data["rows"] if row["status"] == "ABSENT"}
-    assert set(absent) == {
+    by_id = {row["id"]: row for row in data["rows"]}
+    for row_id in (
         "G9T-EXPONENT-FIRST-ERROR",
         "G9T-ALGEBRAIC-MEASUREMENT-INVERSION",
-    }
-    assert "existing exponent package" in absent["G9T-EXPONENT-FIRST-ERROR"]["next_action"]
-    assert "existing quotient mathematics" in absent["G9T-ALGEBRAIC-MEASUREMENT-INVERSION"]["next_action"]
+    ):
+        assert by_id[row_id]["status"] == "PARTIAL"
+        assert by_id[row_id]["existing_evidence"]
+
+    assert "independent mathematical and pedagogical re-review" in by_id[
+        "G9T-EXPONENT-FIRST-ERROR"
+    ]["gap"]
+    assert "create no jurisdiction-specific identity" in by_id[
+        "G9T-ALGEBRAIC-MEASUREMENT-INVERSION"
+    ]["next_action"]
+    assert data["summary"]["key_absent"] == []
 
 
 def test_strong_reuse_rows_do_not_request_duplicate_packages() -> None:
