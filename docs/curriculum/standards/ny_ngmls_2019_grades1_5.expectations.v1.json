@@ -1,0 +1,3838 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "NY-NGMLS-2019-G1-G5-expectation-inventory-v1",
+  "status": "DRAFT_PROPOSED_NOT_VERIFIED",
+  "jurisdiction": {
+    "country": "United States",
+    "state": "New York",
+    "authority": "New York State Education Department",
+    "authority_code": "NYSED"
+  },
+  "curriculum": {
+    "course_code": "NY_NGMLS_MATH_1_5",
+    "course_title": "New York State Next Generation Mathematics Learning Standards (2017, updated June 2019), Grades 1-5",
+    "standards_version": "NYS NGMLS 2017 (updated June 2019)",
+    "adoption": {
+      "board_of_regents_adoption": "2017-09",
+      "document_update": "2019-06",
+      "full_implementation_3_8": "2020-09",
+      "first_regents_algebra_i": "2024-06"
+    }
+  },
+  "provenance": {
+    "authoritative_source_url": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf",
+    "authority_overview_url": "https://www.nysed.gov/standards-instruction/mathematics",
+    "checked_date": "2026-10-16",
+    "source_notes": [
+      "Extracted programmatically from the official NYSED P-12 standards PDF; two-column layout interleaves statements with marginalia, so statement text and cluster headings are best-effort pending Standards Mapping review.",
+      "Coherence chains are official vertical-alignment content published inside the document and are preserved per-row.",
+      "NY identifiers are jurisdiction-native (NY- / AI- / AII- / GEO- prefixes); they must never be merged with CCSS identifiers from other states' inventories by similarity.",
+      "New York has no repository packs, seeds, or skills; every row is NO_REPOSITORY_SPECIFIC_MAPPING_FOUND pending Standards Mapping work."
+    ]
+  },
+  "reconciliation": {
+    "official_expectation_count": 142,
+    "expectations_with_provisional_links": 0,
+    "unmapped_expectations": 142,
+    "deduplicated_phantom_rows": [],
+    "warning": "Official count is derived from this extraction, not an independent NYSED count; reconciliation against a second authoritative source is a documented blocker."
+  },
+  "safety": {
+    "activation": "FORBIDDEN",
+    "mapping_review_required": true,
+    "new_canonical_ids_created": false,
+    "learner_mastery_mutation": false,
+    "verified_coverage_claim": false
+  },
+  "expectations": [
+    {
+      "expectation_id": "NY-1.OA.1",
+      "grade": 1,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Represent and solve problems involving addition and subtraction.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=26",
+      "scope_summary": "Use addition and subtraction within 20 to solve one step word problems involving situations of adding to, taking from, putting together, taking apart, and/or comparing, with unknowns in all positions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "NY-K.OA.2"
+      ],
+      "notes": [
+        "Note: Problems should be represented using objects, drawings, and equations with a symbol"
+      ]
+    },
+    {
+      "expectation_id": "NY-1.OA.2",
+      "grade": 1,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Represent and solve problems involving addition and subtraction.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=26",
+      "scope_summary": "Solve word problems that call for addition of three whole numbers whose sum is less than or equal to 20.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.OA.3",
+      "grade": 1,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Understand and apply properties of operations and the relationship between addition and subtraction.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=27",
+      "scope_summary": "Apply properties of operations as strategies to add and subtract.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Students need not use formal terms for these properties."
+      ]
+    },
+    {
+      "expectation_id": "NY-1.OA.4",
+      "grade": 1,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Understand and apply properties of operations and the relationship between addition and subtraction.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=27",
+      "scope_summary": "Understand subtraction as an unknown-addend problem within 20.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.OA.5",
+      "grade": 1,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Add and subtract within 20.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=28",
+      "scope_summary": "Relate counting to addition and subtraction.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "NY-K.CC.4c"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.OA.6a",
+      "grade": 1,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Add and subtract within 20.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=28",
+      "scope_summary": "Add and subtract within 20. Use strategies such as:",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "NY-K.OA.3",
+        "NY-K.OA.4",
+        "NY-K.OA.5"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.OA.6b",
+      "grade": 1,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Add and subtract within 20.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=28",
+      "scope_summary": "Fluently add and subtract within 10.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.OA.7",
+      "grade": 1,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Work with addition and subtraction equations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=29",
+      "scope_summary": "Understand the meaning of the equal sign, and determine if equations involving addition and subtraction are true or false.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.OA.8",
+      "grade": 1,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Work with addition and subtraction equations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=29",
+      "scope_summary": "Determine the unknown whole number in an addition or subtraction equation with the unknown in all positions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.NBT.1",
+      "grade": 1,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Extend the counting sequence.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=30",
+      "scope_summary": "Count to 120, starting at any number less than 120. In this range, read and write numerals and",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "NY-K.CC.1",
+        "NY-K.CC.2",
+        "NY-K.CC.3"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.NBT.2",
+      "grade": 1,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Understand place value.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=30",
+      "scope_summary": "Understand that the two digits of a two-digit number represent amounts of tens and ones. a. Understand 10 can be thought of as a bundle of ten ones, called a \"ten\". b. Understand the numbers from 11 to 19 are composed of a ten and one, two, three, four, five, six, seven, eight, or nine ones. c. Understand the numbers 10, 20, 30, 40, 50, 60, 70, 80, 90 refer to one, two, three, four, five, six, seven, eight, or nine tens (and 0 ones).",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "NY-K.NBT.1"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.NBT.3",
+      "grade": 1,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Understand place value.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=30",
+      "scope_summary": "Compare two two-digit numbers based on meanings of the tens and ones digits, recording the results of comparisons with the symbols >, =, and <.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "NY-K.CC.7"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.NBT.4",
+      "grade": 1,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to add and subtract.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=31",
+      "scope_summary": "Add within 100, including",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: A written representation is any way of showing a strategy using"
+      ]
+    },
+    {
+      "expectation_id": "NY-1.NBT.5",
+      "grade": 1,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to add and subtract.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=31",
+      "scope_summary": "Given a two-digit number, mentally find 10 more or 10 less than the number, without having to count; explain the reasoning used.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.NBT.6",
+      "grade": 1,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to add and subtract.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=31",
+      "scope_summary": "Subtract multiples of 10 from multiples of 10 in the range 10-90 using",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: A written representation is any way of showing a strategy using"
+      ]
+    },
+    {
+      "expectation_id": "NY-1.MD.1",
+      "grade": 1,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Measure lengths indirectly and by iterating length units.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=32",
+      "scope_summary": "Order three objects by length; compare the lengths of two objects indirectly by using a third object.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "NY-K.MD.2"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.MD.2",
+      "grade": 1,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Measure lengths indirectly and by iterating length units.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=32",
+      "scope_summary": "Measure the length of an object using same-size \u201clength units\u201d placed end to end with no gaps or overlaps. Express the length of an object as a whole number of \u201clength units.\u201d",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: \u201cLength units\u201d could include cubes, paper clips, etc."
+      ]
+    },
+    {
+      "expectation_id": "NY-1.MD.3a",
+      "grade": 1,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Tell and write time and money.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=32",
+      "scope_summary": "Tell and write time in hours and half-hours using analog and digital clocks. Develop an understanding of common terms, such as, but not limited to, o\u2019clock and half past.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.MD.3b",
+      "grade": 1,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Tell and write time and money.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=32",
+      "scope_summary": "Recognize and identify coins (penny, nickel, dime, and quarter) and their value and use the cent symbol (\u00a2) appropriately.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "NY-K.MD.4"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.MD.3c",
+      "grade": 1,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Tell and write time and money.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=32",
+      "scope_summary": "Count a mixed collection of dimes and pennies and determine the cent value (total not to exceed 100 cents).",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.MD.4",
+      "grade": 1,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Represent and interpret data.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=33",
+      "scope_summary": "Organize, represent, and interpret data with up to three categories; ask and answer questions about the total number of data points, how many in each category, and how many more or less are in one category than in another.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "NY-K.MD.3"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.G.1",
+      "grade": 1,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Reason with shapes and their attributes.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=34",
+      "scope_summary": "Distinguish between defining attributes versus non-defining attributes for a wide variety of shapes. Build and/or draw shapes to possess defining attributes.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "NY-K.G.4"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-1.G.2",
+      "grade": 1,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Reason with shapes and their attributes.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=34",
+      "scope_summary": "Compose two-dimensional shapes (rectangles, squares, trapezoids, triangles, half -circles, and quarter-circles) or three-dimensional shapes (cubes, right rectangular prisms, right circular cones, and right circular cylinders) to create a composite shape, and compose new shapes from the composite shape.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "NY-K.G.6"
+      ],
+      "notes": [
+        "Note: Students do not need to learn formal names such as \u201cright rectangular prism.\u201d"
+      ]
+    },
+    {
+      "expectation_id": "NY-1.G.3",
+      "grade": 1,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Reason with shapes and their attributes.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=34",
+      "scope_summary": "Partition circles and rectangles into two and four equal shares, describe the shares using the words halves, fourths, and quarters, and use the phrases half of, fourth of, and quarter of. Describe the whole as two of, or four of the shares. Understand for these examples that decomposing into more equal shares creates smaller shares.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.OA.1a",
+      "grade": 2,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Represent and solve problems involving addition and subtraction.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=36",
+      "scope_summary": "Use addition and subtraction within 100 to solve one-step word problems involving situations of adding to, taking from, putting together, taking apart, and comparing, with unknowns in all positions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.OA.1b",
+      "grade": 2,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Represent and solve problems involving addition and subtraction.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=36",
+      "scope_summary": "Use addition and subtraction within 100 to develop an understanding of solving two -step word problems involving situations of adding to, taking from, putting together, taking apart, and comparing, with unknowns in all positions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.OA.2a",
+      "grade": 2,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Add and subtract within 20.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=37",
+      "scope_summary": "Fluently add and subtract within 20 using mental strategies. Strategies could include:",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.OA.2b",
+      "grade": 2,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Add and subtract within 20.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=37",
+      "scope_summary": "Know from memory all sums within 20 of two one-digit numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.OA.3a",
+      "grade": 2,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Work with equal groups of objects to gain foundations for multiplication.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=38",
+      "scope_summary": "Determine whether a group of objects (up to 20) has an odd or even number of members.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.OA.3b",
+      "grade": 2,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Work with equal groups of objects to gain foundations for multiplication.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=38",
+      "scope_summary": "Write an equation to express an even number as a sum of two equal addends.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.OA.4",
+      "grade": 2,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Work with equal groups of objects to gain foundations for multiplication.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=38",
+      "scope_summary": "Use addition to find the total number of objects arranged in rectangular arrays with up to 5 rows and up to 5 columns. Write an equation to express the total as a sum of equal addends.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.NBT.1",
+      "grade": 2,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Understand place value.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=39",
+      "scope_summary": "Understand that the digits of a three-digit number represent amounts of hundreds, tens, and ones. a. Understand 100 can be thought of as a bundle of ten tens, called a \u201chundred.\u201d b. Understand the numbers 100, 200, 300, 400, 500, 600, 700, 800, 900 refer to one, two, three, four, five, six, seven, eight, or nine hundreds (and 0 tens and 0 ones).",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.NBT.2",
+      "grade": 2,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Understand place value.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=39",
+      "scope_summary": "Count within 1000; skip-count by 5s, 10s, and 100s.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.NBT.3",
+      "grade": 2,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Understand place value.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=39",
+      "scope_summary": "Read and write numbers to 1000 using base-ten numerals, number names, and expanded form.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.NBT.4",
+      "grade": 2,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Understand place value.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=39",
+      "scope_summary": "Compare two three-digit numbers based on meanings of the hundreds, tens, and ones digits, using >, =, and < symbols to record the results of comparisons.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.NBT.5",
+      "grade": 2,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to add and su btract.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=40",
+      "scope_summary": "Fluently add and subtract within 100 using strategies based on place value, properties of operations, and/or the relationship between addition and subtraction.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.NBT.6",
+      "grade": 2,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to add and su btract.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=40",
+      "scope_summary": "Add up to four two-digit numbers using strategies based on place value and properties of operations.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.NBT.7a",
+      "grade": 2,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to add and su btract.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=40",
+      "scope_summary": "Add and subtract within 1000, using",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: A written representation is any way of showing a strategy using words, pictures, or"
+      ]
+    },
+    {
+      "expectation_id": "NY-2.NBT.7b",
+      "grade": 2,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to add and su btract.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=40",
+      "scope_summary": "Understand that in adding or subtracting up to three-digit numbers, one adds or subtracts hundreds and hundreds, tens and tens, ones and ones, and sometimes it is necessary to compose or decompose tens or hundreds.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.NBT.8",
+      "grade": 2,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to add and su btract.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=40",
+      "scope_summary": "Mentally add 10 or 100 to a given number 100-900, and mentally subtract 10 or 100 from a",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.NBT.9",
+      "grade": 2,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to add and su btract.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=40",
+      "scope_summary": "Explain why addition and subtraction strategies work, using place value and the properties of operations.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Explanations may be supported by drawings or objects."
+      ]
+    },
+    {
+      "expectation_id": "NY-2.MD.1",
+      "grade": 2,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Measure and estimate lengths in standard units.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=41",
+      "scope_summary": "Measure the length of an object to the nearest whole by selecting and using appropriate tools such as rulers, yardsticks, meter sticks, and measuring tapes.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.MD.2",
+      "grade": 2,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Measure and estimate lengths in standard units.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=41",
+      "scope_summary": "Measure the length of an object twice, using different \u201clength units\u201d for the two measurements; describe how the two measurements relate to the size of the unit chosen.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.MD.3",
+      "grade": 2,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Measure and estimate lengths in standard units.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=41",
+      "scope_summary": "Estimate lengths using units of inches, feet, centimeters, and meters.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.MD.4",
+      "grade": 2,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Measure and estimate lengths in standard units.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=41",
+      "scope_summary": "Measure to determine how much longer one object is than another, expressing the length difference in terms of a standard \u201clength unit.\u201d",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.MD.5",
+      "grade": 2,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Relate addition and subtraction to length.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=41",
+      "scope_summary": "Use addition and subtraction within 100 to solve word problems involving lengths that are given in the same units.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.MD.6",
+      "grade": 2,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Relate addition and subtraction to length.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=41",
+      "scope_summary": "Represent whole numbers as lengths from 0 on a number line with equally spaced points corresponding to the numbers 0, 1, 2, ..., and represent whole-number sums and differences within 100 on a number line.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.MD.7",
+      "grade": 2,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Work with time and money.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=42",
+      "scope_summary": "Tell and write time from analog and digital clocks in five minute increments, using a.m. and p.m. Develop an understanding of common terms, such as, but not limited to, quarter past, half past, and quarter to.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.MD.8a",
+      "grade": 2,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Work with time and money.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=42",
+      "scope_summary": "Count a mixed collection of coins whose sum is less than or equal to one dollar.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.MD.8b",
+      "grade": 2,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Work with time and money.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=42",
+      "scope_summary": "Solve real world and mathematical problems within one dollar involving quarters, dimes, nickels, and pennies, using the \u00a2 (cent) symbol appropriately.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Students are not introduced to decimals, and therefore the"
+      ]
+    },
+    {
+      "expectation_id": "NY-2.MD.9",
+      "grade": 2,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Represent and interpret data.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=43",
+      "scope_summary": "Generate measurement data by measuring lengths of several objects to the nearest whole unit, or by making repeated measurements of the same object. Present the measurement data in a line plot, where the horizontal scale is marked off in whole-number units.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.MD.10",
+      "grade": 2,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Represent and interpret data.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=43",
+      "scope_summary": "Draw a picture graph and a bar graph (with single-unit scale) to represent a data set with up to four categories. Solve simple put-together, take-apart, and compare problems using information presented in a picture graph or a bar graph.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.G.1",
+      "grade": 2,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Reason with shapes and their attributes.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=44",
+      "scope_summary": "Classify two-dimensional figures as polygons or non-polygons.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.G.2",
+      "grade": 2,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Reason with shapes and their attributes.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=44",
+      "scope_summary": "Partition a rectangle into rows and columns of same-size squares and count to find the total number of them.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-2.G.3",
+      "grade": 2,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Reason with shapes and their attributes.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=44",
+      "scope_summary": "Partition circles and rectangles into two, three, or four equal shares. Describe the shares using the words halves, thirds, half of, a third of, etc. Describe the whole as two halves, three thirds, four fourths. Recognize that equal shares of identical wholes need not have the same shape.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.OA.1",
+      "grade": 3,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Represent and solve problems involving multiplication and division.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=46",
+      "scope_summary": "Interpret products of whole numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.OA.2",
+      "grade": 3,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Represent and solve problems involving multiplication and division.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=46",
+      "scope_summary": "Interpret whole-number quotients of whole numbers. 56 objects are partitioned equally into 8 shares, or as a number of shares when 56 objects are partitioned into equal shares of 8 objects each. Describe a context in which a number of shares or a number of groups can be expressed as 56 \u00f7 8.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.OA.3",
+      "grade": 3,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Represent and solve problems involving multiplication and division.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=46",
+      "scope_summary": "Use multiplication and division within 100 to solve word problems in situations involving equal groups, arrays, and measurement quantities.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.OA.4",
+      "grade": 3,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Represent and solve problems involving multiplication and division.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=46",
+      "scope_summary": "Determine the unknown whole number in a multiplication or division equation relating three whole numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.OA.5",
+      "grade": 3,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Understand properties of multiplication and the relationship between multiplication and division.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=47",
+      "scope_summary": "Apply properties of operations as strategies to multiply and divide.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Students need not use formal terms for these properties.",
+        "Note: A variety of representations can be used when applying the"
+      ]
+    },
+    {
+      "expectation_id": "NY-3.OA.6",
+      "grade": 3,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Understand properties of multiplication and the relationship between multiplication and division.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=47",
+      "scope_summary": "Understand division as an unknown-factor problem.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.OA.7a",
+      "grade": 3,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Multiply and divide within 100.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=48",
+      "scope_summary": "Fluently solve single-digit multiplication and related divisions, using strategies such as the relationship between multiplication and division or properties of operations.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.OA.7b",
+      "grade": 3,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Multiply and divide within 100.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=48",
+      "scope_summary": "Know from memory all products of two one-digit numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.OA.8",
+      "grade": 3,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Solve problems involving the four operations, and identify and extend patterns in arithmetic.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=48",
+      "scope_summary": "Solve two-step word problems posed with whole numbers and having whole -number answers using the four operations. a. Represent these problems using equations or expressions with a letter standing for the unknown quantity. b. Assess the reasonableness of answers using mental computation and estimation strategies including rounding.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Two-step problems need not be represented by a single"
+      ]
+    },
+    {
+      "expectation_id": "NY-3.OA.9",
+      "grade": 3,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Solve problems involving the four operations, and identify and extend patterns in arithmetic.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=48",
+      "scope_summary": "Identify and extend arithmetic patterns (including patterns in the addition table or multiplication table).",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.NBT.1",
+      "grade": 3,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to perform multi -digit arithmetic.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=49",
+      "scope_summary": "Use place value understanding to round whole numbers to the nearest 10 or 100.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.NBT.2",
+      "grade": 3,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to perform multi -digit arithmetic.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=49",
+      "scope_summary": "Fluently add and subtract within 1,000 using strategies and algorithms based on place value, properties of operations, and/or the relationship between addition and subtraction.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: A range of algorithms may be used."
+      ]
+    },
+    {
+      "expectation_id": "NY-3.NBT.3",
+      "grade": 3,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to perform multi -digit arithmetic.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=49",
+      "scope_summary": "Multiply one-digit whole numbers by multiples of 10 in the range 10-90 using strategies based on place value and properties of operations.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.NBT.4a",
+      "grade": 3,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to perform multi -digit arithmetic.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=49",
+      "scope_summary": "Understand that the digits of a four-digit number represent amounts of thousands, hundreds, tens, and ones.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.NBT.4b",
+      "grade": 3,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to perform multi -digit arithmetic.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=49",
+      "scope_summary": "Read and write four-digit numbers using base-ten numerals, number names, and expanded form.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.NF.1",
+      "grade": 3,
+      "domain": "NF",
+      "domain_title": "Number and Operations \u2013 Fractions",
+      "cluster_title": "Develop understanding of fractions as numbers. Note: Fractions are limited to those with denominators 2, 3, 4, 6, and 8.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=50",
+      "scope_summary": "Understand a unit fraction, 1 \ud835\udc4f\ud835\udc4f, is the quantity formed by 1 part when a whole is partitioned into b equal parts. Understand a fraction \ud835\udc4e\ud835\udc4e \ud835\udc4f\ud835\udc4f as the quantity formed by a parts of size 1 \ud835\udc4f\ud835\udc4f.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.NF.2",
+      "grade": 3,
+      "domain": "NF",
+      "domain_title": "Number and Operations \u2013 Fractions",
+      "cluster_title": "Develop understanding of fractions as numbers. Note: Fractions are limited to those with denominators 2, 3, 4, 6, and 8.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=50",
+      "scope_summary": "Understand a fraction as a number on the number line; represent fractions on a number line. a. Represent a fraction 1 \ud835\udc4f\ud835\udc4f on a number line by defining the interval from 0 to 1 as the whole and partitioning it into b equal parts. Recognize that each part has size 1 \ud835\udc4f\ud835\udc4f and that the endpoint of the part starting at 0 locates the number 1 \ud835\udc4f\ud835\udc4f on the number line.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.NF.3",
+      "grade": 3,
+      "domain": "NF",
+      "domain_title": "Number and Operations \u2013 Fractions",
+      "cluster_title": "Develop understanding of fractions as numbers. Note: Fractions are limited to those with denominators 2, 3, 4, 6, and 8.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=50",
+      "scope_summary": "Explain equivalence of fractions and compare fractions by reasoning about their size. a. Understand two fractions as equivalent (equal) if they are the same size, or the same point on a number line. b. Recognize and generate equivalent fractions. Explain why the fractions are equivalent. c. Express whole numbers as fractions, and recognize fractions that are equivalent to whole numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Without specifying the whole, the shaded area could"
+      ]
+    },
+    {
+      "expectation_id": "NY-3.MD.1",
+      "grade": 3,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Solve problems involving measurement and estimation of intervals of time, liquid volumes, and masses of objects.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=51",
+      "scope_summary": "Tell and write time to the nearest minute and measure time intervals in minutes. Solve one -step word problems involving addition and subtraction of time intervals in minutes .",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: This includes one-step problems that cross into a new hour."
+      ]
+    },
+    {
+      "expectation_id": "NY-3.MD.2a",
+      "grade": 3,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Solve problems involving measurement and estimation of intervals of time, liquid volumes, and masses of objects.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=51",
+      "scope_summary": "Measure and estimate liquid volumes and masses of objects using grams (g), k ilograms (kg), and liters (l).",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Does not include compound units such as cm3 and finding the geometric volume of a"
+      ]
+    },
+    {
+      "expectation_id": "NY-3.MD.2b",
+      "grade": 3,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Solve problems involving measurement and estimation of intervals of time, liquid volumes, and masses of objects.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=51",
+      "scope_summary": "Add, subtract, multiply, or divide to solve one-step word problems involving masses or liquid volumes that are given in the same units.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Does not include multiplicative comparison problems involving notions of \u201ctimes as much.\u201d"
+      ]
+    },
+    {
+      "expectation_id": "NY-3.MD.3",
+      "grade": 3,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Represent and interpret data.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=51",
+      "scope_summary": "Draw a scaled picture graph and a scaled bar graph to represent a data set with several categories. Solve one- and two-step \u201chow many more\u201d and \u201chow many less\u201d problems using information presented in a scaled picture graph or a scaled bar graph.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.MD.4",
+      "grade": 3,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Represent and interpret data.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=51",
+      "scope_summary": "Generate measurement data by measuring lengths using rulers marked with halves and fourths of an inch. Show the data by making a line plot where the horizontal scale is marked off in appropriate units\u2014whole numbers, halves, or quarters.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.MD.5",
+      "grade": 3,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Geometric measurement: understand concepts of area and relate area to multiplication and to addition.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=52",
+      "scope_summary": "Recognize area as an attribute of plane figures and understand concepts of area measurement. a. Recognize a square with side length 1 unit, called \u201ca unit square,\u201d is said to have \u201cone square unit\u201d of area, and can be used to measure area. b. Recognize a plane figure which can be covered without gaps or overlaps by n unit squares is said to have an area of n square units.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.MD.6",
+      "grade": 3,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Geometric measurement: understand concepts of area and relate area to multiplication and to addition.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=52",
+      "scope_summary": "Measure areas by counting unit squares.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Unit squares include square cm, square m, square in., square"
+      ]
+    },
+    {
+      "expectation_id": "NY-3.MD.7",
+      "grade": 3,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Geometric measurement: understand concepts of area and relate area to multiplication and to addition.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=52",
+      "scope_summary": "Relate area to the operations of multiplication and addition. a. Find the area of a rectangle with whole-number side lengths by tiling it, and show that the area is the same as would be found by multiplying the side lengths. b. Multiply side lengths to find areas of rectangles with whole-number side lengths in the context of solving real world and mathematical problems, and represent whole-number products as rectangular areas in mathematical reasoning. c. Use tiling to show in a concrete case that the area of a rectangle with whole-number side length a and side length b + c is the sum of a \u00d7 b and a \u00d7 c. Use area models to represent the distributive property in mathematical reasoning.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Problems include no more than one unknown side length."
+      ]
+    },
+    {
+      "expectation_id": "NY-3.MD.8a",
+      "grade": 3,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Geometric measurement: recognize perimeter as an attribute of plane figures and distinguish between linear and area measures.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=53",
+      "scope_summary": "Solve real world and mathematical problems involving perimeters of polygons, including finding the perimeter given the side lengths or finding one unknown side length given the perimeter and other side lengths.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.MD.8b",
+      "grade": 3,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Geometric measurement: recognize perimeter as an attribute of plane figures and distinguish between linear and area measures.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=53",
+      "scope_summary": "Identify rectangles with the same perimeter and different areas or with the same area and different perimeters.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-3.G.1",
+      "grade": 3,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Reason with shapes and their attributes.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=54",
+      "scope_summary": "Recognize and classify polygons based on the number of sides and vertices (triangles, quadrilaterals, pentagons, and hexagons). Identify shapes that do not belong to one of the given subcategories.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Include both regular and irregular polygons, however,"
+      ]
+    },
+    {
+      "expectation_id": "NY-3.G.2",
+      "grade": 3,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Reason with shapes and their attributes.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=54",
+      "scope_summary": "Partition shapes into parts with equal areas. Express the area of each part as a unit fraction of the whole.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.OA.1",
+      "grade": 4,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Use the four operations with whole numbers to solve problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=56",
+      "scope_summary": "Interpret a multiplication equation as a comparison. Represent verbal statements of multiplicative comparisons as multiplication equations.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.OA.2",
+      "grade": 4,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Use the four operations with whole numbers to solve problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=56",
+      "scope_summary": "Multiply or divide to solve word problems involving multiplicative comparison, distinguishing multiplicative comparison from additive comparison. Use drawings and equations with a symbol for the unknown number to represent the problem.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.OA.3",
+      "grade": 4,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Use the four operations with whole numbers to solve problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=56",
+      "scope_summary": "Solve multistep word problems posed with whole numbers and having whole-number answers using the four operations, including problems in which remainders must be interpreted.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Multistep problems need not be represented by a single expression"
+      ]
+    },
+    {
+      "expectation_id": "NY-4.OA.4",
+      "grade": 4,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Gain familiarity with factors and multiples.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=57",
+      "scope_summary": "Find all factor pairs for a whole number in the range 1\u2013100. Recognize that a whole number is a multiple of each of its factors. Determine whether a given whole number in the range 1 \u2013100 is a multiple of a given one-digit number. Determine whether a given whole number in the range 1-100 is prime or composite.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.OA.5",
+      "grade": 4,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Generate and analyze patterns.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=57",
+      "scope_summary": "Generate a number or shape pattern that follows a given rule. Identify and informally explain apparent features of the pattern that were not explicit in the rule itself.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.NBT.1",
+      "grade": 4,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Generalize place value understanding for multi-digit whole numbers. Note: Grade 4 expectations are limited to whole numbers less than or equal to 1,000,000.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=58",
+      "scope_summary": "Recognize that in a multi-digit whole number, a digit in one place represents ten times what it represents in the place to its right.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.NBT.2a",
+      "grade": 4,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Generalize place value understanding for multi-digit whole numbers. Note: Grade 4 expectations are limited to whole numbers less than or equal to 1,000,000.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=58",
+      "scope_summary": "Read and write multi-digit whole numbers using base-ten numerals, number names, and expanded form.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.NBT.2b",
+      "grade": 4,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Generalize place value understanding for multi-digit whole numbers. Note: Grade 4 expectations are limited to whole numbers less than or equal to 1,000,000.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=58",
+      "scope_summary": "Compare two multi-digit numbers based on meanings of the digits in each place, using >, =, and < symbols to record the results of comparisons.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.NBT.3",
+      "grade": 4,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Generalize place value understanding for multi-digit whole numbers. Note: Grade 4 expectations are limited to whole numbers less than or equal to 1,000,000.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=58",
+      "scope_summary": "Use place value understanding to round multi-digit whole numbers to any place.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.NBT.4",
+      "grade": 4,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to perform multi -digit arithmetic. Note: Grade 4 expectations are limited to whole numbers less than or equal to 1,000,000.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=59",
+      "scope_summary": "Fluently add and subtract multi-digit whole numbers using a standard algorithm.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.NBT.5",
+      "grade": 4,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to perform multi -digit arithmetic. Note: Grade 4 expectations are limited to whole numbers less than or equal to 1,000,000.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=59",
+      "scope_summary": "Multiply a whole number of up to four digits by a one-digit whole number, and multiply two two- digit numbers, using strategies based on place value and the properties of operations. Illustrate and explain the calculation by using equations, rectangular arrays, and/or area models.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.NBT.6",
+      "grade": 4,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Use place value understanding and properties of operations to perform multi -digit arithmetic. Note: Grade 4 expectations are limited to whole numbers less than or equal to 1,000,000.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=59",
+      "scope_summary": "Find whole-number quotients and remainders with up to four-digit dividends and one-digit divisors, using strategies based on place value, the properties of operations, and/or the relationship between multiplication and division. Illustrate and explain the calculation by using equations, rectangular arrays, and/or area models.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.NF.1",
+      "grade": 4,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Extend understanding of fraction equivalence and ordering. Note: Grade 4 expectations are limited to fractions with denominators 2, 3, 4, 5, 6, 8, 10, 12, and 100.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=60",
+      "scope_summary": "Explain why a fraction \ud835\udc4e\ud835\udc4e \ud835\udc4f\ud835\udc4f is equivalent to a fraction \ud835\udc4e\ud835\udc4e \u00d7 \ud835\udc5b\ud835\udc5b \ud835\udc4f\ud835\udc4f \u00d7 \ud835\udc5b\ud835\udc5b by using visual fraction models, with attention to how the number and size of the parts differ even though the two fractions themselves are the same size. Use this principle to recognize and generate equivalent fractions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.NF.2",
+      "grade": 4,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Extend understanding of fraction equivalence and ordering. Note: Grade 4 expectations are limited to fractions with denominators 2, 3, 4, 5, 6, 8, 10, 12, and 100.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=60",
+      "scope_summary": "Compare two fractions with different numerators and different denominators.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Without specifying the whole, the shaded area could represent the"
+      ]
+    },
+    {
+      "expectation_id": "NY-4.NF.3",
+      "grade": 4,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Build fractions from unit fractions by applying and extending previous understandings of operations on whole numbers. Note: Grade 4 expectations are limited to fractions with denominators 2, 3, 4, 5, 6, 8, 10, 12, and 100.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=61",
+      "scope_summary": "Understand a fraction \ud835\udc4e\ud835\udc4e \ud835\udc4f\ud835\udc4f with a > 1 as a sum of fractions 1",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note:"
+      ]
+    },
+    {
+      "expectation_id": "NY-4.NF.4",
+      "grade": 4,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Build fractions from unit fractions by applying and extending previous understandings of operations on whole numbers. Note: Grade 4 expectations are limited to fractions with denominators 2, 3, 4, 5, 6, 8, 10, 12, and 100.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=61",
+      "scope_summary": "Apply and extend previous understandings of multiplication to multiply a whole number by a fraction.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: This standard refers to n groups of a fraction (where n is a"
+      ]
+    },
+    {
+      "expectation_id": "NY-4.NF.5",
+      "grade": 4,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Understand decimal notation for fractions, and compare decimal fractions. Note: Grade 4 expectations are limited to fractions with denominators 2, 3, 4, 5, 6, 8, 10, 12, and 100.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=63",
+      "scope_summary": "Express a fraction with denominator 10 as an equivalent fraction with denominator 100, and use this technique to add two fractions with respective denominators 10 and 100.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Students who can generate equivalent fractions can develop strategies for adding fractions"
+      ]
+    },
+    {
+      "expectation_id": "NY-4.NF.6",
+      "grade": 4,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Understand decimal notation for fractions, and compare decimal fractions. Note: Grade 4 expectations are limited to fractions with denominators 2, 3, 4, 5, 6, 8, 10, 12, and 100.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=63",
+      "scope_summary": "Use decimal notation for fractions with denominators 10 or 100.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.NF.7",
+      "grade": 4,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Understand decimal notation for fractions, and compare decimal fractions. Note: Grade 4 expectations are limited to fractions with denominators 2, 3, 4, 5, 6, 8, 10, 12, and 100.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=63",
+      "scope_summary": "Compare two decimals to hundredths by reasoning about their size. Recognize that comparisons are valid only when two decimals refer to the same whole. Record the results of comparisons with the symbols >, =, or <, and justify the conclusions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.MD.1",
+      "grade": 4,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Solve problems involving measurement and conversion of measurements from a larger unit to a smaller unit.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=64",
+      "scope_summary": "Know relative sizes of measurement units: ft., in.; km, m, cm",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.MD.2",
+      "grade": 4,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Solve problems involving measurement and conversion of measurements from a larger unit to a smaller unit.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=64",
+      "scope_summary": "Use the four operations to solve word problems involving distances, intervals of time, liquid volumes, masses of objects, and money. a. Solve problems involving fractions or decimals, and problems that require expressing measurements given in a larger unit in terms of a smaller unit. b. Represent measurement quantities using diagrams that feature a measurement scale, such as number lines.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Grade 4 expectations are limited to fractions with"
+      ]
+    },
+    {
+      "expectation_id": "NY-4.MD.3",
+      "grade": 4,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Solve problems involving measurement and conversion of measurements from a larger unit to a smaller unit.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=64",
+      "scope_summary": "Apply the area and perimeter formulas for rectangles in real world and mathematical problems.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.MD.4",
+      "grade": 4,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Represent and interpret data.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=65",
+      "scope_summary": "Make a line plot to display a data set of measurements in fractions of a unit \ufffd 1 2 , 1 4 , 1 8\ufffd. Solve problems involving addition and subtraction of fractions by using information presented in line plots.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.MD.5",
+      "grade": 4,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Geometric measurement: understand concepts of angle and measure angles.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=65",
+      "scope_summary": "Recognize angles as geometric shapes that are formed wherever two rays share a common endpoint, and understand concepts of angle measurement. a. Recognize an angle is measured with reference to a circle with its center at the common endpoint of the rays, by considering the fraction of the circular arc between the points where the two rays intersect the circle. An angle that turns through 1 360 of a circle is called a \u201cone- degree angle,\u201d and can be used to measure angles. b. Recognize an angle that turns through n one-degree angles is said to have an angle measure of n degrees.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.MD.6",
+      "grade": 4,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Geometric measurement: understand concepts of angle and measure angles.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=65",
+      "scope_summary": "Measure angles in whole-number degrees using a protractor. Sketch angles of specified measure.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.MD.7",
+      "grade": 4,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Geometric measurement: understand concepts of angle and measure angles.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=65",
+      "scope_summary": "Recognize angle measure as additive. When an angle is decomposed into non -overlapping parts, the angle measure of the whole is the sum of the angle measures of the parts. Solve addition and subtraction problems to find unknown angles on a diagram in real world and mathematical problems.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.G.1",
+      "grade": 4,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Draw and identify lines and angles, and classify shapes by properties of their lines and angles.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=66",
+      "scope_summary": "Draw points, lines, line segments, rays, angles (right, acute, obtuse), and perpendicular and parallel lines. Identify these in two-dimensional figures.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.G.2a",
+      "grade": 4,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Draw and identify lines and angles, and classify shapes by properties of their lines and angles.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=66",
+      "scope_summary": "Identify and name triangles based on angle size (right, obtuse, acute).",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.G.2b",
+      "grade": 4,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Draw and identify lines and angles, and classify shapes by properties of their lines and angles.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=66",
+      "scope_summary": "Identify and name all quadrilaterals with 2 pairs of parallel sides as parallelograms.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.G.2c",
+      "grade": 4,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Draw and identify lines and angles, and classify shapes by properties of their lines and angles.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=66",
+      "scope_summary": "Identify and name all quadrilaterals with four right angles as rectangles.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-4.G.3",
+      "grade": 4,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Draw and identify lines and angles, and classify shapes by properties of their lines and angles.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=66",
+      "scope_summary": "Recognize a line of symmetry for a two-dimensional figure as a line across the figure such that the figure can be folded along the line into matching parts. Identify line-symmetric figures and draw lines of symmetry.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.OA.1",
+      "grade": 5,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Write and interpret numerical expressions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=68",
+      "scope_summary": "Apply the order of operations to evaluate numerical expressions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Exponents and nested grouping symbols are not included."
+      ]
+    },
+    {
+      "expectation_id": "NY-5.OA.2",
+      "grade": 5,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Write and interpret numerical expressions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=68",
+      "scope_summary": "Write simple expressions that record calculations with numbers, and interpret numerical",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.OA.3",
+      "grade": 5,
+      "domain": "OA",
+      "domain_title": "Operations and Algebraic Thinking",
+      "cluster_title": "Analyze patterns and relationships.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=68",
+      "scope_summary": "Generate two numerical patterns using two given rules. Identify apparent relationships between corresponding terms. Form ordered pairs consisting of corresponding terms from the two patterns, and graph the ordered pairs on a coordinate plane.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NBT.1",
+      "grade": 5,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Understand the place value system.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=69",
+      "scope_summary": "Recognize that in a multi-digit number, a digit in one place represents 10 times as much as it represents in the place to its right and 1 10 of what it represents in the place to its left.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NBT.2",
+      "grade": 5,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Understand the place value system.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=69",
+      "scope_summary": "Use whole-number exponents to denote powers of 10. Explain patterns in the number of zeros of the product when multiplying a number by powers of 10, and explain patterns in the placement of the decimal point when a decimal is multiplied or divided by a power of 10.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NBT.3",
+      "grade": 5,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Understand the place value system.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=69",
+      "scope_summary": "Read, write, and compare decimals to thousandths. a. Read and write decimals to thousandths using base-ten numerals, number names, and",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NBT.4",
+      "grade": 5,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Understand the place value system.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=69",
+      "scope_summary": "Use place value understanding to round decimals to any place.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NBT.5",
+      "grade": 5,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Perform operations with multi-digit whole numbers and with decimals to hundredths.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=70",
+      "scope_summary": "Fluently multiply multi-digit whole numbers using a standard algorithm.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NBT.6",
+      "grade": 5,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Perform operations with multi-digit whole numbers and with decimals to hundredths.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=70",
+      "scope_summary": "Find whole-number quotients of whole numbers with up to four-digit dividends and two-digit divisors, using strategies based on place value, the properties of operations, and/or the relationship between multiplication and division. Illustrate and explain the calculation by using equations, rectangular arrays, and/or area models.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NBT.7",
+      "grade": 5,
+      "domain": "NBT",
+      "domain_title": "Number and Operations in Base Ten",
+      "cluster_title": "Perform operations with multi-digit whole numbers and with decimals to hundredths.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=70",
+      "scope_summary": "Using concrete models or drawings and strategies based on place value, properties of operations, and/or the relationship between operations:",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Division problems are limited to those that allow for the use of"
+      ]
+    },
+    {
+      "expectation_id": "NY-5.NF.1",
+      "grade": 5,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Use equivalent fractions as a strategy to add and subtract fractions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=71",
+      "scope_summary": "Add and subtract fractions with unlike denominators (including mixed numbers) by replacing given fractions with equivalent fractions in such a way as to produce an equivalent sum or difference of fractions with like denominators.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NF.2",
+      "grade": 5,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Use equivalent fractions as a strategy to add and subtract fractions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=71",
+      "scope_summary": "Solve word problems involving addition and subtraction of fractions referring to the same whole, including cases of unlike denominators.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NF.3",
+      "grade": 5,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Apply and extend previous understandings of multiplication and division to multiply and divide fractions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=72",
+      "scope_summary": "Interpret a fraction as division of the numerator by the denominator ( \ud835\udc4e\ud835\udc4e",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NF.4",
+      "grade": 5,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Apply and extend previous understandings of multiplication and division to multiply and divide fractions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=72",
+      "scope_summary": "Apply and extend previous understandings of multiplication to multiply a fraction by a whole number or a fraction.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NF.5",
+      "grade": 5,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Apply and extend previous understandings of multiplication and division to multiply and divide fractions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=72",
+      "scope_summary": "Interpret multiplication as scaling (resizing). a. Compare the size of a product to the size of one factor on the basis of the size of the other factor, without performing the indicated multiplication.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NF.6",
+      "grade": 5,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Apply and extend previous understandings of multiplication and division to multiply and divide fractions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=73",
+      "scope_summary": "Solve real world problems involving multiplication of fractions and mixed numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.NF.7",
+      "grade": 5,
+      "domain": "NF",
+      "domain_title": "Number and Operations\u2014Fractions",
+      "cluster_title": "Apply and extend previous understandings of multiplication and division to multiply and divide fractions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=73",
+      "scope_summary": "Apply and extend previous understandings of division to divide unit fractions by whole numbers and whole numbers by unit fractions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Students able to multiply fractions in general can develop strategies to"
+      ]
+    },
+    {
+      "expectation_id": "NY-5.MD.1",
+      "grade": 5,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Convert like measurement units within a given measurement system.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=74",
+      "scope_summary": "Convert among different-sized standard measurement units within a given measurement system when the conversion factor is given. Use these conversions in solving multi-step, real world problems.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.MD.2",
+      "grade": 5,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Represent and interpret data.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=74",
+      "scope_summary": "Make a line plot to display a data set of measurements in fractions of a unit \ufffd 1 2 , 1 4 , 1 8\ufffd. Use operations on fractions for this grade to solve problems involving information presented in line plots.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.MD.3",
+      "grade": 5,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Geometric measurement: understand concepts of volume and relate volume to multiplication and to addition.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=75",
+      "scope_summary": "Recognize volume as an attribute of solid figures and understand concepts of volume measurement.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.MD.4",
+      "grade": 5,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Geometric measurement: understand concepts of volume and relate volume to multiplication and to addition.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=75",
+      "scope_summary": "Measure volumes by counting unit cubes, using cubic cm, cubic in., cubic ft., and improvised units.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.MD.5",
+      "grade": 5,
+      "domain": "MD",
+      "domain_title": "Measurement and Data",
+      "cluster_title": "Geometric measurement: understand concepts of volume and relate volume to multiplication and to addition.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=75",
+      "scope_summary": "Relate volume to the operations of multiplication and addition and solve real world and",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.G.1",
+      "grade": 5,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Graph points on the coordinate plane to solve real-world and mathematical problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=76",
+      "scope_summary": "Use a pair of perpendicular number lines, called axes, to define a coordinate system, with the intersection of the lines (the origin) arranged to coincide with the 0 on each line and a given point in the plane located by using an ordered pair of numbers, called its coordinates.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.G.2",
+      "grade": 5,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Graph points on the coordinate plane to solve real-world and mathematical problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=76",
+      "scope_summary": "Represent real world and mathematical problems by graphing points in the first quadrant of the",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-5.G.3",
+      "grade": 5,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Classify two-dimensional figures into categories based on their properties.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=76",
+      "scope_summary": "Understand that attributes belonging to a category of two-dimensional figures also belong to all subcategories of that category.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: The inclusive definition of a trapezoid will be utilized, which"
+      ]
+    },
+    {
+      "expectation_id": "NY-5.G.4",
+      "grade": 5,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Classify two-dimensional figures into categories based on their properties.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=76",
+      "scope_summary": "Classify two-dimensional figures in a hierarchy based on properties.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    }
+  ]
+}
