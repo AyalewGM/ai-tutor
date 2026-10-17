@@ -37,6 +37,10 @@ test('react learner journey: register, practice, earn badge, view badges and ski
   await page.getByLabel('Password').fill(password);
   await page.getByLabel('Display name').fill('Synthetic React Parent');
   await page.getByLabel('4-digit parent PIN').fill(parentPin);
+  await page.locator('#country').click();
+  await page.getByRole('option', { name: 'United States' }).click();
+  await page.locator('#region').click();
+  await page.getByRole('option', { name: 'Maryland' }).click();
   await page.getByLabel('I accept the Terms of Service.').check();
   await page.getByLabel(/I am the parent or guardian/).check();
   await page.getByRole('button', { name: 'Create account' }).click();

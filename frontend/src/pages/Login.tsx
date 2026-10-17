@@ -4,11 +4,12 @@ import { Sparkles, ShieldCheck, LineChart } from "lucide-react";
 import { api, ApiError, post } from "../api";
 import Brand from "../components/Brand";
 import Turnstile from "../components/Turnstile";
-import type { AuthConfig, SessionUser } from "../types";
+import type { AuthConfig, CountryOption, RegionsOut, SessionUser } from "../types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Login() {
   const [mode, setMode] = useState<"signin" | "register">("signin");
@@ -21,6 +22,9 @@ export default function Login() {
   );
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [coppaConsent, setCoppaConsent] = useState(false);
+  const [countries, setCountries] = useState<CountryOption[]>([]);
+  const [countryCode, setCountryCode] = useState("");
+  const [regionCode, setRegionCode] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [siteKey, setSiteKey] = useState<string | null>(null);
@@ -47,6 +51,18 @@ export default function Login() {
       .catch(() => setSiteKey(null));
   }, []);
 
+  const selectedCountry = countries.find((c) => c.code === countryCode);
+  const selectedRegion = selectedCountry?.regions.find((r) => r.code === regionCode);
+
+  useEffect(() => {
+    // Public catalog for the registration form (pre-auth). Loaded lazily —
+    // the sign-in path never needs it.
+    if (mode !== "register" || countries.length > 0) return;
+    api<RegionsOut>("/auth/regions")
+      .then((out) => setCountries(out.countries))
+      .catch(() => setCountries([]));
+  }, [mode, countries.length]);
+
   async function submit(event: FormEvent) {
     event.preventDefault();
     setError("");
@@ -54,11 +70,18 @@ export default function Login() {
     try {
       let session: SessionUser;
       if (mode === "register") {
+        // Radix Select doesn't participate in native form validation.
+        if (!countryCode || !regionCode) {
+          setError("Choose your country and state or province.");
+          return;
+        }
         session = await post<SessionUser>("/auth/register-parent", {
           email,
           password,
           display_name: displayName || undefined,
           parent_pin: parentPin,
+          country_code: countryCode,
+          region_code: regionCode,
           invitation_token: invitationToken.trim() || undefined,
           terms_accepted: termsAccepted,
           coppa_consent_given: coppaConsent,
@@ -227,6 +250,51 @@ export default function Login() {
                       />
                       <p className="text-xs text-muted-foreground">Unlocks parent settings and the progress dashboard.</p>
                     </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1.5">
+                        <Label htmlFor="country">Country</Label>
+                        <Select
+                          value={countryCode}
+                          onValueChange={(v) => {
+                            setCountryCode(v);
+                            setRegionCode("");
+                          }}
+                        >
+                          <SelectTrigger id="country">
+                            <SelectValue placeholder="Select country" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {countries.map((c) => (
+                              <SelectItem key={c.code} value={c.code}>
+                                {c.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label htmlFor="region">State / Province</Label>
+                        <Select value={regionCode} onValueChange={setRegionCode} disabled={!countryCode}>
+                          <SelectTrigger id="region">
+                            <SelectValue placeholder={countryCode ? "Select state" : "Choose a country first"} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {(selectedCountry?.regions ?? []).map((r) => (
+                              <SelectItem key={r.code} value={r.code}>
+                                {r.name}
+                                {r.has_curriculum ? "" : " *"}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      We use this to show your state's curriculum.
+                      {selectedRegion && !selectedRegion.has_curriculum
+                        ? " * No state-specific curriculum yet — you'll see your country's catalog."
+                        : ""}
+                    </p>
                     <label className="flex items-start gap-2.5 text-sm">
                       <input
                         type="checkbox"

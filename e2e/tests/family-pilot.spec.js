@@ -15,6 +15,10 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await page.getByLabel('Password').fill(password);
   await page.getByLabel('Display name').fill('Synthetic Pilot Parent');
   await page.getByLabel('4-digit parent PIN').fill(parentPin);
+  await page.locator('#country').click();
+  await page.getByRole('option', { name: 'United States' }).click();
+  await page.locator('#region').click();
+  await page.getByRole('option', { name: 'Maryland' }).click();
   await page.getByLabel('I accept the Terms of Service.').check();
   await page.getByLabel(/I am the parent or guardian/).check();
   await page.getByRole('button', { name: 'Create account' }).click();
@@ -87,6 +91,10 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await outsiderPage.getByLabel('Password').fill(password);
   await outsiderPage.getByLabel('Display name').fill('Synthetic Unrelated Parent');
   await outsiderPage.getByLabel('4-digit parent PIN').fill(parentPin);
+  await outsiderPage.locator('#country').click();
+  await outsiderPage.getByRole('option', { name: 'United States' }).click();
+  await outsiderPage.locator('#region').click();
+  await outsiderPage.getByRole('option', { name: 'Maryland' }).click();
   await outsiderPage.getByLabel('I accept the Terms of Service.').check();
   await outsiderPage.getByLabel(/I am the parent or guardian/).check();
   await outsiderPage.getByRole('button', { name: 'Create account' }).click();
