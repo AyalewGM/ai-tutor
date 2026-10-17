@@ -25,6 +25,7 @@ from app.services.curriculum_scope import (
     require_skill_in_scope,
     resolve_student_curriculum_scope,
 )
+from app.services.extension_offer import record_extension_offer
 from app.services.problem_selection import select_next_problem
 from app.services.review_schedule import REVIEW_REASON, due_review
 from app.services.usage_metering import ai_generate
@@ -185,7 +186,8 @@ def request_extension_problem(
     )
     if problem is None:
         raise HTTPException(404, "No extension problem configured for this skill")
-    # Persist generated extension items now — the pool is exhausted path
-    # creates them, and the student's answer attempt needs the row to exist.
+    # Bind the exact problem to this authenticated session before returning it.
+    # A global extension_eligible flag alone never authorizes a response.
+    record_extension_offer(db, session=session, problem=problem)
     db.commit()
     return _problem_out(problem)
