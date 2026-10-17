@@ -677,3 +677,64 @@ def test_invitation_send_flag_emails_the_link(outbox):
     )
     assert quiet.status_code == 201
     assert not any("register?invite" in m.body for m in outbox if m.to == quiet.json()["email"])
+
+
+def test_pilot_approval_gate_blocks_pending_family(monkeypatch):
+    """With pilot_require_approval, a registering family is PENDING and every
+    parent-scoped surface denies access until staff approval."""
+    monkeypatch.setattr(settings, "pilot_require_approval", True)
+    email = f"pending-{uuid.uuid4().hex[:8]}@example.com"
+    resp = client.post(
+        "/api/v1/auth/register-parent",
+        json={
+            "email": email,
+            "password": "synthetic-password-12+",
+            "parent_pin": "1234",
+            "country_code": "US",
+            "region_code": "MD",
+            "terms_accepted": True,
+            "coppa_consent_given": True,
+        },
+    )
+    assert resp.status_code == 201, resp.text
+    assert resp.json()["approval_status"] == "PENDING"
+    # Session exists (login works) but parent surfaces deny.
+    assert client.get("/api/v1/onboarding/learners").status_code == 403
+    assert client.post("/api/v1/practice-pass", json={}).status_code == 403
+
+
+def test_pilot_approval_gate_allows_family_after_approval(monkeypatch):
+    monkeypatch.setattr(settings, "pilot_require_approval", True)
+    email = f"approved-{uuid.uuid4().hex[:8]}@example.com"
+    resp = client.post(
+        "/api/v1/auth/register-parent",
+        json={
+            "email": email,
+            "password": "synthetic-password-12+",
+            "parent_pin": "1234",
+            "country_code": "US",
+            "region_code": "MD",
+            "terms_accepted": True,
+            "coppa_consent_given": True,
+        },
+    )
+    assert resp.status_code == 201, resp.text
+    assert client.get("/api/v1/onboarding/learners").status_code == 403
+    with SessionLocal() as db:
+        parent = db.scalar(
+            select(ParentProfile).where(
+                ParentProfile.user_id
+                == db.scalar(select(User.id).where(User.email == email))
+            )
+        )
+        parent.approval_status = "APPROVED"
+        db.commit()
+    assert client.get("/api/v1/onboarding/learners").status_code == 200
+
+
+def test_pilot_approval_gate_off_leaves_register_approved(monkeypatch):
+    """Flag off = existing behavior: self-registered families proceed."""
+    monkeypatch.setattr(settings, "pilot_require_approval", False)
+    resp = _register(f"gate-off-{uuid.uuid4().hex[:8]}@example.com", None)
+    assert resp.status_code == 201, resp.text
+    assert resp.json()["approval_status"] == "APPROVED"

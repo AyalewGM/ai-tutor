@@ -97,6 +97,10 @@ class Settings(BaseSettings):
     pilot_invite_only: bool = False
     pilot_invite_default_seats: int = 3
     pilot_entitlement_days: int = 90
+    # When on, a registering family lands as PENDING and all parent/learner
+    # access is denied until a staff member approves them. Off preserves the
+    # self-serve behavior where approval is recorded but never gates.
+    pilot_require_approval: bool = False
     # Per-child practice-link activation throttle (per client IP).
     practice_link_activate_rate_limit: int = 10
     practice_link_activate_window_seconds: int = 900

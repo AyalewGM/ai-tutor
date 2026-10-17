@@ -19,6 +19,7 @@ from app.models import User
 from app.onboarding_api import regions_catalog
 from app.parent_models import (
     APPROVAL_APPROVED,
+    APPROVAL_PENDING,
     ParentInvitation,
     ParentProfile,
     PilotEntitlement,
@@ -172,7 +173,11 @@ def register_parent(
             coppa_consent_given=True,
             consent_timestamp=accepted_at,
             terms_accepted_at=accepted_at,
-            approval_status=APPROVAL_APPROVED,
+            approval_status=(
+                APPROVAL_PENDING
+                if settings.pilot_require_approval
+                else APPROVAL_APPROVED
+            ),
         )
         db.add(parent)
         db.flush()
