@@ -112,6 +112,15 @@ test("parent pilot invite is carried into registration and removed from browser 
     const req = route.request();
     const path = new URL(req.url()).pathname.replace(/^\/api\/v1/, "");
     if (path === "/auth/config") return json(route, { turnstile_site_key: null });
+    if (path === "/auth/regions") {
+      return json(route, {
+        countries: [{
+          code: "US", name: "United States",
+          regions: [{ code: "MD", name: "Maryland", has_curriculum: true }],
+        }],
+        family: null,
+      });
+    }
     if (path === "/auth/register-parent") {
       registration = JSON.parse(req.postData());
       return json(route, { id: "test-parent", role: "PARENT", display_name: "Test", approval_status: "APPROVED" }, 201);
@@ -124,8 +133,14 @@ test("parent pilot invite is carried into registration and removed from browser 
   await page.getByLabel("Email").fill("pilot@example.test");
   await page.getByLabel("Password").fill("SyntheticPassword!12345");
   await page.getByLabel("4-digit parent PIN").fill("1234");
+  await page.locator('#country').click();
+  await page.getByRole('option', { name: 'United States' }).click();
+  await page.locator('#region').click();
+  await page.getByRole('option', { name: 'Maryland' }).click();
   await page.getByLabel("I accept the Terms of Service.").check();
   await page.getByLabel(/I am the parent or guardian/).check();
   await page.getByRole("button", { name: "Create account" }).click();
   await expect.poll(() => registration?.invitation_token).toBe(invite);
+  expect(registration?.country_code).toBe("US");
+  expect(registration?.region_code).toBe("MD");
 });

@@ -7,8 +7,9 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
+from app.core.settings import settings
 from app.models import Student, TutorSession, User
-from app.parent_models import ParentProfile
+from app.parent_models import APPROVAL_APPROVED, ParentProfile
 
 DbSession = Annotated[Session, Depends(get_db)]
 
@@ -37,11 +38,22 @@ def require_parent_role(user: User) -> None:
         raise HTTPException(status_code=403, detail="Parent or guardian access required")
 
 
+def _deny_unapproved(parent: ParentProfile) -> None:
+    """Pilot approval gate: with pilot_require_approval, a PENDING or REJECTED
+    family cannot reach any parent-scoped or learner-scoped surface. The gate
+    is deliberately flag-scoped — when off, approval remains advisory only."""
+    if settings.pilot_require_approval and parent.approval_status != APPROVAL_APPROVED:
+        raise HTTPException(
+            status_code=403, detail="Family account is awaiting pilot approval"
+        )
+
+
 def current_parent(user: CurrentUser, db: DbSession) -> ParentProfile:
     require_parent_role(user)
     parent = db.scalar(select(ParentProfile).where(ParentProfile.user_id == user.id))
     if parent is None:
         raise HTTPException(status_code=404, detail="Parent profile not initialized")
+    _deny_unapproved(parent)
     return parent
 
 
@@ -83,6 +95,7 @@ def current_learning_access(request: Request, db: DbSession) -> LearningAccess:
         parent = db.scalar(select(ParentProfile).where(ParentProfile.user_id == student.parent_id))
         if parent is None:
             raise HTTPException(status_code=401, detail="Learner access unavailable")
+        _deny_unapproved(parent)
         return LearningAccess(parent=parent, learner_id=student.id)
     user = current_user(request, db)
     return LearningAccess(parent=current_parent(user, db), learner_id=None)

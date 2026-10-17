@@ -148,9 +148,14 @@ class ParentRegisterSchema(BaseModel):
     password: str = Field(min_length=12, max_length=128)
     display_name: str | None = Field(default=None, min_length=1, max_length=120)
     parent_pin: str = Field(pattern=r"^\d{4}$")
+    country_code: str = Field(min_length=2, max_length=2)
+    region_code: str = Field(min_length=2, max_length=3)
     terms_accepted: Literal[True]
     coppa_consent_given: Literal[True]
     turnstile_token: str | None = Field(default=None, max_length=2048)
+    # Required only when pilot_invite_only is enabled: the scoped,
+    # single-use invitation token issued to the family.
+    invitation_token: str | None = Field(default=None, min_length=32, max_length=256)
 
 
 class StudentCreateSchema(BaseModel):

@@ -51,6 +51,8 @@ def _register_payload(email: str) -> dict:
         "email": email,
         "password": "a-very-long-password",
         "parent_pin": "1234",
+        "country_code": "US",
+        "region_code": "MD",
         "terms_accepted": True,
         "coppa_consent_given": True,
     }

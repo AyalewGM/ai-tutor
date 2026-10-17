@@ -7,9 +7,11 @@ Access model:
 - Every state-changing staff action is written to admin_audit_events.
 """
 
+import hashlib
+import secrets
 import uuid
 from collections.abc import Callable
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from decimal import Decimal
 from typing import Annotated
 
@@ -27,8 +29,10 @@ from app.models import User
 from app.parent_models import (
     APPROVAL_APPROVED,
     APPROVAL_REJECTED,
+    ParentInvitation,
     ParentProfile,
     ParentStudentRelationship,
+    PilotEntitlement,
 )
 from app.plan_models import Plan
 from app.services import totp
@@ -40,7 +44,12 @@ from app.services.admin_security import (
     record_admin_action,
     register_mfa_attempt,
 )
-from app.services.email import family_approved_email, family_rejected_email, send_email
+from app.services.email import (
+    family_approved_email,
+    family_invitation_email,
+    family_rejected_email,
+    send_email,
+)
 from app.services.permissions import Permission, has_permission, permissions_for
 
 router = APIRouter(prefix="/admin", tags=["admin"])
@@ -424,6 +433,174 @@ def reject_family(
         family_rejected_email(family_user.email, family_user.display_name, reason),
     )
     return _family_out(parent, family_user, _learner_count(db, parent))
+
+
+# --- Pilot invitations -------------------------------------------------------
+# Scoped, single-use parent invitations for invite-only onboarding. The raw
+# token is returned exactly once at creation; only its hash is stored.
+# Sending invitations stays an owner-gated manual step — these endpoints only
+# mint and audit the tokens.
+
+
+def _invitation_digest(token: str) -> str:
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+class InvitationCreateIn(BaseModel):
+    email: str | None = Field(default=None, max_length=255)
+    seats: int | None = Field(default=None, ge=1, le=20)
+    expires_in_days: int = Field(default=30, ge=1, le=365)
+    # Explicit owner action = approval to email the family the invite link.
+    send: bool = False
+
+
+class InvitationOut(BaseModel):
+    id: str
+    status: str
+    email: str | None
+    seats: int | None
+    expires_at: datetime
+    created_at: datetime
+
+
+class InvitationCreatedOut(InvitationOut):
+    token: str
+
+
+def _invitation_out(invitation) -> InvitationOut:
+    return InvitationOut(
+        id=str(invitation.id),
+        status=invitation.status,
+        email=invitation.email,
+        seats=invitation.seats,
+        expires_at=invitation.expires_at,
+        created_at=invitation.created_at,
+    )
+
+
+@router.post("/family-invitations", response_model=InvitationCreatedOut,
+             status_code=status.HTTP_201_CREATED)
+def create_invitation(
+    payload: InvitationCreateIn,
+    background: BackgroundTasks,
+    db: DbSession,
+    staff: Annotated[User, Depends(require_staff(Permission.FAMILIES_APPROVE))],
+) -> InvitationCreatedOut:
+    if payload.send and not payload.email:
+        raise HTTPException(
+            status_code=422, detail="Cannot send an invitation without an email"
+        )
+    raw = secrets.token_urlsafe(32)
+    now = datetime.now(UTC)
+    invitation = ParentInvitation(
+        token_hash=_invitation_digest(raw),
+        email=payload.email.strip().lower() if payload.email else None,
+        seats=payload.seats,
+        expires_at=now + timedelta(days=payload.expires_in_days),
+        created_by_user_id=staff.id,
+    )
+    db.add(invitation)
+    record_admin_action(
+        db, actor_user_id=staff.id, actor_label=staff.email,
+        action="family_invitation.create", target_type="parent_invitation",
+        target_id=str(invitation.id),
+        after={"email": invitation.email, "seats": invitation.seats},
+    )
+    db.commit()
+    if payload.send:
+        background.add_task(
+            send_email,
+            family_invitation_email(invitation.email, raw, invitation.seats),
+        )
+    out = _invitation_out(invitation)
+    return InvitationCreatedOut(**out.model_dump(), token=raw)
+
+
+@router.get("/family-invitations", response_model=list[InvitationOut])
+def list_invitations(
+    db: DbSession,
+    _user: Annotated[User, Depends(require_staff(Permission.FAMILIES_APPROVE))],
+    status_filter: Annotated[
+        str | None,
+        Query(alias="status", pattern="^(PENDING|ACCEPTED|DECLINED|DISABLED)$"),
+    ] = None,
+    limit: Annotated[int, Query(ge=1, le=200)] = 50,
+    offset: Annotated[int, Query(ge=0)] = 0,
+) -> list[InvitationOut]:
+    query = select(ParentInvitation).order_by(ParentInvitation.created_at.desc())
+    if status_filter:
+        query = query.where(ParentInvitation.status == status_filter)
+    rows = db.scalars(query.limit(limit).offset(offset))
+    return [_invitation_out(r) for r in rows]
+
+
+@router.post("/family-invitations/{invitation_id}/disable", response_model=InvitationOut)
+def disable_invitation(
+    invitation_id: uuid.UUID,
+    db: DbSession,
+    staff: Annotated[User, Depends(require_staff(Permission.FAMILIES_APPROVE))],
+) -> InvitationOut:
+    invitation = db.get(ParentInvitation, invitation_id)
+    if invitation is None:
+        raise HTTPException(status_code=404, detail="Invitation not found")
+    before = {"status": invitation.status}
+    invitation.status = "DISABLED"
+    invitation.responded_at = datetime.now(UTC)
+    record_admin_action(
+        db, actor_user_id=staff.id, actor_label=staff.email,
+        action="family_invitation.disable", target_type="parent_invitation",
+        target_id=str(invitation.id), before=before,
+        after={"status": "DISABLED"},
+    )
+    db.commit()
+    return _invitation_out(invitation)
+
+
+class PilotEntitlementIn(BaseModel):
+    seats: int = Field(ge=1, le=20)
+    days: int = Field(default=90, ge=1, le=730)
+
+
+@router.post("/families/{parent_profile_id}/pilot-entitlement",
+             response_model=FamilyOut)
+def grant_pilot_entitlement(
+    parent_profile_id: uuid.UUID,
+    payload: PilotEntitlementIn,
+    db: DbSession,
+    staff: Annotated[User, Depends(require_staff(Permission.FAMILIES_APPROVE))],
+) -> FamilyOut:
+    """Owner-managed non-paying seat grant for a pilot family. Revokes any
+    prior grant and issues a new time-bounded one — billing is untouched."""
+    parent = db.get(ParentProfile, parent_profile_id)
+    if parent is None:
+        raise HTTPException(status_code=404, detail="Family not found")
+    now = datetime.now(UTC)
+    prior = db.scalar(
+        select(PilotEntitlement).where(
+            PilotEntitlement.parent_profile_id == parent.id,
+            PilotEntitlement.revoked_at.is_(None),
+        )
+    )
+    if prior is not None:
+        prior.revoked_at = now
+    grant = PilotEntitlement(
+        parent_profile_id=parent.id,
+        seats=payload.seats,
+        source="ADMIN",
+        starts_at=now,
+        ends_at=now + timedelta(days=payload.days),
+    )
+    db.add(grant)
+    record_admin_action(
+        db, actor_user_id=staff.id, actor_label=staff.email,
+        action="pilot_entitlement.grant", target_type="parent_profile",
+        target_id=str(parent.id),
+        before={"seats": prior.seats if prior else None},
+        after={"seats": grant.seats, "ends_at": str(grant.ends_at)},
+    )
+    db.commit()
+    user = db.get(User, parent.user_id)
+    return _family_out(parent, user, _learner_count(db, parent))
 
 
 @router.get("/ai-usage/summary")

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { api, post } from "../api";
+import { api, ApiError, post } from "../api";
 import Brand from "../components/Brand";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Activated = { student_id: string; nickname: string | null };
@@ -22,6 +23,8 @@ export default function PracticePass() {
   const { token: urlToken } = useParams();
   const [token] = useState(() => initialToken(urlToken));
   const [error, setError] = useState(token ? "" : "This practice link is invalid or has already been used on this page.");
+  const [inUse, setInUse] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const activation = useRef<Promise<void> | null>(null);
   const navigate = useNavigate();
 
@@ -42,15 +45,54 @@ export default function PracticePass() {
     let mounted = true;
     activation.current
       .then(() => { if (mounted) navigate("/learn", { replace: true }); })
-      .catch(() => {
-        if (mounted) setError("This practice link is invalid, expired or revoked. Ask your parent for a new link.");
+      .catch((err) => {
+        if (!mounted) return;
+        if (err instanceof ApiError && err.status === 409) {
+          setInUse(true);
+          activation.current = null;
+        } else {
+          setError("This practice link is invalid, expired or revoked. Ask your parent for a new link.");
+        }
       })
       .finally(() => {
         // Do not persist bearer credentials in localStorage/sessionStorage.
         delete (window as Window & { __mihurPracticeToken?: string }).__mihurPracticeToken;
       });
     return () => { mounted = false; };
-  }, [token, navigate]);
+  }, [token, attempt, navigate]);
+
+  if (inUse) {
+    return (
+      <main className="mx-auto flex min-h-screen max-w-lg flex-col items-center justify-center gap-6 px-4 py-10">
+        <Brand size="lg" />
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>Someone is practicing on this link</CardTitle>
+            <CardDescription>
+              This practice link is open on another device right now.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4 text-sm text-slate-600">
+            <p>
+              If this is your link, you can try again once the other device is
+              done — or ask your grown-up for your own link if this one belongs
+              to a brother or sister.
+            </p>
+            <Button
+              className="w-full"
+              variant="secondary"
+              onClick={() => {
+                setInUse(false);
+                setAttempt((a) => a + 1);
+              }}
+            >
+              Try again
+            </Button>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
 
   return (
     <main className="mx-auto flex min-h-screen max-w-lg flex-col items-center justify-center gap-6 px-4 py-10">

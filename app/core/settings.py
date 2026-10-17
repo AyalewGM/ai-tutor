@@ -91,6 +91,26 @@ class Settings(BaseSettings):
     # been stored yet, and the fetch timeout for the recalc action.
     usd_to_cad_fallback: Decimal = Decimal("1.36")
     fx_fetch_timeout_seconds: float = 10.0
+    # Invite-only pilot onboarding: when enabled, /auth/register-parent
+    # requires a scoped, single-use parent invitation. Pilot families get
+    # time-bounded seat entitlements — never billing.
+    pilot_invite_only: bool = False
+    pilot_invite_default_seats: int = 3
+    pilot_entitlement_days: int = 90
+    # When on, a registering family lands as PENDING and all parent/learner
+    # access is denied until a staff member approves them. Off preserves the
+    # self-serve behavior where approval is recorded but never gates.
+    pilot_require_approval: bool = False
+    # Per-child practice-link activation throttle (per client IP).
+    practice_link_activate_rate_limit: int = 10
+    practice_link_activate_window_seconds: int = 900
+    # Per-link cap on top of the per-IP cap: two parties fighting over one
+    # shared link should degrade quickly even from different networks.
+    practice_link_activate_per_pass_limit: int = 6
+    # A learner session counts as "in use" (blocking a second activation of
+    # the same link) only if seen within this window. Stale sessions never
+    # block re-entry — they are cleaned up on the next activation.
+    practice_link_live_session_window_seconds: int = 900
 
     model_config = SettingsConfigDict(
         env_file=".env",

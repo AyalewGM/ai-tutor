@@ -36,6 +36,8 @@ def _register(email: str | None = None) -> tuple[str, dict]:
             "password": "correct-horse-battery",
             "display_name": "Pilot Parent",
             "parent_pin": "1234",
+            "country_code": "US",
+            "region_code": "MD",
             "terms_accepted": True,
             "coppa_consent_given": True,
         },
@@ -70,8 +72,9 @@ def test_new_family_is_approved_and_admin_is_notified(outbox) -> None:
     # The approval gate is gone: self-registered families get access
     # immediately; the admin gets a heads-up email, not a decision request.
     assert body["approval_status"] == "APPROVED"
-    assert [m.to for m in outbox] == ["owner@mihur.test"]
-    assert email in outbox[0].body and "/admin" in outbox[0].body
+    # The parent gets a welcome email; the owner still gets the admin notice.
+    notice = next(m for m in outbox if m.to == "owner@mihur.test")
+    assert email in notice.body and "/admin" in notice.body
     assert client.get("/api/v1/onboarding/learners").status_code == 200
 
 

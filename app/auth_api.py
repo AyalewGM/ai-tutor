@@ -1,11 +1,12 @@
-from datetime import UTC, datetime
+import hashlib
+from datetime import UTC, datetime, timedelta
 from typing import Annotated
 
 from argon2 import PasswordHasher
 from argon2.exceptions import VerificationError
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request, Response, status
 from pydantic import BaseModel, EmailStr, Field
-from sqlalchemy import func, select
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -15,7 +16,17 @@ from app.core.settings import settings
 from app.credential_models import UserCredential
 from app.identity import CurrentUser
 from app.models import User
-from app.parent_models import APPROVAL_APPROVED, ParentProfile
+from app.onboarding_api import regions_catalog
+from app.parent_models import (
+    APPROVAL_APPROVED,
+    APPROVAL_PENDING,
+    LearnerPassSession,
+    ParentInvitation,
+    ParentProfile,
+    PilotEntitlement,
+)
+from app.parent_schemas import RegionsOut
+from app.practice_pass_api import LEARNER_COOKIE
 from app.schemas import ParentRegisterSchema
 from app.services.auth_security import (
     clear_login_failures,
@@ -25,7 +36,12 @@ from app.services.auth_security import (
     ensure_not_locked_out,
     record_login_failure,
 )
-from app.services.email import new_family_notification, send_email
+from app.services.email import (
+    family_welcome_email,
+    new_family_notification,
+    send_email,
+)
+from app.services.regions import region_name, valid_region
 from app.services.turnstile import verify_turnstile
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -34,6 +50,74 @@ _passwords = PasswordHasher()
 
 
 ParentRegistration = ParentRegisterSchema
+
+
+def _invitation_digest(token: str) -> str:
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+def _resolve_invitation(db: Session, payload: ParentRegistration) -> ParentInvitation:
+    """Invite-only gate: resolve a pending, unexpired, email-scoped
+    invitation or deny generically — no existence/scope disclosure."""
+    generic = HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="Registration requires a valid invitation",
+    )
+    if not payload.invitation_token:
+        raise generic
+    invitation = db.scalar(
+        select(ParentInvitation)
+        .where(ParentInvitation.token_hash == _invitation_digest(payload.invitation_token))
+        # Serialize concurrent redemptions of the same invite on the row lock;
+        # the guarded UPDATE in _consume_invitation is the atomic backstop.
+        .with_for_update()
+    )
+    if (
+        invitation is None
+        or invitation.status != "PENDING"
+        or invitation.expires_at <= datetime.now(UTC)
+        or (invitation.email is not None
+            and invitation.email.lower() != payload.email.strip().lower())
+    ):
+        raise generic
+    return invitation
+
+
+def _consume_invitation(
+    db: Session, *, invitation: ParentInvitation, parent: ParentProfile, now: datetime
+) -> None:
+    """Single-use consumption + pilot seat grant, inside the registration
+    transaction so a disabled invite can never mint an account. The guarded
+    UPDATE makes single-use atomic even where row locks are a no-op."""
+    consumed = db.execute(
+        update(ParentInvitation)
+        .where(
+            ParentInvitation.id == invitation.id,
+            ParentInvitation.status == "PENDING",
+        )
+        .values(
+            status="ACCEPTED",
+            accepted_parent_profile_id=parent.id,
+            responded_at=now,
+        )
+    )
+    if consumed.rowcount != 1:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Registration requires a valid invitation",
+        )
+    invitation.status = "ACCEPTED"
+    db.add(
+        PilotEntitlement(
+            parent_profile_id=parent.id,
+            seats=invitation.seats or settings.pilot_invite_default_seats,
+            source="INVITATION",
+            invitation_id=invitation.id,
+            starts_at=now,
+            ends_at=now + timedelta(days=settings.pilot_entitlement_days),
+        )
+    )
+    db.flush()
 
 class LoginRequest(BaseModel):
     email: EmailStr
@@ -78,6 +162,32 @@ def _set_session_cookie(response: Response, token: str) -> None:
     )
 
 
+def _end_learner_presence(
+    request: Request, response: Response, db: Session
+) -> None:
+    """A parent credential being established or torn down on this device ends
+    the learner session here: revoke the server-side row keyed by the
+    presented learner cookie, then clear the cookie. Other devices keep
+    their own sessions."""
+    learner_token = request.cookies.get(LEARNER_COOKIE)
+    if learner_token:
+        db.execute(
+            delete(LearnerPassSession).where(
+                LearnerPassSession.token_hash == hashlib.sha256(
+                    learner_token.encode("utf-8")
+                ).hexdigest()
+            )
+        )
+        db.commit()
+    response.delete_cookie(
+        LEARNER_COOKIE,
+        path="/",
+        httponly=True,
+        secure=settings.session_cookie_secure,
+        samesite="lax",
+    )
+
+
 @router.post("/register-parent", response_model=SessionUser, status_code=status.HTTP_201_CREATED)
 def register_parent(
     payload: ParentRegistration,
@@ -89,23 +199,36 @@ def register_parent(
     enforce_register_rate_limit(request)
     verify_turnstile(payload.turnstile_token, client_ip(request))
     email = payload.email.strip().lower()
+    country_code = payload.country_code.upper()
+    region_code = payload.region_code.upper()
+    if not valid_region(country_code, region_code):
+        raise HTTPException(status_code=422, detail="Unknown country or region")
+    invitation = _resolve_invitation(db, payload) if settings.pilot_invite_only else None
     user = User(email=email, display_name=payload.display_name, role="PARENT")
     db.add(user)
     try:
         db.flush()
         db.add(UserCredential(user_id=user.id, password_hash=_passwords.hash(payload.password)))
         accepted_at = datetime.now(UTC)
-        db.add(
-            ParentProfile(
-                user_id=user.id,
-                subscription_tier="free",
-                parent_pin_hash=_passwords.hash(payload.parent_pin),
-                coppa_consent_given=True,
-                consent_timestamp=accepted_at,
-                terms_accepted_at=accepted_at,
-                approval_status=APPROVAL_APPROVED,
-            )
+        parent = ParentProfile(
+            user_id=user.id,
+            subscription_tier="free",
+            parent_pin_hash=_passwords.hash(payload.parent_pin),
+            country_code=country_code,
+            region_code=region_code,
+            coppa_consent_given=True,
+            consent_timestamp=accepted_at,
+            terms_accepted_at=accepted_at,
+            approval_status=(
+                APPROVAL_PENDING
+                if settings.pilot_require_approval
+                else APPROVAL_APPROVED
+            ),
         )
+        db.add(parent)
+        db.flush()
+        if invitation is not None:
+            _consume_invitation(db, invitation=invitation, parent=parent, now=accepted_at)
         token, _ = create_session(db, user.id)
         db.commit()
     except IntegrityError as exc:
@@ -113,6 +236,15 @@ def register_parent(
         # Do not expose whether an account exists.
         raise HTTPException(status_code=400, detail="Unable to create account") from exc
     _set_session_cookie(response, token)
+    _end_learner_presence(request, response, db)
+    background.add_task(
+        send_email,
+        family_welcome_email(
+            user.email,
+            user.display_name,
+            region_name(country_code, region_code),
+        ),
+    )
     notification = new_family_notification(user.email, user.display_name)
     if notification is not None:
         background.add_task(send_email, notification)
@@ -146,6 +278,7 @@ def login(
     token, _ = create_session(db, user.id)
     db.commit()
     _set_session_cookie(response, token)
+    _end_learner_presence(request, response, db)
     return _session_user(db, user)
 
 
@@ -153,6 +286,16 @@ def login(
 def auth_config() -> AuthConfigOut:
     """Public auth-page config — only ever the site key, never the secret."""
     return AuthConfigOut(turnstile_site_key=settings.turnstile_site_key)
+
+
+@router.get("/regions", response_model=RegionsOut)
+def public_regions(db: DbSession) -> RegionsOut:
+    """Country → state/province cascade for the registration form.
+
+    Public because registration happens pre-auth; contains only static
+    geography plus per-region curriculum coverage flags — no family data.
+    """
+    return RegionsOut(countries=regions_catalog(db), family=None)
 
 
 @router.get("/me", response_model=SessionUser)
@@ -167,6 +310,7 @@ def logout(request: Request, response: Response, db: DbSession) -> None:
     if token:
         revoke_session(db, token)
         db.commit()
+    _end_learner_presence(request, response, db)
     response.delete_cookie(
         SESSION_COOKIE,
         path="/",

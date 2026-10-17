@@ -2,8 +2,98 @@ import { useCallback, useEffect, useState } from "react";
 import { api, ApiError, post } from "../../api";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { AdminFamily } from "./types";
+
+interface InvitationCreated {
+  id: string;
+  email: string | null;
+  seats: number | null;
+  token: string;
+}
+
+function InviteFamilyForm() {
+  const [email, setEmail] = useState("");
+  const [seats, setSeats] = useState("3");
+  const [send, setSend] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [issuedLink, setIssuedLink] = useState("");
+
+  async function invite() {
+    setBusy(true);
+    setError("");
+    setIssuedLink("");
+    try {
+      const invitation = await post<InvitationCreated>("/admin/family-invitations", {
+        email: email.trim() || null,
+        seats: Number.parseInt(seats, 10) || null,
+        send: send && !!email.trim(),
+      });
+      const link = `${window.location.origin}/register?invite=${invitation.token}`;
+      if (send && invitation.email) {
+        setIssuedLink(`Invite emailed to ${invitation.email} — link: ${link}`);
+      } else {
+        setIssuedLink(link);
+      }
+      setEmail("");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Invitation failed");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-dashboard">
+      <h3 className="text-sm font-semibold text-slate-950">Invite a family</h3>
+      <p className="mt-1 text-xs text-slate-500">
+        Single-use link scoped to this email. Seats cap how many learners the family can add.
+      </p>
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <Input
+          type="email"
+          placeholder="parent@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-64"
+        />
+        <Input
+          type="number"
+          min={1}
+          max={20}
+          placeholder="Seats"
+          value={seats}
+          onChange={(e) => setSeats(e.target.value)}
+          className="w-24"
+          title="Learner seats"
+        />
+        <label className="flex items-center gap-2 text-sm text-slate-600">
+          <input
+            type="checkbox"
+            checked={send}
+            onChange={(e) => setSend(e.target.checked)}
+          />
+          Email the link
+        </label>
+        <Button
+          size="sm"
+          disabled={busy || !email.trim()}
+          onClick={() => void invite()}
+        >
+          {busy ? "Creating…" : "Create invite"}
+        </Button>
+      </div>
+      {error && <p className="mt-2 text-sm font-medium text-destructive">{error}</p>}
+      {issuedLink && (
+        <p className="mt-2 break-all rounded-lg bg-slate-50 px-3 py-2 font-mono text-xs text-slate-700">
+          {issuedLink}
+        </p>
+      )}
+    </div>
+  );
+}
 
 const STATUS_VARIANT: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
   APPROVED: "default",
@@ -59,6 +149,7 @@ export default function FamiliesTab({ canApprove }: { canApprove: boolean }) {
 
   return (
     <div className="space-y-4">
+      {canApprove && <InviteFamilyForm />}
       <div className="flex items-center justify-between gap-4">
         <h2 className="text-base font-semibold text-slate-950">Families</h2>
         <Select

@@ -9,6 +9,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
+from app.core.settings import settings
 from app.credential_models import UserCredential
 from app.identity import (
     CurrentParent,
@@ -18,6 +19,7 @@ from app.identity import (
 from app.models import Attempt, MasteryEvent, Student, TutorSession
 from app.parent_models import (
     APPROVAL_APPROVED,
+    APPROVAL_PENDING,
     ParentProfile,
     ParentStudentRelationship,
     ParentStudentRelationshipEvent,
@@ -97,7 +99,14 @@ def create_or_load_profile(user: CurrentUser, db: DbSession) -> ParentProfileOut
     require_parent_role(user)
     parent = db.scalar(select(ParentProfile).where(ParentProfile.user_id == user.id))
     if parent is None:
-        parent = ParentProfile(user_id=user.id, approval_status=APPROVAL_APPROVED)
+        parent = ParentProfile(
+            user_id=user.id,
+            approval_status=(
+                APPROVAL_PENDING
+                if settings.pilot_require_approval
+                else APPROVAL_APPROVED
+            ),
+        )
         db.add(parent)
         db.commit()
         db.refresh(parent)

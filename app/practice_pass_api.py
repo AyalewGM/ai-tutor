@@ -4,42 +4,73 @@ import uuid
 from datetime import UTC, datetime, timedelta
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from pydantic import BaseModel, Field
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
+from app.auth import SESSION_COOKIE
 from app.core.database import get_db
 from app.core.settings import settings
 from app.identity import CurrentParent
 from app.models import Student
-from app.parent_models import FamilyPracticePass, LearnerPassSession, ParentStudentRelationship
+from app.parent_models import (
+    FamilyPracticePass,
+    LearnerPassSession,
+    ParentStudentRelationship,
+)
+from app.services.auth_security import (
+    enforce_practice_link_activation_limit,
+    enforce_practice_pass_activation_limit,
+)
 from app.services.parent_gate import require_parent_unlock
 
-# These models live here (rather than parent_models) so legacy test/bootstrap code
-# that creates Base.metadata before Alembic does not pre-create the new tables.
-# Alembic owns their lifecycle in deployed environments.
 router = APIRouter(prefix="/practice-pass", tags=["practice-pass"])
 DbSession = Annotated[Session, Depends(get_db)]
 LEARNER_COOKIE = "ai_tutor_learner"
 PASS_TTL = timedelta(days=7)
 LEARNER_SESSION_TTL = timedelta(days=30)
 
+
 def _digest(token: str) -> str:
     return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+class GenerateIn(BaseModel):
+    # Which child the link binds to. When omitted, the legacy single-child
+    # rule applies: the family must have exactly one active learner.
+    student_id: uuid.UUID | None = None
+
 
 class PracticePassOut(BaseModel):
     url: str
     expires_at: datetime
     student_id: uuid.UUID
 
+
+class PracticePassSummary(BaseModel):
+    student_id: uuid.UUID
+    expires_at: datetime
+    created_at: datetime
+
+
+class PracticePassListOut(BaseModel):
+    passes: list[PracticePassSummary]
+
+
 class ActivateIn(BaseModel):
     token: str = Field(min_length=32, max_length=256)
-    nickname: str = Field(min_length=1, max_length=32, pattern=r"^[A-Za-z0-9_-]+$")
+    # Optional display name for the learner session only; never written to
+    # the canonical parent-managed learner record.
+    nickname: str | None = Field(
+        default=None, min_length=1, max_length=32, pattern=r"^[A-Za-z0-9_-]+$"
+    )
+
 
 class ActivateOut(BaseModel):
     student_id: uuid.UUID
-    nickname: str
+    nickname: str | None
+
 
 def _set_learner_cookie(response: Response, token: str) -> None:
     response.set_cookie(
@@ -47,60 +78,292 @@ def _set_learner_cookie(response: Response, token: str) -> None:
         httponly=True, secure=settings.session_cookie_secure, samesite="lax", path="/",
     )
 
-@router.post("", response_model=PracticePassOut)
-def generate_pass(request: Request, parent: CurrentParent, db: DbSession) -> PracticePassOut:
-    require_parent_unlock(request, parent.user_id)
+
+def _clear_parent_cookie(response: Response) -> None:
+    """Drop the parent session cookie on this device so it cannot coexist
+    with the learner cookie the activation response sets."""
+    response.delete_cookie(
+        SESSION_COOKIE,
+        path="/",
+        httponly=True,
+        secure=settings.session_cookie_secure,
+        samesite="lax",
+    )
+
+
+def _clear_learner_cookie(response: Response) -> None:
+    response.delete_cookie(
+        LEARNER_COOKIE,
+        path="/",
+        httponly=True,
+        secure=settings.session_cookie_secure,
+        samesite="lax",
+    )
+
+
+def _active_relationship(
+    db: Session, *, parent_id: uuid.UUID, student_id: uuid.UUID
+) -> ParentStudentRelationship | None:
+    return db.scalar(
+        select(ParentStudentRelationship).where(
+            ParentStudentRelationship.parent_profile_id == parent_id,
+            ParentStudentRelationship.student_id == student_id,
+            ParentStudentRelationship.active.is_(True),
+        )
+    )
+
+
+def _resolve_target_student(
+    db: Session, *, parent_id: uuid.UUID, student_id: uuid.UUID | None
+) -> uuid.UUID:
+    """Child for the operation: explicit id must be an active relationship;
+    omitted falls back to the legacy exactly-one-active-learner rule."""
+    if student_id is not None:
+        if _active_relationship(db, parent_id=parent_id, student_id=student_id) is None:
+            raise HTTPException(status_code=404, detail="Child not found")
+        return student_id
     student_ids = list(db.scalars(
         select(ParentStudentRelationship.student_id).where(
-            ParentStudentRelationship.parent_profile_id == parent.id,
+            ParentStudentRelationship.parent_profile_id == parent_id,
             ParentStudentRelationship.active.is_(True),
         )
     ))
     if len(student_ids) != 1:
-        raise HTTPException(status_code=409, detail="Pilot practice pass requires exactly one active learner")
+        raise HTTPException(
+            status_code=409,
+            detail="Choose a child before generating a practice link",
+        )
+    return student_ids[0]
+
+
+def revoke_child_pass(db: Session, *, parent_id: uuid.UUID, student_id: uuid.UUID) -> None:
+    """Revoke the pass and invalidate live sessions for one child only."""
     now = datetime.now(UTC)
-    existing = db.scalar(select(FamilyPracticePass).where(FamilyPracticePass.parent_profile_id == parent.id))
+    practice_pass = db.scalar(
+        select(FamilyPracticePass).where(
+            FamilyPracticePass.parent_profile_id == parent_id,
+            FamilyPracticePass.student_id == student_id,
+        )
+    )
+    if practice_pass is None:
+        return
+    practice_pass.revoked_at = now
+    db.execute(
+        delete(LearnerPassSession).where(
+            LearnerPassSession.practice_pass_id == practice_pass.id
+        )
+    )
+
+
+@router.get("", response_model=PracticePassListOut)
+def list_passes(parent: CurrentParent, db: DbSession) -> PracticePassListOut:
+    """Active passes per child — metadata only, never the token."""
+    now = datetime.now(UTC)
+    rows = db.scalars(
+        select(FamilyPracticePass).where(
+            FamilyPracticePass.parent_profile_id == parent.id,
+            FamilyPracticePass.revoked_at.is_(None),
+            FamilyPracticePass.expires_at > now,
+        )
+    )
+    return PracticePassListOut(
+        passes=[
+            PracticePassSummary(
+                student_id=r.student_id, expires_at=r.expires_at, created_at=r.created_at
+            )
+            for r in rows
+        ]
+    )
+
+
+def _mint_pass(
+    db: Session, *, parent_id: uuid.UUID, student_id: uuid.UUID, now: datetime
+) -> PracticePassOut:
+    """Regenerate a child pass: prior link and its live sessions die atomically."""
+    existing = db.scalar(
+        select(FamilyPracticePass).where(
+            FamilyPracticePass.parent_profile_id == parent_id,
+            FamilyPracticePass.student_id == student_id,
+        )
+    )
     if existing is not None:
         existing.revoked_at = now
-        db.execute(delete(LearnerPassSession).where(LearnerPassSession.practice_pass_id == existing.id))
+        db.execute(
+            delete(LearnerPassSession).where(
+                LearnerPassSession.practice_pass_id == existing.id
+            )
+        )
         db.delete(existing)
         db.flush()
     raw = secrets.token_urlsafe(32)
     practice_pass = FamilyPracticePass(
-        parent_profile_id=parent.id, student_id=student_ids[0],
+        parent_profile_id=parent_id, student_id=student_id,
         token_hash=_digest(raw), expires_at=now + PASS_TTL,
     )
     db.add(practice_pass)
+    db.flush()
+    return PracticePassOut(
+        url=f"/practice/{raw}",
+        expires_at=practice_pass.expires_at,
+        student_id=practice_pass.student_id,
+    )
+
+
+@router.post("", response_model=PracticePassOut)
+def generate_pass(
+    request: Request,
+    parent: CurrentParent,
+    db: DbSession,
+    payload: GenerateIn | None = None,
+) -> PracticePassOut:
+    require_parent_unlock(request, parent.user_id)
+    student_id = _resolve_target_student(
+        db, parent_id=parent.id, student_id=(payload.student_id if payload else None)
+    )
+    out = _mint_pass(db, parent_id=parent.id, student_id=student_id, now=datetime.now(UTC))
     db.commit()
-    return PracticePassOut(url=f"/practice/{raw}", expires_at=practice_pass.expires_at, student_id=practice_pass.student_id)
+    return out
+
+
+@router.post("/all", response_model=list[PracticePassOut])
+def generate_all_passes(
+    request: Request,
+    parent: CurrentParent,
+    db: DbSession,
+) -> list[PracticePassOut]:
+    """One link per active child — for sending each kid their own link at once.
+    Regenerating semantics apply to every child at once."""
+    require_parent_unlock(request, parent.user_id)
+    student_ids = list(
+        db.scalars(
+            select(ParentStudentRelationship.student_id).where(
+                ParentStudentRelationship.parent_profile_id == parent.id,
+                ParentStudentRelationship.active.is_(True),
+            )
+        )
+    )
+    if not student_ids:
+        raise HTTPException(status_code=409, detail="No active learners to link")
+    now = datetime.now(UTC)
+    out = [
+        _mint_pass(db, parent_id=parent.id, student_id=student_id, now=now)
+        for student_id in student_ids
+    ]
+    db.commit()
+    return out
+
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)
-def revoke_pass(request: Request, parent: CurrentParent, db: DbSession) -> Response:
+def revoke_pass(
+    request: Request,
+    parent: CurrentParent,
+    db: DbSession,
+    student_id: Annotated[uuid.UUID | None, Query()] = None,
+) -> Response:
     require_parent_unlock(request, parent.user_id)
-    practice_pass = db.scalar(select(FamilyPracticePass).where(FamilyPracticePass.parent_profile_id == parent.id))
-    if practice_pass is not None:
-        practice_pass.revoked_at = datetime.now(UTC)
-        db.execute(delete(LearnerPassSession).where(LearnerPassSession.practice_pass_id == practice_pass.id))
-        db.commit()
+    target = _resolve_target_student(db, parent_id=parent.id, student_id=student_id)
+    revoke_child_pass(db, parent_id=parent.id, student_id=target)
+    db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
+
 @router.post("/activate", response_model=ActivateOut)
-def activate(payload: ActivateIn, response: Response, db: DbSession) -> ActivateOut:
+def activate(
+    payload: ActivateIn, request: Request, response: Response, db: DbSession
+) -> ActivateOut:
+    enforce_practice_link_activation_limit(request)
     now = datetime.now(UTC)
-    practice_pass = db.scalar(select(FamilyPracticePass).where(FamilyPracticePass.token_hash == _digest(payload.token)))
+    # Lock the pass row so two simultaneous activations of the same link
+    # cannot both pass the live-session check.
+    practice_pass = db.scalar(
+        select(FamilyPracticePass)
+        .where(FamilyPracticePass.token_hash == _digest(payload.token))
+        .with_for_update()
+    )
     if practice_pass is None or practice_pass.revoked_at is not None or practice_pass.expires_at <= now:
         raise HTTPException(status_code=401, detail="Practice pass is invalid or expired")
     student = db.get(Student, practice_pass.student_id)
-    if student is None or not student.active:
+    if (
+        student is None
+        or not student.active
+        or _active_relationship(
+            db,
+            parent_id=practice_pass.parent_profile_id,
+            student_id=practice_pass.student_id,
+        )
+        is None
+    ):
         raise HTTPException(status_code=401, detail="Practice pass is invalid or expired")
-    # Nickname is deliberately minimized display data; never ask for a legal name.
-    student.first_name = payload.nickname.strip()
+    enforce_practice_pass_activation_limit(practice_pass.token_hash)
+    # One live session per link: reject a second activation while an existing
+    # session is genuinely in use (seen within the live window). The parent
+    # can always reclaim by regenerating or revoking the link, which deletes
+    # its sessions. Stale/expired sessions are cleaned up below.
+    live_cutoff = now - timedelta(
+        seconds=settings.practice_link_live_session_window_seconds
+    )
+    busy = db.scalar(
+        select(LearnerPassSession).where(
+            LearnerPassSession.practice_pass_id == practice_pass.id,
+            LearnerPassSession.expires_at > now,
+            LearnerPassSession.last_seen_at > live_cutoff,
+        )
+    )
+    if busy is not None:
+        # Idempotent for the current holder: re-visiting the link in the same
+        # browser must succeed rather than self-reject.
+        holder_token = request.cookies.get(LEARNER_COOKIE)
+        if holder_token and _digest(holder_token) == busy.token_hash:
+            _set_learner_cookie(response, holder_token)
+            _clear_parent_cookie(response)
+            response.headers["Referrer-Policy"] = "no-referrer"
+            return ActivateOut(
+                student_id=student.id,
+                nickname=busy.display_name or student.first_name,
+            )
+        raise HTTPException(
+            status_code=409, detail="This practice link is already in use"
+        )
+    db.execute(
+        delete(LearnerPassSession).where(
+            LearnerPassSession.practice_pass_id == practice_pass.id
+        )
+    )
     raw_session = secrets.token_urlsafe(32)
     learner_session = LearnerPassSession(
         practice_pass_id=practice_pass.id, student_id=student.id,
         token_hash=_digest(raw_session), expires_at=now + LEARNER_SESSION_TTL,
+        last_seen_at=now,
+        display_name=(payload.nickname.strip() if payload.nickname else None),
     )
     db.add(learner_session)
     db.commit()
     _set_learner_cookie(response, raw_session)
-    return ActivateOut(student_id=student.id, nickname=student.first_name)
+    _clear_parent_cookie(response)
+    # The bearer token lives in the URL until the SPA strips it; make sure
+    # it can never leak to third parties via Referer on the way out.
+    response.headers["Referrer-Policy"] = "no-referrer"
+    return ActivateOut(
+        student_id=student.id,
+        nickname=learner_session.display_name or student.first_name,
+    )
+
+
+@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
+def learner_logout(request: Request, response: Response, db: DbSession) -> None:
+    """End the learner session on this device.
+
+    Revokes the server-side session row — not just the cookie — so the link
+    is freed for re-activation immediately instead of waiting out the live
+    session window. Returns None so the injected response (which carries the
+    cookie deletion) is the one sent.
+    """
+    token = request.cookies.get(LEARNER_COOKIE)
+    if token:
+        db.execute(
+            delete(LearnerPassSession).where(
+                LearnerPassSession.token_hash == _digest(token)
+            )
+        )
+        db.commit()
+    _clear_learner_cookie(response)
