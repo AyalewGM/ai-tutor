@@ -228,7 +228,7 @@ def main():
                     "-q",
                     "-O",
                     "/dev/null",
-                    f"http://localhost:8080/{path}",
+                    f"http://127.0.0.1:8080/{path}",
                 ],
                 False,
             )
