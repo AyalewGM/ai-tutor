@@ -38,7 +38,7 @@ def test_upgrade_uses_actual_unique_constraint_state(
             else []
         )
     )
-    migration_op = SimpleNamespace(
+    migration_op = types.SimpleNamespace(
         get_bind=lambda: object(),
         drop_constraint=unittest.mock.Mock(),
         create_unique_constraint=unittest.mock.Mock(),
@@ -56,3 +56,37 @@ def test_upgrade_uses_actual_unique_constraint_state(
             "family_practice_passes",
             ["parent_profile_id", "student_id"],
         )
+
+
+@pytest.mark.parametrize("precreated", [False, True])
+def test_upgrade_handles_legacy_and_orm_precreated_tables(monkeypatch, precreated):
+    spec = importlib.util.spec_from_file_location("migration_0036_upgrade", MIGRATION)
+    assert spec is not None and spec.loader is not None
+    migration = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(migration)
+    inspector = types.SimpleNamespace(
+        get_unique_constraints=lambda _table: [
+            {"name": "uq_family_practice_pass_child" if precreated
+             else "uq_family_practice_pass_parent"}
+        ],
+        get_columns=lambda _table: [{"name": "display_name"}] if precreated else [],
+        get_table_names=lambda: (
+            ["family_practice_passes", "learner_pass_sessions",
+             "parent_invitations", "pilot_entitlements"]
+            if precreated else ["family_practice_passes", "learner_pass_sessions"]
+        ),
+    )
+    methods = ("drop_constraint", "create_unique_constraint", "add_column",
+               "create_table", "create_index")
+    operations = {name: unittest.mock.Mock() for name in methods}
+    migration_op = types.SimpleNamespace(get_bind=lambda: object(), **operations)
+    monkeypatch.setattr(migration.sa, "inspect", lambda _conn: inspector)
+    monkeypatch.setattr(migration, "op", migration_op)
+
+    migration.upgrade()
+
+    assert operations["drop_constraint"].call_count == (0 if precreated else 1)
+    assert operations["create_unique_constraint"].call_count == (0 if precreated else 1)
+    assert operations["add_column"].call_count == (0 if precreated else 1)
+    assert operations["create_table"].call_count == (0 if precreated else 2)
+    assert operations["create_index"].call_count == (0 if precreated else 2)
