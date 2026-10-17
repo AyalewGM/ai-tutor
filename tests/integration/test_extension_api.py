@@ -2,6 +2,8 @@
 
 import uuid
 
+import pytest
+
 from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 
@@ -313,6 +315,10 @@ def test_extension_attempt_does_not_change_session_state() -> None:
     session_id = session_payload["session_id"]
     state_before = session_payload["state"]
 
+    offered = client.post(f"/api/v1/tutor/sessions/{session_id}/extension")
+    assert offered.status_code == 200
+    ext_id = uuid.UUID(offered.json()["id"])
+
     response = client.post(
         f"/api/v1/tutor/sessions/{session_id}/respond",
         json={
@@ -330,3 +336,96 @@ def test_extension_attempt_does_not_change_session_state() -> None:
         # The optional tier is progression-neutral: a correct stretch answer
         # cannot advance the learner's real session state.
         assert session.current_state.value == state_before
+
+@pytest.mark.parametrize("router", ["tutor", "adaptive-tutor"])
+def test_extension_response_requires_server_owned_session_offer(router: str) -> None:
+    """Global eligibility cannot make an arbitrary client problem mastery-neutral."""
+
+    student_id, skill_id, ext_id = _seed_student_with_extension_problem()
+    session_response = client.post(
+        f"/api/v1/{router}/sessions",
+        json={"student_id": str(student_id), "skill_id": str(skill_id)},
+    )
+    assert session_response.status_code == 200
+    session_id = session_response.json()["session_id"]
+
+    with SessionLocal() as db:
+        progress = db.get(
+            StudentSkill, {"student_id": student_id, "skill_id": skill_id}
+        )
+        assert progress is not None
+        snapshot = (
+            progress.mastery_score,
+            progress.confidence_score,
+            progress.attempt_count,
+            progress.independent_attempt_count,
+        )
+
+    response = client.post(
+        f"/api/v1/{router}/sessions/{session_id}/respond",
+        json={
+            "problem_id": str(ext_id),
+            "answer": "5",
+            "assistance_level": 0,
+        },
+    )
+    assert response.status_code == 400
+    assert "not offered to this learning session" in response.json()["detail"]
+
+    with SessionLocal() as db:
+        progress = db.get(
+            StudentSkill, {"student_id": student_id, "skill_id": skill_id}
+        )
+        assert progress is not None
+        assert (
+            progress.mastery_score,
+            progress.confidence_score,
+            progress.attempt_count,
+            progress.independent_attempt_count,
+        ) == snapshot
+        assert db.scalar(
+            select(func.count()).select_from(Attempt).where(
+                Attempt.session_id == uuid.UUID(session_id),
+                Attempt.problem_id == ext_id,
+            )
+        ) == 0
+
+
+def test_extension_offer_is_bound_to_the_exact_session() -> None:
+    student_id, skill_id, _ = _seed_student_with_extension_problem()
+
+    first = client.post(
+        "/api/v1/tutor/sessions",
+        json={"student_id": str(student_id), "skill_id": str(skill_id)},
+    )
+    second = client.post(
+        "/api/v1/tutor/sessions",
+        json={"student_id": str(student_id), "skill_id": str(skill_id)},
+    )
+    assert first.status_code == second.status_code == 200
+    first_session = first.json()["session_id"]
+    second_session = second.json()["session_id"]
+
+    offered = client.post(f"/api/v1/tutor/sessions/{first_session}/extension")
+    assert offered.status_code == 200
+    offered_problem_id = offered.json()["id"]
+
+    replay = client.post(
+        f"/api/v1/tutor/sessions/{second_session}/respond",
+        json={
+            "problem_id": offered_problem_id,
+            "answer": "5",
+            "assistance_level": 0,
+        },
+    )
+    assert replay.status_code == 400
+    assert "not offered to this learning session" in replay.json()["detail"]
+
+    with SessionLocal() as db:
+        assert db.scalar(
+            select(func.count()).select_from(Attempt).where(
+                Attempt.session_id == uuid.UUID(second_session),
+                Attempt.problem_id == uuid.UUID(offered_problem_id),
+            )
+        ) == 0
+
