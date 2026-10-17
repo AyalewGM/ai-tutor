@@ -21,6 +21,7 @@ export default function App() {
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/unavailable" element={<Unavailable />} />
+      <Route path="/practice/claim" element={<PracticePass />} />
       <Route path="/practice/:token" element={<PracticePass />} />
       <Route path="/learn" element={<LearnEntry />} />
       <Route path="/parent" element={<ParentDashboard />} />
