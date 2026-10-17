@@ -85,6 +85,22 @@ def enforce_register_rate_limit(request: Request) -> None:
         _deny_rate_limited()
 
 
+def enforce_practice_link_activation_limit(request: Request) -> None:
+    """Throttle bearer-token guessing on the child activation endpoint."""
+    if not settings.auth_throttles_enabled:
+        return
+    count = _increment(
+        f"rl:practice-activate-ip:{client_ip(request)}",
+        settings.practice_link_activate_window_seconds,
+    )
+    if count is None:
+        logger.error("practice-link activation limiter unavailable (redis)")
+        _deny_unavailable()
+    if count > settings.practice_link_activate_rate_limit:
+        logger.warning("practice-link activation rate limit exceeded for client IP")
+        _deny_rate_limited()
+
+
 def _lockout_key(email: str) -> str:
     # SHA-256 so raw account emails never appear in Redis keys or dumps.
     return f"rl:login-fail:{hashlib.sha256(email.encode('utf-8')).hexdigest()}"

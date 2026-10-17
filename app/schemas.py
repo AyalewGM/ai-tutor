@@ -151,6 +151,9 @@ class ParentRegisterSchema(BaseModel):
     terms_accepted: Literal[True]
     coppa_consent_given: Literal[True]
     turnstile_token: str | None = Field(default=None, max_length=2048)
+    # Required only when pilot_invite_only is enabled: the scoped,
+    # single-use invitation token issued to the family.
+    invitation_token: str | None = Field(default=None, min_length=32, max_length=256)
 
 
 class StudentCreateSchema(BaseModel):

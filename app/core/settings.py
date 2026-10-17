@@ -91,6 +91,15 @@ class Settings(BaseSettings):
     # been stored yet, and the fetch timeout for the recalc action.
     usd_to_cad_fallback: Decimal = Decimal("1.36")
     fx_fetch_timeout_seconds: float = 10.0
+    # Invite-only pilot onboarding: when enabled, /auth/register-parent
+    # requires a scoped, single-use parent invitation. Pilot families get
+    # time-bounded seat entitlements — never billing.
+    pilot_invite_only: bool = False
+    pilot_invite_default_seats: int = 3
+    pilot_entitlement_days: int = 90
+    # Per-child practice-link activation throttle (per client IP).
+    practice_link_activate_rate_limit: int = 10
+    practice_link_activate_window_seconds: int = 900
 
     model_config = SettingsConfigDict(
         env_file=".env",

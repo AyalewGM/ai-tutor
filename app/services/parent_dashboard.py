@@ -289,6 +289,11 @@ def unlink_child(db: Session, *, parent: ParentProfile, student_id: uuid.UUID) -
     relationship.active = False
     relationship.unlinked_at = datetime.now(UTC)
     db.add(ParentStudentRelationshipEvent(relationship_id=relationship.id, action="UNLINKED"))
+    # An unlinked child's practice link and live learner sessions must die
+    # with the relationship; siblings' passes are unaffected.
+    from app.practice_pass_api import revoke_child_pass
+
+    revoke_child_pass(db, parent_id=parent.id, student_id=student_id)
     db.flush()
 
 

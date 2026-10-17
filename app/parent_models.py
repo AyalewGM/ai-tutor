@@ -119,7 +119,11 @@ class ParentStudentRelationshipEvent(Base):
 class FamilyPracticePass(Base):
     __tablename__ = "family_practice_passes"
     __table_args__ = (
-        UniqueConstraint("parent_profile_id", name="uq_family_practice_pass_parent"),
+        UniqueConstraint(
+            "parent_profile_id",
+            "student_id",
+            name="uq_family_practice_pass_child",
+        ),
         UniqueConstraint("token_hash", name="uq_family_practice_pass_token"),
     )
 
@@ -141,6 +145,61 @@ class LearnerPassSession(Base):
     student_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("students.id", ondelete="CASCADE"), nullable=False, index=True)
     token_hash: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False)
+    # Per-session display name captured at activation; never written back to
+    # the canonical parent-managed learner record.
+    display_name: Mapped[str | None] = mapped_column(String(32))
+
+
+class ParentInvitation(Base):
+    __tablename__ = "parent_invitations"
+    __table_args__ = (
+        UniqueConstraint("token_hash", name="uq_parent_invitation_token"),
+        CheckConstraint(
+            "status IN ('PENDING','ACCEPTED','DECLINED','DISABLED')",
+            name="ck_parent_invitation_status",
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    token_hash: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    # Optional scoping: when set, only this email may accept the invitation.
+    email: Mapped[str | None] = mapped_column(String(255))
+    status: Mapped[str] = mapped_column(String(20), default="PENDING", server_default="PENDING", nullable=False, index=True)
+    # Optional seat override for the pilot entitlement granted on acceptance;
+    # NULL means the server-side pilot default applies.
+    seats: Mapped[int | None] = mapped_column(Integer)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    created_by_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL")
+    )
+    accepted_parent_profile_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("parent_profiles.id", ondelete="SET NULL")
+    )
+    responded_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False)
+
+
+class PilotEntitlement(Base):
+    __tablename__ = "pilot_entitlements"
+    __table_args__ = (
+        UniqueConstraint("parent_profile_id", name="uq_pilot_entitlement_parent"),
+        CheckConstraint("source IN ('INVITATION','ADMIN')", name="ck_pilot_entitlement_source"),
+        CheckConstraint("seats >= 1", name="ck_pilot_entitlement_seats"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    parent_profile_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("parent_profiles.id", ondelete="CASCADE"), nullable=False
+    )
+    seats: Mapped[int] = mapped_column(Integer, nullable=False)
+    source: Mapped[str] = mapped_column(String(20), nullable=False)
+    invitation_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("parent_invitations.id", ondelete="SET NULL")
+    )
+    starts_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    ends_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False)
 
 

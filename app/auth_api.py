@@ -1,4 +1,5 @@
-from datetime import UTC, datetime
+import hashlib
+from datetime import UTC, datetime, timedelta
 from typing import Annotated
 
 from argon2 import PasswordHasher
@@ -15,7 +16,12 @@ from app.core.settings import settings
 from app.credential_models import UserCredential
 from app.identity import CurrentUser
 from app.models import User
-from app.parent_models import APPROVAL_APPROVED, ParentProfile
+from app.parent_models import (
+    APPROVAL_APPROVED,
+    ParentInvitation,
+    ParentProfile,
+    PilotEntitlement,
+)
 from app.schemas import ParentRegisterSchema
 from app.services.auth_security import (
     clear_login_failures,
@@ -34,6 +40,56 @@ _passwords = PasswordHasher()
 
 
 ParentRegistration = ParentRegisterSchema
+
+
+def _invitation_digest(token: str) -> str:
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+def _resolve_invitation(db: Session, payload: ParentRegistration) -> ParentInvitation:
+    """Invite-only gate: resolve a pending, unexpired, email-scoped
+    invitation or deny generically — no existence/scope disclosure."""
+    generic = HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="Registration requires a valid invitation",
+    )
+    if not payload.invitation_token:
+        raise generic
+    invitation = db.scalar(
+        select(ParentInvitation).where(
+            ParentInvitation.token_hash == _invitation_digest(payload.invitation_token)
+        )
+    )
+    if (
+        invitation is None
+        or invitation.status != "PENDING"
+        or invitation.expires_at <= datetime.now(UTC)
+        or (invitation.email is not None
+            and invitation.email.lower() != payload.email.strip().lower())
+    ):
+        raise generic
+    return invitation
+
+
+def _consume_invitation(
+    db: Session, *, invitation: ParentInvitation, parent: ParentProfile, now: datetime
+) -> None:
+    """Single-use consumption + pilot seat grant, inside the registration
+    transaction so a disabled invite can never mint an account."""
+    invitation.status = "ACCEPTED"
+    invitation.accepted_parent_profile_id = parent.id
+    invitation.responded_at = now
+    db.add(
+        PilotEntitlement(
+            parent_profile_id=parent.id,
+            seats=invitation.seats or settings.pilot_invite_default_seats,
+            source="INVITATION",
+            invitation_id=invitation.id,
+            starts_at=now,
+            ends_at=now + timedelta(days=settings.pilot_entitlement_days),
+        )
+    )
+    db.flush()
 
 class LoginRequest(BaseModel):
     email: EmailStr
@@ -89,23 +145,26 @@ def register_parent(
     enforce_register_rate_limit(request)
     verify_turnstile(payload.turnstile_token, client_ip(request))
     email = payload.email.strip().lower()
+    invitation = _resolve_invitation(db, payload) if settings.pilot_invite_only else None
     user = User(email=email, display_name=payload.display_name, role="PARENT")
     db.add(user)
     try:
         db.flush()
         db.add(UserCredential(user_id=user.id, password_hash=_passwords.hash(payload.password)))
         accepted_at = datetime.now(UTC)
-        db.add(
-            ParentProfile(
-                user_id=user.id,
-                subscription_tier="free",
-                parent_pin_hash=_passwords.hash(payload.parent_pin),
-                coppa_consent_given=True,
-                consent_timestamp=accepted_at,
-                terms_accepted_at=accepted_at,
-                approval_status=APPROVAL_APPROVED,
-            )
+        parent = ParentProfile(
+            user_id=user.id,
+            subscription_tier="free",
+            parent_pin_hash=_passwords.hash(payload.parent_pin),
+            coppa_consent_given=True,
+            consent_timestamp=accepted_at,
+            terms_accepted_at=accepted_at,
+            approval_status=APPROVAL_APPROVED,
         )
+        db.add(parent)
+        db.flush()
+        if invitation is not None:
+            _consume_invitation(db, invitation=invitation, parent=parent, now=accepted_at)
         token, _ = create_session(db, user.id)
         db.commit()
     except IntegrityError as exc:

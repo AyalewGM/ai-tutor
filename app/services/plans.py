@@ -17,7 +17,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.settings import settings
-from app.parent_models import ParentProfile
+from app.parent_models import ParentProfile, PilotEntitlement
 from app.plan_models import Plan, PlatformSetting
 
 logger = logging.getLogger("ai_tutor.plans")
@@ -39,6 +39,17 @@ def effective_plan(db: Session, parent: ParentProfile) -> Plan | None:
 def effective_seats(db: Session, parent: ParentProfile) -> int:
     if parent.max_students is not None:
         return parent.max_students
+    now = datetime.now(UTC)
+    grant = db.scalar(
+        select(PilotEntitlement).where(
+            PilotEntitlement.parent_profile_id == parent.id,
+            PilotEntitlement.revoked_at.is_(None),
+            PilotEntitlement.starts_at <= now,
+            PilotEntitlement.ends_at > now,
+        )
+    )
+    if grant is not None:
+        return grant.seats
     plan = effective_plan(db, parent)
     return plan.max_students if plan is not None else 1
 
