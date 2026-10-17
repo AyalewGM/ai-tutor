@@ -110,7 +110,7 @@ test("parent pilot invite is carried into registration and removed from browser 
   let registration = null;
   await page.route("**/api/v1/**", async (route) => {
     const req = route.request();
-    const path = new URL(req.url()).pathname.replace(/^\\/api\\/v1/, "");
+    const path = new URL(req.url()).pathname.replace(/^\/api\/v1/, "");
     if (path === "/auth/config") return json(route, { turnstile_site_key: null });
     if (path === "/auth/register-parent") {
       registration = JSON.parse(req.postData());
@@ -119,7 +119,7 @@ test("parent pilot invite is carried into registration and removed from browser 
     return json(route, { detail: "not signed in" }, 401);
   });
   await page.goto(`${origin}/login?invite=${invite}`);
-  await expect(page).toHaveURL(/\\/login$/);
+  await expect(page).toHaveURL(/\/login$/);
   await expect(page.getByLabel("Private pilot invitation code")).toHaveValue(invite);
   await page.getByLabel("Email").fill("pilot@example.test");
   await page.getByLabel("Password").fill("SyntheticPassword!12345");
