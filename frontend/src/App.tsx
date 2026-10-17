@@ -4,6 +4,7 @@ import Badges from "./pages/Badges";
 import Billing from "./pages/Billing";
 import Catalog from "./pages/Catalog";
 import Diagnostic from "./pages/Diagnostic";
+import LearnTogether from "./pages/LearnTogether";
 import Landing from "./pages/Landing";
 import LearnEntry from "./pages/LearnEntry";
 import Login from "./pages/Login";
@@ -23,6 +24,8 @@ export default function App() {
       <Route path="/unavailable" element={<Unavailable />} />
       <Route path="/practice/claim" element={<PracticePass />} />
       <Route path="/practice/:token" element={<PracticePass />} />
+      <Route path="/together" element={<LearnTogether />} />
+      <Route path="/together/:boardId" element={<LearnTogether />} />
       <Route path="/learn" element={<LearnEntry />} />
       <Route path="/parent" element={<ParentDashboard />} />
       <Route path="/admin" element={<AdminDashboard />} />

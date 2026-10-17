@@ -43,13 +43,14 @@ export default function NavBar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/80 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4">
+      <div className="mx-auto flex min-h-14 max-w-6xl flex-wrap items-center gap-2 px-4 py-2 sm:gap-6">
         <Link to="/learn" className="flex items-center" aria-label="Mihur home">
           <Brand size="sm" />
         </Link>
-        <nav className="flex items-center gap-1" aria-label="Primary navigation">
+        <nav className="order-last flex w-full items-center gap-1 sm:order-none sm:w-auto" aria-label="Primary navigation">
           {navLink("/learn", "Practice")}
           {parentSession && navLink("/parent", "Parent")}
+          {navLink("/together", "Together")}
         </nav>
         <div className="ml-auto">
           {parentSession && <Button variant="ghost" size="sm" onClick={signOut}>
