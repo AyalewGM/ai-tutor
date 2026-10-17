@@ -102,6 +102,7 @@ services:
       retries: 5
   proxy:
     <<: *common
+    networks: [staging, edge]
     image: ${STAGING_PROXY_IMAGE:?digest required}
     mem_limit: 64m
     cpus: 0.20
@@ -113,6 +114,10 @@ services:
     depends_on:
       frontend: {condition: service_healthy}
 networks:
+  edge:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
   staging:
     internal: true
 volumes:
