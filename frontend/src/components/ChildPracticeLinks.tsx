@@ -128,7 +128,7 @@ export default function ChildPracticeLinks({ children }: { children: Child[] }) 
   return (
     <Card id="child-practice-links">
       <CardHeader>
-        <CardTitle>Private practice links for each child</CardTitle>
+        <CardTitle role="heading" aria-level={2}>Private practice links for each child</CardTitle>
         <CardDescription>
           Each child gets a different link and can practice without a password. Generate a new
           link to replace that child's previous link. Links expire after seven days; a child
