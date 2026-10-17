@@ -46,77 +46,84 @@ def _upgrade_practice_pass_uniqueness() -> None:
 
 def upgrade() -> None:
     _upgrade_practice_pass_uniqueness()
-    op.add_column(
-        "learner_pass_sessions",
-        sa.Column("display_name", sa.String(32), nullable=True),
-    )
+    # Some test/install paths create ORM tables before running Alembic. Do not
+    # repeat DDL for objects the current models already provisioned.
+    inspector = sa.inspect(op.get_bind())
+    columns = {c["name"] for c in inspector.get_columns("learner_pass_sessions")}
+    if "display_name" not in columns:
+        op.add_column(
+            "learner_pass_sessions",
+            sa.Column("display_name", sa.String(32), nullable=True),
+        )
 
-    op.create_table(
-        "parent_invitations",
-        sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
-        sa.Column("token_hash", sa.String(64), nullable=False),
-        sa.Column("email", sa.String(255), nullable=True),
-        sa.Column(
-            "status",
-            sa.String(20),
-            nullable=False,
-            server_default="PENDING",
-        ),
-        sa.Column("seats", sa.Integer(), nullable=True),
-        sa.Column("expires_at", sa.DateTime(timezone=True), nullable=False),
-        sa.Column(
-            "created_by_user_id",
-            postgresql.UUID(as_uuid=True),
-            sa.ForeignKey("users.id", ondelete="SET NULL"),
-            nullable=True,
-        ),
-        sa.Column(
-            "accepted_parent_profile_id",
-            postgresql.UUID(as_uuid=True),
-            sa.ForeignKey("parent_profiles.id", ondelete="SET NULL"),
-            nullable=True,
-        ),
-        sa.Column("responded_at", sa.DateTime(timezone=True), nullable=True),
-        sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
-        sa.CheckConstraint(
-            "status IN ('PENDING','ACCEPTED','DECLINED','DISABLED')",
-            name="ck_parent_invitation_status",
-        ),
-        sa.UniqueConstraint("token_hash", name="uq_parent_invitation_token"),
-    )
-    op.create_index(
-        "ix_parent_invitations_token_hash", "parent_invitations", ["token_hash"]
-    )
-    op.create_index("ix_parent_invitations_status", "parent_invitations", ["status"])
+    tables = set(inspector.get_table_names())
+    if "parent_invitations" not in tables:
+        op.create_table(
+            "parent_invitations",
+            sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
+            sa.Column("token_hash", sa.String(64), nullable=False),
+            sa.Column("email", sa.String(255), nullable=True),
+            sa.Column(
+                "status",
+                sa.String(20),
+                nullable=False,
+                server_default="PENDING",
+            ),
+            sa.Column("seats", sa.Integer(), nullable=True),
+            sa.Column("expires_at", sa.DateTime(timezone=True), nullable=False),
+            sa.Column(
+                "created_by_user_id",
+                postgresql.UUID(as_uuid=True),
+                sa.ForeignKey("users.id", ondelete="SET NULL"),
+                nullable=True,
+            ),
+            sa.Column(
+                "accepted_parent_profile_id",
+                postgresql.UUID(as_uuid=True),
+                sa.ForeignKey("parent_profiles.id", ondelete="SET NULL"),
+                nullable=True,
+            ),
+            sa.Column("responded_at", sa.DateTime(timezone=True), nullable=True),
+            sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+            sa.CheckConstraint(
+                "status IN ('PENDING','ACCEPTED','DECLINED','DISABLED')",
+                name="ck_parent_invitation_status",
+            ),
+            sa.UniqueConstraint("token_hash", name="uq_parent_invitation_token"),
+        )
+        op.create_index(
+            "ix_parent_invitations_token_hash", "parent_invitations", ["token_hash"]
+        )
+        op.create_index("ix_parent_invitations_status", "parent_invitations", ["status"])
 
-    op.create_table(
-        "pilot_entitlements",
-        sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
-        sa.Column(
-            "parent_profile_id",
-            postgresql.UUID(as_uuid=True),
-            sa.ForeignKey("parent_profiles.id", ondelete="CASCADE"),
-            nullable=False,
-        ),
-        sa.Column("seats", sa.Integer(), nullable=False),
-        sa.Column("source", sa.String(20), nullable=False),
-        sa.Column(
-            "invitation_id",
-            postgresql.UUID(as_uuid=True),
-            sa.ForeignKey("parent_invitations.id", ondelete="SET NULL"),
-            nullable=True,
-        ),
-        sa.Column("starts_at", sa.DateTime(timezone=True), nullable=False),
-        sa.Column("ends_at", sa.DateTime(timezone=True), nullable=False),
-        sa.Column("revoked_at", sa.DateTime(timezone=True), nullable=True),
-        sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
-        sa.CheckConstraint(
-            "source IN ('INVITATION','ADMIN')", name="ck_pilot_entitlement_source"
-        ),
-        sa.CheckConstraint("seats >= 1", name="ck_pilot_entitlement_seats"),
-        sa.UniqueConstraint("parent_profile_id", name="uq_pilot_entitlement_parent"),
-    )
-
+    if "pilot_entitlements" not in tables:
+        op.create_table(
+            "pilot_entitlements",
+            sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
+            sa.Column(
+                "parent_profile_id",
+                postgresql.UUID(as_uuid=True),
+                sa.ForeignKey("parent_profiles.id", ondelete="CASCADE"),
+                nullable=False,
+            ),
+            sa.Column("seats", sa.Integer(), nullable=False),
+            sa.Column("source", sa.String(20), nullable=False),
+            sa.Column(
+                "invitation_id",
+                postgresql.UUID(as_uuid=True),
+                sa.ForeignKey("parent_invitations.id", ondelete="SET NULL"),
+                nullable=True,
+            ),
+            sa.Column("starts_at", sa.DateTime(timezone=True), nullable=False),
+            sa.Column("ends_at", sa.DateTime(timezone=True), nullable=False),
+            sa.Column("revoked_at", sa.DateTime(timezone=True), nullable=True),
+            sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+            sa.CheckConstraint(
+                "source IN ('INVITATION','ADMIN')", name="ck_pilot_entitlement_source"
+            ),
+            sa.CheckConstraint("seats >= 1", name="ck_pilot_entitlement_seats"),
+            sa.UniqueConstraint("parent_profile_id", name="uq_pilot_entitlement_parent"),
+        )
 
 def downgrade() -> None:
     op.drop_table("pilot_entitlements")
