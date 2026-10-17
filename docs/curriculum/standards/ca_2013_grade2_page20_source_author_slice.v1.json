@@ -88,7 +88,15 @@
       "source_review_status": "AUTHOR_EDITORIAL_PENDING_INDEPENDENT_PUBLISHER_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
       "assessment": "UNVERIFIED",
-      "mastery": "UNVERIFIED"
+      "mastery": "UNVERIFIED",
+      "required_lettered_subparts": [
+        "a",
+        "b"
+      ],
+      "required_lettered_subpart_scope": {
+        "a": "100 is a bundle of ten tens, called one hundred",
+        "b": "100 through 900 represent one through nine hundreds with zero tens and zero ones"
+      }
     },
     {
       "expectation_id": "2.NBT.2",
