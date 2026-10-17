@@ -41,3 +41,17 @@ test("challenge responses are accepted only while their requested session is cur
     assert.equal(api.isCurrentSessionResponse(...ids), false);
   }
 });
+
+
+test("session operations require both the current session and latest request token", () => {
+  assert.equal(api.isCurrentSessionOperationResponse("A", "A", 3, 3), true);
+  for (const values of [
+    ["A", "B", 3, 3],
+    ["A", "A", 2, 3],
+    ["A", "A", 4, 3],
+    [undefined, undefined, 3, 3],
+    ["", "", 3, 3],
+  ]) {
+    assert.equal(api.isCurrentSessionOperationResponse(...values), false);
+  }
+});
