@@ -127,6 +127,16 @@ test("actual controls update exact state, emit semantic evidence and reset", () 
     return [node, ...nodes(expanded), ...React.Children.toArray(node.props?.children).flatMap(nodes)];
   }
   const button = label => nodes(render()).find(node => node.type === "button" && node.props.children === label);
+  const find = id => nodes(render()).find(node => node.props?.id === id);
+  assert.equal(button("Divide coefficient by 10; increase exponent").props.disabled, true);
+  button("Divide coefficient by 10; increase exponent").props.onClick();
+  assert.equal(emitted.length, 0);
+  assert.equal(nodes(render()).find(node => node.type === "fieldset").props.disabled, true);
+  find("sci-prediction").props.onChange({ target: { value: "INVERSE_CHANGES_PRESERVE_VALUE" } });
+  button("Record prediction").props.onClick();
+  find("sci-prediction").props.onChange({ target: { value: "SAME_DIRECTION_PRESERVES_VALUE" } });
+  assert.equal(find("sci-prediction").props.value, "INVERSE_CHANGES_PRESERVE_VALUE");
+  assert.equal(find("sci-prediction").props.disabled, true);
   button("Divide coefficient by 10; increase exponent").props.onClick();
   assert.deepEqual(emitted.at(-1), {
     schema_version: 1,
@@ -138,6 +148,27 @@ test("actual controls update exact state, emit semantic evidence and reset", () 
   });
   assert.equal(events.isMathInteractionEvent(emitted.at(-1)), true);
   assert.ok(nodes(render()).some(node => React.Children.toArray(node.props?.children).join("").includes("450 × 10^1")));
+  button("Divide coefficient by 10; increase exponent").props.onClick();
+  button("Divide coefficient by 10; increase exponent").props.onClick();
+  find("sci-evidence").props.onChange({ target: { value: "COEFFICIENT_AND_POWER_ARE_INVERSE_FACTORS" } });
+  button("Check guided reasoning").props.onClick();
+  assert.equal(nodes(render()).find(node => node.type === "fieldset").props.disabled, false);
+  assert.ok(nodes(render()).some(node => node.type === "div" && node.props.hidden === true));
+  find("sci-transfer-coefficient").props.onChange({ target: { value: "7.2" } });
+  find("sci-transfer-exponent").props.onChange({ target: { value: "-5" } });
+  button("Verify fresh transfer").props.onClick();
+  assert.ok(state.includes("Correct. Your normalized coefficient and exponent preserve the exact value."));
+  button("Reset this scale").props.onClick();
+  assert.equal(find("sci-prediction").props.disabled, false);
+  assert.equal(nodes(render()).find(node => node.type === "fieldset").props.disabled, true);
+  assert.ok(!state.includes("Correct. Your normalized coefficient and exponent preserve the exact value."));
+  find("sci-prediction").props.onChange({ target: { value: "SAME_DIRECTION_PRESERVES_VALUE" } });
+  button("Record prediction").props.onClick();
+  for (let i = 0; i < 3; i++) button("Divide coefficient by 10; increase exponent").props.onClick();
+  find("sci-evidence").props.onChange({ target: { value: "COEFFICIENT_AND_POWER_ARE_INVERSE_FACTORS" } });
+  button("Check guided reasoning").props.onClick();
+  assert.equal(nodes(render()).find(node => node.type === "fieldset").props.disabled, true);
+  assert.ok(state.some(value => typeof value === "string" && value.includes("reset to predict again")));
   button("Reset this scale").props.onClick();
   assert.ok(nodes(render()).some(node => React.Children.toArray(node.props?.children).join("").includes("4500 × 10^0")));
 });

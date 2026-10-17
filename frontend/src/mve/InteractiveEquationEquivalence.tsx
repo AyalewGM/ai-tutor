@@ -52,7 +52,7 @@ function GuidedEquationEquivalence({ exampleIndex = 0, onMathEvent }: Interactiv
   const [explanationFeedback, setExplanationFeedback] = useState("");
   const [supportStage, setSupportStage] = useState<"MODELED" | "COACHED" | "INDEPENDENT_READINESS">("MODELED");
   const [constructionScale, setConstructionScale] = useState(-2);
-  const [constructed, setConstructed] = useState<AffineEquation | null>(null);
+  const [constructed, setConstructed] = useState<{ equation: AffineEquation; scale: number } | null>(null);
   const [counterexample, setCounterexample] = useState<AffineEquation | null>(null);
   const [exitFeedback, setExitFeedback] = useState("");
   const control = "rounded border p-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 motion-reduce:transition-none";
@@ -93,7 +93,7 @@ function GuidedEquationEquivalence({ exampleIndex = 0, onMathEvent }: Interactiv
     const operation: EquationOperation = { kind: "scale", amount: { numerator: constructionScale, denominator: 1 } };
     const candidate = applyEquationOperation(original, operation);
     if (!candidate) return;
-    setConstructed(candidate);
+    setConstructed({ equation: candidate, scale: constructionScale });
     setCounterexample(null);
     setAnnouncement(`Constructed ${formatAffineEquation(candidate)} by multiplying both complete sides of ${formatAffineEquation(original)} by ${constructionScale}. The solution set is preserved.`);
     onMathEvent?.(operationEvent(operation));
@@ -171,7 +171,7 @@ function GuidedEquationEquivalence({ exampleIndex = 0, onMathEvent }: Interactiv
         aria-label={`Choose scale ${scale}`} onClick={() => setConstructionScale(scale)}>Scale {scale}</button>)}
       <button type="button" className={control} onClick={constructEquivalent}>Construct equivalent equation</button>
     </div>
-    {constructed && <p>Constructed equation: {formatAffineEquation(constructed)}. Global operation: multiply both sides by {constructionScale}.</p>}
+    {constructed && <p>Constructed equation: {formatAffineEquation(constructed.equation)}. Global operation: multiply both sides by {constructed.scale}.</p>}
     {counterexample && <p>Counterexample, not applied: {formatAffineEquation(counterexample)}. It changes only one side, so it is not equivalent.</p>}
 
     <table className="w-full border-collapse text-left">

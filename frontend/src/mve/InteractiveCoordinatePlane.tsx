@@ -62,7 +62,7 @@ export function InteractiveCoordinatePlane({
         viewBox={`0 0 ${size} ${size}`}
         className="visual"
         role="application"
-        aria-label={`Interactive coordinate plane. Keyboard cursor at (\${cursor[0]}, \${cursor[1]}). Use arrow keys to move and Enter or Space to place the point.`}
+        aria-label={`Interactive coordinate plane. Keyboard cursor at (${cursor[0]}, ${cursor[1]}). Use arrow keys to move and Enter or Space to place the point.`}
         tabIndex={0}
         onKeyDown={handleKeyDown}
         onClick={(event) => placePoint(event.clientX, event.clientY, event.currentTarget)}

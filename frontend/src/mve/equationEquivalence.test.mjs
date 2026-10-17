@@ -157,6 +157,21 @@ test("actual handlers preserve state on rejection, emit validated success, isola
   assert.ok(nodes(render()).some(node => /Constructed equation:/.test(String(node.props?.children))));
   assert.deepEqual(emitted.at(-1), { schema_version: 1, type: "EQUATION_TRANSFORMATION_APPLIED",
     operation: "SCALE_BOTH", amount_numerator: 3, amount_denominator: 1, preserved: true });
+  const constructionText = () => nodes(render()).find(node => node.type === "p" &&
+    React.Children.toArray(node.props.children).join("").startsWith("Constructed equation:")).props.children;
+  const snapshot = React.Children.toArray(constructionText()).join("");
+  assert.match(snapshot, /multiply both sides by 3/);
+  nodes(render()).find(node => node.props?.["aria-label"] === "Choose scale -2").props.onClick();
+  assert.equal(React.Children.toArray(constructionText()).join(""), snapshot,
+    "choosing the next scale must not relabel the previous construction");
+  click("Construct equivalent equation");
+  const rebuilt = React.Children.toArray(constructionText()).join("");
+  assert.match(rebuilt, /multiply both sides by -2/);
+  assert.notEqual(rebuilt, snapshot);
+  assert.equal(emitted.at(-1).amount_numerator, -2);
+  click("Reset equation");
+  assert.equal(nodes(render()).some(node => node.type === "p" &&
+    React.Children.toArray(node.props.children).join("").startsWith("Constructed equation:")), false);
 });
 
 test("one-sided illustration requires an exactly different solution", () => {

@@ -321,3 +321,27 @@ test('repair success removes active support rather than only changing status tex
   assert.ok(rendered.some(n => React.Children.toArray(n.props?.children).join('').includes('Support faded')));
   assert.equal(rendered.some(n => React.Children.toArray(n.props?.children).join('').includes('Use exact integers or reduced rational coefficients.')), false);
 });
+
+
+test("prediction controls retain semantics outside image-role containers", () => {
+  const hooked = load('./InteractivePolynomialDivision.tsx', { ...imports, react: {
+    useId: () => "poly-a11y",
+    useState: initial => [typeof initial === "function" ? initial() : initial, () => {}],
+  } });
+  const wrapper = hooked.InteractivePolynomialDivision({ independentAssessment: false });
+  const tree = wrapper.type(wrapper.props);
+  const controls = [];
+  function visit(node, imageAncestor = false) {
+    if (!node || typeof node !== "object") return;
+    const inImage = imageAncestor || node.props?.role === "img";
+    if (["textarea", "select", "input", "button"].includes(node.type)) {
+      assert.equal(inImage, false, "interactive controls must not be descendants of a semantic image");
+      controls.push(node);
+    }
+    for (const child of React.Children.toArray(node.props?.children)) visit(child, inImage);
+  }
+  visit(tree);
+  assert.equal(controls.filter(node => String(node.props?.["aria-label"]).startsWith("Prediction ")).length, 4);
+  const html = renderToStaticMarkup(React.createElement(Component, { independentAssessment: false }));
+  assert.match(html, /role="group" aria-label="Polynomial division model:/);
+});

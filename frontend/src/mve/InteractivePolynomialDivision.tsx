@@ -184,7 +184,7 @@ function GuidedPolynomialDivision({ onMathEvent }: InteractivePolynomialDivision
   return <section aria-label="Guided polynomial division exploration" className="space-y-4 rounded-lg border p-4">
     <h3 className="font-semibold">Observe: divide every grouped term by the same nonzero monomial</h3>
     <p>This review-only guided model does not count toward mastery. It requires learner-entered quotient, reconstruction, explanation, and fresh transfer evidence before any correctness feedback.</p>
-    <div className="rounded border p-3" role="img" aria-label={`Polynomial division model: ${formatPolynomial(POLYNOMIAL_DIVISION_EXAMPLE.dividend)} divided by ${formatTerm(POLYNOMIAL_DIVISION_EXAMPLE.divisor)}.`}>
+    <div className="rounded border p-3" role="group" aria-label={`Polynomial division model: ${formatPolynomial(POLYNOMIAL_DIVISION_EXAMPLE.dividend)} divided by ${formatTerm(POLYNOMIAL_DIVISION_EXAMPLE.divisor)}.`}>
       <p className="font-semibold">({formatPolynomial(POLYNOMIAL_DIVISION_EXAMPLE.dividend)}) / {formatTerm(POLYNOMIAL_DIVISION_EXAMPLE.divisor)}</p>
       <label className="mt-3 block">
         Predict before manipulating (reflection)

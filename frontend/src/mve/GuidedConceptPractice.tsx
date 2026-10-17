@@ -37,6 +37,23 @@ function FractionLesson() {
   const [transferReason, setTransferReason] = useState("");
   const [transferFeedback, setTransferFeedback] = useState("");
 
+  const invalidateFractionExplanation = () => {
+    const wasVerified = explanationVerified;
+    setExplanationVerified(false);
+    setTransferFeedback("");
+    setFeedback(wasVerified ?
+      "Your verified explanation changed. The completed fraction support is restored; recheck the explanation before transfer." : "");
+  };
+
+  const invalidateFractionNumericEvidence = () => {
+    const hadVerifiedEvidence = numericVerified || explanationVerified;
+    setNumericVerified(false);
+    setExplanationVerified(false);
+    setTransferFeedback("");
+    setFeedback(hadVerifiedEvidence ?
+      "Your numeric evidence changed. Recheck the practice and explanation before transfer." : "");
+  };
+
   const check = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const result = classifyEquivalentAnswer(equivalent, answer);
@@ -50,6 +67,7 @@ function FractionLesson() {
     else if (answer.trim() === "2") setRepair("sameNumerator");
     setExplanationVerified(false);
     setNumericVerified(false);
+    setTransferFeedback("");
     setFeedback(result.misconception === "INVALID_INPUT" ? "Enter a whole-number numerator." :
       "Not yet. Complete the targeted repair without revealing the worked answer.");
   };
@@ -84,18 +102,21 @@ function FractionLesson() {
       <form onSubmit={check} className="space-y-2">
         <label className="block" htmlFor="equivalent-numerator">Complete 2/3 = ?/9. Missing numerator:</label>
         <input id="equivalent-numerator" className={control} inputMode="numeric" value={answer}
-          onChange={e => { setAnswer(e.target.value); setFeedback(""); }} />
+          onChange={e => { setAnswer(e.target.value); invalidateFractionNumericEvidence(); }} />
         <button type="submit" className={control}>Check numeric practice</button>
       </form>
       <p role="status" aria-live="polite">{feedback}</p>
 
       <h3 className="font-semibold">Explain</h3>
       <label className="block" htmlFor="fraction-scale">Scale factor from 3 to 9</label>
-      <input id="fraction-scale" className={control} value={explainScale} onChange={e => setExplainScale(e.target.value)} />
+      <input id="fraction-scale" className={control} value={explainScale}
+        onChange={e => { setExplainScale(e.target.value); invalidateFractionExplanation(); }} />
       <label className="block" htmlFor="fraction-new-numerator">Numerator after applying the same factor</label>
-      <input id="fraction-new-numerator" className={control} value={explainNumerator} onChange={e => setExplainNumerator(e.target.value)} />
+      <input id="fraction-new-numerator" className={control} value={explainNumerator}
+        onChange={e => { setExplainNumerator(e.target.value); invalidateFractionExplanation(); }} />
       <label className="block" htmlFor="fraction-same-whole">Why are the fractions equal?</label>
-      <select id="fraction-same-whole" className={control} value={explainSameWhole} onChange={e => setExplainSameWhole(e.target.value)}>
+      <select id="fraction-same-whole" className={control} value={explainSameWhole}
+        onChange={e => { setExplainSameWhole(e.target.value); invalidateFractionExplanation(); }}>
         <option value="">Choose reasoning</option>
         <option value="same-factor">The same whole is repartitioned, and numerator and denominator use the same multiplicative factor.</option>
         <option value="same-numerator">Equal numerators always mean equal fractions.</option>
@@ -104,6 +125,7 @@ function FractionLesson() {
       <button type="button" className={control} onClick={() => {
         const ok = explainScale.trim() === "3" && explainNumerator.trim() === "6" && explainSameWhole === "same-factor";
         setExplanationVerified(ok);
+        setTransferFeedback("");
         setFeedback(ok ? "Explanation verified. The completed visual now fades for transfer." :
           "Not yet. Reconstruct the same multiplicative scale on numerator and denominator.");
       }}>Check explanation</button>
@@ -163,6 +185,7 @@ function RatioLesson() {
   const [predictionFeedback, setPredictionFeedback] = useState("");
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [numericVerified, setNumericVerified] = useState(false);
   const [parts, setParts] = useState("");
   const [unit, setUnit] = useState("");
   const [firstShare, setFirstShare] = useState("");
@@ -175,10 +198,28 @@ function RatioLesson() {
   const [transfer, setTransfer] = useState({ parts: "", unit: "", first: "", second: "" });
   const [transferFeedback, setTransferFeedback] = useState("");
 
+  const invalidateRatioExplanation = () => {
+    const wasVerified = explanationVerified;
+    setExplanationVerified(false);
+    setTransferFeedback("");
+    setFeedback(wasVerified ?
+      "Your verified explanation changed. The equal-part counter support is restored; recheck the explanation before transfer." : "");
+  };
+
+  const invalidateRatioNumericEvidence = () => {
+    const hadVerifiedEvidence = numericVerified || explanationVerified;
+    setNumericVerified(false);
+    setExplanationVerified(false);
+    setTransferFeedback("");
+    setFeedback(hadVerifiedEvidence ?
+      "Your numeric evidence changed. Recheck the practice and explanation before transfer." : "");
+  };
+
   const check = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const result = classifyRatioAnswer(ratio, answer);
     if (result.correct) {
+      setNumericVerified(true);
       setFeedback("Numeric practice is correct. Now reconstruct the ratio parts.");
       return;
     }
@@ -186,6 +227,8 @@ function RatioLesson() {
     else if (result.misconception === "WRONG_PART_COUNT") setRepair("part");
     else setRepair("unequal");
     setExplanationVerified(false);
+    setNumericVerified(false);
+    setTransferFeedback("");
     setFeedback(result.misconception === "INVALID_INPUT" ? "Enter a whole-number share." :
       "Not yet. Complete the targeted ratio repair.");
   };
@@ -223,20 +266,25 @@ function RatioLesson() {
       <form onSubmit={check} className="space-y-2">
         <label className="block" htmlFor="ratio-first-share">How many counters should Group A receive?</label>
         <input id="ratio-first-share" className={control} inputMode="numeric" value={answer}
-          onChange={e => { setAnswer(e.target.value); setFeedback(""); }} />
+          onChange={e => { setAnswer(e.target.value); invalidateRatioNumericEvidence(); }} />
         <button type="submit" className={control}>Check numeric practice</button>
       </form>
       <p role="status" aria-live="polite">{feedback}</p>
 
       <h3 className="font-semibold">Explain</h3>
-      <input aria-label="Total ratio parts" className={control} value={parts} onChange={e => setParts(e.target.value)} />
-      <input aria-label="Common unit value" className={control} value={unit} onChange={e => setUnit(e.target.value)} />
-      <input aria-label="First share from two units" className={control} value={firstShare} onChange={e => setFirstShare(e.target.value)} />
-      <input aria-label="Recomposition equation total" className={control} value={recompose} onChange={e => setRecompose(e.target.value)} />
+      <input aria-label="Total ratio parts" className={control} value={parts}
+        onChange={e => { setParts(e.target.value); invalidateRatioExplanation(); }} />
+      <input aria-label="Common unit value" className={control} value={unit}
+        onChange={e => { setUnit(e.target.value); invalidateRatioExplanation(); }} />
+      <input aria-label="First share from two units" className={control} value={firstShare}
+        onChange={e => { setFirstShare(e.target.value); invalidateRatioExplanation(); }} />
+      <input aria-label="Recomposition equation total" className={control} value={recompose}
+        onChange={e => { setRecompose(e.target.value); invalidateRatioExplanation(); }} />
       <button type="button" className={control} onClick={() => {
         const ok = parts.trim() === "5" && unit.trim() === "4" && firstShare.trim() === "8" &&
           recompose.trim().replaceAll(" ", "") === "8+12=20";
         setExplanationVerified(ok);
+        setTransferFeedback("");
         setFeedback(ok ? "Ratio explanation verified. The counter scaffold now fades for transfer." :
           "Not yet. Reconstruct total parts, common unit, first share, and recomposition.");
       }}>Check explanation</button>
