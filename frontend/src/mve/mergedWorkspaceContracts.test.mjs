@@ -23,6 +23,14 @@ test("reconciled Workspace retains existing guided boundaries and default-off eq
   assert.match(workspaceSource, /<InteractiveFractionBars\b/);
   assert.match(workspaceSource, /<InteractiveFractionAddition\b/);
   assert.doesNotMatch(workspaceSource, /showIntegerExploration\(/);
+  assert.doesNotMatch(workspaceSource, /showLinearExploration\(/);
+  assert.doesNotMatch(workspaceSource, /showBalanceExploration\(/);
+  assert.doesNotMatch(workspaceSource, /showDotPlotExploration\(/);
+  assert.doesNotMatch(workspaceSource, /\/distributive\|expand\.\*parenthes\/i/);
+  assert.match(workspaceSource, /workspaceSnapshot\?\.session_id === sessionId/);
+  assert.match(workspaceSource, /isCurrentWorkspaceResponse\(/);
+  assert.match(workspaceSource, /isCurrentSessionResponse\(/);
+  assert.match(workspaceSource, /extensionRequestRef\.current \+= 1/);
   assert.doesNotMatch(workspaceSource, /<<<<<<<|=======|>>>>>>>/);
 });
 
