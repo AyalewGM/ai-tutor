@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 PACKAGE_ID = "ONT-ALG-POLY-DIVISION-R1"
-REVISION = "issue-337-polynomial-division-package-r2"
+REVISION = "issue-337-polynomial-division-package-r3"
 STATUS = "DRAFT_UNVERIFIED"
 RUNTIME_ACTIVATION = False
 RESPONSE_CONTRACT_REVISION = "poly-division-evidence-v1"
