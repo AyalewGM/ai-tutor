@@ -7,7 +7,6 @@ import unittest.mock
 
 import pytest
 
-
 MIGRATION = (
     pathlib.Path(__file__).resolve().parents[1]
     / "alembic"
