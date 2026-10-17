@@ -250,7 +250,13 @@ def activate(
 ) -> ActivateOut:
     enforce_practice_link_activation_limit(request)
     now = datetime.now(UTC)
-    practice_pass = db.scalar(select(FamilyPracticePass).where(FamilyPracticePass.token_hash == _digest(payload.token)))
+    # Lock the pass row so two simultaneous activations of the same link
+    # cannot both pass the live-session check.
+    practice_pass = db.scalar(
+        select(FamilyPracticePass)
+        .where(FamilyPracticePass.token_hash == _digest(payload.token))
+        .with_for_update()
+    )
     if practice_pass is None or practice_pass.revoked_at is not None or practice_pass.expires_at <= now:
         raise HTTPException(status_code=401, detail="Practice pass is invalid or expired")
     student = db.get(Student, practice_pass.student_id)
@@ -266,9 +272,34 @@ def activate(
     ):
         raise HTTPException(status_code=401, detail="Practice pass is invalid or expired")
     enforce_practice_pass_activation_limit(practice_pass.token_hash)
-    # One live session per link: a second activation (same device re-login or
-    # a shared link) invalidates the previous session, so two people can never
-    # use the same link concurrently — the newest activation wins.
+    # One live session per link: reject a second activation while an existing
+    # session is genuinely in use (seen within the live window). The parent
+    # can always reclaim by regenerating or revoking the link, which deletes
+    # its sessions. Stale/expired sessions are cleaned up below.
+    live_cutoff = now - timedelta(
+        seconds=settings.practice_link_live_session_window_seconds
+    )
+    busy = db.scalar(
+        select(LearnerPassSession).where(
+            LearnerPassSession.practice_pass_id == practice_pass.id,
+            LearnerPassSession.expires_at > now,
+            LearnerPassSession.last_seen_at > live_cutoff,
+        )
+    )
+    if busy is not None:
+        # Idempotent for the current holder: re-visiting the link in the same
+        # browser must succeed rather than self-reject.
+        holder_token = request.cookies.get(LEARNER_COOKIE)
+        if holder_token and _digest(holder_token) == busy.token_hash:
+            _set_learner_cookie(response, holder_token)
+            response.headers["Referrer-Policy"] = "no-referrer"
+            return ActivateOut(
+                student_id=student.id,
+                nickname=busy.display_name or student.first_name,
+            )
+        raise HTTPException(
+            status_code=409, detail="This practice link is already in use"
+        )
     db.execute(
         delete(LearnerPassSession).where(
             LearnerPassSession.practice_pass_id == practice_pass.id
@@ -278,6 +309,7 @@ def activate(
     learner_session = LearnerPassSession(
         practice_pass_id=practice_pass.id, student_id=student.id,
         token_hash=_digest(raw_session), expires_at=now + LEARNER_SESSION_TTL,
+        last_seen_at=now,
         display_name=(payload.nickname.strip() if payload.nickname else None),
     )
     db.add(learner_session)

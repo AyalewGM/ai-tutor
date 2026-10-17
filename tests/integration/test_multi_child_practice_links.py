@@ -406,7 +406,7 @@ def test_bulk_generate_returns_one_link_per_child_and_all_activate():
         _clear_override()
 
 
-def test_second_activation_retires_the_first_session():
+def test_second_activation_is_rejected_while_session_is_live():
     parent_id, (child,) = _make_family(children=1)
     try:
         _override_user(_parent_user(parent_id))
@@ -418,17 +418,19 @@ def test_second_activation_retires_the_first_session():
             client.post("/api/v1/practice-pass/activate", json={"token": token}).status_code
             == 200
         )
-        with SessionLocal() as db:
-            first = db.scalar(
-                select(LearnerPassSession).where(
-                    LearnerPassSession.student_id == child
-                )
-            )
-            assert first is not None
-        # Second holder of the same link activates — the first session dies.
+        # The same browser re-visiting its own link is idempotent — never
+        # self-rejected.
         assert (
             client.post("/api/v1/practice-pass/activate", json={"token": token}).status_code
             == 200
+        )
+        # A second holder of the same link (different browser, no cookie) is
+        # refused while the first session is in use — the live session is
+        # untouched.
+        client.cookies.delete("ai_tutor_learner")
+        assert (
+            client.post("/api/v1/practice-pass/activate", json={"token": token}).status_code
+            == 409
         )
         with SessionLocal() as db:
             live = db.scalars(
@@ -437,7 +439,89 @@ def test_second_activation_retires_the_first_session():
                 )
             ).all()
             assert len(live) == 1
-            assert live[0].id != first.id
+    finally:
+        _clear_override()
+
+
+def test_stale_session_does_not_block_reactivation():
+    """A crashed/idle session must not lock the child out: once last_seen_at
+    is older than the live window, activation succeeds and cleans up."""
+    parent_id, (child,) = _make_family(children=1)
+    try:
+        _override_user(_parent_user(parent_id))
+        url = client.post(
+            "/api/v1/practice-pass", json={"student_id": str(child)}
+        ).json()["url"]
+        token = _extract_token(url)
+        client.post("/api/v1/practice-pass/activate", json={"token": token})
+        with SessionLocal() as db:
+            stale = db.scalar(
+                select(LearnerPassSession).where(
+                    LearnerPassSession.student_id == child
+                )
+            )
+            stale.last_seen_at = datetime.now(UTC) - timedelta(
+                seconds=settings.practice_link_live_session_window_seconds + 60
+            )
+            db.commit()
+            stale_id = stale.id
+        # Re-enter from a browser without the old session cookie — the stale
+        # session is cleaned and activation succeeds.
+        client.cookies.delete("ai_tutor_learner")
+        resp = client.post("/api/v1/practice-pass/activate", json={"token": token})
+        assert resp.status_code == 200
+        with SessionLocal() as db:
+            live = db.scalars(
+                select(LearnerPassSession).where(
+                    LearnerPassSession.student_id == child
+                )
+            ).all()
+            assert len(live) == 1
+            assert live[0].id != stale_id
+    finally:
+        _clear_override()
+
+
+def test_parent_regeneration_reclaims_a_live_link():
+    """If a live link is genuinely shared, the parent retakes it by
+    regenerating — the new link activates despite an in-use session."""
+    parent_id, (child,) = _make_family(children=1)
+    try:
+        _override_user(_parent_user(parent_id))
+        url = client.post(
+            "/api/v1/practice-pass", json={"student_id": str(child)}
+        ).json()["url"]
+        client.post(
+            "/api/v1/practice-pass/activate", json={"token": _extract_token(url)}
+        )
+        # Confirm the in-use block fires for a different holder of the link.
+        client.cookies.delete("ai_tutor_learner")
+        assert (
+            client.post(
+                "/api/v1/practice-pass/activate",
+                json={"token": _extract_token(url)},
+            ).status_code
+            == 409
+        )
+        # Regeneration deletes the live session; the fresh link activates.
+        fresh = client.post(
+            "/api/v1/practice-pass", json={"student_id": str(child)}
+        ).json()["url"]
+        resp = client.post(
+            "/api/v1/practice-pass/activate", json={"token": _extract_token(fresh)}
+        )
+        assert resp.status_code == 200
+        with SessionLocal() as db:
+            assert (
+                len(
+                    db.scalars(
+                        select(LearnerPassSession).where(
+                            LearnerPassSession.student_id == child
+                        )
+                    ).all()
+                )
+                == 1
+            )
     finally:
         _clear_override()
 

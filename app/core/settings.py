@@ -103,6 +103,10 @@ class Settings(BaseSettings):
     # Per-link cap on top of the per-IP cap: two parties fighting over one
     # shared link should degrade quickly even from different networks.
     practice_link_activate_per_pass_limit: int = 6
+    # A learner session counts as "in use" (blocking a second activation of
+    # the same link) only if seen within this window. Stale sessions never
+    # block re-entry — they are cleaned up on the next activation.
+    practice_link_live_session_window_seconds: int = 900
 
     model_config = SettingsConfigDict(
         env_file=".env",

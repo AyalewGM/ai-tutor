@@ -146,6 +146,9 @@ class LearnerPassSession(Base):
     token_hash: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False)
+    # Activity heartbeat written by the session middleware; NULL/old means the
+    # link is not currently in use, so a fresh activation may proceed.
+    last_seen_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     # Per-session display name captured at activation; never written back to
     # the canonical parent-managed learner record.
     display_name: Mapped[str | None] = mapped_column(String(32))

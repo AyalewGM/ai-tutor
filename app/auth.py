@@ -62,6 +62,8 @@ async def session_identity_middleware(request: Request, call_next):
                 )
             )
             if learner_session is not None and learner_session.expires_at > datetime.now(UTC):
+                learner_session.last_seen_at = datetime.now(UTC)
+                db.commit()
                 request.state.authenticated_learner_id = learner_session.student_id
 
     token = request.cookies.get(SESSION_COOKIE)
