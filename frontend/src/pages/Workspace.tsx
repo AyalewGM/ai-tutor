@@ -1,16 +1,14 @@
-import { InteractiveDotPlotExplorer } from "../mve/InteractiveDotPlotExplorer";
-import { showDotPlotExploration } from "../mve/dotPlotExplorer";
 import { InteractivePolynomialDivision } from "../mve/InteractivePolynomialDivision";
 import { showPolynomialDivisionExploration } from "../mve/polynomialDivision";
-import { InteractiveEquationBalance } from "../mve/InteractiveEquationBalance";
-import { showBalanceExploration } from "../mve/equationBalance";
 import { InteractiveEquationEquivalence } from "../mve/InteractiveEquationEquivalence";
-import { InteractiveLinearExplorer } from "../mve/InteractiveLinearExplorer";
-import { showLinearExploration } from "../mve/linearExplorer";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BookOpen, CheckCircle2, ChevronDown, Flag, Lightbulb, Map as MapIcon, HelpCircle, RefreshCcw, Target, Undo2 } from "lucide-react";
 import { ApiError, api, post } from "../api";
+import {
+  isCurrentSessionResponse,
+  isCurrentWorkspaceResponse,
+} from "../workspaceSessionGuard";
 import NavBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
 import ProblemVisual from "../components/ProblemVisual";
@@ -23,7 +21,6 @@ import {
   equationEquivalenceExampleIndex,
   integerAdditionEligible,
 } from "../learningFlowInteractions";
-import { GuidedDistributivePractice } from "../mve/GuidedDistributivePractice";
 import { integerSeedFromString } from "../mve/integerPractice";
 import { InteractiveFractionBars, fractionComparisonTarget } from "../mve/InteractiveFractionBars";
 import { InteractiveFractionAddition } from "../mve/InteractiveFractionAddition";
@@ -128,7 +125,9 @@ function ConfettiBurst({
 
 export default function Workspace() {
   const { sessionId } = useParams<{ sessionId: string }>();
-  const [workspace, setWorkspace] = useState<LearnerWorkspace | null>(null);
+  const [workspaceSnapshot, setWorkspace] = useState<LearnerWorkspace | null>(null);
+  const workspace =
+    workspaceSnapshot?.session_id === sessionId ? workspaceSnapshot : null;
   const [answer, setAnswer] = useState("");
   const [fracNum, setFracNum] = useState("");
   const [fracDen, setFracDen] = useState("");
@@ -143,23 +142,62 @@ export default function Workspace() {
   const [learnOpen, setLearnOpen] = useState(false);
   const [goalOpen, setGoalOpen] = useState(false);
   const [extensionProblem, setExtensionProblem] = useState<WorkspaceProblem | null>(null);
+  const [extensionSessionId, setExtensionSessionId] = useState<string | null>(null);
   const [recap, setRecap] = useState<SessionSummary | null>(null);
   const [goalWasReached, setGoalWasReached] = useState(false);
   const answerRef = useRef<HTMLInputElement>(null);
+  const workspaceRequestRef = useRef(0);
+  const extensionRequestRef = useRef(0);
+  const activeSessionRef = useRef(sessionId);
+  activeSessionRef.current = sessionId;
 
   const load = useCallback(async () => {
+    const requestedSessionId = sessionId;
+    const requestId = ++workspaceRequestRef.current;
     try {
-      setWorkspace(
-        await api<LearnerWorkspace>(`/learner-workspace/sessions/${sessionId}`),
+      const nextWorkspace = await api<LearnerWorkspace>(
+        `/learner-workspace/sessions/${requestedSessionId}`,
       );
+      if (
+        requestId !== workspaceRequestRef.current ||
+        !isCurrentWorkspaceResponse(
+          requestedSessionId,
+          activeSessionRef.current,
+          nextWorkspace.session_id,
+        )
+      ) {
+        return;
+      }
+      setWorkspace(nextWorkspace);
     } catch (err) {
+      if (
+        requestId !== workspaceRequestRef.current ||
+        !isCurrentSessionResponse(requestedSessionId, activeSessionRef.current)
+      ) {
+        return;
+      }
       setError(err instanceof ApiError ? err.message : "Could not load session");
     }
   }, [sessionId]);
 
   useEffect(() => {
-    load();
-  }, [load]);
+    workspaceRequestRef.current += 1;
+    extensionRequestRef.current += 1;
+    setWorkspace(null);
+    setExtensionProblem(null);
+    setExtensionSessionId(null);
+    setAnswer("");
+    setFracNum("");
+    setFracDen("");
+    setStatus("");
+    setError("");
+    setFeedback("");
+    void load();
+    return () => {
+      workspaceRequestRef.current += 1;
+      extensionRequestRef.current += 1;
+    };
+  }, [load, sessionId]);
 
   useEffect(() => {
     if (!badgeToast.length) return;
@@ -184,7 +222,9 @@ export default function Workspace() {
 
   // The optional challenge tier: while an extension problem is active it is
   // the problem being answered; it never changes mastery or progress.
-  const currentProblem = extensionProblem ?? workspace?.problem ?? null;
+  const activeExtensionProblem =
+    extensionSessionId === sessionId ? extensionProblem : null;
+  const currentProblem = activeExtensionProblem ?? workspace?.problem ?? null;
 
   const problemKind = currentProblem?.answer_kind ?? "FREE_TEXT";
   const effectiveAnswer =
@@ -308,10 +348,10 @@ export default function Workspace() {
           title: result.growth.level_title,
         });
       }
-      if (extensionProblem) {
-        // Challenge streak: the server offers the next extension problem
-        // (or null when the stretch pool is exhausted).
+      if (activeExtensionProblem) {
+        // Challenge streak: retain it only for the session that requested it.
         setExtensionProblem(result.next_problem ?? null);
+        setExtensionSessionId(result.next_problem ? sessionId ?? null : null);
         if (!result.next_problem) {
           setStatus("Challenge set complete — nice work!");
           setStatusOk(true);
@@ -330,17 +370,32 @@ export default function Workspace() {
   }
 
   async function requestExtension() {
-    if (extensionProblem) return;
+    if (activeExtensionProblem || !sessionId) return;
+    const requestedSessionId = sessionId;
+    const requestId = ++extensionRequestRef.current;
     setError("");
     setStatus("Loading a challenge…");
     try {
       const problem = await post<WorkspaceProblem>(
-        `/adaptive-tutor/sessions/${sessionId}/extension`,
+        `/adaptive-tutor/sessions/${requestedSessionId}/extension`,
       );
+      if (
+        requestId !== extensionRequestRef.current ||
+        !isCurrentSessionResponse(requestedSessionId, activeSessionRef.current)
+      ) {
+        return;
+      }
       setExtensionProblem(problem);
+      setExtensionSessionId(requestedSessionId);
       setStatus("Challenge mode — optional, doesn't affect your mastery.");
       setStatusOk(true);
     } catch (err) {
+      if (
+        requestId !== extensionRequestRef.current ||
+        !isCurrentSessionResponse(requestedSessionId, activeSessionRef.current)
+      ) {
+        return;
+      }
       setStatus("");
       setError(
         err instanceof ApiError && err.status === 404
@@ -353,7 +408,9 @@ export default function Workspace() {
   }
 
   function exitExtension() {
+    extensionRequestRef.current += 1;
     setExtensionProblem(null);
+    setExtensionSessionId(null);
     setStatus("");
   }
 
@@ -795,9 +852,9 @@ export default function Workspace() {
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between gap-2">
                     <CardTitle>
-                      {extensionProblem ? "Challenge" : "Current problem"}
+                      {activeExtensionProblem ? "Challenge" : "Current problem"}
                     </CardTitle>
-                    {extensionProblem ? (
+                    {activeExtensionProblem ? (
                       <Badge variant="secondary">Optional</Badge>
                     ) : (
                       <Button
@@ -812,11 +869,11 @@ export default function Workspace() {
                     )}
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    {extensionProblem
+                    {activeExtensionProblem
                       ? `${workspace.focus.skill_name} · stretch — doesn't count toward mastery`
                       : `${workspace.focus.skill_name} · ${friendly(workspace.state)}`}
                   </p>
-                  {extensionProblem && (
+                  {activeExtensionProblem && (
                     <button
                       type="button"
                       className="text-left text-xs font-medium text-primary hover:underline"
@@ -865,25 +922,9 @@ export default function Workspace() {
                       )}
                     </div>
                   )}
-                  {(workspace.state === "GUIDED_PRACTICE" || workspace.state === "REMEDIATION") &&
-                    /distributive|expand.*parenthes/i.test(workspace.focus.skill_name) && (
-                      <GuidedDistributivePractice
-                        key={workspace.focus.active_skill_id}
-                        independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
-                      />
-                    )}
-                  {showLinearExploration(workspace.state, workspace.focus.skill_name) && (
-                    <InteractiveLinearExplorer
-                      key={workspace.focus.active_skill_id}
-                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
-                    />
-                  )}
-                  {showBalanceExploration(workspace.state, workspace.focus.skill_name) && (
-                    <InteractiveEquationBalance
-                      key={workspace.focus.active_skill_id}
-                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
-                    />
-                  )}
+                  {/* Distributive, linear and balance lessons stay disabled until
+                      the API supplies separately reviewed exact capabilities. Display
+                      names and sibling labels never authorize a guided mount. */}
                   {equationEquivalenceEnabled && (
                     <InteractiveEquationEquivalence
                       key={`equation-equivalence-${currentProblem?.id ?? workspace.focus.active_skill_id}`}
@@ -894,12 +935,8 @@ export default function Workspace() {
                       independentAssessment={false}
                     />
                   )}
-                  {showDotPlotExploration(workspace.state, workspace.focus.skill_name) && (
-                    <InteractiveDotPlotExplorer
-                      key={workspace.focus.active_skill_id}
-                      independentAssessment={workspace.state !== "GUIDED_PRACTICE" && workspace.state !== "REMEDIATION"}
-                    />
-                  )}
+                  {/* Dot-plot exploration remains fail-closed without an accepted
+                      server-owned capability contract. */}
                   {/* Default off until LearnerWorkspace exposes an approved server-owned capability. */}
                   {/* Probability-tree route remains disabled until an approved server-owned capability is available. */}
                   {showPolynomialDivisionExploration(workspace.state, undefined) && (
