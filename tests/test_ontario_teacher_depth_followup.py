@@ -193,6 +193,66 @@ def test_polynomial_fresh_exit_avoids_published_semantic_collisions(seed, diagno
     )
 
 
+def test_one_term_only_collision_keeps_multi_term_target_and_blocks_omission():
+    seed = 44685
+    diagnosis = "POLY.DIV.ONE_TERM_ONLY"
+    original = polynomial.generate(seed, "guided")
+    fresh = polynomial.fresh_exit(seed, "guided", diagnosis)
+
+    assert original.structure == fresh.structure == "POLYNOMIAL_BY_MONOMIAL"
+    assert len(fresh.teacher_oracle["dividend_terms"]) >= 2
+    assert len(fresh.teacher_oracle["quotient_terms"]) >= 2
+    assert polynomial._semantic_contract(fresh) != polynomial._semantic_contract(
+        original
+    )
+
+    corrected = copy.deepcopy(original.teacher_oracle["structured_response"])
+    failed_original = copy.deepcopy(corrected)
+    failed_original["terms"] = failed_original["terms"][:1]
+    failed_original["reconstruction"] = failed_original["reconstruction"][:1]
+    assert polynomial.diagnose_response(failed_original, original) == diagnosis
+
+    complete_fresh = copy.deepcopy(fresh.teacher_oracle["structured_response"])
+    verified = polynomial.evaluate_repair_progress(
+        failed_original, corrected, complete_fresh, original, fresh
+    )
+    assert verified["ready_to_fade"] is True
+    assert verified["mastery_credit"] is False
+
+    incomplete_fresh = copy.deepcopy(complete_fresh)
+    incomplete_fresh["terms"] = incomplete_fresh["terms"][:1]
+    incomplete_fresh["reconstruction"] = incomplete_fresh["reconstruction"][:1]
+    blocked = polynomial.evaluate_repair_progress(
+        failed_original, corrected, incomplete_fresh, original, fresh
+    )
+    assert blocked["original_repaired"] is True
+    assert blocked["fresh_exit_verified"] is False
+    assert blocked["ready_to_fade"] is False
+    assert blocked["mastery_credit"] is False
+
+
+@pytest.mark.parametrize(
+    "misconception",
+    [
+        "POLY.DIV.COEFFICIENT_RECIPROCAL",
+        "POLY.DIV.ADD_EXPONENTS",
+        "POLY.DIV.ONE_TERM_ONLY",
+        "POLY.DIV.DOMAIN_OMITTED",
+    ],
+)
+def test_fresh_exit_preserves_its_diagnosed_mathematical_target(misconception):
+    original = polynomial.generate(7, "guided")
+    fresh = polynomial.fresh_exit(7, "guided", misconception)
+    assert polynomial._preserves_misconception_target(fresh, misconception)
+    assert polynomial._semantic_contract(fresh) != polynomial._semantic_contract(
+        original
+    )
+    assert (
+        fresh.teacher_oracle["structured_response"]
+        != original.teacher_oracle["structured_response"]
+    )
+
+
 def test_polynomial_no_diagnosis_does_not_claim_repair_and_rejects_wrong_exit():
     item = polynomial.generate(7, "guided")
     correct = copy.deepcopy(item.teacher_oracle["structured_response"])
