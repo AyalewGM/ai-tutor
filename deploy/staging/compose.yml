@@ -41,6 +41,7 @@ services:
     image: ${STAGING_REDIS_IMAGE:?digest required}
     mem_limit: 64m
     cpus: 0.15
+    volumes: [redis_data:/data]
     command: [redis-server, --save, "", --appendonly, "no", --maxmemory, 32mb, --maxmemory-policy, noeviction]
     healthcheck:
       test: [CMD, redis-cli, ping]
@@ -115,6 +116,7 @@ networks:
   staging:
     internal: true
 volumes:
+  redis_data:
   database:
   proxy_data:
   proxy_config:
