@@ -44,10 +44,11 @@ const guidedModule = loadTypeScript(guided, {
   "./distributiveLesson": lessonModule,
 });
 
-test("workspace only mounts guided explanation in guided or remediation states", () => {
-  assert.match(workspace, /workspace\.state === "GUIDED_PRACTICE" \|\| workspace\.state === "REMEDIATION"/);
-  assert.match(workspace, /<GuidedDistributivePractice\s/);
-  assert.match(workspace, /independentAssessment=\{workspace\.state !== "GUIDED_PRACTICE" && workspace\.state !== "REMEDIATION"\}/);
+test("workspace keeps distributive lesson fail closed without an accepted capability", () => {
+  assert.doesNotMatch(workspace, /<GuidedDistributivePractice\s/);
+  assert.doesNotMatch(workspace, /\/distributive\|expand\.\*parenthes\/i/);
+  assert.match(workspace, /Distributive, linear and balance lessons stay disabled/);
+  assert.match(workspace, /integerAdditionEligible\(workspace\.state, learn\)/);
 });
 
 test("independent assessment renders no guided explanation, worked answer, or controls", () => {
