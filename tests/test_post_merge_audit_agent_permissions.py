@@ -9,7 +9,6 @@ from pathlib import Path
 
 import pytest
 
-
 AGENTS = Path(__file__).resolve().parents[1] / ".github" / "agents"
 NAMES = (
     "mihur-bug-hunter",
