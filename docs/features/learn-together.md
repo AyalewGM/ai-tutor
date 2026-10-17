@@ -9,6 +9,8 @@ board URL is an identifier, not a bearer invitation. It does not grant access.
 ## Included
 
 - Shared pen strokes and plain typed math/text, fixed 1600 × 1000 page coordinates.
+- Live pointer with mouse, touch, and keyboard controls, plus smooth in-progress
+  handwriting previews before pen-up. Completed ink uses the same curved paths.
 - JPEG/PNG homework pages with separate annotations for each page.
 - Browser-only PDF preview and selected-page import (5 MiB / 50 pages maximum
   per original PDF). Only rendered page pixels are uploaded, through the same
@@ -46,6 +48,13 @@ Vite development proxy forward WebSockets and preserve the browser Host header,
 including the port. Outer proxies must preserve Host and support WebSocket
 upgrades. Existing HTTPS/cookie deployment requirements continue to apply.
 
+Live previews require the existing Redis service. Pub/Sub relays bounded,
+authenticated frames between API workers without saving pointer/preview data.
+Clients send at most 20 updates/second; the server allows 30/second with a burst
+of 40, 128 preview points, and 16 KiB frames. Preview sources expire after 2.5
+seconds of inactivity. Durable marks still save when Redis is unavailable; the
+UI reports that live previews are unavailable.
+
 Rollback: stop the updated application before `alembic downgrade
 0035_extension_mode`. Downgrading deletes all board content; back up first if
 content must be retained. Deploy the preceding frontend/API together.
@@ -72,15 +81,16 @@ python e2e/run-learn-together-check.py
 
 Optionally set `MIHUR_CHROMIUM_PATH` to a local Chromium executable. This check
 covers parent/child text synchronization, child undo preserving parent work,
-handwriting delivery, offline edit recovery after refresh, shared photo retrieval,
+handwriting before pen-up, pointer controls and expiry, offline edit recovery after refresh, shared photo retrieval,
 zoom, mouse panning, own-mark erasing, PDF preview/import, local-only original
 PDF bytes, per-page annotations, navigation replay, and phone viewport overflow. It uses Chromium touch emulation, not a physical iPad.
 
-Executed author-side: 19 API/deletion tests passed, Ruff passed, production
-frontend build passed, and the two-browser check passed. The prior head `aa0f0ed3aa57d022d5feaed6b8220f36223f882d` passed all CI/security
-checks, including PostgreSQL tests (11,982 passed, 9 expected failures) and the
-container/browser job. The PDF/page-scoping increment requires its own fresh CI
-run. PostgreSQL is not available in the local author environment.
+Executed author-side: 28 API/deletion tests passed, repository Ruff passed,
+production frontend build passed, and the two-browser check passed using a real
+Redis broker. Set `MIHUR_REDIS_EXECUTABLE` to a Redis server executable to run
+that variant; the default uses an isolated test relay. No additional production
+Redis dependency is introduced. Fresh latest-head CI is required before release.
+PostgreSQL is not available in the local author environment.
 
 The isolated API suite exercises real cookie identities and SQL persistence with
 SQLite, plus origin rejection, replay/retry, author-only undo, learner scope,
@@ -91,14 +101,14 @@ fixture. It does not prove PostgreSQL concurrency behavior.
 Before pilot activation, verify the latest-head PostgreSQL tests, staging
 WebSocket forwarding, and real iPad/Safari + Chromebook handwriting. Measure
 resource use on the target VPS. Current live readers query revisions every 500ms;
-this is a bounded first implementation, not a scale-tested room broker.
+durable replay remains separate from Redis previews. This has not been load tested.
 
 ## Deliberate limits
 
-- One fixed-size coordinate plane per worksheet page; completed strokes are
-  synchronized, not each in-progress point. Closed-board replay drains every
+- One fixed-size coordinate plane per worksheet page. Live snapshots are transient;
+  completed strokes are persisted. Closed-board replay drains every
   operation batch before disconnecting.
-- No HEIC support, pressure-sensitive widths, pinch zoom, pointer, live presence,
+- No HEIC support, pressure-sensitive widths, pinch zoom, participant lists,
   independent view/follow mode, integrated voice, or AI reading.
 - PDF forms, attachments, links, and scripts are not interactive. Locked, invalid,
   overly large, or slow-to-render PDFs fail with an actionable error. PDF previews

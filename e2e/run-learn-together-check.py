@@ -42,8 +42,33 @@ def run():
     with tempfile.TemporaryDirectory(prefix="mihur-together-") as temporary:
         config = str(Path(temporary) / "family.json")
         with open(Path(temporary) / "servers.log", "w+") as log:
+            relay = None
+            server_env = os.environ.copy()
+            if os.environ.get("MIHUR_REDIS_EXECUTABLE"):
+                relay = subprocess.Popen(
+                    [
+                        os.environ["MIHUR_REDIS_EXECUTABLE"],
+                        "--bind",
+                        "127.0.0.1",
+                        "--port",
+                        "6389",
+                        "--save",
+                        "",
+                        "--appendonly",
+                        "no",
+                        "--dir",
+                        temporary,
+                    ],
+                    stdout=log,
+                    stderr=log,
+                )
+                server_env.update(REDIS_URL="redis://127.0.0.1:6389/0", MIHUR_TEST_REAL_REDIS="1")
             backend = subprocess.Popen(
-                [sys.executable, __file__, "--serve", config], cwd=ROOT, stdout=log, stderr=log
+                [sys.executable, __file__, "--serve", config],
+                cwd=ROOT,
+                env=server_env,
+                stdout=log,
+                stderr=log
             )
             frontend = subprocess.Popen(
                 [
@@ -86,6 +111,9 @@ def run():
                 os.killpg(frontend.pid, 15)
                 backend.wait(timeout=10)
                 frontend.wait(timeout=10)
+                if relay:
+                    relay.terminate()
+                    relay.wait(timeout=10)
 
 
 if __name__ == "__main__":

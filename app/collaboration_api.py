@@ -6,7 +6,10 @@ so reconnect and multiple workers need neither sticky routing nor in-memory room
 
 import asyncio
 import hashlib
+import json
+import time
 import uuid
+from contextlib import AsyncExitStack, suppress
 from datetime import UTC, datetime
 from typing import Annotated, Literal
 from urllib.parse import urlsplit
@@ -24,12 +27,14 @@ from fastapi import (
     WebSocket,
     WebSocketDisconnect,
 )
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from redis.exceptions import RedisError
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.auth import SESSION_COOKIE, _digest, resolve_user_id
 from app.board_images import MAX_UPLOAD_BYTES, normalize_photo
+from app.board_live import LiveFrame, open_live_channel
 from app.collaboration_models import BoardImage, BoardOperation, CollaborationBoard
 from app.core.database import SessionLocal, get_db
 from app.models import Student, User
@@ -329,7 +334,6 @@ def close_board(board_id: uuid.UUID, request: Request, db: Db):
 
 @router.websocket("/boards/{board_id}/live")
 async def live_board(socket: WebSocket, board_id: uuid.UUID, after: int = 0):
-    # Reject cross-site WebSockets before accepting authenticated cookies.
     origin = urlsplit(socket.headers.get("origin", ""))
     if (
         origin.scheme not in {"http", "https"}
@@ -338,26 +342,116 @@ async def live_board(socket: WebSocket, board_id: uuid.UUID, after: int = 0):
     ):
         await socket.close(code=1008)
         return
-    try:
-        with SessionLocal() as db:
-            authorized(db, socket.cookies, board_id)
-        await socket.accept()
-        while True:
-            # Revalidate live credentials and ownership each pass, including revocation.
-            def read(cursor=after):
-                with SessionLocal() as db:
-                    board, _ = authorized(db, socket.cookies, board_id)
-                    return operations(db, board_id, cursor), board.closed
+    source = str(uuid.uuid4())
+    scope = {"closed": False, "author": "", "pages": set()}
+    tasks = []
+    send_lock = asyncio.Lock()
 
-            batch, closed = await asyncio.to_thread(read)
-            await socket.send_json({"operations": batch, "closed": closed})
-            if batch:
-                after = batch[-1]["revision"]
-            if closed and len(batch) < 200:
-                await socket.close(code=1000)
-                return
-            await asyncio.sleep(0.5)
-    except HTTPException:
+    def read(cursor):
+        with SessionLocal() as db:
+            board, author = authorized(db, socket.cookies, board_id)
+            pages = {
+                str(value)
+                for value in db.scalars(
+                    select(BoardImage.operation_id).where(BoardImage.board_id == board_id)
+                )
+            }
+            return operations(db, board_id, cursor), board.closed, author, pages
+
+    async def send(message):
+        async with send_lock:
+            await asyncio.wait_for(socket.send_json(message), timeout=2)
+
+    try:
+        _, closed, author, pages = await asyncio.to_thread(read, after)
+        scope.update(closed=closed, author=author, pages=pages)
+        await socket.accept()
+        async with AsyncExitStack() as stack:
+            channel = None
+            try:
+                channel = await stack.enter_async_context(open_live_channel(board_id))
+            except (RedisError, OSError, ConnectionError):
+                pass  # Durable replay remains available; the client shows live mode unavailable.
+
+            async def replay():
+                nonlocal after
+                while True:
+                    batch, closed, author, pages = await asyncio.to_thread(read, after)
+                    scope.update(closed=closed, author=author, pages=pages)
+                    await send(
+                        {
+                            "operations": batch,
+                            "closed": closed,
+                            "live_available": channel is not None,
+                        }
+                    )
+                    if batch:
+                        after = batch[-1]["revision"]
+                    if closed and len(batch) < 200:
+                        return
+                    await asyncio.sleep(0.5)
+
+            async def receive():
+                tokens, last = 40.0, time.monotonic()
+                while True:
+                    message = await socket.receive()
+                    if message["type"] == "websocket.disconnect":
+                        raise WebSocketDisconnect(message.get("code", 1000))
+                    raw = message.get("text")
+                    if not isinstance(raw, str):
+                        raise TypeError("Live updates require text frames")
+                    now = time.monotonic()
+                    tokens = min(40, tokens + (now - last) * 30) - 1
+                    last = now
+                    if len(raw.encode("utf-8")) > 16384 or tokens < 0:
+                        raise ValueError("Live update limit exceeded")
+                    frame = LiveFrame.model_validate_json(raw)
+                    if scope["closed"] or (
+                        frame.page_id is not None and frame.page_id not in scope["pages"]
+                    ):
+                        raise ValueError("Live worksheet scope unavailable")
+                    if channel:
+                        # Source/author are always supplied by the authenticated server.
+                        await channel.publish(
+                            {
+                                **frame.model_dump(mode="json"),
+                                "source": source,
+                                "author": scope["author"],
+                            }
+                        )
+
+            async def relay():
+                while True:
+                    event = await channel.receive()
+                    if event and event.get("source") != source:
+                        await send({"ephemeral": event})
+
+            tasks = [asyncio.create_task(replay()), asyncio.create_task(receive())]
+            if channel:
+                tasks.append(asyncio.create_task(relay()))
+            try:
+                completed, _ = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+                for task in completed:
+                    task.result()
+            finally:
+                for task in tasks:
+                    task.cancel()
+                await asyncio.gather(*tasks, return_exceptions=True)
+                if channel:
+                    with suppress(RedisError, OSError, ConnectionError):
+                        await channel.publish(
+                            {
+                                "kind": "clear",
+                                "source": source,
+                                "author": scope["author"],
+                                "page_id": None,
+                            }
+                        )
+        await socket.close(code=1000)
+    except (HTTPException, ValidationError, TypeError, ValueError, json.JSONDecodeError):
         await socket.close(code=1008)
+    except (RedisError, OSError, ConnectionError, TimeoutError):
+        with suppress(RuntimeError, WebSocketDisconnect):
+            await socket.close(code=1013)
     except WebSocketDisconnect:
         pass

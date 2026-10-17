@@ -4,6 +4,7 @@ SQLite is used for these sequential contracts; PostgreSQL lock concurrency remai
 an additional integration gate, rather than being inferred from these tests.
 """
 
+import os
 import uuid
 from datetime import UTC, datetime, timedelta
 
@@ -23,6 +24,7 @@ from app.middleware.board_upload_limit import BoardUploadLimitMiddleware
 from app.middleware.pii_sanitizer import PIISanitizerMiddleware
 from app.models import Student, User
 from app.parent_models import FamilyPracticePass, LearnerPassSession, ParentProfile
+from tests.board_live_helpers import TestLiveRelay
 
 
 @pytest.fixture
@@ -65,6 +67,8 @@ def family(monkeypatch, tmp_path):
 
     app.dependency_overrides[get_db] = db_dependency
     monkeypatch.setattr(api, "SessionLocal", factory)
+    if not os.environ.get("MIHUR_TEST_REAL_REDIS"):
+        monkeypatch.setattr(api, "open_live_channel", TestLiveRelay().open)
     with factory() as db:
         user = User(email="parent@example.test", role="PARENT")
         other = User(email="other@example.test", role="PARENT")
@@ -519,3 +523,129 @@ def test_closed_board_replays_every_batch_before_disconnect(family):
         assert second["closed"] is True
         with pytest.raises(WebSocketDisconnect):
             socket.receive_json()
+
+
+def live_message(socket, predicate):
+    for _ in range(20):
+        message = socket.receive_json()
+        if predicate(message):
+            return message
+    raise AssertionError("Expected live message not received")
+
+
+def test_live_pointer_and_unfinished_ink_never_create_saved_operations(family):
+    client, factory, child, *_ = family
+    path = create_board(client, child)
+    with client.websocket_connect(
+        path + "/live", headers={"origin": "http://testserver"}
+    ) as parent:
+        assert parent.receive_json()["live_available"] is True
+        client.cookies.set("ai_tutor_learner", "child-cookie")
+        with client.websocket_connect(
+            path + "/live", headers={"origin": "http://testserver"}
+        ) as learner:
+            assert learner.receive_json()["live_available"] is True
+            learner.send_json({"kind": "pointer", "point": {"x": 50, "y": 75}})
+            event = live_message(parent, lambda m: "ephemeral" in m)["ephemeral"]
+            assert event["author"] == f"learner:{child}"
+            assert uuid.UUID(event["source"])
+            assert event["point"] == {"x": 50, "y": 75}
+            operation_id = str(uuid.uuid4())
+            learner.send_json(
+                {
+                    "kind": "stroke",
+                    "operation_id": operation_id,
+                    "points": [{"x": 10, "y": 10}, {"x": 60, "y": 80}],
+                }
+            )
+            assert (
+                live_message(parent, lambda m: m.get("ephemeral", {}).get("kind") == "stroke")[
+                    "ephemeral"
+                ]["operation_id"]
+                == operation_id
+            )
+            with factory() as db:
+                assert db.scalars(select(BoardOperation)).all() == []
+            learner.send_json({"kind": "clear"})
+            assert live_message(parent, lambda m: m.get("ephemeral", {}).get("kind") == "clear")
+            # Let server disconnect cleanup finish before TestClient cancels its scope.
+            learner.close()
+            assert live_message(parent, lambda m: m.get("ephemeral", {}).get("kind") == "clear")
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"kind": "pointer", "point": {"x": -1, "y": 0}},
+        {"kind": "pointer", "point": {"x": 1, "y": 0}, "author": "parent:forged"},
+        {"kind": "stroke", "operation_id": str(uuid.uuid4()), "points": [{"x": 1, "y": 1}] * 129},
+        {"kind": "pointer", "point": {"x": 1, "y": 1}, "page_id": str(uuid.uuid4())},
+        {"kind": "stroke", "points": []},
+    ],
+)
+def test_live_rejects_invalid_or_spoofed_frames(family, payload):
+    client, _, child, *_ = family
+    path = create_board(client, child)
+    with client.websocket_connect(
+        path + "/live", headers={"origin": "http://testserver"}
+    ) as socket:
+        socket.receive_json()
+        socket.send_json(payload)
+        with pytest.raises(WebSocketDisconnect) as exc:
+            while True:
+                socket.receive_json()
+        assert exc.value.code == 1008
+
+
+def test_live_rejects_binary_and_oversized_frames(family):
+    client, _, child, *_ = family
+    path = create_board(client, child)
+    for raw in (b"binary", "x" * 16385):
+        with client.websocket_connect(
+            path + "/live", headers={"origin": "http://testserver"}
+        ) as socket:
+            socket.receive_json()
+            socket.send_bytes(raw) if isinstance(raw, bytes) else socket.send_text(raw)
+            with pytest.raises(WebSocketDisconnect) as exc:
+                while True:
+                    socket.receive_json()
+            assert exc.value.code == 1008
+
+
+def test_live_broker_outage_preserves_durable_saving(family, monkeypatch):
+    from contextlib import asynccontextmanager
+
+    @asynccontextmanager
+    async def unavailable(_board):
+        raise ConnectionError("synthetic outage")
+        yield  # pragma: no cover
+
+    monkeypatch.setattr(api, "open_live_channel", unavailable)
+    client, _, child, *_ = family
+    path = create_board(client, child)
+    with client.websocket_connect(
+        path + "/live", headers={"origin": "http://testserver"}
+    ) as socket:
+        assert socket.receive_json()["live_available"] is False
+        result = client.post(path + "/operations", json=mark())
+        assert result.status_code == 200
+        saved = live_message(socket, lambda m: bool(m.get("operations")))
+        assert saved["operations"][0]["revision"] == 1
+
+
+def test_live_channels_are_board_scoped(family):
+    client, _, child, *_ = family
+    first, second = create_board(client, child), create_board(client, child)
+    with (
+        client.websocket_connect(
+            first + "/live", headers={"origin": "http://testserver"}
+        ) as sender,
+        client.websocket_connect(
+            second + "/live", headers={"origin": "http://testserver"}
+        ) as other_board,
+    ):
+        sender.receive_json()
+        other_board.receive_json()
+        sender.send_json({"kind": "pointer", "point": {"x": 10, "y": 10}})
+        for _ in range(2):
+            assert "ephemeral" not in other_board.receive_json()

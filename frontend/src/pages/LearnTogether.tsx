@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { api, ApiError, post, postForm } from "../api";
+import { inkPath, previewPoints } from "../liveInk";
 import NavBar from "../components/NavBar";
 
 const PDFImport = lazy(() => import("../components/PDFImport"));
@@ -18,6 +19,16 @@ type Mark = {
   target?: string;
   author?: string;
   revision?: number;
+};
+type LiveFrame = {
+  kind: "pointer" | "stroke" | "clear";
+  page_id?: string | null;
+  operation_id?: string;
+  points?: Point[];
+  point?: Point;
+  source?: string;
+  author?: string;
+  seen?: number;
 };
 type Board = {
   id: string;
@@ -44,7 +55,23 @@ export default function LearnTogether() {
   const [marks, setMarks] = useState<Mark[]>([]);
   const [pending, setPending] = useState<Mark[]>([]);
   const [draft, setDraft] = useState<Point[]>([]);
-  const [tool, setTool] = useState<"pen" | "text" | "erase" | "pan">("pen");
+  const [peers, setPeers] = useState<Record<string, LiveFrame>>({});
+  const [pointerPosition, setPointerPosition] = useState<Point | null>(null);
+  const pointerVisible = useRef(false);
+  const inkPage = useRef<string | null>(null);
+  const [liveAvailable, setLiveAvailable] = useState(false);
+  const liveSocket = useRef<WebSocket | null>(null);
+  const liveEnabled = useRef(false);
+  const lastLiveSend = useRef(0);
+  const liveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const waitingLive = useRef<LiveFrame | null>(null);
+  const confirmed = useRef(new Set<string>());
+  const inkID = useRef<string | null>(null);
+  const localPointer = useRef<Point>({ x: 800, y: 500 });
+  const draftFrame = useRef<number | null>(null);
+  const [tool, setTool] = useState<
+    "pen" | "text" | "erase" | "pan" | "pointer"
+  >("pen");
   const [zoom, setZoom] = useState(1);
   const [uploading, setUploading] = useState(false);
   const uploadBusy = useRef(false);
@@ -66,7 +93,84 @@ export default function LearnTogether() {
   const stroke = useRef<Point[]>([]);
   const queue = useRef<Mark[]>([]);
   const revision = useRef(0);
+  const ingest = useRef<(batch: Mark[]) => void>(() => {});
   const author = useRef("");
+
+  function sendLive(frame: LiveFrame, force = false) {
+    if (force) {
+      if (liveTimer.current !== null) clearTimeout(liveTimer.current);
+      liveTimer.current = null;
+      waitingLive.current = null;
+    }
+    const socket = liveSocket.current;
+    if (
+      !liveEnabled.current ||
+      !socket ||
+      socket.readyState !== WebSocket.OPEN ||
+      socket.bufferedAmount > 32768
+    )
+      return;
+    const now = performance.now();
+    if (!force && now - lastLiveSend.current < 50) {
+      waitingLive.current = frame;
+      if (liveTimer.current === null)
+        liveTimer.current = setTimeout(
+          () => {
+            const latest = waitingLive.current;
+            liveTimer.current = null;
+            waitingLive.current = null;
+            if (latest) sendLive(latest, true);
+          },
+          50 - (now - lastLiveSend.current),
+        );
+      return;
+    }
+    lastLiveSend.current = now;
+    socket.send(JSON.stringify(frame));
+  }
+  function paintDraft() {
+    if (draftFrame.current !== null) return;
+    draftFrame.current = requestAnimationFrame(() => {
+      draftFrame.current = null;
+      setDraft([...stroke.current]);
+      setPointerPosition(pointerVisible.current ? localPointer.current : null);
+    });
+  }
+  useEffect(() => {
+    const timer = setInterval(
+      () =>
+        setPeers((old) =>
+          Object.fromEntries(
+            Object.entries(old).filter(
+              ([, value]) => Date.now() - (value.seen || 0) < 2500,
+            ),
+          ),
+        ),
+      250,
+    );
+    return () => {
+      clearInterval(timer);
+      if (liveTimer.current !== null) clearTimeout(liveTimer.current);
+      if (draftFrame.current !== null) cancelAnimationFrame(draftFrame.current);
+    };
+  }, []);
+  useEffect(() => {
+    if (inkID.current && stroke.current.length)
+      enqueue({
+        operation_id: inkID.current,
+        kind: "stroke",
+        page_id: inkPage.current,
+        points: [...stroke.current],
+      });
+    sendLive({ kind: "clear" }, true);
+    pointerVisible.current = false;
+    setPointerPosition(null);
+    pointer.current = null;
+    inkID.current = null;
+    stroke.current = [];
+    setDraft([]);
+    setPeers({});
+  }, [selectedPage, tool]);
 
   function persistQueue() {
     if (!boardId || !author.current) return;
@@ -96,6 +200,10 @@ export default function LearnTogether() {
     setPending([]);
     queue.current = [];
     revision.current = 0;
+    confirmed.current.clear();
+    setPeers({});
+    liveEnabled.current = false;
+    setLiveAvailable(false);
     function merge(batch: Mark[]) {
       if (disposed || !batch.length) return;
       const previousRevision = revision.current;
@@ -104,6 +212,14 @@ export default function LearnTogether() {
         ...batch.map((m) => m.revision || 0),
       );
       const ids = new Set(batch.map((m) => m.operation_id));
+      for (const id of ids) confirmed.current.add(id);
+      setPeers((old) =>
+        Object.fromEntries(
+          Object.entries(old).filter(
+            ([, frame]) => !frame.operation_id || !ids.has(frame.operation_id),
+          ),
+        ),
+      );
       queue.current = queue.current.filter((m) => !ids.has(m.operation_id));
       persistQueue();
       setPending([...queue.current]);
@@ -123,6 +239,7 @@ export default function LearnTogether() {
         ),
       );
     }
+    ingest.current = merge;
     async function send() {
       if (disposed || !boardId || sending) return;
       sending = true;
@@ -161,12 +278,30 @@ export default function LearnTogether() {
       socket = new WebSocket(
         `${location.protocol === "https:" ? "wss:" : "ws:"}//${location.host}/api/v1/together/boards/${boardId}/live?after=${revision.current}`,
       );
+      liveSocket.current = socket;
       socket.onopen = () => {
         if (!disposed) setStatus("Connected · work saves automatically");
       };
       socket.onmessage = (event) => {
         if (disposed) return;
         const data = JSON.parse(event.data);
+        if (data.ephemeral) {
+          const frame = data.ephemeral as LiveFrame;
+          if (!frame.source) return;
+          setPeers((old) => {
+            const next = { ...old };
+            if (
+              frame.kind === "clear" ||
+              (frame.operation_id && confirmed.current.has(frame.operation_id))
+            )
+              delete next[frame.source!];
+            else next[frame.source!] = { ...frame, seen: Date.now() };
+            return Object.fromEntries(Object.entries(next).slice(-16));
+          });
+          return;
+        }
+        liveEnabled.current = !!data.live_available;
+        setLiveAvailable(!!data.live_available);
         merge(data.operations);
         if (data.operations.length < 200) setReady(true);
         if (data.closed) {
@@ -175,6 +310,9 @@ export default function LearnTogether() {
         }
       };
       socket.onclose = (event) => {
+        liveEnabled.current = false;
+        setLiveAvailable(false);
+        setPeers({});
         if (!disposed && event.code !== 1000 && event.code !== 1008) {
           setStatus("Reconnecting — keep this page open");
           reconnect = setTimeout(connect, 2000);
@@ -251,6 +389,9 @@ export default function LearnTogether() {
     window.addEventListener("beforeunload", beforeUnload);
     return () => {
       disposed = true;
+      ingest.current = () => {};
+      liveSocket.current = null;
+      liveEnabled.current = false;
       socket?.close();
       clearTimeout(reconnect);
       clearTimeout(retry);
@@ -263,13 +404,17 @@ export default function LearnTogether() {
     if (!board || board.closed || queue.current.length >= 50) return;
     queue.current.push({
       ...mark,
-      ...(mark.kind === "page" ? {} : { page_id: selectedPage }),
+      ...(mark.kind === "page"
+        ? {}
+        : {
+            page_id: mark.page_id === undefined ? selectedPage : mark.page_id,
+          }),
       author: author.current,
     });
     persistQueue();
     setPending([...queue.current]);
   }
-  function point(event: React.PointerEvent): Point {
+  function point(event: { clientX: number; clientY: number }): Point {
     const matrix = svg.current!.getScreenCTM()!.inverse();
     const p = new DOMPoint(event.clientX, event.clientY).matrixTransform(
       matrix,
@@ -331,7 +476,20 @@ export default function LearnTogether() {
     form.append("photo", file);
     form.append("operation_id", id);
     try {
-      await postForm(`/together/boards/${boardId}/photos`, form);
+      const result = await postForm<{ revision: number }>(
+        `/together/boards/${boardId}/photos`,
+        form,
+      );
+      while (revision.current < result.revision) {
+        const batch = await api<Mark[]>(
+          `/together/boards/${boardId}/operations?after=${revision.current}`,
+        );
+        if (!batch.length)
+          throw new Error(
+            "Waiting to synchronize the imported worksheet page. Retry the upload.",
+          );
+        ingest.current(batch);
+      }
       uploadAttempt.current = null;
       return true;
     } catch (err) {
@@ -425,6 +583,14 @@ export default function LearnTogether() {
                 onClick={() => setTool("pen")}
               >
                 Pen
+              </button>
+              <button
+                className={button}
+                disabled={disabled || !liveAvailable}
+                aria-pressed={tool === "pointer"}
+                onClick={() => setTool("pointer")}
+              >
+                Live pointer
               </button>
               <button
                 className={button}
@@ -586,6 +752,17 @@ export default function LearnTogether() {
                 ? ` · ${pending.length} marks waiting to save`
                 : ""}
             </p>
+            <p role="status" className="text-sm">
+              {liveAvailable
+                ? "Live pointer and handwriting connected"
+                : "Live previews unavailable; completed marks still save"}
+            </p>
+            {tool === "pointer" && (
+              <p className="text-sm">
+                Move or tap the board to point. Keyboard: focus the board and
+                use arrow keys; Escape hides the pointer.
+              </p>
+            )}
             {tool === "text" && (
               <label className="block">
                 Text or math (for example: 2x + 3 = 11)
@@ -665,6 +842,52 @@ export default function LearnTogether() {
                   minWidth: 600,
                   touchAction: tool === "pen" ? "none" : "auto",
                 }}
+                tabIndex={tool === "pointer" ? 0 : undefined}
+                onKeyDown={(event) => {
+                  if (tool !== "pointer" || disabled) return;
+                  if (event.key === "Escape") {
+                    pointerVisible.current = false;
+                    paintDraft();
+                    sendLive({ kind: "clear" }, true);
+                    return;
+                  }
+                  const delta: Record<string, Point> = {
+                    ArrowLeft: { x: -15, y: 0 },
+                    ArrowRight: { x: 15, y: 0 },
+                    ArrowUp: { x: 0, y: -15 },
+                    ArrowDown: { x: 0, y: 15 },
+                  };
+                  if (!delta[event.key]) return;
+                  event.preventDefault();
+                  const d = delta[event.key];
+                  localPointer.current = {
+                    x: Math.max(
+                      0,
+                      Math.min(1600, localPointer.current.x + d.x),
+                    ),
+                    y: Math.max(
+                      0,
+                      Math.min(1000, localPointer.current.y + d.y),
+                    ),
+                  };
+                  pointerVisible.current = true;
+                  paintDraft();
+                  sendLive(
+                    {
+                      kind: "pointer",
+                      page_id: selectedPage,
+                      point: localPointer.current,
+                    },
+                    true,
+                  );
+                }}
+                onPointerLeave={() => {
+                  if (tool === "pointer") {
+                    pointerVisible.current = false;
+                    paintDraft();
+                    sendLive({ kind: "clear" }, true);
+                  }
+                }}
                 role="img"
                 aria-label="Shared family whiteboard. Use Type to add text, or Pen to draw."
                 onPointerDown={(e) => {
@@ -675,6 +898,20 @@ export default function LearnTogether() {
                     tool === "pan"
                   )
                     return;
+                  if (tool === "pointer") {
+                    localPointer.current = point(e);
+                    pointerVisible.current = true;
+                    paintDraft();
+                    sendLive(
+                      {
+                        kind: "pointer",
+                        page_id: selectedPage,
+                        point: localPointer.current,
+                      },
+                      true,
+                    );
+                    return;
+                  }
                   if (tool === "text") {
                     if (text.trim()) {
                       enqueue({
@@ -690,30 +927,81 @@ export default function LearnTogether() {
                   e.preventDefault();
                   e.currentTarget.setPointerCapture(e.pointerId);
                   pointer.current = e.pointerId;
+                  inkPage.current = selectedPage;
+                  inkID.current = crypto.randomUUID();
                   stroke.current = [point(e)];
-                  setDraft([...stroke.current]);
+                  paintDraft();
+                  sendLive(
+                    {
+                      kind: "stroke",
+                      page_id: selectedPage,
+                      operation_id: inkID.current,
+                      points: previewPoints(stroke.current),
+                    },
+                    true,
+                  );
                 }}
                 onPointerMove={(e) => {
+                  if (tool === "pointer" && !disabled) {
+                    localPointer.current = point(e);
+                    pointerVisible.current = true;
+                    paintDraft();
+                    sendLive({
+                      kind: "pointer",
+                      page_id: selectedPage,
+                      point: localPointer.current,
+                    });
+                    return;
+                  }
                   if (
                     pointer.current !== e.pointerId ||
                     stroke.current.length >= 4000
                   )
                     return;
-                  stroke.current.push(point(e));
-                  setDraft([...stroke.current]);
+                  const samples = e.nativeEvent.getCoalescedEvents?.() || [];
+                  for (const sample of samples.length
+                    ? samples
+                    : [e.nativeEvent]) {
+                    if (stroke.current.length >= 4000) break;
+                    const p = point(sample),
+                      previous = stroke.current[stroke.current.length - 1];
+                    if (Math.hypot(p.x - previous.x, p.y - previous.y) >= 0.35)
+                      stroke.current.push(p);
+                  }
+                  paintDraft();
+                  if (inkID.current)
+                    sendLive({
+                      kind: "stroke",
+                      page_id: selectedPage,
+                      operation_id: inkID.current,
+                      points: previewPoints(stroke.current),
+                    });
                 }}
                 onPointerUp={(e) => {
                   if (pointer.current !== e.pointerId) return;
                   enqueue({
-                    operation_id: crypto.randomUUID(),
+                    operation_id: inkID.current || crypto.randomUUID(),
                     kind: "stroke",
                     points: stroke.current,
                   });
+                  if (inkID.current)
+                    sendLive(
+                      {
+                        kind: "stroke",
+                        page_id: selectedPage,
+                        operation_id: inkID.current,
+                        points: previewPoints(stroke.current),
+                      },
+                      true,
+                    );
+                  inkID.current = null;
                   pointer.current = null;
                   stroke.current = [];
                   setDraft([]);
                 }}
                 onPointerCancel={() => {
+                  sendLive({ kind: "clear" }, true);
+                  inkID.current = null;
                   pointer.current = null;
                   stroke.current = [];
                   setDraft([]);
@@ -766,10 +1054,10 @@ export default function LearnTogether() {
                             fill={color(m.author)}
                           />
                         ) : (
-                          <polyline
-                            points={m.points
-                              ?.map((p) => `${p.x},${p.y}`)
-                              .join(" ")}
+                          <path
+                            data-testid="saved-stroke"
+                            data-operation-id={m.operation_id}
+                            d={inkPath(m.points || [])}
                             fill="none"
                             stroke={color(m.author)}
                             strokeWidth="4"
@@ -789,8 +1077,64 @@ export default function LearnTogether() {
                       )}
                     </g>
                   ))}
-                <polyline
-                  points={draft.map((p) => `${p.x},${p.y}`).join(" ")}
+                {pointerPosition && (
+                  <circle
+                    data-testid="local-pointer"
+                    cx={pointerPosition.x}
+                    cy={pointerPosition.y}
+                    r="12"
+                    fill={color(board?.author)}
+                    fillOpacity="0.25"
+                    stroke={color(board?.author)}
+                    strokeWidth="3"
+                    pointerEvents="none"
+                  />
+                )}
+                {Object.values(peers)
+                  .filter((frame) => (frame.page_id || null) === selectedPage)
+                  .map((frame) =>
+                    frame.kind === "stroke" ? (
+                      <path
+                        key={frame.source}
+                        data-testid="live-stroke"
+                        data-operation-id={frame.operation_id}
+                        d={inkPath(frame.points || [])}
+                        fill="none"
+                        stroke={color(frame.author)}
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        pointerEvents="none"
+                      />
+                    ) : frame.point ? (
+                      <g
+                        key={frame.source}
+                        data-testid="live-pointer"
+                        pointerEvents="none"
+                      >
+                        <circle
+                          cx={frame.point.x}
+                          cy={frame.point.y}
+                          r="12"
+                          fill={color(frame.author)}
+                          fillOpacity="0.25"
+                          stroke={color(frame.author)}
+                          strokeWidth="3"
+                        />
+                        <text
+                          x={Math.min(frame.point.x + 18, 1470)}
+                          y={Math.max(24, frame.point.y - 15)}
+                          fill={color(frame.author)}
+                          fontSize="24"
+                        >
+                          {frame.author?.startsWith("parent:")
+                            ? "Parent"
+                            : "Child"}
+                        </text>
+                      </g>
+                    ) : null,
+                  )}
+                <path
+                  d={inkPath(draft)}
                   fill="none"
                   stroke={color(board?.author)}
                   strokeWidth="4"

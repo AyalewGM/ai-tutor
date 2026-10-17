@@ -63,14 +63,72 @@ const assert = require("node:assert/strict");
     1,
   );
   await c.getByRole("button", { name: "Pen", exact: true }).click();
+  await Promise.all([
+    p
+      .getByText("Live pointer and handwriting connected", { exact: true })
+      .waitFor(),
+    c
+      .getByText("Live pointer and handwriting connected", { exact: true })
+      .waitFor(),
+  ]);
+  await c
+    .getByRole("img", { name: /Shared family whiteboard/ })
+    .scrollIntoViewIfNeeded();
   const box = await c
     .getByRole("img", { name: /Shared family whiteboard/ })
     .boundingBox();
   await c.mouse.move(box.x + 100, box.y + 100);
   await c.mouse.down();
   await c.mouse.move(box.x + 200, box.y + 150, { steps: 8 });
+  await p.getByTestId("live-stroke").waitFor();
+  const liveID = await p
+    .getByTestId("live-stroke")
+    .getAttribute("data-operation-id");
+  const beforeCommit = await parent.request.get(
+    `http://127.0.0.1:5173/api/v1/together/boards/${f.board}/operations`,
+  );
+  assert.equal(
+    (await beforeCommit.json()).some((mark) => mark.operation_id === liveID),
+    false,
+    "unfinished ink must not become durable evidence",
+  );
   await c.mouse.up();
-  await p.locator('polyline[stroke="#0369a1"]').waitFor();
+  await p
+    .locator(`[data-testid="saved-stroke"][data-operation-id="${liveID}"]`)
+    .waitFor();
+  await p.getByTestId("live-stroke").waitFor({ state: "detached" });
+  const beforePointer = (
+    await (
+      await parent.request.get(
+        `http://127.0.0.1:5173/api/v1/together/boards/${f.board}/operations`,
+      )
+    ).json()
+  ).length;
+  await c.getByRole("button", { name: "Live pointer", exact: true }).click();
+  const boardSurface = c.getByRole("img", { name: /Shared family whiteboard/ });
+  await boardSurface.hover({ position: { x: 140, y: 120 } });
+  await p.getByTestId("live-pointer").waitFor();
+  await boardSurface.focus();
+  await boardSurface.press("ArrowRight");
+  await c.getByTestId("local-pointer").waitFor();
+  await boardSurface.press("Escape");
+  await p.getByTestId("live-pointer").waitFor({ state: "detached" });
+  await c.getByTestId("local-pointer").waitFor({ state: "detached" });
+  await boardSurface.hover({ position: { x: 210, y: 160 } });
+  await p.getByTestId("live-pointer").waitFor();
+  await p.getByTestId("live-pointer").waitFor({ state: "detached", timeout: 5000 });
+  const afterPointer = (
+    await (
+      await parent.request.get(
+        `http://127.0.0.1:5173/api/v1/together/boards/${f.board}/operations`,
+      )
+    ).json()
+  ).length;
+  assert.equal(
+    afterPointer,
+    beforePointer,
+    "live pointers must not create saved operations",
+  );
   await child.setOffline(true);
   await c.getByRole("button", { name: "Type", exact: true }).click();
   await c.getByPlaceholder("Type, then tap the board to place").fill("x = 4");
@@ -288,7 +346,7 @@ const assert = require("node:assert/strict");
   assert.deepEqual(errors, []);
   await browser.close();
   console.log(
-    "PASS: parent/child sync, author undo, drawing, offline queued edit + reload recovery, photo/PDF synchronization, per-page notes and navigation replay, local-only PDF bytes, zoom, own-mark eraser, phone layout; no page errors.",
+    "PASS: parent/child sync, author undo, drawing, offline queued edit + reload recovery, live pointer and pre-release handwriting, photo/PDF synchronization, per-page notes and navigation replay, local-only PDF bytes, zoom, own-mark eraser, phone layout; no page errors.",
   );
 })().catch((e) => {
   console.error(e);
