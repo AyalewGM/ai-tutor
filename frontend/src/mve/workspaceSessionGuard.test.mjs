@@ -7,6 +7,10 @@ const source = await readFile(
   new URL("../workspaceSessionGuard.ts", import.meta.url),
   "utf8",
 );
+const workspaceSource = await readFile(
+  new URL("../pages/Workspace.tsx", import.meta.url),
+  "utf8",
+);
 const js = ts.transpileModule(source, {
   compilerOptions: {
     module: ts.ModuleKind.ESNext,
@@ -54,4 +58,53 @@ test("session operations require both the current session and latest request tok
   ]) {
     assert.equal(api.isCurrentSessionOperationResponse(...values), false);
   }
+});
+
+
+test("a deferred session-A continuation is rejected after navigation to session B", async () => {
+  let currentSessionId = "A";
+  let currentRequestId = 7;
+  let resolveResponse;
+  const response = new Promise((resolve) => {
+    resolveResponse = resolve;
+  });
+  const applied = [];
+  const continuation = response.then(() => {
+    if (
+      api.isCurrentSessionOperationResponse(
+        "A",
+        currentSessionId,
+        7,
+        currentRequestId,
+      )
+    ) {
+      applied.push("stale mutation");
+    }
+  });
+
+  currentSessionId = "B";
+  currentRequestId += 1;
+  resolveResponse();
+  await continuation;
+  assert.deepEqual(applied, []);
+});
+
+test("answer, hint, recap and goal handlers use independent session operation tokens", () => {
+  for (const [handler, requestRef] of [
+    ["submitAnswerText", "answerRequestRef"],
+    ["requestHelp", "helpRequestRef"],
+    ["openRecap", "recapRequestRef"],
+    ["saveDailyGoal", "goalRequestRef"],
+  ]) {
+    assert.match(workspaceSource, new RegExp(`async function ${handler}\\(`));
+    assert.match(
+      workspaceSource,
+      new RegExp(`const requestId = \\+\\+${requestRef}\\.current`),
+    );
+  }
+  assert.match(workspaceSource, /isCurrentSessionOperationResponse\(/);
+  assert.match(workspaceSource, /answerRequestRef\.current \+= 1/);
+  assert.match(workspaceSource, /helpRequestRef\.current \+= 1/);
+  assert.match(workspaceSource, /recapRequestRef\.current \+= 1/);
+  assert.match(workspaceSource, /goalRequestRef\.current \+= 1/);
 });
