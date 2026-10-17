@@ -49,7 +49,10 @@ def test_new_york_jurisdiction_and_provenance() -> None:
     m = _manifest()
     assert m["jurisdiction"]["state"] == "New York"
     assert m["jurisdiction"]["authority_code"] == "NYSED"
-    assert "nysed.gov" in m["provenance"]["authoritative_source_url"]
+    assert m["provenance"]["authoritative_source_url"] == (
+        "https://www.nysed.gov/sites/default/files/programs/"
+        "curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf"
+    )
 
 
 def test_every_row_has_source_page_and_capture_status() -> None:
