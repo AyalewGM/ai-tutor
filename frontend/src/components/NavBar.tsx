@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
-import { post } from "../api";
+import { api, post } from "../api";
 import Brand from "./Brand";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -8,6 +9,15 @@ import { cn } from "@/lib/utils";
 export default function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [parentSession, setParentSession] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    api<{ role: string }>("/auth/me")
+      .then((user) => { if (active) setParentSession(["PARENT", "GUARDIAN"].includes(user.role.toUpperCase())); })
+      .catch(() => { if (active) setParentSession(false); });
+    return () => { active = false; };
+  }, []);
 
   async function signOut() {
     try { await post("/auth/logout"); } catch { /* best effort */ }
@@ -39,13 +49,13 @@ export default function NavBar() {
         </Link>
         <nav className="flex items-center gap-1" aria-label="Primary navigation">
           {navLink("/learn", "Practice")}
-          {navLink("/parent", "Parent")}
+          {parentSession && navLink("/parent", "Parent")}
         </nav>
         <div className="ml-auto">
-          <Button variant="ghost" size="sm" onClick={signOut}>
+          {parentSession && <Button variant="ghost" size="sm" onClick={signOut}>
             <LogOut className="mr-1.5 h-4 w-4" />
             Sign out
-          </Button>
+          </Button>}
         </div>
       </div>
     </header>
