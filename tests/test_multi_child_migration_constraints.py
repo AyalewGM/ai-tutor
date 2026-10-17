@@ -1,15 +1,15 @@
 """Regression coverage for fresh and ORM-precreated family pass schemas."""
 
 import importlib.util
-from pathlib import Path
-from types import SimpleNamespace
-from unittest.mock import Mock
+import pathlib
+import types
+import unittest.mock
 
 import pytest
 
 
 MIGRATION = (
-    Path(__file__).resolve().parents[1]
+    pathlib.Path(__file__).resolve().parents[1]
     / "alembic"
     / "versions"
     / "0036_multi_child_practice_links.py"
@@ -31,7 +31,7 @@ def test_upgrade_uses_actual_unique_constraint_state(
     assert spec is not None and spec.loader is not None
     migration = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(migration)
-    inspector = SimpleNamespace(
+    inspector = types.SimpleNamespace(
         get_unique_constraints=lambda table: (
             [{"name": name} for name in existing]
             if table == "family_practice_passes"
@@ -40,8 +40,8 @@ def test_upgrade_uses_actual_unique_constraint_state(
     )
     migration_op = SimpleNamespace(
         get_bind=lambda: object(),
-        drop_constraint=Mock(),
-        create_unique_constraint=Mock(),
+        drop_constraint=unittest.mock.Mock(),
+        create_unique_constraint=unittest.mock.Mock(),
     )
     monkeypatch.setattr(migration.sa, "inspect", lambda _conn: inspector)
     monkeypatch.setattr(migration, "op", migration_op)
