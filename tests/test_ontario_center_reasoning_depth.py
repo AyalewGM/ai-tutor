@@ -126,14 +126,19 @@ def test_guided_diagnoses_derived_response_errors_not_client_flags():
     assert depth.diagnose_guided(inverse, response)["misconception_id"] == "STAT.CENTER.MEAN_AS_TOTAL"
 
 
-@pytest.mark.parametrize("index", range(9))
-def test_repair_requires_corrected_original_and_fresh_different_structure(index):
+@pytest.mark.parametrize("index", range(45))
+def test_repair_requires_corrected_original_and_fresh_same_concept(index):
     item = depth.generate(index, "guided")
     correct = _correct(item)
     failed = copy.deepcopy(correct)
     failed["reason"] = "WRONG_REASON"
     fresh = depth.fresh_repair_exit(item)
-    assert fresh.structure != item.structure
+    assert fresh == depth.fresh_repair_exit(item)
+    assert fresh.structure == item.structure
+    assert fresh.mode == "guided"
+    assert fresh.values != item.values
+    assert fresh.prompt != item.prompt
+    assert _correct(fresh) != correct
     fresh_correct = _correct(fresh)
     result = depth.evaluate_repair_progress(item, failed, correct, fresh, fresh_correct)
     assert result["original_repaired"] is True
@@ -144,10 +149,23 @@ def test_repair_requires_corrected_original_and_fresh_different_structure(index)
     not_repaired = depth.evaluate_repair_progress(item, failed, failed, fresh, fresh_correct)
     assert not_repaired["ready_to_fade"] is False
 
+    # The learner cannot resubmit the corrected original to pass unseen transfer.
+    repeated_original = depth.evaluate_repair_progress(item, failed, correct, fresh, correct)
+    assert repeated_original["original_repaired"] is True
+    assert repeated_original["fresh_verified"] is False
+    assert repeated_original["ready_to_fade"] is False
+
     fresh_wrong = copy.deepcopy(fresh_correct)
     fresh_wrong["reason"] = "WRONG_REASON"
     not_fresh = depth.evaluate_repair_progress(item, failed, correct, fresh, fresh_wrong)
     assert not_fresh["ready_to_fade"] is False
+
+    # An unrelated correct mathematical competency cannot count as the repair.
+    other_index = 100_000 + (index + 1) % len(depth.STRUCTURES)
+    other = depth.generate(other_index, "guided")
+    assert other.structure != item.structure
+    with pytest.raises(ValueError, match="target-preserving"):
+        depth.evaluate_repair_progress(item, failed, correct, other, _correct(other))
 
 
 def test_no_client_truth_fields_or_fake_exit_and_independent_repair():
