@@ -38,3 +38,18 @@ def test_post_merge_auditor_profiles_are_manual_and_least_privilege(agent: str) 
         expected.append("playwright/*")
     assert tools == expected
     assert not {"execute", "shell", "edit", "write", "agent", "*"} & set(tools)
+
+def test_role_rotation_runbook_does_not_claim_independent_signoff() -> None:
+    runbook = (AGENTS.parents[1] / "docs" / "qa" / "POST_MERGE_QUALITY_AUDIT.md")
+    body = runbook.read_text(encoding="utf-8")
+    assert "## Single-conversation role rotation" in body
+    assert "INTERNAL_ROLE_ROTATION" in body
+    assert "never use `INDEPENDENT_APPROVED`" in body
+    assert "independent security, Math, Pedagogy, Standards or Muse" in body
+
+
+def test_muse_profile_allows_only_isolated_disposable_browser_state() -> None:
+    body = (AGENTS / "mihur-muse-auditor.agent.md").read_text(encoding="utf-8")
+    assert "Playwright interactions may create or change disposable synthetic test data only" in body
+    assert "isolated localhost test stack" in body
+    assert "production database" in body
