@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
+import { createRequire } from "node:module";
 import test from "node:test";
+import React from "react";
+import ts from "typescript";
 import {
   classifyEquivalentAnswer,
   classifyRatioAnswer,
@@ -111,4 +115,132 @@ test("concept predictions are evaluated with targeted reflection", async () => {
   assert.match(ui, /same whole is repartitioned/);
   assert.match(ui, /2 of 5 equal parts is less than one half/);
   assert.match(ui, /predictionFeedback/);
+});
+
+
+const require = createRequire(import.meta.url);
+function load(path, imports = {}) {
+  const source = readFileSync(new URL(path, import.meta.url), "utf8");
+  const js = ts.transpileModule(source, { compilerOptions: {
+    module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2021,
+    jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true,
+  } }).outputText;
+  const module = { exports: {} };
+  new Function("require", "module", "exports", js)(name => imports[name] ?? require(name), module, module.exports);
+  return module.exports;
+}
+
+function conceptHarness(concept) {
+  let state = [];
+  let cursor = 0;
+  const hooked = load("./GuidedConceptPractice.tsx", {
+    "./guidedConceptMath.mjs": {
+      classifyEquivalentAnswer,
+      classifyRatioAnswer,
+      equivalenceModel,
+      ratioPartitionModel,
+    },
+    "../components/ProblemVisual": props => React.createElement("div", {
+      "data-visual-label": props.spec.aria_label,
+    }),
+    react: {
+      useState: initial => {
+        const index = cursor++;
+        if (!(index in state)) state[index] = typeof initial === "function" ? initial() : initial;
+        return [state[index], value => {
+          state[index] = typeof value === "function" ? value(state[index]) : value;
+        }];
+      },
+    },
+  });
+
+  function render() {
+    cursor = 0;
+    const wrapper = hooked.GuidedConceptPractice({ independentAssessment: false, concept });
+    return wrapper.type(wrapper.props);
+  }
+  function nodes(node) {
+    if (!node || typeof node !== "object") return [];
+    const expanded = typeof node.type === "function" ? node.type(node.props) : null;
+    return [node, ...nodes(expanded), ...React.Children.toArray(node.props?.children).flatMap(nodes)];
+  }
+  const all = () => nodes(render());
+  const byId = id => all().find(node => node.props?.id === id);
+  const byLabel = label => all().find(node => node.props?.["aria-label"] === label);
+  const button = label => all().find(node => node.type === "button" && node.props.children === label);
+  const change = (node, value) => node.props.onChange({ target: { value } });
+  const click = label => button(label).props.onClick();
+  const submit = () => all().find(node => node.type === "form").props.onSubmit({ preventDefault() {} });
+  const hasText = value => all().some(node =>
+    React.Children.toArray(node.props?.children).join("").includes(value));
+  return { all, byId, byLabel, change, click, submit, hasText };
+}
+
+test("fraction verification is bound to the exact response snapshot", () => {
+  const ui = conceptHarness("fraction-equivalence");
+  ui.change(ui.byId("fraction-prediction"), "same");
+  ui.click("Lock prediction");
+  ui.change(ui.byId("equivalent-numerator"), "6");
+  ui.submit();
+  ui.change(ui.byId("fraction-scale"), "3");
+  ui.change(ui.byId("fraction-new-numerator"), "6");
+  ui.change(ui.byId("fraction-same-whole"), "same-factor");
+  ui.click("Check explanation");
+  assert.ok(ui.byLabel("Fraction transfer"));
+
+  ui.change(ui.byLabel("Transfer numerator out of twelve"), "9");
+  ui.change(ui.byLabel("Transfer scale factor"), "3");
+  ui.change(ui.byLabel("Transfer reasoning"), "same-factor");
+  ui.click("Check transfer");
+  assert.ok(ui.hasText("Transfer verified: 3/4 = 9/12."));
+
+  ui.change(ui.byId("fraction-scale"), " 3 ");
+  assert.equal(ui.byLabel("Fraction transfer"), undefined);
+  assert.equal(ui.hasText("Transfer verified: 3/4 = 9/12."), false);
+  assert.ok(ui.hasText("Your verified explanation changed."));
+  assert.ok(ui.all().some(node =>
+    node.props?.["data-visual-label"] === "Six of nine equal parts shaded, same length as two thirds"));
+
+  ui.click("Check explanation");
+  assert.ok(ui.byLabel("Fraction transfer"));
+  ui.change(ui.byId("equivalent-numerator"), " 6 ");
+  assert.equal(ui.byLabel("Fraction transfer"), undefined);
+  assert.equal(ui.hasText("Transfer verified: 3/4 = 9/12."), false);
+  assert.ok(ui.hasText("Your numeric evidence changed."));
+  assert.equal(ui.all().some(node =>
+    node.props?.["data-visual-label"] === "Six of nine equal parts shaded, same length as two thirds"), false);
+});
+
+test("ratio verification is bound to the exact response snapshot", () => {
+  const ui = conceptHarness("ratio-partition");
+  ui.change(ui.byLabel("Ratio prediction"), "less");
+  ui.click("Lock prediction");
+  ui.change(ui.byId("ratio-first-share"), "8");
+  ui.submit();
+  ui.change(ui.byLabel("Total ratio parts"), "5");
+  ui.change(ui.byLabel("Common unit value"), "4");
+  ui.change(ui.byLabel("First share from two units"), "8");
+  ui.change(ui.byLabel("Recomposition equation total"), "8 + 12 = 20");
+  ui.click("Check explanation");
+  assert.ok(ui.byLabel("Ratio transfer"));
+
+  ui.change(ui.byLabel("Transfer parts"), "7");
+  ui.change(ui.byLabel("Transfer unit"), "5");
+  ui.change(ui.byLabel("Transfer first"), "10");
+  ui.change(ui.byLabel("Transfer second"), "25");
+  ui.click("Check transfer");
+  assert.ok(ui.hasText("Transfer verified: 10 + 25 = 35 minutes."));
+
+  ui.change(ui.byLabel("Common unit value"), " 4 ");
+  assert.equal(ui.byLabel("Ratio transfer"), undefined);
+  assert.equal(ui.hasText("Transfer verified: 10 + 25 = 35 minutes."), false);
+  assert.ok(ui.hasText("Your verified explanation changed."));
+  assert.ok(ui.byLabel("Five equal ratio parts"));
+
+  ui.click("Check explanation");
+  assert.ok(ui.byLabel("Ratio transfer"));
+  ui.change(ui.byId("ratio-first-share"), " 8 ");
+  assert.equal(ui.byLabel("Ratio transfer"), undefined);
+  assert.equal(ui.hasText("Transfer verified: 10 + 25 = 35 minutes."), false);
+  assert.ok(ui.hasText("Your numeric evidence changed."));
 });
