@@ -68,7 +68,21 @@ def values(text):
     return result
 
 
+def valid_edge_network(network, proxy_ids):
+    """Only the staging proxy may attach to the non-internal ingress bridge."""
+    return (
+        network["Name"] == PROJECT + "_edge"
+        and network.get("Driver") == "bridge"
+        and network.get("Internal") is False
+        and network.get("Options") == {
+            "com.docker.network.bridge.host_binding_ipv4": "127.0.0.1"
+        }
+        and set(network.get("Containers", {})) <= proxy_ids
+    )
+
+
 def inventory():
+    proxy_ids = set()
     ids = run(DOCKER + ["ps", "-aq"]).split()
     if ids:
         for item in json.loads(run(DOCKER + ["inspect", *ids])):
@@ -76,6 +90,15 @@ def inventory():
             require(
                 labels.get("com.docker.compose.project") == PROJECT,
                 "Foreign container present; dedicated staging host required",
+            )
+            if labels.get("com.docker.compose.service") == "proxy":
+                proxy_ids.add(item["Id"])
+            allowed_networks = {PROJECT + "_staging"}
+            if labels.get("com.docker.compose.service") == "proxy":
+                allowed_networks.add(PROJECT + "_edge")
+            require(
+                set(item.get("NetworkSettings", {}).get("Networks", {})) <= allowed_networks,
+                "Unexpected container network attachment",
             )
             for mount in item.get("Mounts", []):
                 if mount["Type"] == "volume":
@@ -109,9 +132,12 @@ def inventory():
             if network["Name"] in {"bridge", "host", "none"}:
                 continue
             require(
-                network["Name"] == PROJECT + "_staging"
-                and network.get("Internal") is True
-                and (network.get("Labels") or {}).get("com.docker.compose.project") == PROJECT,
+                (network.get("Labels") or {}).get("com.docker.compose.project") == PROJECT
+                and (
+                    (network["Name"] == PROJECT + "_staging"
+                     and network.get("Internal") is True)
+                    or valid_edge_network(network, proxy_ids)
+                ),
                 "Foreign or non-isolated Docker network; STOP",
             )
 
