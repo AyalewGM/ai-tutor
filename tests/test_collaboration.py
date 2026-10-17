@@ -5,6 +5,7 @@ an additional integration gate, rather than being inferred from these tests.
 """
 
 import os
+import time
 import uuid
 from datetime import UTC, datetime, timedelta
 
@@ -571,6 +572,10 @@ def test_live_pointer_and_unfinished_ink_never_create_saved_operations(family):
             # Let server disconnect cleanup finish before TestClient cancels its scope.
             learner.close()
             assert live_message(parent, lambda m: m.get("ephemeral", {}).get("kind") == "clear")
+            # Close in-band and yield so the server finishes its disconnect path
+            # before TestClient cancels the session scope on __exit__.
+            parent.close()
+            time.sleep(0.1)
 
 
 @pytest.mark.parametrize(
@@ -631,9 +636,10 @@ def test_live_broker_outage_preserves_durable_saving(family, monkeypatch):
         assert result.status_code == 200
         saved = live_message(socket, lambda m: bool(m.get("operations")))
         assert saved["operations"][0]["revision"] == 1
-
-
-def test_live_channels_are_board_scoped(family):
+        # Close in-band and yield so the server finishes its disconnect path
+        # before TestClient cancels the session scope on __exit__.
+        socket.close()
+        time.sleep(0.1)
     client, _, child, *_ = family
     first, second = create_board(client, child), create_board(client, child)
     with (
@@ -649,3 +655,8 @@ def test_live_channels_are_board_scoped(family):
         sender.send_json({"kind": "pointer", "point": {"x": 10, "y": 10}})
         for _ in range(2):
             assert "ephemeral" not in other_board.receive_json()
+        # Close in-band and yield so the server finishes its disconnect path
+        # before TestClient cancels the session scope on __exit__.
+        sender.close()
+        other_board.close()
+        time.sleep(0.1)
