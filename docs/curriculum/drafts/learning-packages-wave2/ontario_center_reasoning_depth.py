@@ -309,14 +309,14 @@ def evaluate_repair_progress(
 ) -> dict[str, Any]:
     """Advisory evidence gate, never server grading or mastery authority.
 
-    Require repaired original reasoning and a structurally different guided
-    fresh attempt before fading supports.
+    Require repaired original reasoning and a same-concept, numerically fresh
+    guided attempt before fading supports.
     """
 
     if not isinstance(item, DraftVariant) or item.mode != "guided":
         raise PermissionError("repair progress must use a guided draft")
     if not isinstance(fresh_item, DraftVariant) or fresh_item != fresh_repair_exit(item):
-        raise ValueError("fresh attempt does not match the diagnosed new structure")
+        raise ValueError("fresh attempt does not match the diagnosed target-preserving exit")
     failed = diagnose_guided(item, failed_response)
     if failed["correct"]:
         return {
@@ -341,13 +341,40 @@ def evaluate_repair_progress(
     }
 
 
+def _required_response_signature(item: DraftVariant) -> tuple[Any, ...]:
+    """Values actually required from a learner, excluding teacher-only metadata."""
+
+    oracle = item.teacher_oracle
+    if item.structure == "FAIR_RATE_COMPARISON":
+        return (oracle["rates"], oracle["winner"], oracle["reason"])
+    if item.structure == "DISTINCT_FIVE_VALUE_MAXIMUM":
+        return (oracle["values"], oracle["largest"], oracle["reason"])
+    if item.structure == "MISSING_EXTREME_FROM_MEAN_MEDIAN":
+        return (oracle["largest"], oracle["total"], oracle["reason"])
+    raise ValueError("unsupported statistics structure")
+
+
 def fresh_repair_exit(item: DraftVariant) -> DraftVariant:
-    """A new *different* structure before guided supports may fade."""
+    """Deterministic unseen *same-concept* exit with incompatible exact answer.
+
+    The mathematical target must remain available for transfer: dividing by
+    participant counts, proving a constrained maximum, or reconstructing the
+    missing extreme from a mean and ordered data. A new variant ID alone is
+    never sufficient evidence for reducing guided support.
+    """
 
     if not isinstance(item, DraftVariant) or item.mode != "guided":
         raise PermissionError("fresh repair exits are guided only")
-    next_structure = (item.index + 1) % len(STRUCTURES)
-    index = 30_000 + item.index * len(STRUCTURES) + next_structure
-    candidate = generate(index, "guided")
-    assert candidate.structure != item.structure
-    return candidate
+    original_response = _required_response_signature(item)
+    # Preserve the remainder modulo the three existing mathematical structures.
+    start = 30_000 + item.index * len(STRUCTURES) + (item.index % len(STRUCTURES))
+    for offset in range(2_048):
+        candidate = generate(start + offset * len(STRUCTURES), "guided")
+        if candidate.structure != item.structure:
+            continue
+        if candidate.values == item.values or candidate.prompt == item.prompt:
+            continue
+        if _required_response_signature(candidate) == original_response:
+            continue
+        return candidate
+    raise RuntimeError("unable to generate distinct target-preserving repair exit")
