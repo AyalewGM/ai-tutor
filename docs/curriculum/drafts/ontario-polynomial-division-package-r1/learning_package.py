@@ -483,6 +483,40 @@ def _semantic_contract(variant: PackageVariant) -> dict[str, Any]:
     }
 
 
+def _preserves_misconception_target(
+    candidate: PackageVariant, misconception_id: str
+) -> bool:
+    """Require an unseen exit on which the diagnosed mistake can still occur."""
+
+    oracle = candidate.teacher_oracle
+    if misconception_id == "POLY.DIV.ONE_TERM_ONLY":
+        # Dividing just one term is only a meaningful mistake for multi-term work.
+        return (
+            candidate.structure == "POLYNOMIAL_BY_MONOMIAL"
+            and len(oracle["dividend_terms"]) >= 2
+            and len(oracle["quotient_terms"]) >= 2
+        )
+    if misconception_id == "POLY.DIV.ADD_EXPONENTS":
+        # Preserve the pre-existing fresh negative-exponent exit requirement.
+        return any(
+            exponent < 0
+            for term in oracle["quotient_terms"]
+            for _, exponent in term.powers
+        )
+    if misconception_id == "POLY.DIV.DOMAIN_OMITTED":
+        # The original divisor must actually exclude a value.
+        return bool(oracle["domain_restrictions"])
+    if misconception_id == "POLY.DIV.COEFFICIENT_RECIPROCAL":
+        divisor_coefficient = oracle["divisor"].coefficient
+        # Reverse-order division must yield a detectably different coefficient.
+        return any(
+            dividend.coefficient / divisor_coefficient
+            != divisor_coefficient / dividend.coefficient
+            for dividend in oracle["dividend_terms"]
+        )
+    return False
+
+
 def fresh_exit(seed: int, mode: str, misconception_id: str) -> PackageVariant:
     _validate(seed, mode)
     if misconception_id not in MISCONCEPTIONS:
@@ -502,11 +536,7 @@ def fresh_exit(seed: int, mode: str, misconception_id: str) -> PackageVariant:
             == original.teacher_oracle["structured_response"]
         ):
             continue
-        if misconception_id == "POLY.DIV.ADD_EXPONENTS" and not any(
-            exponent < 0
-            for term in candidate.teacher_oracle["quotient_terms"]
-            for _, exponent in term.powers
-        ):
+        if not _preserves_misconception_target(candidate, misconception_id):
             continue
         return candidate
     raise RuntimeError(
