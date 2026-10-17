@@ -497,6 +497,11 @@ def fresh_exit(seed: int, mode: str, misconception_id: str) -> PackageVariant:
         candidate = generate(fresh_seed + offset, mode)
         if _semantic_contract(candidate) == original_contract:
             continue
+        if (
+            candidate.teacher_oracle["structured_response"]
+            == original.teacher_oracle["structured_response"]
+        ):
+            continue
         if misconception_id == "POLY.DIV.ADD_EXPONENTS" and not any(
             exponent < 0
             for term in candidate.teacher_oracle["quotient_terms"]
