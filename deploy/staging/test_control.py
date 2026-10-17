@@ -92,9 +92,11 @@ class Guards(unittest.TestCase):
         container = {"Config": {"Labels": {
             "com.docker.compose.project": "mihur-staging"
         }}, "Mounts": [{"Type": "volume", "Name": "1a9d23"}]}
-        with patch.object(control, "run", side_effect=["redis", json.dumps([container])]):
-            with self.assertRaisesRegex(RuntimeError, "Unexpected container volume"):
-                control.inventory()
+        with (
+            patch.object(control, "run", side_effect=["redis", json.dumps([container])]),
+            self.assertRaisesRegex(RuntimeError, "Unexpected container volume"),
+        ):
+            control.inventory()
 
     def test_empty_inventory_allowed(self):
         with patch.object(control, "run", side_effect=["", "", ""]):
