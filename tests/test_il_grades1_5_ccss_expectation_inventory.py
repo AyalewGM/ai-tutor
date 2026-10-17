@@ -42,7 +42,9 @@ def test_illinois_jurisdiction_and_provenance() -> None:
     m = _manifest()
     assert m["jurisdiction"]["state"] == "Illinois"
     assert m["jurisdiction"]["authority_code"] == "ISBE"
-    assert "isbe.net" in m["provenance"]["authoritative_source_url"]
+    assert m["provenance"]["authoritative_source_url"] == (
+        "https://www.isbe.net/Documents/Math_common_core_standards.pdf"
+    )
 
 
 def test_every_row_has_source_locator_and_capture() -> None:
