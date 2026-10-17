@@ -8,7 +8,7 @@ Manifest: `il_grades1_5_ccss.expectations.v1.json`
 126 official expectations from the Illinois Learning Standards for
 Mathematics (incorporating the Common Core), identical to the canonical CCSS
 identifier set — Illinois adopted CCSS verbatim via ISBE rulemaking effective
-2010-10-28. Generated as a jurisdiction-swapped clone of the reviewed DC
+2010-10-28. Generated as a jurisdiction-swapped clone of the provisional DC
 grades 1–5 inventory: identical identifiers, identical official text,
 independent jurisdiction provenance.
 
@@ -34,10 +34,7 @@ independent jurisdiction provenance.
    `DC*.OA.*`-style pack skills for Illinois coverage requires a Standards
    Mapping EQUIVALENCES proposal and Math Review acceptance — the shared
    identifiers make the mapping *proposal* cheap, not automatic.
-4. **Cheapest full-state coverage on record.** Because the identifier set is
-   a reviewed clone, Illinois moves straight to mapping review once the
-   DMV pack review concludes — no new intake or text-verification pass needed
-   beyond confirming ISBE adoption provenance.
+4. **Cheapest full-state coverage on record.** The cloned DC inventory is not independently accepted in full. Illinois requires an original-CCSS source-fidelity audit of mathematical qualifiers, lettered subparts, and grade scope before mapping or coverage acceptance; confirming ISBE adoption alone is insufficient.
 
 ## Handoffs
 
@@ -51,3 +48,7 @@ independent jurisdiction provenance.
 
 `activation: FORBIDDEN` · zero canonical IDs created · zero learner-evidence
 mutation · `verified_mastery_evidence: NO_AND_MUST_NOT_BE_INFERRED` on all rows.
+
+## Independent source-fidelity gate
+
+Illinois incorporation of the 2010 CCSS does not independently validate each copied DC expectation or the Appendix A Algebra I course selection. Original-source statement text, mathematical conditions, lettered subparts, and course membership remain `PENDING_INDEPENDENT_SOURCE_FIDELITY`. Clone parity does not authorize mappings, assessment, mastery, or activation.
