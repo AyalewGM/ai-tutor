@@ -8,7 +8,7 @@ Manifest: `il_grades6_8_ccss.expectations.v1.json`
 81 official expectations from the Illinois Learning Standards for
 Mathematics (incorporating the Common Core), Grades 6–8 — identical to the
 canonical CCSS identifier set (verbatim ISBE adoption). Generated as a
-jurisdiction-swapped clone of the reviewed DC grades 6–8 inventory.
+jurisdiction-swapped clone of the provisional DC grades 6–8 inventory.
 
 | Grade | RP | NS | EE | G | SP | F | Total | Unmapped |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -45,3 +45,7 @@ jurisdiction-swapped clone of the reviewed DC grades 6–8 inventory.
 
 `activation: FORBIDDEN` · zero canonical IDs created · zero learner-evidence
 mutation · `verified_mastery_evidence: NO_AND_MUST_NOT_BE_INFERRED` on all rows.
+
+## Independent source-fidelity gate
+
+Illinois incorporation of the 2010 CCSS does not independently validate each copied DC expectation or the Appendix A Algebra I course selection. Original-source statement text, mathematical conditions, lettered subparts, and course membership remain `PENDING_INDEPENDENT_SOURCE_FIDELITY`. Clone parity does not authorize mappings, assessment, mastery, or activation.
