@@ -45,6 +45,11 @@ from app.services.curriculum_scope import (
     resolve_student_curriculum_scope,
 )
 from app.services.evaluation import evaluate_distributive_property
+from app.services.extension_offer import (
+    ExtensionOfferError,
+    extension_response_is_authorized,
+    record_extension_offer,
+)
 from app.services.learning_assessment import ASSESSMENT_BLOCK_MESSAGE, check_assessment_guard
 from app.services.mastery import update_mastery
 from app.services.problem_selection import select_next_problem
@@ -267,12 +272,12 @@ def respond(
                 )
             misconception_count = student_misconception.occurrence_count
 
-    content_meta = db.scalar(
-        select(ProblemContentMetadata).where(
-            ProblemContentMetadata.problem_id == problem.id
+    try:
+        is_extension = extension_response_is_authorized(
+            db, session=session, problem=problem
         )
-    )
-    is_extension = bool(content_meta and content_meta.extension_eligible)
+    except ExtensionOfferError as exc:
+        raise HTTPException(400, str(exc)) from exc
 
     mastery = update_mastery(
         float(progress.mastery_score),
@@ -499,7 +504,8 @@ def request_extension_problem(
     )
     if problem is None:
         raise HTTPException(404, "No extension problem configured for this skill")
-    # Persist generated extension items now — the pool is exhausted path
-    # creates them, and the student's answer attempt needs the row to exist.
+    # Bind the exact problem to this authenticated session before returning it.
+    # A global extension_eligible flag alone never authorizes a response.
+    record_extension_offer(db, session=session, problem=problem)
     db.commit()
     return _problem_out(problem)
