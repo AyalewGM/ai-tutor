@@ -3,6 +3,14 @@
 Status: PREPARED, NOT DEPLOYED. Runtime feasibility, remote isolation, staging smoke,
 backup/restore and independent acceptance are NOT VERIFIED. Links: #278, #298, #301.
 
+## Domain access option
+
+For the owner-selected `dev.mihureducation.com` host HTTPS edge, follow
+[host proxy setup](host/README.md) in addition to this baseline runbook. The Compose
+public base URL now targets that domain; localhost tunnel access remains diagnostic.
+The domain guide supersedes the SSH-only ingress/firewall instructions when enabled.
+It retains synthetic-only access and adds host-proxy resource measurements.
+
 ## Purpose and architecture
 
 As DevOps, prepare a small private environment where Muse can test the real container

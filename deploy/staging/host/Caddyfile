@@ -1,0 +1,25 @@
+# Host service only; never mount this into the staging container.
+{
+	admin localhost:2019
+}
+
+dev.mihureducation.com {
+	# Required local file defines @qa using remote_ip, never forwarded headers.
+	import /etc/caddy/mihur-qa-allowlist.caddy
+	handle @qa {
+		reverse_proxy https://127.0.0.1:8443 {
+			header_up Host localhost:8443
+			header_up X-Forwarded-Host dev.mihureducation.com
+			header_up X-Forwarded-Proto https
+			transport http {
+				tls_server_name localhost
+				tls_trust_pool file /etc/caddy/mihur-staging-root.crt
+			}
+		}
+	}
+	handle {
+		respond "Staging access restricted" 403
+	}
+	# Access logs intentionally disabled: practice/invitation URLs may be sensitive.
+	header Referrer-Policy no-referrer
+}
