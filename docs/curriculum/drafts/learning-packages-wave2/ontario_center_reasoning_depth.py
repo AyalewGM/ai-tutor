@@ -299,6 +299,48 @@ def diagnose_guided(item: DraftVariant, response: object) -> dict[str, Any]:
             "socratic_questions": list(SOCRATIC[misconception]), "mastery_credit": False}
 
 
+
+def evaluate_repair_progress(
+    item: DraftVariant,
+    failed_response: object,
+    repaired_response: object,
+    fresh_item: DraftVariant,
+    fresh_response: object,
+) -> dict[str, Any]:
+    """Advisory evidence gate, never server grading or mastery authority.
+
+    Require repaired original reasoning and a structurally different guided
+    fresh attempt before fading supports.
+    """
+
+    if not isinstance(item, DraftVariant) or item.mode != "guided":
+        raise PermissionError("repair progress must use a guided draft")
+    if not isinstance(fresh_item, DraftVariant) or fresh_item != fresh_repair_exit(item):
+        raise ValueError("fresh attempt does not match the diagnosed new structure")
+    failed = diagnose_guided(item, failed_response)
+    if failed["correct"]:
+        return {
+            "misconception_id": None,
+            "original_repaired": False,
+            "fresh_verified": False,
+            "ready_to_fade": False,
+            "mastery_credit": False,
+        }
+    original_repaired = diagnose_guided(item, repaired_response)["correct"]
+    fresh_verified = (
+        diagnose_guided(fresh_item, fresh_response)["correct"]
+        if original_repaired
+        else False
+    )
+    return {
+        "misconception_id": failed["misconception_id"],
+        "original_repaired": original_repaired,
+        "fresh_verified": fresh_verified,
+        "ready_to_fade": original_repaired and fresh_verified,
+        "mastery_credit": False,
+    }
+
+
 def fresh_repair_exit(item: DraftVariant) -> DraftVariant:
     """A new *different* structure before guided supports may fade."""
 
