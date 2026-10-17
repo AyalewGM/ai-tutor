@@ -384,11 +384,12 @@
         50
       ],
       "required_lettered_subparts": [],
-      "author_mathematical_scope_summary": "Explain that population inference from a sample is defensible only when the sample is representative, and that random sampling supports representative samples.",
+      "author_mathematical_scope_summary": "Explain that population-level generalizations from a sample are valid only when the sample is representative of that population. Random sampling tends to produce representative samples and supports valid inference; it does not guarantee that every random sample is representative.",
       "test_material_conditions": [
-        "population",
-        "representative",
-        "random"
+        "population-level generalization",
+        "representative sample is necessary",
+        "random sampling tends to be representative",
+        "random sampling does not guarantee representativeness"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
@@ -404,11 +405,13 @@
         50
       ],
       "required_lettered_subparts": [],
-      "author_mathematical_scope_summary": "Use random sample data to infer an unknown population property, drawing or simulating multiple equally sized samples to estimate uncertainty and variation.",
+      "author_mathematical_scope_summary": "Use data from a random sample to draw inferences about an unknown population characteristic. Generate multiple actual or simulated samples of the same size to gauge variation among estimates or predictions, and reason about how far off an estimate or prediction might be.",
       "test_material_conditions": [
-        "random",
-        "multiple",
-        "variation"
+        "random sample population inference",
+        "multiple actual or simulated samples",
+        "same sample size",
+        "variation in estimates or predictions",
+        "how far off an estimate or prediction might be"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
@@ -424,11 +427,13 @@
         50
       ],
       "required_lettered_subparts": [],
-      "author_mathematical_scope_summary": "Informally compare the visual overlap of two numerical distributions with comparable variability; express differences of centers as a multiple of a variability measure.",
+      "author_mathematical_scope_summary": "Informally assess the degree of visual overlap between two numerical data distributions with similar variabilities, measuring the difference between their centers by expressing that difference as a multiple of a measure of variability (such as mean absolute deviation in the source example).",
       "test_material_conditions": [
-        "overlap",
-        "centers",
-        "variability"
+        "two numerical data distributions",
+        "similar variabilities",
+        "degree of visual overlap",
+        "difference between centers",
+        "multiple of a measure of variability"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
@@ -444,12 +449,12 @@
         50
       ],
       "required_lettered_subparts": [],
-      "author_mathematical_scope_summary": "Use measures of center and spread computed from random samples to make informal comparative inferences about two populations.",
+      "author_mathematical_scope_summary": "Use measures of center and measures of variability for numerical data from random samples to draw informal comparative inferences about two populations; for example, compare sampled word lengths in seventh- and fourth-grade science-book chapters.",
       "test_material_conditions": [
-        "center",
-        "spread",
-        "random samples",
-        "two populations"
+        "measures of center",
+        "measures of variability",
+        "numerical data from random samples",
+        "informal comparative inferences about two populations"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",
@@ -487,11 +492,13 @@
         50
       ],
       "required_lettered_subparts": [],
-      "author_mathematical_scope_summary": "Approximate chance-event probabilities from observed long-run relative frequencies; given an event probability, predict approximate relative frequency and corresponding event counts over repeated trials.",
+      "author_mathematical_scope_summary": "Approximate the probability of a chance event by collecting data on the process that produces it and observing its long-run relative frequency. Given an event probability, predict its approximate relative frequency over repeated trials and approximate event count; predictions are not exact guarantees (for example, about—but not necessarily exactly—200 rolls of 3 or 6 out of 600 rolls of a fair number cube).",
       "test_material_conditions": [
-        "long-run relative frequency",
-        "predict relative frequency from probability",
-        "predict approximate counts for a stated trial count"
+        "collect data on the chance process",
+        "observe long-run relative frequency",
+        "predict approximate relative frequency from known probability",
+        "predict approximate event count over repeated trials",
+        "predicted count is not an exact guarantee"
       ],
       "source_review_status": "AUTHOR_DIRECT_CDE_PDF_PAGE_CHECK_PENDING_INDEPENDENT_FIDELITY",
       "canonical_equivalence": "UNVERIFIED",

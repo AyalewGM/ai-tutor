@@ -17,7 +17,7 @@
       "pdf_zero_based_page": 56,
       "subparts": [],
       "material_conditions": [
-        "Approximate probabilities by observing long-run relative frequencies of chance processes",
+        "Approximate probabilities by collecting data on the chance process and observing its long-run relative frequency",
         "Given a probability, predict an approximate relative frequency in repeated trials",
         "Observed results in finite trials need not equal exact expected counts"
       ]
