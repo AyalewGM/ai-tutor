@@ -12,7 +12,7 @@ x-api-env: &api-env
   AI_PROVIDER: gateway
   LLM_GATEWAY_URL: http://llm-gateway:8001
   REDIS_URL: redis://redis:6379/0
-  PUBLIC_BASE_URL: https://localhost:8443
+  PUBLIC_BASE_URL: https://dev.mihureducation.com
   SESSION_COOKIE_SECURE: "true"
   EMAIL_BACKEND: console
   PHOTO_OCR_PROVIDER: stub
