@@ -464,25 +464,49 @@ def diagnose_response(response: object, variant: PackageVariant) -> str:
     return "UNCLASSIFIED_FOR_HUMAN_REVIEW"
 
 
+def _semantic_contract(variant: PackageVariant) -> dict[str, Any]:
+    """Return the mathematics a learner must solve, independent of variant ID."""
+
+    return {
+        "structure": variant.structure,
+        "prompt": variant.prompt,
+        "divisor": _term_record(variant.teacher_oracle["divisor"]),
+        "dividend_terms": [
+            _term_record(term) for term in variant.teacher_oracle["dividend_terms"]
+        ],
+        "quotient_terms": [
+            _term_record(term) for term in variant.teacher_oracle["quotient_terms"]
+        ],
+        "domain_restrictions": list(
+            variant.teacher_oracle["domain_restrictions"]
+        ),
+    }
+
+
 def fresh_exit(seed: int, mode: str, misconception_id: str) -> PackageVariant:
     _validate(seed, mode)
     if misconception_id not in MISCONCEPTIONS:
         raise ValueError(f"Unsupported misconception: {misconception_id!r}")
+    original = generate(seed, mode)
+    original_contract = _semantic_contract(original)
     order = sorted(MISCONCEPTIONS).index(misconception_id)
     fresh_seed = 100_000 + seed * 16 + order * 2
     if misconception_id == "POLY.DIV.ONE_TERM_ONLY":
         fresh_seed += 1
-    if misconception_id != "POLY.DIV.ADD_EXPONENTS":
-        return generate(fresh_seed, mode)
     for offset in range(2_048):
         candidate = generate(fresh_seed + offset, mode)
-        if any(
+        if _semantic_contract(candidate) == original_contract:
+            continue
+        if misconception_id == "POLY.DIV.ADD_EXPONENTS" and not any(
             exponent < 0
             for term in candidate.teacher_oracle["quotient_terms"]
             for _, exponent in term.powers
         ):
-            return candidate
-    raise RuntimeError("unable to generate a bounded negative-exponent fresh exit")
+            continue
+        return candidate
+    raise RuntimeError(
+        "unable to generate a bounded semantically distinct fresh exit"
+    )
 
 
 
