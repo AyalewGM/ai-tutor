@@ -15,6 +15,21 @@ Audit the merged system for **reproducible** technical, safety, mathematical, pe
 - No feature or standards activation, PR merges, deployment, new family invitations or schedule enabling by an audit agent. Manual owner release decisions remain independent.
 - Never copy protected teaching resources. Do not expose actionable security exploits, student data or secrets in public issues; escalate through an appropriate restricted security path.
 
+## Manual launch using repository custom agents
+
+The six YAML-frontmatter profiles in `.github/agents/` are compatible with GitHub Copilot custom agents (where the repository/account has access). They specify `disable-model-invocation: true` and `user-invocable: true`, so invocation is **manual**. The profiles are not autonomous monitors, background tasks or GitHub Actions workflows; issue creation/merging this runbook does **not** start execution or enable a ChatGPT schedule.
+
+After independently approving and merging the profile PR, an authorized reviewer can open the relevant audit issue (#435–#440), select its matching `Mihur ... Auditor` custom agent in the supported GitHub Copilot interface, and explicitly assign/invoke that issue for a one-time audit. The agent should pin `main`, check previous evidence and report only substantive findings. If this Copilot capability is unavailable in the owner's account, the Markdown files remain self-contained reviewer instructions that can be run manually with an available authorized agent tool; do not misrepresent installation or invocation as complete.
+
+- Engineering: `.github/agents/mihur-bug-hunter.agent.md` → #435
+- AppSec: `.github/agents/mihur-security-auditor.agent.md` → #436
+- Mathematical: `.github/agents/mihur-math-auditor.agent.md` → #437
+- Pedagogical: `.github/agents/mihur-pedagogy-auditor.agent.md` → #438
+- Muse QA: `.github/agents/mihur-muse-auditor.agent.md` → #439
+- Standards: `.github/agents/mihur-standards-auditor.agent.md` → #440
+
+These profiles are configured without editor/write tools. A command-execution tool is available for synthetic offline tests and must not be used to bypass the read-only audit contract, write production databases, or alter repository state. GitHub's actual tool and account permissions must also be checked at invocation. **Do not allow any reviewer to author changes it later independently approves.**
+
 ## Independent lanes and ownership
 
 | Audit lane | Investigate | Fix owner / independent reviewer |
