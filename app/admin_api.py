@@ -44,7 +44,12 @@ from app.services.admin_security import (
     record_admin_action,
     register_mfa_attempt,
 )
-from app.services.email import family_approved_email, family_rejected_email, send_email
+from app.services.email import (
+    family_approved_email,
+    family_invitation_email,
+    family_rejected_email,
+    send_email,
+)
 from app.services.permissions import Permission, has_permission, permissions_for
 
 router = APIRouter(prefix="/admin", tags=["admin"])
@@ -445,6 +450,8 @@ class InvitationCreateIn(BaseModel):
     email: str | None = Field(default=None, max_length=255)
     seats: int | None = Field(default=None, ge=1, le=20)
     expires_in_days: int = Field(default=30, ge=1, le=365)
+    # Explicit owner action = approval to email the family the invite link.
+    send: bool = False
 
 
 class InvitationOut(BaseModel):
@@ -475,9 +482,14 @@ def _invitation_out(invitation) -> InvitationOut:
              status_code=status.HTTP_201_CREATED)
 def create_invitation(
     payload: InvitationCreateIn,
+    background: BackgroundTasks,
     db: DbSession,
     staff: Annotated[User, Depends(require_staff(Permission.FAMILIES_APPROVE))],
 ) -> InvitationCreatedOut:
+    if payload.send and not payload.email:
+        raise HTTPException(
+            status_code=422, detail="Cannot send an invitation without an email"
+        )
     raw = secrets.token_urlsafe(32)
     now = datetime.now(UTC)
     invitation = ParentInvitation(
@@ -495,6 +507,11 @@ def create_invitation(
         after={"email": invitation.email, "seats": invitation.seats},
     )
     db.commit()
+    if payload.send:
+        background.add_task(
+            send_email,
+            family_invitation_email(invitation.email, raw, invitation.seats),
+        )
     out = _invitation_out(invitation)
     return InvitationCreatedOut(**out.model_dump(), token=raw)
 

@@ -600,3 +600,80 @@ def test_uncovered_region_falls_back_to_country_catalog():
     assert all(
         c["region_code"] in {"DC", "MD", "VA", "NY", None} for c in curricula
     )
+
+
+@pytest.fixture
+def outbox(monkeypatch):
+    from app import admin_api, auth_api
+
+    sent = []
+    monkeypatch.setattr(auth_api, "send_email", sent.append)
+    monkeypatch.setattr(admin_api, "send_email", sent.append)
+    monkeypatch.setattr(settings, "admin_notification_email", "owner@example.com")
+    yield sent
+    client.cookies.clear()
+
+
+def _staff_cookie() -> None:
+    """ADMIN session with MFA verified — mirrors the staff gate in admin_api."""
+    from app.auth import SESSION_COOKIE, create_session
+
+    with SessionLocal() as db:
+        staff = User(email=f"staff-{uuid.uuid4().hex[:8]}@example.com", role="ADMIN")
+        db.add(staff)
+        db.flush()
+        token, session = create_session(db, staff.id)
+        session.mfa_verified_at = datetime.now(UTC)
+        db.commit()
+    client.cookies.set(SESSION_COOKIE, token)
+
+
+def test_registration_emails_welcome_to_parent_and_notice_to_owner(outbox):
+    email = f"welcome-{uuid.uuid4().hex[:8]}@example.com"
+    resp = client.post(
+        "/api/v1/auth/register-parent",
+        json={
+            "email": email,
+            "password": "synthetic-password-12+",
+            "parent_pin": "1234",
+            "country_code": "US",
+            "region_code": "NY",
+            "terms_accepted": True,
+            "coppa_consent_given": True,
+        },
+    )
+    assert resp.status_code == 201, resp.text
+    recipients = [m.to for m in outbox]
+    assert email in recipients  # welcome email to the registering parent
+    assert "owner@example.com" in recipients  # admin notification preserved
+    welcome = next(m for m in outbox if m.to == email)
+    assert "New York" in welcome.body
+    assert "one link per child" in welcome.body.lower() or "each child" in welcome.body
+
+
+def test_invitation_send_flag_emails_the_link(outbox):
+    _staff_cookie()
+    # send=true without an email has nowhere to go.
+    assert (
+        client.post(
+            "/api/v1/admin/family-invitations", json={"send": True}
+        ).status_code
+        == 422
+    )
+    target = f"invited-{uuid.uuid4().hex[:8]}@example.com"
+    resp = client.post(
+        "/api/v1/admin/family-invitations",
+        json={"email": target, "seats": 2, "send": True},
+    )
+    assert resp.status_code == 201, resp.text
+    token = resp.json()["token"]
+    invite = next(m for m in outbox if m.to == target)
+    assert f"/register?invite={token}" in invite.body
+    assert "2 learners" in invite.body
+    # The same link can be handed off manually when send is false.
+    quiet = client.post(
+        "/api/v1/admin/family-invitations",
+        json={"email": f"quiet-{uuid.uuid4().hex[:8]}@example.com"},
+    )
+    assert quiet.status_code == 201
+    assert not any("register?invite" in m.body for m in outbox if m.to == quiet.json()["email"])

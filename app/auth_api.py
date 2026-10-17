@@ -33,8 +33,12 @@ from app.services.auth_security import (
     ensure_not_locked_out,
     record_login_failure,
 )
-from app.services.email import new_family_notification, send_email
-from app.services.regions import valid_region
+from app.services.email import (
+    family_welcome_email,
+    new_family_notification,
+    send_email,
+)
+from app.services.regions import region_name, valid_region
 from app.services.turnstile import verify_turnstile
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -181,6 +185,14 @@ def register_parent(
         # Do not expose whether an account exists.
         raise HTTPException(status_code=400, detail="Unable to create account") from exc
     _set_session_cookie(response, token)
+    background.add_task(
+        send_email,
+        family_welcome_email(
+            user.email,
+            user.display_name,
+            region_name(country_code, region_code),
+        ),
+    )
     notification = new_family_notification(user.email, user.display_name)
     if notification is not None:
         background.add_task(send_email, notification)
