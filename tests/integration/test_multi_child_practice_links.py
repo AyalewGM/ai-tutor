@@ -8,12 +8,18 @@ import uuid
 from datetime import UTC, datetime, timedelta
 
 import pytest
+from argon2 import PasswordHasher
+from fastapi import HTTPException
 from fastapi.testclient import TestClient
-from sqlalchemy import select
+from sqlalchemy import func, select
 
 from app import practice_pass_api
+from app.auth import SESSION_COOKIE, create_session
+from app.auth_api import _consume_invitation
+from app.auth_models import AuthSession
 from app.core.database import SessionLocal
 from app.core.settings import settings
+from app.credential_models import UserCredential
 from app.identity import current_user
 from app.main import app
 from app.models import Curriculum, Student, User
@@ -558,6 +564,263 @@ def test_registration_requires_and_stores_family_state():
         )
         assert parent.country_code == "US"
         assert parent.region_code == "NY"
+
+
+# --- Auth authority: single-identity requests --------------------------------
+
+
+def _activate_link(parent_id: uuid.UUID, child: uuid.UUID) -> str:
+    """Mint + activate a child's link; returns the raw pass token."""
+    _override_user(_parent_user(parent_id))
+    try:
+        url = client.post(
+            "/api/v1/practice-pass", json={"student_id": str(child)}
+        ).json()["url"]
+    finally:
+        _clear_override()
+    token = _extract_token(url)
+    resp = client.post("/api/v1/practice-pass/activate", json={"token": token})
+    assert resp.status_code == 200, resp.text
+    return token
+
+
+def _link_student_to_parent(child: uuid.UUID, parent_id: uuid.UUID) -> User:
+    """Populate the legacy Student.parent_id link the learner identity
+    branch requires, and return the parent user."""
+    with SessionLocal() as db:
+        parent = db.get(ParentProfile, parent_id)
+        db.get(Student, child).parent_id = parent.user_id
+        db.commit()
+        return db.get(User, parent.user_id)
+
+
+def test_learner_cookie_suppresses_parent_identity():
+    """A device holding BOTH a live learner cookie and a parent session
+    cookie is learner-scoped: parent surfaces must not be reachable."""
+    parent_id, (child, _sibling) = _make_family(children=2)
+    try:
+        user = _link_student_to_parent(child, parent_id)
+        _activate_link(parent_id, child)
+        with SessionLocal() as db:
+            parent_token, _ = create_session(db, user.id)
+            db.commit()
+        # The parent's cookie is still valid server-side…
+        with SessionLocal() as db:
+            assert db.scalar(
+                select(func.count()).select_from(AuthSession).where(
+                    AuthSession.user_id == user.id
+                )
+            ) == 1
+        # TestClient plants domainless cookies; scope them to the server host
+        # so Set-Cookie deletions evict them like a real browser.
+        client.cookies.set(SESSION_COOKIE, parent_token, domain="testserver.local")
+        # …but the live learner cookie scopes the whole request: parent
+        # endpoints deny even though the parent session row exists.
+        assert client.get("/api/v1/auth/me").status_code == 401
+        assert client.get("/api/v1/practice-pass").status_code == 401
+        assert (
+            client.post(
+                "/api/v1/practice-pass", json={"student_id": str(child)}
+            ).status_code
+            == 401
+        )
+    finally:
+        _clear_override()
+        client.cookies.delete(SESSION_COOKIE)
+        client.cookies.delete("ai_tutor_learner")
+
+
+def test_activation_clears_parent_cookie_on_device():
+    """Activating a kid's link on a shared device ends parent presence
+    there — the two cookies must not coexist."""
+    parent_id, (child,) = _make_family(children=1)
+    try:
+        user = _link_student_to_parent(child, parent_id)
+        _override_user(user)
+        url = client.post(
+            "/api/v1/practice-pass", json={"student_id": str(child)}
+        ).json()["url"]
+        _clear_override()
+        with SessionLocal() as db:
+            parent_token, _ = create_session(db, user.id)
+            db.commit()
+        # TestClient plants domainless cookies; scope to the server host so
+        # Set-Cookie deletions evict like a real browser.
+        client.cookies.set(SESSION_COOKIE, parent_token, domain="testserver.local")
+        resp = client.post(
+            "/api/v1/practice-pass/activate",
+            json={"token": _extract_token(url)},
+        )
+        assert resp.status_code == 200
+        # The response instructs the browser to drop the parent cookie.
+        deletions = [
+            h for h in resp.headers.get_list("set-cookie")
+            if h.startswith(f"{SESSION_COOKIE}=") and "Max-Age=0" in h
+        ]
+        assert len(deletions) == 1
+        # Server-side parent session survives (other devices unaffected)…
+        with SessionLocal() as db:
+            assert db.scalar(
+                select(func.count()).select_from(AuthSession).where(
+                    AuthSession.user_id == user.id
+                )
+            ) == 1
+        # …but the browser jar no longer holds the parent cookie.
+        assert client.cookies.get(SESSION_COOKIE) is None
+    finally:
+        _clear_override()
+        client.cookies.delete(SESSION_COOKIE)
+        client.cookies.delete("ai_tutor_learner")
+
+
+def test_learner_logout_revokes_session_and_frees_link():
+    """POST /practice-pass/logout revokes the server-side session row, so a
+    second holder of the link can activate immediately."""
+    parent_id, (child,) = _make_family(children=1)
+    try:
+        _link_student_to_parent(child, parent_id)
+        token = _activate_link(parent_id, child)
+        holder_cookie = client.cookies.get("ai_tutor_learner")
+        assert holder_cookie
+        # Second holder (no cookie) is refused while the session is live.
+        client.cookies.delete("ai_tutor_learner")
+        assert (
+            client.post(
+                "/api/v1/practice-pass/activate", json={"token": token}
+            ).status_code
+            == 409
+        )
+        # The holder signs out: server row revoked, cookie cleared.
+        client.cookies.set(
+            "ai_tutor_learner", holder_cookie, domain="testserver.local"
+        )
+        assert client.post("/api/v1/practice-pass/logout").status_code == 204
+        assert client.cookies.get("ai_tutor_learner") is None
+        with SessionLocal() as db:
+            assert (
+                db.scalars(
+                    select(LearnerPassSession).where(
+                        LearnerPassSession.student_id == child
+                    )
+                ).all()
+                == []
+            )
+        # The second holder activates without waiting out the live window.
+        assert (
+            client.post(
+                "/api/v1/practice-pass/activate", json={"token": token}
+            ).status_code
+            == 200
+        )
+    finally:
+        _clear_override()
+        client.cookies.delete(SESSION_COOKIE)
+        client.cookies.delete("ai_tutor_learner")
+
+
+def test_parent_login_ends_learner_session_on_device():
+    """Presenting a parent credential revokes the learner session the
+    device was holding."""
+    parent_id, (child,) = _make_family(children=1)
+    try:
+        user = _link_student_to_parent(child, parent_id)
+        _activate_link(parent_id, child)
+        assert client.cookies.get("ai_tutor_learner")
+        with SessionLocal() as db:
+            db.add(
+                UserCredential(
+                    user_id=user.id,
+                    password_hash=PasswordHasher().hash("parent-password-12+"),
+                )
+            )
+            db.commit()
+        resp = client.post(
+            "/api/v1/auth/login",
+            json={"email": user.email, "password": "parent-password-12+"},
+        )
+        assert resp.status_code == 200, resp.text
+        assert client.cookies.get("ai_tutor_learner") is None
+        with SessionLocal() as db:
+            assert (
+                db.scalars(
+                    select(LearnerPassSession).where(
+                        LearnerPassSession.student_id == child
+                    )
+                ).all()
+                == []
+            )
+    finally:
+        _clear_override()
+        client.cookies.delete(SESSION_COOKIE)
+        client.cookies.delete("ai_tutor_learner")
+
+
+def test_parent_logout_revokes_learner_session_too():
+    """/auth/logout tears down both identities on the device."""
+    parent_id, (child,) = _make_family(children=1)
+    try:
+        user = _link_student_to_parent(child, parent_id)
+        _activate_link(parent_id, child)
+        with SessionLocal() as db:
+            parent_token, _ = create_session(db, user.id)
+            db.commit()
+        client.cookies.set(SESSION_COOKIE, parent_token, domain="testserver.local")
+        assert client.post("/api/v1/auth/logout").status_code == 204
+        assert client.cookies.get(SESSION_COOKIE) is None
+        assert client.cookies.get("ai_tutor_learner") is None
+        with SessionLocal() as db:
+            assert (
+                db.scalars(
+                    select(LearnerPassSession).where(
+                        LearnerPassSession.student_id == child
+                    )
+                ).all()
+                == []
+            )
+    finally:
+        _clear_override()
+        client.cookies.delete(SESSION_COOKIE)
+        client.cookies.delete("ai_tutor_learner")
+
+
+def test_invitation_consumption_is_atomic_single_use():
+    """The guarded UPDATE refuses a second consume even if a racing
+    registration already passed the invitation lookup."""
+    _token, invitation_id = _issue_invitation(email=None)
+    parents = []
+    for _ in range(2):
+        with SessionLocal() as db:
+            user = User(
+                email=f"atomic-{uuid.uuid4().hex[:8]}@example.com",
+                display_name="Synthetic Parent",
+                role="PARENT",
+            )
+            db.add(user)
+            db.flush()
+            parent = ParentProfile(user_id=user.id, subscription_tier="free")
+            db.add(parent)
+            db.commit()
+            parents.append(parent.id)
+    with SessionLocal() as db:
+        invitation = db.get(ParentInvitation, invitation_id)
+        _consume_invitation(
+            db,
+            invitation=invitation,
+            parent=db.get(ParentProfile, parents[0]),
+            now=datetime.now(UTC),
+        )
+        db.commit()
+    with SessionLocal() as db:
+        invitation = db.get(ParentInvitation, invitation_id)
+        with pytest.raises(HTTPException) as exc:
+            _consume_invitation(
+                db,
+                invitation=invitation,
+                parent=db.get(ParentProfile, parents[1]),
+                now=datetime.now(UTC),
+            )
+        assert exc.value.status_code == 403
+
 
 
 def test_public_regions_endpoint_serves_registration_cascade():

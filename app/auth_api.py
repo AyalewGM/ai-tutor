@@ -6,7 +6,7 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerificationError
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request, Response, status
 from pydantic import BaseModel, EmailStr, Field
-from sqlalchemy import func, select
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -20,11 +20,13 @@ from app.onboarding_api import regions_catalog
 from app.parent_models import (
     APPROVAL_APPROVED,
     APPROVAL_PENDING,
+    LearnerPassSession,
     ParentInvitation,
     ParentProfile,
     PilotEntitlement,
 )
 from app.parent_schemas import RegionsOut
+from app.practice_pass_api import LEARNER_COOKIE
 from app.schemas import ParentRegisterSchema
 from app.services.auth_security import (
     clear_login_failures,
@@ -64,9 +66,11 @@ def _resolve_invitation(db: Session, payload: ParentRegistration) -> ParentInvit
     if not payload.invitation_token:
         raise generic
     invitation = db.scalar(
-        select(ParentInvitation).where(
-            ParentInvitation.token_hash == _invitation_digest(payload.invitation_token)
-        )
+        select(ParentInvitation)
+        .where(ParentInvitation.token_hash == _invitation_digest(payload.invitation_token))
+        # Serialize concurrent redemptions of the same invite on the row lock;
+        # the guarded UPDATE in _consume_invitation is the atomic backstop.
+        .with_for_update()
     )
     if (
         invitation is None
@@ -83,10 +87,26 @@ def _consume_invitation(
     db: Session, *, invitation: ParentInvitation, parent: ParentProfile, now: datetime
 ) -> None:
     """Single-use consumption + pilot seat grant, inside the registration
-    transaction so a disabled invite can never mint an account."""
+    transaction so a disabled invite can never mint an account. The guarded
+    UPDATE makes single-use atomic even where row locks are a no-op."""
+    consumed = db.execute(
+        update(ParentInvitation)
+        .where(
+            ParentInvitation.id == invitation.id,
+            ParentInvitation.status == "PENDING",
+        )
+        .values(
+            status="ACCEPTED",
+            accepted_parent_profile_id=parent.id,
+            responded_at=now,
+        )
+    )
+    if consumed.rowcount != 1:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Registration requires a valid invitation",
+        )
     invitation.status = "ACCEPTED"
-    invitation.accepted_parent_profile_id = parent.id
-    invitation.responded_at = now
     db.add(
         PilotEntitlement(
             parent_profile_id=parent.id,
@@ -142,6 +162,32 @@ def _set_session_cookie(response: Response, token: str) -> None:
     )
 
 
+def _end_learner_presence(
+    request: Request, response: Response, db: Session
+) -> None:
+    """A parent credential being established or torn down on this device ends
+    the learner session here: revoke the server-side row keyed by the
+    presented learner cookie, then clear the cookie. Other devices keep
+    their own sessions."""
+    learner_token = request.cookies.get(LEARNER_COOKIE)
+    if learner_token:
+        db.execute(
+            delete(LearnerPassSession).where(
+                LearnerPassSession.token_hash == hashlib.sha256(
+                    learner_token.encode("utf-8")
+                ).hexdigest()
+            )
+        )
+        db.commit()
+    response.delete_cookie(
+        LEARNER_COOKIE,
+        path="/",
+        httponly=True,
+        secure=settings.session_cookie_secure,
+        samesite="lax",
+    )
+
+
 @router.post("/register-parent", response_model=SessionUser, status_code=status.HTTP_201_CREATED)
 def register_parent(
     payload: ParentRegistration,
@@ -190,6 +236,7 @@ def register_parent(
         # Do not expose whether an account exists.
         raise HTTPException(status_code=400, detail="Unable to create account") from exc
     _set_session_cookie(response, token)
+    _end_learner_presence(request, response, db)
     background.add_task(
         send_email,
         family_welcome_email(
@@ -231,6 +278,7 @@ def login(
     token, _ = create_session(db, user.id)
     db.commit()
     _set_session_cookie(response, token)
+    _end_learner_presence(request, response, db)
     return _session_user(db, user)
 
 
@@ -262,6 +310,7 @@ def logout(request: Request, response: Response, db: DbSession) -> None:
     if token:
         revoke_session(db, token)
         db.commit()
+    _end_learner_presence(request, response, db)
     response.delete_cookie(
         SESSION_COOKIE,
         path="/",

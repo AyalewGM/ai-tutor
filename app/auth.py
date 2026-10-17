@@ -53,7 +53,13 @@ def resolve_user_id(db: Session, token: str) -> uuid.UUID | None:
 
 
 async def session_identity_middleware(request: Request, call_next):
+    # Single-identity requests: a live learner session makes the whole request
+    # learner-scoped. A leftover parent cookie on the same device must NOT
+    # unlock parent APIs — kids use shared devices. Parent identity is only
+    # resolved when no live learner session exists; presenting a parent
+    # credential (login/register/logout) clears the learner cookie.
     learner_token = request.cookies.get("ai_tutor_learner")
+    learner_scoped = False
     if learner_token:
         with SessionLocal() as db:
             learner_session = db.scalar(
@@ -65,11 +71,13 @@ async def session_identity_middleware(request: Request, call_next):
                 learner_session.last_seen_at = datetime.now(UTC)
                 db.commit()
                 request.state.authenticated_learner_id = learner_session.student_id
+                learner_scoped = True
 
-    token = request.cookies.get(SESSION_COOKIE)
-    if token:
-        with SessionLocal() as db:
-            user_id = resolve_user_id(db, token)
-            if user_id is not None:
-                request.state.authenticated_user_id = user_id
+    if not learner_scoped:
+        token = request.cookies.get(SESSION_COOKIE)
+        if token:
+            with SessionLocal() as db:
+                user_id = resolve_user_id(db, token)
+                if user_id is not None:
+                    request.state.authenticated_user_id = user_id
     return await call_next(request)

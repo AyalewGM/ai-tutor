@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
+from app.auth import SESSION_COOKIE
 from app.core.database import get_db
 from app.core.settings import settings
 from app.identity import CurrentParent
@@ -75,6 +76,28 @@ def _set_learner_cookie(response: Response, token: str) -> None:
     response.set_cookie(
         LEARNER_COOKIE, token, max_age=int(LEARNER_SESSION_TTL.total_seconds()),
         httponly=True, secure=settings.session_cookie_secure, samesite="lax", path="/",
+    )
+
+
+def _clear_parent_cookie(response: Response) -> None:
+    """Drop the parent session cookie on this device so it cannot coexist
+    with the learner cookie the activation response sets."""
+    response.delete_cookie(
+        SESSION_COOKIE,
+        path="/",
+        httponly=True,
+        secure=settings.session_cookie_secure,
+        samesite="lax",
+    )
+
+
+def _clear_learner_cookie(response: Response) -> None:
+    response.delete_cookie(
+        LEARNER_COOKIE,
+        path="/",
+        httponly=True,
+        secure=settings.session_cookie_secure,
+        samesite="lax",
     )
 
 
@@ -292,6 +315,7 @@ def activate(
         holder_token = request.cookies.get(LEARNER_COOKIE)
         if holder_token and _digest(holder_token) == busy.token_hash:
             _set_learner_cookie(response, holder_token)
+            _clear_parent_cookie(response)
             response.headers["Referrer-Policy"] = "no-referrer"
             return ActivateOut(
                 student_id=student.id,
@@ -315,6 +339,7 @@ def activate(
     db.add(learner_session)
     db.commit()
     _set_learner_cookie(response, raw_session)
+    _clear_parent_cookie(response)
     # The bearer token lives in the URL until the SPA strips it; make sure
     # it can never leak to third parties via Referer on the way out.
     response.headers["Referrer-Policy"] = "no-referrer"
@@ -322,3 +347,23 @@ def activate(
         student_id=student.id,
         nickname=learner_session.display_name or student.first_name,
     )
+
+
+@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
+def learner_logout(request: Request, response: Response, db: DbSession) -> None:
+    """End the learner session on this device.
+
+    Revokes the server-side session row — not just the cookie — so the link
+    is freed for re-activation immediately instead of waiting out the live
+    session window. Returns None so the injected response (which carries the
+    cookie deletion) is the one sent.
+    """
+    token = request.cookies.get(LEARNER_COOKIE)
+    if token:
+        db.execute(
+            delete(LearnerPassSession).where(
+                LearnerPassSession.token_hash == _digest(token)
+            )
+        )
+        db.commit()
+    _clear_learner_cookie(response)
