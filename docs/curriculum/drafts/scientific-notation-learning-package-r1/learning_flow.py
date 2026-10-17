@@ -203,9 +203,9 @@ def generate_contextual_transfer(index: int, mode: str, source_generate: Any) ->
         unit = ("pulses", "events")[context]
         ordinary = Fraction(_field(candidate, "teacher_oracle")["ordinary_value"])
         task = (
-            f"A synthetic counter recorded exactly {ordinary} {unit}. "
-            "Express the reading in normalized scientific notation, explain the "
-            "inverse factor-of-ten change, and verify the original exact count."
+            f"A synthetic counter recorded {ordinary} {unit}. "
+            f"Express this exact value {ordinary} in normalized scientific notation, "
+            "explain the inverse factor-of-ten change, and verify the original exact count."
         )
     elif operation == "TO_ORDINARY":
         unit = ("micrometres", "grams")[context]
