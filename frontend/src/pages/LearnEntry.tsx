@@ -14,10 +14,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import type { CurriculumChoice, DiagnosticOut, LearnerChoice, RegionsOut, SessionOut, SkillChoice } from "../types";
+import type { CurriculumChoice, DiagnosticOut, LearnerChoice, RegionsOut, SessionOut, SkillChoice, SessionUser } from "../types";
 
 export default function LearnEntry() {
   const [learners, setLearners] = useState<LearnerChoice[]>([]);
+  const [learnerOnly, setLearnerOnly] = useState(false);
   const [curricula, setCurricula] = useState<CurriculumChoice[]>([]);
   const [skills, setSkills] = useState<SkillChoice[]>([]);
   const [learnerId, setLearnerId] = useState("");
@@ -38,6 +39,11 @@ export default function LearnEntry() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Learner sessions expose exactly one student server-side. Parent-only
+    // roster editing, region changes and billing controls stay hidden here.
+    api<SessionUser>("/auth/me")
+      .then((user) => setLearnerOnly(!["PARENT", "GUARDIAN"].includes(user.role.toUpperCase())))
+      .catch((err) => { if (err instanceof ApiError && err.status === 401) setLearnerOnly(true); });
     api<LearnerChoice[]>("/onboarding/learners")
       .then((rows) => { setLearners(rows); if (rows.length === 1) setLearnerId(rows[0].id); })
       .catch(() => setError("Could not load learners"));
@@ -180,7 +186,7 @@ export default function LearnEntry() {
           <CardContent className="flex flex-col gap-4 pt-6 sm:flex-row sm:items-end">
             <div className="flex-1 space-y-1.5">
               <Label htmlFor="learner">Who is learning?</Label>
-              <Select value={learnerId} onValueChange={setLearnerId}>
+              <Select value={learnerId} onValueChange={setLearnerId} disabled={learnerOnly}>
                 <SelectTrigger id="learner">
                   <SelectValue placeholder="Select learner" />
                 </SelectTrigger>
@@ -222,11 +228,11 @@ export default function LearnEntry() {
                         <BookOpen className="h-3.5 w-3.5" /> Catalog
                       </Link>
                     </Button>
-                    <Button variant="ghost" size="sm" asChild>
+                    {!learnerOnly && <Button variant="ghost" size="sm" asChild>
                       <Link to="/billing">
                         <CreditCard className="h-3.5 w-3.5" /> Plan
                       </Link>
-                    </Button>
+                    </Button>}
                   </div>
                 </div>
                 {avatarPickerOpen && (
@@ -391,8 +397,8 @@ export default function LearnEntry() {
             </CardContent>
           </Card>
 
-          {/* Add learner */}
-          <Card>
+          {/* Account and roster changes are adult-only. */}
+          {!learnerOnly && <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
                 <UserPlus className="h-5 w-5 text-primary" />
@@ -517,7 +523,7 @@ export default function LearnEntry() {
                 </p>
               )}
             </CardContent>
-          </Card>
+          </Card>}
         </div>
 
         {error && (
