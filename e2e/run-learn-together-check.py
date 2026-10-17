@@ -44,10 +44,10 @@ def run():
         with open(Path(temporary) / "servers.log", "w+") as log:
             relay = None
             server_env = os.environ.copy()
-            if os.environ.get("MIHUR_REDIS_EXECUTABLE"):
+            if os.environ.get("MIHUR_TEST_REAL_REDIS") == "1":
                 relay = subprocess.Popen(
                     [
-                        os.environ["MIHUR_REDIS_EXECUTABLE"],
+                        "redis-server",
                         "--bind",
                         "127.0.0.1",
                         "--port",

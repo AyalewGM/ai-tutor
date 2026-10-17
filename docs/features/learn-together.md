@@ -87,7 +87,7 @@ PDF bytes, per-page annotations, navigation replay, and phone viewport overflow.
 
 Executed author-side: 28 API/deletion tests passed, repository Ruff passed,
 production frontend build passed, and the two-browser check passed using a real
-Redis broker. Set `MIHUR_REDIS_EXECUTABLE` to a Redis server executable to run
+Redis broker. Set `MIHUR_TEST_REAL_REDIS=1` with `redis-server` on PATH to run
 that variant; the default uses an isolated test relay. No additional production
 Redis dependency is introduced. Fresh latest-head CI is required before release.
 PostgreSQL is not available in the local author environment.
