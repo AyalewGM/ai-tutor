@@ -18,7 +18,7 @@ import type { CurriculumChoice, DiagnosticOut, LearnerChoice, RegionsOut, Sessio
 
 export default function LearnEntry() {
   const [learners, setLearners] = useState<LearnerChoice[]>([]);
-  const [learnerOnly, setLearnerOnly] = useState(false);
+  const [learnerOnly, setLearnerOnly] = useState(true); // Hide parent-only UI until server confirms adult role.
   const [curricula, setCurricula] = useState<CurriculumChoice[]>([]);
   const [skills, setSkills] = useState<SkillChoice[]>([]);
   const [learnerId, setLearnerId] = useState("");
