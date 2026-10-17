@@ -8,7 +8,6 @@ from sqlalchemy.orm import Session
 
 from app.adaptive_api import _focus
 from app.api import _problem_out, _student_skill, _tutor_context
-from app.content_models import ProblemContentMetadata
 from app.core.database import SessionLocal, get_db
 from app.hint_models import HintEvent
 from app.identity import CurrentLearningAccess, require_learning_owns_session
@@ -50,6 +49,10 @@ from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
     require_skill_in_scope,
+)
+from app.services.extension_offer import (
+    ExtensionOfferError,
+    extension_response_is_authorized,
 )
 from app.services.focus_controller import apply_focus_policy
 from app.services.hint_policy import assistance_level_for_hint, hint_constraint, select_hint
@@ -122,12 +125,12 @@ def respond(
         raise HTTPException(404, "Student or skill not found")
 
     state_at_attempt = session.current_state
-    content_meta = db.scalar(
-        select(ProblemContentMetadata).where(
-            ProblemContentMetadata.problem_id == problem.id
+    try:
+        is_extension = extension_response_is_authorized(
+            db, session=session, problem=problem
         )
-    )
-    is_extension = bool(content_meta and content_meta.extension_eligible)
+    except ExtensionOfferError as exc:
+        raise HTTPException(400, str(exc)) from exc
     if is_extension:
         # Optional stretch tier: tagged EXTENSION so mastery gating, progress
         # counters, and evidence queries exclude it.
