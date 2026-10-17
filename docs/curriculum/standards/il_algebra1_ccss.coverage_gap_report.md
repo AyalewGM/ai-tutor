@@ -5,12 +5,7 @@ Manifest: `il_algebra1_ccss.expectations.v1.json`
 
 ## Scope
 
-48 official CCSS standards placed in High School Algebra I by CCSS Appendix A
-(Traditional Pathway), across 5 units. Illinois adopts CCSS verbatim; the
-identifier set is a jurisdiction-swapped clone of the reviewed DC Algebra I
-inventory. Illinois high-school course placement follows Appendix A pending
-ISBE course-map verification (Illinois districts predominantly run a
-traditional pathway).
+48 provisionally selected CCSS expectation records from an Appendix A Traditional Pathway Algebra I interpretation, across 5 units. Illinois incorporates the 2010 CCSS content edition, but this does **not** establish that Illinois mandates this exact 48-row course selection. The identifier set is derived from a provisional DC Algebra I inventory; its course placement and source scope remain pending independent original Appendix A and ISBE verification.
 
 ## Findings
 
@@ -18,13 +13,13 @@ traditional pathway).
    `NO_REPOSITORY_SPECIFIC_MAPPING_FOUND`.
 2. **Same algebra wave covers five jurisdictions.** The
    `seed_canonical_decomposition` algebra work proposed for MD (`A1.*`),
-   MD IA1 (`IA1.*`), DC (`DCA1.*`), and VA (`VAA1.*`) covers the exact same
-   atomic scope Illinois needs. One reviewed algebra decomposition serves
-   all five.
+   MD IA1 (`IA1.*`), DC (`DCA1.*`), and VA (`VAA1.*`) is a candidate for reuse, not proof of exact Illinois course scope.
+   Independently verify each source expectation and course placement before
+   proposing shared atomic equivalences.
 3. **All of N.RN, N.Q, A.APR, quadratics (A.REI.4–7/11–12), exponentials
    (F.LE.3, F.BF), and statistics (S.ID) are unmapped everywhere** — the
-   identical gap exists in all four seeded jurisdictions, so Illinois adds no
-   new content requirement, only a new mapping surface.
+   apparent shared gap is provisional; Illinois may reuse reviewed canonical
+   mathematics only after source and course-scope acceptance.
 
 ## Handoffs
 
@@ -38,3 +33,7 @@ traditional pathway).
 
 `activation: FORBIDDEN` · zero canonical IDs created · zero learner-evidence
 mutation · `verified_mastery_evidence: NO_AND_MUST_NOT_BE_INFERRED` on all rows.
+
+## Source and course-placement acceptance gate
+
+Illinois 2010 CCSS incorporation confirms content-edition provenance only. Neither the original CCSS Appendix A Traditional Pathway selection nor Illinois-specific Algebra I course placement has been independently reconciled for these 48 rows. All row scope, subparts, mapping and mastery remain pending/unverified; no statewide mandated-course or complete-content claim is authorized.
