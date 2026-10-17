@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 PACKAGE_ID = "ONT-ALG-POLY-DIVISION-R1"
-REVISION = "issue-337-polynomial-division-package-r2"
+REVISION = "issue-337-polynomial-division-package-r3"
 STATUS = "DRAFT_UNVERIFIED"
 RUNTIME_ACTIVATION = False
 RESPONSE_CONTRACT_REVISION = "poly-division-evidence-v1"
@@ -464,25 +464,137 @@ def diagnose_response(response: object, variant: PackageVariant) -> str:
     return "UNCLASSIFIED_FOR_HUMAN_REVIEW"
 
 
+def _semantic_contract(variant: PackageVariant) -> dict[str, Any]:
+    """Return the mathematics a learner must solve, independent of variant ID."""
+
+    return {
+        "structure": variant.structure,
+        "prompt": variant.prompt,
+        "divisor": _term_record(variant.teacher_oracle["divisor"]),
+        "dividend_terms": [
+            _term_record(term) for term in variant.teacher_oracle["dividend_terms"]
+        ],
+        "quotient_terms": [
+            _term_record(term) for term in variant.teacher_oracle["quotient_terms"]
+        ],
+        "domain_restrictions": list(
+            variant.teacher_oracle["domain_restrictions"]
+        ),
+    }
+
+
+def _preserves_misconception_target(
+    candidate: PackageVariant, misconception_id: str
+) -> bool:
+    """Require an unseen exit on which the diagnosed mistake can still occur."""
+
+    oracle = candidate.teacher_oracle
+    if misconception_id == "POLY.DIV.ONE_TERM_ONLY":
+        # Dividing just one term is only a meaningful mistake for multi-term work.
+        return (
+            candidate.structure == "POLYNOMIAL_BY_MONOMIAL"
+            and len(oracle["dividend_terms"]) >= 2
+            and len(oracle["quotient_terms"]) >= 2
+        )
+    if misconception_id == "POLY.DIV.ADD_EXPONENTS":
+        # Preserve the pre-existing fresh negative-exponent exit requirement.
+        return any(
+            exponent < 0
+            for term in oracle["quotient_terms"]
+            for _, exponent in term.powers
+        )
+    if misconception_id == "POLY.DIV.DOMAIN_OMITTED":
+        # The original divisor must actually exclude a value.
+        return bool(oracle["domain_restrictions"])
+    if misconception_id == "POLY.DIV.COEFFICIENT_RECIPROCAL":
+        divisor_coefficient = oracle["divisor"].coefficient
+        # Reverse-order division must yield a detectably different coefficient.
+        return any(
+            dividend.coefficient / divisor_coefficient
+            != divisor_coefficient / dividend.coefficient
+            for dividend in oracle["dividend_terms"]
+        )
+    return False
+
+
 def fresh_exit(seed: int, mode: str, misconception_id: str) -> PackageVariant:
     _validate(seed, mode)
     if misconception_id not in MISCONCEPTIONS:
         raise ValueError(f"Unsupported misconception: {misconception_id!r}")
+    original = generate(seed, mode)
+    original_contract = _semantic_contract(original)
     order = sorted(MISCONCEPTIONS).index(misconception_id)
     fresh_seed = 100_000 + seed * 16 + order * 2
     if misconception_id == "POLY.DIV.ONE_TERM_ONLY":
         fresh_seed += 1
-    if misconception_id != "POLY.DIV.ADD_EXPONENTS":
-        return generate(fresh_seed, mode)
     for offset in range(2_048):
         candidate = generate(fresh_seed + offset, mode)
-        if any(
-            exponent < 0
-            for term in candidate.teacher_oracle["quotient_terms"]
-            for _, exponent in term.powers
+        if _semantic_contract(candidate) == original_contract:
+            continue
+        if (
+            candidate.teacher_oracle["structured_response"]
+            == original.teacher_oracle["structured_response"]
         ):
-            return candidate
-    raise RuntimeError("unable to generate a bounded negative-exponent fresh exit")
+            continue
+        if not _preserves_misconception_target(candidate, misconception_id):
+            continue
+        return candidate
+    raise RuntimeError(
+        "unable to generate a bounded semantically distinct fresh exit"
+    )
+
+
+
+def evaluate_repair_progress(
+    failed_response: object,
+    repaired_response: object,
+    fresh_response: object,
+    variant: PackageVariant,
+    fresh_variant: PackageVariant,
+) -> dict[str, Any]:
+    """Require a repaired original *and* a different complete guided exit.
+
+    This local draft evidence gate only recommends scaffold fading; it cannot
+    authorize a learner route, independent grade, or mastery event. The caller
+    must supply all typed response fields, including original-domain evidence,
+    exponent/coefficient reasons, and multiplication reconstruction.
+    """
+
+    if not isinstance(variant, PackageVariant) or not isinstance(
+        fresh_variant, PackageVariant
+    ):
+        raise TypeError("repair variants must be package variants")
+    if variant.mode != "guided" or fresh_variant.mode != "guided":
+        raise PermissionError("guided repair is unavailable in independent mode")
+
+    misconception = diagnose_response(failed_response, variant)
+    if misconception in {"NO_REMEDIATION", "UNCLASSIFIED_FOR_HUMAN_REVIEW"}:
+        return {
+            "misconception_id": misconception,
+            "original_repaired": False,
+            "fresh_exit_verified": False,
+            "ready_to_fade": False,
+            "mastery_credit": False,
+        }
+
+    seed = int(variant.variant_id.rsplit(":", 1)[1])
+    expected_fresh = fresh_exit(seed, "guided", misconception)
+    if fresh_variant != expected_fresh:
+        raise ValueError("fresh repair attempt must match its diagnosed exit")
+
+    original_repaired = evaluate_structured_response(repaired_response, variant)
+    fresh_exit_verified = (
+        evaluate_structured_response(fresh_response, fresh_variant)
+        if original_repaired
+        else False
+    )
+    return {
+        "misconception_id": misconception,
+        "original_repaired": original_repaired,
+        "fresh_exit_verified": fresh_exit_verified,
+        "ready_to_fade": original_repaired and fresh_exit_verified,
+        "mastery_credit": False,
+    }
 
 
 def advance_scaffold(state: str, event: str) -> str:
