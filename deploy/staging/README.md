@@ -88,6 +88,9 @@ mutation is automated here. Provision swap manually only after checking free dis
 
 ## Images and release manifest (off-host)
 
+See [GitHub Actions image builds](IMAGE_BUILDS.md) for the manual GHCR publishing
+workflow, private-package setup, release artifacts and VPS pull authentication.
+
 From the reviewed release SHA on a trusted build host, build these three images using
 Dockerfile, services/llm_gateway/Dockerfile and frontend/Dockerfile respectively. Tag
 with the full SHA and label org.opencontainers.image.revision with that SHA. Push to

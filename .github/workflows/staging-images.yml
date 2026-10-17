@@ -1,0 +1,91 @@
+name: Build staging images
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: staging-images
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: staging-images
+    permissions:
+      contents: read
+      actions: read
+      packages: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_SHA: ${{ github.sha }}
+      REPOSITORY: ${{ github.repository }}
+      REGISTRY_USER: ${{ github.actor }}
+      PRIVATE_PACKAGES_CONFIRMED: ${{ vars.STAGING_GHCR_PRIVATE_CONFIRMED }}
+    steps:
+      - name: Require registry setup and exact-commit checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$PRIVATE_PACKAGES_CONFIRMED" = true || {
+            echo 'Configure private packages and the staging-images environment first.' >&2
+            exit 1
+          }
+          for workflow in ci.yml security.yml; do
+            gh api "repos/$REPOSITORY/actions/workflows/$workflow/runs?head_sha=$RELEASE_SHA&event=push&per_page=100" > "$RUNNER_TEMP/checks.json"
+            jq -e --arg sha "$RELEASE_SHA" '
+              [.workflow_runs[] | select(.head_sha == $sha and .head_branch == "main")]
+              | sort_by(.run_number) | last
+              | .status == "completed" and .conclusion == "success"
+            ' "$RUNNER_TEMP/checks.json" > /dev/null
+          done
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Build and publish immutable release references
+        shell: bash
+        run: |
+          set -euo pipefail
+          export DOCKER_CONFIG="$RUNNER_TEMP/staging-docker"
+          mkdir -p "$DOCKER_CONFIG" "$RUNNER_TEMP/staging-release"
+          trap 'docker logout ghcr.io >/dev/null 2>&1 || true; rm -rf "$DOCKER_CONFIG"' EXIT
+          printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$REGISTRY_USER" --password-stdin
+          docker buildx create --use --name staging-builder
+          manifest="$RUNNER_TEMP/staging-release/application-images.env"
+          printf 'STAGING_RELEASE_SHA=%s\n' "$RELEASE_SHA" > "$manifest"
+          for service in api gateway frontend; do
+            case "$service" in
+              api) context=.; dockerfile=Dockerfile; key=API ;;
+              gateway) context=.; dockerfile=services/llm_gateway/Dockerfile; key=GATEWAY ;;
+              frontend) context=frontend; dockerfile=frontend/Dockerfile; key=FRONTEND ;;
+            esac
+            image="ghcr.io/${REPOSITORY,,}/staging-$service"
+            metadata="$RUNNER_TEMP/staging-release/$service.json"
+            docker buildx build --platform linux/amd64 \
+              --file "$dockerfile" --tag "$image:$RELEASE_SHA" \
+              --label "org.opencontainers.image.source=https://github.com/$REPOSITORY" \
+              --label "org.opencontainers.image.revision=$RELEASE_SHA" \
+              --provenance=mode=min --metadata-file "$metadata" --push "$context"
+            digest=$(jq -er '.["containerimage.digest"]' "$metadata")
+            [[ "$digest" =~ ^sha256:[a-f0-9]{64}$ ]]
+            printf 'STAGING_%s_IMAGE=%s@%s\n' "$key" "$image" "$digest" >> "$manifest"
+          done
+          {
+            echo '### Staging application images (linux/amd64)'
+            echo '```text'
+            cat "$manifest"
+            echo '```'
+            echo 'All three builds completed. This is not deployment or runtime acceptance.'
+            echo 'Add reviewed DB/Redis/Caddy digests and a fresh secret on the VPS.'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: staging-images-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/staging-release/
+          if-no-files-found: error
+          retention-days: 30
