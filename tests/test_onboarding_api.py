@@ -23,6 +23,8 @@ class OnboardingDb:
         self.active_relationships = active_relationships
 
     def scalar(self, _query):
+        if "pilot_entitlements" in str(_query):
+            return None
         self.scalar_calls += 1
         return self.parent if self.scalar_calls == 1 else self.active_relationships
 
