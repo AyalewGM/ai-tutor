@@ -49,12 +49,12 @@ test("parent manages separate per-child passes; only newly issued link is visibl
   await page.goto(`${origin}/parent/settings`);
   await expect(page.getByRole("heading", { name: "Private practice links for each child" })).toBeVisible();
   await expect(page.getByText("No active link")).toHaveCount(2);
-  await page.getByRole("button", { name: "Generate link" }).first().click();
+  await page.getByRole("button", { name: "Generate link", exact: true }).first().click();
   await expect(page.getByLabel("New link for PilotA — shown once")).toHaveValue(new RegExp("/practice/A{43}$"));
   expect(calls.at(-1)).toEqual({ operation: "create", id: a, pin: "synthetic-parent-unlock" });
 
   // Issuing B's link must not regenerate/revoke A's existing pass.
-  await page.getByRole("button", { name: "Generate link" }).click();
+  await page.getByRole("button", { name: "Generate link", exact: true }).click();
   await expect(page.getByLabel("New link for PilotB — shown once")).toHaveValue(new RegExp("/practice/B{43}$"));
   await expect(page.getByLabel("New link for PilotA — shown once")).toHaveCount(0);
   expect([...active.keys()].sort()).toEqual([a, b].sort());
