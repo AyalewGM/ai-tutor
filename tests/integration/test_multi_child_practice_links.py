@@ -931,7 +931,8 @@ def test_invitation_send_flag_emails_the_link(outbox):
     assert resp.status_code == 201, resp.text
     token = resp.json()["token"]
     invite = next(m for m in outbox if m.to == target)
-    assert f"/register?invite={token}" in invite.body
+    assert f"/login#invite={token}" in invite.body
+    assert f"/login?invite={token}" not in invite.body
     assert "2 learners" in invite.body
     # The same link can be handed off manually when send is false.
     quiet = client.post(
@@ -939,7 +940,7 @@ def test_invitation_send_flag_emails_the_link(outbox):
         json={"email": f"quiet-{uuid.uuid4().hex[:8]}@example.com"},
     )
     assert quiet.status_code == 201
-    assert not any("register?invite" in m.body for m in outbox if m.to == quiet.json()["email"])
+    assert not any("#invite=" in m.body for m in outbox if m.to == quiet.json()["email"])
 
 
 def test_pilot_approval_gate_blocks_pending_family(monkeypatch):
