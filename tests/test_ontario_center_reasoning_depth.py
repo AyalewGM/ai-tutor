@@ -185,3 +185,25 @@ def test_source_policy_no_new_authority_or_activation():
     assert "MATH.DATA.MISSING_MEAN" in source
     assert "CREATE TABLE" not in source
     assert "original teacher PDF" not in source
+
+
+def test_source_traceability_is_conservative_and_does_not_claim_standards():
+    path = (
+        MODULE.parent / "ontario_grade9_center_teacher_traceability.json"
+    )
+    record = json.loads(path.read_text())
+    assert record["status"] == "DRAFT_UNVERIFIED"
+    assert record["runtime_activation"] is False
+    assert record["verified_count"] == 0
+    assert record["standards_authority"] is False
+    assert record["ontario_expectation_ids"].startswith("NOT_ASSERTED")
+    assert len(record["rows"]) == 12
+    assert len({row["id"] for row in record["rows"]}) == 12
+    assert {row["status"] for row in record["rows"]} == {"PARTIAL", "ABSENT"}
+    assert sum(row["status"] == "ABSENT" for row in record["rows"]) == 1
+    assert {row["source"] for row in record["rows"]} == {"page-1", "page-2"}
+    for row in record["rows"]:
+        assert row["next_action"] and row["evidence"] and row["abstract_structure"]
+    serialized = json.dumps(record)
+    assert "teacher_oracle" not in serialized
+    assert "VERIFIED" not in [row["status"] for row in record["rows"]]
