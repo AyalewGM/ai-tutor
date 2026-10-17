@@ -4,6 +4,7 @@ import { ArrowLeft, ShieldCheck, Trash2 } from "lucide-react";
 import { ApiError } from "../api";
 import NavBar from "../components/NavBar";
 import ParentUnlock from "../components/ParentUnlock";
+import ChildPracticeLinks from "../components/ChildPracticeLinks";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -54,7 +55,6 @@ export default function ParentSettings() {
   const [deleteConfirm, setDeleteConfirm] = useState("");
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
-  const [practicePassUrl, setPracticePassUrl] = useState("");
 
   const loadAdultSettings = useCallback(async () => {
     const p = await adultRequest<Profile>("/parents/profile");
@@ -116,28 +116,6 @@ export default function ParentSettings() {
       setNotice({ ...notice, acknowledged: true });
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Could not acknowledge notice.");
-    }
-  }
-
-  async function generatePracticePass() {
-    setError("");
-    try {
-      const pass = await adultRequest<{ url: string }>("/practice-pass", { method: "POST" });
-      setPracticePassUrl(new URL(pass.url, window.location.origin).toString());
-      setStatus("New family practice link created. Any previous link and learner sessions are revoked.");
-    } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not create practice link.");
-    }
-  }
-
-  async function revokePracticePass() {
-    setError("");
-    try {
-      await adultRequest("/practice-pass", { method: "DELETE" });
-      setPracticePassUrl("");
-      setStatus("Family practice link revoked.");
-    } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not revoke practice link.");
     }
   }
 
@@ -241,32 +219,7 @@ export default function ParentSettings() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Family practice link</CardTitle>
-                <CardDescription>
-                  Pilot mode: one active passwordless practice link for this family. Creating a new link revokes the previous one.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex flex-wrap gap-2">
-                  <Button type="button" onClick={generatePracticePass}>Generate new link</Button>
-                  <Button type="button" variant="secondary" onClick={revokePracticePass}>Revoke</Button>
-                </div>
-                {practicePassUrl && (
-                  <div className="space-y-2">
-                    <Label htmlFor="practice-pass-url">Private family link</Label>
-                    <Input id="practice-pass-url" readOnly value={practicePassUrl} />
-                    <Button type="button" variant="secondary" onClick={() => navigator.clipboard.writeText(practicePassUrl)}>
-                      Copy link
-                    </Button>
-                    <p className="text-xs text-muted-foreground">
-                      Treat this link like a key. Send it only to the test family.
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            <ChildPracticeLinks children={children} />
 
             <Card className="border-destructive/30">
               <CardHeader>
