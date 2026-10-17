@@ -48,6 +48,7 @@ def _exact(value: Fraction) -> dict[str, int]:
 def test_context_transfer_is_deterministic_and_shifts_operation_and_context(mode):
     covered = set()
     prompts = set()
+    to_scientific_inputs = []
     for index in range(48):
         practice = source.generate(scientific.scientific_seed(index), "guided")
         item = scientific.generate_contextual_transfer(index, mode, source.generate)
@@ -60,6 +61,10 @@ def test_context_transfer_is_deterministic_and_shifts_operation_and_context(mode
         assert item.variant_id != practice.variant_id
         assert scientific.verify_teacher_oracle(item)
         assert "State why the resulting units" in item.prompt
+        if operation == "TO_SCIENTIFIC":
+            exact_input = Fraction(item.teacher_oracle["ordinary_value"])
+            to_scientific_inputs.append(exact_input)
+            assert f"exact value {exact_input} in normalized" in item.prompt
         if mode == "independent":
             public = scientific.independent_public_task(item)
             serialized = json.dumps(public)
@@ -79,6 +84,8 @@ def test_context_transfer_is_deterministic_and_shifts_operation_and_context(mode
             assert scientific.evaluate_guided_response(item, evidence)["correct"] is True
     assert covered == {"TO_SCIENTIFIC", "TO_ORDINARY", "MULTIPLY", "DIVIDE"}
     assert len(prompts) == 48
+    assert any(abs(value) < 1 for value in to_scientific_inputs)
+    assert any(value.denominator != 1 for value in to_scientific_inputs)
 
 
 @pytest.mark.parametrize("invalid_index", [-1, True, 1.5, "2"])
