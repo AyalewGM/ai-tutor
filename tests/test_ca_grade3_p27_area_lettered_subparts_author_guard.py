@@ -16,8 +16,10 @@ def test_grade3_area_lettered_requirements_preserved():
         "3.MD.5": ["a", "b"],
         "3.MD.7": ["a", "b", "c", "d"],
     }
+    assert supplement["official_source"] == "https://www.cde.ca.gov/be/st/ss/documents/ccssmathstandardaug2013.pdf"
     assert supplement["source_printed_page"] == 27
     assert supplement["source_pdf_zero_based_page_index"] == 33
+    assert supplement["publisher_direct_page_rendering_verified"] is True
     assert supplement["publisher_original_bytes_authenticated"] is False
     assert supplement["independent_source_fidelity"] == "PENDING"
     assert supplement["activation"] == "FORBIDDEN"
