@@ -167,6 +167,32 @@ def test_polynomial_repair_requires_both_complete_original_and_fresh(
     assert blocked_fresh["ready_to_fade"] is False
 
 
+@pytest.mark.parametrize(
+    ("seed", "diagnosis"),
+    [
+        (5700, "POLY.DIV.DOMAIN_OMITTED"),
+        (44685, "POLY.DIV.ONE_TERM_ONLY"),
+    ],
+)
+def test_polynomial_fresh_exit_avoids_published_semantic_collisions(seed, diagnosis):
+    original = polynomial.generate(seed, "guided")
+    fresh = polynomial.fresh_exit(seed, "guided", diagnosis)
+
+    assert fresh == polynomial.fresh_exit(seed, "guided", diagnosis)
+    assert fresh.variant_id != original.variant_id
+    assert polynomial._semantic_contract(fresh) != polynomial._semantic_contract(original)
+    assert (
+        fresh.teacher_oracle["structured_response"]
+        != original.teacher_oracle["structured_response"]
+    )
+    assert (
+        polynomial.evaluate_structured_response(
+            original.teacher_oracle["structured_response"], fresh
+        )
+        is False
+    )
+
+
 def test_polynomial_no_diagnosis_does_not_claim_repair_and_rejects_wrong_exit():
     item = polynomial.generate(7, "guided")
     correct = copy.deepcopy(item.teacher_oracle["structured_response"])
