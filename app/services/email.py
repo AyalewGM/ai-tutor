@@ -147,7 +147,7 @@ def family_invitation_email(to_email: str, token: str, seats: int | None) -> Out
             "You've been invited to the Mihur pilot.\n\n"
             f"{seat_line}"
             "Register your family here (one-time use):\n"
-            f"{settings.public_base_url}/register?invite={token}\n\n"
+            f"{settings.public_base_url}/login#invite={token}\n\n"
             "This link is for your family only — please don't share it.\n\n"
             "— The Mihur team\n"
         ),

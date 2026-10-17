@@ -12,13 +12,19 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Login() {
-  const [mode, setMode] = useState<"signin" | "register">("signin");
+  const [mode, setMode] = useState<"signin" | "register">(
+    () => window.location.pathname === "/register" ? "register" : "signin",
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [parentPin, setParentPin] = useState("");
   const [invitationToken, setInvitationToken] = useState(
-    () => new URLSearchParams(window.location.search).get("invite") ?? "",
+    () => (
+      new URLSearchParams(window.location.hash.slice(1)).get("invite")
+      ?? new URLSearchParams(window.location.search).get("invite")
+      ?? ""
+    ),
   );
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [coppaConsent, setCoppaConsent] = useState(false);
@@ -37,8 +43,11 @@ export default function Login() {
   useLayoutEffect(() => {
     // The invitation code must not remain in the address bar/history.
     const url = new URL(window.location.href);
-    if (url.searchParams.has("invite")) {
+    const hasInviteQuery = url.searchParams.has("invite");
+    const hasInviteFragment = url.hash.startsWith("#invite=");
+    if (hasInviteQuery || hasInviteFragment) {
       url.searchParams.delete("invite");
+      if (hasInviteFragment) url.hash = "";
       window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
     }
   }, []);
