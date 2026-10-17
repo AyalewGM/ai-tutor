@@ -3,6 +3,14 @@
 Status: PREPARED, NOT DEPLOYED. Runtime feasibility, remote isolation, staging smoke,
 backup/restore and independent acceptance are NOT VERIFIED. Links: #278, #298, #301.
 
+## Domain access option
+
+For the owner-selected `dev.mihureducation.com` host HTTPS edge, follow
+[host proxy setup](host/README.md) in addition to this baseline runbook. The Compose
+public base URL now targets that domain; localhost tunnel access remains diagnostic.
+The domain guide supersedes the SSH-only ingress/firewall instructions when enabled.
+It retains synthetic-only access and adds host-proxy resource measurements.
+
 ## Purpose and architecture
 
 As DevOps, prepare a small private environment where Muse can test the real container
@@ -87,6 +95,9 @@ Verify 3000/8000/8001/8002/5432/6379/8443 are unreachable externally. No firewal
 mutation is automated here. Provision swap manually only after checking free disk.
 
 ## Images and release manifest (off-host)
+
+See [GitHub Actions image builds](IMAGE_BUILDS.md) for the manual GHCR publishing
+workflow, private-package setup, release artifacts and VPS pull authentication.
 
 From the reviewed release SHA on a trusted build host, build these three images using
 Dockerfile, services/llm_gateway/Dockerfile and frontend/Dockerfile respectively. Tag

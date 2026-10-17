@@ -1,0 +1,2318 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "NY-NGMLS-2019-G6-G8-expectation-inventory-v1",
+  "status": "DRAFT_PROPOSED_NOT_VERIFIED",
+  "jurisdiction": {
+    "country": "United States",
+    "state": "New York",
+    "authority": "New York State Education Department",
+    "authority_code": "NYSED"
+  },
+  "curriculum": {
+    "course_code": "NY_NGMLS_MATH_6_8",
+    "course_title": "New York State Next Generation Mathematics Learning Standards (2017, updated June 2019), Grades 6-8",
+    "standards_version": "NYS NGMLS 2017 (updated June 2019)",
+    "adoption": {
+      "board_of_regents_adoption": "2017-09",
+      "document_update": "2019-06",
+      "full_implementation_3_8": "2020-09",
+      "first_regents_algebra_i": "2024-06"
+    }
+  },
+  "provenance": {
+    "authoritative_source_url": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf",
+    "authority_overview_url": "https://www.nysed.gov/standards-instruction/mathematics",
+    "checked_date": "2026-10-16",
+    "source_notes": [
+      "Extracted programmatically from the official NYSED P-12 standards PDF; two-column layout interleaves statements with marginalia, so statement text and cluster headings are best-effort pending Standards Mapping review.",
+      "Coherence chains are official vertical-alignment content published inside the document and are preserved per-row.",
+      "NY identifiers are jurisdiction-native (NY- / AI- / AII- / GEO- prefixes); they must never be merged with CCSS identifiers from other states' inventories by similarity.",
+      "New York has no repository packs, seeds, or skills; every row is NO_REPOSITORY_SPECIFIC_MAPPING_FOUND pending Standards Mapping work."
+    ]
+  },
+  "reconciliation": {
+    "official_expectation_count": 82,
+    "expectations_with_provisional_links": 0,
+    "unmapped_expectations": 82,
+    "deduplicated_phantom_rows": [
+      "NY-6.SP.6"
+    ],
+    "warning": "Official count is derived from this extraction, not an independent NYSED count; reconciliation against a second authoritative source is a documented blocker."
+  },
+  "safety": {
+    "activation": "FORBIDDEN",
+    "mapping_review_required": true,
+    "new_canonical_ids_created": false,
+    "learner_mastery_mutation": false,
+    "verified_coverage_claim": false
+  },
+  "expectations": [
+    {
+      "expectation_id": "NY-6.RP.1",
+      "grade": 6,
+      "domain": "RP",
+      "domain_title": "Ratios and Proportional Relationships",
+      "cluster_title": "Understand ratio concepts and use ratio reasoning to solve problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=78",
+      "scope_summary": "Understand the concept of a ratio and use ratio language to describe a ratio relationship between two quantities.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.RP.2",
+      "grade": 6,
+      "domain": "RP",
+      "domain_title": "Ratios and Proportional Relationships",
+      "cluster_title": "Understand ratio concepts and use ratio reasoning to solve problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=78",
+      "scope_summary": "Understand the concept of a unit rate a/b associated with a ratio a:b with b \u2260 0 (b not equal to zero), and use rate language in the context of a ratio relationship.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Expectations for unit rates in this grade are limited to non-complex fractions."
+      ]
+    },
+    {
+      "expectation_id": "NY-6.RP.3",
+      "grade": 6,
+      "domain": "RP",
+      "domain_title": "Ratios and Proportional Relationships",
+      "cluster_title": "Understand ratio concepts and use ratio reasoning to solve problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=78",
+      "scope_summary": "Use ratio and rate reasoning to solve real-world and mathematical problems. tables of equivalent ratios, tape diagrams, double number lines, and equations. a. Make tables of equivalent ratios relating quantities with whole-number measurements, find missing values in the tables, and plot the pairs of values on the coordinate plane. Use tables to compare ratios.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Problems may include unit pricing and constant speed.",
+        "Note: Conversion of units occur within a given measurement"
+      ]
+    },
+    {
+      "expectation_id": "NY-6.NS.1",
+      "grade": 6,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=79",
+      "scope_summary": "Interpret and compute quotients of fractions, and solve word problems involving division of fractions by fractions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Strategies may include but are not limited to the following:"
+      ]
+    },
+    {
+      "expectation_id": "NY-6.NS.2",
+      "grade": 6,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Compute fluently with multi-digit numbers and find common factors and multiples.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=80",
+      "scope_summary": "Fluently divide multi-digit numbers using a standard algorithm.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.NS.3",
+      "grade": 6,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Compute fluently with multi-digit numbers and find common factors and multiples.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=80",
+      "scope_summary": "Fluently add, subtract, multiply, and divide multi-digit decimals using a standard algorithm for",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.NS.4",
+      "grade": 6,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Compute fluently with multi-digit numbers and find common factors and multiples.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=80",
+      "scope_summary": "Find the greatest common factor of two whole numbers less than or equal to 100. Use the distributive property to express a sum of two whole numbers 1\u2013100 with a common factor as a multiple of a sum of two whole numbers with no common factor other than 1. Find the least common multiple of two whole numbers less than or equal to 12 .",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.NS.5",
+      "grade": 6,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Apply and extend previous understandings of numbers to the system of rational numbers.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=80",
+      "scope_summary": "Understand that positive and negative numbers are used together to describe quantities having opposite directions or values. Use positive and negative numbers to represent quantities in real- world contexts, explaining the meaning of 0 in each situation.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.NS.6",
+      "grade": 6,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Apply and extend previous understandings of numbers to the system of rational numbers.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=81",
+      "scope_summary": "Understand a rational number as a point on the number line. Use number lines and coordinate axes to represent points on a number line and in the coordinate plane with negative number coordinates.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.NS.7",
+      "grade": 6,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Apply and extend previous understandings of numbers to the system of rational numbers.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=81",
+      "scope_summary": "Understand ordering and absolute value of rational numbers. a. Interpret statements of inequality as statements about the relative position of two numbers on a number line.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.NS.8",
+      "grade": 6,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Apply and extend previous understandings of numbers to the system of rational numbers.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=81",
+      "scope_summary": "Solve real-world and mathematical problems by graphing points on a coordinate plane. Include use of coordinates and absolute value to find distances between points with the same first coordinate or the same second coordinate.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.EE.1",
+      "grade": 6,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Apply and extend previous understandings of arithmetic to algebraic expressions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=82",
+      "scope_summary": "Write and evaluate numerical expressions involving whole-number exponents.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.EE.2",
+      "grade": 6,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Apply and extend previous understandings of arithmetic to algebraic expressions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=82",
+      "scope_summary": "Write, read, and evaluate expressions in which letters stand for numbers. a. Write expressions that record operations with numbers and with letters standing for numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Expressions may or may not include parentheses. Nested"
+      ]
+    },
+    {
+      "expectation_id": "NY-6.EE.3",
+      "grade": 6,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Apply and extend previous understandings of arithmetic to algebraic expressions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=82",
+      "scope_summary": "Apply the properties of operations to generate equivalent expressions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.EE.4",
+      "grade": 6,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Apply and extend previous understandings of arithmetic to algebraic expressions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=82",
+      "scope_summary": "Identify when two expressions are equivalent.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.EE.5",
+      "grade": 6,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Reason about and solve one-variable equations and inequalities.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=83",
+      "scope_summary": "Understand solving an equation or inequality as a process of answering a question: which values from a specified set, if any, make the equation or inequality true? Use substitution to determine whether a given number in a specified set makes an equation or inequality true.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.EE.6",
+      "grade": 6,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Reason about and solve one-variable equations and inequalities.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=83",
+      "scope_summary": "Use variables to represent numbers and write expressions when solving a real-world or mathematical problem. Understand that a variable can represent an unknown number, or, depending on the purpose at hand, any number in a specified set.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.EE.7",
+      "grade": 6,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Reason about and solve one-variable equations and inequalities.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=83",
+      "scope_summary": "Solve real-world and mathematical problems by writing and solving equations of the form x + p = q; x \u2013 p = q; px = q; and \ud835\udc65\ud835\udc65 \ud835\udc5d\ud835\udc5d = q for cases in which p, q, and x are all nonnegative rational numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: For the"
+      ]
+    },
+    {
+      "expectation_id": "NY-6.EE.8",
+      "grade": 6,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Reason about and solve one-variable equations and inequalities.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=83",
+      "scope_summary": "Write an inequality of the form x > c, x \u2265 c, x \u2264 c, or x < c to represent a constraint or condition in a real-world or mathematical problem. Recognize that inequalities of these forms have infinitely many solutions; represent solutions of such inequalities on a number line.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.EE.9",
+      "grade": 6,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Represent and analyze quantitative relationships between depen dent and independent variables.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=84",
+      "scope_summary": "Use variables to represent two quantities in a real-world problem that change in relationship to one another.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.G.1",
+      "grade": 6,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Solve real-world and mathematical problems involving area, surface area, and volume.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=85",
+      "scope_summary": "Find area of triangles, trapezoids, and other polygons by composing into rectangles or decomposing into triangles and quadrilaterals. Apply these techniques in the context of solving real-world and mathematical problems.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: The inclusive definition of a trapezoid will be utilized, which"
+      ]
+    },
+    {
+      "expectation_id": "NY-6.G.2",
+      "grade": 6,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Solve real-world and mathematical problems involving area, surface area, and volume.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=85",
+      "scope_summary": "Find volumes of right rectangular prisms with fractional edge lengths in the context of solving real-world and mathematical problems.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.G.3",
+      "grade": 6,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Solve real-world and mathematical problems involving area, surface area, and volume.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=85",
+      "scope_summary": "Draw polygons in the coordinate plane given coordinates for the vertices. Use coordinates to find the length of a side joining points with the same first coordinate or the same second coordinate. Apply these techniques in the context of solving real-world and mathematical problems.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.G.4",
+      "grade": 6,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Solve real-world and mathematical problems involving area, surface area, and volume.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=85",
+      "scope_summary": "Represent three-dimensional figures using nets made up of rectangles and triangles, and use the nets to find the surface area of these figures. Apply these techniques in the context of solving real-world and mathematical problems.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Three-dimensional figures include only right rectangular"
+      ]
+    },
+    {
+      "expectation_id": "NY-6.G.5",
+      "grade": 6,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Solve real-world and mathematical problems involving area, surface area, and volume.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=85",
+      "scope_summary": "Use area and volume models to explain perfect squares and perfect cubes.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.SP.1a",
+      "grade": 6,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Develop understanding of statistical variability.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=86",
+      "scope_summary": "Recognize that a statistical question is one that anticipates variability in the data related to the question and accounts for it in the answers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.SP.1b",
+      "grade": 6,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Develop understanding of statistical variability.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=86",
+      "scope_summary": "Understand that statistics can be used to gain information about a population by examining a sample of the population; generalizations about a population from a sample are valid only if the sample is representative of that population.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Students need to understand that data are generated with respect to"
+      ]
+    },
+    {
+      "expectation_id": "NY-6.SP.1c",
+      "grade": 6,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Develop understanding of statistical variability.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=86",
+      "scope_summary": "Understand that the method and sample size used to collect data for a particular question is intended to reduce the difference between a population and a sample taken from the population so valid inferences can be drawn about the population. Generate multiple samples (or simulated samples) of the same size to recognize the variation in estimates or predictions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Examples of acceptable methods to obtain a representative sample"
+      ]
+    },
+    {
+      "expectation_id": "NY-6.SP.2",
+      "grade": 6,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Develop understanding of statistical variability.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=86",
+      "scope_summary": "Understand that a set of quantitative data collected to answer a statistical question has a distribution which can be described by its center, spread, and overall shape.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.SP.3",
+      "grade": 6,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Develop understanding of statistical variability.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=86",
+      "scope_summary": "Recognize that a measure of center for a quantitative data set summarizes all of its values with a single number while a measure of variation describes how its values vary with a single number.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Measures of center are mean, median, and mode. The measure of"
+      ]
+    },
+    {
+      "expectation_id": "NY-6.SP.4",
+      "grade": 6,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Summarize and describe distributions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=87",
+      "scope_summary": "Display quantitative data in plots on a number line, including dot plots, and histograms.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.SP.5",
+      "grade": 6,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Summarize and describe distributions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=87",
+      "scope_summary": "Summarize quantitative data sets in relation to their context. a. Report the number of observations. b. Describe the nature of the attribute under investigation, including how it was measured and its units of measurement. c. Calculate range and measures of center, as well as describe any overall pattern and any striking deviations from the overall pattern with reference to the context in which the data were gathered.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Measures of center are mean, median, and mode. The",
+        "Note: Measures of center are mean, median, and mode. The"
+      ]
+    },
+    {
+      "expectation_id": "NY-6.SP.6",
+      "grade": 6,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Investigate chance processes and develop, use, and evaluate probability models.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=88",
+      "scope_summary": "Understand that the probability of a chance event is a number between 0 and 1 inclusive, that expresses the likelihood of the event occurring. Larger numbers indicate greater likelihood. A probability near 0 indicates an unlikely event, a probability around \u00bd indicates an event that is neither unlikely nor likely, and a probability near 1 indicates a likely event .",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-6.SP.7",
+      "grade": 6,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Investigate chance processes and develop, use, and evaluate probability models.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=88",
+      "scope_summary": "Approximate the probability of a simple event by collecting data on the chance process that produces it and observing its long-run relative frequency, and predict the approximate relative frequency given the probability.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Compound events are introduced in grade 7."
+      ]
+    },
+    {
+      "expectation_id": "NY-6.SP.8",
+      "grade": 6,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Investigate chance processes and develop, use, and evaluate probability models.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=88",
+      "scope_summary": "Develop a probability model and use it to find probabilities of simple events. Compare probabilities from a model to observed frequencies; if the agreement is not good, explain possible sources of the discrepancy.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-7.RP.1",
+      "grade": 7,
+      "domain": "RP",
+      "domain_title": "Ratios and Proportional Relationships",
+      "cluster_title": "Analyze proportional relationships and use them to solve real-world and mathematical problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=90",
+      "scope_summary": "Compute unit rates associated with ratios of fractions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Problems may include ratios of lengths, areas, and other"
+      ]
+    },
+    {
+      "expectation_id": "NY-7.RP.2",
+      "grade": 7,
+      "domain": "RP",
+      "domain_title": "Ratios and Proportional Relationships",
+      "cluster_title": "Analyze proportional relationships and use them to solve real-world and mathematical problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=90",
+      "scope_summary": "Recognize and represent proportional relationships between quantities. a. Decide whether two quantities are in a proportional relationship. testing for equivalent ratios in a table and/or graphing on a coordinate plane and observing whether the graph is a straight line through the origin. b. Identify the constant of proportionality (unit rate) in tables, graphs, equations, diagrams, and",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-7.RP.3",
+      "grade": 7,
+      "domain": "RP",
+      "domain_title": "Ratios and Proportional Relationships",
+      "cluster_title": "Analyze proportional relationships and use them to solve real-world and mathematical problems.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=90",
+      "scope_summary": "Use proportional relationships to solve multistep ratio and percent problems.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Examples of percent problems include: simple interest, tax,"
+      ]
+    },
+    {
+      "expectation_id": "NY-7.NS.1",
+      "grade": 7,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Apply and extend previous understandings of operations with fractions to add, subtract, multiply, and divide rational numbers.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=91",
+      "scope_summary": "Apply and extend previous understandings of addition and subtraction to add and subtract rational numbers. Represent addition and subtraction on a horizontal or vertical number line . a. Describe situations in which opposite quantities combine to make 0. b. Understand addition of rational numbers; p + q is the number located a distance |q| from p, in the positive or negative direction depending on whether q is positive or negative. Show that a number and its opposite have a sum of 0 (are additive inverses). Interpret sums of rational numbers by describing real-world contexts. c. Understand subtraction of rational numbers as adding the additive inverse, p \u2013 q = p + (\u2013q). Show that the distance between two rational numbers on the number line is the absolute value of their difference, and apply this principle in real-world contexts. d. Apply properties of operations as strategies to add and subtract rational numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-7.NS.2",
+      "grade": 7,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Apply and extend previous understandings of operations with fractions to add, subtract, multiply, and divide rational numbers.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=91",
+      "scope_summary": "Apply and extend previous understandings of multiplication and division and of fractions to multiply and divide rational numbers. a. Understand that multiplication is extended from fractions to rational numbers by requiring that operations continue to satisfy the properties of operations, particularly the distributive property, leading to products such as (\u20131)(\u20131) = 1 and the rules for multiplying signed numbers. Interpret products of rational numbers by describing real-world contexts. b. Understand that integers can be divided, provided that the divisor is not zero, and every quotient of integers (with non-zero divisor) is a rational number. If p and q are integers, then \u2013( \ud835\udc5d\ud835\udc5d \ud835\udc5e\ud835\udc5e) = \u2212\ud835\udc5d\ud835\udc5d \ud835\udc5e\ud835\udc5e = \ud835\udc5d\ud835\udc5d \u2212\ud835\udc5e\ud835\udc5e. Interpret quotients of rational numbers by describing real-world contexts. c. Apply properties of operations as strategies to multiply and divide rational numbers. d. Convert a fraction to a decimal using long division; know that the decimal form of a rational number terminates in 0s or eventually repeats.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-7.NS.3",
+      "grade": 7,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Apply and extend previous understandings of operations with fractions to add, subtract, multiply, and divide rational numbers.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=91",
+      "scope_summary": "Solve real-world and mathematical problems involving the four operations with rational numbers.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Computations with rational numbers extend the rules for manipulating fractions to"
+      ]
+    },
+    {
+      "expectation_id": "NY-7.EE.1",
+      "grade": 7,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Use properties of operations to generate equivalent expressions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=92",
+      "scope_summary": "Add, subtract, factor, and expand linear expressions with rational coefficients by applying the properties of operations.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-7.EE.2",
+      "grade": 7,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Use properties of operations to generate equivalent expressions.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=92",
+      "scope_summary": "Understand that rewriting an expression in different forms in real-world and mathematical problems can reveal and explain how the quantities are related.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-7.EE.3",
+      "grade": 7,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Solve real-life and mathematical problems using numerical and algebraic expressions , equations, and inequalities.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=92",
+      "scope_summary": "Solve multi-step real-world and mathematical problems posed with positive and negative rational numbers in any form (whole numbers, fractions, and decimals), using tools strategically. Apply properties of operations to calculate with numbers in any form; convert between forms as appropriate. Assess the reasonableness of answers using mental computation and estimation strategies.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-7.EE.4",
+      "grade": 7,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Solve real-life and mathematical problems using numerical and algebraic expressions , equations, and inequalities.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=93",
+      "scope_summary": "Use variables to represent quantities in a real-world or mathematical problem, and construct simple equations and inequalities to solve problems by reasoning about the quantities.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Solving equations that contain variables on both sides is not",
+        "Note: The words leading to in the standard may require students to"
+      ]
+    },
+    {
+      "expectation_id": "NY-7.G.1",
+      "grade": 7,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Draw, construct, and describe geometrical figures and describe the relationships between them.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=94",
+      "scope_summary": "Solve problems involving scale drawings of geometric figures, including computing actual lengths and areas from a scale drawing and reproducing a scale drawing at a different scale.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-7.G.2",
+      "grade": 7,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Draw, construct, and describe geometrical figures and describe the relationships between them.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=94",
+      "scope_summary": "Draw triangles when given measures of angles and/or sides, noticing when the conditions determine a unique triangle, more than one triangle, or no triangle.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Create triangles through the use of freehand drawings,"
+      ]
+    },
+    {
+      "expectation_id": "NY-7.G.3",
+      "grade": 7,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Draw, construct, and describe geometrical figures and describe the relationships between them.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=94",
+      "scope_summary": "Describe the two-dimensional shapes that result from slicing three-dimensional solids parallel or perpendicular to the base.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Focus of standard is on plane sections resulting from the"
+      ]
+    },
+    {
+      "expectation_id": "NY-7.G.4",
+      "grade": 7,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Solve real-life and mathematical problems involving angle measure, area, surface area, and volume.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=95",
+      "scope_summary": "Apply the formulas for the area and circumference of a circle to solve problems.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Students in grade 7 are not expected to calculate the radius"
+      ]
+    },
+    {
+      "expectation_id": "NY-7.G.5",
+      "grade": 7,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Solve real-life and mathematical problems involving angle measure, area, surface area, and volume.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=95",
+      "scope_summary": "Use facts about supplementary, complementary, vertical, and adjacent angles in a multi-step problem to write and solve simple equations for an unknown angle in a figure.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Students in grade 7 are limited to solving equations that"
+      ]
+    },
+    {
+      "expectation_id": "NY-7.G.6",
+      "grade": 7,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Solve real-life and mathematical problems involving angle measure, area, surface area, and volume.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=95",
+      "scope_summary": "Solve real-world and mathematical problems involving area of two-dimensional objects",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: The inclusive definition of a trapezoid will be utilized, which",
+        "Note: Right prisms include cubes."
+      ]
+    },
+    {
+      "expectation_id": "NY-7.SP.1",
+      "grade": 7,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Draw informal comparative inferences about two populations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=96",
+      "scope_summary": "Construct and interpret box-plots, find the interquartile range, and determine if a data point is an",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Students in grade 7 are not expected to construct box-plots"
+      ]
+    },
+    {
+      "expectation_id": "NY-7.SP.3",
+      "grade": 7,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Draw informal comparative inferences about two populations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=96",
+      "scope_summary": "Informally assess the degree of visual overlap of two quantitative data distributions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-7.SP.4",
+      "grade": 7,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Draw informal comparative inferences about two populations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=96",
+      "scope_summary": "Use measures of center and measures of variability for quantitative data from random samples or",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": [
+        "Note: Measures of center are mean, median, and mode. The"
+      ]
+    },
+    {
+      "expectation_id": "NY-7.SP.8",
+      "grade": 7,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Investigate chance processes and develop, use, and evaluate probability models.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=96",
+      "scope_summary": "Find probabilities of compound events using organized lists, sample space tables, tree diagrams, and simulation.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.NS.1",
+      "grade": 8,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Know that there are numbers that are not rational, and approximate them by rational numbers.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=98",
+      "scope_summary": "Understand informally that every number has a decimal expansion; for rational numbers show that the decimal expansion eventually repeats. Know that other numbers that are not rational are called irrational.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-N.RN.3"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.NS.2",
+      "grade": 8,
+      "domain": "NS",
+      "domain_title": "The Number System",
+      "cluster_title": "Know that there are numbers that are not rational, and approximate them by rational numbers.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=98",
+      "scope_summary": "Use rational approximations of irrational numbers to compare the size of irrational numbers, locate them approximately on a number line, and estimate the value of expressions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.EE.1",
+      "grade": 8,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Work with radicals and integer exponents.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=99",
+      "scope_summary": "Know and apply the properties of integer exponents to generate equivalent numerical expressions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-A.SSE.2"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.EE.2",
+      "grade": 8,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Work with radicals and integer exponents.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=99",
+      "scope_summary": "Use square root and cube root symbols to represent solutions to equations of the form x2 = p and x3 = p, where p is a positive rational number. Know square roots of perfect squares up to 225 and cube roots of perfect cubes up to 125. Know that the square root of a non-perfect square is irrational.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-A.REI.4"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.EE.3",
+      "grade": 8,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Work with radicals and integer exponents.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=99",
+      "scope_summary": "Use numbers expressed in the form of a single digit times an integer power of 10 to estimate very large or very small quantities, and to express how many times as much one is than the other.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.EE.4",
+      "grade": 8,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Work with radicals and integer exponents.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=99",
+      "scope_summary": "Perform multiplication and division with numbers expressed in scientific notation, including problems where both standard decimal form and scientific notation are used. Use scientific notation and choose units of appropriate size for measurements of very large or very small quantities. Interpret scientific notation that has been generated by technology.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-N.Q.3"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.EE.5",
+      "grade": 8,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Understand the connections between proportional relationships, lines, and linear equations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=99",
+      "scope_summary": "Graph proportional relationships, interpreting the unit rate as the slope of the graph. Compare two different proportional relationships represented in different ways.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.EE.6",
+      "grade": 8,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Understand the connections between proportional relationships, lines, and linear equations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=99",
+      "scope_summary": "Use similar triangles to explain why the slope m is the same between any two distinct points on a non-vertical line in the coordinate plane; derive the equation y = mx for a line through the origin and the equation y = mx + b for a line intercepting the vertical axis at b.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-A.REI.10",
+        "GEO-G.GPE.5"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.EE.7",
+      "grade": 8,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Analyze and solve linear equations and pairs of simultaneous linear equations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=100",
+      "scope_summary": "Solve linear equations in one variable. a. Recognize when linear equations in one variable have one solution, infinitely many solutions, or no solutions. Give examples and show which of these possibilities is the case by successively transforming the given equation into simpler forms. b. Solve linear equations with rational number coefficients, including equations whose solutions require expanding expressions using the distributive property and combining like terms.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-A.REI.3"
+      ],
+      "notes": [
+        "Note: This includes equations that contain variables on both sides of"
+      ]
+    },
+    {
+      "expectation_id": "NY-8.EE.8",
+      "grade": 8,
+      "domain": "EE",
+      "domain_title": "Expressions, Equations, and Inequalities",
+      "cluster_title": "Analyze and solve linear equations and pairs of simultaneous linear equations.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=100",
+      "scope_summary": "Analyze and solve pairs of simultaneous linear equations. a. Understand that solutions to a system of two linear equations in two variables correspond to points of intersection of their graphs, because points of intersection satisfy both equations simultaneously. Recognize when the system has one solution, no solution, or infinitely many solutions. b. Solve systems of two linear equations in two variables with integer coefficients: graphically, numerically using a table, and algebraically. Solve simple cases by inspection.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-A.REI.6a",
+        "AI-A.REI.7a"
+      ],
+      "notes": [
+        "Note: Solving systems algebraically will be limited to at least one"
+      ]
+    },
+    {
+      "expectation_id": "NY-8.F.1",
+      "grade": 8,
+      "domain": "F",
+      "domain_title": "Functions",
+      "cluster_title": "Define, evaluate, and compare functions. Note: Function notation is not required in Grade 8.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=101",
+      "scope_summary": "Understand that a function is a rule that assigns to each input exactly one output. The graph of a",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-F.IF.1",
+        "GEO-G.CO.2"
+      ],
+      "notes": [
+        "Note: The terms domain and range may be introduced at this level;"
+      ]
+    },
+    {
+      "expectation_id": "NY-8.F.2",
+      "grade": 8,
+      "domain": "F",
+      "domain_title": "Functions",
+      "cluster_title": "Define, evaluate, and compare functions. Note: Function notation is not required in Grade 8.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=101",
+      "scope_summary": "Compare properties of two functions each represented in a different way (algebraically, graphically, numerically in tables, or by verbal descriptions).",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-F.IF.9"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.F.3",
+      "grade": 8,
+      "domain": "F",
+      "domain_title": "Functions",
+      "cluster_title": "Define, evaluate, and compare functions. Note: Function notation is not required in Grade 8.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=101",
+      "scope_summary": "Interpret the equation y = mx + b as defining a linear function, whose graph is a straight line. Recognize examples of functions that are linear and non-linear.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-F.LE.1b"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.F.4",
+      "grade": 8,
+      "domain": "F",
+      "domain_title": "Functions",
+      "cluster_title": "Use functions to model relationships between quantities. Note: Function notation is not required in Grade 8.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=101",
+      "scope_summary": "Construct a function to model a linear relationship between two quantities. Determine the rate of change and initial value of the function from a description of a relationship or from two ( x, y) values, including reading these from a table or from a graph. Interpret the rate of change and initial value of a linear function in terms of the situation it models, and in terms of its graph or a table of values.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-A.CED.1",
+        "AI-F.IF.6",
+        "AI-F.BF.1"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.F.5",
+      "grade": 8,
+      "domain": "F",
+      "domain_title": "Functions",
+      "cluster_title": "Use functions to model relationships between quantities. Note: Function notation is not required in Grade 8.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=101",
+      "scope_summary": "Describe qualitatively the functional relationship between two quantities by analyzing a graph.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-F.IF.4",
+        "AI-F.LE.3"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.G.1",
+      "grade": 8,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Understand congruence and similarity using physical models, transparencies, or geometry software.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=102",
+      "scope_summary": "Verify experimentally the properties of rotations, reflections, and translations. a. Verify experimentally lines are mapped to lines, and line segments to line segments of the same length. b. Verify experimentally angles are mapped to angles of the same measure. c. Verify experimentally parallel lines are mapped to parallel lines.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "GEO-G.CO.2",
+        "GEO-G.CO.4"
+      ],
+      "notes": [
+        "Note: A translation displaces every point in the plane by the same"
+      ]
+    },
+    {
+      "expectation_id": "NY-8.G.2",
+      "grade": 8,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Understand congruence and similarity using physical models, transparencies, or geometry software.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=102",
+      "scope_summary": "Know that a two-dimensional figure is congruent to another if the corresponding angles are congruent and the corresponding sides are congruent. Equivalently, two two-dimensional figures are congruent if one is the image of the other after a sequence of rotations, reflections, and translations. Given two congruent figures, describe a sequence that maps the congruence between them on the coordinate plane.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "GEO-G.CO.5",
+        "GEO-G.CO.6",
+        "GEO-G.CO.7"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.G.3",
+      "grade": 8,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Understand congruence and similarity using physical models, transparencies, or geometry software.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=102",
+      "scope_summary": "Describe the effect of dilations, translations, rotations, and reflections on two-dimensional figures using coordinates.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "GEO-G.SRT.1"
+      ],
+      "notes": [
+        "Note: Lines of reflection are limited to both axes and lines of the"
+      ]
+    },
+    {
+      "expectation_id": "NY-8.G.4",
+      "grade": 8,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Understand congruence and similarity using physical models, transparencies, or geometry software.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=102",
+      "scope_summary": "Know that a two-dimensional figure is similar to another if the corresponding angles are congruent and the corresponding sides are in proportion. Equivalently, two two -dimensional figures are similar if one is the image of the other after a sequence of rotation s, reflections, translations, and dilations. Given two similar two-dimensional figures, describe a sequence that maps the similarity between them on the coordinate plane.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "GEO-G.CO.3",
+        "GEO-G.SRT.2"
+      ],
+      "notes": [
+        "Note: With dilation, the center and scale factor must be specified."
+      ]
+    },
+    {
+      "expectation_id": "NY-8.G.5",
+      "grade": 8,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Understand congruence and similarity using physical models, transparencies, or geometry software.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=103",
+      "scope_summary": "Use informal arguments to establish facts about the angle sum and exterior angle of triangles, about the angles created when parallel lines are cut by a transversal, and the angle -angle criterion for similarity of triangles.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "GEO-G.CO.9",
+        "GEO-G.CO.10",
+        "GEO-G.SRT.3"
+      ],
+      "notes": [
+        "Note: This standard does not include formal geometric proof."
+      ]
+    },
+    {
+      "expectation_id": "NY-8.G.6",
+      "grade": 8,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Understand and apply the Pythagorean Theorem.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=103",
+      "scope_summary": "Understand a proof of the Pythagorean Theorem and its converse.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.G.7",
+      "grade": 8,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Understand and apply the Pythagorean Theorem.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=103",
+      "scope_summary": "Apply the Pythagorean Theorem to determine unknown side lengths in right triangles in real- world and mathematical problems in two and three dimensions.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "GEO-G.SRT.8"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.G.8",
+      "grade": 8,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Understand and apply the Pythagorean Theorem.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=103",
+      "scope_summary": "Apply the Pythagorean Theorem to find the distance between two points in a coordinate system.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "GEO-G.GPE.1a",
+        "GEO-G.GPE.4"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.G.9",
+      "grade": 8,
+      "domain": "G",
+      "domain_title": "Geometry",
+      "cluster_title": "Solve real-world and mathematical problems involving volume of cylinders, cones, and spheres.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=103",
+      "scope_summary": "Given the formulas for the volume of cones, cylinders, and spheres, solve mathematical and real-",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "GEO-G.GMD.1",
+        "GEO-G.MG.1"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.SP.1",
+      "grade": 8,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Investigate patterns of association in bivariate data.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=104",
+      "scope_summary": "Construct and interpret scatter plots for bivariate measurement data to investigate patterns of association between two quantities. Describe patterns such as clustering, outliers, positive or negative association, linear association, and nonlinear association.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-S.ID.6",
+        "AI-S.ID.9"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.SP.2",
+      "grade": 8,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Investigate patterns of association in bivariate data.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=104",
+      "scope_summary": "Understand that straight lines are widely used to model relationships between two quantitative variables. For scatter plots that suggest a linear association, informally fit a straight line, and informally assess the model fit by judging the closeness of the data points to the line.",
+      "official_text_capture_status": "AUTHORITATIVE_STATEMENT_EXTRACTED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-S.ID.6a",
+        "AI-S.ID.8"
+      ],
+      "notes": []
+    },
+    {
+      "expectation_id": "NY-8.SP.3",
+      "grade": 8,
+      "domain": "SP",
+      "domain_title": "Statistics and Probability",
+      "cluster_title": "Investigate patterns of association in bivariate data.",
+      "source_locator": "https://www.nysed.gov/sites/default/files/programs/curriculum-instruction/nys-next-generation-mathematics-p-12-standards.pdf#page=104",
+      "scope_summary": "Use the equation of a linear model to solve problems in the context of bivariate measurement",
+      "official_text_capture_status": "EXTRACTION_REVIEW_REQUIRED",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "repository_existing_crosswalks": [],
+      "classification": {
+        "standards_mapped": "NO_REPOSITORY_CANDIDATE",
+        "mathematically_reviewed_skill": "NO_CURRENT_REVIEWED_IDENTITY",
+        "exact_target_generator": "NOT_AUDITED",
+        "validated_practice": "NOT_AUDITED",
+        "independent_assessment": "NOT_AUDITED",
+        "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
+      },
+      "blockers": [
+        "NO_REPOSITORY_SKILL_CANDIDATE",
+        "STATEMENT_EXTRACTION_REQUIRES_MANUAL_REVIEW"
+      ],
+      "source_document_id": "NYSED_NGMLS_P12_2017_UPDATED_2019",
+      "coherence": [
+        "AI-S.ID.6a",
+        "AI-S.ID.7"
+      ],
+      "notes": []
+    }
+  ]
+}

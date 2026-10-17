@@ -6757,7 +6757,438 @@
         "111.31(d)(12)(E)",
         "111.31(d)(12)(F)"
       ],
-      "next_author_source_review_status": "130_SOURCE_SCOPE_EDITORIAL_ABSTRACTS_AWAIT_PUBLISHER_TEXT_AND_SUBPART_INDEPENDENT_REVIEW"
+      "next_author_source_review_status": "130_SOURCE_SCOPE_EDITORIAL_ABSTRACTS_AWAIT_PUBLISHER_TEXT_AND_SUBPART_INDEPENDENT_REVIEW",
+      "parent_group_evidence": [
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 1,
+          "expectation_count": 7,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(1)(A)",
+            "111.30(c)(1)(B)",
+            "111.30(c)(1)(C)",
+            "111.30(c)(1)(D)",
+            "111.30(c)(1)(E)",
+            "111.30(c)(1)(F)",
+            "111.30(c)(1)(G)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 2,
+          "expectation_count": 4,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(2)(A)",
+            "111.30(c)(2)(B)",
+            "111.30(c)(2)(C)",
+            "111.30(c)(2)(D)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 3,
+          "expectation_count": 2,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(3)(A)",
+            "111.30(c)(3)(B)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 4,
+          "expectation_count": 7,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(4)(A)",
+            "111.30(c)(4)(B)",
+            "111.30(c)(4)(C)",
+            "111.30(c)(4)(D)",
+            "111.30(c)(4)(E)",
+            "111.30(c)(4)(F)",
+            "111.30(c)(4)(G)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 5,
+          "expectation_count": 5,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(5)(A)",
+            "111.30(c)(5)(B)",
+            "111.30(c)(5)(C)",
+            "111.30(c)(5)(D)",
+            "111.30(c)(5)(E)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 6,
+          "expectation_count": 7,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(6)(A)",
+            "111.30(c)(6)(B)",
+            "111.30(c)(6)(C)",
+            "111.30(c)(6)(D)",
+            "111.30(c)(6)(E)",
+            "111.30(c)(6)(F)",
+            "111.30(c)(6)(G)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 7,
+          "expectation_count": 5,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(7)(A)",
+            "111.30(c)(7)(B)",
+            "111.30(c)(7)(C)",
+            "111.30(c)(7)(D)",
+            "111.30(c)(7)(E)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 8,
+          "expectation_count": 3,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(8)(A)",
+            "111.30(c)(8)(B)",
+            "111.30(c)(8)(C)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 9,
+          "expectation_count": 1,
+          "unlettered_count": 1,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(9)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 10,
+          "expectation_count": 8,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(10)(A)",
+            "111.30(c)(10)(B)",
+            "111.30(c)(10)(C)",
+            "111.30(c)(10)(D)",
+            "111.30(c)(10)(E)",
+            "111.30(c)(10)(F)",
+            "111.30(c)(10)(G)",
+            "111.30(c)(10)(H)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 11,
+          "expectation_count": 7,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(11)(A)",
+            "111.30(c)(11)(B)",
+            "111.30(c)(11)(C)",
+            "111.30(c)(11)(D)",
+            "111.30(c)(11)(E)",
+            "111.30(c)(11)(F)",
+            "111.30(c)(11)(G)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 12,
+          "expectation_count": 4,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(12)(A)",
+            "111.30(c)(12)(B)",
+            "111.30(c)(12)(C)",
+            "111.30(c)(12)(D)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 13,
+          "expectation_count": 4,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(13)(A)",
+            "111.30(c)(13)(B)",
+            "111.30(c)(13)(C)",
+            "111.30(c)(13)(D)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_7",
+          "parent_number": 14,
+          "expectation_count": 3,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.30(c)(14)(A)",
+            "111.30(c)(14)(B)",
+            "111.30(c)(14)(C)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_number": 1,
+          "expectation_count": 7,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.31(d)(1)(A)",
+            "111.31(d)(1)(B)",
+            "111.31(d)(1)(C)",
+            "111.31(d)(1)(D)",
+            "111.31(d)(1)(E)",
+            "111.31(d)(1)(F)",
+            "111.31(d)(1)(G)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_number": 2,
+          "expectation_count": 9,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.31(d)(2)(A)",
+            "111.31(d)(2)(B)",
+            "111.31(d)(2)(C)",
+            "111.31(d)(2)(D)",
+            "111.31(d)(2)(E)",
+            "111.31(d)(2)(F)",
+            "111.31(d)(2)(G)",
+            "111.31(d)(2)(H)",
+            "111.31(d)(2)(I)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_number": 3,
+          "expectation_count": 11,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.31(d)(3)(A)",
+            "111.31(d)(3)(B)",
+            "111.31(d)(3)(C)",
+            "111.31(d)(3)(D)",
+            "111.31(d)(3)(E)",
+            "111.31(d)(3)(F)",
+            "111.31(d)(3)(G)",
+            "111.31(d)(3)(H)",
+            "111.31(d)(3)(I)",
+            "111.31(d)(3)(J)",
+            "111.31(d)(3)(K)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_number": 4,
+          "expectation_count": 6,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.31(d)(4)(A)",
+            "111.31(d)(4)(B)",
+            "111.31(d)(4)(C)",
+            "111.31(d)(4)(D)",
+            "111.31(d)(4)(E)",
+            "111.31(d)(4)(F)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_number": 5,
+          "expectation_count": 3,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.31(d)(5)(A)",
+            "111.31(d)(5)(B)",
+            "111.31(d)(5)(C)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_number": 6,
+          "expectation_count": 3,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.31(d)(6)(A)",
+            "111.31(d)(6)(B)",
+            "111.31(d)(6)(C)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_number": 7,
+          "expectation_count": 3,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.31(d)(7)(A)",
+            "111.31(d)(7)(B)",
+            "111.31(d)(7)(C)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_number": 8,
+          "expectation_count": 2,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.31(d)(8)(A)",
+            "111.31(d)(8)(B)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_number": 9,
+          "expectation_count": 5,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.31(d)(9)(A)",
+            "111.31(d)(9)(B)",
+            "111.31(d)(9)(C)",
+            "111.31(d)(9)(D)",
+            "111.31(d)(9)(E)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_number": 10,
+          "expectation_count": 6,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.31(d)(10)(A)",
+            "111.31(d)(10)(B)",
+            "111.31(d)(10)(C)",
+            "111.31(d)(10)(D)",
+            "111.31(d)(10)(E)",
+            "111.31(d)(10)(F)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_number": 11,
+          "expectation_count": 2,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.31(d)(11)(A)",
+            "111.31(d)(11)(B)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        },
+        {
+          "track": "ADVANCED_GRADE_8_ALGEBRA_I",
+          "parent_number": 12,
+          "expectation_count": 6,
+          "unlettered_count": 0,
+          "official_adoption_url": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+          "expected_subparts": [
+            "111.31(d)(12)(A)",
+            "111.31(d)(12)(B)",
+            "111.31(d)(12)(C)",
+            "111.31(d)(12)(D)",
+            "111.31(d)(12)(E)",
+            "111.31(d)(12)(F)"
+          ],
+          "source_status": "AUTHOR_ENUMERATION_ONLY_PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW",
+          "accepted": false
+        }
+      ],
+      "provenance_contract": {
+        "primary_publisher": "https://www.sos.texas.gov/texreg/archive/June272025/Adopted%20Rules/19.EDUCATION.html",
+        "secondary_locators": [
+          "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-30",
+          "https://www.law.cornell.edu/regulations/texas/19-Tex-Admin-Code-SS-111-31"
+        ],
+        "adoption_version": "2025-06-27",
+        "effective_date": "2025-07-06",
+        "parent_group_count": 26,
+        "expected_student_expectations": 130,
+        "accepted_student_expectations": 0,
+        "rule": "Each source row requires original adopted-rule parent stem and complete mathematical scope/subpart verification; secondary mirror cannot be accepted authority."
+      }
     }
   }
 }

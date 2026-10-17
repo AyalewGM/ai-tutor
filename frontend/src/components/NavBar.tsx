@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
-import { post } from "../api";
+import { api, post } from "../api";
 import Brand from "./Brand";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -8,6 +9,15 @@ import { cn } from "@/lib/utils";
 export default function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [parentSession, setParentSession] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    api<{ role: string }>("/auth/me")
+      .then((user) => { if (active) setParentSession(["PARENT", "GUARDIAN"].includes(user.role.toUpperCase())); })
+      .catch(() => { if (active) setParentSession(false); });
+    return () => { active = false; };
+  }, []);
 
   async function signOut() {
     try { await post("/auth/logout"); } catch { /* best effort */ }
@@ -33,19 +43,20 @@ export default function NavBar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/80 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4">
+      <div className="mx-auto flex min-h-14 max-w-6xl flex-wrap items-center gap-2 px-4 py-2 sm:gap-6">
         <Link to="/learn" className="flex items-center" aria-label="Mihur home">
           <Brand size="sm" />
         </Link>
-        <nav className="flex items-center gap-1" aria-label="Primary navigation">
+        <nav className="order-last flex w-full items-center gap-1 sm:order-none sm:w-auto" aria-label="Primary navigation">
           {navLink("/learn", "Practice")}
-          {navLink("/parent", "Parent")}
+          {parentSession && navLink("/parent", "Parent")}
+          {navLink("/together", "Together")}
         </nav>
         <div className="ml-auto">
-          <Button variant="ghost" size="sm" onClick={signOut}>
+          {parentSession && <Button variant="ghost" size="sm" onClick={signOut}>
             <LogOut className="mr-1.5 h-4 w-4" />
             Sign out
-          </Button>
+          </Button>}
         </div>
       </div>
     </header>

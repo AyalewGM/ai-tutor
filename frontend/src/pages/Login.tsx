@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useLayoutEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Sparkles, ShieldCheck, LineChart } from "lucide-react";
 import { api, ApiError, post } from "../api";
@@ -16,6 +16,9 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [parentPin, setParentPin] = useState("");
+  const [invitationToken, setInvitationToken] = useState(
+    () => new URLSearchParams(window.location.search).get("invite") ?? "",
+  );
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [coppaConsent, setCoppaConsent] = useState(false);
   const [error, setError] = useState("");
@@ -26,6 +29,17 @@ export default function Login() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const next = (params.get("next") || "/learn").replace(/^\/app/, "");
+
+  useLayoutEffect(() => {
+    // The invitation code must not remain in the address bar/history.
+    const url = new URL(window.location.href);
+    if (url.searchParams.has("invite")) {
+      url.searchParams.delete("invite");
+      window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
+    }
+  }, []);
+
+  useEffect(() => { if (invitationToken) setMode("register"); }, [invitationToken]);
 
   useEffect(() => {
     api<AuthConfig>("/auth/config")
@@ -45,6 +59,7 @@ export default function Login() {
           password,
           display_name: displayName || undefined,
           parent_pin: parentPin,
+          invitation_token: invitationToken.trim() || undefined,
           terms_accepted: termsAccepted,
           coppa_consent_given: coppaConsent,
           turnstile_token: turnstileToken || undefined,
@@ -174,6 +189,20 @@ export default function Login() {
 
                 {mode === "register" && (
                   <>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="invitationToken">Private pilot invitation code</Label>
+                      <Input
+                        id="invitationToken"
+                        value={invitationToken}
+                        onChange={(e) => setInvitationToken(e.target.value)}
+                        placeholder="Paste the code from your invitation"
+                        autoComplete="off"
+                        maxLength={256}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Only families with an invitation can register for the private pilot.
+                      </p>
+                    </div>
                     <div className="space-y-1.5">
                       <Label htmlFor="displayName">Display name</Label>
                       <Input

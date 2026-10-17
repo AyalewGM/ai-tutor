@@ -321,3 +321,21 @@ def test_controlling_ca_tx_sources_preserve_version_and_course_boundaries():
     assert texas["advanced_grade8_algebra1"]["course_distinct_from"].startswith("111.39")
     assert texas["acceptance"].startswith("ALL_130_ADVANCED_SCOPE_ROWS_PENDING")
     assert source["acceptance"]["activation"] == "FORBIDDEN"
+
+
+def test_texas_advanced_parent_groups_reconcile_with_all_130_provisional_ids():
+    data = _data("TX")
+    inv = data["advanced_2025_final_adoption_evidence"]["advanced_course_expectation_identifier_inventory"]
+    rows = inv["expectations"]
+    parents = inv["parent_group_evidence"]
+    assert len(rows) == 130
+    assert sum(p["expectation_count"] for p in parents) == len(rows)
+    assert sum(p["unlettered_count"] for p in parents) == 1
+    assert inv["unlettered_grade7_expectation"] == "111.30(c)(9)"
+    assert len({(p["track"], p["parent_number"]) for p in parents}) == len(parents)
+    assert inv["provenance_contract"]["accepted_student_expectations"] == 0
+    for parent in parents:
+        matches = [r["expectation_id"] for r in rows if r["track"] == parent["track"] and r["parent_number"] == parent["parent_number"]]
+        assert parent["expected_subparts"] == matches
+        assert parent["accepted"] is False
+        assert parent["source_status"].endswith("PENDING_INDEPENDENT_FINAL_RULE_PARENT_STEM_AND_LETTERED_SCOPE_REVIEW")
