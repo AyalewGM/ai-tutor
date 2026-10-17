@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { BookOpen, CheckCircle2, ChevronDown, Flag, Lightbulb, Map as MapIcon, HelpCircle, RefreshCcw, Target, Undo2 } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import {
+  isCurrentSessionOperationResponse,
   isCurrentSessionResponse,
   isCurrentWorkspaceResponse,
 } from "../workspaceSessionGuard";
@@ -148,6 +149,10 @@ export default function Workspace() {
   const answerRef = useRef<HTMLInputElement>(null);
   const workspaceRequestRef = useRef(0);
   const extensionRequestRef = useRef(0);
+  const answerRequestRef = useRef(0);
+  const helpRequestRef = useRef(0);
+  const recapRequestRef = useRef(0);
+  const goalRequestRef = useRef(0);
   const activeSessionRef = useRef(sessionId);
   activeSessionRef.current = sessionId;
 
@@ -183,6 +188,10 @@ export default function Workspace() {
   useEffect(() => {
     workspaceRequestRef.current += 1;
     extensionRequestRef.current += 1;
+    answerRequestRef.current += 1;
+    helpRequestRef.current += 1;
+    recapRequestRef.current += 1;
+    goalRequestRef.current += 1;
     setWorkspace(null);
     setExtensionProblem(null);
     setExtensionSessionId(null);
@@ -192,10 +201,20 @@ export default function Workspace() {
     setStatus("");
     setError("");
     setFeedback("");
+    setRecap(null);
+    setGoalOpen(false);
+    setLearnOpen(false);
+    setBadgeToast([]);
+    setLevelUp(null);
+    setMasteryWin(null);
     void load();
     return () => {
       workspaceRequestRef.current += 1;
       extensionRequestRef.current += 1;
+      answerRequestRef.current += 1;
+      helpRequestRef.current += 1;
+      recapRequestRef.current += 1;
+      goalRequestRef.current += 1;
     };
   }, [load, sessionId]);
 
@@ -283,48 +302,123 @@ export default function Workspace() {
   }
 
   async function saveDailyGoal(questions: number | null) {
+    if (!sessionId) return;
+    const requestedSessionId = sessionId;
+    const requestId = ++goalRequestRef.current;
     try {
-      await api<unknown>(`/learner-workspace/sessions/${sessionId}/daily-goal`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ questions_per_day: questions }),
-      });
+      await api<unknown>(
+        `/learner-workspace/sessions/${requestedSessionId}/daily-goal`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ questions_per_day: questions }),
+        },
+      );
+      if (
+        !isCurrentSessionOperationResponse(
+          requestedSessionId,
+          activeSessionRef.current,
+          requestId,
+          goalRequestRef.current,
+        )
+      ) {
+        return;
+      }
       setGoalOpen(false);
       await load();
     } catch (err) {
+      if (
+        !isCurrentSessionOperationResponse(
+          requestedSessionId,
+          activeSessionRef.current,
+          requestId,
+          goalRequestRef.current,
+        )
+      ) {
+        return;
+      }
       setError(err instanceof ApiError ? err.message : "Could not save goal");
     }
   }
 
   async function openRecap() {
+    if (!sessionId) return;
+    const requestedSessionId = sessionId;
+    const requestId = ++recapRequestRef.current;
     try {
-      setRecap(
-        await api<SessionSummary>(`/learner-workspace/sessions/${sessionId}/summary`),
+      const summary = await api<SessionSummary>(
+        `/learner-workspace/sessions/${requestedSessionId}/summary`,
       );
+      if (
+        !isCurrentSessionOperationResponse(
+          requestedSessionId,
+          activeSessionRef.current,
+          requestId,
+          recapRequestRef.current,
+        )
+      ) {
+        return;
+      }
+      setRecap(summary);
     } catch (err) {
+      if (
+        !isCurrentSessionOperationResponse(
+          requestedSessionId,
+          activeSessionRef.current,
+          requestId,
+          recapRequestRef.current,
+        )
+      ) {
+        return;
+      }
       setError(err instanceof ApiError ? err.message : "Could not load recap");
     }
   }
 
   async function submitAnswerText(text: string) {
-    if (!currentProblem || !text) return;
+    if (!currentProblem || !text || !sessionId) return;
+    const requestedSessionId = sessionId;
+    const requestId = ++answerRequestRef.current;
+    const submittedProblemId = currentProblem.id;
+    const submittedExtension = Boolean(activeExtensionProblem);
     setError("");
     setStatus("Checking your work…");
     try {
       const result = await post<RespondOut>(
-        `/adaptive-tutor/sessions/${sessionId}/respond`,
+        `/adaptive-tutor/sessions/${requestedSessionId}/respond`,
         {
-          problem_id: currentProblem.id,
+          problem_id: submittedProblemId,
           answer: text,
           assistance_level: 0,
         },
       );
+      if (
+        !isCurrentSessionOperationResponse(
+          requestedSessionId,
+          activeSessionRef.current,
+          requestId,
+          answerRequestRef.current,
+        )
+      ) {
+        return;
+      }
       setAnswer("");
       setFracNum("");
       setFracDen("");
       const correct = result.evaluation.correct;
       setFeedback("");
-      requestAnimationFrame(() => setFeedback(correct ? "correct" : "wrong"));
+      requestAnimationFrame(() => {
+        if (
+          isCurrentSessionOperationResponse(
+            requestedSessionId,
+            activeSessionRef.current,
+            requestId,
+            answerRequestRef.current,
+          )
+        ) {
+          setFeedback(correct ? "correct" : "wrong");
+        }
+      });
       setStatus(
         correct
           ? "Correct. Keep going."
@@ -335,7 +429,7 @@ export default function Workspace() {
         setCelebrate((c) => c + 1);
       }
       if (result.xp_earned) {
-        setStatus((s) => `${s} +${result.xp_earned} XP`);
+        setStatus((currentStatus) => `${currentStatus} +${result.xp_earned} XP`);
       }
       if (result.new_awards?.length) {
         setBadgeToast(result.new_awards);
@@ -348,10 +442,12 @@ export default function Workspace() {
           title: result.growth.level_title,
         });
       }
-      if (activeExtensionProblem) {
+      if (submittedExtension) {
         // Challenge streak: retain it only for the session that requested it.
         setExtensionProblem(result.next_problem ?? null);
-        setExtensionSessionId(result.next_problem ? sessionId ?? null : null);
+        setExtensionSessionId(
+          result.next_problem ? requestedSessionId : null,
+        );
         if (!result.next_problem) {
           setStatus("Challenge set complete — nice work!");
           setStatusOk(true);
@@ -359,6 +455,16 @@ export default function Workspace() {
       }
       await load();
     } catch (err) {
+      if (
+        !isCurrentSessionOperationResponse(
+          requestedSessionId,
+          activeSessionRef.current,
+          requestId,
+          answerRequestRef.current,
+        )
+      ) {
+        return;
+      }
       setError(err instanceof ApiError ? err.message : "Submit failed");
       setStatus("");
     }
@@ -415,20 +521,43 @@ export default function Workspace() {
   }
 
   async function requestHelp(reason: "HINT" | "I_DONT_UNDERSTAND") {
-    if (!currentProblem) return;
+    if (!currentProblem || !sessionId) return;
+    const requestedSessionId = sessionId;
+    const requestId = ++helpRequestRef.current;
+    const requestedProblemId = currentProblem.id;
     setError("");
     setStatus("");
     try {
       const result = await post<HintResponse>(
-        `/adaptive-tutor/sessions/${sessionId}/hint`,
-        { problem_id: currentProblem.id, reason },
+        `/adaptive-tutor/sessions/${requestedSessionId}/hint`,
+        { problem_id: requestedProblemId, reason },
       );
+      if (
+        !isCurrentSessionOperationResponse(
+          requestedSessionId,
+          activeSessionRef.current,
+          requestId,
+          helpRequestRef.current,
+        )
+      ) {
+        return;
+      }
       setStatus(
         result.message || "Support is not available in this learning state.",
       );
       setStatusOk(result.allowed);
       await load();
     } catch (err) {
+      if (
+        !isCurrentSessionOperationResponse(
+          requestedSessionId,
+          activeSessionRef.current,
+          requestId,
+          helpRequestRef.current,
+        )
+      ) {
+        return;
+      }
       setError(err instanceof ApiError ? err.message : "Hint failed");
     }
   }
