@@ -21,3 +21,16 @@ export function isCurrentSessionResponse(
     requestedSessionId === currentSessionId
   );
 }
+
+
+export function isCurrentSessionOperationResponse(
+  requestedSessionId: string | undefined,
+  currentSessionId: string | undefined,
+  requestId: number,
+  currentRequestId: number,
+): boolean {
+  return (
+    requestId === currentRequestId &&
+    isCurrentSessionResponse(requestedSessionId, currentSessionId)
+  );
+}
