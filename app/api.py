@@ -6,7 +6,6 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.content_models import ProblemContentMetadata
 from app.core.database import get_db
 from app.identity import (
     CurrentLearningAccess,
