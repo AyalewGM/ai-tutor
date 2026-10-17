@@ -240,6 +240,8 @@ def _register(email: str, token: str | None):
         "password": "synthetic-password-12+",
         "display_name": "Synthetic Parent",
         "parent_pin": "1234",
+        "country_code": "US",
+        "region_code": "MD",
         "terms_accepted": True,
         "coppa_consent_given": True,
     }
@@ -382,3 +384,135 @@ def test_expired_and_revoked_passes_cannot_activate():
         )
     finally:
         _clear_override()
+
+
+def test_bulk_generate_returns_one_link_per_child_and_all_activate():
+    parent_id, children = _make_family(children=3)
+    try:
+        _override_user(_parent_user(parent_id))
+        resp = client.post("/api/v1/practice-pass/all")
+        assert resp.status_code == 200
+        links = resp.json()
+        assert {row["student_id"] for row in links} == {str(c) for c in children}
+        # Every link activates and lands on its own child.
+        for row, child in zip(links, children, strict=True):
+            activated = client.post(
+                "/api/v1/practice-pass/activate",
+                json={"token": _extract_token(row["url"])},
+            )
+            assert activated.status_code == 200
+            assert activated.json()["student_id"] == str(child)
+    finally:
+        _clear_override()
+
+
+def test_second_activation_retires_the_first_session():
+    parent_id, (child,) = _make_family(children=1)
+    try:
+        _override_user(_parent_user(parent_id))
+        url = client.post(
+            "/api/v1/practice-pass", json={"student_id": str(child)}
+        ).json()["url"]
+        token = _extract_token(url)
+        assert (
+            client.post("/api/v1/practice-pass/activate", json={"token": token}).status_code
+            == 200
+        )
+        with SessionLocal() as db:
+            first = db.scalar(
+                select(LearnerPassSession).where(
+                    LearnerPassSession.student_id == child
+                )
+            )
+            assert first is not None
+        # Second holder of the same link activates — the first session dies.
+        assert (
+            client.post("/api/v1/practice-pass/activate", json={"token": token}).status_code
+            == 200
+        )
+        with SessionLocal() as db:
+            live = db.scalars(
+                select(LearnerPassSession).where(
+                    LearnerPassSession.student_id == child
+                )
+            ).all()
+            assert len(live) == 1
+            assert live[0].id != first.id
+    finally:
+        _clear_override()
+
+
+def test_registration_requires_and_stores_family_state():
+    email = f"state-{uuid.uuid4().hex[:8]}@example.com"
+    base = {
+        "email": email,
+        "password": "synthetic-password-12+",
+        "parent_pin": "1234",
+        "terms_accepted": True,
+        "coppa_consent_given": True,
+    }
+    # Missing state entirely → 422 (schema requires it).
+    assert (
+        client.post("/api/v1/auth/register-parent", json=base).status_code == 422
+    )
+    # Unknown region pair → 422.
+    bad = dict(base, country_code="US", region_code="XX")
+    assert (
+        client.post("/api/v1/auth/register-parent", json=bad).status_code == 422
+    )
+    # Valid pair registers and persists the family region.
+    ok = dict(base, country_code="US", region_code="NY")
+    resp = client.post("/api/v1/auth/register-parent", json=ok)
+    assert resp.status_code == 201, resp.text
+    with SessionLocal() as db:
+        parent = db.scalar(
+            select(ParentProfile).where(
+                ParentProfile.user_id == db.scalar(
+                    select(User.id).where(User.email == email)
+                )
+            )
+        )
+        assert parent.country_code == "US"
+        assert parent.region_code == "NY"
+
+
+def test_public_regions_endpoint_serves_registration_cascade():
+    resp = client.get("/api/v1/auth/regions")
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["family"] is None
+    countries = {c["code"]: c for c in body["countries"]}
+    assert set(countries) == {"US", "CA"}
+    us = {r["code"]: r for r in countries["US"]["regions"]}
+    assert len(us) == 51  # 50 states + DC
+    assert us["NY"]["name"] == "New York"
+
+
+def test_uncovered_region_falls_back_to_country_catalog():
+    """A state with no seeded curriculum still sees the US catalog —
+    choosing a state is required, never a dead end."""
+    email = f"ny-{uuid.uuid4().hex[:8]}@example.com"
+    resp = client.post(
+        "/api/v1/auth/register-parent",
+        json={
+            "email": email,
+            "password": "synthetic-password-12+",
+            "parent_pin": "1234",
+            "country_code": "US",
+            "region_code": "NY",
+            "terms_accepted": True,
+            "coppa_consent_given": True,
+        },
+    )
+    assert resp.status_code == 201, resp.text
+    # A freshly registered family has no learner session — the shared test
+    # client may carry a sibling test's ai_tutor_learner cookie.
+    client.cookies.delete("ai_tutor_learner")
+    resp = client.get("/api/v1/onboarding/curricula")
+    assert resp.status_code == 200
+    curricula = resp.json()
+    assert curricula  # fell back to the country list, not an empty catalog
+    # Nothing is labeled as belonging to a different covered region.
+    assert all(
+        c["region_code"] in {"DC", "MD", "VA", "NY", None} for c in curricula
+    )

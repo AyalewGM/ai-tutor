@@ -18,7 +18,10 @@ from app.parent_models import (
     LearnerPassSession,
     ParentStudentRelationship,
 )
-from app.services.auth_security import enforce_practice_link_activation_limit
+from app.services.auth_security import (
+    enforce_practice_link_activation_limit,
+    enforce_practice_pass_activation_limit,
+)
 from app.services.parent_gate import require_parent_unlock
 
 router = APIRouter(prefix="/practice-pass", tags=["practice-pass"])
@@ -150,21 +153,13 @@ def list_passes(parent: CurrentParent, db: DbSession) -> PracticePassListOut:
     )
 
 
-@router.post("", response_model=PracticePassOut)
-def generate_pass(
-    request: Request,
-    parent: CurrentParent,
-    db: DbSession,
-    payload: GenerateIn | None = None,
+def _mint_pass(
+    db: Session, *, parent_id: uuid.UUID, student_id: uuid.UUID, now: datetime
 ) -> PracticePassOut:
-    require_parent_unlock(request, parent.user_id)
-    student_id = _resolve_target_student(
-        db, parent_id=parent.id, student_id=(payload.student_id if payload else None)
-    )
-    now = datetime.now(UTC)
+    """Regenerate a child pass: prior link and its live sessions die atomically."""
     existing = db.scalar(
         select(FamilyPracticePass).where(
-            FamilyPracticePass.parent_profile_id == parent.id,
+            FamilyPracticePass.parent_profile_id == parent_id,
             FamilyPracticePass.student_id == student_id,
         )
     )
@@ -179,12 +174,60 @@ def generate_pass(
         db.flush()
     raw = secrets.token_urlsafe(32)
     practice_pass = FamilyPracticePass(
-        parent_profile_id=parent.id, student_id=student_id,
+        parent_profile_id=parent_id, student_id=student_id,
         token_hash=_digest(raw), expires_at=now + PASS_TTL,
     )
     db.add(practice_pass)
+    db.flush()
+    return PracticePassOut(
+        url=f"/practice/{raw}",
+        expires_at=practice_pass.expires_at,
+        student_id=practice_pass.student_id,
+    )
+
+
+@router.post("", response_model=PracticePassOut)
+def generate_pass(
+    request: Request,
+    parent: CurrentParent,
+    db: DbSession,
+    payload: GenerateIn | None = None,
+) -> PracticePassOut:
+    require_parent_unlock(request, parent.user_id)
+    student_id = _resolve_target_student(
+        db, parent_id=parent.id, student_id=(payload.student_id if payload else None)
+    )
+    out = _mint_pass(db, parent_id=parent.id, student_id=student_id, now=datetime.now(UTC))
     db.commit()
-    return PracticePassOut(url=f"/practice/{raw}", expires_at=practice_pass.expires_at, student_id=practice_pass.student_id)
+    return out
+
+
+@router.post("/all", response_model=list[PracticePassOut])
+def generate_all_passes(
+    request: Request,
+    parent: CurrentParent,
+    db: DbSession,
+) -> list[PracticePassOut]:
+    """One link per active child — for sending each kid their own link at once.
+    Regenerating semantics apply to every child at once."""
+    require_parent_unlock(request, parent.user_id)
+    student_ids = list(
+        db.scalars(
+            select(ParentStudentRelationship.student_id).where(
+                ParentStudentRelationship.parent_profile_id == parent.id,
+                ParentStudentRelationship.active.is_(True),
+            )
+        )
+    )
+    if not student_ids:
+        raise HTTPException(status_code=409, detail="No active learners to link")
+    now = datetime.now(UTC)
+    out = [
+        _mint_pass(db, parent_id=parent.id, student_id=student_id, now=now)
+        for student_id in student_ids
+    ]
+    db.commit()
+    return out
 
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)
@@ -222,6 +265,15 @@ def activate(
         is None
     ):
         raise HTTPException(status_code=401, detail="Practice pass is invalid or expired")
+    enforce_practice_pass_activation_limit(practice_pass.token_hash)
+    # One live session per link: a second activation (same device re-login or
+    # a shared link) invalidates the previous session, so two people can never
+    # use the same link concurrently — the newest activation wins.
+    db.execute(
+        delete(LearnerPassSession).where(
+            LearnerPassSession.practice_pass_id == practice_pass.id
+        )
+    )
     raw_session = secrets.token_urlsafe(32)
     learner_session = LearnerPassSession(
         practice_pass_id=practice_pass.id, student_id=student.id,

@@ -36,6 +36,8 @@ def _register(email: str | None = None) -> tuple[str, dict]:
             "password": "correct-horse-battery",
             "display_name": "Pilot Parent",
             "parent_pin": "1234",
+            "country_code": "US",
+            "region_code": "MD",
             "terms_accepted": True,
             "coppa_consent_given": True,
         },

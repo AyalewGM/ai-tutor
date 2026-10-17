@@ -30,6 +30,12 @@ from app.parent_models import (
     ParentStudentRelationship,
     ParentStudentRelationshipEvent,
 )
+from app.parent_schemas import (
+    CountryOption,
+    FamilyRegionOut,
+    RegionOption,
+    RegionsOut,
+)
 from app.plan_models import Plan
 from app.services.curriculum_defaults import resolve_default_curriculum
 from app.services.placement import recommend_next_skill
@@ -51,28 +57,6 @@ class CurriculumChoice(BaseModel):
     grade_level: str | None
     country_code: str | None = None
     region_code: str | None = None
-
-
-class RegionOption(BaseModel):
-    code: str
-    name: str
-    has_curriculum: bool
-
-
-class CountryOption(BaseModel):
-    code: str
-    name: str
-    regions: list[RegionOption]
-
-
-class FamilyRegionOut(BaseModel):
-    country_code: str
-    region_code: str
-
-
-class RegionsOut(BaseModel):
-    countries: list[CountryOption]
-    family: FamilyRegionOut | None
 
 
 class PlanPriceOut(BaseModel):
@@ -157,9 +141,8 @@ class LearnerLaunchpad(BaseModel):
     award_count: int
 
 
-@router.get("/regions", response_model=RegionsOut)
-def list_regions(access: CurrentLearningAccess, db: DbSession) -> RegionsOut:
-    """Country → state/province cascade data + the family's saved region."""
+def regions_catalog(db: Session) -> list[CountryOption]:
+    """Country → state/province cascade with per-region coverage flags."""
     covered = set(
         db.scalars(
             select(Curriculum.region_code).where(
@@ -167,25 +150,31 @@ def list_regions(access: CurrentLearningAccess, db: DbSession) -> RegionsOut:
             )
         ).all()
     )
+    return [
+        CountryOption(
+            code=country_code,
+            name=country["name"],
+            regions=[
+                RegionOption(
+                    code=region_code,
+                    name=region_name,
+                    has_curriculum=region_code in covered,
+                )
+                for region_code, region_name in sorted(
+                    country["regions"].items(), key=lambda item: item[1]
+                )
+            ],
+        )
+        for country_code, country in COUNTRIES.items()
+    ]
+
+
+@router.get("/regions", response_model=RegionsOut)
+def list_regions(access: CurrentLearningAccess, db: DbSession) -> RegionsOut:
+    """Country → state/province cascade data + the family's saved region."""
     parent = access.parent
     return RegionsOut(
-        countries=[
-            CountryOption(
-                code=country_code,
-                name=country["name"],
-                regions=[
-                    RegionOption(
-                        code=region_code,
-                        name=region_name,
-                        has_curriculum=region_code in covered,
-                    )
-                    for region_code, region_name in sorted(
-                        country["regions"].items(), key=lambda item: item[1]
-                    )
-                ],
-            )
-            for country_code, country in COUNTRIES.items()
-        ],
+        countries=regions_catalog(db),
         family=(
             FamilyRegionOut(country_code=parent.country_code, region_code=parent.region_code)
             if parent.country_code and parent.region_code

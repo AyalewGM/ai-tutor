@@ -101,6 +101,23 @@ def enforce_practice_link_activation_limit(request: Request) -> None:
         _deny_rate_limited()
 
 
+def enforce_practice_pass_activation_limit(token_digest: str) -> None:
+    """Per-link cap: a shared link can never hold concurrent sessions, so
+    repeated activations by two holders ping-pong. Throttle that fight."""
+    if not settings.auth_throttles_enabled:
+        return
+    count = _increment(
+        f"rl:practice-activate-pass:{token_digest}",
+        settings.practice_link_activate_window_seconds,
+    )
+    if count is None:
+        logger.error("practice-link per-pass limiter unavailable (redis)")
+        _deny_unavailable()
+    if count > settings.practice_link_activate_per_pass_limit:
+        logger.warning("practice-link per-pass activation limit exceeded")
+        _deny_rate_limited()
+
+
 def _lockout_key(email: str) -> str:
     # SHA-256 so raw account emails never appear in Redis keys or dumps.
     return f"rl:login-fail:{hashlib.sha256(email.encode('utf-8')).hexdigest()}"

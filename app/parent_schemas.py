@@ -13,6 +13,28 @@ class ParentProfileOut(BaseModel):
     region_code: str | None = None
 
 
+class RegionOption(BaseModel):
+    code: str
+    name: str
+    has_curriculum: bool
+
+
+class CountryOption(BaseModel):
+    code: str
+    name: str
+    regions: list[RegionOption]
+
+
+class FamilyRegionOut(BaseModel):
+    country_code: str
+    region_code: str
+
+
+class RegionsOut(BaseModel):
+    countries: list[CountryOption]
+    family: FamilyRegionOut | None
+
+
 class ParentProfileUpdateIn(BaseModel):
     display_name: str = Field(min_length=1, max_length=120)
 

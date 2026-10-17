@@ -10,6 +10,8 @@ def test_parent_registration_requires_terms_and_coppa_attestation() -> None:
         "password": "synthetic-password-123",
         "display_name": "Synthetic Parent",
         "parent_pin": "4821",
+        "country_code": "US",
+        "region_code": "MD",
         "terms_accepted": True,
         "coppa_consent_given": True,
     }

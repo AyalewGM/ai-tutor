@@ -16,12 +16,14 @@ from app.core.settings import settings
 from app.credential_models import UserCredential
 from app.identity import CurrentUser
 from app.models import User
+from app.onboarding_api import regions_catalog
 from app.parent_models import (
     APPROVAL_APPROVED,
     ParentInvitation,
     ParentProfile,
     PilotEntitlement,
 )
+from app.parent_schemas import RegionsOut
 from app.schemas import ParentRegisterSchema
 from app.services.auth_security import (
     clear_login_failures,
@@ -32,6 +34,7 @@ from app.services.auth_security import (
     record_login_failure,
 )
 from app.services.email import new_family_notification, send_email
+from app.services.regions import valid_region
 from app.services.turnstile import verify_turnstile
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -145,6 +148,10 @@ def register_parent(
     enforce_register_rate_limit(request)
     verify_turnstile(payload.turnstile_token, client_ip(request))
     email = payload.email.strip().lower()
+    country_code = payload.country_code.upper()
+    region_code = payload.region_code.upper()
+    if not valid_region(country_code, region_code):
+        raise HTTPException(status_code=422, detail="Unknown country or region")
     invitation = _resolve_invitation(db, payload) if settings.pilot_invite_only else None
     user = User(email=email, display_name=payload.display_name, role="PARENT")
     db.add(user)
@@ -156,6 +163,8 @@ def register_parent(
             user_id=user.id,
             subscription_tier="free",
             parent_pin_hash=_passwords.hash(payload.parent_pin),
+            country_code=country_code,
+            region_code=region_code,
             coppa_consent_given=True,
             consent_timestamp=accepted_at,
             terms_accepted_at=accepted_at,
@@ -212,6 +221,16 @@ def login(
 def auth_config() -> AuthConfigOut:
     """Public auth-page config — only ever the site key, never the secret."""
     return AuthConfigOut(turnstile_site_key=settings.turnstile_site_key)
+
+
+@router.get("/regions", response_model=RegionsOut)
+def public_regions(db: DbSession) -> RegionsOut:
+    """Country → state/province cascade for the registration form.
+
+    Public because registration happens pre-auth; contains only static
+    geography plus per-region curriculum coverage flags — no family data.
+    """
+    return RegionsOut(countries=regions_catalog(db), family=None)
 
 
 @router.get("/me", response_model=SessionUser)

@@ -100,6 +100,9 @@ class Settings(BaseSettings):
     # Per-child practice-link activation throttle (per client IP).
     practice_link_activate_rate_limit: int = 10
     practice_link_activate_window_seconds: int = 900
+    # Per-link cap on top of the per-IP cap: two parties fighting over one
+    # shared link should degrade quickly even from different networks.
+    practice_link_activate_per_pass_limit: int = 6
 
     model_config = SettingsConfigDict(
         env_file=".env",
