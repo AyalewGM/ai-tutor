@@ -81,7 +81,7 @@ def inventory():
                 if mount["Type"] == "volume":
                     require(
                         mount["Name"]
-                        in {PROJECT + "_" + n for n in ("database", "proxy_data", "proxy_config")},
+                        in {PROJECT + "_" + n for n in ("database", "redis_data", "proxy_data", "proxy_config")},
                         "Unexpected container volume",
                     )
                 else:
@@ -96,7 +96,7 @@ def inventory():
         for volume in json.loads(run(DOCKER + ["volume", "inspect", *names])):
             require(
                 volume["Name"]
-                in {PROJECT + "_" + n for n in ("database", "proxy_data", "proxy_config")}
+                in {PROJECT + "_" + n for n in ("database", "redis_data", "proxy_data", "proxy_config")}
                 and (volume.get("Labels") or {}).get("com.docker.compose.project") == PROJECT
                 and volume["Driver"] == "local"
                 and not volume.get("Options"),

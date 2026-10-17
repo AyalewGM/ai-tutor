@@ -76,6 +76,26 @@ class Guards(unittest.TestCase):
         ):
             control.inventory()
 
+    def test_named_redis_volume_allowed(self):
+        labels = {"com.docker.compose.project": "mihur-staging"}
+        container = {"Config": {"Labels": labels}, "Mounts": [
+            {"Type": "volume", "Name": "mihur-staging_redis_data"}
+        ]}
+        volume = {"Name": "mihur-staging_redis_data", "Labels": labels,
+                  "Driver": "local", "Options": None}
+        with patch.object(control, "run", side_effect=[
+            "redis", json.dumps([container]), "volume", json.dumps([volume]), ""
+        ]):
+            control.inventory()
+
+    def test_anonymous_redis_volume_still_rejected(self):
+        container = {"Config": {"Labels": {
+            "com.docker.compose.project": "mihur-staging"
+        }}, "Mounts": [{"Type": "volume", "Name": "1a9d23"}]}
+        with patch.object(control, "run", side_effect=["redis", json.dumps([container])]):
+            with self.assertRaisesRegex(RuntimeError, "Unexpected container volume"):
+                control.inventory()
+
     def test_empty_inventory_allowed(self):
         with patch.object(control, "run", side_effect=["", "", ""]):
             control.inventory()
