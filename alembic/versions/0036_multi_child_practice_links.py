@@ -23,15 +23,29 @@ branch_labels = None
 depends_on = None
 
 
+def _upgrade_practice_pass_uniqueness() -> None:
+    # Revision 0025 conditionally creates this table. On databases bootstrapped
+    # from current ORM metadata, the per-child constraint may already exist,
+    # while the historical parent-only constraint was never installed.
+    constraints = {
+        c["name"] for c in sa.inspect(op.get_bind()).get_unique_constraints(
+            "family_practice_passes"
+        )
+    }
+    if "uq_family_practice_pass_parent" in constraints:
+        op.drop_constraint(
+            "uq_family_practice_pass_parent", "family_practice_passes", type_="unique"
+        )
+    if "uq_family_practice_pass_child" not in constraints:
+        op.create_unique_constraint(
+            "uq_family_practice_pass_child",
+            "family_practice_passes",
+            ["parent_profile_id", "student_id"],
+        )
+
+
 def upgrade() -> None:
-    op.drop_constraint(
-        "uq_family_practice_pass_parent", "family_practice_passes", type_="unique"
-    )
-    op.create_unique_constraint(
-        "uq_family_practice_pass_child",
-        "family_practice_passes",
-        ["parent_profile_id", "student_id"],
-    )
+    _upgrade_practice_pass_uniqueness()
     op.add_column(
         "learner_pass_sessions",
         sa.Column("display_name", sa.String(32), nullable=True),
