@@ -101,6 +101,46 @@ def public_payload(record: dict) -> dict:
     }
 
 
+def guided_misconception_question(record: dict, misconception_code: str) -> dict:
+    """Return one Socratic follow-up after a trusted guided-mode classification.
+
+    This content helper deliberately does not classify a learner response.  A
+    future trusted scorer may select a misconception code and request the
+    matching question, but only for a record generated in ``guided`` mode.
+    Submitted misconception exemplars and exact oracles stay teacher-only.
+    """
+
+    if not isinstance(record, dict):
+        raise TypeError("record must be a dictionary")
+    if record.get("mode") != "guided":
+        raise ValueError("guided misconception questions require guided mode")
+    if not isinstance(misconception_code, str) or not misconception_code:
+        raise TypeError("misconception_code must be a nonempty string")
+
+    misconceptions = record.get("misconceptions_teacher_only")
+    if not isinstance(misconceptions, dict):
+        raise TypeError("record is missing misconception evidence")
+    try:
+        misconception = misconceptions[misconception_code]
+    except KeyError as exc:
+        raise ValueError(f"unsupported misconception code: {misconception_code}") from exc
+    if not isinstance(misconception, dict):
+        raise TypeError("misconception evidence must be a dictionary")
+    question = misconception.get("socratic_probe")
+    if not isinstance(question, str) or not question.endswith("?"):
+        raise ValueError("misconception evidence is missing a Socratic question")
+
+    return {
+        "variant_id": record["variant_id"],
+        "mode": "guided",
+        "family": record["family"],
+        "misconception_code": misconception_code,
+        "socratic_question": question,
+        "return_to_response_schema": list(record["response_schema"]),
+        "next_action": "REVISE_AND_RESUBMIT_WITHOUT_ORACLE_DISCLOSURE",
+    }
+
+
 def _standard_substitution(seed: int, mode: str) -> dict:
     rng = _rng(seed, mode, STANDARD_SUBSTITUTION)
     while True:
@@ -409,16 +449,29 @@ def generate(family: str, seed: int, mode: str) -> dict:
     return builder(seed, mode)
 
 
-def generate_fresh_transfer(source_family: str, seed: int, mode: str) -> dict:
-    """Choose a deterministic, structurally different family for unseen transfer."""
+def generate_fresh_transfer(
+    source_family: str,
+    seed: int,
+    source_mode: str,
+    target_mode: str,
+) -> dict:
+    """Choose a different family and require an independent verification exit."""
 
-    _validate(seed, mode)
+    _validate(seed, source_mode)
+    _validate(seed, target_mode)
+    if target_mode != "independent":
+        raise ValueError("fresh transfer verification must use independent mode")
     if source_family not in BUILDERS:
         raise ValueError(f"unsupported source family: {source_family}")
     source_index = FAMILY_ORDER.index(source_family)
-    offset = 1 + (_rng(seed, mode, "TRANSFER_SELECTOR").randrange(len(FAMILY_ORDER) - 1))
+    offset = 1 + (
+        _rng(seed, source_mode, "TRANSFER_SELECTOR").randrange(len(FAMILY_ORDER) - 1)
+    )
     target_family = FAMILY_ORDER[(source_index + offset) % len(FAMILY_ORDER)]
-    record = generate(target_family, seed + 1_000_003, mode)
+    record = generate(target_family, seed + 1_000_003, target_mode)
     record["transfer_from_family"] = source_family
+    record["transfer_source_mode"] = source_mode
+    record["transfer_target_mode"] = target_mode
     record["transfer_contract"] = "DIFFERENT_MATHEMATICAL_STRUCTURE_SAME_CANDIDATE_SKILL"
+    record["verification_contract"] = "INDEPENDENT_HINT_FREE_EXIT"
     return record
