@@ -7,6 +7,7 @@ seeded, routed, or authorized for mastery.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from random import Random
 from typing import Any
@@ -107,6 +108,29 @@ _SOCRATIC_QUESTIONS = {
     "SUB.WORD.MULTISTEP.ADD_INSTEAD": "Does each event increase the starting amount or remove from it? What sign matches the story?",
     "MUL.MULTISTEP.FORGOT_ADD": "What quantity comes from equal groups, and what separate extra quantity must be combined afterward?",
     "DIV.WORD.MULTISTEP.ONE_STEP": "After combining both source amounts, what equal-sharing step is still required?",
+}
+
+# Only a family that exercises the observed error can diagnose its repair.
+# Fresh numbers within the same family are preferable to arbitrary switches
+# across fraction/decimal/word-problem targets.
+_REPAIR_TARGET_FAMILIES: dict[str, tuple[str, ...]] = {
+    "FRAC.UNIT.USE_WHOLE": ("MATH.FRAC.UNIT.MEANING",),
+    "FRAC.NUMBER_LINE.COUNT_MARKS": ("MATH.FRAC.NUMBER_LINE",),
+    "FRAC.COMPARE.BIGGER_DENOM": (
+        "MATH.FRAC.COMPARE.SAME_NUMERATOR",
+        "MATH.FRAC.ERROR.BIGGER_DENOM",
+    ),
+    "DEC.FRACTION.DIVIDE_WRONG_WAY": (
+        "MATH.DEC.FRACTION.TENTHS",
+        "MATH.DEC.FRACTION.HUNDREDTHS",
+    ),
+    "DEC.ORDER.REVERSE": ("MATH.DEC.ORDER",),
+    "DEC.ALIGN.LAST_DIGITS": ("MATH.DEC.ERROR.ALIGN",),
+    "ADD.WORD.MULTISTEP.TWO_ONLY": ("MATH.ADD.WORD.MULTISTEP",),
+    "SUB.WORD.MULTISTEP.SUBTRACT_ONCE": ("MATH.SUB.WORD.MULTISTEP",),
+    "SUB.WORD.MULTISTEP.ADD_INSTEAD": ("MATH.SUB.WORD.MULTISTEP",),
+    "MUL.MULTISTEP.FORGOT_ADD": ("MATH.MUL.WORD.MULTISTEP",),
+    "DIV.WORD.MULTISTEP.ONE_STEP": ("MATH.DIV.WORD.MULTISTEP",),
 }
 
 
@@ -218,6 +242,43 @@ def _different_family(concept_id: str, family_code: str, seed: int, purpose: str
     return families[(families.index(family_code) + offset) % len(families)]
 
 
+def _prompt_numbers(prompt: str) -> tuple[str, ...]:
+    """Extract displayed numeric parameters, including decimals and commas."""
+
+    return tuple(re.findall(r"\d+(?:,\d{3})*(?:\.\d+)?", prompt))
+
+
+def _fresh_targeted_repair(variant: Variant, code: str) -> Variant | None:
+    """Re-test the diagnosed structure with fresh operands, or fail closed."""
+
+    if (
+        variant.concept_id not in CONCEPT_FAMILIES
+        or variant.family_code not in CONCEPT_FAMILIES[variant.concept_id]
+        or variant.family_code not in _REPAIR_TARGET_FAMILIES.get(code, ())
+    ):
+        return None
+    source_numbers = _prompt_numbers(variant.prompt)
+    if not source_numbers:
+        return None
+
+    # A bounded, deterministic search for new numbers in the same canonical
+    # structure. Exhaustion must not fall back to an unrelated family.
+    for attempt in range(32):
+        candidate = _build(
+            variant.concept_id,
+            variant.family_code,
+            variant.seed + 1_000_003 + attempt * 10_007,
+            "guided",
+            f"repair:{code}",
+        )
+        if (
+            candidate.prompt != variant.prompt
+            and _prompt_numbers(candidate.prompt) != source_numbers
+        ):
+            return candidate
+    return None
+
+
 def guided_support_for_response(
     variant: Variant, observed_response: object
 ) -> dict[str, Any] | None:
@@ -237,14 +298,9 @@ def guided_support_for_response(
     question = _SOCRATIC_QUESTIONS.get(code)
     if question is None:
         return None
-    family_code = _different_family(variant.concept_id, variant.family_code, variant.seed, "repair")
-    repair = _build(
-        variant.concept_id,
-        family_code,
-        variant.seed + 1_000_003,
-        "guided",
-        "repair",
-    )
+    repair = _fresh_targeted_repair(variant, code)
+    if repair is None:
+        return None
     return {
         "misconception_code": code,
         "socratic_question": question,

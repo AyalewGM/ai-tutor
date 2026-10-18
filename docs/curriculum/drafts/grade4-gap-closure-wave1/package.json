@@ -7,7 +7,7 @@
   "mastery_writes": false,
   "revision": "R2.0",
   "question_depth_r2": {
-    "revision": "R2.0",
+    "revision": "R2.1",
     "status": "DRAFT_UNVERIFIED",
     "runtime_activation": false,
     "implementation_base_commit": "ecb8ad8d6e0acf5388e03bbc6dea14a9f5bb2913",
@@ -29,8 +29,8 @@
     },
     "existing_work": "The Grade 4 draft already defined broad teaching goals and one shallow generator per concept; registered shared domains already provide canonical fraction, decimal, and whole-number word-problem families, with independent acceptance not reassessed here.",
     "gap": "The full-seed audit measured only four distinct stored mathematical tasks for each named local skill, while the existing draft exposed only guided/independent modes and no executable observed-response repair path.",
-    "improvement": "Reuse twelve shared canonical families through deterministic diagnostic, guided, independent, and mastery namespaces; add exact hidden oracles, response-specific guided repair, different-family unseen transfer, and concrete/visual/symbolic keyboard/AT contracts.",
-    "verification": "Focused deterministic tests independently reconstruct every oracle from learner-visible prompts, run two identical passes, exercise all modes/families and repair routes, enforce answer isolation, and assert no persistence surface.",
+    "improvement": "Reuse twelve shared canonical families in four separated modes; exact hidden oracles; response-specific repairs restricted to an explicit misconception-to-family allowlist, with fresh numerical data and fail-closed exhaustion; different-family unseen independent transfer; concrete/visual/symbolic keyboard/AT contracts.",
+    "verification": "Two-pass deterministic tests independently reconstruct source and numerically fresh repair oracles, enforce repair-target preservation (including decimal alignment and multiplication-plus-extra regressions), four-mode separation, answer isolation, and no persistence surface. Independent exact-head re-review remains PENDING.",
     "generator_reuse": [
       "app.domains.fraction_decimal_depth",
       "app.domains.addition",
@@ -100,6 +100,15 @@
       "frontend_mve": "PENDING",
       "assessment_backend": "PENDING",
       "muse_qa": "PENDING"
+    },
+    "guided_repair_target_contract": {
+      "routing": "single recognized observed response in guided mode only",
+      "family_policy": "explicit misconception-to-eligible canonical family allowlist; fresh instance retains diagnosed source family",
+      "fresh_numeric_instance": true,
+      "max_deterministic_attempts": 32,
+      "mismatch_policy": "FAIL_CLOSED",
+      "different_family_role": "independent transfer only",
+      "review_status": "PENDING_INDEPENDENT_MATH_AND_PEDAGOGY"
     }
   },
   "base_commit": "cfda3f7301502c712c29f22ae5e4948cfa1ebc75",

@@ -69,7 +69,10 @@ def _reconstruct_answer(variant) -> str:
 
 def test_manifest_records_measured_gap_provenance_and_fail_closed_state() -> None:
     depth = PACKAGE["question_depth_r2"]
-    assert depth["revision"] == "R2.0"
+    assert depth["revision"] == "R2.1"
+    contract = depth["guided_repair_target_contract"]
+    assert contract["fresh_numeric_instance"] is True
+    assert contract["mismatch_policy"] == "FAIL_CLOSED"
     assert depth["audit_evidence"]["source_pr"] == 447
     assert depth["audit_evidence"]["source_sha"] == "195806169943268a5d2d7878a34834c39d92f7a7"
     assert depth["audit_evidence"]["stored_distinct_tasks_per_local_skill"] == 4
@@ -140,8 +143,17 @@ def test_guided_observed_errors_receive_specific_fresh_repairs_only() -> None:
                 assert support["misconception_code"] == code
                 assert "?" in support["socratic_question"]
                 repair = support["repair_task"]
-                assert repair["family_code"] != guided.family_code
+                assert guided.family_code in MODULE._REPAIR_TARGET_FAMILIES[code]
+                assert repair["family_code"] == guided.family_code
                 assert repair["prompt"] != guided.prompt
+                source_numbers = MODULE._prompt_numbers(guided.prompt)
+                repair_numbers = MODULE._prompt_numbers(repair["prompt"])
+                assert repair_numbers != source_numbers
+                hidden = MODULE._fresh_targeted_repair(guided, code)
+                assert hidden is not None
+                assert hidden.public_payload() == repair
+                assert _reconstruct_answer(hidden) == hidden.canonical_answer
+                assert MODULE.guided_support_for_response(guided, response) == support
                 assert repair["mode"] == "guided"
                 assert repair["support_prompts"] == []
                 assert not {"answer", "oracle", "seed"}.intersection(repair)
@@ -155,6 +167,49 @@ def test_guided_observed_errors_receive_specific_fresh_repairs_only() -> None:
                         is None
                     )
     assert seen_codes == set(MODULE._SOCRATIC_QUESTIONS)
+
+
+@pytest.mark.parametrize(
+    "concept_id,seed,expected_family",
+    [
+        ("G4-DECIMAL-FRACTIONS", 2, "MATH.DEC.ERROR.ALIGN"),
+        ("G4-MULTISTEP-WORD", 1, "MATH.MUL.WORD.MULTISTEP"),
+    ],
+)
+def test_reported_cross_target_repair_counterexamples(
+    concept_id: str, seed: int, expected_family: str
+) -> None:
+    source = MODULE.generate(concept_id, seed, "guided")
+    assert source.family_code == expected_family
+    code, wrong_answer = source.misconceptions[0]
+    support = MODULE.guided_support_for_response(source, wrong_answer)
+    assert support is not None
+    assert support["misconception_code"] == code
+    assert support["repair_task"]["family_code"] == expected_family
+    source_numbers = MODULE._prompt_numbers(source.prompt)
+    repair_numbers = MODULE._prompt_numbers(support["repair_task"]["prompt"])
+    assert source_numbers != repair_numbers
+
+
+def test_repair_target_allowlist_and_exhaustion_fail_closed(monkeypatch) -> None:
+    assert set(MODULE._REPAIR_TARGET_FAMILIES) == set(MODULE._SOCRATIC_QUESTIONS)
+    for family_names in MODULE.CONCEPT_FAMILIES.values():
+        assert all(family in MODULE._BUILDERS for family in family_names)
+    for eligible in MODULE._REPAIR_TARGET_FAMILIES.values():
+        assert all(family in MODULE._BUILDERS for family in eligible)
+
+    source = MODULE.generate("G4-MULTISTEP-WORD", 1, "guided")
+    code, wrong_answer = source.misconceptions[0]
+    assert code == "MUL.MULTISTEP.FORGOT_ADD"
+    from dataclasses import replace
+
+    wrong_family = replace(source, family_code="MATH.SUB.WORD.MULTISTEP")
+    assert MODULE.guided_support_for_response(wrong_family, wrong_answer) is None
+
+    # A builder that cannot provide new numeric parameters must not silently
+    # switch to a different teaching target.
+    monkeypatch.setattr(MODULE, "_build", lambda *args: source)
+    assert MODULE.guided_support_for_response(source, wrong_answer) is None
 
 
 def test_independent_transfer_changes_family_and_hides_support() -> None:
