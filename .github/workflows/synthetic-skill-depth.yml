@@ -57,7 +57,9 @@ jobs:
             scripts/seed_va_grade7.py
             scripts/seed_dc_grade6.py
             scripts/seed_dc_grade7.py
-            scripts/seed_algebra1.py
+            # Maryland is the supported entry point: it upgrades legacy MCPS
+            # content idempotently. Calling seed_algebra1 separately before
+            # each pass recreates the old curriculum after the upgrade.
             scripts/seed_md_algebra1.py
             scripts/seed_mth1w.py
             scripts/seed_va_algebra1.py
@@ -130,7 +132,7 @@ jobs:
           from pathlib import Path
 
           report = json.loads((Path(os.environ["RUNNER_TEMP"]) / "mihur-full-seed-skill-depth.json").read_text())
-          print("SYNTHETIC FULL-SEED MANIFEST (14 scripts) — NOT PRODUCTION:")
+          print("SYNTHETIC FULL-SEED MANIFEST (13 supported script entry points) — NOT PRODUCTION:")
           print("Grade/course counts:", json.dumps(report["grades"], sort_keys=True))
           print("Thin populated instructional local skills (first 35):")
           for row in report["thin_populated_priority"][:35]:
