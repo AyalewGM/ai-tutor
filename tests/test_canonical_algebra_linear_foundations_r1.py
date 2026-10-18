@@ -150,6 +150,20 @@ def test_guided_and_independent_namespaces_never_collide() -> None:
             assert guided.variant_id != independent.variant_id
 
 
+def test_misconception_answers_never_collide_with_exact_oracle() -> None:
+    def normalize(value: str) -> str:
+        return "".join(value.lower().split()).replace("−", "-")
+
+    for family in GEN.BUILDERS:
+        for mode in GEN.MODES:
+            for seed in range(500):
+                item = GEN.generate(family, seed, mode)
+                assert all(
+                    normalize(answer) != normalize(item.canonical_answer)
+                    for answer in item.misconception_answers.values()
+                )
+
+
 def test_unknown_family_and_mode_fail_closed() -> None:
     with pytest.raises(ValueError):
         GEN.generate("MATH.UNKNOWN", 0, "guided")

@@ -117,6 +117,10 @@ def _evaluate_expression(rng: random.Random) -> tuple:
     d = rng.randint(1, 4)
     value = a * (x + b) - c * (x - d)
     ignored_parentheses = a * x + b - c * x - d
+    while ignored_parentheses == value:
+        d += 1
+        value = a * (x + b) - c * (x - d)
+        ignored_parentheses = a * x + b - c * x - d
     prompt = f"Evaluate {a}(x + {b}) - ({c})(x - {d}) when x = {_fraction(x)}."
     oracle = {
         "x": _fraction(x), "a": a, "b": b, "c": c, "d": d,
@@ -231,7 +235,9 @@ def _multiplicative_equation(rng: random.Random) -> tuple:
 
 def _slope_table(rng: random.Random) -> tuple:
     slope = Fraction(rng.choice((-5, -3, -2, 2, 3, 5)), rng.choice((1, 2, 3)))
-    dx = slope.denominator * rng.choice((1, 2))
+    while abs(slope) == 1:
+        slope = Fraction(rng.choice((-5, -3, -2, 2, 3, 5)), rng.choice((1, 2, 3)))
+    dx = slope.denominator * 2
     x0 = rng.randint(-4, 2)
     b = rng.randint(-6, 6)
     points = [(x0 + i * dx, slope * (x0 + i * dx) + b) for i in range(3)]
@@ -258,9 +264,11 @@ def _slope_table(rng: random.Random) -> tuple:
 
 def _linear_model(rng: random.Random) -> tuple:
     slope = Fraction(rng.choice((-5, -3, 2, 3, 5)), rng.choice((1, 2)))
+    while abs(slope) == 1:
+        slope = Fraction(rng.choice((-5, -3, 2, 3, 5)), rng.choice((1, 2)))
     dx = slope.denominator * 2
     x1 = rng.randint(-3, 1)
-    b = Fraction(rng.randint(-8, 8))
+    b = Fraction(rng.choice(tuple(range(-8, 0)) + tuple(range(1, 9))))
     x2 = x1 + dx
     y1, y2 = slope * x1 + b, slope * x2 + b
     prompt = (
