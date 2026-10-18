@@ -70,9 +70,9 @@
     "Manipulate": "Use proposed factor, vertex, and coefficient controls with equivalent keyboard and text inputs; implementation remains MVE-owned.",
     "Explain": "Name which representation exposes each feature and reconcile exact substitution totals.",
     "Practice": "Use seven deterministic structures, signed coefficients, exact fractions, double branches, and no-real cases.",
-    "Diagnose": "Route from complete submitted evidence to root-sign, lost-plus-minus, vertex-sign, square, opening, or second-difference pathways.",
-    "Transfer": "Select a deterministic family with a different mathematical structure from the source family.",
-    "Verify": "Require complete exact oracles and independently reconstructible totals; trusted scoring remains backend-owned."
+    "Diagnose": "After a trusted guided-mode classification, expose only the selected Socratic question for root-sign, lost-plus-minus, vertex-sign, square, opening, or second-difference repair; never expose teacher exemplars or exact oracles.",
+    "Transfer": "Select a deterministic family with a different mathematical structure from the source family and record source and target modes explicitly.",
+    "Verify": "Require an independent, hint-free transfer exit with complete exact oracles and independently reconstructible totals; trusted scoring remains backend-owned."
   },
   "concrete_visual_symbolic": {
     "concrete": "Reuse the existing rectangle/tile construction from R4.",
@@ -82,9 +82,12 @@
   },
   "independent_evidence": {
     "deterministic_seed_oracle_tests": "AUTHORED_PENDING_EXECUTION",
-    "unseen_transfer": "MODE_NAMESPACED_DIFFERENT_FAMILY_CONTRACT",
+    "unseen_transfer": "EXPLICIT_SOURCE_MODE_TO_INDEPENDENT_DIFFERENT_FAMILY_CONTRACT",
+    "guided_misconception_support": "CONTENT_HELPER_FAILS_CLOSED_OUTSIDE_GUIDED_MODE",
     "math_review": "PENDING",
     "pedagogical_review": "PENDING",
+    "prior_head_math_review": "04faeeca0883a885b282a6c7bcfd7d82009400dc_ACCEPTED",
+    "prior_head_pedagogical_review": "04faeeca0883a885b282a6c7bcfd7d82009400dc_CHANGES_REQUIRED",
     "muse_qa": "PENDING",
     "trusted_scoring": "NOT_IMPLEMENTED",
     "learner_visibility": "NOT_VERIFIED"
