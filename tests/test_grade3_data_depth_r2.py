@@ -117,6 +117,73 @@ def test_guided_support_is_isolated_from_diagnostic_independent_and_mastery():
             assert payload["guided_support"]==[]
 
 
+def test_manifest_and_executable_repair_contracts_match_exactly():
+    data_package=next(item for item in PACKAGE["packages"] if item["id"]=="G3-DATA")
+    manifest={
+        route["code"]:{
+            "socratic_question":route["socratic_question"],
+            "repair_requirement":route["repair_requirement"],
+        }
+        for route in data_package["misconception_routes"]
+    }
+    executable={
+        code:{
+            "socratic_question":contract["socratic_question"],
+            "repair_requirement":contract["repair_requirement"],
+        }
+        for code,contract in MODULE.DATA_MISCONCEPTION_REPAIRS.items()
+    }
+    assert executable==manifest
+
+
+@pytest.mark.parametrize("family_index",range(8))
+@pytest.mark.parametrize("seed_round",range(64))
+def test_each_declared_error_selects_targeted_guided_socratic_fresh_repair(
+    family_index,seed_round
+):
+    seed=family_index+8*seed_round
+    variant=MODULE.generate("G3-DATA",seed,"guided")
+    oracle=variant.teacher_oracle()
+    assert len(oracle["misconception_answers"])==1
+    code,wrong=next(iter(oracle["misconception_answers"].items()))
+
+    first=MODULE.guided_data_repair(variant,wrong)
+    second=MODULE.guided_data_repair(variant,wrong)
+    assert first==second
+    assert first is not None
+    assert first["mode"]=="guided"
+    assert first["misconception_code"]==code
+    assert first["socratic_question"]==MODULE.DATA_MISCONCEPTION_REPAIRS[code]["socratic_question"]
+    assert first["repair_requirement"]==MODULE.DATA_MISCONCEPTION_REPAIRS[code]["repair_requirement"]
+    assert len(first["repair_tasks"])==len(MODULE.DATA_MISCONCEPTION_REPAIRS[code]["repair_families"])
+    for task,expected_family in zip(
+        first["repair_tasks"],MODULE.DATA_MISCONCEPTION_REPAIRS[code]["repair_families"],strict=True
+    ):
+        encoded=json.dumps(task,sort_keys=True).lower()
+        assert task["family_code"]==expected_family
+        assert task["prompt"]!=variant.prompt
+        assert task["guided_support"]==[]
+        assert task["mastery_credit"] is False
+        assert "oracle" not in encoded and "answer" not in encoded and "seed" not in encoded
+
+
+@pytest.mark.parametrize("mode",["diagnostic","independent","mastery"])
+def test_targeted_repair_fails_closed_outside_guided_mode(mode):
+    variant=MODULE.generate("G3-DATA",19,mode)
+    wrong=next(iter(variant.teacher_oracle()["misconception_answers"].values()))
+    with pytest.raises(ValueError,match="requires a guided"):
+        MODULE.guided_data_repair(variant,wrong)
+
+
+def test_unknown_or_malformed_guided_response_has_no_repair_surface():
+    variant=MODULE.generate("G3-DATA",19,"guided")
+    assert MODULE.guided_data_repair(variant,"not-a-declared-error") is None
+    with pytest.raises(ValueError,match="must not be empty"):
+        MODULE.guided_data_repair(variant,"   ")
+    with pytest.raises(TypeError,match="exact text or integer"):
+        MODULE.guided_data_repair(variant,{"value":3})
+
+
 @pytest.mark.parametrize(("source_mode","target_mode"),[("diagnostic","independent"),("guided","mastery")])
 def test_unseen_transfer_is_deterministic_and_changes_structure(source_mode,target_mode):
     for seed in range(32):
