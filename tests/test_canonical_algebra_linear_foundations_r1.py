@@ -35,6 +35,9 @@ def test_package_is_shared_draft_only_and_mapping_fails_closed() -> None:
         "PRACTICE", "DIAGNOSE", "TRANSFER", "VERIFY",
     ]
     assert all(value is False for value in MANIFEST["data_safety"].values())
+    assert MANIFEST["revision"] == "r2"
+    assert MANIFEST["accessibility_contract"]["applies_to_every_family"] is True
+    assert MANIFEST["accessibility_contract"]["implementation_owner"] == "Frontend/MVE"
 
 
 def test_generator_is_pure_and_cannot_touch_history_or_runtime() -> None:
@@ -62,9 +65,82 @@ def test_deterministic_variety_and_learner_safe_payload(family: str, mode: str) 
         public = item.public_payload()
         assert public["mastery_credit"] is False
         assert not {"oracle", "canonical_answer", "misconception_answers", "socratic_prompts", "seed"} & public.keys()
+        assert public["interaction_requirements"] == item.accessibility_contract
         assert item.guided_support() == (() if mode == "independent" else item.socratic_prompts)
         assert len(item.socratic_prompts) == 3
         assert item.misconception_answers
+
+
+def test_every_family_has_specific_keyboard_screen_reader_error_and_motion_contract() -> None:
+    required = {
+        "structured_response_fields",
+        "keyboard_order",
+        "screen_reader_reading_order",
+        "state_announcements",
+        "field_error_behavior",
+        "focus_recovery",
+        "reduced_motion",
+        "non_color_equivalent",
+        "text_equivalent",
+    }
+    contracts = {}
+    for family in GEN.BUILDERS:
+        item = GEN.generate(family, 19, "guided")
+        contract = item.accessibility_contract
+        assert required <= contract.keys()
+        assert len(contract["structured_response_fields"]) >= 5
+        assert contract["keyboard_order"][0] == "prompt"
+        assert "aria-live" in contract["field_error_behavior"]
+        assert "first invalid field" in contract["focus_recovery"]
+        assert "prefers-reduced-motion" in contract["reduced_motion"]
+        assert "colour" in contract["non_color_equivalent"]
+        assert "oracle" in contract["state_announcements"]
+        contracts[family] = (
+            contract["structured_response_fields"],
+            contract["screen_reader_reading_order"],
+            contract["text_equivalent"],
+        )
+    assert len(set(contracts.values())) == len(GEN.BUILDERS)
+
+
+def test_linear_table_and_two_point_model_require_text_and_delta_announcements() -> None:
+    table = GEN.generate("MATH.FUNC.LINEAR.SLOPE.TABLE", 7, "guided").public_payload()
+    table_contract = table["interaction_requirements"]
+    assert table_contract["structured_response_fields"] == (
+        "first_point", "second_point", "delta_x", "delta_y", "slope", "interval_check"
+    )
+    assert "each coordinate row" in table_contract["screen_reader_reading_order"]
+    assert "x equals" in table_contract["text_equivalent"]
+    assert "delta x then delta y" in table_contract["text_equivalent"]
+
+    model = GEN.generate("MATH.FUNC.LINEAR.MODEL", 7, "guided").public_payload()
+    model_contract = model["interaction_requirements"]
+    assert "point_one_check" in model_contract["structured_response_fields"]
+    assert "point_two_check" in model_contract["structured_response_fields"]
+    assert "chosen coordinates" in model_contract["text_equivalent"]
+    assert "delta x and delta y" in model_contract["text_equivalent"]
+
+
+def test_accessibility_payload_does_not_leak_math_or_misconception_answers() -> None:
+    def strings(value):
+        if isinstance(value, str):
+            yield value
+        elif isinstance(value, dict):
+            for key, nested in value.items():
+                yield key
+                yield from strings(nested)
+        elif isinstance(value, (list, tuple)):
+            for nested in value:
+                yield from strings(nested)
+
+    for family in GEN.BUILDERS:
+        for mode in GEN.MODES:
+            for seed in range(25):
+                item = GEN.generate(family, seed, mode)
+                contract = item.public_payload()["interaction_requirements"]
+                contract_strings = set(strings(contract))
+                assert item.canonical_answer not in contract_strings
+                assert all(answer not in contract_strings for answer in item.misconception_answers.values())
 
 
 def test_expression_oracles_are_exact_and_distribution_path_is_specific() -> None:
