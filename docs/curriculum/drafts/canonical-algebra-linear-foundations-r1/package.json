@@ -1,0 +1,75 @@
+{
+  "package_id": "canonical-algebra-linear-foundations-r1",
+  "revision": "r1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "scope": "Shared Grade 9 / Algebra I mathematical depth for expressions, one-step equations, and slope/intercept reasoning",
+  "audit_evidence": {
+    "main_sha": "ecb8ad8d6e0acf5388e03bbc6dea14a9f5bb2913",
+    "per_skill_audit_pr": 447,
+    "per_skill_audit_sha": "195806169943268a5d2d7878a34834c39d92f7a7",
+    "finding": "Named Grade 9 and Algebra I local skills have two stored distinct tasks and one stored family; canonical generator and learner-route evidence remain incomplete."
+  },
+  "canonical_contract": {
+    "status": "REUSES_EXISTING_MATHEMATICAL_FAMILY_IDS_ONLY",
+    "skills": [
+      "MATH.EE.EXPR",
+      "MATH.EE.EQUATION.ONE",
+      "MATH.F.LINEAR.SLOPE_INTERCEPT"
+    ],
+    "families": [
+      "MATH.ALG.EXPR.EVALUATE",
+      "MATH.ALG.EXPR.TRANSLATE",
+      "MATH.ALG.EXPR.ERROR.DISTRIBUTE",
+      "MATH.EQ.ONE.ADD_DIRECT",
+      "MATH.ALG.EQ.ONE.MULT",
+      "MATH.FUNC.LINEAR.SLOPE.TABLE",
+      "MATH.FUNC.LINEAR.MODEL",
+      "MATH.FUNC.LINEAR.ERROR.INTERCEPT"
+    ],
+    "jurisdiction_mapping": "PROVISIONAL_NOT_ACTIVATED",
+    "mapping_approval": "UNKNOWN",
+    "note": "MATH.ALGEBRA1.* seed-code decomposition remains separate review work; this package does not remap or seed any local skill."
+  },
+  "reuse": {
+    "existing_runtime_registry": "app/canonical_problem_families.py",
+    "existing_domain_generators": "app/domains/algebra_functions.py",
+    "existing_seed_decomposition": "scripts/decompose_seed_codes.py",
+    "existing_grade9_draft": "docs/curriculum/drafts/grade9-gap-closure-wave1",
+    "improvement": "Adds exact signed/fractional oracles, parameter-verification totals, misconception-specific diagnosis, disjoint modes, and structurally different unseen transfer without runtime registration."
+  },
+  "learning_sequence": [
+    "OBSERVE",
+    "PREDICT",
+    "MANIPULATE",
+    "EXPLAIN",
+    "PRACTICE",
+    "DIAGNOSE",
+    "TRANSFER",
+    "VERIFY"
+  ],
+  "representations": [
+    "CONTEXTUAL",
+    "TABLE",
+    "SYMBOLIC"
+  ],
+  "gates": {
+    "math_review": "PENDING",
+    "pedagogy_review": "PENDING",
+    "standards_mapping": "PENDING",
+    "assessment_backend": "PENDING",
+    "frontend_rendering_accessibility": "PENDING",
+    "muse_browser_qa": "PENDING",
+    "engineering_acceptance": "PENDING",
+    "deployed": false
+  },
+  "data_safety": {
+    "database_access": false,
+    "learner_data_access": false,
+    "attempt_history_writes": false,
+    "diagnostic_history_writes": false,
+    "mastery_history_writes": false,
+    "variant_history_writes": false
+  }
+}
