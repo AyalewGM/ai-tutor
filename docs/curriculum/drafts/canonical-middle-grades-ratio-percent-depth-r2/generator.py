@@ -538,23 +538,42 @@ def guided_repair(variant: Variant, submitted: str) -> dict[str, object] | None:
     normalized = submitted.strip().upper() if variant.answer_kind == "choice" else submitted.strip()
     if normalized == variant.answer:
         return {"classification": "CORRECT_NO_REMEDIATION", "questions": ()}
+
+    matches: list[str] = []
     for code, wrong_answer in variant.misconception_answers:
         candidate = wrong_answer.upper() if variant.answer_kind == "choice" else wrong_answer
         if normalized == candidate:
-            q1, q2, move = _REPAIR[code]
-            return {
-                "classification": code,
-                "questions": (q1, q2),
-                "representation_move": move,
-                "fresh_exit_family": TRANSFER_PARTNER[variant.family],
-            }
+            matches.append(code)
+
+    if len(matches) > 1:
+        return {
+            "classification": "AMBIGUOUS_RESPONSE_NEEDS_REASONING",
+            "questions": (
+                "Which quantities did you compare, and what operation or relationship did you use?",
+                "What calculation or representation would distinguish the possible strategies?",
+            ),
+            "representation_move": (
+                "Show the intermediate comparison with ordered units before choosing a correction."
+            ),
+            "fresh_exit_family": TRANSFER_PARTNER[variant.family],
+        }
+
+    if len(matches) == 1:
+        code = matches[0]
+        q1, q2, move = _REPAIR[code]
+        return {
+            "classification": code,
+            "questions": (q1, q2),
+            "representation_move": move,
+            "fresh_exit_family": TRANSFER_PARTNER[variant.family],
+        }
+
     return {
         "classification": "UNCLASSIFIED_NO_ANSWER_REVEAL",
         "questions": ("Which two quantities and ordered units are being compared?",),
         "representation_move": "Re-label the given quantities before choosing an operation.",
         "fresh_exit_family": TRANSFER_PARTNER[variant.family],
     }
-
 
 def generate_transfer(source: Variant, *, seed_offset: int = 1_000_003) -> Variant:
     """Generate a structurally different unseen independent transfer item."""
