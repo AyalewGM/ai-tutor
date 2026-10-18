@@ -147,6 +147,40 @@ def test_guided_observed_answers_select_specific_support_only() -> None:
             assert MODULE.guided_repair(isolated, "not-the-answer") is None
 
 
+def test_ambiguous_guided_signatures_use_neutral_fail_closed_support() -> None:
+    ambiguous_counts = {}
+
+    for family in MODULE.FAMILIES:
+        count = 0
+        for seed in range(2_048):
+            guided = MODULE.generate(family, seed, "guided")
+            grouped = {}
+            for code, answer in guided.misconception_answers:
+                normalized = answer.upper() if guided.answer_kind == "choice" else answer
+                grouped.setdefault(normalized, []).append(code)
+
+            for submitted, codes in grouped.items():
+                support = MODULE.guided_repair(guided, submitted)
+                assert support is not None
+                if len(codes) == 1:
+                    assert support["classification"] == codes[0]
+                else:
+                    count += 1
+                    assert support["classification"] == "AMBIGUOUS_RESPONSE_NEEDS_REASONING"
+                    assert len(support["questions"]) == 2
+                    assert support["fresh_exit_family"] == MODULE.TRANSFER_PARTNER[family]
+                    assert all(code not in support.values() for code in codes)
+
+        if count:
+            ambiguous_counts[family] = count
+
+    assert ambiguous_counts == {
+        "MATH.RATIO.TABLE.MISSING": 97,
+        "MATH.RATE.COMPARE": 790,
+    }
+
+
+
 def test_transfer_changes_family_and_is_independent_hint_free() -> None:
     for family in MODULE.FAMILIES:
         for source_mode in ("diagnostic", "guided"):
