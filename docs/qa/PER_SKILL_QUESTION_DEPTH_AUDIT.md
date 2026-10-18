@@ -13,7 +13,7 @@ The JSON contains **one row for every active curriculum-local skill**, including
 Per local skill:
 - grade or course; jurisdiction; curriculum code and version; local skill code and name;
 - canonical code and mapping type (explicitly **NOT independently reviewed**), enabling reuse without jurisdiction-specific generators;
-- stored curated/generated rows, non-extension selection upper bound, unique mathematical task keys, duplicate rows and conflicting answers on the *same mathematical task*;
+- stored curated/generated rows, non-extension selection upper bound, unique mathematical task keys, duplicate rows, conflicting answers and **complete-task reuse across diagnostic/guided versus independent/mastery pools** (mode labels alone do not confer fresh transfer);
 - stored problem types, tagged families, difficulty tiers, metadata declaration counts for diagnostic/guided/independent/mastery and missing-mode metadata;
 - legacy generator **sample execution** of implemented types already backed by stored problems, plus deterministic canonical family sample uniqueness by approved-code *candidate* (no assumed deployment route);
 - repetition/cross-session assessment-risk flags and separate Math, Pedagogy, rendering and Muse QA = **NOT ASSESSED**.
