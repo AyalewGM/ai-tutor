@@ -91,7 +91,7 @@ def _sample_canonical(canonical_code: str | None, count: int) -> dict[str, Any]:
     for family in sorted(families, key=lambda f: f.code):
         difficulty = family.min_difficulty
         mode = (LearningMode.INDEPENDENT if LearningMode.INDEPENDENT in family.modes
-                else sorted(family.modes, key=lambda m: m.value)[0])
+                else min(family.modes, key=lambda m: m.value))
         keys: set[tuple[str, str]] = set()
         errors: set[str] = set()
         for seed in range(count):
