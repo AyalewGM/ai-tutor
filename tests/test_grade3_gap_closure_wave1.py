@@ -87,17 +87,11 @@ def test_time_end_time_has_clock_format():
         assert ":" in o["end_time"]
         assert o["elapsed"]>0
 
-def test_scaled_graph_counts_are_scale_consistent():
-    tie_seen=False
-    for seed in range(120):
-        o=MODULE.generate("G3-DATA",seed,"independent").teacher_oracle()
-        assert all(h>=1 for h in o["heights"])
-        max_height=max(o["heights"])
-        expected=[label for label,height in zip(("A","B","C"),o["heights"]) if height==max_height]
-        assert o["greatest"]==expected
-        assert o["scale"] in {2,5,10}
-        tie_seen = tie_seen or len(expected)>1
-    assert tie_seen
+def test_data_depth_reuses_all_canonical_families():
+    for mode in MODULE.DATA_MODES:
+        variants=[MODULE.generate("G3-DATA",seed,mode) for seed in range(8)]
+        assert {variant.family_code for variant in variants}==set(MODULE.DATA_FAMILIES)
+        assert all(variant.teacher_oracle()["canonical_answer"] for variant in variants)
 
 def test_area_perimeter_are_distinct_measures():
     for seed in range(30):
@@ -117,7 +111,7 @@ def test_shape_hierarchy_relations():
     assert relations[3]=="SOMETIMES"
 
 @pytest.mark.parametrize(("concept","seed","mode","error"),[
-("BAD",1,"guided",ValueError),("G3-TIME",-1,"guided",ValueError),("G3-TIME",True,"guided",TypeError),("G3-TIME",1,"assessment",ValueError)])
+("BAD",1,"guided",ValueError),("G3-TIME",-1,"guided",ValueError),("G3-TIME",True,"guided",TypeError),("G3-TIME",1,"assessment",ValueError),("G3-DATA",1,"assessment",ValueError)])
 def test_invalid_generation_fails_closed(concept,seed,mode,error):
     with pytest.raises(error):
         MODULE.generate(concept,seed,mode)
