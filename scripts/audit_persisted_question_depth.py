@@ -236,13 +236,15 @@ def audit_database(db: Session, *, source_sha: str, samples: int = 3) -> dict[st
         ),
     )
     by_grade: dict[str, dict[str, int]] = defaultdict(
-        lambda: {"skills": 0, "populated": 0, "thin_populated": 0, "empty": 0})
+        lambda: {"skills": 0, "populated": 0, "thin_populated": 0, "empty": 0, "qa_fixtures": 0})
     for row in rows:
         group = by_grade[str(row["grade_or_course"] or "UNKNOWN")]
         group["skills"] += 1
+        if row["is_qa_fixture"]:
+            group["qa_fixtures"] += 1
         if row["stored_non_extension"]:
             group["populated"] += 1
-            if row["stored_distinct_tasks"] < MIN_UNIQUE_FOR_DEPTH_REVIEW:
+            if not row["is_qa_fixture"] and row["stored_distinct_tasks"] < MIN_UNIQUE_FOR_DEPTH_REVIEW:
                 group["thin_populated"] += 1
         else:
             group["empty"] += 1
