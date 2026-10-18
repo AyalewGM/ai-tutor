@@ -33,6 +33,8 @@ from app.services.problem_generation import GENERATORS
 
 MODES = ("diagnostic", "guided", "independent", "mastery")
 MIN_UNIQUE_FOR_DEPTH_REVIEW = 6  # TRIAGE threshold, never mastery/readiness approval
+# Explicit QA-only source fixture from scripts/seed_sprint1.py, not teaching depth.
+NON_INSTRUCTIONAL_FIXTURES = {("MCPS_MATH_8", "M8.PROB.MARBLE_QA")}
 
 
 def _text(value: Any) -> str:
@@ -144,6 +146,7 @@ def summarize_skill(
                        if p.problem_type == t), samples)
                       for t in types if t in GENERATORS}
     canonical = _sample_canonical(canonical_code, samples)
+    is_qa_fixture = (curriculum.code, skill.code) in NON_INSTRUCTIONAL_FIXTURES
     issue_flags = []
     if normal and unique_tasks < MIN_UNIQUE_FOR_DEPTH_REVIEW:
         issue_flags.append("THIN_STORED_UNIQUE_TASKS")
@@ -165,6 +168,8 @@ def summarize_skill(
         issue_flags.append("NO_NON_EXTENSION_STORED_QUESTIONS")
     return {
         "grade_or_course": curriculum.grade_level,
+        "is_qa_fixture": is_qa_fixture,
+        "instructional_priority_eligible": not is_qa_fixture,
         "curriculum_code": curriculum.code,
         "curriculum_version": curriculum.version,
         "jurisdiction": curriculum.jurisdiction,
@@ -221,7 +226,7 @@ def audit_database(db: Session, *, source_sha: str, samples: int = 3) -> dict[st
             code, mapping.mapping_type if mapping else None, samples=samples,
         ))
     ranked = sorted(
-        (r for r in rows if r["stored_non_extension"] > 0),
+        (r for r in rows if r["stored_non_extension"] > 0 and r["instructional_priority_eligible"]),
         key=lambda r: (
             r["stored_distinct_tasks"],
             len(r["stored_family_codes"]),
@@ -257,6 +262,7 @@ def audit_database(db: Session, *, source_sha: str, samples: int = 3) -> dict[st
                              "not_a_mastery_or_release_standard": True},
         "grades": dict(sorted(by_grade.items())),
         "skill_count": len(rows),
+        "qa_fixture_skill_count": sum(r["is_qa_fixture"] for r in rows),
         "thin_populated_priority": [
             {"grade_or_course": r["grade_or_course"],
              "curriculum_code": r["curriculum_code"], "skill_code": r["skill_code"],
