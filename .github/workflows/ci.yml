@@ -49,6 +49,36 @@ jobs:
       - name: Seed Sprint 1 content
         run: python scripts/seed_sprint1.py
 
+      # Synthetic Sprint 1 only; not a full Grades 1–9 population claim.
+      # Per-local-skill evidence is archived even if later unrelated tests fail.
+      - name: Snapshot synthetic per-skill question depth
+        run: |
+          python -m scripts.audit_persisted_question_depth \
+            --database-url "$DATABASE_URL" \
+            --source-sha "$(git rev-parse HEAD)" \
+            --samples 2 \
+            --output "$RUNNER_TEMP/mihur-sprint1-skill-depth.json"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads((Path(os.environ["RUNNER_TEMP"]) / "mihur-sprint1-skill-depth.json").read_text())
+          print("SYNTHETIC SPRINT 1 ONLY — per-grade population:", report["grades"])
+          print("Thinnest populated local skills (up to 20):")
+          for item in report["thin_populated_priority"][:20]:
+              print(item["grade_or_course"], item["curriculum_code"],
+                    item["skill_code"], item["stored_distinct_tasks"],
+                    ",".join(item["issue_flags"]))
+          PY
+
+      - name: Upload synthetic per-skill audit artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: mihur-sprint1-per-skill-depth
+          path: ${{ runner.temp }}/mihur-sprint1-skill-depth.json
+          if-no-files-found: error
+
       - name: Test
         env:
           # Isolated CI PostgreSQL is migrated and seeded in the prior steps.
