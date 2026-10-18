@@ -83,6 +83,9 @@ _REVIEWED_CATALOG_SNAPSHOTS: dict[tuple[str, str], frozenset[CatalogSnapshot]] =
             CatalogSnapshot(39, "6530d5611f51d2ce13e1eda84ff42a6d66a2e8ec1d19d1ffe32ff38c7f35e782"),
         }
     ),
+    ("MCPS_ALGEBRA_1_2026_27", "SY2026-27"): frozenset(
+        {CatalogSnapshot(50, "807f3c056742591f61a8665b32be9139728e51b9ae6c16d0754b70dab28cedbc")}
+    ),
     ("MD_ALGEBRA_1_2026_27", "MCCRS-revised-SY2026-27"): frozenset(
         {CatalogSnapshot(62, "f767b89698a69d29188773d25f4c1b68f78fbf74c22ecca5bf9731ead22c2877")}
     ),
@@ -108,7 +111,10 @@ _REVIEWED_CATALOG_SNAPSHOTS: dict[tuple[str, str], frozenset[CatalogSnapshot]] =
         {CatalogSnapshot(72, "6305b3857d51405e2e50d09e79c1675064dcdc21a27605ba42ad5fb080fe87b8")}
     ),
     ("MTH1W", "2021"): frozenset(
-        {CatalogSnapshot(64, "b75f48729b5cb8e1d937f83425ae991e1863ff93605ab5e98c412985242f15cc")}
+        {
+            CatalogSnapshot(48, "8adc88a5b17ff0062fd835e8b43ca20d9c26a75c376cbc284f1c4c97433917ea"),
+            CatalogSnapshot(64, "b75f48729b5cb8e1d937f83425ae991e1863ff93605ab5e98c412985242f15cc"),
+        }
     ),
     ("VA_ALGEBRA_1_SOL_2023", "SOL-2023-v1"): frozenset(
         {CatalogSnapshot(10, "a5df474bdf74adcb77239eeda908d81aaee2ac15dd737e302228b313e4f3935e")}
