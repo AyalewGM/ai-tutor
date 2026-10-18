@@ -8,7 +8,7 @@ Status: **AUTHOR EVIDENCE ONLY — NOT ACCEPTED**. Supports #446 / #377. Does no
 - Primary original standards locator: https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000
 - VDOE official Grade 8 *Overview of Revisions*, August 2023 (supplementary issuer-published scope evidence, **not** a substitute for the original standards): https://www.doe.virginia.gov/home/showpublisheddocument/49365/638315056768230000
 - VDOE authority index: https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics
-- Checked 2026-10-18: original Grade 8 and compiled original links returned HTTP 403 in browser retrieval; VDOE overview's indexed public text exposes the clauses below. Individual original printed pages and the complete set of lettered knowledge-and-skills clauses remain **UNKNOWN**. Do not elevate the indexed overview to full primary-source verification.
+- Checked 2026-10-18: original Grade 8 and compiled original links returned HTTP 403 in browser retrieval; VDOE overview's indexed public text exposes the clauses below. This was the initial access state; a subsequently supplied complete 17-page VDOE overview PDF allowed transcription of its 2023-column lettered KS clauses. The separate original 2023 SOL publication still requires direct verification; do not elevate the overview to the original publication.
 
 ## Bounded clause evidence from VDOE's revision overview (page label: 16)
 
@@ -40,3 +40,11 @@ Under #446 the quality audit owns measured persisted question depth. Curriculum/
 Obtain original 2023 VDOE Grade 8 SOL PDF or authenticated copy, locate every parent and all lettered Knowledge and Skills on its exact printed page, compare all 16 parent summaries and the clauses above, and record deviations as a new author correction request. Separately inspect the original NGA/CCSSO 2010 Grade 8 CCSS text adopted by DC, including the 8.EE.C.7(a,b), 8.EE.C.8(a,b,c), and 8.G.A.1(a,b,c) subparts already provisionally indexed. Do not treat source-text URLs on unofficial republishers as accepting authority.
 
 Independent decisions required: source fidelity per clause; architectural/mathematical canonical identity; generator and assessment coverage; pedagogical and QA gates. All remain PENDING. No learner/history/mastery/activation mutation.
+
+## October 18 follow-up — full VDOE overview PDF inspected
+
+The user supplied the actual 17-page VDOE August 2023 Grade 8 *Overview of Revisions* PDF corresponding to the URL above. Its **2023 Knowledge and Skills** right-hand columns were read across printed pages 2–15. The bounded clause-id index is now tracked in `va_grade8_2023.overview_ks_clause_inventory_446.v1.json`: **16 parent standards and 74 lettered KS identifiers** indexed from the overview (not 74 independently accepted expectations). The source tables include important restrictions (e.g., 8.NS.1 natural-number range 1–400, 8.PS.2 boxplots no more than 20 data items, 8.PFA.4 equations up to four steps). The machine-readable index intentionally does **not** assert complete original-SOL source fidelity or canonical equivalence. Each parent must still be compared to the separate VDOE 2023 Mathematics SOL publication by a different reviewer.
+
+**Clause-direction correction relative to the earlier short overview-summary table:** the detailed 2023 KS column on overview printed page 14 identifies `8.PFA.4c` as **writing an equation from a verbal situation** and `8.PFA.4d` as **creating a verbal situation from an equation**. Printed page 15 identifies `8.PFA.5c` as **writing an inequality from a verbal situation**, `8.PFA.5d` as **creating a situation from an inequality**, and `8.PFA.5e` as **solving a contextual inequality problem**. The shorter summary on printed page 16 groups and paraphrases these tasks in a different order; use the detailed 2023 column for this author's clause-index transcription, with independent verification still required.
+
+No DC Grade 8 source content or mapping approval is implied by this Virginia issuer document; #446 question-depth audits and canonical family building remain independent tracks.
