@@ -41,7 +41,55 @@ def test_every_family_replays_idempotently_without_oracle_leakage(
     public = depth.public_payload(first)
     assert "oracle_teacher_only" not in public
     assert "misconceptions_teacher_only" not in public
+    assert "guided_support" not in public
     assert "answer" not in json.dumps(public).lower()
+
+
+@pytest.mark.parametrize("family_index", range(7))
+@pytest.mark.parametrize("seed", range(80))
+def test_guided_question_selects_one_misconception_without_answer_leakage(
+    family_index: int, seed: int
+) -> None:
+    depth = load_module()
+    record = depth.generate(depth.FAMILY_ORDER[family_index], seed, "guided")
+
+    for code, evidence in record["misconceptions_teacher_only"].items():
+        support = depth.guided_misconception_question(record, code)
+        encoded = json.dumps(support, sort_keys=True).lower()
+
+        assert support["mode"] == "guided"
+        assert support["family"] == record["family"]
+        assert support["misconception_code"] == code
+        assert support["socratic_question"] == evidence["socratic_probe"]
+        assert support["return_to_response_schema"] == record["response_schema"]
+        assert support["next_action"] == "REVISE_AND_RESUBMIT_WITHOUT_ORACLE_DISCLOSURE"
+        assert "submitted" not in encoded
+        assert "oracle_teacher_only" not in encoded
+
+
+@pytest.mark.parametrize("mode", ["diagnostic", "independent", "mastery"])
+def test_guided_question_fails_closed_outside_guided_mode(mode: str) -> None:
+    depth = load_module()
+    record = depth.generate(depth.FACTORED_ROOTS, 17, mode)
+
+    with pytest.raises(ValueError, match="require guided mode"):
+        depth.guided_misconception_question(record, "QUAD.ROOT_SIGN")
+
+
+def test_guided_question_rejects_unknown_or_malformed_classification() -> None:
+    depth = load_module()
+    record = depth.generate(depth.FACTORED_ROOTS, 17, "guided")
+
+    with pytest.raises(ValueError, match="unsupported misconception code"):
+        depth.guided_misconception_question(record, "QUAD.UNKNOWN")
+    with pytest.raises(TypeError, match="nonempty string"):
+        depth.guided_misconception_question(record, "")
+    with pytest.raises(TypeError, match="record must be a dictionary"):
+        depth.guided_misconception_question(None, "QUAD.ROOT_SIGN")
+    malformed = dict(record)
+    malformed.pop("misconceptions_teacher_only")
+    with pytest.raises(TypeError, match="missing misconception evidence"):
+        depth.guided_misconception_question(malformed, "QUAD.ROOT_SIGN")
 
 
 @pytest.mark.parametrize("seed", range(120))
@@ -167,20 +215,40 @@ def test_misconception_submissions_never_equal_exact_oracle(
 
 
 @pytest.mark.parametrize("family_index", range(7))
-@pytest.mark.parametrize("mode", ["diagnostic", "guided", "independent", "mastery"])
+@pytest.mark.parametrize("source_mode", ["diagnostic", "guided", "independent", "mastery"])
 @pytest.mark.parametrize("seed", range(80))
-def test_transfer_is_deterministic_and_changes_mathematical_structure(
-    family_index: int, mode: str, seed: int
+def test_transfer_is_deterministic_changes_structure_and_exits_independent(
+    family_index: int, source_mode: str, seed: int
 ) -> None:
     depth = load_module()
     source = depth.FAMILY_ORDER[family_index]
-    first = depth.generate_fresh_transfer(source, seed, mode)
-    second = depth.generate_fresh_transfer(source, seed, mode)
+    first = depth.generate_fresh_transfer(source, seed, source_mode, "independent")
+    second = depth.generate_fresh_transfer(source, seed, source_mode, "independent")
 
     assert first == second
     assert first["family"] != source
+    assert first["mode"] == "independent"
     assert first["transfer_from_family"] == source
+    assert first["transfer_source_mode"] == source_mode
+    assert first["transfer_target_mode"] == "independent"
     assert first["transfer_contract"] == "DIFFERENT_MATHEMATICAL_STRUCTURE_SAME_CANDIDATE_SKILL"
+    assert first["verification_contract"] == "INDEPENDENT_HINT_FREE_EXIT"
+    public = depth.public_payload(first)
+    assert "oracle_teacher_only" not in public
+    assert "misconceptions_teacher_only" not in public
+
+
+@pytest.mark.parametrize("target_mode", ["diagnostic", "guided", "mastery"])
+def test_transfer_rejects_non_independent_verification_exit(target_mode: str) -> None:
+    depth = load_module()
+
+    with pytest.raises(ValueError, match="must use independent mode"):
+        depth.generate_fresh_transfer(
+            depth.VERTEX_SYMMETRY,
+            31,
+            "guided",
+            target_mode,
+        )
 
 
 def test_modes_use_distinct_variant_namespaces_and_parameters() -> None:
