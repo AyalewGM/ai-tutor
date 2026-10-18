@@ -40,6 +40,83 @@ FAMILY_SKILL = {
     for family in families
 }
 
+COMMON_ACCESSIBILITY = {
+    "keyboard_order": (
+        "prompt",
+        "structured_response_fields_in_declared_order",
+        "check_response",
+        "guided_support_when_available",
+    ),
+    "field_error_behavior": (
+        "Identify the field by its visible label, announce the error through an aria-live region, "
+        "and do not erase any other learner response."
+    ),
+    "focus_recovery": (
+        "After validation, move focus to the first invalid field; after a successful check, "
+        "move focus to the result summary. Never reset focus to the page start."
+    ),
+    "reduced_motion": (
+        "No motion is required. If a representation animates, prefers-reduced-motion shows "
+        "the labelled before and after states simultaneously."
+    ),
+    "non_color_equivalent": (
+        "Every colour distinction also has a text label and a shape, border, or line-style cue."
+    ),
+    "state_announcements": (
+        "Announce learner-entered values and validation state only; never announce the oracle, "
+        "worked answer, or misconception exemplar before submission."
+    ),
+}
+
+FAMILY_ACCESSIBILITY = {
+    "MATH.ALG.EXPR.EVALUATE": {
+        "structured_response_fields": ("substitution", "left_group", "right_group", "exact_value", "verification"),
+        "screen_reader_reading_order": "Expression, supplied x-value, grouped terms from left to right, response fields, check control, status.",
+        "text_equivalent": "Linear text preserves parentheses and explicitly labels each grouped term before evaluation.",
+    },
+    "MATH.ALG.EXPR.TRANSLATE": {
+        "structured_response_fields": ("dependent_quantity", "independent_quantity", "fixed_term", "rate_term", "expression", "zero_input_check"),
+        "screen_reader_reading_order": "Context sentence, quantity-and-unit glossary, fixed and repeated charges, response fields, check control, status.",
+        "text_equivalent": "A labelled two-row table states p as parts and C as dollars, including the p = 0 row.",
+    },
+    "MATH.ALG.EXPR.ERROR.DISTRIBUTE": {
+        "structured_response_fields": ("first_error", "first_product", "second_product", "expanded_expression", "verification_value"),
+        "screen_reader_reading_order": "Original expression, learner claim, outside factor, first inside term, second inside term, response fields, status.",
+        "text_equivalent": "The distribution model is narrated as two signed products; arrows are never the sole carrier of meaning.",
+    },
+    "MATH.EQ.ONE.ADD_DIRECT": {
+        "structured_response_fields": ("operation_left", "operation_right", "left_result", "right_result", "solution", "substitution_check"),
+        "screen_reader_reading_order": "Original left side, equality word, original right side, paired-operation fields, simplified sides, solution, substitution check.",
+        "text_equivalent": "A balance table has labelled left and right columns and repeats the same-operation requirement in text.",
+    },
+    "MATH.ALG.EQ.ONE.MULT": {
+        "structured_response_fields": ("coefficient", "inverse_multiplier_left", "inverse_multiplier_right", "solution", "substitution_check"),
+        "screen_reader_reading_order": "Signed coefficient and variable, equality word, right side, reciprocal fields for both sides, solution, check.",
+        "text_equivalent": "A balance table names the exact signed reciprocal applied to each side; cancellation is narrated, not shown by colour alone.",
+    },
+    "MATH.FUNC.LINEAR.SLOPE.TABLE": {
+        "structured_response_fields": ("first_point", "second_point", "delta_x", "delta_y", "slope", "interval_check"),
+        "screen_reader_reading_order": "Table caption, x then y column headers, each coordinate row in order, selected-point fields, delta fields, slope, interval check, status.",
+        "text_equivalent": "Provide every table row as 'x equals …; y equals …'. A selected-point state announces both coordinates; committed learner entries announce delta x then delta y, without supplying oracle deltas.",
+    },
+    "MATH.FUNC.LINEAR.MODEL": {
+        "structured_response_fields": ("point_one", "point_two", "delta_x", "delta_y", "slope", "intercept", "equation", "point_one_check", "point_two_check"),
+        "screen_reader_reading_order": "First ordered pair, second ordered pair, coordinate-change fields, slope, intercept, equation, two substitution checks, status.",
+        "text_equivalent": "Ordered pairs are spoken as x-coordinate then y-coordinate. Point selection announces the chosen coordinates; learner-entered delta x and delta y are announced before the slope field.",
+    },
+    "MATH.FUNC.LINEAR.ERROR.INTERCEPT": {
+        "structured_response_fields": ("first_error", "fixed_charge", "hourly_rate", "correct_model", "zero_input_check", "requested_input_check"),
+        "screen_reader_reading_order": "Context and units, student model, fixed-charge field, hourly-rate field, corrected model, two checks, status.",
+        "text_equivalent": "A two-column context table labels input hours and output dollars and includes a zero-hour row for the intercept meaning.",
+    },
+}
+
+
+def _accessibility_contract(family_code: str) -> dict[str, Any]:
+    """Return public, answer-free interaction requirements for one family."""
+
+    return {**COMMON_ACCESSIBILITY, **FAMILY_ACCESSIBILITY[family_code]}
+
 
 def _fraction(value: Fraction | int) -> str:
     value = Fraction(value)
@@ -82,6 +159,7 @@ class Variant:
     oracle: dict[str, Any]
     misconception_answers: dict[str, str]
     socratic_prompts: tuple[str, ...]
+    accessibility_contract: dict[str, Any]
 
     def public_payload(self) -> dict[str, Any]:
         """Return a learner-safe draft payload with no hidden evidence."""
@@ -93,6 +171,7 @@ class Variant:
             "mode": self.mode,
             "prompt": self.prompt,
             "answer_kind": self.answer_kind,
+            "interaction_requirements": dict(self.accessibility_contract),
             "mastery_credit": False,
         }
 
@@ -347,6 +426,7 @@ def generate(family_code: str, seed: int, mode: str) -> Variant:
         oracle=oracle,
         misconception_answers=wrong,
         socratic_prompts=hints,
+        accessibility_contract=_accessibility_contract(family_code),
     )
 
 
