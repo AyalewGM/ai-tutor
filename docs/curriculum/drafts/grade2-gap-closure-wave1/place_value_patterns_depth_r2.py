@@ -12,7 +12,7 @@ from random import Random
 
 STATUS = "DRAFT_UNVERIFIED"
 RUNTIME_ACTIVATION = False
-REVISION = "g2-place-pattern-depth-r2"
+REVISION = "g2-place-pattern-depth-r2.1"
 
 PLACE_CONCEPT = "G2-PLACE-VALUE"
 PATTERN_CONCEPT = "G2-SKIP-PATTERNS"
@@ -72,6 +72,24 @@ class Variant:
 
     def teacher_oracle(self) -> dict[str, object]:
         return dict(self.oracle)
+
+    def guided_support_for_response(self, response: object) -> dict[str, str] | None:
+        """Return one Socratic repair only after a guided misconception match.
+
+        Diagnostic, independent, and mastery variants cannot expose authored
+        repairs. Unknown guided responses also fail closed rather than receiving
+        a generic hint that might reveal the hidden oracle.
+        """
+
+        if self.mode != "guided":
+            return None
+        for code, misconception_response in self.misconception_responses.items():
+            if response == misconception_response:
+                return {
+                    "misconception_code": code,
+                    "socratic_prompt": self.socratic_repairs[code],
+                }
+        return None
 
 
 def _validate(concept_id: str, seed: int, mode: str) -> None:
@@ -305,9 +323,13 @@ def _pattern_variant(family: str, rng: Random) -> tuple:
         fields = ("completed_sequence", "constant_step", "rule_explanation")
 
     elif family == "EXTEND_BACKWARD":
-        end = rng.randrange(400, 901, 100) if step == 100 else rng.randrange(100, 501, step)
+        minimum_endpoint = 5 * step
+        end = rng.randrange(minimum_endpoint, 901 if step == 100 else 501, step)
         sequence = tuple(end - step * index for index in range(6))
-        prompt = f"Count backward from {end} by {step}. Give the next five terms and explain why the step is negative."
+        prompt = (
+            f"Count backward from {end} by {step}. Give the next five terms and explain "
+            "how much smaller each term becomes."
+        )
         oracle = {
             "sequence": sequence,
             "signed_step": -step,
@@ -317,8 +339,14 @@ def _pattern_variant(family: str, rng: Random) -> tuple:
         repairs = {
             "FORWARD_NOT_BACKWARD": "Does moving backward make each term greater or smaller? By how much?"
         }
-        visual = {"kind": "backward_number_line", "start": end, "step": -step, "jumps": 5}
-        fields = ("completed_sequence", "signed_step", "direction_explanation")
+        visual = {
+            "kind": "backward_number_line",
+            "start": end,
+            "direction": "backward",
+            "step_size": step,
+            "jumps": 5,
+        }
+        fields = ("completed_sequence", "decrease_amount", "direction_explanation")
 
     elif family == "MISSING_INTERNAL_TERM":
         start = rng.randrange(0, 501, 5)
