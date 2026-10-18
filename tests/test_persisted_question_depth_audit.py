@@ -91,3 +91,30 @@ def test_explicit_qa_visual_fixture_is_reported_but_not_instructional_priority()
     assert row["is_qa_fixture"] is True
     assert row["instructional_priority_eligible"] is False
     assert row["stored_distinct_tasks"] == 1
+
+
+def test_identical_mathematical_task_across_assisted_and_independent_is_flagged() -> None:
+    curriculum = SimpleNamespace(code="SYNTH_G3", grade_level="3", version="1", jurisdiction="Synthetic")
+    skill = SimpleNamespace(code="M3.MD.DATA", name="Graph reading")
+    items = [
+        problem("diag", "How many blue votes?", "7", params={"blue": 7, "red": 4}),
+        problem("ind", "How many blue votes?", "7", params={"red": 4, "blue": 7}),
+        problem("guide", "How many cats?", "6", params={"cat": 6}),
+        problem("mastery", "How many cats?", "6", params={"cat": 6}),
+    ]
+    metadata = {
+        "diag": SimpleNamespace(extension_eligible=False, diagnostic_eligible=True,
+                                guided_eligible=False, independent_eligible=False, mastery_eligible=False),
+        "ind": SimpleNamespace(extension_eligible=False, diagnostic_eligible=False,
+                               guided_eligible=False, independent_eligible=True, mastery_eligible=False),
+        "guide": SimpleNamespace(extension_eligible=False, diagnostic_eligible=False,
+                                 guided_eligible=True, independent_eligible=False, mastery_eligible=False),
+        "mastery": SimpleNamespace(extension_eligible=False, diagnostic_eligible=False,
+                                   guided_eligible=False, independent_eligible=False, mastery_eligible=True),
+    }
+    row = summarize_skill(curriculum, skill, items, metadata, None, None, samples=1)
+    assert row["stored_distinct_tasks"] == 2
+    assert row["diagnostic_independent_same_task_groups"] == 1
+    assert row["guided_mastery_same_task_groups"] == 1
+    assert row["assisted_independent_same_task_groups"] == 2
+    assert "SAME_TASK_IN_ASSISTED_AND_INDEPENDENT_POOLS" in row["issues_for_triage"]
