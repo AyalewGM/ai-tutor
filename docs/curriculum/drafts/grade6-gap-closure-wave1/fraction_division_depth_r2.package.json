@@ -1,0 +1,140 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "MIHUR_CONTENT_PROVENANCE",
+  "package_id": "grade6-gap-closure-wave1",
+  "component_revision": "fraction-division-depth-r2",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "learner_visible": false,
+  "learner_data_writes": false,
+  "mastery_writes": false,
+  "build_once_map_many": {
+    "shared_mathematics": "fraction division as measurement, fair sharing, common-unit counting, reciprocal multiplication, and missing-factor reasoning",
+    "existing_registry_families_reused": [
+      "MATH.FRAC.DIV",
+      "MATH.FRAC.WORD.DIVISION"
+    ],
+    "registry_family_review_status": "EXISTING_ON_MAIN_MATH_APPROVAL_NOT_REASSESSED_HERE",
+    "new_canonical_identity": false,
+    "local_mapping_changes": [],
+    "mapping_status": "NOT_ASSESSED_NO_MAPPING_AUTHORITY"
+  },
+  "reuse_first_audit": {
+    "main_sha": "ecb8ad8d6e0acf5388e03bbc6dea14a9f5bb2913",
+    "issue": 446,
+    "audit_pr": 447,
+    "audit_head_sha": "195806169943268a5d2d7878a34834c39d92f7a7",
+    "workflow_run": 39099428048,
+    "artifact_id": 12126245961,
+    "artifact_sha256": "33bede1875efe5f70649c97c6158ddc233795d70c584926d8a79a5a138a86978",
+    "measured_rows": [
+      {
+        "local_skill": "M6.NS.FRACTION",
+        "canonical_code_reported_by_audit": "MATH.NS.FRACTION_DIVISION",
+        "stored_distinct_tasks": 2,
+        "stored_families": ["WORD_PROBLEM"],
+        "missing_metadata_rows": 2,
+        "sampled_generator": "WORD_PROBLEM",
+        "learner_visible_integrated_status": "NOT_VERIFIED"
+      },
+      {
+        "local_skill": "DC6.NS.FRACTION",
+        "canonical_code_reported_by_audit": "MATH.NS.FRACTION_DIVISION",
+        "stored_distinct_tasks": 2,
+        "stored_families": ["WORD_PROBLEM"],
+        "missing_metadata_rows": 2,
+        "sampled_generator": "WORD_PROBLEM",
+        "learner_visible_integrated_status": "NOT_VERIFIED"
+      },
+      {
+        "local_skill": "VA6.CE.FRACTION",
+        "canonical_code_reported_by_audit": "MATH.NS.FRACTION_DIVISION",
+        "stored_distinct_tasks": 2,
+        "stored_families": ["WORD_PROBLEM"],
+        "missing_metadata_rows": 2,
+        "sampled_generator": "WORD_PROBLEM",
+        "learner_visible_integrated_status": "NOT_VERIFIED"
+      }
+    ],
+    "audit_limits": [
+      "Synthetic seeded data only; no production or live learner records were read.",
+      "Generator sample success does not prove mathematical correctness, rendering, scoring, or learner availability.",
+      "The current selector did not enforce declared diagnostic, guided, independent, or mastery metadata in the audited path."
+    ]
+  },
+  "existing_work_gap_improvement_verification": {
+    "existing_work": "Main contains canonical fraction generators and the grade6-gap-closure-wave1 package with one generic fraction-division variant structure; PR #447 measured two stored WORD_PROBLEM tasks for each populated local Grade 6 fraction-division row.",
+    "actual_gap": "Stored diversity is thin; the existing package does not provide family-specific executable measurement, sharing, partial-group, common-unit, inverse-factor, error-analysis, and dimensional-transfer evidence. Learner visibility and mode eligibility remain unverified.",
+    "planned_improvement": "Deepen the existing package once with eight structurally distinct deterministic families, exact rational teacher oracles, misconception-specific Socratic support, representation contracts, and cross-family unseen transfer. Do not seed, map, wire, score, or activate it.",
+    "verification": "Focused tests independently reconstruct every quotient and multiplication check, prove deterministic two-pass replay and mode namespaces, reject misconception collisions and answer leakage, enforce fresh-family transfer and fail-closed inputs, and inspect the draft module for persistence dependencies. Independent Math, Pedagogy, Muse, Assessment Backend, standards, and release gates remain pending."
+  },
+  "learning_design": {
+    "sequence": [
+      "OBSERVE",
+      "PREDICT",
+      "MANIPULATE",
+      "EXPLAIN",
+      "PRACTICE",
+      "DIAGNOSE",
+      "TRANSFER",
+      "VERIFY"
+    ],
+    "representations": [
+      "CONCRETE",
+      "VISUAL",
+      "SYMBOLIC"
+    ],
+    "families": [
+      "MEASUREMENT_GROUPS",
+      "FAIR_SHARE",
+      "NUMBER_LINE_PARTIAL_JUMPS",
+      "COMMON_DENOMINATOR_COUNTS",
+      "MISSING_FACTOR",
+      "RECIPE_BATCHES",
+      "RECIPROCAL_ERROR_ANALYSIS",
+      "DIMENSIONAL_TRANSFER"
+    ],
+    "misconception_codes": [
+      "MULTIPLY_INSTEAD_OF_DIVIDE",
+      "REVERSE_DIVISION_ORDER",
+      "DROP_PARTIAL_GROUP",
+      "ADD_COMMON_UNIT_COUNTS",
+      "REVERSE_COMMON_UNIT_COUNTS",
+      "ADD_FACTOR_INSTEAD_OF_DIVIDE",
+      "REVERSE_RATE_DIRECTION",
+      "MULTIPLY_AVAILABLE_BY_RATE",
+      "RECIPROCATE_DIVIDEND",
+      "MULTIPLY_WITHOUT_RECIPROCAL",
+      "MULTIPLY_AREA_BY_WIDTH",
+      "KEEP_SQUARE_UNIT_AFTER_DIVISION"
+    ],
+    "answer_contract": "teacher-only exact fractions.Fraction quotient plus reciprocal-product and multiplication reconstruction",
+    "unseen_transfer": "same seed changes family and prompt across guided and independent namespaces"
+  },
+  "accessibility": {
+    "keyboard": "Required; no drag-only partitioning or grouping.",
+    "screen_reader": "Exact quantities, partition state, groups, fields, and field errors announced in reading order.",
+    "reduced_motion": "Discrete states; optional animation suppressed.",
+    "color": "No color-only meaning.",
+    "focus": "Restore focus to first inconsistent field after feedback.",
+    "implementation_status": "REQUIREMENTS_ONLY_NOT_WIRED"
+  },
+  "standards_provenance": {
+    "official_source_url": "UNKNOWN_NOT_RESEARCHED_IN_THIS_BOUNDED_CHANGE",
+    "publication_version": "UNKNOWN",
+    "exact_expectation_ids": [],
+    "mapping_approval": "NOT_ASSESSED",
+    "coverage_credit": "NONE"
+  },
+  "independent_gates": {
+    "mathematics": "PENDING",
+    "pedagogy": "PENDING",
+    "standards_mapping": "PENDING_NOT_REQUIRED_FOR_SHARED_MATH_AUTHOR_REVIEW",
+    "assessment_backend": "NOT_IMPLEMENTED",
+    "frontend_mve": "NOT_IMPLEMENTED",
+    "muse_browser_qa": "PENDING",
+    "ci_appsec": "PENDING",
+    "release": "NOT_APPROVED",
+    "deployment": "NOT_DEPLOYED"
+  }
+}
