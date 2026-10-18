@@ -10,6 +10,7 @@ from app.content_ingestion import (
 )
 from app.core.database import SessionLocal
 from app.models import Curriculum, Misconception, Problem, Skill, SkillPrerequisite
+from app.services.problem_catalog_authorization import authorize_active_authored_catalog
 
 CURRICULUM_CODE = "MTH1W"
 AUTHORITY_CODE = "ON_MIN_ED"
@@ -838,6 +839,8 @@ def seed():
 
         persist_expectation_pack(db, _expectation_pack())
 
+        db.flush()
+        authorize_active_authored_catalog(db, curriculum_codes={curriculum.code})
         db.commit()
         print(f"MTH1W seed complete. Curriculum={curriculum.id}")
     finally:
