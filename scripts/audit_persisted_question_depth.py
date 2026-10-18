@@ -135,6 +135,30 @@ def summarize_skill(
     for p, key in zip(normal, task_keys):
         answers[key].add(_text(p.canonical_answer))
     ambiguous = sum(len(a) > 1 for a in answers.values())
+    # Count FULL mathematical-task collisions, not only shared prompt text.
+    # The same prompt may correctly differ by visual/parameters/choices.
+    task_modes: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for problem, task_key in zip(normal, task_keys):
+        metadata = metadata_by_id.get(problem.id)
+        if metadata is None:
+            continue
+        for mode in MODES:
+            if getattr(metadata, f"{mode}_eligible", False):
+                task_modes[task_key].add(mode)
+    exposed_to_independent = {"diagnostic", "guided"}
+    independent_evidence = {"independent", "mastery"}
+    assisted_independent_reuse = sum(
+        bool(modes & exposed_to_independent) and bool(modes & independent_evidence)
+        for modes in task_modes.values()
+    )
+    diagnostic_independent_reuse = sum(
+        {"diagnostic", "independent"}.issubset(modes)
+        for modes in task_modes.values()
+    )
+    guided_mastery_reuse = sum(
+        {"guided", "mastery"}.issubset(modes)
+        for modes in task_modes.values()
+    )
     declared = {mode: sum(bool(getattr(metadata_by_id[p.id], f"{mode}_eligible"))
                            for p in normal if p.id in metadata_by_id)
                 for mode in MODES}
@@ -156,6 +180,8 @@ def summarize_skill(
         issue_flags.append("REPEATED_MATHEMATICAL_TASK")
     if ambiguous:
         issue_flags.append("SAME_TASK_DIFFERENT_ANSWERS")
+    if assisted_independent_reuse:
+        issue_flags.append("SAME_TASK_IN_ASSISTED_AND_INDEPENDENT_POOLS")
     if missing_metadata:
         issue_flags.append("MISSING_MODE_METADATA")
     if normal and any(declared[m] == 0 for m in ("independent", "mastery")):
@@ -183,6 +209,9 @@ def summarize_skill(
         "stored_distinct_tasks": unique_tasks,
         "duplicate_task_rows": len(normal) - unique_tasks,
         "conflicting_answer_task_groups": ambiguous,
+        "assisted_independent_same_task_groups": assisted_independent_reuse,
+        "diagnostic_independent_same_task_groups": diagnostic_independent_reuse,
+        "guided_mastery_same_task_groups": guided_mastery_reuse,
         "stored_curated": sum(p.source_type != "GENERATED" for p in normal),
         "stored_generated": sum(p.source_type == "GENERATED" for p in normal),
         "stored_family_codes": families,
