@@ -1,7 +1,7 @@
-import uuid
 from contextlib import contextmanager
 
-from sqlalchemy import create_engine, func, select
+import pytest
+from sqlalchemy import create_engine, select
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.orm import Session
@@ -9,10 +9,7 @@ from sqlalchemy.orm import Session
 from app.content_models import ProblemContentMetadata
 from app.core.database import Base
 from app.models import Curriculum, Problem, Skill
-from app.services.problem_catalog_authorization import (
-    ACTIVE_CATALOG_POLICY_VERSION,
-    authorize_active_authored_catalog,
-)
+from app.services import problem_catalog_authorization as catalog_authorization
 
 
 @compiles(JSONB, "sqlite")
@@ -64,6 +61,7 @@ def _problem(
     db: Session,
     skill: Skill,
     *,
+    prompt: str,
     source_type: str = "CURATED",
     provenance: dict | None = None,
 ) -> Problem:
@@ -71,7 +69,7 @@ def _problem(
         primary_skill_id=skill.id,
         problem_type="SOLVE_EQUATION",
         difficulty=1,
-        prompt=f"Synthetic {uuid.uuid4()}",
+        prompt=prompt,
         canonical_answer="x=1",
         source_type=source_type,
         solution={"answer": "x=1", "provenance": provenance} if provenance else {"answer": "x=1"},
@@ -89,47 +87,66 @@ def _reviewed_provenance() -> dict:
     }
 
 
-def test_authorization_is_explicit_idempotent_and_fail_closed() -> None:
-    with _session() as db:
-        active = _curriculum(db, code="ACTIVE")
-        other_active = _curriculum(db, code="OTHER")
-        inactive = _curriculum(db, code="INACTIVE", active=False)
-        active_skill = _skill(db, active, code="ACTIVE.SKILL")
-        other_skill = _skill(db, other_active, code="OTHER.SKILL")
-        inactive_skill = _skill(db, inactive, code="INACTIVE.SKILL")
-        qa_skill = _skill(db, active, code="M8.PROB.MARBLE_QA")
-
-        authorized = _problem(db, active_skill, provenance=_reviewed_provenance())
-        wrong_author = _problem(
-            db,
-            active_skill,
-            provenance={**_reviewed_provenance(), "author": "Unreviewed draft author"},
+def _snapshot(db: Session, curriculum: Curriculum):
+    records = list(
+        db.execute(
+            select(Problem, Skill, Curriculum, ProblemContentMetadata)
+            .join(Skill, Skill.id == Problem.primary_skill_id)
+            .join(Curriculum, Curriculum.id == Skill.curriculum_id)
+            .outerjoin(
+                ProblemContentMetadata,
+                ProblemContentMetadata.problem_id == Problem.id,
+            )
+            .where(
+                Curriculum.id == curriculum.id,
+                Problem.source_type == "CURATED",
+                Skill.code != "M8.PROB.MARBLE_QA",
+            )
         )
-        metadata_free = _problem(db, active_skill)
-        generated = _problem(
+    )
+    return catalog_authorization._catalog_snapshot(records)
+
+
+def _approve_current_snapshot(monkeypatch: pytest.MonkeyPatch, db, curriculum) -> None:
+    monkeypatch.setitem(
+        catalog_authorization._REVIEWED_CATALOG_SNAPSHOTS,
+        (curriculum.code, curriculum.version),
+        frozenset({_snapshot(db, curriculum)}),
+    )
+
+
+def test_exact_snapshot_authorizes_only_missing_rows_and_preserves_narrow_metadata(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    with _session() as db:
+        curriculum = _curriculum(db, code="REVIEWED")
+        skill = _skill(db, curriculum, code="REVIEWED.SKILL")
+        authorized = _problem(
             db,
-            active_skill,
-            source_type="GENERATED",
+            skill,
+            prompt="Reviewed exact task",
             provenance=_reviewed_provenance(),
         )
-        _problem(db, other_skill, provenance=_reviewed_provenance())
-        _problem(db, inactive_skill, provenance=_reviewed_provenance())
-        _problem(db, qa_skill, provenance=_reviewed_provenance())
-
-        existing = _problem(db, active_skill, provenance=_reviewed_provenance())
+        existing = _problem(
+            db,
+            skill,
+            prompt="Reviewed guided-only task",
+            provenance=_reviewed_provenance(),
+        )
         db.add(
             ProblemContentMetadata(
                 problem_id=existing.id,
-                curriculum_id=active.id,
+                curriculum_id=curriculum.id,
                 objective="Narrow pre-existing authorization.",
                 evaluation_type="EXACT",
                 guided_eligible=True,
             )
         )
         db.flush()
+        _approve_current_snapshot(monkeypatch, db, curriculum)
 
-        assert authorize_active_authored_catalog(db, curriculum_codes={"ACTIVE"}) == 1
-        assert authorize_active_authored_catalog(db, curriculum_codes={"ACTIVE"}) == 0
+        assert catalog_authorization.authorize_active_authored_catalog(db) == 1
+        assert catalog_authorization.authorize_active_authored_catalog(db) == 0
 
         row = db.scalar(
             select(ProblemContentMetadata).where(ProblemContentMetadata.problem_id == authorized.id)
@@ -140,8 +157,10 @@ def test_authorization_is_explicit_idempotent_and_fail_closed() -> None:
         assert row.independent_eligible is True
         assert row.mastery_eligible is True
         assert row.extension_eligible is False
-        assert row.provenance_json["policy"] == ACTIVE_CATALOG_POLICY_VERSION
-        assert row.provenance_json["new_draft_authorization"] is False
+        assert row.provenance_json["policy"] == (
+            catalog_authorization.ACTIVE_CATALOG_POLICY_VERSION
+        )
+        assert row.provenance_json["catalog_digest"] == _snapshot(db, curriculum).digest
 
         existing_row = db.scalar(
             select(ProblemContentMetadata).where(ProblemContentMetadata.problem_id == existing.id)
@@ -152,14 +171,125 @@ def test_authorization_is_explicit_idempotent_and_fail_closed() -> None:
         assert existing_row.independent_eligible is False
         assert existing_row.mastery_eligible is False
 
-        unauthorized_ids = {wrong_author.id, metadata_free.id, generated.id}
+
+def test_future_lookalike_with_same_provenance_changes_snapshot_and_fails_closed(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    with _session() as db:
+        curriculum = _curriculum(db, code="REVIEWED")
+        skill = _skill(db, curriculum, code="REVIEWED.SKILL")
+        reviewed = _problem(
+            db,
+            skill,
+            prompt="Only reviewed exact task",
+            provenance=_reviewed_provenance(),
+        )
+        _approve_current_snapshot(monkeypatch, db, curriculum)
+        assert catalog_authorization.authorize_active_authored_catalog(db) == 1
+
+        lookalike = _problem(
+            db,
+            skill,
+            prompt="Future unreviewed task with copied provenance",
+            provenance=_reviewed_provenance(),
+        )
+        assert catalog_authorization.authorize_active_authored_catalog(db) == 0
         assert (
             db.scalar(
-                select(func.count())
-                .select_from(ProblemContentMetadata)
-                .where(ProblemContentMetadata.problem_id.in_(unauthorized_ids))
+                select(ProblemContentMetadata).where(
+                    ProblemContentMetadata.problem_id == lookalike.id
+                )
             )
-            == 0
+            is None
         )
-        assert db.scalar(select(func.count()).select_from(ProblemContentMetadata)) == 2
-        db.rollback()
+        assert (
+            db.scalar(
+                select(ProblemContentMetadata).where(
+                    ProblemContentMetadata.problem_id == reviewed.id
+                )
+            )
+            is not None
+        )
+
+
+@pytest.mark.parametrize(
+    "change",
+    ["prompt", "answer", "problem_type", "difficulty", "solution"],
+)
+def test_any_mathematical_content_change_invalidates_snapshot(
+    monkeypatch: pytest.MonkeyPatch,
+    change: str,
+) -> None:
+    with _session() as db:
+        curriculum = _curriculum(db, code="REVIEWED")
+        skill = _skill(db, curriculum, code="REVIEWED.SKILL")
+        problem = _problem(
+            db,
+            skill,
+            prompt="Reviewed exact task",
+            provenance=_reviewed_provenance(),
+        )
+        _approve_current_snapshot(monkeypatch, db, curriculum)
+        if change == "prompt":
+            problem.prompt = "Edited task"
+        elif change == "answer":
+            problem.canonical_answer = "x=2"
+        elif change == "problem_type":
+            problem.problem_type = "WORD_PROBLEM"
+        elif change == "difficulty":
+            problem.difficulty = 2
+        else:
+            problem.solution = {**problem.solution, "worked_step": "unreviewed"}
+        db.flush()
+
+        assert catalog_authorization.authorize_active_authored_catalog(db) == 0
+        assert (
+            db.scalar(
+                select(ProblemContentMetadata).where(
+                    ProblemContentMetadata.problem_id == problem.id
+                )
+            )
+            is None
+        )
+
+
+def test_unknown_partial_generated_inactive_and_qa_catalogs_fail_closed(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    with _session() as db:
+        active = _curriculum(db, code="REVIEWED")
+        inactive = _curriculum(db, code="INACTIVE", active=False)
+        active_skill = _skill(db, active, code="REVIEWED.SKILL")
+        inactive_skill = _skill(db, inactive, code="INACTIVE.SKILL")
+        qa_skill = _skill(db, active, code="M8.PROB.MARBLE_QA")
+        approved = _problem(
+            db,
+            active_skill,
+            prompt="Reviewed exact task",
+            provenance=_reviewed_provenance(),
+        )
+        _approve_current_snapshot(monkeypatch, db, active)
+        _problem(
+            db,
+            active_skill,
+            prompt="Generated task",
+            source_type="GENERATED",
+            provenance=_reviewed_provenance(),
+        )
+        _problem(
+            db,
+            inactive_skill,
+            prompt="Inactive task",
+            provenance=_reviewed_provenance(),
+        )
+        _problem(
+            db,
+            qa_skill,
+            prompt="QA-only task",
+            provenance=_reviewed_provenance(),
+        )
+
+        assert catalog_authorization.authorize_active_authored_catalog(db) == 1
+        rows = list(db.scalars(select(ProblemContentMetadata)))
+        assert len(rows) == 1
+        assert rows[0].problem_id == approved.id
