@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "package_id": "G2-PLACE-PATTERN-DEPTH-R2",
-  "revision": "g2-place-pattern-depth-r2",
+  "revision": "g2-place-pattern-depth-r2.1",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "mastery_writes": false,
@@ -50,6 +50,8 @@
     "exact_oracle": true,
     "answer_free_public_payload": true,
     "misconception_specific_socratic_repair": true,
+    "guided_response_to_misconception_route": true,
+    "nonnegative_backward_sequence_invariant": true,
     "structural_unseen_transfer": true
   },
   "learning_sequence": [
