@@ -1,0 +1,143 @@
+name: Synthetic Full-Seed Skill Depth Audit
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - scripts/audit_persisted_question_depth.py
+      - tests/test_persisted_question_depth_audit.py
+      - .github/workflows/synthetic-skill-depth.yml
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: ai_tutor
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d ai_tutor"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql+psycopg://postgres@localhost:5432/ai_tutor
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -e '.[dev]'
+      - name: Lint per-skill instrument
+        run: ruff check scripts/audit_persisted_question_depth.py tests/test_persisted_question_depth_audit.py
+      - name: Migrate isolated PostgreSQL
+        run: alembic upgrade head
+
+      - name: Seed supported core cohorts and assert second-run identity stability
+        run: |
+          set -euo pipefail
+          scripts=(
+            scripts/seed_sprint1.py
+            scripts/seed_all_elementary_packs.py
+            scripts/seed_grade6.py
+            scripts/seed_grade7.py
+            scripts/seed_grade8.py
+            scripts/seed_va_grade6.py
+            scripts/seed_va_grade7.py
+            scripts/seed_dc_grade6.py
+            scripts/seed_dc_grade7.py
+            scripts/seed_algebra1.py
+            scripts/seed_md_algebra1.py
+            scripts/seed_mth1w.py
+            scripts/seed_va_algebra1.py
+            scripts/seed_dc_algebra1.py
+          )
+          seed_all() {
+            for script in "${scripts[@]}"; do
+              echo "Synthetic seed: $script"
+              python "$script"
+            done
+          }
+          snapshot() {
+            SNAPSHOT_PATH="$1" python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          from sqlalchemy import select
+
+          from app.content_models import ProblemContentMetadata
+          from app.core.database import SessionLocal
+          from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, ProblemFamily
+          from app.models import Curriculum, Misconception, Problem, Skill, SkillPrerequisite
+
+          with SessionLocal() as db:
+              result = {}
+              for model, columns in (
+                  (Curriculum, (Curriculum.id, Curriculum.code, Curriculum.version)),
+                  (Skill, (Skill.id, Skill.curriculum_id, Skill.code)),
+                  (Misconception, (Misconception.id, Misconception.skill_id, Misconception.code)),
+                  (Problem, (Problem.id, Problem.primary_skill_id, Problem.prompt,
+                             Problem.canonical_answer, Problem.answer_kind, Problem.solution)),
+                  (SkillPrerequisite, (SkillPrerequisite.skill_id, SkillPrerequisite.prerequisite_skill_id)),
+                  (ProblemContentMetadata, (ProblemContentMetadata.id, ProblemContentMetadata.problem_id)),
+                  (CanonicalSkill, (CanonicalSkill.id, CanonicalSkill.code)),
+                  (CurriculumSkillMapping, (CurriculumSkillMapping.id, CurriculumSkillMapping.skill_id)),
+                  (ProblemFamily, (ProblemFamily.id, ProblemFamily.code)),
+              ):
+                  rows = db.execute(select(*columns)).all()
+                  result[model.__tablename__] = sorted(
+                      json.dumps([str(v) if not isinstance(v, (dict, list)) else v for v in row],
+                                 sort_keys=True, default=str)
+                      for row in rows
+                  )
+              Path(os.environ["SNAPSHOT_PATH"]).write_text(
+                  json.dumps(result, sort_keys=True), encoding="utf-8"
+              )
+          PY
+          }
+          seed_all
+          snapshot "$RUNNER_TEMP/first-seed.json"
+          seed_all
+          snapshot "$RUNNER_TEMP/second-seed.json"
+          cmp "$RUNNER_TEMP/first-seed.json" "$RUNNER_TEMP/second-seed.json"
+          echo "Two-pass content and stable identity seed check: PASS"
+
+      - name: Create full synthetic per-skill report
+        run: |
+          python -m scripts.audit_persisted_question_depth \
+            --database-url "$DATABASE_URL" \
+            --source-sha "$(git rev-parse HEAD)" \
+            --samples 3 \
+            --output "$RUNNER_TEMP/mihur-full-seed-skill-depth.json"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads((Path(os.environ["RUNNER_TEMP"]) / "mihur-full-seed-skill-depth.json").read_text())
+          print("SYNTHETIC FULL-SEED MANIFEST (14 scripts) — NOT PRODUCTION:")
+          print("Grade/course counts:", json.dumps(report["grades"], sort_keys=True))
+          print("Thin populated instructional local skills (first 35):")
+          for row in report["thin_populated_priority"][:35]:
+              print(row["grade_or_course"], row["curriculum_code"],
+                    row["skill_code"], row["stored_distinct_tasks"])
+          PY
+
+      - name: Upload per-skill depth evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: mihur-full-seed-per-skill-depth
+          path: ${{ runner.temp }}/mihur-full-seed-skill-depth.json
+          if-no-files-found: error
