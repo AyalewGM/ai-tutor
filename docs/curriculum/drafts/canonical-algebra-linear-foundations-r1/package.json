@@ -1,6 +1,6 @@
 {
   "package_id": "canonical-algebra-linear-foundations-r1",
-  "revision": "r1",
+  "revision": "r2",
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "mastery_writes": false,
@@ -54,6 +54,22 @@
     "TABLE",
     "SYMBOLIC"
   ],
+  "accessibility_contract": {
+    "status": "CONTENT_REQUIREMENTS_AUTHORED_IMPLEMENTATION_PENDING",
+    "applies_to_every_family": true,
+    "requirements": [
+      "family-specific structured response field order",
+      "keyboard order from prompt through check, guided support, and status",
+      "screen-reader reading order and learner-state announcements",
+      "linear-table row text equivalents and coordinate/delta entry announcements",
+      "first-invalid-field focus recovery without clearing other work",
+      "reduced-motion before/after alternative",
+      "text plus shape, border, or line-style alternatives to colour"
+    ],
+    "assessment_isolation": "Announcements expose learner-entered state only; oracle, worked answer, and misconception exemplars remain hidden before submission.",
+    "implementation_owner": "Frontend/MVE",
+    "verification_owner": "Independent Pedagogy and Muse browser QA"
+  },
   "gates": {
     "math_review": "PENDING",
     "pedagogy_review": "PENDING",
