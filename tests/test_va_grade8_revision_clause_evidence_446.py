@@ -16,3 +16,19 @@ def test_revision_overview_is_not_promoted_to_original_source():
     assert "not** a substitute for the original standards" in text
     for identifier in ("8.NS.1c", "8.MG.2c", "8.MG.4c", "8.PS.1a", "8.PS.2d", "8.PS.2i", "8.PS.3c", "8.PFA.1a", "8.PFA.3a", "8.PFA.3b", "8.PFA.4c", "8.PFA.4d", "8.PFA.5d", "8.PFA.5e"):
         assert identifier in text
+
+
+def test_pfa_equation_and_inequality_clause_directions():
+    """Guard the source-specific semantic direction, not just ID mentions."""
+    text = LEDGER.read_text(encoding="utf-8")
+    expected_table_rows = (
+        "| 8.PFA.4c | Write a multistep linear equation from a verbal/contextual situation | SOURCE_INDEX_EVIDENCE_ONLY |",
+        "| 8.PFA.4d | Create a verbal/contextual situation from a multistep linear equation | SOURCE_INDEX_EVIDENCE_ONLY |",
+        "| 8.PFA.5c | Write a multistep linear inequality from a verbal/contextual situation | SOURCE_INDEX_EVIDENCE_ONLY |",
+        "| 8.PFA.5d | Create a verbal/contextual situation from a multistep linear inequality | SOURCE_INDEX_EVIDENCE_ONLY |",
+        "| 8.PFA.5e | Solve a contextual problem requiring a multistep linear inequality | SOURCE_INDEX_EVIDENCE_ONLY |",
+    )
+    for row in expected_table_rows:
+        assert row in text
+    assert "| 8.PFA.4c; 8.PFA.4d |" not in text
+    assert "| 8.PFA.5d; 8.PFA.5e |" not in text
