@@ -50,6 +50,10 @@
       "pedagogical": "PENDING",
       "muse_qa": "PENDING"
     },
+    "prior_exact_head_reviews": {
+      "b1f9a8145a2f5106cb48a0247fa7bfd821321554_mathematical": "ACCEPT",
+      "b1f9a8145a2f5106cb48a0247fa7bfd821321554_pedagogical": "CHANGES_REQUIRED"
+    },
     "runtime_activation": false,
     "learner_history_writes": false,
     "ownership": {
