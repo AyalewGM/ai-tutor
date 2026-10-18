@@ -6,7 +6,10 @@
   "mastery_writes": false,
   "build_once_map_many": true,
   "scope": {
-    "grades": [6, 7],
+    "grades": [
+      6,
+      7
+    ],
     "mathematics": [
       "ratio interpretation and equivalence",
       "unit-rate computation and comparison",
@@ -37,16 +40,46 @@
   "canonical_reuse": {
     "identity_authority": "EXISTING_REGISTERED_FAMILY_METADATA_ONLY",
     "families": [
-      {"family": "MATH.RATIO.EQUIVALENT", "skill": "MATH.RP.RATIO.EQUIVALENT"},
-      {"family": "MATH.RATIO.PART_WHOLE", "skill": "MATH.RP.RATIO.INTERPRET"},
-      {"family": "MATH.RATIO.TABLE.MISSING", "skill": "MATH.RP.RATIO.EQUIVALENT"},
-      {"family": "MATH.RATIO.RECIPE", "skill": "MATH.RP.RATIO.EQUIVALENT"},
-      {"family": "MATH.RATE.UNIT", "skill": "MATH.RP.RATE.UNIT"},
-      {"family": "MATH.RATE.COMPARE", "skill": "MATH.RP.RATE.UNIT"},
-      {"family": "MATH.PCT.OF_QUANTITY", "skill": "MATH.RP.PERCENT.OF"},
-      {"family": "MATH.PCT.FIND_WHOLE", "skill": "MATH.RP.PERCENT.OF"},
-      {"family": "MATH.PCT.DISCOUNT", "skill": "MATH.RP.PERCENT.APPLICATIONS"},
-      {"family": "MATH.PCT.INCREASE", "skill": "MATH.RP.PERCENT.CHANGE"}
+      {
+        "family": "MATH.RATIO.EQUIVALENT",
+        "skill": "MATH.RP.RATIO.EQUIVALENT"
+      },
+      {
+        "family": "MATH.RATIO.PART_WHOLE",
+        "skill": "MATH.RP.RATIO.INTERPRET"
+      },
+      {
+        "family": "MATH.RATIO.TABLE.MISSING",
+        "skill": "MATH.RP.RATIO.EQUIVALENT"
+      },
+      {
+        "family": "MATH.RATIO.RECIPE",
+        "skill": "MATH.RP.RATIO.EQUIVALENT"
+      },
+      {
+        "family": "MATH.RATE.UNIT",
+        "skill": "MATH.RP.RATE.UNIT"
+      },
+      {
+        "family": "MATH.RATE.COMPARE",
+        "skill": "MATH.RP.RATE.UNIT"
+      },
+      {
+        "family": "MATH.PCT.OF_QUANTITY",
+        "skill": "MATH.RP.PERCENT.OF"
+      },
+      {
+        "family": "MATH.PCT.FIND_WHOLE",
+        "skill": "MATH.RP.PERCENT.OF"
+      },
+      {
+        "family": "MATH.PCT.DISCOUNT",
+        "skill": "MATH.RP.PERCENT.APPLICATIONS"
+      },
+      {
+        "family": "MATH.PCT.INCREASE",
+        "skill": "MATH.RP.PERCENT.CHANGE"
+      }
     ],
     "composite_seed_codes_approved_here": false,
     "dc_va_grade8_mapping_activated": false
@@ -74,12 +107,22 @@
       "TRANSFER",
       "VERIFY"
     ],
-    "representation_progression": ["CONCRETE", "VISUAL", "SYMBOLIC"],
-    "mode_namespaces": ["diagnostic", "guided", "independent", "mastery"],
+    "representation_progression": [
+      "CONCRETE",
+      "VISUAL",
+      "SYMBOLIC"
+    ],
+    "mode_namespaces": [
+      "diagnostic",
+      "guided",
+      "independent",
+      "mastery"
+    ],
     "guided_support_only": true,
     "independent_transfer_enforced": true,
     "teacher_oracle_public": false,
-    "exact_arithmetic": "fractions.Fraction"
+    "exact_arithmetic": "fractions.Fraction",
+    "ambiguous_observed_response": "FAIL_CLOSED_NEUTRAL_PROBE_NO_TARGETED_LABEL"
   },
   "accessibility": {
     "keyboard": "Tables, aligned number-line points, bars, and response controls must be operable without dragging.",
@@ -102,7 +145,7 @@
   },
   "review_gates": {
     "mathematical_review": "PENDING",
-    "pedagogical_review": "PENDING",
+    "pedagogical_review": "CHANGES_REQUIRED_AT_a35581c0_CORRECTED_PENDING_REREVIEW",
     "standards_mapping": "PENDING_NOT_CHANGED",
     "assessment_backend": "PENDING",
     "frontend_mve": "PENDING",
