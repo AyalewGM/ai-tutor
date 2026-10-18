@@ -2,6 +2,29 @@
 
 **Status: DRAFT_UNVERIFIED · runtime off · no mastery writes**
 
+## R2 measured question-depth correction
+
+The Issue #446 / PR #447 synthetic persisted-question audit measured only three
+distinct stored tasks for each mapped Grade 1 count/compare skill and four for
+each mapped tens/ones skill.  `number_sense_depth_r2.py` deepens those two
+existing concepts in place: five structurally different count/compare families
+and six place-value families, each with deterministic diagnostic, guided,
+independent, and mastery namespaces.
+
+The families separate quantity-to-numeral representation, decade-crossing
+counting, place-based comparison, duplicate-preserving ordering, neighboring
+numbers, compose/decompose, digit value, exchange invariance, teen-versus-tens,
+and zero-placeholder reasoning.  Each item carries an exact hidden oracle,
+misconception-specific wrong response and Socratic repair, plus a concrete
+keyboard/screen-reader interaction contract.  Independent and mastery variants
+change mathematical family as well as parameters relative to guided variants.
+
+This is not a learner-availability claim.  The existing canonical aliases remain
+`PROPOSED_NOT_APPROVED`, standards mapping remains pending, and R2 is not
+imported, seeded, routed, scored, or activated.  It requires fresh independent
+Mathematical and Pedagogical review, Assessment Backend and Frontend/MVE review,
+and synthetic Muse browser QA.
+
 This single PR deepens the complete Maryland Grade 1 strand set while preserving the already-separated Grade 1 Gate-5 mathematical identity boundaries.
 
 ## Included learning packages
