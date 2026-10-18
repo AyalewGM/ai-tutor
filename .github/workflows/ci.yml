@@ -49,6 +49,73 @@ jobs:
       - name: Seed Sprint 1 content
         run: python scripts/seed_sprint1.py
 
+      - name: Verify Sprint 1 seed is idempotent on isolated PostgreSQL
+        run: |
+          python - <<'PY'
+          import json
+
+          from sqlalchemy import select
+
+          from app.core.database import SessionLocal
+          from app.models import Curriculum, Misconception, Problem, Skill, SkillPrerequisite
+          from scripts.seed_sprint1 import seed
+
+          # Metadata/content only: never read or mutate learner/attempt/mastery tables.
+          def inventory():
+              with SessionLocal() as db:
+                  result = {}
+                  for model, columns in (
+                      (Curriculum, (Curriculum.id, Curriculum.code, Curriculum.version)),
+                      (Skill, (Skill.id, Skill.curriculum_id, Skill.code)),
+                      (Misconception, (Misconception.id, Misconception.skill_id, Misconception.code)),
+                      (Problem, (Problem.id, Problem.primary_skill_id, Problem.prompt, Problem.canonical_answer, Problem.solution)),
+                      (SkillPrerequisite, (SkillPrerequisite.skill_id, SkillPrerequisite.prerequisite_skill_id, SkillPrerequisite.importance_weight)),
+                  ):
+                      rows = db.execute(select(*columns)).all()
+                      result[model.__tablename__] = sorted(
+                          json.dumps(tuple(str(v) if not isinstance(v, dict)
+                                           else v for v in row), sort_keys=True, default=str)
+                          for row in rows
+                      )
+                  return result
+
+          before = inventory()
+          seed()
+          after = inventory()
+          assert after == before, "Sprint 1 seed changed existing content/identities on rerun"
+          print("Synthetic Sprint 1 reseed idempotency: PASS")
+          PY
+
+      # Synthetic Sprint 1 only; not a full Grades 1–9 population claim.
+      # Per-local-skill evidence is archived even if later unrelated tests fail.
+      - name: Snapshot synthetic per-skill question depth
+        run: |
+          python -m scripts.audit_persisted_question_depth \
+            --database-url "$DATABASE_URL" \
+            --source-sha "$(git rev-parse HEAD)" \
+            --samples 2 \
+            --output "$RUNNER_TEMP/mihur-sprint1-skill-depth.json"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads((Path(os.environ["RUNNER_TEMP"]) / "mihur-sprint1-skill-depth.json").read_text())
+          print("SYNTHETIC SPRINT 1 ONLY — per-grade population:", report["grades"])
+          print("Thinnest populated local skills (up to 20):")
+          for item in report["thin_populated_priority"][:20]:
+              print(item["grade_or_course"], item["curriculum_code"],
+                    item["skill_code"], item["stored_distinct_tasks"],
+                    ",".join(item["issue_flags"]))
+          PY
+
+      - name: Upload synthetic per-skill audit artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: mihur-sprint1-per-skill-depth
+          path: ${{ runner.temp }}/mihur-sprint1-skill-depth.json
+          if-no-files-found: error
+
       - name: Test
         env:
           # Isolated CI PostgreSQL is migrated and seeded in the prior steps.
