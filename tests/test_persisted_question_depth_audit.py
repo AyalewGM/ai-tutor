@@ -83,3 +83,11 @@ def test_canonical_generator_sample_is_not_mathematical_approval() -> None:
         assert record["unique_sample_tasks"] <= 2
         assert record["math_review"] == "NOT_ASSESSED"
         assert record["learner_route"] == "NOT_VERIFIED"
+
+def test_explicit_qa_visual_fixture_is_reported_but_not_instructional_priority() -> None:
+    curriculum = SimpleNamespace(code="MCPS_MATH_8", grade_level="8", version="1", jurisdiction="MD")
+    skill = SimpleNamespace(code="M8.PROB.MARBLE_QA", name="Marble QA only")
+    row = summarize_skill(curriculum, skill, [problem("qa", "Blue marbles?", "3/8")], {}, None, None, samples=1)
+    assert row["is_qa_fixture"] is True
+    assert row["instructional_priority_eligible"] is False
+    assert row["stored_distinct_tasks"] == 1
