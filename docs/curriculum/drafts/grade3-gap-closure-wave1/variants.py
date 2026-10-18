@@ -4,13 +4,37 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from fractions import Fraction
+from hashlib import sha256
 from random import Random
+
+from app.domains.elementary_data_patterns import build as build_elementary_data
 
 STATUS="DRAFT_UNVERIFIED"
 RUNTIME_ACTIVATION=False
 NAMESPACE="grade3-gap-closure-wave1"
 MODES=frozenset({"guided","independent"})
+DATA_MODES=("diagnostic","guided","independent","mastery")
 CONCEPTS=("G3-MULTIPLICATION","G3-DIVISION","G3-FACT-FAMILIES","G3-PLACE-VALUE","G3-FRACTIONS","G3-TIME","G3-DATA","G3-AREA-PERIMETER","G3-SHAPES")
+DATA_FAMILIES=(
+    "MATH.DATA.BAR.READ",
+    "MATH.DATA.BAR.COMPARE",
+    "MATH.DATA.BAR.TOTAL",
+    "MATH.DATA.PICTURE.SCALE",
+    "MATH.DATA.TALLY.READ",
+    "MATH.DATA.FREQ.MODE",
+    "MATH.DATA.LINEPLOT.FREQUENCY",
+    "MATH.DATA.LINEPLOT.DIFFERENCE",
+)
+DATA_RESPONSE_FIELDS={
+    "MATH.DATA.BAR.READ": ("category_count", "graph_reading_explanation"),
+    "MATH.DATA.BAR.COMPARE": ("difference", "comparison_explanation"),
+    "MATH.DATA.BAR.TOTAL": ("combined_count", "addition_explanation"),
+    "MATH.DATA.PICTURE.SCALE": ("represented_count", "key_explanation"),
+    "MATH.DATA.TALLY.READ": ("represented_count", "grouping_explanation"),
+    "MATH.DATA.FREQ.MODE": ("category", "frequency_explanation"),
+    "MATH.DATA.LINEPLOT.FREQUENCY": ("frequency", "line_plot_explanation"),
+    "MATH.DATA.LINEPLOT.DIFFERENCE": ("difference", "comparison_explanation"),
+}
 
 def _fmt(v:Fraction)->str:
     return str(v.numerator) if v.denominator==1 else f"{v.numerator}/{v.denominator}"
@@ -18,15 +42,70 @@ def _fmt(v:Fraction)->str:
 @dataclass(frozen=True)
 class Variant:
     concept_id:str; mode:str; seed:int; item_id:str; prompt:str; public_fields:tuple[str,...]; oracle:dict[str,object]
+    family_code:str|None=None
+    support_prompts:tuple[str,...]=()
     def public_payload(self)->dict[str,object]:
-        return {"concept_id":self.concept_id,"mode":self.mode,"item_id":self.item_id,"prompt":self.prompt,"response_fields":list(self.public_fields)}
+        if self.family_code is None:
+            return {
+                "concept_id":self.concept_id,
+                "mode":self.mode,
+                "item_id":self.item_id,
+                "prompt":self.prompt,
+                "response_fields":list(self.public_fields),
+            }
+        payload={
+            "concept_id":self.concept_id,
+            "mode":self.mode,
+            "task_id":sha256(self.item_id.encode("utf-8")).hexdigest()[:20],
+            "prompt":self.prompt,
+            "response_fields":list(self.public_fields),
+            "guided_support":list(self.support_prompts) if self.mode=="guided" else [],
+            "mastery_credit":False,
+        }
+        payload["family_code"]=self.family_code
+        return payload
     def teacher_oracle(self)->dict[str,object]: return dict(self.oracle)
 
 def _validate(concept_id:str,seed:int,mode:str)->None:
     if concept_id not in CONCEPTS: raise ValueError("unknown concept")
     if isinstance(seed,bool) or not isinstance(seed,int): raise TypeError("seed must be integer")
     if seed<0: raise ValueError("seed must be nonnegative")
-    if mode not in MODES: raise ValueError("mode must be guided or independent")
+    allowed_modes=DATA_MODES if concept_id=="G3-DATA" else MODES
+    if mode not in allowed_modes: raise ValueError(f"mode must be one of: {', '.join(allowed_modes)}")
+
+def _generate_data(seed:int,mode:str,item_id:str)->Variant:
+    mode_offset=DATA_MODES.index(mode)*2
+    family_code=DATA_FAMILIES[(seed+mode_offset)%len(DATA_FAMILIES)]
+    rng=Random(f"{NAMESPACE}:data-depth-r2:{mode}:{seed}:{family_code}")
+    prompt,answer,hints,misconceptions=build_elementary_data(family_code,rng,difficulty=3)
+    oracle={
+        "canonical_answer":answer,
+        "family_code":family_code,
+        "misconception_answers":dict(misconceptions),
+        "oracle_contract":"exact canonical elementary data answer",
+    }
+    return Variant(
+        "G3-DATA",
+        mode,
+        seed,
+        item_id,
+        prompt,
+        DATA_RESPONSE_FIELDS[family_code],
+        oracle,
+        family_code,
+        tuple(hints),
+    )
+
+def generate_data_transfer(seed:int,source_mode:str,target_mode:str)->Variant:
+    """Create a deterministic fresh exit with a different structure and full math."""
+    if source_mode not in DATA_MODES or target_mode not in DATA_MODES:
+        raise ValueError("source and target modes must be Grade 3 data modes")
+    source=generate("G3-DATA",seed,source_mode)
+    for offset in range(1,65):
+        candidate=generate("G3-DATA",seed+10_000+offset,target_mode)
+        if candidate.family_code!=source.family_code and candidate.prompt!=source.prompt:
+            return candidate
+    raise RuntimeError("could not construct fresh Grade 3 data transfer")
 
 def _round_half_up_positive(value:int,place:int)->int:
     if value<0 or place<=0:
@@ -77,13 +156,7 @@ def generate(concept_id:str,seed:int,mode:str)->Variant:
         oracle={"end_time":f"{end_h}:{end_m:02d}","elapsed":elapsed}
         fields=("timeline","end_time","hour_crossing_explanation")
     elif concept_id=="G3-DATA":
-        scale=rng.choice((2,5,10)); cats=["A","B","C"]; counts=[rng.randint(1,5)*scale for _ in cats]
-        prompt=f"A scaled bar graph uses 1 grid unit = {scale}. Categories A,B,C have counts {counts}. Give the bar heights in grid units and answer which category is greatest."
-        heights=[c//scale for c in counts]
-        greatest_value=max(counts)
-        greatest=[cats[i] for i,count in enumerate(counts) if count==greatest_value]
-        oracle={"heights":heights,"greatest":greatest,"scale":scale}
-        fields=("scale","bar_heights","greatest_categories","comparison_explanation")
+        return _generate_data(seed,mode,item_id)
     elif concept_id=="G3-AREA-PERIMETER":
         l,w=rng.randint(2,10),rng.randint(2,8)
         prompt=f"A rectangle is {l} units by {w} units. Find area and perimeter, explain square vs linear units, and give one different rectangle with the same area if possible."
