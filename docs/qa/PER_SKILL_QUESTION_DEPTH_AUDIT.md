@@ -8,6 +8,8 @@ Run `python -m scripts.audit_persisted_question_depth --database-url "$TEST_DATA
 
 The JSON contains **one row for every active curriculum-local skill**, including zero-problem skills; grouped grade/course statistics; and a sorted `thin_populated_priority` of populated skills with fewer than six distinct mathematical tasks (a *triage threshold*, not a release acceptance standard).
 
+**QA-only fixtures:** the Sprint 1 marble-bag skill `MCPS_MATH_8 / M8.PROB.MARBLE_QA` is explicitly seeded for accessibility regression, not curriculum depth. Count it in the inventory, exclude it from instructional thin-skill priorities, and never use fixture absence/presence as official standards evidence.
+
 Per local skill:
 - grade or course; jurisdiction; curriculum code and version; local skill code and name;
 - canonical code and mapping type (explicitly **NOT independently reviewed**), enabling reuse without jurisdiction-specific generators;
