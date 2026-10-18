@@ -35,6 +35,48 @@ DATA_RESPONSE_FIELDS={
     "MATH.DATA.LINEPLOT.FREQUENCY": ("frequency", "line_plot_explanation"),
     "MATH.DATA.LINEPLOT.DIFFERENCE": ("difference", "comparison_explanation"),
 }
+DATA_MISCONCEPTION_REPAIRS={
+    "DATA.BAR.READ.WRONG_CATEGORY": {
+        "socratic_question": "Which category name does the question point to, and where is that category in the data?",
+        "repair_requirement": "Name the target category before reading its value; verify against a fresh bar task.",
+        "repair_families": ("MATH.DATA.BAR.READ",),
+    },
+    "DATA.BAR.COMPARE.ADD": {
+        "socratic_question": "Does 'difference' ask how many altogether or how far apart the two counts are?",
+        "repair_requirement": "Read both bars, subtract smaller from larger, and contrast with a fresh total question.",
+        "repair_families": ("MATH.DATA.BAR.COMPARE", "MATH.DATA.BAR.TOTAL"),
+    },
+    "DATA.BAR.TOTAL.SUBTRACT": {
+        "socratic_question": "What word tells you to combine the two category counts?",
+        "repair_requirement": "Add the two requested counts and verify with a fresh total structure.",
+        "repair_families": ("MATH.DATA.BAR.TOTAL",),
+    },
+    "DATA.PICTURE.IGNORE_KEY": {
+        "socratic_question": "If each symbol stands for several students, what must happen to every symbol you count?",
+        "repair_requirement": "Multiply symbols by the key value and explain the unit represented.",
+        "repair_families": ("MATH.DATA.PICTURE.SCALE",),
+    },
+    "DATA.TALLY.COUNT_GROUPS_ONLY": {
+        "socratic_question": "How many marks are hidden inside each complete tally bundle?",
+        "repair_requirement": "Count complete groups by fives, then add extras on a fresh tally task.",
+        "repair_families": ("MATH.DATA.TALLY.READ",),
+    },
+    "DATA.MODE.CHOOSE_SMALLEST": {
+        "socratic_question": "Does 'most often' point to the least count or the greatest count?",
+        "repair_requirement": "Pair each category with its count and select the greatest frequency.",
+        "repair_families": ("MATH.DATA.FREQ.MODE",),
+    },
+    "DATA.LINEPLOT.COUNT_DISTINCT": {
+        "socratic_question": "Are you counting all different labels, or only observations equal to the target value?",
+        "repair_requirement": "Mark each target observation one-for-one on a fresh line plot.",
+        "repair_families": ("MATH.DATA.LINEPLOT.FREQUENCY",),
+    },
+    "DATA.LINEPLOT.ADD_FREQUENCIES": {
+        "socratic_question": "After counting both stacks, how can you measure how far apart their heights are?",
+        "repair_requirement": "Subtract smaller frequency from larger and verify by comparing stack heights.",
+        "repair_families": ("MATH.DATA.LINEPLOT.DIFFERENCE",),
+    },
+}
 
 def _fmt(v:Fraction)->str:
     return str(v.numerator) if v.denominator==1 else f"{v.numerator}/{v.denominator}"
@@ -106,6 +148,65 @@ def generate_data_transfer(seed:int,source_mode:str,target_mode:str)->Variant:
         if candidate.family_code!=source.family_code and candidate.prompt!=source.prompt:
             return candidate
     raise RuntimeError("could not construct fresh Grade 3 data transfer")
+
+def _fresh_guided_data_family(source:Variant,family_code:str,ordinal:int)->Variant:
+    """Create a deterministic answer-hidden repair task in one requested family."""
+    if family_code not in DATA_FAMILIES:
+        raise ValueError("unknown Grade 3 data repair family")
+    for offset in range(1,129):
+        candidate_seed=source.seed+20_000+ordinal*10_000+offset
+        candidate=generate("G3-DATA",candidate_seed,"guided")
+        if candidate.family_code==family_code and candidate.prompt!=source.prompt:
+            return candidate
+    raise RuntimeError("could not construct fresh Grade 3 data repair")
+
+def guided_data_repair(variant:Variant,observed_response:object)->dict[str,object]|None:
+    """Select targeted guided repair from an exact declared misconception response.
+
+    This content helper does not score correctness or write learner evidence. It
+    only recognizes the generator's declared misconception signatures, exposes
+    their answer-free Socratic question, and supplies deterministic fresh repair
+    tasks. Trusted response parsing and scoring remain backend-owned.
+    """
+    if not isinstance(variant,Variant):
+        raise TypeError("variant must be a Variant")
+    if variant.concept_id!="G3-DATA" or variant.mode!="guided":
+        raise ValueError("targeted data repair requires a guided Grade 3 data variant")
+    if isinstance(observed_response,bool) or not isinstance(observed_response,(str,int)):
+        raise TypeError("observed_response must be an exact text or integer response")
+    observed=str(observed_response).strip()
+    if not observed:
+        raise ValueError("observed_response must not be empty")
+
+    declared=variant.teacher_oracle().get("misconception_answers")
+    if not isinstance(declared,dict):
+        raise TypeError("variant is missing misconception evidence")
+    matches=[code for code,answer in declared.items() if str(answer).strip()==observed]
+    if not matches:
+        return None
+    if len(matches)!=1:
+        raise ValueError("observed response matches multiple misconception codes")
+    code=matches[0]
+    try:
+        contract=DATA_MISCONCEPTION_REPAIRS[code]
+    except KeyError as exc:
+        raise ValueError(f"missing repair contract for misconception: {code}") from exc
+
+    repair_tasks=[]
+    for ordinal,family_code in enumerate(contract["repair_families"]):
+        repair=_fresh_guided_data_family(variant,family_code,ordinal)
+        payload=repair.public_payload()
+        payload["guided_support"]=[]
+        repair_tasks.append(payload)
+    return {
+        "source_task_id":variant.public_payload()["task_id"],
+        "mode":"guided",
+        "misconception_code":code,
+        "socratic_question":contract["socratic_question"],
+        "repair_requirement":contract["repair_requirement"],
+        "repair_tasks":repair_tasks,
+        "next_action":"ANSWER_FRESH_REPAIR_THEN_FADE_TO_INDEPENDENT",
+    }
 
 def _round_half_up_positive(value:int,place:int)->int:
     if value<0 or place<=0:
