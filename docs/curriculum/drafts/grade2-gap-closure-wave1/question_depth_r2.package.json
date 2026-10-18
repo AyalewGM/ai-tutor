@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "G2-PLACE-PATTERN-DEPTH-R2",
+  "revision": "g2-place-pattern-depth-r2",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "audit_evidence": {
+    "source": "PR #447 full-seed synthetic artifact",
+    "source_sha": "195806169943268a5d2d7878a34834c39d92f7a7",
+    "artifact_id": 12126245961,
+    "local_rows": [
+      "DC2.NBT.PLACE_VALUE",
+      "MD2.NBT.PLACE_VALUE",
+      "VA2.NBT.PLACE_VALUE",
+      "DC2.NBT.PATTERNS",
+      "MD2.NBT.PATTERNS",
+      "VA2.NBT.PATTERNS"
+    ],
+    "stored_distinct_tasks_per_local_row": 3,
+    "learner_visible_integrated_status": "NOT_VERIFIED",
+    "selection_mode_enforcement": "NOT_IMPLEMENTED_ON_AUDIT_HEAD"
+  },
+  "existing_work_reused": [
+    "docs/curriculum/drafts/grade2-gap-closure-wave1",
+    "docs/curriculum/drafts/foundations-reuse-v1/place_value_seeded.py",
+    "scripts/generate_elementary_packs_1_2.py",
+    "app/services/problem_generation.py legacy PLACE_VALUE_BASE_TEN, NUMBER_PATTERN and NUMBER_SEQUENCE generators",
+    "app/services/visualization.py place_value_disks and number-line specifications"
+  ],
+  "canonical_boundaries": [
+    {
+      "alias": "MATH.ELEMENTARY.PLACE_VALUE.HUNDREDS_TENS_ONES",
+      "repository_status": "UNMAPPED",
+      "audit_mapping_approval": "NOT_ASSESSED",
+      "authority": "UNKNOWN_NOT_APPROVED"
+    },
+    {
+      "alias": "MATH.ELEMENTARY.NUMBER_SENSE.SKIP_COUNTING_PATTERNS",
+      "repository_status": "UNMAPPED",
+      "audit_mapping_approval": "NOT_ASSESSED",
+      "authority": "UNKNOWN_NOT_APPROVED"
+    }
+  ],
+  "authored_depth": {
+    "place_value_families": 7,
+    "pattern_families": 7,
+    "modes": ["diagnostic", "guided", "independent", "mastery"],
+    "deterministic_module": "place_value_patterns_depth_r2.py",
+    "exact_oracle": true,
+    "answer_free_public_payload": true,
+    "misconception_specific_socratic_repair": true,
+    "structural_unseen_transfer": true
+  },
+  "learning_sequence": [
+    "OBSERVE",
+    "PREDICT",
+    "MANIPULATE",
+    "EXPLAIN",
+    "PRACTICE",
+    "DIAGNOSE",
+    "TRANSFER",
+    "VERIFY"
+  ],
+  "representation_sequence": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+  "accessibility": {
+    "implementation_status": "REQUIREMENT_ONLY_NOT_WIRED",
+    "keyboard": true,
+    "screen_reader_state": true,
+    "focus_recovery": true,
+    "reduced_motion": true,
+    "color_only_meaning": false
+  },
+  "history_preservation": {
+    "learner": "UNCHANGED_NO_RUNTIME_IMPORT",
+    "attempt": "UNCHANGED_NO_RUNTIME_IMPORT",
+    "diagnostic_attempt": "UNCHANGED_NO_RUNTIME_IMPORT",
+    "mastery_event": "UNCHANGED_NO_RUNTIME_IMPORT",
+    "variant_history": "UNCHANGED_NO_RUNTIME_IMPORT"
+  },
+  "review_gates": {
+    "mathematical": "PENDING",
+    "pedagogical": "PENDING",
+    "canonical_taxonomy": "PENDING",
+    "standards_mapping": "PENDING",
+    "assessment_backend": "PENDING",
+    "frontend_mve": "PENDING",
+    "muse_browser_qa": "PENDING",
+    "release": "NOT_APPROVED"
+  }
+}

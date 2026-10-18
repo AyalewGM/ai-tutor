@@ -107,6 +107,22 @@ Current state:
 - Runtime activated: NO
 - Deployed/pilot-ready: NO
 
+## R2 measured question-depth revision
+
+The PR #447 full-seed synthetic audit measured the shared Grade 2 place-value
+and skip-pattern local rows at three distinct stored tasks each in DC, Maryland,
+and Virginia. `place_value_patterns_depth_r2.py` therefore deepens these two
+existing concepts once, rather than creating jurisdiction-specific banks. It
+adds seven structurally distinct families per concept and separate diagnostic,
+guided, independent, and mastery namespaces, with exact hidden oracles,
+misconception-specific Socratic repairs, and keyboard/screen-reader contracts.
+
+`question_depth_r2.package.json` records the audit evidence and the fail-closed
+authority boundary. Both Grade 2 aliases remain `UNMAPPED` and their audit
+mapping approval is `NOT_ASSESSED`; the revision is not seeded, learner-visible,
+or runtime activated. Independent Math, Pedagogy, taxonomy/standards, Assessment
+Backend, Frontend/MVE, Muse, and release gates remain pending.
+
 Suggested focused command:
 
 `pytest -q tests/test_grade2_gap_closure_wave1.py`
