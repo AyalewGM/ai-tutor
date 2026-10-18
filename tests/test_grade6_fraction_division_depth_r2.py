@@ -52,7 +52,8 @@ def test_provenance_pins_measured_audit_and_stays_fail_closed() -> None:
     assert package["build_once_map_many"]["new_canonical_identity"] is False
     assert package["build_once_map_many"]["local_mapping_changes"] == []
     assert package["standards_provenance"]["mapping_approval"] == "NOT_ASSESSED"
-    assert package["independent_gates"]["mathematics"] == "PENDING"
+    assert package["independent_gates"]["mathematics"].startswith("ACCEPTED_AT_")
+    assert package["independent_gates"]["pedagogy"].endswith("PENDING_REREVIEW")
 
 
 @pytest.mark.parametrize("mode", module.MODES)
@@ -142,6 +143,7 @@ def test_independent_public_payload_has_no_answer_hint_or_oracle(mode: str, seed
     assert "teacher_oracle" not in serialized
     assert "misconception_answers" not in serialized
     assert "socratic_support" not in public
+    assert "socratic_support_contract" not in public
     assert set(public) == {
         "variant_id",
         "mode",
@@ -153,10 +155,16 @@ def test_independent_public_payload_has_no_answer_hint_or_oracle(mode: str, seed
     }
 
 
-def test_guided_support_is_question_based_and_accessibility_is_equivalent() -> None:
+def test_guided_support_contract_is_response_triggered_and_accessibility_is_equivalent() -> None:
     public = module.generate(17, "guided").public_payload()
-    assert len(public["socratic_support"]) == 3
-    assert all(question.endswith("?") for question in public["socratic_support"])
+    support = public["socratic_support_contract"]
+    assert support == {
+        "trigger": "AFTER_EXACT_QUOTIENT_SUBMISSION",
+        "selection": "MATCH_OBSERVED_ANSWER_TO_MISCONCEPTION_PATHWAY",
+        "ambiguous_match": "RETURN_EACH_SUPPORTED_HYPOTHESIS_WITHOUT_CHOOSING_FOR_THE_LEARNER",
+        "fallback": "UNCLASSIFIED_WRONG_ANSWER",
+        "answer_reveal": False,
+    }
     contract = public["interaction_contract"]
     assert set(contract) == {
         "keyboard",
@@ -167,6 +175,76 @@ def test_guided_support_is_question_based_and_accessibility_is_equivalent() -> N
     }
     assert "without drag" in contract["keyboard"]
     assert "partition" in contract["screen_reader"]
+
+
+def test_every_misconception_has_distinct_socratic_support() -> None:
+    expected_codes = {
+        code
+        for family in module.FAMILIES
+        for code, _answer in module.generate(19, "guided", family).misconceptions
+    }
+    assert expected_codes == set(module.MISCONCEPTION_SUPPORT)
+    questions = [item["socratic_question"] for item in module.MISCONCEPTION_SUPPORT.values()]
+    moves = [item["representation_move"] for item in module.MISCONCEPTION_SUPPORT.values()]
+    assert len(questions) == len(set(questions)) == 13
+    assert len(moves) == len(set(moves)) == 13
+    assert all(question.endswith("?") for question in questions)
+
+
+@pytest.mark.parametrize("family", module.FAMILIES)
+@pytest.mark.parametrize("seed", range(80))
+def test_observed_misconception_answer_selects_only_supported_guided_pathways(
+    family: str, seed: int
+) -> None:
+    item = module.generate(seed, "guided", family)
+    by_answer: dict[Fraction, set[str]] = {}
+    for code, wrong_answer in item.misconceptions:
+        by_answer.setdefault(wrong_answer, set()).add(code)
+    for wrong_answer, expected_codes in by_answer.items():
+        support = item.guided_support_for_answer(wrong_answer)
+        assert support is not None
+        assert support["answer_reveal"] is False
+        assert support["status"] in {"MATCHED_MISCONCEPTION", "AMBIGUOUS_MATCH"}
+        pathways = support["pathways"]
+        assert {path["misconception_code"] for path in pathways} == expected_codes
+        assert all(path["socratic_question"].endswith("?") for path in pathways)
+        assert all(_fraction(str(wrong_answer)) != item.quotient for _path in pathways)
+
+
+def test_guided_support_handles_correct_unclassified_and_malformed_answers_without_leakage() -> (
+    None
+):
+    item = module.generate(23, "guided", "RECIPE_BATCHES")
+    correct = item.guided_support_for_answer(str(item.quotient))
+    assert correct == {
+        "status": "CORRECT_NO_REMEDIATION",
+        "observed_answer": str(item.quotient),
+        "pathways": [],
+        "answer_reveal": False,
+    }
+    unclassified = item.guided_support_for_answer(item.quotient + 101)
+    assert unclassified is not None
+    assert unclassified["status"] == "UNCLASSIFIED_WRONG_ANSWER"
+    assert [path["misconception_code"] for path in unclassified["pathways"]] == [
+        "UNCLASSIFIED_WRONG_ANSWER"
+    ]
+    assert str(item.quotient) not in json.dumps(unclassified)
+    for malformed, error in (
+        (True, TypeError),
+        (1.5, TypeError),
+        ("", ValueError),
+        ("3/0", ValueError),
+    ):
+        with pytest.raises(error):
+            item.guided_support_for_answer(malformed)
+
+
+@pytest.mark.parametrize("mode", ("diagnostic", "independent", "mastery"))
+@pytest.mark.parametrize("family", module.FAMILIES)
+def test_misconception_support_is_unavailable_outside_guided_mode(mode: str, family: str) -> None:
+    item = module.generate(29, mode, family)
+    wrong = item.misconceptions[0][1]
+    assert item.guided_support_for_answer(wrong) is None
 
 
 @pytest.mark.parametrize(
