@@ -1,6 +1,6 @@
 # Mihur: per-skill question depth and repetition audit
 
-Tracking issue: **TBD**. Baseline: `main@ecb8ad8d6e0acf5388e03bbc6dea14a9f5bb2913`.
+Tracking issue: **[#446](https://github.com/AyalewGM/ai-tutor/issues/446)**. Baseline: `main@ecb8ad8d6e0acf5388e03bbc6dea14a9f5bb2913`.
 
 ## What is measured
 
