@@ -97,6 +97,7 @@
     "misconception_codes": [
       "MULTIPLY_INSTEAD_OF_DIVIDE",
       "REVERSE_DIVISION_ORDER",
+      "MULTIPLY_TOTAL_BY_SHARES",
       "DROP_PARTIAL_GROUP",
       "ADD_COMMON_UNIT_COUNTS",
       "REVERSE_COMMON_UNIT_COUNTS",
@@ -109,6 +110,7 @@
       "KEEP_SQUARE_UNIT_AFTER_DIVISION"
     ],
     "answer_contract": "teacher-only exact fractions.Fraction quotient plus reciprocal-product and multiplication reconstruction",
+    "guided_misconception_contract": "after an exact quotient submission, match the observed wrong value to every supported misconception hypothesis; return a distinct question and representation move for each match without revealing the answer; use an unclassified fallback when evidence is insufficient",
     "unseen_transfer": "same seed changes family and prompt across guided and independent namespaces"
   },
   "accessibility": {
@@ -127,8 +129,8 @@
     "coverage_credit": "NONE"
   },
   "independent_gates": {
-    "mathematics": "PENDING",
-    "pedagogy": "PENDING",
+    "mathematics": "ACCEPTED_AT_74ed63c3f3637176272f38e6c0f2ba7f125cdf63_PRESERVED_UNCHANGED",
+    "pedagogy": "CHANGES_REQUIRED_AT_74ed63c3f3637176272f38e6c0f2ba7f125cdf63_TARGETED_SUPPORT_CORRECTION_PENDING_REREVIEW",
     "standards_mapping": "PENDING_NOT_REQUIRED_FOR_SHARED_MATH_AUTHOR_REVIEW",
     "assessment_backend": "NOT_IMPLEMENTED",
     "frontend_mve": "NOT_IMPLEMENTED",
