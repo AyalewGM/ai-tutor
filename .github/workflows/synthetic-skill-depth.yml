@@ -66,7 +66,10 @@ jobs:
           seed_all() {
             for script in "${scripts[@]}"; do
               echo "Synthetic seed: $script"
-              python "$script"
+              # Import-aware invocation: some seed modules import scripts.*.
+              module="${script%.py}"
+              module="${module//\//.}"
+              python -m "$module"
             done
           }
           snapshot() {
