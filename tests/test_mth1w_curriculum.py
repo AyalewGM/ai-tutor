@@ -86,6 +86,7 @@ def test_mth1w_seed_is_idempotent_and_jurisdiction_local():
         problems = list(
             db.scalars(
                 select(Problem).where(Problem.primary_skill_id.in_(seeded_skill_ids))
+                .where(Problem.source_type == "CURATED")
             )
         )
         assert len(problems) == 11
