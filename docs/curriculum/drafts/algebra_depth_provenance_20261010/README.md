@@ -17,12 +17,19 @@ draft families: exact rational substitution, factored roots with substituted
 totals, vertex symmetry, complete plus/minus branches, no-real classification,
 equal-step table-to-rule evidence, and reconciliation of standard/factored/vertex
 forms. Fresh transfer must change mathematical family, not just coefficients.
+After a trusted guided-mode misconception classification, R5 now exposes only
+the selected Socratic question; it never exposes the teacher exemplar or exact
+oracle. Transfer records source and target modes explicitly and fails closed
+unless the verification exit is independent and hint-free.
 
 R5 is implemented only in `quadratic_depth_r5.py` with machine-readable evidence
 in `quadratic_depth_r5.package.json`. It is not imported by runtime code, registered,
 seeded, routed, scored, or mapped. Canonical authority remains
-`UNKNOWN_NOT_AUTHORITATIVE`; standards mappings remain provisional; independent
-Math, Pedagogy, Muse, backend, frontend/accessibility, and Engineering gates are
-all pending.
+`UNKNOWN_NOT_AUTHORITATIVE`; standards mappings remain provisional. Independent
+Math accepted the unchanged seven-family mathematics at PR #455 head
+`04faeeca0883a885b282a6c7bcfd7d82009400dc`; targeted review of the bounded
+guided-support/transfer correction is pending. Pedagogy re-review, Muse, backend,
+frontend/accessibility, Engineering, activation, merge, and deployment remain
+pending.
 
 `W4-G9-EXPO-MODELING` is deliberately unchanged: its source remains `UNKNOWN_UNLOCATED`, so it is not counted as coverage or advanced by this revision.
