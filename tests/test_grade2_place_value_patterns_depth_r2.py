@@ -114,6 +114,10 @@ def test_pattern_oracles_reconstruct_exact_sequences_and_transfer() -> None:
                 sequence = oracle["sequence"]
                 assert all(sequence[i + 1] - sequence[i] == oracle["signed_step"] for i in range(5))
                 assert oracle["signed_step"] < 0
+                assert min(sequence) >= 0
+                assert item.visual_model["direction"] == "backward"
+                assert item.visual_model["step_size"] == abs(oracle["signed_step"])
+                assert "signed_step" not in item.response_fields
             elif item.family_code == "MISSING_INTERNAL_TERM":
                 assert oracle["missing_term"] == oracle["left_check"] == oracle["right_check"]
             elif item.family_code == "INFER_CONSTANT_STEP":
@@ -175,6 +179,45 @@ def test_misconception_responses_never_collide_with_scored_answers() -> None:
                 assert pattern_wrong != pattern_oracle["changing_place"]
             else:
                 assert pattern_wrong != pattern_oracle["elapsed_first_to_last"]
+
+
+def test_guided_support_routes_only_matching_misconceptions() -> None:
+    for concept in MODULE.CONCEPTS:
+        for seed in range(84):
+            guided = MODULE.generate(concept, seed, "guided")
+            code, response = next(iter(guided.misconception_responses.items()))
+            support = guided.guided_support_for_response(response)
+            assert support == {
+                "misconception_code": code,
+                "socratic_prompt": guided.socratic_repairs[code],
+            }
+            assert guided.guided_support_for_response(object()) is None
+            assert "oracle" not in support
+            assert "answer" not in support
+
+
+@pytest.mark.parametrize("mode", ("diagnostic", "independent", "mastery"))
+def test_non_guided_modes_never_expose_support(mode) -> None:
+    for concept in MODULE.CONCEPTS:
+        for seed in range(84):
+            item = MODULE.generate(concept, seed, mode)
+            response = next(iter(item.misconception_responses.values()))
+            assert item.guided_support_for_response(response) is None
+            public = item.public_payload()
+            assert "support" not in public
+            assert "socratic_prompt" not in public
+
+
+def test_backward_sequences_remain_in_grade2_whole_number_domain() -> None:
+    for mode in MODULE.MODES:
+        for seed in range(10_000):
+            item = MODULE.generate(MODULE.PATTERN_CONCEPT, seed, mode)
+            if item.family_code != "EXTEND_BACKWARD":
+                continue
+            sequence = item.teacher_oracle()["sequence"]
+            assert min(sequence) >= 0
+            assert "-" not in item.prompt
+            assert all(value >= 0 for value in item.visual_model.values() if isinstance(value, int))
 
 
 def test_accessibility_contract_is_explicit_for_every_family() -> None:
