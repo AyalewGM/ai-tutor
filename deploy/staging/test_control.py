@@ -76,6 +76,50 @@ class Guards(unittest.TestCase):
         ):
             control.inventory()
 
+    def test_named_redis_volume_allowed(self):
+        labels = {"com.docker.compose.project": "mihur-staging"}
+        container = {"Config": {"Labels": labels}, "Mounts": [
+            {"Type": "volume", "Name": "mihur-staging_redis_data"}
+        ]}
+        volume = {"Name": "mihur-staging_redis_data", "Labels": labels,
+                  "Driver": "local", "Options": None}
+        with patch.object(control, "run", side_effect=[
+            "redis", json.dumps([container]), "volume", json.dumps([volume]), ""
+        ]):
+            control.inventory()
+
+    def test_anonymous_redis_volume_still_rejected(self):
+        container = {"Config": {"Labels": {
+            "com.docker.compose.project": "mihur-staging"
+        }}, "Mounts": [{"Type": "volume", "Name": "1a9d23"}]}
+        with (
+            patch.object(control, "run", side_effect=["redis", json.dumps([container])]),
+            self.assertRaisesRegex(RuntimeError, "Unexpected container volume"),
+        ):
+            control.inventory()
+
+    def test_edge_network_scope(self):
+        edge = {"Name": "mihur-staging_edge", "Driver": "bridge", "Internal": False,
+                "Options": {"com.docker.network.bridge.host_binding_ipv4": "127.0.0.1"},
+                "Containers": {"proxy-id": {}}}
+        self.assertTrue(control.valid_edge_network(edge, {"proxy-id"}))
+        self.assertFalse(control.valid_edge_network(edge, set()))
+        for field, bad in [("Driver", "overlay"), ("Internal", True),
+                           ("Name", "foreign"), ("Options", {})]:
+            with self.subTest(field=field):
+                self.assertFalse(control.valid_edge_network({**edge, field: bad}, {"proxy-id"}))
+
+    def test_application_cannot_attach_edge(self):
+        item = {"Config": {"Labels": {
+            "com.docker.compose.project": "mihur-staging",
+            "com.docker.compose.service": "tutor-api",
+        }}, "NetworkSettings": {"Networks": {"mihur-staging_edge": {}}}}
+        with (
+            patch.object(control, "run", side_effect=["api", json.dumps([item])]),
+            self.assertRaisesRegex(RuntimeError, "network attachment"),
+        ):
+            control.inventory()
+
     def test_empty_inventory_allowed(self):
         with patch.object(control, "run", side_effect=["", "", ""]):
             control.inventory()

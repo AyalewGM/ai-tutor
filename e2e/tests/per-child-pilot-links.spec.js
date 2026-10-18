@@ -144,3 +144,22 @@ test("parent pilot invite is carried into registration and removed from browser 
   expect(registration?.country_code).toBe("US");
   expect(registration?.region_code).toBe("MD");
 });
+
+for (const scenario of [
+  { name: "new fragment", path: "/login#invite=", expectedPath: "/login" },
+  { name: "legacy query", path: "/register?invite=", expectedPath: "/register" },
+]) {
+  test(`parent invitation ${scenario.name} opens registration and scrubs token`, async ({ page }) => {
+    const invite = "I".repeat(43);
+    await page.route("**/api/v1/auth/config", (route) => json(route, { turnstile_site_key: null }));
+    await page.route("**/api/v1/auth/regions", (route) => json(route, {
+      countries: [{ code: "US", name: "United States", regions: [{ code: "MD", name: "Maryland", has_curriculum: true }] }],
+      family: null,
+    }));
+    await page.goto(`${origin}${scenario.path}${invite}`);
+    await expect(page).toHaveURL(`${origin}${scenario.expectedPath}`);
+    await expect(page.getByLabel("Private pilot invitation code")).toHaveValue(invite);
+    await expect(page.getByRole("button", { name: "Create account" })).toBeVisible();
+    expect(await page.evaluate((secret) => location.href.includes(secret), invite)).toBe(false);
+  });
+}

@@ -68,7 +68,21 @@ def values(text):
     return result
 
 
+def valid_edge_network(network, proxy_ids):
+    """Only the staging proxy may attach to the non-internal ingress bridge."""
+    return (
+        network["Name"] == PROJECT + "_edge"
+        and network.get("Driver") == "bridge"
+        and network.get("Internal") is False
+        and network.get("Options") == {
+            "com.docker.network.bridge.host_binding_ipv4": "127.0.0.1"
+        }
+        and set(network.get("Containers", {})) <= proxy_ids
+    )
+
+
 def inventory():
+    proxy_ids = set()
     ids = run(DOCKER + ["ps", "-aq"]).split()
     if ids:
         for item in json.loads(run(DOCKER + ["inspect", *ids])):
@@ -77,11 +91,20 @@ def inventory():
                 labels.get("com.docker.compose.project") == PROJECT,
                 "Foreign container present; dedicated staging host required",
             )
+            if labels.get("com.docker.compose.service") == "proxy":
+                proxy_ids.add(item["Id"])
+            allowed_networks = {PROJECT + "_staging"}
+            if labels.get("com.docker.compose.service") == "proxy":
+                allowed_networks.add(PROJECT + "_edge")
+            require(
+                set(item.get("NetworkSettings", {}).get("Networks", {})) <= allowed_networks,
+                "Unexpected container network attachment",
+            )
             for mount in item.get("Mounts", []):
                 if mount["Type"] == "volume":
                     require(
                         mount["Name"]
-                        in {PROJECT + "_" + n for n in ("database", "proxy_data", "proxy_config")},
+                        in {PROJECT + "_" + n for n in ("database", "redis_data", "proxy_data", "proxy_config")},
                         "Unexpected container volume",
                     )
                 else:
@@ -96,7 +119,7 @@ def inventory():
         for volume in json.loads(run(DOCKER + ["volume", "inspect", *names])):
             require(
                 volume["Name"]
-                in {PROJECT + "_" + n for n in ("database", "proxy_data", "proxy_config")}
+                in {PROJECT + "_" + n for n in ("database", "redis_data", "proxy_data", "proxy_config")}
                 and (volume.get("Labels") or {}).get("com.docker.compose.project") == PROJECT
                 and volume["Driver"] == "local"
                 and not volume.get("Options"),
@@ -109,9 +132,12 @@ def inventory():
             if network["Name"] in {"bridge", "host", "none"}:
                 continue
             require(
-                network["Name"] == PROJECT + "_staging"
-                and network.get("Internal") is True
-                and (network.get("Labels") or {}).get("com.docker.compose.project") == PROJECT,
+                (network.get("Labels") or {}).get("com.docker.compose.project") == PROJECT
+                and (
+                    (network["Name"] == PROJECT + "_staging"
+                     and network.get("Internal") is True)
+                    or valid_edge_network(network, proxy_ids)
+                ),
                 "Foreign or non-isolated Docker network; STOP",
             )
 
@@ -228,7 +254,7 @@ def main():
                     "-q",
                     "-O",
                     "/dev/null",
-                    f"http://localhost:8080/{path}",
+                    f"http://127.0.0.1:8080/{path}",
                 ],
                 False,
             )
