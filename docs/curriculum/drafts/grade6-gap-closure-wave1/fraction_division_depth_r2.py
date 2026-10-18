@@ -29,6 +29,67 @@ FAMILIES = (
 )
 _MODE_OFFSETS = {"diagnostic": 0, "guided": 1, "independent": 3, "mastery": 5}
 
+MISCONCEPTION_SUPPORT = {
+    "MULTIPLY_INSTEAD_OF_DIVIDE": {
+        "socratic_question": "What missing-factor equation must your quotient satisfy when it is multiplied by the divisor?",
+        "representation_move": "Build divisor-sized groups inside the dividend, then compare the group count with the product you wrote.",
+    },
+    "REVERSE_DIVISION_ORDER": {
+        "socratic_question": "Which quantity is being split or measured, and which quantity names one group?",
+        "representation_move": "Label the dividend as the total and the divisor as one group before drawing any groups.",
+    },
+    "MULTIPLY_TOTAL_BY_SHARES": {
+        "socratic_question": "If the total is shared among the containers, should one share be greater than the whole total?",
+        "representation_move": "Partition one bar for the total into the stated number of equal container regions.",
+    },
+    "DROP_PARTIAL_GROUP": {
+        "socratic_question": "Where is the remaining distance after the last full jump, and what fraction of one jump does it represent?",
+        "representation_move": "Mark the leftover segment and compare its length with one complete divisor-sized jump.",
+    },
+    "ADD_COMMON_UNIT_COUNTS": {
+        "socratic_question": "Once both quantities use the same-size pieces, do you add their counts or ask how many divisor counts fit in the dividend count?",
+        "representation_move": "Align the two common-unit bars and group the dividend pieces in sets equal to the divisor-piece count.",
+    },
+    "REVERSE_COMMON_UNIT_COUNTS": {
+        "socratic_question": "Which common-unit count belongs first when you ask how many divisor-sized sets fit inside the dividend?",
+        "representation_move": "Label the dividend-piece count as the amount being measured and the divisor-piece count as one set.",
+    },
+    "ADD_FACTOR_INSTEAD_OF_DIVIDE": {
+        "socratic_question": "What inverse operation undoes multiplying q by the known factor while keeping the equation balanced?",
+        "representation_move": "Divide both sides of the balance by the known factor and keep each side visible.",
+    },
+    "REVERSE_RATE_DIRECTION": {
+        "socratic_question": "Which quantity is available in total, and which quantity is used for exactly one batch?",
+        "representation_move": "Label a double number line with total cups on one side and batches on the other before forming the quotient.",
+    },
+    "MULTIPLY_AVAILABLE_BY_RATE": {
+        "socratic_question": "What equation must the batch count satisfy when it is multiplied by the cups used per batch?",
+        "representation_move": "Make equal per-batch groups from the available cups and count the groups.",
+    },
+    "RECIPROCATE_DIVIDEND": {
+        "socratic_question": "In the related missing-factor equation, which factor must be undone to isolate the quotient?",
+        "representation_move": "Write quotient times divisor equals dividend, then mark the factor being undone.",
+    },
+    "MULTIPLY_WITHOUT_RECIPROCAL": {
+        "socratic_question": "What number multiplied by the divisor equals one, so division can be rewritten as multiplication?",
+        "representation_move": "Pair the divisor with its multiplicative inverse before multiplying by the dividend.",
+    },
+    "MULTIPLY_AREA_BY_WIDTH": {
+        "socratic_question": "If area equals length times width, which operation isolates the missing length?",
+        "representation_move": "Label the rectangle area and width, leave length unknown, and write their multiplication relationship.",
+    },
+    "KEEP_SQUARE_UNIT_AFTER_DIVISION": {
+        "socratic_question": "How do the metre units simplify in square metres divided by metres?",
+        "representation_move": "Write square metres as metre times metre and cancel the width unit explicitly.",
+    },
+}
+
+_UNCLASSIFIED_SUPPORT = {
+    "misconception_code": "UNCLASSIFIED_WRONG_ANSWER",
+    "socratic_question": "Which multiplication check would show whether your quotient reconstructs the original dividend?",
+    "representation_move": "Return to the model, label the total and one group, and compare the represented groups with your quotient.",
+}
+
 
 def _text(value: Fraction) -> str:
     if value.denominator == 1:
@@ -87,12 +148,56 @@ class FractionDivisionVariant:
             },
         }
         if self.mode == "guided":
-            payload["socratic_support"] = [
-                "What does one group represent in this situation?",
-                "Should dividing by this amount make the result larger or smaller than the dividend? Why?",
-                "Which multiplication would reconstruct the original quantity?",
-            ]
+            payload["socratic_support_contract"] = {
+                "trigger": "AFTER_EXACT_QUOTIENT_SUBMISSION",
+                "selection": "MATCH_OBSERVED_ANSWER_TO_MISCONCEPTION_PATHWAY",
+                "ambiguous_match": "RETURN_EACH_SUPPORTED_HYPOTHESIS_WITHOUT_CHOOSING_FOR_THE_LEARNER",
+                "fallback": "UNCLASSIFIED_WRONG_ANSWER",
+                "answer_reveal": False,
+            }
         return payload
+
+    def guided_support_for_answer(
+        self, learner_answer: Fraction | int | str
+    ) -> dict[str, object] | None:
+        """Return answer-free, observed-error support only for guided variants.
+
+        One numeric response can be consistent with more than one misconception.
+        In that case every plausible pathway is returned rather than inventing a
+        diagnosis.  Non-guided modes have no remediation surface.
+        """
+
+        if self.mode != "guided":
+            return None
+        answer = _parse_exact_answer(learner_answer)
+        if answer == self.quotient:
+            return {
+                "status": "CORRECT_NO_REMEDIATION",
+                "observed_answer": _text(answer),
+                "pathways": [],
+                "answer_reveal": False,
+            }
+        matched_codes = tuple(code for code, wrong in self.misconceptions if wrong == answer)
+        if not matched_codes:
+            pathways = [dict(_UNCLASSIFIED_SUPPORT)]
+            status = "UNCLASSIFIED_WRONG_ANSWER"
+        else:
+            pathways = [
+                {"misconception_code": code, **MISCONCEPTION_SUPPORT[code]}
+                for code in matched_codes
+            ]
+            status = "MATCHED_MISCONCEPTION" if len(pathways) == 1 else "AMBIGUOUS_MATCH"
+        return {
+            "status": status,
+            "observed_answer": _text(answer),
+            "pathways": pathways,
+            "answer_reveal": False,
+            "focus_target": "model_or_equation",
+            "screen_reader_announcement": (
+                "Your response does not reconstruct the original quantity. "
+                "Review the question and representation move."
+            ),
+        }
 
     def teacher_oracle(self) -> dict[str, object]:
         if self.divisor < 1:
@@ -133,6 +238,17 @@ def _validate(seed: int, mode: str, family: str | None) -> None:
         raise ValueError(f"unsupported family: {family!r}")
 
 
+def _parse_exact_answer(value: Fraction | int | str) -> Fraction:
+    if isinstance(value, bool) or not isinstance(value, (Fraction, int, str)):
+        raise TypeError("learner answer must be an exact Fraction, integer, or fraction string")
+    if isinstance(value, str) and not value.strip():
+        raise ValueError("learner answer cannot be blank")
+    try:
+        return Fraction(value.strip() if isinstance(value, str) else value)
+    except (ValueError, ZeroDivisionError) as error:
+        raise ValueError("learner answer must be an exact integer or fraction") from error
+
+
 def _family(seed: int, mode: str) -> str:
     return FAMILIES[(seed + _MODE_OFFSETS[mode]) % len(FAMILIES)]
 
@@ -156,6 +272,11 @@ def _variant(
     )
     if len(clean) != len(misconceptions):
         raise AssertionError("misconception answer collided with exact quotient")
+    unknown_codes = {code for code, _answer in clean} - MISCONCEPTION_SUPPORT.keys()
+    if unknown_codes:
+        raise AssertionError(
+            f"missing Socratic support for misconception codes: {sorted(unknown_codes)}"
+        )
     return FractionDivisionVariant(
         variant_id=f"{NAMESPACE}:{mode}:{family}:{seed}",
         seed=seed,
