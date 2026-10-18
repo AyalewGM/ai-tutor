@@ -16,9 +16,9 @@ from __future__ import annotations
 import argparse
 import json
 import random
-from collections import Counter, defaultdict
+from collections import defaultdict
+from functools import lru_cache
 from pathlib import Path
-from types import SimpleNamespace
 from typing import Any
 
 from sqlalchemy import create_engine, select, text
@@ -59,6 +59,7 @@ def _family_code(problem: Any) -> str:
     return str(solution.get("problem_family") or problem.problem_type)
 
 
+@lru_cache(maxsize=512)
 def _sample_legacy(problem_type: str, difficulty: int, count: int) -> dict[str, Any]:
     generator = GENERATORS.get(problem_type)
     if generator is None:
@@ -83,6 +84,7 @@ def _sample_legacy(problem_type: str, difficulty: int, count: int) -> dict[str, 
     }
 
 
+@lru_cache(maxsize=512)
 def _sample_canonical(canonical_code: str | None, count: int) -> dict[str, Any]:
     families = [f for f in FAMILIES.values() if f.canonical_skill_code == canonical_code]
     results: dict[str, dict[str, Any]] = {}
