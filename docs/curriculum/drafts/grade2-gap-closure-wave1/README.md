@@ -123,6 +123,11 @@ mapping approval is `NOT_ASSESSED`; the revision is not seeded, learner-visible,
 or runtime activated. Independent Math, Pedagogy, taxonomy/standards, Assessment
 Backend, Frontend/MVE, Muse, and release gates remain pending.
 
+Revision R2.1 constrains every backward-count sequence to nonnegative whole
+numbers and represents the learner-facing decrease with a positive step size.
+It also adds a guided-only response-to-misconception route; diagnostic,
+independent, and mastery variants remain support-free and answer-isolated.
+
 Suggested focused command:
 
 `pytest -q tests/test_grade2_gap_closure_wave1.py`
