@@ -129,18 +129,35 @@ def _count_variant(family: str, rng: Random) -> tuple:
         )
 
     if family == "COUNT_ON_CROSS_DECADE":
-        start = rng.randint(87, 107)
+        boundary = rng.choice((90, 100, 110))
+        steps_before_boundary = rng.randint(1, 4)
+        start = boundary - steps_before_boundary
         sequence = tuple(start + i for i in range(6))
-        missing_index = rng.choice((1, 2, 3, 4))
+        before_index = steps_before_boundary - 1
+        after_index = steps_before_boundary
+        missing_candidates = tuple(
+            index for index in (1, 2, 3, 4) if index not in (before_index, after_index)
+        )
+        missing_index = rng.choice(missing_candidates)
         shown = tuple("blank" if i == missing_index else value for i, value in enumerate(sequence))
+        before_crossing = boundary - 1
+        after_crossing = boundary
+        before_place_value = {"tens": before_crossing // 10, "ones": before_crossing % 10}
+        after_place_value = {"tens": after_crossing // 10, "ones": after_crossing % 10}
         prompt = (
-            f"Count on by ones from {start}. Fill the blank in {shown} and explain what changes when "
-            "the count crosses a new ten."
+            f"Count on by ones from {start}. Fill the blank in {shown}. At the visible step from "
+            f"{before_crossing} to {after_crossing}, explain how the tens and ones change."
         )
         oracle = {
             "missing_number": sequence[missing_index],
             "sequence": sequence,
             "step_checks": tuple(sequence[i + 1] - sequence[i] for i in range(5)),
+            "before_crossing": before_crossing,
+            "after_crossing": after_crossing,
+            "before_place_value": before_place_value,
+            "after_place_value": after_place_value,
+            "tens_increase": after_place_value["tens"] - before_place_value["tens"],
+            "ones_reset": before_place_value["ones"] == 9 and after_place_value["ones"] == 0,
         }
         misconceptions = {"COUNT_SKIPS": sequence[missing_index] + 1}
         repairs = {
@@ -151,8 +168,24 @@ def _count_variant(family: str, rng: Random) -> tuple:
         return (
             prompt,
             ("missing_number", "crossing_explanation"),
-            {"kind": "number_line", "minimum": start, "maximum": start + 5, "shown": shown},
-            _interaction("number_line", "Number line from {minimum} through {maximum}; {shown}"),
+            {
+                "kind": "number_line",
+                "minimum": start,
+                "maximum": start + 5,
+                "shown": shown,
+                "before_crossing": before_crossing,
+                "after_crossing": after_crossing,
+                "before_tens": before_place_value["tens"],
+                "before_ones": before_place_value["ones"],
+                "after_tens": after_place_value["tens"],
+                "after_ones": after_place_value["ones"],
+            },
+            _interaction(
+                "number_line",
+                "Number line from {minimum} through {maximum}; {shown}. Visible decade crossing: "
+                "{before_crossing} has {before_tens} tens and {before_ones} ones; "
+                "{after_crossing} has {after_tens} tens and {after_ones} ones.",
+            ),
             oracle,
             misconceptions,
             repairs,

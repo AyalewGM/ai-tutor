@@ -79,6 +79,21 @@ def test_count_family_oracles_reconstruct_exact_requested_results() -> None:
                 sequence = oracle["sequence"]
                 assert all(step == 1 for step in oracle["step_checks"])
                 assert oracle["missing_number"] in sequence[1:-1]
+                assert oracle["before_crossing"] + 1 == oracle["after_crossing"]
+                assert oracle["before_crossing"] % 10 == 9
+                assert oracle["after_crossing"] % 10 == 0
+                assert oracle["before_crossing"] in sequence
+                assert oracle["after_crossing"] in sequence
+                assert oracle["before_place_value"] == {
+                    "tens": oracle["before_crossing"] // 10,
+                    "ones": 9,
+                }
+                assert oracle["after_place_value"] == {
+                    "tens": oracle["after_crossing"] // 10,
+                    "ones": 0,
+                }
+                assert oracle["tens_increase"] == 1
+                assert oracle["ones_reset"] is True
             elif item.family_code == "COMPARE_BY_PLACE":
                 left = 10 * oracle["left_tens"] + oracle["left_ones"]
                 right = 10 * oracle["right_tens"] + oracle["right_ones"]
@@ -141,6 +156,49 @@ def test_accessibility_contract_is_explicit_for_every_family() -> None:
             assert interaction["reduced_motion"] is True
             assert interaction["color_only_meaning"] is False
             assert interaction["focus_after_feedback"]
+
+
+@pytest.mark.parametrize("mode", MODULE.MODES)
+def test_count_on_family_always_crosses_a_ten_without_hiding_the_transition(mode) -> None:
+    family_instances = 0
+    for seed in range(5_000):
+        item = MODULE.generate(MODULE.COUNT_CONCEPT, seed, mode)
+        if item.family_code != "COUNT_ON_CROSS_DECADE":
+            continue
+
+        family_instances += 1
+        oracle = item.teacher_oracle()
+        visual = item.visual_model
+        sequence = oracle["sequence"]
+        before = oracle["before_crossing"]
+        after = oracle["after_crossing"]
+        before_index = sequence.index(before)
+        after_index = sequence.index(after)
+
+        assert after_index == before_index + 1
+        assert before % 10 == 9
+        assert after % 10 == 0
+        assert visual["shown"][before_index] == before
+        assert visual["shown"][after_index] == after
+        assert visual["shown"].count("blank") == 1
+        assert visual["before_crossing"] == before
+        assert visual["after_crossing"] == after
+        assert visual["before_tens"] == before // 10
+        assert visual["before_ones"] == 9
+        assert visual["after_tens"] == after // 10
+        assert visual["after_ones"] == 0
+        state_template = item.interaction["screen_reader_state_template"]
+        for field in (
+            "{before_crossing}",
+            "{before_tens}",
+            "{before_ones}",
+            "{after_crossing}",
+            "{after_tens}",
+            "{after_ones}",
+        ):
+            assert field in state_template
+
+    assert family_instances == 1_000
 
 
 @pytest.mark.parametrize(
