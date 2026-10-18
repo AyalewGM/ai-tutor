@@ -5,6 +5,7 @@ from fractions import Fraction
 
 from sqlalchemy import select
 
+from app.content_models import ProblemContentMetadata
 from app.core.database import SessionLocal
 from app.models import (
     Attempt,
@@ -137,7 +138,7 @@ def test_generated_problems_do_not_repeat_within_session() -> None:
         db.rollback()
 
 
-def test_skill_without_generator_falls_back_to_repeats() -> None:
+def test_skill_without_generator_fails_closed_after_history_exhaustion() -> None:
     with SessionLocal() as db:
         curriculum = db.scalar(select(Curriculum).where(Curriculum.code == "MCPS_MATH_8"))
         skill = Skill(
@@ -157,6 +158,16 @@ def test_skill_without_generator_falls_back_to_repeats() -> None:
             canonical_answer="2",
         )
         db.add(problem)
+        db.flush()
+        db.add(
+            ProblemContentMetadata(
+                problem_id=problem.id,
+                curriculum_id=curriculum.id,
+                objective="Synthetic independent fallback candidate.",
+                evaluation_type="EXACT",
+                independent_eligible=True,
+            )
+        )
         db.flush()
         student = Student(
             curriculum_id=curriculum.id,
@@ -188,7 +199,7 @@ def test_skill_without_generator_falls_back_to_repeats() -> None:
             state=TutorState.INDEPENDENT_PRACTICE,
             session_id=session.id,
         )
-        assert selected is not None and selected.id == problem.id
+        assert selected is None
         db.rollback()
 
 

@@ -447,7 +447,7 @@ def respond(
                 if problem.primary_skill_id == next_skill_id
                 else None,
                 current_difficulty=next_progress.current_difficulty,
-                state=state_at_attempt,
+                state=transition.state,
                 correct=None if is_extension else evidence.evaluation.correct,
                 session_id=session.id,
                 offer_extension=is_extension,

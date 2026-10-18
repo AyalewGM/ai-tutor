@@ -5,6 +5,7 @@ from sqlalchemy import select
 from app.core.database import SessionLocal
 from app.curriculum_models import EducationAuthority
 from app.models import Curriculum, Misconception, Problem, Skill, SkillPrerequisite
+from app.services.problem_catalog_authorization import authorize_active_authored_catalog
 
 CURRICULUM_CODE = "MCPS_ALGEBRA_1_2026_27"
 
@@ -839,6 +840,8 @@ def seed() -> None:
 
         seed_content(db, curriculum)
 
+        db.flush()
+        authorize_active_authored_catalog(db, curriculum_codes={curriculum.code})
         db.commit()
         print(f"Algebra I pilot seed complete. Curriculum={curriculum.id}")
     finally:

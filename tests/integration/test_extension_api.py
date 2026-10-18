@@ -166,9 +166,8 @@ def test_extension_opt_in_and_evidence_isolation() -> None:
 
 
 def test_extension_falls_back_to_generated_problem() -> None:
-    """When the authored extension pool is empty for a skill, opt-in should
-    still serve a generated stretch item tagged extension_eligible so fast
-    learners never hit a ceiling."""
+    """After the explicit extension seed is exhausted, opt-in should serve a
+    generated stretch item tagged extension_eligible."""
     from decimal import Decimal
 
     code = f"TEST.EXT.GEN.{uuid.uuid4().hex[:8]}"
@@ -181,30 +180,59 @@ def test_extension_falls_back_to_generated_problem() -> None:
             curriculum_id=curriculum.id,
             code=code,
             name="Extension generation fallback probe",
-            description="Test skill with no authored extension problems",
+            description="Test skill with one exhaustible extension authority problem",
             difficulty_level=Decimal("1.0"),
             mastery_threshold=Decimal("0.850"),
         )
         db.add(skill)
         db.flush()
-        # A generator-capable problem type is what makes the fallback work.
-        db.add(
-            Problem(
-                primary_skill_id=skill.id,
-                problem_type="SOLVE_EQUATION",
-                difficulty=3,
-                prompt="Solve for x: x + 4 = 11.",
-                canonical_answer="x=7",
-                source_type="CURATED",
-                solution={
-                    "provenance": {
-                        "origin": "AUTHORED",
-                        "author": "Mihur synthetic test fixture",
-                        "license": "Internal test fixture",
-                        "source_uri": "https://github.com/AyalewGM/ai-tutor",
-                    }
-                },
-            )
+        provenance = {
+            "origin": "AUTHORED",
+            "author": "Mihur synthetic test fixture",
+            "license": "Internal test fixture",
+            "source_uri": "https://github.com/AyalewGM/ai-tutor",
+        }
+        ordinary = Problem(
+            primary_skill_id=skill.id,
+            problem_type="SOLVE_EQUATION",
+            difficulty=3,
+            prompt="Solve for x: x + 4 = 11.",
+            canonical_answer="x=7",
+            source_type="CURATED",
+            solution={"provenance": provenance},
+        )
+        extension_seed = Problem(
+            primary_skill_id=skill.id,
+            problem_type="SOLVE_EQUATION",
+            difficulty=6,
+            prompt="Extension seed: solve for x: 2x + 3 = 17.",
+            canonical_answer="x=7",
+            source_type="CURATED",
+            solution={"provenance": provenance},
+        )
+        db.add_all([ordinary, extension_seed])
+        db.flush()
+        db.add_all(
+            [
+                ProblemContentMetadata(
+                    problem_id=ordinary.id,
+                    curriculum_id=curriculum.id,
+                    objective="Synthetic ordinary-mode integration fixture.",
+                    evaluation_type="EXACT",
+                    diagnostic_eligible=True,
+                    guided_eligible=True,
+                    independent_eligible=True,
+                    mastery_eligible=True,
+                    extension_eligible=False,
+                ),
+                ProblemContentMetadata(
+                    problem_id=extension_seed.id,
+                    curriculum_id=curriculum.id,
+                    objective="Synthetic extension generator authority.",
+                    evaluation_type="EXACT",
+                    extension_eligible=True,
+                ),
+            ]
         )
         student = Student(
             curriculum_id=curriculum.id,
@@ -218,6 +246,7 @@ def test_extension_falls_back_to_generated_problem() -> None:
         db.refresh(student)
         db.commit()
         student_id, skill_id = student.id, skill.id
+        extension_seed_id = str(extension_seed.id)
 
     session_response = client.post(
         "/api/v1/tutor/sessions",
@@ -225,6 +254,16 @@ def test_extension_falls_back_to_generated_problem() -> None:
     )
     assert session_response.status_code == 200
     session_id = session_response.json()["session_id"]
+
+    authored_response = client.post(f"/api/v1/tutor/sessions/{session_id}/extension")
+    assert authored_response.status_code == 200
+    authored_id = authored_response.json()["id"]
+    assert authored_id == extension_seed_id
+    answered = client.post(
+        f"/api/v1/tutor/sessions/{session_id}/respond",
+        json={"problem_id": authored_id, "answer": "x=7", "assistance_level": 0},
+    )
+    assert answered.status_code == 200
 
     ext_response = client.post(f"/api/v1/tutor/sessions/{session_id}/extension")
     assert ext_response.status_code == 200

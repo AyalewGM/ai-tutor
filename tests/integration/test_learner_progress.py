@@ -4,6 +4,7 @@ import uuid
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 
+from app.content_models import ProblemContentMetadata
 from app.core.database import SessionLocal
 from app.main import app
 from app.models import (
@@ -186,6 +187,23 @@ def _xp_student(db, *, prior_correct: int) -> tuple[str, str, str]:
     ]
     db.add_all(problems)
     db.flush()
+    db.add_all(
+        [
+            ProblemContentMetadata(
+                problem_id=problem.id,
+                curriculum_id=curriculum.id,
+                objective="Synthetic level-progress integration fixture.",
+                evaluation_type="EXACT",
+                diagnostic_eligible=True,
+                guided_eligible=True,
+                independent_eligible=True,
+                mastery_eligible=True,
+                extension_eligible=False,
+                provenance_json={"scope": "SYNTHETIC_TEST_ONLY"},
+            )
+            for problem in problems
+        ]
+    )
     session = TutorSession(
         student_id=student.id,
         primary_skill_id=skill.id,

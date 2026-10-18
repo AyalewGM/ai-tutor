@@ -5,6 +5,7 @@ from decimal import Decimal
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 
+from app.content_models import ProblemContentMetadata
 from app.core.database import SessionLocal
 from app.main import app
 from app.models import (
@@ -70,6 +71,17 @@ def _setup_review_due() -> tuple[str, str, str, str]:
             source_type="CURATED",
         )
         db.add(problem)
+        db.flush()
+        db.add(
+            ProblemContentMetadata(
+                problem_id=problem.id,
+                curriculum_id=curriculum.id,
+                objective="Synthetic spaced-review integration fixture.",
+                evaluation_type="EXACT",
+                independent_eligible=True,
+                provenance_json={"scope": "SYNTHETIC_TEST_ONLY"},
+            )
+        )
         db.commit()
         return str(problem.id), str(student.id), str(skill.id), str(curriculum.id)
 
@@ -225,6 +237,17 @@ def test_due_review_detours_before_new_skill_and_resumes() -> None:
             source_type="CURATED",
         )
         db.add(new_problem)
+        db.flush()
+        db.add(
+            ProblemContentMetadata(
+                problem_id=new_problem.id,
+                curriculum_id=curriculum_id,
+                objective="Synthetic post-review target fixture.",
+                evaluation_type="EXACT",
+                guided_eligible=True,
+                provenance_json={"scope": "SYNTHETIC_TEST_ONLY"},
+            )
+        )
         db.commit()
         new_skill_id = str(new_skill.id)
         new_problem_id = str(new_problem.id)

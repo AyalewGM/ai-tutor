@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from sqlalchemy import select
 
+from app.content_models import ProblemContentMetadata
 from app.core.database import SessionLocal
 from app.curriculum_models import EducationAuthority
 from app.models import (
@@ -11,6 +12,7 @@ from app.models import (
     Skill,
     SkillPrerequisite,
 )
+from app.services.problem_catalog_authorization import authorize_active_authored_catalog
 
 
 def _skill(db, curriculum: Curriculum, code: str, name: str, description: str, level: int) -> Skill:
@@ -206,14 +208,15 @@ def seed() -> None:
             "Identify marble colors in a probability bag visual.",
             2,
         )
+        marble_prompt = (
+            "A bag has 8 equally likely marbles: 3 blue and 5 red. "
+            "What is the probability of drawing a blue marble?"
+        )
         _problem(
             db,
             skill=marble_prob,
             difficulty=1,
-            prompt=(
-                "A bag has 8 equally likely marbles: 3 blue and 5 red. "
-                "What is the probability of drawing a blue marble?"
-            ),
+            prompt=marble_prompt,
             answer="3/8",
             problem_type="WORD_PROBLEM",
             visual_spec={
@@ -222,6 +225,37 @@ def seed() -> None:
                 "aria_label": "Bag containing 3 blue and 5 red marbles.",
             },
         )
+        db.flush()
+        marble_problem = db.scalar(
+            select(Problem).where(
+                Problem.primary_skill_id == marble_prob.id,
+                Problem.prompt == marble_prompt,
+            )
+        )
+        marble_metadata = db.scalar(
+            select(ProblemContentMetadata).where(
+                ProblemContentMetadata.problem_id == marble_problem.id,
+            )
+        )
+        if marble_metadata is None:
+            db.add(
+                ProblemContentMetadata(
+                    problem_id=marble_problem.id,
+                    curriculum_id=curriculum.id,
+                    objective="Synthetic marble-bag accessibility regression only.",
+                    evaluation_type="EXACT",
+                    diagnostic_eligible=True,
+                    guided_eligible=False,
+                    independent_eligible=False,
+                    mastery_eligible=False,
+                    extension_eligible=False,
+                    llm_solution_required=False,
+                    provenance_json={
+                        "scope": "SYNTHETIC_BROWSER_QA_ONLY",
+                        "history_policy": "NO_MASTERY_AUTHORITY",
+                    },
+                )
+            )
 
         def _misconception(
             skill: Skill, code: str, name: str, description: str, strategy: str
@@ -438,11 +472,19 @@ def seed() -> None:
                 problem_type=problem_type,
             )
 
+        # SessionLocal disables autoflush. Persist the complete reviewed
+        # catalog before calculating its immutable authorization snapshot.
+        db.flush()
+        authorized = authorize_active_authored_catalog(
+            db,
+            curriculum_codes={curriculum.code},
+        )
         db.commit()
         print(
             "Seed complete. "
             f"Curriculum={curriculum.id} "
-            f"Distributive={distributive.id} MultiStep={multi_step.id}"
+            f"Distributive={distributive.id} MultiStep={multi_step.id} "
+            f"ModeMetadataAdded={authorized}"
         )
     finally:
         db.close()

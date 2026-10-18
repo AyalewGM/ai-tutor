@@ -22,6 +22,8 @@ from pathlib import Path
 # entrypoint style) — repo root must be importable for `app`/`scripts`.
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
+from app.core.database import SessionLocal
+from app.services.problem_catalog_authorization import authorize_active_authored_catalog
 
 # (module, label). Order is deliberate: jurisdiction curricula first, then the
 # canonical cross-curriculum map needs the skills to exist, then authored
@@ -71,6 +73,14 @@ def main() -> int:
     print("[seed-all] Backfilling answer kinds ...", flush=True)
     backfill = importlib.import_module("scripts.ops.backfill_answer_kinds")
     backfill.main()
+
+    # Legacy production seeders predate per-problem mode metadata.  Authorize
+    # only the exact active authored rows admitted by the bounded compatibility
+    # policy; draft/unknown/generated rows remain fail closed.
+    with SessionLocal() as db:
+        authorized = authorize_active_authored_catalog(db)
+        db.commit()
+    print(f"[seed-all] Added explicit mode metadata to {authorized} authored rows.")
 
     if "--warm" in args:
         print("[seed-all] Warming problem banks ...", flush=True)

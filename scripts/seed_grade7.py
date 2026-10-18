@@ -5,6 +5,7 @@ from sqlalchemy import select
 from app.core.database import SessionLocal
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, EducationAuthority
 from app.models import Curriculum, Misconception, Problem, Skill, SkillPrerequisite
+from app.services.problem_catalog_authorization import authorize_active_authored_catalog
 
 CURRICULUM_CODE = "MCPS_MATH_7"
 
@@ -947,6 +948,10 @@ def seed() -> None:
                 answer_kind=answer_kind, parameters=parameters, choices=choices,
             )
 
+        # SessionLocal disables autoflush. Persist the complete reviewed
+        # catalog before calculating its immutable authorization snapshot.
+        db.flush()
+        authorize_active_authored_catalog(db, curriculum_codes={curriculum.code})
         db.commit()
         print(f"Grade 7 seed complete. Curriculum={curriculum.id}")
     finally:
