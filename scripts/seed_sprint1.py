@@ -11,6 +11,7 @@ from app.models import (
     Skill,
     SkillPrerequisite,
 )
+from app.services.problem_catalog_authorization import authorize_active_authored_catalog
 
 
 def _skill(db, curriculum: Curriculum, code: str, name: str, description: str, level: int) -> Skill:
@@ -438,11 +439,16 @@ def seed() -> None:
                 problem_type=problem_type,
             )
 
+        authorized = authorize_active_authored_catalog(
+            db,
+            curriculum_codes={curriculum.code},
+        )
         db.commit()
         print(
             "Seed complete. "
             f"Curriculum={curriculum.id} "
-            f"Distributive={distributive.id} MultiStep={multi_step.id}"
+            f"Distributive={distributive.id} MultiStep={multi_step.id} "
+            f"ModeMetadataAdded={authorized}"
         )
     finally:
         db.close()
