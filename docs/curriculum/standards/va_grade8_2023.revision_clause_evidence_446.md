@@ -24,8 +24,11 @@ The *revision overview*, comparing 2016 SOL and 2023 SOL, explicitly refers to t
 | 8.PS.3c | Technology for scatterplots | SOURCE_INDEX_EVIDENCE_ONLY |
 | 8.PFA.1a | Model distributive property | SOURCE_INDEX_EVIDENCE_ONLY |
 | 8.PFA.3a; 8.PFA.3b | Effect of adding b to y=mx; describe slope, intercept and variables | SOURCE_INDEX_EVIDENCE_ONLY |
-| 8.PFA.4c; 8.PFA.4d | Create contextual verbal situation for equation; write equation from contextual situation | SOURCE_INDEX_EVIDENCE_ONLY |
-| 8.PFA.5d; 8.PFA.5e | Create contextual verbal situation for inequality; write inequality from contextual situation | SOURCE_INDEX_EVIDENCE_ONLY |
+| 8.PFA.4c | Write a multistep linear equation from a verbal/contextual situation | SOURCE_INDEX_EVIDENCE_ONLY |
+| 8.PFA.4d | Create a verbal/contextual situation from a multistep linear equation | SOURCE_INDEX_EVIDENCE_ONLY |
+| 8.PFA.5c | Write a multistep linear inequality from a verbal/contextual situation | SOURCE_INDEX_EVIDENCE_ONLY |
+| 8.PFA.5d | Create a verbal/contextual situation from a multistep linear inequality | SOURCE_INDEX_EVIDENCE_ONLY |
+| 8.PFA.5e | Solve a contextual problem requiring a multistep linear inequality | SOURCE_INDEX_EVIDENCE_ONLY |
 
 **Important:** These are cited clause references in an issuer's *revision summary*, not a full enumeration of all lettered subparts. Other clauses, example restrictions and the entire parent scope are pending comparison against the actual original SOL. A reviewer must not infer omitted clauses are absent.
 
