@@ -1,0 +1,118 @@
+{
+  "package_id": "CANONICAL-MIDDLE-GRADES-RATIO-PERCENT-DEPTH-R2",
+  "revision": 2,
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "build_once_map_many": true,
+  "scope": {
+    "grades": [6, 7],
+    "mathematics": [
+      "ratio interpretation and equivalence",
+      "unit-rate computation and comparison",
+      "percent of a quantity and unknown whole",
+      "discount and percent increase"
+    ],
+    "jurisdiction_identity_created": false,
+    "local_mapping_changed": false
+  },
+  "reuse_first_audit": {
+    "main_sha": "ecb8ad8d6e0acf5388e03bbc6dea14a9f5bb2913",
+    "audit_pr": 447,
+    "audit_pr_sha": "195806169943268a5d2d7878a34834c39d92f7a7",
+    "audit_issue": 446,
+    "evidence": "The successful synthetic full-seed inventory reports Grade 6 ratio and unit-rate and Grade 7 percent/proportion skills among the two-distinct-stored-task priorities. It does not prove live learner availability or mode eligibility.",
+    "existing_work": [
+      "docs/curriculum/drafts/grade6-gap-closure-wave1",
+      "app/domains/ratios.py",
+      "app/domains/percent.py",
+      "tests/test_canonical_fractions_ratios.py"
+    ],
+    "actual_gap": "The persisted synthetic rows are thin and the existing Grade 6 draft exposes one combined ratio-table structure; learner-visible routing remains NOT_VERIFIED.",
+    "planned_improvement": "Add structurally distinct deterministic canonical family evidence with exact oracles, targeted guided repair, independent transfer, and accessibility contracts, without registration or seeding.",
+    "learner_visible_availability": "NOT_VERIFIED",
+    "stored_candidate_mode_metadata": "UNKNOWN_PER_TARGET_ROW",
+    "cross_session_repetition": "NOT_ASSESSED_BY_CONTENT_PACKAGE"
+  },
+  "canonical_reuse": {
+    "identity_authority": "EXISTING_REGISTERED_FAMILY_METADATA_ONLY",
+    "families": [
+      {"family": "MATH.RATIO.EQUIVALENT", "skill": "MATH.RP.RATIO.EQUIVALENT"},
+      {"family": "MATH.RATIO.PART_WHOLE", "skill": "MATH.RP.RATIO.INTERPRET"},
+      {"family": "MATH.RATIO.TABLE.MISSING", "skill": "MATH.RP.RATIO.EQUIVALENT"},
+      {"family": "MATH.RATIO.RECIPE", "skill": "MATH.RP.RATIO.EQUIVALENT"},
+      {"family": "MATH.RATE.UNIT", "skill": "MATH.RP.RATE.UNIT"},
+      {"family": "MATH.RATE.COMPARE", "skill": "MATH.RP.RATE.UNIT"},
+      {"family": "MATH.PCT.OF_QUANTITY", "skill": "MATH.RP.PERCENT.OF"},
+      {"family": "MATH.PCT.FIND_WHOLE", "skill": "MATH.RP.PERCENT.OF"},
+      {"family": "MATH.PCT.DISCOUNT", "skill": "MATH.RP.PERCENT.APPLICATIONS"},
+      {"family": "MATH.PCT.INCREASE", "skill": "MATH.RP.PERCENT.CHANGE"}
+    ],
+    "composite_seed_codes_approved_here": false,
+    "dc_va_grade8_mapping_activated": false
+  },
+  "depth_contract": {
+    "structures": [
+      "equivalent-ratio multiplicative table",
+      "part-to-part ratio with a given whole",
+      "double-number-line missing coordinate",
+      "recipe scaling by batches and unit rate",
+      "fractional unit rate with dimensional reconstruction",
+      "unequal-pack comparison by exact unit rate",
+      "percent-of with grid, number line, and equation",
+      "unknown whole recovered from part and percent",
+      "discount amount distinguished from final price",
+      "percent increase with explicit reference base"
+    ],
+    "teaching_flow": [
+      "OBSERVE",
+      "PREDICT",
+      "MANIPULATE",
+      "EXPLAIN",
+      "PRACTICE",
+      "DIAGNOSE",
+      "TRANSFER",
+      "VERIFY"
+    ],
+    "representation_progression": ["CONCRETE", "VISUAL", "SYMBOLIC"],
+    "mode_namespaces": ["diagnostic", "guided", "independent", "mastery"],
+    "guided_support_only": true,
+    "independent_transfer_enforced": true,
+    "teacher_oracle_public": false,
+    "exact_arithmetic": "fractions.Fraction"
+  },
+  "accessibility": {
+    "keyboard": "Tables, aligned number-line points, bars, and response controls must be operable without dragging.",
+    "screen_reader": "Announce quantity names, ordered units, row and column headers, and aligned scale values in reading order.",
+    "non_colour": true,
+    "reduced_motion": true,
+    "focus_preservation": true,
+    "exact_input": "Accept equivalent reduced fractions and a separate ordered-unit field."
+  },
+  "persistence_boundary": {
+    "registered_by_app": false,
+    "seeded": false,
+    "selector_or_scorer_changed": false,
+    "learner_records_changed": false,
+    "attempt_records_changed": false,
+    "diagnostic_attempt_records_changed": false,
+    "mastery_events_changed": false,
+    "variant_history_changed": false,
+    "idempotence_evidence": "Pure same-seed generation replay; persistence is intentionally absent and remains an Assessment Backend gate."
+  },
+  "review_gates": {
+    "mathematical_review": "PENDING",
+    "pedagogical_review": "PENDING",
+    "standards_mapping": "PENDING_NOT_CHANGED",
+    "assessment_backend": "PENDING",
+    "frontend_mve": "PENDING",
+    "muse_browser_qa": "PENDING",
+    "engineering_release": "PENDING",
+    "deployed": false
+  },
+  "provenance": {
+    "authorship": "Original Mihur-authored prompts, representations, diagnostic questions, and transfer contracts.",
+    "copyright": "No copied worksheets, vendor assessment items, teacher PDFs, or learner data.",
+    "official_standards_claim": "UNKNOWN_NOT_ASSERTED"
+  }
+}
