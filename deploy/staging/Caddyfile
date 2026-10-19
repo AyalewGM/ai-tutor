@@ -4,5 +4,10 @@
 }
 https://localhost:8443 {
     tls internal
-    reverse_proxy frontend:8080
+    reverse_proxy frontend:8080 {
+        # The outer proxy uses localhost for this TLS site's routing.
+        # Restore the fixed public authority for API same-origin checks;
+        # never derive it from client-supplied forwarded headers.
+        header_up Host dev.mihureducation.com
+    }
 }
