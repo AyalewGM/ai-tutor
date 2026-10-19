@@ -49,7 +49,7 @@ def release_preflight_passes(evidence: PackageReleaseEvidence) -> bool:
     )
     if not all(reviewed == sha for reviewed in reviewers):
         return False
-    if not all(
+    return all(
         (
             evidence.canonical_mapping_approved,
             evidence.exact_scorer_verified,
@@ -57,6 +57,4 @@ def release_preflight_passes(evidence: PackageReleaseEvidence) -> bool:
             evidence.history_preservation_verified,
             evidence.runtime_activation_approved,
         )
-    ):
-        return False
-    return True
+    )
