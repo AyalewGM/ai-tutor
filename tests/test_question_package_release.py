@@ -2,8 +2,7 @@ from dataclasses import replace
 
 from app.services.question_package_release import (
     PackageReleaseEvidence,
-    QuestionMode,
-    permitted_question_modes,
+    release_preflight_passes,
 )
 
 
@@ -28,7 +27,7 @@ def complete_evidence() -> PackageReleaseEvidence:
 
 
 def test_unreviewed_package_cannot_activate() -> None:
-    assert permitted_question_modes(PackageReleaseEvidence(package_sha=SHA)) == frozenset()
+    assert release_preflight_passes(PackageReleaseEvidence(package_sha=SHA)) is False
 
 
 def test_every_review_and_release_gate_is_required() -> None:
@@ -41,8 +40,8 @@ def test_every_review_and_release_gate_is_required() -> None:
         "muse_qa_sha",
         "engineering_authorized_sha",
     ):
-        assert permitted_question_modes(replace(complete, **{field: None})) == frozenset()
-        assert permitted_question_modes(replace(complete, **{field: "b" * 40})) == frozenset()
+        assert release_preflight_passes(replace(complete, **{field: None})) is False
+        assert release_preflight_passes(replace(complete, **{field: "b" * 40})) is False
     for field in (
         "canonical_mapping_approved",
         "exact_scorer_verified",
@@ -50,16 +49,16 @@ def test_every_review_and_release_gate_is_required() -> None:
         "history_preservation_verified",
         "runtime_activation_approved",
     ):
-        assert permitted_question_modes(replace(complete, **{field: False})) == frozenset()
+        assert release_preflight_passes(replace(complete, **{field: False})) is False
 
 
 def test_eligible_mode_permissions_require_all_gates() -> None:
-    assert permitted_question_modes(complete_evidence()) == frozenset(QuestionMode)
-    assert permitted_question_modes(replace(complete_evidence(), package_sha="invalid")) == frozenset()
+    # Full preflight is not a diagnostic/independent/mastery mode grant.\n    assert release_preflight_passes(complete_evidence()) is True
+    assert release_preflight_passes(replace(complete_evidence(), package_sha="invalid")) is False
 
 
 def test_gate_is_side_effect_free() -> None:
     evidence = complete_evidence()
     before = repr(evidence)
-    assert permitted_question_modes(evidence)
+    assert release_preflight_passes(evidence)
     assert repr(evidence) == before
