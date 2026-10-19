@@ -1,9 +1,6 @@
 from dataclasses import replace
 
-from app.services.question_package_release import (
-    PackageReleaseEvidence,
-    release_preflight_passes,
-)
+from app.services.question_package_release import PackageReleaseEvidence, release_preflight_passes
 
 
 SHA = "a" * 40
