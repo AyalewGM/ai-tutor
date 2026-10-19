@@ -1,19 +1,11 @@
 """Fail-closed, side-effect-free release eligibility for new question packages.
 
-This is a preflight contract, not an activation switch. The runtime selector
+This Boolean preflight cannot authorize diagnostic, guided, independent, or mastery. The runtime selector
 continues to require stored, independently authorized ProblemContentMetadata.
 Content merges, draft declarations, and CI alone never grant mode authority.
 """
 
 from dataclasses import dataclass
-from enum import Enum
-
-
-class QuestionMode(str, Enum):
-    DIAGNOSTIC = "diagnostic"
-    GUIDED = "guided"
-    INDEPENDENT = "independent"
-    MASTERY = "mastery"
 
 
 @dataclass(frozen=True)
@@ -34,8 +26,8 @@ class PackageReleaseEvidence:
     runtime_activation_approved: bool = False
 
 
-def permitted_question_modes(evidence: PackageReleaseEvidence) -> frozenset[QuestionMode]:
-    """Return no runtime permissions until *all* independent gates are met.
+def release_preflight_passes(evidence: PackageReleaseEvidence) -> bool:
+    """Check release evidence without granting any runtime mode permissions.
 
     The SHA checks are intentionally strict: an approval for a previous source
     revision cannot authorize a newly modified content package. Frontend,
@@ -46,7 +38,7 @@ def permitted_question_modes(evidence: PackageReleaseEvidence) -> frozenset[Ques
 
     sha = evidence.package_sha
     if len(sha) != 40 or any(ch not in "0123456789abcdef" for ch in sha):
-        return frozenset()
+        return False
     reviewers = (
         evidence.math_accepted_sha,
         evidence.pedagogy_accepted_sha,
@@ -56,7 +48,7 @@ def permitted_question_modes(evidence: PackageReleaseEvidence) -> frozenset[Ques
         evidence.engineering_authorized_sha,
     )
     if not all(reviewed == sha for reviewed in reviewers):
-        return frozenset()
+        return False
     if not all((
         evidence.canonical_mapping_approved,
         evidence.exact_scorer_verified,
@@ -64,5 +56,5 @@ def permitted_question_modes(evidence: PackageReleaseEvidence) -> frozenset[Ques
         evidence.history_preservation_verified,
         evidence.runtime_activation_approved,
     )):
-        return frozenset()
-    return frozenset(QuestionMode)
+        return False
+    return True
