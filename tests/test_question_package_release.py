@@ -2,7 +2,6 @@ from dataclasses import replace
 
 from app.services import question_package_release as release
 
-
 SHA = "a" * 40
 
 
