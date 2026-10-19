@@ -4,8 +4,8 @@ These tests validate the agent profile itself. They do NOT claim that an audit
 has run, that a browser is accessible, or that any PR is ready to merge.
 """
 
-from pathlib import Path
 import re
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PROFILE = ROOT / ".github/agents/mihur-independent-system-qa.agent.md"
@@ -65,5 +65,5 @@ def test_agent_explicitly_refuses_unsafe_test_and_release_shortcuts() -> None:
         "Playwright",
     ):
         assert required.lower() in body.lower() or required.lower() in runbook.lower()
-    assert "Creating the profile/issue does not execute" not in body  # no false success claim
+    assert "A custom agent definition does **not** run itself." in body
     assert "No changes to learner history, production" in runbook
