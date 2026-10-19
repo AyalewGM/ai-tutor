@@ -53,7 +53,8 @@ def test_every_review_and_release_gate_is_required() -> None:
 
 
 def test_eligible_mode_permissions_require_all_gates() -> None:
-    # Full preflight is not a diagnostic/independent/mastery mode grant.\n    assert release_preflight_passes(complete_evidence()) is True
+    # Full preflight is not a diagnostic/independent/mastery mode grant.
+    assert release_preflight_passes(complete_evidence()) is True
     assert release_preflight_passes(replace(complete_evidence(), package_sha="invalid")) is False
 
 
