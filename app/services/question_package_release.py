@@ -1,7 +1,7 @@
 """Fail-closed, side-effect-free release eligibility for new question packages.
 
-This Boolean preflight cannot authorize diagnostic, guided, independent, or mastery. The runtime selector
-continues to require stored, independently authorized ProblemContentMetadata.
+This Boolean preflight cannot authorize diagnostic, guided, independent, or
+mastery. The runtime selector still requires explicit ProblemContentMetadata.
 Content merges, draft declarations, and CI alone never grant mode authority.
 """
 
@@ -49,12 +49,14 @@ def release_preflight_passes(evidence: PackageReleaseEvidence) -> bool:
     )
     if not all(reviewed == sha for reviewed in reviewers):
         return False
-    if not all((
-        evidence.canonical_mapping_approved,
-        evidence.exact_scorer_verified,
-        evidence.response_schema_verified,
-        evidence.history_preservation_verified,
-        evidence.runtime_activation_approved,
-    )):
+    if not all(
+        (
+            evidence.canonical_mapping_approved,
+            evidence.exact_scorer_verified,
+            evidence.response_schema_verified,
+            evidence.history_preservation_verified,
+            evidence.runtime_activation_approved,
+        )
+    ):
         return False
     return True
