@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Settings } from "lucide-react";
+import { HelpCircle, Settings } from "lucide-react";
 import { api } from "../api";
 import NavBar from "../components/NavBar";
 import ParentUnlock from "../components/ParentUnlock";
@@ -44,11 +44,18 @@ export default function ParentDashboard() {
               your child may need support.
             </p>
           </div>
+          <div className="flex flex-wrap gap-2">
+          <Button variant="outline" asChild>
+            <Link to="/help/parent-first-day">
+              <HelpCircle className="h-4 w-4" /> Parent guide
+            </Link>
+          </Button>
           <Button variant="outline" asChild>
             <Link to="/parent/settings">
               <Settings className="h-4 w-4" /> Settings &amp; privacy
             </Link>
           </Button>
+          </div>
         </div>
 
         {!unlockToken && (
