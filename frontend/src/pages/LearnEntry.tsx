@@ -179,6 +179,7 @@ export default function LearnEntry() {
           <p className="mt-1 text-muted-foreground">
             Continue learning or explore a topic you want to practice today.
           </p>
+          <Link to="/help/student-first-session" className="mt-2 inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline">New here? Read your first-session guide</Link>
         </div>
 
         {/* Learner picker */}
