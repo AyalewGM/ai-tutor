@@ -1,0 +1,241 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_VDOE_REVISION_OVERVIEW_EVIDENCE_NOT_ACCEPTED",
+  "authority": "Virginia Department of Education",
+  "publication": "Grade 8 Mathematics Standards of Learning - 2023 Overview of Revisions",
+  "publication_date": "August 2023",
+  "source_url": "https://www.doe.virginia.gov/home/showpublisheddocument/49365/638315056768230000",
+  "source_file_supplied_in_conversation": true,
+  "source_role": "OFFICIAL_VDOE_REVISION_OVERVIEW_NOT_ORIGINAL_STANDARDS",
+  "scope": "2023 SOL Knowledge and Skills column on overview printed pages 2-15",
+  "original_2023_sol_document_verified": false,
+  "canonical_correspondence_approved": false,
+  "activation": "FORBIDDEN",
+  "parent_rows": [
+    {
+      "parent_id": "8.NS.1",
+      "knowledge_skill_clause_ids": [
+        "8.NS.1a",
+        "8.NS.1b",
+        "8.NS.1c"
+      ],
+      "overview_printed_pages": [
+        2
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.NS.2",
+      "knowledge_skill_clause_ids": [
+        "8.NS.2a",
+        "8.NS.2b",
+        "8.NS.2c"
+      ],
+      "overview_printed_pages": [
+        3
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.CE.1",
+      "knowledge_skill_clause_ids": [
+        "8.CE.1a",
+        "8.CE.1b",
+        "8.CE.1c"
+      ],
+      "overview_printed_pages": [
+        4
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.MG.1",
+      "knowledge_skill_clause_ids": [
+        "8.MG.1a",
+        "8.MG.1b"
+      ],
+      "overview_printed_pages": [
+        5
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.MG.2",
+      "knowledge_skill_clause_ids": [
+        "8.MG.2a",
+        "8.MG.2b",
+        "8.MG.2c",
+        "8.MG.2d"
+      ],
+      "overview_printed_pages": [
+        5
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.MG.3",
+      "knowledge_skill_clause_ids": [
+        "8.MG.3a",
+        "8.MG.3b",
+        "8.MG.3c",
+        "8.MG.3d",
+        "8.MG.3e",
+        "8.MG.3f",
+        "8.MG.3g"
+      ],
+      "overview_printed_pages": [
+        6
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.MG.4",
+      "knowledge_skill_clause_ids": [
+        "8.MG.4a",
+        "8.MG.4b",
+        "8.MG.4c",
+        "8.MG.4d",
+        "8.MG.4e"
+      ],
+      "overview_printed_pages": [
+        7,
+        8
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.MG.5",
+      "knowledge_skill_clause_ids": [
+        "8.MG.5a",
+        "8.MG.5b",
+        "8.MG.5c"
+      ],
+      "overview_printed_pages": [
+        8
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.PS.1",
+      "knowledge_skill_clause_ids": [
+        "8.PS.1a",
+        "8.PS.1b",
+        "8.PS.1c",
+        "8.PS.1d"
+      ],
+      "overview_printed_pages": [
+        9
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.PS.2",
+      "knowledge_skill_clause_ids": [
+        "8.PS.2a",
+        "8.PS.2b",
+        "8.PS.2c",
+        "8.PS.2d",
+        "8.PS.2e",
+        "8.PS.2f",
+        "8.PS.2g",
+        "8.PS.2h",
+        "8.PS.2i",
+        "8.PS.2j"
+      ],
+      "overview_printed_pages": [
+        9,
+        10
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.PS.3",
+      "knowledge_skill_clause_ids": [
+        "8.PS.3a",
+        "8.PS.3b",
+        "8.PS.3c",
+        "8.PS.3d",
+        "8.PS.3e",
+        "8.PS.3f"
+      ],
+      "overview_printed_pages": [
+        10,
+        11
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.PFA.1",
+      "knowledge_skill_clause_ids": [
+        "8.PFA.1a",
+        "8.PFA.1b"
+      ],
+      "overview_printed_pages": [
+        11,
+        12
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.PFA.2",
+      "knowledge_skill_clause_ids": [
+        "8.PFA.2a",
+        "8.PFA.2b"
+      ],
+      "overview_printed_pages": [
+        12
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.PFA.3",
+      "knowledge_skill_clause_ids": [
+        "8.PFA.3a",
+        "8.PFA.3b",
+        "8.PFA.3c",
+        "8.PFA.3d",
+        "8.PFA.3e",
+        "8.PFA.3f"
+      ],
+      "overview_printed_pages": [
+        12,
+        13
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.PFA.4",
+      "knowledge_skill_clause_ids": [
+        "8.PFA.4a",
+        "8.PFA.4b",
+        "8.PFA.4c",
+        "8.PFA.4d",
+        "8.PFA.4e",
+        "8.PFA.4f",
+        "8.PFA.4g"
+      ],
+      "overview_printed_pages": [
+        13,
+        14
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    },
+    {
+      "parent_id": "8.PFA.5",
+      "knowledge_skill_clause_ids": [
+        "8.PFA.5a",
+        "8.PFA.5b",
+        "8.PFA.5c",
+        "8.PFA.5d",
+        "8.PFA.5e",
+        "8.PFA.5f",
+        "8.PFA.5g"
+      ],
+      "overview_printed_pages": [
+        14,
+        15
+      ],
+      "review_status": "AUTHOR_TRANSCRIPTION_PENDING_INDEPENDENT_ORIGINAL_SOL_COMPARISON"
+    }
+  ]
+}
