@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import {
   ArrowLeft, ArrowRight, BookOpen, GraduationCap, HeartHandshake,
@@ -18,7 +19,7 @@ const categories = [
   { slug: "privacy-and-faq", icon: ShieldCheck },
 ] as const;
 
-function headingId(children: React.ReactNode): string {
+function headingId(children: ReactNode): string {
   const label = String(children);
   return label.toLowerCase().normalize("NFKD").replace(/[^a-z0-9\s-]/g, "").trim().replace(/\s+/g, "-");
 }
