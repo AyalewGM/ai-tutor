@@ -1,6 +1,7 @@
 """Fail-closed regression for bounded DC Grade 8 function scope evidence."""
 import json
 from pathlib import Path
+
 LEDGER = (
     Path(__file__).resolve().parents[1]
     / "docs"
