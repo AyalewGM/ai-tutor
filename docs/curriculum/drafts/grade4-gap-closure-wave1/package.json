@@ -5,6 +5,112 @@
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "mastery_writes": false,
+  "revision": "R2.0",
+  "question_depth_r2": {
+    "revision": "R2.1",
+    "status": "DRAFT_UNVERIFIED",
+    "runtime_activation": false,
+    "implementation_base_commit": "ecb8ad8d6e0acf5388e03bbc6dea14a9f5bb2913",
+    "learner_visible_availability": "NOT_VERIFIED",
+    "mapping_approval": "UNKNOWN_NOT_REASSESSED",
+    "canonical_family_approval": "REUSED_EXISTING_REPOSITORY_FAMILIES; ACCEPTANCE_NOT_REASSESSED_HERE",
+    "audit_evidence": {
+      "source_issue": 446,
+      "source_pr": 447,
+      "source_sha": "195806169943268a5d2d7878a34834c39d92f7a7",
+      "environment": "ISOLATED_SYNTHETIC_FULL_SEED",
+      "stored_distinct_tasks_per_local_skill": 4,
+      "thin_local_skills": [
+        "*.NF.FRACTIONS",
+        "*.NF.DECIMALS",
+        "*.OA.MULTI_STEP"
+      ],
+      "learner_visibility_claim": "NOT_ASSESSED_BY_STORED_COUNT"
+    },
+    "existing_work": "The Grade 4 draft already defined broad teaching goals and one shallow generator per concept; registered shared domains already provide canonical fraction, decimal, and whole-number word-problem families, with independent acceptance not reassessed here.",
+    "gap": "The full-seed audit measured only four distinct stored mathematical tasks for each named local skill, while the existing draft exposed only guided/independent modes and no executable observed-response repair path.",
+    "improvement": "Reuse twelve shared canonical families in four separated modes; exact hidden oracles; response-specific repairs restricted to an explicit misconception-to-family allowlist, with fresh numerical data and fail-closed exhaustion; different-family unseen independent transfer; concrete/visual/symbolic keyboard/AT contracts.",
+    "verification": "Two-pass deterministic tests independently reconstruct source and numerically fresh repair oracles, enforce repair-target preservation (including decimal alignment and multiplication-plus-extra regressions), four-mode separation, answer isolation, and no persistence surface. Independent exact-head re-review remains PENDING.",
+    "generator_reuse": [
+      "app.domains.fraction_decimal_depth",
+      "app.domains.addition",
+      "app.domains.subtraction",
+      "app.domains.multiplication",
+      "app.domains.division"
+    ],
+    "canonical_concepts": {
+      "G4-FRACTIONS": [
+        "MATH.FRAC.UNIT.MEANING",
+        "MATH.FRAC.NUMBER_LINE",
+        "MATH.FRAC.COMPARE.SAME_NUMERATOR",
+        "MATH.FRAC.ERROR.BIGGER_DENOM"
+      ],
+      "G4-DECIMAL-FRACTIONS": [
+        "MATH.DEC.FRACTION.TENTHS",
+        "MATH.DEC.FRACTION.HUNDREDTHS",
+        "MATH.DEC.ORDER",
+        "MATH.DEC.ERROR.ALIGN"
+      ],
+      "G4-MULTISTEP-WORD": [
+        "MATH.ADD.WORD.MULTISTEP",
+        "MATH.SUB.WORD.MULTISTEP",
+        "MATH.MUL.WORD.MULTISTEP",
+        "MATH.DIV.WORD.MULTISTEP"
+      ]
+    },
+    "teaching_flow": [
+      "OBSERVE",
+      "PREDICT",
+      "MANIPULATE",
+      "EXPLAIN",
+      "PRACTICE",
+      "DIAGNOSE",
+      "TRANSFER",
+      "VERIFY"
+    ],
+    "representation_progression": [
+      "CONCRETE",
+      "VISUAL",
+      "SYMBOLIC"
+    ],
+    "mode_contract": {
+      "diagnostic": "answer-free probe; no support",
+      "guided": "support only after one declared observed response",
+      "independent": "different-family transfer; no support",
+      "mastery": "answer-free candidate only; no mastery write or credit"
+    },
+    "accessibility": [
+      "family-specific keyboard order",
+      "structured response fields",
+      "screen-reader prompt-model-field-feedback order",
+      "focus recovery after feedback",
+      "reduced-motion text-equivalent state change",
+      "labels and patterns instead of colour-only meaning"
+    ],
+    "historical_record_policy": {
+      "learner_records": "UNCHANGED",
+      "attempt_records": "UNCHANGED",
+      "diagnostic_attempt_records": "UNCHANGED",
+      "mastery_event_records": "UNCHANGED",
+      "variant_history": "UNCHANGED"
+    },
+    "review_state": {
+      "independent_math": "PENDING",
+      "independent_pedagogy": "PENDING",
+      "frontend_mve": "PENDING",
+      "assessment_backend": "PENDING",
+      "muse_qa": "PENDING"
+    },
+    "guided_repair_target_contract": {
+      "routing": "single recognized observed response in guided mode only",
+      "family_policy": "explicit misconception-to-eligible canonical family allowlist; fresh instance retains diagnosed source family",
+      "fresh_numeric_instance": true,
+      "max_deterministic_attempts": 32,
+      "mismatch_policy": "FAIL_CLOSED",
+      "different_family_role": "independent transfer only",
+      "review_status": "PENDING_INDEPENDENT_MATH_AND_PEDAGOGY"
+    }
+  },
   "base_commit": "cfda3f7301502c712c29f22ae5e4948cfa1ebc75",
   "purpose": "Deepen all Grade 4 Maryland strand content in one PR without duplicating existing canonical families or fraction-equivalence work.",
   "existing_reuse": [
