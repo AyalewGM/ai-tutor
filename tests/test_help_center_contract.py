@@ -78,3 +78,12 @@ def test_draft_status_is_honest_and_screen_captures_not_fabricated() -> None:
     assert "four-digit parent pin" in articles["parent-first-day"]
     assert "independent" in articles["progress-and-mastery"]
     assert "subject to staging websocket" in articles["privacy-and-faq"]
+
+
+def test_unavailable_region_does_not_claim_curriculum_equivalence() -> None:
+    source = (PAGES / "LearnEntry.tsx").read_text(encoding="utf-8")
+    assert "pick the closest grade-level fit" not in source
+    assert "another region's curriculum is not automatically equivalent" in source
+    assert "Content in progress" in source
+    parent = (GUIDES_DIR / "parent-first-day.md").read_text(encoding="utf-8")
+    assert "Do not select an unrelated grade" in parent
