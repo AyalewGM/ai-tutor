@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0-draft",
+  "package_id": "W2-G9-QUADRATIC-PATTERNS",
+  "revision": "G9_DEPTH_R5_2026-10-18",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "learner_data_writes": false,
+  "audit_evidence": {
+    "issue": 446,
+    "audit_pr": 447,
+    "audit_head": "195806169943268a5d2d7878a34834c39d92f7a7",
+    "artifact_id": 12125514143,
+    "observations": [
+      "MTH1W.C.QUAD has 2 stored distinct tasks in one QUADRATIC_FUNCTION family",
+      "A1.QUAD.FN has 2 stored distinct tasks in one QUADRATIC_FUNCTION family",
+      "mode metadata, learner visibility, independent scoring, and mastery eligibility remain NOT VERIFIED"
+    ]
+  },
+  "canonical": {
+    "candidate": "MATH.F.QUADRATIC.INTERPRET",
+    "approval": "UNKNOWN_NOT_AUTHORITATIVE",
+    "mapping_use": "FORBIDDEN_UNTIL_SEPARATE_ACCEPTANCE"
+  },
+  "reuse": {
+    "existing_package": "W2-G9-QUADRATIC-PATTERNS",
+    "previous_revision": "G9_DEPTH_R4_2026-10-10",
+    "existing_oracles": [
+      "generate_quadratic_area",
+      "generate_quadratic_pattern"
+    ],
+    "existing_generator_contract": "app/domains/advanced_algebra_highschool.py",
+    "existing_family_ids": [
+      "MATH.QUAD.EVALUATE",
+      "MATH.QUAD.ROOTS.FACTORED",
+      "MATH.QUAD.VERTEX.SYMMETRY",
+      "MATH.QUAD.COMPARE.LINEAR",
+      "MATH.QUAD.ERROR.ROOT_SIGN"
+    ],
+    "mve": "UNKNOWN_NOT_WIRED_OR_VERIFIED"
+  },
+  "standards_evidence": [
+    {
+      "jurisdiction": "Ontario",
+      "official_url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c3",
+      "publication_or_version": "MTH1W 2021",
+      "expectation_ids": ["C3.1"],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED"
+    },
+    {
+      "jurisdiction": "Maryland",
+      "official_url": "https://msde.maryland.gov/media/17798",
+      "publication_or_version": "August 2022",
+      "expectation_ids": ["A.SSE.B.3", "A.REI.B.4", "F.IF.C.7", "F.IF.C.8"],
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED"
+    }
+  ],
+  "authored_families": [
+    "QUAD.STANDARD.EXACT_SUBSTITUTION",
+    "QUAD.FACTORED.ROOTS_VERIFY",
+    "QUAD.VERTEX.SYMMETRY",
+    "QUAD.SQUARE_ROOT.PLUS_MINUS",
+    "QUAD.VERTEX.NO_REAL",
+    "QUAD.TABLE.SECOND_DIFFERENCE_RULE",
+    "QUAD.FORMS.RECONCILE_FEATURES"
+  ],
+  "teaching_sequence": {
+    "Observe": "Compare a table, factored form, standard form, and vertex form without asserting they are interchangeable evidence.",
+    "Predict": "Commit roots, opening, symmetry, solution count, or next table value before symbolic verification.",
+    "Manipulate": "Use proposed factor, vertex, and coefficient controls with equivalent keyboard and text inputs; implementation remains MVE-owned.",
+    "Explain": "Name which representation exposes each feature and reconcile exact substitution totals.",
+    "Practice": "Use seven deterministic structures, signed coefficients, exact fractions, double branches, and no-real cases.",
+    "Diagnose": "After a trusted guided-mode classification, expose only the selected Socratic question for root-sign, lost-plus-minus, vertex-sign, square, opening, or second-difference repair; never expose teacher exemplars or exact oracles.",
+    "Transfer": "Select a deterministic family with a different mathematical structure from the source family and record source and target modes explicitly.",
+    "Verify": "Require an independent, hint-free transfer exit with complete exact oracles and independently reconstructible totals; trusted scoring remains backend-owned."
+  },
+  "concrete_visual_symbolic": {
+    "concrete": "Reuse the existing rectangle/tile construction from R4.",
+    "visual": "Tables, symmetry pairs, factor zeros, and vertex/axis descriptions are specified but not learner-wired.",
+    "symbolic": "Exact standard, factored, vertex, square-root, and table-rule evidence.",
+    "implementation_status": "CONTENT_CONTRACT_ONLY"
+  },
+  "independent_evidence": {
+    "deterministic_seed_oracle_tests": "AUTHORED_PENDING_EXECUTION",
+    "unseen_transfer": "EXPLICIT_SOURCE_MODE_TO_INDEPENDENT_DIFFERENT_FAMILY_CONTRACT",
+    "guided_misconception_support": "CONTENT_HELPER_FAILS_CLOSED_OUTSIDE_GUIDED_MODE",
+    "math_review": "PENDING",
+    "pedagogical_review": "PENDING",
+    "prior_head_math_review": "04faeeca0883a885b282a6c7bcfd7d82009400dc_ACCEPTED",
+    "prior_head_pedagogical_review": "04faeeca0883a885b282a6c7bcfd7d82009400dc_CHANGES_REQUIRED",
+    "muse_qa": "PENDING",
+    "trusted_scoring": "NOT_IMPLEMENTED",
+    "learner_visibility": "NOT_VERIFIED"
+  },
+  "ownership_boundaries": {
+    "content": "mathematical definitions, exact oracles, misconception classifications",
+    "assessment_backend": "server scorer, API, attempt/mastery isolation",
+    "frontend_mve": "interaction, routing, keyboard and assistive-technology implementation",
+    "independent_review": "verdicts only; reviewers do not author this revision"
+  }
+}
