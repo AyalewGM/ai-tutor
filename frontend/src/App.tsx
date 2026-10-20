@@ -6,6 +6,7 @@ import Catalog from "./pages/Catalog";
 import Diagnostic from "./pages/Diagnostic";
 import LearnTogether from "./pages/LearnTogether";
 import Landing from "./pages/Landing";
+import HelpCenter from "./pages/HelpCenter";
 import LearnEntry from "./pages/LearnEntry";
 import Login from "./pages/Login";
 import ParentDashboard from "./pages/ParentDashboard";
@@ -20,6 +21,8 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
+      <Route path="/help" element={<HelpCenter />} />
+      <Route path="/help/:slug" element={<HelpCenter />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Login />} />
       <Route path="/unavailable" element={<Unavailable />} />
