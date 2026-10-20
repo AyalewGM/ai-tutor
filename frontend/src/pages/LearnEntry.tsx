@@ -507,8 +507,9 @@ export default function LearnEntry() {
                   </Select>
                   {familyRegion && !regionCovered && selectedRegion && (
                     <p className="text-xs text-muted-foreground">
-                      Mihur doesn't have a {selectedRegion.name} curriculum yet —
-                      pick the closest grade-level fit.
+                      Mihur doesn't have a {selectedRegion.name} curriculum yet. Only choose
+                      an exact curriculum confirmed for your child by the pilot team;
+                      another region's curriculum is not automatically equivalent.
                     </p>
                   )}
                 </div>
