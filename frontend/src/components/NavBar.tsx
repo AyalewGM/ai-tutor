@@ -51,6 +51,7 @@ export default function NavBar() {
           {navLink("/learn", "Practice")}
           {parentSession && navLink("/parent", "Parent")}
           {navLink("/together", "Together")}
+          {navLink("/help", "Help")}
         </nav>
         <div className="ml-auto">
           {parentSession && <Button variant="ghost" size="sm" onClick={signOut}>
