@@ -6,7 +6,56 @@
   "runtime_activation": false,
   "mastery_writes": false,
   "base_commit": "cfda3f7301502c712c29f22ae5e4948cfa1ebc75",
+  "revision": "g1-number-place-depth-r2",
   "purpose": "Provide complete Grade 1 learning-depth coverage in one PR while preserving Gate-5 identity/evidence boundaries and existing foundations.",
+  "question_depth_r2": {
+    "audit_source": {
+      "issue": 446,
+      "audit_pr": 447,
+      "audit_head": "195806169943268a5d2d7878a34834c39d92f7a7",
+      "artifact_id": 12125514143,
+      "synthetic_report_only": true
+    },
+    "measured_gap": {
+      "MATH.ELEMENTARY.NUMBER_SENSE.COUNT_COMPARE_TO_120": {
+        "stored_distinct_tasks_per_mapped_local_skill": 3,
+        "stored_families": [
+          "COMPARE_NUMBERS",
+          "NUMBER_SEQUENCE"
+        ]
+      },
+      "MATH.ELEMENTARY.PLACE_VALUE.TENS_ONES": {
+        "stored_distinct_tasks_per_mapped_local_skill": 4,
+        "stored_families": [
+          "PLACE_VALUE_BASE_TEN"
+        ]
+      }
+    },
+    "scope": [
+      "G1-COUNT-REPRESENT",
+      "G1-PLACE-VALUE"
+    ],
+    "canonical_alias_status": "PROPOSED_NOT_APPROVED",
+    "standards_mapping_status": "PENDING",
+    "learner_visible_status": "NOT_VERIFIED",
+    "runtime_activation": false,
+    "mode_namespaces": [
+      "diagnostic",
+      "guided",
+      "independent",
+      "mastery"
+    ],
+    "family_counts": {
+      "G1-COUNT-REPRESENT": 5,
+      "G1-PLACE-VALUE": 6
+    },
+    "history_writes": false,
+    "independent_math_review": "PENDING_R2",
+    "independent_pedagogy_review": "PENDING_R2",
+    "assessment_backend_review": "PENDING_R2",
+    "frontend_mve_review": "PENDING_R2",
+    "muse_qa": "PENDING_R2"
+  },
   "existing_reuse": [
     "docs/curriculum/packs/md-grade1-mccrs-2026_27.json",
     "docs/curriculum/taxonomy_candidate_scope.grade1_gate5.v1.json",
