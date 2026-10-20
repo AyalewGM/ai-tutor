@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { api, ApiError } from "../api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -133,6 +134,7 @@ export default function ChildPracticeLinks({ children }: { children: Child[] }) 
           Each child gets a different link and can practice without a password. Generate a new
           link to replace that child's previous link. Links expire after seven days; a child
           already signed in stays active until their learner session expires or is revoked.
+          {" "}<Link to="/help/parent-first-day#3-share-each-childs-private-practice-link" className="text-primary underline underline-offset-2">How to share a link safely</Link>.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
