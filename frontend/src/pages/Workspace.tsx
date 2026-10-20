@@ -632,6 +632,9 @@ export default function Workspace() {
               >
                 <BookOpen className="h-4 w-4" /> Catalog
               </Link>
+              <Link to="/help/progress-and-mastery" className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-medium backdrop-blur transition-colors hover:bg-white/25">
+                <HelpCircle className="h-4 w-4" /> Help
+              </Link>
               {workspace.daily_goal ? (
                 <button
                   type="button"
