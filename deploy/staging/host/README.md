@@ -111,3 +111,28 @@ parent README; never delete volumes, CA storage, databases or downgrade schema.
 Reverting PUBLIC_BASE_URL requires a reviewed clean release, not a dirty VPS edit.
 
 Reference: https://caddyserver.com/docs/caddyfile/directives/reverse_proxy
+
+## Whiteboard WebSocket public authority
+
+The host proxy intentionally sends `Host: localhost:8443` to select the internal
+TLS site, with certificate verification using SNI `localhost`. The container
+proxy then sets `Host: dev.mihureducation.com` toward the frontend; nginx passes
+that authority unchanged to the API. This fixed staging value must match the
+public browser Origin. Do not forward arbitrary X-Forwarded-Host values or
+rewrite Origin: the backend's same-origin and board authorization checks remain
+required. A direct localhost tunnel is a health diagnostic, not the supported
+whiteboard browser origin.
+
+Deploy through the normal clean-release workflow with matching release manifest
+and image digests. No database migration or seed is required for this proxy-only
+change. Recreate the staging proxy to reload its bind-mounted Caddyfile (a running
+Caddy process does not automatically reload edited files). Preserve host Caddy's
+local access-log and allowlist configuration; do not overwrite it with the example.
+
+Acceptance on the VPS remains required: health endpoints return 200; an authorized
+synthetic board session from the public origin upgrades with HTTP 101 and exchanges
+live drawing/pointer updates; missing authentication, a foreign Origin and a
+cross-family board remain rejected. Never publish cookies, board links or tokens
+in evidence. For rollback, use the previous clean release and corresponding
+manifest, recreate its proxy, and repeat health checks; no volume deletion or
+schema downgrade. The previous release retains the known WebSocket defect.
