@@ -127,6 +127,7 @@ export default function Privacy() {
         <p className="mt-8 text-sm text-muted-foreground">
           Questions about privacy during the pilot? Contact your pilot
           coordinator directly — we answer every question personally.
+          {" "}<Link to="/help/privacy-and-faq" className="text-primary underline underline-offset-2">Read privacy and family account FAQs</Link>.
         </p>
       </main>
     </div>
