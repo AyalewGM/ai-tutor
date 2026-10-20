@@ -1791,6 +1791,21 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "retrospective_source_fidelity_correction_20261020": {
+        "source_authority": "DC OSSE adoption of CCSS mathematics / NGA CCSSO source",
+        "source_url": "https://www.thecorestandards.org/Math/Content/8/F/A/1/",
+        "source_locator": "Grade 8 / F / A; CCSS Mathematics 2010 printed p.54 footnote",
+        "requirements": {
+          "parent": "A function assigns exactly one output to each input; its graph is the set of ordered pairs consisting of an input and its corresponding output.",
+          "grade8_boundary": "Function notation is not required in Grade 8."
+        },
+        "short_summary_exhaustive": false,
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
       }
     },
     {
@@ -1869,6 +1884,22 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "retrospective_source_fidelity_correction_20261020": {
+        "source_authority": "DC OSSE adoption of CCSS mathematics / NGA CCSSO source",
+        "source_url": "https://www.thecorestandards.org/Math/Content/8/F/B/4/",
+        "source_locator": "Grade 8 / F / B; CCSS Mathematics 2010 printed p.55",
+        "requirements": {
+          "parent": "Construct a function to model a linear relationship between two quantities.",
+          "determination": "Determine rate of change and initial value from a description of the relationship or from two ordered-pair values, including values read from a table or graph.",
+          "interpretation": "Interpret the rate of change and initial value in terms of the modeled situation."
+        },
+        "short_summary_exhaustive": false,
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
       }
     },
     {
@@ -1895,6 +1926,21 @@
         "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
         "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
         "official_text_reproduced": false
+      },
+      "retrospective_source_fidelity_correction_20261020": {
+        "source_authority": "DC OSSE adoption of CCSS mathematics / NGA CCSSO source",
+        "source_url": "https://www.thecorestandards.org/Math/Content/8/F/B/5/",
+        "source_locator": "Grade 8 / F / B; CCSS Mathematics 2010 printed p.55",
+        "requirements": {
+          "analysis": "Analyze a graph to describe where a functional relationship is increasing or decreasing and whether it is linear or nonlinear.",
+          "construction": "Sketch a graph that exhibits the qualitative features described verbally for the functional relationship."
+        },
+        "short_summary_exhaustive": false,
+        "independent_source_fidelity": "PENDING",
+        "canonical_equivalence": "UNVERIFIED",
+        "assessment": "UNVERIFIED",
+        "mastery": "UNVERIFIED",
+        "activation": "FORBIDDEN"
       }
     },
     {
