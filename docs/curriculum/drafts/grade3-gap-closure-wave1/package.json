@@ -5,8 +5,63 @@
   "status": "DRAFT_UNVERIFIED",
   "runtime_activation": false,
   "mastery_writes": false,
-  "base_commit": "cfda3f7301502c712c29f22ae5e4948cfa1ebc75",
+  "base_commit": "ecb8ad8d6e0acf5388e03bbc6dea14a9f5bb2913",
   "purpose": "Deepen all Grade 3 Maryland strand content in one PR while preserving the accepted vertical-slice foundations and shared canonical math.",
+  "content_provenance": {
+    "package_id": "G3-DATA-DEPTH-R2",
+    "revision": "issue-451-r2-2026-10-18",
+    "audit_issue": 451,
+    "coordination_issues": [446, 311],
+    "audit_pr": 447,
+    "audit_head": "195806169943268a5d2d7878a34834c39d92f7a7",
+    "audited_main": "ecb8ad8d6e0acf5388e03bbc6dea14a9f5bb2913",
+    "stored_evidence": {
+      "distinct_mathematical_tasks_per_local_skill": 2,
+      "duplicate_rows_per_local_skill": 6,
+      "source": "Issue #451 synthetic audit",
+      "status": "VERIFIED_AT_AUDITED_MAIN"
+    },
+    "learner_visible_availability": "NOT_VERIFIED",
+    "canonical_reuse": {
+      "skill_codes": [
+        "MATH.DATA.ELEMENTARY.REPRESENT",
+        "MATH.DATA.ELEMENTARY.COMPARE"
+      ],
+      "source": "app/domains/elementary_data_patterns.py",
+      "mapping_approval": "EXISTING_REPOSITORY_CONTRACT_NOT_REASSESSED"
+    },
+    "standards_source_url": "UNKNOWN",
+    "standards_publication_version": "UNKNOWN",
+    "exact_expectation_ids": [],
+    "standards_mapping_status": "UNKNOWN_NOT_REASSESSED",
+    "teaching_sequence": [
+      "OBSERVE",
+      "PREDICT",
+      "MANIPULATE",
+      "EXPLAIN",
+      "PRACTICE",
+      "DIAGNOSE",
+      "TRANSFER",
+      "VERIFY"
+    ],
+    "representation_sequence": ["CONCRETE_CONTEXT", "VISUAL", "SYMBOLIC"],
+    "independent_reviews": {
+      "mathematical": "PENDING",
+      "pedagogical": "PENDING",
+      "muse_qa": "PENDING"
+    },
+    "prior_exact_head_reviews": {
+      "b1f9a8145a2f5106cb48a0247fa7bfd821321554_mathematical": "ACCEPT",
+      "b1f9a8145a2f5106cb48a0247fa7bfd821321554_pedagogical": "CHANGES_REQUIRED"
+    },
+    "runtime_activation": false,
+    "learner_history_writes": false,
+    "ownership": {
+      "content": "THIS_REVISION",
+      "trusted_scoring_and_selection": "ASSESSMENT_BACKEND",
+      "learner_interaction_and_routing": "FRONTEND_MVE"
+    }
+  },
   "existing_reuse": [
     "docs/curriculum/packs/md-grade3-mccrs-2026_27.json",
     "PR #92 / docs/curriculum/f024_md_grade3_vertical_slice.md",
@@ -625,13 +680,29 @@
     },
     {
       "id": "G3-DATA",
-      "title": "Scaled picture and bar graphs",
+      "title": "Graph and frequency reasoning",
       "status": "DRAFT_UNVERIFIED",
       "runtime_activation": false,
       "mastery_writes": false,
       "standards_candidate": "Maryland 3.MD",
       "reuse_policy": "REUSE_EXISTING_MD3_PACK_PR92_AND_SHARED_CANONICAL_FAMILIES; NO NEW CANONICAL AUTHORITY",
-      "learning_objective": "Develop independent Grade 3 reasoning for scaled picture and bar graphs through models, explanation, varied practice, and unseen transfer.",
+      "learning_objective": "Interpret bar, picture, tally, frequency-table, and line-plot representations; distinguish reading, total, difference, scale, and frequency structures; then transfer independently to a fresh family.",
+      "canonical_families": [
+        "MATH.DATA.BAR.READ",
+        "MATH.DATA.BAR.COMPARE",
+        "MATH.DATA.BAR.TOTAL",
+        "MATH.DATA.PICTURE.SCALE",
+        "MATH.DATA.TALLY.READ",
+        "MATH.DATA.FREQ.MODE",
+        "MATH.DATA.LINEPLOT.FREQUENCY",
+        "MATH.DATA.LINEPLOT.DIFFERENCE"
+      ],
+      "mode_contract": {
+        "modes": ["diagnostic", "guided", "independent", "mastery"],
+        "full_math_distinct_for_same_seed": true,
+        "guided_support_only_in_guided_mode": true,
+        "mastery_credit_from_this_draft": false
+      },
       "teaching_flow": [
         {
           "phase": "OBSERVE",
@@ -675,33 +746,63 @@
         }
       ],
       "core_reasoning": [
-        "read graph scale/legend",
-        "construct scaled graphs from data",
-        "solve one/two-step comparison problems",
-        "distinguish category label from frequency"
+        "read a named bar or line-plot frequency",
+        "apply picture-graph keys and tally groups",
+        "distinguish totals from absolute differences",
+        "identify a greatest frequency from category data"
       ],
       "misconception_routes": [
         {
-          "code": "G3.DATA.SCALE_IGNORED",
-          "evidence": "Observed response suggests weakness in read graph scale/legend.",
-          "socratic_question": "What does the original model show about read graph scale/legend?",
-          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+          "code": "DATA.BAR.READ.WRONG_CATEGORY",
+          "evidence": "The response matches a different category's bar.",
+          "socratic_question": "Which category name does the question point to, and where is that category in the data?",
+          "repair_requirement": "Name the target category before reading its value; verify against a fresh bar task."
         },
         {
-          "code": "G3.DATA.BAR_HEIGHT_AS_LABEL",
-          "evidence": "Observed response suggests weakness in construct scaled graphs from data.",
-          "socratic_question": "What does the original model show about construct scaled graphs from data?",
-          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+          "code": "DATA.BAR.COMPARE.ADD",
+          "evidence": "The response equals the sum when the question asks for a difference.",
+          "socratic_question": "Does 'difference' ask how many altogether or how far apart the two counts are?",
+          "repair_requirement": "Read both bars, subtract smaller from larger, and contrast with a fresh total question."
         },
         {
-          "code": "G3.DATA.PICTURE_ONE_ICON_ONE",
-          "evidence": "Observed response suggests weakness in solve one/two-step comparison problems.",
-          "socratic_question": "What does the original model show about solve one/two-step comparison problems?",
-          "repair_requirement": "Use a fresh task or contrast case, require model/explanation plus check, then fade scaffold."
+          "code": "DATA.BAR.TOTAL.SUBTRACT",
+          "evidence": "The response equals the difference when the question asks for a combined count.",
+          "socratic_question": "What word tells you to combine the two category counts?",
+          "repair_requirement": "Add the two requested counts and verify with a fresh total structure."
+        },
+        {
+          "code": "DATA.PICTURE.IGNORE_KEY",
+          "evidence": "The response equals the number of symbols rather than the represented count.",
+          "socratic_question": "If each symbol stands for several students, what must happen to every symbol you count?",
+          "repair_requirement": "Multiply symbols by the key value and explain the unit represented."
+        },
+        {
+          "code": "DATA.TALLY.COUNT_GROUPS_ONLY",
+          "evidence": "The response treats each complete tally group as one mark.",
+          "socratic_question": "How many marks are hidden inside each complete tally bundle?",
+          "repair_requirement": "Count complete groups by fives, then add extras on a fresh tally task."
+        },
+        {
+          "code": "DATA.MODE.CHOOSE_SMALLEST",
+          "evidence": "The response names the category with the least frequency.",
+          "socratic_question": "Does 'most often' point to the least count or the greatest count?",
+          "repair_requirement": "Pair each category with its count and select the greatest frequency."
+        },
+        {
+          "code": "DATA.LINEPLOT.COUNT_DISTINCT",
+          "evidence": "The response counts distinct values instead of marks above the target.",
+          "socratic_question": "Are you counting all different labels, or only observations equal to the target value?",
+          "repair_requirement": "Mark each target observation one-for-one on a fresh line plot."
+        },
+        {
+          "code": "DATA.LINEPLOT.ADD_FREQUENCIES",
+          "evidence": "The response adds two frequencies when the question asks for their difference.",
+          "socratic_question": "After counting both stacks, how can you measure how far apart their heights are?",
+          "repair_requirement": "Subtract smaller frequency from larger and verify by comparing stack heights."
         }
       ],
       "guided_practice": {
-        "minimum_seeded_structures": 4,
+        "minimum_seeded_structures": 8,
         "scaffold_fading": true,
         "exact_or_structured_oracle": true
       },
@@ -712,9 +813,9 @@
         "mastery_source": "SERVER_TRUSTED_INDEPENDENT_SCORING_ONLY_AFTER_REVIEW"
       },
       "mve_accessibility": [
-        "keyboard-equivalent interaction",
-        "screen-reader mathematical state",
-        "text alternative for arrays/clocks/graphs/shapes",
+        "keyboard-equivalent selection and numeric/text response",
+        "screen-reader announcement of category, value, scale, and requested operation",
+        "ordered text table alternative for every graph or line plot",
         "reduced motion",
         "no color-only meaning",
         "focus preserved after feedback"

@@ -69,7 +69,9 @@ Learners treat fractions as numbers, not just shaded pieces: same-whole area mod
 Learners tell/write time to the minute, model elapsed time, cross hour boundaries, and explain addition/subtraction strategies.
 
 ### Data
-Learners read and construct scaled picture/bar graphs, use legends/scales, and solve comparison questions rather than reading bar height as raw count.
+Issue #451 R2 reuses the shared elementary-data generator rather than creating a jurisdiction-specific bank. Eight mathematical families now distinguish bar reading, bar comparison, bar total, picture-graph scale, tally grouping, frequency-table mode, line-plot frequency, and line-plot difference. Diagnostic, guided, independent, and mastery draft variants use different full mathematical tasks for the same seed. Each declared data misconception has an executable guided-only route from its observed exact response to its specific Socratic question and a deterministic fresh repair task. The bar-comparison addition error receives both a fresh difference task and the specified total-question contrast. Repair tasks suppress generic hints, expose no oracle, and cannot be requested from diagnostic, independent, or mastery records. Deterministic transfer remains separate and changes both family and prompt before independent verification.
+
+This is authored evidence only. The current jurisdiction packs remain unchanged and runtime activation remains false, so learner-visible availability is **NOT_VERIFIED**. Standards mapping is **UNKNOWN_NOT_REASSESSED**. Independent Math accepted the unchanged eight-family mathematics at PR #458 head `b1f9a8145a2f5106cb48a0247fa7bfd821321554`; targeted review of the bounded guided-repair correction is pending. Pedagogy re-review, frontend/MVE implementation, Assessment Backend integration, and Muse QA remain pending.
 
 ### Area and perimeter
 Learners distinguish square units from linear units, connect arrays to rectangle area, find perimeter, and reason about missing sides and same-area/different-perimeter situations.
@@ -94,8 +96,9 @@ All new prompts, contexts, explanations, diagnostics, and transfer structures ar
 
 Files:
 - `package.json`: nine deep package contracts
-- `variants.py`: deterministic guided/independent variants
+- `variants.py`: deterministic variants, including the four-mode Grade 3 data R2 contract
 - `tests/test_grade3_gap_closure_wave1.py`: mathematical/structural checks, namespace isolation, answer isolation, and fail-closed runtime gates
+- `tests/test_grade3_data_depth_r2.py`: independent data-oracle recomputation, eight-family coverage, mode separation, deterministic transfer, idempotence, and runtime-neutrality checks
 
 Current state:
 - Authored: YES
@@ -113,6 +116,6 @@ Current state:
 
 Suggested focused command:
 
-`pytest -q tests/test_grade3_gap_closure_wave1.py`
+`pytest -q tests/test_grade3_gap_closure_wave1.py tests/test_grade3_data_depth_r2.py`
 
 Also run Ruff, JSON validation, exact-head CI/AppSec, and independent Math → Pedagogy → Standards/Architecture → Frontend/MVE → Assessment Backend → Muse review before activation.
