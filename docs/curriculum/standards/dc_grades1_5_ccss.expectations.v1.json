@@ -749,12 +749,12 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G1_MD",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Tell and write time in hours and half-hours using analog and digital clocks.Represent and interpret data.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION",
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
       "source_boundary_evidence": {
         "individual_standard_url": "https://www.thecorestandards.org/Math/Content/1/MD/B/3/",
         "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
@@ -1775,12 +1775,12 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G2_MD",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Solve word problems involving dollar bills, quarters, dimes, nickels, and pennies, using $ and ¢ symbols appropriately. Example: If you have 2 dimes and 3 pennies, how many cents do you have?Represent and interpret data.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION",
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
       "source_boundary_evidence": {
         "individual_standard_url": "https://www.thecorestandards.org/Math/Content/2/MD/C/8/",
         "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
@@ -2642,12 +2642,12 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G3_MD",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Measure and estimate liquid volumes and masses of objects using standard units of grams (g), kilograms (kg), and liters (l).1 Add, subtract, multiply, or divide to solve one-step word problems involving masses or volumes that are given in the same units, e.g., by using drawings (such as a beaker with a measurement scale) to represent the problem.2Represent and interpret data.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION",
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
       "source_boundary_evidence": {
         "individual_standard_url": "https://www.thecorestandards.org/Math/Content/3/MD/A/2/",
         "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
@@ -2731,12 +2731,12 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G3_MD",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Generate measurement data by measuring lengths using rulers marked with halves and fourths of an inch. Show the data by making a line plot, where the horizontal scale is marked off in appropriate units— whole numbers, halves, or quarters.Geometric measurement: understand concepts of area and relate area to multiplication and to addition.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION",
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
       "source_boundary_evidence": {
         "individual_standard_url": "https://www.thecorestandards.org/Math/Content/3/MD/B/4/",
         "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
@@ -3300,12 +3300,12 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G4_NBT",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Use place value understanding to round multi-digit whole numbers to any place.Use place value understanding and properties of operations to perform multi-digit arithmetic.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION",
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
       "source_boundary_evidence": {
         "individual_standard_url": "https://www.thecorestandards.org/Math/Content/4/NBT/A/3/",
         "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
@@ -3821,12 +3821,12 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G4_MD",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Apply the area and perimeter formulas for rectangles in real world and mathematical problems. For example, find the width of a rectangular room given the area of the flooring and the length, by viewing the area formula as a multiplication equation with an unknown factor.Represent and interpret data.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION",
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
       "source_boundary_evidence": {
         "individual_standard_url": "https://www.thecorestandards.org/Math/Content/4/MD/A/3/",
         "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
@@ -3867,12 +3867,12 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G4_MD",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Make a line plot to display a data set of measurements in fractions of a unit (1/2, 1/4, 1/8). Solve problems involving addition and subtraction of fractions by using information presented in line plots. For example, from a line plot find and interpret the difference in length between the longest and shortest specimens in an insect collection.Geometric measurement: understand concepts of angle and measure angles.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION",
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
       "source_boundary_evidence": {
         "individual_standard_url": "https://www.thecorestandards.org/Math/Content/4/MD/B/4/",
         "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
@@ -4781,12 +4781,12 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G5_MD",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Convert among different-sized standard measurement units within a given measurement system (e.g., convert 5 cm to 0.05 m), and use these conversions in solving multi-step, real world problems.Represent and interpret data.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION",
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
       "source_boundary_evidence": {
         "individual_standard_url": "https://www.thecorestandards.org/Math/Content/5/MD/A/1/",
         "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
@@ -4827,12 +4827,12 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G5_MD",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Make a line plot to display a data set of measurements in fractions of a unit (1/2, 1/4, 1/8). Use operations on fractions for this grade to solve problems involving information presented in line plots. For example, given different measurements of liquid in identical beakers, find the amount of liquid each beaker would contain if the total amount in all the beakers were redistributed equally.Geometric measurement: understand concepts of volume.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION",
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
       "source_boundary_evidence": {
         "individual_standard_url": "https://www.thecorestandards.org/Math/Content/5/MD/B/2/",
         "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
