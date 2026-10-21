@@ -89,7 +89,7 @@
       "cluster": "A",
       "domain_title": "Operations and Algebraic Thinking",
       "source_locator": "https://www.thecorestandards.org/Math/Content/1/OA/A/2/",
-      "scope_summary": "Solve word problems that call for addition of three whole numbers whose sum is less than or equal to 20, e.g., by using objects, drawings, and equations with a symbol for the unknown number to represent the problem.Understand and apply properties of operations and the relationship between addition and subtraction.",
+      "scope_summary": "Solve word problems that call for addition of three whole numbers whose sum is less than or equal to 20, e.g., by using objects, drawings, and equations with a symbol for the unknown number to represent the problem.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -118,12 +118,18 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G1_OA",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Solve word problems that call for addition of three whole numbers whose sum is less than or equal to 20, e.g., by using objects, drawings, and equations with a symbol for the unknown number to represent the problem.Understand and apply properties of operations and the relationship between addition and subtraction.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/1/OA/A/2/",
+        "removed_adjacent_cluster_heading": "Understand and apply properties of operations and the relationship between addition and subtraction.",
+        "review_method": "COMPARED_TO_PUBLISHED_INDIVIDUAL_CCSSL_STANDARD",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "1.OA.B.3",
@@ -175,7 +181,7 @@
       "cluster": "B",
       "domain_title": "Operations and Algebraic Thinking",
       "source_locator": "https://www.thecorestandards.org/Math/Content/1/OA/B/4/",
-      "scope_summary": "Understand subtraction as an unknown-addend problem. For example, subtract 10 - 8 by finding the number that makes 10 when added to 8.Add and subtract within 20.",
+      "scope_summary": "Understand subtraction as an unknown-addend problem. For example, subtract 10 - 8 by finding the number that makes 10 when added to 8.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -204,12 +210,18 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G1_OA",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Understand subtraction as an unknown-addend problem. For example, subtract 10 - 8 by finding the number that makes 10 when added to 8.Add and subtract within 20.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/1/OA/B/4/",
+        "removed_adjacent_cluster_heading": "Add and subtract within 20.",
+        "review_method": "COMPARED_TO_PUBLISHED_INDIVIDUAL_CCSSL_STANDARD",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "1.OA.C.5",
@@ -261,7 +273,7 @@
       "cluster": "C",
       "domain_title": "Operations and Algebraic Thinking",
       "source_locator": "https://www.thecorestandards.org/Math/Content/1/OA/C/6/",
-      "scope_summary": "Add and subtract within 20, demonstrating fluency for addition and subtraction within 10. Use strategies such as counting on; making ten (e.g., 8 + 6 = 8 + 2 + 4 = 10 + 4 = 14); decomposing a number leading to a ten (e.g., 13 - 4 = 13 - 3 - 1 = 10 - 1 = 9); using the relationship between addition and subtraction (e.g., knowing that 8 + 4 = 12, one knows 12 - 8 = 4); and creating equivalent but easier or known sums (e.g., adding 6 + 7 by creating the known equivalent 6 + 6 + 1 = 12 + 1 = 13).Work with addition and subtraction equations.",
+      "scope_summary": "Add and subtract within 20, demonstrating fluency for addition and subtraction within 10. Use strategies such as counting on; making ten (e.g., 8 + 6 = 8 + 2 + 4 = 10 + 4 = 14); decomposing a number leading to a ten (e.g., 13 - 4 = 13 - 3 - 1 = 10 - 1 = 9); using the relationship between addition and subtraction (e.g., knowing that 8 + 4 = 12, one knows 12 - 8 = 4); and creating equivalent but easier or known sums (e.g., adding 6 + 7 by creating the known equivalent 6 + 6 + 1 = 12 + 1 = 13).",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -290,12 +302,18 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G1_OA",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Add and subtract within 20, demonstrating fluency for addition and subtraction within 10. Use strategies such as counting on; making ten (e.g., 8 + 6 = 8 + 2 + 4 = 10 + 4 = 14); decomposing a number leading to a ten (e.g., 13 - 4 = 13 - 3 - 1 = 10 - 1 = 9); using the relationship between addition and subtraction (e.g., knowing that 8 + 4 = 12, one knows 12 - 8 = 4); and creating equivalent but easier or known sums (e.g., adding 6 + 7 by creating the known equivalent 6 + 6 + 1 = 12 + 1 = 13).Work with addition and subtraction equations.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/1/OA/C/6/",
+        "removed_adjacent_cluster_heading": "Work with addition and subtraction equations.",
+        "review_method": "COMPARED_TO_PUBLISHED_INDIVIDUAL_CCSSL_STANDARD",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "1.OA.D.7",
@@ -389,7 +407,7 @@
       "cluster": "A",
       "domain_title": "Number and Operations in Base Ten",
       "source_locator": "https://www.thecorestandards.org/Math/Content/1/NBT/A/1/",
-      "scope_summary": "Count to 120, starting at any number less than 120. In this range, read and write numerals and represent a number of objects with a written numeral.Understand place value.",
+      "scope_summary": "Count to 120, starting at any number less than 120. In this range, read and write numerals and represent a number of objects with a written numeral.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -414,12 +432,18 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G1_NBT",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Count to 120, starting at any number less than 120. In this range, read and write numerals and represent a number of objects with a written numeral.Understand place value.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/1/NBT/A/1/",
+        "removed_adjacent_cluster_heading": "Understand place value.",
+        "review_method": "COMPARED_TO_PUBLISHED_INDIVIDUAL_CCSSL_STANDARD",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "1.NBT.B.2",
@@ -467,7 +491,7 @@
       "cluster": "B",
       "domain_title": "Number and Operations in Base Ten",
       "source_locator": "https://www.thecorestandards.org/Math/Content/1/NBT/B/3/",
-      "scope_summary": "Compare two two-digit numbers based on meanings of the tens and ones digits, recording the results of comparisons with the symbols >, =, and <.Use place value understanding and properties of operations to add and subtract.",
+      "scope_summary": "Compare two two-digit numbers based on meanings of the tens and ones digits, recording the results of comparisons with the symbols >, =, and <.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -492,12 +516,18 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G1_NBT",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Compare two two-digit numbers based on meanings of the tens and ones digits, recording the results of comparisons with the symbols >, =, and <.Use place value understanding and properties of operations to add and subtract.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/1/NBT/B/3/",
+        "removed_adjacent_cluster_heading": "Use place value understanding and properties of operations to add and subtract.",
+        "review_method": "COMPARED_TO_PUBLISHED_INDIVIDUAL_CCSSL_STANDARD",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "1.NBT.C.4",
@@ -879,7 +909,7 @@
       "cluster": "A",
       "domain_title": "Operations and Algebraic Thinking",
       "source_locator": "https://www.thecorestandards.org/Math/Content/2/OA/A/1/",
-      "scope_summary": "Use addition and subtraction within 100 to solve one- and two-step word problems involving situations of adding to, taking from, putting together, taking apart, and comparing, with unknowns in all positions, e.g., by using drawings and equations with a symbol for the unknown number to represent the problem.1Add and subtract within 20.",
+      "scope_summary": "Use addition and subtraction within 100 to solve one- and two-step word problems involving situations of adding to, taking from, putting together, taking apart, and comparing, with unknowns in all positions, e.g., by using drawings and equations with a symbol for the unknown number to represent the problem.1",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -902,12 +932,18 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G2_OA",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Use addition and subtraction within 100 to solve one- and two-step word problems involving situations of adding to, taking from, putting together, taking apart, and comparing, with unknowns in all positions, e.g., by using drawings and equations with a symbol for the unknown number to represent the problem.1Add and subtract within 20.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/2/OA/A/1/",
+        "removed_adjacent_cluster_heading": "Add and subtract within 20.",
+        "review_method": "COMPARED_TO_PUBLISHED_INDIVIDUAL_CCSSL_STANDARD",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "2.OA.B.2",
@@ -1155,7 +1191,7 @@
       "cluster": "A",
       "domain_title": "Number and Operations in Base Ten",
       "source_locator": "https://www.thecorestandards.org/Math/Content/2/NBT/A/4/",
-      "scope_summary": "Compare two three-digit numbers based on meanings of the hundreds, tens, and ones digits, using >, =, and < symbols to record the results of comparisons.Use place value understanding and properties of operations to add and subtract.",
+      "scope_summary": "Compare two three-digit numbers based on meanings of the hundreds, tens, and ones digits, using >, =, and < symbols to record the results of comparisons.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -1184,12 +1220,18 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G2_NBT",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Compare two three-digit numbers based on meanings of the hundreds, tens, and ones digits, using >, =, and < symbols to record the results of comparisons.Use place value understanding and properties of operations to add and subtract.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/2/NBT/A/4/",
+        "removed_adjacent_cluster_heading": "Use place value understanding and properties of operations to add and subtract.",
+        "review_method": "COMPARED_TO_PUBLISHED_INDIVIDUAL_CCSSL_STANDARD",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "2.NBT.B.5",
