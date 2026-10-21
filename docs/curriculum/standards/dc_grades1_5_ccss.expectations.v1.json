@@ -4352,7 +4352,7 @@
       "cluster": "A",
       "domain_title": "Number and Operations in Base Ten",
       "source_locator": "https://www.thecorestandards.org/Math/Content/5/NBT/A/4/",
-      "scope_summary": "Use place value understanding to round decimals to any place.Perform operations with multi-digit whole numbers and with decimals to hundredths.",
+      "scope_summary": "Use place value understanding to round decimals to any place.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -4375,12 +4375,20 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G5_NBT",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Use place value understanding to round decimals to any place.Perform operations with multi-digit whole numbers and with decimals to hundredths.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/5/NBT/A/4/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": "Perform operations with multi-digit whole numbers and with decimals to hundredths.",
+        "contamination_type": "ADJACENT_CLUSTER_HEADING",
+        "review_method": "BOUNDED_CCSSL_INDIVIDUAL_STANDARD_AND_SECTION_BOUNDARY_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "5.NBT.B.5",
@@ -5018,7 +5026,7 @@
       "cluster": "A",
       "domain_title": "Geometry",
       "source_locator": "https://www.thecorestandards.org/Math/Content/5/G/A/2/",
-      "scope_summary": "Represent real world and mathematical problems by graphing points in the first quadrant of the coordinate plane, and interpret coordinate values of points in the context of the situation.Classify two-dimensional figures into categories based on their properties.",
+      "scope_summary": "Represent real world and mathematical problems by graphing points in the first quadrant of the coordinate plane, and interpret coordinate values of points in the context of the situation.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -5043,12 +5051,20 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G5_G",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Represent real world and mathematical problems by graphing points in the first quadrant of the coordinate plane, and interpret coordinate values of points in the context of the situation.Classify two-dimensional figures into categories based on their properties.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/5/G/A/2/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": "Classify two-dimensional figures into categories based on their properties.",
+        "contamination_type": "ADJACENT_CLUSTER_HEADING",
+        "review_method": "BOUNDED_CCSSL_INDIVIDUAL_STANDARD_AND_SECTION_BOUNDARY_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "5.G.B.3",
@@ -5096,7 +5112,7 @@
       "cluster": "B",
       "domain_title": "Geometry",
       "source_locator": "https://www.thecorestandards.org/Math/Content/5/G/B/4/",
-      "scope_summary": "Classify two-dimensional figures in a hierarchy based on properties. Kindergarten-Grade 12Standards for Mathematical Practice Introduction How to read the grade level standards Kindergarten Introduction Counting & Cardinality Operations & Algebraic Thinking Number & Operations in Base Ten Measurement & Data Geometry Grade 1 Introduction Operations & Algebraic Thinking Number & Operations in Base Ten Measurement & Data Geometry Grade 2 Introduction Operations & Algebraic Thinking Number & Operations in Base Ten Measurement & Data Geometry Grade 3 Introduction Operation",
+      "scope_summary": "Classify two-dimensional figures in a hierarchy based on properties.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -5121,11 +5137,20 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G5_G",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "raw_scope_capture": "Classify two-dimensional figures in a hierarchy based on properties. Kindergarten-Grade 12Standards for Mathematical Practice Introduction How to read the grade level standards Kindergarten Introduction Counting & Cardinality Operations & Algebraic Thinking Number & Operations in Base Ten Measurement & Data Geometry Grade 1 Introduction Operations & Algebraic Thinking Number & Operations in Base Ten Measurement & Data Geometry Grade 2 Introduction Operations & Algebraic Thinking Number & Operations in Base Ten Measurement & Data Geometry Grade 3 Introduction Operation",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/5/G/B/4/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": " Kindergarten-Grade 12Standards for Mathematical Practice Introduction How to read the grade level standards Kindergarten Introduction Counting & Cardinality Operations & Algebraic Thinking Number & Operations in Base Ten Measurement & Data Geometry Grade 1 Introduction Operations & Algebraic Thinking Number & Operations in Base Ten Measurement & Data Geometry Grade 2 Introduction Operations & Algebraic Thinking Number & Operations in Base Ten Measurement & Data Geometry Grade 3 Introduction Operation",
+        "contamination_type": "PAGE_NAVIGATION_TEXT",
+        "review_method": "BOUNDED_CCSSL_INDIVIDUAL_STANDARD_AND_SECTION_BOUNDARY_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     }
   ]
 }
