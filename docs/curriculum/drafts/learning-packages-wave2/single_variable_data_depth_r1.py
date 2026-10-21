@@ -1,5 +1,6 @@
 """Original draft-only one-variable data question families; no runtime or mastery authority."""
 from __future__ import annotations
+
 import random
 import re
 from collections import Counter
@@ -57,12 +58,12 @@ def box(values, modified=False):
     inside = [v for v in values if lower <= v <= upper]
     if not inside:
         raise ValueError("no non-outlier values")
-    return dict(minimum=str(lo), q1=str(q1), median=str(q2), q3=str(q3),
-                maximum=str(hi), iqr=str(iqr), lower_fence=str(lower),
-                upper_fence=str(upper),
-                left_whisker=str(min(inside) if modified else lo),
-                right_whisker=str(max(inside) if modified else hi),
-                outliers=sorted(v for v in values if v < lower or v > upper) if modified else [])
+    return {"minimum": str(lo), "q1": str(q1), "median": str(q2), "q3": str(q3),
+            "maximum": str(hi), "iqr": str(iqr), "lower_fence": str(lower),
+            "upper_fence": str(upper),
+            "left_whisker": str(min(inside) if modified else lo),
+            "right_whisker": str(max(inside) if modified else hi),
+            "outliers": sorted(v for v in values if v < lower or v > upper) if modified else []}
 
 
 def generate(family, seed, mode, *, transfer=False):
@@ -97,8 +98,8 @@ def generate(family, seed, mode, *, transfer=False):
         values = [start + 2 * i for i in range(5)] + [start + rng.randint(58, 81)]
         rng.shuffle(values)
         prompt = f"Service times in minutes: {values}. Find mean, median, mode, range and resistant typical center."
-        answer = dict(mean=str(Fraction(sum(values), 6)), median=str(median(values)),
-                      mode="NONE", range=str(max(values) - min(values)), center="MEDIAN")
+        answer = {"mean": str(Fraction(sum(values), 6)), "median": str(median(values)),
+                  "mode": "NONE", "range": str(max(values) - min(values)), "center": "MEDIAN"}
         error = dict(answer, center="MEAN")
     elif family == "CONSTRUCT_SET":
         m, d = rng.randint(12, 29), rng.randint(2, 8)
@@ -137,9 +138,9 @@ def generate(family, seed, mode, *, transfer=False):
         rng.shuffle(a)
         rng.shuffle(b)
         ai, bi = exact(box(a)["iqr"]), exact(box(b)["iqr"])
-        answer = dict(median_a=str(median(a)), median_b=str(median(b)),
-                      iqr_a=str(ai), iqr_b=str(bi),
-                      wider="A" if ai > bi else "B")
+        answer = {"median_a": str(median(a)), "median_b": str(median(b)),
+                  "iqr_a": str(ai), "iqr_b": str(bi),
+                  "wider": "A" if ai > bi else "B"}
         error = dict(answer, wider="B" if ai > bi else "A")
         prompt = f"Group A: {a}; Group B: {b}. Compare medians and IQRs. Which has wider middle 50%?"
     if transfer:
