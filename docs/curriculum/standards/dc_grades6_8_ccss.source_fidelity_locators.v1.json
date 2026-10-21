@@ -1892,7 +1892,7 @@
         "requirements": {
           "parent": "Construct a function to model a linear relationship between two quantities.",
           "determination": "Determine rate of change and initial value from a description of the relationship or from two ordered-pair values, including values read from a table or graph.",
-          "interpretation": "Interpret the rate of change and initial value in terms of the modeled situation."
+          "interpretation": "Interpret the rate of change and initial value in terms of the modeled situation and in terms of its graph or table of values."
         },
         "short_summary_exhaustive": false,
         "independent_source_fidelity": "PENDING",
