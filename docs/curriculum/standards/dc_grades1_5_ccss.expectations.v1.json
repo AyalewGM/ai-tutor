@@ -2110,7 +2110,7 @@
       "cluster": "A",
       "domain_title": "Operations and Algebraic Thinking",
       "source_locator": "https://www.thecorestandards.org/Math/Content/3/OA/A/4/",
-      "scope_summary": "Determine the unknown whole number in a multiplication or division equation relating three whole numbers. For example, determine the unknown number that makes the equation true in each of the equations 8 × ? = 48, 5 = _ ÷ 3, 6 × 6 = ?Understand properties of multiplication and the relationship between multiplication and division.",
+      "scope_summary": "Determine the unknown whole number in a multiplication or division equation relating three whole numbers. For example, determine the unknown number that makes the equation true in each of the equations 8 × ? = 48, 5 = _ ÷ 3, 6 × 6 = ?",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -2137,12 +2137,18 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G3_OA",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Determine the unknown whole number in a multiplication or division equation relating three whole numbers. For example, determine the unknown number that makes the equation true in each of the equations 8 × ? = 48, 5 = _ ÷ 3, 6 × 6 = ?Understand properties of multiplication and the relationship between multiplication and division.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/3/OA/A/4/",
+        "removed_adjacent_cluster_heading": "Understand properties of multiplication and the relationship between multiplication and division.",
+        "review_method": "ORIGINAL_CCSSL_PUBLISHED_STANDARD_BOUNDARY_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "3.OA.B.5",
@@ -2192,7 +2198,7 @@
       "cluster": "B",
       "domain_title": "Operations and Algebraic Thinking",
       "source_locator": "https://www.thecorestandards.org/Math/Content/3/OA/B/6/",
-      "scope_summary": "Understand division as an unknown-factor problem. For example, find 32 ÷ 8 by finding the number that makes 32 when multiplied by 8.Multiply and divide within 100.",
+      "scope_summary": "Understand division as an unknown-factor problem. For example, find 32 ÷ 8 by finding the number that makes 32 when multiplied by 8.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -2219,12 +2225,18 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G3_OA",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Understand division as an unknown-factor problem. For example, find 32 ÷ 8 by finding the number that makes 32 when multiplied by 8.Multiply and divide within 100.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/3/OA/B/6/",
+        "removed_adjacent_cluster_heading": "Multiply and divide within 100.",
+        "review_method": "ORIGINAL_CCSSL_PUBLISHED_STANDARD_BOUNDARY_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "3.OA.C.7",
