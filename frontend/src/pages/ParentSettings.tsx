@@ -158,6 +158,7 @@ export default function ParentSettings() {
             <ArrowLeft className="h-4 w-4" /> Back to dashboard
           </Link>
           <h1 className="mt-2 text-3xl font-bold tracking-tight">Settings &amp; privacy</h1>
+          <Link to="/help/parent-first-day#3-share-each-childs-private-practice-link" className="mt-2 inline-block text-sm font-medium text-primary underline-offset-4 hover:underline">How to set up a child’s private link</Link>
         </div>
 
         {!unlocked && (

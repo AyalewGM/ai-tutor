@@ -352,6 +352,9 @@ export default function Login() {
                 <Button type="submit" className="w-full" size="lg" disabled={submitting}>
                   {submitting ? "Please wait…" : mode === "register" ? "Create account" : "Sign in"}
                 </Button>
+                <p className="pt-2 text-center text-sm text-muted-foreground">
+                  New to Mihur? <Link to="/help/parent-first-day" className="font-medium text-primary underline-offset-2 hover:underline">Read the parent setup guide</Link>.
+                </p>
               </form>
             </CardContent>
           </Card>

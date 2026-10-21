@@ -179,6 +179,7 @@ export default function LearnEntry() {
           <p className="mt-1 text-muted-foreground">
             Continue learning or explore a topic you want to practice today.
           </p>
+          <Link to="/help/student-first-session" className="mt-2 inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline">New here? Read your first-session guide</Link>
         </div>
 
         {/* Learner picker */}
@@ -506,8 +507,9 @@ export default function LearnEntry() {
                   </Select>
                   {familyRegion && !regionCovered && selectedRegion && (
                     <p className="text-xs text-muted-foreground">
-                      Mihur doesn't have a {selectedRegion.name} curriculum yet —
-                      pick the closest grade-level fit.
+                      Mihur doesn't have a {selectedRegion.name} curriculum yet. Only choose
+                      an exact curriculum confirmed for your child by the pilot team;
+                      another region's curriculum is not automatically equivalent.
                     </p>
                   )}
                 </div>

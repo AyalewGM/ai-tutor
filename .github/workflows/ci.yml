@@ -147,6 +147,9 @@ jobs:
         working-directory: frontend
         run: npm ci
 
+      - name: Verify versioned Help Center content parity
+        run: node frontend/scripts/sync-help-guides.mjs --check
+
       - name: MVE contract regression check
         working-directory: frontend
         run: npm run check:mve
