@@ -689,7 +689,7 @@
       "cluster": "A",
       "domain_title": "Measurement and Data",
       "source_locator": "https://www.thecorestandards.org/Math/Content/1/MD/A/2/",
-      "scope_summary": "Express the length of an object as a whole number of length units, by laying multiple copies of a shorter object (the length unit) end to end; understand that the length measurement of an object is the number of same-size length units that span it with no gaps or overlaps. Limit to contexts where the object being measured is spanned by a whole number of length units with no gaps or overlaps.Tell and write time.",
+      "scope_summary": "Express the length of an object as a whole number of length units, by laying multiple copies of a shorter object (the length unit) end to end; understand that the length measurement of an object is the number of same-size length units that span it with no gaps or overlaps. Limit to contexts where the object being measured is spanned by a whole number of length units with no gaps or overlaps.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -712,12 +712,19 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G1_MD",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Express the length of an object as a whole number of length units, by laying multiple copies of a shorter object (the length unit) end to end; understand that the length measurement of an object is the number of same-size length units that span it with no gaps or overlaps. Limit to contexts where the object being measured is spanned by a whole number of length units with no gaps or overlaps.Tell and write time.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/1/MD/A/2/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": "Tell and write time.",
+        "review_method": "BOUNDED_NEXT_CLUSTER_HEADING_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "1.MD.B.3",
@@ -959,7 +966,7 @@
       "cluster": "B",
       "domain_title": "Operations and Algebraic Thinking",
       "source_locator": "https://www.thecorestandards.org/Math/Content/2/OA/B/2/",
-      "scope_summary": "Fluently add and subtract within 20 using mental strategies.2 By end of Grade 2, know from memory all sums of two one-digit numbers.Work with equal groups of objects to gain foundations for multiplication.",
+      "scope_summary": "Fluently add and subtract within 20 using mental strategies.2 By end of Grade 2, know from memory all sums of two one-digit numbers.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -982,12 +989,19 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G2_OA",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Fluently add and subtract within 20 using mental strategies.2 By end of Grade 2, know from memory all sums of two one-digit numbers.Work with equal groups of objects to gain foundations for multiplication.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/2/OA/B/2/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": "Work with equal groups of objects to gain foundations for multiplication.",
+        "review_method": "BOUNDED_NEXT_CLUSTER_HEADING_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "2.OA.C.3",
@@ -1584,7 +1598,7 @@
       "cluster": "A",
       "domain_title": "Measurement and Data",
       "source_locator": "https://www.thecorestandards.org/Math/Content/2/MD/A/4/",
-      "scope_summary": "Measure to determine how much longer one object is than another, expressing the length difference in terms of a standard length unit.Relate addition and subtraction to length.",
+      "scope_summary": "Measure to determine how much longer one object is than another, expressing the length difference in terms of a standard length unit.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -1611,12 +1625,19 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G2_MD",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Measure to determine how much longer one object is than another, expressing the length difference in terms of a standard length unit.Relate addition and subtraction to length.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/2/MD/A/4/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": "Relate addition and subtraction to length.",
+        "review_method": "BOUNDED_NEXT_CLUSTER_HEADING_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "2.MD.B.5",
@@ -1666,7 +1687,7 @@
       "cluster": "B",
       "domain_title": "Measurement and Data",
       "source_locator": "https://www.thecorestandards.org/Math/Content/2/MD/B/6/",
-      "scope_summary": "Represent whole numbers as lengths from 0 on a number line diagram with equally spaced points corresponding to the numbers 0, 1, 2, ..., and represent whole-number sums and differences within 100 on a number line diagram.Work with time and money.",
+      "scope_summary": "Represent whole numbers as lengths from 0 on a number line diagram with equally spaced points corresponding to the numbers 0, 1, 2, ..., and represent whole-number sums and differences within 100 on a number line diagram.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -1693,12 +1714,19 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G2_MD",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Represent whole numbers as lengths from 0 on a number line diagram with equally spaced points corresponding to the numbers 0, 1, 2, ..., and represent whole-number sums and differences within 100 on a number line diagram.Work with time and money.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/2/MD/B/6/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": "Work with time and money.",
+        "review_method": "BOUNDED_NEXT_CLUSTER_HEADING_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "2.MD.C.7",
@@ -2245,7 +2273,7 @@
       "cluster": "C",
       "domain_title": "Operations and Algebraic Thinking",
       "source_locator": "https://www.thecorestandards.org/Math/Content/3/OA/C/7/",
-      "scope_summary": "Fluently multiply and divide within 100, using strategies such as the relationship between multiplication and division (e.g., knowing that 8 × 5 = 40, one knows 40 ÷ 5 = 8) or properties of operations. By the end of Grade 3, know from memory all products of two one-digit numbers.Solve problems involving the four operations, and identify and explain patterns in arithmetic.",
+      "scope_summary": "Fluently multiply and divide within 100, using strategies such as the relationship between multiplication and division (e.g., knowing that 8 × 5 = 40, one knows 40 ÷ 5 = 8) or properties of operations. By the end of Grade 3, know from memory all products of two one-digit numbers.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -2272,12 +2300,19 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G3_OA",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Fluently multiply and divide within 100, using strategies such as the relationship between multiplication and division (e.g., knowing that 8 × 5 = 40, one knows 40 ÷ 5 = 8) or properties of operations. By the end of Grade 3, know from memory all products of two one-digit numbers.Solve problems involving the four operations, and identify and explain patterns in arithmetic.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/3/OA/C/7/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": "Solve problems involving the four operations, and identify and explain patterns in arithmetic.",
+        "review_method": "BOUNDED_NEXT_CLUSTER_HEADING_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "3.OA.D.8",
@@ -3081,7 +3116,7 @@
       "cluster": "A",
       "domain_title": "Operations and Algebraic Thinking",
       "source_locator": "https://www.thecorestandards.org/Math/Content/4/OA/A/3/",
-      "scope_summary": "Solve multistep word problems posed with whole numbers and having whole-number answers using the four operations, including problems in which remainders must be interpreted. Represent these problems using equations with a letter standing for the unknown quantity. Assess the reasonableness of answers using mental computation and estimation strategies including rounding.Gain familiarity with factors and multiples.",
+      "scope_summary": "Solve multistep word problems posed with whole numbers and having whole-number answers using the four operations, including problems in which remainders must be interpreted. Represent these problems using equations with a letter standing for the unknown quantity. Assess the reasonableness of answers using mental computation and estimation strategies including rounding.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -3108,12 +3143,19 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G4_OA",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Solve multistep word problems posed with whole numbers and having whole-number answers using the four operations, including problems in which remainders must be interpreted. Represent these problems using equations with a letter standing for the unknown quantity. Assess the reasonableness of answers using mental computation and estimation strategies including rounding.Gain familiarity with factors and multiples.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/4/OA/A/3/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": "Gain familiarity with factors and multiples.",
+        "review_method": "BOUNDED_NEXT_CLUSTER_HEADING_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "4.OA.B.4",
@@ -3122,7 +3164,7 @@
       "cluster": "B",
       "domain_title": "Operations and Algebraic Thinking",
       "source_locator": "https://www.thecorestandards.org/Math/Content/4/OA/B/4/",
-      "scope_summary": "Find all factor pairs for a whole number in the range 1-100. Recognize that a whole number is a multiple of each of its factors. Determine whether a given whole number in the range 1-100 is a multiple of a given one-digit number. Determine whether a given whole number in the range 1-100 is prime or composite.Generate and analyze patterns.",
+      "scope_summary": "Find all factor pairs for a whole number in the range 1-100. Recognize that a whole number is a multiple of each of its factors. Determine whether a given whole number in the range 1-100 is a multiple of a given one-digit number. Determine whether a given whole number in the range 1-100 is prime or composite.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -3149,12 +3191,19 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G4_OA",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Find all factor pairs for a whole number in the range 1-100. Recognize that a whole number is a multiple of each of its factors. Determine whether a given whole number in the range 1-100 is a multiple of a given one-digit number. Determine whether a given whole number in the range 1-100 is prime or composite.Generate and analyze patterns.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/4/OA/B/4/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": "Generate and analyze patterns.",
+        "review_method": "BOUNDED_NEXT_CLUSTER_HEADING_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "4.OA.C.5",
@@ -3494,7 +3543,7 @@
       "cluster": "A",
       "domain_title": "Number and Operations—Fractions",
       "source_locator": "https://www.thecorestandards.org/Math/Content/4/NF/A/2/",
-      "scope_summary": "Compare two fractions with different numerators and different denominators, e.g., by creating common denominators or numerators, or by comparing to a benchmark fraction such as 1/2. Recognize that comparisons are valid only when the two fractions refer to the same whole. Record the results of comparisons with symbols >, =, or <, and justify the conclusions, e.g., by using a visual fraction model.Build fractions from unit fractions.",
+      "scope_summary": "Compare two fractions with different numerators and different denominators, e.g., by creating common denominators or numerators, or by comparing to a benchmark fraction such as 1/2. Recognize that comparisons are valid only when the two fractions refer to the same whole. Record the results of comparisons with symbols >, =, or <, and justify the conclusions, e.g., by using a visual fraction model.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -3519,12 +3568,19 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G4_NF",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Compare two fractions with different numerators and different denominators, e.g., by creating common denominators or numerators, or by comparing to a benchmark fraction such as 1/2. Recognize that comparisons are valid only when the two fractions refer to the same whole. Record the results of comparisons with symbols >, =, or <, and justify the conclusions, e.g., by using a visual fraction model.Build fractions from unit fractions.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/4/NF/A/2/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": "Build fractions from unit fractions.",
+        "review_method": "BOUNDED_NEXT_CLUSTER_HEADING_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "4.NF.B.3",
@@ -4164,7 +4220,7 @@
       "cluster": "A",
       "domain_title": "Operations and Algebraic Thinking",
       "source_locator": "https://www.thecorestandards.org/Math/Content/5/OA/A/2/",
-      "scope_summary": "Write simple expressions that record calculations with numbers, and interpret numerical expressions without evaluating them. For example, express the calculation \"add 8 and 7, then multiply by 2\" as 2 × (8 + 7). Recognize that 3 × (18932 + 921) is three times as large as 18932 + 921, without having to calculate the indicated sum or product.Analyze patterns and relationships.",
+      "scope_summary": "Write simple expressions that record calculations with numbers, and interpret numerical expressions without evaluating them. For example, express the calculation \"add 8 and 7, then multiply by 2\" as 2 × (8 + 7). Recognize that 3 × (18932 + 921) is three times as large as 18932 + 921, without having to calculate the indicated sum or product.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -4189,12 +4245,19 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G5_OA",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Write simple expressions that record calculations with numbers, and interpret numerical expressions without evaluating them. For example, express the calculation \"add 8 and 7, then multiply by 2\" as 2 × (8 + 7). Recognize that 3 × (18932 + 921) is three times as large as 18932 + 921, without having to calculate the indicated sum or product.Analyze patterns and relationships.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/5/OA/A/2/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": "Analyze patterns and relationships.",
+        "review_method": "BOUNDED_NEXT_CLUSTER_HEADING_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "5.OA.B.3",
@@ -4546,7 +4609,7 @@
       "cluster": "A",
       "domain_title": "Number and Operations—Fractions",
       "source_locator": "https://www.thecorestandards.org/Math/Content/5/NF/A/2/",
-      "scope_summary": "Solve word problems involving addition and subtraction of fractions referring to the same whole, including cases of unlike denominators, e.g., by using visual fraction models or equations to represent the problem. Use benchmark fractions and number sense of fractions to estimate mentally and assess the reasonableness of answers. For example, recognize an incorrect result 2/5 + 1/2 = 3/7, by observing that 3/7 < 1/2.Apply and extend previous understandings of multiplication and division.",
+      "scope_summary": "Solve word problems involving addition and subtraction of fractions referring to the same whole, including cases of unlike denominators, e.g., by using visual fraction models or equations to represent the problem. Use benchmark fractions and number sense of fractions to estimate mentally and assess the reasonableness of answers. For example, recognize an incorrect result 2/5 + 1/2 = 3/7, by observing that 3/7 < 1/2.",
       "official_text_capture_status": "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED",
       "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [
@@ -4571,12 +4634,19 @@
       "blockers": [
         "PACK_REFERENCE_IS_STRAND_LEVEL",
         "SOURCE_LOCATOR_NOT_INDEPENDENTLY_FETCH_VERIFIED",
-        "SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW"
+        "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED"
       ],
       "source_document_id": "CCSS_MATH_G5_NF",
       "source_locator_status": "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED",
       "raw_scope_capture": "Solve word problems involving addition and subtraction of fractions referring to the same whole, including cases of unlike denominators, e.g., by using visual fraction models or equations to represent the problem. Use benchmark fractions and number sense of fractions to estimate mentally and assess the reasonableness of answers. For example, recognize an incorrect result 2/5 + 1/2 = 3/7, by observing that 3/7 < 1/2.Apply and extend previous understandings of multiplication and division.<div",
-      "scope_completeness_status": "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+      "scope_completeness_status": "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+      "source_boundary_evidence": {
+        "individual_standard_url": "https://www.thecorestandards.org/Math/Content/5/NF/A/2/",
+        "original_publisher_pdf": "https://learning.ccsso.org/wp-content/uploads/2022/11/ADA-Compliant-Math-Standards.pdf",
+        "removed_adjacent_cluster_heading": "Apply and extend previous understandings of multiplication and division.",
+        "review_method": "BOUNDED_NEXT_CLUSTER_HEADING_RECONCILIATION",
+        "bounded_author_reconciliation": "PENDING_INDEPENDENT_SOURCE_FIDELITY"
+      }
     },
     {
       "expectation_id": "5.NF.B.3",
