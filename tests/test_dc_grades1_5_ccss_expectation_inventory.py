@@ -47,7 +47,10 @@ def test_every_row_has_source_locator_and_capture() -> None:
         )
         assert "/None/" not in row["source_locator"]
         assert row["source_locator_status"] == "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED"
-        assert row["scope_completeness_status"] == "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+        assert row["scope_completeness_status"] in {
+            "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION",
+            "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED",
+        }
         assert "<div" not in row["scope_summary"].lower()
         assert "<span" not in row["scope_summary"].lower()
         assert row["official_text_capture_status"] == "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED"
@@ -79,5 +82,32 @@ def test_contaminated_original_preserved_and_all_scope_claims_blocked() -> None:
     captured = [r for r in rows if "raw_scope_capture" in r]
     assert len(captured) == 94
     assert all("<div" in r["raw_scope_capture"].lower() for r in captured)
-    assert all("SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW" in r["blockers"] for r in rows)
+    assert sum("SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW" in r["blockers"] for r in rows) == 119
     assert all(r["classification"]["verified_mastery_evidence"] == "NO_AND_MUST_NOT_BE_INFERRED" for r in rows)
+
+
+def test_seven_verified_individual_standard_boundaries() -> None:
+    """Pin publisher-checked heading spillovers; never imply whole-inventory acceptance."""
+    rows = {r["expectation_id"]: r for r in _manifest()["expectations"]}
+    heading_by_id = {
+        "1.OA.A.2": "Understand and apply properties of operations and the relationship between addition and subtraction.",
+        "1.OA.B.4": "Add and subtract within 20.",
+        "1.OA.C.6": "Work with addition and subtraction equations.",
+        "1.NBT.A.1": "Understand place value.",
+        "1.NBT.B.3": "Use place value understanding and properties of operations to add and subtract.",
+        "2.OA.A.1": "Add and subtract within 20.",
+        "2.NBT.A.4": "Use place value understanding and properties of operations to add and subtract.",
+    }
+    assert sum("source_boundary_evidence" in row for row in rows.values()) == 7
+    for standard_id, heading in heading_by_id.items():
+        row = rows[standard_id]
+        evidence = row["source_boundary_evidence"]
+        assert evidence["removed_adjacent_cluster_heading"] == heading
+        assert evidence["individual_standard_url"] == row["source_locator"]
+        assert not row["scope_summary"].endswith(heading)
+        assert row["scope_completeness_status"] == (
+            "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED"
+        )
+        assert row["official_text_capture_status"] == "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED"
+        assert row["classification"]["verified_mastery_evidence"] == "NO_AND_MUST_NOT_BE_INFERRED"
+        assert "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED" in row["blockers"]
