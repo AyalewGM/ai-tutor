@@ -82,7 +82,7 @@ def test_contaminated_original_preserved_and_all_scope_claims_blocked() -> None:
     captured = [r for r in rows if "raw_scope_capture" in r]
     assert len(captured) == 94
     assert all("<div" in r["raw_scope_capture"].lower() for r in captured)
-    assert sum("SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW" in r["blockers"] for r in rows) == 110
+    assert sum("SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW" in r["blockers"] for r in rows) == 108
     assert all(r["classification"]["verified_mastery_evidence"] == "NO_AND_MUST_NOT_BE_INFERRED" for r in rows)
 
 
@@ -98,7 +98,7 @@ def test_seven_verified_individual_standard_boundaries() -> None:
         "2.OA.A.1": "Add and subtract within 20.",
         "2.NBT.A.4": "Use place value understanding and properties of operations to add and subtract.",
     }
-    assert sum("source_boundary_evidence" in row for row in rows.values()) == 16
+    assert sum("source_boundary_evidence" in row for row in rows.values()) == 18
     for standard_id, heading in heading_by_id.items():
         row = rows[standard_id]
         evidence = row["source_boundary_evidence"]
@@ -139,3 +139,21 @@ def test_nine_more_publisher_cluster_boundaries_are_excluded() -> None:
         assert row["official_text_capture_status"] == "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED"
         assert row["classification"]["verified_mastery_evidence"] == "NO_AND_MUST_NOT_BE_INFERRED"
     assert _manifest()["safety"]["activation"] == "FORBIDDEN"
+
+
+def test_two_grade3_heading_boundaries_are_excluded() -> None:
+    rows = {r["expectation_id"]: r for r in _manifest()["expectations"]}
+    expected = {
+        "3.OA.A.4": "Understand properties of multiplication and the relationship between multiplication and division.",
+        "3.OA.B.6": "Multiply and divide within 100.",
+    }
+    for standard_id, heading in expected.items():
+        row = rows[standard_id]
+        assert row["source_boundary_evidence"]["removed_adjacent_cluster_heading"] == heading
+        assert row["source_boundary_evidence"]["individual_standard_url"] == row["source_locator"]
+        assert not row["scope_summary"].endswith(heading)
+        assert row["scope_completeness_status"] == (
+            "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED"
+        )
+        assert row["official_text_capture_status"] == "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED"
+        assert row["classification"]["verified_mastery_evidence"] == "NO_AND_MUST_NOT_BE_INFERRED"
