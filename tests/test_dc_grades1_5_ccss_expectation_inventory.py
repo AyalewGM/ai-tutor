@@ -82,7 +82,7 @@ def test_contaminated_original_preserved_and_all_scope_claims_blocked() -> None:
     captured = [r for r in rows if "raw_scope_capture" in r]
     assert len(captured) == 94
     assert all("<div" in r["raw_scope_capture"].lower() for r in captured)
-    assert sum("SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW" in r["blockers"] for r in rows) == 119
+    assert sum("SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW" in r["blockers"] for r in rows) == 110
     assert all(r["classification"]["verified_mastery_evidence"] == "NO_AND_MUST_NOT_BE_INFERRED" for r in rows)
 
 
@@ -98,7 +98,7 @@ def test_seven_verified_individual_standard_boundaries() -> None:
         "2.OA.A.1": "Add and subtract within 20.",
         "2.NBT.A.4": "Use place value understanding and properties of operations to add and subtract.",
     }
-    assert sum("source_boundary_evidence" in row for row in rows.values()) == 7
+    assert sum("source_boundary_evidence" in row for row in rows.values()) == 16
     for standard_id, heading in heading_by_id.items():
         row = rows[standard_id]
         evidence = row["source_boundary_evidence"]
@@ -111,3 +111,31 @@ def test_seven_verified_individual_standard_boundaries() -> None:
         assert row["official_text_capture_status"] == "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED"
         assert row["classification"]["verified_mastery_evidence"] == "NO_AND_MUST_NOT_BE_INFERRED"
         assert "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED" in row["blockers"]
+
+
+def test_nine_more_publisher_cluster_boundaries_are_excluded() -> None:
+    """Bounded source repair, not independent full statement acceptance."""
+    rows = {r["expectation_id"]: r for r in _manifest()["expectations"]}
+    headings = {
+        "1.MD.B.3": "Represent and interpret data.",
+        "2.MD.C.8": "Represent and interpret data.",
+        "3.MD.A.2": "Represent and interpret data.",
+        "3.MD.B.4": "Geometric measurement: understand concepts of area and relate area to multiplication and to addition.",
+        "4.NBT.A.3": "Use place value understanding and properties of operations to perform multi-digit arithmetic.",
+        "4.MD.A.3": "Represent and interpret data.",
+        "4.MD.B.4": "Geometric measurement: understand concepts of angle and measure angles.",
+        "5.MD.A.1": "Represent and interpret data.",
+        "5.MD.B.2": "Geometric measurement: understand concepts of volume.",
+    }
+    for code, heading in headings.items():
+        row = rows[code]
+        assert not row["scope_summary"].endswith(heading)
+        assert row["source_boundary_evidence"]["removed_adjacent_cluster_heading"] == heading
+        assert row["source_boundary_evidence"]["individual_standard_url"] == row["source_locator"]
+        assert row["scope_completeness_status"] == (
+            "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED"
+        )
+        assert "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED" in row["blockers"]
+        assert row["official_text_capture_status"] == "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED"
+        assert row["classification"]["verified_mastery_evidence"] == "NO_AND_MUST_NOT_BE_INFERRED"
+    assert _manifest()["safety"]["activation"] == "FORBIDDEN"
