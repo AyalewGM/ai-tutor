@@ -21,7 +21,7 @@ SOCRATIC = {
     "MODIFIED": "What is the largest observed value inside the upper fence?",
     "COMPARE": "Compare Q3 minus Q1 for each group, not the full ranges.",
 }
-NUMBER = re.compile(r"[+-]?(?:\\d+(?:\\.\\d+)?|\\d+/[1-9]\\d*)\\Z")
+NUMBER = re.compile(r"[+-]?(?:[0-9]+(?:[.][0-9]+)?|[0-9]+/[1-9][0-9]*)$")
 
 
 def exact(value):
