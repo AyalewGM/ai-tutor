@@ -1,10 +1,12 @@
 """Author-only verification; no production or Muse-owned tests changed."""
 from __future__ import annotations
+
 import importlib.util
 import json
 import sys
 from fractions import Fraction
 from pathlib import Path
+
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
