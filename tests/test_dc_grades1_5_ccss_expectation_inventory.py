@@ -80,9 +80,9 @@ def test_reconciliation_counts_reconcile() -> None:
 def test_contaminated_original_preserved_and_all_scope_claims_blocked() -> None:
     rows = _manifest()["expectations"]
     captured = [r for r in rows if "raw_scope_capture" in r]
-    assert len(captured) == 94
-    assert all("<div" in r["raw_scope_capture"].lower() for r in captured)
-    assert sum("SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW" in r["blockers"] for r in rows) == 108
+    assert len(captured) == 95
+    assert sum("<div" in r["raw_scope_capture"].lower() for r in captured) == 94
+    assert sum("SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW" in r["blockers"] for r in rows) == 105
     assert all(r["classification"]["verified_mastery_evidence"] == "NO_AND_MUST_NOT_BE_INFERRED" for r in rows)
 
 
@@ -98,7 +98,7 @@ def test_seven_verified_individual_standard_boundaries() -> None:
         "2.OA.A.1": "Add and subtract within 20.",
         "2.NBT.A.4": "Use place value understanding and properties of operations to add and subtract.",
     }
-    assert sum("source_boundary_evidence" in row for row in rows.values()) == 18
+    assert sum("source_boundary_evidence" in row for row in rows.values()) == 21
     for standard_id, heading in heading_by_id.items():
         row = rows[standard_id]
         evidence = row["source_boundary_evidence"]
@@ -157,3 +157,31 @@ def test_two_grade3_heading_boundaries_are_excluded() -> None:
         )
         assert row["official_text_capture_status"] == "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED"
         assert row["classification"]["verified_mastery_evidence"] == "NO_AND_MUST_NOT_BE_INFERRED"
+
+
+def test_grade5_source_cluster_and_navigation_spillovers() -> None:
+    rows = {r["expectation_id"]: r for r in _manifest()["expectations"]}
+    endings = {
+        "5.NBT.A.4": "Perform operations with multi-digit whole numbers and with decimals to hundredths.",
+        "5.G.A.2": "Classify two-dimensional figures into categories based on their properties.",
+        "5.G.B.4": "Kindergarten-Grade 12Standards for Mathematical Practice",
+    }
+    for code, heading in endings.items():
+        row = rows[code]
+        evidence = row["source_boundary_evidence"]
+        assert evidence["individual_standard_url"] == row["source_locator"]
+        assert heading in evidence["removed_adjacent_cluster_heading"]
+        assert not row["scope_summary"].endswith(heading)
+        assert row["scope_completeness_status"] == (
+            "BOUNDED_HEADING_SPILLOVER_CORRECTED_REMAINDER_UNVERIFIED"
+        )
+        assert row["official_text_capture_status"] == "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED"
+        assert row["classification"]["verified_mastery_evidence"] == "NO_AND_MUST_NOT_BE_INFERRED"
+        assert "REMAINING_SOURCE_FIDELITY_NOT_INDEPENDENTLY_ACCEPTED" in row["blockers"]
+    assert rows["5.G.B.4"]["scope_summary"] == (
+        "Classify two-dimensional figures in a hierarchy based on properties."
+    )
+    assert rows["5.G.B.4"]["raw_scope_capture"].startswith(
+        "Classify two-dimensional figures in a hierarchy based on properties."
+    )
+    assert _manifest()["safety"]["activation"] == "FORBIDDEN"
