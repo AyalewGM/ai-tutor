@@ -41,8 +41,16 @@ def test_ccss_identifier_shape_and_clusters() -> None:
 
 def test_every_row_has_source_locator_and_capture() -> None:
     for row in _manifest()["expectations"]:
-        assert row["source_locator"].startswith("https://www.thecorestandards.org/Math/")
-        assert row["official_text_capture_status"].startswith("AUTHORITATIVE")
+        grade, domain, cluster, number = row["expectation_id"].split(".")
+        assert row["source_locator"] == (
+            f"https://www.thecorestandards.org/Math/Content/{grade}/{domain}/{cluster}/{number}/"
+        )
+        assert "/None/" not in row["source_locator"]
+        assert row["source_locator_status"] == "DERIVED_FROM_CCSSL_ID_NOT_INDEPENDENTLY_FETCH_VERIFIED"
+        assert row["scope_completeness_status"] == "PENDING_OFFICIAL_TEXT_AND_CLUSTER_BOUNDARY_REEXTRACTION"
+        assert "<div" not in row["scope_summary"].lower()
+        assert "<span" not in row["scope_summary"].lower()
+        assert row["official_text_capture_status"] == "AUTHOR_EXTRACTION_UNVERIFIED_NOT_ACCEPTED"
         assert len(row["scope_summary"]) >= 30
         assert "CCSS.Math" not in row["scope_summary"]
 
@@ -64,3 +72,12 @@ def test_reconciliation_counts_reconcile() -> None:
     assert m["reconciliation"]["official_expectation_count"] == len(rows)
     assert m["reconciliation"]["expectations_with_provisional_links"] == linked
     assert m["reconciliation"]["unmapped_expectations"] == len(rows) - linked
+
+
+def test_contaminated_original_preserved_and_all_scope_claims_blocked() -> None:
+    rows = _manifest()["expectations"]
+    captured = [r for r in rows if "raw_scope_capture" in r]
+    assert len(captured) == 94
+    assert all("<div" in r["raw_scope_capture"].lower() for r in captured)
+    assert all("SCOPE_TEXT_MAY_CONTAIN_ADJACENT_CLUSTER_HEADING_REQUIRES_SOURCE_REVIEW" in r["blockers"] for r in rows)
+    assert all(r["classification"]["verified_mastery_evidence"] == "NO_AND_MUST_NOT_BE_INFERRED" for r in rows)
