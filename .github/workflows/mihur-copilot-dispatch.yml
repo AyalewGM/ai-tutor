@@ -1,0 +1,49 @@
+name: Mihur Math Content Director — explicit Copilot dispatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: "Existing open issue with mihur-content-request label"
+        required: true
+        type: number
+      confirmation:
+        description: "Type ASSIGN_COPILOT_EQ3 to authorize a coding-agent assignment"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: mihur-content-agent-dispatch
+    env:
+      MIHUR_COPILOT_DISPATCH_TOKEN: ${{ secrets.MIHUR_COPILOT_DISPATCH_TOKEN }}
+      ISSUE_NUMBER: ${{ inputs.issue_number }}
+      DISPATCH_CONFIRMATION: ${{ inputs.confirmation }}
+    steps:
+      - name: Checkout trusted default-branch implementation
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Explicitly authorized Copilot issue assignment
+        shell: bash
+        run: |
+          if [ -z "$MIHUR_COPILOT_DISPATCH_TOKEN" ]; then
+            echo "No separate authorized dispatch credential configured."
+            exit 1
+          fi
+          python -m scripts.math_content_agent_dispatch \
+            --issue-number "$ISSUE_NUMBER" \
+            --confirmation "$DISPATCH_CONFIRMATION"
