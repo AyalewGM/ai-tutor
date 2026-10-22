@@ -62,3 +62,41 @@ Both are reference-only. Do not copy or closely paraphrase questions, student/te
 4. **Engineering:** check exact-SHA source and review evidence, separate staging and production authorizations and history-safe rollback.
 
 **Absolute boundaries:** this slice does not import the factory into runtime application routes, seed content, create IDs or mappings, grant eligibility flags, rewrite problems or learner history, award mastery, merge or deploy.
+
+## Review routing automation V1 (bounded, offline)
+
+The companion tool `scripts/math_content_orchestrator.py` consumes one
+factory JSON quality report plus an evidence manifest containing the exact
+content SHA, CI result and independent review links. It deterministically
+produces one next accountable owner and one consolidated owner-facing report.
+Rejected reviews route back to Content Production; SHA changes invalidate
+old approvals. It cannot invoke agents, post comments, merge code, seed a
+database, or authorize staging/production.
+
+Example synthetic evidence file:
+
+```json
+{
+  "content_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "ci": {"sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "status": "success"},
+  "math": {"status": "PENDING"}
+}
+```
+
+Run the coordinator after an authorized integration has obtained its own
+verifiable evidence:
+
+```bash
+python -m scripts.math_content_orchestrator \
+  --factory-report /tmp/mihur-factory-report.json \
+  --evidence /tmp/mihur-factory-evidence.json \
+  --output /tmp/mihur-single-owner-handoff.json
+python -m pytest -q tests/test_math_content_orchestrator.py
+```
+
+**V1 is an offline routing-intent layer, not a running cross-agent dispatcher.**
+To remove manual switching completely, an Engineering-owned follow-up must
+connect it to authenticated GitHub issue/PR events, actual agent invocation
+availability, independent-review attestation and audit logging. It must
+fail closed and never perform release actions. Do not claim automatic
+delegation or reviewer approval before that integration is executed.
