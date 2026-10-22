@@ -116,7 +116,7 @@ def import_manifest(db: sqlite3.Connection, program_id: str, manifest: dict) -> 
     validated = []
     for item in items:
         if not isinstance(item, dict):
-            raise ValueError("invalid expectation")
+            raise TypeError("invalid expectation")
         grade = item.get("grade")
         code = item.get("expectation_code")
         course = item.get("course_code")
