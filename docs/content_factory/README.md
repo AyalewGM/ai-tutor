@@ -100,3 +100,32 @@ connect it to authenticated GitHub issue/PR events, actual agent invocation
 availability, independent-review attestation and audit logging. It must
 fail closed and never perform release actions. Do not claim automatic
 delegation or reviewer approval before that integration is executed.
+
+## GitHub event listener — read-only Actions integration
+
+The workflow `.github/workflows/mihur-content-director.yml` listens to
+`pull_request_target` updates, `pull_request_review` submissions/dismissals,
+and manual `workflow_dispatch`. It uses a **trusted main-branch checkout**
+and read-only `contents`, `pull-requests` and `actions` permissions.
+It does NOT checkout or execute untrusted PR head code, post back to GitHub,
+approve a review, assign an agent, or deploy a release.
+
+`scripts/math_content_github_evidence.py` obtains the current PR head SHA
+and latest PR-triggered CI status directly from the authenticated GitHub REST
+API. It deliberately leaves independent review gates PENDING: a comment,
+AI-generated text, or successful CI run is *not* reviewer attestation.
+The existing offline orchestrator translates the available evidence into a
+single next owner and an Actions Step Summary plus short-lived artifacts.
+
+**Activation requirement:** GitHub does not execute a new workflow merely
+because its YAML is proposed on a draft feature branch. The workflow must
+first be reviewed and merged into the default branch; run it manually against
+PR #484 using the Actions UI, then open/modify a synthetic test PR and confirm
+the workflow executes from trusted code. No production or staging activity
+is involved. Manual run requires `pr_number`.
+
+**Known scope limit:** until a subsequent authenticated reviewer-attestation
+adapter and an explicitly authorized agent-dispatch integration exist, the
+coordinator can report review owners but cannot truthfully mark Math,
+Pedagogy or Muse as ACCEPTED or claim it actually invoked an agent. Do not
+relax this rule to reduce coordination workload.
