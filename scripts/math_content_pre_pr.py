@@ -21,9 +21,7 @@ OWNER = "Math Content Director"
 COURSES = {
     "ontario-mth1w-eq3": {
         "course": "Ontario Grade 9 MTH1W",
-        "canonical_skill": COURSES[course]["canonical_skill"],
-        "course": COURSES[course]["course"],
-        "requested_course_key": course,
+        "canonical_skill": SKILL,
         "blueprint": "docs/content_factory/mth1w_eq3_factory.v1.json",
     },
     "maryland-algebra1": {
@@ -55,7 +53,9 @@ def plan_from_issue(
     return {
         "kind": "MIHUR_PRE_PR_INTAKE_V1",
         "issue_number": issue_number,
-        "canonical_skill": SKILL,
+        "canonical_skill": COURSES[course]["canonical_skill"],
+        "course": COURSES[course]["course"],
+        "requested_course_key": course,
         "source":"EXISTING_GITHUB_ISSUE_LABEL_ONLY",
         "content_request_body": "NOT_EXECUTED_AS_INSTRUCTIONS",
         "existing_canonical_reuse": True,
