@@ -1,0 +1,56 @@
+# Mihur Autonomous Curriculum Factory V2 — phase 1
+
+## What this PR delivers
+
+This PR deliberately starts a **new V2 bounded slice** without adding more hard-coded
+course choices to the V1 factory PR #484.
+
+`scripts/curriculum_program_v2.py` provides:
+- Parsing a broad natural-language Ontario mathematics goal into a program spanning
+  an explicit grade range (1–12).
+- Durable, resumable SQLite program and work-unit records with deterministic stable
+  IDs, deduplicated imports and audit history. SQLite is an **offline development
+  prototype**, not the production multi-tenant PostgreSQL orchestration database.
+- Source-reviewed official expectation manifest import. Grade 10–12 pathways and
+  their course identities must be verified; we do not invent one generic course
+  per grade.
+- Next eligible unit in source/grade order; fail-closed state transitions with
+  optimistic version checking.
+- Explicit separation of `APPROVED` *planning status* from actual reviewer
+  authentication, scorer registration, runtime activation, staging or deployment.
+
+## Example usage
+
+```bash
+python -m scripts.curriculum_program_v2 --database /tmp/mihur-v2.db goal \
+  'I want the full Ontario mathematics curriculum, Grades 1-12'
+```
+
+The result says `AWAITING_OFFICIAL_SOURCE_INVENTORY` with zero units until a
+Standards reviewer has actually verified a manifest of expectations and course
+versions. The `import-source-manifest` command is a **prototype trusted-operator
+interface**; its manifest metadata, including reviewer identity and evidence URL,
+is not cryptographically authenticated. An untrusted party could fabricate those
+fields; therefore **do not deploy it as an automated approval gate**.
+
+Next (only after Security/Architecture approval):
+1. Store signed, source-revision-scoped standards manifests in production
+   PostgreSQL with reviewer principal/capability verification and provenance.
+2. Expand program parser to jurisdictions/grades/courses through constrained
+   AI goal analysis with structured validation and human scope approval.
+3. Add durable leased workers, retries, concurrency quotas, cancellation,
+   bounded resource budgets, audit logs, and anti-duplicate task claims.
+4. Wire actual model research/design agents, licensing checks and exact
+   math verification in isolated execution; never treat LLM output as oracle.
+5. Keep truly independent reviewer agents/humans isolated from authoring,
+   with issue/PR evidence and conditional rework.
+6. Produce founder-facing approvals and summary. Do not seed, activate or
+   publish questions from planning-state transitions.
+
+## Production safety
+
+This prototype never calls an LLM or browser, performs external research,
+creates a PR from content, dispatches an agent, accesses learner records,
+grants scoring modes, or deploys. `APPROVED` here is a state-machine word,
+**not** verified independent source/content acceptance or release authority.
+Existing Content Factory PR #484 remains independently reviewable.
