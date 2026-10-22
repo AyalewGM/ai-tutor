@@ -2,7 +2,8 @@
 import pytest
 
 from scripts.curriculum_program_v2 import (
-    connect, import_manifest, next_task, parse_goal, register_goal, transition,
+    claim_next, complete_claim, connect, import_manifest, next_task, parse_goal,
+    register_goal, transition,
 )
 
 
@@ -83,3 +84,54 @@ def test_no_extraneous_grades_or_dishonest_source_state(tmp_path):
         manifest["expectations"][0]["grade"] = 10
         with pytest.raises(ValueError):
             import_manifest(db, program["program_id"], manifest)
+
+
+
+def test_lease_claim_retry_fencing_and_review_only_completion(tmp_path):
+    path = tmp_path / "leases.db"
+    with connect(path) as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        pid = program["program_id"]
+    with connect(path) as a, connect(path) as b:
+        first = claim_next(a, pid, "worker-A", now_epoch=1000, ttl_seconds=60)
+        assert first["fencing_token"] == 1
+        assert claim_next(b, pid, "worker-B", now_epoch=1001) is None
+        second = claim_next(b, pid, "worker-B", now_epoch=1060)
+        assert second["fencing_token"] == 2
+        assert second["attempt"] == 2
+        with pytest.raises(ValueError):
+            complete_claim(a, first["work_id"], "worker-A", 1, 1061,
+                           evidence_ref="https://github.com/AyalewGM/ai-tutor/pull/485")
+        result = complete_claim(
+            b, second["work_id"], "worker-B", 2, 1061,
+            evidence_ref="https://github.com/AyalewGM/ai-tutor/pull/485",
+        )
+        assert result["status"] == "REVIEW_REQUIRED"
+        assert result["review_accepted"] is False
+        assert claim_next(a, pid, "worker-C", now_epoch=1062) is None
+
+
+def test_lease_attempt_budget_exhaustion(tmp_path):
+    with connect(tmp_path / "budget.db") as db:
+        p = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, p["program_id"], sample_manifest())
+        one = claim_next(db, p["program_id"], "a", 100, ttl_seconds=30,
+                         max_attempts=2)
+        two = claim_next(db, p["program_id"], "b", 131, ttl_seconds=30,
+                         max_attempts=2)
+        assert two["fencing_token"] == 2
+        assert claim_next(db, p["program_id"], "c", 162, max_attempts=2) is None
+
+
+def test_stale_lease_can_never_approve_or_release(tmp_path):
+    with connect(tmp_path / "stale.db") as db:
+        p = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, p["program_id"], sample_manifest())
+        lease = claim_next(db, p["program_id"], "worker", 1000, ttl_seconds=30)
+        with pytest.raises(ValueError):
+            complete_claim(db, lease["work_id"], "worker", 1, 1030,
+                           evidence_ref="https://github.com/AyalewGM/ai-tutor/pull/485")
+        with pytest.raises(ValueError):
+            complete_claim(db, lease["work_id"], "hijacker", 1, 1001,
+                           evidence_ref="https://github.com/AyalewGM/ai-tutor/pull/485")
