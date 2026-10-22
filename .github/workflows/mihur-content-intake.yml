@@ -52,6 +52,9 @@ jobs:
           with open(os.environ["GITHUB_ENV"], "a") as output:
               output.write(f"CONTENT_ISSUE_NUMBER={number}\n")
           PY
+
+      - name: Generate read-only pre-PR plan
+        run: |
           python -m scripts.math_content_pre_pr \
             --issue-number "$CONTENT_ISSUE_NUMBER" \
             --output "$RUNNER_TEMP/mihur-pre-pr.json"
