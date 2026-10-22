@@ -129,3 +129,29 @@ adapter and an explicitly authorized agent-dispatch integration exist, the
 coordinator can report review owners but cannot truthfully mark Math,
 Pedagogy or Muse as ACCEPTED or claim it actually invoked an agent. Do not
 relax this rule to reduce coordination workload.
+
+## Pre-PR entry point — explicit approved issue
+
+The companion GitHub Actions workflow `.github/workflows/mihur-content-intake.yml`
+starts *before a content PR exists*. It listens to a maintainer-applied
+`mihur-content-request` issue label or to `workflow_dispatch` with an issue
+number. The adapter `scripts/math_content_pre_pr.py` requires that the issue
+is still open, has that exact label, and is not itself a PR. It treats the
+issue body strictly as untrusted data; the V1 pilot scope is pinned to the
+existing EQ3 blueprint, never derived from unreviewed instructions.
+
+The Actions job uses trusted default-branch code and read-only GitHub
+permissions. It emits a concise owner/next-action report and an audit artifact.
+It cannot execute a research/model agent, create a PR, mark a review approved,
+change runtime/metadata, or deploy. This is **pre-PR intake and planning**,
+not end-to-end autonomous orchestration.
+
+Once the workflows are independently reviewed and merged into main:
+1. Open or reuse the appropriate Mihur mathematical content issue.
+2. Have an authorized maintainer apply the `mihur-content-request` label,
+   or manually run **Mihur Content Factory — pre-PR intake** with that
+   already-labelled issue number.
+3. Review the workflow's Step Summary. It identifies the Content Director
+   as owner of the bounded existing-family/depth-gap analysis.
+4. Separate authorized agent-dispatch and branch/PR creation integration
+   is still required before agents can implement from that report.
