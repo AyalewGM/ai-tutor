@@ -155,3 +155,41 @@ Once the workflows are independently reviewed and merged into main:
    as owner of the bounded existing-family/depth-gap analysis.
 4. Separate authorized agent-dispatch and branch/PR creation integration
    is still required before agents can implement from that report.
+
+## Explicit coding-agent dispatch (manual and separately approved)
+
+The further workflow `.github/workflows/mihur-copilot-dispatch.yml`
+uses GitHub's documented Copilot issue-assignment REST API to hand a
+**pre-existing, open, explicitly labelled EQ3 issue** to the Copilot coding
+agent. It is intentionally `workflow_dispatch` ONLY — the automated issue
+intake never launches coding agents.
+
+**Requirements before enabling:**
+1. Engineering and Security must review this workflow, its permissions and
+   the issue-to-agent task template. Merge it to the default branch after
+   exact-head quality gates.
+2. Configure a protected GitHub Actions environment named
+   `mihur-content-agent-dispatch` with required reviewers / owner approval.
+3. Configure its secret `MIHUR_COPILOT_DISPATCH_TOKEN` with only the minimum
+   permissions GitHub currently requires for Copilot issue assignment.
+   This is **not** the Actions read-only `GITHUB_TOKEN`.
+4. Explicitly mark a single existing bounded content issue with the
+   `mihur-content-request` label, then manually run
+   **Mihur Math Content Director — explicit Copilot dispatch**, giving its
+   issue number and typing `ASSIGN_COPILOT_EQ3`.
+5. Check the Copilot assignment, resulting task and draft PR; do not equate
+   assignment with task completion, independent approval or content release.
+
+The dispatch code refuses closed/unlabelled/PR issues and prevents
+repeat assignment when Copilot is already assigned. It verifies that GitHub
+acknowledges assignment. The bounded instructions demand existing-family
+reuse, mathematical seed tests, no proprietary content copying, and
+independent review before scoring/runtime changes. GitHub will also provide
+the agent the original issue description; treat that data as untrusted and
+review the proposed PR against the bounded instructions.
+
+**This is a deliberately manually gated first real agent invocation.**
+Continuous self-triggering pre-PR dispatch, reviewer attestation, task
+completion observation and safe next-agent delegation remain separate
+Engineering milestones. No automatic merge, independent self-review,
+staging seed or production deployment is enabled.
