@@ -9,6 +9,13 @@ on:
         description: "Approved Mihur content request issue"
         required: true
         type: number
+      course:
+        description: "Course to audit and develop"
+        required: true
+        type: choice
+        options:
+          - maryland-algebra1
+          - ontario-mth1w-eq3
 
 permissions:
   contents: read
@@ -26,6 +33,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       EVENT_ISSUE: ${{ github.event.issue.number }}
       MANUAL_ISSUE: ${{ inputs.issue_number }}
+      REQUESTED_COURSE: ${{ inputs.course }}
     steps:
       - name: Checkout trusted default branch
         uses: actions/checkout@v4
@@ -57,6 +65,7 @@ jobs:
         run: |
           python -m scripts.math_content_pre_pr \
             --issue-number "$CONTENT_ISSUE_NUMBER" \
+            --course "${REQUESTED_COURSE:-ontario-mth1w-eq3}" \
             --output "$RUNNER_TEMP/mihur-pre-pr.json"
 
       - name: Publish one accountable owner report
@@ -73,6 +82,7 @@ jobs:
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as output:
               output.write("## Mihur Math Content Factory — pre-PR intake\n\n")
               output.write(f"**Issue:** #{result['issue_number']}\n\n")
+              output.write(f"**Course:** {result['course']}\n\n")
               output.write(f"**Canonical skill:** {result['canonical_skill']}\n\n")
               output.write(f"**Next owner:** {result['next_owner']}\n\n")
               output.write(f"**Next action:** {result['next_action']}\n\n")
