@@ -1,7 +1,7 @@
 """Read-only, explicitly requested pre-PR Mihur Content Factory intake.
 
 Consumes an approved GitHub issue (maintainer-controlled label), never its
-untrusted text as instructions or shell input. Produces one bounded EQ3 plan.
+untrusted text as instructions or shell input. Course selection is explicit.
 No PR creation, agent invocation, label mutation, reviewer spoofing or release.
 """
 from __future__ import annotations
@@ -18,11 +18,29 @@ from scripts.math_content_github_evidence import REPO, _api
 INTAKE_LABEL = "mihur-content-request"
 SKILL = "MATH.EE.EQUATION.MULTISTEP"
 OWNER = "Math Content Director"
+COURSES = {
+    "ontario-mth1w-eq3": {
+        "course": "Ontario Grade 9 MTH1W",
+        "canonical_skill": COURSES[course]["canonical_skill"],
+        "course": COURSES[course]["course"],
+        "requested_course_key": course,
+        "blueprint": "docs/content_factory/mth1w_eq3_factory.v1.json",
+    },
+    "maryland-algebra1": {
+        "course": "Maryland Grade 9 Algebra I",
+        "canonical_skill": "PENDING_PER_SKILL_AUDIT",
+        "blueprint": "TO_BE_DERIVED_FROM_APPROVED_MARYLAND_STANDARDS",
+    },
+}
 
 
-def plan_from_issue(issue: dict[str, Any], *, issue_number: int) -> dict[str, Any]:
+def plan_from_issue(
+    issue: dict[str, Any], *, issue_number: int, course: str = "ontario-mth1w-eq3"
+) -> dict[str, Any]:
     if type(issue_number) is not int or not 1 <= issue_number <= 1_000_000:
         raise ValueError("invalid issue number")
+    if course not in COURSES:
+        raise ValueError("unsupported course or curriculum selection")
     if not isinstance(issue, dict) or "pull_request" in issue:
         raise ValueError("issue intake must not be a pull request")
     labels = issue.get("labels")
@@ -43,9 +61,9 @@ def plan_from_issue(issue: dict[str, Any], *, issue_number: int) -> dict[str, An
         "existing_canonical_reuse": True,
         "existing_family_audit": "REQUIRED",
         "official_source_licensing": "REQUIRED",
-        "initial_factory_blueprint": "docs/content_factory/mth1w_eq3_factory.v1.json",
+        "initial_factory_blueprint": COURSES[course]["blueprint"],
         "next_owner": OWNER,
-        "next_action": "Reconcile existing math families and verified depth gaps; prepare a bounded original-family authoring plan with independent gates.",
+        "next_action": "Audit the selected course against official source/version and existing canonical families; prioritize three verified depth gaps and prepare a bounded original-family plan with independent gates.",
         "implementation_pr": "NOT_CREATED",
         "agent_execution": "NOT_EXECUTED",
         "review_status": "PENDING",
@@ -55,7 +73,7 @@ def plan_from_issue(issue: dict[str, Any], *, issue_number: int) -> dict[str, An
 
 
 def fetch_plan(
-    issue_number: int, *, token: str,
+    issue_number: int, *, token: str, course: str = "ontario-mth1w-eq3",
     fetch: Callable[..., Any] = urllib.request.urlopen,
 ) -> dict[str, Any]:
     if type(issue_number) is not int or not 1 <= issue_number <= 1_000_000:
@@ -63,15 +81,16 @@ def fetch_plan(
     if not token:
         raise ValueError("read-only GitHub token required")
     issue = _api(f"/repos/{REPO}/issues/{issue_number}", token, fetch)
-    return plan_from_issue(issue, issue_number=issue_number)
+    return plan_from_issue(issue, issue_number=issue_number, course=course)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Pre-PR content factory issue intake")
     parser.add_argument("--issue-number", type=int, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--course", choices=sorted(COURSES), default="ontario-mth1w-eq3")
     args = parser.parse_args()
-    report = fetch_plan(args.issue_number, token=os.environ.get("GITHUB_TOKEN", ""))
+    report = fetch_plan(args.issue_number, token=os.environ.get("GITHUB_TOKEN", ""), course=args.course)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n",
                            encoding="utf-8")
 
