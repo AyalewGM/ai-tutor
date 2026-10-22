@@ -180,3 +180,24 @@ by this repository. A GitHub event alone cannot message a ChatGPT conversation.
 
 No Copilot dependency, assignment token, custom Copilot agent or related
 secrets are required for this V1.
+
+## Trigger without pasting a full prompt — Maryland Algebra I
+
+After workflow review and merge, open GitHub Actions, select
+**Mihur Content Factory — pre-PR intake**, select **Run workflow**, enter
+an open issue number carrying the `mihur-content-request` label, and
+choose `maryland-algebra1` from the course menu. Use existing content
+production issue #313 only if it is intentionally approved and labelled;
+otherwise create one bounded Maryland request through the normal issue
+review process.
+
+The read-only event action then verifies the label and issue identity
+and creates a Maryland-specific Content Director work-plan artifact.
+Its canonical skill is deliberately `PENDING_PER_SKILL_AUDIT`, not
+Ontario's EQ3 identity. This initial trigger does **not** start a
+ChatGPT conversation or automatically create mathematical questions/PRs:
+it is a convenient one-click planning handoff, pending a supported
+ChatGPT/Work invocation or separately authorized API agent service.
+
+Never label an unrelated issue for convenience, infer Maryland source
+equivalences from Ontario, or claim an autonomous agent was dispatched.
