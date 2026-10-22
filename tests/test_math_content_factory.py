@@ -103,19 +103,16 @@ def test_seed_replay_and_unique_mathematical_tasks(contract: dict) -> None:
     assert report["quality_gates"]["backend_family_scoring_and_mode_grants"] is False
 
 
-def test_student_error_simulator_detects_correct_answer_collision() -> None:
-    """Known original legacy word-family risk: ignoring start may be correct."""
-    witnessed = False
+def test_student_error_simulator_respects_canonical_collision_filter() -> None:
+    """Registry already sanitizes wrongly labelled alternatives; preserve it."""
     for seed in range(256):
         problem = generate(
             "MATH.ALG.EQ.WORD.TARGET",
             seed=seed, difficulty=3, mode=LearningMode.GUIDED,
         )
-        answer = problem.misconception_answers.get("ALG.WORD.IGNORE_START")
-        if answer is not None and problem.is_correct(answer):
-            witnessed = True
-            break
-    assert witnessed, "adversarial simulator should expose known signature collision"
+        for label, candidate in problem.misconception_answers.items():
+            assert not problem.is_correct(candidate)
+            assert problem.misconception_for(candidate) == label
 
 
 def test_bad_seed_budget_fails_closed(contract: dict) -> None:
@@ -124,9 +121,36 @@ def test_bad_seed_budget_fails_closed(contract: dict) -> None:
             run_factory(contract, seeds=count)
 
 
-def test_factory_detects_misconception_defects_without_granting_release(contract: dict) -> None:
-    report = run_factory(contract, seeds=256)
-    assert report["observed_mathematical_failures"]
-    assert any("collides with correct answer" in issue for issue in report["observed_mathematical_failures"])
+def test_factory_reuses_existing_safe_registry_without_granting_release(contract: dict) -> None:
+    report = run_factory(contract, seeds=64)
+    assert report["observed_mathematical_failures"] == []
+    assert report["automated_math_checks_passed"] is True
+    assert report["pilot_skill_ready"] is False
+
+
+def test_factory_rejects_intentionally_corrupted_misconception_oracle(
+    contract: dict, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Prove a genuinely unsafe source is rejected without changing main math."""
+    from dataclasses import replace
+
+    from scripts import math_content_factory as factory
+
+    original_generate = factory.generate
+
+    def bad_generator(family_code, *, seed, difficulty, mode):
+        item = original_generate(family_code, seed=seed, difficulty=difficulty, mode=mode)
+        if family_code == "MATH.ALG.EQ.WORD.TARGET":
+            return replace(
+                item, misconception_answers={"FAKE_WRONG": item.canonical_answer}
+            )
+        return item
+
+    monkeypatch.setattr(factory, "generate", bad_generator)
+    report = factory.run_factory(contract, seeds=8)
+    assert any(
+        "collides with correct answer" in issue
+        for issue in report["observed_mathematical_failures"]
+    )
     assert report["automated_math_checks_passed"] is False
     assert report["pilot_skill_ready"] is False
