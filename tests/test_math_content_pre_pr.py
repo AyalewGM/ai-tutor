@@ -68,3 +68,21 @@ def test_authenticated_get_only_with_no_body_injection():
 def test_missing_token_rejected():
     with pytest.raises(ValueError):
         fetch_plan(446, token="")
+
+
+def test_maryland_algebra1_manual_selection_is_not_ontario_alias():
+    result = plan_from_issue(request(), issue_number=446, course="maryland-algebra1")
+    assert result["course"] == "Maryland Grade 9 Algebra I"
+    assert result["requested_course_key"] == "maryland-algebra1"
+    assert result["canonical_skill"] == "PENDING_PER_SKILL_AUDIT"
+    assert result["initial_factory_blueprint"] == (
+        "TO_BE_DERIVED_FROM_APPROVED_MARYLAND_STANDARDS"
+    )
+    assert result["implementation_pr"] == "NOT_CREATED"
+    assert result["agent_execution"] == "NOT_EXECUTED"
+    assert result["runtime_activation"] is False
+
+
+def test_unknown_course_rejected():
+    with pytest.raises(ValueError):
+        plan_from_issue(request(), issue_number=446, course="maryland-mth1w")
