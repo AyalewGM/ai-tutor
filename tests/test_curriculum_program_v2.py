@@ -7,6 +7,7 @@ from scripts.curriculum_program_v2 import (
     connect,
     import_manifest,
     next_task,
+    operator_status,
     parse_goal,
     register_goal,
     transition,
@@ -15,7 +16,7 @@ from scripts.curriculum_program_v2 import (
 
 def sample_manifest():
     return {
-        "verification_state": "SOURCE_REVIEWED",
+        "verification_state": "CLAIMED_SOURCE_REVIEWED_UNAUTHENTICATED",
         "reviewer_identity": "Independent Standards Review",
         "review_evidence_url": "https://github.com/AyalewGM/ai-tutor/issues/278",
         "expectations": [
@@ -58,14 +59,16 @@ def test_review_cannot_skip_implementation_or_self_release(tmp_path):
         task_id = next_task(db, program["program_id"])["id"]
         evidence = "https://github.com/AyalewGM/ai-tutor/pull/484"
         with pytest.raises(ValueError):
-            transition(db, task_id, "APPROVED", "author", evidence, 0)
+            transition(db, task_id, "PROTOTYPE_REVIEW_RECORDED", "author", evidence, 0)
         first = transition(db, task_id, "IN_PROGRESS", "content-owner", evidence, 0)
         assert first["content_runtime_activated"] is False
         with pytest.raises(ValueError):
             transition(db, task_id, "REVIEW_REQUIRED", "content-owner", evidence, 0)
         transition(db, task_id, "REVIEW_REQUIRED", "content-owner", evidence, 1)
-        approved = transition(db, task_id, "APPROVED", "reviewer", evidence, 2)
+        approved = transition(db, task_id, "PROTOTYPE_REVIEW_RECORDED", "reviewer", evidence, 2)
         assert approved["content_runtime_activated"] is False
+        assert approved["independent_approval"] is False
+        assert approved["canonical_skill_id"] is None
         with pytest.raises(ValueError):
             transition(db, task_id, "IN_PROGRESS", "author", evidence, 3)
         count = db.execute("SELECT COUNT(*) FROM audit_events").fetchone()[0]
@@ -128,6 +131,11 @@ def test_lease_attempt_budget_exhaustion(tmp_path):
                          max_attempts=2)
         assert two["fencing_token"] == 2
         assert claim_next(db, p["program_id"], "c", 162, max_attempts=2) is None
+        report = operator_status(db, p["program_id"])
+        assert report["counts"]["BLOCKED_RETRY_EXHAUSTED"] == 1
+        assert len(report["blocked_work_units"]) == 1
+        assert db.execute("SELECT COUNT(*) FROM audit_events WHERE new_status='BLOCKED_RETRY_EXHAUSTED'").fetchone()[0] == 1
+        assert claim_next(db, p["program_id"], "d", 200, max_attempts=2) is None
 
 
 def test_stale_lease_can_never_approve_or_release(tmp_path):
@@ -141,3 +149,44 @@ def test_stale_lease_can_never_approve_or_release(tmp_path):
         with pytest.raises(ValueError):
             complete_claim(db, lease["work_id"], "hijacker", 1, 1001,
                            evidence_ref="https://github.com/AyalewGM/ai-tutor/pull/485")
+
+def test_conflicting_provenance_rejected_atomically(tmp_path):
+    with connect(tmp_path / "provenance.db") as db:
+        p = register_goal(db, "Ontario mathematics Grades 9-12")
+        first = sample_manifest()
+        import_manifest(db, p["program_id"], first)
+        for conflict in (
+            {"expectations": [{**first["expectations"][0], "official_source_url": "https://example.org/conflict"}]},
+            {"reviewer_identity": "other-reviewer"},
+            {"review_evidence_url": "https://example.org/other-evidence"},
+        ):
+            with pytest.raises(ValueError, match="conflicting source provenance"):
+                import_manifest(db, p["program_id"], {**first, **conflict})
+        assert db.execute("SELECT COUNT(*) FROM work_items").fetchone()[0] == 1
+
+
+def test_untrusted_source_and_review_never_confer_authority(tmp_path):
+    with connect(tmp_path / "auth.db") as db:
+        p = register_goal(db, "Ontario mathematics Grades 9-12")
+        manifest = sample_manifest()
+        with pytest.raises(PermissionError):
+            import_manifest(db, p["program_id"],
+                            {**manifest, "verification_state": "SOURCE_REVIEWED"})
+        imported = import_manifest(db, p["program_id"], manifest)
+        assert imported["source_review_authenticated"] is False
+        task = next_task(db, p["program_id"])
+        assert task["id"].startswith("unit-")
+        assert "canonical_skill_id" not in task
+        result = transition(db, task["id"], "IN_PROGRESS", "author",
+                            "https://example.org/draft", 0)
+        assert result["canonical_skill_id"] is None
+        transition(db, task["id"], "REVIEW_REQUIRED", "author",
+                   "https://example.org/draft", 1)
+        review = transition(db, task["id"], "PROTOTYPE_REVIEW_RECORDED",
+                            "self-claimed-reviewer", "https://example.org/draft", 2)
+        assert review["independent_approval"] is False
+        assert review["content_runtime_activated"] is False
+        assert operator_status(db, p["program_id"])["independent_approval"] is False
+        with pytest.raises(ValueError):
+            transition(db, task["id"], "APPROVED", "self",
+                       "https://example.org/draft", 3)
