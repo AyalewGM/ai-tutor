@@ -58,6 +58,13 @@ def connect(path: str | Path) -> sqlite3.Connection:
           version INTEGER NOT NULL DEFAULT 0,
           UNIQUE(program_id,grade,course_code,expectation_code,source_version)
         );
+        CREATE TABLE IF NOT EXISTS worker_leases (
+          work_id TEXT PRIMARY KEY REFERENCES work_items(id),
+          owner TEXT NOT NULL,
+          fencing_token INTEGER NOT NULL,
+          expires_at INTEGER NOT NULL,
+          attempt_count INTEGER NOT NULL DEFAULT 0
+        );
         CREATE TABLE IF NOT EXISTS audit_events (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           work_id TEXT NOT NULL REFERENCES work_items(id),
@@ -163,6 +170,85 @@ def transition(db: sqlite3.Connection, item_id: str, status: str,
     return {"id": item_id, "from": old, "to": status, "version": version + 1,
             "content_runtime_activated": False}
 
+
+
+
+def claim_next(db: sqlite3.Connection, program_id: str, owner: str,
+               now_epoch: int, ttl_seconds: int = 300,
+               max_attempts: int = 3) -> dict | None:
+    """Atomically claim eligible queued work (offline SQLite prototype only).
+
+    Lease token monotonically increases across retries; a stale worker cannot
+    complete work using an earlier token. This is not a distributed PG worker.
+    """
+    if (not isinstance(owner, str) or not owner.strip() or len(owner) > 120
+            or type(now_epoch) is not int or now_epoch < 0
+            or type(ttl_seconds) is not int or not 30 <= ttl_seconds <= 3600
+            or type(max_attempts) is not int or not 1 <= max_attempts <= 20):
+        raise ValueError("invalid lease request")
+    db.execute("BEGIN IMMEDIATE")
+    try:
+        row = db.execute("""
+          SELECT w.id, l.fencing_token, l.attempt_count
+          FROM work_items w LEFT JOIN worker_leases l ON l.work_id=w.id
+          WHERE w.program_id=? AND w.status='QUEUED'
+            AND (l.work_id IS NULL OR l.expires_at <= ?)
+            AND (l.work_id IS NULL OR l.attempt_count < ?)
+          ORDER BY w.grade,w.course_code,w.expectation_code LIMIT 1
+        """, (program_id, now_epoch, max_attempts)).fetchone()
+        if row is None:
+            db.commit()
+            return None
+        work_id, old_token, attempts = row
+        token = (old_token or 0) + 1
+        db.execute("""
+          INSERT INTO worker_leases(work_id,owner,fencing_token,expires_at,attempt_count)
+          VALUES(?,?,?,?,?)
+          ON CONFLICT(work_id) DO UPDATE SET
+            owner=excluded.owner, fencing_token=excluded.fencing_token,
+            expires_at=excluded.expires_at, attempt_count=excluded.attempt_count
+        """, (work_id, owner, token, now_epoch + ttl_seconds, (attempts or 0) + 1))
+        db.commit()
+        return {"work_id": work_id, "owner": owner, "fencing_token": token,
+                "expires_at": now_epoch + ttl_seconds, "attempt": (attempts or 0) + 1,
+                "worker_invoked": False}
+    except BaseException:
+        db.rollback()
+        raise
+
+
+def complete_claim(db: sqlite3.Connection, work_id: str, owner: str,
+                   fencing_token: int, now_epoch: int,
+                   *, evidence_ref: str) -> dict:
+    """Fence stale workers; stage only for review, never approve or release."""
+    if (not isinstance(owner, str) or not owner.strip()
+            or type(fencing_token) is not int or fencing_token < 1
+            or type(now_epoch) is not int or now_epoch < 0
+            or not isinstance(evidence_ref, str)
+            or not evidence_ref.startswith("https://")):
+        raise ValueError("invalid completion evidence")
+    db.execute("BEGIN IMMEDIATE")
+    try:
+        lease = db.execute("""SELECT owner,fencing_token,expires_at
+            FROM worker_leases WHERE work_id=?""", (work_id,)).fetchone()
+        current = db.execute("SELECT status,version FROM work_items WHERE id=?",
+                             (work_id,)).fetchone()
+        if (lease is None or current is None or lease[0] != owner
+                or lease[1] != fencing_token or lease[2] <= now_epoch
+                or current[0] != "QUEUED"):
+            raise ValueError("stale, expired or unauthorized claim")
+        db.execute("""UPDATE work_items
+            SET status='REVIEW_REQUIRED',version=version+1 WHERE id=?""", (work_id,))
+        db.execute("""INSERT INTO audit_events(work_id,old_status,new_status,actor,evidence_ref)
+            VALUES(?,?,?,?,?)""", (work_id, "QUEUED", "REVIEW_REQUIRED",
+                                   owner, evidence_ref))
+        db.execute("DELETE FROM worker_leases WHERE work_id=?", (work_id,))
+        db.commit()
+        return {"work_id": work_id, "status": "REVIEW_REQUIRED",
+                "review_accepted": False, "release_authority": "NONE"}
+    except BaseException:
+        db.rollback()
+        raise
 
 def main() -> None:
     p = argparse.ArgumentParser(description="Mihur V2 durable curriculum-planning slice")
