@@ -13,13 +13,14 @@ import re
 import sqlite3
 from pathlib import Path
 
-_STATES = {"QUEUED", "IN_PROGRESS", "REVIEW_REQUIRED", "CHANGES_REQUIRED", "APPROVED"}
+_STATES = {"QUEUED", "IN_PROGRESS", "REVIEW_REQUIRED", "CHANGES_REQUIRED", "PROTOTYPE_REVIEW_RECORDED", "BLOCKED_RETRY_EXHAUSTED"}
 _ALLOWED = {
     "QUEUED": {"IN_PROGRESS"},
     "IN_PROGRESS": {"REVIEW_REQUIRED", "CHANGES_REQUIRED"},
-    "REVIEW_REQUIRED": {"APPROVED", "CHANGES_REQUIRED"},
+    "REVIEW_REQUIRED": {"PROTOTYPE_REVIEW_RECORDED", "CHANGES_REQUIRED"},
     "CHANGES_REQUIRED": {"IN_PROGRESS"},
-    "APPROVED": set(),
+    "PROTOTYPE_REVIEW_RECORDED": set(),
+    "BLOCKED_RETRY_EXHAUSTED": set(),
 }
 _GOAL = re.compile(r"(?i)\bontario\b.*\b(?:math|mathematics)\b.*\bgrades?\s*(\d+)\s*(?:-|–|to|through)\s*(\d+)\b")
 
@@ -54,6 +55,8 @@ def connect(path: str | Path) -> sqlite3.Connection:
           expectation_code TEXT NOT NULL,
           approved_source_url TEXT NOT NULL,
           source_version TEXT NOT NULL,
+          source_review_claimant TEXT NOT NULL DEFAULT '',
+          source_review_evidence_url TEXT NOT NULL DEFAULT '',
           status TEXT NOT NULL DEFAULT 'QUEUED',
           version INTEGER NOT NULL DEFAULT 0,
           UNIQUE(program_id,grade,course_code,expectation_code,source_version)
@@ -75,6 +78,11 @@ def connect(path: str | Path) -> sqlite3.Connection:
           created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
     """)
+    columns = {row[1] for row in db.execute("PRAGMA table_info(work_items)")}
+    for name in ("source_review_claimant", "source_review_evidence_url"):
+        if name not in columns:
+            db.execute(f"ALTER TABLE work_items ADD COLUMN {name} TEXT NOT NULL DEFAULT ''")
+    db.commit()
     return db
 
 
@@ -104,7 +112,7 @@ def import_manifest(db: sqlite3.Connection, program_id: str, manifest: dict) -> 
     if not record:
         raise ValueError("unknown program")
     goal = json.loads(record[0])
-    if manifest.get("verification_state") != "SOURCE_REVIEWED":
+    if manifest.get("verification_state") != "CLAIMED_SOURCE_REVIEWED_UNAUTHENTICATED":
         raise PermissionError("manifest lacks source-review gate")
     reviewer = manifest.get("reviewer_identity")
     evidence = manifest.get("review_evidence_url")
@@ -130,12 +138,26 @@ def import_manifest(db: sqlite3.Connection, program_id: str, manifest: dict) -> 
         item_id = "unit-" + _identity(program_id, str(grade), course, code, version)
         validated.append((item_id, program_id, grade, course, code, url, version))
     with db:
+        seen = {}
+        for row in validated:
+            provenance = (row[5], row[6], reviewer, evidence)
+            if row[0] in seen and seen[row[0]] != provenance:
+                raise ValueError("conflicting source provenance within manifest")
+            seen[row[0]] = provenance
+            previous = db.execute("""SELECT approved_source_url,source_version,
+                source_review_claimant,source_review_evidence_url
+                FROM work_items WHERE id=?""", (row[0],)).fetchone()
+            if previous is not None and tuple(previous) != provenance:
+                raise ValueError("conflicting source provenance for existing unit")
         db.executemany("""INSERT OR IGNORE INTO work_items
-            (id,program_id,grade,course_code,expectation_code,approved_source_url,source_version)
-            VALUES(?,?,?,?,?,?,?)""", validated)
+            (id,program_id,grade,course_code,expectation_code,approved_source_url,
+             source_version,source_review_claimant,source_review_evidence_url)
+            VALUES(?,?,?,?,?,?,?,?,?)""",
+            [(*row, reviewer, evidence) for row in validated])
     return {"program_id": program_id, "submitted": len(validated),
             "total": count_items(db, program_id), "execution": "NOT_STARTED",
-            "approval_authority": "NONE"}
+            "approval_authority": "NONE", "source_review_authenticated": False,
+            "runtime_activation_authorized": False}
 
 
 def next_task(db: sqlite3.Connection, program_id: str) -> dict | None:
@@ -168,7 +190,8 @@ def transition(db: sqlite3.Connection, item_id: str, status: str,
         db.execute("""INSERT INTO audit_events(work_id,old_status,new_status,actor,evidence_ref)
                       VALUES(?,?,?,?,?)""", (item_id, old, status, actor, evidence_ref))
     return {"id": item_id, "from": old, "to": status, "version": version + 1,
-            "content_runtime_activated": False}
+            "content_runtime_activated": False, "independent_approval": False,
+            "canonical_skill_id": None}
 
 
 
@@ -188,6 +211,19 @@ def claim_next(db: sqlite3.Connection, program_id: str, owner: str,
         raise ValueError("invalid lease request")
     db.execute("BEGIN IMMEDIATE")
     try:
+        exhausted = db.execute("""SELECT w.id FROM work_items w
+            JOIN worker_leases l ON l.work_id=w.id
+            WHERE w.program_id=? AND w.status='QUEUED'
+              AND l.expires_at <= ? AND l.attempt_count >= ?""",
+              (program_id, now_epoch, max_attempts)).fetchall()
+        for (item_id,) in exhausted:
+            db.execute("""UPDATE work_items SET status='BLOCKED_RETRY_EXHAUSTED',
+                version=version+1 WHERE id=?""", (item_id,))
+            db.execute("""INSERT INTO audit_events
+                (work_id,old_status,new_status,actor,evidence_ref)
+                VALUES(?,?,?,?,?)""", (item_id, "QUEUED",
+                "BLOCKED_RETRY_EXHAUSTED", "offline-planner",
+                "prototype://retry-exhausted"))
         row = db.execute("""
           SELECT w.id, l.fencing_token, l.attempt_count
           FROM work_items w LEFT JOIN worker_leases l ON l.work_id=w.id
@@ -211,7 +247,8 @@ def claim_next(db: sqlite3.Connection, program_id: str, owner: str,
         db.commit()
         return {"work_id": work_id, "owner": owner, "fencing_token": token,
                 "expires_at": now_epoch + ttl_seconds, "attempt": (attempts or 0) + 1,
-                "worker_invoked": False}
+                "worker_invoked": False, "execution_authorized": False,
+                "source_review_authenticated": False, "canonical_skill_id": None}
     except BaseException:
         db.rollback()
         raise
@@ -245,10 +282,25 @@ def complete_claim(db: sqlite3.Connection, work_id: str, owner: str,
         db.execute("DELETE FROM worker_leases WHERE work_id=?", (work_id,))
         db.commit()
         return {"work_id": work_id, "status": "REVIEW_REQUIRED",
-                "review_accepted": False, "release_authority": "NONE"}
+                "review_accepted": False, "release_authority": "NONE",
+                "canonical_skill_id": None}
     except BaseException:
         db.rollback()
         raise
+
+def operator_status(db: sqlite3.Connection, program_id: str) -> dict:
+    """Offline operator report; no authorization implied."""
+    rows = db.execute("""SELECT status,COUNT(*) FROM work_items
+        WHERE program_id=? GROUP BY status""", (program_id,)).fetchall()
+    blocked = db.execute("""SELECT id,grade,course_code,expectation_code
+        FROM work_items WHERE program_id=? AND status='BLOCKED_RETRY_EXHAUSTED'
+        ORDER BY grade,course_code,expectation_code""", (program_id,)).fetchall()
+    return {"counts": dict(rows), "blocked_work_units": [
+        dict(zip(("work_id","grade","course_code","expectation_code"), row))
+        for row in blocked],
+        "source_review_authenticated": False, "independent_approval": False,
+        "execution_authorized": False, "canonical_skill_mapping_authorized": False}
+
 
 def main() -> None:
     p = argparse.ArgumentParser(description="Mihur V2 durable curriculum-planning slice")
@@ -261,6 +313,8 @@ def main() -> None:
     imp.add_argument("--manifest", type=Path, required=True)
     nxt = sub.add_parser("next")
     nxt.add_argument("--program-id", required=True)
+    status = sub.add_parser("status")
+    status.add_argument("--program-id", required=True)
     args = p.parse_args()
     with connect(args.database) as db:
         if args.command == "goal":
@@ -268,8 +322,10 @@ def main() -> None:
         elif args.command == "import-source-manifest":
             result = import_manifest(db, args.program_id,
                                      json.loads(args.manifest.read_text()))
-        else:
+        elif args.command == "next":
             result = next_task(db, args.program_id)
+        else:
+            result = operator_status(db, args.program_id)
     print(json.dumps(result, indent=2, sort_keys=True))
 
 
