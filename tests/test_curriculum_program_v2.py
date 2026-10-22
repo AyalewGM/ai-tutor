@@ -2,8 +2,14 @@
 import pytest
 
 from scripts.curriculum_program_v2 import (
-    claim_next, complete_claim, connect, import_manifest, next_task, parse_goal,
-    register_goal, transition,
+    claim_next,
+    complete_claim,
+    connect,
+    import_manifest,
+    next_task,
+    parse_goal,
+    register_goal,
+    transition,
 )
 
 
@@ -116,7 +122,7 @@ def test_lease_attempt_budget_exhaustion(tmp_path):
     with connect(tmp_path / "budget.db") as db:
         p = register_goal(db, "Ontario mathematics Grades 9-12")
         import_manifest(db, p["program_id"], sample_manifest())
-        one = claim_next(db, p["program_id"], "a", 100, ttl_seconds=30,
+        claim_next(db, p["program_id"], "a", 100, ttl_seconds=30,
                          max_attempts=2)
         two = claim_next(db, p["program_id"], "b", 131, ttl_seconds=30,
                          max_attempts=2)
