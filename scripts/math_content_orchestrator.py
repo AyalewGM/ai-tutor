@@ -72,16 +72,37 @@ def reconcile(factory: dict[str, Any], evidence: dict[str, Any]) -> dict[str, An
         if not ci_ok:
             next_owner, reason = "Engineering / CI", "Verify full CI at the exact source revision."
         else:
-            for gate, owner in GATES:
-                if verdicts[gate] == "CHANGES_REQUIRED":
-                    next_owner, reason = "Content Production", f"Resolve {owner} findings on the original authored branch."
-                    break
-                if verdicts[gate] != "ACCEPTED":
-                    next_owner, reason = owner, f"Obtain an independent, exact-SHA {gate} verdict."
-                    break
+            # A rejection on a later gate must not be hidden by an earlier
+            # pending gate. Rework takes precedence across all exact-SHA gates.
+            rejection = next(
+                ((gate, owner) for gate, owner in GATES
+                 if verdicts[gate] == "CHANGES_REQUIRED"),
+                None,
+            )
+            if rejection is not None:
+                _gate, owner = rejection
+                next_owner, reason = (
+                    "Content Production",
+                    f"Resolve {owner} findings on the original authored branch.",
+                )
             else:
-                next_owner = "Engineering Lead / DevOps"
-                reason = "All reported specialist gates accepted; staging still needs independent operator authorization."
+                pending = next(
+                    ((gate, owner) for gate, owner in GATES
+                     if verdicts[gate] != "ACCEPTED"),
+                    None,
+                )
+                if pending is not None:
+                    gate, owner = pending
+                    next_owner, reason = (
+                        owner,
+                        f"Obtain an independent, exact-SHA {gate} verdict.",
+                    )
+                else:
+                    next_owner = "Engineering Lead / DevOps"
+                    reason = (
+                        "All reported specialist gates accepted; staging still "
+                        "needs independent operator authorization."
+                    )
     releases = {
         target: "NOT_VERIFIED"
         for target in RELEASE_KEYS
