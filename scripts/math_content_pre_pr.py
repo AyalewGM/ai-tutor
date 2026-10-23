@@ -10,8 +10,8 @@ import argparse
 import json
 import os
 import urllib.request
-from pathlib import Path
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any
 
 from scripts.math_content_github_evidence import REPO, _api
