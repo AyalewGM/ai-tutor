@@ -190,3 +190,15 @@ def test_untrusted_source_and_review_never_confer_authority(tmp_path):
         with pytest.raises(ValueError):
             transition(db, task["id"], "APPROVED", "self",
                        "https://example.org/draft", 3)
+
+
+
+def test_next_task_does_not_offer_actively_leased_work(tmp_path):
+    with connect(tmp_path / "preview.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        assert next_task(db, program["program_id"], now_epoch=1000) is not None
+        lease = claim_next(db, program["program_id"], "worker-1", 1000, ttl_seconds=60)
+        assert lease is not None
+        assert next_task(db, program["program_id"], now_epoch=1001) is None
+        assert next_task(db, program["program_id"], now_epoch=1060) is not None
