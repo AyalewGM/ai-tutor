@@ -103,3 +103,21 @@ def test_no_runtime_activation_even_on_permitted_inputs() -> None:
     bad["runtime_activation"] = True
     with pytest.raises(ValueError):
         reconcile(bad, evidence())
+
+
+
+def test_later_rejection_takes_priority_over_earlier_pending_gate() -> None:
+    proof = evidence()
+    proof["muse"] = {**accepted(), "status": "CHANGES_REQUIRED"}
+    result = reconcile(factory(), proof)
+    assert result["next_owner"] == "Content Production"
+    assert "Muse" in result["next_action"]
+    assert result["gates"]["math"] == "PENDING"
+
+
+def test_stale_rejection_does_not_overrule_pending() -> None:
+    proof = evidence()
+    proof["muse"] = {**accepted(), "status": "CHANGES_REQUIRED", "source_sha": "b" * 40}
+    result = reconcile(factory(), proof)
+    assert result["next_owner"] == "Independent Math"
+    assert result["gates"]["muse"] == "PENDING"
