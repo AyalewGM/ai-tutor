@@ -160,11 +160,22 @@ def import_manifest(db: sqlite3.Connection, program_id: str, manifest: dict) -> 
             "runtime_activation_authorized": False}
 
 
-def next_task(db: sqlite3.Connection, program_id: str) -> dict | None:
-    row = db.execute("""SELECT id,grade,course_code,expectation_code,source_version
-      FROM work_items WHERE program_id=? AND status='QUEUED'
-      ORDER BY grade,course_code,expectation_code LIMIT 1""",
-                     (program_id,)).fetchone()
+def next_task(db: sqlite3.Connection, program_id: str,
+              now_epoch: int | None = None) -> dict | None:
+    """Peek at claimable unleased work; claiming still requires claim_next."""
+    import time
+
+    if now_epoch is None:
+        now_epoch = int(time.time())
+    if type(now_epoch) is not int or now_epoch < 0:
+        raise ValueError("invalid current time")
+    row = db.execute("""SELECT w.id,w.grade,w.course_code,w.expectation_code,
+        w.source_version FROM work_items w
+      LEFT JOIN worker_leases l ON l.work_id=w.id
+      WHERE w.program_id=? AND w.status='QUEUED'
+      AND (l.work_id IS NULL OR l.expires_at <= ?)
+      ORDER BY w.grade,w.course_code,w.expectation_code LIMIT 1""",
+                     (program_id, now_epoch)).fetchone()
     if row is None:
         return None
     return dict(zip(["id", "grade", "course_code", "expectation_code", "source_version"], row))
