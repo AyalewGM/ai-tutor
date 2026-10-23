@@ -49,3 +49,20 @@ class BoardImage(Base):
     operation_id: Mapped[uuid.UUID] = mapped_column()
     digest: Mapped[str] = mapped_column(String(64))
     pixels: Mapped[bytes] = mapped_column(LargeBinary, deferred=True)
+
+
+class BoardClearReceipt(Base):
+    """Durable replay evidence for a scoped clear, without learner PII."""
+
+    __tablename__ = "board_clear_receipts"
+    __table_args__ = (UniqueConstraint("board_id", "operation_id"),)
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    board_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("collaboration_boards.id", ondelete="CASCADE"), index=True
+    )
+    operation_id: Mapped[uuid.UUID] = mapped_column()
+    author: Mapped[str] = mapped_column(String(80))
+    page_id: Mapped[uuid.UUID | None] = mapped_column(nullable=True)
+    expected_revision: Mapped[int] = mapped_column(Integer)
+    result_revision: Mapped[int] = mapped_column(Integer)
+    target_ids: Mapped[list] = mapped_column(JSON)
