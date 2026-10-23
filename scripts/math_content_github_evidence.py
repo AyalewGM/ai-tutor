@@ -13,7 +13,8 @@ import re
 import urllib.error
 import urllib.request
 from pathlib import Path
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 REPO = "AyalewGM/ai-tutor"
 _SHA = re.compile(r"[0-9a-f]{40}\Z")
@@ -64,7 +65,7 @@ def fetch_evidence(
         token, fetch,
     )
     if not isinstance(runs, dict) or not isinstance(runs.get("workflow_runs"), list):
-        raise ValueError("missing workflow evidence")
+        raise TypeError("missing workflow evidence")
     # A completed successful exact-head CI is necessary, not sufficient.
     ci_runs = [
         run for run in runs["workflow_runs"]
