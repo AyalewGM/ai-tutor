@@ -12,8 +12,8 @@ import os
 import re
 import urllib.error
 import urllib.request
-from pathlib import Path
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any
 
 REPO = "AyalewGM/ai-tutor"
