@@ -44,7 +44,7 @@ def _verdict(evidence: dict[str, Any], gate: str, sha: str) -> str:
 def reconcile(factory: dict[str, Any], evidence: dict[str, Any]) -> dict[str, Any]:
     """Give one actionable next owner, preserving each independent review gate."""
     if not isinstance(factory, dict) or not isinstance(evidence, dict):
-        raise ValueError("factory/evidence must be objects")
+        raise TypeError("factory/evidence must be objects")
     if factory.get("runtime_activation") is not False or factory.get("status") != "DRAFT_UNVERIFIED":
         raise ValueError("orchestrator refuses runtime authorization")
     if factory.get("release_authority") != "NONE":
@@ -58,7 +58,7 @@ def reconcile(factory: dict[str, Any], evidence: dict[str, Any]) -> dict[str, An
 
     quality = factory.get("quality_gates")
     if not isinstance(quality, dict):
-        raise ValueError("missing factory mathematical quality evidence")
+        raise TypeError("missing factory mathematical quality evidence")
     mathematically_safe = factory.get("automated_math_checks_passed") is True
     # CI is informative only; it cannot substitute for math/pedagogy authority.
     ci = evidence.get("ci", {})
