@@ -1,7 +1,8 @@
 """Durable idempotency receipts for scoped family-board clear operations."""
 
-from alembic import op
 import sqlalchemy as sa
+
+from alembic import op
 
 revision = "0039_board_clear_receipts"
 down_revision = "0038_merge_pilot_heads"
