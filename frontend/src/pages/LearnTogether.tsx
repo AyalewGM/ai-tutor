@@ -453,6 +453,7 @@ export default function LearnTogether() {
   const pages = marks.filter((m) => m.kind === "image");
   const background = visible.find((m) => m.kind === "image");
   function changePage(value: string) {
+    setClearConfirm(false);
     const page = value || null;
     setSelectedPage(page);
     setZoom(1);
