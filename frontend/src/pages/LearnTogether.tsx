@@ -782,8 +782,7 @@ export default function LearnTogether() {
             </div>
             {clearConfirm && (
               <div
-                role="alertdialog"
-                aria-modal="true"
+                role="group"
                 aria-labelledby="clear-my-writing-title"
                 aria-describedby="clear-my-writing-description"
                 className="rounded-xl border border-amber-300 bg-amber-50 p-4 space-y-3 text-slate-900"
