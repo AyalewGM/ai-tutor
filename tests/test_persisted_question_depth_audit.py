@@ -72,7 +72,11 @@ def test_missing_metadata_never_becomes_verified_assessment_depth() -> None:
         "diagnostic": 0, "guided": 0, "independent": 0, "mastery": 0,
     }
     assert row["learner_selectable_non_extension_upper_bound"] == 1
-    assert row["cross_session_repetition"].startswith("AT_RISK")
+    assert row["cross_session_repetition"].startswith("AT_RISK_MATH_EQUIVALENCE_REUSE")
+    assert "STUDENT_ATTEMPT_IDS_EXCLUDED_ACROSS_SESSIONS" in row["cross_session_repetition"]
+    assert row["selection_mode_eligibility_enforcement"] == (
+        "IMPLEMENTED_METADATA_GATE_PER_STATE;LEARNER_ROUTE_NOT_VERIFIED"
+    )
 
 
 def test_canonical_generator_sample_is_not_mathematical_approval() -> None:
