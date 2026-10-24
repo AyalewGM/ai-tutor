@@ -221,8 +221,8 @@ def summarize_skill(
         "missing_metadata_rows": missing_metadata,
         "learner_selectable_non_extension_upper_bound": len(normal),
         "learner_visible_integrated_status": "NOT_VERIFIED",
-        "selection_mode_eligibility_enforcement": "NOT_IMPLEMENTED_IN_CURRENT_SELECTOR",
-        "cross_session_repetition": "AT_RISK_SELECTOR_EXCLUDES_ONLY_CURRENT_SESSION",
+        "selection_mode_eligibility_enforcement": "IMPLEMENTED_METADATA_GATE_PER_STATE;LEARNER_ROUTE_NOT_VERIFIED",
+        "cross_session_repetition": "AT_RISK_MATH_EQUIVALENCE_REUSE;STUDENT_ATTEMPT_IDS_EXCLUDED_ACROSS_SESSIONS",
         "legacy_generator_samples": sampled_legacy,
         "canonical_generator_samples": canonical,
         "math_oracle_review": "NOT_ASSESSED",
@@ -288,7 +288,11 @@ def audit_database(db: Session, *, source_sha: str, samples: int = 3) -> dict[st
             "Independent mathematical answer verification",
             "Independent pedagogical and Muse QA",
         ],
-        "selector_evidence": "Current select_next_problem does not gate on mode flags and avoids past attempted IDs only within a supplied session",
+        "selector_evidence": ("Current select_next_problem requires mode-specific ProblemContentMetadata and "
+                             "extension eligibility; when student identity is available, it excludes "
+                             "past Attempt and DiagnosticAttempt problem IDs across sessions. "
+                             "Mathematically equivalent generated tasks and real learner routes "
+                             "remain unverified."),
         "threshold_policy": {"thin_if_distinct_task_count_less_than": MIN_UNIQUE_FOR_DEPTH_REVIEW,
                              "not_a_mastery_or_release_standard": True},
         "grades": dict(sorted(by_grade.items())),
