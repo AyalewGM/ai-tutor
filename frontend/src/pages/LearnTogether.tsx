@@ -81,6 +81,8 @@ export default function LearnTogether() {
   const [status, setStatus] = useState("Connecting…");
   const [error, setError] = useState("");
   const [share, setShare] = useState("");
+  const [clearConfirm, setClearConfirm] = useState(false);
+  const [clearing, setClearing] = useState(false);
   const svg = useRef<SVGSVGElement>(null);
   const pointer = useRef<number | null>(null);
   const panStart = useRef<{
@@ -518,6 +520,55 @@ export default function LearnTogether() {
     });
   }
   const disabled = !board || !ready || board.closed || pending.length >= 50;
+  const canClear = !disabled && !clearing && !uploading
+    && !queue.current.length && !inkID.current && !stroke.current.length;
+  const ownVisibleCount = visible.filter(
+    (m) => m.author === board?.author && (m.kind === "stroke" || m.kind === "text"),
+  ).length;
+
+  async function clearMyWriting() {
+    if (!boardId || !board || !canClear || ownVisibleCount === 0) return;
+    const pageAtConfirmation = selectedPage;
+    const expectedRevision = revision.current;
+    const operationId = crypto.randomUUID();
+    setClearing(true);
+    setClearConfirm(false);
+    setError("");
+    try {
+      const response = await post<{
+        result_revision: number;
+        cleared_count: number;
+        page_id: string | null;
+      }>(`/together/boards/${boardId}/clear-my-writing`, {
+        operation_id: operationId,
+        page_id: pageAtConfirmation,
+        expected_revision: expectedRevision,
+      });
+      if (response.page_id !== pageAtConfirmation) {
+        throw new Error("The board page changed during clearing. Refresh the board.");
+      }
+      // The endpoint writes durable erase events. Reconcile from the server's
+      // revision stream, never hide strokes only in React/local state.
+      let cursor = revision.current;
+      while (cursor < response.result_revision) {
+        const batch = await api<Mark[]>(
+          `/together/boards/${boardId}/operations?after=${cursor}`,
+        );
+        if (!batch.length) throw new Error("Board changes are still synchronizing. Refresh.");
+        ingest.current(batch);
+        const next = Math.max(cursor, ...batch.map((mark) => mark.revision || 0));
+        if (next === cursor) throw new Error("Board updates are not advancing. Refresh.");
+        cursor = next;
+      }
+      setStatus(`Cleared ${response.cleared_count} of your marks on this page.`);
+    } catch (err) {
+      setError(err instanceof ApiError && err.status === 409
+        ? "The board changed before your clear was applied. Review the page and try again."
+        : err instanceof Error ? err.message : "Unable to clear writing. Try again.");
+    } finally {
+      setClearing(false);
+    }
+  }
 
   return (
     <>
@@ -678,6 +729,14 @@ export default function LearnTogether() {
               >
                 Eraser (my marks)
               </button>
+              <button
+                type="button"
+                className={button}
+                disabled={!canClear || ownVisibleCount === 0}
+                onClick={() => setClearConfirm(true)}
+              >
+                Clear My Writing
+              </button>
               <label className={`${button} max-w-full`}>
                 Add homework photo
                 <input
@@ -720,6 +779,38 @@ export default function LearnTogether() {
                 Fit page
               </button>
             </div>
+            {clearConfirm && (
+              <div
+                role="alertdialog"
+                aria-modal="true"
+                aria-labelledby="clear-my-writing-title"
+                aria-describedby="clear-my-writing-description"
+                className="rounded-xl border border-amber-300 bg-amber-50 p-4 space-y-3 text-slate-900"
+              >
+                <h2 id="clear-my-writing-title" className="font-semibold">
+                  Clear your writing on this page?
+                </h2>
+                <p id="clear-my-writing-description" className="text-sm">
+                  This removes {ownVisibleCount} of your saved text and pen marks
+                  {selectedPage ? " on the selected worksheet page" : " on the blank page"}.
+                  The other person's writing, worksheet pages and imported images stay.
+                  You cannot undo this batch from this control.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <button type="button" className={button} onClick={() => setClearConfirm(false)}>
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="rounded-lg bg-red-700 px-4 py-2 font-semibold text-white disabled:opacity-40"
+                    disabled={!canClear || ownVisibleCount === 0}
+                    onClick={() => void clearMyWriting()}
+                  >
+                    Clear {ownVisibleCount} of my marks
+                  </button>
+                </div>
+              </div>
+            )}
             {showPDF && (
               <Suspense fallback={<p role="status">Loading PDF importer…</p>}>
                 <PDFImport
