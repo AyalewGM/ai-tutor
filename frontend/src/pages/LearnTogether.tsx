@@ -403,7 +403,7 @@ export default function LearnTogether() {
   }, [boardId]);
 
   function enqueue(mark: Mark) {
-    if (!board || board.closed || queue.current.length >= 50) return;
+    if (!board || board.closed || clearing || queue.current.length >= 50) return;
     queue.current.push({
       ...mark,
       ...(mark.kind === "page"
@@ -519,7 +519,7 @@ export default function LearnTogether() {
       target: mark.operation_id,
     });
   }
-  const disabled = !board || !ready || board.closed || pending.length >= 50;
+  const disabled = !board || !ready || board.closed || clearing || pending.length >= 50;
   const canClear = !disabled && !clearing && !uploading
     && !queue.current.length && !inkID.current && !stroke.current.length;
   const ownVisibleCount = visible.filter(
