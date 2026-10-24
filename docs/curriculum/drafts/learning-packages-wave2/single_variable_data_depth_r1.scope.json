@@ -1,0 +1,345 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "SV-DATA-DEPTH-R1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "learner_visible_availability": "NOT_VERIFIED",
+  "production_taxonomy_changed": false,
+  "official_expectation_candidate": "Ontario MTH1W (2021) D1.2",
+  "mapping_status": "SOURCE_VERIFIED_CANDIDATE_PENDING_INDEPENDENT_STANDARDS",
+  "canonical_identity_status": "ARCHITECTURE_REVIEW_REQUIRED; NO_NEW_ATOMS",
+  "reuse_first": {
+    "merged_prs": [
+      173,
+      252,
+      328,
+      425
+    ],
+    "files": [
+      "app/domains/statistics_probability.py",
+      "docs/curriculum/drafts/learning-packages-wave2/boxplot_reasoning_draft.py",
+      "docs/curriculum/drafts/learning-packages-wave2/ontario_center_reasoning_depth.py"
+    ],
+    "note": "Do not duplicate accepted mean/median/range/missing-mean generators or prior five-number/IQR draft; this is a bounded deepening wave, not live content."
+  },
+  "quartile_convention": "MEDIAN_OF_HALVES_EXCLUDE_ODD_MIDDLE",
+  "ordinary_boxplot": "Whiskers at observed minimum and maximum",
+  "modified_boxplot": "1.5×IQR strict fences; whiskers at extreme observed nonoutliers; plot outliers separately",
+  "teacher_evidence": [
+    {
+      "source": "private single-variable data lesson",
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        7,
+        8,
+        9
+      ],
+      "abstract_demand": "graph and variable classification"
+    },
+    {
+      "source": "private central tendency practice",
+      "pages": [
+        1,
+        2
+      ],
+      "abstract_demand": "center, mode, inverse constraints"
+    },
+    {
+      "source": "private box-plot practice",
+      "pages": [
+        1,
+        2
+      ],
+      "abstract_demand": "construct and interpret five-number summaries"
+    },
+    {
+      "source": "private box-plot lesson",
+      "pages": [
+        1,
+        3,
+        5,
+        8,
+        9,
+        10
+      ],
+      "abstract_demand": "quartile convention, IQR, fences, boxplot distinctions"
+    }
+  ],
+  "research_sources": [
+    {
+      "type": "official",
+      "url": "https://assets-us-01.kc-usercontent.com/fbd574c4-da36-0066-a0c5-849ffb2de96e/2c41223a-5f39-4dd2-b94c-c75d2fae1fbd/Math_9_strand%20chart_AODA_06-May-21.pdf",
+      "role": "Ontario 2021 D1.2 context only; not an accepted Mihur mapping"
+    },
+    {
+      "type": "method",
+      "url": "https://www.itl.nist.gov/div898/handbook/eda/section3/boxplot.htm",
+      "role": "outlier fences and modified whisker method"
+    },
+    {
+      "type": "method",
+      "url": "https://online.stat.psu.edu/stat200/Lesson03",
+      "role": "independent boxplot and IQR comparison"
+    },
+    {
+      "type": "method",
+      "url": "https://online.stat.psu.edu/stat800/Lesson02",
+      "role": "explicitly differing quartile conventions"
+    }
+  ],
+  "provenance_and_licensing": "All generated prompts/datasets/structures original; private worksheets, their figures, numerical datasets and keys not committed. External materials cited for method only, not copied; external reproduction licenses not assumed.",
+  "scope_cards": [
+    {
+      "family": "DATA_TYPE",
+      "title": "Variable type and permissible values",
+      "status": "DRAFT_UNVERIFIED",
+      "canonical_identity": "REUSE_REVIEWED_WHERE_APPLICABLE; NO_NEW_AUTHORITY",
+      "inclusions": "categorical, quantitative discrete including noninteger steps, continuous measurements",
+      "exclusions": "No discrete=whole-numbers shortcut; do not infer data type from formatting",
+      "prerequisites": "variable, measurement, possible values",
+      "misconception": "TYPE",
+      "assessment_evidence": "classification plus reasoning about allowed values",
+      "accepted_responses": "Exact equivalent rational/terminating decimal forms where applicable; multiple valid integer sets accepted",
+      "learning_phases": [
+        "OBSERVE",
+        "PREDICT",
+        "MANIPULATE",
+        "EXPLAIN",
+        "PRACTICE",
+        "DIAGNOSE",
+        "TRANSFER",
+        "VERIFY"
+      ],
+      "representation_progression": [
+        "CONCRETE",
+        "VISUAL",
+        "SYMBOLIC"
+      ],
+      "independent_mastery": "NOT_AUTHORIZED; hints absent; trusted scoring pending",
+      "depth_contract": "BOUNDED_AUTHOR_SLICE; 8-12 independently distinct families per substantial canonical skill NOT_YET_PROVEN"
+    },
+    {
+      "family": "GRAPH_CHOICE",
+      "title": "Graph selection by analytical purpose",
+      "status": "DRAFT_UNVERIFIED",
+      "canonical_identity": "REUSE_REVIEWED_WHERE_APPLICABLE; NO_NEW_AUTHORITY",
+      "inclusions": "category bars, numeric-bin histograms, part-whole circle charts, side-by-side box plots",
+      "exclusions": "No histogram=continuous-only or categorical=numeric conflation",
+      "prerequisites": "data types, frequency, part-whole",
+      "misconception": "GRAPH",
+      "assessment_evidence": "graph choice with axis/scale justification",
+      "accepted_responses": "Exact equivalent rational/terminating decimal forms where applicable; multiple valid integer sets accepted",
+      "learning_phases": [
+        "OBSERVE",
+        "PREDICT",
+        "MANIPULATE",
+        "EXPLAIN",
+        "PRACTICE",
+        "DIAGNOSE",
+        "TRANSFER",
+        "VERIFY"
+      ],
+      "representation_progression": [
+        "CONCRETE",
+        "VISUAL",
+        "SYMBOLIC"
+      ],
+      "independent_mastery": "NOT_AUTHORIZED; hints absent; trusted scoring pending",
+      "depth_contract": "BOUNDED_AUTHOR_SLICE; 8-12 independently distinct families per substantial canonical skill NOT_YET_PROVEN"
+    },
+    {
+      "family": "CENTER_CHOICE",
+      "title": "Center and spread with an extreme observation",
+      "status": "DRAFT_UNVERIFIED",
+      "canonical_identity": "REUSE_REVIEWED_WHERE_APPLICABLE; NO_NEW_AUTHORITY",
+      "inclusions": "mean, median, no mode, range, resistant representative choice",
+      "exclusions": "Median is not universally preferable; do not discard outliers without context",
+      "prerequisites": "ordering, arithmetic mean, frequency",
+      "misconception": "CENTER",
+      "assessment_evidence": "exact mean/median/range and defended center",
+      "accepted_responses": "Exact equivalent rational/terminating decimal forms where applicable; multiple valid integer sets accepted",
+      "learning_phases": [
+        "OBSERVE",
+        "PREDICT",
+        "MANIPULATE",
+        "EXPLAIN",
+        "PRACTICE",
+        "DIAGNOSE",
+        "TRANSFER",
+        "VERIFY"
+      ],
+      "representation_progression": [
+        "CONCRETE",
+        "VISUAL",
+        "SYMBOLIC"
+      ],
+      "independent_mastery": "NOT_AUTHORIZED; hints absent; trusted scoring pending",
+      "depth_contract": "BOUNDED_AUTHOR_SLICE; 8-12 independently distinct families per substantial canonical skill NOT_YET_PROVEN"
+    },
+    {
+      "family": "CONSTRUCT_SET",
+      "title": "Inverse dataset construction",
+      "status": "DRAFT_UNVERIFIED",
+      "canonical_identity": "REUSE_REVIEWED_WHERE_APPLICABLE; NO_NEW_AUTHORITY",
+      "inclusions": "any five nonnegative integers with target mean, median, unique mode, range",
+      "exclusions": "No single precomputed set as the only valid answer",
+      "prerequisites": "mean as total, order statistics, frequency",
+      "misconception": "CONSTRUCT",
+      "assessment_evidence": "check every constraint for unordered proposed set",
+      "accepted_responses": "Exact equivalent rational/terminating decimal forms where applicable; multiple valid integer sets accepted",
+      "learning_phases": [
+        "OBSERVE",
+        "PREDICT",
+        "MANIPULATE",
+        "EXPLAIN",
+        "PRACTICE",
+        "DIAGNOSE",
+        "TRANSFER",
+        "VERIFY"
+      ],
+      "representation_progression": [
+        "CONCRETE",
+        "VISUAL",
+        "SYMBOLIC"
+      ],
+      "independent_mastery": "NOT_AUTHORIZED; hints absent; trusted scoring pending",
+      "depth_contract": "BOUNDED_AUTHOR_SLICE; 8-12 independently distinct families per substantial canonical skill NOT_YET_PROVEN"
+    },
+    {
+      "family": "QUARTILES",
+      "title": "Quartile and IQR computation",
+      "status": "DRAFT_UNVERIFIED",
+      "canonical_identity": "REUSE_REVIEWED_WHERE_APPLICABLE; NO_NEW_AUTHORITY",
+      "inclusions": "median-of-halves with odd median excluded; Q3−Q1",
+      "exclusions": "Do not silently substitute interpolated percentile convention",
+      "prerequisites": "sorting, median, exact fractions",
+      "misconception": "QUARTILES",
+      "assessment_evidence": "exact Q1, median, Q3, IQR",
+      "accepted_responses": "Exact equivalent rational/terminating decimal forms where applicable; multiple valid integer sets accepted",
+      "learning_phases": [
+        "OBSERVE",
+        "PREDICT",
+        "MANIPULATE",
+        "EXPLAIN",
+        "PRACTICE",
+        "DIAGNOSE",
+        "TRANSFER",
+        "VERIFY"
+      ],
+      "representation_progression": [
+        "CONCRETE",
+        "VISUAL",
+        "SYMBOLIC"
+      ],
+      "independent_mastery": "NOT_AUTHORIZED; hints absent; trusted scoring pending",
+      "depth_contract": "BOUNDED_AUTHOR_SLICE; 8-12 independently distinct families per substantial canonical skill NOT_YET_PROVEN"
+    },
+    {
+      "family": "ORDINARY_BOX",
+      "title": "Ordinary box-plot construction",
+      "status": "DRAFT_UNVERIFIED",
+      "canonical_identity": "REUSE_REVIEWED_WHERE_APPLICABLE; NO_NEW_AUTHORITY",
+      "inclusions": "five-number landmarks and min/max whiskers",
+      "exclusions": "Do not automatically apply modified outlier whiskers",
+      "prerequisites": "quartiles, number-line scale",
+      "misconception": "ORDINARY",
+      "assessment_evidence": "seven structured landmarks and text alternative",
+      "accepted_responses": "Exact equivalent rational/terminating decimal forms where applicable; multiple valid integer sets accepted",
+      "learning_phases": [
+        "OBSERVE",
+        "PREDICT",
+        "MANIPULATE",
+        "EXPLAIN",
+        "PRACTICE",
+        "DIAGNOSE",
+        "TRANSFER",
+        "VERIFY"
+      ],
+      "representation_progression": [
+        "CONCRETE",
+        "VISUAL",
+        "SYMBOLIC"
+      ],
+      "independent_mastery": "NOT_AUTHORIZED; hints absent; trusted scoring pending",
+      "depth_contract": "BOUNDED_AUTHOR_SLICE; 8-12 independently distinct families per substantial canonical skill NOT_YET_PROVEN"
+    },
+    {
+      "family": "MODIFIED_BOX",
+      "title": "Modified box-plot outlier reasoning",
+      "status": "DRAFT_UNVERIFIED",
+      "canonical_identity": "REUSE_REVIEWED_WHERE_APPLICABLE; NO_NEW_AUTHORITY",
+      "inclusions": "strict 1.5×IQR fences, non-outlier whiskers, separately plotted outliers",
+      "exclusions": "Do not place whiskers at fences or at excluded outliers",
+      "prerequisites": "quartiles, IQR, inequalities",
+      "misconception": "MODIFIED",
+      "assessment_evidence": "exact quartiles/fences/whiskers and outlier set",
+      "accepted_responses": "Exact equivalent rational/terminating decimal forms where applicable; multiple valid integer sets accepted",
+      "learning_phases": [
+        "OBSERVE",
+        "PREDICT",
+        "MANIPULATE",
+        "EXPLAIN",
+        "PRACTICE",
+        "DIAGNOSE",
+        "TRANSFER",
+        "VERIFY"
+      ],
+      "representation_progression": [
+        "CONCRETE",
+        "VISUAL",
+        "SYMBOLIC"
+      ],
+      "independent_mastery": "NOT_AUTHORIZED; hints absent; trusted scoring pending",
+      "depth_contract": "BOUNDED_AUTHOR_SLICE; 8-12 independently distinct families per substantial canonical skill NOT_YET_PROVEN"
+    },
+    {
+      "family": "COMPARE_BOXES",
+      "title": "Comparing distributions",
+      "status": "DRAFT_UNVERIFIED",
+      "canonical_identity": "REUSE_REVIEWED_WHERE_APPLICABLE; NO_NEW_AUTHORITY",
+      "inclusions": "paired medians and IQRs, wider middle 50%",
+      "exclusions": "Do not infer causation or confuse range and IQR",
+      "prerequisites": "quartiles, shared-scale interpretation",
+      "misconception": "COMPARE",
+      "assessment_evidence": "two exact medians, IQRs and comparative decision",
+      "accepted_responses": "Exact equivalent rational/terminating decimal forms where applicable; multiple valid integer sets accepted",
+      "learning_phases": [
+        "OBSERVE",
+        "PREDICT",
+        "MANIPULATE",
+        "EXPLAIN",
+        "PRACTICE",
+        "DIAGNOSE",
+        "TRANSFER",
+        "VERIFY"
+      ],
+      "representation_progression": [
+        "CONCRETE",
+        "VISUAL",
+        "SYMBOLIC"
+      ],
+      "independent_mastery": "NOT_AUTHORIZED; hints absent; trusted scoring pending",
+      "depth_contract": "BOUNDED_AUTHOR_SLICE; 8-12 independently distinct families per substantial canonical skill NOT_YET_PROVEN"
+    }
+  ],
+  "reviews": {
+    "mathematical": "PENDING",
+    "pedagogical": "PENDING",
+    "standards": "PENDING",
+    "architecture": "PENDING",
+    "assessment_backend": "PENDING",
+    "frontend_mve": "PENDING",
+    "muse_qa": "PENDING",
+    "engineering": "PENDING"
+  },
+  "policy": {
+    "no_student_history_writes": true,
+    "no_canonical_activation": true,
+    "no_standards_credit": true,
+    "no_merge_or_deploy": true
+  }
+}
