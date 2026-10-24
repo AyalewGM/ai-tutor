@@ -35,7 +35,12 @@ from sqlalchemy.orm import Session
 from app.auth import SESSION_COOKIE, _digest, resolve_user_id
 from app.board_images import MAX_UPLOAD_BYTES, normalize_photo
 from app.board_live import LiveFrame, open_live_channel
-from app.collaboration_models import BoardClearReceipt, BoardImage, BoardOperation, CollaborationBoard
+from app.collaboration_models import (
+    BoardClearReceipt,
+    BoardImage,
+    BoardOperation,
+    CollaborationBoard,
+)
 from app.core.database import SessionLocal, get_db
 from app.models import Student, User
 from app.parent_models import FamilyPracticePass, LearnerPassSession
