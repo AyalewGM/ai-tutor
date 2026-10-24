@@ -1,0 +1,148 @@
+{
+  "schema_version": "1.0.0",
+  "product": "Mihur",
+  "revision": "ONTARIO_EQ3_FACTORY_PILOT_V1",
+  "local_skill": "MTH1W.C.ALG.EQ3",
+  "canonical_skill": "MATH.EE.EQUATION.MULTISTEP",
+  "ontario_curriculum_version": "MTH1W-2021",
+  "official_expectation_id": "C1.5",
+  "official_expectation_mapping": "CANDIDATE_PENDING_STANDARDS",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "provenance_rule": "Research structural mathematical demand; never copy or closely paraphrase external questions, diagrams, answer keys, or scoring rubrics.",
+  "research_sources": [
+    {
+      "publisher": "Ontario Ministry of Education",
+      "title": "Grade 9 Mathematics MTH1W C1.5",
+      "url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+      "purpose": "Verify scope: create, solve and verify contextual equations; promote equality-preserving representations",
+      "reuse_policy": "REFERENCE_ONLY_DO_NOT_COPY",
+      "permission_to_rehost_items": false,
+      "verified_research_scope": "OFFICIAL_PAGE_LOCATED_NOT_INDEPENDENT_MAPPING_ACCEPTED"
+    },
+    {
+      "publisher": "EQAO",
+      "title": "Grade 9 mathematics framework and released-question resource directory",
+      "url": "https://www.eqao.com/the-assessments/grade-9-math/",
+      "purpose": "Study response format and reasoning categories; do not ingest assessment item text, illustrations or choices",
+      "reuse_policy": "REFERENCE_ONLY_DO_NOT_COPY",
+      "permission_to_rehost_items": false,
+      "verified_research_scope": "ASSESSMENT_DIRECTORY_REVIEWED_NOT_ITEM_REUSE"
+    }
+  ],
+  "quality_policy": {
+    "target_distinct_families": 10,
+    "minimum_unique_per_mode": 25,
+    "seed_modes": [
+      "GUIDED",
+      "INDEPENDENT"
+    ],
+    "deterministic_math_oracle": "SymPy independently solves an equation reconstructed from the learner-visible original prompt; no trusting canonical_answer",
+    "misconception_collision_rule": "No proposed misconception answer may equal the exact solution or another labelled misconception answer",
+    "task_fingerprint_rule": "Distinct mathematical operands and constraints, not just seed or variant identifiers",
+    "independent_boundary": "No hints, private canonical answer, misconception signatures, evaluator state or mastery credit in projected independent task",
+    "grading_boundary": "Factory checks cannot authorize mastery, modes, local mappings, runtime, staging or production",
+    "critical_release_gates": [
+      "INDEPENDENT_MATH",
+      "INDEPENDENT_PEDAGOGY",
+      "CANONICAL_MAPPING",
+      "BACKEND_SCORER",
+      "FRONTEND_MVE",
+      "MUSE_QA",
+      "ENGINEERING",
+      "AUTHORIZED_STAGING",
+      "AUTHORIZED_PRODUCTION"
+    ]
+  },
+  "families": [
+    {
+      "family_code": "MATH.ALG.EQ.MULTISTEP.DISTRIBUTE",
+      "authoring_origin": "EXISTING_CANONICAL_REUSE",
+      "representation": "Bracket area model, symbolic equality and inverse operations",
+      "misconception_focus": "Distributing to only one term; confusing inverse operation order",
+      "teaching_phases": [
+        "OBSERVE",
+        "PREDICT",
+        "MANIPULATE",
+        "EXPLAIN",
+        "PRACTICE",
+        "DIAGNOSE",
+        "TRANSFER",
+        "VERIFY"
+      ],
+      "review_approved": "NOT_CONFERRED_BY_FACTORY"
+    },
+    {
+      "family_code": "MATH.ALG.EQ.MULTISTEP.BOTH_SIDES",
+      "authoring_origin": "EXISTING_CANONICAL_REUSE",
+      "representation": "Two-sided balance with operation ledger and substitution check",
+      "misconception_focus": "Dropping variable terms from the right-hand side and moving signs without preserving equality",
+      "teaching_phases": [
+        "OBSERVE",
+        "PREDICT",
+        "MANIPULATE",
+        "EXPLAIN",
+        "PRACTICE",
+        "DIAGNOSE",
+        "TRANSFER",
+        "VERIFY"
+      ],
+      "review_approved": "NOT_CONFERRED_BY_FACTORY"
+    },
+    {
+      "family_code": "MATH.ALG.EQ.WORD.TARGET",
+      "authoring_origin": "EXISTING_CANONICAL_REUSE",
+      "representation": "Fixed initial quantity, repeated rate table, variable equation",
+      "misconception_focus": "Ignoring initial quantity; reporting total instead of unknown number of steps",
+      "teaching_phases": [
+        "OBSERVE",
+        "PREDICT",
+        "MANIPULATE",
+        "EXPLAIN",
+        "PRACTICE",
+        "DIAGNOSE",
+        "TRANSFER",
+        "VERIFY"
+      ],
+      "review_approved": "NOT_CONFERRED_BY_FACTORY"
+    }
+  ],
+  "ai_workflow": [
+    {
+      "stage": "RESEARCH",
+      "operator": "AI research agent",
+      "output": "source URL, official clause and version, observed mathematical structures and explicit license constraints"
+    },
+    {
+      "stage": "DESIGN",
+      "operator": "AI question designer",
+      "output": "original family blueprint, target competency, representation, misconceptions, constraints and hidden oracle contract"
+    },
+    {
+      "stage": "BUILD",
+      "operator": "Python/SymPy",
+      "output": "deterministic seeded variants, independent mathematical reconstruction and structural fingerprint"
+    },
+    {
+      "stage": "RED_TEAM",
+      "operator": "deterministic misconception simulator plus optional AI student simulation",
+      "output": "colliding answers, missing reasoning, neutral fail-closed routes, labelled adversarial examples"
+    },
+    {
+      "stage": "QA",
+      "operator": "independent Math and Pedagogical agents",
+      "output": "exact-SHA evidence and accepted/rejected claims, source license review"
+    },
+    {
+      "stage": "INTEGRATE",
+      "operator": "Assessment Backend + Frontend/MVE + Muse + Engineering",
+      "output": "reviewed family-scoped modes/scorer, interactive student journey, synthetic repeat-session QA, authorized staging"
+    }
+  ],
+  "excluded_work": [
+    "No new Ontario-specific mathematical identity",
+    "No teacher PDF/child photo copied to GitHub",
+    "No direct runtime imports, seeding or mode grants",
+    "No learner/Attempt/DiagnosticAttempt/MasteryEvent/variant writes"
+  ]
+}
