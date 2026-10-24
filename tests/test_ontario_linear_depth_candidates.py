@@ -6,10 +6,15 @@ import re
 from fractions import Fraction
 
 import pytest
-from sympy import Eq, Rational, Symbol, solveset, S
+from sympy import Eq, Rational, S, Symbol, solveset
 
 from scripts.author_ontario_linear_depth import (
-    FAMILIES, MODES, SKILLS, create_candidate, create_pack, learner_projection,
+    FAMILIES,
+    MODES,
+    SKILLS,
+    create_candidate,
+    create_pack,
+    learner_projection,
 )
 
 
@@ -80,7 +85,7 @@ def test_mode_pools_and_pack_are_distinct_and_fail_closed():
     for family in FAMILIES:
         group = [q for q in pack["candidates"] if q["candidate_family"] == family]
         assert len({q["task_fingerprint"] for q in group}) == len(group)
-        assert set(q["mode"] for q in group) == set(MODES)
+        assert {q["mode"] for q in group} == set(MODES)
     assert pack == create_pack(count_per_family_mode=25)
 
 
