@@ -19,7 +19,12 @@ from starlette.websockets import WebSocketDisconnect
 from app import collaboration_api as api
 from app.auth import SESSION_COOKIE, _digest, create_session
 from app.auth_models import AuthSession
-from app.collaboration_models import BoardImage, BoardOperation, CollaborationBoard
+from app.collaboration_models import (
+    BoardClearReceipt,
+    BoardImage,
+    BoardOperation,
+    CollaborationBoard,
+)
 from app.core.database import get_db
 from app.middleware.board_upload_limit import BoardUploadLimitMiddleware
 from app.middleware.pii_sanitizer import PIISanitizerMiddleware
@@ -43,6 +48,7 @@ def family(monkeypatch, tmp_path):
         CollaborationBoard,
         BoardOperation,
         BoardImage,
+        BoardClearReceipt,
     ):
         model.__table__.create(engine)
     factory = sessionmaker(engine, expire_on_commit=False)
@@ -660,3 +666,73 @@ def test_live_broker_outage_preserves_durable_saving(family, monkeypatch):
         sender.close()
         other_board.close()
         time.sleep(0.1)
+
+
+def test_clear_my_writing_is_atomic_scoped_and_idempotent(family):
+    client, _, child, *_ = family
+    path = create_board(client, child)
+    parent_mark = mark()
+    assert client.post(path + "/operations", json=parent_mark).status_code == 200
+    client.cookies.set("ai_tutor_learner", "child-cookie")
+    learner_mark = mark()
+    assert client.post(path + "/operations", json=learner_mark).status_code == 200
+    request = {
+        "operation_id": str(uuid.uuid4()),
+        "page_id": None,
+        "expected_revision": 2,
+    }
+    result = client.post(path + "/clear-my-writing", json=request)
+    assert result.status_code == 200, result.text
+    assert result.json()["cleared_operation_ids"] == [learner_mark["operation_id"]]
+    assert result.json()["result_revision"] == 3
+    replay = client.post(path + "/clear-my-writing", json=request)
+    assert replay.status_code == 200
+    assert replay.json()["idempotent_replay"] is True
+    assert replay.json()["result_revision"] == 3
+    assert client.post(path + "/clear-my-writing", json={
+        **request, "expected_revision": 3
+    }).status_code == 409
+    events = client.get(path + "/operations?after=0").json()
+    assert [e["kind"] for e in events] == ["stroke", "stroke", "erase"]
+    assert events[-1]["target"] == learner_mark["operation_id"]
+
+
+def test_clear_my_writing_rejects_stale_and_unauthorized(family):
+    client, _, child, _, other_token, _ = family
+    path = create_board(client, child)
+    assert client.post(path + "/operations", json=mark()).status_code == 200
+    request = {
+        "operation_id": str(uuid.uuid4()),
+        "page_id": None,
+        "expected_revision": 0,
+    }
+    assert client.post(path + "/clear-my-writing", json=request).status_code == 409
+    assert client.post(path + "/clear-my-writing", json={
+        "operation_id": str(uuid.uuid4()), "expected_revision": 1
+    }).status_code == 422
+    client.cookies.set(SESSION_COOKIE, other_token)
+    assert client.post(path + "/clear-my-writing", json={
+        **request, "expected_revision": 1
+    }).status_code == 404
+    client.cookies.clear()
+    assert client.post(path + "/clear-my-writing", json=request).status_code == 401
+
+
+def test_clear_my_writing_does_not_reerase_prior_erased_marks(family):
+    client, _, child, *_ = family
+    path = create_board(client, child)
+    first = mark()
+    assert client.post(path + "/operations", json=first).status_code == 200
+    erase = mark(kind="erase", points=[], target=first["operation_id"])
+    assert client.post(path + "/operations", json=erase).status_code == 200
+    request = {
+        "operation_id": str(uuid.uuid4()),
+        "page_id": None,
+        "expected_revision": 2,
+    }
+    reply = client.post(path + "/clear-my-writing", json=request)
+    assert reply.status_code == 200
+    assert reply.json()["cleared_count"] == 0
+    assert reply.json()["result_revision"] == 2
+    replay = client.post(path + "/clear-my-writing", json=request)
+    assert replay.json()["idempotent_replay"] is True

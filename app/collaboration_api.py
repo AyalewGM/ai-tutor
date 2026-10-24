@@ -35,7 +35,12 @@ from sqlalchemy.orm import Session
 from app.auth import SESSION_COOKIE, _digest, resolve_user_id
 from app.board_images import MAX_UPLOAD_BYTES, normalize_photo
 from app.board_live import LiveFrame, open_live_channel
-from app.collaboration_models import BoardImage, BoardOperation, CollaborationBoard
+from app.collaboration_models import (
+    BoardClearReceipt,
+    BoardImage,
+    BoardOperation,
+    CollaborationBoard,
+)
 from app.core.database import SessionLocal, get_db
 from app.models import Student, User
 from app.parent_models import FamilyPracticePass, LearnerPassSession
@@ -243,6 +248,121 @@ def write_operation(board_id: uuid.UUID, payload: Operation, request: Request, d
     )
     db.commit()
     return {"revision": board.revision}
+
+
+
+class ClearMyWriting(BaseModel):
+    """Client-provided revision freezes the confirmed clear scope."""
+
+    model_config = ConfigDict(extra="forbid")
+    operation_id: uuid.UUID
+    page_id: uuid.UUID | None
+    expected_revision: int = Field(ge=0)
+
+
+@router.post("/boards/{board_id}/clear-my-writing")
+def clear_my_writing(board_id: uuid.UUID, payload: ClearMyWriting, request: Request, db: Db):
+    # Reject an omitted page field rather than silently clearing the base page.
+    if "page_id" not in payload.model_fields_set:
+        raise HTTPException(422, "Explicit page_id is required")
+    board, author = authorized(db, request.cookies, board_id, lock=True)
+    receipt = db.scalar(
+        select(BoardClearReceipt).where(
+            BoardClearReceipt.board_id == board_id,
+            BoardClearReceipt.operation_id == payload.operation_id,
+        )
+    )
+    if receipt is not None:
+        if (
+            receipt.author != author
+            or receipt.page_id != payload.page_id
+            or receipt.expected_revision != payload.expected_revision
+        ):
+            raise HTTPException(409, "IDEMPOTENCY_CONFLICT")
+        return {
+            "operation_id": str(receipt.operation_id),
+            "board_id": str(board_id),
+            "page_id": str(receipt.page_id) if receipt.page_id else None,
+            "expected_revision": receipt.expected_revision,
+            "result_revision": receipt.result_revision,
+            "cleared_count": len(receipt.target_ids),
+            "cleared_operation_ids": receipt.target_ids,
+            "idempotent_replay": True,
+        }
+    if board.closed:
+        raise HTTPException(409, "BOARD_CLOSED")
+    if payload.page_id is not None:
+        exists = db.scalar(
+            select(BoardImage.id).where(
+                BoardImage.board_id == board_id,
+                BoardImage.operation_id == payload.page_id,
+            )
+        )
+        if exists is None:
+            raise HTTPException(404, "Worksheet page not found")
+    if board.revision != payload.expected_revision:
+        raise HTTPException(409, "STALE_BOARD_REVISION")
+    rows = list(db.scalars(
+        select(BoardOperation).where(BoardOperation.board_id == board_id)
+        .order_by(BoardOperation.revision)
+    ))
+    # Only text/stroke records on the selected page may be cleared.
+    hidden = {
+        str(row.payload.get("target"))
+        for row in rows
+        if row.payload.get("kind") in {"undo", "erase"}
+    }
+    targets = [
+        row for row in rows
+        if row.author == author
+        and row.payload.get("kind") in {"stroke", "text"}
+        and row.payload.get("page_id") == (
+            str(payload.page_id) if payload.page_id else None
+        )
+        and str(row.operation_id) not in hidden
+    ]
+    if board.revision + len(targets) > 10000:
+        raise HTTPException(409, "BOARD_FULL")
+    for index, target in enumerate(targets, start=1):
+        # Namespaced UUIDv5 is deterministic across retries, unique per target.
+        operation_id = uuid.uuid5(payload.operation_id, str(target.operation_id))
+        db.add(BoardOperation(
+            board_id=board_id,
+            operation_id=operation_id,
+            revision=board.revision + index,
+            author=author,
+            payload={
+                "kind": "erase",
+                "points": [],
+                "text": "",
+                "x": 40,
+                "y": 60,
+                "target": str(target.operation_id),
+                **({"page_id": str(payload.page_id)} if payload.page_id else {}),
+            },
+        ))
+    board.revision += len(targets)
+    ids = [str(row.operation_id) for row in targets]
+    db.add(BoardClearReceipt(
+        board_id=board_id,
+        operation_id=payload.operation_id,
+        author=author,
+        page_id=payload.page_id,
+        expected_revision=payload.expected_revision,
+        result_revision=board.revision,
+        target_ids=ids,
+    ))
+    db.commit()
+    return {
+        "operation_id": str(payload.operation_id),
+        "board_id": str(board_id),
+        "page_id": str(payload.page_id) if payload.page_id else None,
+        "expected_revision": payload.expected_revision,
+        "result_revision": board.revision,
+        "cleared_count": len(ids),
+        "cleared_operation_ids": ids,
+        "idempotent_replay": False,
+    }
 
 
 @router.post("/boards/{board_id}/photos")
