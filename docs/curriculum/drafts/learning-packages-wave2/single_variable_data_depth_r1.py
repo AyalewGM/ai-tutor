@@ -13,14 +13,14 @@ MODES = ("diagnostic", "guided", "independent", "mastery")
 FAMILIES = ("DATA_TYPE", "GRAPH_CHOICE", "CENTER_CHOICE", "CONSTRUCT_SET",
             "QUARTILES", "ORDINARY_BOX", "MODIFIED_BOX", "COMPARE_BOXES")
 SOCRATIC = {
-    "TYPE": "Are the values categories, measured quantities or separate permitted steps?",
-    "GRAPH": "What must the display show: categories, intervals, proportions or quartiles?",
-    "CENTER": "Which center is least affected by the unusually large observation?",
-    "CONSTRUCT": "Does the sum divided by five equal the requested mean?",
+    "DATA_TYPE": "Are the values categories, measured quantities or separate permitted steps?",
+    "GRAPH_CHOICE": "What must the display show: categories, intervals, proportions or quartiles?",
+    "CENTER_CHOICE": "Which center is least affected by the unusually large observation?",
+    "CONSTRUCT_SET": "Does the sum divided by five equal the requested mean?",
     "QUARTILES": "Where are the medians of the two halves, not their endpoints?",
-    "ORDINARY": "Where does the left whisker of an ordinary plot end?",
-    "MODIFIED": "What is the largest observed value inside the upper fence?",
-    "COMPARE": "Compare Q3 minus Q1 for each group, not the full ranges.",
+    "ORDINARY_BOX": "Where does the left whisker of an ordinary plot end?",
+    "MODIFIED_BOX": "What is the largest observed value inside the upper fence?",
+    "COMPARE_BOXES": "Compare Q3 minus Q1 for each group, not the full ranges.",
 }
 NUMBER = re.compile(r"[+-]?(?:[0-9]+(?:[.][0-9]+)?|[0-9]+/[1-9][0-9]*)$")
 
