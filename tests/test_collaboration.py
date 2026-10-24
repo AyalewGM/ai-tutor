@@ -19,7 +19,12 @@ from starlette.websockets import WebSocketDisconnect
 from app import collaboration_api as api
 from app.auth import SESSION_COOKIE, _digest, create_session
 from app.auth_models import AuthSession
-from app.collaboration_models import BoardClearReceipt, BoardImage, BoardOperation, CollaborationBoard
+from app.collaboration_models import (
+    BoardClearReceipt,
+    BoardImage,
+    BoardOperation,
+    CollaborationBoard,
+)
 from app.core.database import get_db
 from app.middleware.board_upload_limit import BoardUploadLimitMiddleware
 from app.middleware.pii_sanitizer import PIISanitizerMiddleware
