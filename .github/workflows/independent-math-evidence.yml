@@ -34,7 +34,7 @@ jobs:
         run: |
           set -euo pipefail
           gh api "repos/${{ github.repository }}/pulls/$PR" > pr.json
-          jq -e '.state == "open" and .head.repo.full_name == "\${{ github.repository }}"' pr.json
+          jq -e '.state == "open" and .head.repo.full_name == "${{ github.repository }}"' pr.json
           echo "sha=$(jq -er '.head.sha' pr.json)" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v4
         with:
