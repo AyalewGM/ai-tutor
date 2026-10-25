@@ -327,6 +327,7 @@ class LearningState:
     position: int = 0
     prediction_locked: bool = False
     completed: tuple[str, ...] = ()
+    practiced_answer: str | None = None
 
     @property
     def stage(self) -> str:
@@ -447,6 +448,7 @@ def advance_learning_path(
         raise ValueError("learning state does not belong to this variant")
     stage = state.stage
     prediction_locked = state.prediction_locked
+    practiced_answer = state.practiced_answer
     if stage == "COMPLETE":
         raise ValueError("learning path is already complete")
     if stage == "OBSERVE" and not _nonempty(response, "observation"):
@@ -462,8 +464,13 @@ def advance_learning_path(
             raise ValueError("the same nonempty operation must be applied to both sides")
     if stage == "EXPLAIN" and not _nonempty(response, "equality_justification"):
         raise ValueError("an equality-preserving explanation is required")
-    if stage == "PRACTICE" and not _nonempty(response, "exact_answer"):
-        raise ValueError("an exact practice response is required")
+    if stage == "PRACTICE":
+        try:
+            practiced_answer = _fmt(Fraction(str(response["exact_answer"])))
+        except (KeyError, ValueError, ZeroDivisionError):
+            raise ValueError("an exact practice response is required") from None
+        if practiced_answer != variant.answer:
+            raise ValueError("practice answer does not solve the original equation")
     if stage == "DIAGNOSE":
         required = (
             "exact_answer",
@@ -489,7 +496,9 @@ def advance_learning_path(
         except (KeyError, ValueError, ZeroDivisionError):
             raise ValueError("two exact substitution values are required") from None
         p = dict(variant.parameters)
-        answer = Fraction(variant.answer)
+        if practiced_answer is None:
+            raise ValueError("verified practice answer required before verification")
+        answer = Fraction(practiced_answer)
         expected_left = Fraction(p["coefficient"]) * answer + Fraction(p["offset"])
         expected_right = Fraction(p["rhs"])
         if left != expected_left or right != expected_right or left != right:
@@ -501,6 +510,7 @@ def advance_learning_path(
         position=state.position + 1,
         prediction_locked=prediction_locked,
         completed=state.completed + (stage,),
+        practiced_answer=practiced_answer,
     )
 
 
