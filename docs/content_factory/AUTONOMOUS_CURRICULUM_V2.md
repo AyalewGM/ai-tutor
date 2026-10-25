@@ -27,8 +27,8 @@ python -m scripts.curriculum_program_v2 --database /tmp/mihur-v2.db goal \
 ```
 
 The result says `AWAITING_OFFICIAL_SOURCE_INVENTORY` with zero units until a
-Standards reviewer has actually verified a manifest of expectations and course
-versions. The `import-source-manifest` command is a **prototype trusted-operator
+manifest of expectations and course versions is imported with a caller-claimed
+source review for offline planning only. The `import-source-manifest` command is a **prototype trusted-operator
 interface**; its manifest metadata, including reviewer identity and evidence URL,
 is not cryptographically authenticated. An untrusted party could fabricate those
 fields; therefore **do not deploy it as an automated approval gate**.
@@ -57,7 +57,7 @@ Existing Content Factory PR #484 remains independently reviewable.
 
 ## Phase 1b: bounded worker claim and stale-worker fencing
 
-`claim_next` now atomically selects an eligible source-reviewed work unit,
+`claim_next` now atomically selects an eligible work unit (caller-claimed source review for offline planning only),
 records its lease owner, expiration and monotonically increasing fencing
 token, and enforces a configurable retry budget. Concurrent claimers
 using separate SQLite connections cannot claim the same live unit.
