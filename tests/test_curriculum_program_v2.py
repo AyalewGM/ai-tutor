@@ -1,4 +1,6 @@
 """V2 program planner tests (offline, no model/network, no learner DB)."""
+import sqlite3
+
 import pytest
 
 from scripts.curriculum_program_v2 import (
@@ -265,3 +267,39 @@ def test_operator_status_surfaces_expired_retry_exhausted_work(tmp_path):
         assert [u["work_id"] for u in status["retry_exhausted_awaiting_block"]] == [lease["work_id"]]
         assert operator_status(db, program["program_id"], now_epoch=129,
                                max_attempts=1)["retry_exhausted_awaiting_block"] == []
+
+
+def test_failed_commit_rolls_back_planner_writes(tmp_path):
+    evidence = "https://github.com/AyalewGM/ai-tutor/issues/278"
+    path = tmp_path / "locked.db"
+    with connect(path) as setup:
+        program = register_goal(setup, "Ontario mathematics Grades 9-12")
+        import_manifest(setup, program["program_id"], sample_manifest())
+        task_id = next_task(setup, program["program_id"])["id"]
+    reader = sqlite3.connect(path, timeout=0)
+    writer = connect(path)
+    writer.execute("PRAGMA busy_timeout=0")
+    reader.execute("BEGIN")
+    reader.execute("SELECT status FROM work_items").fetchall()
+    with pytest.raises(sqlite3.OperationalError):
+        transition(writer, task_id, "IN_PROGRESS", "operator", evidence, 0)
+    assert not writer.in_transaction
+    reader.rollback()
+    writer.commit()
+    assert writer.execute("SELECT status,version FROM work_items WHERE id=?",
+                          (task_id,)).fetchone() == ("QUEUED", 0)
+    assert writer.execute("SELECT COUNT(*) FROM audit_events").fetchone()[0] == 0
+    reader.close()
+    writer.close()
+
+
+def test_status_and_preview_use_each_leases_stored_retry_budget(tmp_path):
+    with connect(tmp_path / "budget-default.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        lease = claim_next(db, program["program_id"], "w", 100, ttl_seconds=30, max_attempts=1)
+        status = operator_status(db, program["program_id"], now_epoch=130)
+        assert [u["work_id"] for u in status["retry_exhausted_awaiting_block"]] == [lease["work_id"]]
+        assert next_task(db, program["program_id"], 130) is None
+        with pytest.raises(ValueError):
+            operator_status(db, program["program_id"], now_epoch=130, max_attempts=0)
