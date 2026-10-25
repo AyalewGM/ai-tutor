@@ -1,0 +1,126 @@
+{
+  "package_id": "CANONICAL-GRADE8-INVERSE-OPERATIONS-DEPTH-R1",
+  "revision": 1,
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "build_once_map_many": true,
+  "scope": {
+    "grade": 8,
+    "existing_skills": [
+      "M8.ALG.INVERSE.ADD",
+      "M8.ALG.INVERSE.MULT"
+    ],
+    "family_count": 12,
+    "new_canonical_identity_created": false,
+    "jurisdiction_bank_created": false,
+    "curriculum_mapping_changed": false,
+    "dc_or_virginia_grade8_mapping_activated": false
+  },
+  "reuse_first_audit": {
+    "main_sha": "518373df175c9de114845a5065a7588de2a43beb",
+    "audit_issue": 446,
+    "audit_pr": 447,
+    "evidence": "The synthetic persisted-question audit reports M8.ALG.INVERSE.ADD and M8.ALG.INVERSE.MULT at two distinct stored tasks each. This does not prove learner-visible availability, mode eligibility, or production counts.",
+    "existing_source": "scripts/seed_sprint1.py",
+    "learner_visible_availability": "NOT_VERIFIED",
+    "stored_candidate_mode_metadata": "UNKNOWN_PER_TARGET_ROW",
+    "actual_gap": "Both populated atomic skills have only coefficient-level stored variation and lack a reviewed shared package of distinct representations, contexts, error analysis, exact rational cases, and unseen transfer.",
+    "planned_improvement": "Author shared deterministic depth once as a runtime-disabled sidecar; preserve all stored rows and mappings."
+  },
+  "depth_contract": {
+    "distinct_families": 12,
+    "coefficient_swaps_are_variants": true,
+    "teaching_flow": [
+      "OBSERVE",
+      "PREDICT",
+      "MANIPULATE",
+      "EXPLAIN",
+      "PRACTICE",
+      "DIAGNOSE",
+      "TRANSFER",
+      "VERIFY"
+    ],
+    "representation_progression": [
+      "CONCRETE",
+      "VISUAL",
+      "SYMBOLIC"
+    ],
+    "mode_namespaces": [
+      "diagnostic",
+      "guided",
+      "independent",
+      "mastery"
+    ],
+    "guided_classification": "TWO_PROBE_REQUIRED_FAIL_CLOSED",
+    "independent_and_mastery": "SEPARATE_UNHINTED_ITEMS",
+    "exact_arithmetic": "fractions.Fraction",
+    "answer_equivalence": "any exact integer or fraction equal to the oracle",
+    "decimal_approximation_required": false
+  },
+  "source_provenance": [
+    {
+      "publisher": "Maryland State Department of Education",
+      "url": "https://msde.maryland.gov/media/17821",
+      "document_title": "Grade 8 MCCRS Mathematics Companion Guide",
+      "version_date": "Version 1, February 2026; standards adopted July 2025",
+      "page": 24,
+      "standard_id": "8.AT.B.3",
+      "access_date": "2026-10-25",
+      "use": "Current scope and teaching-aim research: rational coefficients, equality preservation, negative-number error analysis, multiple strategies, explanation, and varied mastery evidence.",
+      "license_adaptation": "Research reference only. No example, wording, diagram, or protected expression was reproduced."
+    },
+    {
+      "publisher": "Montgomery County Public Schools",
+      "url": "https://www.montgomeryschoolsmd.org/curriculum/math-support/middle/math8-unit4",
+      "document_title": "Math 8 - Unit 4 - Linear Equations and Linear Systems",
+      "version_date": "Live page; no page-level revision date displayed",
+      "page": "web page, Puzzle Problems section",
+      "standard_id": "LOCAL_SEQUENCE_REFERENCE_ONLY",
+      "access_date": "2026-10-25",
+      "use": "Local teaching-aim research for balanced equations and applying the same operation to both sides.",
+      "license_adaptation": "Page attributes underlying IM 6-8 Math to Open Up Resources under CC BY 4.0. This package nevertheless uses only high-level mathematical aims and entirely original prompts, contexts, diagrams-as-text, and parameterization."
+    },
+    {
+      "publisher": "Montgomery County Public Schools",
+      "url": "https://www.montgomeryschoolsmd.org/curriculum/math-support/middle/math7-unit5",
+      "document_title": "Math 7 - Unit 5 - Rational Number Arithmetic",
+      "version_date": "Live page; no page-level revision date displayed",
+      "page": "web page",
+      "standard_id": "PREREQUISITE_EVIDENCE_ONLY",
+      "access_date": "2026-10-25",
+      "use": "Prerequisite teaching-aim research for additive opposites and multiplicative reciprocals; not evidence of Grade 8 alignment.",
+      "license_adaptation": "No task wording or diagram was reproduced; all generated material is original."
+    }
+  ],
+  "accessibility": {
+    "keyboard_no_drag_required": true,
+    "screen_reader_equation_order": true,
+    "non_colour_cues": true,
+    "reduced_motion": true,
+    "focus_preservation": true,
+    "exact_fraction_input": true
+  },
+  "persistence_boundary": {
+    "registered_by_app": false,
+    "seeded": false,
+    "selector_or_scorer_changed": false,
+    "learner_records_changed": false,
+    "attempt_records_changed": false,
+    "diagnostic_attempt_records_changed": false,
+    "mastery_events_changed": false,
+    "variant_history_changed": false,
+    "idempotence_evidence": "Pure same-input replay; persistence remains an Assessment Backend gate."
+  },
+  "review_gates": {
+    "mathematical_review": "PENDING",
+    "pedagogical_review": "PENDING",
+    "source_and_mapping_review": "PENDING",
+    "assessment_backend": "PENDING",
+    "frontend_rendering": "PENDING",
+    "muse_browser_qa": "PENDING",
+    "engineering_release": "PENDING",
+    "deployed": false
+  },
+  "copyright": "Original Mihur-authored tasks and support. Public access was not treated as permission to copy source expression."
+}
