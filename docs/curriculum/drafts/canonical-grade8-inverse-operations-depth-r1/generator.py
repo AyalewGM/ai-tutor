@@ -383,7 +383,7 @@ def stage_payload(variant: Variant, state: LearningState) -> dict[str, object]:
             "stage": stage,
             "instruction": "Apply one operation to the complete left and right sides.",
             "representation": variant.representation[1],
-            "response_fields": ["left_operation", "right_operation"],
+            "response_fields": ["left_operation", "right_operation", "operation_value", "resulting_x"],
             "same_operation_required": True,
         }
     if stage == "EXPLAIN":
@@ -462,6 +462,24 @@ def advance_learning_path(
         right = response.get("right_operation")
         if not prediction_locked or not isinstance(left, str) or left != right or not left:
             raise ValueError("the same nonempty operation must be applied to both sides")
+        p = dict(variant.parameters)
+        a, b, c = (Fraction(p[key]) for key in ("coefficient", "offset", "rhs"))
+        try:
+            value = Fraction(str(response["operation_value"]))
+            resulting_x = Fraction(str(response["resulting_x"]))
+        except (KeyError, ValueError, ZeroDivisionError):
+            raise ValueError("exact inverse value and resulting x are required") from None
+        if a == 1 and b != 0:
+            required_operation = "SUBTRACT" if b > 0 else "ADD"
+            required_value = abs(b)
+        elif a != 1 and b == 0:
+            required_operation = "DIVIDE"
+            required_value = a
+        else:
+            raise ValueError("unsupported one-step inverse structure")
+        if (left != required_operation or value != required_value
+                or resulting_x != (c - b) / a):
+            raise ValueError("transformation must isolate x with exact inverse arithmetic")
     if stage == "EXPLAIN" and not _nonempty(response, "equality_justification"):
         raise ValueError("an equality-preserving explanation is required")
     if stage == "PRACTICE":
