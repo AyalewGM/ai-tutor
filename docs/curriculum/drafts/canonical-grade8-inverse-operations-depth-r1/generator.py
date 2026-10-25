@@ -18,6 +18,16 @@ STATUS: Final = "DRAFT_UNVERIFIED"
 RUNTIME_ACTIVATION: Final = False
 NAMESPACE: Final = "canonical-grade8:inverse-operations-depth-r1"
 MODES: Final = frozenset({"diagnostic", "guided", "independent", "mastery"})
+TEACHING_STAGES: Final = (
+    "OBSERVE",
+    "PREDICT",
+    "MANIPULATE",
+    "EXPLAIN",
+    "PRACTICE",
+    "DIAGNOSE",
+    "TRANSFER",
+    "VERIFY",
+)
 
 ADD_SKILL: Final = "M8.ALG.INVERSE.ADD"
 MULT_SKILL: Final = "M8.ALG.INVERSE.MULT"
@@ -93,69 +103,112 @@ _REPAIR: Final = MappingProxyType(
             "What operation is attached to x in the original equation?",
             "Which opposite operation must be applied to both sides to keep equality?",
             "Show the same signed counter change on both balance pans.",
+            "This response repeats the attached operation. Equality is preserved by applying the opposite operation to both complete sides.",
         ),
         "EQ_005": (
             "Which side contains x, and does that change what equality means?",
             "Can you swap the complete left and right expressions before isolating x?",
             "Rotate the whole balance; do not move a term across the equals sign.",
+            "Equality is symmetric: the complete sides may exchange positions, but a term cannot move alone and change sign without an operation on both sides.",
         ),
         "EQ_006": (
             "What is the sign of the offset, including its numerator?",
             "What exact opposite fraction added to both sides makes that offset zero?",
             "Partition both sides into the same denominator before cancelling opposites.",
+            "The response loses part of the signed fraction. The exact additive opposite must include the original sign, numerator, and denominator.",
         ),
         "EQ_007": (
             "Does the stated change describe the start, the change, or the final value?",
             "What equation reconstructs final = start + change?",
             "Place start, signed change, and final on a labelled number line.",
+            "The response confuses the start, signed change, and final value. Reconstructing final = start + change identifies which quantity is unknown.",
         ),
         "EQ_003": (
             "Is the coefficient multiplying x or being added to x?",
             "Which division applied to both sides makes the coefficient equal to 1?",
             "Partition both balance pans into the same number of equal groups.",
+            "The response multiplies by the coefficient again. Because the coefficient multiplies x, equal division on both sides is the preserving inverse.",
         ),
         "EQ_008": (
             "What operation does the fraction bar apply to x?",
             "What multiplication on both sides undoes division by the divisor?",
             "Regroup each side into equal sets of the divisor before recombining.",
+            "The response divides an already divided quantity again. Multiplication by the divisor recomposes the whole on both sides.",
         ),
         "EQ_009": (
             "What is the sign of the coefficient multiplying x?",
             "After division, what sign results from the quotient of the two signed values?",
             "Label the signed coefficient before partitioning both sides equally.",
+            "The response drops the coefficient's negative sign. Dividing by a signed coefficient must preserve both its magnitude and sign.",
         ),
         "EQ_010": (
             "Which exact number multiplies x?",
             "What reciprocal makes that coefficient equal to 1, and what must happen on the other side?",
             "Use equal fraction strips to show reciprocal multiplication on both sides.",
+            "The response uses the coefficient again instead of its reciprocal. Only the reciprocal makes the rational coefficient equal to one.",
         ),
         "EQ_011": (
             "Does the total name one group or all equal groups?",
             "Which quotient recovers the amount in one group?",
             "Partition the total into the stated number of equal, labelled groups.",
+            "The response treats the total as one group. Equal sharing by the number of groups recovers the amount in each group.",
         ),
         "EQ_004": (
             "In the term ax, what operation connects a and x?",
             "Would subtracting a undo multiplication by a? Test by substitution.",
             "Replace repeated x-groups with equal boxes before choosing the inverse.",
+            "The response treats a coefficient as an addend. In ax, a and x are multiplied, so subtraction cannot undo the relationship.",
         ),
     }
 )
 
-_PROBE_TOKEN: Final = MappingProxyType(
+_STRATEGY_OPTION: Final = MappingProxyType(
     {
-        "EQ_001": "REPEATED_THE_OFFSET_OPERATION",
-        "EQ_005": "MOVED_A_TERM_ACROSS_EQUALS",
-        "EQ_006": "IGNORED_FRACTION_SIGN_OR_DENOMINATOR",
-        "EQ_007": "CONFUSED_START_CHANGE_FINAL",
-        "EQ_003": "MULTIPLIED_BY_COEFFICIENT_AGAIN",
-        "EQ_008": "DIVIDED_BY_DIVISOR_AGAIN",
-        "EQ_009": "DROPPED_NEGATIVE_COEFFICIENT",
-        "EQ_010": "USED_COEFFICIENT_NOT_RECIPROCAL",
-        "EQ_011": "USED_TOTAL_AS_ONE_GROUP",
-        "EQ_004": "TREATED_COEFFICIENT_AS_ADDEND",
+        "EQ_001": (
+            "REPEATED_ATTACHED_OPERATION",
+            "I repeated the operation attached to x on the other value.",
+        ),
+        "EQ_005": (
+            "MOVED_TERM_ACROSS_EQUALS",
+            "I moved a term across the equals sign and changed it there.",
+        ),
+        "EQ_006": (
+            "IGNORED_FRACTION_DETAIL",
+            "I worked with part of the fraction but not its full signed value.",
+        ),
+        "EQ_007": (
+            "CONFUSED_START_CHANGE_FINAL",
+            "I used the final value as the start or treated the change as the final value.",
+        ),
+        "EQ_003": (
+            "MULTIPLIED_BY_COEFFICIENT_AGAIN",
+            "I multiplied by the coefficient again.",
+        ),
+        "EQ_008": (
+            "DIVIDED_BY_DIVISOR_AGAIN",
+            "I divided by the divisor again.",
+        ),
+        "EQ_009": (
+            "DROPPED_NEGATIVE_COEFFICIENT",
+            "I used the coefficient's magnitude but did not keep its negative sign.",
+        ),
+        "EQ_010": (
+            "USED_COEFFICIENT_NOT_RECIPROCAL",
+            "I multiplied by the coefficient instead of its reciprocal.",
+        ),
+        "EQ_011": (
+            "USED_TOTAL_AS_ONE_GROUP",
+            "I treated the total as the amount in one group.",
+        ),
+        "EQ_004": (
+            "TREATED_COEFFICIENT_AS_ADDEND",
+            "I treated the coefficient as though it were added to x.",
+        ),
     }
 )
+
+_ADD_STRATEGIES: Final = ("EQ_001", "EQ_005", "EQ_006", "EQ_007")
+_MULT_STRATEGIES: Final = ("EQ_003", "EQ_008", "EQ_009", "EQ_010", "EQ_011", "EQ_004")
 
 
 def _fmt(value: Fraction) -> str:
@@ -164,6 +217,48 @@ def _fmt(value: Fraction) -> str:
 
 def _signed(value: Fraction) -> str:
     return f"+ {_fmt(value)}" if value >= 0 else f"- {_fmt(-value)}"
+
+
+def equation_display(variant: Variant) -> str:
+    """Return the task equation without revealing an inverse operation."""
+
+    p = dict(variant.parameters)
+    coefficient = Fraction(p["coefficient"])
+    offset = Fraction(p["offset"])
+    rhs = p["rhs"]
+    if variant.family == FAMILIES[7]:
+        divisor = 1 / coefficient
+        left = f"x/{_fmt(divisor)}"
+    elif coefficient == 1:
+        left = "x"
+    elif coefficient == -1:
+        left = "-x"
+    else:
+        left = f"{_fmt(coefficient)}x"
+    if offset:
+        left = f"{left} {_signed(offset)}"
+    if variant.family == FAMILIES[2]:
+        return f"{rhs} = {left}"
+    return f"{left} = {rhs}"
+
+
+def _unhinted_prompt(variant: Variant) -> str:
+    """Keep independent/mastery wording free of operation or repair cues."""
+
+    p = dict(variant.parameters)
+    if variant.family == FAMILIES[4]:
+        return (
+            f"A quantity changed by {_fmt(Fraction(p['offset']))} and ended at "
+            f"{p['rhs']}. Find the starting value and verify it."
+        )
+    if variant.family == FAMILIES[10]:
+        return (
+            f"{p['coefficient']} identical groups have total {p['rhs']}. "
+            "Find the amount in each group and verify it."
+        )
+    if variant.family in {FAMILIES[5], FAMILIES[11]}:
+        return variant.prompt
+    return f"Solve {equation_display(variant)} exactly and verify by substitution."
 
 
 def _validate(family: str, seed: int, mode: str) -> None:
@@ -194,16 +289,16 @@ class Variant:
     misconception_answers: tuple[tuple[str, str], ...]
 
     def public_payload(self) -> dict[str, object]:
-        """Return an answer-free learner contract."""
+        """Return the answer-free entry contract with mode-specific stages."""
 
+        state = start_learning_path(self)
         payload: dict[str, object] = {
             "variant_id": self.variant_id,
             "family": self.family,
             "mode": self.mode,
             "structure": self.structure,
-            "prompt": self.prompt,
-            "response_fields": ["exact_answer", "equality_justification"],
-            "representation": list(self.representation),
+            "learning_path": list(state.stages),
+            "initial_stage": stage_payload(self, state),
             "accessibility": dict(ACCESSIBILITY_CONTRACT),
         }
         if self.mode in {"independent", "mastery"}:
@@ -220,6 +315,189 @@ class Variant:
             "answer_equivalence": "Any exact integer or fraction equal to the oracle is valid.",
             "domain_boundary": self.equivalence_boundary,
         }
+
+
+@dataclass(frozen=True)
+class LearningState:
+    """Pure, renderer-neutral evidence state for one learner path."""
+
+    variant_id: str
+    mode: str
+    stages: tuple[str, ...]
+    position: int = 0
+    prediction_locked: bool = False
+    completed: tuple[str, ...] = ()
+
+    @property
+    def stage(self) -> str:
+        return "COMPLETE" if self.position >= len(self.stages) else self.stages[self.position]
+
+
+def _mode_stages(mode: str) -> tuple[str, ...]:
+    if mode == "guided":
+        return TEACHING_STAGES
+    if mode == "diagnostic":
+        return ("DIAGNOSE", "TRANSFER", "VERIFY")
+    return ("PRACTICE", "VERIFY")
+
+
+def start_learning_path(variant: Variant) -> LearningState:
+    return LearningState(
+        variant_id=variant.variant_id,
+        mode=variant.mode,
+        stages=_mode_stages(variant.mode),
+    )
+
+
+def stage_payload(variant: Variant, state: LearningState) -> dict[str, object]:
+    """Reveal only the material allowed at the current stage."""
+
+    if state.variant_id != variant.variant_id or state.mode != variant.mode:
+        raise ValueError("learning state does not belong to this variant")
+    stage = state.stage
+    if stage == "COMPLETE":
+        return {"stage": stage, "response_fields": []}
+    if stage == "OBSERVE":
+        return {
+            "stage": stage,
+            "instruction": "Describe what is equal before choosing an operation.",
+            "equation": equation_display(variant),
+            "representation": variant.representation[0],
+            "response_fields": ["observation"],
+            "reveals_inverse_operation": False,
+        }
+    if stage == "PREDICT":
+        return {
+            "stage": stage,
+            "instruction": "Predict which operation should be applied to both complete sides.",
+            "response_fields": ["operation_choice"],
+            "choices": ["ADD", "SUBTRACT", "MULTIPLY", "DIVIDE"],
+            "lock_before_next": True,
+            "reveals_inverse_operation": False,
+        }
+    if stage == "MANIPULATE":
+        if not state.prediction_locked:
+            raise ValueError("prediction must be locked before manipulation is revealed")
+        return {
+            "stage": stage,
+            "instruction": "Apply one operation to the complete left and right sides.",
+            "representation": variant.representation[1],
+            "response_fields": ["left_operation", "right_operation"],
+            "same_operation_required": True,
+        }
+    if stage == "EXPLAIN":
+        return {
+            "stage": stage,
+            "instruction": "Explain why the transformation preserves equality.",
+            "representation": variant.representation[2],
+            "response_fields": ["equality_justification"],
+        }
+    if stage == "PRACTICE":
+        return {
+            "stage": stage,
+            "instruction": (
+                variant.prompt if variant.mode == "guided" else _unhinted_prompt(variant)
+            ),
+            "response_fields": ["exact_answer"],
+            "support": "FADING_GUIDED" if variant.mode == "guided" else "NONE_UNHINTED",
+        }
+    if stage == "DIAGNOSE":
+        return {
+            "stage": stage,
+            "instruction": "Use answer, strategy, and substitution evidence before selecting a repair.",
+            "response_fields": [
+                "exact_answer",
+                "strategy_choice",
+                "substitution_left",
+                "substitution_right",
+            ],
+            "classification_from_one_wrong_answer": False,
+        }
+    if stage == "TRANSFER":
+        return {
+            "stage": stage,
+            "instruction": "Complete a fresh different-family item without hints.",
+            "response_fields": [
+                "independent_variant_id",
+                "independent_family",
+                "independent_mode",
+                "support_used",
+            ],
+            "required_mode": "independent",
+        }
+    return {
+        "stage": "VERIFY",
+        "instruction": "Substitute the completed result and compare both sides exactly.",
+        "response_fields": ["substitution_left", "substitution_right"],
+        "exact_equality_required": True,
+    }
+
+
+def _nonempty(response: dict[str, object], field: str) -> bool:
+    value = response.get(field)
+    return isinstance(value, str) and bool(value.strip())
+
+
+def advance_learning_path(
+    variant: Variant, state: LearningState, response: dict[str, object]
+) -> LearningState:
+    """Advance only when the current stage's learner evidence is complete."""
+
+    if state.variant_id != variant.variant_id or state.mode != variant.mode:
+        raise ValueError("learning state does not belong to this variant")
+    stage = state.stage
+    prediction_locked = state.prediction_locked
+    if stage == "COMPLETE":
+        raise ValueError("learning path is already complete")
+    if stage == "OBSERVE" and not _nonempty(response, "observation"):
+        raise ValueError("observation evidence is required")
+    if stage == "PREDICT":
+        if response.get("operation_choice") not in {"ADD", "SUBTRACT", "MULTIPLY", "DIVIDE"}:
+            raise ValueError("a supported operation prediction is required")
+        prediction_locked = True
+    if stage == "MANIPULATE":
+        left = response.get("left_operation")
+        right = response.get("right_operation")
+        if not prediction_locked or not isinstance(left, str) or left != right or not left:
+            raise ValueError("the same nonempty operation must be applied to both sides")
+    if stage == "EXPLAIN" and not _nonempty(response, "equality_justification"):
+        raise ValueError("an equality-preserving explanation is required")
+    if stage == "PRACTICE" and not _nonempty(response, "exact_answer"):
+        raise ValueError("an exact practice response is required")
+    if stage == "DIAGNOSE":
+        required = (
+            "exact_answer",
+            "strategy_choice",
+            "substitution_left",
+            "substitution_right",
+        )
+        if not all(_nonempty(response, field) for field in required):
+            raise ValueError("answer, strategy, and substitution evidence are required")
+    if stage == "TRANSFER":
+        if (
+            not _nonempty(response, "independent_variant_id")
+            or not _nonempty(response, "independent_family")
+            or response.get("independent_mode") != "independent"
+            or response.get("independent_family") == variant.family
+            or response.get("support_used") is not False
+        ):
+            raise ValueError("fresh different-family unhinted independent transfer is required")
+    if stage == "VERIFY":
+        try:
+            left = Fraction(str(response["substitution_left"]))
+            right = Fraction(str(response["substitution_right"]))
+        except (KeyError, ValueError, ZeroDivisionError):
+            raise ValueError("two exact substitution values are required") from None
+        if left != right:
+            raise ValueError("verification requires exact equality")
+    return LearningState(
+        variant_id=state.variant_id,
+        mode=state.mode,
+        stages=state.stages,
+        position=state.position + 1,
+        prediction_locked=prediction_locked,
+        completed=state.completed + (stage,),
+    )
 
 
 def _variant(
@@ -488,12 +766,13 @@ def verification_equation(variant: Variant) -> str:
 
 
 def guided_probe(variant: Variant, observed_answer: str) -> dict[str, object] | None:
-    """Ask a neutral second probe; do not infer a misconception from one answer."""
+    """Expose a learner-facing second probe without inferring from one answer."""
 
     if variant.mode != "guided":
         return None
     try:
-        observed = _fmt(Fraction(observed_answer))
+        observed_value = Fraction(observed_answer)
+        observed = _fmt(observed_value)
     except (ValueError, ZeroDivisionError):
         return {
             "classification": "UNPARSEABLE_NEEDS_CLARIFICATION",
@@ -507,6 +786,9 @@ def guided_probe(variant: Variant, observed_answer: str) -> dict[str, object] | 
     candidates = tuple(
         code for code, answer in variant.misconception_answers if answer == observed
     )
+    strategy_codes = (
+        _ADD_STRATEGIES if variant.canonical_skill == ADD_SKILL else _MULT_STRATEGIES
+    )
     return {
         "classification": "EVIDENCE_INCOMPLETE_NEEDS_STRATEGY_PROBE",
         "questions": (
@@ -514,18 +796,41 @@ def guided_probe(variant: Variant, observed_answer: str) -> dict[str, object] | 
             "Substitute your result: what value does each side become?",
         ),
         "candidate_count": len(candidates),
+        "response_fields": (
+            "strategy_choice",
+            "substitution_left",
+            "substitution_right",
+        ),
+        "strategy_choices": tuple(
+            {
+                "id": _STRATEGY_OPTION[code][0],
+                "label": _STRATEGY_OPTION[code][1],
+            }
+            for code in strategy_codes
+        )
+        + (
+            {
+                "id": "OTHER_OR_UNSURE",
+                "label": "I used a different strategy or I am not sure.",
+            },
+        ),
     }
 
 
 def guided_repair(
-    variant: Variant, observed_answer: str, strategy_probe: str
+    variant: Variant,
+    observed_answer: str,
+    strategy_choice: str,
+    substitution_left: str,
+    substitution_right: str,
 ) -> dict[str, object] | None:
-    """Return targeted repair only after answer and strategy probes agree."""
+    """Return targeted repair only when three learner evidence fields agree."""
 
     if variant.mode != "guided":
         return None
     try:
-        observed = _fmt(Fraction(observed_answer))
+        observed_value = Fraction(observed_answer)
+        observed = _fmt(observed_value)
     except (ValueError, ZeroDivisionError):
         return {
             "classification": "UNCLASSIFIED_NO_ANSWER_REVEAL",
@@ -533,9 +838,32 @@ def guided_repair(
         }
     if observed == variant.answer:
         return {"classification": "CORRECT_NO_REMEDIATION", "questions": ()}
+    p = dict(variant.parameters)
+    try:
+        reported_left = Fraction(substitution_left)
+        reported_right = Fraction(substitution_right)
+    except (ValueError, ZeroDivisionError):
+        return {
+            "classification": "UNCLASSIFIED_NO_ANSWER_REVEAL",
+            "questions": (
+                "Substitute your value and report both sides as exact integers or fractions.",
+            ),
+        }
+    expected_left = (
+        Fraction(p["coefficient"]) * observed_value + Fraction(p["offset"])
+    )
+    expected_right = Fraction(p["rhs"])
+    if reported_left != expected_left or reported_right != expected_right:
+        return {
+            "classification": "UNCLASSIFIED_NO_ANSWER_REVEAL",
+            "questions": (
+                "Recalculate the complete left and right sides after substitution.",
+                "Keep each signed fraction exact before comparing them.",
+            ),
+        }
     candidates = tuple(
         code for code, answer in variant.misconception_answers
-        if answer == observed and _PROBE_TOKEN[code] == strategy_probe
+        if answer == observed and _STRATEGY_OPTION[code][0] == strategy_choice
     )
     if len(candidates) != 1:
         return {
@@ -546,19 +874,14 @@ def guided_repair(
             ),
         }
     code = candidates[0]
-    q1, q2, move = _REPAIR[code]
+    q1, q2, move, explanation = _REPAIR[code]
     return {
         "classification": code,
         "questions": (q1, q2),
         "representation_move": move,
+        "guided_explanation": explanation,
         "fresh_exit_family": TRANSFER_PARTNER[variant.family],
     }
-
-
-def strategy_probe_token(misconception_code: str) -> str:
-    """Testing/reviewer hook for the second-probe contract, not learner copy."""
-
-    return _PROBE_TOKEN[misconception_code]
 
 
 def source_seed(variant: Variant) -> int:
