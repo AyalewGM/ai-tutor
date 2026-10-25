@@ -15,9 +15,6 @@ jobs:
   verify:
     if: contains(fromJSON('[489,472,484]'), github.event.pull_request.number)
     runs-on: ubuntu-latest
-    env:
-      ACTIONS_CACHE_URL: ''
-      ACTIONS_RUNTIME_TOKEN: ''
     strategy:
       fail-fast: false
       matrix:
@@ -55,6 +52,8 @@ jobs:
         env:
           SHA: ${{ steps.pin.outputs.sha }}
           TEST: ${{ matrix.test }}
+          ACTIONS_CACHE_URL: ''
+          ACTIONS_RUNTIME_TOKEN: ''
         run: |
           mkdir -p evidence
           test "$(git rev-parse HEAD)" = "$SHA" || exit 1
