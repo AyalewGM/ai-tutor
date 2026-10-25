@@ -128,8 +128,8 @@ def _case(family: str, rng: random.Random) -> tuple[str, tuple[Fraction, Fractio
 
 
 def create_candidate(family: str, *, seed: str | int, mode: str) -> dict:
-    if family not in FAMILIES or mode not in MODES:
-        raise ValueError("Unknown family or mode")
+    if family not in FAMILIES or mode not in MODES or type(seed) not in (str, int) or isinstance(seed, str) and not seed:
+        raise ValueError("Unknown family, mode or invalid seed")
     prompt, (a, b, c, d), misconception, rationale, hints, wrong = _case(
         family, _rng(family, seed, mode)
     )
@@ -167,7 +167,7 @@ def learner_projection(candidate: dict) -> dict:
 
 
 def create_pack(*, count_per_family_mode: int = 25) -> dict:
-    if not 1 <= count_per_family_mode <= 100:
+    if type(count_per_family_mode) is not int or not 1 <= count_per_family_mode <= 100:
         raise ValueError("count must be in 1..100")
     produced: list[dict] = []
     for family in FAMILIES:
