@@ -1,0 +1,92 @@
+name: Independent mathematical evidence for issue 446
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  self-check:
+    if: github.event.pull_request.number == 491
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m unittest tests/test_independent_math_workflow.py
+  verify:
+    if: contains(fromJSON('[489,472,484]'), github.event.pull_request.number)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {pr: 489, test: tests/test_ontario_linear_depth_candidates.py}
+          - {pr: 472, test: tests/test_single_variable_data_depth_r1.py}
+          - {pr: 484, test: tests/test_math_content_factory.py}
+    steps:
+      - name: Pin exact PR SHA
+        id: pin
+        if: matrix.pr == github.event.pull_request.number
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ matrix.pr }}
+        run: |
+          set -euo pipefail
+          gh api "repos/${{ github.repository }}/pulls/$PR" > pr.json
+          jq -e --arg sha "${{ github.event.pull_request.head.sha }}" '.state == "open" and .head.sha == $sha and .head.repo.full_name == "${{ github.repository }}"' pr.json
+          echo "sha=$(jq -er '.head.sha' pr.json)" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        if: matrix.pr == github.event.pull_request.number
+        with:
+          ref: ${{ steps.pin.outputs.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        if: matrix.pr == github.event.pull_request.number
+        with:
+          python-version: '3.12'
+      - if: matrix.pr == github.event.pull_request.number
+        run: pip install -e '.[dev]'
+      - name: Reconstruct scoped mathematical oracles
+        id: oracle
+        if: matrix.pr == github.event.pull_request.number
+        continue-on-error: true
+        env:
+          SHA: ${{ steps.pin.outputs.sha }}
+          TEST: ${{ matrix.test }}
+          ACTIONS_CACHE_URL: ''
+          ACTIONS_RUNTIME_TOKEN: ''
+        run: |
+          mkdir -p evidence
+          test "$(git rev-parse HEAD)" = "$SHA" || exit 1
+          sha256sum "$TEST" > evidence/test-source.sha256
+          python -m pytest "$TEST" -q --junitxml=evidence/results.xml > evidence/pytest.log 2>&1
+      - name: Save exact revision and verification boundary
+        if: always() && matrix.pr == github.event.pull_request.number && steps.pin.outcome == 'success'
+        env:
+          SHA: ${{ steps.pin.outputs.sha }}
+          PR: ${{ matrix.pr }}
+          RESULT: ${{ steps.oracle.outcome }}
+        run: |
+          mkdir -p evidence
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          Path("evidence/manifest.json").write_text(json.dumps({
+            "issue": 446, "pr": int(os.environ["PR"]), "exact_sha": os.environ["SHA"],
+            "test_result": os.environ["RESULT"], "independent_math_review": "PENDING",
+            "evidence_scope": "PR-authored tests with independently recomputed oracles; separate reviewer required",
+            "no_merge": True, "no_activation": True, "no_learner_history_access": True
+          }, indent=2) + "\n")
+          PY
+      - name: Archive evidence even on test failure
+        if: always() && steps.pin.outcome == 'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: mathematical-evidence-${{ matrix.pr }}-${{ steps.pin.outputs.sha }}
+          path: evidence/
+          retention-days: 90
+      - name: Fail on unverified evidence
+        if: always() && matrix.pr == github.event.pull_request.number
+        env:
+          PIN: ${{ steps.pin.outcome }}
+          ORACLE: ${{ steps.oracle.outcome }}
+        run: test "$PIN" = success && test "$ORACLE" = success
