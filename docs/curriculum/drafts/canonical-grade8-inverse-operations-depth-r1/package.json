@@ -15,7 +15,10 @@
     "new_canonical_identity_created": false,
     "jurisdiction_bank_created": false,
     "curriculum_mapping_changed": false,
-    "dc_or_virginia_grade8_mapping_activated": false
+    "dc_or_virginia_grade8_mapping_activated": false,
+    "maryland_mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+    "maryland_coverage_claim": "8.AT.B.3b_PARTIAL_NON_EXHAUSTIVE",
+    "maryland_full_standard_coverage": false
   },
   "reuse_first_audit": {
     "main_sha": "518373df175c9de114845a5065a7588de2a43beb",
@@ -63,12 +66,18 @@
       "publisher": "Maryland State Department of Education",
       "url": "https://msde.maryland.gov/media/17821",
       "document_title": "Grade 8 MCCRS Mathematics Companion Guide",
-      "version_date": "Version 1, February 2026; standards adopted July 2025",
+      "version_date": "Version 1, February 2026; standards adopted July 29, 2025",
       "page": 24,
-      "standard_id": "8.AT.B.3",
+      "standard_id": "8.AT.B.3b",
       "access_date": "2026-10-25",
-      "use": "Current scope and teaching-aim research: rational coefficients, equality preservation, negative-number error analysis, multiple strategies, explanation, and varied mastery evidence.",
-      "license_adaptation": "Research reference only. No example, wording, diagram, or protected expression was reproduced."
+      "use": "Current scope and teaching-aim research for this bounded 8.AT.B.3b subset: rational coefficients, equality preservation, negative-number error analysis, multiple strategies, and explanation. No full-standard coverage is claimed.",
+      "license_adaptation": "Research reference only. No example, wording, diagram, or protected expression was reproduced.",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "coverage_boundary": "Only the one-step additive/subtractive and multiplicative/divisive equation subset authored in this package; this is not full 8.AT.B.3b coverage.",
+      "excluded_from_coverage_credit": [
+        "8.AT.B.3a (construct and justify equations with one, no, or infinitely many solutions)",
+        "The remaining 8.AT.B.3b scope, including equations that require the distributive property and combining like terms"
+      ]
     },
     {
       "publisher": "Montgomery County Public Schools",
