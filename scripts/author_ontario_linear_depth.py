@@ -105,6 +105,146 @@ _REPAIR_LIBRARY = {
     },
 }
 
+_CONFIRMATION_CHOICES = {
+    "EQ.OMIT_CONSTANT": {
+        "evidence_choice": "DIVIDE_BEFORE_REMOVING_CONSTANT",
+        "choices": (
+            (
+                "DIVIDE_BEFORE_REMOVING_CONSTANT",
+                "Divide by the variable coefficient before removing the additive constant.",
+            ),
+            (
+                "REMOVE_CONSTANT_BOTH_SIDES",
+                "Remove the additive constant with the same inverse operation on both sides.",
+            ),
+            (
+                "CHANGE_ONLY_ONE_SIDE",
+                "Change the side containing the variable without changing the other side.",
+            ),
+        ),
+    },
+    "EQ.MULTIPLY_INSTEAD_OF_DIVIDE_FRACTION": {
+        "evidence_choice": "MULTIPLY_BY_COEFFICIENT_AGAIN",
+        "choices": (
+            (
+                "MULTIPLY_BY_COEFFICIENT_AGAIN",
+                "Multiply by the fractional coefficient again after isolating its product.",
+            ),
+            (
+                "MULTIPLY_BY_RECIPROCAL_BOTH_SIDES",
+                "Multiply both sides by the coefficient's reciprocal.",
+            ),
+            (
+                "REMOVE_DENOMINATOR_ONE_SIDE",
+                "Remove the denominator only from the side containing the variable.",
+            ),
+        ),
+    },
+    "EQ.DROPPED_BRACKET_CONSTANT": {
+        "evidence_choice": "DISTRIBUTE_TO_X_ONLY",
+        "choices": (
+            (
+                "DISTRIBUTE_TO_X_ONLY",
+                "Multiply the factor by x but leave the other term in the parentheses unchanged.",
+            ),
+            (
+                "DISTRIBUTE_TO_EVERY_TERM",
+                "Multiply every term in the parentheses by the outside factor.",
+            ),
+            (
+                "CHANGE_CONSTANT_WITHOUT_MULTIPLYING",
+                "Change the sign of the constant without multiplying it by the outside factor.",
+            ),
+        ),
+    },
+    "EQ.IGNORED_RIGHT_VARIABLE": {
+        "evidence_choice": "LEAVE_RIGHT_VARIABLE_UNCHANGED",
+        "choices": (
+            (
+                "LEAVE_RIGHT_VARIABLE_UNCHANGED",
+                "Solve using only the variable term on the left side.",
+            ),
+            (
+                "SUBTRACT_VARIABLE_TERM_BOTH_SIDES",
+                "Subtract one variable term from both complete sides before dividing.",
+            ),
+            (
+                "ADD_COEFFICIENTS_ACROSS_SIDES",
+                "Add the two variable coefficients because they appear on opposite sides.",
+            ),
+        ),
+    },
+    "EQ.MOVED_LEFT_CONSTANT_WRONG_SIGN": {
+        "evidence_choice": "CHANGE_SIGN_WITHOUT_BALANCING",
+        "choices": (
+            (
+                "CHANGE_SIGN_WITHOUT_BALANCING",
+                "Move the constant and change its sign without applying an "
+                "operation to both sides.",
+            ),
+            (
+                "APPLY_INVERSE_BOTH_SIDES",
+                "Apply the inverse operation to both complete sides.",
+            ),
+            (
+                "KEEP_SIGN_AND_MOVE",
+                "Move the constant to the other side without changing anything else.",
+            ),
+        ),
+    },
+    "EQ.OMITTED_LEFT_CONSTANT": {
+        "evidence_choice": "DIVIDE_WHILE_CONSTANT_REMAINS",
+        "choices": (
+            (
+                "DIVIDE_WHILE_CONSTANT_REMAINS",
+                "Divide by the variable coefficient while the additive constant remains.",
+            ),
+            (
+                "REMOVE_ADDITIVE_TERM_FIRST",
+                "Remove the additive term from both sides before dividing.",
+            ),
+            (
+                "DROP_CONSTANT",
+                "Drop the additive constant because it has no variable.",
+            ),
+        ),
+    },
+    "EQ.ADDED_VARIABLE_COEFFICIENTS": {
+        "evidence_choice": "ADD_OPPOSITE_SIDE_COEFFICIENTS",
+        "choices": (
+            (
+                "ADD_OPPOSITE_SIDE_COEFFICIENTS",
+                "Add the coefficients because the variable terms are on opposite sides.",
+            ),
+            (
+                "SUBTRACT_ONE_VARIABLE_TERM_BOTH_SIDES",
+                "Subtract one complete variable term from both sides.",
+            ),
+            (
+                "CANCEL_VARIABLES_WITHOUT_OPERATION",
+                "Cancel both variable terms without applying the same operation to each side.",
+            ),
+        ),
+    },
+    "EQ.USED_RECIPROCAL_WRONG_DIRECTION": {
+        "evidence_choice": "MULTIPLY_BY_COEFFICIENT_AGAIN",
+        "choices": (
+            (
+                "MULTIPLY_BY_COEFFICIENT_AGAIN",
+                "Multiply by the variable coefficient again.",
+            ),
+            (
+                "DIVIDE_OR_RECIPROCAL",
+                "Divide by the coefficient or multiply by its reciprocal on both sides.",
+            ),
+            (
+                "FLIP_VARIABLE",
+                "Replace the variable with its reciprocal.",
+            ),
+        ),
+    },
+}
+
 
 def _rng(family: str, seed: str | int, mode: str) -> random.Random:
     key = f"mihur-mth1w-linear-draft-v1|{family}|{mode}|{seed}"
@@ -326,12 +466,20 @@ def _diagnostic_contract(
             continue
         seen.add(wrong)
         repair = _REPAIR_LIBRARY[code]
+        confirmation = _CONFIRMATION_CHOICES[code]
         signals.append(
             {
                 "misconception_code": code,
                 "candidate_response": f"x={_fmt(wrong)}",
                 "confirmation_probe_for_author_review": repair["confirmation"],
                 "confirmation_oracle_for_author_review": repair["oracle"],
+                "confirmation_choices_for_learner": [
+                    {"id": choice_id, "text": text}
+                    for choice_id, text in confirmation["choices"]
+                ],
+                "confirmation_evidence_choice_for_author_review": confirmation[
+                    "evidence_choice"
+                ],
                 "socratic_repair_for_author_review": list(repair["questions"]),
             }
         )
@@ -474,6 +622,266 @@ def create_unhinted_transfer(
     raise ArithmeticError("Different-reasoning-family transfer budget exhausted")
 
 
+def _parse_exact_response(response: str | None) -> Fraction | None:
+    """Parse a bounded exact response for the author-side journey simulator."""
+    if not isinstance(response, str):
+        return None
+    value = response.strip().replace(" ", "")
+    if value.casefold().startswith("x="):
+        value = value[2:]
+    try:
+        return Fraction(value)
+    except (ValueError, ZeroDivisionError):
+        return None
+
+
+def _signal_for_response(candidate: dict, response: str) -> dict | None:
+    parsed = _parse_exact_response(response)
+    if parsed is None:
+        return None
+    for signal in candidate["diagnostic_contract_for_author_review"]["signals"]:
+        if _parse_exact_response(signal["candidate_response"]) == parsed:
+            return signal
+    return None
+
+
+def _create_target_preserving_guided_retest(
+    source: dict,
+    misconception_code: str,
+) -> tuple[dict, dict]:
+    """Find a fresh same-family task that can probe the confirmed reasoning error."""
+    for attempt in range(2048):
+        target = create_candidate(
+            source["candidate_family"],
+            seed=(
+                f"guided-retest|{source['variant_id']}|"
+                f"{misconception_code}|{attempt}"
+            ),
+            mode="GUIDED",
+        )
+        if target["task_fingerprint"] == source["task_fingerprint"]:
+            continue
+        if target["canonical_answer"] == source["canonical_answer"]:
+            continue
+        for signal in target["diagnostic_contract_for_author_review"]["signals"]:
+            if signal["misconception_code"] == misconception_code:
+                return target, signal
+    raise ArithmeticError("Target-preserving guided retest budget exhausted")
+
+
+def authored_journey_learner_projection(journey: dict) -> dict:
+    """Expose only the learner-operable part of an author-review journey."""
+    stage = journey["stage"]
+    result = {
+        "stage": stage,
+        "guided_success_counts_as_independent": False,
+        "runtime_credit_authorized": False,
+    }
+    if stage == "PRACTICE_RETRY":
+        result["neutral_prompt"] = journey["neutral_prompt"]
+    elif stage == "CONFIRM_REASONING":
+        result["confirmation_prompt"] = journey["confirmation_prompt"]
+        result["confirmation_choices"] = journey["confirmation_choices"]
+    elif stage in ("GUIDED_RETEST", "GUIDED_RETEST_RETRY"):
+        result["socratic_repair_questions"] = journey[
+            "socratic_repair_questions"
+        ]
+        result["guided_retest_task"] = journey["guided_retest_task"]
+        if stage == "GUIDED_RETEST_RETRY":
+            result["neutral_prompt"] = journey["neutral_prompt"]
+    elif stage == "READY_FOR_TRANSFER_CONFIRMATION":
+        result["readiness_prompt"] = (
+            "Are you ready to solve a fresh problem without hints?"
+        )
+    elif stage in ("INDEPENDENT_EXIT", "INDEPENDENT_RETRY"):
+        result["independent_task"] = journey["independent_task"]
+        result["hints_allowed"] = False
+    elif stage == "COMPLETE":
+        result["independent_success"] = True
+    return result
+
+
+def simulate_authored_learning_journey(
+    source: dict,
+    *,
+    practice_response: str,
+    follow_up_reasoning_response: str | None = None,
+    guided_retest_response: str | None = None,
+    readiness_confirmed: bool = False,
+    independent_response: str | None = None,
+) -> dict:
+    """Execute a draft response→probe→repair→transfer authoring scenario.
+
+    This is review evidence, not a runtime route or trusted scorer. The follow-up
+    response is a learner-selected structured choice from the neutral choices
+    emitted at ``CONFIRM_REASONING``. Only corroborated reasoning selects a
+    misconception route. Guided success never counts as independent mastery.
+    """
+    if source.get("mode") != "GUIDED":
+        raise ValueError("Authored teaching journey requires a GUIDED source")
+
+    transcript: list[dict] = [
+        {"stage": "PRACTICE", "learner_response": practice_response}
+    ]
+
+    def finish(journey: dict) -> dict:
+        journey["journey_transcript_for_author_review"] = list(transcript)
+        return journey
+
+    practice_value = _parse_exact_response(practice_response)
+    correct_value = _parse_exact_response(source["canonical_answer"])
+    if practice_value is None:
+        transcript.append({"stage": "PRACTICE_RETRY", "reason": "UNPARSEABLE"})
+        return finish({
+            "stage": "PRACTICE_RETRY",
+            "neutral_prompt": "Enter one exact value for x before explaining your strategy.",
+            "confirmed_misconception_for_author_review": None,
+        })
+
+    transfer_source = source
+    if practice_value == correct_value:
+        transcript.append({"stage": "READY_FOR_TRANSFER_CONFIRMATION"})
+        journey = {
+            "stage": "READY_FOR_TRANSFER_CONFIRMATION",
+            "practice_was_correct": True,
+            "confirmed_misconception_for_author_review": None,
+        }
+    else:
+        signal = _signal_for_response(source, practice_response)
+        if signal is None:
+            transcript.append({"stage": "PRACTICE_RETRY", "reason": "NO_MATCH"})
+            return finish({
+                "stage": "PRACTICE_RETRY",
+                "neutral_prompt": (
+                    "Show the first equality-preserving operation you would apply "
+                    "to both complete sides."
+                ),
+                "confirmed_misconception_for_author_review": None,
+            })
+        if follow_up_reasoning_response is None:
+            transcript.append({"stage": "CONFIRM_REASONING"})
+            return finish({
+                "stage": "CONFIRM_REASONING",
+                "confirmation_prompt": signal[
+                    "confirmation_probe_for_author_review"
+                ],
+                "confirmation_choices": signal[
+                    "confirmation_choices_for_learner"
+                ],
+                "pending_misconception_for_author_review": signal[
+                    "misconception_code"
+                ],
+                "confirmed_misconception_for_author_review": None,
+            })
+        transcript.append(
+            {
+                "stage": "CONFIRM_REASONING",
+                "learner_response": follow_up_reasoning_response,
+            }
+        )
+        if (
+            follow_up_reasoning_response
+            != signal["confirmation_evidence_choice_for_author_review"]
+        ):
+            transcript.append(
+                {"stage": "PRACTICE_RETRY", "reason": "AMBIGUOUS_EVIDENCE"}
+            )
+            return finish({
+                "stage": "PRACTICE_RETRY",
+                "neutral_prompt": (
+                    "Your answer and strategy evidence do not yet support one "
+                    "diagnosis. Try the equation again and show the same operation "
+                    "on both complete sides."
+                ),
+                "confirmed_misconception_for_author_review": None,
+            })
+
+        retest, retest_signal = _create_target_preserving_guided_retest(
+            source,
+            signal["misconception_code"],
+        )
+        retest_task = learner_projection(retest)
+        retest_value = _parse_exact_response(guided_retest_response)
+        journey = {
+            "stage": "GUIDED_RETEST",
+            "practice_was_correct": False,
+            "confirmed_misconception_for_author_review": signal[
+                "misconception_code"
+            ],
+            "socratic_repair_questions": retest_signal[
+                "socratic_repair_for_author_review"
+            ],
+            "guided_retest_task": retest_task,
+            "private_guided_retest_for_author_review": retest,
+        }
+        transcript.append(
+            {
+                "stage": "GUIDED_RETEST",
+                "learner_response": guided_retest_response,
+                "confirmed_misconception": signal["misconception_code"],
+            }
+        )
+        if guided_retest_response is None:
+            return finish(journey)
+        if retest_value != _parse_exact_response(retest["canonical_answer"]):
+            journey["stage"] = "GUIDED_RETEST_RETRY"
+            journey["neutral_prompt"] = (
+                "Recheck whether the same operation was applied to both complete sides."
+            )
+            transcript.append({"stage": "GUIDED_RETEST_RETRY"})
+            return finish(journey)
+        transcript.append({"stage": "READY_FOR_TRANSFER_CONFIRMATION"})
+        journey = {
+            "stage": "READY_FOR_TRANSFER_CONFIRMATION",
+            "practice_was_correct": False,
+            "guided_retest_succeeded": True,
+            "guided_success_counts_as_independent": False,
+            "confirmed_misconception_for_author_review": signal[
+                "misconception_code"
+            ],
+        }
+        transfer_source = retest
+
+    if not readiness_confirmed:
+        return finish(journey)
+
+    transfer = create_unhinted_transfer(
+        transfer_source,
+        target_mode="INDEPENDENT",
+    )
+    journey = {
+        "stage": "INDEPENDENT_EXIT",
+        "independent_task": transfer["learner_task"],
+        "hints_allowed": False,
+        "guided_success_counts_as_independent": False,
+        "runtime_credit_authorized": False,
+        "private_transfer_for_author_review": transfer,
+    }
+    transcript.append(
+        {
+            "stage": "INDEPENDENT_EXIT",
+            "learner_response": independent_response,
+        }
+    )
+    if independent_response is None:
+        return finish(journey)
+    if (
+        _parse_exact_response(independent_response)
+        != _parse_exact_response(transfer["private_exact_oracle_for_review"])
+    ):
+        journey["stage"] = "INDEPENDENT_RETRY"
+        journey["independent_success"] = False
+        transcript.append({"stage": "INDEPENDENT_RETRY"})
+        return finish(journey)
+    transcript.append({"stage": "COMPLETE"})
+    return finish({
+        "stage": "COMPLETE",
+        "independent_success": True,
+        "guided_success_counts_as_independent": False,
+        "runtime_credit_authorized": False,
+    })
+
+
 def create_pack(*, count_per_family_mode: int = 25) -> dict:
     if type(count_per_family_mode) is not int or not 1 <= count_per_family_mode <= 100:
         raise ValueError("count must be in 1..100")
@@ -493,7 +901,7 @@ def create_pack(*, count_per_family_mode: int = 25) -> dict:
                 produced.append(candidate)
                 count += 1
     return {
-        "schema": "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V4",
+        "schema": "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V5",
         "source_issue": "AyalewGM/ai-tutor#337",
         "curriculum_hint": "Ontario Grade 9 MTH1W — proposed scope only",
         "official_standards_mapping_status": "NOT_INDEPENDENTLY_APPROVED",
@@ -506,6 +914,7 @@ def create_pack(*, count_per_family_mode: int = 25) -> dict:
         "runtime_activation": False,
         "requires_server_authoritative_scoring": True,
         "diagnosis_requires_multiple_probes": True,
+        "authored_learning_journey": "RESPONSE_PROBE_REPAIR_RETEST_TRANSFER_V1",
         "hinted_success_counts_as_independent": False,
         "transfer_requires_changed_reasoning_structure": True,
         "transfer_requires_changed_presentation": False,

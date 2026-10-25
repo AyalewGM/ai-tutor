@@ -15,10 +15,12 @@ from scripts.author_ontario_linear_depth import (
     SKILLS,
     TRANSFER_FAMILY,
     _task_fingerprint,
+    authored_journey_learner_projection,
     create_candidate,
     create_pack,
     create_unhinted_transfer,
     learner_projection,
+    simulate_authored_learning_journey,
 )
 
 
@@ -201,12 +203,16 @@ def test_unhinted_transfer_changes_reasoning_family_task_and_answer(family, targ
 
 def test_mode_pools_and_pack_are_distinct_and_fail_closed():
     pack = create_pack(count_per_family_mode=25)
-    assert pack["schema"] == "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V4"
+    assert pack["schema"] == "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V5"
     assert len(pack["candidates"]) == 25 * len(FAMILIES) * len(MODES)
     assert pack["runtime_registered"] is False
     assert pack["runtime_activation"] is False
     assert pack["math_review"] == "PENDING_INDEPENDENT"
     assert pack["diagnosis_requires_multiple_probes"] is True
+    assert (
+        pack["authored_learning_journey"]
+        == "RESPONSE_PROBE_REPAIR_RETEST_TRANSFER_V1"
+    )
     assert pack["hinted_success_counts_as_independent"] is False
     assert pack["transfer_requires_changed_reasoning_structure"] is True
     assert pack["transfer_requires_changed_presentation"] is False
@@ -219,6 +225,190 @@ def test_mode_pools_and_pack_are_distinct_and_fail_closed():
         assert {q["presentation_id"] for q in group} == set(PRESENTATIONS[family])
         assert {q["reasoning_structure_id"] for q in group} == {family}
     assert pack == create_pack(count_per_family_mode=25)
+
+
+@pytest.mark.parametrize("family", FAMILIES)
+def test_authored_journey_routes_corroborated_error_to_fresh_guided_retest(family):
+    source = create_candidate(family, seed=37, mode="GUIDED")
+    signal = source["diagnostic_contract_for_author_review"]["signals"][0]
+
+    confirm = simulate_authored_learning_journey(
+        source,
+        practice_response=signal["candidate_response"],
+    )
+    assert confirm["stage"] == "CONFIRM_REASONING"
+    assert confirm["confirmed_misconception_for_author_review"] is None
+    assert len(confirm["confirmation_choices"]) == 3
+    public_confirm = authored_journey_learner_projection(confirm)
+    assert "misconception" not in json.dumps(public_confirm).casefold()
+    assert "evidence_choice" not in json.dumps(public_confirm).casefold()
+
+    guided = simulate_authored_learning_journey(
+        source,
+        practice_response=signal["candidate_response"],
+        follow_up_reasoning_response=signal[
+            "confirmation_evidence_choice_for_author_review"
+        ],
+    )
+    assert guided["stage"] == "GUIDED_RETEST"
+    retest = guided["private_guided_retest_for_author_review"]
+    assert retest["candidate_family"] == family
+    assert retest["task_fingerprint"] != source["task_fingerprint"]
+    assert retest["canonical_answer"] != source["canonical_answer"]
+    assert signal["misconception_code"] in {
+        item["misconception_code"]
+        for item in retest["diagnostic_contract_for_author_review"]["signals"]
+    }
+    public_guided = authored_journey_learner_projection(guided)
+    assert public_guided["guided_retest_task"] == learner_projection(retest)
+    assert "canonical_answer" not in json.dumps(public_guided)
+    assert "oracle" not in json.dumps(public_guided).casefold()
+
+
+@pytest.mark.parametrize("family", FAMILIES)
+def test_authored_journey_requires_retest_then_unhinted_independent_exit(family):
+    source = create_candidate(family, seed=83, mode="GUIDED")
+    signal = source["diagnostic_contract_for_author_review"]["signals"][0]
+    guided = simulate_authored_learning_journey(
+        source,
+        practice_response=signal["candidate_response"],
+        follow_up_reasoning_response=signal[
+            "confirmation_evidence_choice_for_author_review"
+        ],
+    )
+    retest = guided["private_guided_retest_for_author_review"]
+
+    retry = simulate_authored_learning_journey(
+        source,
+        practice_response=signal["candidate_response"],
+        follow_up_reasoning_response=signal[
+            "confirmation_evidence_choice_for_author_review"
+        ],
+        guided_retest_response="x=0",
+        readiness_confirmed=True,
+    )
+    assert retry["stage"] == "GUIDED_RETEST_RETRY"
+    assert "private_transfer_for_author_review" not in retry
+
+    ready = simulate_authored_learning_journey(
+        source,
+        practice_response=signal["candidate_response"],
+        follow_up_reasoning_response=signal[
+            "confirmation_evidence_choice_for_author_review"
+        ],
+        guided_retest_response=retest["canonical_answer"],
+    )
+    assert ready["stage"] == "READY_FOR_TRANSFER_CONFIRMATION"
+    assert ready["guided_retest_succeeded"] is True
+    assert ready["guided_success_counts_as_independent"] is False
+
+    independent = simulate_authored_learning_journey(
+        source,
+        practice_response=signal["candidate_response"],
+        follow_up_reasoning_response=signal[
+            "confirmation_evidence_choice_for_author_review"
+        ],
+        guided_retest_response=retest["canonical_answer"],
+        readiness_confirmed=True,
+    )
+    assert independent["stage"] == "INDEPENDENT_EXIT"
+    transfer = independent["private_transfer_for_author_review"]
+    assert transfer["target_family"] == TRANSFER_FAMILY[family]
+    assert transfer["target_mode"] == "INDEPENDENT"
+    assert transfer["hints_allowed"] is False
+    public_exit = authored_journey_learner_projection(independent)
+    assert public_exit["independent_task"] == transfer["learner_task"]
+    assert "socratic_repair" not in json.dumps(public_exit)
+    assert "oracle" not in json.dumps(public_exit).casefold()
+
+    independent_retry = simulate_authored_learning_journey(
+        source,
+        practice_response=signal["candidate_response"],
+        follow_up_reasoning_response=signal[
+            "confirmation_evidence_choice_for_author_review"
+        ],
+        guided_retest_response=retest["canonical_answer"],
+        readiness_confirmed=True,
+        independent_response="x=0",
+    )
+    assert independent_retry["stage"] == "INDEPENDENT_RETRY"
+    assert independent_retry["independent_success"] is False
+    public_retry = authored_journey_learner_projection(independent_retry)
+    assert "socratic_repair" not in json.dumps(public_retry)
+    assert "oracle" not in json.dumps(public_retry).casefold()
+
+    complete = simulate_authored_learning_journey(
+        source,
+        practice_response=signal["candidate_response"],
+        follow_up_reasoning_response=signal[
+            "confirmation_evidence_choice_for_author_review"
+        ],
+        guided_retest_response=retest["canonical_answer"],
+        readiness_confirmed=True,
+        independent_response=transfer["private_exact_oracle_for_review"],
+    )
+    assert complete["stage"] == "COMPLETE"
+    assert complete["independent_success"] is True
+    assert complete["guided_success_counts_as_independent"] is False
+    assert [
+        event["stage"]
+        for event in complete["journey_transcript_for_author_review"]
+    ] == [
+        "PRACTICE",
+        "CONFIRM_REASONING",
+        "GUIDED_RETEST",
+        "READY_FOR_TRANSFER_CONFIRMATION",
+        "INDEPENDENT_EXIT",
+        "COMPLETE",
+    ]
+
+
+@pytest.mark.parametrize("family", FAMILIES)
+def test_authored_journey_withholds_diagnosis_for_ambiguous_evidence(family):
+    source = create_candidate(family, seed=121, mode="GUIDED")
+    signal = source["diagnostic_contract_for_author_review"]["signals"][0]
+    disconfirming_choice = next(
+        choice["id"]
+        for choice in signal["confirmation_choices_for_learner"]
+        if choice["id"]
+        != signal["confirmation_evidence_choice_for_author_review"]
+    )
+    ambiguous = simulate_authored_learning_journey(
+        source,
+        practice_response=signal["candidate_response"],
+        follow_up_reasoning_response=disconfirming_choice,
+    )
+    assert ambiguous["stage"] == "PRACTICE_RETRY"
+    assert ambiguous["confirmed_misconception_for_author_review"] is None
+    assert "socratic_repair_questions" not in ambiguous
+
+    unmatched = simulate_authored_learning_journey(
+        source,
+        practice_response="x=999999",
+        follow_up_reasoning_response=signal[
+            "confirmation_evidence_choice_for_author_review"
+        ],
+    )
+    assert unmatched["stage"] == "PRACTICE_RETRY"
+    assert unmatched["confirmed_misconception_for_author_review"] is None
+    assert "socratic_repair_questions" not in unmatched
+
+
+def test_authored_journey_correct_practice_bypasses_repair_and_bad_modes_fail():
+    source = create_candidate(FAMILIES[0], seed=5, mode="GUIDED")
+    ready = simulate_authored_learning_journey(
+        source,
+        practice_response=source["canonical_answer"],
+    )
+    assert ready["stage"] == "READY_FOR_TRANSFER_CONFIRMATION"
+    assert ready["practice_was_correct"] is True
+    assert ready["confirmed_misconception_for_author_review"] is None
+
+    with pytest.raises(ValueError):
+        simulate_authored_learning_journey(
+            create_candidate(FAMILIES[0], seed=5, mode="INDEPENDENT"),
+            practice_response="x=1",
+        )
 
 
 @pytest.mark.parametrize("family", FAMILIES)
