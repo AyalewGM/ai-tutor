@@ -27,6 +27,15 @@ def _recompute(variant) -> Fraction:
     return (rhs - offset) / coefficient
 
 
+def _substitution_values(variant, observed_answer: str) -> tuple[str, str]:
+    p = dict(variant.parameters)
+    left = (
+        Fraction(p["coefficient"]) * Fraction(observed_answer)
+        + Fraction(p["offset"])
+    )
+    return str(left), p["rhs"]
+
+
 def test_package_is_draft_reuse_only_and_history_neutral() -> None:
     manifest = json.loads((PACKAGE / "package.json").read_text())
     assert manifest["status"] == "DRAFT_UNVERIFIED"
@@ -120,6 +129,7 @@ def test_public_payload_is_answer_free_accessible_and_unhinted_when_independent(
         "answer",
         "oracle",
         "parameters",
+        "prompt",
         "misconception_answers",
         "verification",
         "strategy_probe",
@@ -129,6 +139,10 @@ def test_public_payload_is_answer_free_accessible_and_unhinted_when_independent(
             variant = MODULE.generate(family, 73, mode)
             payload = variant.public_payload()
             assert forbidden.isdisjoint(payload)
+            assert payload["learning_path"] == list(
+                MODULE.start_learning_path(variant).stages
+            )
+            assert payload["initial_stage"]["stage"] == payload["learning_path"][0]
             assert set(payload["accessibility"]) == {
                 "keyboard",
                 "screen_reader",
@@ -150,16 +164,40 @@ def test_guided_diagnosis_requires_answer_and_strategy_evidence() -> None:
             first_probe = MODULE.guided_probe(guided, answer)
             assert first_probe["classification"] == "EVIDENCE_INCOMPLETE_NEEDS_STRATEGY_PROBE"
             assert len(first_probe["questions"]) == 2
+            assert first_probe["response_fields"] == (
+                "strategy_choice",
+                "substitution_left",
+                "substitution_right",
+            )
+            assert all(
+                set(choice) == {"id", "label"}
+                for choice in first_probe["strategy_choices"]
+            )
+            left, right = _substitution_values(guided, answer)
 
-            mismatched = MODULE.guided_repair(guided, answer, "DIFFERENT_STRATEGY")
+            mismatched = MODULE.guided_repair(
+                guided, answer, "OTHER_OR_UNSURE", left, right
+            )
             assert mismatched["classification"] == "UNCLASSIFIED_NO_ANSWER_REVEAL"
 
-            support = MODULE.guided_repair(
-                guided, answer, MODULE.strategy_probe_token(code)
-            )
+            routed = [
+                MODULE.guided_repair(
+                    guided, answer, choice["id"], left, right
+                )
+                for choice in first_probe["strategy_choices"]
+            ]
+            matches = [result for result in routed if result["classification"] == code]
+            assert len(matches) == 1
+            support = matches[0]
             assert support["classification"] == code
             assert len(support["questions"]) == 2
+            assert support["guided_explanation"]
             assert support["fresh_exit_family"] == MODULE.TRANSFER_PARTNER[family]
+
+            inconsistent = MODULE.guided_repair(
+                guided, answer, first_probe["strategy_choices"][0]["id"], "999", right
+            )
+            assert inconsistent["classification"] == "UNCLASSIFIED_NO_ANSWER_REVEAL"
 
         assert MODULE.guided_probe(guided, guided.answer) == {
             "classification": "CORRECT_NO_REMEDIATION",
@@ -167,16 +205,108 @@ def test_guided_diagnosis_requires_answer_and_strategy_evidence() -> None:
         }
 
 
+def test_ambiguous_and_unparseable_probe_evidence_fails_closed() -> None:
+    ambiguous = None
+    for seed in range(4_096):
+        candidate = MODULE.generate(MODULE.FAMILIES[3], seed, "guided")
+        for _, answer in candidate.misconception_answers:
+            probe = MODULE.guided_probe(candidate, answer)
+            if probe["candidate_count"] > 1:
+                ambiguous = (candidate, answer, probe)
+                break
+        if ambiguous:
+            break
+
+    assert ambiguous is not None
+    variant, answer, probe = ambiguous
+    assert probe["classification"] == "EVIDENCE_INCOMPLETE_NEEDS_STRATEGY_PROBE"
+    left, right = _substitution_values(variant, answer)
+    neutral = MODULE.guided_repair(
+        variant, answer, "OTHER_OR_UNSURE", left, right
+    )
+    assert neutral["classification"] == "UNCLASSIFIED_NO_ANSWER_REVEAL"
+
+    unparseable = MODULE.guided_probe(variant, "not-a-number")
+    assert unparseable["classification"] == "UNPARSEABLE_NEEDS_CLARIFICATION"
+    assert "answer" not in unparseable
+
+
 def test_support_isolated_from_diagnostic_independent_and_mastery_modes() -> None:
     for family in MODULE.FAMILIES:
         for mode in ("diagnostic", "independent", "mastery"):
             variant = MODULE.generate(family, 113, mode)
             observed = variant.misconception_answers[0][1]
-            code = variant.misconception_answers[0][0]
             assert MODULE.guided_probe(variant, observed) is None
-            assert MODULE.guided_repair(
-                variant, observed, MODULE.strategy_probe_token(code)
-            ) is None
+            assert MODULE.guided_repair(variant, observed, "ANY", "0", "0") is None
+
+
+def test_guided_learning_path_locks_prediction_and_enforces_every_stage() -> None:
+    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    state = MODULE.start_learning_path(guided)
+    assert state.stages == MODULE.TEACHING_STAGES
+    assert MODULE.stage_payload(guided, state)["stage"] == "OBSERVE"
+    assert MODULE.stage_payload(guided, state)["reveals_inverse_operation"] is False
+
+    state = MODULE.advance_learning_path(guided, state, {"observation": "Both sides are equal."})
+    assert state.stage == "PREDICT"
+    state = MODULE.advance_learning_path(guided, state, {"operation_choice": "SUBTRACT"})
+    assert state.stage == "MANIPULATE"
+    assert state.prediction_locked is True
+    with pytest.raises(ValueError, match="same nonempty operation"):
+        MODULE.advance_learning_path(
+            guided,
+            state,
+            {"left_operation": "SUBTRACT", "right_operation": "ADD"},
+        )
+    state = MODULE.advance_learning_path(
+        guided,
+        state,
+        {"left_operation": "SUBTRACT", "right_operation": "SUBTRACT"},
+    )
+    state = MODULE.advance_learning_path(
+        guided,
+        state,
+        {"equality_justification": "The same operation changes equal values equally."},
+    )
+    state = MODULE.advance_learning_path(
+        guided, state, {"exact_answer": guided.answer}
+    )
+    state = MODULE.advance_learning_path(
+        guided,
+        state,
+        {
+            "exact_answer": guided.answer,
+            "strategy_choice": "OTHER_OR_UNSURE",
+            "substitution_left": dict(guided.parameters)["rhs"],
+            "substitution_right": dict(guided.parameters)["rhs"],
+        },
+    )
+    transfer = MODULE.generate_transfer(guided)
+    state = MODULE.advance_learning_path(
+        guided,
+        state,
+        {
+            "independent_variant_id": transfer.variant_id,
+            "independent_family": transfer.family,
+            "independent_mode": transfer.mode,
+            "support_used": False,
+        },
+    )
+    state = MODULE.advance_learning_path(
+        guided, state, {"substitution_left": "5/2", "substitution_right": "5/2"}
+    )
+    assert state.stage == "COMPLETE"
+    assert state.completed == MODULE.TEACHING_STAGES
+
+
+def test_independent_and_mastery_have_only_unhinted_practice_and_verify() -> None:
+    for mode in ("independent", "mastery"):
+        variant = MODULE.generate(MODULE.FAMILIES[9], 223, mode)
+        state = MODULE.start_learning_path(variant)
+        assert state.stages == ("PRACTICE", "VERIFY")
+        first = MODULE.stage_payload(variant, state)
+        assert first["support"] == "NONE_UNHINTED"
+        assert "representation" not in first
 
 
 def test_transfer_changes_structure_and_is_independent_unhinted() -> None:
@@ -224,3 +354,4 @@ def test_invalid_generation_fails_closed(
 ) -> None:
     with pytest.raises(error):
         MODULE.generate(family, seed, mode)
+
