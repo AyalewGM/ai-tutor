@@ -179,8 +179,10 @@ _CONFIRMATION_CHOICES = {
         "choices": (
             (
                 "CHANGE_SIGN_WITHOUT_BALANCING",
-                "Move the constant and change its sign without applying an "
-                "operation to both sides.",
+                (
+                    "Move the constant and change its sign without applying an "
+                    "operation to both sides."
+                ),
             ),
             (
                 "APPLY_INVERSE_BOTH_SIDES",
