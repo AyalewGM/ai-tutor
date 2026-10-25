@@ -24,3 +24,19 @@ or answer key is copied.
 The package is not imported by `app`, registered, seeded, routed, scored, or
 rendered. It changes no learner, Attempt, DiagnosticAttempt, MasteryEvent, or
 variant-history record and cannot award mastery.
+
+
+## Enforced learner-flow and mode boundary
+
+The guided draft now exposes only the evidence needed at the current stage and enforces:
+Observe → Predict → Manipulate → Explain → Practice → Diagnose → Transfer → Verify.
+
+- Prediction and manipulation must use the reviewed equality-preserving operation and explicitly apply it to both complete sides.
+- Explanation uses learner-visible conceptual choices; sign-moving and one-side-only claims fail closed.
+- A genuine wrong practice response plus a corroborating reasoning choice is required before misconception-specific repair appears.
+- Repair never reveals the worked answer and must end with an exact corrected response.
+- Transfer is a generated different-family independent variant; both its server-generated ID and exact response must match.
+- Final verification re-solves the original task and, for exact-rational families, reconstructs both substitution values.
+- Diagnostic, independent, and mastery payloads expose no guided choices, representations, misconception routes, or repair.
+
+This remains authoring evidence only: DRAFT_UNVERIFIED, unregistered, and runtime-disabled.

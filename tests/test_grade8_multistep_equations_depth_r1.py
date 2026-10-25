@@ -110,7 +110,7 @@ def test_support_is_unavailable_outside_guided_mode():
             ) == {"status": "SUPPORT_NOT_AVAILABLE"}
 
 
-def test_public_payload_has_accessibility_contract_and_no_private_evidence():
+def test_public_payload_is_mode_isolated_accessible_and_leakage_safe():
     forbidden = (
         "canonical_answer",
         "oracle",
@@ -124,7 +124,6 @@ def test_public_payload_has_accessibility_contract_and_no_private_evidence():
             payload = variant.public_payload()
             flattened = repr(payload).lower()
             assert all(term not in flattened for term in forbidden)
-            assert all(set(item) == {"id", "label"} for item in payload["first_step_choices"])
             assert set(payload["interaction_requirements"]) == {
                 "keyboard",
                 "screen_reader",
@@ -135,7 +134,16 @@ def test_public_payload_has_accessibility_contract_and_no_private_evidence():
             }
             assert payload["runtime_activation"] is False
             assert payload["mastery_credit"] is False
-
+            if mode == "guided":
+                assert payload["stage"] == "OBSERVE"
+                assert "prompt" not in payload
+                assert "first_step_choices" not in payload
+                assert payload["guided_session_required"] is True
+            else:
+                assert payload["response_fields"] == ["answer"]
+                assert payload["guided_support_available"] is False
+                assert "first_step_choices" not in payload
+                assert "representation_sequence" not in payload
 
 def test_unhinted_transfer_changes_family_structure_task_and_answer():
     for family in generator.FAMILIES:
@@ -175,3 +183,128 @@ def test_invalid_inputs_fail_closed():
             pass
         else:
             raise AssertionError(f"count should fail closed: {bad_count!r}")
+
+
+def _advance_to_practice(variant):
+    state = generator.start_guided_learning(variant)
+    assert state.stage == "OBSERVE"
+    skipped = generator.advance_guided_learning(state, {"first_step_id": "PRESERVE_EQUALITY"})
+    assert skipped.stage == "OBSERVE"
+    state = generator.advance_guided_learning(
+        state, {"observation_choice": "STRUCTURE_NOTICED"}
+    )
+    assert state.stage == "PREDICT"
+    wrong = generator.advance_guided_learning(
+        state, {"first_step_id": "CHANGE_ONE_SIDE"}
+    )
+    assert wrong.stage == "PREDICT"
+    state = generator.advance_guided_learning(
+        state, {"first_step_id": "PRESERVE_EQUALITY"}
+    )
+    assert state.stage == "MANIPULATE"
+    one_side = generator.advance_guided_learning(
+        state,
+        {
+            "operation_choice": "PRESERVE_EQUALITY",
+            "applied_to": ["LEFT_COMPLETE_SIDE"],
+        },
+    )
+    assert one_side.stage == "MANIPULATE"
+    state = generator.advance_guided_learning(
+        state,
+        {
+            "operation_choice": "PRESERVE_EQUALITY",
+            "applied_to": ["LEFT_COMPLETE_SIDE", "RIGHT_COMPLETE_SIDE"],
+        },
+    )
+    assert state.stage == "EXPLAIN"
+    unsupported = generator.advance_guided_learning(
+        state, {"claim_choice": "MOVE_AND_CHANGE_SIGN"}
+    )
+    assert unsupported.stage == "EXPLAIN"
+    state = generator.advance_guided_learning(
+        state, {"claim_choice": "SAME_OPERATION_BOTH_COMPLETE_SIDES"}
+    )
+    assert state.stage == "PRACTICE"
+    return state
+
+
+def test_guided_learning_flow_requires_math_evidence_transfer_binding_and_verification():
+    variant = generator.create_variant(
+        "VARIABLES_BOTH_SIDES", seed=6, mode="guided"
+    )
+    state = _advance_to_practice(variant)
+    signal = variant.misconception_signals[0]
+    state = generator.advance_guided_learning(
+        state, {"answer": signal["candidate_response"]}
+    )
+    assert state.stage == "DIAGNOSE"
+    unsupported = generator.advance_guided_learning(
+        state, {"reasoning_choice": "OTHER"}
+    )
+    assert unsupported.stage == "DIAGNOSE"
+    assert unsupported.feedback_code == "DIAGNOSIS_NOT_CORROBORATED"
+    state = generator.advance_guided_learning(
+        state, {"reasoning_choice": signal["reasoning_choice"]}
+    )
+    assert state.stage == "DIAGNOSE"
+    assert state.diagnosis_route == signal["code"]
+    state = generator.advance_guided_learning(
+        state, {"corrected_response": variant.canonical_answer}
+    )
+    assert state.stage == "TRANSFER"
+    transfer = state.transfer_variant
+    assert transfer is not None
+    fabricated = generator.advance_guided_learning(
+        state,
+        {"variant_id": "fabricated", "answer": transfer.canonical_answer},
+    )
+    assert fabricated.stage == "TRANSFER"
+    state = generator.advance_guided_learning(
+        state,
+        {"variant_id": transfer.variant_id, "answer": transfer.canonical_answer},
+    )
+    assert state.stage == "VERIFY"
+    invalid = generator.advance_guided_learning(
+        state,
+        {
+            "answer": variant.canonical_answer,
+            "substitution_left": "5/2",
+            "substitution_right": "5/2",
+        },
+    )
+    assert invalid.stage == "VERIFY"
+    state = generator.advance_guided_learning(
+        state,
+        {
+            "answer": variant.canonical_answer,
+            "substitution_left": variant.oracle["substitution_left"],
+            "substitution_right": variant.oracle["substitution_right"],
+        },
+    )
+    assert state.complete is True
+    assert state.stage == generator.COMPLETE_STAGE
+
+
+def test_correct_guided_practice_bypasses_repair_but_not_unhinted_transfer():
+    variant = generator.create_variant(
+        "FRACTIONAL_COEFFICIENTS", seed=4, mode="guided"
+    )
+    state = _advance_to_practice(variant)
+    state = generator.advance_guided_learning(
+        state, {"answer": variant.canonical_answer}
+    )
+    assert state.stage == "DIAGNOSE"
+    assert "reasoning_choices" not in generator.learning_stage_payload(state)
+    blocked = generator.advance_guided_learning(
+        state, {"readiness_choice": "NOT_READY"}
+    )
+    assert blocked.stage == "DIAGNOSE"
+    state = generator.advance_guided_learning(
+        state, {"readiness_choice": "READY_UNHINTED"}
+    )
+    assert state.stage == "TRANSFER"
+    transfer_payload = generator.learning_stage_payload(state)["transfer"]
+    assert transfer_payload["mode"] == "independent"
+    assert "first_step_choices" not in transfer_payload
+    assert "representation_sequence" not in transfer_payload

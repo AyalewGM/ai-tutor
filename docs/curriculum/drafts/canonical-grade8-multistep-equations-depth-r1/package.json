@@ -5,7 +5,12 @@
   "canonical_skill_code": "MATH.EE.EQUATION.MULTISTEP",
   "canonical_identity_status": "REUSE_CANDIDATE_FROM_ACCEPTED_CROSSWALK__NOT_ACTIVATED",
   "family_count": 12,
-  "modes": ["diagnostic", "guided", "independent", "mastery"],
+  "modes": [
+    "diagnostic",
+    "guided",
+    "independent",
+    "mastery"
+  ],
   "quality_contract": {
     "build_once_map_many": true,
     "coefficient_swaps_are_not_families": true,
@@ -13,7 +18,21 @@
     "multi_probe_guided_diagnosis": true,
     "independent_transfer_changes_family": true,
     "guided_success_counts_as_mastery": false,
-    "learner_history_changes": false
+    "learner_history_changes": false,
+    "enforced_learning_stages": [
+      "OBSERVE",
+      "PREDICT",
+      "MANIPULATE",
+      "EXPLAIN",
+      "PRACTICE",
+      "DIAGNOSE",
+      "TRANSFER",
+      "VERIFY"
+    ],
+    "stage_specific_disclosure": true,
+    "independent_mastery_guided_scaffold_exposure": false,
+    "transfer_id_and_response_binding": true,
+    "original_equation_substitution_verification": true
   },
   "source_provenance": [
     {

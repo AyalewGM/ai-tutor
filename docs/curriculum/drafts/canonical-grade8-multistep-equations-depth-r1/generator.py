@@ -8,11 +8,22 @@ from __future__ import annotations
 
 import hashlib
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from fractions import Fraction
 from typing import Any
 
 MODES = ("diagnostic", "guided", "independent", "mastery")
+LEARNING_STAGES = (
+    "OBSERVE",
+    "PREDICT",
+    "MANIPULATE",
+    "EXPLAIN",
+    "PRACTICE",
+    "DIAGNOSE",
+    "TRANSFER",
+    "VERIFY",
+)
+COMPLETE_STAGE = "COMPLETE"
 PRIMARY_SEEDS = range(16)
 TRANSFER_SEEDS = range(1_000_003, 1_000_019)
 CANONICAL_SKILL = "MATH.EE.EQUATION.MULTISTEP"
@@ -273,23 +284,38 @@ class Variant:
     guided_explanation: str
 
     def public_payload(self) -> dict[str, Any]:
-        return {
+        payload: dict[str, Any] = {
             "variant_id": self.variant_id,
             "family_code": self.family_code,
             "canonical_skill_code": self.canonical_skill_code,
             "mode": self.mode,
             "structure_code": self.structure_code,
-            "prompt": self.prompt,
             "answer_kind": self.answer_kind,
-            "first_step_choices": [
-                {"id": item["id"], "label": item["label"]}
-                for item in self.first_step_choices
-            ],
-            "representation_sequence": list(FAMILY_METADATA[self.family_code]["representation"]),
             "interaction_requirements": dict(ACCESSIBILITY),
             "mastery_credit": False,
             "runtime_activation": False,
         }
+        if self.mode == "guided":
+            payload.update(
+                {
+                    "stage": LEARNING_STAGES[0],
+                    "guided_session_required": True,
+                    "observation": {
+                        "representation": FAMILY_METADATA[self.family_code]["representation"][0],
+                        "prompt": "Notice the quantities, groups, and two complete sides before choosing an operation.",
+                    },
+                }
+            )
+        else:
+            payload.update(
+                {
+                    "stage": "DIAGNOSE" if self.mode == "diagnostic" else "PRACTICE",
+                    "prompt": self.prompt,
+                    "response_fields": ["answer"],
+                    "guided_support_available": False,
+                }
+            )
+        return payload
 
     def response_is_correct(self, response: str) -> bool:
         if self.answer_kind == "EXACT_RATIONAL":
@@ -522,6 +548,246 @@ def create_unhinted_transfer(source: Variant) -> Variant:
         if target.task_fingerprint != source.task_fingerprint and target.canonical_answer != source.canonical_answer:
             return target
     raise ArithmeticError("reviewed transfer seed band exhausted")
+
+
+
+@dataclass(frozen=True)
+class LearningState:
+    source: Variant
+    stage: str
+    practice_response: str | None = None
+    transfer_variant: Variant | None = None
+    diagnosis_route: str | None = None
+    feedback_code: str | None = None
+    complete: bool = False
+
+
+def start_guided_learning(variant: Variant) -> LearningState:
+    if variant.mode != "guided":
+        raise ValueError("the eight-stage teaching flow is available only in guided mode")
+    return LearningState(source=variant, stage=LEARNING_STAGES[0])
+
+
+def _correct_first_step_id(variant: Variant) -> str:
+    matches = [item["id"] for item in variant.first_step_choices if item.get("correct") is True]
+    if len(matches) != 1:
+        raise ValueError("variant must have exactly one reviewed first-step choice")
+    return matches[0]
+
+
+def _retry(state: LearningState, feedback_code: str, *, diagnosis_route: str | None = None) -> LearningState:
+    return replace(
+        state,
+        feedback_code=feedback_code,
+        diagnosis_route=state.diagnosis_route if diagnosis_route is None else diagnosis_route,
+    )
+
+
+def _advance(state: LearningState, stage: str, **changes: Any) -> LearningState:
+    return replace(state, stage=stage, feedback_code=None, **changes)
+
+
+def learning_stage_payload(state: LearningState) -> dict[str, Any]:
+    if state.complete:
+        return {
+            "stage": COMPLETE_STAGE,
+            "complete": True,
+            "mastery_credit": False,
+            "feedback_code": state.feedback_code,
+        }
+    variant = state.source
+    payload: dict[str, Any] = {
+        "variant_id": variant.variant_id,
+        "family_code": variant.family_code,
+        "stage": state.stage,
+        "complete": False,
+        "mastery_credit": False,
+        "feedback_code": state.feedback_code,
+        "interaction_requirements": dict(ACCESSIBILITY),
+    }
+    if state.stage == "OBSERVE":
+        payload["observation"] = {
+            "representation": FAMILY_METADATA[variant.family_code]["representation"][0],
+            "prompt": "Notice the quantities, groups, and two complete sides.",
+            "response_choices": [
+                {
+                    "id": "STRUCTURE_NOTICED",
+                    "label": "I can identify the groups and both complete sides without solving yet.",
+                }
+            ],
+        }
+    elif state.stage == "PREDICT":
+        payload["prompt"] = variant.prompt
+        payload["first_step_choices"] = [
+            {"id": item["id"], "label": item["label"]} for item in variant.first_step_choices
+        ]
+    elif state.stage == "MANIPULATE":
+        payload["prompt"] = variant.prompt
+        payload["operation_choices"] = [
+            {"id": item["id"], "label": item["label"]} for item in variant.first_step_choices
+        ]
+        payload["required_side_labels"] = ["LEFT_COMPLETE_SIDE", "RIGHT_COMPLETE_SIDE"]
+    elif state.stage == "EXPLAIN":
+        payload["claim_choices"] = [
+            {
+                "id": "SAME_OPERATION_BOTH_COMPLETE_SIDES",
+                "label": "The same operation applies to both complete sides, so equality is preserved.",
+            },
+            {
+                "id": "MOVE_AND_CHANGE_SIGN",
+                "label": "A term can move across the equals sign and change sign by itself.",
+            },
+            {
+                "id": "CHANGE_ONLY_X_SIDE",
+                "label": "Only the side containing x needs to change.",
+            },
+        ]
+    elif state.stage == "PRACTICE":
+        payload.update({"prompt": variant.prompt, "answer_kind": variant.answer_kind})
+    elif state.stage == "DIAGNOSE":
+        if variant.response_is_correct(state.practice_response or ""):
+            payload["readiness_choices"] = [
+                {
+                    "id": "READY_UNHINTED",
+                    "label": "I checked my answer and am ready for an unhinted different structure.",
+                }
+            ]
+        elif state.diagnosis_route is None:
+            payload["reasoning_choices"] = [
+                {"id": item["reasoning_choice"], "label": item["reasoning_label"]}
+                for item in variant.misconception_signals
+            ]
+            payload["prompt"] = "Choose the reasoning that best matches the work you actually did."
+        else:
+            payload["repair"] = {
+                "misconception_code": state.diagnosis_route,
+                "questions": list(variant.socratic_questions),
+                "explanation": variant.guided_explanation,
+                "worked_answer_revealed": False,
+                "corrected_response_required": True,
+            }
+    elif state.stage == "TRANSFER":
+        transfer = state.transfer_variant or create_unhinted_transfer(variant)
+        payload["transfer"] = transfer.public_payload()
+        payload["transfer"]["stage"] = "TRANSFER"
+    elif state.stage == "VERIFY":
+        payload.update(
+            {
+                "prompt": variant.prompt,
+                "answer_kind": variant.answer_kind,
+                "verification_fields": (
+                    ["answer", "substitution_left", "substitution_right"]
+                    if variant.answer_kind == "EXACT_RATIONAL"
+                    else ["answer", "verification_claim"]
+                ),
+            }
+        )
+    else:
+        raise ValueError(f"unsupported learning stage: {state.stage}")
+    return payload
+
+
+def advance_guided_learning(state: LearningState, evidence: dict[str, Any]) -> LearningState:
+    if state.complete:
+        return _retry(state, "ALREADY_COMPLETE")
+    if not isinstance(evidence, dict):
+        return _retry(state, "MALFORMED_EVIDENCE")
+    variant = state.source
+    if state.stage == "OBSERVE":
+        if evidence.get("observation_choice") != "STRUCTURE_NOTICED":
+            return _retry(state, "OBSERVATION_REQUIRED")
+        return _advance(state, "PREDICT")
+    if state.stage == "PREDICT":
+        if evidence.get("first_step_id") != _correct_first_step_id(variant):
+            return _retry(state, "PREDICTION_NOT_EQUALITY_PRESERVING")
+        return _advance(state, "MANIPULATE")
+    if state.stage == "MANIPULATE":
+        sides = evidence.get("applied_to")
+        if (
+            evidence.get("operation_choice") != _correct_first_step_id(variant)
+            or not isinstance(sides, list)
+            or set(sides) != {"LEFT_COMPLETE_SIDE", "RIGHT_COMPLETE_SIDE"}
+            or len(sides) != 2
+        ):
+            return _retry(state, "BOTH_COMPLETE_SIDES_REQUIRED")
+        return _advance(state, "EXPLAIN")
+    if state.stage == "EXPLAIN":
+        if evidence.get("claim_choice") != "SAME_OPERATION_BOTH_COMPLETE_SIDES":
+            return _retry(state, "EQUALITY_EXPLANATION_REQUIRED")
+        return _advance(state, "PRACTICE")
+    if state.stage == "PRACTICE":
+        response = evidence.get("answer")
+        if not isinstance(response, str) or not response.strip():
+            return _retry(state, "PRACTICE_RESPONSE_REQUIRED")
+        return _advance(state, "DIAGNOSE", practice_response=response)
+    if state.stage == "DIAGNOSE":
+        if variant.response_is_correct(state.practice_response or ""):
+            if evidence.get("readiness_choice") != "READY_UNHINTED":
+                return _retry(state, "READINESS_CONFIRMATION_REQUIRED")
+            transfer = create_unhinted_transfer(variant)
+            return _advance(state, "TRANSFER", transfer_variant=transfer)
+        if state.diagnosis_route is not None:
+            corrected = evidence.get("corrected_response")
+            if not isinstance(corrected, str) or not variant.response_is_correct(corrected):
+                return _retry(state, "TARGETED_REPAIR_STILL_REQUIRED")
+            transfer = create_unhinted_transfer(variant)
+            return _advance(state, "TRANSFER", transfer_variant=transfer)
+        reasoning = evidence.get("reasoning_choice")
+        repair = variant.guided_repair(state.practice_response or "", reasoning)
+        if repair["status"] != "TARGETED_REPAIR":
+            return _retry(state, "DIAGNOSIS_NOT_CORROBORATED")
+        corrected = evidence.get("corrected_response")
+        if isinstance(corrected, str) and variant.response_is_correct(corrected):
+            transfer = create_unhinted_transfer(variant)
+            return _advance(
+                state,
+                "TRANSFER",
+                transfer_variant=transfer,
+                diagnosis_route=repair["misconception_code"],
+            )
+        return _retry(
+            state,
+            "TARGETED_REPAIR_REQUIRED",
+            diagnosis_route=repair["misconception_code"],
+        )
+    if state.stage == "TRANSFER":
+        transfer = state.transfer_variant
+        if transfer is None:
+            return _retry(state, "TRANSFER_NOT_BOUND")
+        if evidence.get("variant_id") != transfer.variant_id:
+            return _retry(state, "TRANSFER_ID_MISMATCH")
+        response = evidence.get("answer")
+        if not isinstance(response, str) or not transfer.response_is_correct(response):
+            return _retry(state, "TRANSFER_RESPONSE_INCORRECT")
+        return _advance(state, "VERIFY")
+    if state.stage == "VERIFY":
+        response = evidence.get("answer")
+        if not isinstance(response, str) or not variant.response_is_correct(response):
+            return _retry(state, "ORIGINAL_RESPONSE_INCORRECT")
+        if variant.answer_kind == "EXACT_RATIONAL":
+            submitted_left = _parse_exact(evidence.get("substitution_left"))
+            submitted_right = _parse_exact(evidence.get("substitution_right"))
+            expected_left = _parse_exact(variant.oracle.get("substitution_left"))
+            expected_right = _parse_exact(variant.oracle.get("substitution_right"))
+            if (
+                submitted_left is None
+                or submitted_right is None
+                or expected_left is None
+                or expected_right is None
+                or submitted_left != expected_left
+                or submitted_right != expected_right
+                or submitted_left != submitted_right
+            ):
+                return _retry(state, "SUBSTITUTION_DOES_NOT_VERIFY_ORIGINAL")
+        elif evidence.get("verification_claim") != "CHECKED_ORIGINAL_STRUCTURE":
+            return _retry(state, "STRUCTURE_VERIFICATION_REQUIRED")
+        return replace(
+            state,
+            stage=COMPLETE_STAGE,
+            complete=True,
+            feedback_code=None,
+        )
+    raise ValueError(f"unsupported learning stage: {state.stage}")
 
 
 def create_pack(*, seeds_per_family_mode: int = 16) -> dict[str, Any]:
