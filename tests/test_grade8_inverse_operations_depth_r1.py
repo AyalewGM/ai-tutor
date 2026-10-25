@@ -240,6 +240,50 @@ def test_support_isolated_from_diagnostic_independent_and_mastery_modes() -> Non
             assert MODULE.guided_repair(variant, observed, "ANY", "0", "0") is None
 
 
+def test_diagnostic_path_is_unhinted_and_retains_verified_answer() -> None:
+    variant = MODULE.generate(MODULE.FAMILIES[3], 137, "diagnostic")
+    state = MODULE.start_learning_path(variant)
+    payload = MODULE.stage_payload(variant, state)
+    assert payload == {
+        "stage": "DIAGNOSE",
+        "instruction": "Solve the diagnostic item exactly without guided support.",
+        "response_fields": ["exact_answer"],
+        "support": "NONE_UNHINTED",
+        "guided_repair_available": False,
+    }
+
+    with pytest.raises(ValueError, match="cannot unlock guided repair"):
+        MODULE.advance_learning_path(variant, state, {"exact_answer": "999"})
+
+    state = MODULE.advance_learning_path(
+        variant, state, {"exact_answer": variant.answer}
+    )
+    assert state.stage == "TRANSFER"
+    assert state.practiced_answer == variant.answer
+    assert state.diagnosis_classification == "CORRECT_NO_REMEDIATION"
+
+    transfer = MODULE.generate_transfer(variant)
+    state = MODULE.advance_learning_path(
+        variant,
+        state,
+        {
+            "independent_variant_id": transfer.variant_id,
+            "independent_answer": transfer.answer,
+            "independent_family": transfer.family,
+            "independent_mode": transfer.mode,
+            "support_used": False,
+        },
+    )
+    assert state.stage == "VERIFY"
+    rhs = dict(variant.parameters)["rhs"]
+    state = MODULE.advance_learning_path(
+        variant,
+        state,
+        {"substitution_left": rhs, "substitution_right": rhs},
+    )
+    assert state.stage == "COMPLETE"
+
+
 def test_guided_learning_path_locks_prediction_and_enforces_every_stage() -> None:
     guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
     state = MODULE.start_learning_path(guided)
@@ -595,4 +639,5 @@ def test_matched_diagnosis_requires_targeted_repair_exit() -> None:
     )
     assert exited.stage == "TRANSFER"
     assert exited.repair_completed is True
+
 
