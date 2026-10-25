@@ -488,8 +488,12 @@ def advance_learning_path(
             right = Fraction(str(response["substitution_right"]))
         except (KeyError, ValueError, ZeroDivisionError):
             raise ValueError("two exact substitution values are required") from None
-        if left != right:
-            raise ValueError("verification requires exact equality")
+        p = dict(variant.parameters)
+        answer = Fraction(variant.answer)
+        expected_left = Fraction(p["coefficient"]) * answer + Fraction(p["offset"])
+        expected_right = Fraction(p["rhs"])
+        if left != expected_left or right != expected_right or left != right:
+            raise ValueError("verification must reconstruct the original equation exactly")
     return LearningState(
         variant_id=state.variant_id,
         mode=state.mode,
