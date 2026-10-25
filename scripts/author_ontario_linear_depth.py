@@ -124,6 +124,30 @@ def _fmt(f: Fraction) -> str:
     return str(f.numerator) if f.denominator == 1 else f"{f.numerator}/{f.denominator}"
 
 
+def _task_fingerprint(
+    family: str,
+    displayed: tuple[Fraction, Fraction, Fraction, Fraction],
+) -> str:
+    """One identity for a displayed affine equation, even if sides are swapped.
+
+    The family remains part of the identity because a bracket/distribution
+    task and a flat equation exercise different mathematical operations.
+    Within a family, reordering terms or reversing sides must not masquerade
+    as a novel task in another assessment mode. Equal roots alone do *not*
+    imply duplicate instructional tasks.
+    """
+    a, b, c, d = displayed
+    sides = sorted(((_fmt(a), _fmt(b)), (_fmt(c), _fmt(d))))
+    payload = {
+        "version": "AFFINE_SIDE_SYMMETRY_V1",
+        "family": family,
+        "sides": sides,
+    }
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True).encode()
+    ).hexdigest()
+
+
 def _case(
     family: str,
     rng: random.Random,
@@ -353,22 +377,14 @@ def create_candidate(family: str, *, seed: str | int, mode: str) -> dict:
             (_fmt(value) for value in normalized),
         )
     )
-    fingerprint = hashlib.sha256(
-        json.dumps(
-            {
-                "family": family,
-                "structure_id": structure,
-                "coefficients": coefficients,
-            },
-            sort_keys=True,
-        ).encode()
-    ).hexdigest()
+    fingerprint = _task_fingerprint(family, (a, b, c, d))
     return {
         "candidate_family": family,
         "canonical_skill_hint": SKILLS[family],
         "mode": mode,
         "variant_id": hashlib.sha256(f"{family}|{mode}|{seed}".encode()).hexdigest()[:24],
         "task_fingerprint": fingerprint,
+        "task_fingerprint_version": "AFFINE_SIDE_SYMMETRY_V1",
         "structure_id": structure,
         "prompt": prompt,
         "equation_coefficients": coefficients,
@@ -463,7 +479,7 @@ def create_pack(*, count_per_family_mode: int = 25) -> dict:
                 produced.append(candidate)
                 count += 1
     return {
-        "schema": "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V2",
+        "schema": "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V3",
         "source_issue": "AyalewGM/ai-tutor#337",
         "curriculum_hint": "Ontario Grade 9 MTH1W — proposed scope only",
         "official_standards_mapping_status": "NOT_INDEPENDENTLY_APPROVED",
@@ -478,6 +494,7 @@ def create_pack(*, count_per_family_mode: int = 25) -> dict:
         "diagnosis_requires_multiple_probes": True,
         "hinted_success_counts_as_independent": False,
         "transfer_requires_changed_structure": True,
+        "task_fingerprint_version": "AFFINE_SIDE_SYMMETRY_V1",
         "candidates": produced,
     }
 
