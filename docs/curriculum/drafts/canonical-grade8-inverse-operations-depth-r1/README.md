@@ -13,11 +13,23 @@ prerequisite, difficulty rationale, exact oracle, equivalence/domain boundary,
 misconception signatures, targeted representation move, and concrete → visual
 → symbolic contract.
 
-Guided diagnosis deliberately requires two agreeing probes: an observed exact
-answer and a separate strategy probe. A single wrong answer never earns a
-misconception label. Ambiguous or inconsistent evidence fails closed to neutral
-questions. Diagnostic, independent, and mastery modes cannot obtain guided
-repair, and transfer exits to a different family in unhinted independent mode.
+Guided diagnosis requires an observed exact answer, a learner-visible labelled
+strategy choice, and exact substitution values. A single wrong answer never
+earns a misconception label. The public probe contract—not a reviewer-only
+token—drives classification. Ambiguous, inconsistent, or unparseable evidence
+fails closed to neutral questions. After agreeing evidence, guided repair adds
+two Socratic questions, a representation move, and an explanation of why the
+observed strategy breaks equality without revealing the correct answer.
+
+The guided path is an enforced pure state machine: Observe → Predict →
+Manipulate → Explain → Practice → Diagnose → Transfer → Verify. Prediction is
+locked before manipulation reveals the visual operation; manipulation requires
+the same operation on both complete sides; explanation and practice evidence
+are required before diagnosis. Transfer must identify a fresh different-family
+`independent` item with no support, and verification requires exact equal
+substitution values. Diagnostic, independent, and mastery modes cannot obtain
+guided repair; independent and mastery paths contain only unhinted Practice and
+Verify stages.
 
 ## Standards and local-source boundary
 
@@ -51,3 +63,4 @@ trusted selection, mode eligibility, scoring, persistence, nonrepetition, and
 history isolation. Frontend/MVE and Muse own rendering, keyboard/AT behaviour,
 learner visibility, and browser isolation. No DC or Virginia mapping is added
 or activated here.
+
