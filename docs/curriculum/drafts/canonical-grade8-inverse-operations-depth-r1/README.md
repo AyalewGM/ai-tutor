@@ -22,14 +22,19 @@ two Socratic questions, a representation move, and an explanation of why the
 observed strategy breaks equality without revealing the correct answer.
 
 The guided path is an enforced pure state machine: Observe → Predict →
-Manipulate → Explain → Practice → Diagnose → Transfer → Verify. Prediction is
-locked before manipulation reveals the visual operation; manipulation requires
-the same operation on both complete sides; explanation and practice evidence
-are required before diagnosis. Transfer must identify a fresh different-family
-`independent` item with no support, and verification requires exact equal
-substitution values. Diagnostic, independent, and mastery modes cannot obtain
-guided repair; independent and mastery paths contain only unhinted Practice and
-Verify stages.
+Manipulate → Explain → Practice → Diagnose → Transfer → Verify. The actual
+prediction is retained; an incorrect inverse choice stays in Predict with a
+task-specific Socratic retry before manipulation is revealed. Manipulation
+requires the exact inverse on both complete sides. Explain requires a correct
+public equality-preservation choice plus a learner explanation naming both
+sides. Diagnose is bound to the public answer/strategy/substitution probes:
+arbitrary evidence cannot advance, and a uniquely matched misconception
+remains in Diagnose until the learner completes its answer-free targeted repair
+and exactly resolves the original equation. Transfer must identify a fresh
+different-family `independent` item with no support, and verification
+reconstructs both original equation sides from the practiced exact answer.
+Diagnostic, independent, and mastery modes cannot obtain guided repair;
+independent and mastery paths contain only unhinted Practice and Verify stages.
 
 ## Standards and local-source boundary
 
@@ -63,4 +68,5 @@ trusted selection, mode eligibility, scoring, persistence, nonrepetition, and
 history isolation. Frontend/MVE and Muse own rendering, keyboard/AT behaviour,
 learner visibility, and browser isolation. No DC or Virginia mapping is added
 or activated here.
+
 
