@@ -1,4 +1,4 @@
-# Ontario Grade 9 signed and exact-fraction equation depth — author candidates v2
+# Ontario Grade 9 signed and exact-fraction equation depth — author candidates v3
 
 **Status: DRAFT_UNVERIFIED; NOT learner-visible; NOT approved for runtime registration or seeding.**
 
@@ -44,3 +44,7 @@ Hinted success is explicitly ineligible as independent evidence. Even a successf
 Independent Math must recheck the changed displayed-equation structures, exact oracles, diagnostic response collisions and transfer search at the exact head. Independent Pedagogy must evaluate whether the multi-probe and target-preserving repair contract resolves its prior concern. Standards, trusted scoring/API, accessible Frontend/MVE, Muse QA, Security and Engineering remain separate.
 
 No candidate is registered, seeded, routed or activated. Historical attempts, diagnostic results, variants and mastery events remain unchanged.
+
+## Cross-mode mathematical task identity (v3)
+
+Previously the fingerprint included `structure_id`, so a constant-first or sides-reversed rendering of the same affine equality could be counted as new independent work. Draft v3 fingerprints the unordered pair of exact affine sides **within the same pedagogical family**. Reordering or swapping the two sides no longer creates a fresh mathematical-task identity. Root-only matching is deliberately avoided: many distinct reasoning tasks share the same solution. The version is `AFFINE_SIDE_SYMMETRY_V1`, and the draft pack schema is `MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V3`. Any earlier v2 generated exports are superseded for novelty accounting; neither version is authorized for learner use.
