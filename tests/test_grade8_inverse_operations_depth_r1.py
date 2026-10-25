@@ -249,7 +249,9 @@ def test_guided_learning_path_locks_prediction_and_enforces_every_stage() -> Non
 
     state = MODULE.advance_learning_path(guided, state, {"observation": "Both sides are equal."})
     assert state.stage == "PREDICT"
-    state = MODULE.advance_learning_path(guided, state, {"operation_choice": "SUBTRACT"})
+    offset = Fraction(dict(guided.parameters)["offset"])
+    operation = "SUBTRACT" if offset > 0 else "ADD"
+    state = MODULE.advance_learning_path(guided, state, {"operation_choice": operation})
     assert state.stage == "MANIPULATE"
     assert state.prediction_locked is True
     with pytest.raises(ValueError, match="same nonempty operation"):
@@ -261,7 +263,12 @@ def test_guided_learning_path_locks_prediction_and_enforces_every_stage() -> Non
     state = MODULE.advance_learning_path(
         guided,
         state,
-        {"left_operation": "SUBTRACT", "right_operation": "SUBTRACT"},
+        {
+            "left_operation": operation,
+            "right_operation": operation,
+            "operation_value": str(abs(offset)),
+            "resulting_x": guided.answer,
+        },
     )
     state = MODULE.advance_learning_path(
         guided,
@@ -287,13 +294,17 @@ def test_guided_learning_path_locks_prediction_and_enforces_every_stage() -> Non
         state,
         {
             "independent_variant_id": transfer.variant_id,
+            "independent_answer": transfer.answer,
             "independent_family": transfer.family,
             "independent_mode": transfer.mode,
             "support_used": False,
         },
     )
     state = MODULE.advance_learning_path(
-        guided, state, {"substitution_left": "5/2", "substitution_right": "5/2"}
+        guided, state, {
+            "substitution_left": dict(guided.parameters)["rhs"],
+            "substitution_right": dict(guided.parameters)["rhs"],
+        }
     )
     assert state.stage == "COMPLETE"
     assert state.completed == MODULE.TEACHING_STAGES
@@ -355,3 +366,88 @@ def test_invalid_generation_fails_closed(
     with pytest.raises(error):
         MODULE.generate(family, seed, mode)
 
+
+
+def test_fake_transfer_id_and_wrong_independent_answer_are_rejected() -> None:
+    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    state = MODULE.LearningState(
+        variant_id=guided.variant_id,
+        mode="guided",
+        stages=MODULE.TEACHING_STAGES,
+        position=6,
+        prediction_locked=True,
+        practiced_answer=guided.answer,
+    )
+    transfer = MODULE.generate_transfer(guided)
+    valid = {
+        "independent_variant_id": transfer.variant_id,
+        "independent_family": transfer.family,
+        "independent_mode": "independent",
+        "support_used": False,
+        "independent_answer": transfer.answer,
+    }
+    with pytest.raises(ValueError, match="identifier"):
+        MODULE.advance_learning_path(
+            guided, state, valid | {"independent_variant_id": "fabricated-id"}
+        )
+    with pytest.raises(ValueError, match="did not solve"):
+        MODULE.advance_learning_path(
+            guided, state, valid | {"independent_answer": "999999"}
+        )
+    assert MODULE.advance_learning_path(guided, state, valid).stage == "VERIFY"
+
+
+def test_equal_fabricated_verification_does_not_pass() -> None:
+    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    state = MODULE.LearningState(
+        variant_id=guided.variant_id,
+        mode="guided",
+        stages=MODULE.TEACHING_STAGES,
+        position=7,
+        prediction_locked=True,
+        practiced_answer=guided.answer,
+    )
+    with pytest.raises(ValueError, match="original equation"):
+        MODULE.advance_learning_path(
+            guided, state, {"substitution_left": "5/2", "substitution_right": "5/2"}
+        )
+
+
+def test_fake_inverse_operation_and_wrong_result_are_rejected() -> None:
+    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    state = MODULE.LearningState(
+        variant_id=guided.variant_id,
+        mode="guided",
+        stages=MODULE.TEACHING_STAGES,
+        position=2,
+        prediction_locked=True,
+    )
+    offset = Fraction(dict(guided.parameters)["offset"])
+    operation = "SUBTRACT" if offset > 0 else "ADD"
+    base = {
+        "left_operation": operation,
+        "right_operation": operation,
+        "operation_value": str(abs(offset)),
+        "resulting_x": guided.answer,
+    }
+    with pytest.raises(ValueError, match="exact inverse"):
+        MODULE.advance_learning_path(
+            guided, state, base | {"operation_value": "not-a-rational"}
+        )
+    with pytest.raises(ValueError, match="exact inverse arithmetic"):
+        MODULE.advance_learning_path(
+            guided, state, base | {"resulting_x": "999"}
+        )
+    assert MODULE.advance_learning_path(guided, state, base).stage == "EXPLAIN"
+
+
+def test_invalid_practice_answer_is_rejected() -> None:
+    v = MODULE.generate(MODULE.FAMILIES[9], 223, "independent")
+    state = MODULE.start_learning_path(v)
+    with pytest.raises(ValueError, match="does not solve"):
+        MODULE.advance_learning_path(v, state, {"exact_answer": "999"})
+    state = MODULE.advance_learning_path(v, state, {"exact_answer": v.answer})
+    p = dict(v.parameters)
+    assert MODULE.advance_learning_path(
+        v, state, {"substitution_left": p["rhs"], "substitution_right": p["rhs"]}
+    ).stage == "COMPLETE"
