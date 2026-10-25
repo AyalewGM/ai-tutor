@@ -48,7 +48,10 @@ def _fraction(raw: object) -> Fraction | None:
     if not _RATIONAL.fullmatch(value):
         return None
     try:
-        return Fraction(value)
+        if "/" in value:
+            numerator, denominator = value.split("/", 1)
+            return Fraction(int(numerator), int(denominator))
+        return Fraction(int(value))
     except (ValueError, ZeroDivisionError):
         return None
 
