@@ -9,7 +9,7 @@ curriculum-mapping, or mastery authority here.
 from __future__ import annotations
 
 import random
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from fractions import Fraction
 from types import MappingProxyType
 from typing import Final
@@ -326,8 +326,14 @@ class LearningState:
     stages: tuple[str, ...]
     position: int = 0
     prediction_locked: bool = False
+    prediction_choice: str | None = None
+    prediction_feedback: str | None = None
     completed: tuple[str, ...] = ()
     practiced_answer: str | None = None
+    explanation_evidence: str | None = None
+    diagnosis_classification: str | None = None
+    diagnosis_feedback: tuple[str, ...] = ()
+    repair_completed: bool = False
 
     @property
     def stage(self) -> str:
@@ -368,7 +374,7 @@ def stage_payload(variant: Variant, state: LearningState) -> dict[str, object]:
             "reveals_inverse_operation": False,
         }
     if stage == "PREDICT":
-        return {
+        payload = {
             "stage": stage,
             "instruction": "Predict which operation should be applied to both complete sides.",
             "response_fields": ["operation_choice"],
@@ -376,6 +382,11 @@ def stage_payload(variant: Variant, state: LearningState) -> dict[str, object]:
             "lock_before_next": True,
             "reveals_inverse_operation": False,
         }
+        if state.prediction_choice is not None:
+            payload["recorded_prediction"] = state.prediction_choice
+        if state.prediction_feedback is not None:
+            payload["socratic_feedback"] = state.prediction_feedback
+        return payload
     if stage == "MANIPULATE":
         if not state.prediction_locked:
             raise ValueError("prediction must be locked before manipulation is revealed")
@@ -391,7 +402,21 @@ def stage_payload(variant: Variant, state: LearningState) -> dict[str, object]:
             "stage": stage,
             "instruction": "Explain why the transformation preserves equality.",
             "representation": variant.representation[2],
-            "response_fields": ["equality_justification"],
+            "response_fields": ["reasoning_choice", "equality_justification"],
+            "reasoning_choices": [
+                {
+                    "id": "SAME_OPERATION_BOTH_SIDES",
+                    "label": "The same operation was applied to both complete sides.",
+                },
+                {
+                    "id": "MOVE_TERM_CHANGE_SIGN",
+                    "label": "A term moved across the equals sign and changed sign.",
+                },
+                {
+                    "id": "ONE_SIDE_ONLY",
+                    "label": "Only the side containing x needs to change.",
+                },
+            ],
         }
     if stage == "PRACTICE":
         return {
@@ -403,7 +428,32 @@ def stage_payload(variant: Variant, state: LearningState) -> dict[str, object]:
             "support": "FADING_GUIDED" if variant.mode == "guided" else "NONE_UNHINTED",
         }
     if stage == "DIAGNOSE":
-        return {
+        if (
+            state.diagnosis_classification is not None
+            and state.diagnosis_classification.startswith("EQ_")
+        ):
+            return {
+                "stage": stage,
+                "phase": "TARGETED_REPAIR_EXIT",
+                "instruction": "Use the guided repair, then solve the original equation again without an answer reveal.",
+                "guided_support": list(state.diagnosis_feedback),
+                "response_fields": [
+                    "repair_reflection_choice",
+                    "repair_exit_answer",
+                ],
+                "reflection_choices": [
+                    {
+                        "id": "APPLY_INVERSE_TO_BOTH_SIDES",
+                        "label": "Apply the inverse operation to both complete sides.",
+                    },
+                    {
+                        "id": "CHANGE_ONE_SIDE",
+                        "label": "Change only the side containing x.",
+                    },
+                ],
+                "worked_answer_reveal": False,
+            }
+        payload = {
             "stage": stage,
             "instruction": "Use answer, strategy, and substitution evidence before selecting a repair.",
             "response_fields": [
@@ -414,6 +464,27 @@ def stage_payload(variant: Variant, state: LearningState) -> dict[str, object]:
             ],
             "classification_from_one_wrong_answer": False,
         }
+        if variant.mode == "guided":
+            strategy_codes = (
+                _ADD_STRATEGIES
+                if variant.canonical_skill == ADD_SKILL
+                else _MULT_STRATEGIES
+            )
+            payload["strategy_choices"] = [
+                {
+                    "id": _STRATEGY_OPTION[code][0],
+                    "label": _STRATEGY_OPTION[code][1],
+                }
+                for code in strategy_codes
+            ] + [
+                {
+                    "id": "OTHER_OR_UNSURE",
+                    "label": "I used a different strategy or I am not sure.",
+                }
+            ]
+        if state.diagnosis_feedback:
+            payload["neutral_retry"] = list(state.diagnosis_feedback)
+        return payload
     if stage == "TRANSFER":
         return {
             "stage": stage,
@@ -440,6 +511,45 @@ def _nonempty(response: dict[str, object], field: str) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
+def _required_inverse(variant: Variant) -> tuple[str, Fraction, Fraction]:
+    p = dict(variant.parameters)
+    coefficient = Fraction(p["coefficient"])
+    offset = Fraction(p["offset"])
+    rhs = Fraction(p["rhs"])
+    if coefficient == 1 and offset != 0:
+        operation = "SUBTRACT" if offset > 0 else "ADD"
+        return operation, abs(offset), rhs - offset
+    if coefficient != 1 and offset == 0:
+        return "DIVIDE", coefficient, rhs / coefficient
+    raise ValueError("unsupported one-step inverse structure")
+
+
+def _prediction_prompt(variant: Variant) -> str:
+    operation, _, _ = _required_inverse(variant)
+    if operation in {"ADD", "SUBTRACT"}:
+        return (
+            "What operation undoes the signed offset on x, and why must it "
+            "be applied to both complete sides?"
+        )
+    return (
+        "What operation makes the coefficient of x equal to one, and why "
+        "must it be applied to both complete sides?"
+    )
+
+
+def _valid_equality_explanation(response: dict[str, object]) -> bool:
+    if response.get("reasoning_choice") != "SAME_OPERATION_BOTH_SIDES":
+        return False
+    if not _nonempty(response, "equality_justification"):
+        return False
+    words = str(response["equality_justification"]).casefold()
+    mentions_both_sides = "both" in words and "side" in words
+    names_preservation = any(
+        marker in words for marker in ("equal", "equality", "same value")
+    )
+    return mentions_both_sides and names_preservation
+
+
 def advance_learning_path(
     variant: Variant, state: LearningState, response: dict[str, object]
 ) -> LearningState:
@@ -449,40 +559,52 @@ def advance_learning_path(
         raise ValueError("learning state does not belong to this variant")
     stage = state.stage
     prediction_locked = state.prediction_locked
+    prediction_choice = state.prediction_choice
+    prediction_feedback = state.prediction_feedback
     practiced_answer = state.practiced_answer
+    explanation_evidence = state.explanation_evidence
+    diagnosis_classification = state.diagnosis_classification
+    diagnosis_feedback = state.diagnosis_feedback
+    repair_completed = state.repair_completed
     if stage == "COMPLETE":
         raise ValueError("learning path is already complete")
     if stage == "OBSERVE" and not _nonempty(response, "observation"):
         raise ValueError("observation evidence is required")
     if stage == "PREDICT":
-        if response.get("operation_choice") not in {"ADD", "SUBTRACT", "MULTIPLY", "DIVIDE"}:
+        choice = response.get("operation_choice")
+        if choice not in {"ADD", "SUBTRACT", "MULTIPLY", "DIVIDE"}:
             raise ValueError("a supported operation prediction is required")
+        prediction_choice = str(choice)
+        required_operation, _, _ = _required_inverse(variant)
+        if choice != required_operation:
+            return replace(
+                state,
+                prediction_choice=prediction_choice,
+                prediction_feedback=_prediction_prompt(variant),
+                prediction_locked=False,
+            )
         prediction_locked = True
+        prediction_feedback = None
     if stage == "MANIPULATE":
         left = response.get("left_operation")
         right = response.get("right_operation")
         if not prediction_locked or not isinstance(left, str) or left != right or not left:
             raise ValueError("the same nonempty operation must be applied to both sides")
-        p = dict(variant.parameters)
-        a, b, c = (Fraction(p[key]) for key in ("coefficient", "offset", "rhs"))
         try:
             value = Fraction(str(response["operation_value"]))
             resulting_x = Fraction(str(response["resulting_x"]))
         except (KeyError, ValueError, ZeroDivisionError):
             raise ValueError("exact inverse value and resulting x are required") from None
-        if a == 1 and b != 0:
-            required_operation = "SUBTRACT" if b > 0 else "ADD"
-            required_value = abs(b)
-        elif a != 1 and b == 0:
-            required_operation = "DIVIDE"
-            required_value = a
-        else:
-            raise ValueError("unsupported one-step inverse structure")
+        required_operation, required_value, expected_x = _required_inverse(variant)
         if (left != required_operation or value != required_value
-                or resulting_x != (c - b) / a):
+                or resulting_x != expected_x):
             raise ValueError("transformation must isolate x with exact inverse arithmetic")
-    if stage == "EXPLAIN" and not _nonempty(response, "equality_justification"):
-        raise ValueError("an equality-preserving explanation is required")
+    if stage == "EXPLAIN":
+        if not _valid_equality_explanation(response):
+            raise ValueError(
+                "select the equality-preserving reason and explain both complete sides"
+            )
+        explanation_evidence = str(response["equality_justification"]).strip()
     if stage == "PRACTICE":
         try:
             practiced_answer = _fmt(Fraction(str(response["exact_answer"])))
@@ -491,14 +613,78 @@ def advance_learning_path(
         if practiced_answer != variant.answer:
             raise ValueError("practice answer does not solve the original equation")
     if stage == "DIAGNOSE":
-        required = (
-            "exact_answer",
-            "strategy_choice",
-            "substitution_left",
-            "substitution_right",
-        )
-        if not all(_nonempty(response, field) for field in required):
-            raise ValueError("answer, strategy, and substitution evidence are required")
+        if variant.mode != "guided":
+            try:
+                observed = Fraction(str(response["exact_answer"]))
+            except (KeyError, ValueError, ZeroDivisionError):
+                raise ValueError("an exact diagnostic response is required") from None
+            if observed != Fraction(variant.answer):
+                raise ValueError(
+                    "diagnostic evidence cannot unlock guided repair or transfer"
+                )
+        elif (
+            diagnosis_classification is not None
+            and diagnosis_classification.startswith("EQ_")
+        ):
+            if response.get("repair_reflection_choice") != "APPLY_INVERSE_TO_BOTH_SIDES":
+                raise ValueError("repair reflection must preserve both complete sides")
+            try:
+                exit_answer = Fraction(str(response["repair_exit_answer"]))
+            except (KeyError, ValueError, ZeroDivisionError):
+                raise ValueError("an exact repair-exit answer is required") from None
+            if exit_answer != Fraction(variant.answer):
+                raise ValueError("repair exit must solve the original equation")
+            repair_completed = True
+        else:
+            if not _nonempty(response, "exact_answer"):
+                raise ValueError("an exact answer is required before diagnosis")
+            probe = guided_probe(variant, str(response["exact_answer"]))
+            assert probe is not None
+            if probe["classification"] == "CORRECT_NO_REMEDIATION":
+                diagnosis_classification = "CORRECT_NO_REMEDIATION"
+                diagnosis_feedback = ()
+            elif probe["classification"] == "UNPARSEABLE_NEEDS_CLARIFICATION":
+                return replace(
+                    state,
+                    diagnosis_classification="NEUTRAL_RETRY",
+                    diagnosis_feedback=tuple(probe["questions"]),
+                )
+            else:
+                required = (
+                    "strategy_choice",
+                    "substitution_left",
+                    "substitution_right",
+                )
+                if not all(_nonempty(response, field) for field in required):
+                    return replace(
+                        state,
+                        diagnosis_classification="NEUTRAL_RETRY",
+                        diagnosis_feedback=tuple(probe["questions"]),
+                    )
+                repair = guided_repair(
+                    variant,
+                    str(response["exact_answer"]),
+                    str(response["strategy_choice"]),
+                    str(response["substitution_left"]),
+                    str(response["substitution_right"]),
+                )
+                assert repair is not None
+                classification = str(repair["classification"])
+                if not classification.startswith("EQ_"):
+                    return replace(
+                        state,
+                        diagnosis_classification="NEUTRAL_RETRY",
+                        diagnosis_feedback=tuple(repair["questions"]),
+                    )
+                return replace(
+                    state,
+                    diagnosis_classification=classification,
+                    diagnosis_feedback=(
+                        str(repair["guided_explanation"]),
+                        *tuple(str(q) for q in repair["questions"]),
+                    ),
+                    repair_completed=False,
+                )
     if stage == "TRANSFER":
         if (
             not _nonempty(response, "independent_variant_id")
@@ -538,8 +724,14 @@ def advance_learning_path(
         stages=state.stages,
         position=state.position + 1,
         prediction_locked=prediction_locked,
+        prediction_choice=prediction_choice,
+        prediction_feedback=prediction_feedback,
         completed=state.completed + (stage,),
         practiced_answer=practiced_answer,
+        explanation_evidence=explanation_evidence,
+        diagnosis_classification=diagnosis_classification,
+        diagnosis_feedback=diagnosis_feedback,
+        repair_completed=repair_completed,
     )
 
 
@@ -939,3 +1131,4 @@ def generate_transfer(source: Variant, *, seed_offset: int = 1_000_003) -> Varia
     return generate(
         TRANSFER_PARTNER[source.family], source_seed(source) + seed_offset, "independent"
     )
+
