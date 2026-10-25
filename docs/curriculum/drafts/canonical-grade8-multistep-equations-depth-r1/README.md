@@ -15,11 +15,18 @@ requirements, and keyboard/AT requirements. Independent transfer is always a
 different family in the same proposed canonical skill. Diagnostic,
 independent, and mastery variants expose no guided repair.
 
-The source ledger is deliberately fail-closed. Maryland `8.AT.B.3b`, DC
-`8.EE.C.7a-b`, and Virginia `8.PFA.4` are research locators only until separate
-source/mapping review. The MCPS support page is legacy/open-resource structure
-research, not proof of current local sequence. No source task, diagram, wording,
-or answer key is copied.
+The source ledger is deliberately fail-closed. Maryland `8.AT.B.3a` and
+`8.AT.B.3b` are recorded as separate `PARTIAL_NON_EXHAUSTIVE` /
+`PROVISIONAL_NOT_ACCEPTED` relations. The three identity, contradiction, and
+solution-class comparison families carry only bounded `8.AT.B.3a` recognition,
+comparison, and justification evidence; learner construction of examples and
+complete rewriting to the publisher-specified forms are excluded from coverage
+credit. The other nine families carry the bounded `8.AT.B.3b` solving,
+distribution, like-term, modeling, and error-analysis relation. DC `8.EE.C.7a-b`
+and Virginia `8.PFA.4` remain provisional research locators only. The MCPS
+support page is legacy/open-resource structure research, not proof of current
+local sequence. No full-standard coverage, source task, diagram, wording, or
+answer key is claimed or copied.
 
 The package is not imported by `app`, registered, seeded, routed, scored, or
 rendered. It changes no learner, Attempt, DiagnosticAttempt, MasteryEvent, or
