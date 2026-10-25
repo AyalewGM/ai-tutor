@@ -24,10 +24,14 @@ repair, and transfer exits to a different family in unhinted independent mode.
 Maryland's current Grade 8 MCCRS Companion Guide (Version 1, February 2026),
 standard 8.AT.B.3 on page 24, supports rational-coefficient linear equations
 and emphasizes equality meaning, negatives, error analysis, explanation, and
-multiple strategies. The MCPS Math 8 Unit 4 page provides local teaching aims
-for balanced equations and applying the same operation to both sides. The MCPS
-Math 7 Unit 5 page is used only as prerequisite evidence for opposites and
-reciprocals, not as proof of Grade 8 alignment.
+multiple strategies. MCPS's current middle-school mathematics page identifies
+Amplify Desmos Math as its Grades 6-8 core curriculum but publishes no
+unit-to-standard mapping there. The separate, undated Math 8 Unit 4
+family-support page reproduces 2017-2019 IM/Open Up Resources material and is
+used only as historical, openly licensed mathematical-structure research for
+balanced equations—not as proof of current MCPS sequence or alignment. The
+Math 7 Unit 5 page is likewise prerequisite-only evidence for opposites and
+reciprocals, not proof of Grade 8 alignment.
 
 No source task, wording, diagram, or protected expression is copied. The
 prompts, contexts, parameterization, representations, distractors, and repairs
