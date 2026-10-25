@@ -12,6 +12,7 @@ from scripts.author_ontario_linear_depth import (
     FAMILIES,
     MODES,
     SKILLS,
+    _task_fingerprint,
     STRUCTURES,
     create_candidate,
     create_pack,
@@ -193,7 +194,7 @@ def test_unhinted_transfer_changes_structure_task_and_answer(family, target_mode
 
 def test_mode_pools_and_pack_are_distinct_and_fail_closed():
     pack = create_pack(count_per_family_mode=25)
-    assert pack["schema"] == "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V2"
+    assert pack["schema"] == "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V3"
     assert len(pack["candidates"]) == 25 * len(FAMILIES) * len(MODES)
     assert pack["runtime_registered"] is False
     assert pack["runtime_activation"] is False
@@ -201,6 +202,7 @@ def test_mode_pools_and_pack_are_distinct_and_fail_closed():
     assert pack["diagnosis_requires_multiple_probes"] is True
     assert pack["hinted_success_counts_as_independent"] is False
     assert pack["transfer_requires_changed_structure"] is True
+    assert pack["task_fingerprint_version"] == "AFFINE_SIDE_SYMMETRY_V1"
     assert len({q["variant_id"] for q in pack["candidates"]}) == len(pack["candidates"])
     for family in FAMILIES:
         group = [q for q in pack["candidates"] if q["candidate_family"] == family]
@@ -208,6 +210,34 @@ def test_mode_pools_and_pack_are_distinct_and_fail_closed():
         assert {q["mode"] for q in group} == set(MODES)
         assert {q["structure_id"] for q in group} == set(STRUCTURES[family])
     assert pack == create_pack(count_per_family_mode=25)
+
+
+@pytest.mark.parametrize("family", FAMILIES)
+def test_reordered_or_swapped_affine_equations_are_one_mathematical_task(family):
+    original = (Fraction(3, 4), Fraction(-7), Fraction(-2), Fraction(5, 3))
+    swapped = (original[2], original[3], original[0], original[1])
+    # The display structure must not create a new mathematical task identity.
+    assert _task_fingerprint(family, original) == _task_fingerprint(family, swapped)
+    # Changing a term should make a genuinely different equation.
+    changed = (original[0], original[1] + 1, original[2], original[3])
+    assert _task_fingerprint(family, original) != _task_fingerprint(family, changed)
+
+
+def test_unseen_mode_pool_deduplicates_sides_reversed_and_term_order():
+    # Different presentation structures can represent an identical affine
+    # equation; separate hashes would falsely declare independent transfer.
+    family = FAMILIES[0]
+    terms_first = (Fraction(5), Fraction(-7), Fraction(0), Fraction(8))
+    constant_first = (Fraction(5), Fraction(-7), Fraction(0), Fraction(8))
+    sides_reversed = (Fraction(0), Fraction(8), Fraction(5), Fraction(-7))
+    fingerprints = {
+        _task_fingerprint(family, item)
+        for item in (terms_first, constant_first, sides_reversed)
+    }
+    assert len(fingerprints) == 1
+    # Distinct mathematical *representations* are intentionally preserved
+    # between families; the user must still make the same-family transfer.
+    assert _task_fingerprint(FAMILIES[1], terms_first) not in fingerprints
 
 
 def test_invalid_requests_cannot_bypass_scope():
