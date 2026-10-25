@@ -436,6 +436,8 @@ def stage_payload(variant: Variant, state: LearningState) -> dict[str, object]:
                 "support": "NONE_UNHINTED",
                 "guided_repair_available": False,
             }
+        if state.practiced_answer is None:
+            raise ValueError("guided diagnosis requires the retained practice response")
         if (
             state.diagnosis_classification is not None
             and state.diagnosis_classification.startswith("EQ_")
@@ -461,11 +463,26 @@ def stage_payload(variant: Variant, state: LearningState) -> dict[str, object]:
                 ],
                 "worked_answer_reveal": False,
             }
+        probe = guided_probe(variant, state.practiced_answer)
+        assert probe is not None
+        if probe["classification"] == "CORRECT_NO_REMEDIATION":
+            return {
+                "stage": stage,
+                "phase": "CORRECT_CONFIRMATION",
+                "instruction": (
+                    "Your retained practice response satisfies the original equation. "
+                    "Confirm that you are ready for an unhinted transfer task."
+                ),
+                "response_fields": ["confirm_ready_for_transfer"],
+                "support": "NONE_UNHINTED",
+            }
         payload = {
             "stage": stage,
-            "instruction": "Use answer, strategy, and substitution evidence before selecting a repair.",
+            "instruction": (
+                "Use the retained practice response, your strategy, and exact "
+                "substitution evidence before selecting a repair."
+            ),
             "response_fields": [
-                "exact_answer",
                 "strategy_choice",
                 "substitution_left",
                 "substitution_right",
@@ -618,7 +635,7 @@ def advance_learning_path(
             practiced_answer = _fmt(Fraction(str(response["exact_answer"])))
         except (KeyError, ValueError, ZeroDivisionError):
             raise ValueError("an exact practice response is required") from None
-        if practiced_answer != variant.answer:
+        if variant.mode != "guided" and practiced_answer != variant.answer:
             raise ValueError("practice answer does not solve the original equation")
     if stage == "DIAGNOSE":
         if variant.mode != "guided":
@@ -645,13 +662,16 @@ def advance_learning_path(
                 raise ValueError("an exact repair-exit answer is required") from None
             if exit_answer != Fraction(variant.answer):
                 raise ValueError("repair exit must solve the original equation")
+            practiced_answer = _fmt(exit_answer)
             repair_completed = True
         else:
-            if not _nonempty(response, "exact_answer"):
-                raise ValueError("an exact answer is required before diagnosis")
-            probe = guided_probe(variant, str(response["exact_answer"]))
+            if practiced_answer is None:
+                raise ValueError("guided diagnosis requires the retained practice response")
+            probe = guided_probe(variant, practiced_answer)
             assert probe is not None
             if probe["classification"] == "CORRECT_NO_REMEDIATION":
+                if response.get("confirm_ready_for_transfer") is not True:
+                    raise ValueError("correct practice must be confirmed before transfer")
                 diagnosis_classification = "CORRECT_NO_REMEDIATION"
                 diagnosis_feedback = ()
             elif probe["classification"] == "UNPARSEABLE_NEEDS_CLARIFICATION":
@@ -674,7 +694,7 @@ def advance_learning_path(
                     )
                 repair = guided_repair(
                     variant,
-                    str(response["exact_answer"]),
+                    practiced_answer,
                     str(response["strategy_choice"]),
                     str(response["substitution_left"]),
                     str(response["substitution_right"]),
