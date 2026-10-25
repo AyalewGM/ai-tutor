@@ -76,7 +76,7 @@
     "deterministic_seed_contract": {
       "primary_seed_band": "0..191",
       "transfer_seed_band": "1000003..1000194",
-      "normalized_equation_uniqueness": "192_OF_192_PER_FAMILY_AND_MODE_IN_EACH_REVIEWED_BAND",
+      "normalized_equation_uniqueness": "ZERO_OVERLAP_ACROSS_ALL_4_MODES_X_2_BANDS;_192_OF_192_WITHIN_EACH_SLICE",
       "out_of_band": "REJECTED"
     },
     "exact_arithmetic": "fractions.Fraction",

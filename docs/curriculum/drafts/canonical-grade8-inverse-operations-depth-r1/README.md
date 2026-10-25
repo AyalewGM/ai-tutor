@@ -14,11 +14,12 @@ misconception signatures, targeted representation move, and concrete → visual
 → symbolic contract.
 
 The reviewed generator accepts primary seeds `0..191` and a separate transfer
-band `1000003..1000194`. Within each family and mode, every seed in a band maps
-to a distinct normalized equation; out-of-band seeds fail closed. The two
-bands are deterministic permutations of a normalized candidate pool rather
-than independent random draws, so a different variant ID cannot disguise an
-identical equation inside the reviewed bank.
+band `1000003..1000194`. Each family owns one deterministic candidate
+permutation partitioned into eight non-overlapping slices: four modes times two
+seed bands. Every slice contains 192 distinct normalized equations, and no
+normalized equation appears in any other mode/band slice for that family.
+Out-of-band seeds fail closed, so a different variant ID or assessment mode
+cannot disguise an identical equation inside the reviewed bank.
 
 Guided practice retains the learner's first parseable exact response, whether
 correct or incorrect. Diagnose uses that authentic practice response with a

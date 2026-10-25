@@ -18,7 +18,8 @@ from typing import Final
 STATUS: Final = "DRAFT_UNVERIFIED"
 RUNTIME_ACTIVATION: Final = False
 NAMESPACE: Final = "canonical-grade8:inverse-operations-depth-r1"
-MODES: Final = frozenset({"diagnostic", "guided", "independent", "mastery"})
+MODE_ORDER: Final = ("diagnostic", "guided", "independent", "mastery")
+MODES: Final = frozenset(MODE_ORDER)
 TEACHING_STAGES: Final = (
     "OBSERVE",
     "PREDICT",
@@ -34,6 +35,10 @@ ADD_SKILL: Final = "M8.ALG.INVERSE.ADD"
 MULT_SKILL: Final = "M8.ALG.INVERSE.MULT"
 PRIMARY_SEED_COUNT: Final = 192
 TRANSFER_SEED_OFFSET: Final = 1_000_003
+REVIEWED_BAND_COUNT: Final = 2
+REVIEWED_TASKS_PER_FAMILY: Final = (
+    len(MODE_ORDER) * REVIEWED_BAND_COUNT * PRIMARY_SEED_COUNT
+)
 
 FAMILIES: Final = (
     "MATH.EQ.INVERSE.ADD.BALANCE",
@@ -842,63 +847,65 @@ def _variant(
 
 @cache
 def _candidate_pool(family: str) -> tuple[tuple[Fraction, ...], ...]:
-    """Enumerate normalized parameter tuples before deterministic shuffling."""
+    """Enumerate enough normalized tuples for every disjoint mode/band slice."""
 
-    xs = tuple(Fraction(n) for n in range(-12, 13) if n)
+    xs = tuple(Fraction(n) for n in range(-32, 33) if n)
     if family == FAMILIES[0]:
-        pool = {(x, Fraction(offset)) for x in xs for offset in range(-11, 12) if offset}
+        pool = {(x, Fraction(offset)) for x in xs for offset in range(-24, 25) if offset}
     elif family == FAMILIES[1]:
-        pool = {(x, Fraction(amount)) for x in xs for amount in range(2, 13)}
+        pool = {(x, Fraction(amount)) for x in xs for amount in range(2, 26)}
     elif family == FAMILIES[2]:
-        pool = {(x, Fraction(offset)) for x in xs for offset in range(-10, 11) if offset}
+        pool = {(x, Fraction(offset)) for x in xs for offset in range(-24, 25) if offset}
     elif family == FAMILIES[3]:
         solutions = {
             Fraction(n, denominator)
-            for n in range(-15, 16)
+            for n in range(-32, 33)
             if n
-            for denominator in (2, 3, 4)
+            for denominator in (2, 3, 4, 5, 6, 8)
         }
         offsets = {
             Fraction(n, denominator)
-            for n in range(-9, 10)
+            for n in range(-24, 25)
             if n
-            for denominator in (2, 3, 4, 5, 6)
+            for denominator in (2, 3, 4, 5, 6, 8)
         }
         pool = {(solution, offset) for solution in solutions for offset in offsets}
     elif family == FAMILIES[4]:
-        pool = {(x, Fraction(change)) for x in xs for change in range(-9, 10) if change}
+        pool = {(x, Fraction(change)) for x in xs for change in range(-24, 25) if change}
     elif family == FAMILIES[5]:
-        pool = {(x, Fraction(offset)) for x in xs for offset in range(2, 12)}
+        pool = {(x, Fraction(offset)) for x in xs for offset in range(2, 26)}
     elif family == FAMILIES[6]:
-        pool = {(x, Fraction(coefficient)) for x in xs for coefficient in range(2, 13)}
+        pool = {(x, Fraction(coefficient)) for x in xs for coefficient in range(2, 26)}
     elif family == FAMILIES[7]:
-        pool = {(x, Fraction(divisor)) for x in xs for divisor in range(2, 11)}
+        pool = {(x, Fraction(divisor)) for x in xs for divisor in range(2, 26)}
     elif family == FAMILIES[8]:
-        pool = {(x, Fraction(magnitude)) for x in xs for magnitude in range(2, 11)}
+        pool = {(x, Fraction(magnitude)) for x in xs for magnitude in range(2, 26)}
     elif family == FAMILIES[9]:
         coefficients = {
             Fraction(numerator, denominator)
-            for numerator in range(2, 9)
-            for denominator in range(2, 10)
+            for numerator in range(2, 26)
+            for denominator in range(2, 26)
             if numerator != denominator
         }
         pool = {(solution, coefficient) for solution in xs for coefficient in coefficients}
     elif family == FAMILIES[10]:
         per_group_values = {
             Fraction(numerator, denominator)
-            for numerator in range(1, 13)
-            for denominator in (1, 2, 4)
+            for numerator in range(1, 33)
+            for denominator in (1, 2, 3, 4, 5, 6, 8)
         }
         pool = {
             (per_group, Fraction(groups))
             for per_group in per_group_values
-            for groups in range(2, 13)
+            for groups in range(2, 26)
         }
     else:
-        pool = {(x, Fraction(coefficient)) for x in xs for coefficient in range(2, 12)}
+        pool = {(x, Fraction(coefficient)) for x in xs for coefficient in range(2, 26)}
     ordered = tuple(sorted(pool))
-    if len(ordered) < PRIMARY_SEED_COUNT:
-        raise AssertionError("family needs at least one normalized task per reviewed seed")
+    if len(ordered) < REVIEWED_TASKS_PER_FAMILY:
+        raise AssertionError(
+            "family needs a disjoint normalized task for every mode and seed band"
+        )
     return ordered
 
 
@@ -909,11 +916,22 @@ def _seed_band(seed: int) -> tuple[str, int]:
 
 
 @cache
+def _shuffled_candidate_pool(family: str) -> tuple[tuple[Fraction, ...], ...]:
+    """Return one stable permutation shared by all disjoint mode/band slices."""
+
+    candidates = list(_candidate_pool(family))
+    random.Random(f"{NAMESPACE}:{family}:DISJOINT_MODE_BANDS").shuffle(candidates)
+    return tuple(candidates)
+
+
+@cache
 def _seeded_candidate(family: str, mode: str, seed: int) -> tuple[Fraction, ...]:
     band, slot = _seed_band(seed)
-    candidates = list(_candidate_pool(family))
-    random.Random(f"{NAMESPACE}:{family}:{mode}:{band}").shuffle(candidates)
-    return candidates[slot]
+    mode_index = MODE_ORDER.index(mode)
+    band_index = 0 if band == "PRIMARY" else 1
+    slice_index = mode_index * REVIEWED_BAND_COUNT + band_index
+    candidate_index = slice_index * PRIMARY_SEED_COUNT + slot
+    return _shuffled_candidate_pool(family)[candidate_index]
 
 
 def generate(family: str, seed: int, mode: str) -> Variant:

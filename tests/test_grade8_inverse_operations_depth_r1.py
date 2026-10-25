@@ -390,6 +390,30 @@ def test_transfer_seed_band_is_normalized_and_nonrepeating() -> None:
         assert len({variant.parameters for variant in transfers}) == len(transfers)
 
 
+def test_normalized_equations_are_disjoint_across_every_mode_and_seed_band() -> None:
+    bands = {
+        "primary": range(MODULE.PRIMARY_SEED_COUNT),
+        "transfer": range(
+            MODULE.TRANSFER_SEED_OFFSET,
+            MODULE.TRANSFER_SEED_OFFSET + MODULE.PRIMARY_SEED_COUNT,
+        ),
+    }
+    for family in MODULE.FAMILIES:
+        pools: dict[tuple[str, str], set[tuple[tuple[str, str], ...]]] = {}
+        for mode in MODULE.MODE_ORDER:
+            for band, seeds in bands.items():
+                normalized = {
+                    MODULE.generate(family, seed, mode).parameters for seed in seeds
+                }
+                assert len(normalized) == MODULE.PRIMARY_SEED_COUNT
+                pools[(mode, band)] = normalized
+
+        pool_items = list(pools.items())
+        for index, (left_name, left) in enumerate(pool_items):
+            for right_name, right in pool_items[index + 1 :]:
+                assert left.isdisjoint(right), (family, left_name, right_name)
+
+
 def test_generation_has_no_persistence_or_application_imports() -> None:
     source = (PACKAGE / "generator.py").read_text()
     forbidden = (
