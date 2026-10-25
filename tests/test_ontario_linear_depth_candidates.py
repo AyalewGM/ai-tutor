@@ -11,8 +11,9 @@ from sympy import Eq, Rational, S, Symbol, solveset
 from scripts.author_ontario_linear_depth import (
     FAMILIES,
     MODES,
+    PRESENTATIONS,
     SKILLS,
-    STRUCTURES,
+    TRANSFER_FAMILY,
     _task_fingerprint,
     create_candidate,
     create_pack,
@@ -24,15 +25,15 @@ from scripts.author_ontario_linear_depth import (
 def _coefficients_from_prompt(data: dict) -> dict[str, str]:
     """Independently parse actual student text to catch prompt/oracle divergence."""
     family = data["candidate_family"]
-    structure = data["structure_id"]
+    presentation = data["presentation_id"]
     prompt = data["prompt"]
     if family == "TWO_STEP_SIGNED_RATIONAL":
-        if structure == "VARIABLE_TERM_FIRST":
+        if presentation == "VARIABLE_TERM_FIRST":
             m = re.fullmatch(r"Solve (-?\d+)x ([+-]\d+) = (-?\d+)\.", prompt)
             assert m is not None
             a, b, d = map(int, m.groups())
             result = (Fraction(a), Fraction(b), Fraction(0), Fraction(d))
-        elif structure == "CONSTANT_TERM_FIRST":
+        elif presentation == "CONSTANT_TERM_FIRST":
             m = re.fullmatch(r"Solve (-?\d+) ([+-]\d+)x = (-?\d+)\.", prompt)
             assert m is not None
             b, a, d = map(int, m.groups())
@@ -43,7 +44,7 @@ def _coefficients_from_prompt(data: dict) -> dict[str, str]:
             d, a, b = map(int, m.groups())
             result = (Fraction(0), Fraction(d), Fraction(a), Fraction(b))
     elif family == "TWO_STEP_FRACTIONAL_COEFFICIENT":
-        if structure == "VARIABLE_TERM_FIRST":
+        if presentation == "VARIABLE_TERM_FIRST":
             m = re.fullmatch(
                 r"Solve \((-?\d+)/(\d+)\)x ([+-]\d+) = (-?\d+)\.",
                 prompt,
@@ -51,7 +52,7 @@ def _coefficients_from_prompt(data: dict) -> dict[str, str]:
             assert m is not None
             a, den, b, d = map(int, m.groups())
             result = (Fraction(a, den), Fraction(b), Fraction(0), Fraction(d))
-        elif structure == "CONSTANT_TERM_FIRST":
+        elif presentation == "CONSTANT_TERM_FIRST":
             m = re.fullmatch(
                 r"Solve (-?\d+) ([+-]) \((\d+)/(\d+)\)x = (-?\d+)\.",
                 prompt,
@@ -69,7 +70,7 @@ def _coefficients_from_prompt(data: dict) -> dict[str, str]:
             d, a, den, b = map(int, m.groups())
             result = (Fraction(0), Fraction(d), Fraction(a, den), Fraction(b))
     elif family == "MULTISTEP_NEGATIVE_DISTRIBUTION":
-        if structure == "VARIABLE_TERM_FIRST":
+        if presentation == "VARIABLE_TERM_FIRST":
             m = re.fullmatch(
                 r"Solve -(\d+)\(x - \((-?\d+)\)\) \+ \((-?\d+)\) = (-?\d+)\.",
                 prompt,
@@ -77,7 +78,7 @@ def _coefficients_from_prompt(data: dict) -> dict[str, str]:
             assert m is not None
             k, b, c, d = map(int, m.groups())
             result = (Fraction(-k), Fraction(k * b + c), Fraction(0), Fraction(d))
-        elif structure == "CONSTANT_TERM_FIRST":
+        elif presentation == "CONSTANT_TERM_FIRST":
             m = re.fullmatch(
                 r"Solve \((-?\d+)\) - (\d+)\(x - \((-?\d+)\)\) = (-?\d+)\.",
                 prompt,
@@ -95,7 +96,7 @@ def _coefficients_from_prompt(data: dict) -> dict[str, str]:
             result = (Fraction(0), Fraction(d), Fraction(-k), Fraction(k * b + c))
     else:
         assert family == "MULTISTEP_VARIABLES_BOTH_SIDES"
-        if structure == "CONSTANT_TERM_FIRST":
+        if presentation == "CONSTANT_TERM_FIRST":
             m = re.fullmatch(
                 r"Solve (-?\d+) ([+-]\d+)x = (-?\d+) ([+-]\d+)x\.",
                 prompt,
@@ -164,23 +165,29 @@ def test_exact_noninteger_oracle_and_multi_probe_contract_for_60_seeds(family, m
 
 
 @pytest.mark.parametrize("family", FAMILIES)
-def test_all_presentation_structures_are_seed_reachable(family):
+def test_all_presentation_layouts_are_seed_reachable(family):
     observed = {
-        create_candidate(family, seed=seed, mode="GUIDED")["structure_id"]
+        create_candidate(family, seed=seed, mode="GUIDED")["presentation_id"]
         for seed in range(120)
     }
-    assert observed == set(STRUCTURES[family])
+    assert observed == set(PRESENTATIONS[family])
 
 
 @pytest.mark.parametrize("family", FAMILIES)
 @pytest.mark.parametrize("target_mode", ("INDEPENDENT", "MASTERY"))
-def test_unhinted_transfer_changes_structure_task_and_answer(family, target_mode):
+def test_unhinted_transfer_changes_reasoning_family_task_and_answer(family, target_mode):
     source = create_candidate(family, seed=11, mode="GUIDED")
     transfer = create_unhinted_transfer(source, target_mode=target_mode)
-    assert transfer["target_family"] == family
+    assert transfer["source_family"] == family
+    assert transfer["target_family"] == TRANSFER_FAMILY[family]
+    assert SKILLS[transfer["target_family"]] == SKILLS[family]
     assert transfer["target_mode"] == target_mode
-    assert transfer["source_structure_id"] != transfer["target_structure_id"]
-    assert transfer["structure_changed"] is True
+    assert (
+        transfer["source_reasoning_structure_id"]
+        != transfer["target_reasoning_structure_id"]
+    )
+    assert transfer["reasoning_structure_changed"] is True
+    assert isinstance(transfer["presentation_changed"], bool)
     assert transfer["task_fingerprint_changed"] is True
     assert transfer["answer_changed"] is True
     assert transfer["hints_allowed"] is False
@@ -194,21 +201,23 @@ def test_unhinted_transfer_changes_structure_task_and_answer(family, target_mode
 
 def test_mode_pools_and_pack_are_distinct_and_fail_closed():
     pack = create_pack(count_per_family_mode=25)
-    assert pack["schema"] == "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V3"
+    assert pack["schema"] == "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V4"
     assert len(pack["candidates"]) == 25 * len(FAMILIES) * len(MODES)
     assert pack["runtime_registered"] is False
     assert pack["runtime_activation"] is False
     assert pack["math_review"] == "PENDING_INDEPENDENT"
     assert pack["diagnosis_requires_multiple_probes"] is True
     assert pack["hinted_success_counts_as_independent"] is False
-    assert pack["transfer_requires_changed_structure"] is True
+    assert pack["transfer_requires_changed_reasoning_structure"] is True
+    assert pack["transfer_requires_changed_presentation"] is False
     assert pack["task_fingerprint_version"] == "AFFINE_SIDE_SYMMETRY_V1"
     assert len({q["variant_id"] for q in pack["candidates"]}) == len(pack["candidates"])
     for family in FAMILIES:
         group = [q for q in pack["candidates"] if q["candidate_family"] == family]
         assert len({q["task_fingerprint"] for q in group}) == len(group)
         assert {q["mode"] for q in group} == set(MODES)
-        assert {q["structure_id"] for q in group} == set(STRUCTURES[family])
+        assert {q["presentation_id"] for q in group} == set(PRESENTATIONS[family])
+        assert {q["reasoning_structure_id"] for q in group} == {family}
     assert pack == create_pack(count_per_family_mode=25)
 
 
@@ -224,7 +233,7 @@ def test_reordered_or_swapped_affine_equations_are_one_mathematical_task(family)
 
 
 def test_unseen_mode_pool_deduplicates_sides_reversed_and_term_order():
-    # Different presentation structures can represent an identical affine
+    # Different presentation layouts can represent an identical affine
     # equation; separate hashes would falsely declare independent transfer.
     family = FAMILIES[0]
     terms_first = (Fraction(5), Fraction(-7), Fraction(0), Fraction(8))

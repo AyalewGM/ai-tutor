@@ -27,9 +27,15 @@ SKILLS = {
     "MULTISTEP_NEGATIVE_DISTRIBUTION": "MATH.EE.EQUATION.MULTISTEP",
     "MULTISTEP_VARIABLES_BOTH_SIDES": "MATH.EE.EQUATION.MULTISTEP",
 }
-STRUCTURES = {
+PRESENTATIONS = {
     family: ("VARIABLE_TERM_FIRST", "CONSTANT_TERM_FIRST", "SIDES_REVERSED")
     for family in FAMILIES
+}
+TRANSFER_FAMILY = {
+    "TWO_STEP_SIGNED_RATIONAL": "TWO_STEP_FRACTIONAL_COEFFICIENT",
+    "TWO_STEP_FRACTIONAL_COEFFICIENT": "TWO_STEP_SIGNED_RATIONAL",
+    "MULTISTEP_NEGATIVE_DISTRIBUTION": "MULTISTEP_VARIABLES_BOTH_SIDES",
+    "MULTISTEP_VARIABLES_BOTH_SIDES": "MULTISTEP_NEGATIVE_DISTRIBUTION",
 }
 
 _REPAIR_LIBRARY = {
@@ -161,17 +167,17 @@ def _case(
     Fraction,
     str,
 ]:
-    """Return prompt, displayed/base coefficients, repair metadata and structure."""
+    """Return prompt, coefficients, repair metadata and presentation layout."""
     if family == "TWO_STEP_SIGNED_RATIONAL":
         x = _noninteger(rng)
         a = x.denominator * rng.choice((-1, 1)) * rng.randint(1, 4)
         b = _nonzero(rng, -15, 15)
         d = a * x + b
-        structure = rng.choice(STRUCTURES[family])
-        if structure == "VARIABLE_TERM_FIRST":
+        presentation = rng.choice(PRESENTATIONS[family])
+        if presentation == "VARIABLE_TERM_FIRST":
             prompt = f"Solve {a}x {b:+d} = {d}."
             displayed = (Fraction(a), Fraction(b), Fraction(0), Fraction(d))
-        elif structure == "CONSTANT_TERM_FIRST":
+        elif presentation == "CONSTANT_TERM_FIRST":
             prompt = f"Solve {b} {a:+d}x = {d}."
             displayed = (Fraction(a), Fraction(b), Fraction(0), Fraction(d))
         else:
@@ -188,7 +194,7 @@ def _case(
                 "Divide both sides by the coefficient, including its sign.",
             ),
             Fraction(d, a),
-            structure,
+            presentation,
         )
     if family == "TWO_STEP_FRACTIONAL_COEFFICIENT":
         while True:
@@ -202,12 +208,12 @@ def _case(
                 break
         b = _nonzero(rng, -12, 12)
         d = b + change
-        structure = rng.choice(STRUCTURES[family])
+        presentation = rng.choice(PRESENTATIONS[family])
         coefficient = Fraction(a, denominator)
-        if structure == "VARIABLE_TERM_FIRST":
+        if presentation == "VARIABLE_TERM_FIRST":
             prompt = f"Solve ({a}/{denominator})x {b:+d} = {d}."
             displayed = (coefficient, Fraction(b), Fraction(0), Fraction(d))
-        elif structure == "CONSTANT_TERM_FIRST":
+        elif presentation == "CONSTANT_TERM_FIRST":
             sign = "+" if a > 0 else "-"
             prompt = f"Solve {b} {sign} ({abs(a)}/{denominator})x = {d}."
             displayed = (coefficient, Fraction(b), Fraction(0), Fraction(d))
@@ -225,7 +231,7 @@ def _case(
                 "Undo multiplication by a fraction with its reciprocal.",
             ),
             Fraction(a * change, denominator),
-            structure,
+            presentation,
         )
     if family == "MULTISTEP_NEGATIVE_DISTRIBUTION":
         x = _noninteger(rng)
@@ -233,11 +239,11 @@ def _case(
         b = _nonzero(rng, -9, 9)
         c = rng.randint(-12, 12)
         target = -k * (x - b) + c
-        structure = rng.choice(STRUCTURES[family])
-        if structure == "VARIABLE_TERM_FIRST":
+        presentation = rng.choice(PRESENTATIONS[family])
+        if presentation == "VARIABLE_TERM_FIRST":
             prompt = f"Solve -{k}(x - ({b})) + ({c}) = {target}."
             displayed = (Fraction(-k), Fraction(k * b + c), Fraction(0), Fraction(target))
-        elif structure == "CONSTANT_TERM_FIRST":
+        elif presentation == "CONSTANT_TERM_FIRST":
             prompt = f"Solve ({c}) - {k}(x - ({b})) = {target}."
             displayed = (Fraction(-k), Fraction(k * b + c), Fraction(0), Fraction(target))
         else:
@@ -254,7 +260,7 @@ def _case(
                 "After distribution, collect constants and isolate x.",
             ),
             Fraction(c - target, k),
-            structure,
+            presentation,
         )
     if family == "MULTISTEP_VARIABLES_BOTH_SIDES":
         x = _noninteger(rng)
@@ -266,11 +272,11 @@ def _case(
                 break
         b = _nonzero(rng, -12, 12)
         d = difference * x + b
-        structure = rng.choice(STRUCTURES[family])
-        if structure == "VARIABLE_TERM_FIRST":
+        presentation = rng.choice(PRESENTATIONS[family])
+        if presentation == "VARIABLE_TERM_FIRST":
             prompt = f"Solve {a}x {b:+d} = {c}x {int(d):+d}."
             displayed = (Fraction(a), Fraction(b), Fraction(c), Fraction(d))
-        elif structure == "CONSTANT_TERM_FIRST":
+        elif presentation == "CONSTANT_TERM_FIRST":
             prompt = f"Solve {b} {a:+d}x = {int(d)} {c:+d}x."
             displayed = (Fraction(a), Fraction(b), Fraction(c), Fraction(d))
         else:
@@ -287,7 +293,7 @@ def _case(
                 "Simplify the variable coefficient, then isolate x.",
             ),
             Fraction(d - b, a),
-            structure,
+            presentation,
         )
     raise ValueError(f"Unknown draft family: {family}")
 
@@ -356,7 +362,7 @@ def create_candidate(family: str, *, seed: str | int, mode: str) -> dict:
         rationale,
         hints,
         wrong,
-        structure,
+        presentation,
     ) = _case(family, _rng(family, seed, mode))
     if a == c:
         raise ArithmeticError("Nonunique or nonexistent equation solution")
@@ -385,7 +391,8 @@ def create_candidate(family: str, *, seed: str | int, mode: str) -> dict:
         "variant_id": hashlib.sha256(f"{family}|{mode}|{seed}".encode()).hexdigest()[:24],
         "task_fingerprint": fingerprint,
         "task_fingerprint_version": "AFFINE_SIDE_SYMMETRY_V1",
-        "structure_id": structure,
+        "presentation_id": presentation,
+        "reasoning_structure_id": family,
         "prompt": prompt,
         "equation_coefficients": coefficients,
         "normalized_equation_coefficients": normalized_coefficients,
@@ -412,7 +419,7 @@ def create_candidate(family: str, *, seed: str | int, mode: str) -> dict:
             "independent_modes": ["INDEPENDENT", "MASTERY"],
             "requires_unhinted_transfer": True,
             "requires_new_task_fingerprint": True,
-            "requires_changed_structure_id": True,
+            "requires_changed_reasoning_structure_id": True,
             "runtime_credit_authorized": False,
         },
     }
@@ -428,26 +435,33 @@ def create_unhinted_transfer(
     *,
     target_mode: str = "INDEPENDENT",
 ) -> dict:
-    """Select a same-target, structurally changed task; never award runtime credit."""
+    """Select a same-skill, different-reasoning-family task without runtime credit."""
     if target_mode not in ("INDEPENDENT", "MASTERY"):
         raise ValueError("Transfer must be independent or mastery mode")
-    family = source["candidate_family"]
+    source_family = source["candidate_family"]
+    target_family = TRANSFER_FAMILY[source_family]
+    if SKILLS[target_family] != source["canonical_skill_hint"]:
+        raise ArithmeticError("Transfer family must preserve the canonical skill")
     for attempt in range(2048):
         seed = f"transfer|{source['variant_id']}|{attempt}"
-        target = create_candidate(family, seed=seed, mode=target_mode)
-        if target["structure_id"] == source["structure_id"]:
-            continue
+        target = create_candidate(target_family, seed=seed, mode=target_mode)
         if target["task_fingerprint"] == source["task_fingerprint"]:
             continue
         if target["canonical_answer"] == source["canonical_answer"]:
             continue
         return {
             "source_variant_id": source["variant_id"],
-            "target_family": family,
+            "source_family": source_family,
+            "target_family": target_family,
             "target_mode": target_mode,
-            "source_structure_id": source["structure_id"],
-            "target_structure_id": target["structure_id"],
-            "structure_changed": True,
+            "source_reasoning_structure_id": source["reasoning_structure_id"],
+            "target_reasoning_structure_id": target["reasoning_structure_id"],
+            "reasoning_structure_changed": True,
+            "source_presentation_id": source["presentation_id"],
+            "target_presentation_id": target["presentation_id"],
+            "presentation_changed": (
+                source["presentation_id"] != target["presentation_id"]
+            ),
             "task_fingerprint_changed": True,
             "answer_changed": True,
             "hints_allowed": False,
@@ -457,7 +471,7 @@ def create_unhinted_transfer(
             "private_exact_oracle_for_review": target["canonical_answer"],
             "private_target_fingerprint_for_review": target["task_fingerprint"],
         }
-    raise ArithmeticError("Structurally distinct transfer budget exhausted")
+    raise ArithmeticError("Different-reasoning-family transfer budget exhausted")
 
 
 def create_pack(*, count_per_family_mode: int = 25) -> dict:
@@ -479,7 +493,7 @@ def create_pack(*, count_per_family_mode: int = 25) -> dict:
                 produced.append(candidate)
                 count += 1
     return {
-        "schema": "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V3",
+        "schema": "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V4",
         "source_issue": "AyalewGM/ai-tutor#337",
         "curriculum_hint": "Ontario Grade 9 MTH1W — proposed scope only",
         "official_standards_mapping_status": "NOT_INDEPENDENTLY_APPROVED",
@@ -493,7 +507,8 @@ def create_pack(*, count_per_family_mode: int = 25) -> dict:
         "requires_server_authoritative_scoring": True,
         "diagnosis_requires_multiple_probes": True,
         "hinted_success_counts_as_independent": False,
-        "transfer_requires_changed_structure": True,
+        "transfer_requires_changed_reasoning_structure": True,
+        "transfer_requires_changed_presentation": False,
         "task_fingerprint_version": "AFFINE_SIDE_SYMMETRY_V1",
         "candidates": produced,
     }
