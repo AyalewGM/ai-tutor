@@ -33,8 +33,11 @@ remains in Diagnose until the learner completes its answer-free targeted repair
 and exactly resolves the original equation. Transfer must identify a fresh
 different-family `independent` item with no support, and verification
 reconstructs both original equation sides from the practiced exact answer.
-Diagnostic, independent, and mastery modes cannot obtain guided repair;
-independent and mastery paths contain only unhinted Practice and Verify stages.
+Diagnostic, independent, and mastery modes cannot obtain guided repair.
+Diagnostic exposes only one exact unhinted answer field, retains an accepted
+answer for final original-equation verification, and never requests guided
+strategy or substitution probes. Independent and mastery paths contain only
+unhinted Practice and Verify stages.
 
 ## Standards and local-source boundary
 
@@ -68,5 +71,6 @@ trusted selection, mode eligibility, scoring, persistence, nonrepetition, and
 history isolation. Frontend/MVE and Muse own rendering, keyboard/AT behaviour,
 learner visibility, and browser isolation. No DC or Virginia mapping is added
 or activated here.
+
 
 
